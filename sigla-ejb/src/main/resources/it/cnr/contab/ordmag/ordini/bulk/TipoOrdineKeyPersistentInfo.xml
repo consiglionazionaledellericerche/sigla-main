@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.ordini.bulk.TipoOrdineKey">
+	<defaultColumnMap
+		tableName="TIPO_ORDINE">
+		<columnMapping
+			columnName="CD_TIPO_ORDINE"
+			propertyName="cdTipoOrdine"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdTipoOrdine"
+		partOfOid="true" />
+</SQLPersistentInfo>

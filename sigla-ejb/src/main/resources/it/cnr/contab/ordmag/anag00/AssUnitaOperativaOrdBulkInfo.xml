@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Rappresenta le associazioni/gerarchie tra unità operative per indirizzare le abilitazioni."
+	longDescription="Rappresenta le associazioni/gerarchie tra unità operative per indirizzare le abilitazioni.">
+	<fieldProperty
+		name="findUnitaOperativaRif"
+		property="unitaOperativaOrdRif"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Operativa" />
+	<fieldProperty
+		name="cdUnitaOperativa"
+		property="unitaOperativaOrd.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice Unità Operativa" />
+	<fieldProperty
+		name="dsUnitaOperativaRif"
+		property="unitaOperativaOrdRif.dsUnitaOperativa"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Descrizione Unità Operativa di Riferimento" />
+	<fieldProperty
+		name="cdUnitaOperativaRif"
+		property="unitaOperativaOrdRif.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice Unità Operativa di Riferimento" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Cancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdUnitaOperativa" />
+		<formFieldProperty
+			name="cdUnitaOperativaRif" />
+	</form>
+	<formFieldProperty
+		name="dtCancellazione" />
+	<formFieldProperty
+		name="cdUnitaOperativaRif" />
+	<formFieldProperty
+		name="dsUnitaOperativaRif" />
+	<formFieldProperty name="findUnitaOperativaRif" />
+	<findFieldProperty
+		name="cdUnitaOperativa" />
+	<findFieldProperty
+		name="cdUnitaOperativaRif" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdUnitaOperativaRif" />
+	<columnFieldProperty
+		name="dsUnitaOperativaRif" />
+</bulkInfo>

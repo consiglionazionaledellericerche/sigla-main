@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagKey">
+	<defaultColumnMap
+		tableName="MOVIMENTI_MAG">
+		<columnMapping
+			columnName="PG_MOVIMENTO"
+			propertyName="pgMovimento"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pgMovimento"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Luoghi di Consegna"
+	longDescription="Luoghi di Consegna">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Cds" />
+	<fieldProperty
+		name="cdLuogoConsegna"
+		property="cdLuogoConsegna"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="dsLuogoConsegna"
+		property="dsLuogoConsegna"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="indirizzo"
+		property="indirizzo"
+		inputType="TEXT"
+		maxLength="100"
+		nullable="false"
+		label="Indirizzo" />
+	<fieldProperty
+		name="cap"
+		property="cap"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="5"
+		label="Cap" />
+	<fieldProperty
+		name="pgComune"
+		property="pgComune"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Comune" />
+	<fieldProperty
+		name="pgNazione"
+		property="pgNazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Nazione" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Cancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdLuogoConsegna" />
+		<formFieldProperty
+		    inputSize="30"
+			name="dsLuogoConsegna" />
+	</form>
+	<formFieldProperty
+		name="cdLuogoConsegna" />
+	<formFieldProperty
+		name="dsLuogoConsegna" />
+	<formFieldProperty
+		name="indirizzo" />
+	<formFieldProperty
+		name="cap" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdLuogoConsegna" />
+	<findFieldProperty
+		name="dsLuogoConsegna" />
+	<findFieldProperty
+		name="indirizzo" />
+	<findFieldProperty
+		name="cap" />
+	<findFieldProperty
+		name="pgComune" />
+	<findFieldProperty
+		name="pgNazione" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdLuogoConsegna" />
+	<columnFieldProperty
+		name="dsLuogoConsegna" />
+	<columnFieldProperty
+		name="indirizzo" />
+	<columnFieldProperty
+		name="cap" />
+	<columnFieldProperty
+		name="pgComune" />
+	<columnFieldProperty
+		name="pgNazione" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

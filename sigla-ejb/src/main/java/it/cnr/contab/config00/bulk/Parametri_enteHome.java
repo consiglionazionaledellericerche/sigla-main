@@ -1,21 +1,26 @@
 package it.cnr.contab.config00.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.sql.*;
-
-
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.SQLExceptionHandler;
 
 /**
  * @author aimprota
  */
 public class Parametri_enteHome extends BulkHome
 {
-	//Parametri_enteBulk parametri;
+	private static final long serialVersionUID = 1L;
 
-    /**
+	/**
      * @param class1
      * @param connection
      */
@@ -38,30 +43,51 @@ public class Parametri_enteHome extends BulkHome
 	 * @param par_ent Parametri Ente
 	 */
 
-	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,OggettoBulk par_ent) throws PersistencyException {
+	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,OggettoBulk parEnte) throws PersistencyException {
 		try {
-			((Parametri_enteBulk)par_ent).setId(new Integer( ((Integer)findAndLockMax( par_ent, "id", new Integer(0) )).intValue()+1 ));
+			((Parametri_enteBulk)parEnte).setId(new Integer( ((Integer)findAndLockMax( parEnte, "id", new Integer(0) )).intValue()+1 ));
 		} catch(it.cnr.jada.bulk.BusyResourceException e) {
 			throw new PersistencyException(e);
 		}
 	}
+	
 	/**
 	 * Ritorna un SQLBuilder con la columnMap del ricevente
 	 */
 	public SQLBuilder selectRigaAttiva() {
 		SQLBuilder sql = createSQLBuilder();
-		sql.addSQLClause("AND", "ATTIVO", sql.EQUALS, "Y");	
+		sql.addClause(FindClause.AND, "attivo", SQLBuilder.EQUALS, Boolean.TRUE);
 		return sql;
 	}
 
-    public int contaRigheAttive(it.cnr.jada.UserContext userContext) throws IntrospectionException, PersistencyException {
+    public int contaRigheAttive(it.cnr.jada.UserContext userContext) throws PersistencyException {
     	try{
-    		PersistentHome dettHome = getHomeCache().getHome(Parametri_enteBulk.class);
-    		SQLBuilder sql = dettHome.createSQLBuilder();
-    		sql.addClause("AND", "ATTIVO", sql.EQUALS, "Y");
-    		return(sql.executeCountQuery(getConnection()));  
+    		return selectRigaAttiva().executeCountQuery(getConnection());  
     	}catch(SQLException sqlException){
     		throw SQLExceptionHandler.getInstance().handleSQLException(sqlException);
     	}
     }
+
+    public Parametri_enteBulk getParametriEnteAttiva() throws PersistencyException{
+		return (Parametri_enteBulk) this.fetchAll(selectRigaAttiva()).get(0);
+	}	
+
+    public boolean isInformixAttivo() throws PersistencyException{
+    	Parametri_enteBulk parente = getParametriEnteAttiva();
+    	if (parente!=null)
+    		return parente.getFl_informix();
+    	return true;
+    }
+
+    @Override
+    public void initializeBulkForInsert(UserContext usercontext, OggettoBulk oggettobulk)
+    		throws PersistencyException, ComponentException {
+    	((Parametri_enteBulk)oggettobulk).setFl_autenticazione_ldap(Boolean.FALSE);
+    	((Parametri_enteBulk)oggettobulk).setAttivo(Boolean.FALSE);    	
+    	((Parametri_enteBulk)oggettobulk).setFl_informix(Boolean.FALSE);    	
+    	((Parametri_enteBulk)oggettobulk).setFl_gae_es(Boolean.FALSE);    	
+    	((Parametri_enteBulk)oggettobulk).setFl_prg_pianoeco(Boolean.FALSE);    	
+    	super.initializeBulkForInsert(usercontext, oggettobulk);
+    }
+    
 }

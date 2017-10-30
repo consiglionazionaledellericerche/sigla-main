@@ -13,6 +13,9 @@ import javax.ejb.EJBException;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteHome;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
@@ -30,9 +33,18 @@ import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateHome;
 import it.cnr.contab.prevent01.ejb.PdgModuloEntrateComponentSession;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteComuneBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
@@ -42,6 +54,8 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.HomeCache;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
@@ -197,6 +211,11 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext userContext,OggettoBu
 		Pdg_Modulo_EntrateHome dettHome = (Pdg_Modulo_EntrateHome)getHome(userContext,Pdg_Modulo_EntrateBulk.class);
 		testata.setDettagli_entrata(new BulkList(dettHome.findDetailsFor(testata)));
 		aggiornaImportiTotali(userContext,testata);
+		
+		testata.getProgetto().setOtherField(
+				(Progetto_other_fieldBulk)getHome(userContext, Progetto_other_fieldBulk.class)
+				.findByPrimaryKey(new Progetto_other_fieldBulk(testata.getProgetto().getPg_progetto())));
+
 	    for (Iterator dett = testata.getDettagli_entrata().iterator();dett.hasNext();){
 			Pdg_Modulo_EntrateBulk pdg_modulo_entrate = (Pdg_Modulo_EntrateBulk)dett.next();
 			pdg_modulo_entrate.setNature(((PdgModuloEntrateComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPREVENT01_EJB_Pdg_Modulo_EntrateComponentSession",it.cnr.contab.prevent01.ejb.PdgModuloEntrateComponentSession.class)).findNatura(userContext, pdg_modulo_entrate));
@@ -252,5 +271,18 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext userContext,OggettoBu
 		} catch(Throwable e) {
 			throw handleException(e);
 		}
+	}
+
+	public SQLBuilder selectVoce_piano_economicoByClause(UserContext userContext, Pdg_Modulo_EntrateBulk dettaglio, Voce_piano_economico_prgBulk vocePiano, CompoundFindClause clause) throws ComponentException, PersistencyException {
+		Voce_piano_economico_prgHome vocePianoHome = (Voce_piano_economico_prgHome)getHome(userContext, Voce_piano_economico_prgBulk.class);
+		Integer pgProgetto=null;
+ 		if (dettaglio!=null && dettaglio.getPg_progetto()!=null)
+ 			pgProgetto = dettaglio.getPg_progetto();
+
+		SQLBuilder sql = vocePianoHome.findVocePianoEconomicoPrgList(pgProgetto);
+
+		if (clause != null) 
+			sql.addClause(clause);
+		return sql;
 	}
 }

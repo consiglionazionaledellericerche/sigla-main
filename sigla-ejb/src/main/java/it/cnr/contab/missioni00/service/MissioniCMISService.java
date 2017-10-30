@@ -119,8 +119,8 @@ public class MissioniCMISService extends StoreService {
 		aspectsToAdd.add("P:sigla_commons_aspect:utente_applicativo_sigla");
 		aspectsToAdd.add(MissioniCMISService.ASPECT_CMIS_MISSIONE_SIGLA);
 		metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspectsToAdd);
-		return createFolderIfNotPresent(getStorageObjectByPath(path, true, true).getPath(),
-				folderName, metadataProperties);
+		path = createFolderIfNotPresent(path, folderName, metadataProperties);
+		return path;
 	}
 
 	public String createFolderDettaglioIfNotPresent(String path, Missione_dettaglioBulk dettaglio) throws ApplicationException{
@@ -137,7 +137,7 @@ public class MissioniCMISService extends StoreService {
 		List<String> aspectsToAdd = new ArrayList<String>();
 		aspectsToAdd.add("P:cm:titled");
 		metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspectsToAdd);
-		return createFolderIfNotPresent(getStorageObjectByPath(path, true, true).getPath(),
-				folderName, metadataProperties);
+		path = createFolderIfNotPresent(path, folderName, metadataProperties);
+		return path;
 	}
 }

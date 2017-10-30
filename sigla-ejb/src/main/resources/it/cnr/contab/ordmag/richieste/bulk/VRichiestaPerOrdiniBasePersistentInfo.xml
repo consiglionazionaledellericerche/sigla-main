@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniBase"
+	keyClassName="it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniKey"
+	homeClassName="it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniHome">
+	<defaultColumnMap
+		tableName="V_RICHIESTA_PER_ORDINI">
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="cdBeneServizio"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_BENE_SERVIZIO"
+			propertyName="dsBeneServizio"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="NOTA_RIGA"
+			propertyName="notaRiga"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CATEGORIA_GRUPPO"
+			propertyName="cdCategoriaGruppo"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="QUANTITA_RICHIESTA"
+			propertyName="quantitaRichiesta"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_MISURA"
+			propertyName="cdUnitaMisura"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_MISURA_MINIMA"
+			propertyName="cdUnitaMisuraMinima"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="COEF_CONV"
+			propertyName="coefConv"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			columnScale="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO_DEF"
+			propertyName="cdBeneServizioDef"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_OBBL"
+			propertyName="cdCdsObbl"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBL"
+			propertyName="esercizioObbl"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIG_OBBL"
+			propertyName="esercizioOrigObbl"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pgObbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="cdCentroResponsabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="cdLineaAttivita"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_VOCE"
+			propertyName="esercizioVoce"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="tiAppartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="tiGestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cdElementoVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pgProgetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_RICHIESTA"
+			propertyName="dataRichiesta"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_RICHIESTA"
+			propertyName="dsRichiesta"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="true" />
+		<columnMapping
+			columnName="NOTA"
+			propertyName="nota"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA_DEST"
+			propertyName="cdUnitaOperativaDest"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_INVIO"
+			propertyName="dataInvio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdBeneServizio" />
+	<persistentProperty
+		name="dsBeneServizio" />
+	<persistentProperty
+		name="notaRiga" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="cdCategoriaGruppo" />
+	<persistentProperty
+		name="quantitaRichiesta" />
+	<persistentProperty
+		name="cdUnitaMisura" />
+	<persistentProperty
+		name="cdUnitaMisuraMinima" />
+	<persistentProperty
+		name="coefConv" />
+	<persistentProperty
+		name="cdBeneServizioDef" />
+	<persistentProperty
+		name="cdCdsObbl" />
+	<persistentProperty
+		name="esercizioObbl" />
+	<persistentProperty
+		name="esercizioOrigObbl" />
+	<persistentProperty
+		name="pgObbligazione" />
+	<persistentProperty
+		name="cdCentroResponsabilita" />
+	<persistentProperty
+		name="cdLineaAttivita" />
+	<persistentProperty
+		name="esercizioVoce" />
+	<persistentProperty
+		name="tiAppartenenza" />
+	<persistentProperty
+		name="tiGestione" />
+	<persistentProperty
+		name="cdElementoVoce" />
+	<persistentProperty
+		name="pgProgetto" />
+	<persistentProperty
+		name="dataRichiesta" />
+	<persistentProperty
+		name="dsRichiesta" />
+	<persistentProperty
+		name="nota" />
+	<persistentProperty
+		name="cdUnitaOperativaDest" />
+	<persistentProperty
+		name="dataInvio" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

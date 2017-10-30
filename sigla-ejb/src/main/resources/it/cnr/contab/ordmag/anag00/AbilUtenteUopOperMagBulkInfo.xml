@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Archivio per associazione Utente/Uo/Tipo Operazione/Magazzino per la gestione delle Abilitazioni"
+	longDescription="Archivio per associazione Utente/Uo/Tipo Operazione/Magazzino per la gestione delle Abilitazioni">
+	<fieldProperty
+		name="cdUtente"
+		property="cdUtente"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Utente" />
+	<fieldProperty
+		name="findAbilUtenteUopOperBulk"
+		property="abilUtenteUopOperBulk"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Abilitazione utente uop operazione" />
+	<fieldProperty
+		name="cdUnitaOperativa"
+		property="abilUtenteUopOperBulk.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice Unità Operativa" />
+	<fieldProperty
+		name="cdTipoOperazione"
+		property="abilUtenteUopOperBulk.cdTipoOperazione"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice Tipo Operazione" />
+	<fieldProperty
+		name="findMagazzino"
+		property="magazzino"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Magazzino" />
+	<fieldProperty
+		name="cdCds"
+		property="magazzino.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Cds" />
+	<fieldProperty
+		name="cdMagazzino"
+		property="magazzino.cdMagazzino"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="Codice Magazzino" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Cancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdUtente" />
+		<formFieldProperty
+			name="cdUnitaOperativa" />
+		<formFieldProperty
+			name="cdTipoOperazione" />
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="cdMagazzino" />
+	</form>
+	<formFieldProperty
+		name="findAbilUtenteUopOperBulk" />
+	<formFieldProperty
+		name="findMagazzino" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdUtente" />
+	<findFieldProperty
+		name="cdUnitaOperativa" />
+	<findFieldProperty
+		name="cdTipoOperazione" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdMagazzino" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdUtente" />
+	<columnFieldProperty
+		name="cdUnitaOperativa" />
+	<columnFieldProperty
+		name="cdTipoOperazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdMagazzino" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

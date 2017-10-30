@@ -91,6 +91,13 @@
 			columnSize="15"
 			columnScale="2"
 			nullable="false" />
+		<columnMapping
+			columnName="FL_ASSOCIATA_ORDINE"
+			propertyName="flAssociataOrdine"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</columnMap>
 	<persistentProperty
 		name="obbligazione"

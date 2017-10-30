@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk"
+	homeClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome" >
+	<defaultColumnMap
+		tableName="PROGETTO_OTHER_FIELD" >
+		<columnMapping
+			columnName="CD_PROGRAMMA"
+			propertyName="pdgProgramma.cd_programma"/>	
+		<columnMapping
+			columnName="CD_MISSIONE"
+			propertyName="pdgMissione.cd_missione"/>
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="pdgProgramma" />	
+	<persistentProperty
+		name="pdgMissione" />
+</SQLPersistentInfo>

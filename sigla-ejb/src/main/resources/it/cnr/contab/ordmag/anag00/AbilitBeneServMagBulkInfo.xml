@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Archivio per l'abilitazione dei magazzini agli articoli attraverso le categorie/gruppi"
+	longDescription="Archivio per l'abilitazione dei magazzini agli articoli attraverso le categorie/gruppi">
+	<fieldProperty
+		name="findMagazzino"
+		property="magazzino"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Magazzino" />
+	<fieldProperty
+		name="findCategoriaGruppo"
+		property="categoriaGruppoInvent"
+		inputType="searchtool" 
+		formName="searchtool" 
+		label="Categoria-Gruppo"
+		enabledOnSearch="true"		
+	/>
+	<fieldProperty
+		name="cdCds"
+		property="magazzino.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Cds" />
+	<fieldProperty
+		name="cdMagazzino"
+		property="magazzino.cdMagazzino"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice Magazzino" />
+	<fieldProperty
+		name="cdCategoriaGruppo"
+		property="categoriaGruppoInvent.cd_categoria_gruppo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice Categoria Gruppo" />
+	<fieldProperty
+		name="dsCategoriaGruppo"
+		property="categoriaGruppoInvent.ds_categoria_gruppo"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Descrizione Categoria Gruppo" />
+	<fieldProperty
+		name="dtFinValidita"
+		property="dtFinValidita"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Fine Validita" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdMagazzino" />
+		<formFieldProperty
+			name="cdCategoriaGruppo" />
+	</form>
+	<formFieldProperty
+		name="findMagazzino" />
+	<formFieldProperty
+		name="findCategoriaGruppo" />
+	<formFieldProperty
+		name="cdCategoriaGruppo" />
+	<formFieldProperty
+		name="dsCategoriaGruppo" />
+	<formFieldProperty
+		name="dtFinValidita" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdMagazzino" />
+	<findFieldProperty
+		name="cdCategoriaGruppo" />
+	<findFieldProperty
+		name="dtFinValidita" />
+	<columnFieldProperty
+		name="cdCategoriaGruppo" />
+	<columnFieldProperty
+		name="dsCategoriaGruppo" />
+	<columnFieldProperty
+		name="dtFinValidita" />
+</bulkInfo>

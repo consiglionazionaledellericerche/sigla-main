@@ -1,13 +1,13 @@
 package it.cnr.contab.doccont00.ejb;
 import java.math.BigDecimal;
 
-import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
-
 import javax.annotation.PostConstruct;
-import javax.ejb.*;
+import javax.ejb.EJBException;
+import javax.ejb.Remove;
+import javax.ejb.Stateless;
+
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRDOCCONT00_EJB_SaldoComponentSession")
 public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentSessionBean implements SaldoComponentSession  {
 	private it.cnr.contab.doccont00.comp.SaldoComponent componentObj;
@@ -370,6 +370,58 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 		try {
 			componentObj.aggiornaSaldiAnniSuccessivi(param1,param2,param3,param4,param5,param6,param7);
 			component_invocation_succes(param1,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param1,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param1,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param1,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param1,componentObj,e);
+		}
+	}
+	public void checkDispPianoEconomicoProgetto(it.cnr.jada.UserContext param1, it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk param2) throws ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param1,componentObj);
+		try {
+			componentObj.checkDispPianoEconomicoProgetto(param1,param2);
+			component_invocation_succes(param1,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param1,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param1,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param1,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param1,componentObj,e);
+		}
+	}
+	public void checkDispPianoEconomicoProgetto(it.cnr.jada.UserContext param1, it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk param2) throws ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param1,componentObj);
+		try {
+			componentObj.checkDispPianoEconomicoProgetto(param1,param2);
+			component_invocation_succes(param1,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param1,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param1,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param1,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param1,componentObj,e);
+		}
+	}
+	public String getMessaggioSfondamentoPianoEconomico(it.cnr.jada.UserContext param1, it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk param2) throws ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param1,componentObj);
+		try {
+			java.lang.String result = componentObj.getMessaggioSfondamentoPianoEconomico(param1,param2);
+			component_invocation_succes(param1,componentObj);
+			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(param1,componentObj);
 			throw e;
