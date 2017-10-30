@@ -94,6 +94,15 @@
 		enabledOnSearch="true"
 		/>
 	<fieldProperty
+		name="simple_searchtool_ds_elemento_voce"
+		property="ds_elemento_voce"
+		label="Descrizione"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="300"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
 		name="esercizio"
 		property="esercizio"
 		label="Esercizio"
@@ -370,6 +379,15 @@
 		<formFieldProperty
 		    inputSize="60"
 			name="searchtool_ds_elemento_voce" />
+	</form>
+	<form
+		name="simple_searchtool" >
+		<formFieldProperty
+		    inputSize="20"
+			name="searchtool_cd_elemento_voce" />
+		<formFieldProperty
+		    inputSize="60"
+			name="simple_searchtool_ds_elemento_voce" />
 	</form>
 	<form
 		name="searchtoolclass" >

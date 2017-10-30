@@ -15,6 +15,7 @@ public class Pdg_esercizioBulk extends Pdg_esercizioBase {
 	private it.cnr.contab.config00.sto.bulk.CdrBulk cdr;
 
 	private static OrderedHashtable statoKeys;
+	private static OrderedHashtable statoSenzaContrattazioneKeys;
 	private static Hashtable prossimoStato;
 	private static Hashtable precedenteStato;
 	final public static String STATO_APERTURA_CDR 		= "AC";
@@ -87,6 +88,18 @@ public class Pdg_esercizioBulk extends Pdg_esercizioBase {
 			statoKeys.put(STATO_CHIUSURA_GESTIONALE_CDR, "Chiusura Gestionale del CDR");
 		}
 		return statoKeys;
+	}
+	public OrderedHashtable getStatoSenzaContrattazioneKeys() {
+		if (statoSenzaContrattazioneKeys == null)
+		{
+			statoSenzaContrattazioneKeys = new OrderedHashtable();
+			statoSenzaContrattazioneKeys.put(STATO_APERTURA_CDR, "Apertura del CDR");	
+			statoSenzaContrattazioneKeys.put(STATO_PRECHIUSURA_CDR, "Prechiusura del CDR");	
+			statoSenzaContrattazioneKeys.put(STATO_CHIUSURA_CDR, "Chiusura del CDR");
+			statoSenzaContrattazioneKeys.put(STATO_APERTURA_GESTIONALE_CDR, "Apertura Gestionale del CDR");
+			statoSenzaContrattazioneKeys.put(STATO_CHIUSURA_GESTIONALE_CDR, "Chiusura Gestionale del CDR");
+		}
+		return statoSenzaContrattazioneKeys;
 	}
 	public it.cnr.contab.config00.sto.bulk.CdrBulk getCdr() {
 		return cdr;

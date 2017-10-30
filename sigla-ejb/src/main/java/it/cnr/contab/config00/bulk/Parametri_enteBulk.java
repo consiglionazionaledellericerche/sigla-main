@@ -56,6 +56,10 @@ public class Parametri_enteBulk extends Parametri_enteBase
 	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context){
 		super.initializeForInsert(bp,context);
 		setAttivo(Boolean.FALSE);
+    	setFl_autenticazione_ldap(Boolean.FALSE);
+    	setFl_informix(Boolean.FALSE);    	
+    	setFl_gae_es(Boolean.FALSE);
+    	setFl_prg_pianoeco(Boolean.FALSE);
 	  return this;
 	}
 
@@ -68,5 +72,9 @@ public class Parametri_enteBulk extends Parametri_enteBase
 			return logoDBKeys.get(getTipo_db());
 		}
 		return "logo_mini_altro.gif";
+	}
+	
+	public boolean isEnteCNR() {
+		return "CNR".equals(getDescrizione());
 	}
 }

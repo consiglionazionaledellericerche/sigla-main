@@ -310,6 +310,11 @@
 				</td>
 				<td></td>
 			</tr>
+			<tr>				
+				<td><% bp.getController().writeFormLabel( out, "tot_ordini"); %></td>
+				<td><% bp.getController().writeFormInput( out, "tot_ordini"); %></td>
+				<td></td>
+			</tr>
 		   </table>
 		   </div>            
          </td>

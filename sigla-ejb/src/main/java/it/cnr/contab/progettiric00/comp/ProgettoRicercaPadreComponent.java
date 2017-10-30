@@ -1,12 +1,16 @@
 package it.cnr.contab.progettiric00.comp;
 
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.List;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.blob.bulk.PostItHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -42,12 +46,14 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
 /**
  * @author Marco Spasiano
@@ -65,11 +71,39 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
 	public ProgettoRicercaPadreComponent() {
 		super();
 	}
-private ProgettoBulk intBulk(UserContext userContext, ProgettoBulk bulk) throws ComponentException {
+	
+	private ProgettoBulk intBulk(UserContext userContext, ProgettoBulk bulk) throws ComponentException {
+		try {
+			boolean flNuovoPdg = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext)).getFl_nuovo_pdg(); 
+			boolean flInformix= Utility.createParametriEnteComponentSession().getParametriEnte(userContext).getFl_informix(); 
 				
-	            if (bulk.getDipartimento() == null)
-		           throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto è necessario inserire il Dipartimento!");
+	        if (bulk.getUnita_organizzativa() == null)
+				throw new it.cnr.jada.comp.ApplicationException("L'unità organizzativa è obbligatoria.");
+
+			if (bulk.getDipartimento() == null)
+		        throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto è necessario inserire il Dipartimento!");
 				
+			if (flNuovoPdg) {
+		        if (bulk.getCd_progetto() == null)
+					throw new it.cnr.jada.comp.ApplicationException("Campo codice obbligatorio.");
+		        else {
+		 		   ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE");
+				   SQLBuilder sql = progettohome.createSQLBuilder();
+				   sql.addClause(FindClause.AND, "cd_progetto", SQLBuilder.EQUALS, bulk.getCd_progetto());
+				   if (bulk.getPg_progetto()!=null)
+					   sql.addClause(FindClause.AND, "pg_progetto", SQLBuilder.NOT_EQUALS, bulk.getPg_progetto());
+				   List<ProgettoBulk> progettiClone = progettohome.fetchAll(sql);
+				   if (!progettiClone.isEmpty())
+						throw new it.cnr.jada.comp.ApplicationException("Esiste già un progetto con il codice indicato (id: "+progettiClone.get(0).getPg_progetto()+").");
+		        }		        
+
+		        if (bulk.getDs_progetto() == null)
+					throw new it.cnr.jada.comp.ApplicationException("Campo descrizione obbligatorio.");
+
+		        if (!flInformix && (bulk.getPdgProgramma() == null || bulk.getPdgProgramma().getCd_programma() == null))
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto è necessario inserire il Programma!");
+			} else {
+
 				if (bulk.getDt_inizio() == null)
 					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto è necessario inserire la data di inizio!");
 				
@@ -85,15 +119,15 @@ private ProgettoBulk intBulk(UserContext userContext, ProgettoBulk bulk) throws 
 				if(bulk.getDt_proroga() != null && bulk.getDt_fine().after( bulk.getDt_proroga() ))
 						throw new it.cnr.jada.comp.ApplicationException("Data di proroga deve essere maggiore della data di fine!");
 
-				if (bulk.getUnita_organizzativa() == null)
-						throw new it.cnr.jada.comp.ApplicationException("L'unità organizzativa è obbligatoria.");
-				  if (bulk.getImporto_progetto() == null)
-					 throw new it.cnr.jada.comp.ApplicationException("Entità delle risorse necessarie è obbligatorio.");
-				  //se non vengono specificati dettagli Finanziatori
-				  if(((ProgettoBulk)bulk).getDettagliFinanziatori().isEmpty() )
-					 throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto è necessario inserire almeno un Finanziatore!");
-				  //calcolo la discrepanza tra importo progetto e importo dettagli finanziatori
-				  if(!((ProgettoBulk)bulk).getDettagliFinanziatori().isEmpty() ) {
+				if (bulk.getImporto_progetto() == null)
+					throw new it.cnr.jada.comp.ApplicationException("Entità delle risorse necessarie è obbligatorio.");
+
+				//se non vengono specificati dettagli Finanziatori
+				if(((ProgettoBulk)bulk).getDettagliFinanziatori().isEmpty() )
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto è necessario inserire almeno un Finanziatore!");
+				
+				//calcolo la discrepanza tra importo progetto e importo dettagli finanziatori
+				if(!((ProgettoBulk)bulk).getDettagliFinanziatori().isEmpty() ) {
 					java.math.BigDecimal sum = new java.math.BigDecimal(0);
 					java.math.BigDecimal residuo = new java.math.BigDecimal(0);
 					for(int i = 0; bulk.getDettagliFinanziatori().size() > i; i++) {
@@ -108,41 +142,54 @@ private ProgettoBulk intBulk(UserContext userContext, ProgettoBulk bulk) throws 
 					}else if(sum.compareTo(bulk.getImporto_progetto())< 0) {
 						throw new it.cnr.jada.comp.ApplicationException("La somma degli importi dei finanziatori è inferiore all'importo del progetto");	
 					}
-				  }                
-				if ((ProgettoBulk)bulk.getProgettopadre() == null)
-				  ((ProgettoBulk)bulk).setLivello(new Integer(1));
-
-				//se nei dettagli non è presente la UO cordinatrice viene creata                
-				if( cercaUocordinatrice(bulk) ) {
-				   Progetto_uoBulk dett = new Progetto_uoBulk(
-					 bulk.getPg_progetto(),
-					 bulk.getUnita_organizzativa()
-				   );
-				   dett.setCrudStatus( dett.TO_BE_CREATED );
-				   dett.setUser( bulk.getUser() );
-				   bulk.addToDettagli(dett);
 				}
-		  return bulk;
+			}
+
+			if ((ProgettoBulk)bulk.getProgettopadre() == null)
+			  ((ProgettoBulk)bulk).setLivello(new Integer(1));
+
+			//se nei dettagli non è presente la UO cordinatrice viene creata                
+			if( cercaUocordinatrice(bulk) ) {
+				Progetto_uoBulk dett = new Progetto_uoBulk(
+										   bulk.getPg_progetto(),
+										   bulk.getUnita_organizzativa()
+									  );
+				dett.setCrudStatus( dett.TO_BE_CREATED );
+				dett.setUser( bulk.getUser() );
+				bulk.addToDettagli(dett);
+			}
+			
+			return bulk;
+		} catch (Exception e) {
+			throw new ComponentException(e);
 		}
-/**
- * Pre:  Ricerca progetti disponibili
- * Post: Limitazione ai progetti della UO in scrivania tranne per l'ente.
- */
-        
+	}
+
+	/**
+	 * Pre:  Ricerca progetti disponibili
+	 * Post: Limitazione ai progetti della UO in scrivania tranne per l'ente.
+	 */
 		public Query select(UserContext userContext,CompoundFindClause clauses,OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
 		{
 		   ProgettoBulk progetto = (ProgettoBulk)bulk;
 		   ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE");
 		   SQLBuilder sql = progettohome.createSQLBuilder();
 		   sql.addClause(clauses);
+		   progetto.setTipo_fase(null);
 		   sql.addClause(bulk.buildFindClauses(new Boolean(true)));
 		   sql.addSQLClause("AND", "V_PROGETTO_PADRE.ESERCIZIO", SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
 		   sql.addSQLClause("AND", "PG_PROGETTO_PADRE", sql.ISNULL,null);
-		   sql.addClause("AND","tipo_fase",SQLBuilder.NOT_EQUALS,ProgettoBulk.TIPO_FASE_NON_DEFINITA);
+		   sql.addClause("AND","tipo_fase",SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_NON_DEFINITA);
+
 		   // Se uo 999.000 in scrivania: visualizza tutti i progetti
 		   Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 		   if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-			  sql.addSQLExistsClause("AND",progettohome.abilitazioniProgetti(userContext));
+			   try {
+				if (Utility.createParametriEnteComponentSession().getParametriEnte(userContext).getFl_informix())
+				   sql.addSQLExistsClause("AND",progettohome.abilitazioniProgetti(userContext));
+				} catch (Exception e) {
+					throw handleException(e);
+				}
 		   }
 		   return sql;
 		}     
@@ -189,7 +236,26 @@ private ProgettoBulk intBulk(UserContext userContext, ProgettoBulk bulk) throws 
 			 /* Fine if*/
 			/*Fine valorizzazione id PostIt*/
 			}
-			return super.modificaConBulk(uc, bulk);
+			
+		   try{		
+			   validateBulkForInsert(uc, bulk);
+			   ProgettoBulk progettoPrev = (ProgettoBulk)getHome(uc, ProgettoBulk.class).findByPrimaryKey(new ProgettoBulk(((ProgettoBulk)bulk).getEsercizio(), ((ProgettoBulk)bulk).getPg_progetto(), ProgettoBulk.TIPO_FASE_PREVISIONE));
+			   if (progettoPrev!=null)
+				   getHome(uc, ProgettoBulk.class, "PROGETTO_SIP").delete(progettoPrev, uc);
+
+			   ProgettoBulk progettoGest = (ProgettoBulk)getHome(uc, ProgettoBulk.class).findByPrimaryKey(new ProgettoBulk(((ProgettoBulk)bulk).getEsercizio(), ((ProgettoBulk)bulk).getPg_progetto(), ProgettoBulk.TIPO_FASE_GESTIONE));
+			   if (progettoGest!=null)
+				   getHome(uc, ProgettoBulk.class, "PROGETTO_SIP").delete(progettoGest, uc);
+
+			   ((ProgettoBulk)bulk).setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
+			   getHome(uc, bulk, "PROGETTO_SIP").insert((Persistent)bulk, uc);
+
+			   ((ProgettoBulk)bulk).setTipo_fase(ProgettoBulk.TIPO_FASE_GESTIONE);
+			   getHome(uc, bulk, "PROGETTO_SIP").insert((Persistent)bulk, uc);
+		   }catch(Throwable throwable){
+		       throw handleException(throwable);
+		   }					
+		   return bulk;
 		}  
 /**
  * Pre:  Controllo Dt_inizio > Dt_fine
@@ -249,11 +315,22 @@ private ProgettoBulk intBulk(UserContext userContext, ProgettoBulk bulk) throws 
 				 
 				}
 				/*Fine valorizzazione id PostIt*/	  
-				  ((PostItBulk) ((ProgettoBulk)bulk).getDettagliPostIt().get(i)).setPg_progetto(new Integer(sq_progetto.intValue()));
-				  
-				  
-				}                              
-				return super.creaConBulk(uc, bulk);
+				((PostItBulk) ((ProgettoBulk)bulk).getDettagliPostIt().get(i)).setPg_progetto(new Integer(sq_progetto.intValue()));
+				}
+				((ProgettoBulk)bulk).setFl_piano_triennale(false);
+				
+				((ProgettoBulk)bulk).setStato(ProgettoBulk.TIPO_STATO_APPROVATO);
+				try {
+					validaCreaConBulk(uc, bulk);
+					((ProgettoBulk)bulk).setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
+					getHome(uc, bulk, "PROGETTO_SIP").insert((Persistent)bulk, uc);
+
+					((ProgettoBulk)bulk).setTipo_fase(ProgettoBulk.TIPO_FASE_GESTIONE);
+					getHome(uc, bulk, "PROGETTO_SIP").insert((Persistent)bulk, uc);
+				}catch(Throwable throwable){
+		            throw handleException(throwable);
+		        }					
+				return bulk;
 		}                 
 
 	  protected boolean cercaUocordinatrice(ProgettoBulk progetto)
@@ -292,27 +369,59 @@ private ProgettoBulk intBulk(UserContext userContext, ProgettoBulk bulk) throws 
 	}        
     
 		public void eliminaConBulk(it.cnr.jada.UserContext aUC, it.cnr.jada.bulk.OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
-          
-		  /*Se sto cancellando il progetto cancello anche tutti i dettagli */
-		  if (bulk instanceof ProgettoBulk){
-			for(int i = 0; ((ProgettoBulk)bulk).getDettagli().size() > i; i++) {
-			  ((Progetto_uoBulk) ((ProgettoBulk)bulk).getDettagli().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
-			}
-			for(int i = 0; ((ProgettoBulk)bulk).getDettagliFinanziatori().size() > i; i++) {
-			  ((Progetto_finanziatoreBulk) ((ProgettoBulk)bulk).getDettagliFinanziatori().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
-			}
-			for(int i = 0; ((ProgettoBulk)bulk).getDettagliPartner_esterni().size() > i; i++) {
-			  ((Progetto_partner_esternoBulk) ((ProgettoBulk)bulk).getDettagliPartner_esterni().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
-			}
-			for(int i = 0; ((ProgettoBulk)bulk).getDettagliPostIt().size() > i; i++) {
-			  ((PostItBulk) ((ProgettoBulk)bulk).getDettagliPostIt().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
-			}            
-		  }              
-		  super.eliminaConBulk(aUC, bulk);
+		   try{		
+			   	/*Se sto cancellando il progetto cancello anche tutti i dettagli */
+				if (bulk instanceof ProgettoBulk){
+		 		   ProgettoHome progettohome = (ProgettoHome)getHome(aUC, ProgettoBulk.class,"V_PROGETTO_PADRE");
+				   SQLBuilder sql = progettohome.createSQLBuilder();
+				   sql.addSQLClause(FindClause.AND, "P_PG_PROGETTO", SQLBuilder.EQUALS, ((ProgettoBulk)bulk).getPg_progetto());
+				   List<ProgettoBulk> progettiFigli = progettohome.fetchAll(sql);
+				   if (!progettiFigli.isEmpty())
+						throw new it.cnr.jada.comp.ApplicationException("Esistono progetti collegati. Eliminazione non possibile.");
+	          
+				   for(int i = 0; ((ProgettoBulk)bulk).getDettagli().size() > i; i++) {
+					  ((Progetto_uoBulk) ((ProgettoBulk)bulk).getDettagli().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
+				   }
+				   for(int i = 0; ((ProgettoBulk)bulk).getDettagliFinanziatori().size() > i; i++) {
+					  ((Progetto_finanziatoreBulk) ((ProgettoBulk)bulk).getDettagliFinanziatori().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
+				   }
+				   for(int i = 0; ((ProgettoBulk)bulk).getDettagliPartner_esterni().size() > i; i++) {
+					  ((Progetto_partner_esternoBulk) ((ProgettoBulk)bulk).getDettagliPartner_esterni().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
+				   }
+				   for(int i = 0; ((ProgettoBulk)bulk).getDettagliPostIt().size() > i; i++) {
+					  ((PostItBulk) ((ProgettoBulk)bulk).getDettagliPostIt().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
+				   }            
+	
+				   ProgettoBulk progettoPrev = (ProgettoBulk)getHome(aUC, ProgettoBulk.class).findByPrimaryKey(new ProgettoBulk(((ProgettoBulk)bulk).getEsercizio(), ((ProgettoBulk)bulk).getPg_progetto(), ProgettoBulk.TIPO_FASE_PREVISIONE));
+				   if (progettoPrev!=null)
+					   getHome(aUC, ProgettoBulk.class, "PROGETTO_SIP").delete(progettoPrev, aUC);
+	
+				   ProgettoBulk progettoGest = (ProgettoBulk)getHome(aUC, ProgettoBulk.class).findByPrimaryKey(new ProgettoBulk(((ProgettoBulk)bulk).getEsercizio(), ((ProgettoBulk)bulk).getPg_progetto(), ProgettoBulk.TIPO_FASE_GESTIONE));
+				   if (progettoGest!=null)
+					   getHome(aUC, ProgettoBulk.class, "PROGETTO_SIP").delete(progettoGest, aUC);
+				}
+		   }catch(Throwable throwable){
+		       throw handleException(throwable);
+		   }		  
 		}
+
 		public it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cnr.jada.UserContext aUC, it.cnr.jada.bulk.OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
-			// inizializzazione per gestire la codifica automatica
-			((ProgettoBulk)bulk).setParametriCds(parametriCds(aUC, (ProgettoBulk) bulk));
+			try { 
+				// inizializzazione per gestire la codifica automatica
+				((ProgettoBulk)bulk).setParametriCds(parametriCds(aUC, (ProgettoBulk) bulk));
+				((ProgettoBulk)bulk).setFl_utilizzabile(Boolean.TRUE);
+				((ProgettoBulk)bulk).setEsercizio(CNRUserContext.getEsercizio(aUC));
+				if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, CNRUserContext.getEsercizio(aUC)).getFl_nuovo_pdg()) {
+					((ProgettoBulk)bulk).setLivello(1);
+					((ProgettoBulk)bulk).setResponsabile(((TerzoHome)getHome(aUC, TerzoBulk.class)).findTerzoEnte());
+					((ProgettoBulk)bulk).setDt_inizio(DateUtils.firstDateOfTheYear(CNRUserContext.getEsercizio(aUC)));
+					((ProgettoBulk)bulk).setImporto_progetto(BigDecimal.ZERO);
+					((ProgettoBulk)bulk).setDurata_progetto(ProgettoBulk.DURATA_PROGETTO_PLURIENNALE);
+					((ProgettoBulk)bulk).setCondiviso(Boolean.TRUE);					
+				}
+			} catch (Exception e) {
+				throw handleException(e);
+			}
 			return super.inizializzaBulkPerInserimento(aUC, bulk);
 		}
 
@@ -328,7 +437,13 @@ private ProgettoBulk intBulk(UserContext userContext, ProgettoBulk bulk) throws 
 						testata.setDettagliFinanziatori(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliFinanziatori(testata)));
 						testata.setDettagliPartner_esterni(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPartner_esterni(testata)));                	
 						testata.setDettagliPostIt(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPostIt(testata)));                	
-                        
+
+						ProgettoBulk progettoPrev = (ProgettoBulk)((ProgettoHome)getHome(userContext, ProgettoBulk.class)).findByPrimaryKey(new ProgettoBulk(testata.getEsercizio(), testata.getPg_progetto(), ProgettoBulk.TIPO_FASE_PREVISIONE));
+						ProgettoBulk progettoGest = (ProgettoBulk)((ProgettoHome)getHome(userContext, ProgettoBulk.class)).findByPrimaryKey(new ProgettoBulk(testata.getEsercizio(), testata.getPg_progetto(), ProgettoBulk.TIPO_FASE_GESTIONE));
+
+						testata.setFl_previsione(progettoPrev!=null);
+						testata.setFl_gestione(progettoGest!=null);
+
 						getHomeCache(userContext).fetchAll(userContext);
 						return testata;
 				} catch(Exception e) {
@@ -578,12 +693,20 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 		return param;
 	}
 	public void aggiornaGECO(UserContext userContext) throws ComponentException{
-    	ProgettoHome progettoHome = ((ProgettoHome)getHome(userContext,ProgettoBulk.class));
-    	progettoHome.aggiornaGeco(userContext,null);
-    	DipartimentoHome dipartimentoHome = ((DipartimentoHome)getHome(userContext,DipartimentoBulk.class));
-    	dipartimentoHome.aggiornaDipartimenti(userContext, null);
-    	if (userContext.getUser().equalsIgnoreCase("GECO"))
-    	   cancellaProgettoSIP(userContext);
+		try {
+			//L'aggiornamento parte solo se attivo informix
+			Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(userContext); 
+			if (parEnte.getFl_informix()) {
+		    	ProgettoHome progettoHome = ((ProgettoHome)getHome(userContext,ProgettoBulk.class));
+		    	progettoHome.aggiornaGeco(userContext,null);
+		    	DipartimentoHome dipartimentoHome = ((DipartimentoHome)getHome(userContext,DipartimentoBulk.class));
+		    	dipartimentoHome.aggiornaDipartimenti(userContext, null);
+		    	if (userContext.getUser().equalsIgnoreCase("GECO"))
+		    	   cancellaProgettoSIP(userContext);
+			}
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		} 
 	}
 	private void handleExceptionMail(UserContext userContext, Exception e){
 	}

@@ -37,7 +37,7 @@ public class Utente_gestoreHome extends BulkHome {
 	    sql.addClause("AND","ti_utente",SQLBuilder.EQUALS,bulk.UTENTE_AMMINISTRATORE_KEY);
 //		sql.addClause("AND","fl_autenticazione_ldap",SQLBuilder.EQUALS,Boolean.FALSE);
 		try {
-			sql.addClause("AND","dt_fine_validita",SQLBuilder.LESS_EQUALS,utentegest.getDataOdierna());
+			sql.addClause("AND","dt_fine_validita",SQLBuilder.GREATER_EQUALS,utentegest.getDataOdierna());
 		} catch (BusinessProcessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

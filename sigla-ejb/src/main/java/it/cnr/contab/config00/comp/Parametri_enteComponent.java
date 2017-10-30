@@ -6,12 +6,8 @@
  */
 package it.cnr.contab.config00.comp;
 
-import java.sql.SQLException;
 import java.util.Calendar;
 
-
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteHome;
 import it.cnr.contab.config00.bulk.ServizioPecBulk;
@@ -32,7 +28,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.Broker;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 /**
  * @author rpagano
@@ -42,6 +38,8 @@ import it.cnr.jada.persistency.sql.*;
  */
 public class Parametri_enteComponent extends CRUDComponent {
 
+	private static final long serialVersionUID = 1L;
+	
 	public OggettoBulk creaConBulk(UserContext userContext, OggettoBulk oggettobulk)
 		throws ComponentException
 	{
@@ -78,14 +76,22 @@ public class Parametri_enteComponent extends CRUDComponent {
 	  try
 	  {
 		validaCampiObbligatori(userContext,parametri_ente);
+		
+	   	Parametri_enteHome testataHome = (Parametri_enteHome)getHome(userContext, Parametri_enteBulk.class);
+		if (parametri_ente.isToBeUpdated()) {
+			Parametri_enteBulk parametriEnteDB = (Parametri_enteBulk)testataHome.findByPrimaryKey(parametri_ente);
+			if (!parametriEnteDB.getFl_informix().equals(parametri_ente.getFl_informix()))
+				throw new ApplicationException("Attenzione! Non è possibile modificare il flag \"Collegamento a Informix\".");
+			if (parametriEnteDB.getFl_gae_es() && !parametri_ente.getFl_gae_es())
+				throw new ApplicationException("Attenzione! Non è possibile modificare il flag \"Gestione GAE E/S\".");
+		}				
 
 		int totAttive = 0;
 		
 		if(parametri_ente.getAttivo().booleanValue()) {
-		   	Parametri_enteHome testataHome = (Parametri_enteHome)getHome(userContext, Parametri_enteBulk.class);
 			SQLBuilder sql = testataHome.createSQLBuilder();
-			sql.addSQLClause("AND","ATTIVO",sql.EQUALS,"Y");
-			sql.addSQLClause("AND","ID",sql.NOT_EQUALS,parametri_ente.getId());
+			sql.addSQLClause("AND","ATTIVO",SQLBuilder.EQUALS,"Y");
+			sql.addSQLClause("AND","ID", SQLBuilder.NOT_EQUALS, parametri_ente.getId());
 
 			try {
 				totAttive = sql.executeCountQuery(testataHome.getConnection()) + 1;
@@ -104,17 +110,8 @@ public class Parametri_enteComponent extends CRUDComponent {
 	}
 	public Parametri_enteBulk getParametriEnte(UserContext userContext) throws ComponentException{
 		try{
-		   	Parametri_enteHome testataHome = (Parametri_enteHome)getHome(userContext, Parametri_enteBulk.class);
-			SQLBuilder sql = testataHome.createSQLBuilder();
-			sql.addSQLClause("AND","ATTIVO",sql.EQUALS,"Y");
-
-			getHomeCache(userContext).fetchAll(userContext,testataHome);
-			Parametri_enteBulk ente = (Parametri_enteBulk) getHome(userContext, Parametri_enteBulk.class).fetchAll(sql).get(0);
-			return ente;
-
+			return ((Parametri_enteHome)getHome(userContext, Parametri_enteBulk.class)).getParametriEnteAttiva();
 		}catch(it.cnr.jada.persistency.PersistencyException ex){
-			throw handleException(ex);
-		} catch (Exception ex) {
 			throw handleException(ex);
 		}	
 	}
@@ -128,7 +125,7 @@ public class Parametri_enteComponent extends CRUDComponent {
 		try{
 		   	Parametri_enteHome testataHome = (Parametri_enteHome)getHome(userContext, Parametri_enteBulk.class);
 			SQLBuilder sql = testataHome.createSQLBuilder();
-			sql.addSQLClause("AND","ATTIVO",sql.EQUALS,"Y");
+			sql.addSQLClause("AND","ATTIVO",SQLBuilder.EQUALS,"Y");
 
 			getHomeCache(userContext).fetchAll(userContext,testataHome);
 			Parametri_enteBulk ente = (Parametri_enteBulk) getHome(userContext, Parametri_enteBulk.class).fetchAll(sql).get(0);

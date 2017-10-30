@@ -382,6 +382,9 @@ public class CMISSiglaStorageConfiguration {
                             .orElse(null);
                 } catch (CmisObjectNotFoundException _ex) {
                     return null;
+                } catch (IllegalArgumentException _ex) {
+                    logger.error("Invalid path: {}", path);
+                    throw _ex;
                 }
             }
 

@@ -12,7 +12,7 @@
 	Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk)bp.getModel(); %>
 	<% bp.getConsuntivoController().writeHTMLTable(pageContext,"consuntivoSet",false,false,false,"100%","100px"); %>
   
-   <div class="Group">
+   <div class="Group card">
 
    <table>	  	
       <tr>

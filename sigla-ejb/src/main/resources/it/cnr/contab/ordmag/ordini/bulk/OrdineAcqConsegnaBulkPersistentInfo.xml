@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk"
+	homeClassName="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaHome">
+	<defaultColumnMap
+		tableName="ORDINE_ACQ_CONSEGNA">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="ordineAcqRiga.ordineAcq.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="ordineAcqRiga.ordineAcq.numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="ordineAcqRiga.ordineAcq.numerazioneOrd.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE"
+			propertyName="ordineAcqRiga.ordineAcq.numerazioneOrd.cdNumeratore" />
+		<columnMapping
+			columnName="NUMERO"
+			propertyName="ordineAcqRiga.ordineAcq.numero" />
+		<columnMapping
+			columnName="RIGA"
+			propertyName="ordineAcqRiga.riga" />
+		<columnMapping
+			columnName="CD_CDS_MAG"
+			propertyName="magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="magazzino.cdMagazzino" />
+		<columnMapping
+			columnName="CD_CDS_LUOGO"
+			propertyName="luogoConsegnaMag.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_LUOGO_CONSEGNA"
+			propertyName="luogoConsegnaMag.cdLuogoConsegna" />
+		<columnMapping
+			columnName="CD_UOP_DEST"
+			propertyName="unitaOperativaOrd.cdUnitaOperativa" />
+		<columnMapping
+			columnName="CD_CDS_OBBL"
+			propertyName="obbligazioneScadenzario.obbligazione.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBL"
+			propertyName="obbligazioneScadenzario.obbligazione.esercizio"  />
+		<columnMapping
+			columnName="ESERCIZIO_ORIG_OBBL"
+			propertyName="obbligazioneScadenzario.obbligazione.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.pg_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCAD"
+			propertyName="obbligazioneScadenzario.pg_obbligazione_scadenzario" />
+	</defaultColumnMap>
+    <columnMap
+            name="DATI_ORDINI_COMPLETI"
+            tableName="ORDINE_ACQ_CONSEGNA"
+            extends="default">
+        <columnMapping
+                columnName="ORDINE_ACQ_RIGA.CD_BENE_SERVIZIO"
+                propertyName="ordineAcqRiga.cdBeneServizio"
+                sqlTypeName="VARCHAR"
+                columnSize="15"/>
+        <columnMapping
+                columnName="ORDINE_ACQ_RIGA.DS_BENE_SERVIZIO"
+                propertyName="ordineAcqRiga.dsBeneServizio"
+                sqlTypeName="VARCHAR"
+                columnSize="300"/>
+        <columnMapping
+                columnName="ORDINE_ACQ.DATA_ORDINE"
+                propertyName="ordineAcqRiga.ordineAcq.dataOrdine"
+                sqlTypeName="timestamp"
+                columnSize="7"/>
+        <columnMapping
+                columnName="ORDINE_ACQ.CD_TERZO"
+                propertyName="ordineAcqRiga.ordineAcq.cdTerzo"
+                sqlTypeName="DECIMAL"
+                columnSize="8"/>
+        <columnMapping
+                columnName="ORDINE_ACQ.RAGIONE_SOCIALE"
+                propertyName="ordineAcqRiga.ordineAcq.ragioneSociale"
+                sqlTypeName="VARCHAR"
+                columnSize="50"/>
+        <columnMapping
+                columnName="ORDINE_ACQ_RIGA.NOTA_RIGA"
+                propertyName="ordineAcq.notaRiga"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
+    </columnMap>
+	<persistentProperty
+		name="ordineAcqRiga"
+		partOfOid="true" />
+	<persistentProperty
+		name="magazzino" />
+	<persistentProperty
+		name="luogoConsegnaMag" />
+	<persistentProperty
+		name="unitaOperativaOrd" />
+	<persistentProperty
+		name="obbligazioneScadenzario" />
+</SQLPersistentInfo>

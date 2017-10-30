@@ -18,8 +18,58 @@
 			columnSize="10"
 			nullable="false" />
 		<columnMapping
+			columnName="CD_TIPO_ARTICOLO"
+			propertyName="cdTipoArticolo"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_GRUPPO_MERCEOLOGICO"
+			propertyName="cdGruppoMerceologico"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
 			columnName="FL_GESTIONE_INVENTARIO"
 			propertyName="fl_gestione_inventario"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_SCADENZA"
+			propertyName="flScadenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="TIPO_SERVIZIO"
+			propertyName="tipoServizio"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_MANUTENZIONE"
+			propertyName="tipoManutenzione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_GESTIONE"
+			propertyName="tipoGestione"
+			sqlTypeName="CHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="SCONTI_APPLIC_INVENT"
+			propertyName="scontiApplicInvent"
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
@@ -98,8 +148,7 @@
 			propertyName="fl_valido"
 			sqlTypeName="CHAR"
 			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+			nullable="false"/>
 		<columnMapping
 			columnName="FL_AUTOFATTURA"
 			propertyName="fl_autofattura"
@@ -121,6 +170,10 @@
 		name="fl_gestione_inventario" />
 	<persistentProperty
 		name="cd_voce_iva" />
+	<persistentProperty
+		name="cdGruppoMerceologico" />
+	<persistentProperty
+		name="cdTipoArticolo" />
 	<persistentProperty
 		name="utcr" />
 	<persistentProperty
@@ -149,4 +202,16 @@
 		name="fl_autofattura" />			
 	<persistentProperty
 		name="fl_bollo" />			
+	<persistentProperty
+		name="flScadenza"/>
+	<persistentProperty
+		name="tipoServizio"/>
+	<persistentProperty
+		name="tipoManutenzione"/>
+	<persistentProperty
+		name="tipoGestione"/>
+	<persistentProperty
+		name="note"/>
+	<persistentProperty
+		name="scontiApplicInvent"/>
 </SQLPersistentInfo>
