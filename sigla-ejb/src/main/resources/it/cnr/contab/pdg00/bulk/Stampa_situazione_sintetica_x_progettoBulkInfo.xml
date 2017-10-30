@@ -84,7 +84,7 @@
 		inputType="SEARCHTOOL"
 		enabledOnSearch="true"
 		readonlyProperty="ROFindGaeForPrint"
-		label="GAE" />
+		label="G.a.e." />
 	<fieldProperty
 		name="cdGaeForPrint"
 		property="gaeForPrint.cd_linea_attivita"
@@ -92,36 +92,14 @@
 		inputSize="30"
 		inputType="TEXT"
 		readonlyProperty="ROGaeForPrint"
-		label="GAE"/>		
+		label="G.a.e."/>		
 	<fieldProperty
 		name="dsGaeForPrint"
 		property="gaeForPrint.ds_linea_attivita"
 		maxLength="30"
 		inputSize="30"
 		inputType="ROTEXT"
-		label="Descrizione GAE" />	
-	<fieldProperty
-		name="findResponsabileGaeForPrint"
-		property="responsabileGaeForPrint"
-		inputType="SEARCHTOOL"
-		enabledOnSearch="true"
-		readonlyProperty="ROFindResponsabileGaeForPrint"
-		label="Responsabile GAE" />
-	<fieldProperty
-		name="cdResponsabileGaeForPrint"
-		property="responsabileGaeForPrint.cd_terzo"
-		maxLength="8"
-		inputSize="8"
-		inputType="TEXT"
-		readonlyProperty="ROResponsabileGaeForPrint"
-		label="Responsabile GAE"/>
-	<fieldProperty
-		name="dsResponsabileGaeForPrint"
-		property="responsabileGaeForPrint.denominazione_sede"
-		maxLength="30"
-		inputSize="30"
-		inputType="ROTEXT"
-		label="Denominazione Resp"  />
+		label="Descrizione Gae" />	
 	<fieldProperty
 		name="printGae"
 		property="printGae"
@@ -186,10 +164,6 @@
 	<formFieldProperty name="findGaeForPrint" />
 	<formFieldProperty name="cdGaeForPrint" />
 	<formFieldProperty name="dsGaeForPrint" />
-
-	<formFieldProperty name="findResponsabileGaeForPrint" />
-	<formFieldProperty name="cdResponsabileGaeForPrint" />
-	<formFieldProperty name="dsResponsabileGaeForPrint" />
 
 	<formFieldProperty name="printGae" />
 	<formFieldProperty name="printVoce" />
@@ -263,19 +237,6 @@
 			parameterType="STRING"
 			paramNameJR="P_ORDINE"
 			paramTypeJR="java.lang.String" />
-		<printFieldProperty 
-			name="cdResponsabileGae"
-			property="cdResponsabileGaeForPrint"
-			parameterPosition="10"
-			parameterType="STRING"
-			paramNameJR="P_RESPONSABILE_GAE"
-			paramTypeJR="java.lang.Integer" />
-		<printFieldProperty 
-			name="dsResponsabileGae"
-			property="dsResponsabileGaeForPrint"
-			parameterPosition="11"
-			parameterType="STRING"
-			paramNameJR="P_DS_RESPONSABILE_GAE"
-			paramTypeJR="java.lang.String" />
+
 	</printForm>	
 </bulkInfo>

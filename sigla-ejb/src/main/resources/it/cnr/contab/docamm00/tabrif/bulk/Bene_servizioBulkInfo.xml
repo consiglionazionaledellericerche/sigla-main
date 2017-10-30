@@ -22,13 +22,12 @@
 	<fieldProperty
 		name="ds_voce_iva"
 		property="voce_iva.ds_voce_iva"
-		inputSize="15"
+		inputSize="80"
 		inputType="ROTEXT"
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false"
 		label="Descrizione Iva"
 		caseSensitiveSearch="false" />
-
 	<fieldProperty
 		name="categoria_gruppo"
 		property="categoria_gruppo"
@@ -36,6 +35,78 @@
 		enabledOnSearch="false"
 		label="Categoria Gruppo"
         enabledOnEdit="true" />	
+	<fieldProperty
+		name="unitaMisura"
+		property="unitaMisura"
+		inputType="SEARCHTOOL" 		
+		formName="searchtool"
+		enabledOnSearch="false"
+		label="Unita di Misura"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="cdUnitaMisura"
+		property="unitaMisura.cdUnitaMisura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Codice Unità di Misura" />
+	<fieldProperty
+		name="dsUnitaMisura"
+		property="unitaMisura.dsUnitaMisura"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="Descrizione Unità di Misura" />
+	<fieldProperty
+		name="tipoArticolo"
+		property="tipoArticolo"
+		inputType="SEARCHTOOL" 		
+		formName="searchtool"
+		enabledOnSearch="false"
+		label="Tipo Articolo"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="cdTipoArticolo"
+		property="tipoArticolo.cdTipoArticolo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Codice Tipo Articolo" />
+	<fieldProperty
+		name="dsTipoArticolo"
+		property="tipoArticolo.dsTipoArticolo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="Descrizione Tipo Articolo" />
+	<fieldProperty
+		name="gruppoMerceologico"
+		property="gruppoMerceologico"
+		inputType="SEARCHTOOL" 		
+		formName="searchtool"
+		enabledOnSearch="false"
+		label="Gruppo Merceologico"
+        enabledOnEdit="true" />	
+	<fieldProperty
+		name="cdGruppoMerceologico"
+		property="gruppoMerceologico.cdGruppoMerceologico"
+		maxLength="10"
+		inputSize="6"
+		inputType="TEXT"		
+		readonlyProperty="ROcategoria_gruppo"
+	 	label="Codice Gruppo Merceologico"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dsGruppoMerceologico"
+		property="gruppoMerceologico.dsGruppoMerceologico"
+		inputSize="30"
+		inputType="ROTEXT"
+	 	label="Descrizione Gruppo Merceologico"
+		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="cd_categoria_gruppo"
 		property="categoria_gruppo.cd_categoria_gruppo"
@@ -46,18 +117,25 @@
 	 	label="Categoria Gruppo"
 		caseSensitiveSearch="false" />
 	<fieldProperty
+		name="cd_categoria_gruppoForSearch"
+		property="categoria_gruppo.cd_categoria_gruppo"
+		maxLength="10"
+		inputSize="6"
+		inputType="TEXT"		
+	 	label="Categoria Gruppo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
 		name="ds_categoria_gruppo"
 		property="categoria_gruppo.ds_categoria_gruppo"
-		inputSize="15"
+		inputSize="80"
 		inputType="ROTEXT"
 		label="Categoria Gruppo"
 		caseSensitiveSearch="false" />
-
 	<fieldProperty
 		name="cd_bene_servizio"
 		property="cd_bene_servizio"
-		maxLength="10"
-		inputSize="6"
+		maxLength="15"
+		inputSize="15"
 		inputType="TEXT"
 		enabledOnSearch="true"
 		enabledOnEdit="false"
@@ -73,14 +151,14 @@
 		name="ds_bene_servizio"
 		property="ds_bene_servizio"
 		maxLength="300"
-		inputSize="50"
+		inputSize="100"
 		inputType="TEXT"
 		label="Descrizione"
 		nullable="false"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="unita_misura"
-		property="unita_misura"
+		property="unitaMisura.cdUnitaMisura"
 		maxLength="10"
 		inputSize="6"
 		inputType="TEXT"
@@ -124,6 +202,96 @@
 		label="Servizio/Bene"
 		caseSensitiveSearch="false" />
 	<fieldProperty
+		name="tipoServizio"
+		property="tipoServizio"
+		maxLength="1"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="tipoServizioKeys"
+		readonlyProperty="ROTi_bene_servizio"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Tipo Servizio"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="tipoServizioForSearch"
+		property="tipoServizio"
+		maxLength="1"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="tipoServizioKeys"
+		readonlyProperty="ROTi_bene_servizio"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Tipo Servizio"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="tipoManutenzione"
+		property="tipoManutenzione"
+		maxLength="1"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="tipoManutenzioneKeys"
+		readonlyProperty="ROTi_bene_servizio"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Tipo Manutenzione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="tipoManutenzioneForSearch"
+		property="tipoManutenzione"
+		maxLength="1"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="tipoManutenzioneKeys"
+		readonlyProperty="ROTi_bene_servizio"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Tipo Manutenzione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="tipoGestione"
+		property="tipoGestione"
+		maxLength="1"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="false"
+		keysProperty="tipoGestioneKeys"
+		readonlyProperty="ROTi_bene_servizio"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		label="Tipo Gestione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="tipoGestioneForSearch"
+		property="tipoGestione"
+		maxLength="1"
+		inputSize="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="tipoGestioneKeys"
+		readonlyProperty="ROTi_bene_servizio"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Tipo Gestione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
 		name="fl_obb_intrastat_acq"
 		property="fl_obb_intrastat_acq"
 		inputType="CHECKBOX"
@@ -140,8 +308,9 @@
 	<fieldProperty
 		name="fl_valido"
 		property="fl_valido"
-		inputType="CHECKBOX"
-		label="valido"
+		inputType="SELECT"
+		keysProperty="statoKeys"
+		label="Stato"
 		enabledOnFreeSearch="true"
 		enabledOnSearch="true"/>	
 	<fieldProperty
@@ -158,11 +327,37 @@
 		label="Bollo"
 		enabledOnFreeSearch="true"
 		enabledOnSearch="true"/>
+	<fieldProperty
+		name="flScadenza"
+		property="flScadenza"
+		inputType="CHECKBOX"
+		label="Scadenza"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="scontiApplicInvent"
+		property="scontiApplicInvent"
+		inputType="CHECKBOX"
+		label="Sconti Applicati in Inventariazione"
+		enabledOnFreeSearch="true"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="note"
+		property="note"
+		inputType="TEXTAREA"
+		cols="100"
+		rows="3"
+		maxLength="2000"
+		label="Nota" />
 	<form name="searchtool">
 		<formFieldProperty
-			name="cd_bene_servizio" />
+			name="cd_bene_servizio" 
+		    inputSize="15" />
 		<formFieldProperty
-			name="ds_bene_servizio" />		    	    
+			name="ds_bene_servizio" 
+		    inputSize="80"  />
+		<formFieldProperty
+			name="unita_misura" />
 	</form>		
 	<formFieldProperty
 		name="cd_bene_servizio" />
@@ -172,6 +367,10 @@
 		name="ds_categoria_gruppo" />
 	<formFieldProperty
 		name="categoria_gruppo" />
+	<formFieldProperty
+		name="gruppoMerceologico" />
+	<formFieldProperty
+		name="tipoArticolo" />
 	<formFieldProperty
 		name="ds_bene_servizio" />
 	<formFieldProperty
@@ -183,6 +382,8 @@
 	<formFieldProperty
 		name="unita_misura" />
 	<formFieldProperty
+		name="unitaMisura" />
+	<formFieldProperty
 		name="fl_gestione_inventario" />	
 	<formFieldProperty
 		name="fl_gestione_magazzino" />
@@ -191,6 +392,8 @@
 	<formFieldProperty
 		name="ti_bene_servizioForSearch" />
 	<formFieldProperty
+		name="tipoServizioForSearch" />
+	<formFieldProperty
 		name="fl_obb_intrastat_acq" />
 	<formFieldProperty
 		name="fl_obb_intrastat_ven" />
@@ -200,23 +403,39 @@
 		name="fl_autofattura" />	
 	<formFieldProperty
 		name="fl_bollo" />	
+	<formFieldProperty
+		name="flScadenza" />	
+	<formFieldProperty
+		name="tipoServizio" />	
+	<formFieldProperty
+		name="tipoManutenzione" />	
+	<formFieldProperty
+		name="tipoManutenzioneForSearch" />	
+	<formFieldProperty
+		name="tipoGestione" />	
+	<formFieldProperty
+		name="tipoGestioneForSearch" />	
+	<formFieldProperty
+		name="note" />	
+	<formFieldProperty
+		name="scontiApplicInvent" />	
 		
-	<columnFieldProperty
-		name="cd_voce_iva" />
 	<columnFieldProperty
 		name="cd_bene_servizio" />
 	<columnFieldProperty
-		name="fl_gestione_magazzino" />
-	<columnFieldProperty
 		name="ds_bene_servizio" />
-	<columnFieldProperty
-		name="unita_misura" />
 	<columnFieldProperty
 		name="cd_categoria_gruppo" />
 	<columnFieldProperty
-		name="fl_gestione_inventario" />
+		name="unita_misura" />
+	<columnFieldProperty
+		name="cd_voce_iva" />
 	<columnFieldProperty
 		name="ti_bene_servizio" />
+	<columnFieldProperty
+		name="fl_gestione_inventario" />
+	<columnFieldProperty
+		name="fl_gestione_magazzino" />
 	<columnFieldProperty
 		name="fl_obb_intrastat_acq" />
 	<columnFieldProperty
@@ -227,6 +446,8 @@
 		name="fl_autofattura" />	
 	<columnFieldProperty
 		name="fl_bollo" />	
+	<columnFieldProperty
+		name="tipoGestione" />	
 
 	<findFieldProperty
 		name="cd_voce_iva" />
@@ -239,9 +460,11 @@
 	<findFieldProperty
 		name="unita_misura" />
 	<findFieldProperty
-		name="cd_categoria_gruppo" />
+		name="cd_categoria_gruppoForSearch" />
 	<findFieldProperty
 		name="ti_bene_servizioForSearch" />
+	<findFieldProperty
+		name="tipoServizioForSearch" />
 	<findFieldProperty
 		name="fl_obb_intrastat_acq" />
 	<findFieldProperty

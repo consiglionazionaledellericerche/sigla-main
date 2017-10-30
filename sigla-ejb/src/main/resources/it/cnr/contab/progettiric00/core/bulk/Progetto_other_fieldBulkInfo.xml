@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="find_programma"
+		property="pdgProgramma"
+		label="Programma"
+		inputType="SEARCHTOOL"
+		nullable="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_programma"
+		property="pdgProgramma.cd_programma"
+		label="Programma"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		nullable="false"
+		enabledOnFreeSearch="true" />	
+	<fieldProperty
+		name="ds_programma"
+		property="pdgProgramma.ds_programma"
+		label="Descrizione Programma"
+		inputType="ROTEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnFreeSearch="false" />	
+	<fieldProperty
+		name="desctool_programma"
+		property="pdgProgramma.cd_programma"
+		descProperty="pdgProgramma.ds_programma"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="30"
+		maxLength="40"
+		nullable="false"
+		label="Programma" />
+	<fieldProperty
+		name="find_missione"
+		property="pdgMissione"
+		label="Missione"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		nullable="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_missione"
+		property="pdgMissione.cd_missione"
+		label="Missione"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnFreeSearch="true" />	
+	<fieldProperty
+		name="ds_missione"
+		property="pdgMissione.ds_missione"
+		label="Descrizione Missione"
+		inputType="ROTEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnFreeSearch="false" />	
+	<fieldProperty
+		name="desctool_missione"
+		property="pdgMissione.cd_missione"
+		descProperty="pdgMissione.ds_missione"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="30"
+		maxLength="40"
+		nullable="false"
+		label="Missione" />				
+	<fieldProperty
+		name="fl_piano_economico"
+		property="fl_piano_economico"
+		inputType="CHECKBOX"
+		label="Attiva Piano Economico" />
+
+	<formFieldProperty name="find_programma" />
+	<formFieldProperty name="cd_programma" />
+	<formFieldProperty name="ds_programma" />
+	<formFieldProperty name="desctool_programma" />
+	<formFieldProperty name="find_missione"/> 
+	<formFieldProperty name="cd_missione"/> 
+	<formFieldProperty name="ds_missione" />
+	<formFieldProperty name="desctool_missione" />
+	<formFieldProperty name="fl_piano_economico" />
+	
+	<columnFieldProperty name="find_programma" />
+	<columnFieldProperty name="cd_programma" />
+	<columnFieldProperty name="ds_programma" />
+	<columnFieldProperty name="desctool_programma" />
+	<columnFieldProperty name="find_missione"/> 
+	<columnFieldProperty name="cd_missione"/> 
+	<columnFieldProperty name="ds_missione" />
+	<columnFieldProperty name="desctool_missione" />
+	<columnFieldProperty name="fl_piano_economico" />
+
+	<findFieldProperty name="cd_programma" />
+	<findFieldProperty name="cd_missione" />
+	<findFieldProperty name="fl_piano_economico" />
+
+	<form name="other_field">
+		<formFieldProperty
+			name="fl_piano_economico" />			
+	</form>
+</bulkInfo>

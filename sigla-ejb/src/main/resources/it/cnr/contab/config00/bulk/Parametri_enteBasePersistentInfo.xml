@@ -79,6 +79,24 @@
 			columnSize="1"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_INFORMIX"
+			propertyName="fl_informix"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_GAE_ES"
+			propertyName="fl_gae_es"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_PRG_PIANOECO"
+			propertyName="fl_prg_pianoeco"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="LDAP_USER"
 			propertyName="ldap_user"
 			sqlTypeName="VARCHAR"
@@ -150,17 +168,23 @@
 	<persistentProperty		
 		name="box_scadenze" />								
 	<persistentProperty
-		name="fl_autenticazione_ldap" />		
-	<persistentProperty		
-		name="ldap_user" />								
+		name="fl_autenticazione_ldap" />	
+	<persistentProperty
+		name="fl_informix" />
+	<persistentProperty
+		name="fl_gae_es" />
+	<persistentProperty
+		name="fl_prg_pianoeco" />
+	<persistentProperty
+		name="ldap_user" />
 	<persistentProperty		
 		name="ldap_password" />								
 	<persistentProperty		
 		name="ldap_base_dn" />								
-	<persistentProperty		
-		name="ldap_app_name" />								
-	<persistentProperty		
-		name="dt_ldap_migrazione" />								
-	<persistentProperty		
-		name="ldap_link_cambio_password" />								
+	<persistentProperty
+		name="ldap_app_name" />
+	<persistentProperty
+		name="dt_ldap_migrazione" />
+	<persistentProperty
+		name="ldap_link_cambio_password" />
 </SQLPersistentInfo>

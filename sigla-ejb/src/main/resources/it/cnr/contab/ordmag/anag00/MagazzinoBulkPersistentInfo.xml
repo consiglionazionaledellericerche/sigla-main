@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.MagazzinoBulk"
+	homeClassName="it.cnr.contab.ordmag.anag00.MagazzinoHome">
+	<defaultColumnMap
+		tableName="MAGAZZINO">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="unitaOperativaOrd.cdUnitaOperativa" />
+		<columnMapping
+			columnName="CD_CDS_LUOGO"
+			propertyName="luogoConsegnaMag.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_LUOGO_CONSEGNA"
+			propertyName="luogoConsegnaMag.cdLuogoConsegna" />
+		<columnMapping
+			columnName="CD_CDS_CAR_MAG"
+			propertyName="tipoMovimentoMagCarMag.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_CAR_MAG"
+			propertyName="tipoMovimentoMagCarMag.cdTipoMovimento" />
+		<columnMapping
+			columnName="CD_CDS_CAR_TRA"
+			propertyName="tipoMovimentoMagCarTra.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_CAR_TRA"
+			propertyName="tipoMovimentoMagCarTra.cdTipoMovimento" />
+		<columnMapping
+			columnName="CD_CDS_CAR_FMA"
+			propertyName="tipoMovimentoMagCarFma.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_CAR_FMA"
+			propertyName="tipoMovimentoMagCarFma.cdTipoMovimento" />
+		<columnMapping
+			columnName="CD_CDS_SCA_UO"
+			propertyName="tipoMovimentoMagScaUo.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_SCA_UO"
+			propertyName="tipoMovimentoMagScaUo.cdTipoMovimento" />
+		<columnMapping
+			columnName="CD_CDS_TRA_SCA"
+			propertyName="tipoMovimentoMagTraSca.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_TRA_SCA"
+			propertyName="tipoMovimentoMagTraSca.cdTipoMovimento" />
+		<columnMapping
+			columnName="CD_CDS_TRA_CAR"
+			propertyName="tipoMovimentoMagTraCar.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_TRA_CAR"
+			propertyName="tipoMovimentoMagTraCar.cdTipoMovimento" />
+		<columnMapping
+			columnName="CD_CDS_RV_POS"
+			propertyName="tipoMovimentoMagRvPos.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_RV_POS"
+			propertyName="tipoMovimentoMagRvPos.cdTipoMovimento" />
+		<columnMapping
+			columnName="CD_CDS_RV_NEG"
+			propertyName="tipoMovimentoMagRvNeg.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_RV_NEG"
+			propertyName="tipoMovimentoMagRvNeg.cdTipoMovimento" />
+		<columnMapping
+			columnName="CD_CDS_CHI"
+			propertyName="tipoMovimentoMagChi.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO_CHI"
+			propertyName="tipoMovimentoMagChi.cdTipoMovimento" />
+		<columnMapping
+			columnName="CD_CDS_RAGGR_SCA"
+			propertyName="raggrMagazzinoSca.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_RAGGR_MAGAZZINO_SCA"
+			propertyName="raggrMagazzinoSca.cdRaggrMagazzino" />
+		<columnMapping
+			columnName="CD_CDS_RAGGR_RIM"
+			propertyName="raggrMagazzinoRim.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_RAGGR_MAGAZZINO_RIM"
+			propertyName="raggrMagazzinoRim.cdRaggrMagazzino" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="unitaOrganizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="unitaOperativaOrd" />
+	<persistentProperty
+		name="luogoConsegnaMag" />
+	<persistentProperty
+		name="tipoMovimentoMagCarMag" />
+	<persistentProperty
+		name="tipoMovimentoMagCarTra" />
+	<persistentProperty
+		name="tipoMovimentoMagCarFma" />
+	<persistentProperty
+		name="tipoMovimentoMagScaUo" />
+	<persistentProperty
+		name="tipoMovimentoMagTraSca" />
+	<persistentProperty
+		name="tipoMovimentoMagTraCar" />
+	<persistentProperty
+		name="tipoMovimentoMagRvPos" />
+	<persistentProperty
+		name="tipoMovimentoMagRvNeg" />
+	<persistentProperty
+		name="tipoMovimentoMagChi" />
+	<persistentProperty
+		name="raggrMagazzinoSca" />
+	<persistentProperty
+		name="raggrMagazzinoRim" />
+</SQLPersistentInfo>

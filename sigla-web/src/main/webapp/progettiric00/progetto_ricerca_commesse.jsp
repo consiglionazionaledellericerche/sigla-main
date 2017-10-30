@@ -22,24 +22,17 @@
 </head>
 
 <body class="Form">
-<% TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)BusinessProcess.getBusinessProcess(request);
-   bp.openFormWindow(pageContext);   
-   tabs = new String[][] {
-                   { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_commesse.jsp" }};//,
-                   //{ "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" },
-                   //{ "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" },
-                   //{ "tabDettagliPostIt","Post-It","/config00/dettagliPostIt.jsp" },
-                   //{ "tabSpeseCostiFigurativi","Spese/Costi Figurativi","/progettiric00/spese_costi_figurativi.jsp" },
-                   //{ "tabRisorseResiduePresunte","Risorse Residue Presunte","/progettiric00/risorse_residue_presunte.jsp" }};
-   JSPUtils.tabbed(
+<%  TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)BusinessProcess.getBusinessProcess(request);
+    bp.openFormWindow(pageContext);   
+
+	JSPUtils.tabbed(
                    pageContext,
                    "tab",
-                   tabs,
+                   bp.getTabs(session),
                    bp.getTab("tab"),
                    "center",
                    "100%",
                    "100%" );
-
-   bp.closeFormWindow(pageContext); 
+    bp.closeFormWindow(pageContext); 
 %>
 </body>

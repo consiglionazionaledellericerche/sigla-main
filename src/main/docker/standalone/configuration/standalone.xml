@@ -155,7 +155,9 @@
                         <password>dbform</password>
                     </security>
                     <validation>
-                        <exception-sorter class-name="org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter"/>
+                        <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleValidConnectionChecker"/>
+                        <stale-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleStaleConnectionChecker"/>
+                        <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.novendor.NullExceptionSorter"/>
                     </validation>
                     <timeout>
                         <blocking-timeout-millis>5000</blocking-timeout-millis>
@@ -329,7 +331,7 @@
         <subsystem xmlns="urn:jboss:domain:jsf:1.0"/>
         <subsystem xmlns="urn:jboss:domain:mail:2.0">
             <mail-session name="default" from="sigla@cnr.it" jndi-name="java:jboss/mail/Default">
-                <smtp-server password="sigla" username="amministrazione_sigla" outbound-socket-binding-ref="mail-smtp"/>
+                <smtp-server password="sigla" username="**************" outbound-socket-binding-ref="mail-smtp"/>
             </mail-session>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:naming:2.0">

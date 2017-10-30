@@ -161,4 +161,19 @@
 			</TD><TD colspan="3">
 			<% bp.getController().writeFormInput(out,"default","livello_pat", false, null, null);%>
 		</TD></TR>			
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"fl_pdg_codlast");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"fl_pdg_codlast");%>
+		</TD></TR>					
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"fl_pdg_contrattazione");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"fl_pdg_contrattazione");%>
+		</TD></TR>					
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"fl_pdg_quadra_fonti_esterne");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"fl_pdg_quadra_fonti_esterne");%>
+		</TD></TR>					
 	</table>

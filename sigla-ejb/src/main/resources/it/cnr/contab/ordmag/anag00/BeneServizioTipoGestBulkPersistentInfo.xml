@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.BeneServizioTipoGestBulk"
+	homeClassName="it.cnr.contab.ordmag.anag00.BeneServizioTipoGestHome">
+	<defaultColumnMap
+		tableName="BENE_SERVIZIO_TIPO_GEST">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="magazzino.cdMagazzino" />
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="beneServizio.cd_bene_servizio" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="magazzino"
+		partOfOid="true" />
+	<persistentProperty
+		name="beneServizio"
+		partOfOid="true" />
+</SQLPersistentInfo>

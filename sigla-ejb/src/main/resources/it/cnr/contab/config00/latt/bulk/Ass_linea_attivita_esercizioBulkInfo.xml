@@ -50,6 +50,12 @@
 		enabledOnSearch="true" 
 		enabledOnFreeSearch="true"		
 		enabledOnEdit="true"/>		
+	<fieldProperty
+		name="voce_piano"
+		property="voce_piano_economico"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Voce del piano economico" />
 
 	<formFieldProperty
 		name="esercizio" />
@@ -61,6 +67,8 @@
 		name="esercizio_fine" />
 	<formFieldProperty
 		name="cd_progetto" />		
+	<formFieldProperty 
+		name="voce_piano" />
 							
 	<columnFieldProperty
 		name="esercizio" />
@@ -72,6 +80,8 @@
 		name="esercizio_fine" />
 	<columnFieldProperty
 		name="cd_progetto" />		
+	<columnFieldProperty 
+		name="voce_piano" />
 
 	<findFieldProperty
 		name="esercizio" />

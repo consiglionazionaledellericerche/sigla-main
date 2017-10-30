@@ -1,3 +1,4 @@
+<%@page import="it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk"%>
 <head>
 <title>Pdg Gestionale - Spese</title>
 
@@ -15,6 +16,7 @@
 <body class="Form">
 <%
 	CRUDPdgModuloSpeseGestBP bp = (CRUDPdgModuloSpeseGestBP)BusinessProcess.getBusinessProcess(request);
+	Pdg_modulo_speseBulk moduloSpese = (Pdg_modulo_speseBulk)bp.getModel();
 	bp.openFormWindow(pageContext);
 %>
 <%! static String[][] tabs = null;%>
@@ -40,13 +42,17 @@
 			<td><% bp.getController().writeFormInput(out,"commessa"); %></td>
 			<td><% bp.getController().writeFormLabel(out,"progetto"); %></td>
 			<td><% bp.getController().writeFormInput(out,"progetto"); %></td>
+			<td><% bp.getController().writeFormLabel(out,"desctool_area"); %></td>
+			<td><% bp.getController().writeFormInput(out,"desctool_area"); %></td>
 		<% } else { %>
 			<td><% bp.getController().writeFormLabel(out,"cd_progetto_liv2"); %></td>
 			<td><% bp.getController().writeFormInput(out,"cd_progetto_liv2"); %></td>
 			<td><% bp.getController().writeFormLabel(out,"cd_progetto_liv1"); %></td>
 			<td><% bp.getController().writeFormInput(out,"cd_progetto_liv1"); %></td>
-			<td><% bp.getController().writeFormLabel(out,"dipartimento_liv2"); %></td>
-			<td><% bp.getController().writeFormInput(out,"dipartimento_liv2"); %></td>
+			<td><% bp.getController().writeFormLabel(out,"programma_liv2"); %></td>
+			<td><% bp.getController().writeFormInput(out,"programma_liv2"); %></td>
+			<td><% bp.getController().writeFormLabel(out,"desctool_missione"); %></td>
+			<td><% bp.getController().writeFormInput(out,"desctool_missione"); %></td>
 		<% } %>		
 	</tr>
 	<tr>
@@ -56,15 +62,12 @@
 		<% } %>		
 		<td><% bp.getController().writeFormLabel(out,"desctool_classificazione"); %></td>
 		<td><% bp.getController().writeFormInput(out,"desctool_classificazione"); %></td>
-		<% if (!bp.isFlNuovoPdg()) { %>
-			<td><% bp.getController().writeFormLabel(out,"desctool_area"); %></td>
-			<td><% bp.getController().writeFormInput(out,"desctool_area"); %></td>
-		<% } else{ %>
-			<td><% bp.getController().writeFormLabel(out,"desctool_missione"); %></td>
-			<td><% bp.getController().writeFormInput(out,"desctool_missione"); %></td>
-		<% } %>
 	  	<td><% bp.getController().writeFormLabel(out,"desctool_cofog");%></td>
 		<td><% bp.getController().writeFormInput(out,"desctool_cofog");%></td>
+		<% if (moduloSpese.getCd_voce_piano()!=null) {%>
+		  	<td><% bp.getController().writeFormLabel(out,"desctool_voce_piano_economico_prg");%></td>
+			<td><% bp.getController().writeFormInput(out,"desctool_voce_piano_economico_prg");%></td>
+		<% } %>		
 	</tr>
 <!--
 	<tr>

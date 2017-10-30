@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.AbilitBeneServMagBulk"
+	homeClassName="it.cnr.contab.ordmag.anag00.AbilitBeneServMagHome">
+	<defaultColumnMap
+		tableName="ABILIT_BENE_SERV_MAG">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="magazzino.cdMagazzino" />
+		<columnMapping
+			columnName="CD_CATEGORIA_GRUPPO"
+			propertyName="categoriaGruppoInvent.cd_categoria_gruppo" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="magazzino"
+		partOfOid="true" />
+	<persistentProperty
+		name="categoriaGruppoInvent"
+		partOfOid="true" />
+</SQLPersistentInfo>

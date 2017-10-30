@@ -10,6 +10,8 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Tipo_progettoBulk;
 
 /**
@@ -28,6 +30,9 @@ public class Progetto_sipBulk extends ProgettoBase {
 	private DipartimentoBulk dipartimento;
 	private Tipo_progettoBulk tipo;
 	private DivisaBulk divisa;
+	private Pdg_programmaBulk pdgProgramma;
+	private Pdg_missioneBulk pdgMissione;
+	private Progetto_other_fieldBulk otherField;
 	
 	public Progetto_sipBulk() {
 		super();
@@ -216,5 +221,72 @@ public class Progetto_sipBulk extends ProgettoBase {
 	}
 	public boolean isModulo(){
 		return getLivello().equals(ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+	}
+
+	public Pdg_programmaBulk getPdgProgramma() {
+		return pdgProgramma;
+	}
+	
+	public void setPdgProgramma(Pdg_programmaBulk pdgProgramma) {
+		this.pdgProgramma = pdgProgramma;
+	}
+	@Override
+	public String getCd_programma() {
+		Pdg_programmaBulk pdgProgramma = this.getPdgProgramma();
+		if (pdgProgramma == null)
+			return null;
+		return pdgProgramma.getCd_programma();
+	}
+	
+	@Override
+	public void setCd_programma(String cd_programma) {
+		this.getPdgProgramma().setCd_programma(cd_programma);
+	}
+
+	public Pdg_missioneBulk getPdgMissione() {
+		return pdgMissione;
+	}
+	
+	public void setPdgMissione(Pdg_missioneBulk pdgMissione) {
+		this.pdgMissione = pdgMissione;
+	}
+	@Override
+	public String getCd_missione() {
+		Pdg_missioneBulk pdgMissione = this.getPdgMissione();
+		if (pdgMissione == null)
+			return null;
+		return pdgMissione.getCd_missione();
+	}
+	
+	@Override
+	public void setCd_missione(String cd_missione) {
+		this.getPdgMissione().setCd_missione(cd_missione);
+	}
+
+	public void setOtherField(Progetto_other_fieldBulk otherField) {
+		this.otherField = otherField;
+	}
+	
+	public Progetto_other_fieldBulk getOtherField() {
+		return otherField;
+	}
+
+	public Boolean getFl_piano_economico() {
+		return getOtherField()!=null && 
+			   getOtherField().getFl_piano_economico()!=null &&
+			   getOtherField().getFl_piano_economico();
+	}
+	
+	public void setFl_piano_economico(Boolean fl_piano_economico) {
+		if (getOtherField()==null) {
+			Progetto_other_fieldBulk bulk = new Progetto_other_fieldBulk(this.getPg_progetto());
+			bulk.setToBeCreated();
+			setOtherField(bulk); 
+		}
+		if (getFl_piano_economico()!=null && fl_piano_economico!=null && 
+				getFl_piano_economico()!=fl_piano_economico) {
+			getOtherField().setFl_piano_economico(fl_piano_economico);
+			getOtherField().setToBeUpdated();	
+		}
 	}
 }
