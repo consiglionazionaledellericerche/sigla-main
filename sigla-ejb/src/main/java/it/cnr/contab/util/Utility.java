@@ -7,12 +7,15 @@
 package it.cnr.contab.util;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.rmi.RemoteException;
 import java.util.Set;
 
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 
+import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
+import it.cnr.contab.varstanz00.ejb.VariazioniStanziamentoResiduoComponentSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -56,7 +59,7 @@ public final class Utility {
 	public static final java.math.BigDecimal ZERO = new java.math.BigDecimal(0);
 	public static String TIPO_GESTIONE_SPESA = "S";
 	public static String TIPO_GESTIONE_ENTRATA = "E";
-
+    public static final BigDecimal CENTO = new BigDecimal(100);
 	/**
 	 * Restituisce true se i due oggetti sono uguali o sono entrambi null
 	 * false altrimenti
@@ -83,6 +86,12 @@ public final class Utility {
 			return object1.equalsByPrimaryKey(object2);
 		return false;
 	}
+
+    public static BigDecimal nvl(BigDecimal imp, BigDecimal otherImp){
+        if (imp != null)
+            return imp;
+        return otherImp;
+    }
 
 	public static BigDecimal nvl(BigDecimal imp){
 		if (imp != null)
@@ -131,7 +140,66 @@ public final class Utility {
 		}
 		builder.append(s);
 		return builder.toString();
-	}	
+	}
+	public static BigDecimal round2Decimali(BigDecimal importo) {
+		return round(importo,2);
+	}
+
+	public static BigDecimal round6Decimali(BigDecimal importo) {
+		return round(importo,6);
+	}
+
+	public static BigDecimal roundIntero(BigDecimal importo) {
+		return round(importo,0);
+	}
+
+	public static BigDecimal round(BigDecimal importo, int scale) {
+		importo = nvl(importo);
+		return importo.setScale(scale,RoundingMode.HALF_UP);
+	}
+
+	public static BigDecimal trunc(BigDecimal importo, int scale) {
+		importo = nvl(importo);
+		return importo.setScale(scale,RoundingMode.DOWN);
+	}
+
+	public static BigDecimal ceil(BigDecimal importo, int scale) {
+		importo = nvl(importo);
+		return importo.setScale(scale,RoundingMode.UP);
+	}
+
+
+	public static BigDecimal trunc2Decimali(BigDecimal importo) {
+		return trunc(nvl(importo),2);
+	}
+
+	public static BigDecimal truncIntero(BigDecimal importo) {
+		return trunc(nvl(importo),0);
+	}
+
+	/**
+	 * Metodo che effetua una divisione, il cui risultato viene fornito con 2
+	 * cifre decimali ed arrotondamento per difetto o per eccesso
+	 *
+	 * @param dividendo
+	 *            Dividendo
+	 * @param divisore
+	 *            Divisore
+	 * @return il risultato della divisione
+	 */
+
+	public static BigDecimal divide(BigDecimal dividendo, BigDecimal divisore) {
+		return dividendo.divide(divisore,2, RoundingMode.HALF_UP);
+	}
+
+	public static BigDecimal divide(BigDecimal dividendo, Integer divisore) {
+		return dividendo.divide(new BigDecimal(divisore),2,RoundingMode.HALF_UP);
+	}
+
+	public static BigDecimal divide(BigDecimal dividendo, BigDecimal divisore, Integer arrotondamento) {
+		return dividendo.divide(divisore,arrotondamento,RoundingMode.HALF_UP);
+	}
+
 
 	public static String NumberToText(int n) {
 		// metodo wrapper
@@ -347,5 +415,11 @@ public final class Utility {
 	}	
 	public static LiquidIvaInterfComponentSession createLiquidIvaInterfComponentSession() throws javax.ejb.EJBException{
 		return (LiquidIvaInterfComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRGESTIVA00_EJB_LiquidIvaInterfComponentSession", LiquidIvaInterfComponentSession.class);
-	}	
+	}
+	public static ProgettoRicercaComponentSession createProgettoRicercaComponentSession() throws javax.ejb.EJBException{
+		return (ProgettoRicercaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPROGETTIRIC00_EJB_ProgettoRicercaComponentSession", ProgettoRicercaComponentSession.class);
+	}
+    public static VariazioniStanziamentoResiduoComponentSession createVariazioniStanziamentoResiduoComponentSession() throws javax.ejb.EJBException{
+	    return (VariazioniStanziamentoResiduoComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRVARSTANZ00_EJB_VariazioniStanziamentoResiduoComponentSession", VariazioniStanziamentoResiduoComponentSession.class);
+	}
 }
