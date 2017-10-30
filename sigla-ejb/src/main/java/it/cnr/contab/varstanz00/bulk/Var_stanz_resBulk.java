@@ -452,5 +452,9 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	public void setApprovazioneControllata(boolean approvazioneControllata) {
 		this.approvazioneControllata = approvazioneControllata;
 	}
-	
+	@Override
+	public OggettoBulk initializeForInsert(CRUDBP crudbp, ActionContext actioncontext) {
+		setFl_perenzione(Boolean.FALSE);
+		return super.initializeForInsert(crudbp, actioncontext);
+	}
 }
