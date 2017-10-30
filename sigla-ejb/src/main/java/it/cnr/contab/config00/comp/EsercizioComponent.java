@@ -1,5 +1,11 @@
 package it.cnr.contab.config00.comp;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.List;
+
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
@@ -17,12 +23,6 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Classe che ridefinisce alcune operazioni di CRUD su EsercizioBulk
@@ -698,5 +698,22 @@ public boolean isEsercizioAperto (UserContext userContext) throws ComponentExcep
 	 }catch (PersistencyException ex) {
 					throw handleException(ex);	
 }
+}
+/**
+ * Estrae il bulk dell'esercizio dell'esercizio di scrivania del cds di scrivania  
+ * Nel caso non trovi nulla restituisce valore vuoto
+ *
+ * @param userContext contesto
+ * @return l'esercizio del centro di spesa corrispondente all'esercizio di scrivania
+ */	
+public EsercizioBulk getEsercizio( UserContext userContext ) throws it.cnr.jada.comp.ComponentException 
+{
+	try 
+	{
+		EsercizioHome home = (EsercizioHome)getHome(userContext, EsercizioBulk.class);
+		return (EsercizioBulk)home.findByPrimaryKey(new EsercizioBulk(CNRUserContext.getCd_cds(userContext),CNRUserContext.getEsercizio(userContext)));
+	} catch (Throwable e) {
+		throw handleException(e);
+	}
 }
 }

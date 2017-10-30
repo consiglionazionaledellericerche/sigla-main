@@ -105,6 +105,10 @@
 			<td><% bp.getController().writeFormLabel(out,"printMovimentazione"); %></td>
 			<td><% bp.getController().writeFormInput(out,"printMovimentazione"); %></td>
 		  </tr>
+		  <tr>
+			<td><% bp.getController().writeFormLabel(out,"printPianoEconomico"); %></td>
+			<td><% bp.getController().writeFormInput(out,"printPianoEconomico"); %></td>
+		  </tr>
 		 </table>
 		 </div>
 		</td>

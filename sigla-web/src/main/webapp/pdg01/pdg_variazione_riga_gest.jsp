@@ -79,19 +79,32 @@
 <table> 
 	<tr>
 		<%	if (bp.getParametriCnr().getFl_nuovo_pdg()) 
-				bp.getRigheVariazioneGestionale().writeFormField(out,null,"searchtool_progetto_liv2",1,3);
+				bp.getRigheVariazioneGestionale().writeFormField(out,null,"searchtool_progetto_liv2",1,4);
 			else
-				bp.getRigheVariazioneGestionale().writeFormField(out,null,"searchtool_progetto",1,3);
+				bp.getRigheVariazioneGestionale().writeFormField(out,null,"searchtool_progetto",1,4);
 		%>
 	</tr>
 	<tr>
 		<%	if (bp.getParametriCnr().getFl_nuovo_pdg()) { %>   
 			<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"find_linea_attivita_liv2");%></td>
-			<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_linea_attivita_liv2",isDettaglioGestionaleEnable,null,null);%></td>
-		
+			<td colspan="4">
+				<table>
+					<tr>
+						<td><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_linea_attivita_liv2",isDettaglioGestionaleEnable,null,null);%></td>
+						<td><% bp.getRigheVariazioneGestionale().writeFormInput( out,"default","crea_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
+					</tr>
+				</table>
+			</td>
 		<% } else { %> 
 			<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"find_linea_attivita");%></td>
-			<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
+			<td colspan="4">
+				<table>
+					<tr>
+						<td><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
+						<td><% bp.getRigheVariazioneGestionale().writeFormInput( out,"default","crea_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
+					</tr>
+				</table>
+			</td>
 		<% } %>
 	</tr>
 	<%	if (bp.getParametriCnr().getFl_nuovo_pdg().booleanValue()) { %> 
@@ -103,12 +116,12 @@
 		<% } %>
 	<tr> 
 		<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"find_elemento_voce");%></td>
-		<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_elemento_voce",(isDettaglioGestionaleEnable || bulk.getPdg_variazione().isApprovata()),null,null);%></td>
+		<td colspan=4><% bp.getRigheVariazioneGestionale().writeFormInput(out,null,"find_elemento_voce",(isDettaglioGestionaleEnable || bulk.getPdg_variazione().isApprovata()),null,null);%></td>
 	</tr>
 <% 	if (!bp.isUoArea() && !bp.getParametriCnr().getFl_nuovo_pdg()) { %> 
 	<tr>
 		<td><% bp.getRigheVariazioneGestionale().writeFormLabel(out,"searchtool_area");%></td>
-		<td colspan=3><% bp.getRigheVariazioneGestionale().writeFormInput(out,"searchtool_area");%></td>
+		<td colspan=4><% bp.getRigheVariazioneGestionale().writeFormInput(out,"searchtool_area");%></td>
 	</tr>
 <% 	} %>
 <% 	if (bp.isGestioneSpesa()) { %>

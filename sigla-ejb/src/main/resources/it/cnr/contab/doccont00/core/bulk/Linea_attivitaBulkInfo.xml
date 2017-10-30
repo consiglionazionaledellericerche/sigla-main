@@ -140,7 +140,7 @@
 		<columnFieldProperty
 			name="prcImputazioneFin"
 			headerStyle="text-align: center"
-			columnStyle="width:50px; text-align: right"
+			columnStyle="text-align: right"
 			enabledOnEdit="true"
 			enabledOnInsert="true"			
 			/>		

@@ -227,6 +227,13 @@
 		readonlyProperty="ROElemento_voce"
 		nullable="false"
 		label="Voce del Piano" />
+	<fieldProperty
+		name="crea_linea_attivita"
+		property="linea_attivita"
+		inputType="CRUDTOOL"
+		CRUDBusinessProcessName="CRUDLinea_attivitaBP"
+		readonlyProperty="ROLinea_attivita"
+		enabledOnSearch="true"/>
 
 	<formFieldProperty
 		name="esercizio" />
@@ -284,6 +291,8 @@
 		name="find_linea_attivita" />
 	<formFieldProperty
 		name="find_cdr_assegnatario" />
+	<formFieldProperty
+		name="crea_linea_attivita" />
 
 	<findFieldProperty
 		name="esercizio" />

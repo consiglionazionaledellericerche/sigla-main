@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Archivio per la testata delle Bolle di Scarico"
+	longDescription="Archivio per la testata delle Bolle di Scarico">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="cdMagazzino"
+		property="cdMagazzino"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Magazzino" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="cdNumeratoreMag"
+		property="cdNumeratoreMag"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Numeratore" />
+	<fieldProperty
+		name="pgBollaSca"
+		property="pgBollaSca"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Numero" />
+	<fieldProperty
+		name="dtBollaSca"
+		property="dtBollaSca"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Data" />
+	<fieldProperty
+		name="findMagazzino"
+		property="magazzino"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Magazzino" />
+	<fieldProperty
+		name="cdCdsMag"
+		property="magazzino.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdCdsMag" />
+	<fieldProperty
+		name="cdMagazzinoMag"
+		property="magazzino.cdMagazzino"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdMagazzinoMag" />
+	<fieldProperty
+		name="dsMagazzino"
+		property="magazzino.dsMagazzino"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="100"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaOrd"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="UnitaOperativaOrd" />
+	<fieldProperty
+		name="cdUopDest"
+		property="unitaOperativaOrd.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="Codice Uop" />
+	<fieldProperty
+		name="dsUopDest"
+		property="unitaOperativaOrd.dsUnitaOperativa"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="250"
+		enabledOnEdit="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="cdCdsMagDest"
+		property="magazzino.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdCdsMagDest" />
+	<fieldProperty
+		name="cdMagazzinoDest"
+		property="magazzino.cdMagazzino"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Magazzino Destinatario" />
+	<fieldProperty
+		name="dsMagazzinoDest"
+		property="magazzino.dsMagazzino"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="stato" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtCancellazione" />
+	<columnSet
+		name="bollaScaricoforPrint">
+		<columnFieldProperty
+			name="cdMagazzino" />
+		<columnFieldProperty
+			name="dsMagazzino" />
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="cdNumeratoreMag" />
+		<columnFieldProperty
+			name="pgBollaSca" />
+		<columnFieldProperty
+			name="dtBollaSca" />
+		<columnFieldProperty
+			name="cdUopDest" />
+		<columnFieldProperty
+			name="dsUopDest" />
+		<columnFieldProperty
+			name="cdMagazzinoDest" />
+		<columnFieldProperty
+			name="dsMagazzinoDest" />
+	</columnSet>
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="cdMagazzino" />
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="cdNumeratoreMag" />
+		<formFieldProperty
+			name="pgBollaSca" />
+	</form>
+	<formFieldProperty
+		name="cdCds" />
+	<formFieldProperty
+		name="cdMagazzino" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cdNumeratoreMag" />
+	<formFieldProperty
+		name="pgBollaSca" />
+	<formFieldProperty
+		name="dtBollaSca" />
+	<formFieldProperty
+		name="findMagazzino" />
+	<formFieldProperty
+		name="findUnitaOperativaOrd" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdMagazzino" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdNumeratoreMag" />
+	<findFieldProperty
+		name="pgBollaSca" />
+	<findFieldProperty
+		name="dtBollaSca" />
+	<findFieldProperty
+		name="cdCdsMag" />
+	<findFieldProperty
+		name="cdMagazzinoMag" />
+	<findFieldProperty
+		name="cdUopDest" />
+	<findFieldProperty
+		name="cdCdsMagDest" />
+	<findFieldProperty
+		name="cdMagazzinoDest" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdMagazzino" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdNumeratoreMag" />
+	<columnFieldProperty
+		name="pgBollaSca" />
+	<columnFieldProperty
+		name="dtBollaSca" />
+	<columnFieldProperty
+		name="cdCdsMag" />
+	<columnFieldProperty
+		name="cdMagazzinoMag" />
+	<columnFieldProperty
+		name="cdUopDest" />
+	<columnFieldProperty
+		name="cdCdsMagDest" />
+	<columnFieldProperty
+		name="cdMagazzinoDest" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

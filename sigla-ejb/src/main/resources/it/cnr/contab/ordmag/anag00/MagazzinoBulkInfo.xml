@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Rappresenta i magazzini utilizzati in gestione ordine e magazzino."
+	longDescription="Rappresenta i magazzini utilizzati in gestione ordine e magazzino.">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Cds" />
+	<fieldProperty
+		name="cdMagazzino"
+		property="cdMagazzino"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="dsMagazzino"
+		property="dsMagazzino"
+		inputType="TEXT"
+		maxLength="100"
+		inputSize="100"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="dsMagazzinoRid"
+		property="dsMagazzino"
+		inputType="TEXT"
+		maxLength="30"
+		inputSize="100"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaOrd"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Operativa" />
+	<fieldProperty
+		name="cdUnitaOperativa"
+		property="unitaOperativaOrd.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="12"
+		maxLength="12"
+		label="Codice Unità Operativa" />
+	<fieldProperty
+		name="dsUnitaOperativa"
+		property="unitaOperativaOrd.dsUnitaOperativa"
+		inputType="TEXT"
+		inputSize="12"
+		maxLength="12"
+		label="Descrizione Unità Operativa" />
+	<fieldProperty
+		name="findLuogoConsegnaMag"
+		property="luogoConsegnaMag"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Luogo di Consegna" />
+	<fieldProperty
+		name="cdCdsLuogo"
+		property="luogoConsegnaMag.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Cds Luogo di Consegna" />
+	<fieldProperty
+		name="cdLuogoConsegna"
+		property="luogoConsegnaMag.cdLuogoConsegna"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="Codice Luogo di Consegna" />
+	<fieldProperty
+		name="dsLuogoConsegna"
+		property="luogoConsegnaMag.dsLuogoConsegna"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		nullable="false"
+		label="Descrizione Luogo di Consegna" />
+	<fieldProperty
+		name="findTipoMovimentoMagCarMag"
+		property="tipoMovimentoMagCarMag"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Tipo Movimento" />
+	<fieldProperty
+		name="cdCdsCarMag"
+		property="tipoMovimentoMagCarMag.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Cds Car Mag" />
+	<fieldProperty
+		name="cdTipoMovimentoCarMag"
+		property="tipoMovimentoMagCarMag.cdTipoMovimento"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Movimento Carico a Magazzino" />
+	<fieldProperty
+		name="cdCdsCarTra"
+		property="tipoMovimentoMagCarTra.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Cds Car Tra" />
+	<fieldProperty
+		name="cdTipoMovimentoCarTra"
+		property="tipoMovimentoMagCarTra.cdTipoMovimento"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Movimento Carico in transito" />
+	<fieldProperty
+		name="cdCdsCarFma"
+		property="tipoMovimentoMagCarFma.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Cds Car Fma" />
+	<fieldProperty
+		name="cdTipoMovimentoCarFma"
+		property="tipoMovimentoMagCarFma.cdTipoMovimento"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Movimento Carico fuori Magazzino" />
+	<fieldProperty
+		name="cdCdsScaUo"
+		property="tipoMovimentoMagScaUo.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Cds Sca Uo" />
+	<fieldProperty
+		name="cdTipoMovimentoScaUo"
+		property="tipoMovimentoMagScaUo.cdTipoMovimento"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Movimento Scarico a UO" />
+	<fieldProperty
+		name="cdCdsTraSca"
+		property="tipoMovimentoMagTraSca.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Cds Tra Sca" />
+	<fieldProperty
+		name="cdTipoMovimentoTraSca"
+		property="tipoMovimentoMagTraSca.cdTipoMovimento"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Movimento scarico per trasferimento" />
+	<fieldProperty
+		name="cdCdsTraCar"
+		property="tipoMovimentoMagTraCar.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Cds car tra" />
+	<fieldProperty
+		name="cdTipoMovimentoTraCar"
+		property="tipoMovimentoMagTraCar.cdTipoMovimento"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Movimento carico per trasferimento" />
+	<fieldProperty
+		name="cdCdsRvPos"
+		property="tipoMovimentoMagRvPos.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Cds Rv Pos" />
+	<fieldProperty
+		name="cdTipoMovimentoRvPos"
+		property="tipoMovimentoMagRvPos.cdTipoMovimento"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Movimento variazione valore positiva" />
+	<fieldProperty
+		name="cdCdsRvNeg"
+		property="tipoMovimentoMagRvNeg.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="cds Rv Neg" />
+	<fieldProperty
+		name="cdTipoMovimentoRvNeg"
+		property="tipoMovimentoMagRvNeg.cdTipoMovimento"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Movimento variazione valore negativa" />
+	<fieldProperty
+		name="cdCdsChi"
+		property="tipoMovimentoMagChi.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Cds Chi" />
+	<fieldProperty
+		name="cdTipoMovimentoChi"
+		property="tipoMovimentoMagChi.cdTipoMovimento"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Movimento Chiusura" />
+	<fieldProperty
+		name="dtUltValSca"
+		property="dtUltValSca"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Ultima Valorizzazione Scarichi" />
+	<fieldProperty
+		name="esercizioValSca"
+		property="esercizioValSca"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio Val Sca" />
+	<fieldProperty
+		name="findRaggrMagazzinoRim"
+		property="raggrMagazzinoRim"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Raggruppamento di Magazzino" />
+	<fieldProperty
+		name="cdCdsRaggrSca"
+		property="raggrMagazzinoSca.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds Raggr Sca" />
+	<fieldProperty
+		name="cdRaggrMagazzinoSca"
+		property="raggrMagazzinoSca.cdRaggrMagazzino"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Raggruppamento per gli scarichi" />
+	<fieldProperty
+		name="metodoValSca"
+		property="metodoValSca"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Ultimo metodo Valorizzazione Scarichi" />
+	<fieldProperty
+		name="dtUltValRim"
+		property="dtUltValRim"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Ultima Valorizzazione Scarichi" />
+	<fieldProperty
+		name="esercizioValRim"
+		property="esercizioValRim"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="EsercizioValRim" />
+	<fieldProperty
+		name="cdCdsRaggrRim"
+		property="raggrMagazzinoRim.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds Raggr Rim" />
+	<fieldProperty
+		name="cdRaggrMagazzinoRim"
+		property="raggrMagazzinoRim.cdRaggrMagazzino"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Raggruppamento Valorizzazione Rimanenze" />
+	<fieldProperty
+		name="metodoValRim"
+		property="metodoValRim"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Ultimo metodo Valorizzazione Rimanenze" />
+	<fieldProperty
+		name="abilTuttiBeniServ"
+		property="abilTuttiBeniServ"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		nullable="false"
+		label="Abilitato a tutti i beni/servizi" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Cancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+		    inputSize="3"
+			name="cdMagazzino" />
+		<formFieldProperty
+		    inputSize="30"
+			name="dsMagazzinoRid" />
+	</form>
+	<form
+		name="searchtool_esteso">
+		<formFieldProperty
+		    inputSize="3"
+			name="cdMagazzino" />
+		<formFieldProperty
+		    inputSize="50"
+			name="dsMagazzino" />
+	</form>
+	<formFieldProperty
+		name="cdMagazzino" />
+	<formFieldProperty
+		name="dsMagazzino" />
+	<formFieldProperty
+		name="findUnitaOperativaOrd" />
+	<formFieldProperty
+		name="findLuogoConsegnaMag" />
+	<formFieldProperty
+		name="findTipoMovimentoMagCarMag" />
+	<formFieldProperty
+		name="dtUltValSca" />
+	<formFieldProperty
+		name="esercizioValSca" />
+	<formFieldProperty
+		name="findRaggrMagazzinoRim" />
+	<formFieldProperty
+		name="metodoValSca" />
+	<formFieldProperty
+		name="dtUltValRim" />
+	<formFieldProperty
+		name="esercizioValRim" />
+	<formFieldProperty
+		name="metodoValRim" />
+	<formFieldProperty
+		name="abilTuttiBeniServ" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdMagazzino" />
+	<findFieldProperty
+		name="dsMagazzino" />
+	<findFieldProperty
+		name="cdUnitaOperativa" />
+	<findFieldProperty
+		name="cdCdsLuogo" />
+	<findFieldProperty
+		name="cdLuogoConsegna" />
+	<findFieldProperty
+		name="cdCdsCarMag" />
+	<findFieldProperty
+		name="cdTipoMovimentoCarMag" />
+	<findFieldProperty
+		name="cdCdsCarTra" />
+	<findFieldProperty
+		name="cdTipoMovimentoCarTra" />
+	<findFieldProperty
+		name="cdCdsCarFma" />
+	<findFieldProperty
+		name="cdTipoMovimentoCarFma" />
+	<findFieldProperty
+		name="cdCdsScaUo" />
+	<findFieldProperty
+		name="cdTipoMovimentoScaUo" />
+	<findFieldProperty
+		name="cdCdsTraSca" />
+	<findFieldProperty
+		name="cdTipoMovimentoTraSca" />
+	<findFieldProperty
+		name="cdCdsTraCar" />
+	<findFieldProperty
+		name="cdTipoMovimentoTraCar" />
+	<findFieldProperty
+		name="cdCdsRvPos" />
+	<findFieldProperty
+		name="cdTipoMovimentoRvPos" />
+	<findFieldProperty
+		name="cdCdsRvNeg" />
+	<findFieldProperty
+		name="cdTipoMovimentoRvNeg" />
+	<findFieldProperty
+		name="cdCdsChi" />
+	<findFieldProperty
+		name="cdTipoMovimentoChi" />
+	<findFieldProperty
+		name="dtUltValSca" />
+	<findFieldProperty
+		name="esercizioValSca" />
+	<findFieldProperty
+		name="cdCdsRaggrSca" />
+	<findFieldProperty
+		name="cdRaggrMagazzinoSca" />
+	<findFieldProperty
+		name="metodoValSca" />
+	<findFieldProperty
+		name="dtUltValRim" />
+	<findFieldProperty
+		name="esercizioValRim" />
+	<findFieldProperty
+		name="cdCdsRaggrRim" />
+	<findFieldProperty
+		name="cdRaggrMagazzinoRim" />
+	<findFieldProperty
+		name="metodoValRim" />
+	<findFieldProperty
+		name="abilTuttiBeniServ" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdMagazzino" />
+	<columnFieldProperty
+		name="dsMagazzino" />
+	<columnFieldProperty
+		name="cdUnitaOperativa" />
+	<columnFieldProperty
+		name="cdCdsLuogo" />
+	<columnFieldProperty
+		name="cdLuogoConsegna" />
+	<columnFieldProperty
+		name="cdCdsCarMag" />
+	<columnFieldProperty
+		name="cdTipoMovimentoCarMag" />
+	<columnFieldProperty
+		name="cdCdsCarTra" />
+	<columnFieldProperty
+		name="cdTipoMovimentoCarTra" />
+	<columnFieldProperty
+		name="cdCdsCarFma" />
+	<columnFieldProperty
+		name="cdTipoMovimentoCarFma" />
+	<columnFieldProperty
+		name="cdCdsScaUo" />
+	<columnFieldProperty
+		name="cdTipoMovimentoScaUo" />
+	<columnFieldProperty
+		name="cdCdsTraSca" />
+	<columnFieldProperty
+		name="cdTipoMovimentoTraSca" />
+	<columnFieldProperty
+		name="cdCdsTraCar" />
+	<columnFieldProperty
+		name="cdTipoMovimentoTraCar" />
+	<columnFieldProperty
+		name="cdCdsRvPos" />
+	<columnFieldProperty
+		name="cdTipoMovimentoRvPos" />
+	<columnFieldProperty
+		name="cdCdsRvNeg" />
+	<columnFieldProperty
+		name="cdTipoMovimentoRvNeg" />
+	<columnFieldProperty
+		name="cdCdsChi" />
+	<columnFieldProperty
+		name="cdTipoMovimentoChi" />
+	<columnFieldProperty
+		name="dtUltValSca" />
+	<columnFieldProperty
+		name="esercizioValSca" />
+	<columnFieldProperty
+		name="cdCdsRaggrSca" />
+	<columnFieldProperty
+		name="cdRaggrMagazzinoSca" />
+	<columnFieldProperty
+		name="metodoValSca" />
+	<columnFieldProperty
+		name="dtUltValRim" />
+	<columnFieldProperty
+		name="esercizioValRim" />
+	<columnFieldProperty
+		name="cdCdsRaggrRim" />
+	<columnFieldProperty
+		name="cdRaggrMagazzinoRim" />
+	<columnFieldProperty
+		name="metodoValRim" />
+	<columnFieldProperty
+		name="abilTuttiBeniServ" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+	<columnSet name="default" >
+		<columnFieldProperty name="cdMagazzino"/>
+		<columnFieldProperty name="dsMagazzino"/>
+		<columnFieldProperty name="cdUnitaOperativa"/>
+		<columnFieldProperty name="dsUnitaOperativa"/>
+		<columnFieldProperty name="cdLuogoConsegna"/>
+		<columnFieldProperty name="dsLuogoConsegna"/>
+		<columnFieldProperty name="abilTuttiBeniServ"/>
+	</columnSet>
+</bulkInfo>

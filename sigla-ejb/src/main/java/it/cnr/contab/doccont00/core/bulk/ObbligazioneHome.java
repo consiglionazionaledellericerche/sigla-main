@@ -1695,6 +1695,20 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 		sqlAssestato.addSQLClause(FindClause.OR, "(nvl(VOCE_F_SALDI_CDR_LINEA.IM_STANZ_RES_IMPROPRIO,0)+nvl(VOCE_F_SALDI_CDR_LINEA.VAR_PIU_STANZ_RES_IMP,0)-nvl(VOCE_F_SALDI_CDR_LINEA.VAR_MENO_STANZ_RES_IMP,0) +  nvl(VOCE_F_SALDI_CDR_LINEA.VAR_MENO_OBBL_RES_PRO,0)-nvl(VOCE_F_SALDI_CDR_LINEA.VAR_PIU_OBBL_RES_PRO,0))", SQLBuilder.GREATER, 0);
 		sqlAssestato.closeParenthesis();
 		
+		if (bulk.getListaVociSelezionabili() != null && !bulk.getListaVociSelezionabili().isEmpty()) {
+			sql.openParenthesis("AND");
+			for (Elemento_voceBulk voce : bulk.getListaVociSelezionabili()){
+				sql.openParenthesis("OR");
+				sql.addSQLClause("AND","ELEMENTO_VOCE.CD_ELEMENTO_VOCE",sql.EQUALS, voce.getCd_elemento_voce());
+				sql.addSQLClause("AND","ELEMENTO_VOCE.TI_APPARTENENZA",sql.EQUALS, voce.getTi_appartenenza());
+				sql.addSQLClause("AND","ELEMENTO_VOCE.TI_GESTIONE",sql.EQUALS, voce.getTi_gestione());
+				sql.addSQLClause("AND","ELEMENTO_VOCE.ESERCIZIO",sql.EQUALS, voce.getEsercizio());
+				sql.closeParenthesis();
+				
+			}
+			sql.closeParenthesis();
+		}
+		
 		SQLBuilder sqlstrOrg = new SQLBuilder();
 		sqlstrOrg.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA");
 		sqlstrOrg.setHeader(String.valueOf("SELECT 1"));

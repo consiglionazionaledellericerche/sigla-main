@@ -7,7 +7,7 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.MessageToUser;
@@ -304,6 +304,7 @@ public it.cnr.jada.action.Forward doBlankSearchFind_nodo_padre_2015(it.cnr.jada.
 
 public it.cnr.jada.action.Forward doBlankSearchFind_nodo_padre_2016(it.cnr.jada.action.ActionContext context,it.cnr.contab.config00.latt.bulk.WorkpackageBulk linea_attivita) {
 	linea_attivita.setProgetto2016(new ProgettoBulk());
+	linea_attivita.setVocePianoEconomico2016(null);
 	if (linea_attivita.getModulo2015()==null || linea_attivita.getModulo2015().getCd_progetto()==null)
 		linea_attivita.setPdgProgramma(null);
 	return context.findDefaultForward();
@@ -476,18 +477,21 @@ public Forward doSalva(ActionContext context) {
 			if (progetto!=null) {
 				progetto.setProgettopadre((ProgettoBulk)bp.createComponentSession().findByPrimaryKey(context.getUserContext(), 
 						new ProgettoBulk(progetto.getEsercizio(), progetto.getPg_progetto_padre(), progetto.getTipo_fase())));
+				progetto.setOtherField((Progetto_other_fieldBulk)bp.createComponentSession().findByPrimaryKey(context.getUserContext(), 
+						new Progetto_other_fieldBulk(progetto.getPg_progetto())));
 			}
 			if (linea!=null && linea.getPdgProgramma()!=null && linea.getPdgProgramma().getCd_programma()!=null && 
 				progetto!=null && progetto.getProgettopadre()!=null && 
-				!linea.getPdgProgramma().getCd_programma().equals(progetto.getProgettopadre().getCd_dipartimento())) {
+				!linea.getPdgProgramma().getCd_programma().equals(progetto.getProgettopadre().getCd_programma())) {
 				setErrorMessage(context,"Attenzione: il progetto, appartenente al dipartimento con codice "+progetto.getProgettopadre().getCd_dipartimento()+
 						" non è coerente con il programma indicato sulla GAE!");
 				return context.findDefaultForward();
 			} else if (linea!=null && (linea.getPdgProgramma()==null || linea.getPdgProgramma().getCd_programma()==null) && 
-					progetto!=null && progetto.getProgettopadre()!=null && progetto.getProgettopadre().getCd_dipartimento()!=null) {
-				linea.setPdgProgramma((Pdg_programmaBulk)bp.createComponentSession().findByPrimaryKey(context.getUserContext(), new Pdg_programmaBulk(progetto.getProgettopadre().getCd_dipartimento())));
-			}				
+					progetto!=null && progetto.getProgettopadre()!=null && progetto.getProgettopadre().getPdgProgramma()!=null) {
+				linea.setPdgProgramma((Pdg_programmaBulk)bp.createComponentSession().findByPrimaryKey(context.getUserContext(), progetto.getProgettopadre().getPdgProgramma()));
+			}
 			linea.setProgetto2016(progetto);
+			linea.setVocePianoEconomico2016(null);
 			return context.findDefaultForward();
 		} catch(Throwable e){
 			return handleException(context, e);

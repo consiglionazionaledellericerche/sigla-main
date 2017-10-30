@@ -1,10 +1,5 @@
 package it.cnr.contab.config00.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
-
 public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 
 	public final static String SK_SDI = "SDI";
@@ -12,10 +7,18 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_TERZO_SPECIALE = "TERZO_SPECIALE";
 	public final static String SK_CODICE_DIVERSI_PGIRO = "CODICE_DIVERSI_PGIRO";
 	public final static String SK_CODICE_DIVERSI_IMPEGNI = "CODICE_DIVERSI_IMPEGNI";
+	public final static String PK_OBBLIGATORIETA_ORDINI = "OBBLIGATORIETA_ORDINI";
+	public final static String PK_PARAMETRI_ORDINI = "PARAMETRI_ORDINI";
 
 	public final static String PK_LINEA_ATTIVITA_SPECIALE = "LINEA_ATTIVITA_SPECIALE";
 	public final static String SK_LINEA_COMUNE_VERSAMENTO_IVA = "LINEA_COMUNE_VERSAMENTO_IVA";
 	
+	public final static String SK_GG_DT_PREV_CONSEGNA = "GIORNI_DATA_PREVISTA_CONSEGNA";
+
+	public final static String SK_PROGETTO_RICHIESTA = "PROGETTO_RICHIESTA";
+	public final static String SK_GAE_RICHIESTA = "GAE_RICHIESTA";
+	public final static String SK_VOCE_RICHIESTA = "VOCE_RICHIESTA";
+
 	public final static String SK_LINEA_ATTIVITA_ENTRATA_ENTE = "LINEA_ATTIVITA_ENTRATA_ENTE";
 	public final static String SK_LINEA_ATTIVITA_SPESA_ENTE = "LINEA_ATTIVITA_SPESA_ENTE";
 
@@ -75,11 +78,18 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	
 	public final static String PK_INTEGRAZIONE_SDI = "INTEGRAZIONE_SDI";
 	public final static String SK_INTEGRAZIONE_SDI = "MODALITA";
-	
-	public Configurazione_cnrBulk() {
+
+    public final static String SK_GESTIONE_ORDINI = "GESTIONE";
+    public final static String PK_ORDINI = "ORDINI";
+
+    public final static String SK_ORDINE_AUT_ROTTURA_UO_DESTINAZIONE = "ORDINI_AUT_ROTTURA_UO_DEST";
+    public final static String SK_ORDINE_IMPEGNO_UO_DESTINAZIONE = "IMPEGNO_ORDINI_UO_DEST";
+
+    public Configurazione_cnrBulk() {
 	super();
 }
-public Configurazione_cnrBulk(java.lang.String cd_chiave_primaria,java.lang.String cd_chiave_secondaria,java.lang.String cd_unita_funzionale,java.lang.Integer esercizio) {
-	super(cd_chiave_primaria,cd_chiave_secondaria,cd_unita_funzionale,esercizio);
-}
+
+    public Configurazione_cnrBulk(java.lang.String cd_chiave_primaria,java.lang.String cd_chiave_secondaria,java.lang.String cd_unita_funzionale,java.lang.Integer esercizio) {
+		super(cd_chiave_primaria,cd_chiave_secondaria,cd_unita_funzionale,esercizio);
+	}
 }

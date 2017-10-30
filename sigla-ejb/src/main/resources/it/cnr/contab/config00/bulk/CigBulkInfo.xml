@@ -63,6 +63,15 @@
 			inputType="TEXT"
 	        inputSize="40" />
 	</form>
+	<form
+		name="searchtool_large">
+		<formFieldProperty
+			name="cdCig" />
+		<formFieldProperty
+			name="dsCig"
+			inputType="TEXT"
+	        inputSize="50" />
+	</form>
 	<formFieldProperty
 		name="cdCig" />
 	<formFieldProperty

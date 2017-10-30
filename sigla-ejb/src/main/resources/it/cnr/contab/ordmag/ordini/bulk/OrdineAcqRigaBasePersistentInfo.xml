@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBase"
+	keyClassName="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaKey"
+	homeClassName="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaHome">
+	<defaultColumnMap
+		tableName="ORDINE_ACQ_RIGA">
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="cdBeneServizio"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_BENE_SERVIZIO"
+			propertyName="dsBeneServizio"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="NOTA_RIGA"
+			propertyName="notaRiga"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="cdVoceIva"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="PREZZO_UNITARIO"
+			propertyName="prezzoUnitario"
+			sqlTypeName="DECIMAL"
+			columnSize="20"
+			columnScale="6"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_MISURA"
+			propertyName="cdUnitaMisura"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="COEF_CONV"
+			propertyName="coefConv"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			columnScale="5"
+			nullable="false" />
+		<columnMapping
+			columnName="SCONTO1"
+			propertyName="sconto1"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="SCONTO2"
+			propertyName="sconto2"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="SCONTO3"
+			propertyName="sconto3"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_IMPONIBILE_DIVISA"
+			propertyName="imImponibileDivisa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA_DIVISA"
+			propertyName="imIvaDivisa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IMPONIBILE"
+			propertyName="imImponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA"
+			propertyName="imIva"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA_D"
+			propertyName="imIvaD"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA_ND"
+			propertyName="imIvaNd"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TOTALE_RIGA"
+			propertyName="imTotaleRiga"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dtCancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdBeneServizio" />
+	<persistentProperty
+		name="dsBeneServizio" />
+	<persistentProperty
+		name="notaRiga" />
+	<persistentProperty
+		name="cdVoceIva" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="prezzoUnitario" />
+	<persistentProperty
+		name="cdUnitaMisura" />
+	<persistentProperty
+		name="coefConv" />
+	<persistentProperty
+		name="sconto1" />
+	<persistentProperty
+		name="sconto2" />
+	<persistentProperty
+		name="sconto3" />
+	<persistentProperty
+		name="imImponibileDivisa" />
+	<persistentProperty
+		name="imIvaDivisa" />
+	<persistentProperty
+		name="imImponibile" />
+	<persistentProperty
+		name="imIva" />
+	<persistentProperty
+		name="imIvaD" />
+	<persistentProperty
+		name="imIvaNd" />
+	<persistentProperty
+		name="imTotaleRiga" />
+	<persistentProperty
+		name="dtCancellazione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

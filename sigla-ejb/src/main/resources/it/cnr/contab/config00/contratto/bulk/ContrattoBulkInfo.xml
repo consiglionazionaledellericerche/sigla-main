@@ -498,6 +498,17 @@
                 enabledOnEdit="false"
                 enabledOnSearch="false"/>               
         <fieldProperty
+                name="tot_ordini"
+                property="tot_ordini"
+                label="Ordinato"
+                inputType="ROTEXT"
+                formatName = "it.cnr.contab.util.EuroFormat"
+                maxLength="18"
+                inputSize="18"
+                enabledOnInsert="false"
+                enabledOnEdit="false"
+                enabledOnSearch="false"/>
+        <fieldProperty
                 name="unita_organizzativa"
                 property="unita_organizzativa"
                 inputType="SEARCHTOOL"
@@ -627,6 +638,16 @@
 	                name="oggetto"
 	                inputType="TEXT"
 	                inputSize="40" />
+	    </form>            
+	    <form name="searchtool_large">
+	          <formFieldProperty
+	                name="esercizio" />
+	          <formFieldProperty
+	                name="pg_contratto" />
+	          <formFieldProperty
+	                name="oggetto"
+	                inputType="TEXT"
+	                inputSize="70" />
 	    </form>            
 	    <form name="searchtoolMin">
 	          <formFieldProperty
@@ -760,6 +781,8 @@
                 name="tot_doccont_cont_spe"/>
         <formFieldProperty
                 name="tot_doccont_cont_etr"/>               
+        <formFieldProperty
+                name="tot_ordini"/>
         <formFieldProperty
                 name="unita_organizzativa"/>
         <formFieldProperty

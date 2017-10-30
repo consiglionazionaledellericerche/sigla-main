@@ -65,6 +65,12 @@
 			nullable="true"/>
 	</columnMap>
 			
+	<columnMap
+		name="V_ELEMENTO_VOCE_ORDINI"
+		extends="default"
+		tableName="V_ELEMENTO_VOCE_ORDINI" >
+	</columnMap>
+			
 	<persistentProperty
 		name="elemento_padre" />
 	<persistentProperty

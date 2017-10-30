@@ -49,6 +49,12 @@ import it.cnr.contab.prevent01.bulk.Pdg_missioneHome;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoHome;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
@@ -172,15 +178,15 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 					throw new ApplicationException( "La Commessa sul GAE non può essere nulla.");
 				if (latt!=null && latt.getModulo2015()!=null && 
 					latt.getModulo2015().getProgettopadre()!=null && latt.getModulo2015().getProgettopadre().getProgettopadre()!=null)
-					cdProgramma = latt.getModulo2015().getProgettopadre().getProgettopadre().getCd_dipartimento();
+					cdProgramma = latt.getModulo2015().getProgettopadre().getProgettopadre().getCd_programma();
 			}
 			if (parCnr.getFl_nuovo_pdg()) {
 				if (latt.getProgetto2016() == null ||(latt.getProgetto2016() != null && latt.getProgetto2016().getPg_progetto() == null))
 					throw new ApplicationException( "Il Progetto sul GAE non può essere nullo. " );
 				if (latt!=null && latt.getProgetto2016()!=null && latt.getProgetto2016().getProgettopadre()!=null)
-					if (cdProgramma != null && !cdProgramma.equals(latt.getProgetto2016().getProgettopadre().getCd_dipartimento()))
-						throw new ApplicationException( "Il Codice Dipartimento del Modulo di attività ("+cdProgramma+") non può essere differente da quello del Progetto ("+latt.getProgetto2016().getProgettopadre().getCd_dipartimento()+")." );
-					cdProgramma = latt.getProgetto2016().getProgettopadre().getCd_dipartimento();
+					if (cdProgramma != null && !cdProgramma.equals(latt.getProgetto2016().getProgettopadre().getCd_programma()))
+						throw new ApplicationException( "Il Codice Dipartimento del Modulo di attività ("+cdProgramma+") non può essere differente da quello del Progetto ("+latt.getProgetto2016().getProgettopadre().getCd_programma()+")." );
+					cdProgramma = latt.getProgetto2016().getProgettopadre().getCd_programma();
 			}
 			if (cdProgramma!=null) {
 				if (latt.getPdgProgramma()!=null && !cdProgramma.equals(latt.getPdgProgramma().getCd_programma()))
@@ -220,10 +226,13 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 		}
 		/*Fine PostIt*/		
 		ProgettoBulk modulo2015=null,progetto2016=null;
+		Voce_piano_economico_prgBulk vocePianoEconomico2016=null;
 		if (latt.getModulo2015()!=null && latt.getModulo2015().getPg_progetto()!=null)
 			modulo2015=latt.getModulo2015();
-		if (latt.getProgetto2016()!=null && latt.getProgetto2016().getPg_progetto()!=null)
+		if (latt.getProgetto2016()!=null && latt.getProgetto2016().getPg_progetto()!=null) {
 			progetto2016 = latt.getProgetto2016();
+			vocePianoEconomico2016 = latt.getVocePianoEconomico2016();
+		}
 		latt = (WorkpackageBulk)super.creaConBulk( uc, bulk );
 		if (modulo2015!=null) {
 			Ass_linea_attivita_esercizioBulk assGaeEsercizio2015 = new Ass_linea_attivita_esercizioBulk(latt.getEsercizio_inizio(),latt.getCd_centro_responsabilita(), latt.getCd_linea_attivita());
@@ -237,6 +246,9 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 			Ass_linea_attivita_esercizioBulk assGaeEsercizio2016 = new Ass_linea_attivita_esercizioBulk(CNRUserContext.getEsercizio(uc),latt.getCd_centro_responsabilita(), latt.getCd_linea_attivita());
 			assGaeEsercizio2016.setProgetto(progetto2016);
 			assGaeEsercizio2016.setEsercizio_fine(latt.getEsercizio_fine());
+			if (progetto2016.getFl_piano_economico() && (vocePianoEconomico2016==null || vocePianoEconomico2016.getCd_voce_piano()==null))
+				throw new ApplicationException( "Il Progetto selezionato impone l'indicazione della Voce Piano Economico sulla GAE." );
+			assGaeEsercizio2016.setVoce_piano_economico(vocePianoEconomico2016);
 			assGaeEsercizio2016.setToBeCreated();
 			makeBulkPersistent(uc, assGaeEsercizio2016);
 			latt.setProgetto2016(assGaeEsercizio2016.getProgetto());
@@ -532,6 +544,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 		
 		WorkpackageHome testataHome = (WorkpackageHome)getHome(userContext, WorkpackageBulk.class);
 		ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+		Progetto_other_fieldHome progetto_other_fieldHome = (Progetto_other_fieldHome)getHome(userContext, Progetto_other_fieldBulk.class);
 		/* Angelo 18/11/2004 Aggiunta gestione PostIt*/
 		aLA.setDettagliPostIt(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPostIt(aLA)));
 
@@ -549,6 +562,9 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 			} else { 
 				int annoProgetto = CNRUserContext.getEsercizio(userContext).compareTo(new Integer(2016))==-1?new Integer(2016):CNRUserContext.getEsercizio(userContext);
 				aLA.setProgetto2016((ProgettoBulk)progettoHome.findByPrimaryKey(new ProgettoBulk(annoProgetto, assGaeEsercizio.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA)));
+				if (aLA.getProgetto2016()!=null && aLA.getProgetto2016().getPg_progetto()!=null)
+					aLA.getProgetto2016().setOtherField((Progetto_other_fieldBulk)progetto_other_fieldHome.findByPrimaryKey(new Progetto_other_fieldBulk(aLA.getProgetto2016().getPg_progetto())));
+				aLA.setVocePianoEconomico2016(assGaeEsercizio.getVoce_piano_economico());
 				if (aLA.getProgetto2016()==null)
 					throw new ApplicationException("Attenzione! E'' stato indicato sulla linea di attivita'' un progetto (" + assGaeEsercizio.getPg_progetto() + ") inesistente.");					
 				//Aggiorno l'anno anche sul progetto padre
@@ -612,12 +628,13 @@ public WorkpackageBulk inizializzaNature(UserContext userContext,WorkpackageBulk
 	try {
 			NaturaHome home = (NaturaHome)getHome(userContext,NaturaBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
-			if (linea_attivita.getTi_gestione() != null){
-				if (linea_attivita.getTi_gestione().equals(linea_attivita.TI_GESTIONE_SPESE))
-				  sql.addSQLClause("AND","FL_SPESA",sql.EQUALS,"Y");
-				else if (linea_attivita.getTi_gestione().equals(linea_attivita.TI_GESTIONE_ENTRATE))
-				  sql.addSQLClause("AND","FL_ENTRATA",sql.EQUALS,"Y"); 
-
+			if (linea_attivita.TI_GESTIONE_SPESE.equals(linea_attivita.getTi_gestione()))
+			  sql.addSQLClause("AND","FL_SPESA",sql.EQUALS,"Y");
+			else if (linea_attivita.TI_GESTIONE_ENTRATE.equals(linea_attivita.getTi_gestione()))
+			  sql.addSQLClause("AND","FL_ENTRATA",sql.EQUALS,"Y"); 
+			else if (linea_attivita.getTi_gestione().equals(linea_attivita.TI_GESTIONE_ENTRAMBE)) {
+			  sql.addSQLClause("AND","FL_SPESA",sql.EQUALS,"Y");
+			  sql.addSQLClause("AND","FL_ENTRATA",sql.EQUALS,"Y");
 			}
 			Broker broker = home.createBroker(sql);
 			linea_attivita.setNature(home.fetchAll(broker));
@@ -749,22 +766,35 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 			} else {
 				assGaeEsercizio2016 = assGaeEsercizio;
 				if (linea_attivita.getProgetto2016()==null || linea_attivita.getProgetto2016().getPg_progetto()==null ||
-					linea_attivita.getEsercizio_fine().compareTo(assGaeEsercizio2016.getEsercizio())==-1) {
+					linea_attivita.getEsercizio_fine().compareTo(assGaeEsercizio2016.getEsercizio())<0) {
 					if (isGaeUtilizzata(userContext,linea_attivita,false)) 
 						throw new ApplicationException( "Il Progetto non può essere eliminato in quanto la GAE risulta già utilizzata." );
 					assGaeEsercizio2016.setToBeDeleted();
-				}else if (linea_attivita.getProgetto2016().getPg_progetto().equals(assGaeEsercizio.getProgetto().getPg_progetto()) &&
-					linea_attivita.getEsercizio_fine().compareTo(assGaeEsercizio.getEsercizio_fine()) <0) {
-				assGaeEsercizio2016.setEsercizio_fine(linea_attivita.getEsercizio_fine());
-				assGaeEsercizio2016.setToBeUpdated();
+				} else if (linea_attivita.getProgetto2016()!=null && linea_attivita.getProgetto2016().getPg_progetto()!=null &&
+						linea_attivita.getProgetto2016().getFl_piano_economico() && 
+						(linea_attivita.getVocePianoEconomico2016()==null || linea_attivita.getVocePianoEconomico2016().getCd_voce_piano()==null)) {
+					throw new ApplicationException( "Il Progetto selezionato impone l'indicazione della Voce Piano Economico sulla GAE." );
+				} else if (linea_attivita.getProgetto2016().getPg_progetto().equals(assGaeEsercizio.getProgetto().getPg_progetto()) &&
+						  (linea_attivita.getEsercizio_fine().compareTo(assGaeEsercizio.getEsercizio_fine())!=0 ||
+						   (linea_attivita.getVocePianoEconomico2016()!=null && assGaeEsercizio.getVoce_piano_economico()!= null &&
+						    !linea_attivita.getVocePianoEconomico2016().equalsByPrimaryKey(assGaeEsercizio.getVoce_piano_economico())) ||
+						   (linea_attivita.getVocePianoEconomico2016()!=null && assGaeEsercizio.getVoce_piano_economico() == null) ||
+						   (linea_attivita.getVocePianoEconomico2016()==null && assGaeEsercizio.getVoce_piano_economico() != null))) {
+					assGaeEsercizio2016.setEsercizio_fine(linea_attivita.getEsercizio_fine());
+					assGaeEsercizio2016.setVoce_piano_economico(linea_attivita.getVocePianoEconomico2016());
+					assGaeEsercizio2016.setToBeUpdated();
 				} else if (!linea_attivita.getProgetto2016().getPg_progetto().equals(assGaeEsercizio.getProgetto().getPg_progetto()) ||
-						!linea_attivita.getEsercizio_fine().equals(assGaeEsercizio.getEsercizio_fine())) {
+						   !linea_attivita.getEsercizio_fine().equals(assGaeEsercizio.getEsercizio_fine())||
+						   (linea_attivita.getVocePianoEconomico2016()!=null && assGaeEsercizio.getVoce_piano_economico()!= null &&
+						    !linea_attivita.getVocePianoEconomico2016().equalsByPrimaryKey(assGaeEsercizio.getVoce_piano_economico())) ||
+						   (linea_attivita.getVocePianoEconomico2016()!=null && assGaeEsercizio.getVoce_piano_economico() == null) ||
+						   (linea_attivita.getVocePianoEconomico2016()==null && assGaeEsercizio.getVoce_piano_economico() != null)) {
 					if (isGaeUtilizzata(userContext,linea_attivita,false)) 
 						throw new ApplicationException( "Il Progetto non può essere modificato in quanto la GAE risulta già utilizzata." );
 					assGaeEsercizio2016.setProgetto(linea_attivita.getProgetto2016());
 					assGaeEsercizio2016.setEsercizio_fine(linea_attivita.getEsercizio_fine());
+					assGaeEsercizio2016.setVoce_piano_economico(linea_attivita.getVocePianoEconomico2016());
 					assGaeEsercizio2016.setToBeUpdated();
-				
 				}
 			}
 		}
@@ -778,6 +808,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 			assGaeEsercizio2016 = new Ass_linea_attivita_esercizioBulk(Integer.valueOf(2016),linea_attivita.getCd_centro_responsabilita(), linea_attivita.getCd_linea_attivita());
 			assGaeEsercizio2016.setProgetto(linea_attivita.getProgetto2016());
 			assGaeEsercizio2016.setEsercizio_fine(linea_attivita.getEsercizio_fine());
+			assGaeEsercizio2016.setVoce_piano_economico(linea_attivita.getVocePianoEconomico2016());
 			assGaeEsercizio2016.setToBeCreated();
 		}
 		linea_attivita = (WorkpackageBulk)super.modificaConBulk( userContext, linea_attivita);
@@ -948,7 +979,7 @@ public SQLBuilder selectProgetto2016ByClause (UserContext userContext,
 		sql.addSQLJoin("V_PROGETTO_PADRE.ESERCIZIO_PROGETTO_PADRE","PROGETTO_DIP.ESERCIZIO");
 		sql.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO_PADRE","PROGETTO_DIP.PG_PROGETTO");
 		sql.addSQLJoin("V_PROGETTO_PADRE.TIPO_FASE_PROGETTO_PADRE","PROGETTO_DIP.TIPO_FASE");
-		sql.addSQLClause(FindClause.AND, "PROGETTO_DIP.CD_DIPARTIMENTO", SQLBuilder.EQUALS, linea_attivita.getPdgProgramma().getCd_programma());
+		sql.addSQLClause(FindClause.AND, "PROGETTO_DIP.CD_PROGRAMMA", SQLBuilder.EQUALS, linea_attivita.getPdgProgramma().getCd_programma());
 	}
 	return sql;
 }
@@ -1438,5 +1469,18 @@ public java.util.List findListaGAEFEWS(UserContext userContext,String cdr,Intege
 
 			return sqlVarResPDG.executeExistsQuery(getConnection(userContext));
 		}
+	}
+	
+	public SQLBuilder selectVocePianoEconomico2016ByClause (UserContext userContext, WorkpackageBulk linea_attivita, Voce_piano_economico_prgBulk vocePianoEconomico, CompoundFindClause clause) throws ComponentException, PersistencyException {
+		Voce_piano_economico_prgHome vocePianoHome = (Voce_piano_economico_prgHome)getHome(userContext, Voce_piano_economico_prgBulk.class);
+		Integer pgProgetto=null;
+ 		if (linea_attivita!=null && linea_attivita.getProgetto2016()!=null && linea_attivita.getProgetto2016().getPg_progetto()!=null)
+ 			pgProgetto = linea_attivita.getProgetto2016().getPg_progetto();
+
+		SQLBuilder sql = vocePianoHome.findVocePianoEconomicoPrgList(pgProgetto);
+
+		if (clause != null) 
+			sql.addClause(clause);
+		return sql;
 	}
 }

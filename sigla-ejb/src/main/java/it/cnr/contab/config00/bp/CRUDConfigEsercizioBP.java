@@ -1,6 +1,13 @@
 package it.cnr.contab.config00.bp;
 
+import java.rmi.RemoteException;
+
+import it.cnr.contab.config00.ejb.EsercizioComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.jada.DetailedRuntimeException;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.comp.ComponentException;
 /**
  * Business process che mantiene lo stato di un processo CRUD.
  * E' utilizzato in combinazione con la <code>CRUDEsercizioAction</code>.
@@ -101,5 +108,33 @@ public boolean isCambiaStatoButtonEnabled()
 		return true;
 	return false;	
 
+}
+protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
+	super.initialize(actioncontext);
+	EsercizioComponentSession sessione = (EsercizioComponentSession) createComponentSession();
+	try {
+		EsercizioBulk esercizioBulk = sessione.getEsercizio(actioncontext.getUserContext());
+		if (esercizioBulk != null)
+			this.setModel(actioncontext, esercizioBulk);
+			this.setStatus(it.cnr.jada.util.action.FormController.EDIT);
+	} catch (DetailedRuntimeException e) {
+		throw handleException(e);
+	} catch (ComponentException e) {
+		throw handleException(e);
+	} catch (RemoteException e) {
+		throw handleException(e);
+	}
+}
+
+public boolean isSearchButtonHidden() {
+	return true;
+}
+
+public boolean isFreeSearchButtonHidden() {
+	return true;
+}
+
+public boolean isNewButtonHidden() {
+	return true;
 }
 }
