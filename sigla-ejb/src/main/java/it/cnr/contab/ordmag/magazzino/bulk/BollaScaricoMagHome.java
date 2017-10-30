@@ -74,7 +74,7 @@ public class BollaScaricoMagHome extends BulkHome {
 			Persistent persistent) throws PersistencyException {
 		BollaScaricoMagBulk bolla = (BollaScaricoMagBulk)persistent;
 		bolla.setStampaBollaScarico("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
-				"doStampaBollaScarico("+bolla.getEsercizio()+",\""+bolla.getCdCds()+"\",\""+bolla.getCdMagazzino()+"\","+bolla.getCdNumeratoreMag()+"\","+bolla.getPgBollaSca()+",\""+Filtro_ricerca_doc_ammVBulk.DOC_ATT_GRUOP+"\"); return false' "+
+				"doStampaBollaScarico("+bolla.getEsercizio()+",\""+bolla.getCdCds()+"\",\""+bolla.getCdMagazzino()+"\","+bolla.getCdNumeratoreMag()+"\","+bolla.getPgBollaSca()+"\"); return false' "+
 				"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
 				"title='Visualizza Documenti Collegati'><img align='middle' class='Button' src='img/application-pdf.png'></button>");
 		return super.completeBulkRowByRow(userContext, persistent);
