@@ -57,31 +57,4 @@ public class ContabilizzaOrdineAction extends SelezionatoreListaAction {
         }
     }
 
-    public Forward doRigheSelezionate(ActionContext context) {
-        try {
-            ContabilizzaOrdineBP bp = (ContabilizzaOrdineBP)context.getBusinessProcess();
-            HookForward hook = (HookForward)context.getCaller();
-            Optional.ofNullable(hook.getParameter("remoteIterator"))
-                    .filter(RemoteIterator.class::isInstance)
-                    .map(RemoteIterator.class::cast)
-                    .ifPresent(ri -> {
-                        try {
-                            bp.setIterator(context,ri);
-                        } catch (RemoteException|BusinessProcessException e) {
-                            throw new DetailedRuntimeException(e);
-                        }
-                    });
-            Optional.ofNullable(hook.getParameter("condizioneRadice"))
-                    .filter(CondizioneComplessaBulk.class::isInstance)
-                    .map(CondizioneComplessaBulk.class::cast)
-                    .ifPresent(condizioneRicercaBulk -> {
-                            bp.setCondizioneCorrente(condizioneRicercaBulk);
-                    });
-            bp.setDirty(true);
-            return context.findDefaultForward();
-        } catch(Throwable e) {
-            return handleException(context,e);
-        }
-    }
-
 }
