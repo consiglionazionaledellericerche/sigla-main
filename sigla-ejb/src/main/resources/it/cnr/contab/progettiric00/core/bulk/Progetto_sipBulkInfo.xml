@@ -193,6 +193,7 @@
 		<columnFieldProperty
 			name="dt_inizio" />
 	</columnSet>          
+
 	<columnSet
 		name="progetti_sip">
 		<columnFieldProperty

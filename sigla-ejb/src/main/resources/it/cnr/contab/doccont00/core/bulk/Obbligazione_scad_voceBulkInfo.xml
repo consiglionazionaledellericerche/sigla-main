@@ -127,7 +127,7 @@
 	<columnFieldProperty
 		name="prc"
 		headerStyle="text-align: center"
-		columnStyle="width:20%; text-align: right"
+		columnStyle="text-align: right"
 		enabledOnEdit="false"
 		inputCssClass="form-control column"		
 		/>

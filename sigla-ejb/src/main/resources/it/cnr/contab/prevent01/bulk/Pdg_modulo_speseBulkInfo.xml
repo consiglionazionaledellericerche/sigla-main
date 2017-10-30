@@ -14,8 +14,8 @@
 		name="cd_centro_responsabilita"
 		property="cd_centro_responsabilita"
 		inputType="ROTEXT"
-		inputSize="30"
-		maxLength="30"
+		inputSize="15"
+		maxLength="15"
 		label="CdR" />
 	<fieldProperty
 		name="ds_centro_responsabilita"
@@ -38,13 +38,24 @@
         name="classificazione"
         property="classificazione"
         inputType="SEARCHTOOL"
+        formName="searchtool"
+        columnSet="searchtool"
+        freeSearchSet="searchtool"
+        enabledOnInsert="true"
+        enabledOnSearch="true"
+        readonlyPropertyOnEdit="classificazioneRO"
+        label="Classificazione" />		
+	<fieldProperty
+        name="classificazione_codlast"
+        property="classificazione"
+        inputType="SEARCHTOOL"
         formName="searchtool_codlast"
         columnSet="searchtool_codlast"
         freeSearchSet="searchtool_codlast"
         enabledOnInsert="true"
         enabledOnSearch="true"
         readonlyPropertyOnEdit="classificazioneRO"
-        label="Classificazione" />		
+        label="Classificazione" />	
 	<fieldProperty
 		name="id_classificazione"
 		property="classificazione.id_classificazione"
@@ -176,7 +187,7 @@
 		property="prev_ass_imp_int"
 		inputType="ROTEXT"
 		maxLength="15"
-		inputSize="15"
+		inputSize="10"
 		style="border-style: outset;border-width : 1px;"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label="Fonti Interne" />			
@@ -185,7 +196,7 @@
 		property="prev_ass_imp_est"
 		inputType="ROTEXT"
 		maxLength="15"
-		inputSize="15"
+		inputSize="10"
 		style="border-style: outset;border-width : 1px;"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label="Fonti Esterne" />			
@@ -194,7 +205,7 @@
 		property="tot_prev_ass_imp"
 		inputType="ROTEXT"
 		maxLength="15"
-		inputSize="15"
+		inputSize="10"
 		style="border-style: outset;border-width : 1px;"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		label="Totale" />			
@@ -358,7 +369,17 @@
 		enabledOnInsert="false"
 		inputSize="5"
 		maxLength="10"
-		label="Programma" />		
+		label="Dipartimento" />		
+	<fieldProperty
+		name="programma_liv2"
+		property="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.cd_programma"
+		descProperty="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.pdgProgramma.ds_programma"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="10"
+		maxLength="10"
+		label="Programma" />
 	<fieldProperty
 		name="cd_progetto_liv1"
 		property="pdg_modulo_costi.pdg_modulo.progetto.progettopadre.cd_progetto"
@@ -376,7 +397,7 @@
 		inputType="DESCTOOL"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		inputSize="15"
+		inputSize="10"
 		maxLength="10"
 		label="Progetto" />
 	<fieldProperty
@@ -386,7 +407,7 @@
 		inputType="DESCTOOL"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		inputSize="25"
+		inputSize="15"
 		maxLength="30"
 		label="Classificazione Ufficiale" />	
 	<fieldProperty
@@ -407,10 +428,21 @@
 		inputType="DESCTOOL"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		inputSize="30"
+		inputSize="10"
 		maxLength="30"
 		nullable="false"
 		label="Cofog" />	
+	<fieldProperty
+		name="desctool_voce_piano_economico_prg"
+		property="voce_piano_economico.cd_voce_piano"
+		descProperty="voce_piano_economico.ds_voce_piano"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="10"
+		maxLength="30"
+		nullable="false"
+		label="Piano Economico" />	
 	<fieldProperty
 		name="pdgMissione"
 		property="pdgMissione"
@@ -433,10 +465,10 @@
 		inputType="DESCTOOL"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		inputSize="30"
-		maxLength="40"
+		inputSize="10"
+		maxLength="10"
 		nullable="false"
-		label="missione" />				
+		label="Missione" />				
 	<fieldProperty
 		name="label_gestione_decentrata"
 		label="Gestione Decentrata" />
@@ -495,6 +527,13 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnFreeSearch="true" />		
+	<fieldProperty
+		name="voce_piano"
+		property="voce_piano_economico"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Voce del piano economico" />
+
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -507,6 +546,8 @@
 		name="pg_dettaglio" />		
 	<formFieldProperty
         name="classificazione"/>		
+	<formFieldProperty
+        name="classificazione_codlast"/>		
 	<formFieldProperty
 		name="id_classificazione" />
 	<formFieldProperty
@@ -559,6 +600,8 @@
 	<formFieldProperty
 		name="dipartimento_liv2" />		
 	<formFieldProperty
+		name="programma_liv2" />		
+	<formFieldProperty
 		name="cd_progetto_liv1" />
 	<formFieldProperty
 		name="cd_progetto_liv2" />
@@ -571,6 +614,8 @@
 		name="desctool_cofog" />		
 	<formFieldProperty
 		name="desctool_missione" />	
+	<formFieldProperty
+		name="desctool_voce_piano_economico_prg" />
 	<formFieldProperty
 		name="label_previsione_assestata_impegno"/>		
 	<formFieldProperty
@@ -624,7 +669,10 @@
 	<formFieldProperty
 		name="cd_cofog"/>	
 	<formFieldProperty
-		name="cofog"/>	
+		name="cofog"/>
+	<formFieldProperty 
+		name="voce_piano" />
+				
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -650,7 +698,8 @@
 	<findFieldProperty
 		name="im_spese_a3" />
 	<findFieldProperty
-		name="cd_missione"/>			
+		name="cd_missione"/>
+		
 	<columnFieldProperty
 		name="cd_classificazione"
 		descProperty="classificazione.ds_classificazione"

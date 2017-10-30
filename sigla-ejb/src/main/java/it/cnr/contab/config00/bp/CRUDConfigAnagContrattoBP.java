@@ -12,6 +12,8 @@ import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StorageObject;
@@ -25,8 +27,10 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.upload.UploadedFile;
 
 import java.io.FileInputStream;
@@ -42,6 +46,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.EJBException;
+import javax.ejb.RemoveException;
 import javax.servlet.ServletException;
 /**
  * @author mspasiano
@@ -53,6 +58,8 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 
 	private static final long serialVersionUID = 1L;
 
+	private ContrattoBulk contratto;
+	private String tipoAccesso;
 	protected ContrattoService contrattoService;
 	protected Date dataStipulaParametri;
 	protected Boolean flagPubblicaContratto;
@@ -111,6 +118,12 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	public CRUDConfigAnagContrattoBP(String s)
 	{
 		super(s);
+	}
+
+	public CRUDConfigAnagContrattoBP(String function, ContrattoBulk contratto, String tipoAccesso) {
+		super(function);
+		setContratto(contratto);
+		setTipoAccesso(tipoAccesso);
 	}
 
 	public boolean isPublishHidden(){
@@ -433,6 +446,50 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		contrattoService = SpringUtil.getBean("contrattoService",
 				ContrattoService.class);		
 		super.initialize(actioncontext);
+		try {
+			if (Optional.ofNullable(getTipoAccesso())
+					.filter(tipoAccesso -> tipoAccesso.equals("V"))
+					.isPresent()) {
+				ContrattoBulk contratto = getContratto();
+				setModel(actioncontext, contratto);
+				cerca(actioncontext);
+			}
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
+
+	public void cerca(ActionContext actioncontext) throws RemoteException, InstantiationException, RemoveException, BusinessProcessException
+	{
+		try
+		{
+			fillModel(actioncontext);
+			OggettoBulk oggettobulk = getModel();
+			RemoteIterator remoteiterator = find(actioncontext, null, oggettobulk);
+			if(remoteiterator == null || remoteiterator.countElements() == 0)
+			{
+				EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
+				return;
+			}
+			if(remoteiterator.countElements() == 1)
+			{
+				OggettoBulk oggettobulk1 = (OggettoBulk)remoteiterator.nextElement();
+				EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
+				if(oggettobulk1 != null) {
+					edit(actioncontext, oggettobulk1);
+				}
+				return;
+			}
+			else {
+				EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
+				//reset(actioncontext);
+				setStatus(SEARCH);
+			}
+		}
+		catch(Throwable throwable)
+		{
+			throw handleException(throwable);
+		}
 	}
 
 	@Override
@@ -605,5 +662,21 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 
 	public void setFlagPubblicaContratto(Boolean flagPubblicaContratto) {
 		this.flagPubblicaContratto = flagPubblicaContratto;
+	}
+
+	public ContrattoBulk getContratto() {
+		return contratto;
+	}
+
+	public void setContratto(ContrattoBulk contratto) {
+		this.contratto = contratto;
+	}
+
+	public String getTipoAccesso() {
+		return tipoAccesso;
+	}
+
+	public void setTipoAccesso(String tipoAccesso) {
+		this.tipoAccesso = tipoAccesso;
 	}
 }

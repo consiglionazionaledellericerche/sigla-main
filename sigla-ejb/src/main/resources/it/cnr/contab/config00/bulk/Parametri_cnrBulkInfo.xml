@@ -105,7 +105,7 @@
 		name="fl_motivazione_su_imp"
 		property="fl_motivazione_su_imp"
 		inputType="CHECKBOX"
-		label="Obbligatoriet? campo Motivazione su Impegno" />
+		label="Obbligatorietà campo Motivazione su Impegno" />
 	<fieldProperty
 		name="importo_max_imp"
 		property="importo_max_imp"
@@ -251,6 +251,21 @@
 		inputType="CHECKBOX"
 		label="Nuova Gestione PDG" />		
 	<fieldProperty
+		name="fl_pdg_codlast"
+		property="fl_pdg_codlast"
+		inputType="CHECKBOX"
+		label="PDG: Gestione Ultimo Livello Classificazione" />		
+	<fieldProperty
+		name="fl_pdg_contrattazione"
+		property="fl_pdg_contrattazione"
+		inputType="CHECKBOX"
+		label="PDG: Gestione Contrattazione" />		
+	<fieldProperty
+		name="fl_pdg_quadra_fonti_esterne"
+		property="fl_pdg_quadra_fonti_esterne"
+		inputType="CHECKBOX"
+		label="PDG: Quadratura Fonti Esterne" />		
+	<fieldProperty
 		name="data_attivazione_new_voce"
 		property="data_attivazione_new_voce"
 		label="Data Attivazione Nuova Voce"
@@ -260,7 +275,7 @@
 		enabledOnInsert="true"
 		enabledOnSearch="true"
 		nullable="true"	/>
-<fieldProperty
+	<fieldProperty
 		name="fl_tesoreria_unica"
 		property="fl_tesoreria_unica"
 		label="Gestione tesoreria Unica" 
@@ -336,10 +351,10 @@
 		name="fl_nuovo_pdg" />						      
 	<formFieldProperty
 		name="ricerca_prof_int_giorni_pubbl"
-	    label="Giorni di pubblicazione per la&lt;BR&gt;Verifica Professionalit? Interne" />
+	    label="Giorni di pubblicazione per la&lt;BR&gt;Verifica Professionalità Interne" />
 	<formFieldProperty
 		name="ricerca_prof_int_giorni_scad" 
-		label="Giorni di validita per la&lt;BR&gt;Verifica Professionalit? Interne&lt;BR&gt;dopo la pubblicazione" />
+		label="Giorni di validita per la&lt;BR&gt;Verifica Professionalità Interne&lt;BR&gt;dopo la pubblicazione" />
 	<formFieldProperty
 	        name="fl_incarico" />
 	<formFieldProperty
@@ -368,7 +383,13 @@
 	<formFieldProperty
 		name="data_attivazione_new_voce" />
 	<formFieldProperty
-		name="fl_tesoreria_unica"/>				       
+		name="fl_pdg_codlast"/>
+	<formFieldProperty
+		name="fl_pdg_contrattazione"/>
+	<formFieldProperty
+		name="fl_pdg_quadra_fonti_esterne"/>
+	<formFieldProperty
+		name="fl_tesoreria_unica"/>
 	<formFieldProperty
 		name="fl_pubblica_contratto"/>				       
 	<formFieldProperty

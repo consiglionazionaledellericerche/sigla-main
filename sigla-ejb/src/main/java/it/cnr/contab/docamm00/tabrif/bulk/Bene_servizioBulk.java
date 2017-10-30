@@ -1,5 +1,8 @@
 package it.cnr.contab.docamm00.tabrif.bulk;
 
+import it.cnr.contab.ordmag.anag00.GruppoMerceologicoBulk;
+import it.cnr.contab.ordmag.anag00.TipoArticoloBulk;
+import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 
@@ -13,9 +16,30 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 	protected final static java.lang.Boolean TRUE= java.lang.Boolean.TRUE;
 	protected final static java.lang.Boolean FALSE= java.lang.Boolean.FALSE;
 
+	public final static String TIPO_CONSEGNA_MAGAZZINO = "MAG";
+	public final static String TIPO_CONSEGNA_TRANSITO = "TRA";
+	public final static String TIPO_CONSEGNA_FUORI_MAGAZZINO = "FMA";
+
 	public final static String BENE_SERVIZIO = "*";
 	public final static String SERVIZIO = "S";
 	public final static String BENE = "B";
+
+	public final static String TIPO_SERVIZIO_MANUTENZIONE = "M";
+	public final static String MANUTENZIONE = "S";
+	public final static String MANUTENZIONE_INCREMENTATIVA = "I";
+	public final static String MANUTENZIONE_NON_INCREMENTATIVA = "N";
+
+	public final static String STATO_VALIDO = "Y";
+	public final static String STATO_NON_ORDINABILE = "O";
+	public final static String STATO_NON_VALIDO = "N";
+
+	public final static Dictionary statoKeys;
+	static {
+		statoKeys = new it.cnr.jada.util.OrderedHashtable();
+		statoKeys.put(STATO_VALIDO,"Valido");
+		statoKeys.put(STATO_NON_ORDINABILE,"Non Ordinabile");
+		statoKeys.put(STATO_NON_VALIDO,"Non Valido");	
+	};
 
 	public final static Dictionary BENI_SERVIZI;
 
@@ -27,6 +51,31 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 		//		BENI_SERVIZI.put(BENE_SERVIZIO,"Entrambi");
 	}
 
+	public final static Dictionary TIPO_CONSEGNA;
+	static{
+		TIPO_CONSEGNA = new it.cnr.jada.util.OrderedHashtable();
+		TIPO_CONSEGNA.put(TIPO_CONSEGNA_TRANSITO,"Transito");
+		TIPO_CONSEGNA.put(TIPO_CONSEGNA_MAGAZZINO,"Magazzino");
+		TIPO_CONSEGNA.put(TIPO_CONSEGNA_FUORI_MAGAZZINO,"Fuori Magazzino");
+	}
+
+	public final static Dictionary TIPO_SERVIZIO;
+	static{
+		TIPO_SERVIZIO = new it.cnr.jada.util.OrderedHashtable();
+		TIPO_SERVIZIO.put(TIPO_SERVIZIO_MANUTENZIONE,"Manutenzione");
+		TIPO_SERVIZIO.put(SERVIZIO,"Servizio");
+	}
+
+	public final static Dictionary TIPO_MANUTENZIONE;
+	static{
+		TIPO_MANUTENZIONE = new it.cnr.jada.util.OrderedHashtable();
+		TIPO_MANUTENZIONE.put(MANUTENZIONE_NON_INCREMENTATIVA,"Non Incrementativa");
+		TIPO_MANUTENZIONE.put(MANUTENZIONE_INCREMENTATIVA,"Incrementativa");
+	}
+
+	protected GruppoMerceologicoBulk gruppoMerceologico;
+	protected TipoArticoloBulk tipoArticolo;
+	protected UnitaMisuraBulk unitaMisura;
 	protected Voce_ivaBulk voce_iva;
 	protected Categoria_gruppo_inventBulk categoria_gruppo;
 	public Bene_servizioBulk() {
@@ -55,9 +104,43 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 			return null;
 		return voce_iva.getCd_voce_iva();
 	}
+	public java.lang.String getCdTipoArticolo() {
+		TipoArticoloBulk tipoArticolo = this.getTipoArticolo();
+		if (tipoArticolo == null)
+			return null;
+		return tipoArticolo.getCdTipoArticolo();
+	}
+	public java.lang.String getCdGruppoMerceologico() {
+		GruppoMerceologicoBulk gruppoMerceologico = this.getGruppoMerceologico();
+		if (gruppoMerceologico== null)
+			return null;
+		return gruppoMerceologico.getCdGruppoMerceologico();
+	}
+	public java.lang.String getCdUnitaMisura() {
+		UnitaMisuraBulk unitaMisura = this.getUnitaMisura();
+		if (unitaMisura== null)
+			return null;
+		return unitaMisura.getCdUnitaMisura();
+	}
 	public Dictionary getTi_bene_servizioKeys() {
 
 		return BENI_SERVIZI;
+	}
+	public Dictionary getStatoKeys() {
+
+		return statoKeys;
+	}
+	public Dictionary getTipoServizioKeys() {
+
+		return TIPO_SERVIZIO;
+	}
+	public Dictionary getTipoManutenzioneKeys() {
+
+		return TIPO_MANUTENZIONE;
+	}
+	public Dictionary getTipoGestioneKeys() {
+
+		return TIPO_CONSEGNA;
 	}
 	/**
 	 * Insert the method's description here.
@@ -77,24 +160,19 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 
 		voce_iva = new Voce_ivaBulk();
 		categoria_gruppo = new Categoria_gruppo_inventBulk();
+		tipoArticolo = new TipoArticoloBulk();
+		gruppoMerceologico = new GruppoMerceologicoBulk();
+		unitaMisura = new UnitaMisuraBulk();
 		//for (java.util.Iterator i = childrenController.values().iterator();i.hasNext();)	
 		//this.get
 
-		if (getFl_gestione_magazzino()==null)
-			setFl_gestione_magazzino(FALSE);
-		if (getFl_gestione_inventario()==null)
-			setFl_gestione_inventario(FALSE);
-		if (getFl_obb_intrastat_acq()==null)
+			setFl_gestione_magazzino(null);
+			setFl_gestione_inventario(null);
 			setFl_obb_intrastat_acq(TRUE);	
-		if (getFl_obb_intrastat_ven()==null)
 			setFl_obb_intrastat_ven(TRUE);	
-		if (getFl_valido()==null)
-			setFl_valido(TRUE);
-		if (getFl_autofattura()==null)
-			setFl_autofattura(FALSE);	
-		if (getFl_bollo()==null)
-			setFl_bollo(FALSE);	
-
+			setFl_valido(null);
+			setFl_autofattura(null);	
+			setFl_bollo(null);	
 		return super.initialize(bp,context);
 	}
 	/**
@@ -107,7 +185,22 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 
 		Bene_servizioBulk bulk = (Bene_servizioBulk)super.initializeForInsert(bp,context);
 
-		setTi_bene_servizio(SERVIZIO);
+		if (getFl_gestione_magazzino()==null)
+			setFl_gestione_magazzino(FALSE);
+		if (getFl_gestione_inventario()==null)
+			setFl_gestione_inventario(FALSE);
+		if (getFl_obb_intrastat_acq()==null)
+			setFl_obb_intrastat_acq(TRUE);	
+		if (getFl_obb_intrastat_ven()==null)
+			setFl_obb_intrastat_ven(TRUE);	
+		if (getFl_valido()==null)
+			setFl_valido(STATO_VALIDO);
+		if (getFl_autofattura()==null)
+			setFl_autofattura(FALSE);	
+		if (getFl_bollo()==null)
+			setFl_bollo(FALSE);	
+
+		setTi_bene_servizio(BENE);
 
 		return bulk;
 	}
@@ -136,6 +229,9 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 	public void setCd_voce_iva(java.lang.String cd_voce_iva) {
 		this.getVoce_iva().setCd_voce_iva(cd_voce_iva);
 	}
+	public void setCdTipoArticolo(java.lang.String cdTipoArticolo) {
+		this.getTipoArticolo().setCdTipoArticolo(cdTipoArticolo);
+	}
 	public void setVoce_iva(Voce_ivaBulk vi) {
 		voce_iva = vi;
 		if (vi!=null)
@@ -152,5 +248,35 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 			throw new ValidationException("Attenzione: non è possibile che un bene servizio sia a magazzino e ad inventario");
 		if (getFl_gestione_inventario().booleanValue() && (getCategoria_gruppo()==null || getCategoria_gruppo().getDs_categoria_gruppo()==null))
 			throw new ValidationException("Inserire un gruppo inventariale");
+	}
+	public GruppoMerceologicoBulk getGruppoMerceologico() {
+		return gruppoMerceologico;
+	}
+	public void setGruppoMerceologico(GruppoMerceologicoBulk gruppoMerceologico) {
+		this.gruppoMerceologico = gruppoMerceologico;
+		if (gruppoMerceologico!=null)
+			super.setCdGruppoMerceologico(gruppoMerceologico.getCdGruppoMerceologico());
+	}
+	public TipoArticoloBulk getTipoArticolo() {
+		return tipoArticolo;
+	}
+	public void setTipoArticolo(TipoArticoloBulk tipoArticolo) {
+		this.tipoArticolo = tipoArticolo;
+		if (tipoArticolo!=null)
+			super.setCdTipoArticolo(tipoArticolo.getCdTipoArticolo());
+	}
+	public UnitaMisuraBulk getUnitaMisura() {
+		return unitaMisura;
+	}
+	public void setUnitaMisura(UnitaMisuraBulk unitaMisura) {
+		this.unitaMisura = unitaMisura;
+		if (unitaMisura!=null)
+			super.setCdTipoArticolo(unitaMisura.getCdUnitaMisura());
+	}
+	public void setUnita_misura(java.lang.String cdUnitaMisura) {
+		this.getUnitaMisura().setCdUnitaMisura(cdUnitaMisura);
+	}
+	public void setCdGruppoMerceologico(java.lang.String cdGruppoMerceologico) {
+		this.getGruppoMerceologico().setCdGruppoMerceologico(cdGruppoMerceologico);
 	}
 }

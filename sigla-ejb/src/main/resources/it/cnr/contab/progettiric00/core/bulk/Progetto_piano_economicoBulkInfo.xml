@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="voce_piano"
+		property="voce_piano_economico"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Voce del piano economico" />
+	<fieldProperty
+		name="cd_voce_piano"
+		property="voce_piano_economico.cd_voce_piano"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"		
+		label="Codice Voce" />
+	<fieldProperty
+		name="ds_voce_piano"
+		property="voce_piano_economico.ds_voce_piano"
+		maxLength="100"
+		inputSize="100"
+		inputType="ROTEXT"
+		label="Descrizione Voce"/>
+	<fieldProperty
+		name="esercizio_piano"
+		property="esercizio_piano"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio" />
+	<fieldProperty
+		name="im_entrata"
+		property="im_entrata"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Entrata" />
+	<fieldProperty
+		name="im_spesa"
+		property="im_spesa"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Spesa" />
+	<fieldProperty
+		name="fl_ctrl_disp"
+		property="fl_ctrl_disp"
+		inputType="CHECKBOX"
+		label="Controlla Disponibilità" />
+
+	<fieldProperty
+		name="im_assestato_entrata"
+		property="saldoEntrata.assestato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Entrata" />
+	<fieldProperty
+		name="im_disp_residua_entrata"
+		property="saldoEntrata.disp_residua"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Disponibilità Residua Entrata" />
+	<fieldProperty
+		name="im_assestato_spesa"
+		property="saldoSpesa.assestato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Spesa" />
+	<fieldProperty
+		name="im_disp_residua_spesa"
+		property="saldoSpesa.disp_residua"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Disponibilità Residua Spesa" />
+
+
+	<formFieldProperty name="voce_piano" />
+	<formFieldProperty name="cd_voce_piano" />
+	<formFieldProperty name="ds_voce_piano" />
+	<formFieldProperty name="esercizio_piano" />
+	<formFieldProperty name="im_entrata"/> 
+	<formFieldProperty name="im_spesa"/> 
+	<formFieldProperty name="fl_ctrl_disp" />
+	<formFieldProperty name="im_assestato_entrata" />
+	<formFieldProperty name="im_disp_residua_entrata" />
+	<formFieldProperty name="im_assestato_spesa" />
+	<formFieldProperty name="im_disp_residua_spesa" />
+	
+	<columnFieldProperty name="voce_piano" />
+	<columnFieldProperty name="cd_voce_piano" />
+	<columnFieldProperty name="ds_voce_piano" />
+	<columnFieldProperty name="esercizio_piano" />
+	<columnFieldProperty name="im_entrata"/> 
+	<columnFieldProperty name="im_spesa"/> 
+	<columnFieldProperty name="fl_ctrl_disp" />
+	<columnFieldProperty name="im_assestato_entrata" />
+	<columnFieldProperty name="im_disp_residua_entrata" />
+	<columnFieldProperty name="im_assestato_spesa" />
+	<columnFieldProperty name="im_disp_residua_spesa" />
+
+	<findFieldProperty name="cd_voce_piano" />
+	<findFieldProperty name="ds_voce_piano" />
+	<findFieldProperty name="fl_ctrl_disp" />
+
+	<form name="piano_economico">
+		<formFieldProperty
+			name="esercizio_piano"/>
+		<formFieldProperty
+			name="voce_piano"/>
+		<formFieldProperty
+			name="im_entrata"/> 
+		<formFieldProperty
+			name="im_spesa"/> 
+		<formFieldProperty
+			name="fl_ctrl_disp"/> 
+	</form>
+
+	<columnSet name="piano_economico">
+		<columnFieldProperty
+			name="esercizio_piano"/>
+		<columnFieldProperty
+			name="cd_voce_piano"/>
+		<columnFieldProperty
+			name="ds_voce_piano"/>
+		<columnFieldProperty
+			name="fl_ctrl_disp"/>
+		<columnFieldProperty
+			name="im_entrata"
+			headerLabel="ENTRATA"
+			label="Disp. Iniziale"/>
+		<columnFieldProperty 
+			name="im_assestato_entrata"
+			headerLabel="ENTRATA"
+			label="Assestato"/>
+		<columnFieldProperty 
+			name="im_disp_residua_entrata"
+			headerLabel="ENTRATA"
+			label="Disp. Residua"/>
+		<columnFieldProperty
+			name="im_spesa"
+			headerLabel="SPESA"
+			label="Disp. Iniziale"/>
+		<columnFieldProperty 
+			name="im_assestato_spesa"
+			headerLabel="SPESA"
+			label="Assestato"/>
+		<columnFieldProperty 
+			name="im_disp_residua_spesa"
+			headerLabel="SPESA"
+			label="Disp. Residua"/>
+	</columnSet>
+	
+	<form name="piano_economico1">
+		<formFieldProperty
+			name="voce_piano"/>
+		<formFieldProperty
+			name="im_entrata"/> 
+		<formFieldProperty
+			name="im_spesa"/> 
+		<formFieldProperty
+			name="fl_ctrl_disp"/> 
+	</form>
+
+	<columnSet name="piano_economico1">
+		<columnFieldProperty
+			name="cd_voce_piano"/>
+		<columnFieldProperty
+			name="ds_voce_piano"/>
+		<columnFieldProperty
+			name="fl_ctrl_disp"/>
+		<columnFieldProperty
+			name="im_entrata"
+			headerLabel="ENTRATA"
+			label="Disp. Iniziale"/>
+		<columnFieldProperty 
+			name="im_assestato_entrata"
+			headerLabel="ENTRATA"
+			label="Assestato"/>
+		<columnFieldProperty 
+			name="im_disp_residua_entrata"
+			headerLabel="ENTRATA"
+			label="Disp. Residua"/>
+		<columnFieldProperty
+			name="im_spesa"
+			headerLabel="SPESA"
+			label="Disp. Iniziale"/>
+		<columnFieldProperty 
+			name="im_assestato_spesa"
+			headerLabel="SPESA"
+			label="Assestato"/>
+		<columnFieldProperty 
+			name="im_disp_residua_spesa"
+			headerLabel="SPESA"
+			label="Disp. Residua"/>
+	</columnSet>	
+</bulkInfo>

@@ -25,6 +25,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
@@ -172,7 +173,16 @@ public class CRUDPdgModuloEntrateGestComponent extends it.cnr.jada.comp.CRUDComp
 		sql.addClause("AND","cd_centro_responsabilita",sql.EQUALS,dett.getCd_cdr_assegnatario());
 		sql.addClause("AND","pg_progetto",sql.EQUALS,dett.getPg_progetto());
 		sql.addClause("AND","cd_natura",sql.EQUALS,dett.getCd_natura());
-		sql.addClause("AND","ti_gestione",sql.EQUALS,Elemento_voceHome.GESTIONE_ENTRATE);
+
+		sql.openParenthesis(FindClause.AND);
+		sql.addClause(FindClause.OR,"ti_gestione",SQLBuilder.EQUALS,WorkpackageBulk.TI_GESTIONE_ENTRATE);
+		sql.addClause(FindClause.OR,"ti_gestione",SQLBuilder.EQUALS,WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
+		sql.closeParenthesis();
+
+		if (dett.getPdg_modulo_entrate().getVoce_piano_economico()!=null && dett.getPdg_modulo_entrate().getVoce_piano_economico().getCd_voce_piano()!=null ) {
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_UNITA_PIANO",SQLBuilder.EQUALS,dett.getPdg_modulo_entrate().getVoce_piano_economico().getCd_unita_organizzativa());
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_VOCE_PIANO",SQLBuilder.EQUALS,dett.getPdg_modulo_entrate().getVoce_piano_economico().getCd_voce_piano());
+		}
 
 		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
 		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));

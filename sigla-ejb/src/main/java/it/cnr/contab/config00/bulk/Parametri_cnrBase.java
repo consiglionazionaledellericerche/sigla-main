@@ -1,7 +1,6 @@
 package it.cnr.contab.config00.bulk;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import it.cnr.jada.persistency.Keyed;
 
@@ -46,6 +45,9 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	private String clausolaOrdine;
 	private java.sql.Timestamp data_stipula_contratti;
 	private Boolean fl_nuovo_pdg;
+	private Boolean fl_pdg_codlast;
+	private Boolean fl_pdg_contrattazione;
+	private Boolean fl_pdg_quadra_fonti_esterne;
 	private java.sql.Timestamp data_attivazione_new_voce;
 	
 	private Boolean fl_tesoreria_unica;
@@ -335,6 +337,7 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	public Boolean getFl_pubblica_contratto() {
 		return fl_pubblica_contratto;
 	}
+
 	public void setFl_pubblica_contratto(Boolean fl_pubblica_contratto) {
 		this.fl_pubblica_contratto = fl_pubblica_contratto;
 	}	
@@ -352,5 +355,28 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 
 	public void setLivello_pat(Integer integer) {
 		livello_pat = integer;
+	}
+	public Boolean getFl_pdg_codlast() {
+		return fl_pdg_codlast;
+	}
+	
+	public void setFl_pdg_codlast(Boolean fl_pdg_codlast) {
+		this.fl_pdg_codlast = fl_pdg_codlast;
+	}
+	
+	public Boolean getFl_pdg_contrattazione() {
+		return fl_pdg_contrattazione;
+	}
+	
+	public void setFl_pdg_contrattazione(Boolean fl_pdg_contrattazione) {
+		this.fl_pdg_contrattazione = fl_pdg_contrattazione;
+	}
+	
+	public Boolean getFl_pdg_quadra_fonti_esterne() {
+		return fl_pdg_quadra_fonti_esterne;
+	}
+	
+	public void setFl_pdg_quadra_fonti_esterne(Boolean fl_pdg_quadra_fonti_esterne) {
+		this.fl_pdg_quadra_fonti_esterne = fl_pdg_quadra_fonti_esterne;
 	}
 }
