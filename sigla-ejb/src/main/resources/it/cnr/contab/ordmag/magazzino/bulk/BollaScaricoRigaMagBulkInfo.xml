@@ -63,15 +63,15 @@
 		nullable="false"
 		label="pgBollaSca" />
 	<fieldProperty
-		name="rigbollaScaN"
-		property="rigbollaScaN"
+		name="rigaBollaSca"
+		property="rigaBollaSca"
 		inputType="TEXT"
 		inputSize="5"
 		maxLength="5"
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="rigbollaScaN" />
+		label="Riga" />
 	<fieldProperty
 		name="cdBeneServizio"
 		property="cdBeneServizio"
@@ -336,12 +336,12 @@
 		<formFieldProperty
 			name="pgBollaSca" />
 		<formFieldProperty
-			name="rigbollaScaN" />
+			name="rigaBollaSca" />
 	</form>
 	<formFieldProperty
 		name="findBollaScaricoMag" />
 	<formFieldProperty
-		name="rigbollaScaN" />
+		name="rigaBollaSca" />
 	<formFieldProperty
 		name="findUnitaMisura" />
 	<formFieldProperty
@@ -373,7 +373,7 @@
 	<findFieldProperty
 		name="pgBollaSca" />
 	<findFieldProperty
-		name="rigbollaScaN" />
+		name="rigaBollaSca" />
 	<findFieldProperty
 		name="cdBeneServizio" />
 	<findFieldProperty
@@ -437,7 +437,7 @@
 	<columnFieldProperty
 		name="pgBollaSca" />
 	<columnFieldProperty
-		name="rigbollaScaN" />
+		name="rigaBollaSca" />
 	<columnFieldProperty
 		name="cdBeneServizio" />
 	<columnFieldProperty
