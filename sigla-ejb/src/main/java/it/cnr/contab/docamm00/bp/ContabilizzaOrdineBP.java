@@ -22,7 +22,6 @@ import java.util.List;
 public class ContabilizzaOrdineBP extends SelezionatoreListaBP implements SearchProvider {
 
     private Fattura_passiva_rigaBulk fattura_passiva_rigaBulk;
-    private CondizioneComplessaBulk condizioneCorrente;
 
     public ContabilizzaOrdineBP(String s) {
         super(s);
@@ -30,34 +29,8 @@ public class ContabilizzaOrdineBP extends SelezionatoreListaBP implements Search
         setColumns(getBulkInfo().getColumnFieldPropertyDictionary("fattura_passiva"));
     }
 
-    @Override
-    public Button[] createToolbar() {
-        List<Button> buttons = new ArrayList<Button>(Arrays.asList(super.createToolbar()));
-        Button button = new Button(Config.getHandler().getProperties(getClass()), "Toolbar.freeSearchFilter");
-        button.setSeparator(true);
-        buttons.add(button);
-        buttons.add(new Button(Config.getHandler().getProperties(getClass()), "Toolbar.freeSearchRemoveFilter"));
-        return buttons.toArray(new Button[buttons.size()]);
-    }
-
     public void setFattura_passiva_rigaBulk(Fattura_passiva_rigaBulk fattura_passiva_rigaBulk) {
         this.fattura_passiva_rigaBulk = fattura_passiva_rigaBulk;
-    }
-
-    public boolean isFilterButtonHidden() {
-        return false;
-    }
-
-    public boolean isRemoveFilterButtonHidden() {
-        return condizioneCorrente == null;
-    }
-
-    public CondizioneComplessaBulk getCondizioneCorrente() {
-        return condizioneCorrente;
-    }
-
-    public void setCondizioneCorrente(CondizioneComplessaBulk condizioneCorrente) {
-        this.condizioneCorrente = condizioneCorrente;
     }
 
     @Override
@@ -75,6 +48,4 @@ public class ContabilizzaOrdineBP extends SelezionatoreListaBP implements Search
             throw new BusinessProcessException(exception);
         }
     }
-
-
 }
