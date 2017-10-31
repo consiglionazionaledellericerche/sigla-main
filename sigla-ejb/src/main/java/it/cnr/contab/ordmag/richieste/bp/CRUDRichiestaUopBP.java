@@ -243,25 +243,27 @@ public class CRUDRichiestaUopBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ri
 	@Override
 	public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
 		RichiestaUopBulk allegatoParentBulk = (RichiestaUopBulk)oggettobulk;
-        richiesteCMISService.getFilesRichiesta(allegatoParentBulk).stream()
-                .filter(storageObject -> !richiesteCMISService.hasAspect(storageObject, StoragePropertyNames.SYS_ARCHIVED.value()))
-                .filter(storageObject -> !richiesteCMISService.hasAspect(storageObject, RichiesteCMISService.ASPECT_STAMPA_RICHIESTA_ORDINI))
-                .filter(storageObject -> !excludeChild(storageObject))
-                .forEach(storageObject -> {
-                    try {
-                        richiesteCMISService.recuperoAllegatiDettaglioRichiesta(allegatoParentBulk, storageObject);
-                        AllegatoRichiestaBulk allegato = (AllegatoRichiestaBulk) Introspector.newInstance(getAllegatoClass(), storageObject);
-                        allegato.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-                        allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
-                        allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
-                        allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
-                        completeAllegato(allegato);
-                        allegato.setCrudStatus(OggettoBulk.NORMAL);
-                        allegatoParentBulk.addToArchivioAllegati(allegato);
-                    } catch (NoSuchMethodException|IllegalAccessException|InstantiationException|InvocationTargetException|ApplicationException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+		if (allegatoParentBulk.getCdUnitaOperativa() != null){
+	        richiesteCMISService.getFilesRichiesta(allegatoParentBulk).stream()
+            .filter(storageObject -> !richiesteCMISService.hasAspect(storageObject, StoragePropertyNames.SYS_ARCHIVED.value()))
+            .filter(storageObject -> !richiesteCMISService.hasAspect(storageObject, RichiesteCMISService.ASPECT_STAMPA_RICHIESTA_ORDINI))
+            .filter(storageObject -> !excludeChild(storageObject))
+            .forEach(storageObject -> {
+                try {
+                    richiesteCMISService.recuperoAllegatiDettaglioRichiesta(allegatoParentBulk, storageObject);
+                    AllegatoRichiestaBulk allegato = (AllegatoRichiestaBulk) Introspector.newInstance(getAllegatoClass(), storageObject);
+                    allegato.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+                    allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
+                    allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
+                    allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
+                    completeAllegato(allegato);
+                    allegato.setCrudStatus(OggettoBulk.NORMAL);
+                    allegatoParentBulk.addToArchivioAllegati(allegato);
+                } catch (NoSuchMethodException|IllegalAccessException|InstantiationException|InvocationTargetException|ApplicationException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+		}
 		return allegatoParentBulk;
 	}
 
