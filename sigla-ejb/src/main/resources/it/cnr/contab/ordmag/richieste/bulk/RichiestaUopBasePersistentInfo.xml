@@ -36,6 +36,12 @@
 			columnSize="30"
 			nullable="true" />
 		<columnMapping
+			columnName="CD_UOP_RICHIESTA"
+			propertyName="cdUopRichiesta"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
 			columnName="DATA_INVIO"
 			propertyName="dataInvio"
 			sqlTypeName="TIMESTAMP"
@@ -88,6 +94,8 @@
 		name="nota" />
 	<persistentProperty
 		name="cdUnitaOperativaDest" />
+	<persistentProperty
+		name="cdUopRichiesta" />
 	<persistentProperty
 		name="dataInvio" />
 	<persistentProperty
