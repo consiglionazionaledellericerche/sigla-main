@@ -2153,7 +2153,7 @@ public void verificaCoperturaContratto (UserContext aUC,OrdineAcqBulk ordine, in
 	  try {	
 		  ContrattoHome contrattoHome = (ContrattoHome)getHome(aUC, ContrattoBulk.class);
 		  SQLBuilder sql = contrattoHome.calcolaTotOrdini(aUC,ordine.getContratto());
-		  BigDecimal totale = null; 
+		  BigDecimal totale = BigDecimal.ZERO; 
 			try {
 				java.sql.ResultSet rs = null;
 				LoggableStatement ps = null;
@@ -2175,7 +2175,7 @@ public void verificaCoperturaContratto (UserContext aUC,OrdineAcqBulk ordine, in
 				throw handleException(ex);
 			}
 		  if (flag == INSERIMENTO){
-			    totale = totale.add(ordine.getImTotaleOrdine());			  
+			    totale = Utility.nvl(totale).add(ordine.getImTotaleOrdine());			  
 		  } else if (flag == MODIFICA){
 				OrdineAcqBulk ordineDB;
 				try {
