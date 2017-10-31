@@ -237,6 +237,13 @@
 			columnScale="2"
 			nullable="true" />
 		<columnMapping
+			columnName="VINCOLI_RES"
+			propertyName="vincoli_res"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
 			columnName="DISP_RES"
 			propertyName="disp_res"
 			sqlTypeName="DECIMAL"
@@ -343,6 +350,8 @@
 		name="var_meno_res_pro" />
 	<persistentProperty
 		name="ass_res" />
+	<persistentProperty
+		name="vincoli_res" />
 	<persistentProperty
 		name="disp_res" />
 	<persistentProperty
@@ -494,6 +503,13 @@
 		<columnMapping
 			columnName="ASS_RES"
 			propertyName="ass_res"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VINCOLI_RES"
+			propertyName="vincoli_res"
 			sqlTypeName="DECIMAL"
 			columnSize="15"
 			columnScale="2"
@@ -1000,6 +1016,13 @@
 			columnScale="2"
 			nullable="true" />
 		<columnMapping
+			columnName="VINCOLI_RES"
+			propertyName="vincoli_res"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
 			columnName="DISP_RES"
 			propertyName="disp_res"
 			sqlTypeName="DECIMAL"
@@ -1367,6 +1390,13 @@
 		<columnMapping
 			columnName="ASS_RES"
 			propertyName="ass_res"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VINCOLI_RES"
+			propertyName="vincoli_res"
 			sqlTypeName="DECIMAL"
 			columnSize="15"
 			columnScale="2"

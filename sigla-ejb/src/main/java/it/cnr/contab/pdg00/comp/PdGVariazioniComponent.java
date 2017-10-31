@@ -1,5 +1,23 @@
 package it.cnr.contab.pdg00.comp;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+
+import javax.ejb.EJBException;
+
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
@@ -87,24 +105,6 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.sql.Types;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
-
-import javax.ejb.EJBException;
 
 public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		implements Cloneable, Serializable, IPrintMgr {
@@ -395,7 +395,6 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			CompoundFindClause clauses, OggettoBulk bulk)
 			throws ComponentException,
 			it.cnr.jada.persistency.PersistencyException {
-		try {
 			SQLBuilder sql = getHome(userContext, bulk, "VP_PDG_VARIAZIONE")
 					.createSQLBuilder();
 			sql.addClause(clauses);
@@ -456,9 +455,6 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 				sql.closeParenthesis();
 			}
 			return sql;
-		} catch (IntrospectionException e) {
-			throw new ComponentException(e);
-		}
 	}
 
 	protected Query select(UserContext userContext, CompoundFindClause clauses,

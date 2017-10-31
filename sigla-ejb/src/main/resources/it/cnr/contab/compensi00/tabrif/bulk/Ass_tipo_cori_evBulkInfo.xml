@@ -45,7 +45,7 @@
 		label="Codice CO/RI" />
 	<fieldProperty
 		name="cd_elemento_voce"
-		property="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
 		inputType="TEXT"
 		maxLength="45"
 		enabledOnSearch="true"
