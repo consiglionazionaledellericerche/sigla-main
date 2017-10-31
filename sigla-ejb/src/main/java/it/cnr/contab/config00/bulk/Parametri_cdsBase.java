@@ -46,6 +46,8 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 
 	private Boolean fl_riaccertamento;
 
+	private Boolean fl_riobbligazione;
+
 	public Parametri_cdsBase() {
 		super();
 	}
@@ -284,5 +286,11 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 	}
 	public void setFl_riaccertamento(Boolean fl_riaccertamento) {
 		this.fl_riaccertamento = fl_riaccertamento;
+	}
+	public Boolean getFl_riobbligazione() {
+		return fl_riobbligazione;
+	}
+	public void setFl_riobbligazione(Boolean fl_riobbligazione) {
+		this.fl_riobbligazione = fl_riobbligazione;
 	}
 }

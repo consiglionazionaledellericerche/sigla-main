@@ -1743,4 +1743,18 @@ public String recupero_cdr_speciale_stipendi() throws IntrospectionException, Pe
 		return null;
 	return conf_cnr.getVal01();
 }
+/**
+ * Ritorna tutti le obbligazioni uguali al bulk indipendentemente dall'esercizio
+ * comprensivo di quello indicato nel bulk
+ *
+ */
+public SQLBuilder selectAllEqualsObbligazioniByClause( ObbligazioneBulk bulk, ObbligazioneHome home,OggettoBulk bulkClause,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException
+{	
+	SQLBuilder sql = this.createSQLBuilder();
+	sql.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, bulk.getCd_cds() );
+	sql.addClause(FindClause.AND, "esercizio_originale", SQLBuilder.EQUALS, bulk.getEsercizio_originale() );
+	sql.addClause(FindClause.AND, "pg_obbligazione", SQLBuilder.EQUALS, bulk.getPg_obbligazione() );
+	sql.addClause( clause );
+	return sql;
+}
 }

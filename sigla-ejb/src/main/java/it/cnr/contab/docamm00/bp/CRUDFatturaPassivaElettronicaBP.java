@@ -421,7 +421,11 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	    	fatturaPassivaBulk.setFl_san_marino_senza_iva(Boolean.FALSE);
 	    	fatturaPassivaBulk.setFl_fattura_compenso(existsTributi(documentoEleTestata));
 
-	    	fatturaPassivaBulk.setFl_split_payment(documentoEleTestata.isDocumentoSplitPayment());
+	    	//Il flag viene impostato a true se documento splitPayment con iva != 0
+	    	fatturaPassivaBulk.setFl_split_payment(documentoEleTestata.isDocumentoSplitPayment() &&
+	    			documentoEleTestata.getDocEleIVAColl()!=null && !documentoEleTestata.getDocEleIVAColl().isEmpty() && 
+	    			documentoEleTestata.getDocEleIVAColl().stream().map(x->x.getImposta()).reduce((x,y)->x.add(y)).get().compareTo(BigDecimal.ZERO)!=0);
+
 	    	if (fatturaPassivaBulk.getFl_split_payment()) {
 	    		java.util.Vector sezionali = ((FatturaPassivaComponentSession)nbp.createComponentSession()).estraeSezionali(context.getUserContext(),fatturaPassivaBulk);
 	    		fatturaPassivaBulk.setSezionali(sezionali);
@@ -583,7 +587,12 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				.filter(DocumentoEleAllegatiBulk.class::isInstance)
 				.map(DocumentoEleAllegatiBulk.class::cast)
 				.map(DocumentoEleAllegatiBulk::getCmisNodeRef)
-				.anyMatch(s -> s.equals(storageObject.getKey()))){
+                .filter(cmisNodeRef -> Optional.ofNullable(cmisNodeRef).isPresent())
+				.anyMatch(cmisNodeRef -> cmisNodeRef.equals(
+						Optional.ofNullable(storageObject)
+								.map(StorageObject::getKey)
+								.orElse("")
+				))){
 			return true;
 		}
 		if (storageObject.<String>getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value())

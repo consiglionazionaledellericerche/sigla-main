@@ -90,7 +90,10 @@ public class V_assestatoBulk extends OggettoBulk implements KeyedPersistent {
 
 	private java.math.BigDecimal prc_da_assegnare;
 	
-//    DB_IMP_UTILIZZATO DECIMAL(22,0)
+//  IMPORTO_VINCOLI DECIMAL(22,0)
+	private java.math.BigDecimal importo_vincoli;
+
+	//    DB_IMP_UTILIZZATO DECIMAL(22,0)
 //    utilizzata per memorizzare il valore iniziale dell'importo dell'oggetto 
 //    che risulta già sottratto alla disponibilità mostrata
 	private java.math.BigDecimal db_imp_utilizzato;
@@ -224,6 +227,8 @@ public class V_assestatoBulk extends OggettoBulk implements KeyedPersistent {
 			label = label.concat("\rVariazioni Residui Propri: " + new it.cnr.contab.util.EuroFormat().format(getVariazioni_residui_propri().negate()));
 		if (getImporto_utilizzato().compareTo(Utility.ZERO)!=0)
 			label = label.concat("\rImpegni assunti: " + new it.cnr.contab.util.EuroFormat().format(getImporto_utilizzato().subtract(Utility.nvl(getDb_imp_utilizzato()))));
+		if (getImporto_vincoli().compareTo(Utility.ZERO)!=0)
+			label = label.concat("\rVincoli: " + new it.cnr.contab.util.EuroFormat().format(getImporto_vincoli()));
 		return label;
 	}
 
@@ -307,5 +312,13 @@ public class V_assestatoBulk extends OggettoBulk implements KeyedPersistent {
 	}
 	public void setCd_natura(java.lang.String cd_natura) {
 		this.cd_natura = cd_natura;
+	}
+	
+	public java.math.BigDecimal getImporto_vincoli() {
+		return importo_vincoli;
+	}
+	
+	public void setImporto_vincoli(java.math.BigDecimal importo_vincoli) {
+		this.importo_vincoli = importo_vincoli;
 	}
 }
