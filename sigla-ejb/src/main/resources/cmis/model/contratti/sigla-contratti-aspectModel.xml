@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+	<!-- Definition of new Model -->
+<model name="sigla_contratti_aspect:sigla_contratti_aspectModel" 
+	xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<!-- Optional meta-data about the model -->
+	<description>SIGLA extension Content Model - Tipo Norma</description>
+	<author>Raffaele Pagano</author>
+	<version>1.0</version>
+
+	<!--
+		Imports are required to allow references to definitions in other
+		models
+	-->
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+
+	<!-- Introduction of new namespaces defined by this model -->
+	<namespaces>
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/cmis" prefix="sigla_contratti_aspect" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/procedura/cmis" prefix="sigla_contratti_aspect_procedura" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/incarichi/cmis" prefix="sigla_contratti_aspect_incarichi" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/borse_studio/cmis" prefix="sigla_contratti_aspect_borse_studio" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/assegni_ricerca/cmis" prefix="sigla_contratti_aspect_assegni_ricerca" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/appalti/cmis" prefix="sigla_contratti_aspect_appalti" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/tipo_norma/cmis" prefix="sigla_contratti_aspect_tipo_norma" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/link/cmis" prefix="sigla_contratti_aspect_link" />
+	</namespaces>
+	<aspects>
+		<aspect name="sigla_contratti_aspect:link">
+			<title>Link esterno ad una pagina WEB</title>
+			<properties>
+				<property name="sigla_contratti_aspect_link:url">
+					<title>URL Http ad una pagina esterna</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+
+		<aspect name="sigla_contratti_aspect:procedura">
+			<title>Procedura Conferimento Incarico</title>
+			<properties>
+				<property name="sigla_contratti_aspect_procedura:esercizio">
+					<title>Esercizio di riferimento</title>
+					<type>d:int</type>
+				</property>
+				<property name="sigla_contratti_aspect_procedura:progressivo">
+					<title>Progressivo di riferimento</title>
+					<type>d:long</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_contratti_aspect:incarichi">
+			<title>Incarico di Collaborazione</title>
+			<properties>
+				<property name="sigla_contratti_aspect_incarichi:esercizio">
+					<title>Esercizio di riferimento</title>
+					<type>d:int</type>
+				</property>
+				<property name="sigla_contratti_aspect_incarichi:progressivo">
+					<title>Progressivo di riferimento</title>
+					<type>d:long</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_contratti_aspect:borse_studio">
+			<title>Borse di Studio</title>
+			<properties>
+				<property name="sigla_contratti_aspect_borse_studio:esercizio">
+					<title>Esercizio di riferimento</title>
+					<type>d:int</type>
+				</property>
+				<property name="sigla_contratti_aspect_borse_studio:progressivo">
+					<title>Progressivo di riferimento</title>
+					<type>d:long</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_contratti_aspect:assegni_ricerca">
+			<title>Assegni di Ricerca</title>
+			<properties>
+				<property name="sigla_contratti_aspect_assegni_ricerca:esercizio">
+					<title>Esercizio di riferimento</title>
+					<type>d:int</type>
+				</property>
+				<property name="sigla_contratti_aspect_assegni_ricerca:progressivo">
+					<title>Progressivo di riferimento</title>
+					<type>d:long</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_contratti_aspect:appalti">
+			<title>Appalti di Servizi</title>
+			<properties>
+				<property name="sigla_contratti_aspect_appalti:esercizio">
+					<title>Esercizio di riferimento</title>
+					<type>d:int</type>
+				</property>
+				<property name="sigla_contratti_aspect_appalti:stato">
+					<title>Stato del contratto</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_contratti_aspect_appalti:progressivo">
+					<title>Progressivo di riferimento</title>
+					<type>d:long</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_contratti_aspect:tipo_norma">
+			<title>Norma o Titolo</title>
+			<properties>
+				<property name="sigla_contratti_aspect_tipo_norma:descrizione">
+					<title>Descrizione</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_contratti_aspect_tipo_norma:numero">
+					<title>Numero</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_contratti_aspect_tipo_norma:data">
+					<title>Data</title>
+					<type>d:datetime</type>
+				</property>
+				<property name="sigla_contratti_aspect_tipo_norma:articolo">
+					<title>Articolo</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_contratti_aspect_tipo_norma:comma">
+					<title>Comma</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+
+		<aspect name="sigla_contratti_aspect:stato_annullato">
+			<title>Stato annullato</title>
+		</aspect>
+		<aspect name="sigla_contratti_aspect:stato_definitivo">
+			<title>Stato del contratto</title>
+		</aspect>
+	</aspects>
+</model>

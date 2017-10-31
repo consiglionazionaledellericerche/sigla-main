@@ -4,12 +4,7 @@ import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -1069,7 +1064,14 @@ public SQLBuilder selectCommessaForPrintByClause (UserContext userContext,Stampa
 	sql.addClause("AND", "esercizio", sql.EQUALS, CNRUserContext.getEsercizio(userContext));
 	sql.addClause("AND", "tipo_fase", sql.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
 	sql.addClause("AND", "livello", sql.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
-	sql.addClause("AND","pg_progetto_padre",sql.EQUALS,stampa.getProgettoForPrint().getPg_progetto());
+	Optional.ofNullable(stampa)
+			.ifPresent(stampa_elenco_progetti_laBulk -> {
+				Optional.ofNullable(stampa_elenco_progetti_laBulk.getProgettoForPrint())
+						.map(progettoBulk -> progettoBulk.getPg_progetto())
+						.ifPresent(pgProgetto -> {
+							sql.addClause("AND","pg_progetto_padre",SQLBuilder.EQUALS, pgProgetto);
+						});
+			});
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 	if (((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
 		sql.addSQLClause("AND","V_PROGETTO_PADRE.PG_PROGETTO_PADRE IN ( SELECT DISTINCT PG_PROGETTO FROM V_PROGETTO_PADRE WHERE CD_PROGETTO = ?)");

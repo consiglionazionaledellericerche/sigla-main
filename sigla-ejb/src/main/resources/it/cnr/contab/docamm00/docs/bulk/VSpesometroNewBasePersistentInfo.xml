@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.docs.bulk.VSpesometroNewBase"
+	keyClassName="it.cnr.contab.docamm00.docs.bulk.VSpesometroNewKey"
+	homeClassName="it.cnr.contab.docamm00.docs.bulk.VSpesometroNewHome">
+	<defaultColumnMap
+		tableName="V_SPESOMETRO_NEW">
+		<columnMapping
+			columnName="DATA"
+			propertyName="data"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="TI_FATTURA"
+			propertyName="ti_fattura"
+			sqlTypeName="CHAR"
+			columnSize="4" />
+		<columnMapping
+			columnName="TIPO"
+			propertyName="tipo"
+			sqlTypeName="VARCHAR"
+			columnSize="7" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="UO"
+			propertyName="uo"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />	
+		<columnMapping
+			columnName="PROG_FATTURA"
+			propertyName="prog_fattura"
+			sqlTypeName="DECIMAL"
+			columnSize="22"/>		
+		<columnMapping
+			columnName="NATURA"
+			propertyName="natura"
+			sqlTypeName="VARCHAR"
+			columnSize="2" />
+		<columnMapping
+			columnName="PERCENTUALE"
+			propertyName="percentuale"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />		
+		<columnMapping	
+			columnName="FL_DETRAIBILE"
+			propertyName="fl_detraibile"
+			sqlTypeName="CHAR"
+			columnSize="1" />	
+		<columnMapping
+			columnName="IMPONIBILE_FA"
+			propertyName="imponibile_fa"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="IVA_FA"
+			propertyName="iva_fa"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="PERC_DETRA"
+			propertyName="perc_detra"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
+		<columnMapping
+			columnName="SPLIT"
+			propertyName="split"
+			sqlTypeName="VARCHAR"
+			columnSize="1" />	
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="STATO_RESIDENZA"
+			propertyName="stato_residenza"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>
+		<columnMapping
+			columnName="PROVINCIA"
+			propertyName="provincia"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="COD_NAZ"
+			propertyName="cod_naz"
+			sqlTypeName="VARCHAR"
+			columnSize="10" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragione_sociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>
+		<columnMapping
+			columnName="INDIRIZZO_SEDE"
+			propertyName="indirizzo_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="106"/>
+		<columnMapping
+			columnName="NUMERO_CIVICO_SEDE"
+			propertyName="numero_civico_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="5" />	
+		<columnMapping
+			columnName="COMUNE_SEDE"
+			propertyName="comune_sede"
+			sqlTypeName="VARCHAR"
+			columnSize="100"/>	
+		<columnMapping
+			columnName="CAP"
+			propertyName="cap"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />		
+		<columnMapping
+			columnName="DT_FATTURA_FORNITORE"
+			propertyName="dt_fattura_fornitore"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="NR_FATTURA_FORNITORE"
+			propertyName="nr_fattura_fornitore"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />		
+		<columnMapping
+			columnName="TERZO_UO"
+			propertyName="terzo_uo"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />		
+	</defaultColumnMap>
+ <persistentProperty
+		name="data" />
+	<persistentProperty
+		name="tipo" />
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="ti_fattura" />	
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="partita_iva" />	
+	<persistentProperty
+		name="prog_fattura" />
+	<persistentProperty
+		name="uo" />	
+	<persistentProperty
+		name="cap" />	
+	<persistentProperty
+		name="percentuale" />	
+	<persistentProperty
+		name="natura" />	
+	<persistentProperty
+		name="perc_detra" />
+	<persistentProperty
+		name="fl_detraibile" />
+	<persistentProperty
+		name="iva_fa" />
+	<persistentProperty
+		name="imponibile_fa" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="ragione_sociale" />		
+	<persistentProperty
+		name="nr_fattura_fornitore" />
+	<persistentProperty
+		name="dt_fattura_fornitore" />
+	<persistentProperty
+		name="numero_civico_sede" />
+	<persistentProperty
+		name="comune_sede" />
+	<persistentProperty
+		name="indirizzo_sede" />
+	<persistentProperty
+		name="stato_residenza" />
+	<persistentProperty
+		name="cod_naz" />
+	<persistentProperty
+		name="provincia" />
+	<persistentProperty
+		name="split" />
+	<persistentProperty
+		name="terzo_uo" />			
+</SQLPersistentInfo>

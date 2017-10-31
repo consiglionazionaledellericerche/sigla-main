@@ -1,5 +1,6 @@
 package it.cnr.contab.doccont00.core.bulk;
 
+import java.math.BigDecimal;
 import java.util.Dictionary;
 
 import it.cnr.jada.action.ActionContext;
@@ -115,6 +116,17 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 	public void validate() throws ValidationException {
 		if ( getIm_accertamento() == null )
 			throw new ValidationException( "Il campo IMPORTO è obbligatorio." );
+
+		if (this.isInesigibile() || this.isParzialmenteInesigibile()) {
+			if (this.getIm_quota_inesigibile()==null) 
+				throw new ValidationException( "Il campo QUOTA INESIGIBILE è obbligatorio." );
+			if (this.getIm_quota_inesigibile().compareTo(BigDecimal.ZERO)<=0) 
+				throw new ValidationException( "Il campo QUOTA INESIGIBILE deve essere positivo." );
+			if (this.getIm_quota_inesigibile().compareTo(this.getImportoNonIncassato())>0)
+				throw new ValidationException( "Il campo QUOTA INESIGIBILE non può essere superiore all'importo residuo da incassare ("
+						+ new it.cnr.contab.util.EuroFormat().format(this.getImportoNonIncassato()) +")." );
+		}
+		
 		super.validate();
 	}
 	
@@ -127,5 +139,32 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 	@SuppressWarnings("rawtypes")
 	public Dictionary getStato_AccertamentoResiduoKeys() {
 		return stato_AccertamentoResiduoKeys;
-	}	
+	}
+	
+	private java.math.BigDecimal im_quota_inesigibile;
+	
+	public java.math.BigDecimal getIm_quota_inesigibile() {
+		return im_quota_inesigibile;
+	}
+	
+	public void setIm_quota_inesigibile(java.math.BigDecimal im_quota_inesigibile) {
+		this.im_quota_inesigibile = im_quota_inesigibile;
+	}
+	
+	public java.math.BigDecimal getIm_quota_inesigibile_ripartita() {
+		return getPdgVincoliColl().stream().map(x->x.getIm_vincolo()).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO)
+				.add(getAccertamentoVincoliPerentiColl().stream().map(x->x.getIm_vincolo()).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
+	}
+
+	public java.math.BigDecimal getIm_quota_inesigibile_da_ripartire() {
+		return getIm_quota_inesigibile().subtract(getIm_quota_inesigibile_ripartita());
+	}
+	
+	public boolean isInesigibile() {
+		return Stato.INESIGIBILE.value.equals(getStato());
+	}
+
+	public boolean isParzialmenteInesigibile() {
+		return Stato.PARZIALMENTE_INESIGIBILE.value.equals(getStato());
+	}
 }

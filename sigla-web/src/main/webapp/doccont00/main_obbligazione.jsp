@@ -33,34 +33,15 @@
 <table class="Panel">
 	<tr><td colspan=2>
 	<%	
-		if (bp.isEditingScadenza())
-		
-			JSPUtils.tabbed(
-						pageContext,
-						"tab",
-						new String[][] {
-								{ "tabObbligazione","Impegni","/doccont00/tab_obbligazione.jsp" },
-								{ "tabImputazioneFin","Imputazione Finanziaria","/doccont00/tab_imputazione_fin_obbligazione.jsp" },
-								{ "tabScadenzario","Scadenzario","/doccont00/tab_scadenzario_obbligazione.jsp" } ,
-								{ "tabCdrCapitoli","Cdr","/doccont00/tab_cdr_capitoli.jsp" } },						
-						bp.getTab("tab"),
-						"center",
-						null, null,
-						false);
-		else
-			JSPUtils.tabbed(
-						pageContext,
-						"tab",
-						new String[][] {
-								{ "tabObbligazione","Impegni","/doccont00/tab_obbligazione.jsp" },
-								{ "tabImputazioneFin","Imputazione Finanziaria","/doccont00/tab_imputazione_fin_obbligazione.jsp" },
-								{ "tabScadenzario","Scadenzario","/doccont00/tab_scadenzario_obbligazione.jsp" },
-								{ "tabCdrCapitoli","Cdr","/doccont00/tab_cdr_capitoli.jsp" } },												
-						bp.getTab("tab"),
-						"center",
-						null, null,						
-						true);		
-		%>
+		JSPUtils.tabbed(
+					pageContext,
+					"tab",
+					bp.getTabs(),
+					bp.getTab("tab"),
+					"center",
+					null, null,
+					!bp.isEditingScadenza());
+	%>
 	</td></tr>	
 	</table>
 <%	bp.closeFormWindow(pageContext); %>
