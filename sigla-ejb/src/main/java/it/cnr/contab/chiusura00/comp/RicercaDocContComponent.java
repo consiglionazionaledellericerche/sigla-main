@@ -1746,6 +1746,24 @@ public boolean isRiaccertamentoChiuso(it.cnr.jada.UserContext userContext) throw
 	}
 }
 
+public boolean isRiobbligazioneChiusa(it.cnr.jada.UserContext userContext) throws ComponentException {
+	try {
+		String cd_cds = CNRUserContext.getCd_cds(userContext);
+		if(cd_cds != null) {
+			Parametri_cdsBulk param_cds = (Parametri_cdsBulk)getHome(userContext, Parametri_cdsBulk.class).findByPrimaryKey(new Parametri_cdsBulk(cd_cds,((CNRUserContext)userContext).getEsercizio()));
+			if (param_cds.getFl_riobbligazione()) {
+				SQLBuilder sql = selectResiduiForRiobbligazione(userContext);
+				if (sql.executeCountQuery(getConnection(userContext))>0)
+					return false;
+			}
+		}
+		return true;
+	}
+	catch(Throwable e) {
+		throw handleException(e);
+	}
+}
+
 public boolean isGaeCollegateProgetti(it.cnr.jada.UserContext userContext) throws ComponentException {
 	try {
 		String cd_cds = CNRUserContext.getCd_cds(userContext);
@@ -1862,6 +1880,23 @@ public SQLBuilder selectResiduiForRiaccertamento(UserContext userContext) throws
 	return sql;
 }
 
+public SQLBuilder selectResiduiForRiobbligazione(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
+	SQLBuilder sql = getHome( userContext, V_obb_acc_xxxBulk.class, "V_OBB_ACC_RIPORTA" ).createSQLBuilder();
+	sql.addSQLClause(FindClause.AND, "V_OBB_ACC_RIPORTA.ESERCIZIO", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getEsercizio());
+	sql.addSQLClause(FindClause.AND, "V_OBB_ACC_RIPORTA.CD_CDS_ORIGINE", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getCd_cds());
+	sql.addSQLClause(FindClause.AND, "V_OBB_ACC_RIPORTA.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
+	sql.addSQLClause(FindClause.AND, "V_OBB_ACC_RIPORTA.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_OBB_RES);
+	sql.addSQLClause(FindClause.AND, "V_OBB_ACC_RIPORTA.FL_PGIRO",SQLBuilder.EQUALS, "N");
+
+	sql.addTableToHeader("OBBLIGAZIONE");
+	sql.addSQLJoin("OBBLIGAZIONE.CD_CDS", "V_OBB_ACC_RIPORTA.CD_CDS");
+	sql.addSQLJoin("OBBLIGAZIONE.ESERCIZIO", "V_OBB_ACC_RIPORTA.ESERCIZIO");
+	sql.addSQLJoin("OBBLIGAZIONE.ESERCIZIO_ORIGINALE", "V_OBB_ACC_RIPORTA.ESERCIZIO_ORI_ACC_OBB");
+	sql.addSQLJoin("OBBLIGAZIONE.PG_OBBLIGAZIONE", "V_OBB_ACC_RIPORTA.PG_ACC_OBB");
+	
+	sql.addSQLClause(FindClause.AND, "OBBLIGAZIONE.STATO_RESIDUO", SQLBuilder.ISNULL, null);
+	return sql;
+}
 public SQLBuilder selectGaeSenzaProgettiForRibaltamento(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
 	SQLBuilder sql = getHome( userContext, V_obb_acc_xxxBulk.class, "V_OBB_ACC_RIPORTA" ).createSQLBuilder();
 	sql.addSQLClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getEsercizio());

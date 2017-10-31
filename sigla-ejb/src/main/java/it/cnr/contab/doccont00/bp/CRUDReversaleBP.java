@@ -518,22 +518,23 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		}
 	}
 	public boolean isAggiungiRimuoviCodiciSiopeEnabled(){
-		return ((ReversaleBulk)getModel())!= null &&
-				((ReversaleBulk)getModel()).getCd_uo_origine() != null && 
-				(
-						(
-								((ReversaleBulk)getModel()).getCd_uo_origine().equals(getUoSrivania().getCd_unita_organizzativa()) &&
-								!isInputReadonly() &&
-								getStatus()!= VIEW &&
-								((ReversaleBulk)getModel()).getStato_trasmissione().equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO)
-								) ||
-								(
-										isUoEnte() && 
-										!((ReversaleBulk)getModel()).getCd_uo_origine().equals(getUoSrivania().getCd_unita_organizzativa()) &&
-										((ReversaleBulk)getModel()).isSiopeDaCompletare()
-										)
-						);
+        return Optional.ofNullable(getModel())
+				.filter(ReversaleBulk.class::isInstance)
+				.map(ReversaleBulk.class::cast)
+				.map(reversaleBulk -> {
+					return (Optional.ofNullable(reversaleBulk.getCd_uo_origine())
+							.filter(uoOrigine -> uoOrigine.equals(getUoSrivania().getCd_unita_organizzativa()))
+							.isPresent() && !isInputReadonly() && getStatus()!= VIEW &&
+							Optional.ofNullable(reversaleBulk.getStato_trasmissione())
+								.filter(statoTrasmissione -> statoTrasmissione.equals(ReversaleBulk.STATO_TRASMISSIONE_NON_INSERITO))
+								.isPresent()) || (
+										isUoEnte() && Optional.ofNullable(reversaleBulk.getCd_uo_origine())
+												.filter(uoOrigine -> !uoOrigine.equals(getUoSrivania().getCd_unita_organizzativa()))
+												.isPresent() && reversaleBulk.isSiopeDaCompletare()
+							);
+				}).orElse(false);
 	}
+
 	public void selezionaRigaSiopeDaCompletare(ActionContext actioncontext) throws it.cnr.jada.action.BusinessProcessException 
 	{
 		ReversaleBulk reversale = (ReversaleBulk)getModel();

@@ -253,11 +253,21 @@ public class CMISSiglaStorageConfiguration {
 
             @Override
             public void updateProperties(StorageObject storageObject, Map<String, Object> metadataProperties) {
-                Optional.ofNullable(siglaSession.getObject(storageObject.getKey()))
+                CmisObject cmisobject = Optional.ofNullable(siglaSession.getObject(storageObject.getKey()))
+                        .filter(cmisObject -> cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT))
+                        .map(Document.class::cast)
+                        .map(document -> siglaSession.getObject(document.<String>getPropertyValue("cmis:versionSeriesId")))
+                        .orElseGet(() -> siglaSession.getObject(storageObject.getKey()));
+
+                Optional.ofNullable(cmisobject)
                         .map(cmisObject -> {
                             Optional.ofNullable(metadataProperties.get(StoragePropertyNames.NAME.value()))
                                     .ifPresent(name -> {
-                                        cmisObject.updateProperties(Collections.singletonMap(StoragePropertyNames.NAME.value(), name), true);
+                                        try {
+                                            cmisObject.updateProperties(Collections.singletonMap(StoragePropertyNames.NAME.value(), name), true);
+                                        } catch(CmisConstraintException _ex) {
+                                            logger.error("Cannot rename file with value: {}", name, _ex);
+                                        }
                                     });
                             try {
                                 return cmisObject.updateProperties(metadataProperties);
@@ -272,8 +282,15 @@ public class CMISSiglaStorageConfiguration {
 
             @Override
             public StorageObject updateStream(String key, InputStream inputStream, String contentType) {
-                return Optional.ofNullable(siglaSession.getObject(key))
-                        .map(cmisObject -> (Document)cmisObject)
+                CmisObject cmisobject = Optional.ofNullable(siglaSession.getObject(key))
+                        .filter(cmisObject -> cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT))
+                        .map(Document.class::cast)
+                        .map(document -> siglaSession.getObject(document.<String>getPropertyValue("cmis:versionSeriesId")))
+                        .orElseGet(() -> siglaSession.getObject(key));
+
+                return Optional.ofNullable(cmisobject)
+                        .filter(Document.class::isInstance)
+                        .map(Document.class::cast)
                         .map(document -> {
                                 return Optional.ofNullable(document.setContentStream(
                                         new ContentStreamImpl(
@@ -365,6 +382,9 @@ public class CMISSiglaStorageConfiguration {
                             .orElse(null);
                 } catch (CmisObjectNotFoundException _ex) {
                     return null;
+                } catch (IllegalArgumentException _ex) {
+                    logger.error("Invalid path: {}", path);
+                    throw _ex;
                 }
             }
 

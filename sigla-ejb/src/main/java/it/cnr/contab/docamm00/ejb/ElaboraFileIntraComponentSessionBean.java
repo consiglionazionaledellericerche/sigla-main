@@ -1,11 +1,14 @@
 package it.cnr.contab.docamm00.ejb;
 import it.cnr.contab.docamm00.comp.ElaboraFileIntraComponent;
 import it.cnr.contab.docamm00.docs.bulk.VIntrastatBulk;
+import it.cnr.contab.docamm00.docs.bulk.VSpesometroNewBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v2.DatiFatturaType;
 
 import java.rmi.RemoteException;
 import java.util.List;
@@ -13,6 +16,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
+import javax.xml.bind.JAXBElement;
 
 
 @Stateless(name="CNRDOCAMM00_EJB_ElaboraFileIntraComponentSession")
@@ -259,5 +263,20 @@ public List EstraiBlacklist(UserContext param0, OggettoBulk param1,OggettoBulk p
 		} catch(Error e) {
 			throw uncaughtError(param0,componentObj,e);
 		}
-	}	
+	}
+@Override
+public JAXBElement<DatiFatturaType> creaDatiFatturaType(UserContext param0,
+		VSpesometroNewBulk param1) throws ComponentException,
+		IntrospectionException, RemoteException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		JAXBElement<DatiFatturaType> result = ((ElaboraFileIntraComponent)componentObj).creaDatiFatturaType(param0,param1);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}	
 }

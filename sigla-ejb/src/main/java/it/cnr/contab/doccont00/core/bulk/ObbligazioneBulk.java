@@ -12,6 +12,8 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
@@ -40,7 +42,7 @@ import java.util.Vector;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value=Include.NON_NULL)
-public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDocumentoContabileBulk {
+public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDocumentoContabileBulk, AllegatoParentBulk {
 	private static final long serialVersionUID = 1L;
 
 	private it.cnr.jada.util.OrderedHashtable anniResidui = new it.cnr.jada.util.OrderedHashtable();
@@ -66,6 +68,7 @@ public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDo
 	private boolean enableVoceNext = false;
 	private List<Elemento_voceBulk> listaVociSelezionabili = null;
 
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 
 	public final static String STATO_OBB_PROVVISORIO 	= "P";
 	public final static String STATO_OBB_DEFINITIVO 	= "D";
@@ -527,7 +530,7 @@ public BulkList getNuoveLineeAttivitaColl() {
 /**
  * @return it.cnr.jada.bulk.BulkCollection
  */
-public it.cnr.jada.bulk.BulkList getObbligazione_scadenzarioColl() {
+public it.cnr.jada.bulk.BulkList<Obbligazione_scadenzarioBulk> getObbligazione_scadenzarioColl() {
 	return obbligazione_scadenzarioColl;
 }
 public java.lang.Long getPg_doc_contabile() {
@@ -1947,5 +1950,26 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 	}
 	public void setListaVociSelezionabili(List<Elemento_voceBulk> listaVociSelezionabili) {
 		this.listaVociSelezionabili = listaVociSelezionabili;
+	}
+	@Override
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		((AllegatoObbligazioneBulk)allegato).setEsercizioDiAppartenenza(this.getEsercizio());
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;		
+	}
+	@Override
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		return getArchivioAllegati().remove(index);
+	}
+	@Override
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+	@Override
+	public void setArchivioAllegati(BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
+	}
+	public BigDecimal getImportoNonPagato() {
+		return this.getObbligazione_scadenzarioColl().stream().map(e->e.getImportoNonPagato()).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
 	}
 }
