@@ -20,6 +20,9 @@ public class RichiestaUopBase extends RichiestaUopKey implements Keyed {
 //    CD_UNITA_OPERATIVA_DEST VARCHAR(30) NOT NULL
 	private java.lang.String cdUnitaOperativaDest;
  
+//  CD_UNITA_OPERATIVA_DEST VARCHAR(30) NOT NULL
+	private java.lang.String cdUopRichiesta;
+
 //    DATA_INVIO TIMESTAMP(7)
 	private java.sql.Timestamp dataInvio;
  
@@ -133,5 +136,11 @@ public class RichiestaUopBase extends RichiestaUopKey implements Keyed {
 	 **/
 	public void setDtCancellazione(java.sql.Timestamp dtCancellazione)  {
 		this.dtCancellazione=dtCancellazione;
+	}
+	public java.lang.String getCdUopRichiesta() {
+		return cdUopRichiesta;
+	}
+	public void setCdUopRichiesta(java.lang.String cdUopRichiesta) {
+		this.cdUopRichiesta = cdUopRichiesta;
 	}
 }
