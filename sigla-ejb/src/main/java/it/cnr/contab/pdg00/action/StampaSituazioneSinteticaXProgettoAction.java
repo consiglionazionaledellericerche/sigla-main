@@ -41,8 +41,10 @@ public class StampaSituazioneSinteticaXProgettoAction extends it.cnr.contab.repo
 		Stampa_situazione_sintetica_x_progettoBulk stampa_gae = ((Stampa_situazione_sintetica_x_progettoBulk)bp.getModel());
 
 		stampa_gae.setGaeForPrint(gae);
-		if (gae!=null)
+		if (gae!=null) {
 			stampa_gae.setProgettoForPrint(gae.getProgetto());
+			stampa_gae.setResponsabileGaeForPrint(gae.getResponsabile());
+		}
 		return context.findDefaultForward();
 	}
 

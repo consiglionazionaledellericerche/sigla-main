@@ -44,13 +44,9 @@ public class VSitGaeResiduiSpesaHome extends RestServicesHome implements Consult
 			sql.openParenthesis("AND");
 			sql.addSQLClause("OR", "CD_CENTRO_RESPONSABILITA",sql.EQUALS,CNRUserContext.getCd_cdr(userContext));
 			CdrHome cdrHome = (CdrHome) getHomeCache().getHome(CdrBulk.class);
-			try {
-				for (java.util.Iterator j = cdrHome.findCdrAfferenti(cdrUtente).iterator(); j.hasNext();) {
-					CdrBulk cdrAfferenti = (CdrBulk) j.next();
-					sql.addSQLClause("OR","CD_CENTRO_RESPONSABILITA", sql.EQUALS, cdrAfferenti.getCd_centro_responsabilita());
-				}
-			} catch (IntrospectionException e) {
-				throw new ComponentException(e);
+			for (java.util.Iterator j = cdrHome.findCdrAfferenti(cdrUtente).iterator(); j.hasNext();) {
+				CdrBulk cdrAfferenti = (CdrBulk) j.next();
+				sql.addSQLClause("OR","CD_CENTRO_RESPONSABILITA", sql.EQUALS, cdrAfferenti.getCd_centro_responsabilita());
 			}
 			sql.closeParenthesis();
 		}

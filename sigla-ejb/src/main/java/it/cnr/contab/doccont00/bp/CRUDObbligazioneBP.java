@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.Vector;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
@@ -716,6 +717,8 @@ public OggettoBulk initializeModelForEdit(ActionContext context,OggettoBulk bulk
 									context.getUserContext(),
 									bulk.initializeForEdit(this,context));
 		
+
+		oggettobulk = initializeModelForEditAllegati(context, oggettobulk);
 		((ObbligazioneBulk)oggettobulk).caricaAnniResidui(context);
 		return oggettobulk;
 	} catch(Throwable e) {
@@ -1153,5 +1156,21 @@ private void setEnableVoceNext(boolean enableVoceNext) {
 public boolean isElementoVoceNewVisible() {
 	return this.isEnableVoceNext() && getModel()!=null && 
 			((ObbligazioneBulk)getModel()).isEnableVoceNext();
+}
+
+public String [][] getTabs() {
+	TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+	int i=0;
+
+	pages.put(i++, new String[]{ "tabObbligazione","Impegni","/doccont00/tab_obbligazione.jsp" });
+	pages.put(i++, new String[]{ "tabImputazioneFin","Imputazione Finanziaria","/doccont00/tab_imputazione_fin_obbligazione.jsp" });
+	pages.put(i++, new String[]{ "tabScadenzario","Scadenzario","/doccont00/tab_scadenzario_obbligazione.jsp" });
+	pages.put(i++, new String[]{ "tabCdrCapitoli","Cdr","/doccont00/tab_cdr_capitoli.jsp" });
+	
+	String[][] tabs = new String[i][3];
+	
+	for (int j = 0; j < i; j++)
+		tabs[j]=new String[]{pages.get(j)[0],pages.get(j)[1],pages.get(j)[2]};
+	return tabs;
 }
 }

@@ -1627,6 +1627,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                 .filter(DocumentoEleAllegatiBulk.class::isInstance)
                 .map(DocumentoEleAllegatiBulk.class::cast)
                 .map(DocumentoEleAllegatiBulk::getCmisNodeRef)
+                .filter(s -> Optional.ofNullable(s).isPresent())
                 .anyMatch(s -> s.equals(storageObject.getKey()))) {
             return true;
         }

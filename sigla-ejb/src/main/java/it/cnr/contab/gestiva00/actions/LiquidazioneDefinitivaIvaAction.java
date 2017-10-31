@@ -1,5 +1,6 @@
 package it.cnr.contab.gestiva00.actions;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import it.cnr.contab.gestiva00.bp.LiquidazioneDefinitivaIvaBP;
 import it.cnr.contab.gestiva00.bp.LiquidazioneIvaBP;
@@ -46,14 +47,15 @@ protected Forward basicDoCerca(
 			Liquidazione_ivaBulk oldLiquidazione = bulk.getLastLiquidazioneProvvisoria();
 			
 			if (oldLiquidazione==null || newLiquidazione.getIva_da_versare().compareTo(oldLiquidazione.getIva_da_versare())!=0) {
-				if (bulk.getTotaleRipartizioneFinanziaria().compareTo(newLiquidazione.getIva_da_versare())!=0) {
+				if (newLiquidazione.getIva_da_versare().compareTo(BigDecimal.ZERO)<0 &&
+				    bulk.getTotaleRipartizioneFinanziaria().compareTo(newLiquidazione.getIva_da_versare().abs())!=0) {
 					bp.commitUserTransaction();
 					bp.inizializzaMese(context);
 					message = "Attenzione! L'importo da versare è stato aggiornato e non corrisponde al totale ripartito per esercizio! Saranno create variazioni temporanee da completare successivamente! Si desidera continuare?";
 				}
 			} else {
 				bp.rollbackUserTransaction();
-				if (bulk.getTotaleRipartizioneFinanziaria().compareTo(oldLiquidazione.getIva_da_versare())!=0)
+				if (bulk.getTotaleRipartizioneFinanziaria().compareTo(bulk.getDebitoLastLiquidazioneProvvisoria())!=0)
 					message = "Attenzione! L'importo da versare non corrisponde al totale ripartito per esercizio! Saranno create variazioni temporanee da completare successivamente! Si desidera continuare?";
 			}
 

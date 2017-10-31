@@ -42,6 +42,8 @@ public class Voce_epBase extends Voce_epKey implements Keyed {
 	// TI_VOCE_EP CHAR(1)
 	private java.lang.String ti_voce_ep;
 
+	private java.lang.Integer id_classificazione;
+	
 public Voce_epBase() {
 	super();
 }
@@ -191,5 +193,11 @@ public void setTi_sezione(java.lang.String ti_sezione) {
  */
 public void setTi_voce_ep(java.lang.String ti_voce_ep) {
 	this.ti_voce_ep = ti_voce_ep;
+}
+public java.lang.Integer getId_classificazione() {
+	return id_classificazione;
+}
+public void setId_classificazione(java.lang.Integer id_classificazione) {
+	this.id_classificazione = id_classificazione;
 }
 }

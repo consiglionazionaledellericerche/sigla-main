@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.Accertamento_vincolo_perenteBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.Accertamento_vincolo_perenteHome">
+	<defaultColumnMap
+		tableName="ACCERTAMENTO_VINCOLO_PERENTE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="variazioneResidua.esercizio" />
+		<columnMapping
+			columnName="PG_VARIAZIONE"
+			propertyName="variazioneResidua.pg_variazione" />
+		<columnMapping
+			columnName="CD_CDS_ACCERTAMENTO"
+			propertyName="accertamento.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="accertamento.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="accertamento.esercizio_originale" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="accertamento.pg_accertamento" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="variazioneResidua" 
+		partOfOid="true" />	
+	<persistentProperty
+		name="accertamento"  
+		partOfOid="true" />	
+</SQLPersistentInfo>

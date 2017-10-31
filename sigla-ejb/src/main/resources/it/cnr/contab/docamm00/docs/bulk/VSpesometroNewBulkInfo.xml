@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="ti_fattura"
+		property="ti_fattura"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		label="ti_fattura" />
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		keysProperty="tipoKeys"
+		inputSize="30"
+		maxLength="30"
+		inputType="SELECT"
+		enabledOnEdit="false"
+		label="tipo" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizio" />
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="partita Iva" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="codice Fiscale" />
+		
+	<fieldProperty
+		name="imponibile_fa"
+		property="imponibile_fa"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="imponibileFa" />
+	<fieldProperty
+		name="iva_fa"
+		property="iva_fa"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="ivaFa" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="cognome" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="nome" />
+	<fieldProperty
+		name="data"
+		property="data"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="data" />
+	<fieldProperty
+		name="stato_residenza"
+		property="stato_residenza"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="stato residenza" />
+	<fieldProperty
+		name="provincia"
+		property="provincia"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="provincia" />
+	<fieldProperty
+		name="cod_naz"
+		property="cod_naz"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="codice_naz" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="ragione_sociale"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="ragione Sociale" />
+	<fieldProperty
+		name="indirizzo_sede"
+		property="indirizzo_sede"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="indirizzo Sede" />
+	<fieldProperty
+		name="numero_civico_sede"
+		property="numero_civico_sede"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="civico" />	
+	<fieldProperty
+		name="comune_sede"
+		property="comune_sede"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="comuneSede" />
+	<fieldProperty
+		name="prog"
+		property="prog"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="prog" />
+	<fieldProperty
+		name="prog_fattura"
+		property="prog_fattura"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="prog Fattura" />	
+	<fieldProperty
+		name="da_data"
+		property="da_data"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="data da" />
+	<fieldProperty
+		name="a_data"
+		property="a_data"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="data a" />
+	<fieldProperty
+		name="dt_fattura_fornitore"
+		property="dt_fattura_fornitore"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dt_fattura_fornitore" />			
+	<fieldProperty
+		name="nr_fattura_fornitore"
+		property="nr_fattura_fornitore"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="nr_fattura_fornitore" />			
+	<fieldProperty
+		name="fl_detraibile"
+		property="fl_detraibile"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="detraibile" />	
+	<fieldProperty
+		name="perc_detra"
+		property="perc_detra"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnSearch="true"
+		label="perc_detra" />		
+	<fieldProperty
+		name="percentuale"
+		property="percentuale"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnSearch="true"
+		label="percentuale" />		
+	<fieldProperty
+		name="cap"
+		property="cap"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnSearch="true"
+		label="cap" />			
+	<fieldProperty
+		name="natura"
+		property="natura"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnSearch="true"
+		label="natura" />			
+	<fieldProperty
+		name="uo"
+		property="uo"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnSearch="true"
+		label="uo" />	
+	<fieldProperty
+		name="split"
+		property="split"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnSearch="true"
+		label="split" />		
+	<fieldProperty
+		name="terzo_uo"
+		property="terzo_uo"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="terzo uo" />			
+	<fieldProperty
+		name="nome_file"
+		property="nome_file"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="22"
+		enabledOnEdit="true"
+		label="nome File" />	
+	<form
+		name="searchtool">
+	</form>
+	<formFieldProperty
+		name="nome_file" />
+	<formFieldProperty
+		name="da_data" />
+	<formFieldProperty
+		name="a_data" />
+	<formFieldProperty
+		name="prog" />
+	<formFieldProperty
+		name="data" />
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="ti_fattura" />	
+	<formFieldProperty
+		name="codice_fiscale" />
+	<formFieldProperty
+		name="partita_iva" />	
+	<formFieldProperty
+		name="prog_fattura" />
+	<formFieldProperty
+		name="uo" />	
+	<formFieldProperty
+		name="cap" />	
+	<formFieldProperty
+		name="percentuale" />	
+	<formFieldProperty
+		name="natura" />	
+	<formFieldProperty
+		name="perc_detra" />
+	<formFieldProperty
+		name="fl_detraibile" />
+	<formFieldProperty
+		name="iva_fa" />
+	<formFieldProperty
+		name="imponibile_fa" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="cognome" />
+	<formFieldProperty
+		name="ragione_sociale" />		
+	<formFieldProperty
+		name="nr_fattura_fornitore" />
+	<formFieldProperty
+		name="dt_fattura_fornitore" />
+	<formFieldProperty
+		name="numero_civico_sede" />
+	<formFieldProperty
+		name="comune_sede" />
+	<formFieldProperty
+		name="indirizzo_sede" />
+	<formFieldProperty
+		name="stato_residenza" />
+	<formFieldProperty
+		name="cod_naz" />
+	<formFieldProperty
+		name="provincia" />
+	<formFieldProperty
+		name="split" />
+	<formFieldProperty
+		name="terzo_uo" />	
+	<columnFieldProperty
+		name="da_data" />
+	<columnFieldProperty
+		name="a_data" />
+</bulkInfo>

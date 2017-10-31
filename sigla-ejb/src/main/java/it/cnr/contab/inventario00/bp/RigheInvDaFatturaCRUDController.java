@@ -80,7 +80,7 @@ public class RigheInvDaFatturaCRUDController
     }
 
     @Override
-    public void writeTfoot(JspWriter jspWriter) throws IOException {
+    public void writeTfoot(JspWriter jspwriter) throws IOException {
 
     }
 }

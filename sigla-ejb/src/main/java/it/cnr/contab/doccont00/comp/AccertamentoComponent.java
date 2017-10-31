@@ -1,5 +1,22 @@
 package it.cnr.contab.doccont00.comp;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.util.Collection;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Vector;
+
+import javax.ejb.EJBException;
+
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
@@ -30,6 +47,8 @@ import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaHome;
@@ -48,6 +67,8 @@ import it.cnr.contab.doccont00.core.bulk.Accertamento_scad_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scad_voceHome;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioHome;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_vincolo_perenteBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_vincolo_perenteHome;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
@@ -72,6 +93,9 @@ import it.cnr.contab.doccont00.core.bulk.V_pdg_accertamento_etrBulk;
 import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
+import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
+import it.cnr.contab.prevent00.bulk.Pdg_vincoloHome;
+import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioHome;
@@ -86,6 +110,7 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_resKey;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaHome;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaKey;
+import it.cnr.contab.varstanz00.comp.VariazioniStanziamentoResiduoComponent;
 import it.cnr.contab.varstanz00.ejb.VariazioniStanziamentoResiduoComponentSession;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
@@ -105,22 +130,7 @@ import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.sql.Types;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
-import javax.ejb.EJBException;
+import it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType.VariazioneIncarichi;
 
 /* Gestisce documenti di tipo
 	ACR con fl_pgiro = 'N' - bilancio Ente
@@ -1768,6 +1778,9 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 		// carica lo scadenzario e i suoi dettagli
 		AccertamentoHome accertHome = (AccertamentoHome) getHome( aUC, accertamento.getClass());
 		Accertamento_scadenzarioHome osHome = (Accertamento_scadenzarioHome) getHome( aUC, Accertamento_scadenzarioBulk.class );
+		
+		accertamento.setPdgVincoliColl( new BulkList( accertHome.findPdgVincoloList( accertamento ) ));
+		accertamento.setAccertamentoVincoliPerentiColl( new BulkList( accertHome.findAccertamentoVincoloPerenteList( accertamento ) ));
 				
 		accertamento.setAccertamento_scadenzarioColl( new BulkList( accertHome.findAccertamento_scadenzarioList( accertamento ) ));
 		for ( Iterator i = accertamento.getAccertamento_scadenzarioColl().iterator(); i.hasNext(); )
@@ -2379,6 +2392,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 			}
 			annullaRigheDocAmm(aUC,accertamento);
 		}
+		verificaDisponibilitaVincoliSpese(aUC, (AccertamentoResiduoBulk)accertamento);
 	}
 
 	try
@@ -4572,4 +4586,202 @@ protected AccertamentoBulk validaCreaModificaElementoVoceNext(UserContext userCo
 	}
 	return accertamento;
 }	
+public SQLBuilder selectLineaAttivita_centro_responsabilitaByClause(UserContext userContext, Pdg_vincoloBulk pdgVincolo, CdrBulk cdr, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+{
+	SQLBuilder sql = getHome(userContext, cdr, "V_CDR_VALIDO").createSQLBuilder();
+
+	V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(userContext, V_struttura_organizzativaBulk.class);
+	sql.openParenthesis(FindClause.AND);
+	for (java.util.Iterator j = strHome.findUoCollegateCDS(new Unita_organizzativaBulk(CNRUserContext.getCd_cds(userContext)), CNRUserContext.getEsercizio( userContext )).iterator(); j.hasNext();) {
+		Unita_organizzativaBulk uoAfferente = (Unita_organizzativaBulk) j.next();
+		for (java.util.Iterator x = strHome.findCDRBaseUO(uoAfferente, CNRUserContext.getEsercizio( userContext )).iterator(); x.hasNext();) {
+			CdrBulk cdrAfferente = (CdrBulk) x.next();
+			sql.addClause(FindClause.OR,"cd_centro_responsabilita", SQLBuilder.EQUALS, cdrAfferente.getCd_centro_responsabilita());
+		}
+	}
+	sql.closeParenthesis();
+
+	if (clauses != null) sql.addClause(clauses);
+
+	return sql; 
+}
+public SQLBuilder selectLineaAttivitaByClause(UserContext userContext, Pdg_vincoloBulk pdgVincolo, WorkpackageBulk linea, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+{
+	SQLBuilder sql = getHome(userContext, linea, "V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
+	 
+	sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
+	sql.addClause("AND","ti_gestione",sql.EQUALS,Elemento_voceHome.GESTIONE_SPESE);
+
+	if (pdgVincolo.getCd_centro_responsabilita()!=null)
+		sql.addClause("AND","cd_centro_responsabilita",sql.EQUALS,pdgVincolo.getCd_centro_responsabilita());
+	else {
+		V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(userContext, V_struttura_organizzativaBulk.class);
+		sql.openParenthesis(FindClause.AND);
+		for (java.util.Iterator j = strHome.findUoCollegateCDS(new Unita_organizzativaBulk(CNRUserContext.getCd_cds(userContext)), CNRUserContext.getEsercizio( userContext )).iterator(); j.hasNext();) {
+			Unita_organizzativaBulk uoAfferente = (Unita_organizzativaBulk) j.next();
+			for (java.util.Iterator x = strHome.findCDRBaseUO(uoAfferente, CNRUserContext.getEsercizio( userContext )).iterator(); x.hasNext();) {
+				CdrBulk cdrAfferente = (CdrBulk) x.next();
+				sql.addClause(FindClause.OR,"cd_centro_responsabilita", SQLBuilder.EQUALS, cdrAfferente.getCd_centro_responsabilita());
+			}
+		}
+		sql.closeParenthesis();
+	}
+	
+	/**
+	 * Escludo la linea di attività dell'IVA C20
+	 */
+	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
+	try {
+		config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_COMUNE_VERSAMENTO_IVA);
+	} catch (RemoteException e) {
+		throw new ComponentException(e);
+	} catch (EJBException e) {
+		throw new ComponentException(e);
+	}
+	if (config != null){
+		sql.addSQLClause( "AND", "V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",  sql.NOT_EQUALS, config.getVal01());
+	}
+
+	if (clauses != null) sql.addClause(clauses);
+	
+	return sql; 
+}
+public SQLBuilder selectElementoVoceByClause (UserContext userContext, Pdg_vincoloBulk pdgVincolo, Elemento_voceBulk elementoVoce, CompoundFindClause clause) throws ComponentException, PersistencyException {
+	Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+	
+	SQLBuilder sql = getHome(userContext, elementoVoce,"V_ELEMENTO_VOCE_PDG_SPE").createSQLBuilder();
+
+	sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
+	
+	sql.openParenthesis(FindClause.AND);
+	sql.addSQLClause(FindClause.OR, "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", SQLBuilder.ISNULL, null);	
+	sql.addSQLClause(FindClause.OR, "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", SQLBuilder.EQUALS, "N");	
+	sql.closeParenthesis();
+	
+	if (clause != null) sql.addClause(clause);
+	
+	return sql;
+}
+public SQLBuilder selectAssestatoRisorseCoperturaByClause (UserContext userContext, Pdg_vincoloBulk pdgVincolo, V_assestatoBulk assestato, CompoundFindClause clause) throws ComponentException, PersistencyException {
+	SQLBuilder sql = getHome(userContext, assestato).createSQLBuilder();
+
+	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio( userContext ) );
+	sql.addClause(FindClause.AND, "esercizio_res", SQLBuilder.LESS, CNRUserContext.getEsercizio( userContext ) );
+	sql.addClause(FindClause.AND, "ti_appartenenza", sql.EQUALS, Elemento_voceHome.APPARTENENZA_CDS );
+	sql.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
+	sql.addSQLClause(FindClause.AND, "IMPORTO_DISPONIBILE+IMPORTO_VINCOLI", SQLBuilder.GREATER, BigDecimal.ZERO);
+	
+	V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(userContext, V_struttura_organizzativaBulk.class);
+	sql.openParenthesis(FindClause.AND);
+	for (java.util.Iterator j = strHome.findUoCollegateCDS(new Unita_organizzativaBulk(CNRUserContext.getCd_cds(userContext)), CNRUserContext.getEsercizio( userContext )).iterator(); j.hasNext();) {
+		Unita_organizzativaBulk uoAfferente = (Unita_organizzativaBulk) j.next();
+		for (java.util.Iterator x = strHome.findCDRBaseUO(uoAfferente, CNRUserContext.getEsercizio( userContext )).iterator(); x.hasNext();) {
+			CdrBulk cdrAfferente = (CdrBulk) x.next();
+			sql.addClause(FindClause.OR,"cd_centro_responsabilita", SQLBuilder.EQUALS, cdrAfferente.getCd_centro_responsabilita());
+		}
+	}
+	sql.closeParenthesis();
+
+	if (clause != null) sql.addClause(clause);
+	
+	return sql;
+}
+
+public void verificaDisponibilitaVincoliSpese(UserContext aUC,AccertamentoResiduoBulk accertamento) throws ComponentException
+{
+	try {
+		if (accertamento.isInesigibile() || accertamento.isParzialmenteInesigibile()) {
+			if (accertamento.getIm_quota_inesigibile_da_ripartire().compareTo(BigDecimal.ZERO)!=0)
+				throw new ApplicationException("Attenzione! Non risulta correttamente coperta con spese vincolate la quota inesigibile dell'accertamento residuo. Operazione non possibile!");
+	
+			SaldoComponentSession session = createSaldoComponentSession();
+			for (Pdg_vincoloBulk vincolo : accertamento.getPdgVincoliColl()) {
+				if (vincolo.getIm_vincolo().compareTo(BigDecimal.ZERO)<=0)
+					throw new ApplicationException("L'importo di vincolo relativo al CDR "+vincolo.getCd_centro_responsabilita()+
+							" G.A.E. "+vincolo.getCd_linea_attivita()+" Voce "+vincolo.getElementoVoce().getCd_voce()+ 
+							" non può essere negativo.");
+
+				String error = session.checkDispObbligazioniAccertamenti(aUC, vincolo.getCd_centro_responsabilita(), 
+															   vincolo.getCd_linea_attivita(), 
+															   vincolo.getElementoVoce(), 
+															   vincolo.getEsercizio_res(), 
+															   vincolo.getEsercizio().equals(vincolo.getEsercizio_res())?
+																	   Voce_f_saldi_cdr_lineaBulk.TIPO_COMPETENZA:
+																	   Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_IMPROPRIO, 
+															   Parametri_cdsBulk.BLOCCO_IMPEGNI_ERROR);
+				if (error!=null)
+					throw new ApplicationException(error);
+			}
+			
+			//verifico che le variazioni non siano completamente coperte da accertamenti
+			Accertamento_vincolo_perenteHome home = (Accertamento_vincolo_perenteHome)getHome(aUC, Accertamento_vincolo_perenteBulk.class);
+			VariazioniStanziamentoResiduoComponentSession session2 = Utility.createVariazioniStanziamentoResiduoComponentSession();
+			for (Accertamento_vincolo_perenteBulk vincolo : accertamento.getAccertamentoVincoliPerentiColl()) {
+				if (vincolo.getIm_vincolo().compareTo(BigDecimal.ZERO)<=0)
+					throw new ApplicationException("L'importo di vincolo relativo alla variazione residua "+
+							vincolo.getVariazioneResidua().getEsercizio()+"/"+vincolo.getVariazioneResidua().getPg_variazione()+
+							" non può essere negativo.");
+
+				List<Accertamento_vincolo_perenteBulk> listVincoli = home.cercaDettagliVincolati(vincolo.getVariazioneResidua());
+				BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).get();
+			    
+				//EFFETTUO LA SOMMA DEGLI IMPORTI MOVIMENTATI SOLO DALLE UO DI CUI DEVO RITIRARE LA SOMMA
+				Var_stanz_resHome varHome = (Var_stanz_resHome)getHome(aUC, Var_stanz_resBulk.class);
+				Collection<Var_stanz_res_rigaBulk> righeVar = varHome.findVariazioniRiga(vincolo.getVariazioneResidua());
+
+				BigDecimal totVariazioneCDS = BigDecimal.ZERO;
+
+				V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(aUC, V_struttura_organizzativaBulk.class);
+				for (java.util.Iterator j = strHome.findUoCollegateCDS(new Unita_organizzativaBulk(CNRUserContext.getCd_cds(aUC)), CNRUserContext.getEsercizio( aUC )).iterator(); j.hasNext();) {
+					Unita_organizzativaBulk uoAfferente = (Unita_organizzativaBulk) j.next();
+					for (java.util.Iterator x = strHome.findCDRBaseUO(uoAfferente, CNRUserContext.getEsercizio( aUC )).iterator(); x.hasNext();) {
+						CdrBulk cdrAfferente = (CdrBulk) x.next();
+						totVariazioneCDS = totVariazioneCDS.add(
+							righeVar.stream().filter(e->e.getCd_cdr().equals(cdrAfferente.getCd_centro_responsabilita()))
+															 .map(Var_stanz_res_rigaBulk::getIm_variazione)
+															 .reduce(BigDecimal::add).orElse(BigDecimal.ZERO));
+					}
+				}
+
+				//recupero 
+				BigDecimal diff = totVariazioneCDS.abs().subtract(impVincolo);
+				if (diff.compareTo(BigDecimal.ZERO)<0)
+					throw new ApplicationException("La variazione residua "+vincolo.getVariazioneResidua().getEsercizio()+"/"+
+					vincolo.getVariazioneResidua().getPg_variazione()+
+				   " non può essere associata all'accertamento residuo per un importo superiore a "
+				   + new it.cnr.contab.util.EuroFormat().format(diff.add(vincolo.getIm_vincolo()))+". Modificare il valore.");
+			}
+
+		}
+	} catch (Exception e1) {
+		throw new it.cnr.jada.comp.ComponentException(e1);
+	}
+}
+
+public SQLBuilder selectVariazioneResiduaByClause (UserContext userContext, Accertamento_vincolo_perenteBulk vincolo, Var_stanz_resBulk variazione, CompoundFindClause clause) throws ComponentException, PersistencyException {
+	SQLBuilder sql = getHome(userContext, variazione).createSQLBuilder();
+
+	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.LESS, CNRUserContext.getEsercizio( userContext ) );
+	sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, Var_stanz_resBulk.STATO_APPROVATA );
+	sql.addClause(FindClause.AND, "tipologia", SQLBuilder.EQUALS, Var_stanz_resBulk.TIPOLOGIA_STO );
+	sql.addClause(FindClause.AND, "fl_perenzione", SQLBuilder.EQUALS, Boolean.TRUE );
+	
+	V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(userContext, V_struttura_organizzativaBulk.class);
+	sql.openParenthesis(FindClause.AND);
+	for (java.util.Iterator j = strHome.findUoCollegateCDS(new Unita_organizzativaBulk(CNRUserContext.getCd_cds(userContext)), CNRUserContext.getEsercizio( userContext )).iterator(); j.hasNext();) {
+		Unita_organizzativaBulk uoAfferente = (Unita_organizzativaBulk) j.next();
+		for (java.util.Iterator x = strHome.findCDRBaseUO(uoAfferente, CNRUserContext.getEsercizio( userContext )).iterator(); x.hasNext();) {
+			CdrBulk cdrAfferente = (CdrBulk) x.next();
+			sql.addClause(FindClause.OR,"cd_centro_responsabilita", SQLBuilder.EQUALS, cdrAfferente.getCd_centro_responsabilita());
+		}
+	}
+	sql.closeParenthesis();
+
+	if (clause != null) sql.addClause(clause);
+
+	sql.setOrderBy("esercizio", it.cnr.jada.util.OrderConstants.ORDER_DESC);
+	sql.setOrderBy("pg_variazione", it.cnr.jada.util.OrderConstants.ORDER_DESC);
+	return sql;
+}
 }

@@ -4,6 +4,7 @@ import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.prevent00.bulk.Pdg_aggregatoBulk;
 import it.cnr.contab.prevent00.bulk.Bilancio_preventivoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Chiusura_coepBulk;
 import it.cnr.contab.coepcoan00.core.bulk.Chiusura_coepHome;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
@@ -15,6 +16,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.pdg00.bulk.*;
@@ -4235,6 +4237,9 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 		if (stampa.getPgProgettoForPrint()!=null) 
 			sql.addSQLClause("AND", "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, stampa.getPgProgettoForPrint());
 
+		if (stampa.getCdResponsabileGaeForPrint()!=null) 
+			sql.addSQLClause("AND", "V_LINEA_ATTIVITA_VALIDA.CD_RESPONSABILE_TERZO", SQLBuilder.EQUALS, stampa.getCdResponsabileGaeForPrint());
+
 		sql.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA");
 		sql.addSQLJoin("V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO", "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO");
 		sql.addSQLJoin("V_STRUTTURA_ORGANIZZATIVA.CD_ROOT", "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA");
@@ -4244,6 +4249,37 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 
 		return sql;
 	}
+
+	public SQLBuilder selectResponsabileGaeForPrintByClause(UserContext userContext, Stampa_situazione_sintetica_x_progettoBulk stampa, TerzoBulk responsabile, CompoundFindClause clause) throws ComponentException, PersistencyException {
+		if (clause == null) 
+			clause = ((OggettoBulk)responsabile).buildFindClauses(null);
+		
+		SQLBuilder sql = getHome(userContext, responsabile).createSQLBuilder();
+		if (clause != null) 
+			sql.addClause(clause);
+		
+		SQLBuilder sqlExist = getHome(userContext,WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
+		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_RESPONSABILE_TERZO", "TERZO.CD_TERZO");
+		sqlExist.addSQLClause("AND", "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+
+		if (stampa.getPgProgettoForPrint()!=null) 
+			sqlExist.addSQLClause("AND", "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, stampa.getPgProgettoForPrint());
+
+		if (stampa.getCdGaeForPrint()!=null) 
+			sqlExist.addSQLClause("AND", "V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", SQLBuilder.EQUALS, stampa.getCdGaeForPrint());
+		
+		sqlExist.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA");
+		sqlExist.addSQLJoin("V_STRUTTURA_ORGANIZZATIVA.ESERCIZIO", "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO");
+		sqlExist.addSQLJoin("V_STRUTTURA_ORGANIZZATIVA.CD_ROOT", "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA");
+
+		sqlExist.addSQLClause("AND", "V_STRUTTURA_ORGANIZZATIVA.CD_TIPO_LIVELLO", SQLBuilder.EQUALS, V_struttura_organizzativaHome.LIVELLO_CDR);
+		sqlExist.addSQLClause("AND", "V_STRUTTURA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, stampa.getCdUoForPrint());
+
+		sql.addSQLExistsClause("AND",sqlExist);
+
+		return sql;
+	}
+
 //^^@@
 /** 
   *  Normale
@@ -4286,7 +4322,7 @@ public SQLBuilder selectCdrForPrintByClause (UserContext userContext,
   *    PreCondition:
   *      Viene richiesto l'elenco dei centri di responsabilità compatibili con il livello di responsabilità dell'utente
   *    PostCondition:
-  *      Viene restituito una query sui cdr con le clausole specificate e una clausola sull'esercizio uguale a quello del pdg specificato
+  *      Viene restituito una query sui cdr con le clausole specificate e una clausolOrdineAcqComponentOrdineAcqComponenta sull'esercizio uguale a quello del pdg specificato
  */
 //^^@@
 public SQLBuilder selectCdrForPrintByClause (UserContext userContext, 
