@@ -83,12 +83,15 @@ public class DocumentiContabiliService extends StoreService {
 	}
 
 	public String getDocumentKey(StatoTrasmissione bulk, boolean fullNodeRef) {
-		return Optional.ofNullable(getStorageObjectByPath(bulk.getStorePath().concat(SiglaStorageService.SUFFIX).concat(bulk.getCMISName())))
+		return Optional.ofNullable(bulk)
+				.map(statoTrasmissione -> Optional.ofNullable(getStorageObjectByPath(statoTrasmissione.getStorePath()
+						.concat(SiglaStorageService.SUFFIX)
+						.concat(statoTrasmissione.getCMISName())))
 				.map(storageObject ->
 						fullNodeRef ? Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()))
 								.map(String.class::cast)
 								.orElse(storageObject.getKey()) : storageObject.getKey())
-				.orElse(null);
+				.orElse(null)).orElse(null);
 	}
 
 	public InputStream getStreamDocumento(StatoTrasmissione bulk) throws ApplicationException{

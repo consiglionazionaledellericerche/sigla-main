@@ -6,9 +6,11 @@
  */
 package it.cnr.contab.pdg00.bulk;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 
 /**
  * @author 
@@ -27,6 +29,8 @@ public class Stampa_situazione_sintetica_x_progettoBulk extends OggettoBulk {
 	protected it.cnr.contab.progettiric00.core.bulk.ProgettoBulk progettoForPrint;
 
 	private WorkpackageBulk gaeForPrint;
+
+	private TerzoBulk responsabileGaeForPrint;
 
 	private boolean cdsForPrintEnabled;
 
@@ -103,6 +107,14 @@ public class Stampa_situazione_sintetica_x_progettoBulk extends OggettoBulk {
 	public void setGaeForPrint(WorkpackageBulk gaeForPrint) {
 		this.gaeForPrint = gaeForPrint;
 	}
+
+	public TerzoBulk getResponsabileGaeForPrint() {
+		return responsabileGaeForPrint;
+	}
+	
+	public void setResponsabileGaeForPrint(TerzoBulk responsabileGaeForPrint) {
+		this.responsabileGaeForPrint = responsabileGaeForPrint;
+	}
 	
 	public void setCdsForPrintEnabled(boolean cdsForPrintEnabled) {
 		this.cdsForPrintEnabled = cdsForPrintEnabled;
@@ -160,8 +172,24 @@ public class Stampa_situazione_sintetica_x_progettoBulk extends OggettoBulk {
 		return isROFindGaeForPrint() || getGaeForPrint()==null || getGaeForPrint().getCrudStatus()==NORMAL;
 	}
 
+	public boolean isROFindResponsabileGaeForPrint() {
+		return isROFindGaeForPrint() || getPgProgettoForPrint()==null;
+	}
+
+	public boolean isROResponsabileGaeForPrint() {
+		return isROFindResponsabileGaeForPrint() || getResponsabileGaeForPrint()==null || getResponsabileGaeForPrint().getCrudStatus()==NORMAL;
+	}
+
 	public String getCdCdsForPrint() {
 		return getCdsForPrint()!=null?getCdsForPrint().getCd_unita_organizzativa():null;
+	}
+
+	public Integer getCdResponsabileGaeForPrint() {
+		return getResponsabileGaeForPrint()!=null?getResponsabileGaeForPrint().getCd_terzo():null;
+	}
+
+	public String getDsResponsabileGaeForPrint() {
+		return getResponsabileGaeForPrint()!=null?getResponsabileGaeForPrint().getDenominazione_sede():null;
 	}
 
 	public String getCdUoForPrint() {
@@ -226,5 +254,14 @@ public class Stampa_situazione_sintetica_x_progettoBulk extends OggettoBulk {
 	
 	public void setPrintPianoEconomico(Boolean printPianoEconomico) {
 		this.printPianoEconomico = printPianoEconomico;
+	}
+
+	@Override
+	public void validate() throws ValidationException {
+		if (getCdUoForPrint()==null)
+			throw new ValidationException("E' obbligatorio indicare l'unità organizzativa.");
+		if (getPgProgettoForPrint()==null)
+			throw new ValidationException("E' obbligatorio indicare il progetto.");
+		super.validate();
 	}
 }

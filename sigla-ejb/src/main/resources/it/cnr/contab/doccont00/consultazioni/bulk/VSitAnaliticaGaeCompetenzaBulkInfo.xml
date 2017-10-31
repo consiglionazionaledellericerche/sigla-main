@@ -189,8 +189,7 @@
 		name="assestatoComp"
 		property="assestatoComp"
 		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		label="assestatoComp" />
 	<fieldProperty
@@ -204,24 +203,21 @@
 		name="daAssumere"
 		property="daAssumere"
 		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		label="daAssumere" />
 	<fieldProperty
 		name="imAssDocAmmSpe"
 		property="imAssDocAmmSpe"
 		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		label="imAssDocAmmSpe" />
 	<fieldProperty
 		name="imAssDocAmmEtr"
 		property="imAssDocAmmEtr"
 		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		label="imAssDocAmmEtr" />
 	<fieldProperty
@@ -235,13 +231,10 @@
 		name="daPagareIncassare"
 		property="daPagareIncassare"
 		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		label="daPagareIncassare" />
-	<form
-		name="searchtool">
-	</form>
+
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty

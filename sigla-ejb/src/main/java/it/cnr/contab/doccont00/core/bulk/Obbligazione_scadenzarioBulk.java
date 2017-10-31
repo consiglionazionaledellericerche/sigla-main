@@ -1,13 +1,19 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 @JsonInclude(value=Include.NON_NULL)
 public class Obbligazione_scadenzarioBulk extends Obbligazione_scadenzarioBase implements Cloneable, IScadenzaDocumentoContabileBulk {
 
@@ -348,5 +354,9 @@ public DatiFinanziariScadenzeDTO getDatiFinanziariScadenzeDTO() {
 }
 public void setDatiFinanziariScadenzeDTO(DatiFinanziariScadenzeDTO datiFinanziariScadenzeDTO) {
 	this.datiFinanziariScadenzeDTO = datiFinanziariScadenzeDTO;
+}
+public java.math.BigDecimal getImportoNonPagato() {
+	return Optional.ofNullable(getIm_scadenza()).map(map -> map).orElse(BigDecimal.ZERO).
+			subtract(Optional.ofNullable(getIm_associato_doc_contabile()).map(map -> map).orElse(BigDecimal.ZERO));
 }
 }

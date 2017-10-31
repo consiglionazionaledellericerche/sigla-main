@@ -1,20 +1,41 @@
 package it.cnr.contab.doccont00.action;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Collection;
 
-import it.cnr.contab.anagraf00.core.bulk.*;
-import it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
-import it.cnr.contab.doccont00.bp.*;
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.util.*;
-import it.cnr.jada.util.action.*;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk;
+import it.cnr.contab.doccont00.bp.CRUDAccertamentoBP;
+import it.cnr.contab.doccont00.bp.CRUDAccertamentoModificaBP;
+import it.cnr.contab.doccont00.bp.CRUDAccertamentoResiduoAmministraBP;
+import it.cnr.contab.doccont00.bp.CRUDAccertamentoResiduoBP;
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneResBP;
+import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
+import it.cnr.contab.doccont00.bp.SelezionatoreAssestatoDocContBP;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
+import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.bulk.BulkCollections;
+import it.cnr.jada.bulk.BulkInfo;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.StrServ;
+import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.util.action.OptionBP;
 
 /**
  * Azione che gestisce le richieste relative alla Gestione Documenti Contabili
@@ -1163,6 +1184,70 @@ public Forward doAnnullaScadenza(ActionContext context)
 	catch(Throwable e) 
 	{
 		return handleException(context,e);
+	}
+}
+public Forward doBringBackSearchFindAssestato(ActionContext context, Pdg_vincoloBulk pdgVincolo, V_assestatoBulk assestato) {
+	try {
+		fillModel(context);
+		CRUDAccertamentoResiduoBP bp = (CRUDAccertamentoResiduoBP)getBusinessProcess(context);
+		if (assestato != null) {
+			pdgVincolo.setAssestatoRisorseCopertura(assestato);
+			pdgVincolo.setEsercizio_res(assestato.getEsercizio_res());
+			pdgVincolo.setLineaAttivita(new WorkpackageBulk(assestato.getCd_centro_responsabilita(), assestato.getCd_linea_attivita()));
+			doSearch(context, "main.Vincoli.find_linea_attivita");
+			pdgVincolo.setElementoVoce(new Elemento_voceBulk(assestato.getCd_elemento_voce(), assestato.getEsercizio(), assestato.getTi_appartenenza(), assestato.getTi_gestione()));
+			doSearch(context, "main.Vincoli.find_elemento_voce");
+			bp.setDirty(true);
+		} 		
+		return context.findDefaultForward();
+	}catch (Throwable ex) {
+		return handleException(context, ex);
+	}
+}
+public Forward doBlankSearchFindAssestato(ActionContext context, Pdg_vincoloBulk pdgVincolo) {
+	try {
+		fillModel(context);
+		CRUDAccertamentoResiduoBP bp = (CRUDAccertamentoResiduoBP)getBusinessProcess(context);
+		pdgVincolo.setAssestatoRisorseCopertura(null);
+		pdgVincolo.setEsercizio_res(null);
+		pdgVincolo.setLineaAttivita(null);
+		pdgVincolo.setElementoVoce(null);
+		pdgVincolo.setIm_vincolo(BigDecimal.ZERO);
+		bp.setDirty(true);
+		return context.findDefaultForward();
+	}catch (Throwable ex) {
+		return handleException(context, ex);
+	}
+}
+
+public Forward doOnChangeStato(ActionContext context) {
+	try {
+		CRUDAccertamentoBP bp = (CRUDAccertamentoBP) context.getBusinessProcess();
+		AccertamentoResiduoBulk accertamento = (AccertamentoResiduoBulk) bp.getModel();
+		String oldStato = accertamento.getStato();
+
+		fillModel(context);
+		
+		if (accertamento.isInesigibile() || accertamento.isParzialmenteInesigibile()) {
+			if (accertamento.getIm_quota_inesigibile()==null)
+				accertamento.setIm_quota_inesigibile(BigDecimal.ZERO);
+			if (accertamento.isInesigibile())
+				accertamento.setIm_quota_inesigibile(accertamento.getImportoNonIncassato());
+		} else if (accertamento.getPdgVincoliColl().size()>0 || accertamento.getAccertamentoVincoliPerentiColl().size()>0)
+			if (bp instanceof CRUDAccertamentoResiduoAmministraBP)
+				bp.setMessage("Attenzione! Esistono vincoli associati all'accertamento non coerenti con il suo nuovo stato che saranno azzerati all'atto del salvataggio.");
+			else {
+				accertamento.setStato(oldStato);
+				bp.setMessage("Operazione non possibile! Esistono vincoli associati all'accertamento. Eliminare i vincoli e rieffettuare l'operazione.");
+			}
+		else 
+			accertamento.setIm_quota_inesigibile(null);
+		
+		return context.findDefaultForward();
+	} catch (java.lang.ClassCastException ex) {
+		return context.findDefaultForward();
+	} catch (Throwable ex) {
+		return handleException(context, ex);
 	}
 }
 }
