@@ -26,7 +26,12 @@
      <table class="Panel card">	
 	  <tr>
 	    <td>
-	  	<% bp.getController().writeFormLabel(out,"cd_progetto_padre");%>
+      	<% if (isFlNuovoPdg) {
+				bp.getController().writeFormLabel(out,"cd_progetto_padre_area");
+ 		   } else {
+				bp.getController().writeFormLabel(out,"cd_progetto_padre");
+		   }
+      	%>      	
 	    </td>
 	    <td colspan="2">
 	  	<% bp.getController().writeFormInput(out,"cd_progetto_padre");%>
@@ -70,7 +75,12 @@
 		%>
      <table class="Panel card">		  
 	  <TR><TD>
-	  	<% bp.getController().writeFormLabel(out,"cd_progetto");%>
+      	<% if (isFlNuovoPdg) {
+				bp.getController().writeFormLabel(out,"cd_progetto_area");
+ 		   } else {
+				bp.getController().writeFormLabel(out,"cd_progetto");
+		   }
+      	%>      	
 	  	</TD><TD>
 	  	<% bp.getController().writeFormInput(out,"cd_progetto");%>
 	  </TD></TR>
@@ -192,14 +202,24 @@
  <div class="Group">
 	<table class="Panel">	
 	  <TR><TD>
-	  	<% bp.getController().writeFormLabel(out,"cd_progetto");%>
+      	<% if (isFlNuovoPdg) {
+				bp.getController().writeFormLabel(out,"cd_progetto_area");
+ 		   } else {
+				bp.getController().writeFormLabel(out,"cd_progetto");
+		   }
+      	%>      	
 	  	</TD><TD>
 	  	<% bp.getController().writeFormInput(out,"cd_progetto");%>
 	  </TD></TR>
 	  <% if (!(bp instanceof TestataProgettiRicercaNuovoBP)){%>
 	  <tr>
 	    <td>
-	  	<% bp.getController().writeFormLabel(out,"cd_progetto_padre");%>
+      	<% if (isFlNuovoPdg) {
+				bp.getController().writeFormLabel(out,"cd_progetto_padre_area");
+ 		   } else {
+				bp.getController().writeFormLabel(out,"cd_progetto_padre");
+		   }
+      	%>      	
 	    </td>
 	    <td colspan="3">
 	  	<% bp.getController().writeFormInput(out,"cd_progetto_padre");%>

@@ -97,6 +97,15 @@
 		maxLength="1"
 		label="Gestione Piano Economico Progetto" />
 	<fieldProperty
+		name="abil_progetto_strorg"
+		property="abil_progetto_strorg"
+        keysProperty="abilProgettoStrorgKeys"		
+        inputType="SELECT"
+		label="Livello Abilitazione Progetti"	
+		enabledOnSearch="true"
+		caseSensitiveSearch="false"	
+		nullable="false" />
+	<fieldProperty
 		name="ldap_password"
 		property="ldap_password"
 		maxLength="100"
@@ -166,6 +175,8 @@
 		name="fl_gae_es" />
 	<formFieldProperty
 		name="fl_prg_pianoeco" />
+	<formFieldProperty
+		name="abil_progetto_strorg" />
 	
 	<columnFieldProperty
 		name="descrizione" />
