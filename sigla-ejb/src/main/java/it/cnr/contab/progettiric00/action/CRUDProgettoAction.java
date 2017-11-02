@@ -108,7 +108,7 @@ public Forward doFreeSearchFind_nodo_padre(ActionContext context) {
 		TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)getBusinessProcess(context);
 		ProgettoBulk progetto = (ProgettoBulk)bp.getModel();
 		progetto.setProgettopadre(new ProgettoBulk());	
-		return freeSearch(context, getFormField(context, "main.find_nodo_padre"), progetto);
+		return freeSearch(context, getFormField(context, "main.find_nodo_padre"), progetto.getProgettopadre());
 }
 /**
   *  E' stata generata la richiesta di cercare un Progetto che sia padre della Progetto
@@ -127,6 +127,9 @@ public it.cnr.jada.action.Forward doSearchFind_nodo_padre(ActionContext context)
 	try{
 		
 		TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)getBusinessProcess(context);
+		if ("TestataProgettiRicercaBP".equals(bp.getName()))
+			return search(context, getFormField(context, "main.find_nodo_padre"), "filtro_ricerca_aree_short");
+			
 		ProgettoBulk progetto = (ProgettoBulk)bp.getModel();
 		
 		String cd = null;
