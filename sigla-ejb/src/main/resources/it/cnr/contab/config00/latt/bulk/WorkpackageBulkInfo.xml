@@ -301,6 +301,8 @@
       	enabledOnEdit="true"
 		enabledOnSearch="true" 
 		enabledOnFreeSearch="true"
+		freeSearchSet="filtro_ricerca_prog2"
+		columnSet="nuovoPdg"
 		label="Area Progettuale"/>
 	<fieldProperty
 		name="cd_progetto2016"
