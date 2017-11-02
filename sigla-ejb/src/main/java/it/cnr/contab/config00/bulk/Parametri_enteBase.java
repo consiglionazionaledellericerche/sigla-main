@@ -38,6 +38,9 @@ public class Parametri_enteBase extends Parametri_enteKey implements Keyed{
 	// FL_PRG_PIANOECO CHAR(1)
 	private java.lang.Boolean fl_prg_pianoeco;
 
+	// ABIL_PROGETTO_STRORG VARCHAR2(3)
+	private java.lang.String abil_progetto_strorg;
+
 	private java.lang.String ldap_user;	
 
 	private java.lang.String ldap_password;	
@@ -234,5 +237,20 @@ public class Parametri_enteBase extends Parametri_enteKey implements Keyed{
 	
 	public void setFl_prg_pianoeco(java.lang.Boolean fl_prg_pianoeco) {
 		this.fl_prg_pianoeco = fl_prg_pianoeco;
+	}
+	
+	/*
+	 * Indica il livello di abilitazione per l'utilizzazione dei progetti
+	 * UO:  Il progetto deve essere abilitato a livello UO. L'abilitazione del progetto ad una UO 
+	 * 	    lo renderà disponibile solo per la UO indicata.
+	 * CDS: Il progetto deve essere abilitato a livello CDS. L'abilitazione del progetto ad una sola UO del CDS
+	 * 		lo renderà disponibile per tutte le UO del CDS stesso. 
+	 */
+	public java.lang.String getAbil_progetto_strorg() {
+		return abil_progetto_strorg;
+	}
+	
+	public void setAbil_progetto_strorg(java.lang.String abil_progetto_strorg) {
+		this.abil_progetto_strorg = abil_progetto_strorg;
 	}
 }
