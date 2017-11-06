@@ -138,7 +138,7 @@ public void writeHTMLToolbar(
 			!(isInputReadonly() || getDetails().isEmpty() || ((CRUDFatturaAttivaBP)getParentController()).isSearching())? command : null,
 			true,
 			"Contabilizza",
-			"btn-sm btn-secondary btn-title",
+			"btn-sm btn-secondary btn-outline-secondary btn-title",
 			HttpActionContext.isFromBootstrap(context));
 
 		
@@ -157,7 +157,7 @@ public void writeHTMLToolbar(
 					enabled ? "javascript:submitForm('doSdoppiaDettaglio');" : null,
 					true,
 					"Sdoppia",
-					"btn-sm btn-secondary btn-title",
+					"btn-sm btn-secondary btn-outline-secondary btn-title",
 					HttpActionContext.isFromBootstrap(context));
 		}
 }
