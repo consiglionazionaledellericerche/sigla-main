@@ -3,6 +3,7 @@ package it.cnr.contab.spring.storage;
 import com.microsoft.azure.storage.analytics.StorageService;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,7 @@ public class AzureStoreServiceTest {
     private StoreService storeService;
 
     @Test
+    @Ignore
     public void testStore() throws IOException {
         InputStream is = IOUtils.toInputStream(TEXT, Charset.defaultCharset());
         Map<String, Object> map = new HashMap();
@@ -71,6 +73,7 @@ public class AzureStoreServiceTest {
     }
 
     @Test
+    @Ignore
     public void testGetAndDelete() throws IOException {
         final StorageObject storageObjectByPath = storeService.getStorageObjectByPath(FOO_CIAONE);
         assertEquals(Arrays.asList(P_CM_TITLED),
