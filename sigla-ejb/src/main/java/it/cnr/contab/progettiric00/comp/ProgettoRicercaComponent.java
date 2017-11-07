@@ -334,7 +334,8 @@ public ProgettoRicercaComponent() {
 
 				if (bulk.getUnita_organizzativa() == null)
 						throw new it.cnr.jada.comp.ApplicationException("L'unità organizzativa è obbligatoria.");
-				if (bulk.getProgettopadre() == null)
+
+				if (bulk.getProgettopadre() == null || bulk.getProgettopadre().getPg_progetto() == null)
 					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto è necessario inserire il progetto padre!");	                	
 
 				if ((ProgettoBulk)bulk.getProgettopadre() == null)
@@ -573,9 +574,10 @@ public ProgettoRicercaComponent() {
 				if (clause == null) 
 				  clause = progettopadre.buildFindClauses(null);
 				SQLBuilder sql = getHome(userContext, progettopadre,"V_PROGETTO_PADRE").createSQLBuilder();
-				sql.addSQLClause("AND", "PG_PROGETTO", sql.NOT_EQUALS, ((ProgettoBulk)bulk).getPg_progetto());
+				sql.addSQLClause(FindClause.AND, "PG_PROGETTO", SQLBuilder.NOT_EQUALS, ((ProgettoBulk)bulk).getPg_progetto());
+				sql.addSQLClause(FindClause.AND, "TIPO_FASE", SQLBuilder.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
 			    if (((ProgettoBulk)bulk).getLivello() != null)
-				   sql.addSQLClause("AND", "LIVELLO", sql.EQUALS, new Integer(((ProgettoBulk)bulk).getLivello().intValue()-1));
+				   sql.addSQLClause(FindClause.AND, "LIVELLO", SQLBuilder.EQUALS, new Integer(((ProgettoBulk)bulk).getLivello().intValue()-1));
 				if (clause != null) 
 				  sql.addClause(clause);
 				return sql;
