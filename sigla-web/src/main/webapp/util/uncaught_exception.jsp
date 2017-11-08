@@ -26,7 +26,9 @@
 
 	String stackTrace = sw.toString();
 	CNRUserInfo userInfo = (CNRUserInfo)HttpActionContext.getUserInfo(request);
-	bp.insertError(new HttpActionContext(this,request,response), userInfo.getUserid(),userInfo.getEsercizio(), (userInfo.getUnita_organizzativa() != null) ? userInfo.getUnita_organizzativa().getCd_unita_organizzativa() : null,stackTrace);
+	if (bp != null && userInfo != null) {
+	    bp.insertError(new HttpActionContext(this,request,response), userInfo.getUserid(),userInfo.getEsercizio(), (userInfo.getUnita_organizzativa() != null) ? userInfo.getUnita_organizzativa().getCd_unita_organizzativa() : null,stackTrace);
+	}
 %>
 <script language="JavaScript" archive="scripts.jar" src="scripts/util.js"></script>
 <script>
