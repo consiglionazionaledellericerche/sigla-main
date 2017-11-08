@@ -43,7 +43,7 @@ public class Print_spoolerBulk extends Print_spoolerBase {
 		ti_visibilitaKeys.put(TI_VISIBILITA_CDR, "Cdr");
 		ti_visibilitaKeys.put(TI_VISIBILITA_UNITA_ORGANIZZATIVA, "Unità org.");
 		ti_visibilitaKeys.put(TI_VISIBILITA_CDS, "Cds");
-		ti_visibilitaKeys.put(TI_VISIBILITA_CNR, "Cnr");
+		ti_visibilitaKeys.put(TI_VISIBILITA_CNR, "Ente");
 		ti_visibilitaKeys.put(TI_VISIBILITA_PUBLICO, "Pubblico");
 	}
 	public static final String TIPO_INTERVALLO_GIORNI = "G";
