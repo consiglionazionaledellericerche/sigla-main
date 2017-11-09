@@ -320,34 +320,42 @@ $F{STATO}.trim().equals("A")?($F{IM_DOC}.subtract($F{IM_RITENUTE})).negate():($F
 		<groupHeader>
 			<band height="45" splitType="Stretch">
 				<staticText>
-					<reportElement key="staticText-7" style="BOLD" x="270" y="8" width="115" height="13" uuid="ab4c4552-1c7a-4515-b33b-ac5d13324f9e"/>
+					<reportElement key="staticText-7" style="BOLD" x="270" y="5" width="115" height="17" uuid="ab4c4552-1c7a-4515-b33b-ac5d13324f9e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement markup="styled"/>
+					<textElement markup="styled">
+						<font size="12"/>
+					</textElement>
 					<text><![CDATA[Unità organizzativa:]]></text>
 				</staticText>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField" style="BOLD" x="369" y="8" width="50" height="13" uuid="6464e502-4348-4106-93ac-4d04c557ffb3"/>
+					<reportElement key="textField" x="369" y="5" width="50" height="17" uuid="6464e502-4348-4106-93ac-4d04c557ffb3"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{CD_UNITA_ORGANIZZATIVA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField" style="BOLD" x="416" y="8" width="385" height="13" uuid="b6998686-ccc9-46fc-aa24-ca221a90d95b"/>
+					<reportElement key="textField" x="416" y="5" width="385" height="17" uuid="b6998686-ccc9-46fc-aa24-ca221a90d95b"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{DS_UNITA_ORGANIZZATIVA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="false">
@@ -943,7 +951,7 @@ precedente
 				<textFieldExpression><![CDATA[$V{DettNetto}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField" style="NORMAL" x="85" y="0" width="50" height="13" uuid="480af406-ce16-4df4-82c4-bf7a178aa5df"/>
+				<reportElement key="textField" style="BOLD" x="85" y="0" width="50" height="13" uuid="480af406-ce16-4df4-82c4-bf7a178aa5df"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

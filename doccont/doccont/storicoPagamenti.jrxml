@@ -22,12 +22,12 @@
 	<queryString>
 		<![CDATA[select count(distinct cd_anag) ,sum(importo-importo_pagato),esercizio,ROUND((TO_NUMBER (TO_CHAR (periodo_da, 'mm') + 1) / 3),0) trimestre,0 gg from storico_indicatore
 where
-pg_estrazione=$P{prog}  having sum(importo-importo_pagato) > 0
+pg_estrazione   =$P{prog}  having sum(importo-importo_pagato) > 0
 group by cd_anag,esercizio,ROUND((TO_NUMBER (TO_CHAR (periodo_da, 'mm') + 1) / 3),0)
-union
+union all
 select  0,0, esercizio,ROUND((TO_NUMBER (TO_CHAR (dt_trasmissione, 'mm') + 1) / 3),0) trimestre,
                          ROUND (SUM (importo_pesato) / SUM (IMPORTO_PAGATO)) gg
-                         from storico_indicatore where pg_estrazione  =$P{prog} and importo_pagato!=0
+                         from storico_indicatore where pg_estrazione   =$P{prog} and importo_pagato!=0
                          group by esercizio,ROUND((TO_NUMBER (TO_CHAR (dt_trasmissione, 'mm') + 1) / 3),0)]]>
 	</queryString>
 	<field name="COUNT(DISTINCTCD_ANAG)" class="java.math.BigDecimal"/>
@@ -35,24 +35,108 @@ select  0,0, esercizio,ROUND((TO_NUMBER (TO_CHAR (dt_trasmissione, 'mm') + 1) / 
 	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
 	<field name="TRIMESTRE" class="java.math.BigDecimal"/>
 	<field name="GG" class="java.math.BigDecimal"/>
-	<variable name="tot_creditori" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="tot_creditori" class="java.math.BigDecimal" resetType="Group" resetGroup="trimestre" calculation="Sum">
 		<variableExpression><![CDATA[$F{COUNT(DISTINCTCD_ANAG)}]]></variableExpression>
 	</variable>
-	<variable name="tot_debiti" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="tot_debiti" class="java.math.BigDecimal" resetType="Group" resetGroup="trimestre" calculation="Sum">
 		<variableExpression><![CDATA[$F{SUM(IMPORTO-IMPORTO_PAGATO)}]]></variableExpression>
 	</variable>
-	<variable name="tot_gg" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="tot_gg" class="java.math.BigDecimal" resetType="Group" resetGroup="trimestre" calculation="Sum">
 		<variableExpression><![CDATA[$F{GG}]]></variableExpression>
 	</variable>
+	<group name="trimestre">
+		<groupExpression><![CDATA[$F{ESERCIZIO}+$F{TRIMESTRE}]]></groupExpression>
+		<groupFooter>
+			<band height="90">
+				<rectangle>
+					<reportElement x="45" y="30" width="394" height="20" uuid="ceb1fd8a-10a2-4d1f-b371-34227f18be86"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="45" y="10" width="394" height="20" uuid="d92e7b78-5362-499a-8228-7ecd5645d5b3"/>
+				</rectangle>
+				<textField pattern="###0">
+					<reportElement style="TNR10" x="249" y="30" width="63" height="20" uuid="578c400d-bc69-41c4-9695-e5c73b3de8e3"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{tot_creditori}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0">
+					<reportElement style="TNR10" x="157" y="30" width="72" height="20" uuid="bcf07408-9b64-41e4-86df-7ffcc182ceba"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{tot_gg}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement style="TNR10" x="323" y="30" width="104" height="20" uuid="dff0a0fb-3a35-4dcb-a8d9-f721493c1f40"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{tot_debiti}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TNR10" x="55" y="30" width="38" height="20" uuid="fdd6d34c-4c36-424d-a97e-6e90b83e9823"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{ESERCIZIO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TNR10" x="103" y="30" width="40" height="20" uuid="d7b80e74-cf02-4977-a0e2-927e8fece644"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{TRIMESTRE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="TNRG10" x="55" y="10" width="38" height="20" uuid="87ac8150-c18f-493b-98f3-13bdcb389e45"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Anno]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TNRG10" x="101" y="10" width="45" height="20" uuid="db93867e-d853-44b7-8a5e-ef672b6a3c8f"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Trimestre]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TNRG10" x="157" y="10" width="72" height="20" uuid="512d468e-e9f9-451b-b475-302b3857f2ec"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[N° Giorni]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TNRG10" x="249" y="10" width="61" height="20" uuid="8973a50d-c7c7-49dc-97f8-a9d6ab843305"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[N° Creditori]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TNRG10" x="365" y="10" width="61" height="20" uuid="b5729b2c-718d-4079-8161-9393490fb105"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Tot. Debiti]]></text>
+				</staticText>
+				<line>
+					<reportElement x="97" y="10" width="1" height="40" uuid="212baed8-092a-435e-b2ba-281e4bfc9701"/>
+				</line>
+				<line>
+					<reportElement x="147" y="10" width="1" height="40" uuid="2e7d2841-5a58-445c-a79a-d8006831e9af"/>
+				</line>
+				<line>
+					<reportElement x="237" y="10" width="1" height="40" uuid="1c69c8c2-bc95-473b-948c-1712ed319a40"/>
+				</line>
+				<line>
+					<reportElement x="317" y="10" width="1" height="40" uuid="f453e103-f222-40ae-9f6f-f5519eceb852"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="40" splitType="Stretch">
+		<band height="91" splitType="Stretch">
 			<image onErrorType="Icon">
 				<reportElement key="image-1" x="3" y="0" width="441" height="40" uuid="60ac1d76-1d4d-40c0-bcab-2f19636ecc8b"/>
 				<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement style="TNRG12" x="48" y="40" width="427" height="51" uuid="d8c4a69a-5957-4a50-91b2-b0b6283a0556"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Indicatore trimestrale di tempestività dei pagamenti di cui all’art. 33 del D.Lgs 14 marzo 2013, n.33 elaborato con le modalità di cui all’art.9 del D.P.C.M. del 22 settembre 2014.]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -71,84 +155,6 @@ select  0,0, esercizio,ROUND((TO_NUMBER (TO_CHAR (dt_trasmissione, 'mm') + 1) / 
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="135" splitType="Stretch">
-			<rectangle>
-				<reportElement x="68" y="100" width="394" height="20" uuid="ceb1fd8a-10a2-4d1f-b371-34227f18be86"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="68" y="80" width="394" height="20" uuid="d92e7b78-5362-499a-8228-7ecd5645d5b3"/>
-			</rectangle>
-			<textField pattern="###0">
-				<reportElement style="TNR10" x="272" y="100" width="63" height="20" uuid="578c400d-bc69-41c4-9695-e5c73b3de8e3"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$V{tot_creditori}]]></textFieldExpression>
-			</textField>
-			<textField pattern="###0">
-				<reportElement style="TNR10" x="180" y="100" width="72" height="20" uuid="bcf07408-9b64-41e4-86df-7ffcc182ceba"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$V{tot_gg}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00">
-				<reportElement style="TNR10" x="346" y="100" width="104" height="20" uuid="dff0a0fb-3a35-4dcb-a8d9-f721493c1f40"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$V{tot_debiti}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="TNR10" x="78" y="100" width="38" height="20" uuid="fdd6d34c-4c36-424d-a97e-6e90b83e9823"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{ESERCIZIO}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="TNR10" x="126" y="100" width="40" height="20" uuid="d7b80e74-cf02-4977-a0e2-927e8fece644"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{TRIMESTRE}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement style="TNRG10" x="78" y="80" width="38" height="20" uuid="87ac8150-c18f-493b-98f3-13bdcb389e45"/>
-				<textElement textAlignment="Center">
-					<font fontName="Times New Roman"/>
-				</textElement>
-				<text><![CDATA[Anno]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="TNRG10" x="124" y="80" width="45" height="20" uuid="db93867e-d853-44b7-8a5e-ef672b6a3c8f"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[Trimestre]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="TNRG10" x="180" y="80" width="72" height="20" uuid="512d468e-e9f9-451b-b475-302b3857f2ec"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[N° Giorni]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="TNRG10" x="272" y="80" width="61" height="20" uuid="8973a50d-c7c7-49dc-97f8-a9d6ab843305"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[N° Creditori]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="TNRG10" x="388" y="80" width="61" height="20" uuid="b5729b2c-718d-4079-8161-9393490fb105"/>
-				<textElement textAlignment="Right"/>
-				<text><![CDATA[Tot. Debiti]]></text>
-			</staticText>
-			<line>
-				<reportElement x="120" y="80" width="1" height="40" uuid="212baed8-092a-435e-b2ba-281e4bfc9701"/>
-			</line>
-			<line>
-				<reportElement x="170" y="80" width="1" height="40" uuid="2e7d2841-5a58-445c-a79a-d8006831e9af"/>
-			</line>
-			<line>
-				<reportElement x="260" y="80" width="1" height="40" uuid="1c69c8c2-bc95-473b-948c-1712ed319a40"/>
-			</line>
-			<line>
-				<reportElement x="340" y="80" width="1" height="40" uuid="f453e103-f222-40ae-9f6f-f5519eceb852"/>
-			</line>
-			<staticText>
-				<reportElement style="TNRG12" x="49" y="17" width="427" height="51" uuid="d8c4a69a-5957-4a50-91b2-b0b6283a0556"/>
-				<textElement textAlignment="Justified">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[Indicatore trimestrale di tempestività dei pagamenti di cui all’art. 33 del D.Lgs 14 marzo 2013, n.33 elaborato con le modalità di cui all’art.9 del D.P.C.M. del 22 settembre 2014.]]></text>
-			</staticText>
-		</band>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>
