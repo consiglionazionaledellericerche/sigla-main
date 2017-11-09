@@ -26,7 +26,9 @@
 		<tr>
 			<td>
 				<% bp.writeFormLabel(out,"ti_stato_documento"); %>
-				<% bp.writeFormInput(out,null,"ti_stato_documento",false,null,"onclick=\"javascript:submitForm('doCambiaVisibilita')\""); %>
+				<div class="d-inline-block">
+				    <% bp.writeFormInput(out,null,"ti_stato_documento",false,null,"onclick=\"javascript:submitForm('doCambiaVisibilita')\""); %>
+				</div>
 			</td>		
 		</tr>
 		<tr height="100%">
