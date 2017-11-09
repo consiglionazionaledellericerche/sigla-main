@@ -14,6 +14,8 @@ import it.cnr.jada.persistency.Keyed;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class V_saldi_piano_econom_progettoBase extends V_saldi_piano_econom_progettoKey implements Keyed {
+	private static final long serialVersionUID = 5918224310476589096L;
+
 	// DISP DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal disp;
 
@@ -26,11 +28,11 @@ public class V_saldi_piano_econom_progettoBase extends V_saldi_piano_econom_prog
 	// VARIAMENO DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal variameno;
 
-	// ASSESTATO DECIMAL(15,2) NOT NULL
-	private java.math.BigDecimal assestato;
+	// IMPACC DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal impacc;
 
-	// DISP_RESIDUA DECIMAL(15,2) NOT NULL
-	private java.math.BigDecimal disp_residua;
+	// MANRIS DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal manris;
 
 	public V_saldi_piano_econom_progettoBase() {
 		super();
@@ -68,20 +70,20 @@ public class V_saldi_piano_econom_progettoBase extends V_saldi_piano_econom_prog
 		this.variameno = variameno;
 	}
 
-	public java.math.BigDecimal getAssestato() {
-		return assestato;
+	public java.math.BigDecimal getImpacc() {
+		return impacc;
 	}
-
-	public void setAssestato(java.math.BigDecimal assestato) {
-		this.assestato = assestato;
+	
+	public void setImpacc(java.math.BigDecimal impacc) {
+		this.impacc = impacc;
 	}
-
-	public java.math.BigDecimal getDisp_residua() {
-		return disp_residua;
+	
+	public java.math.BigDecimal getManris() {
+		return manris;
 	}
-
-	public void setDisp_residua(java.math.BigDecimal disp_residua) {
-		this.disp_residua = disp_residua;
+	
+	public void setManris(java.math.BigDecimal manris) {
+		this.manris = manris;
 	}
 }
 
