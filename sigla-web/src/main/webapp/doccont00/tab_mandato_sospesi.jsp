@@ -13,10 +13,10 @@
 		CRUDAbstractMandatoBP bp = (CRUDAbstractMandatoBP)BusinessProcess.getBusinessProcess(request);
 		it.cnr.contab.doccont00.core.bulk.MandatoBulk mandato = (it.cnr.contab.doccont00.core.bulk.MandatoBulk)bp.getModel();
 %>
-	<table border="0" cellspacing="0" cellpadding="2">
+	<table border="0" cellspacing="0" cellpadding="2" class="w-100 h-100">
 		<tr>
 			<td>
-			      <b><font size=2>Sospesi associati al mandato</font></b>
+			      <b class="h3 text-primary">Sospesi associati al mandato</b>
 			      <% bp.getSospesiSelezionati().writeHTMLTable(pageContext,null,bp.isCaricaSospesiButtonEnabled() && bp.isEditable() ,false,bp.isRimuoviSospesiButtonEnabled(),"100%","200px", false); %>
 			</td>
 		</tr>
