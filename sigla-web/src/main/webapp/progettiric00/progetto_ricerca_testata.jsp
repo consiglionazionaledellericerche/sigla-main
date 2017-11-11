@@ -53,13 +53,7 @@
 	  	<% bp.getController().writeFormInput(out,"ds_progetto");%>
 	  </TD></TR>
 	  <TR>
-	    <TD><% bp.getController().writeFormLabel( out, "find_dipartimento"); %></TD>	
-	    <TD colspan="3">
-	      <% bp.getController().writeFormInput( out, "cd_dipartimento");
-	         bp.getController().writeFormInput( out, "ds_dipartimento");
-	         bp.getController().writeFormInput( out, "find_dipartimento");%>
-	      <!-- <%  bp.getController().writeFormInput( out, "crea_dipartimento"); %> -->
-	    </TD>
+	    <% bp.getController().writeFormField( out, "find_dipartimento"); %>	
 	  </TR>
 	  <% if (!isFlNuovoPdg) { %>
 		  <TR><TD>
