@@ -71,23 +71,36 @@
 	</table>
 	</div>
 
-	<table border="0" cellspacing="0" cellpadding="2">
+	<table border="0" cellspacing="0" cellpadding="2" class="w-100">
 		<tr>
 			<td colspan=2 align="center">
-				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaDocPassivi')",null, bp.getParentRoot().isBootstrap()); %>
+			    <% JSPUtils.button(out,
+                    bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search" : "img/find24.gif",
+                    bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search" : "img/find24.gif",
+                    bp.encodePath("Ricerca"),
+                    "javascript:submitForm('doCercaDocPassivi')",
+                    "btn-primary btn-outline-primary btn-title",
+                    bp.isEditable(),
+                    bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
 	
 		<tr>
 			<td colspan=2>
-			      <b ALIGN="CENTER"><font size=2>Documenti passivi disponibili</font></b>
+			      <b class="h3 text-primary text-align-center d-block">Documenti passivi disponibili</b>
 			      <% bp.getDocumentiPassivi().writeHTMLTable(pageContext,null,false,false,false,"100%","200px", true); %>
 			</td>
 		</tr>
 		<tr>
-			<td  colspan=2 align = "center"><% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("Conferma"), "javascript:submitForm('doAggiungiDocPassivi')", bp.getParentRoot().isBootstrap()); %></td>
-<!-- 	<td><% JSPUtils.button(out,bp.encodePath("img/zoom24.gif"),bp.encodePath("img/zoom24.gif"), bp.encodePath("Dettaglio fattura"),"javascript:submitForm('doVisualizzaFatturaPerDoc_passivo')",bp.isDettaglioFatturaPerDoc_passivoEnabled() , bp.getParentRoot().isBootstrap()); %></td>
--->
+			<td  colspan=2 align = "center">
+			    <% JSPUtils.button(out,
+			        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o" : "img/save24.gif",
+                    bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o" : "img/save24.gif",
+                    bp.encodePath("Conferma"),
+			        "javascript:submitForm('doAggiungiDocPassivi')",
+			        "btn-primary btn-outline-primary btn-title",
+			        bp.isEditable(),
+			        bp.getParentRoot().isBootstrap()); %>
+			</td>
 		</tr>
-
 	</table>

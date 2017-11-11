@@ -1,9 +1,16 @@
 package it.cnr.contab.config00.latt.bulk;
 
+import java.rmi.RemoteException;
+
+import javax.ejb.EJBException;
+
 import it.cnr.contab.config00.blob.bulk.PostItBulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.contab.consultazioni.bulk.ConsultazioniRestHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -20,15 +27,12 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.sql.ApplicationPersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
-import java.rmi.RemoteException;
-
-import javax.ejb.EJBException;
-
-public class WorkpackageHome extends BulkHome {
+public class WorkpackageHome extends BulkHome implements ConsultazioniRestHome {
 	/**
 	 * Costrutture linea di attivit Home
 	 *
@@ -173,5 +177,67 @@ public class WorkpackageHome extends BulkHome {
 		sql.addSQLClause("OR","COFOG.DT_CANCELLAZIONE",sql.GREATER,it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
 		sql.closeParenthesis();
 		return sql;
+	}
+
+	@Override
+	public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+		if(compoundfindclause == null){
+			if(oggettobulk != null)
+				compoundfindclause = oggettobulk.buildFindClauses(null);
+		}else{
+			compoundfindclause = CompoundFindClause.and(compoundfindclause, oggettobulk.buildFindClauses(Boolean.FALSE));
+		}
+		sql =  getHomeCache().getHome(WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA_SENZA_PADRE").selectByClause(userContext, compoundfindclause);
+
+		if(!isUtenteEnte(userContext)){ 
+			WorkpackageHome home = (WorkpackageHome) getHomeCache().getHome(oggettobulk.getClass());
+			SQLBuilder sqlExists = home.createSQLBuilder();
+			CdrBulk cdrUtente = cdrFromUserContext(userContext);
+			String uo_scrivania = CNRUserContext.getCd_unita_organizzativa(userContext);
+			if (cdrUtente.getLivello().compareTo(CdrHome.CDR_PRIMO_LIVELLO)==0)
+			{
+				sql.addTableToHeader("V_CDR_VALIDO");
+				sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA_SENZA_PADRE.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
+				sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+				sql.openParenthesis("AND");
+				sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
+				sql.addSQLClause("OR", "V_CDR_VALIDO.CD_CDR_AFFERENZA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
+				sql.closeParenthesis();
+			}else{
+				sql.addTableToHeader("V_CDR_VALIDO");
+				sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA_SENZA_PADRE.CD_CENTRO_RESPONSABILITA","V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA");
+				sql.addSQLClause("AND", "V_CDR_VALIDO.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+				sql.openParenthesis("AND");
+				sql.addSQLClause("AND", "V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA",sql.EQUALS,cdrUtente.getCd_centro_responsabilita());
+				sql.addSQLClause("OR", "V_CDR_VALIDO.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,uo_scrivania);
+				sql.closeParenthesis();
+			}
+			((SQLBuilder)sql).addSQLExistsClause(FindClause.AND, sqlExists);
+		}
+		return sql;
+	}
+
+	private boolean isCdrEnte(UserContext userContext,CdrBulk cdr) throws ComponentException {
+		try {
+			getHomeCache().getHome(cdr.getUnita_padre()).findByPrimaryKey(cdr.getUnita_padre());
+			return cdr.isCdrAC();
+		} catch(Throwable e) {
+			throw new it.cnr.jada.comp.ComponentException(e);
+		}
+	}
+	private boolean isUtenteEnte(UserContext userContext) throws ComponentException {
+		return isCdrEnte(userContext,cdrFromUserContext(userContext));
+	}	
+	private CdrBulk cdrFromUserContext(UserContext userContext) throws ComponentException {
+		try {
+			it.cnr.contab.utenze00.bulk.UtenteBulk user = new it.cnr.contab.utenze00.bulk.UtenteBulk(userContext.getUser() );
+			user = (it.cnr.contab.utenze00.bulk.UtenteBulk)getHomeCache().getHome(user).findByPrimaryKey(user);
+
+			CdrBulk cdr = new CdrBulk( it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cdr(userContext) );
+			return (CdrBulk)getHomeCache().getHome(cdr).findByPrimaryKey(cdr);
+
+		} catch (it.cnr.jada.persistency.PersistencyException e) {
+			throw new ComponentException(e);
+		}
 	}
 }
