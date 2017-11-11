@@ -294,7 +294,7 @@ public class OfflineReportComponent extends GenericComponent implements
 						|| it.cnr.contab.utenze00.bp.CNRUserContext
 								.getCd_cdr(userContext) == null)
 					throw new ApplicationException(
-							"Utente non abilitato per il livello di visibilità CNR.");
+							"Utente non abilitato per il livello di visibilità Ente.");
 				CdrBulk cdr = (CdrBulk) getHome(userContext, CdrBulk.class)
 						.findByPrimaryKey(
 								new CdrKey(
@@ -304,12 +304,12 @@ public class OfflineReportComponent extends GenericComponent implements
 						|| it.cnr.contab.utenze00.bp.CNRUserContext
 								.getCd_cdr(userContext) == null)
 					throw new ApplicationException(
-							"Utente non abilitato per il livello di visibilità CNR.");
+							"Utente non abilitato per il livello di visibilità Ente.");
 				getHomeCache(userContext).fetchAll(userContext);
 				if (!Tipo_unita_organizzativaHome.TIPO_UO_ENTE.equals(cdr
 						.getUnita_padre().getUnita_padre().getCd_tipo_unita()))
 					throw new ApplicationException(
-							"Utente non abilitato per il livello di visibilità CNR.");
+							"Utente non abilitato per il livello di visibilità Ente.");
 			}
 			sql.addClause("and", "tiVisibilita", sql.EQUALS, ti_visibilita);
 
