@@ -12,8 +12,8 @@
 <body class="Form">
 <% OfflineReportPrintBP bp = (OfflineReportPrintBP)BusinessProcess.getBusinessProcess(request);
 	bp.openFormWindow(pageContext); %>
-	La stampa richiesta verrà accodata.
-	<table class="Panel">
+	<span class="h3 text-primary">La stampa richiesta verrà accodata.</span>
+	<table class="Panel card p-3 mb-2">
 		<tr>
 			<td>
 				<% bp.writeFormLabel(out,"ds_utente"); %>
@@ -40,17 +40,17 @@
 		</table>	
 	<%} %>
 	<% if (bp.isEMailEnabled()){ %>
-		<div class="GroupLabel">E-Mail</div>          
-		<table class="Group" style="width:80%">
+		<div class="GroupLabel GroupLabel h3 text-primary">E-Mail</div>
+		<table class="Group card mb-2" style="width:80%">
 			<tr><% bp.writeFormField(out,"email_a");%></tr>
 			<tr><% bp.writeFormField(out,"email_cc");%></tr>
 			<tr><% bp.writeFormField(out,"email_ccn");%></tr>
 			<tr><% bp.writeFormField(out,"email_subject");%></tr>
 			<tr><% bp.writeFormField(out,"email_body");%></tr>
 		</table>
-		<table class="Group" style="width:80%">
+		<table class="Group card p-3" cellpadding="2" style="width:80%">
 			<tr>
-				<td colspan="5">
+				<td colspan="5" class="text-info h4">
 					Formato data/ora: DD/MM/YYYY HH:MM
 				</td>
 			</tr>

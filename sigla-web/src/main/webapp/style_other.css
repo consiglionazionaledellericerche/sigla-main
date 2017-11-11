@@ -452,3 +452,6 @@ input.inputFieldReadOnly {
 	cursor:default;
 	font-size : 16px;
 }
+.d-inline-block{
+    display : inline-block;
+}
