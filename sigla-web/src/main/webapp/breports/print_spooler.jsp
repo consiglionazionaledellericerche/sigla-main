@@ -16,27 +16,13 @@
 
 <% PrintSpoolerBP bp = (PrintSpoolerBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); %>
-	<table class="Panel" width="100%" height="70%">
-		<tr>
-			<td>
-				<% bp.writeFormLabel(out,"ti_visibilita"); %>
-			</td>
-			<td>  	
-				<% bp.writeFormInput(out,null,"ti_visibilita",false,null,"onclick=\"javascript:submitForm('doCambiaVisibilita')\""); %>
-			</td>
-		</tr>
-		<tr height="100%">
-			<td colspan="4">
-				<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
-			</td> 
-		</tr>
-		<tr>
-			<td colspan="4">
-				<% bp.writeHTMLNavigator(out); %>
-			</td>
-		</tr>
-	</table>
-	<% if (bp.isEMailEnabled()){ %>
+	 <% bp.writeFormLabel(out,"ti_visibilita"); %>&nbsp;
+	 <div class="d-inline-block">
+	    <% bp.writeFormInput(out,null,"ti_visibilita",false,null,"onclick=\"javascript:submitForm('doCambiaVisibilita')\""); %>
+	 </div>
+	 <% bp.writeHTMLTable(pageContext,"100%","70%"); %>
+	 <% bp.writeHTMLNavigator(out); %>
+	 <% if (bp.isEMailEnabled()){ %>
 		<div class="GroupLabel">E-Mail</div>          
 		<table class="Group" >
 			<tr>
@@ -60,8 +46,7 @@
 				<td><% bp.getController().writeFormInput(out,null,"email_body",true,null,null);%></td>
 			</tr>
 		</table>
-			
-	<%}%>
+	 <%}%>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
 
