@@ -820,6 +820,8 @@
 		property="lettera_pagamento_estero"
 		inputType="BUTTON"
 		img="img/new16.gif"
+		buttonClass="btn btn-outline-info btn-title"
+		iconClass="fa fa-fw fa-plus"
 		readonlyProperty="abledToInsertLettera"
 		label="Crea lettera pagamento estero"
 		href="javascript:submitForm('doCreaLettera')" />
@@ -828,6 +830,8 @@
 		property="lettera_pagamento_estero"
 		inputType="BUTTON"
 		img="img/delete16.gif"
+		buttonClass="btn btn-outline-danger btn-title"
+		iconClass="fa fa-fw fa-trash"
 		readonlyProperty="abledToDeleteLettera"
 		label="Cancella lettera pagamento estero"
 		href="javascript:submitForm('doCancellaLettera')" />
@@ -836,6 +840,8 @@
 		property="lettera_pagamento_estero"
 		inputType="BUTTON"
 		img="img/delete16.gif"
+		buttonClass="btn btn-outline-danger btn-title"
+		iconClass="fa fa-fw fa-trash"
 		readonlyProperty="abledToDisassociaLettera"
 		label="Scollega lettera pagamento estero"
 		href="javascript:submitForm('doDisassociaLettera')" />	
