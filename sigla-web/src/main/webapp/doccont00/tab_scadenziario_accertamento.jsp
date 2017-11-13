@@ -16,8 +16,8 @@
 	Accertamento_scadenzarioBulk scadenza = (Accertamento_scadenzarioBulk)bp.getScadenzario().getModel();
 %>
 
-	<div class="Group">		
-	<table>
+	<div class="Group card">
+	<table class="w-100">
 		<tr>
 			<td><% bp.getController().writeFormLabel( out, "cd_voceRO"); %></td>
 			<td><% bp.getController().writeFormInput( out, "cd_voceRO"); %>
