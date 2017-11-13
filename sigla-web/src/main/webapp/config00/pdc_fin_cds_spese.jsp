@@ -32,14 +32,14 @@
 	 UserContext uc = HttpActionContext.getUserContext(session);
 	 Elemento_voceBulk voce = (Elemento_voceBulk)bp.getModel();%>
 
-	<table class="Panel">
+	<table class="Panel card border-primary p-3 mb-2">
 	<% if (!bp.isFlNuovoPdg()){%>
 		<tr>
-		<td colspan=4><CENTER><h3>Gestione Capitolo Parte I</h3></CENTER></td>
+		<td colspan=4><CENTER><h3 class="text-primary">Gestione Capitolo Parte I</h3></CENTER></td>
 		</tr>
 	<% } else { %>
 		<tr>
-		<td colspan=4><CENTER><h3>Gestione Voce di Bilancio di Spesa</h3></CENTER></td>
+		<td colspan=4><CENTER><h3 class="text-primary">Gestione Voce di Bilancio di Spesa</h3></CENTER></td>
 		</tr>
 	<% } %>
 	<tr>
@@ -109,7 +109,7 @@
 	  </td> 	  
 	</tr>				
 	</table>
-	<table>
+	<table class="Panel card border-info p-3">
 	<tr>
 	  <td><% bp.getController().writeFormLabel( out, "fl_recon"); %></td>	
 	  <td><% bp.getController().writeFormInput( out, "fl_recon"); %></td>
