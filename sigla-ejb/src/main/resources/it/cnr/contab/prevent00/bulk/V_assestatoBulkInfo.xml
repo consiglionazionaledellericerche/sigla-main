@@ -265,7 +265,7 @@
 			label="%"
 			headerLabel="Assegna"
 			headerStyle="text-align: center"
-			columnStyle="width:50px; text-align: right" 
+			columnStyle="width:20%; text-align: right"
 			command="doAssegnaPercentuale"/>
 		<columnFieldProperty
 			name="imp_da_assegnare"
@@ -302,12 +302,12 @@
 			label="%"
 			headerLabel="Assegna"
 			headerStyle="text-align: center"
-			columnStyle="width:50px; text-align: right" />
+			columnStyle="text-align: right" />
 		<columnFieldProperty
 			name="imp_da_assegnare"
 			label="Importo"
 			headerLabel="Assegna"
-			columnStyle="text-align: right;"
+			columnStyle="width:20%; text-align: right;"
 			command="doAssegnaImporto"/>
 	</columnSet>
 	<columnSet
