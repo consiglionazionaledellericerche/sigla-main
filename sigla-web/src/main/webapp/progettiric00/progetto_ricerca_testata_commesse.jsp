@@ -6,7 +6,6 @@
 		it.cnr.contab.progettiric00.bp.*,
 		it.cnr.contab.progettiric00.core.bulk.*"
 %>
-
 <%
 	TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)BusinessProcess.getBusinessProcess(request);
 	boolean isFlNuovoPdg = bp.isFlNuovoPdg();
@@ -16,14 +15,14 @@
 	<% if ((bp.getStatus() == bp.INSERT || bp.getStatus() == bp.EDIT || bp.getStatus() == bp.VIEW)){%>
      <div class="GroupLabel">
       	<% if (isFlNuovoPdg) {
-			   bp.getController().writeFormInput(out,null,"livello_padre2016",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");
+			   bp.getController().writeFormInput(out,null,"livello_padre2016",true,"GroupLabel h3 h-100 text-primary","style=\"border-style : none; cursor:default;\"");
 		  } else {
-			   bp.getController().writeFormInput(out,null,"livello_padre",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");
+			   bp.getController().writeFormInput(out,null,"livello_padre",true,"GroupLabel h3 h-100 text-primary","style=\"border-style : none; cursor:default;\"");
 		  } 
 		%>
 	 </div>
 	 <div class="Group">
-     <table class="Panel card">	
+     <table class="Panel card border-primary p-2 mb-2">
 	  <tr>
       	<% if (isFlNuovoPdg) {
 				bp.getController().writeFormField(out,"find_nodo_padre_area");
@@ -68,12 +67,12 @@
 	</div>
   <div class="GroupLabel">
       	<% if (isFlNuovoPdg) {
-			   bp.getController().writeFormInput(out,null,"livello2016",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");
+			   bp.getController().writeFormInput(out,null,"livello2016",true,"GroupLabel h3 h-100 text-info","style=\"border-style : none; cursor:default;\"");
 		  } else {
-			   bp.getController().writeFormInput(out,null,"livello",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");
+			   bp.getController().writeFormInput(out,null,"livello",true,"GroupLabel h3 h-100 text-info","style=\"border-style : none; cursor:default;\"");
 		  } 
 		%>
-     <table class="Panel card">		  
+     <table class="Panel card border-info p-2">
 	  <TR><TD>
       	<% if (isFlNuovoPdg) {
 				bp.getController().writeFormLabel(out,"cd_progetto_area");
@@ -193,14 +192,14 @@
 	<%}else{%>
         <div class="GroupLabel">
            	<% if (isFlNuovoPdg) {
-				   bp.getController().writeFormInput(out,null,"livello2016",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");
+				   bp.getController().writeFormInput(out,null,"livello2016",true,"GroupLabel h3 h-100 text-info","style=\"border-style : none; cursor:default;\"");
 			  } else {
-				   bp.getController().writeFormInput(out,null,"livello",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");
+				   bp.getController().writeFormInput(out,null,"livello",true,"GroupLabel h3 h-100 text-info","style=\"border-style : none; cursor:default;\"");
 			  } 
 			%>
         </div>
  <div class="Group">
-	<table class="Panel">	
+	<table class="Panel card border-info p-2">
 	  <TR>
 	  	<TD>
 	      	<% if (isFlNuovoPdg) {
