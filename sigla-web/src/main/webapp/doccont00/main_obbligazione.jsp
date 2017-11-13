@@ -29,20 +29,15 @@
 <%  
 		bp.openFormWindow(pageContext); 
 %>
-
-<table class="Panel">
-	<tr><td colspan=2>
-	<%	
-		JSPUtils.tabbed(
-					pageContext,
-					"tab",
-					bp.getTabs(),
-					bp.getTab("tab"),
-					"center",
-					null, null,
-					!bp.isEditingScadenza());
-	%>
-	</td></tr>	
-	</table>
+<%
+    JSPUtils.tabbed(
+                pageContext,
+                "tab",
+                bp.getTabs(),
+                bp.getTab("tab"),
+                "center",
+                "100%", null,
+                !bp.isEditingScadenza());
+%>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
