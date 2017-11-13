@@ -41,14 +41,14 @@
 	<%} %>
 	<% if (bp.isEMailEnabled()){ %>
 		<div class="GroupLabel GroupLabel h3 text-primary">E-Mail</div>
-		<table class="Group card mb-2" style="width:80%">
+		<table class="Group card mb-2 p-3">
 			<tr><% bp.writeFormField(out,"email_a");%></tr>
 			<tr><% bp.writeFormField(out,"email_cc");%></tr>
 			<tr><% bp.writeFormField(out,"email_ccn");%></tr>
 			<tr><% bp.writeFormField(out,"email_subject");%></tr>
 			<tr><% bp.writeFormField(out,"email_body");%></tr>
 		</table>
-		<table class="Group card p-3" cellpadding="2" style="width:80%">
+		<table class="Group card p-3" cellpadding="2">
 			<tr>
 				<td colspan="5" class="text-info h4">
 					Formato data/ora: DD/MM/YYYY HH:MM
@@ -60,6 +60,7 @@
 				<% bp.writeFormField(out,"ti_intervallo");%>
 			</tr>
 		</table>
+		<% if (!bp.getParentRoot().isBootstrap()) { %>
 		<script type="text/javascript">		
 		  var oFCKeditor = new FCKeditor('main.email_body') ;
 		  var sSkinPath = "<%=request.getContextPath()%>/scripts/editor/skins/office2003/" ;
@@ -70,7 +71,8 @@
 			sSkinPath + 'images/toolbar.bg.gif' + ';' +
 			sSkinPath + 'images/toolbar.buttonarrow.gif' ;
 		  oFCKeditor.ReplaceTextarea();
-		</script>		
+		</script>
+		<% } %>
 	<%}%>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
