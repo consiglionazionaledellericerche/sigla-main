@@ -73,6 +73,7 @@
 						</tr>					
 					</table>
 				</div>
+			</div>				
 			</td>
 			<td>
  		    <div class="card">
@@ -85,6 +86,7 @@
 						</tr>
 					</table>
 				</div>
+			</div>
 			</td>
 		</tr>
 		<tr>
@@ -101,11 +103,11 @@
 						</tr>
 					</table>
 				</div>
+			</div>				
 			</td>
 		</tr>
 	</table>
 </div>
-
 <%	bp.closeFormWindow(pageContext); %>
 </body>
 </html>

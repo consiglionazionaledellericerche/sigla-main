@@ -288,19 +288,6 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Tot.Risorse per&lt;BR&gt;Progetto" />	
 		
-	<fieldProperty
-		name="statoDecisionale"
-		property="statoDecisionale"
-		inputType="ROTEXT"
-		inputSize="5"
-		label="Contr." />
-	<fieldProperty
-		name="statoGestionale"
-		property="statoGestionale"
-		inputType="ROTEXT"
-		inputSize="5"
-		label="Contr." />
-					
 	<formFieldProperty
 		name="esercizio_ro" />
 	<formFieldProperty
@@ -360,11 +347,6 @@
 	<formFieldProperty
 		name="searchtool_progetto_liv2" />
 
-	<formFieldProperty
-		name="statoDecisionale" />
-	<formFieldProperty
-		name="statoGestionale" />
-
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -398,6 +380,61 @@
 		name="stato"
 		label="Stato attuale" />
 
+	<fieldProperty
+		name="existDecisionaleE"
+		property="existDecisionaleE"
+		label="Decisionale Entrata"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="existDecisionaleS"
+		property="existDecisionaleS"
+		label="Decisionale Spesa"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="existDecisionaleC"
+		property="existDecisionaleC"
+		label="Decisionale Costi"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="existDecisionaleR"
+		property="existDecisionaleR"
+		label="Residui"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="existGestionaleE"
+		property="existGestionaleE"
+		label="Gestionale Entrata"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="existGestionaleS"
+		property="existGestionaleS"
+		label="Gestionale Spesa"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false"
+		/>
+
 	<columnSet name="prg_liv2">
 		<columnFieldProperty
 			name="cd_progetto"
@@ -415,16 +452,36 @@
 			name="stato"
 			label="Stato attuale" />
 		<columnFieldProperty
-			name="statoDecisionale"
-			label="Contr."
-			headerStyle="text-align: center"
-			columnStyle="text-align: center"
-			headerLabel="DATI PRESENTI" />
+			name="existDecisionaleE"
+			label="Entrata"
+			headerLabel="Contrattazione" 
+			columnStyle="text-align: center" />
 		<columnFieldProperty
-			name="statoGestionale"
-			label="Gest."
-			headerStyle="text-align: center"
-			columnStyle="text-align: center"
-			headerLabel="DATI PRESENTI" />
+			name="existDecisionaleS"
+			label="Spesa"
+			headerLabel="Contrattazione" 
+			columnStyle="text-align: center" />
+		<columnFieldProperty
+			name="existGestionaleE"
+			label="Entrata"
+			headerLabel="Gestionale" 
+			columnStyle="text-align: center" />
+		<columnFieldProperty
+			name="existGestionaleS"
+			label="Spesa"
+			headerLabel="Gestionale"
+			enabledOnEdit="true"
+			enabledOnView="true"
+			columnStyle="text-align: center" />
+		<columnFieldProperty
+			name="existDecisionaleC"
+			label="Costi"
+			headerLabel="Costi/Residui" 
+			columnStyle="text-align: center" />
+		<columnFieldProperty
+			name="existDecisionaleR"
+			label="Residui"
+			headerLabel="Costi/Residui" 
+			columnStyle="text-align: center" />
 	</columnSet>
 </bulkInfo>
