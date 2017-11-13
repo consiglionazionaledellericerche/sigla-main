@@ -408,15 +408,13 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		               { "tabPianoEconomico","Piano Economico","/progettiric00/progetto_piano_economico.jsp" } ,
 		               { "tabDettagliFinanziatori","Finanziatori","/progettiric00/progetto_ricerca_dettagliFinanziatori.jsp" },
 		               { "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" },
-		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" },
-		               { "tabDettagliPostIt","Post-It","/config00/dettagliPostIt.jsp" }};
+		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" }};
 	    	} else {
 		    	return new String[][] {
 		               { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_commesse.jsp" },
 		               { "tabDettagliFinanziatori","Finanziatori","/progettiric00/progetto_ricerca_dettagliFinanziatori.jsp" },
 		               { "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" },
-		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" },
-		               { "tabDettagliPostIt","Post-It","/config00/dettagliPostIt.jsp" }};
+		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" }};
 	    	}
 	    } else {
 	  	   return new String[][] {
