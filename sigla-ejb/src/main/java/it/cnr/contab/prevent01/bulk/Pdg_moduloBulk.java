@@ -70,6 +70,8 @@ public class Pdg_moduloBulk extends Pdg_moduloBase {
 	
 	private Boolean existDecisionaleE = Boolean.FALSE;	
 	private Boolean existDecisionaleS = Boolean.FALSE;	
+	private Boolean existDecisionaleC = Boolean.FALSE;
+	private Boolean existDecisionaleR = Boolean.FALSE;
 	private Boolean existGestionaleE = Boolean.FALSE;	
 	private Boolean existGestionaleS = Boolean.FALSE;
 	
@@ -225,7 +227,6 @@ public class Pdg_moduloBulk extends Pdg_moduloBase {
 		setCambia_stato(stato);
 	}
 
-
 	public BigDecimal getImporto_progetto() {
 		return importo_progetto;
 	}
@@ -250,6 +251,22 @@ public class Pdg_moduloBulk extends Pdg_moduloBase {
 		this.existDecisionaleS = existDecisionaleS;
 	}
 	
+	public Boolean getExistDecisionaleC() {
+		return existDecisionaleC;
+	}
+	
+	public void setExistDecisionaleC(Boolean existDecisionaleC) {
+		this.existDecisionaleC = existDecisionaleC;
+	}
+	
+	public Boolean getExistDecisionaleR() {
+		return existDecisionaleR;
+	}
+	
+	public void setExistDecisionaleR(Boolean existDecisionaleR) {
+		this.existDecisionaleR = existDecisionaleR;
+	}
+	
 	public Boolean getExistGestionaleE() {
 		return existGestionaleE;
 	}
@@ -265,24 +282,5 @@ public class Pdg_moduloBulk extends Pdg_moduloBase {
 	public void setExistGestionaleS(Boolean existGestionaleS) {
 		this.existGestionaleS = existGestionaleS;
 	}
-	
-	public String getStatoDecisionale() {
-		if (getExistDecisionaleE() && getExistDecisionaleS())
-			return "T";
-		if (getExistDecisionaleE())
-			return "E";
-		if (getExistDecisionaleS())
-			return "S";
-		return null;
-	}
 
-	public String getStatoGestionale() {
-		if (getExistGestionaleE() && getExistGestionaleS())
-			return "T";
-		if (getExistGestionaleE())
-			return "E";
-		if (getExistGestionaleS())
-			return "S";
-		return null;
-	}
 }
