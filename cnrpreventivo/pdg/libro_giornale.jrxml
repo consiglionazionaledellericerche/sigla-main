@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="169"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -45,7 +45,7 @@
 		<defaultValueExpression><![CDATA[new Integer("2016")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cds" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["001"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="uo" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
@@ -263,17 +263,6 @@ WHERE ESERCIZIO = $P{esercizio}
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[GIORNALE DI CONTABILITA']]></text>
 			</staticText>
-			<textField isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10BOLD" x="678" y="68" width="143" height="15" uuid="426d4a56-4ad1-4070-8b2a-fc51c943462e"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["Stampa "+$P{stampa}]]></textFieldExpression>
-			</textField>
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement key="textField" style="TNR10" x="678" y="108" width="143" height="15" uuid="06579b2e-0481-49fe-9615-9d3ae310de00"/>
 				<box>

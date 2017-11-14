@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="situazione_sintetica_disp_GAE" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="situazione_sintetica_disp_GAE" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="d5b58e66-f221-4adc-b52e-6aca1883a3fb">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
 	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
@@ -31,10 +31,10 @@
 		<defaultValueExpression><![CDATA["004.000.000"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2017)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Idrpt" class="java.lang.Long" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Long(1088805)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Long(1255343)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select * from V_CONS_DISP_COMP_RES_SINTESI v
@@ -91,7 +91,7 @@ and esercizio = $P{Esercizio}]]>
 		<groupHeader>
 			<band height="29" splitType="Stretch">
 				<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNRGC12" x="90" y="8" width="686" height="14"/>
+					<reportElement key="textField" style="TNRGC12" x="90" y="8" width="686" height="14" uuid="812cc484-84d2-4ae8-9a8f-b117dde62784"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -99,17 +99,16 @@ and esercizio = $P{Esercizio}]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_RESPONSABILE_TERZO}+" - "+$F{DENOMINAZIONE_SEDE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_RESPONSABILE_TERZO}+" - "+$F{DENOMINAZIONE_SEDE}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-10" style="TNRGC12" x="0" y="8" width="82" height="14"/>
+					<reportElement key="staticText-10" style="TNRGC12" x="0" y="8" width="82" height="14" uuid="a52633f6-1574-404d-9450-1f8b585209dd"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[Responsabile]]></text>
 				</staticText>
 			</band>
@@ -117,29 +116,27 @@ and esercizio = $P{Esercizio}]]>
 		<groupFooter>
 			<band height="32" splitType="Stretch">
 				<staticText>
-					<reportElement key="staticText-11" style="TNRGC12" x="0" y="9" width="132" height="15"/>
+					<reportElement key="staticText-11" style="TNRGC12" x="0" y="9" width="132" height="15" uuid="07b1a5cd-e09e-40a6-9531-32a21a4e55a8"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[Totale per Responsabile]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-8" style="TNRGC12" x="141" y="9" width="334" height="15"/>
+					<reportElement key="textField-8" style="TNRGC12" x="141" y="9" width="334" height="15" uuid="b153a007-2ad9-4bdd-9667-22bc106be6b4"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DENOMINAZIONE_SEDE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DENOMINAZIONE_SEDE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-9" style="TNRG12" x="495" y="9" width="116" height="15"/>
+					<reportElement key="textField-9" style="TNRG12" x="495" y="9" width="116" height="15" uuid="82f5fa09-433b-46af-b908-206144e8c3f1"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -147,10 +144,10 @@ and esercizio = $P{Esercizio}]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Totale_Responsabile_disp_comp}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Totale_Responsabile_disp_comp}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-10" style="TNRG12" x="634" y="9" width="116" height="15"/>
+					<reportElement key="textField-10" style="TNRG12" x="634" y="9" width="116" height="15" uuid="30109b88-4ef0-458e-a685-c159fc451152"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -158,7 +155,7 @@ and esercizio = $P{Esercizio}]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Totale_Responsabile_disp_res}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Totale_Responsabile_disp_res}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -168,18 +165,17 @@ and esercizio = $P{Esercizio}]]>
 		<groupHeader>
 			<band height="30" splitType="Stretch">
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
-					<reportElement key="textField" style="TNRG10" x="76" y="7" width="700" height="15"/>
+					<reportElement key="textField" style="TNRG10" x="76" y="7" width="700" height="15" uuid="b2f6aaa2-a1d5-448c-9f2c-c3ec0743638e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CDR}+" / "+$F{LDA}+"   "+($F{DS_LDA}==null?"":$F{DS_LDA})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CDR}+" / "+$F{LDA}+"   "+($F{DS_LDA}==null?"":$F{DS_LDA})]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-2" style="TNRG10" x="0" y="8" width="64" height="14"/>
+					<reportElement key="staticText-2" style="TNRG10" x="0" y="8" width="64" height="14" uuid="606751e4-d297-4716-a8ea-4a22594c7329"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -190,20 +186,20 @@ and esercizio = $P{Esercizio}]]>
 					<text><![CDATA[CDR / GAE]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-1" x="0" y="2" width="782" height="1"/>
+					<reportElement key="line-1" x="0" y="2" width="782" height="1" uuid="04a727f4-2672-48dc-9c43-64fcbc95741c"/>
 				</line>
 				<line>
-					<reportElement key="line-3" x="0" y="2" width="1" height="28"/>
+					<reportElement key="line-3" x="0" y="2" width="1" height="28" uuid="e84b27c1-2a3b-4138-aab8-71bce9ff530f"/>
 				</line>
 				<line>
-					<reportElement key="line-7" x="782" y="2" width="1" height="28"/>
+					<reportElement key="line-7" x="782" y="2" width="1" height="28" uuid="8d90da3f-c477-48c8-9e32-6cf43ee0fde3"/>
 				</line>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="33" splitType="Stretch">
 				<staticText>
-					<reportElement key="staticText-8" style="TNRG10" x="0" y="9" width="64" height="15"/>
+					<reportElement key="staticText-8" style="TNRG10" x="0" y="9" width="64" height="15" uuid="1692f727-4047-430d-b5f9-6e575f212092"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -214,18 +210,17 @@ and esercizio = $P{Esercizio}]]>
 					<text><![CDATA[Totale GAE]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
-					<reportElement key="textField-4" style="TNRG10" x="70" y="9" width="71" height="15"/>
+					<reportElement key="textField-4" style="TNRG10" x="70" y="9" width="71" height="15" uuid="2c01a117-3777-4250-b68a-cd0d68af5c78"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{LDA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{LDA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNRG10" x="495" y="9" width="116" height="15"/>
+					<reportElement key="textField" style="TNRG10" x="495" y="9" width="116" height="15" uuid="edd6b7a0-c9ce-48e2-9f76-59ba092755eb"/>
 					<box>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -233,10 +228,10 @@ and esercizio = $P{Esercizio}]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Totale_GAE_disp_comp}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Totale_GAE_disp_comp}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNRG10" x="634" y="9" width="116" height="15"/>
+					<reportElement key="textField" style="TNRG10" x="634" y="9" width="116" height="15" uuid="2d2379a1-6195-4ba9-908c-154c5644a2fc"/>
 					<box>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -244,16 +239,16 @@ and esercizio = $P{Esercizio}]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Totale_GAE_disp_res}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Totale_GAE_disp_res}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-2" x="0" y="26" width="782" height="1"/>
+					<reportElement key="line-2" x="0" y="26" width="782" height="1" uuid="35c08a94-7412-4e3c-ab55-39f1d098e134"/>
 				</line>
 				<line>
-					<reportElement key="line-6" x="0" y="0" width="1" height="27"/>
+					<reportElement key="line-6" x="0" y="0" width="1" height="27" uuid="d62073e1-f97e-433f-a744-e5c3d84a266c"/>
 				</line>
 				<line>
-					<reportElement key="line-10" x="782" y="0" width="1" height="27"/>
+					<reportElement key="line-10" x="782" y="0" width="1" height="27" uuid="90959c31-a591-4586-b3be-f9fd3c0f40a7"/>
 				</line>
 			</band>
 		</groupFooter>
@@ -263,7 +258,7 @@ and esercizio = $P{Esercizio}]]>
 		<groupHeader>
 			<band height="22" splitType="Stretch">
 				<staticText>
-					<reportElement key="staticText-3" style="TNRG10" x="1" y="4" width="117" height="14"/>
+					<reportElement key="staticText-3" style="TNRG10" x="1" y="4" width="117" height="14" uuid="251d4bb7-94cf-48b9-b1b0-d7bf1235ba63"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -274,7 +269,7 @@ and esercizio = $P{Esercizio}]]>
 					<text><![CDATA[Capitolo]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-4" style="TNRG10" x="124" y="4" width="363" height="14"/>
+					<reportElement key="staticText-4" style="TNRG10" x="124" y="4" width="363" height="14" uuid="7cc1de06-6b11-43e1-89a3-d28a07ba9fbb"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -285,7 +280,7 @@ and esercizio = $P{Esercizio}]]>
 					<text><![CDATA[Descrizione]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-6" style="TNRG10" x="495" y="4" width="116" height="14"/>
+					<reportElement key="staticText-6" style="TNRG10" x="495" y="4" width="116" height="14" uuid="385b911c-0a36-4c71-905d-a6aca5d4f7cb"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -296,7 +291,7 @@ and esercizio = $P{Esercizio}]]>
 					<text><![CDATA[Disponibilità Competenza]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-7" style="TNRG10" x="634" y="4" width="116" height="14"/>
+					<reportElement key="staticText-7" style="TNRG10" x="634" y="4" width="116" height="14" uuid="2186eb2e-154f-40b2-9d9f-7c4434002d78"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -307,10 +302,10 @@ and esercizio = $P{Esercizio}]]>
 					<text><![CDATA[Disponibilità Residui]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-4" x="0" y="0" width="1" height="22"/>
+					<reportElement key="line-4" x="0" y="0" width="1" height="22" uuid="a42c4c93-06d2-479b-8fe3-f93f5489d491"/>
 				</line>
 				<line>
-					<reportElement key="line-8" x="782" y="0" width="1" height="22"/>
+					<reportElement key="line-8" x="782" y="0" width="1" height="22" uuid="77017f4d-fe2b-4bd8-b301-e8ed9b938740"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -324,7 +319,7 @@ and esercizio = $P{Esercizio}]]>
 	<title>
 		<band height="83" splitType="Stretch">
 			<staticText>
-				<reportElement key="staticText-1" style="TNRGC16" x="35" y="46" width="718" height="21"/>
+				<reportElement key="staticText-1" style="TNRGC16" x="35" y="46" width="718" height="21" uuid="4f6edcd0-4590-4eb9-8a32-97b7c482d621"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -335,14 +330,14 @@ and esercizio = $P{Esercizio}]]>
 				<text><![CDATA[ Situazione Sintetica Disponibiltà GAE]]></text>
 			</staticText>
 			<image>
-				<reportElement key="image-1" x="0" y="0" width="546" height="39"/>
+				<reportElement key="image-1" x="0" y="0" width="546" height="39" uuid="7db8dda3-5354-4016-8ba8-35acf0d1eaa7"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -355,29 +350,27 @@ and esercizio = $P{Esercizio}]]>
 	<detail>
 		<band height="19" splitType="Prevent">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR10" x="1" y="4" width="117" height="12"/>
+				<reportElement key="textField" style="TNR10" x="1" y="4" width="117" height="12" uuid="56efa424-dc05-4393-a28d-0c5c53a94069"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_ELEMENTO_VOCE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CD_ELEMENTO_VOCE}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR10" x="124" y="4" width="363" height="12"/>
+				<reportElement key="textField" style="TNR10" x="124" y="4" width="363" height="12" uuid="db3a84d5-0ee9-4bcf-8581-69def2773aa3"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_VOCE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DS_VOCE}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR10" x="495" y="4" width="116" height="12"/>
+				<reportElement key="textField" style="TNR10" x="495" y="4" width="116" height="12" uuid="c70d8a23-d7f0-49c5-917f-7a974a47b87f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -385,10 +378,10 @@ and esercizio = $P{Esercizio}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{DISP_COMP}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DISP_COMP}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR10" x="634" y="4" width="116" height="12"/>
+				<reportElement key="textField" style="TNR10" x="634" y="4" width="116" height="12" uuid="49a5691d-88da-4a2c-ae9e-16ad641c1b78"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -396,13 +389,13 @@ and esercizio = $P{Esercizio}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{DISP_RES}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DISP_RES}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-5" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="19"/>
+				<reportElement key="line-5" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="19" uuid="752c00eb-429f-4096-872e-750cef463396"/>
 			</line>
 			<line>
-				<reportElement key="line-9" stretchType="RelativeToBandHeight" x="782" y="0" width="1" height="19"/>
+				<reportElement key="line-9" stretchType="RelativeToBandHeight" x="782" y="0" width="1" height="19" uuid="fda15e5b-20d2-4aed-af21-738bdeb339a3"/>
 			</line>
 		</band>
 	</detail>
@@ -412,18 +405,17 @@ and esercizio = $P{Esercizio}]]>
 	<pageFooter>
 		<band height="39" splitType="Stretch">
 			<textField evaluationTime="Report" pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false">
-				<reportElement key="textField-1" style="TNRG10" x="0" y="26" width="161" height="13"/>
+				<reportElement key="textField-1" style="TNRG10" x="0" y="26" width="161" height="13" uuid="fbd781e9-a1db-47e6-8fe9-aafc055e9b69"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Data di stampa "+ new SimpleDateFormat("dd/MM/yyyy HH.mm.ss").format(new java.util.Date())]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Data di stampa "+ new SimpleDateFormat("dd/MM/yyyy HH.mm.ss").format(new java.util.Date())]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-2" style="TNRG10" x="621" y="26" width="100" height="13"/>
+				<reportElement key="textField-2" style="TNRG10" x="621" y="26" width="100" height="13" uuid="a837c01f-2cdb-46a4-99ff-17bd4a0c2451"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -431,36 +423,34 @@ and esercizio = $P{Esercizio}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" isBlankWhenNull="false">
-				<reportElement key="textField-3" style="TNRG10" x="721" y="26" width="55" height="13"/>
+				<reportElement key="textField-3" style="TNRG10" x="721" y="26" width="55" height="13" uuid="288b9993-d7d7-4bc1-bc12-03ef4bc6d80c"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
 		<band height="24" splitType="Stretch">
 			<staticText>
-				<reportElement key="staticText-9" style="TNRG12" x="0" y="9" width="132" height="15"/>
+				<reportElement key="staticText-9" style="TNRG12" x="0" y="9" width="132" height="15" uuid="653e932f-7ab1-41f0-afe3-d867d731023c"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[Totale Generale]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-6" style="TNRG12" x="495" y="9" width="116" height="15"/>
+				<reportElement key="textField-6" style="TNRG12" x="495" y="9" width="116" height="15" uuid="70a957f2-7a22-4bc7-bae3-537bfc511d6a"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -468,10 +458,10 @@ and esercizio = $P{Esercizio}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Totale_GAE_stampa_disp_comp}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{Totale_GAE_stampa_disp_comp}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-7" style="TNRG12" x="634" y="9" width="116" height="15"/>
+				<reportElement key="textField-7" style="TNRG12" x="634" y="9" width="116" height="15" uuid="a86b91f5-626a-4cae-8551-c0eaffe15028"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -479,7 +469,7 @@ and esercizio = $P{Esercizio}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Totale_GAE_stampa_disp_res}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{Totale_GAE_stampa_disp_res}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
