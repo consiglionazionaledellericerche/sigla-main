@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="totali_x_natura_res_usc" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="totali_x_natura_res_usc" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="48d3b84b-f3a5-4bc7-8b6e-83b57dd007f7">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="59"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -40,7 +40,7 @@ AND v.CD_COMMESSA = $P{commessa}
 and v.esercizio = p.esercizio
 ORDER BY  v.cd_natura asc]]>
 	</queryString>
-	<field name="ESERCIZIO" class="java.lang.Integer"/>
+	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
 	<field name="CDS" class="java.lang.String"/>
 	<field name="UO" class="java.lang.String"/>
 	<field name="CD_CENTRO_RESPONSABILITA" class="java.lang.String"/>
@@ -65,6 +65,7 @@ ORDER BY  v.cd_natura asc]]>
 	<field name="VAR_STANZ_RES_MENO_STO" class="java.math.BigDecimal"/>
 	<field name="VAR_STANZ_RES_MENO_ECO" class="java.math.BigDecimal"/>
 	<field name="TOTALE" class="java.math.BigDecimal"/>
+	<field name="VINCOLI" class="java.math.BigDecimal"/>
 	<field name="ASSUNTI" class="java.math.BigDecimal"/>
 	<field name="DA_ASSUMERE" class="java.math.BigDecimal"/>
 	<field name="LIQUIDATI" class="java.math.BigDecimal"/>
@@ -86,6 +87,9 @@ ORDER BY  v.cd_natura asc]]>
 	</variable>
 	<variable name="SUM_TOTALE_NATURA" class="java.math.BigDecimal" resetType="Group" resetGroup="CD_NATURA" calculation="Sum">
 		<variableExpression><![CDATA[$F{TOTALE}]]></variableExpression>
+	</variable>
+	<variable name="SUM_VINCOLI_NATURA" class="java.math.BigDecimal" resetType="Group" resetGroup="CD_NATURA" calculation="Sum">
+		<variableExpression><![CDATA[$F{VINCOLI}]]></variableExpression>
 	</variable>
 	<variable name="SUM_ASSUNTI_NATURA" class="java.math.BigDecimal" resetType="Group" resetGroup="CD_NATURA" calculation="Sum">
 		<variableExpression><![CDATA[$F{ASSUNTI}]]></variableExpression>
@@ -113,18 +117,17 @@ ORDER BY  v.cd_natura asc]]>
 		<groupFooter>
 			<band height="22" splitType="Stretch">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-1" style="TNR9G" x="10" y="4" width="204" height="13"/>
+					<reportElement key="textField-1" style="TNR9G" x="10" y="4" width="203" height="13" uuid="7e9fe86f-5d85-4172-ada9-416ca90ac438"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{FL_NUOVO_PDG}.equals( "N" )?"Totale Commessa ":"Totale Area Progettuale ")+$P{commessa}+" Natura "+$F{CD_NATURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{FL_NUOVO_PDG}.equals( "N" )?"Totale Commessa ":"Totale Area Progettuale ")+$P{commessa}+" Natura "+$F{CD_NATURA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-2" style="TNR9G" x="217" y="4" width="52" height="13"/>
+					<reportElement key="textField-2" style="TNR9G" x="213" y="4" width="51" height="13" uuid="bf497016-fb26-4d01-9454-352911b1854f"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -132,10 +135,10 @@ ORDER BY  v.cd_natura asc]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" markup="styled"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_INIZIALI_NATURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_INIZIALI_NATURA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-3" style="TNR9G" x="273" y="4" width="52" height="13"/>
+					<reportElement key="textField-3" style="TNR9G" x="264" y="4" width="51" height="13" uuid="8f2704e0-f60f-4227-8115-4c52dc3b750f"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -143,10 +146,10 @@ ORDER BY  v.cd_natura asc]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_NATURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_PIU_NATURA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-4" style="TNR9G" x="383" y="4" width="52" height="13"/>
+					<reportElement key="textField-4" style="TNR9G" x="366" y="4" width="51" height="13" uuid="99f6c046-5acd-4ea7-b419-0ebeaa272b2c"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -154,10 +157,10 @@ ORDER BY  v.cd_natura asc]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_NATURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_ECO_NATURA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-5" style="TNR9G" x="329" y="4" width="52" height="13"/>
+					<reportElement key="textField-5" style="TNR9G" x="315" y="4" width="51" height="13" uuid="9161fdc4-9130-46b0-ab97-c12305d2a6ca"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -165,10 +168,10 @@ ORDER BY  v.cd_natura asc]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_NATURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VAR_STANZ_RES_MENO_STO_NATURA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-6" style="TNR9G" x="439" y="4" width="52" height="13"/>
+					<reportElement key="textField-6" style="TNR9G" x="417" y="4" width="51" height="13" uuid="5a888b6e-33bd-4399-88c6-9e1bdfb1d06f"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -176,10 +179,10 @@ ORDER BY  v.cd_natura asc]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_TOTALE_NATURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_TOTALE_NATURA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-7" style="TNR9G" x="549" y="4" width="52" height="13"/>
+					<reportElement key="textField-6" style="TNR9G" x="468" y="4" width="51" height="13" uuid="7a69ba00-32a2-4d27-a9f9-493eaebb6ced"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -187,10 +190,10 @@ ORDER BY  v.cd_natura asc]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_ASSUMERE_NATURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_VINCOLI_NATURA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-8" style="TNR9G" x="603" y="4" width="52" height="13"/>
+					<reportElement key="textField-7" style="TNR9G" x="570" y="4" width="51" height="13" uuid="5afd4c3a-9f3d-4dfc-af9d-1b92e3155bee"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -198,10 +201,10 @@ ORDER BY  v.cd_natura asc]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_LIQUIDATI_NATURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_ASSUMERE_NATURA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-9" style="TNR9G" x="657" y="4" width="52" height="13"/>
+					<reportElement key="textField-8" style="TNR9G" x="621" y="4" width="51" height="13" uuid="0c068350-afca-4caf-925c-32c16e49c281"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -209,10 +212,10 @@ ORDER BY  v.cd_natura asc]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_PAGATI_NATURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_LIQUIDATI_NATURA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-10" style="TNR9G" x="711" y="4" width="52" height="13"/>
+					<reportElement key="textField-9" style="TNR9G" x="672" y="4" width="51" height="13" uuid="1336b277-9711-4641-b14c-a837a5003b7e"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -220,10 +223,10 @@ ORDER BY  v.cd_natura asc]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_DA_PAGARE_NATURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_PAGATI_NATURA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-11" style="TNR9G" x="495" y="4" width="52" height="13"/>
+					<reportElement key="textField-10" style="TNR9G" x="723" y="4" width="51" height="13" uuid="b26097bf-0504-493b-b64e-8f10ace7bf58"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -231,10 +234,10 @@ ORDER BY  v.cd_natura asc]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_ASSUNTI_NATURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DA_PAGARE_NATURA}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-12" style="TNR9G" x="765" y="4" width="52" height="13"/>
+					<reportElement key="textField-11" style="TNR9G" x="519" y="4" width="51" height="13" uuid="b346145f-f6e1-4700-a8a2-a236347fe3ea"/>
 					<box>
 						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -242,7 +245,18 @@ ORDER BY  v.cd_natura asc]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_RESIDUI_FINALI_NATURA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_ASSUNTI_NATURA}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-12" style="TNR9G" x="774" y="4" width="51" height="13" uuid="fd80fd7a-4ed5-4369-9493-74207b2daac5"/>
+					<box>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{SUM_RESIDUI_FINALI_NATURA}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
