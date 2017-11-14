@@ -77,6 +77,16 @@ public class StampaPdgpBilancioAction extends it.cnr.contab.reports.action.Param
 		}
 	}	
 
+	public Forward doAggiornaPrevisioneAP(ActionContext context) 
+	{
+		try {
+			fillModel(context);
+			return openConfirm(context,"Attenzione! Confermi l'aggiornamento della previsione definitiva anno precedente?",OptionBP.CONFIRM_YES_NO,"doConfirmAggiornaPrevisioneAP");
+		} catch(Throwable e) {
+			return handleException(context,e);
+		}
+	}	
+
 	public Forward doAggiornaResiduoAP(ActionContext context) 
 	{
 		try {
@@ -163,7 +173,7 @@ public class StampaPdgpBilancioAction extends it.cnr.contab.reports.action.Param
 			if (option == OptionBP.YES_BUTTON) 
 			{
 				StampaPdgpBilancioBP  bp = (StampaPdgpBilancioBP)context.getBusinessProcess();
-				bp.stampaBilancioCallAggiornaDati(context, true, false, false, false);		
+				bp.stampaBilancioCallAggiornaDati(context, true, false, false, false, false);		
 				bp.setMessage("Operazione effettuata!");
 			}
 			return context.findDefaultForward();
@@ -178,7 +188,22 @@ public class StampaPdgpBilancioAction extends it.cnr.contab.reports.action.Param
 			if (option == OptionBP.YES_BUTTON) 
 			{
 				StampaPdgpBilancioBP  bp = (StampaPdgpBilancioBP)context.getBusinessProcess();
-				bp.stampaBilancioCallAggiornaDati(context, false, true, false, false);
+				bp.stampaBilancioCallAggiornaDati(context, false, true, false, false, false);
+				bp.setMessage("Operazione effettuata!");
+			}
+			return context.findDefaultForward();
+		} catch(Throwable e) {
+			return handleException(context,e);
+		}
+	}
+
+	public Forward doConfirmAggiornaPrevisioneAP(ActionContext context,int option) {
+		try
+		{
+			if (option == OptionBP.YES_BUTTON) 
+			{
+				StampaPdgpBilancioBP  bp = (StampaPdgpBilancioBP)context.getBusinessProcess();
+				bp.stampaBilancioCallAggiornaDati(context, false, false, true, false, false);		
 				bp.setMessage("Operazione effettuata!");
 			}
 			return context.findDefaultForward();
@@ -193,7 +218,7 @@ public class StampaPdgpBilancioAction extends it.cnr.contab.reports.action.Param
 			if (option == OptionBP.YES_BUTTON) 
 			{
 				StampaPdgpBilancioBP  bp = (StampaPdgpBilancioBP)context.getBusinessProcess();
-				bp.stampaBilancioCallAggiornaDati(context, false, false, true, false);
+				bp.stampaBilancioCallAggiornaDati(context, false, false, false, true, false);
 				bp.setMessage("Operazione effettuata!");
 			}
 			return context.findDefaultForward();
@@ -208,7 +233,7 @@ public class StampaPdgpBilancioAction extends it.cnr.contab.reports.action.Param
 			if (option == OptionBP.YES_BUTTON) 
 			{
 				StampaPdgpBilancioBP  bp = (StampaPdgpBilancioBP)context.getBusinessProcess();
-				bp.stampaBilancioCallAggiornaDati(context, false, false, false, true);
+				bp.stampaBilancioCallAggiornaDati(context, false, false, false, false, true);
 				bp.setMessage("Operazione effettuata!");
 			}
 			return context.findDefaultForward();
