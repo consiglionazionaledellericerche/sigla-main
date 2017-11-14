@@ -85,6 +85,7 @@
 	 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Cassa Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaCassaAC')",null,true, bp.getParentRoot().isBootstrap());%></td>
 		    <% if (Stampa_pdgp_bilancioBulk.TIPO_PROVVISORIO.equals(((Stampa_pdgp_bilancioBulk)bp.getModel()).getTi_origine())) { %>
 	 	    	<td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Previsione Anno Corrente", "if (disableDblClick()) submitForm('doAggiornaPrevisioneAC')",null,true, bp.getParentRoot().isBootstrap());%></td>
+	 	    	<td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Previsione Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaPrevisioneAP')",null,true, bp.getParentRoot().isBootstrap());%></td>
 		 	    <td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Residuo Anno Precedente", "if (disableDblClick()) submitForm('doAggiornaResiduoAP')",null,true, bp.getParentRoot().isBootstrap());%></td>
 		 	<% } %>
 		  </tr>
