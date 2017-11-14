@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="1248"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -29,6 +29,9 @@
 		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_FONTE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["ASSFIN"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT NVL(SUM(FONDO_CASSA), 0) FONDO_INIZ_CASSA_N,
 NVL(SUM(FONDO_CASSA_PRE),0) FONDO_INIZ_CASSA_PREC_N,
@@ -56,7 +59,15 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
       UNION ALL
       SELECT 0 FONDO_CASSA, IM01 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
       FROM CONFIGURAZIONE_CNR
-      WHERE ESERCIZIO=$P{P_ESERCIZIO}-1
+      WHERE SUBSTR($P{P_FONTE},1,3) = 'EXT'
+      AND   ESERCIZIO=$P{P_ESERCIZIO}
+      AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
+      AND   CD_CHIAVE_SECONDARIA = 'FONDO_CASSA_AP'
+      UNION ALL
+      SELECT 0 FONDO_CASSA, IM01 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
+      FROM CONFIGURAZIONE_CNR
+      WHERE SUBSTR($P{P_FONTE},1,3) != 'EXT'
+      AND   ESERCIZIO=$P{P_ESERCIZIO}-1
       AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
       AND   CD_CHIAVE_SECONDARIA = 'FONDO_CASSA'
       UNION ALL
@@ -68,7 +79,15 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
       UNION ALL
       SELECT 0 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, IM01 AVANZO_PRE
       FROM CONFIGURAZIONE_CNR
-      WHERE ESERCIZIO=$P{P_ESERCIZIO}-1
+      WHERE SUBSTR($P{P_FONTE},1,3) = 'EXT'
+      AND   ESERCIZIO=$P{P_ESERCIZIO}
+      AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
+      AND   CD_CHIAVE_SECONDARIA = 'AVANZO_AP'
+      UNION ALL
+      SELECT 0 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, IM01 AVANZO_PRE
+      FROM CONFIGURAZIONE_CNR
+      WHERE SUBSTR($P{P_FONTE},1,3) != 'EXT'
+      AND   ESERCIZIO=$P{P_ESERCIZIO}-1
       AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
       AND   CD_CHIAVE_SECONDARIA = 'AVANZO')]]>
 	</queryString>
