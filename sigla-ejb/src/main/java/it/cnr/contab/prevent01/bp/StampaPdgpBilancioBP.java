@@ -127,8 +127,8 @@ public class StampaPdgpBilancioBP extends ParametricPrintBP {
 		return stampa;
 	}
 	
-	public void stampaBilancioCallAggiornaDati(ActionContext context, boolean aggPrevAC, boolean aggResiduiAC, boolean aggResiduiAP, boolean aggCassaAC) throws BusinessProcessException, ComponentException {
-		((PdgAggregatoModuloComponentSession)createComponentSession()).stampaBilancioCallAggiornaDati(context.getUserContext(), (Stampa_pdgp_bilancioBulk)this.getModel(), aggPrevAC, aggResiduiAC, aggResiduiAP, aggCassaAC);
+	public void stampaBilancioCallAggiornaDati(ActionContext context, boolean aggPrevAC, boolean aggResiduiAC, boolean aggPrevAP, boolean aggResiduiAP, boolean aggCassaAC) throws BusinessProcessException, ComponentException {
+		((PdgAggregatoModuloComponentSession)createComponentSession()).stampaBilancioCallAggiornaDati(context.getUserContext(), (Stampa_pdgp_bilancioBulk)this.getModel(), aggPrevAC, aggResiduiAC, aggPrevAP, aggResiduiAP, aggCassaAC);
 	}
 	
 	public void stampaRendicontoCallAggiornaDati(ActionContext context, boolean aggCompAC, boolean aggResiduiAC, boolean aggCassaAC, boolean aggCompAP, boolean aggResiduiAP, boolean aggCassaAP) throws BusinessProcessException, ComponentException {
