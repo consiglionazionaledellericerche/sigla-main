@@ -3430,6 +3430,10 @@ public abstract class Fattura_passivaBulk
     }
 
     public boolean isROFlDaOrdini() {
-        return isAbledToModifyFlagsTipoFattura();
+        return Optional.ofNullable(fattura_passiva_dettColl)
+                .filter(bulkList -> !bulkList.isEmpty())
+                .map(bulkList -> bulkList.stream())
+                .map(stream -> stream.anyMatch(fattura_attiva_rigaBulk -> ((Fattura_passiva_rigaBulk)fattura_attiva_rigaBulk).isVoidable()))
+                .orElse(false);
     }
 }
