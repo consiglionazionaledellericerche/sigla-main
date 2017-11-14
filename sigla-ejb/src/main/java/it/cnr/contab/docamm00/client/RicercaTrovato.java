@@ -49,7 +49,7 @@ public class RicercaTrovato {
 
     	TrovatoBulk trovato = new TrovatoBulk();
         String url = "";
-        url = getTargetEndpoint()+"/brevetti/rest/trovato/";
+        url = getTargetEndpoint()+"/rest/trovato/";
         if (soloValidi){
         	url+="valido/";
         }
