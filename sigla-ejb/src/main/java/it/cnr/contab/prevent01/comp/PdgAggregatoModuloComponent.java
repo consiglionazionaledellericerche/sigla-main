@@ -965,22 +965,23 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 	}
 	
 	public void stampaBilancioCallAggiornaDati(UserContext userContext, Stampa_pdgp_bilancioBulk bulk, 
-			boolean aggPrevAC, boolean aggResiduiAC, boolean aggResiduiAP, boolean aggCassaAC) throws it.cnr.jada.comp.ComponentException {
+			boolean aggPrevAC, boolean aggResiduiAC, boolean aggPrevAP, boolean aggResiduiAP, boolean aggCassaAC) throws it.cnr.jada.comp.ComponentException {
 		try
 		{
 			LoggableStatement cs = new LoggableStatement(getConnection( userContext ), 
 				"call " +
 				it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +			
-				"PRC_LOAD_TABLE_STAMPA_BILANCIO(?, ?, ?, ?, ?, ?, ?)",false,this.getClass());
+				"PRC_LOAD_TABLE_STAMPA_BILANCIO(?, ?, ?, ?, ?, ?, ?, ?)",false,this.getClass());
 				try
 				{
 					cs.setInt( 1, bulk.getEsercizio().intValue());
 					cs.setString( 2, aggPrevAC?String.valueOf("Y"):String.valueOf("N"));		
 					cs.setString( 3, aggResiduiAC?String.valueOf("Y"):String.valueOf("N"));
-					cs.setString( 4, aggResiduiAP?String.valueOf("Y"):String.valueOf("N"));
-					cs.setString( 5, aggCassaAC?String.valueOf("Y"):String.valueOf("N"));
-					cs.setInt( 6, bulk.getPercCassa()!=null?bulk.getPercCassa():Integer.valueOf(0).intValue());
-					cs.setString( 7, userContext.getUser());
+					cs.setString( 4, aggPrevAP?String.valueOf("Y"):String.valueOf("N"));		
+					cs.setString( 5, aggResiduiAP?String.valueOf("Y"):String.valueOf("N"));
+					cs.setString( 6, aggCassaAC?String.valueOf("Y"):String.valueOf("N"));
+					cs.setInt( 7, bulk.getPercCassa()!=null?bulk.getPercCassa():Integer.valueOf(0).intValue());
+					cs.setString( 8, userContext.getUser());
 
 					cs.executeQuery();
 				}
