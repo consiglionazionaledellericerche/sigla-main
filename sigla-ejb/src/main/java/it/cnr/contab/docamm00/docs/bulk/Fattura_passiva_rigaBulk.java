@@ -16,6 +16,7 @@ import it.cnr.jada.bulk.ValidationException;
 
 import java.util.Calendar;
 import java.util.Dictionary;
+import java.util.Optional;
 
 public abstract class Fattura_passiva_rigaBulk
         extends Fattura_passiva_rigaBase
@@ -468,6 +469,11 @@ public abstract class Fattura_passiva_rigaBulk
                 !STATO_INIZIALE.equals(getStato_cofi());
     }
 
+    public boolean isStatoIniziale() {
+        return Optional.ofNullable(getStato_cofi())
+                .map(statoCofi -> statoCofi.equals(STATO_INIZIALE))
+                .orElse(false);
+    }
     /**
      * Insert the method's description here.
      * Creation date: (9/13/2001 10:33:00 AM)
