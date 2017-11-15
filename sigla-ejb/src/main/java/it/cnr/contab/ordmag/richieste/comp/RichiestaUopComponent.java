@@ -29,6 +29,8 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventHome;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceHome;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
@@ -132,12 +134,12 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
     		RichiestaUopRigaBulk riga = (RichiestaUopRigaBulk) i.next();
     		if (riga != null){
     			if (riga.getCdElementoVoce() != null && riga.getCdCategoriaGruppo() != null){
-    				Elemento_voceHome home = (Elemento_voceHome)getHome(userContext, Elemento_voceBulk.class,"V_ELEMENTO_VOCE_ORDINI");
+    				Categoria_gruppo_voceHome home = (Categoria_gruppo_voceHome)getHome(userContext, Categoria_gruppo_voceBulk.class);
     				SQLBuilder sql = home.createSQLBuilder();
     				
-    				sql.addSQLClause("AND", "V_ELEMENTO_VOCE_ORDINI.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
-    				sql.addSQLClause("AND", "V_ELEMENTO_VOCE_ORDINI.CD_CATEGORIA_GRUPPO_INVENT", sql.EQUALS, riga.getCdCategoriaGruppo());
-    				sql.addSQLClause("AND", "V_ELEMENTO_VOCE_ORDINI.CD_ELEMENTO_VOCE", sql.EQUALS, riga.getCdElementoVoce());
+    				sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
+    				sql.addSQLClause("AND", "CD_CATEGORIA_GRUPPO_INVENT", sql.EQUALS, riga.getCdCategoriaGruppo());
+    				sql.addSQLClause("AND", "CD_ELEMENTO_VOCE", sql.EQUALS, riga.getCdElementoVoce());
     				
     				List list;
 					try {
@@ -432,19 +434,29 @@ public SQLBuilder selectElementoVoceByClause (UserContext userContext,
 		CompoundFindClause clause) throws ComponentException, PersistencyException {
 	if (clause == null) clause = ((OggettoBulk)elementoVoce).buildFindClauses(null);
 
-	SQLBuilder sql = getHome(userContext, elementoVoce,"V_ELEMENTO_VOCE_ORDINI").createSQLBuilder();
+	SQLBuilder sql = getHome(userContext, elementoVoce).createSQLBuilder();
 	
 	if(clause != null) sql.addClause(clause);
 
-	sql.addSQLClause("AND", "V_ELEMENTO_VOCE_ORDINI.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
-	sql.addSQLClause("AND", "V_ELEMENTO_VOCE_ORDINI.CD_CATEGORIA_GRUPPO_INVENT", sql.EQUALS, dett.getCdCategoriaGruppo());
+	SQLBuilder sqlExists = null;
+	Categoria_gruppo_voceHome abilCatVoce = (Categoria_gruppo_voceHome) getHomeCache(userContext).getHome(Categoria_gruppo_voceBulk.class);
+	sqlExists = abilCatVoce.createSQLBuilder();
+	sqlExists.addSQLJoin("ELEMENTO_VOCE.ESERCIZIO", "CATEGORIA_GRUPPO_VOCE.ESERCIZIO");
+	sqlExists.addSQLJoin("ELEMENTO_VOCE.TI_APPARTENENZA", "CATEGORIA_GRUPPO_VOCE.TI_APPARTENENZA");
+	sqlExists.addSQLJoin("ELEMENTO_VOCE.TI_GESTIONE", "CATEGORIA_GRUPPO_VOCE.TI_GESTIONE");
+	sqlExists.addSQLJoin("ELEMENTO_VOCE.CD_ELEMENTO_VOCE", "CATEGORIA_GRUPPO_VOCE.CD_ELEMENTO_VOCE");
+	if (dett.getCdBeneServizio() != null){
+		Bene_servizioHome Home = (Bene_servizioHome)getHome(userContext, Bene_servizioBulk.class);
+		Bene_servizioBulk bene = (Bene_servizioBulk)Home.findByPrimaryKey(new Bene_servizioBulk(dett.getCdBeneServizio()));
+		sqlExists.addSQLClause("AND", "CATEGORIA_GRUPPO_VOCE.CD_CATEGORIA_GRUPPO",SQLBuilder.EQUALS,bene.getCd_categoria_gruppo());
+	}
+	sql.addSQLClause("AND", "ELEMENTO_VOCE.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
 
 	if (dett.getLineaAttivita() != null)
-		sql.addSQLClause("AND","V_ELEMENTO_VOCE_ORDINI.CD_FUNZIONE",sql.EQUALS,dett.getLineaAttivita().getCd_funzione());
+		sql.addSQLClause("AND","ELEMENTO_VOCE.CD_FUNZIONE",sql.EQUALS,dett.getLineaAttivita().getCd_funzione());
 
-	if (clause != null) sql.addClause(clause);
+	sql.addSQLExistsClause("AND", sqlExists);
 
-	sql.addOrderBy("fl_default desc, ordine asc");
 	return sql;
 }
 public SQLBuilder selectProgettoByClause (UserContext userContext, 
