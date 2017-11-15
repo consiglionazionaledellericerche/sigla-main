@@ -15,14 +15,14 @@
 %>
     <div class="GroupLabel">
       	<% if (isFlNuovoPdg) {
-			   bp.getController().writeFormInput(out,null,"livello2016",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");
+			   bp.getController().writeFormInput(out,null,"livello2016",true,"GroupLabel h3 h-100 text-primary","style=\"border-style : none; cursor:default;\"");
 		  } else {
-			   bp.getController().writeFormInput(out,null,"livello",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");
+			   bp.getController().writeFormInput(out,null,"livello",true,"GroupLabel h3 h-100 text-primary","style=\"border-style : none; cursor:default;\"");
 		  } 
 		%>
    	</div>
   	<div class="Group">
-	<table class="Panel">	
+	<table class="Panel card border-primary p-2 mb-2">
 	  <TR><TD>
 	  	<% bp.getController().writeFormLabel(out,"cd_progetto");%>
 	  	</TD><TD>
@@ -53,13 +53,7 @@
 	  	<% bp.getController().writeFormInput(out,"ds_progetto");%>
 	  </TD></TR>
 	  <TR>
-	    <TD><% bp.getController().writeFormLabel( out, "find_dipartimento"); %></TD>	
-	    <TD colspan="3">
-	      <% bp.getController().writeFormInput( out, "cd_dipartimento");
-	         bp.getController().writeFormInput( out, "ds_dipartimento");
-	         bp.getController().writeFormInput( out, "find_dipartimento");%>
-	      <!-- <%  bp.getController().writeFormInput( out, "crea_dipartimento"); %> -->
-	    </TD>
+	    <% bp.getController().writeFormField( out, "find_dipartimento"); %>	
 	  </TR>
 	  <% if (!isFlNuovoPdg) { %>
 		  <TR><TD>
