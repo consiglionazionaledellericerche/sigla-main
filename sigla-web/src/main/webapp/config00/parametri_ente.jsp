@@ -101,6 +101,11 @@
 			</TD><TD>
 			<% bp.getController().writeFormInput(out,"fl_prg_pianoeco");%>
 		</TD></TR>
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"abil_progetto_strorg");%>
+			</TD><TD>
+			<% bp.getController().writeFormInput(out,"abil_progetto_strorg");%>
+		</TD></TR>
 		<TABLE width="400">
 		<TR>		
 		<TD align="center" width="50%"><% bp.getController().writeFormLabel(out,"box_scadenze");%></TD>
