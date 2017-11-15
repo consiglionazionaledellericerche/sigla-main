@@ -14,8 +14,8 @@
 		CRUDMandatoBP bp = (CRUDMandatoBP)BusinessProcess.getBusinessProcess(request);
 		it.cnr.contab.doccont00.core.bulk.MandatoIBulk mandato = (it.cnr.contab.doccont00.core.bulk.MandatoIBulk)bp.getModel();
 %>
-  <div class="Group">		
-  <table border="0" cellspacing="0" cellpadding="2">
+  <div class="Group card">
+  <table border="0" cellspacing="0" cellpadding="2" class="w-100 h-100">
 	<tr>
 			<td><% bp.getController().writeFormLabel( out, "esercizio"); %></td>
 	   	<td><% bp.getController().writeFormInput( out, "esercizio"); %></td>
@@ -39,7 +39,7 @@
   </table>
   </div>
   
-  <div class="Group">		
+  <div class="Group card">
   <table border="0" cellspacing="0" cellpadding="2">
 	<tr>
 			<td><% bp.getController().writeFormInput( out,"default", "ti_mandato", false, null,"onclick=\"submitForm('doCambiaTipoMandato')\"" ); %></td>						
@@ -47,7 +47,7 @@
   </table>
   </div>
   
-  <div class="Group">		
+  <div class="Group card">
   <table border="0" cellspacing="0" cellpadding="2">	
 	<tr>
 			<td><% bp.getController().writeFormLabel( out, "pg_mandato"); %></td>
@@ -87,7 +87,7 @@
   </table>
   </div>
 
-  <div class="Group">		
+  <div class="Group card">
   <table border="0" cellspacing="0" cellpadding="2">	
   	<tr>
 			<td><% bp.getController().writeFormLabel( out, "im_mandato"); %></td>
@@ -104,10 +104,10 @@
   </table>
   </div>
 <% if (!bp.isSearching() && bp.isSiope_attiva() && mandato.isRequiredSiope()) {%>
-  <div class="Group">		
-	<fieldset class="fieldset">
-	<legend class="GroupLabel">Codici SIOPE</legend>
-	  <table border="0" cellspacing="0" cellpadding="2">	
+  <div class="Group">
+	<fieldset class="fieldset card">
+	<legend class="GroupLabel card-header text-primary">Codici SIOPE</legend>
+	  <table border="0" cellspacing="0" cellpadding="2" class="card-body">
 	  	<tr>
 				<td><% bp.getController().writeFormLabel( out, "im_associato_siope"); %></td>
 	    		<td><% bp.getController().writeFormInput( out, "im_associato_siope"); %></td>

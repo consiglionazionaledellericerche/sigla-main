@@ -26,7 +26,7 @@
 		enabledOnSearch="false"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		enabledOnFreeSearch="false"				
+		enabledOnFreeSearch="false"
 		caseSensitiveSearch="false"
 		nullable="false" />
 	<fieldProperty
@@ -51,12 +51,15 @@
       	enabledOnEdit="true"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"/>
+
 	<fieldProperty
 		name="find_nodo_padre"
 		property="progettopadre"
 		inputType="SEARCHTOOL"
 		label="Commessa/Modulo Attività"
 		readonlyProperty="ROfind_nodo_padre"
+		freeSearchSet="filtro_ricerca_aree_short"
+		columnSet="filtro_ricerca_aree_short"
 		enabledOnInsert="true"
       	enabledOnEdit="true"
 		enabledOnSearch="true"
@@ -93,6 +96,20 @@
 		inputType="ROTEXT"
 		enabledOnEdit="true"
 		caseSensitiveSearch="false"/>
+
+	<fieldProperty
+		name="find_nodo_padre_area"
+		property="progettopadre"
+		inputType="SEARCHTOOL"
+		label="Area Progettuale"
+		formName="form_searchtool_progetto"
+		readonlyProperty="ROfind_nodo_padre"
+		freeSearchSet="filtro_ricerca_aree_short"
+		columnSet="filtro_ricerca_aree_short"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"/>
 
 	/*********************************************************/
 
@@ -190,6 +207,7 @@
 		inputType="TEXT"
 		enabledOnSearch="true"
 		label="Budget in Divisa" />
+
 	<fieldProperty
 		name="cd_progetto"
 		property="cd_progetto"
@@ -200,6 +218,17 @@
 		enabledOnSearch="true"
 		enabledOnEdit="false"
 		label="Codice"
+		nullable="false" />
+	<fieldProperty
+		name="cd_progetto_area"
+		property="cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		readonlyProperty="ROprogettoCodifica"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		label="Progetto"
 		nullable="false" />
 	<fieldProperty
 		name="ds_progetto"
@@ -352,8 +381,8 @@
 		nullable="false"
 		label="Dipartimento"
 		readonlyProperty="RODipartimento"
-		enabledOnSearch="true"
-		/>
+		formName="searchtool"
+		enabledOnSearch="true"/>
 	<fieldProperty
 		name="cd_dipartimento"
 		property="dipartimento.cd_dipartimento"
@@ -384,14 +413,6 @@
 		nullable="false"
 		label="Descrizione Dipartimento"
 		caseSensitiveSearch="false" />
-
-	<fieldProperty
-		name="crea_dipartimento"
-		property="dipartimento"
-		inputType="CRUDTOOL"
-		readonlyProperty="RODipartimento"
-		CRUDBusinessProcessName="CRUDConfigDipartimentoBP"
-		/>
 
 	/*********************************************************/
 
@@ -698,6 +719,8 @@
 	<formFieldProperty
 		name="cd_progetto" />
 	<formFieldProperty
+		name="cd_progetto_area" />
+	<formFieldProperty
 		name="ds_progetto" />
 	<formFieldProperty
 		name="cd_progetto_comm_wp" />
@@ -728,6 +751,8 @@
 	<formFieldProperty
 		name="find_nodo_padre" />
 	<formFieldProperty
+		name="find_nodo_padre_area" />
+	<formFieldProperty
 		name="cd_progetto_padre" />
 	<formFieldProperty
 		name="cd_progetto_padre_commessa" />
@@ -755,8 +780,6 @@
 		name="ds_dipartimento" />
 	<formFieldProperty
 		name="find_dipartimento" />
-	<formFieldProperty
-		name="crea_dipartimento" />
 
 	<formFieldProperty
 		name="generale_affitto" />
@@ -912,9 +935,9 @@
 		<columnFieldProperty
 			name="livello2016" />
 		<columnFieldProperty
-			name="cd_progetto" />
+			name="cd_progetto_area" />
 		<columnFieldProperty
-			name="cd_progetto_padre" 
+			name="cd_progetto_padre"
 			label="Area Progettuale"/>
 		<columnFieldProperty
 			name="cd_unita_organizzativa" />
@@ -953,7 +976,7 @@
 		<columnFieldProperty
 			name="livello2016" />
 		<columnFieldProperty
-			name="cd_progetto" />
+			name="cd_progetto_area" />
 		<columnFieldProperty
 			name="ds_progetto" />
 		<columnFieldProperty
@@ -987,7 +1010,7 @@
 			name="note" />
 	</columnSet>
 
-	<columnSet	name="restService">
+	<columnSet name="restService">
 		<columnFieldProperty name="cd_progetto"/>
 		<columnFieldProperty name="pg_progetto"/>
 		<columnFieldProperty name="tipo_fase" />
@@ -1005,173 +1028,171 @@
 
 	<columnSet
 		name="filtro_ricerca_moduli">
-	<columnFieldProperty
-		name="cd_progetto"
-		label="Codice Modulo di Attività" />
-	<columnFieldProperty
-		name="cd_progetto_padre"
-		label="Codice Commessa" />
-	<columnFieldProperty
-		name="tipo_fase" />
-	<columnFieldProperty
-		name="cd_unita_organizzativa" />
-	<columnFieldProperty
-		name="importo_progetto" />
-	<columnFieldProperty
-		name="importo_divisa" />
-	<columnFieldProperty
-		name="dt_proroga" />
-	<columnFieldProperty
-		name="cd_divisa" />
-	<columnFieldProperty
-		name="ds_progetto" />
-	<columnFieldProperty
-		name="cd_responsabile_terzo" />
-	<columnFieldProperty
-		name="dt_inizio" />
-	<columnFieldProperty
-		name="dt_fine" />
-	<columnFieldProperty
-		name="cd_tipo_progetto" />
-	<columnFieldProperty
-		name="stato" />
-	<columnFieldProperty
-		name="durata_progetto" />
-	<columnFieldProperty
-		name="note" />
+		<columnFieldProperty
+			name="cd_progetto"
+			label="Codice Modulo di Attività" />
+		<columnFieldProperty
+			name="cd_progetto_padre"
+			label="Codice Commessa" />
+		<columnFieldProperty
+			name="tipo_fase" />
+		<columnFieldProperty
+			name="cd_unita_organizzativa" />
+		<columnFieldProperty
+			name="importo_progetto" />
+		<columnFieldProperty
+			name="importo_divisa" />
+		<columnFieldProperty
+			name="dt_proroga" />
+		<columnFieldProperty
+			name="cd_divisa" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="cd_responsabile_terzo" />
+		<columnFieldProperty
+			name="dt_inizio" />
+		<columnFieldProperty
+			name="dt_fine" />
+		<columnFieldProperty
+			name="cd_tipo_progetto" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="durata_progetto" />
+		<columnFieldProperty
+			name="note" />
 	</columnSet>
 
 	<columnSet
 		name="filtro_ricerca_commesse">
-	<columnFieldProperty
-		name="cd_progetto"
-		label="Codice Commessa" />
-	<columnFieldProperty
-		name="cd_progetto_padre" />
-	<columnFieldProperty
-		name="tipo_fase" />
-	<columnFieldProperty
-		name="cd_unita_organizzativa" />
-	<columnFieldProperty
-		name="importo_progetto" />
-	<columnFieldProperty
-		name="importo_divisa" />
-	<columnFieldProperty
-		name="dt_proroga" />
-	<columnFieldProperty
-		name="cd_divisa" />
-	<columnFieldProperty
-		name="ds_progetto" />
-	<columnFieldProperty
-		name="cd_responsabile_terzo" />
-	<columnFieldProperty
-		name="dt_inizio" />
-	<columnFieldProperty
-		name="dt_fine" />
-	<columnFieldProperty
-		name="cd_tipo_progetto" />
-	<columnFieldProperty
-		name="stato" />
-	<columnFieldProperty
-		name="durata_progetto" />
-	<columnFieldProperty
-		name="note" />
+		<columnFieldProperty
+			name="cd_progetto"
+			label="Codice Commessa" />
+		<columnFieldProperty
+			name="cd_progetto_padre" />
+		<columnFieldProperty
+			name="tipo_fase" />
+		<columnFieldProperty
+			name="cd_unita_organizzativa" />
+		<columnFieldProperty
+			name="importo_progetto" />
+		<columnFieldProperty
+			name="importo_divisa" />
+		<columnFieldProperty
+			name="dt_proroga" />
+		<columnFieldProperty
+			name="cd_divisa" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="cd_responsabile_terzo" />
+		<columnFieldProperty
+			name="dt_inizio" />
+		<columnFieldProperty
+			name="dt_fine" />
+		<columnFieldProperty
+			name="cd_tipo_progetto" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="durata_progetto" />
+		<columnFieldProperty
+			name="note" />
 	</columnSet>
 
-<columnSet
+	<columnSet
 		name="filtro_ricerca_aree">
-	<columnFieldProperty
-		name="cd_progetto"
-		label="Area Progettuale" />
-	<columnFieldProperty
-		name="tipo_fase" />
-	<columnFieldProperty
-		name="dt_proroga" />
-	<columnFieldProperty
-		name="ds_progetto" />
-	<columnFieldProperty
-		name="cd_responsabile_terzo" />
-	<columnFieldProperty
-		name="dt_inizio" />
-	<columnFieldProperty
-		name="dt_fine" />
-	<columnFieldProperty
-		name="cd_tipo_progetto" />
-	<columnFieldProperty
-		name="stato" />
-	<columnFieldProperty
-		name="durata_progetto" />
-	<columnFieldProperty
-		name="note" />
+		<columnFieldProperty
+			name="cd_progetto_area" />
+		<columnFieldProperty
+			name="tipo_fase" />
+		<columnFieldProperty
+			name="dt_proroga" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="cd_responsabile_terzo" />
+		<columnFieldProperty
+			name="dt_inizio" />
+		<columnFieldProperty
+			name="dt_fine" />
+		<columnFieldProperty
+			name="cd_tipo_progetto" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="durata_progetto" />
+		<columnFieldProperty
+			name="note" />
 	</columnSet>
 	
 	<columnSet
 		name="filtro_ricerca_prog2">
-	<columnFieldProperty
-		name="cd_progetto"
-		label="Progetto" />
-	<columnFieldProperty
-		name="cd_progetto_padre"
-		label="Area progettuale" />
-	<columnFieldProperty
-		name="tipo_fase" />
-	<columnFieldProperty
-		name="cd_unita_organizzativa" />
-	<columnFieldProperty
-		name="dt_proroga" />
-	<columnFieldProperty
-		name="ds_progetto" />
-	<columnFieldProperty
-		name="cd_responsabile_terzo" />
-	<columnFieldProperty
-		name="dt_inizio" />
-	<columnFieldProperty
-		name="dt_fine" />
-	<columnFieldProperty
-		name="cd_tipo_progetto" />
-	<columnFieldProperty
-		name="stato" />
-	<columnFieldProperty
-		name="durata_progetto" />
-	<columnFieldProperty
-		name="note" />
+		<columnFieldProperty
+			name="cd_progetto_area" />
+		<columnFieldProperty
+			name="cd_progetto_padre"
+			label="Area Progettuale"/>
+		<columnFieldProperty
+			name="tipo_fase" />
+		<columnFieldProperty
+			name="cd_unita_organizzativa" />
+		<columnFieldProperty
+			name="dt_proroga" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="cd_responsabile_terzo" />
+		<columnFieldProperty
+			name="dt_inizio" />
+		<columnFieldProperty
+			name="dt_fine" />
+		<columnFieldProperty
+			name="cd_tipo_progetto" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="durata_progetto" />
+		<columnFieldProperty
+			name="note" />
 	</columnSet>
 
 	<columnSet
 		name="filtro_ricerca_progetti">
-	<columnFieldProperty
-		name="cd_progetto"
-		label="Codice Progetto" />
-	<columnFieldProperty
-		name="tipo_fase" />
-	<columnFieldProperty
-		name="cd_dipartimento" />
-	<columnFieldProperty
-		name="cd_unita_organizzativa" />
-	<columnFieldProperty
-		name="importo_progetto" />
-	<columnFieldProperty
-		name="importo_divisa" />
-	<columnFieldProperty
-		name="dt_proroga" />
-	<columnFieldProperty
-		name="cd_divisa" />
-	<columnFieldProperty
-		name="ds_progetto" />
-	<columnFieldProperty
-		name="cd_responsabile_terzo" />
-	<columnFieldProperty
-		name="dt_inizio" />
-	<columnFieldProperty
-		name="dt_fine" />
-	<columnFieldProperty
-		name="cd_tipo_progetto" />
-	<columnFieldProperty
-		name="stato" />
-	<columnFieldProperty
-		name="durata_progetto" />
-	<columnFieldProperty
-		name="note" />
+		<columnFieldProperty
+			name="cd_progetto"
+			label="Codice Progetto" />
+		<columnFieldProperty
+			name="tipo_fase" />
+		<columnFieldProperty
+			name="cd_dipartimento" />
+		<columnFieldProperty
+			name="cd_unita_organizzativa" />
+		<columnFieldProperty
+			name="importo_progetto" />
+		<columnFieldProperty
+			name="importo_divisa" />
+		<columnFieldProperty
+			name="dt_proroga" />
+		<columnFieldProperty
+			name="cd_divisa" />
+		<columnFieldProperty
+			name="ds_progetto" />
+		<columnFieldProperty
+			name="cd_responsabile_terzo" />
+		<columnFieldProperty
+			name="dt_inizio" />
+		<columnFieldProperty
+			name="dt_fine" />
+		<columnFieldProperty
+			name="cd_tipo_progetto" />
+		<columnFieldProperty
+			name="stato" />
+		<columnFieldProperty
+			name="durata_progetto" />
+		<columnFieldProperty
+			name="note" />
 	</columnSet>
 
 	<findFieldProperty
@@ -1211,174 +1232,173 @@
 		
 	<freeSearchSet
 		name="filtro_ricerca_moduli">
-	<findFieldProperty
-		name="cd_progetto"
-		label="Codice Modulo di Attività" />
-	<findFieldProperty
-		name="cd_progetto_padre"
-		label="Codice Commessa" />
-	<findFieldProperty
-		name="tipo_fase" />
-	<findFieldProperty
-		name="cd_unita_organizzativa" />
-	<findFieldProperty
-		name="importo_progetto" />
-	<findFieldProperty
-		name="importo_divisa" />
-	<findFieldProperty
-		name="dt_proroga" />
-	<findFieldProperty
-		name="cd_divisa" />
-	<findFieldProperty
-		name="ds_progetto" />
-	<findFieldProperty
-		name="cd_responsabile_terzo" />
-	<findFieldProperty
-		name="dt_inizio" />
-	<findFieldProperty
-		name="dt_fine" />
-	<findFieldProperty
-		name="cd_tipo_progetto" />
-	<findFieldProperty
-		name="stato" />
-	<findFieldProperty
-		name="durata_progetto" />
-	<findFieldProperty
-		name="note" />
+		<findFieldProperty
+			name="cd_progetto"
+			label="Codice Modulo di Attività" />
+		<findFieldProperty
+			name="cd_progetto_padre"
+			label="Codice Commessa" />
+		<findFieldProperty
+			name="tipo_fase" />
+		<findFieldProperty
+			name="cd_unita_organizzativa" />
+		<findFieldProperty
+			name="importo_progetto" />
+		<findFieldProperty
+			name="importo_divisa" />
+		<findFieldProperty
+			name="dt_proroga" />
+		<findFieldProperty
+			name="cd_divisa" />
+		<findFieldProperty
+			name="ds_progetto" />
+		<findFieldProperty
+			name="cd_responsabile_terzo" />
+		<findFieldProperty
+			name="dt_inizio" />
+		<findFieldProperty
+			name="dt_fine" />
+		<findFieldProperty
+			name="cd_tipo_progetto" />
+		<findFieldProperty
+			name="stato" />
+		<findFieldProperty
+			name="durata_progetto" />
+		<findFieldProperty
+			name="note" />
 	</freeSearchSet>
 
 	<freeSearchSet
 		name="filtro_ricerca_commesse">
-	<findFieldProperty
-		name="cd_progetto"
-		label="Codice Commessa" />
-	<findFieldProperty
-		name="cd_progetto_padre" />
-	<findFieldProperty
-		name="tipo_fase" />
-	<findFieldProperty
-		name="cd_unita_organizzativa" />
-	<findFieldProperty
-		name="importo_progetto" />
-	<findFieldProperty
-		name="importo_divisa" />
-	<findFieldProperty
-		name="dt_proroga" />
-	<findFieldProperty
-		name="cd_divisa" />
-	<findFieldProperty
-		name="ds_progetto" />
-	<findFieldProperty
-		name="cd_responsabile_terzo" />
-	<findFieldProperty
-		name="dt_inizio" />
-	<findFieldProperty
-		name="dt_fine" />
-	<findFieldProperty
-		name="cd_tipo_progetto" />
-	<findFieldProperty
-		name="stato" />
-	<findFieldProperty
-		name="durata_progetto" />
-	<findFieldProperty
-		name="note" />
+		<findFieldProperty
+			name="cd_progetto"
+			label="Codice Commessa" />
+		<findFieldProperty
+			name="cd_progetto_padre" />
+		<findFieldProperty
+			name="tipo_fase" />
+		<findFieldProperty
+			name="cd_unita_organizzativa" />
+		<findFieldProperty
+			name="importo_progetto" />
+		<findFieldProperty
+			name="importo_divisa" />
+		<findFieldProperty
+			name="dt_proroga" />
+		<findFieldProperty
+			name="cd_divisa" />
+		<findFieldProperty
+			name="ds_progetto" />
+		<findFieldProperty
+			name="cd_responsabile_terzo" />
+		<findFieldProperty
+			name="dt_inizio" />
+		<findFieldProperty
+			name="dt_fine" />
+		<findFieldProperty
+			name="cd_tipo_progetto" />
+		<findFieldProperty
+			name="stato" />
+		<findFieldProperty
+			name="durata_progetto" />
+		<findFieldProperty
+			name="note" />
 	</freeSearchSet>
 
 	<freeSearchSet
 		name="filtro_ricerca_progetti">
-	<findFieldProperty
-		name="cd_progetto"
-		label="Codice Progetto" />
-	<findFieldProperty
-		name="tipo_fase" />
-	<findFieldProperty
-		name="cd_dipartimento" />
-	<findFieldProperty
-		name="cd_unita_organizzativa" />
-	<findFieldProperty
-		name="importo_progetto" />
-	<findFieldProperty
-		name="importo_divisa" />
-	<findFieldProperty
-		name="dt_proroga" />
-	<findFieldProperty
-		name="cd_divisa" />
-	<findFieldProperty
-		name="ds_progetto" />
-	<findFieldProperty
-		name="cd_responsabile_terzo" />
-	<findFieldProperty
-		name="dt_inizio" />
-	<findFieldProperty
-		name="dt_fine" />
-	<findFieldProperty
-		name="cd_tipo_progetto" />
-	<findFieldProperty
-		name="stato" />
-	<findFieldProperty
-		name="durata_progetto" />
-	<findFieldProperty
-		name="note" />
+		<findFieldProperty
+			name="cd_progetto"
+			label="Codice Progetto" />
+		<findFieldProperty
+			name="tipo_fase" />
+		<findFieldProperty
+			name="cd_dipartimento" />
+		<findFieldProperty
+			name="cd_unita_organizzativa" />
+		<findFieldProperty
+			name="importo_progetto" />
+		<findFieldProperty
+			name="importo_divisa" />
+		<findFieldProperty
+			name="dt_proroga" />
+		<findFieldProperty
+			name="cd_divisa" />
+		<findFieldProperty
+			name="ds_progetto" />
+		<findFieldProperty
+			name="cd_responsabile_terzo" />
+		<findFieldProperty
+			name="dt_inizio" />
+		<findFieldProperty
+			name="dt_fine" />
+		<findFieldProperty
+			name="cd_tipo_progetto" />
+		<findFieldProperty
+			name="stato" />
+		<findFieldProperty
+			name="durata_progetto" />
+		<findFieldProperty
+			name="note" />
 	</freeSearchSet>		
 
-<freeSearchSet
+	<freeSearchSet
 		name="filtro_ricerca_aree">
-	<findFieldProperty
-		name="cd_progetto"
-		label="Area Progettuale" />
-	<findFieldProperty
-		name="tipo_fase" />
-	<findFieldProperty
-		name="dt_proroga" />
-	<findFieldProperty
-		name="ds_progetto" />
-	<findFieldProperty
-		name="cd_responsabile_terzo" />
-	<findFieldProperty
-		name="dt_inizio" />
-	<findFieldProperty
-		name="dt_fine" />
-	<findFieldProperty
-		name="cd_tipo_progetto" />
-	<findFieldProperty
-		name="stato" />
-	<findFieldProperty
-		name="durata_progetto" />
-	<findFieldProperty
-		name="note" />
+		<findFieldProperty
+			name="cd_progetto_area" />
+		<findFieldProperty
+			name="tipo_fase" />
+		<findFieldProperty
+			name="dt_proroga" />
+		<findFieldProperty
+			name="ds_progetto" />
+		<findFieldProperty
+			name="cd_responsabile_terzo" />
+		<findFieldProperty
+			name="dt_inizio" />
+		<findFieldProperty
+			name="dt_fine" />
+		<findFieldProperty
+			name="cd_tipo_progetto" />
+		<findFieldProperty
+			name="stato" />
+		<findFieldProperty
+			name="durata_progetto" />
+		<findFieldProperty
+			name="note" />
 	</freeSearchSet>
 	
 	<freeSearchSet
 		name="filtro_ricerca_prog2">
-	<findFieldProperty
-		name="cd_progetto"
-		label="Progetto" />
-	<findFieldProperty
-		name="cd_progetto_padre"
-		label="Area progettuale" />
-	<findFieldProperty
-		name="tipo_fase" />
-	<findFieldProperty
-		name="cd_unita_organizzativa" />
-	<findFieldProperty
-		name="dt_proroga" />
-	<findFieldProperty
-		name="ds_progetto" />
-	<findFieldProperty
-		name="cd_responsabile_terzo" />
-	<findFieldProperty
-		name="dt_inizio" />
-	<findFieldProperty
-		name="dt_fine" />
-	<findFieldProperty
-		name="cd_tipo_progetto" />
-	<findFieldProperty
-		name="stato" />
-	<findFieldProperty
-		name="durata_progetto" />
-	<findFieldProperty
-		name="note" />
+		<findFieldProperty
+			name="cd_progetto_area" />
+		<findFieldProperty
+			name="cd_progetto_padre"
+			label="Area Progettuale"/>
+		<findFieldProperty
+			name="tipo_fase" />
+		<findFieldProperty
+			name="cd_unita_organizzativa" />
+		<findFieldProperty
+			name="dt_proroga" />
+		<findFieldProperty
+			name="ds_progetto" />
+		<findFieldProperty
+			name="cd_responsabile_terzo" />
+		<findFieldProperty
+			name="dt_inizio" />
+		<findFieldProperty
+			name="dt_fine" />
+		<findFieldProperty
+			name="cd_tipo_progetto" />
+		<findFieldProperty
+			name="stato" />
+		<findFieldProperty
+			name="durata_progetto" />
+		<findFieldProperty
+			name="note" />
 	</freeSearchSet>
+
 	<form
 		name="form_searchtool_progetto" >
 		<formFieldProperty
@@ -1420,7 +1440,7 @@
 	
 	<columnSet name="filtro_ricerca_aree_short">
 		<columnFieldProperty
-			name="cd_progetto"
+			name="cd_progetto_area" 
 			label="Area Progettuale" />
 		<columnFieldProperty
 			name="ds_progetto" />
@@ -1435,4 +1455,22 @@
 		<columnFieldProperty
 			name="note" />
 	</columnSet>
+
+	<freeSearchSet name="filtro_ricerca_aree_short">
+		<findFieldProperty
+			name="cd_progetto_area"
+			label="Area Progettuale" />
+		<findFieldProperty
+			name="ds_progetto" />
+		<findFieldProperty
+			name="cd_dipartimento" />
+		<findFieldProperty
+			name="ds_dipartimento" />
+		<findFieldProperty
+			name="cd_programma" />
+		<findFieldProperty
+			name="ds_programma" />
+		<findFieldProperty
+			name="note" />
+	</freeSearchSet>
 </bulkInfo>

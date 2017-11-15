@@ -68,7 +68,8 @@
 	<action path="/ConsPDGPTitAction"
 		actionClass="it.cnr.contab.prevent01.consultazioni.action.ConsPDGPTitAction">
 	</action>
-
+	<action path="/ConsProcedureAmministrativeAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+	</action>
 	<action path="/ConsRegistroInventarioAction"
 		actionClass="it.cnr.contab.inventario00.actions.ConsRegistroInventarioAction">
 	</action>
@@ -1729,6 +1730,14 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsMandatoRevRestAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
+	</businessProcess>
+	<businessProcess name="ConsProcedureAmministrativeBP"
+		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+			value="it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsProcedureAmministrativeAction" />
 	</businessProcess>
 	<businessProcess name="ConsTerzoPerCompensoBP"
 		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">

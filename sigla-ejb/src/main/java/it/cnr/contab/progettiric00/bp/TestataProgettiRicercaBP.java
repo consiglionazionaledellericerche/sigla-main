@@ -6,9 +6,12 @@ import java.util.GregorianCalendar;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.InitializingBean;
+
 import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_finanziatoreBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBulk;
@@ -29,11 +32,11 @@ import it.cnr.jada.util.RemoteBulkTree;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
-
 public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IProgettoBP{
 	private boolean flNuovoPdg = false;
 	private boolean flInformix = false;
 	private boolean flPrgPianoEconomico = false;
+	private boolean isUoCdsCollegata = false;
 
 	private SimpleDetailCRUDController crudDettagli = new SimpleDetailCRUDController( "Dettagli", Progetto_uoBulk.class, "dettagli", this) {
 		public void validateForDelete(ActionContext context, OggettoBulk detail)
@@ -89,6 +92,8 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
 			setFlInformix(parEnte.getFl_informix().booleanValue());
 			setFlPrgPianoEconomico(parEnte.getFl_prg_pianoeco().booleanValue());
+			Unita_organizzativaBulk uo = (Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findUOByCodice(actioncontext.getUserContext(), CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext()));
+			isUoCdsCollegata = uo.getFl_uo_cds() ;
 		}catch(Throwable e) {
 			throw new BusinessProcessException(e);
 		}
@@ -332,11 +337,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		}
 		return stringbuffer.toString();
 	}
-	public String getSearchResultColumnSet() {
-	
-		return "filtro_ricerca_commesse";
-	}
-	
+
 	public int getLivelloProgetto() {
 		return ProgettoBulk.LIVELLO_PROGETTO_SECONDO.intValue();
 	}
@@ -387,32 +388,33 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	public void basicEdit(ActionContext actioncontext, OggettoBulk oggettobulk, boolean flag)
 			throws BusinessProcessException {
 		super.basicEdit(actioncontext, oggettobulk, flag);
-		if (!((ProgettoBulk)oggettobulk).getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())))
+		if (isFlInformix() || ((ProgettoBulk)oggettobulk).getCd_unita_organizzativa() ==null ||
+			!((ProgettoBulk)oggettobulk).getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())))
 			this.setStatus(VIEW);
 		
 	}
 	
 	public String[][] getTabs(HttpSession session) {
 		String uo = CNRUserContext.getCd_unita_organizzativa(HttpActionContext.getUserContext(session));
-	
-	    if (this.isFlNuovoPdg() && this.getModel()!=null && 
-	    	((ProgettoBulk)this.getModel()).getCd_unita_organizzativa()!=null &&
-	    	((ProgettoBulk)this.getModel()).getCd_unita_organizzativa().equals(uo)) {
+
+		
+	    if (this.isFlNuovoPdg() && 
+	    	 (isUoCdsCollegata || 
+	    	  (((ProgettoBulk)this.getModel()).getCd_unita_organizzativa()!=null &&
+	    	   ((ProgettoBulk)this.getModel()).getCd_unita_organizzativa().equals(uo)))) {
 	    	if (this.isFlPrgPianoEconomico() && ((ProgettoBulk)this.getModel()).getFl_piano_economico()) {
 		    	return new String[][] {
 		               { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_commesse.jsp" },
 		               { "tabPianoEconomico","Piano Economico","/progettiric00/progetto_piano_economico.jsp" } ,
 		               { "tabDettagliFinanziatori","Finanziatori","/progettiric00/progetto_ricerca_dettagliFinanziatori.jsp" },
 		               { "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" },
-		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" },
-		               { "tabDettagliPostIt","Post-It","/config00/dettagliPostIt.jsp" }};
+		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" }};
 	    	} else {
 		    	return new String[][] {
 		               { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_commesse.jsp" },
 		               { "tabDettagliFinanziatori","Finanziatori","/progettiric00/progetto_ricerca_dettagliFinanziatori.jsp" },
 		               { "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" },
-		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" },
-		               { "tabDettagliPostIt","Post-It","/config00/dettagliPostIt.jsp" }};
+		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" }};
 	    	}
 	    } else {
 	  	   return new String[][] {
@@ -470,18 +472,37 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			throws BusinessProcessException {
 		if (this.isFlNuovoPdg()) {
 			ProgettoBulk progettopadre = new ProgettoBulk();
-			progettopadre.setLivello(1);
+			progettopadre.setLivello(ProgettoBulk.LIVELLO_PROGETTO_PRIMO);
 			((ProgettoBulk)oggettobulk).setProgettopadre(progettopadre);
-			((ProgettoBulk)oggettobulk).setLivello(2);
+			((ProgettoBulk)oggettobulk).setLivello(ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
 		}
 		return super.initializeModelForInsert(actioncontext, oggettobulk);
 	}
+
+	@Override
+	public OggettoBulk initializeModelForSearch(ActionContext actioncontext, OggettoBulk oggettobulk)
+			throws BusinessProcessException {
+		if (this.isFlNuovoPdg()) {
+			ProgettoBulk progettopadre = new ProgettoBulk();
+			progettopadre.setLivello(ProgettoBulk.LIVELLO_PROGETTO_PRIMO);
+			((ProgettoBulk)oggettobulk).setProgettopadre(progettopadre);
+			((ProgettoBulk)oggettobulk).setLivello(ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+		}
+		return super.initializeModelForSearch(actioncontext, oggettobulk);
+	}
+	/*
 	public String getLabelCd_progetto_padre() {
 		if (this.isFlNuovoPdg())
 			return ProgettoBulk.LABEL_AREA_PROGETTUALE;
 		return ProgettoBulk.LABEL_COMMESSA;
 	}
 	
+	public String getLabelCd_progetto() {
+		if (this.isFlNuovoPdg())
+			return ProgettoBulk.LABEL_PROGETTO;
+		return ProgettoBulk.LABEL_MODULO;
+	}
+	 */
 	public SimpleDetailCRUDController getCrudPianoEconomicoTotale() {
 		return crudPianoEconomicoTotale;
 	}
@@ -492,5 +513,16 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	
 	public SimpleDetailCRUDController getCrudPianoEconomicoAltriAnni() {
 		return crudPianoEconomicoAltriAnni;
+	}
+	
+	@Override
+	public void validate(ActionContext actioncontext) throws ValidationException {
+		ProgettoBulk bulk = (ProgettoBulk)getModel();
+		if (bulk.getProgettopadre() == null || bulk.getProgettopadre().getPg_progetto() == null)
+			throw new ValidationException("Attenzione: Per salvare "+
+					(this.isFlNuovoPdg()?"il "+ProgettoBulk.LABEL_PROGETTO:"la "+ProgettoBulk.LABEL_COMMESSA)+
+					" è necessario inserire "+
+					(this.isFlNuovoPdg()?"l' "+ProgettoBulk.LABEL_AREA_PROGETTUALE:"la "+ProgettoBulk.LABEL_COMMESSA)+"!");	                	
+		super.validate(actioncontext);
 	}
 }

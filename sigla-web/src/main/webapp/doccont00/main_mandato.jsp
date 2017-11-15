@@ -37,7 +37,7 @@ function doVisualizzaMandato() {
 <body class="Form">
 
 
-<table class="Panel">
+<table class="Panel w-100 h-100">
 	<tr><td colspan=2>
 	<%
 		// if ( bp.isRicercaDocumentiTabEnabled() )
@@ -54,7 +54,7 @@ function doVisualizzaMandato() {
 								},
 						bp.getTab("tab"),
 						"center",
-						null,null);
+						"100%","100%");
 		else
 			JSPUtils.tabbed(
 						pageContext,
@@ -67,7 +67,7 @@ function doVisualizzaMandato() {
 								},
 						bp.getTab("tab"),
 						"center",
-						null,null);
+						"100%","100%");
 		
 	%>
 	</td></tr>	

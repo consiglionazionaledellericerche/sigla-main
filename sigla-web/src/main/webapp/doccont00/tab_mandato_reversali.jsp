@@ -18,10 +18,9 @@
 		CRUDAbstractMandatoBP bp = (CRUDAbstractMandatoBP)BusinessProcess.getBusinessProcess(request);
 		it.cnr.contab.doccont00.core.bulk.MandatoBulk mandato = (it.cnr.contab.doccont00.core.bulk.MandatoBulk)bp.getModel();
 %>
-  <% if ( bp.isInserting() && mandato.getTi_mandato().equals( mandato.TIPO_REGOLARIZZAZIONE ) )
-  { %>
-  <div class="Group">		
-  <table border="0" cellspacing="0" cellpadding="2">
+  <% if ( bp.isInserting() && mandato.getTi_mandato().equals( mandato.TIPO_REGOLARIZZAZIONE ) ) { %>
+  <div class="Group card">
+  <table border="0" cellspacing="0" cellpadding="2" class="w-100 h-100">
   <tr><td>
 	  <table border="0" cellspacing="0" cellpadding="2">	
  	 	<tr>
@@ -40,7 +39,7 @@
  	  </table>
   </td></tr>
   <tr><td>
-  	  <table border="0" cellspacing="0" cellpadding="2">	
+  	  <table border="0" cellspacing="0" cellpadding="2" class="w-100 h-100">
  	 	<tr>
 		    <% if ( mandato.getCd_unita_organizzativa().equals( mandato.getCd_uo_ente() ) ) { %>
 			<td><% ((CRUDMandatoBP)bp).getDocumentiAttiviPerRegolarizzazione().writeHTMLTable(pageContext,"regolarizzazione",false,false,false,"100%","150px", true); %></td>
@@ -54,10 +53,10 @@
   </div>
   <%} else {%>
 
-	<table border="0" cellspacing="0" cellpadding="2">		
+	<table border="0" cellspacing="0" cellpadding="2" class="w-100 h-100">
 		<tr>
 			<td colspan=2>
-			      <b ALIGN="CENTER"><font size=2>Doc.contabili associati</font></b>
+			      <b class="h3 text-primary">Doc.contabili associati</b>
 			      <% bp.getReversaliMan().setEnabled( false );
 			         bp.getReversaliMan().writeHTMLTable(pageContext,"doc_cont_coll",false,false,false,"100%","100px", true); %>
 			</td>
@@ -67,8 +66,8 @@
     <% if (mandato != null && mandato instanceof MandatoIBulk && 
            ((MandatoIBulk)mandato).getVar_bilancio() != null){ %>
     <BR>
-    <div class="GroupLabel">Variazione al bilancio dell'Ente</div>          
-    <div class="Group">
+    <div class="GroupLabel h3 text-primary">Variazione al bilancio dell'Ente</div>
+    <div class="Group card">
   	   <table>      
 	      <tr>
 		     <td><% bp.getController().writeFormField(out,"pg_variazione_bilancio");%></td>
