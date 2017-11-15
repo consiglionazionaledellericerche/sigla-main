@@ -20,6 +20,7 @@ import it.cnr.jada.persistency.PersistencyException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -111,8 +112,17 @@ public class MissioneResource implements MissioneLocal{
 				orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Unità Organizzativa del contesto diversa da quella della Missione"));
 		}
 
+    	Calendar cal = Calendar.getInstance();
 		missioneBulk.setObbligazione_scadenzario(Optional.ofNullable(missioneComponentSession.recuperoObbligazioneDaGemis(userContext, missioneBulk)).orElse(null));
 		missioneBulk.setAnticipo(Optional.ofNullable(missioneComponentSession.recuperoAnticipoDaGemis(userContext, missioneBulk)).orElse(null));
+		cal.setTime(missioneBulk.getDt_inizio_missione());
+		cal.set(Calendar.SECOND,0);
+		cal.set(Calendar.MILLISECOND,0);
+		missioneBulk.setDt_inizio_missione(new Timestamp(cal.getTimeInMillis()));
+		cal.setTime(missioneBulk.getDt_fine_missione());
+		cal.set(Calendar.SECOND,0);
+		cal.set(Calendar.MILLISECOND,0);
+		missioneBulk.setDt_fine_missione(new Timestamp(cal.getTimeInMillis()));
 		final MissioneBulk missione = (MissioneBulk) missioneComponentSession.inizializzaBulkPerInserimento(
     			userContext, 
     			missioneBulk);
@@ -120,7 +130,21 @@ public class MissioneResource implements MissioneLocal{
     	missione.setToBeCreated();
     	missione.getTappeMissioneColl().stream().forEach(x -> {
     		x.setToBeCreated();
-    		x.setMissione(missione);	
+    		x.setMissione(missione);
+    		cal.setTime(x.getDt_inizio_tappa());
+    		cal.set(Calendar.SECOND,0);
+    		cal.set(Calendar.MILLISECOND,0);
+    		x.setDt_inizio_tappa(new Timestamp(cal.getTimeInMillis()));
+    		cal.setTime(x.getDt_fine_tappa());
+    		cal.set(Calendar.SECOND,0);
+    		cal.set(Calendar.MILLISECOND,0);
+    		x.setDt_fine_tappa(new Timestamp(cal.getTimeInMillis()));
+    	});    	
+    	missione.getSpeseMissioneColl().stream().forEach(x -> {
+    		cal.setTime(x.getDt_inizio_tappa());
+    		cal.set(Calendar.SECOND,0);
+    		cal.set(Calendar.MILLISECOND,0);
+    		x.setDt_inizio_tappa(new Timestamp(cal.getTimeInMillis()));
     	});    	
     	Stream.concat(
     			Stream.concat(
