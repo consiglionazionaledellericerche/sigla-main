@@ -143,6 +143,8 @@
 	<formFieldProperty
 		name="codice_anac" />
 	<findFieldProperty
+		name="codice_anac" />
+	<findFieldProperty
 		name="cd_proc_amm" />
 	<findFieldProperty
 		name="ds_proc_amm" />
@@ -167,4 +169,6 @@
 		name="ds_proc_amm" />
 	<columnFieldProperty
 		name="fl_cancellato" />
+	<columnFieldProperty
+		name="codice_anac" />
 </bulkInfo>

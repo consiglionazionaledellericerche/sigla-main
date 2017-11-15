@@ -2,6 +2,7 @@ package it.cnr.contab.config00.bulk;
 
 import java.util.Dictionary;
 
+import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.jada.bulk.*;
 
 /**
@@ -36,8 +37,15 @@ public class Parametri_enteBulk extends Parametri_enteBase
 		logoDBKeys.put(DB_SVILUPPO,"logo_mini_svil.gif");
 		logoDBKeys.put(DB_ALTRO,"logo_mini_altro.gif");
 	};
-	
-    /**
+
+	public final static Dictionary<String,String> abilProgettoStrorgKeys;
+	static {
+		abilProgettoStrorgKeys = new it.cnr.jada.util.OrderedHashtable();
+		abilProgettoStrorgKeys.put(V_struttura_organizzativaHome.LIVELLO_CDS,"Centro di Spesa");
+		abilProgettoStrorgKeys.put(V_struttura_organizzativaHome.LIVELLO_UO,"Unità Organizzativa");
+	};
+
+	/**
      * Costruttore di default
      */
     public Parametri_enteBulk()
@@ -60,6 +68,7 @@ public class Parametri_enteBulk extends Parametri_enteBase
     	setFl_informix(Boolean.FALSE);    	
     	setFl_gae_es(Boolean.FALSE);
     	setFl_prg_pianoeco(Boolean.FALSE);
+    	setAbil_progetto_strorg(V_struttura_organizzativaHome.LIVELLO_UO);
 	  return this;
 	}
 
@@ -76,5 +85,13 @@ public class Parametri_enteBulk extends Parametri_enteBase
 	
 	public boolean isEnteCNR() {
 		return "CNR".equals(getDescrizione());
+	}
+	
+	public boolean isAbilProgettoUO() {
+		return V_struttura_organizzativaHome.LIVELLO_UO.equals(getAbil_progetto_strorg());
+	}
+
+	public boolean isAbilProgettoCDS() {
+		return V_struttura_organizzativaHome.LIVELLO_CDS.equals(getAbil_progetto_strorg());
 	}
 }

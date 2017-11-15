@@ -16,54 +16,59 @@
 
 <table class="Form" width="100%">
   <tr>
-	<td>
-		<b><big class="text-primary">CdR</big></b>
-		<% JSPUtils.button(out,
-				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
-				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
-				bp.getParentRoot().isBootstrap() ?"Conferma" : null,
-				"javascript:submitForm('doCaricaLineeAttivita')",
-				"btn-secondary btn-title",
-				obbligazione.isConfermaCentriDiResponsabilitaEnabled() && bp.isEditable(),
-				bp.getParentRoot().isBootstrap()); %>
-		<% Button.write(out,
-				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-hand-lizard-o fa-flip-horizontal text-primary" : "img/zoom16.gif",
-				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-hand-lizard-o fa-flip-horizontal text-primary" : "img/zoom16.gif",
-				null,
-				"javascript:submitForm('doVisualizzaSpeseCdr')", 
-				"btn-secondary btn-title", 
-				"Prospetto situazione spese", 
-				bp.isVisualizzaSpeseCdrButtonEnabled(), 
-				bp.getParentRoot().isBootstrap()); %>
+        <td>
+            <b><big class="text-primary">CdR</big></b>
+            <% JSPUtils.button(out,
+                    bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
+                    bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
+                    bp.getParentRoot().isBootstrap() ?"Conferma" : null,
+                    "javascript:submitForm('doCaricaLineeAttivita')",
+                    "btn-secondary btn-outline-secondary btn-title",
+                    obbligazione.isConfermaCentriDiResponsabilitaEnabled() && bp.isEditable(),
+                    bp.getParentRoot().isBootstrap()); %>
+            <% Button.write(out,
+                    bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-hand-lizard-o fa-flip-horizontal text-primary" : "img/zoom16.gif",
+                    bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-hand-lizard-o fa-flip-horizontal text-primary" : "img/zoom16.gif",
+                    null,
+                    "javascript:submitForm('doVisualizzaSpeseCdr')",
+                    "btn-secondary btn-outline-secondary btn-title",
+                    "Prospetto situazione spese",
+                    bp.isVisualizzaSpeseCdrButtonEnabled(),
+                    bp.getParentRoot().isBootstrap()); %>
 
-	</td>
+        </td>
+        <td></td>
 	</tr>
 	<tr>
-	<td><%	bp.getCentriDiResponsabilita().writeHTMLTable(pageContext,"cdr",false,false,false,"100%","100px"); %></td>
+	    <td colspan=2><% bp.getCentriDiResponsabilita().writeHTMLTable(pageContext,"cdr",false,false,false,"100%","100px"); %></td>
 	</tr>
 	<tr>
-	<td colspan=2>
-			<b ALIGN="CENTER" class="text-primary"><big>GAE</big></b>
-			<% JSPUtils.button(out,
-					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
-					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
-					bp.getParentRoot().isBootstrap() ?"Conferma" : null,
-					"javascript:submitForm('doConfermaLineeAttivita')",
-					"btn-secondary btn-title",
-					obbligazione.isConfermaLineeAttivitaEnabled() && bp.isEditable(),
-					bp.getParentRoot().isBootstrap()); %>
-	</td>
+        <td colspan=2>
+                <b ALIGN="CENTER" class="text-primary"><big>GAE</big></b>
+                <% JSPUtils.button(out,
+                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
+                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
+                        bp.getParentRoot().isBootstrap() ?"Conferma" : null,
+                        "javascript:submitForm('doConfermaLineeAttivita')",
+                        "btn-secondary btn-outline-secondary btn-title",
+                        obbligazione.isConfermaLineeAttivitaEnabled() && bp.isEditable(),
+                        bp.getParentRoot().isBootstrap()); %>
+        </td>
 	</tr>
 	<tr>
-	<td colspan=2>
-		<b class="h5 text-info">GAE da PdG approvato</b>
-	</td>
-	<td><b ALIGN="CENTER" class="h5 text-info">Altri GAE</b></td>
+        <td>
+            <b class="h5 text-info">GAE da PdG approvato</b>
+        </td>
+	    <td>
+	        <b class="h5 text-info">Altri GAE</b>
+	    </td>
 	</tr>
 	<tr>
-		<td colspan=2>
-		      <%	bp.getLineeDiAttivita().writeHTMLTable(pageContext,null,false,false,false,"100%","200px"); %>
+		<td>
+		    <%bp.getLineeDiAttivita().writeHTMLTable(pageContext,null,false,false,false,"100%","200px"); %>
 		</td>
-		<td><%	bp.getNuoveLineeDiAttivita().writeHTMLTable(pageContext,"latt",obbligazione.isAddNuoveLattEnabled() && bp.isEditable(),false,true,"100%","200px", false); %></td>
+		<td>
+		    <%bp.getNuoveLineeDiAttivita().writeHTMLTable(pageContext,"latt",obbligazione.isAddNuoveLattEnabled() && bp.isEditable(),false,true,"100%","200px", false); %>
+		</td>
 	</tr>
 </table>

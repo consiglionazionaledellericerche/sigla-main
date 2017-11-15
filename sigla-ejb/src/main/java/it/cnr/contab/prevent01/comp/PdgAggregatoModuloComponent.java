@@ -44,6 +44,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.OutdatedResourceException;
@@ -108,6 +109,12 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 				moduloBulk.setExistGestionaleS(pdgModuloHome.existsGestionaleS(moduloBulk));
 				moduloBulk.setExistDecisionaleE(moduloBulk.getExistGestionaleE()?Boolean.TRUE:pdgModuloHome.existsDecisionaleE(moduloBulk));
 				moduloBulk.setExistDecisionaleS(moduloBulk.getExistGestionaleS()?Boolean.TRUE:pdgModuloHome.existsDecisionaleS(moduloBulk));
+
+				Pdg_modulo_costiBulk moduloCosti = (Pdg_modulo_costiBulk)((Pdg_modulo_costiHome)getHome(userContext, Pdg_modulo_costiBulk.class)).findByPrimaryKey(new Pdg_modulo_costiBulk(moduloBulk));
+				moduloBulk.setExistDecisionaleR(moduloCosti!=null &&
+						                        (moduloCosti.getTot_risorse_presunte_es_prec().compareTo(BigDecimal.ZERO)>0 ||
+											     moduloCosti.getTot_risorse_provenienti_es_prec().compareTo(BigDecimal.ZERO)>0));
+				moduloBulk.setExistDecisionaleC(moduloCosti!=null && moduloCosti.getTot_costi().compareTo(BigDecimal.ZERO)>0);
 			}
 			getHomeCache(userContext).fetchAll(userContext);
 			return testata;
