@@ -12,9 +12,9 @@
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
 		<columnMapping columnName="VARIAMENO" propertyName="variameno"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
-		<columnMapping columnName="ASSESTATO" propertyName="assestato"
+		<columnMapping columnName="IMPACC" propertyName="impacc"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
-		<columnMapping columnName="DISP_RESIDUA" propertyName="disp_residua"
+		<columnMapping columnName="MANRIS" propertyName="manris"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
 	</defaultColumnMap>
 
@@ -22,6 +22,6 @@
 	<persistentProperty name="stanziamento" />
 	<persistentProperty name="variapiu" />
 	<persistentProperty name="variameno" />
-	<persistentProperty name="assestato" />
-	<persistentProperty name="disp_residua" />
+	<persistentProperty name="impacc" />
+	<persistentProperty name="manris" />
 </SQLPersistentInfo>
