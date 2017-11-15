@@ -183,6 +183,8 @@
 	</action>
 	<action path="/ConsMandatoRevRestAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
+	<action path="/ConsTerzoPerCompensoAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+	</action>
 	<action path="/ConsDivisaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
 		needExistingSession="false">
 	</action>
@@ -1726,6 +1728,15 @@
 			value="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsMandatoRevRestAction" />
+		<init-param name="searchResultColumnSet" value="restService" />
+	</businessProcess>
+	<businessProcess name="ConsTerzoPerCompensoBP"
+		className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+			value="it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsTerzoPerCompensoAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 </action-mappings>
