@@ -13,18 +13,17 @@
 	CRUDDocumentoGenericoPassivoBP bp = (CRUDDocumentoGenericoPassivoBP)BusinessProcess.getBusinessProcess(request);
 	Documento_genericoBulk documento = (Documento_genericoBulk)bp.getModel();
 %>
-
-<table>
-	<tr>
-		<td  colspan="4">
-		<% bp.writeFormFieldDoc1210(out,"creaLettera");%>
-		<% bp.writeFormFieldDoc1210(out,"cancellaLettera");%>
-		<% bp.writeFormFieldDoc1210(out,"disassociaLettera");%>
-		</td>
-	</tr>
-</table>
-<div class="Group" style="width:100%">
-	<div class="GroupLabel"><% bp.writeFormInput(out, "displayStatoTrasmissione");%></div>
+<div class="Group card p-3" style="width:100%">
+	<table width="100%">
+		<tr>
+			<% bp.writeFormFieldDoc1210(out,"creaLettera");%>
+			<% bp.writeFormFieldDoc1210(out,"cancellaLettera");%>
+			<% bp.writeFormFieldDoc1210(out,"disassociaLettera");%>
+		</tr>
+	</table>
+</div>
+<div class="Group card p-3" style="width:100%">
+	<div class="GroupLabel h3 text-primary"><% bp.writeFormInput(out, "displayStatoTrasmissione");%></div>
 	<table width="100%">
 		<tr>
 			<% bp.writeFormFieldDoc1210(out,"esercizio_lettera");%>
@@ -86,8 +85,8 @@
 		</tr>
 		<tr>
 			<td colspan="4">
-				<div class="GroupLabel">Sospeso</div>
-				<div class="Group" style="width:90%">
+				<div class="GroupLabel h3 text-primary">Sospeso</div>
+				<div class="Group card p-3" style="width:90%">
 					<table>
 						<tr>
 							<% bp.writeFormFieldDoc1210(out,"cd_sospeso"); %>

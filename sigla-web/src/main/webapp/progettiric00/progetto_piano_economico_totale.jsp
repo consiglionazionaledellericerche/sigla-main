@@ -22,11 +22,6 @@
 	  	<% controller.writeFormInput(out,null,"voce_piano",isKeyEditable,null,null);%>
 	  </TD></TR>
   	  <TR><TD>
-	  	<% controller.writeFormLabel(out,"im_entrata");%>
-	  	</TD><TD colspan="3">
-	  	<% controller.writeFormInput(out,"im_entrata");%>
-	  </TD></TR>
-  	  <TR><TD>
 	  	<% controller.writeFormLabel(out,"im_spesa");%>
 	  	</TD><TD colspan="3">
 	  	<% controller.writeFormInput(out,"im_spesa");%>
