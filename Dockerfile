@@ -6,7 +6,7 @@ ENV SIGLA it/cnr/sigla-ear/4.0.1/sigla-ear-4.0.1-wildfly.ear
 
 COPY SIGLA/target/SIGLA.ear standalone/deployments/SIGLA.ear
 
-CMD ["./bin/standalone.sh", "-b", "0.0.0.0", "--debug", "8787", "-bmanagement", "0.0.0.0", "-Dspring.profiles.active=CMIS"]
+CMD ["./bin/standalone.sh", "-b", "0.0.0.0", "--debug", "8787", "-bmanagement", "0.0.0.0", "-Dspring.profiles.active=CMIS -Duser.country=IT -Duser.language=it"]
 
 COPY src/main/docker/standalone/configuration/  standalone/configuration/
 COPY src/main/docker/domain/configuration/  domain/configuration/
