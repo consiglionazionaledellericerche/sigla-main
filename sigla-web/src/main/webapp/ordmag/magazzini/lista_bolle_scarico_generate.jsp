@@ -22,8 +22,8 @@ ListaBolleScaricoGenerateBP bp = (ListaBolleScaricoGenerateBP)BusinessProcess.ge
 		bp.openFormWindow(pageContext);
 %>
 <script language="JavaScript">
-function doStampaBolla(esercizio, cd_cds , cd_unita_organizzativa, pg_fattura) {	
-  doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/DocumentiCollegati '+esercizio+'-'+cd_cds+'-'+cd_unita_organizzativa+'-'+pg_fattura+'.pdf?esercizio='+esercizio+'&cds='+cd_cds+'&cdUo='+cd_unita_organizzativa+'&pgFattura='+pg_fattura+'&methodName=scaricaDocumentiCollegati&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+function doStampaBollaScarico(esercizio, cdCds , cdMagazzino, cdNumeratore, pgBolla) {	
+  doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/StampaBollaScarico '+esercizio+'-'+cdCds+'-'+cdMagazzino+'-'+cdNumeratore+'-'+pgBolla+'.pdf?esercizio='+esercizio+'&cds='+cdCds+'&magazzino='+cdMagazzino+'&numeratore='+cdNumeratore+'&pgBolla='+pgBolla+'&methodName=stampaBollaScarico&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 </head>
