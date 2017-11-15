@@ -62,7 +62,12 @@
 	<queryString>
 		<![CDATA[SELECT * FROM PRT_LIBRO_GIORNALE
 WHERE ESERCIZIO = $P{esercizio}
-]]>
+ AND CD_CDS LIKE DECODE($P{cds},'*','%',$P{cds})
+  AND CD_UNITA_ORGANIZZATIVA LIKE DECODE($P{uo},'*','%',$P{uo})
+ and DT_CONTABILIZZAZIONE between $P{da_contabilizzazione} and $P{a_contabilizzazione}
+  AND (($P{tipologia} != 'T' AND TI_ISTITUZ_COMMERC = $P{tipologia}) OR
+        ($P{tipologia} = 'T'))
+ ]]>
 	</queryString>
 	<field name="RAGIONE_SOCIALE" class="java.lang.String"/>
 	<field name="VIA_FISCALE" class="java.lang.String"/>
