@@ -248,7 +248,6 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 	public int addToRighe( BollaScaricoRigaMagBulk nuovoRigo ) 
 	{
 		nuovoRigo.setStato(OrdineAcqRigaBulk.STATO_INSERITA);
-		righe.add(nuovoRigo);
 		int max = 0;
 		for (Iterator i = righe.iterator(); i.hasNext();) {
 			int prog = ((BollaScaricoRigaMagBulk)i.next()).getRigaBollaSca();
@@ -256,6 +255,7 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 		}
 		nuovoRigo.setRigaBollaSca(new Integer(max+1));
 
+		righe.add(nuovoRigo);
 		return righe.size()-1;
 	}
 	public List getChildren() {
