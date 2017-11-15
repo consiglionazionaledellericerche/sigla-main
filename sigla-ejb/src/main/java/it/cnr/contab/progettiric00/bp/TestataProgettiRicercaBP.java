@@ -6,6 +6,8 @@ import java.util.GregorianCalendar;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.InitializingBean;
+
 import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
@@ -386,7 +388,8 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	public void basicEdit(ActionContext actioncontext, OggettoBulk oggettobulk, boolean flag)
 			throws BusinessProcessException {
 		super.basicEdit(actioncontext, oggettobulk, flag);
-		if (!((ProgettoBulk)oggettobulk).getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())))
+		if (isFlInformix() || ((ProgettoBulk)oggettobulk).getCd_unita_organizzativa() ==null ||
+			!((ProgettoBulk)oggettobulk).getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())))
 			this.setStatus(VIEW);
 		
 	}
@@ -405,15 +408,13 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		               { "tabPianoEconomico","Piano Economico","/progettiric00/progetto_piano_economico.jsp" } ,
 		               { "tabDettagliFinanziatori","Finanziatori","/progettiric00/progetto_ricerca_dettagliFinanziatori.jsp" },
 		               { "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" },
-		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" },
-		               { "tabDettagliPostIt","Post-It","/config00/dettagliPostIt.jsp" }};
+		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" }};
 	    	} else {
 		    	return new String[][] {
 		               { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_commesse.jsp" },
 		               { "tabDettagliFinanziatori","Finanziatori","/progettiric00/progetto_ricerca_dettagliFinanziatori.jsp" },
 		               { "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" },
-		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" },
-		               { "tabDettagliPostIt","Post-It","/config00/dettagliPostIt.jsp" }};
+		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" }};
 	    	}
 	    } else {
 	  	   return new String[][] {
@@ -471,13 +472,24 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			throws BusinessProcessException {
 		if (this.isFlNuovoPdg()) {
 			ProgettoBulk progettopadre = new ProgettoBulk();
-			progettopadre.setLivello(1);
+			progettopadre.setLivello(ProgettoBulk.LIVELLO_PROGETTO_PRIMO);
 			((ProgettoBulk)oggettobulk).setProgettopadre(progettopadre);
-			((ProgettoBulk)oggettobulk).setLivello(2);
+			((ProgettoBulk)oggettobulk).setLivello(ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
 		}
 		return super.initializeModelForInsert(actioncontext, oggettobulk);
 	}
 
+	@Override
+	public OggettoBulk initializeModelForSearch(ActionContext actioncontext, OggettoBulk oggettobulk)
+			throws BusinessProcessException {
+		if (this.isFlNuovoPdg()) {
+			ProgettoBulk progettopadre = new ProgettoBulk();
+			progettopadre.setLivello(ProgettoBulk.LIVELLO_PROGETTO_PRIMO);
+			((ProgettoBulk)oggettobulk).setProgettopadre(progettopadre);
+			((ProgettoBulk)oggettobulk).setLivello(ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+		}
+		return super.initializeModelForSearch(actioncontext, oggettobulk);
+	}
 	/*
 	public String getLabelCd_progetto_padre() {
 		if (this.isFlNuovoPdg())

@@ -26,7 +26,7 @@
 		enabledOnSearch="false"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		enabledOnFreeSearch="false"				
+		enabledOnFreeSearch="false"
 		caseSensitiveSearch="false"
 		nullable="false" />
 	<fieldProperty
@@ -77,18 +77,6 @@
 		enabledOnFreeSearch="true"
 		enabledOnEdit="true"/>
 	<fieldProperty
-		name="cd_progetto_padre_area"
-		property="progettopadre.cd_progetto"
-		maxLength="30"
-		inputSize="30"
-		inputType="TEXT"
-		label="Area Progettuale"
-		readonlyProperty="ROprogetto"
-		caseSensitiveSearch="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		enabledOnEdit="true"/>
-	<fieldProperty
 		name="cd_progetto_padre_commessa"
 		property="progettopadre.cd_progetto"
 		maxLength="30"
@@ -108,6 +96,20 @@
 		inputType="ROTEXT"
 		enabledOnEdit="true"
 		caseSensitiveSearch="false"/>
+
+	<fieldProperty
+		name="find_nodo_padre_area"
+		property="progettopadre"
+		inputType="SEARCHTOOL"
+		label="Area Progettuale"
+		formName="form_searchtool_progetto"
+		readonlyProperty="ROfind_nodo_padre"
+		freeSearchSet="filtro_ricerca_aree_short"
+		columnSet="filtro_ricerca_aree_short"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"/>
 
 	/*********************************************************/
 
@@ -379,8 +381,8 @@
 		nullable="false"
 		label="Dipartimento"
 		readonlyProperty="RODipartimento"
-		enabledOnSearch="true"
-		/>
+		formName="searchtool"
+		enabledOnSearch="true"/>
 	<fieldProperty
 		name="cd_dipartimento"
 		property="dipartimento.cd_dipartimento"
@@ -411,14 +413,6 @@
 		nullable="false"
 		label="Descrizione Dipartimento"
 		caseSensitiveSearch="false" />
-
-	<fieldProperty
-		name="crea_dipartimento"
-		property="dipartimento"
-		inputType="CRUDTOOL"
-		readonlyProperty="RODipartimento"
-		CRUDBusinessProcessName="CRUDConfigDipartimentoBP"
-		/>
 
 	/*********************************************************/
 
@@ -757,9 +751,9 @@
 	<formFieldProperty
 		name="find_nodo_padre" />
 	<formFieldProperty
-		name="cd_progetto_padre" />
+		name="find_nodo_padre_area" />
 	<formFieldProperty
-		name="cd_progetto_padre_area" />
+		name="cd_progetto_padre" />
 	<formFieldProperty
 		name="cd_progetto_padre_commessa" />
 	<formFieldProperty
@@ -786,8 +780,6 @@
 		name="ds_dipartimento" />
 	<formFieldProperty
 		name="find_dipartimento" />
-	<formFieldProperty
-		name="crea_dipartimento" />
 
 	<formFieldProperty
 		name="generale_affitto" />
@@ -945,7 +937,8 @@
 		<columnFieldProperty
 			name="cd_progetto_area" />
 		<columnFieldProperty
-			name="cd_progetto_padre_area"/>
+			name="cd_progetto_padre"
+			label="Area Progettuale"/>
 		<columnFieldProperty
 			name="cd_unita_organizzativa" />
 		<columnFieldProperty
@@ -1139,7 +1132,8 @@
 		<columnFieldProperty
 			name="cd_progetto_area" />
 		<columnFieldProperty
-			name="cd_progetto_padre_area" />
+			name="cd_progetto_padre"
+			label="Area Progettuale"/>
 		<columnFieldProperty
 			name="tipo_fase" />
 		<columnFieldProperty
@@ -1379,7 +1373,8 @@
 		<findFieldProperty
 			name="cd_progetto_area" />
 		<findFieldProperty
-			name="cd_progetto_padre_area" />
+			name="cd_progetto_padre"
+			label="Area Progettuale"/>
 		<findFieldProperty
 			name="tipo_fase" />
 		<findFieldProperty
@@ -1403,6 +1398,7 @@
 		<findFieldProperty
 			name="note" />
 	</freeSearchSet>
+
 	<form
 		name="form_searchtool_progetto" >
 		<formFieldProperty
