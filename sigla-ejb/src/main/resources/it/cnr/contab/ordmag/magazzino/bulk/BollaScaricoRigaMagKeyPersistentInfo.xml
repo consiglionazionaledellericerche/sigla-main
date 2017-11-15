@@ -39,8 +39,8 @@
 			nullable="false"
 			primary="true" />
 		<columnMapping
-			columnName="RIGBOLLA_SCA_N"
-			propertyName="rigbollaScaN"
+			columnName="RIGA_BOLLA_SCA"
+			propertyName="rigaBollaSca"
 			sqlTypeName="DECIMAL"
 			columnSize="5"
 			nullable="false"
@@ -62,6 +62,6 @@
 		name="pgBollaSca"
 		partOfOid="true" />
 	<persistentProperty
-		name="rigbollaScaN"
+		name="rigaBollaSca"
 		partOfOid="true" />
 </SQLPersistentInfo>
