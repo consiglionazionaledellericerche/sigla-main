@@ -11,7 +11,7 @@ public class BollaScaricoRigaMagKey extends OggettoBulk implements KeyedPersiste
 	private java.lang.Integer esercizio;
 	private java.lang.String cdNumeratoreMag;
 	private java.lang.Integer pgBollaSca;
-	private java.lang.Integer rigbollaScaN;
+	private java.lang.Integer rigaBollaSca;
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: BOLLA_SCARICO_RIGA_MAG
@@ -19,14 +19,14 @@ public class BollaScaricoRigaMagKey extends OggettoBulk implements KeyedPersiste
 	public BollaScaricoRigaMagKey() {
 		super();
 	}
-	public BollaScaricoRigaMagKey(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.Integer esercizio, java.lang.String cdNumeratoreMag, java.lang.Integer pgBollaSca, java.lang.Integer rigbollaScaN) {
+	public BollaScaricoRigaMagKey(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.Integer esercizio, java.lang.String cdNumeratoreMag, java.lang.Integer pgBollaSca, java.lang.Integer rigaBollaSca) {
 		super();
 		this.cdCds=cdCds;
 		this.cdMagazzino=cdMagazzino;
 		this.esercizio=esercizio;
 		this.cdNumeratoreMag=cdNumeratoreMag;
 		this.pgBollaSca=pgBollaSca;
-		this.rigbollaScaN=rigbollaScaN;
+		this.rigaBollaSca=rigaBollaSca;
 	}
 	public boolean equalsByPrimaryKey(Object o) {
 		if (this== o) return true;
@@ -37,7 +37,7 @@ public class BollaScaricoRigaMagKey extends OggettoBulk implements KeyedPersiste
 		if (!compareKey(getEsercizio(), k.getEsercizio())) return false;
 		if (!compareKey(getCdNumeratoreMag(), k.getCdNumeratoreMag())) return false;
 		if (!compareKey(getPgBollaSca(), k.getPgBollaSca())) return false;
-		if (!compareKey(getRigbollaScaN(), k.getRigbollaScaN())) return false;
+		if (!compareKey(getRigaBollaSca(), k.getRigaBollaSca())) return false;
 		return true;
 	}
 	public int primaryKeyHashCode() {
@@ -47,7 +47,7 @@ public class BollaScaricoRigaMagKey extends OggettoBulk implements KeyedPersiste
 		i = i + calculateKeyHashCode(getEsercizio());
 		i = i + calculateKeyHashCode(getCdNumeratoreMag());
 		i = i + calculateKeyHashCode(getPgBollaSca());
-		i = i + calculateKeyHashCode(getRigbollaScaN());
+		i = i + calculateKeyHashCode(getRigaBollaSca());
 		return i;
 	}
 	/**
@@ -124,14 +124,14 @@ public class BollaScaricoRigaMagKey extends OggettoBulk implements KeyedPersiste
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [rigbollaScaN]
 	 **/
-	public void setRigbollaScaN(java.lang.Integer rigbollaScaN)  {
-		this.rigbollaScaN=rigbollaScaN;
+	public void setRigaBollaSca(java.lang.Integer rigaBollaSca)  {
+		this.rigaBollaSca=rigaBollaSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [rigbollaScaN]
 	 **/
-	public java.lang.Integer getRigbollaScaN() {
-		return rigbollaScaN;
+	public java.lang.Integer getRigaBollaSca() {
+		return rigaBollaSca;
 	}
 }
