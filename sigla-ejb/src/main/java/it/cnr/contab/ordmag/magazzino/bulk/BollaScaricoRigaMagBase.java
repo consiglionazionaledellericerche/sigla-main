@@ -90,8 +90,8 @@ public class BollaScaricoRigaMagBase extends BollaScaricoRigaMagKey implements K
 	public BollaScaricoRigaMagBase() {
 		super();
 	}
-	public BollaScaricoRigaMagBase(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.Integer esercizio, java.lang.String cdNumeratoreMag, java.lang.Integer pgBollaSca, java.lang.Integer rigbollaScaN) {
-		super(cdCds, cdMagazzino, esercizio, cdNumeratoreMag, pgBollaSca, rigbollaScaN);
+	public BollaScaricoRigaMagBase(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.Integer esercizio, java.lang.String cdNumeratoreMag, java.lang.Integer pgBollaSca, java.lang.Integer rigaBollaSca) {
+		super(cdCds, cdMagazzino, esercizio, cdNumeratoreMag, pgBollaSca, rigaBollaSca);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
