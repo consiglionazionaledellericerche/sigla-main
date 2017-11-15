@@ -73,11 +73,16 @@ public class TestataProgettiRicercaNuovoBP extends TestataProgettiRicercaBP impl
 		}
 		return stringbuffer.toString();
 	}
+
 	public String getSearchResultColumnSet() {
-
-		return "filtro_ricerca_progetti";
-
+		return "filtro_ricerca_aree_short";
 	}	
+	
+	@Override
+	public String getFreeSearchSet() {
+		return "filtro_ricerca_aree_short";
+	}
+
 	public int getLivelloProgetto() {
 		return ProgettoBulk.LIVELLO_PROGETTO_PRIMO.intValue();
 	}

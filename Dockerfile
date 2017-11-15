@@ -1,3 +1,4 @@
+# DOCKER-VERSION 17.10.0-ce
 FROM jboss/wildfly:10.0.0.Final
 WORKDIR /opt/jboss/wildfly
 

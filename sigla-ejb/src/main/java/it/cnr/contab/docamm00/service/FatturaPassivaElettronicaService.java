@@ -388,9 +388,11 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		}
 		for (Folder folder : folders) {
 		    if (folder.exists()) {
-				folder.open(Folder.READ_ONLY);
+		    	if (!folder.isOpen())
+					folder.open(Folder.READ_ONLY);
 				processingMailFromHostPec(folder, userName, password, daysBefore);
-				folder.close(true);				
+				if (folder.isOpen())
+					folder.close(true);
 		    } 
 		}
 	}
@@ -402,10 +404,12 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		}
 		for (Folder folder : folders) {
 		    if (folder.exists()) {
-				folder.open(Folder.READ_ONLY);
+				if (!folder.isOpen())
+					folder.open(Folder.READ_ONLY);
 				processingMailFromSdi(folder, userName, daysBefore);
-				folder.close(true);				
-		    }
+				if (folder.isOpen())
+					folder.close(true);
+			}
 		}
 	}
 
@@ -417,10 +421,12 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		}
 		for (Folder folder : folders) {
 		    if (folder.exists()) {
-				folder.open(Folder.READ_ONLY);
+				if (!folder.isOpen())
+					folder.open(Folder.READ_ONLY);
 				processingMailFromReturn(folder, userName, daysBefore);
-				folder.close(true);				
-		    }
+				if (folder.isOpen())
+					folder.close(true);
+			}
 		}
 	}
 	
