@@ -368,6 +368,7 @@ public class ProgettoGestHome extends BulkHome implements ConsultazioniRestHome 
 							sqlExists.addSQLExistsClause("OR",sqlArea);
 						}
 						sqlExists.closeParenthesis();
+
 						sqlExists.addSQLJoin("PROGETTO.ESERCIZIO", "PROGETTO_GEST.ESERCIZIO");
 						sqlExists.addSQLJoin("PROGETTO.TIPO_FASE", "PROGETTO_GEST.TIPO_FASE");
 						sqlExists.addSQLJoin("PROGETTO.PG_PROGETTO", "PROGETTO_GEST.PG_PROGETTO");
