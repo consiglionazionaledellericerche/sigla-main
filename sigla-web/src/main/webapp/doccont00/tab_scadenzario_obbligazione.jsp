@@ -13,7 +13,7 @@
 		CRUDObbligazioneBP bp = (CRUDObbligazioneBP)BusinessProcess.getBusinessProcess(request);
 %>
 
-	<table border="0" cellspacing="0" cellpadding="2">
+	<table border="0" cellspacing="0" cellpadding="2" class="w-100">
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "cd_elemento_voceRO"); %></td>
 	<td>	
