@@ -66,7 +66,6 @@ public class RichiestaUopBulk extends RichiestaUopBase implements AllegatoParent
 	public RichiestaUopBulk(java.lang.String cdCds, java.lang.String cdUnitaOperativa, java.lang.Integer esercizio, java.lang.String cdNumeratore, java.lang.Integer numero) {
 		super(cdCds, cdUnitaOperativa, esercizio, cdNumeratore, numero);
 		setUnitaOrganizzativa( new Unita_organizzativaBulk(cdCds) );
-		setUnitaOperativaOrd(new UnitaOperativaOrdBulk(cdUnitaOperativa) );
 		setNumerazioneOrd( new NumerazioneOrdBulk(cdUnitaOperativa,esercizio,cdNumeratore) );
 	}
 	/**
@@ -133,12 +132,15 @@ public class RichiestaUopBulk extends RichiestaUopBase implements AllegatoParent
 	 * Restituisce il valore di: [cdUnitaOperativa]
 	 **/
 	public java.lang.String getCdUnitaOperativa() {
+		NumerazioneOrdBulk numerazioneOrd = this.getNumerazioneOrd();
+		if (numerazioneOrd == null)
+			return null;
+		return getNumerazioneOrd().getCdUnitaOperativa();
+	}
+	public java.lang.String getCdUopRichiesta() {
 		UnitaOperativaOrdBulk uop = this.getUnitaOperativaOrd();
 		if (uop == null){
-			NumerazioneOrdBulk numerazioneOrd = this.getNumerazioneOrd();
-			if (numerazioneOrd == null)
-				return null;
-			return getNumerazioneOrd().getCdUnitaOperativa();
+			return null;
 		}
 		return this.getUnitaOperativaOrd().getCdUnitaOperativa();
 	}
@@ -147,8 +149,10 @@ public class RichiestaUopBulk extends RichiestaUopBase implements AllegatoParent
 	 * Setta il valore di: [cdUnitaOperativa]
 	 **/
 	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
-		this.getUnitaOperativaOrd().setCdUnitaOperativa(cdUnitaOperativa);
 		this.getNumerazioneOrd().setCdUnitaOperativa(cdUnitaOperativa);
+	}
+	public void setCdUopRichiesta(java.lang.String cdUnitaOperativa)  {
+		this.getUnitaOperativaOrd().setCdUnitaOperativa(cdUnitaOperativa);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]

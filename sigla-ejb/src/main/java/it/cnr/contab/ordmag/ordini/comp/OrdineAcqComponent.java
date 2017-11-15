@@ -570,15 +570,8 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
         			UnitaOperativaOrdBulk uop = recuperoUopDest(usercontext, cons);
         			cons.setUnitaOperativaOrd(uop);
         		}
-        		if (riga.getRigheConsegnaColl().size() == 1){
-        			riga.setDspDtPrevConsegna(cons.getDtPrevConsegna());
-        			riga.setDspLuogoConsegna(cons.getLuogoConsegnaMag());
-        			riga.setDspMagazzino(cons.getMagazzino());
-        			riga.setDspQuantita(cons.getQuantita());
-        			riga.setDspTipoConsegna(cons.getTipoConsegna());
-        			riga.setDspUopDest(cons.getUnitaOperativaOrd());
-        		}
         	}
+    		impostaCampiDspRiga(riga);
         	if (esisteScadenzaComune){
             	riga.setDspObbligazioneScadenzario(scadenzaComune);
         	}
@@ -591,6 +584,18 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
 //    impostaTotaliOrdine(ordine);
     rebuildObbligazioni(usercontext, ordine);
     return inizializzaOrdine(usercontext, (OggettoBulk)ordine, false);
+}
+
+private void impostaCampiDspRiga(OrdineAcqRigaBulk riga) {
+	if (riga.getRigheConsegnaColl().size() == 1){
+		OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)riga.getRigheConsegnaColl().iterator().next();
+		riga.setDspDtPrevConsegna(cons.getDtPrevConsegna());
+		riga.setDspLuogoConsegna(cons.getLuogoConsegnaMag());
+		riga.setDspMagazzino(cons.getMagazzino());
+		riga.setDspQuantita(cons.getQuantita());
+		riga.setDspTipoConsegna(cons.getTipoConsegna());
+		riga.setDspUopDest(cons.getUnitaOperativaOrd());
+	}
 }
 
 private MagazzinoBulk recuperoMagazzino(UserContext usercontext, OrdineAcqConsegnaBulk cons) throws ComponentException, PersistencyException {
@@ -2018,16 +2023,23 @@ public OrdineAcqBulk creaOrdineDaRichieste(it.cnr.jada.UserContext userContext, 
 			creaRigaOrdine(userContext,ordine, rigaRichiesta);
 		}
 	}
+	for (Object riga : ordine.getRigheOrdineColl()){
+		OrdineAcqRigaBulk rigaOrdine = (OrdineAcqRigaBulk)riga;
+		impostaCampiDspRiga(rigaOrdine);
+	}
 	return ordine;
 }
 private void creaRigaOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine, RichiestaUopRigaBulk rigaRichiesta) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 	boolean trovataRiga = false;
-	for (Object riga : ordine.getRigheOrdineColl()){
-		OrdineAcqRigaBulk rigaOrdine = (OrdineAcqRigaBulk)riga;
-//		if (rigaOrdine.get)
+	OrdineAcqRigaBulk rigaOrdine = null;
+	for (Object objectRiga : ordine.getRigheOrdineColl()){
+		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)objectRiga;
+		if (riga.getBeneServizio().equalsByPrimaryKey(rigaRichiesta.getBeneServizio())){
+			rigaOrdine = riga;
+		}
 	}
 	if (!trovataRiga){
-		OrdineAcqRigaBulk rigaOrdine = new OrdineAcqRigaBulk();
+		rigaOrdine = new OrdineAcqRigaBulk();
 		rigaOrdine = (OrdineAcqRigaBulk)rigaOrdine.inizializzaPerInserimento(userContext);
 		rigaOrdine.setBeneServizio(rigaRichiesta.getBeneServizio());
 		rigaOrdine.setDsBeneServizio(rigaRichiesta.getDsBeneServizio());
@@ -2044,17 +2056,17 @@ private void creaRigaOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk o
 		rigaOrdine.setUnitaMisura(rigaRichiesta.getUnitaMisura());
 		rigaOrdine.setCoefConv(rigaRichiesta.getCoefConv());
 		rigaOrdine.setNotaRiga(rigaRichiesta.getNotaRiga());
-		rigaOrdine.setDspTipoConsegna(Bene_servizioBulk.TIPO_CONSEGNA_TRANSITO);
-		rigaOrdine.setDspUopDest(rigaRichiesta.getRichiestaUop().getUnitaOperativaOrd());
-		OrdineAcqConsegnaBulk consegna = new OrdineAcqConsegnaBulk();
-		consegna.inizializzaConsegnaNuovaRiga();
-		consegna.setTipoConsegna(Bene_servizioBulk.TIPO_CONSEGNA_TRANSITO);
-		consegna.setUnitaOperativaOrd(rigaRichiesta.getRichiestaUop().getUnitaOperativaOrd());
-		consegna.setQuantita(rigaRichiesta.getQuantitaAutorizzata());
-		consegna.setDtPrevConsegna(rigaOrdine.getDspDtPrevConsegna());
-		rigaOrdine.addToRigheConsegnaColl(consegna);
-		ordine.addToRigheOrdineColl(rigaOrdine);
+		rigaOrdine.setOrdineAcq(ordine);
 	}
+	OrdineAcqConsegnaBulk consegna = new OrdineAcqConsegnaBulk();
+	consegna.inizializzaConsegnaNuovaRiga();
+	consegna.setTipoConsegna(Bene_servizioBulk.TIPO_CONSEGNA_TRANSITO);
+	consegna.setUnitaOperativaOrd(rigaRichiesta.getRichiestaUop().getUnitaOperativaOrd());
+	consegna.setQuantita(rigaRichiesta.getQuantitaAutorizzata());
+	consegna.setDtPrevConsegna(rigaOrdine.getDspDtPrevConsegna());
+	consegna.getRigheRichiestaCollegate().add(rigaRichiesta);
+	rigaOrdine.addToRigheConsegnaColl(consegna);
+	ordine.addToRigheOrdineColl(rigaOrdine);
 }
 
 private Bene_servizioBulk recuperoBeneServizio(it.cnr.jada.UserContext userContext, String cdBeneServizio)
@@ -2141,7 +2153,7 @@ public void verificaCoperturaContratto (UserContext aUC,OrdineAcqBulk ordine, in
 	  try {	
 		  ContrattoHome contrattoHome = (ContrattoHome)getHome(aUC, ContrattoBulk.class);
 		  SQLBuilder sql = contrattoHome.calcolaTotOrdini(aUC,ordine.getContratto());
-		  BigDecimal totale = null; 
+		  BigDecimal totale = BigDecimal.ZERO; 
 			try {
 				java.sql.ResultSet rs = null;
 				LoggableStatement ps = null;
@@ -2163,7 +2175,7 @@ public void verificaCoperturaContratto (UserContext aUC,OrdineAcqBulk ordine, in
 				throw handleException(ex);
 			}
 		  if (flag == INSERIMENTO){
-			    totale = totale.add(ordine.getImTotaleOrdine());			  
+			    totale = Utility.nvl(totale).add(ordine.getImTotaleOrdine());			  
 		  } else if (flag == MODIFICA){
 				OrdineAcqBulk ordineDB;
 				try {
