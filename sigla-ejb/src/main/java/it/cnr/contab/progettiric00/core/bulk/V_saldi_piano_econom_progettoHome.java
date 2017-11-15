@@ -20,6 +20,8 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class V_saldi_piano_econom_progettoHome extends BulkHome {
+	private static final long serialVersionUID = 5918224310476589096L;
+	
 	public V_saldi_piano_econom_progettoHome(java.sql.Connection conn) {
 		super(V_saldi_piano_econom_progettoBulk.class,conn);
 	}

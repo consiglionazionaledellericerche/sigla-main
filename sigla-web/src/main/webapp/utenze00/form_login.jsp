@@ -11,10 +11,18 @@
 		<title>Login</title>
 	</head>
 	<body class="Workspace">
+        <%
+	    it.cnr.contab.utenze00.bp.LoginBP bp = (it.cnr.contab.utenze00.bp.LoginBP)BusinessProcess.getBusinessProcessRoot(request);
+	    if (bp!=null)
+			bp.openForm(pageContext);
+	    else { %>
 		<form name="mainForm" action="Login.do" method="post" onsubmit="return disableDblClick()">
 			<input type="hidden" name="comando">
 			<input type="hidden" name="requestor" value="/SIGLA/utenze00/form_login.jsp">
-			<table align="center" class="Window">
+		<%
+			}
+	    %>
+	        <table align="center" class="Window">
 				<tbody>
 					<tr>
 						<td><img src="img/question.gif"></td>
