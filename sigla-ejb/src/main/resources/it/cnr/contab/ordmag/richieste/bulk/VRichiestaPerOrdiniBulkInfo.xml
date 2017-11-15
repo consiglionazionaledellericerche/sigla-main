@@ -99,14 +99,14 @@
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		enabledOnEdit="false"
 		label="Quantità Richiesta" />
-<!--  	<fieldProperty
+  	<fieldProperty
 		name="findBeneServizio"
-		property="beneServizio"
+		property="beneServizioDef"
 		inputType="SEARCHTOOL"
         formName="searchtool"
 		enabledOnSearch="true"
         enabledOnEdit="true" 
-		label="Bene/Servizio"/>-->	
+		label="Bene/Servizio"/>	
 	<fieldProperty
 		name="cdBeneServizio"
 		property="cdBeneServizio"
@@ -257,6 +257,15 @@
 		enabledOnEdit="false"
 		label="Descrizione" /> -->
 	<fieldProperty
+		name="categoriaGruppo"
+		property="categoriaGruppo"
+		maxLength="200"
+		inputSize="50"
+		inputType="TEXT"
+		nullable="false"
+		label="Categoria Gruppo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
 		name="allegatiDocumentale"
 		property="allegatiDocumentale"
 		inputType="BUTTON"
@@ -347,7 +356,7 @@
 	<formFieldProperty name="dsProgetto" />
 	<formFieldProperty name="cdProgetto" />
 	<formFieldProperty name="cdCategoriaGruppo" />
-	<formFieldProperty name="dsCategoriaGruppo" />
+	<formFieldProperty name="categoriaGruppo" />
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty
