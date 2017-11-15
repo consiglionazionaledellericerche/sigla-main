@@ -11,6 +11,9 @@
 			columnName="CD_UNITA_OPERATIVA"
 			propertyName="numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa" />
 		<columnMapping
+			columnName="CD_UOP_RICHIESTA"
+			propertyName="unitaOperativaOrd.cdUnitaOperativa" />
+		<columnMapping
 			columnName="ESERCIZIO"
 			propertyName="numerazioneOrd.esercizio" />
 		<columnMapping
@@ -26,6 +29,8 @@
 	<persistentProperty
 		name="numerazioneOrd"
 		partOfOid="true" />
+	<persistentProperty
+		name="unitaOperativaOrd" />
 	<persistentProperty
 		name="unitaOperativaOrdDest" />
 </SQLPersistentInfo>

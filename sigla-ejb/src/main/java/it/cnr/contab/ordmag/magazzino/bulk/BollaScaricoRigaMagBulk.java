@@ -25,8 +25,8 @@ public class BollaScaricoRigaMagBulk extends BollaScaricoRigaMagBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: BOLLA_SCARICO_RIGA_MAG
 	 **/
-	public BollaScaricoRigaMagBulk(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.Integer esercizio, java.lang.String cdNumeratoreMag, java.lang.Integer pgBollaSca, java.lang.Integer rigbollaScaN) {
-		super(cdCds, cdMagazzino, esercizio, cdNumeratoreMag, pgBollaSca, rigbollaScaN);
+	public BollaScaricoRigaMagBulk(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.Integer esercizio, java.lang.String cdNumeratoreMag, java.lang.Integer pgBollaSca, java.lang.Integer rigaBollaSca) {
+		super(cdCds, cdMagazzino, esercizio, cdNumeratoreMag, pgBollaSca, rigaBollaSca);
 		setBollaScaricoMag( new BollaScaricoMagBulk(cdCds,cdMagazzino,esercizio,cdNumeratoreMag,pgBollaSca) );
 	}
 	/**

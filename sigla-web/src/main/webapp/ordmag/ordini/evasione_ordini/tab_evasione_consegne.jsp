@@ -65,6 +65,14 @@ it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk"%>
 	         <td><% bp.getConsegne().writeFormInput(out,"dtScadenza");%></td>
 	      </tr>  	      
 		  <tr>
+	         <td><% bp.getConsegne().writeFormLabel(out,"unitaMisuraAcquisto");%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","unitaMisuraAcquisto",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormLabel(out,"coefAcq");%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","coefAcq",true, null, null);%></td>
+	         <td><% bp.getConsegne().writeFormLabel(out,"unitaMisuraMinima");%></td>
+	         <td><% bp.getConsegne().writeFormInput(out,"default","unitaMisuraMinima",true, null, null);%></td>
+	      </tr>  	
+		  <tr>
 	         <td><% bp.getConsegne().writeFormLabel(out,"quantitaOriginaria");%></td>
 	         <td><% bp.getConsegne().writeFormInput(out,"default","quantitaOriginaria",true, null, null);%></td>
 	         <td><% bp.getConsegne().writeFormLabel(out,"tipoConsegna");%></td>
