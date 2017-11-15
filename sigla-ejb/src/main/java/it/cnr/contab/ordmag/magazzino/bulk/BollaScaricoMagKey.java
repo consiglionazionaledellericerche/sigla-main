@@ -116,4 +116,9 @@ public class BollaScaricoMagKey extends OggettoBulk implements KeyedPersistent {
 	public java.lang.Integer getPgBollaSca() {
 		return pgBollaSca;
 	}
+	@Override
+	public String toString() {
+		return cdCds + "_" + "_" + esercizio + cdMagazzino 
+				+ "_" + cdNumeratoreMag + "_" + pgBollaSca;
+	}
 }
