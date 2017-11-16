@@ -5,7 +5,7 @@
 	<parent>
     	<artifactId>sigla-storage</artifactId>
     	<groupId>it.cnr</groupId>
-	    <version>4.1.30</version>
+	    <version>4.1.31-SNAPSHOT</version>
   	</parent>
 	<dependencies>
 		  <dependency>
