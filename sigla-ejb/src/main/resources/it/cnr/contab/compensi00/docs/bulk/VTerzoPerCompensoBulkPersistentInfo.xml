@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.VTerzoPerCompensoBulk"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.VTerzoPerCompensoKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.VTerzoPerCompensoHome" >
+
+	<defaultColumnMap
+		tableName="V_TERZO_PER_COMPENSO" >
+
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo"
+			fetchOnly = "true" />
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="anagrafico.cd_anag"
+			fetchOnly = "true" />
+			
+	</defaultColumnMap>
+
+	<columnMap
+		name = "DISTINCT_TERZO"
+		tableName="V_TERZO_PER_COMPENSO" >
+
+		<columnMapping
+			columnName="CD_REGIONE_FISCALE"
+			propertyName="cd_regione_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_COMUNE_FISCALE"
+			propertyName="pg_comune_fiscale"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragione_sociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="cd_anag"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_DIPENDENTE_ALTRO"
+			propertyName="ti_dipendente_altro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_COMUNE_FISCALE"
+			propertyName="ds_comune_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO_PRECEDENTE"
+			propertyName="cd_terzo_precedente"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CD_PROVINCIA_FISCALE"
+			propertyName="cd_provincia_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_PROVINCIA_FISCALE"
+			propertyName="ds_provincia_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_REGIONE_FISCALE"
+			propertyName="ds_regione_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo"
+			fetchOnly = "true" />
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="anagrafico.cd_anag"
+			fetchOnly = "true" />
+		<columnMapping
+			columnName="DT_FINE_VALIDITA_TERZO"
+			propertyName="dt_fine_validita_terzo"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+	</columnMap>
+
+	<persistentProperty
+		name="terzo" />
+	<persistentProperty
+		name="anagrafico" />
+		
+</SQLPersistentInfo>
