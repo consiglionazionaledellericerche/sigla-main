@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.VTerzoPerCompensoBase"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.VTerzoPerCompensoKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.VTerzoPerCompensoHome" >
+	<defaultColumnMap
+		tableName="V_TERZO_PER_COMPENSO" >
+		<columnMapping
+			columnName="CD_REGIONE_FISCALE"
+			propertyName="cd_regione_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO_PRECEDENTE"
+			propertyName="cd_terzo_precedente"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="PG_COMUNE_FISCALE"
+			propertyName="pg_comune_fiscale"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="DS_TIPO_RAPPORTO"
+			propertyName="ds_tipo_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragione_sociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
+		<columnMapping
+			columnName="CD_ANAG"
+			propertyName="cd_anag"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="TI_DIPENDENTE_ALTRO"
+			propertyName="ti_dipendente_altro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FIN_VALIDITA"
+			propertyName="dt_fin_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_COMUNE_FISCALE"
+			propertyName="ds_comune_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_INI_VALIDITA"
+			propertyName="dt_ini_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_PROVINCIA_FISCALE"
+			propertyName="cd_provincia_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="DS_PROVINCIA_FISCALE"
+			propertyName="ds_provincia_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_FINE_VALIDITA_TERZO"
+			propertyName="dt_fine_validita_terzo"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DS_REGIONE_FISCALE"
+			propertyName="ds_regione_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="false" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partita_iva"
+			sqlTypeName="VARCHAR"
+			columnSize="20" />
+		<columnMapping
+			columnName="CD_TIPO_RAPPORTO"
+			propertyName="cd_tipo_rapporto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_regione_fiscale" />
+	<persistentProperty
+		name="pg_comune_fiscale" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="ds_tipo_rapporto" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="ragione_sociale" />
+	<persistentProperty
+		name="cd_anag" />
+	<persistentProperty
+		name="ti_dipendente_altro" />
+	<persistentProperty
+		name="dt_fin_validita" />
+	<persistentProperty
+		name="ds_comune_fiscale" />
+	<persistentProperty
+		name="dt_ini_validita" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="cd_terzo" />
+	<persistentProperty
+		name="cd_provincia_fiscale" />
+	<persistentProperty
+		name="ds_provincia_fiscale" />
+	<persistentProperty
+		name="ds_regione_fiscale" />
+	<persistentProperty
+		name="dt_fine_validita_terzo" />
+	<persistentProperty
+		name="partita_iva" />
+	<persistentProperty
+		name="cd_tipo_rapporto" />
+</SQLPersistentInfo>
