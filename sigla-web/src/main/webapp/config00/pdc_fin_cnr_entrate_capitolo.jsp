@@ -31,24 +31,18 @@
 	 Elemento_voceBulk voce = (Elemento_voceBulk)bp.getModel();
 	 %>
 
-	<table class="Panel">
 	<% if (!bp.isFlNuovoPdg()){%>
-		<tr>
-		<td colspan=2><CENTER><h3>Gestione Capitsolo</h3></CENTER></td>
-		</tr>
+		<div><CENTER><h3 class="text-primary">Gestione Capitolo</h3></CENTER></div>
 	<% } else { %>
-		<tr>
-		<td colspan=2><CENTER><h3>Gestione Voce di Bilancio di Entrata</h3></CENTER></td>
-		</tr>
+		<div><CENTER><h3 class="text-primary">Gestione Voce di Bilancio di Entrata</h3></CENTER></div>
 	<% } %>
+	<table class="Panel card p-3 mb-2">
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "esercizio"); %></td>
-	<td><% bp.getController().writeFormInputByStatus( out, "esercizio"); %></td>
+		<% bp.getController().writeFormField( out, "esercizio"); %>
 	</tr>
 	<% if (!bp.isFlNuovoPdg()){%>
 		<tr>
-		<td><% bp.getController().writeFormLabel( out, "cd_proprio_elemento"); %></td>	
-		<td><% bp.getController().writeFormInputByStatus( out, "cd_proprio_elemento"); %></td>
+			<% bp.getController().writeFormField( out, "cd_proprio_elemento"); %>
 		</tr>
 		<tr>
 		<td><span class="FormLabel">Categoria</span></td>	
@@ -75,82 +69,58 @@
 		</tr>	
 	<% } else {%>
 		<tr>
-		<td><% bp.getController().writeFormLabel( out, "cd_proprio_elemento"); %></td>	
-		<td><% bp.getController().writeFormInputByStatus( out, "cd_proprio_elemento"); %>
-			<% bp.getController().writeFormLabel( out, "fl_partita_giro"); %>
-			<% bp.getController().writeFormInput( out, "fl_partita_giro"); %>
-			<% bp.getController().writeFormLabel( out, "fl_voce_sac"); %>
-			<% bp.getController().writeFormInput( out, "fl_voce_sac"); %></td>
+			<% bp.getController().writeFormField( out, "cd_proprio_elemento"); %>
 		</tr>
 	<% } %>
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "ds_elemento_voce"); %></td>	
-	<td><% bp.getController().writeFormInput( out, "ds_elemento_voce"); %></td>
+		<% bp.getController().writeFormField( out, "ds_elemento_voce"); %>
 	</tr>
 	<tr>
-	  <td><% bp.getController().writeFormLabel(out,"classificazione_entrate");%></td>
-	  <td> 
-	   <TABLE cellspacing="0">
-	   <tr> 
-	      <td><% bp.getController().writeFormInput(out,"esercizio_cla_e");%></td> 
-	  	  <td><% bp.getController().writeFormInput(out,"cod_cla_e");%></td> 
-	      <td><% bp.getController().writeFormInput(out,"classificazione_entrate");%></td> 
-	  </tr>
-	  </TABLE> 
-	  </td> 	  
+	  <% bp.getController().writeFormField(out,"classificazione_entrate");%>
 	</tr>				
 	<tr>
-	  <td><% bp.getController().writeFormLabel(out,"find_classificazione_voci");%></td>
-	  <td> 
-	   <TABLE cellspacing="0">
-	   <tr> 
-	      <td><% bp.getController().writeFormInput(out,"find_classificazione_voci");%></td> 
-	  </tr>
-	  </TABLE> 
-	  </td> 	  
+	  <% bp.getController().writeFormField(out,"find_classificazione_voci");%>
 	</tr>				
 	</table>
-	<table>
+
+	<table class="Panel card p-3">
 	<tr>
-	  <td><% bp.getController().writeFormLabel( out, "fl_recon"); %></td>	
-	  <td><% bp.getController().writeFormInput( out, "fl_recon"); %></td>
+	  <% bp.getController().writeFormField( out, "fl_partita_giro"); %>	
 	</tr>
-	</table>
-	<table>
 	<tr>
-	  <td><% bp.getController().writeFormLabel( out, "fl_inv_beni_patr"); %></td>	
-	  <td><% bp.getController().writeFormInput( out, "fl_inv_beni_patr"); %></td>
+	  <% bp.getController().writeFormField( out, "fl_voce_sac"); %>	
+	</tr>
+	<tr>
+	  <% bp.getController().writeFormField( out, "fl_recon"); %>	
+	</tr>
+	<tr>
+	  <% bp.getController().writeFormField( out, "fl_inv_beni_patr"); %>	
 	</tr>
 	<tr>
 	  <td><% bp.getController().writeFormLabel( out, "fl_check_terzo_siope"); %></td>	
 	  <td><% bp.getController().writeFormInput( out,null,"fl_check_terzo_siope",(voce!=null?!voce.isGestoreOk(uc):false),null,null); %></td>
 	</tr>
 	<tr>
-	  <td><% bp.getController().writeFormLabel( out, "fl_soggetto_prelievo"); %></td>	
-	  <td><% bp.getController().writeFormInput( out, "fl_soggetto_prelievo"); %></td>
+	  <% bp.getController().writeFormField( out, "fl_soggetto_prelievo"); %>
 	</tr>
 	<tr>
-	  <td><% bp.getController().writeFormLabel( out, "perc_prelievo_pdgp_entrate"); %></td>	
-	  <td><% bp.getController().writeFormInput( out, "perc_prelievo_pdgp_entrate"); %></td>
+	  <% bp.getController().writeFormField( out, "perc_prelievo_pdgp_entrate"); %>	
 	</tr>
 	<tr>
-	  <td><% bp.getController().writeFormLabel( out, "fl_solo_residuo"); %></td>	
-	  <td><% bp.getController().writeFormInput( out, "fl_solo_residuo"); %></td>
-	  <td><% bp.getController().writeFormLabel( out, "fl_azzera_residui"); %></td>	
-	  <td><% bp.getController().writeFormInput( out, "fl_azzera_residui"); %></td>
-	  <td><% bp.getController().writeFormLabel( out, "fl_solo_competenza"); %></td>	
-	  <td><% bp.getController().writeFormInput( out, "fl_solo_competenza"); %></td>
+	  <% bp.getController().writeFormField( out, "fl_solo_competenza"); %>	
 	</tr>
-	
 	<tr>
-	  <td><% bp.getController().writeFormLabel( out, "fl_trovato"); %></td>
-	  <td><% bp.getController().writeFormInput( out, "fl_trovato"); %></td>
+	  <% bp.getController().writeFormField( out, "fl_solo_residuo"); %>	
+	</tr>
+	<tr>
+	  <% bp.getController().writeFormField( out, "fl_azzera_residui"); %>	
+	</tr>
+	<tr>
+	  <% bp.getController().writeFormField( out, "fl_trovato"); %>	
 	</tr>	
-
 	<tr>
-	  <td><% bp.getController().writeFormLabel( out, "fl_missioni"); %></td>
-	  <td><% bp.getController().writeFormInput( out, "fl_missioni"); %></td>
+	  <% bp.getController().writeFormField( out, "fl_missioni"); %>	
 	</tr>	
-
+	</table>
 <%	bp.closeFormWindow(pageContext); %>
 </body>

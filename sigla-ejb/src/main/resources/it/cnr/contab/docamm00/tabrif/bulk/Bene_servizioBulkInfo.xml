@@ -358,7 +358,7 @@
 		    inputSize="80"  />
 		<formFieldProperty
 			name="unita_misura" />
-	</form>		
+	</form>
 	<formFieldProperty
 		name="cd_bene_servizio" />
 	<formFieldProperty

@@ -10,8 +10,8 @@
 		enabledOnEdit="true"
 		enabledOnInsert="true"				
 		inputType="CHECKBOX"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" 
 		/>
 	<fieldProperty
 		name="fl_voce_sac"

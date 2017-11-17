@@ -53,6 +53,7 @@
 		maxLength="30"
 		inputSize="20"
 		enabledOnSearch="true"
+		enabledOnEdit="false"
 		/>
 
 	<fieldProperty
@@ -151,13 +152,14 @@
 		enabledOnEdit="true"
 		enabledOnInsert="true"				
 		inputType="CHECKBOX"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true" 
-		/>
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />			
 	<fieldProperty
 		name="find_capoconto_fin"
 		property="capoconto_fin"
 		inputType="SEARCHTOOL"
+		label="Categoria Economica/Finanziaria"
+		formName="searchtool"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		/>
@@ -183,7 +185,7 @@
 		name="classificazione_entrate"
 		property="classificazione_entrate"
 		inputType="SEARCHTOOL"
-		formName="searchtoolclass"
+		formName="searchtool"
 		enabledOnSearch="true"
 		label="Classificazione di Entrata" />		
 	<fieldProperty
@@ -205,7 +207,7 @@
 		name="classificazione_spese"
 		property="classificazione_spese"
 		inputType="SEARCHTOOL"
-		formName="searchtoolclasspe"
+		formName="searchtoolbase"
 		enabledOnSearch="true"
 		label="Classificazione di Spesa" />		
 	<fieldProperty
