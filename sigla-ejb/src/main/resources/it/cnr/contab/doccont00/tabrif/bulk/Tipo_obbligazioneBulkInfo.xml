@@ -44,5 +44,12 @@
 		name="ds_tipo_obbligazione"
 		/>
 
-
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_tipo_obbligazione"/>
+		<formFieldProperty
+			name="ds_tipo_obbligazione"
+			inputSize="60" />
+	</form>
 </bulkInfo>
