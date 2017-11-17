@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.VTerzoPerCompensoKey">
+	<defaultColumnMap
+		tableName="V_TERZO_PER_COMPENSO" >
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cd_terzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_DIPENDENTE_ALTRO"
+			propertyName="ti_dipendente_altro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="DT_INI_VALIDITA"
+			propertyName="dt_ini_validita"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_terzo"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_dipendente_altro"
+		partOfOid="true" />
+	<persistentProperty
+		name="dt_ini_validita"
+		partOfOid="true" />
+</SQLPersistentInfo>
