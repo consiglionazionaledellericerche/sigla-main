@@ -121,8 +121,11 @@
 		name="find_debitore"
 		property="debitore"
 		inputType="SEARCHTOOL" 
-		enabledOnSearch="true"
 		label="Debitore"
+		formName="searchtool_large"
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+		enabledOnSearch="true"
+		nullable="false"
 		/>
 	<fieldProperty
 		name="cd_terzo"
@@ -208,9 +211,13 @@
 		name="find_capitolo"
 		property="capitolo"
 		inputType="SEARCHTOOL" 
+		label="Capitolo"
 		enabledOnSearch="true"
+		readonlyProperty="ROCapitolo"
+		formName="accertamento"
 		columnSet="accertamento"
 		freeSearchSet="accertamento"
+		nullable="false"		
 		/>
 	<fieldProperty
 		name="cd_voce"
@@ -364,7 +371,18 @@
 		name="find_contratto"
 		property="contratto"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		label="Contratto"
+		CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
+		enabledOnSearch="true" 
+		/>
+	<fieldProperty
+		name="bs_find_contratto"
+		property="contratto"
+		inputType="SEARCHTOOL"
+		formName="bs_searchtool"
+		label="Contratto"
+		CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
 		enabledOnSearch="true" 
 		/>
 	<fieldProperty
@@ -584,6 +602,9 @@
 	<formFieldProperty
 		name="find_contratto"
 		/>
+	<formFieldProperty
+		name="bs_find_contratto"
+		/>		
 	<formFieldProperty
 		name="esercizio_contratto"
 		/>		

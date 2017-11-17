@@ -12,11 +12,27 @@
 		inputSize="200"
 		inputType="TEXT"
 		label="Descrizione Titolo/Capitolo"
+		enabledOnSearch="true"
 		caseSensitiveSearch="false" />
 		
 	<formFieldProperty
 		name="ds_titolo_capitolo" />
 
+	<form
+		name="accertamento" >
+		<formFieldProperty
+			name="cd_voce" 
+		    inputSize="20"
+		    enabledOnSearch="true"
+		    enabledOnFreeSearch="true"/>
+		<formFieldProperty
+			name="ds_titolo_capitolo" 
+		    inputSize="60"
+			enabledOnSearch="true"	
+			enabledOnFreeSearch="true"
+			/>
+	</form>
+	
 <columnSet
 	name="accertamento">
 
@@ -27,6 +43,8 @@
 		name="ds_titolo_capitolo"/>
 </columnSet>
 
+	<findFieldProperty
+		name="cd_voce" />
 	<findFieldProperty
 		name="ds_titolo_capitolo" />
 
