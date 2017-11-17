@@ -24,7 +24,7 @@
 	bp.openFormWindow(pageContext); %>
 
 <% if (filtro.getElemento_voce() != null) { %>
-	<div class="Group">
+	<div class="Group container-fluid" style="border: thin groove; padding: 4px;">
 		<table>	
 			<tr>
 				<% bp.getController().writeFormField(out,"ds_elemento_voce");%>
@@ -34,7 +34,7 @@
 <% } %>
 
 <%if (fornitore!=null){%>
-	<div class="Group">
+	<div class="Group Panel card border-primary p-3 mb-2">
 		<table>
 			<tr>
 				<td>
@@ -142,7 +142,7 @@
 		</table>	
 	</div>
 <%}%>
-	<div class="Group">
+	<div class="Group Panel card border-primary p-3 mb-2">
 		<table>	
 			<tr>
 				<td>
@@ -155,7 +155,7 @@
 			<% 	bp.getController().writeFormField(out,"data_scadenziario"); %>
 		</table>
 	</div>
-	<div class="Group">
+	<div class="Group Panel card border-primary p-3 mb-2">
 		<table>	
 			<tr>
 				<td>
@@ -168,7 +168,7 @@
 			<% 	bp.getController().writeFormField(out,"im_importo"); %>
 		</table>
 	</div>
-	<div class="Group">
+	<div class="Group Panel card border-primary p-3 mb-2">
 		<table>	
 			<tr>
 				<td>

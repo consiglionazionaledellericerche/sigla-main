@@ -43,9 +43,11 @@
 		name="find_elemento_voce"
 		property="elemento_voce"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		label="Voce del piano"
 		enabledOnSearch="true"
 		completeOnSave="false"
+		nullable="false"
 		/>
 	<fieldProperty
 		name="cd_elemento_voce"
@@ -88,7 +90,10 @@
 		property="creditore"
 		inputType="SEARCHTOOL"
 		label="Creditore"
+		formName="searchtool_large"
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
 		enabledOnSearch="true"
+		nullable="false"
 		/>
 	<fieldProperty
 		name="cd_terzo"
@@ -154,6 +159,7 @@
 		property="tipo_obbligazione"
 		inputType="SEARCHTOOL"
 		label="Tipologia"
+		formName="searchtool"
 		enabledOnSearch="true"
 		/>
 	<fieldProperty
@@ -419,7 +425,18 @@
 		name="find_contratto"
 		property="contratto"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		label="Contratto"
+		CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
+		enabledOnSearch="true" 
+		/>
+	<fieldProperty
+		name="bs_find_contratto"
+		property="contratto"
+		inputType="SEARCHTOOL"
+		formName="bs_searchtool"
+		label="Contratto"
+		CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
 		enabledOnSearch="true" 
 		/>
 	<fieldProperty
@@ -471,6 +488,15 @@
 		property="incarico_repertorio"
 		inputType="SEARCHTOOL"
 		label="Incarico"
+		formName="searchtool001"
+		enabledOnSearch="true" 
+		/>
+	<fieldProperty
+		name="bs_find_incarico_repertorio"
+		property="incarico_repertorio"
+		inputType="SEARCHTOOL"
+		label="Incarico"
+		formName="bs_searchtool001"
 		enabledOnSearch="true" 
 		/>
 	<fieldProperty
@@ -746,6 +772,9 @@
 		name="find_contratto"
 		/>
 	<formFieldProperty
+		name="bs_find_contratto"
+		/>		
+	<formFieldProperty
 		name="esercizio_contratto"
 		/>		
 	<formFieldProperty
@@ -759,6 +788,9 @@
 		/>
 	<formFieldProperty
 		name="find_incarico_repertorio"
+		/>
+	<formFieldProperty
+		name="bs_find_incarico_repertorio"
 		/>
 	<formFieldProperty
 		name="esercizio_rep"	
