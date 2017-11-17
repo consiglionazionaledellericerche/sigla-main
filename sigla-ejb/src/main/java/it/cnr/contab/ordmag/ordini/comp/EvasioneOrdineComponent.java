@@ -324,6 +324,7 @@ public class EvasioneOrdineComponent
     			for (Iterator k = listaOrdiniConConsegneEvase.iterator(); k.hasNext();) {
     				ordine = ((OrdineAcqBulk)k.next());
     				if (ordine.equalsByPrimaryKey(ordineConsegna)){
+    					ordineEsistente = true;
     					break;
     				}
     			}
