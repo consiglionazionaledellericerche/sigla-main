@@ -4,7 +4,7 @@
  */
 package it.cnr.contab.ordmag.richieste.bulk;
 import it.cnr.jada.persistency.Keyed;
-public class VRichiestaPerOrdiniBase extends RichiestaUopRigaKey implements Keyed {
+public class VRichiestaPerOrdiniBase extends VRichiestaPerOrdiniKey implements Keyed {
 //    CD_BENE_SERVIZIO VARCHAR(15)
 	private java.lang.String cdBeneServizio;
  
@@ -19,6 +19,7 @@ public class VRichiestaPerOrdiniBase extends RichiestaUopRigaKey implements Keye
  
 //    CD_CATEGORIA_GRUPPO VARCHAR(10)
 	private java.lang.String cdCategoriaGruppo;
+	private java.lang.String dsCategoriaGruppo;
  
 //    QUANTITA_RICHIESTA DECIMAL(17,5)
 	private java.math.BigDecimal quantitaRichiesta;
@@ -409,5 +410,11 @@ public class VRichiestaPerOrdiniBase extends RichiestaUopRigaKey implements Keye
 	}
 	public void setCdUnitaMisuraMinima(java.lang.String cdUnitaMisuraMinima) {
 		this.cdUnitaMisuraMinima = cdUnitaMisuraMinima;
+	}
+	public java.lang.String getDsCategoriaGruppo() {
+		return dsCategoriaGruppo;
+	}
+	public void setDsCategoriaGruppo(java.lang.String dsCategoriaGruppo) {
+		this.dsCategoriaGruppo = dsCategoriaGruppo;
 	}
 }

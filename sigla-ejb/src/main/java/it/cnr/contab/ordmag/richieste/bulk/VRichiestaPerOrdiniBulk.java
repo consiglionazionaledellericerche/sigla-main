@@ -15,7 +15,7 @@ import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
-public class VRichiestaPerOrdiniBulk extends RichiestaUopRigaBase {
+public class VRichiestaPerOrdiniBulk extends VRichiestaPerOrdiniBase {
     public final static String STATO_INSERITO= "INS";
     public final static String STATO_ANNULLATO= "ANN";
 	/**
@@ -562,5 +562,11 @@ Capitolo definito dall"utente collegato a Categoria
 	 **/
 	public void setNotaUopDest(java.lang.String notaUopDest)  {
 		this.notaUopDest=notaUopDest;
+	}
+	public String getCategoriaGruppo() {
+		if (getCdCategoriaGruppo() == null){
+			return null;
+		}
+		return getCdCategoriaGruppo()+"-"+getDsCategoriaGruppo();
 	}
 }
