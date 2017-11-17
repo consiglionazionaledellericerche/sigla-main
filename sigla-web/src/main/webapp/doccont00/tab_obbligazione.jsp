@@ -13,8 +13,8 @@
 		CRUDObbligazioneBP bp = (CRUDObbligazioneBP)BusinessProcess.getBusinessProcess(request);
 		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = (it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk)bp.getModel();
 %>
-
-  <table border="0" cellspacing="0" cellpadding="2">
+<div class="card p-3 m-1">
+  <table border="0" cellspacing="0" cellpadding="2" class="w-100">
 	<tr colspan=3>
 <!--
 	<td><% bp.getController().writeFormLabel( out, "esercizio_competenza"); %></td>
@@ -59,7 +59,7 @@
 	
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "ds_obbligazione"); %></td>
-	<td colspan=2>
+	<td colspan="2">
 		<% bp.getController().writeFormInput( out,"default", "ds_obbligazione",bp.isRoCampiResiduoProprio(),null,null); %></td>
 	</tr>
 
@@ -70,13 +70,17 @@
 		<% bp.getController().writeFormInput( out, "motivazione"); %></td>
 	</tr>
  -->
+	</table>
+</div>
+	
+<div class="Group card p-3 m-1">
+	<table class="w-100">
     <tr>
     <td colspan=3>
 	    <% if (obbligazione!=null && (obbligazione.isCompetenza() || obbligazione.isObbligazioneResiduoImproprio())) { %>
-		<div class="Group">
-	    <table border="0" cellspacing="0" cellpadding="2">
+	    <table border="0" cellspacing="0" cellpadding="2" class="w-100">
 		    <tr><td>
-			    <table border="0" cellspacing="0" cellpadding="2">
+			    <table border="0" cellspacing="0" cellpadding="2" class="w-100"> 
 	    		<tr>
 	     			<td><% bp.getController().writeFormInput( out, "fl_gara_in_corso"); %></td>
 					<td><% bp.getController().writeFormLabel( out, "fl_gara_in_corso"); %></td>
@@ -90,27 +94,20 @@
 	    	<tr>
 				<td>
 		<% } %>
-				<div class="GroupLabel">Repertorio</div>  
-				<div class="Group">
-				<table>
+				<div class="GroupLabel font-weight-bold text-primary ml-2">Repertorio</div>  
+				<div class="Group card p-3 m-1 w-100">
+				<table class="w-100">
 				  <tr>
-				    <td><% bp.getController().writeFormLabel( out, "find_contratto"); %></td>
+				    <td><% bp.getController().writeFormLabel( out, bp.getParentRoot().isBootstrap()?"bs_find_contratto":"find_contratto"); %></td>
 					<td colspan=2>
-					    <% bp.getController().writeFormInput( out, "esercizio_contratto"); %>
-						<% bp.getController().writeFormInput( out, "pg_contratto"); %>
-						<% bp.getController().writeFormInput( out, "oggetto_contratto"); %>
-						<% bp.getController().writeFormInput( out, "find_contratto"); %>
-						<% bp.getController().writeFormInput( out, "crea_contratto"); %>
+						<% bp.getController().writeFormInput( out, bp.getParentRoot().isBootstrap()?"bs_find_contratto":"find_contratto"); %>
 					</td>				 
 				  </tr>
 				  <% if (bp.isIncarichi_repertorio_attiva()) {%>
 			      <tr>
-			         <td><% bp.getController().writeFormLabel(out,"find_incarico_repertorio");%></td>
+			         <td><% bp.getController().writeFormLabel(out,bp.getParentRoot().isBootstrap()?"bs_find_incarico_repertorio":"find_incarico_repertorio");%></td>
 			         <td colspan=2>
-			             <% bp.getController().writeFormInput(out,"esercizio_rep");%>
-			             <% bp.getController().writeFormInput(out,"pg_repertorio");%>
-			             <% bp.getController().writeFormInput(out,"oggetto_repertorio");%>
-						 <% bp.getController().writeFormInput(out,"find_incarico_repertorio"); %>
+			         	 <% bp.getController().writeFormInput(out,bp.getParentRoot().isBootstrap()?"bs_find_incarico_repertorio":"find_incarico_repertorio");%>
 			         </td>
 			      </tr>
 			      <% } %>
@@ -131,23 +128,22 @@
 		</tr>
     <% } %> 		
  -->
-    </div>
 	</table>
-    <br>
-	<div class="Group">
-	<table>
+</div>
+
+    <% if (!bp.getParentRoot().isBootstrap()) { %>
+	    <br>
+	<% } %>
+    
+<div class="Group card p-3 m-1">
+	<table class="w-100">
 	  <tr>
-	   <td><% bp.getController().writeFormLabel( out, "cd_terzo"); %></td>
-	   <td colspan=2>
-		<% bp.getController().writeFormInput( out,"default","cd_terzo",bp.isRoCampiResiduoProprio(),null,null); %>
-		<% bp.getController().writeFormInput( out,"default","ds_creditore",bp.isRoCampiResiduoProprio(),null,null); %>
-		<% bp.getController().writeFormInput( out,"default","find_creditore",bp.isRoCampiResiduoProprio(),null,null); %>
-		<% bp.getController().writeFormInput( out,"default","crea_creditore",bp.isRoCampiResiduoProprio(),null,null); %>
-	   </td>
+	   <td><% bp.getController().writeFormLabel( out, "find_creditore"); %></td>
+	   <td colspan="2"><% bp.getController().writeFormInput( out, "find_creditore"); %></td>
 	  </tr>
 	  <tr>
-	   <td>	<% bp.getController().writeFormLabel( out, "cd_terzo_precedente"); %></td>
-	   <td colspan=2><% bp.getController().writeFormInput( out, "cd_terzo_precedente"); %></td>
+	   <td><% bp.getController().writeFormLabel( out, "cd_terzo_precedente"); %></td>
+	   <td colspan="2"><% bp.getController().writeFormInput( out, "cd_terzo_precedente"); %></td>
 	  </tr>
 	  <tr>
 	   <td>	<% bp.getController().writeFormLabel( out, "codice_fiscale"); %></td>
@@ -158,9 +154,14 @@
 	   </td>
 	  </tr>
 	</table>	
-    </div>
-    <br>
-	<table>
+</div>
+
+    <% if (!bp.getParentRoot().isBootstrap()) { %>
+	    <br>
+	<% } %>
+	
+	<div class="card p-3 m-1">
+	<table class="w-100">
 	<tr>
   	<% if (bp instanceof CRUDObbligazioneResBP){ %>
   		<% if (((CRUDObbligazioneResBP)bp).isROImporto()){ %>
@@ -182,14 +183,12 @@
 	</td>
 	</tr>
 	<tr>
-		<td><% bp.getController().writeFormLabel( out, "cd_elemento_voce"); %></td>
+		<td><% bp.getController().writeFormLabel( out, "find_elemento_voce"); %></td>
 		<td colspan=2>
 			<table>
 			<tr>
 			<td>
-		    <% bp.getController().writeFormInput(out,"default","cd_elemento_voce", bp.isRoCampiResiduoProprio()||bp.isROElemento_voce(),null,null); %>
-		    <% bp.getController().writeFormInput(out,"default","ds_elemento_voce", bp.isRoCampiResiduoProprio()||bp.isROElemento_voce(),null,null); %>
-		    <% bp.getController().writeFormInput(out,"default","find_elemento_voce",bp.isRoCampiResiduoProprio()|| bp.isROFindElemento_voce(),null,null); %>
+			    <% bp.getController().writeFormInput(out,"default","find_elemento_voce",bp.isRoCampiResiduoProprio()|| bp.isROFindElemento_voce(),null,null); %>
 			</td>
 			<td>
 			<%JSPUtils.button(out, 
@@ -230,11 +229,10 @@
 		    <% bp.getController().writeFormInput( out,"default", "dt_scadenza_contratto", bp.isRoCampiResiduoProprio(),null,null); %></td>
 	</tr>
 	<tr>
-		<td><% bp.getController().writeFormLabel( out, "cd_tipo_obbligazione"); %></td>
+		<td><% bp.getController().writeFormLabel( out, "find_tipo_obbligazione"); %></td>
 		<td colspan=2>
-			<% bp.getController().writeFormInput( out,"default", "cd_tipo_obbligazione", bp.isRoCampiResiduoProprio(),null,null); %>
-			<% bp.getController().writeFormInput( out,"default", "ds_tipo_obbligazione", bp.isRoCampiResiduoProprio(),null,null); %>
 			<% bp.getController().writeFormInput( out,"default", "find_tipo_obbligazione", bp.isRoCampiResiduoProprio(),null,null); %>
 		</td>
 	</tr>
   </table>
+  </div>

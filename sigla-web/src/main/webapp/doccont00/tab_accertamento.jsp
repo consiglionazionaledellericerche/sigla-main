@@ -11,7 +11,7 @@
 	CRUDAccertamentoBP bp = (CRUDAccertamentoBP)BusinessProcess.getBusinessProcess(request);
 	it.cnr.contab.doccont00.core.bulk.AccertamentoBulk accertamento = (it.cnr.contab.doccont00.core.bulk.AccertamentoBulk)bp.getModel();
 %>
-
+<div class="card p-3 m-1">
 	<table border="0" cellspacing="0" cellpadding="2">
 	
 	<tr>
@@ -82,56 +82,53 @@
 	<td colspan=2> <% bp.getController().writeFormInput( out, "ds_accertamento"); %></td>
 	</tr>
 	</table>
-	<div class="GroupLabel">Repertorio Contratti</div>  
-	<div class="Group">
-	<table>
+</div>
+
+<div class="Group card p-3 m-1">
+<div class="GroupLabel font-weight-bold text-primary ml-2">Repertorio Contratti</div>  
+	<div class="Group" p-3 m-1 w-100">
+	<table class="w-100">
 	  <tr>
 		<%if (bp instanceof CRUDAccertamentoResiduoBP && ((CRUDAccertamentoResiduoBP)bp).isContrattoEnabledOnView()) { %>
-	        <td><% bp.getController().writeFormLabel( out, "find_contratto_eov"); %></td>
+	        <td><% bp.getController().writeFormLabel( out, bp.getParentRoot().isBootstrap()?"bs_find_contratto_eov":"find_contratto_eov"); %></td>
 		    <td colspan=2>
-		        <% bp.getController().writeFormInput( out, "esercizio_contratto_eov"); %>
-   			    <% bp.getController().writeFormInput( out, "pg_contratto_eov"); %>
- 			    <% bp.getController().writeFormInput( out, "oggetto_contratto"); %>
-			    <% bp.getController().writeFormInput( out, "find_contratto_eov"); %>
-			    <% bp.getController().writeFormInput( out, "crea_contratto_eov"); %>
+				<% bp.getController().writeFormInput( out, bp.getParentRoot().isBootstrap()?"bs_find_contratto_eov":"find_contratto_eov"); %>
 		    </td>
 		<% } else { %>
-	        <td><% bp.getController().writeFormLabel( out, "find_contratto"); %></td>
+	        <td><% bp.getController().writeFormLabel( out, bp.getParentRoot().isBootstrap()?"bs_find_contratto":"find_contratto"); %></td>
 		    <td colspan=2>
-		        <% bp.getController().writeFormInput( out, "esercizio_contratto"); %>
-   			    <% bp.getController().writeFormInput( out, "pg_contratto"); %>
- 			    <% bp.getController().writeFormInput( out, "oggetto_contratto"); %>
-			    <% bp.getController().writeFormInput( out, "find_contratto"); %>
-			    <% bp.getController().writeFormInput( out, "crea_contratto"); %>
+				<% bp.getController().writeFormInput( out, bp.getParentRoot().isBootstrap()?"bs_find_contratto":"find_contratto"); %>
 		    </td>
 		<% } %>
 	  </tr>
 	</table>	
-    </div>	  	
-	<div class="Group">
-	<table>
-	<tr>
-	<td>	<% bp.getController().writeFormLabel( out, "cd_terzo"); %></td>
-	<td>	<% bp.getController().writeFormInput( out, "cd_terzo"); %>
-			<% bp.getController().writeFormInput( out, "ds_debitore"); %>
-			<% bp.getController().writeFormInput( out, "find_debitore"); %>
-			<% bp.getController().writeFormInput( out, "crea_debitore" ); %></td>
-	</tr>
-	<tr>
-	<td>	<% bp.getController().writeFormLabel( out, "cd_terzo_precedente"); %></td>
-	<td>	<% bp.getController().writeFormInput( out, "cd_terzo_precedente"); %></td>
-	</tr>
+    </div>
+</div>
+</div>
 
+<div class="Group card p-3 m-1">
+	<table class="w-100">
 	<tr>
-	<td>	<% bp.getController().writeFormLabel( out, "codice_fiscale"); %></td>
-	<td>	<% bp.getController().writeFormInput( out, "codice_fiscale"); %>
-	        <% bp.getController().writeFormLabel( out, "partita_iva"); %>
-	        <% bp.getController().writeFormInput( out, "partita_iva"); %>	        
-	</td>
+	   <td><% bp.getController().writeFormLabel( out, "find_debitore"); %></td>
+	   <td colspan="2"><% bp.getController().writeFormInput( out, "find_debitore"); %></td>
+	</tr>
+	<tr>
+	<td><% bp.getController().writeFormLabel( out, "cd_terzo_precedente"); %></td>
+	<td colspan="2"><% bp.getController().writeFormInput( out, "cd_terzo_precedente"); %></td>
+	</tr>
+	<tr>
+	 <td> <% bp.getController().writeFormLabel( out, "codice_fiscale"); %></td>
+	 <td> <% bp.getController().writeFormInput( out, "codice_fiscale"); %></td>
+	 <td>
+	    <% bp.getController().writeFormLabel( out, "partita_iva"); %>
+	    <% bp.getController().writeFormInput( out, "partita_iva"); %>	        
+	 </td>
 	</tr>
 	</table>
-    </div>
-	<table>
+</div>
+
+<div class="card p-3 m-1">
+	<table class="w-100">
 	<tr>
   	<% if (bp instanceof CRUDAccertamentoResiduoBP){ %>
   		<% if (((CRUDAccertamentoResiduoBP)bp).isROImporto()){ %>
@@ -148,10 +145,8 @@
 	</tr>
 	
 	<tr>
-	<td>	<% bp.getController().writeFormLabel( out, "cd_voce"); %></td>
-	<td>	<% bp.getController().writeFormInput( out, "default","cd_voce", bp.isROCapitolo(),null,null); %>
-			<% bp.getController().writeFormInput( out, "default","ds_voce", bp.isROCapitolo(),null,null); %>
-			<% bp.getController().writeFormInput( out, "default","find_capitolo", bp.isROFindCapitolo(),null,null); %></td>				 
+	<td>	<% bp.getController().writeFormLabel( out, "find_capitolo"); %></td>
+	<td>	<% bp.getController().writeFormInput( out, "default","find_capitolo", bp.isROFindCapitolo(),null,null); %></td>				 
 	</tr>
  	
  	<% if (bp.isElementoVoceNewVisible()){ %>
@@ -174,7 +169,6 @@
     <%}%>
 	<tr>
 	
-	
 	<tr>
 	<td>	<% bp.getController().writeFormLabel( out, "cd_riferimento_contratto"); %></td>
 	<td>	<% bp.getController().writeFormInput( out, "cd_riferimento_contratto"); %>	
@@ -183,3 +177,4 @@
 	</tr>
 
   </table>
+</div>

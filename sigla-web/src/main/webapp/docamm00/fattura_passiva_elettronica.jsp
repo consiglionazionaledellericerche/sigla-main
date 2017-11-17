@@ -42,59 +42,82 @@ function doScaricaEsito() {
 <body class="Form">
 <%	bp.openFormWindow(pageContext); %>
 	<div class="Group">	
-	<table class="Panel">
-		<tr><% bp.getController().writeFormField(out,"idCodice");%>
-		<% 	if (!bp.isSearching() && model != null && model.isIrregistrabile()) {%>
-				<td colspan="2">
-				  	<span style="font-weight:bold; font-family:sans-serif; font-size:16px; color:blue">NON REGISTRABILE</span>
-			  	</td>
-			<% } %> 
-		</tr>
+	<table class="Panel w-100" style="width:100%">
 		<tr>
-			<% bp.getController().writeFormField(out,"identificativoSdi");%>
-			<% bp.getController().writeFormField(out,"progressivo");%>
+			<td class="w-25" style="width:25%"><% bp.getController().writeFormLabel(out,"idCodice");%></td>
+			<td><% bp.getController().writeFormInput(out,"idCodice");%></td>
+		<% 	if (!bp.isSearching() && model != null && model.isIrregistrabile()) {%>
+			<td colspan="2">
+			  	<span style="font-weight:bold; font-family:sans-serif; font-size:16px; color:blue">NON REGISTRABILE</span>
+			</td>
+		<% } %> 
+		</tr>
+		
+		<tr>
+			<td><% bp.getController().writeFormLabel(out,"identificativoSdi");%></td>
+			<td><% bp.getController().writeFormInput(out,"identificativoSdi");%></td>
+			<td colspan="2">
+				<% bp.getController().writeFormLabel(out,"progressivo");%>
+				<% bp.getController().writeFormInput(out,"progressivo");%>
+			</td>
 		</tr>
 			
 		<tr><% bp.getController().writeFormField(out,"dataDocumento");%></tr>
+		
 		<tr><% bp.getController().writeFormField(out,"codiceDestinatario");%></tr>
-		<% if (userInfo.getUnita_organizzativa().getCd_tipo_unita().equalsIgnoreCase("ENTE")) {%>
-			<tr><% bp.getController().writeFormField(out,"unitaOrganizzativa");%></tr>
-		<% } else {%>
-			<tr><% bp.getController().writeFormField(out,"unitaDestinazione");%></tr>			
-		<% } %>	 
+		
 		<tr>
-			<% bp.getController().writeFormField(out,"unitaCompetenza");%>
+		<% if (userInfo.getUnita_organizzativa().getCd_tipo_unita().equalsIgnoreCase("ENTE")) {%>
+			<td><% bp.getController().writeFormLabel(out,"unitaOrganizzativa");%></td>
+			<td colspan="2"><% bp.getController().writeFormInput(out,"unitaOrganizzativa");%></td>
+		<% } else {%>
+			<td><% bp.getController().writeFormLabel(out,"unitaDestinazione");%></td>
+			<td colspan="2"><% bp.getController().writeFormInput(out,"unitaDestinazione");%></td>
+		<% } %>	 
+		</tr>			
+		
+		<tr>
+			<td><% bp.getController().writeFormLabel(out,"unitaCompetenza");%></td>
+			<td colspan="2"><% bp.getController().writeFormInput(out,"unitaCompetenza");%></td>
 			<% 	if (!bp.isSearching() && model != null && 
 					model.getUnitaCompetenza() != null &&
-					userInfo.getUnita_organizzativa().equalsByPrimaryKey(model.getUnitaCompetenza())) {
-					bp.getController().writeFormField(out,"flCompletato");
-				}
-			%>
+					userInfo.getUnita_organizzativa().equalsByPrimaryKey(model.getUnitaCompetenza())) { %>
+				<td>
+					<% bp.getController().writeFormLabel(out,"flCompletato"); %>
+					<% bp.getController().writeFormInput(out,"flCompletato"); %>
+				</td>
+			<% 	} %>
 		</tr>
+
+		<% 	if (bp.isSearching()) {%>				
 		<tr>
-			<% 	if (bp.isSearching()) {%>				
-				<% bp.getController().writeFormField(out,"flIrregistrabile");%>			
-			<% } %>	    
+			<% bp.getController().writeFormField(out,"flIrregistrabile");%>			
 		</tr>
+		<% } %>	    
+
 		<tr>
 			<% 	if (bp.isSearching()) {%>				
 				<% bp.getController().writeFormField(out,"statoDocumento");%>
 			<% } else {%>
 				<td>
-						<%bp.getController().writeFormInput(out,null,"statoDocumentoVisual",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;\"");%>
+					<%bp.getController().writeFormInput(out,null,"statoDocumentoVisual",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;\"");%>
 				</td>
 				<% 	if (model != null && model.getStatoNotificaEsito()!= null) {%>
-					<td>
+					<td colspan="2">
 						<%bp.getController().writeFormInput(out,null,"statoNotificaEsitoVisual",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; width:300; cursor:default; font-size : 16px;\"");%>
 					</td>
 				<% } %> 
 			<% } %>	    
 		</tr>
-			<% 	if (!bp.isSearching() && model != null && model.isRicevutaDecorrenzaTermini() && model.isRifiutabile()) {%>
-				<td>
-					<%bp.getController().writeFormInput(out,null,"ricevutaDecorrenza",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; width:300; cursor:default; font-size : 16px;\"");%>
-				</td>
-			<% } %> 
+
+		<% 	if (!bp.isSearching() && model != null && model.isRicevutaDecorrenzaTermini() && model.isRifiutabile()) {%>
+		<tr>
+			<td colspan="4">
+				<%bp.getController().writeFormInput(out,null,"ricevutaDecorrenza",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; width:300; cursor:default; font-size : 16px;\"");%>
+			</td>
+		</tr>				
+		<% } %> 
+
 		<% 	if (!bp.isSearching() && model != null && model.getStatoDocumento() != null &&
 				model.getStatoDocumento().equals(StatoDocumentoEleEnum.RIFIUTATO.name())) {%>
 		<tr>

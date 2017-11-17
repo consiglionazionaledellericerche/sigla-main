@@ -639,6 +639,18 @@
 	                inputType="TEXT"
 	                inputSize="40" />
 	    </form>            
+	    <form name="bs_searchtool">
+	          <formFieldProperty
+	                name="esercizio" 
+	                style="width: 8%!important;"/>
+	          <formFieldProperty
+	                name="pg_contratto" 
+	                style="width: 8%!important;"/>
+	          <formFieldProperty
+	                name="oggetto"
+	                inputType="TEXT"
+	                inputSize="40" />
+	    </form>            
 	    <form name="searchtool_large">
 	          <formFieldProperty
 	                name="esercizio" />

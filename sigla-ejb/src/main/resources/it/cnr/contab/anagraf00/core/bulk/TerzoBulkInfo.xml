@@ -286,7 +286,9 @@
 	<form
 		name="searchtool_large" >
 		<formFieldProperty
-			name="cd_terzo" />
+			name="cd_terzo"
+			nullable="false" 
+			inputSize="10"/>
 		<formFieldProperty
 			name="denominazione_sede"
 			inputSize="60" />

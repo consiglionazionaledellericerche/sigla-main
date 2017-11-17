@@ -145,14 +145,14 @@
 		     	<td>
 		      		<% bp.getController().writeFormLabel(out,"ti_istituz_commerc");%>
 		      	</td>      	
-		     	<td colspan="5">
+		     	<td colspan="10">
 		      		<% bp.getController().writeFormInput(out,null,"ti_istituz_commerc",roOnAutoGen||roForSplit,null,"onChange=\"submitForm('doOnIstituzionaleCommercialeChange')\"");%>
 		      	</td>
 			<% } else { %>
 		     	<td>
 		      		<% bp.getController().writeFormLabel(out,"ti_istituz_commercSearch");%>
 		      	</td>      	
-		     	<td colspan="5">
+		     	<td colspan="10">
 		      		<% bp.getController().writeFormInput(out,null,"ti_istituz_commercSearch",roOnAutoGen||roForSplit,null,"onChange=\"submitForm('doOnIstituzionaleCommercialeChange')\"");%>
 		      	</td>
 			<% } %>
@@ -186,7 +186,7 @@
 	     	<td>
 	      		<% bp.getController().writeFormInput(out,null,"fl_intra_ue",roOnAutoGen,null,"");%>
 	      	</td>      	
-	     	<td width="10">&nbsp;</td>
+	     	<td width="100">&nbsp;</td>
 	     	<td>
 	      		<% bp.getController().writeFormLabel(out,"fl_extra_ue");%>
 	      	</td>      	
@@ -215,7 +215,7 @@
 	     	<td>
 	     		<% bp.getController().writeFormInput(out,null,"fl_san_marino_con_iva",roOnAutoGen,null,"");%>
 	     	</td>
-	     	<td width="10">&nbsp;</td>
+	     	<td width="100">&nbsp;</td>
 	      	<td>
 	      		<% bp.getController().writeFormLabel(out,"fl_san_marino_senza_iva");%>
 	      	</td>      	
@@ -277,18 +277,16 @@
 			<td>
 				<% bp.getController().writeFormLabel(out,"pg_fattura_estera");%>
 			</td>
-			<td>
+			<td colspan="10">
 				<% bp.getController().writeFormInput(out, null, "pg_fattura_estera", roOnAutoGen, null, "");%>
 				<% bp.getController().writeFormInput(out, null, "fatturaEstera", roOnAutoGen, null, "");%>
-			</td>
-			<td>
 				<% Button.write(
 						out,
-						"img/open16.gif",
-						"img/open16.gif",
+						bp.getParentRoot().isBootstrap() ? "fa fa-folder-open faa-passing" : "img/open16.gif",
+						bp.getParentRoot().isBootstrap() ? "fa fa-folder-open" : "img/open16.gif",
 						null,
 						"submitForm('doApriFatturaEstera()')",
-						null,
+						"btn animated-hover",
 						"Apri fattura estera",
 						bp.isEditing() && (!bp.isDeleting() || !bp.isModelVoided()), bp.getParentRoot().isBootstrap()); %>
 			</td>
@@ -303,7 +301,7 @@
 		      	<td>
 		      		<% bp.getController().writeFormLabel(out,"ti_bene_servizioForSearch");%>
 		      	</td>      	
-		     	<td>
+		     	<td colspan="10">
 		     		<% bp.getController().writeFormInput(out,null,"ti_bene_servizioForSearch",roOnAutoGen,null,"onChange=\"submitForm('doOnTiBeneServizioChange')\"");%>
 		     	</td>
 		      </tr>
@@ -312,7 +310,7 @@
 		      	<td>
 		      		<% bp.getController().writeFormLabel(out,"ti_bene_servizio");%>
 		      	</td>      	
-		     	<td>
+		     	<td colspan="10">
 		     		<% bp.getController().writeFormInput(out,null,"ti_bene_servizio",roOnAutoGen,null,"onChange=\"submitForm('doOnTiBeneServizioChange')\"");%>
 		     	</td>
 		      </tr>
@@ -323,7 +321,7 @@
       	<td>
       		<% bp.getController().writeFormLabel(out,"sezionale");%>
       	</td>      	
-     	<td colspan="5">
+     	<td colspan="10">
      		<% bp.getController().writeFormInput(out,null,"sezionale",roOnAutoGen,null,"");%>
      	</td>
       </tr>
