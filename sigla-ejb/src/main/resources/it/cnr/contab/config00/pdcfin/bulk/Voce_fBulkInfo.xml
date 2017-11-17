@@ -142,7 +142,8 @@
 		maxLength="50"
 		inputSize="50"
 		inputType="TEXT"
-		label="Capitolo" />
+		label="Capitolo" 
+		enabledOnSearch="true"/>
 	<fieldProperty
 		name="cd_elemento_voce"
 		property="cd_elemento_voce"

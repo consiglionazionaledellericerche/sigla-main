@@ -16,21 +16,21 @@
 
 <table class="Form" width="100%">
   <tr>
-	<td>
-		<b><big class="text-primary h5">CdR</big></b>
-		<% JSPUtils.button(out,
-				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
-				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
-				bp.getParentRoot().isBootstrap() ?"Conferma" : null,
-				"javascript:submitForm('doCaricaLineeAttivita')",
-				"btn-secondary btn-outline-secondary btn-title",
-				accertamento.isConfermaCentriDiResponsabilitaEnabled() && bp.isEditable(),
-				bp.getParentRoot().isBootstrap()); %>
-	</td>
+		<td>
+			<b><big class="text-primary h5">CdR</big></b>
+			<% JSPUtils.button(out,
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o text-primary" : "img/conferma.gif",
+					bp.getParentRoot().isBootstrap() ?"Conferma" : null,
+					"javascript:submitForm('doCaricaLineeAttivita')",
+					"btn-secondary btn-outline-secondary btn-title",
+					accertamento.isConfermaCentriDiResponsabilitaEnabled() && bp.isEditable(),
+					bp.getParentRoot().isBootstrap()); %>
+		</td>
+        <td></td>
 	</tr>
 	<tr>
-	<td colspan=2>
-	<%	bp.getCentriDiResponsabilita().writeHTMLTable(pageContext,"cdr",false,false,false,"100%","100px"); %><td></td>
+		<td colspan=2><%bp.getCentriDiResponsabilita().writeHTMLTable(pageContext,"cdr",false,false,false,"100%","100px"); %></td>
 	</tr>
 	<tr>
 		<td colspan=2>
@@ -46,7 +46,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan=2>
+		<td>
 			<b class="h5 text-info">GAE da PdG approvato</b>
 		</td>
 		<td>
@@ -54,10 +54,11 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan=2>
+		<td>
 			<% bp.getLineeDiAttivita().writeHTMLTable(pageContext,null,false,false,false,"100%","200px"); %>
 		</td>
 		<td>
-			<% bp.getNuoveLineeDiAttivita().writeHTMLTable(pageContext,"latt",accertamento.isAddNuoveLattEnabled() && bp.isEditable(),false,true,"100%","200px", false); %></td>
+			<% bp.getNuoveLineeDiAttivita().writeHTMLTable(pageContext,"latt",accertamento.isAddNuoveLattEnabled() && bp.isEditable(),false,true,"100%","200px", false); %>
+        </td>
 	</tr>
 </table>
