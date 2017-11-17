@@ -36,6 +36,12 @@
 			columnSize="10"
 			nullable="true" />
 		<columnMapping
+			columnName="DS_CATEGORIA_GRUPPO"
+			propertyName="dsCategoriaGruppo"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
 			columnName="QUANTITA_RICHIESTA"
 			propertyName="quantitaRichiesta"
 			sqlTypeName="DECIMAL"
@@ -180,6 +186,8 @@
 		name="stato" />
 	<persistentProperty
 		name="cdCategoriaGruppo" />
+	<persistentProperty
+		name="dsCategoriaGruppo" />
 	<persistentProperty
 		name="quantitaRichiesta" />
 	<persistentProperty
