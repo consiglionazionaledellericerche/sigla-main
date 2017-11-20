@@ -431,15 +431,6 @@
 		enabledOnSearch="true" 
 		/>
 	<fieldProperty
-		name="bs_find_contratto"
-		property="contratto"
-		inputType="SEARCHTOOL"
-		formName="bs_searchtool"
-		label="Contratto"
-		CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
-		enabledOnSearch="true" 
-		/>
-	<fieldProperty
 		name="esercizio_contratto"	
 		property="contratto.esercizio"
 		label="Esercizio contratto"
@@ -489,14 +480,6 @@
 		inputType="SEARCHTOOL"
 		label="Incarico"
 		formName="searchtool001"
-		enabledOnSearch="true" 
-		/>
-	<fieldProperty
-		name="bs_find_incarico_repertorio"
-		property="incarico_repertorio"
-		inputType="SEARCHTOOL"
-		label="Incarico"
-		formName="bs_searchtool001"
 		enabledOnSearch="true" 
 		/>
 	<fieldProperty
@@ -770,10 +753,7 @@
 		/>		
 	<formFieldProperty
 		name="find_contratto"
-		/>
-	<formFieldProperty
-		name="bs_find_contratto"
-		/>		
+		/>	
 	<formFieldProperty
 		name="esercizio_contratto"
 		/>		
@@ -788,9 +768,6 @@
 		/>
 	<formFieldProperty
 		name="find_incarico_repertorio"
-		/>
-	<formFieldProperty
-		name="bs_find_incarico_repertorio"
 		/>
 	<formFieldProperty
 		name="esercizio_rep"	

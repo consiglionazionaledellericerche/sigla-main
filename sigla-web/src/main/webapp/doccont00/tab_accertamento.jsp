@@ -90,14 +90,14 @@
 	<table class="w-100">
 	  <tr>
 		<%if (bp instanceof CRUDAccertamentoResiduoBP && ((CRUDAccertamentoResiduoBP)bp).isContrattoEnabledOnView()) { %>
-	        <td><% bp.getController().writeFormLabel( out, bp.getParentRoot().isBootstrap()?"bs_find_contratto_eov":"find_contratto_eov"); %></td>
+	        <td><% bp.getController().writeFormLabel( out, "find_contratto_eov"); %></td>
 		    <td colspan=2>
-				<% bp.getController().writeFormInput( out, bp.getParentRoot().isBootstrap()?"bs_find_contratto_eov":"find_contratto_eov"); %>
+				<% bp.getController().writeFormInput( out, "find_contratto_eov"); %>
 		    </td>
 		<% } else { %>
-	        <td><% bp.getController().writeFormLabel( out, bp.getParentRoot().isBootstrap()?"bs_find_contratto":"find_contratto"); %></td>
+	        <td><% bp.getController().writeFormLabel( out, "find_contratto"); %></td>
 		    <td colspan=2>
-				<% bp.getController().writeFormInput( out, bp.getParentRoot().isBootstrap()?"bs_find_contratto":"find_contratto"); %>
+				<% bp.getController().writeFormInput( out, "find_contratto"); %>
 		    </td>
 		<% } %>
 	  </tr>
