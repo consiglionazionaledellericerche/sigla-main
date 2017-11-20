@@ -35,7 +35,8 @@
 			              <Specification-Version>${project.version}</Specification-Version>
 			              <Implementation-Version>${project.version}-${sigla.build.number}</Implementation-Version>
 			            </manifestEntries>
-			          </archive>					
+			          </archive>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
 					</configuration>
 				</plugin>
 			</plugins>
