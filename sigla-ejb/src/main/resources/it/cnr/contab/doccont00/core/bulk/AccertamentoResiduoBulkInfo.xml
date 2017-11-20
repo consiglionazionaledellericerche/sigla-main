@@ -101,15 +101,6 @@
 		enabledOnView="true"
 		/>
 	<fieldProperty
-		name="bs_find_contratto_eov"
-		property="contratto"
-		inputType="SEARCHTOOL"
-		formName="bs_searchtool"
-		label="Contratto"
-		enabledOnSearch="true" 
-		enabledOnView="true"
-		/>
-	<fieldProperty
 		name="esercizio_contratto_eov"	
 		property="contratto.esercizio"
 		label="Esercizio contratto"
@@ -244,10 +235,7 @@
 		/> 		
 	<formFieldProperty
 		name="find_contratto_eov"
-		/>
-	<formFieldProperty
-		name="bs_find_contratto_eov"
-		/>		
+		/>	
 	<formFieldProperty
 		name="esercizio_contratto_eov"
 		/>		
