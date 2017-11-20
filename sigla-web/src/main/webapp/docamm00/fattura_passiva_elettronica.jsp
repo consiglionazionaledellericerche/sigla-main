@@ -42,15 +42,15 @@ function doScaricaEsito() {
 <body class="Form">
 <%	bp.openFormWindow(pageContext); %>
 	<div class="Group">	
-	<table class="Panel w-100" style="width:100%">
+	<table class="Panel w-100">
 		<tr>
-			<td class="w-25" style="width:25%"><% bp.getController().writeFormLabel(out,"idCodice");%></td>
+			<td class="w-25"><% bp.getController().writeFormLabel(out,"idCodice");%></td>
 			<td><% bp.getController().writeFormInput(out,"idCodice");%></td>
 		<% 	if (!bp.isSearching() && model != null && model.isIrregistrabile()) {%>
 			<td colspan="2">
 			  	<span style="font-weight:bold; font-family:sans-serif; font-size:16px; color:blue">NON REGISTRABILE</span>
 			</td>
-		<% } %> 
+		<% } %>
 		</tr>
 		
 		<tr>
@@ -63,9 +63,9 @@ function doScaricaEsito() {
 		</tr>
 			
 		<tr><% bp.getController().writeFormField(out,"dataDocumento");%></tr>
-		
+
 		<tr><% bp.getController().writeFormField(out,"codiceDestinatario");%></tr>
-		
+
 		<tr>
 		<% if (userInfo.getUnita_organizzativa().getCd_tipo_unita().equalsIgnoreCase("ENTE")) {%>
 			<td><% bp.getController().writeFormLabel(out,"unitaOrganizzativa");%></td>
