@@ -221,7 +221,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 				fatturaPassivaElettronicaBP.setMessage("Ricevuta decorrenza termini - non è possibile effettuare il Rifiuto. Registrare il documento e richiedere nota credito, oppure rifiutare il documento secondo le modalità di invio PEC (Vedere Manuale)!");
 			} else {
 				String message = "Inserire il motivo di rifiuto della fattura:";
-				message += "<textarea maxLength=\"255\" name=\"main.motivoRifiuto\" class=\"FormInput\" "+
+				message += "<textarea maxLength=\"255\" name=\"main.motivoRifiuto\" class=\"FormInput w-100\" "+
 						"cols=\"60\" rows=\"5\" onfocus=\"focused(this)\" onclick=\"cancelBubble(event)\"></textarea>";
 				openConfirm( context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmRifiutaFattura");				
 			}

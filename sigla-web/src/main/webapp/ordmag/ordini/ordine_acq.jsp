@@ -26,24 +26,60 @@ function doStampaOrdine() {
 </head>
 <body class="Form">
 <%  bp.openFormWindow(pageContext); %>
-	<table>
-		<%
-
-		JSPUtils.tabbed(
-					pageContext,
-					"tab",
-					new String[][] {
-					{ "tabOrdineAcq","Ordine d'Acquisto","/ordmag/ordini/tab_ordine_acq.jsp" },
-					{ "tabOrdineFornitore","Fornitore","/ordmag/ordini/tab_ordine_fornitore.jsp" },
-					{ "tabOrdineAcqDettaglio","Dettaglio","/ordmag/ordini/tab_ordine_acq_dettagli.jsp" },
-					{ "tabOrdineAcqObbligazioni","Obbligazioni Collegate","/ordmag/ordini/tab_ordine_acq_obbligazioni.jsp" },
-					{ "tabAllegati","Allegati","/ordmag/ordini/tab_ordine_acq_allegati.jsp" }},
-					bp.getTab("tab"),
-					"center",
-					"100%",
-					null );
-		%>
-	
+	<div class="Group card p-2 mb-2">
+		<table cellpadding="2">
+			<tr>
+				<%
+					bp.getController().writeFormField(out, "esercizio");
+				%>
+				<%
+					bp.getController().writeFormField(out, "cdNumeratore");
+				%>
+				<%
+					bp.getController().writeFormField(out, "numero");
+				%>
+				<%
+					bp.getController().writeFormField(out, "dataOrdine");
+				%>
+				<%
+					bp.getController().writeFormField(out, "percProrata");
+				%>
+			</tr>
+			<tr>
+				<%
+				bp.getController().writeFormField(out, "imImponibile");
+				bp.getController().writeFormField(out, "imIva");
+				bp.getController().writeFormField(out, "imIvaD");
+				bp.getController().writeFormField(out, "imTotaleOrdine");
+				%>
+			</tr>
+			<tr><% 
+				   if (bp.isInserting()) {
+					 bp.getController().writeFormField(out, "stato");
+				   } else if (bp.isSearching()) {
+				     bp.getController().writeFormField(out, "statoForSearch");
+				   } else {
+				     bp.getController().writeFormField(out, "statoForUpdate");
+				   } 
+				%>
+			</tr>
+		</table>
+	</div>
+	<%
+	JSPUtils.tabbed(
+				pageContext,
+				"tab",
+				new String[][] {
+				{ "tabOrdineAcq","Ordine d'Acquisto","/ordmag/ordini/tab_ordine_acq.jsp" },
+				{ "tabOrdineFornitore","Fornitore","/ordmag/ordini/tab_ordine_fornitore.jsp" },
+				{ "tabOrdineAcqDettaglio","Dettaglio","/ordmag/ordini/tab_ordine_acq_dettagli.jsp" },
+				{ "tabOrdineAcqObbligazioni","Obbligazioni Collegate","/ordmag/ordini/tab_ordine_acq_obbligazioni.jsp" },
+				{ "tabAllegati","Allegati","/ordmag/ordini/tab_ordine_acq_allegati.jsp" }},
+				bp.getTab("tab"),
+				"center",
+				"100%",
+				null );
+	%>	
 <%	bp.closeFormWindow(pageContext); %>
 </body>
 </html>
