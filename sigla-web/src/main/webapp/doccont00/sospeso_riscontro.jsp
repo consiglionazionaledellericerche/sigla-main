@@ -24,7 +24,7 @@
     it.cnr.contab.doccont00.core.bulk.SospesoBulk sospeso = (it.cnr.contab.doccont00.core.bulk.SospesoBulk)bp.getModel();
 	bp.openFormWindow(pageContext); %>
 
-	<table class="Panel">
+	<table class="Panel card p-2">
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "esercizio"); %></td>
 		<td><% bp.getController().writeFormInput( out, "esercizio"); %></td>
