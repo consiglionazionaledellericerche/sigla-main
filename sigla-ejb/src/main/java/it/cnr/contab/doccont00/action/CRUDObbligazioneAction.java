@@ -39,6 +39,7 @@ import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.FillException;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
@@ -943,7 +944,11 @@ public Forward handleException(ActionContext context, Throwable ex)
 			ObbligazioneBulk obbligazione = (ObbligazioneBulk)bp.getModel();
 
 			bp.getModel().validate();
-			if ( ((ObbligazioneBulk) bp.getModel()).getElemento_voce().getCrudStatus() == bp.getModel().UNDEFINED )
+
+			if (obbligazione == null || obbligazione.getCd_elemento_voce()==null)
+				throw new ValidationException("E' necessario selezionare una voce");
+
+			if ( obbligazione.getElemento_voce().getCrudStatus() != OggettoBulk.NORMAL )
 				doSearch( context, "main.find_elemento_voce" );
 			if ( bp.getMessage() != null )
 			{
@@ -952,10 +957,6 @@ public Forward handleException(ActionContext context, Throwable ex)
 			}	
 			bp.verificaTestataObbligazione( context );
 
-			if (obbligazione == null || obbligazione.getCd_elemento_voce()==null)
-				throw new ValidationException("E' necessario selezionare una voce");
-
-			BulkInfo bulkInfo = BulkInfo.getBulkInfo(V_assestatoBulk.class);
 			SelezionatoreAssestatoDocContBP nbp = (SelezionatoreAssestatoDocContBP)context.createBusinessProcess("SelezionatoreAssestatoDocContBP",
 											new Object[]{ 
 											"M",
