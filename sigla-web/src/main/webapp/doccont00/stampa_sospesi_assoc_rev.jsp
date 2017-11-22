@@ -21,30 +21,20 @@
 	Stampa_sospesi_cnr_assoc_revVBulk bulk = (Stampa_sospesi_cnr_assoc_revVBulk)bp.getModel();
 	bp.openFormWindow(pageContext); %>
 
-<table>
+<table class="w-100 card p-2">
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"cd_cds"); %></td>
-	<td></td>
-	<td><% bp.getController().writeFormInput(out,"cd_cds"); %></td>
+	<td colspan="3"><% bp.getController().writeFormInput(out,"cd_cds"); %></td>
   </tr>
-</table>
-<br>
-<table>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"findUOForPrint"); %></td>
-	<td>
-		<% bp.getController().writeFormInput(out,null,"cdUOForPrint",(bulk!=null?!bulk.isUOForPrintEnabled():false),null,null); %>
-		<% bp.getController().writeFormInput(out,"dsUOForPrint"); %>
+	<td colspan="3">
 		<% bp.getController().writeFormInput(out,null,"findUOForPrint",(bulk!=null?!bulk.isUOForPrintEnabled():false),null,null); %>
 	</td>
   </tr>
-</table>
-<br>
-<table>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"dataInizio"); %></td>
 	<td><% bp.getController().writeFormInput(out,"dataInizio"); %></td>
-	<td></td>
 	<td><% bp.getController().writeFormLabel(out,"dataFine"); %></td>
 	<td><% bp.getController().writeFormInput(out,"dataFine"); %></td>
   </tr>
