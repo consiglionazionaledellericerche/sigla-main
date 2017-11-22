@@ -21,10 +21,7 @@ import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.CRUDAction;
-import it.cnr.jada.util.action.FormField;
-import it.cnr.jada.util.action.SelezionatoreListaAction;
-import it.cnr.jada.util.action.SelezionatoreListaBP;
+import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.SoggettoEmittenteType;
@@ -57,7 +54,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 	        {
 	            OggettoBulk oggettobulk1 = (OggettoBulk)remoteiterator.nextElement();
 	            EJBCommonServices.closeRemoteIterator(actioncontext,remoteiterator);
-	            fatturaPassivaElettronicaBP.setMessage("La ricerca ha fornito un solo risultato.");
+	            fatturaPassivaElettronicaBP.setMessage(FormBP.INFO_MESSAGE,"La ricerca ha fornito un solo risultato.");
 	            return doRiportaSelezione(actioncontext, oggettobulk1);
 	        } else
 	        {
