@@ -98,16 +98,16 @@
 				<div class="Group card p-3 m-1 w-100">
 				<table class="w-100">
 				  <tr>
-				    <td><% bp.getController().writeFormLabel( out, bp.getParentRoot().isBootstrap()?"bs_find_contratto":"find_contratto"); %></td>
+				    <td><% bp.getController().writeFormLabel( out, "find_contratto"); %></td>
 					<td colspan=2>
-						<% bp.getController().writeFormInput( out, bp.getParentRoot().isBootstrap()?"bs_find_contratto":"find_contratto"); %>
+						<% bp.getController().writeFormInput( out, "find_contratto"); %>
 					</td>				 
 				  </tr>
 				  <% if (bp.isIncarichi_repertorio_attiva()) {%>
 			      <tr>
-			         <td><% bp.getController().writeFormLabel(out,bp.getParentRoot().isBootstrap()?"bs_find_incarico_repertorio":"find_incarico_repertorio");%></td>
+			         <td><% bp.getController().writeFormLabel(out,"find_incarico_repertorio");%></td>
 			         <td colspan=2>
-			         	 <% bp.getController().writeFormInput(out,bp.getParentRoot().isBootstrap()?"bs_find_incarico_repertorio":"find_incarico_repertorio");%>
+			         	 <% bp.getController().writeFormInput(out,"find_incarico_repertorio");%>
 			         </td>
 			      </tr>
 			      <% } %>

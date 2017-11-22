@@ -55,7 +55,8 @@
 		<formFieldProperty
 			name="cdNotaPrecodificata" />
 		<formFieldProperty
-			name="nota" />
+			name="nota"
+			inputType="TEXT" />
 	</form>
 	<formFieldProperty
 		name="cdNotaPrecodificata" />
