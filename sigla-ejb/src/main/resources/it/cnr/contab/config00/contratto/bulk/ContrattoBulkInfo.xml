@@ -631,26 +631,16 @@
                	label="CIG comunicato dal Committente da esporre sulla Fattura Attiva" />
 	    <form name="searchtool">
 	          <formFieldProperty
-	                name="esercizio" />
+	                name="esercizio"
+	                inputCssClass="w-8" />
 	          <formFieldProperty
-	                name="pg_contratto" />
-	          <formFieldProperty
-	                name="oggetto"
-	                inputType="TEXT"
-	                inputSize="40" />
-	    </form>            
-	    <form name="bs_searchtool">
-	          <formFieldProperty
-	                name="esercizio" 
-	                style="width: 8%!important;"/>
-	          <formFieldProperty
-	                name="pg_contratto" 
-	                style="width: 8%!important;"/>
+	                name="pg_contratto"
+	                inputCssClass="w-8" />
 	          <formFieldProperty
 	                name="oggetto"
 	                inputType="TEXT"
 	                inputSize="40" />
-	    </form>            
+	    </form>
 	    <form name="searchtool_large">
 	          <formFieldProperty
 	                name="esercizio" />
