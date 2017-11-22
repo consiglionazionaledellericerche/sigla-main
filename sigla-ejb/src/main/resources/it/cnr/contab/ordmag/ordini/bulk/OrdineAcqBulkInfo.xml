@@ -77,6 +77,7 @@
 		name="dataOrdine"
 		property="dataOrdine"
 		inputType="TEXT"
+		inputSize="10"
 		formatName="date_short"
 		enabledOnInsert="false"
 		enabledOnEdit="false"
@@ -127,6 +128,7 @@
 		property="divisa"
 		formName="searchtool"
 		inputType="SEARCHTOOL"
+		inputCssClass="w-50 "
 		label="Valuta"		
 		/>		
 	<fieldProperty
@@ -409,6 +411,7 @@
 		name="nota"
 		property="nota"
 		inputType="TEXTAREA"
+		inputCssClass="w-100"
 		cols="160"
 		rows="3"
 		maxLength="2000"
@@ -528,6 +531,7 @@
 		inputSize="131"
 		maxLength="100"
 		nullable="true"
+		inputCssClass="w-100"
 		label="Referente Esterno" />
 	<fieldProperty
         name="findTipoOrdine"
@@ -599,6 +603,8 @@
 		name="find_contratto"
 		property="contratto"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
+		CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
 		label="Contratto"
 		enabledOnSearch="true" 
 		/>

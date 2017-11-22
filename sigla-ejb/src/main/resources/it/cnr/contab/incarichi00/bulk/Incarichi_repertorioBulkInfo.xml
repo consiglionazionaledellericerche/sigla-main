@@ -670,25 +670,14 @@
 
     <form name="searchtool001">
          <formFieldProperty
-               name="esercizio" />
+               name="esercizio"
+               inputCssClass="w-8 " />
          <formFieldProperty
-               name="pg_repertorio" />
-         <formFieldProperty
-               name="oggetto_procedura"
-               inputType="TEXT"
-               inputSize="40" />
-    </form>            
-
-    <form name="bs_searchtool001">
-         <formFieldProperty
-               name="esercizio" 
-               style="width: 8%!important;"/>
-         <formFieldProperty
-               name="pg_repertorio" 
-               style="width: 8%!important;"/>
+               name="pg_repertorio"
+               inputCssClass="w-8 " />
          <formFieldProperty
                name="oggetto_procedura"
                inputType="TEXT"
                inputSize="40" />
-    </form>            
+    </form>
 </bulkInfo>
