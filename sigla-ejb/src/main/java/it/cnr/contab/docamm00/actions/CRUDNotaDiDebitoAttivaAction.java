@@ -397,7 +397,7 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 			else if (ri.countElements() == 1) {
 				OggettoBulk bulk = (OggettoBulk)ri.nextElement();
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
-				bp.setMessage("La ricerca ha fornito un solo risultato.");
+				bp.setMessage(FormBP.INFO_MESSAGE,"La ricerca ha fornito un solo risultato.");
 				bp.edit(context,bulk);
 				return context.findDefaultForward();
 			} else {

@@ -9,6 +9,7 @@
 		property="cdsForPrint"
 		inputType="SEARCHTOOL"
 		completeOnSave = "true"
+		formName="searchtool"
 		label="CDS" />
 	<fieldProperty
 		name="cdCdsForPrint"
