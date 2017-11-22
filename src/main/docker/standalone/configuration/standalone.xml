@@ -31,7 +31,6 @@
         <extension module="org.wildfly.extension.undertow"/>
     </extensions>
 
-
     <management>
         <security-realms>
             <security-realm name="ManagementRealm">
