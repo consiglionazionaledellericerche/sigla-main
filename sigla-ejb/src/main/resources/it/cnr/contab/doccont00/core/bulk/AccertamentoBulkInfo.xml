@@ -377,15 +377,6 @@
 		enabledOnSearch="true" 
 		/>
 	<fieldProperty
-		name="bs_find_contratto"
-		property="contratto"
-		inputType="SEARCHTOOL"
-		formName="bs_searchtool"
-		label="Contratto"
-		CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
-		enabledOnSearch="true" 
-		/>
-	<fieldProperty
 		name="esercizio_contratto"	
 		property="contratto.esercizio"
 		label="Esercizio contratto"
@@ -601,10 +592,7 @@
 		/>
 	<formFieldProperty
 		name="find_contratto"
-		/>
-	<formFieldProperty
-		name="bs_find_contratto"
-		/>		
+		/>	
 	<formFieldProperty
 		name="esercizio_contratto"
 		/>		
