@@ -359,6 +359,14 @@
 		<formFieldProperty
 			name="unita_misura" />
 	</form>
+	<form name="searchtool_codice">
+		<formFieldProperty
+			name="cd_bene_servizio" 
+		    inputSize="10" />
+		<formFieldProperty
+			name="ds_bene_servizio" 
+		    inputSize="45"  />
+	</form>
 	<formFieldProperty
 		name="cd_bene_servizio" />
 	<formFieldProperty
