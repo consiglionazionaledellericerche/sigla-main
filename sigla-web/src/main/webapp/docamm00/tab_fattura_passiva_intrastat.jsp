@@ -60,59 +60,44 @@
 				</td>
 			</tr>
 			<tr>      			
-				<% bp.getDettaglioIntrastatController().writeFormField(out,"cd_natura_transazione"); %>
 				<td>
-					<% bp.getDettaglioIntrastatController().writeFormInput(out,"ds_natura_transazione"); %>
+					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"natura_transazione"); %>
 				</td>
-				<td>
+				<td colspan="3">
 					<% bp.getDettaglioIntrastatController().writeFormInput(out, "natura_transazione"); %>
 				</td>
 				<% bp.getDettaglioIntrastatController().writeFormField(out,"modalita_trasporto"); %>
 			</tr>
 			<tr>   
-				<td>   			
-					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"pg_nazione_origine"); %>
-				</td>
 				<td>
-					<% bp.getDettaglioIntrastatController().writeFormInput(out,"cd_iso_nazione_origine"); %>
+					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"nazione_origine"); %>
 				</td>
-				<td>	
-					<% bp.getDettaglioIntrastatController().writeFormInput(out,"ds_nazione_origine"); %>
-				</td>
-				<td> 
+				<td colspan="3">
 					<% bp.getDettaglioIntrastatController().writeFormInput(out, "nazione_origine"); %>
 				</td>
 				<% bp.getDettaglioIntrastatController().writeFormField(out,"condizione_consegna"); %>
 			</tr>
 			<tr>
 				<td>
-					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"pg_nazione_provenienza"); %>
+					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"nazione_provenienza"); %>
 				</td>
-				<td>
-					<% bp.getDettaglioIntrastatController().writeFormInput(out,"cd_iso_nazione_provenienza"); %>
-				</td>
-				<td>
-					<% bp.getDettaglioIntrastatController().writeFormInput(out,"ds_nazione_provenienza"); %>
-				</td>
-				<td>
+				<td colspan="3">
 					<% bp.getDettaglioIntrastatController().writeFormInput(out, "nazione_provenienza"); %>
 				</td>
 			</tr> 
 			<tr>      			
-				<% bp.getDettaglioIntrastatController().writeFormField(out,"cd_provincia_destinazione"); %>
 				<td>
-					<% bp.getDettaglioIntrastatController().writeFormInput(out,"ds_provincia_destinazione"); %>
+					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"provincia_destinazione"); %>
 				</td>
-				<td>
+				<td colspan="3">
 					<% bp.getDettaglioIntrastatController().writeFormInput(out, "provincia_destinazione"); %>
 				</td>
 			</tr>
 			<tr>
-				<% bp.getDettaglioIntrastatController().writeFormField(out,"cd_nomenclatura_combinata"); %>
 				<td>
-					<% bp.getDettaglioIntrastatController().writeFormInput(out,"ds_nomenclatura_combinata"); %>
+					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"nomenclatura_combinata"); %>
 				</td>
-				<td>
+				<td colspan="3">
 					<% bp.getDettaglioIntrastatController().writeFormInput(out, "nomenclatura_combinata"); %>
 				</td>
 			</tr>
@@ -123,12 +108,7 @@
 				<td colspan="3">
 					<% bp.getDettaglioIntrastatController().writeFormInput(out,"unita_supplementari"); %>
 				</td>
-					<td>
-					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"valore_statistico"); %>
-				</td>
-				<td colspan="3">
-					<% bp.getDettaglioIntrastatController().writeFormInput(out,"valore_statistico"); %>
-				</td>
+				<% bp.getDettaglioIntrastatController().writeFormField(out,"valore_statistico"); %>
 			</tr>
 			<tr>      			
 			   <td>
@@ -137,12 +117,7 @@
 				<td colspan="3">
 					<% bp.getDettaglioIntrastatController().writeFormInput(out,"ammontare_euro"); %>
 				</td>
-				<td>
-					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"ammontare_divisa"); %>
-				</td>
-				<td colspan="3">
-					<% bp.getDettaglioIntrastatController().writeFormInput(out,"ammontare_divisa"); %>
-				</td>
+				<% bp.getDettaglioIntrastatController().writeFormField(out,"ammontare_divisa"); %>
 			</tr>
 			<tr>      			
 				<td>
@@ -175,7 +150,7 @@
 				<td>
 					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"esercizio"); %>
 				</td>
-				<td>
+				<td colspan="3">
 					<% bp.getDettaglioIntrastatController().writeFormInput(out,"esercizio"); %>
 				</td>
 			</tr>
@@ -183,7 +158,7 @@
 				<td>
 					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"ds_bene"); %>
 				</td>
-				<td colspan="5">
+				<td colspan="3">
 					<% bp.getDettaglioIntrastatController().writeFormInput(out,"ds_bene"); %>
 				</td>
 			</tr>
@@ -191,7 +166,7 @@
 				<td>      			
 					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"modalita_incasso"); %>
 				</td>
-				<td>      			
+				<td colspan="3">      			
 					<% bp.getDettaglioIntrastatController().writeFormInput(out,"modalita_incasso"); %>
 				</td>
 			</tr>
@@ -199,27 +174,23 @@
 				<td>      			
 					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"modalita_erogazione"); %>
 				</td>
-				<td>      			
+				<td colspan="3">      			
 					<% bp.getDettaglioIntrastatController().writeFormInput(out,"modalita_erogazione"); %>
 				</td>			
 			</tr>
 			<tr>
 				<td>
-					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"cd_cpa"); %>
+					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"codici_cpa"); %>
 				</td>
-				<td>
-					<% bp.getDettaglioIntrastatController().writeFormInput(out,"cd_cpa"); %>
-					<% bp.getDettaglioIntrastatController().writeFormInput(out,"ds_cpa"); %>
+				<td colspan="3">
 					<% bp.getDettaglioIntrastatController().writeFormInput(out, "codici_cpa"); %>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"cd_iso_nazione_provenienza"); %>
+					<% bp.getDettaglioIntrastatController().writeFormLabel(out,"nazione_provenienza"); %>
 				</td>
-				<td>
-					<% bp.getDettaglioIntrastatController().writeFormInput(out,"cd_iso_nazione_provenienza"); %>
-					<% bp.getDettaglioIntrastatController().writeFormInput(out,"ds_nazione_provenienza"); %>
+				<td colspan="3">
 					<% bp.getDettaglioIntrastatController().writeFormInput(out, "nazione_provenienza"); %>
 				</td>
 			</tr>
@@ -230,10 +201,7 @@
 				<td>
 					<% bp.getDettaglioIntrastatController().writeFormInput(out,"ammontare_euro"); %>
 				</td>
-				<td>
-				 	<% bp.getDettaglioIntrastatController().writeFormLabel(out,"ammontare_divisa"); %>
-					<% bp.getDettaglioIntrastatController().writeFormInput(out,"ammontare_divisa"); %>
-				</td>
+			 	<% bp.getDettaglioIntrastatController().writeFormField(out,"ammontare_divisa"); %>
 			</tr> 
 			
 		</table>
