@@ -134,13 +134,12 @@ public void writeHTMLToolbar(
 							"javascript:submitForm('doRicercaAccertamento')";
 		it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 			context,
-			HttpActionContext.isFromBootstrap(context) ? "fa fa-bolt text-primary" : "img/history16.gif",
+			HttpActionContext.isFromBootstrap(context) ? "fa fa-fw fa-bolt" : "img/history16.gif",
 			!(isInputReadonly() || getDetails().isEmpty() || ((CRUDFatturaAttivaBP)getParentController()).isSearching())? command : null,
 			true,
 			"Contabilizza",
-			"btn-sm btn-secondary btn-outline-secondary btn-title",
+			"btn-sm btn-outline-primary btn-title",
 			HttpActionContext.isFromBootstrap(context));
-
 		
 		if (getParentController() instanceof CRUDFatturaAttivaIBP) {
 			CRUDFatturaAttivaBP bp = (CRUDFatturaAttivaBP)getParentController();
@@ -153,11 +152,11 @@ public void writeHTMLToolbar(
 
 			it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 					context,
-					HttpActionContext.isFromBootstrap(context) ? "fa fa-copy text-primary" : "img/bookmarks16.gif",
+					HttpActionContext.isFromBootstrap(context) ? "fa fa-fw fa-clipboard" : "img/bookmarks16.gif",
 					enabled ? "javascript:submitForm('doSdoppiaDettaglio');" : null,
 					true,
 					"Sdoppia",
-					"btn-sm btn-secondary btn-outline-secondary btn-title",
+					"btn-sm btn-outline-success btn-title",
 					HttpActionContext.isFromBootstrap(context));
 		}
 }

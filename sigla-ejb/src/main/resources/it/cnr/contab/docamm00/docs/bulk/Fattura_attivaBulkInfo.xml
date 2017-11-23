@@ -170,7 +170,7 @@
 		name="cd_cliente"
 		property="cliente.cd_terzo"
 		maxLength="30"
-		inputSize="6"
+		inputSize="10"
 		inputType="TEXT"
 		label="Cliente"
 		readonlyPropertyOnEdit="ROcliente"
@@ -183,7 +183,7 @@
 		name="cd_precedente"
 		property="cliente.cd_precedente"
 		maxLength="20"
-		inputSize="6"
+		inputSize="10"
 		inputType="TEXT"
 		label="Codice precedente"
 		readonlyPropertyOnEdit="ROcliente"
@@ -211,7 +211,9 @@
 		label="Cliente"
 		enabledOnSearch="true"
 		enabledOnEdit="true"
-		readonlyProperty="ROClienteSearchTool"/>
+		readonlyProperty="ROClienteSearchTool"
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+		nullable="false"/>
 	<fieldProperty
 		name="codice_fiscale"
 		property="codice_fiscale"
@@ -227,8 +229,8 @@
 	<fieldProperty
 		name="partita_iva"
 		property="partita_iva"
-		maxLength="11"
-		inputSize="11"
+		maxLength="20"
+		inputSize="20"
 		inputType="TEXT"
 		readonlyPropertyOnEdit="ROcliente"
 		readonlyPropertyOnInsert="ROcliente"
@@ -696,8 +698,9 @@
 		name="via_fiscale"
 		property="cliente.via_sede"
 		maxLength="20"
-		inputSize="10"
+		inputSize="20"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Via/P.za"/>
 	<fieldProperty
 		name="num_civico"
@@ -712,6 +715,7 @@
 		maxLength="100"
 		inputSize="20"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Comune"/>
 	<fieldProperty
 		name="ds_provincia"
