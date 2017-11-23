@@ -21,44 +21,30 @@
 	Stampa_sospesi_cnr_assoc_cdsVBulk bulk = (Stampa_sospesi_cnr_assoc_cdsVBulk)bp.getModel();
 	bp.openFormWindow(pageContext); %>
 
-<table>
+<table class="w-100 card p-2">
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"cd_cds"); %></td>
-	<td></td>
-	<td><% bp.getController().writeFormInput(out,"cd_cds"); %></td>
+	<td colspan="3"><% bp.getController().writeFormInput(out,"cd_cds"); %></td>
   </tr>
-</table>
 <% if (bulk.isCdsEnte()){ %>
-<br>
-<table>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"findCdsForPrint"); %></td>
-	<td>
-		<% bp.getController().writeFormInput(out,"cdCdsForPrint"); %>
-		<% bp.getController().writeFormInput(out,"dsCdsForPrint"); %>
+	<td colspan="3">
 		<% bp.getController().writeFormInput(out,"findCdsForPrint"); %>
 	</td>
   </tr>
-</table>
 <% } %>
-<br>
-<table>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"dataInizio"); %></td>
 	<td><% bp.getController().writeFormInput(out,"dataInizio"); %></td>
-	<td></td>	
 	<td><% bp.getController().writeFormLabel(out,"dataFine"); %></td>
 	<td><% bp.getController().writeFormInput(out,"dataFine"); %></td>
   </tr>
-</table>
-<br>
-<table>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"ti_entrata_spesa"); %></td>
-	<td><% bp.getController().writeFormInput(out,"ti_entrata_spesa"); %></td>
+	<td colspan="3"><% bp.getController().writeFormInput(out,"ti_entrata_spesa"); %></td>
   </tr>
 </table>
-
 <% bp.closeFormWindow(pageContext); %>
 
 </body>

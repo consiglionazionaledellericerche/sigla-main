@@ -130,7 +130,7 @@
 		name="dt_registrazione"
 		property="dt_registrazione"
 		inputType="TEXT"
-		inputSize="8"
+		inputSize="10"
 		formatName="date_short"
 		nullable="false"
 		enabledOnEdit="false"
