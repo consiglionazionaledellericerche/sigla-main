@@ -13,7 +13,7 @@ function doScaricaFile() {
 }
 </script>
 <%  bp.getCrudArchivioAllegati().writeHTMLTable(pageContext,bp.getAllegatiFormName(),true,false,true,"100%","150px"); %>  
-<div class="Group">
+<div class="Group card">
   <table>
   	<% bp.getCrudArchivioAllegati().writeForm(out, bp.getAllegatiFormName());  %>
   </table>
