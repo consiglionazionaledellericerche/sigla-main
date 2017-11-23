@@ -143,15 +143,15 @@
                     </security>
                 </datasource>
                 <datasource jndi-name="java:/jdbc/CIR" pool-name="OracleDSSIGLAPool" enabled="true" use-java-context="true" statistics-enabled="true">
-                    <connection-url>jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF</connection-url>
+                    <connection-url>${env.SIGLA_CONNECTION_URL:jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF}</connection-url>
                     <driver>ojdbc</driver>
                     <pool>
                         <min-pool-size>5</min-pool-size>
                         <max-pool-size>20</max-pool-size>
                     </pool>
                     <security>
-                        <user-name>PCIR009</user-name>
-                        <password>dbform</password>
+                        <user-name>${env.SIGLA_CONNECTION_USERNAME:PCIR009}</user-name>
+                        <password>${env.SIGLA_CONNECTION_PASSWORD:dbform}</password>
                     </security>
                     <validation>
                         <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleValidConnectionChecker"/>
