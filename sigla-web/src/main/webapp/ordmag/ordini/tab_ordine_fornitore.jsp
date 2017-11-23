@@ -16,7 +16,7 @@
 	boolean roOnAutoGen = false;
 %>
 
-	<div class="Group">
+	<div class="Group card p-2">
 		<table>
 			<tr>
 		<%

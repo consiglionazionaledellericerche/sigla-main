@@ -21,7 +21,7 @@
 <body class="Form">
 <% 	it.cnr.contab.doccont00.bp.RicercaMandatoReversaleBP bp = (it.cnr.contab.doccont00.bp.RicercaMandatoReversaleBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); %>
-   <table class="Panel">
+   <table class="Panel card p-2">
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "esercizio"); %></td>
 	<td><% bp.getController().writeFormInput( out, "esercizio"); %></td>
