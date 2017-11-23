@@ -15,6 +15,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.CRUDAction;
 import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.util.action.FormBP;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
@@ -37,7 +38,7 @@ public class ArchiviaStampaPdgVariazioneAction extends CRUDAction {
 	        if(remoteiterator.countElements() == 1){
 	            OggettoBulk oggettobulk1 = (OggettoBulk)remoteiterator.nextElement();
 	            EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
-	            crudbp.setMessage("La ricerca ha fornito un solo risultato.");
+	            crudbp.setMessage(FormBP.INFO_MESSAGE,"La ricerca ha fornito un solo risultato.");
 	            return doRiportaSelezione(actioncontext, oggettobulk1);
 	        }else{
 	            crudbp.setModel(actioncontext, oggettobulk);
