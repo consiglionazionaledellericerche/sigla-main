@@ -276,9 +276,16 @@
 	</form>
 
 	<form
+		name="searchtool_small" >
+		<formFieldProperty
+			name="cd_terzo"  
+			inputCssClass="w-10"/>
+	</form>
+
+	<form
 		name="searchtool_lungo" >
 		<formFieldProperty
-			name="cd_terzo" />
+			name="cd_terzo"/>
 		<formFieldProperty
 			name="denominazione_sede"
 			inputSize="50" />

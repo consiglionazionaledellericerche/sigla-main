@@ -43,6 +43,7 @@
 		name="esercizio"
 		property="esercizio"
 		inputType="ROTEXT"
+		inputSize="6"
 		label="Esercizio" />
 	<fieldProperty
 		name="pg_fattura_attiva"
@@ -188,7 +189,9 @@
 	<fieldProperty
 		name="natura_transazione"
 		property="natura_transazione"
-		inputType="SEARCHTOOL" 		
+		inputType="SEARCHTOOL"
+		formName="searchtool_codice"
+		label="Natura transazione"
 		enabledOnSearch="false"
 		readonlyPropertyOnEdit="inviato"
         enabledOnFreeSearch="false"
@@ -198,11 +201,13 @@
 		name="nomenclatura_combinata"
 		property="nomenclatura_combinata"
 		inputType="SEARCHTOOL" 		
+		formName="searchtool_codice"
 		readonlyPropertyOnEdit="inviato"
 		enabledOnSearch="false"
         enabledOnFreeSearch="false"
         enabledOnInsert="true"
-        enabledOnEdit="true" />	
+        enabledOnEdit="true" 
+		label="Nomenclatura combinata"/>	
 	<fieldProperty
 		name="modalita_trasporto"
 		property="modalita_trasporto"
@@ -284,17 +289,20 @@
 		property="nazione_destinazione"
 		inputType="SEARCHTOOL" 		
 		enabledOnSearch="false"
+		formName="searchtool_iso"
 		readonlyPropertyOnEdit="inviato"
         enabledOnFreeSearch="false"
         enabledOnInsert="true"
-        enabledOnEdit="true" />
+        enabledOnEdit="true" 
+		label="Nazione pagamento" />
 	<fieldProperty
 		name="provincia_origine"
 		property="provincia_origine"
-		inputType="SEARCHTOOL" 		
+		inputType="SEARCHTOOL" 
+		formName="searchtool"
 		enabledOnSearch="false"
 		readonlyPropertyOnEdit="inviato"
-        enabledOnFreeSearch="false"
+		enabledOnFreeSearch="false"
         enabledOnInsert="true"
         enabledOnEdit="true"
         label="Prov. origine"
@@ -334,11 +342,13 @@
 		name="codici_cpa"
 		property="codici_cpa"
 		readonlyPropertyOnEdit="inviato"
-		inputType="SEARCHTOOL" 		
+		inputType="SEARCHTOOL"
+		formName="searchtool"
 		enabledOnSearch="false"
         enabledOnFreeSearch="false"
         enabledOnInsert="true"
-        enabledOnEdit="true" />		
+        enabledOnEdit="true" 
+        label="Codice servizio (Cpa)"/>		
    	<fieldProperty
 		name="modalita_incasso"
 		property="modalita_incasso"
