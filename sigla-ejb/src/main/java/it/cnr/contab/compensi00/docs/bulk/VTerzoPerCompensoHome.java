@@ -6,7 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
 
+import it.cnr.contab.anagraf00.core.bulk.InquadramentoBulk;
+import it.cnr.contab.anagraf00.core.bulk.InquadramentoHome;
 import it.cnr.contab.consultazioni.bulk.ConsultazioniRestHome;
+import it.cnr.contab.docamm00.consultazioni.bulk.VFatturaAttivaRigaBrevettiBulk;
+import it.cnr.contab.docamm00.consultazioni.bulk.VFatturaAttivaRigaBrevettiHome;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -66,7 +70,15 @@ public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFi
 				}
 			}
 		}
+		InquadramentoHome home = (InquadramentoHome) getHomeCache().getHome(InquadramentoBulk.class);
+		SQLBuilder sqlExists = home.createSQLBuilder();
+		sqlExists.addSQLJoin("INQUADRAMENTO.CD_TIPO_RAPPORTO", "V_TERZO_PER_COMPENSO.CD_TIPO_RAPPORTO");
+		sqlExists.addSQLJoin("INQUADRAMENTO.CD_ANAG", "V_TERZO_PER_COMPENSO.CD_ANAG");
+		sqlExists.addSQLJoin("INQUADRAMENTO.DT_INI_VALIDITA_RAPPORTO", "V_TERZO_PER_COMPENSO.DT_INI_VALIDITA");
+
 		sql =  selectByClause(userContext, newClauses);
+		sql.addSQLExistsClause("AND", sqlExists);
+
 	}
 	return sql;
 }
