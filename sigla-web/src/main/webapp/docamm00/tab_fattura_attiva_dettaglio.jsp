@@ -19,20 +19,20 @@
 	else 
 		bp.getDettaglio().writeHTMLTable(pageContext,"righeNdDSet",true,false,true,"100%","200px"); %>
 
-   <div class="Group">
+   <div class="Group card">
 
-   <table>	
+   <table class="w-75">
     <tr>
-   		<% bp.getDettaglio().writeFormField(out,"cd_bene_servizio");%>
-     	<td colspan="3">
-     		<% bp.getDettaglio().writeFormInput(out,null,"ds_bene_servizio",false,null,"");%>
-     		<% bp.getDettaglio().writeFormInput(out, null, "bene_servizio", roOnAutoGen, null, "");%>
+		<td><% bp.getDettaglio().writeFormLabel(out,"bene_servizio");%>
+   		<td colspan="5">
+   			<% bp.getDettaglio().writeFormInput(out, null, "bene_servizio", roOnAutoGen, null, "");%>
    		</td>
       </tr>
     <%if (fatturaAttiva.getTi_causale_emissione()!=null && fatturaAttiva.getTi_causale_emissione().equals(fatturaAttiva.TARIFFARIO)){%>
       <tr>
-   		<% bp.getDettaglio().writeFormField(out,"cd_tariffario");%>
-   		<% bp.getDettaglio().writeFormField(out,"ds_tariffario");%>
+      	<td>
+	  		<% bp.getDettaglio().writeFormLabel(out,"tariffario");%>
+	  	</td>
 		<td>
 			<% bp.getDettaglio().writeFormInput(out, null, "tariffario", roOnAutoGen, null, "");%>
 		</td>
@@ -46,20 +46,11 @@
 	  	</td>
       </tr>
    <%}%>
-      <tr>      			
-   		<% bp.getDettaglio().writeFormField(out,"cd_voce_iva");%>
-   		<% bp.getDettaglio().writeFormField(out,"ds_voce_iva");%>
-		<td>
-			<% bp.getDettaglio().writeFormInput(out, null, "voce_iva", roOnAutoGen&&fatturaAttiva.isIvaRecuperabile(), null, "");%>
-		</td>
-      </tr>
       <tr>
-      	<td>
-	  		<% bp.getDettaglio().writeFormLabel(out,"percentuale");%>%
-	  	</td>
-	  	<td>
-	  		<% bp.getDettaglio().writeFormInput(out,null,"percentuale",false,null,"");%>
-	  	</td>
+		<td><% bp.getDettaglio().writeFormLabel(out,"voce_iva");%>
+   		<td colspan="5">
+			<% bp.getDettaglio().writeFormInput(out, null, "voce_iva", roOnAutoGen&&fatturaAttiva.isIvaRecuperabile(), null, "");%>
+   		</td>
       </tr>
       <tr>
       	<td>
@@ -84,8 +75,8 @@
  	  </tr>
       </table>
    </div>
-   <div class="Group">
-  	<table>
+   <div class="Group card">
+  	<table class="w-75">
             <tr>
 	    <td>
       		<% bp.getDettaglio().writeFormLabel(out,"dt_da_competenza_coge");%>         		
@@ -99,8 +90,8 @@
     </table>
    </div>
 
-    <div class="Group">
-  	<table>
+    <div class="Group card">
+  	<table class="w-75">
 	  <tr>
 	  	<td>
 	  		<% bp.getDettaglio().writeFormLabel(out,"quantita");%>
@@ -121,7 +112,7 @@
 	  	</td>
 		<%	if (riga != null && riga.getFl_iva_forzata() != null && riga.getFl_iva_forzata().booleanValue()) { %>
 			  	<td>
-				  	<% bp.getDettaglio().writeFormInput(out,null,"im_iva",false,null,"style=\"color:red\"");%>
+				  	<% bp.getDettaglio().writeFormInput(out,null,"im_iva",false,null,"style=\"color:red;text-align: right\"");%>
 			  	</td>
 			  	<td>
 				  	<span class="FormLabel" style="color:red">L'importo IVA e' forzato.</span>

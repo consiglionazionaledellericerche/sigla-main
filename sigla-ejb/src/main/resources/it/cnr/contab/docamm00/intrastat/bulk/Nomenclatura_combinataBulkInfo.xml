@@ -123,6 +123,17 @@
 	<findFieldProperty
 		name="unita_supplementari" />
 	
-		
+	<form
+		name="searchtool_codice" >
+		<formFieldProperty
+			name="cd_nomenclatura_combinata"
+			inputType="TEXT"
+			inputSize="4" 
+			inputCssClass="w-25 "/>
+		<formFieldProperty
+			name="ds_nomenclatura_combinata"
+			inputType="ROTEXT" 
+			inputSize="30"/>
+	</form>
 		
 </bulkInfo>

@@ -150,4 +150,13 @@
 	<findFieldProperty name="unita_misura" />
 	<findFieldProperty name="cd_voce_iva" />
 		
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_tariffario"
+			inputSize="10" />
+		<formFieldProperty
+			name="ds_tariffario"
+			inputSize="45"/>
+	</form>
 </bulkInfo>
