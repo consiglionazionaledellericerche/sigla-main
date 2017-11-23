@@ -226,7 +226,9 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false"
 		completeOnSave="false"
-		label="fornitore"/>
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+		label="Fornitore"
+		nullable="false"/>
 	<fieldProperty
 		name="crea_fornitore"
 		property="fornitore"
@@ -236,8 +238,8 @@
 	<fieldProperty
 		name="cd_fornitore"
 		property="fornitore.cd_terzo"
-		maxLength="30"
-		inputSize="6"
+		maxLength="8"
+		inputSize="10"
 		inputType="TEXT"
 		label="Fornitore"
 		readonlyPropertyOnEdit="ROfornitore"
@@ -250,7 +252,7 @@
 		name="cd_precedente"
 		property="fornitore.cd_precedente"
 		maxLength="20"
-		inputSize="6"
+		inputSize="20"
 		inputType="TEXT"
 		label="Codice precedente"
 		readonlyPropertyOnEdit="ROfornitore"
@@ -285,8 +287,9 @@
 		name="via_fiscale"
 		property="fornitore.via_sede"
 		maxLength="20"
-		inputSize="10"
+		inputSize="20"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Via/P.za"/>
 	<fieldProperty
 		name="num_civico"
@@ -300,6 +303,7 @@
 		property="fornitore.comune_sede.ds_comune"
 		maxLength="100"
 		inputSize="20"
+		inputCssClass="w-100 "
 		inputType="ROTEXT"
 		label="Comune"/>
 	<fieldProperty
@@ -324,8 +328,8 @@
 	<fieldProperty
 		name="codice_fiscale"
 		property="codice_fiscale"
-		maxLength="16"
-		inputSize="16"
+		maxLength="20"
+		inputSize="20"
 		inputType="TEXT"
 		label="Cod. Fiscale"
 		readonlyPropertyOnEdit="ROfornitore"
@@ -1227,9 +1231,11 @@
 	<formFieldProperty
 		name="ti_associato_manrevForSearch" />
 	<formFieldProperty 
-		name="esercizio"/>
+		name="esercizio"
+		inputSize="6"/>
 	<formFieldProperty 
-		name="esercizio_fattura_fornitore"/>
+		name="esercizio_fattura_fornitore"
+		inputSize="6"/>
 	<formFieldProperty
 		name="fl_fattura_compenso" 
 		command="doOnFlFatturaCompensoChange" />
@@ -1241,7 +1247,7 @@
 	<formFieldProperty
 		name="cd_fornitore" />
 	<formFieldProperty
-		name="cd_precedente" />
+		name="cd_precedente"/>
 	<formFieldProperty
 		name="ds_fornitore" />
 	<formFieldProperty

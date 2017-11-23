@@ -34,9 +34,12 @@
 		name="bene_servizio"
 		property="bene_servizio"
 		inputType="SEARCHTOOL"
+		formName="searchtool_codice"
 		readonlyProperty="ROBeneServizioSearchTool"
 		enabledOnSearch="false"
-        enabledOnEdit="true" />	
+        enabledOnEdit="true" 
+        label="Bene/Servizio"
+        nullable="false"/>	
 	<fieldProperty
 		name="cd_bene_servizio"
 		property="bene_servizio.cd_bene_servizio"
@@ -62,7 +65,10 @@
 		property="voce_iva"
 		inputType="SEARCHTOOL" 		
 		enabledOnSearch="false"
-        enabledOnEdit="true" />	
+		formName="searchtool_large"
+		nullable="false"
+		label="I.V.A."
+		enabledOnEdit="true" />	
 	<fieldProperty
 		name="cd_voce_iva"
 		property="voce_iva.cd_voce_iva"
@@ -356,7 +362,8 @@
 	<formFieldProperty
 		name="ds_bene_servizio" />
 	<formFieldProperty
-		name="ds_riga_fattura" />
+		name="ds_riga_fattura"
+		inputCssClass="w-100 " />
 	<formFieldProperty
 		name="dt_da_competenza_coge"
 		label="Competenza dal" />
