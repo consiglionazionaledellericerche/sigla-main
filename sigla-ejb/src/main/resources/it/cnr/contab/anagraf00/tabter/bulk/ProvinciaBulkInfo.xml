@@ -41,4 +41,16 @@
 	<findFieldProperty name="cd_regione" />
 	<findFieldProperty name="ds_provincia" />
 
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="cd_provincia"
+			inputType="TEXT"
+			inputSize="4" 
+			inputCssClass="w-25 "/>
+		<formFieldProperty
+			name="ds_provincia"
+			inputType="ROTEXT" 
+			inputSize="30"/>
+	</form>
 </bulkInfo>
