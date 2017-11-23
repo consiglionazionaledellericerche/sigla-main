@@ -26,7 +26,6 @@
 				<td colspan="3">
 					<% bp.getController().writeFormInput(out, null, "cd_fornitore", roOnAutoGen, null, "");%>
 					<% bp.getController().writeFormInput(out, null, "fornitore", roOnAutoGen, null, "");%>
-					<% bp.getController().writeFormInput(out, null, "crea_fornitore", roOnAutoGen, null, "");%>
 				</td>
 			</tr>
 			<tr>
