@@ -602,6 +602,7 @@
 			/>
 		<formFieldProperty
 			name="intestazione"
+			inputSize="35"
 			/>
 		<formFieldProperty
 			name="codice_iban"
