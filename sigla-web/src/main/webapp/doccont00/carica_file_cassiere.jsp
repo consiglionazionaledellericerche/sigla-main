@@ -26,7 +26,7 @@
 
 <% bp.openFormWindow(pageContext); %>
 
-	<div class="Group">	
+	<div class="Group card">
 	<table style="width:100%">
        <tr>
     	<td>
@@ -35,7 +35,7 @@
        </tr>
 		<tr>
 			<td>
-				<input type="file" name="fileCassiere">			
+				<input type="file" name="fileCassiere">
 				<% JSPUtils.button(out,null,null,"Invia File","javascript:submitForm('doCaricaFile')", true, bp.getParentRoot().isBootstrap()); %>
 			</td>
 		</tr>
