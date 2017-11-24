@@ -282,7 +282,7 @@
 		cols="75"
 		rows="4"
 		nullable="false"
-		label="Descrizione Documento Generico"
+		label="Descrizione Documento&lt;BR&gt;Generico"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="pg_documento_generico"

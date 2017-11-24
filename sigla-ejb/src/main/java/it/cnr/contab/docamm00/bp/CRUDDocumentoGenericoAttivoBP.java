@@ -24,6 +24,7 @@ import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.jsp.JSPUtils;
 
 public class CRUDDocumentoGenericoAttivoBP 
 	extends SimpleCRUDBP 
@@ -927,9 +928,17 @@ public void setDetailDoubling(boolean isDetailDoubling) {
 public void writeInventarioToolbar(javax.servlet.jsp.JspWriter writer) throws java.io.IOException,javax.servlet.ServletException {
 
 	if (!isSearching() && !isDeleting()) {
-		openToolbar(writer);
-		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createInventarioToolbar(),this, this.getParentRoot().isBootstrap());
-		closeToolbar(writer);
+		if (this.getParentRoot().isBootstrap()) {
+			writer.println("<!-- TOOLBAR INVENTARIO -->");
+			writer.println("<div id=\"inventarioToolbar\" class=\"btn-toolbar\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">");
+			JSPUtils.toolbarBootstrap(writer, Arrays.asList(createInventarioToolbar()), this);
+			writer.println("</div>");
+			writer.println("<!-- FINE TOOLBAR INVENTARIO -->");				
+		} else {						
+			openToolbar(writer);
+			it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createInventarioToolbar(),this, this.getParentRoot().isBootstrap());
+			closeToolbar(writer);
+		}
 	}
 }
 protected it.cnr.jada.util.jsp.Button[] createInventarioToolbar() {

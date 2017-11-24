@@ -222,11 +222,13 @@
 		name="fornitore"
 		property="fornitore"
 		inputType="SEARCHTOOL"
+		formName="searchtool_small"
 		readonlyProperty="ROFornitoreSearchTool"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false"
 		completeOnSave="false"
 		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+		inputCssClass=""
 		label="Fornitore"
 		nullable="false"/>
 	<fieldProperty

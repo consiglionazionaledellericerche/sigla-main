@@ -19,10 +19,9 @@
 		<table>
 			<tr>
 				<td>
-					<% bp.getController().writeFormLabel(out,"cd_cliente");%>
+					<% bp.getController().writeFormLabel(out,"cliente");%>
 				</td>
 				<td colspan="3">
-					<% bp.getController().writeFormInput(out, null, "cd_cliente", roOnAutoGen, null, "");%>
 					<% bp.getController().writeFormInput(out, null, "cliente", roOnAutoGen, null, "");%>
 				</td>
 			</tr>
