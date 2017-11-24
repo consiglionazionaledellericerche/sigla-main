@@ -11,7 +11,7 @@
 
 <%	CRUDDocumentoGenericoPassivoBP bp = (CRUDDocumentoGenericoPassivoBP)BusinessProcess.getBusinessProcess(request);
 	Documento_genericoBulk doc = (Documento_genericoBulk)bp.getModel(); %>
-	<div class="Group" style="width:100%">
+	<div class="Group card" style="width:100%">
 		<table width="100%">
 			<tr>
 			  	<td colspan="2">
@@ -31,7 +31,7 @@
 	   		</tr>
 		</table>
 	</div>
-	<div class="Group" style="width:100%">
+	<div class="Group card" style="width:100%">
    		<table width="100%">
 			<tr>
 			  	<td>
