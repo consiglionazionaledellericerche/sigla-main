@@ -278,8 +278,7 @@
 	<form
 		name="searchtool_small" >
 		<formFieldProperty
-			name="cd_terzo"  
-			inputCssClass="w-10"/>
+			name="cd_terzo" />
 	</form>
 
 	<form

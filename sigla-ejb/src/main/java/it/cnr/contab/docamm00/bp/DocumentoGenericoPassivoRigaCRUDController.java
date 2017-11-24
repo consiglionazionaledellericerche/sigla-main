@@ -84,13 +84,17 @@ public class DocumentoGenericoPassivoRigaCRUDController extends it.cnr.jada.util
 
 		super.writeHTMLToolbar(context, reset, find, delete);
 
-		String command = "javascript:submitForm('doRicercaObbligazione')";
+        boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
+
+        String command = "javascript:submitForm('doRicercaObbligazione')";
 		it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 				context,
-				"img/history16.gif",
-				!(isInputReadonly() || getDetails().isEmpty() || ((CRUDDocumentoGenericoPassivoBP)getParentController()).isSearching())? command : null,
-						true,"Contabilizza",
-						HttpActionContext.isFromBootstrap(context));
+				isFromBootstrap ? "fa fa-fw fa-bolt" : "img/history16.gif",
+		        !(isInputReadonly() || getDetails().isEmpty() || ((CRUDDocumentoGenericoPassivoBP)getParentController()).isSearching())? command : null,
+				true,
+				"Contabilizza",
+				"btn-sm btn-outline-primary btn-title",
+                isFromBootstrap);
 	}
 	@Override
 	public void writeFormInput(JspWriter jspwriter, String s, String s1,
