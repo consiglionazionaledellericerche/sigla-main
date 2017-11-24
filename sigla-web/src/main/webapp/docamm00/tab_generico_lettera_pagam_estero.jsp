@@ -22,6 +22,7 @@
 		</tr>
 	</table>
 </div>
+
 <div class="Group card p-3" style="width:100%">
 	<div class="GroupLabel h3 text-primary"><% bp.writeFormInput(out, "displayStatoTrasmissione");%></div>
 	<table width="100%">
@@ -40,8 +41,8 @@
 		</tr>
 		<tr>
 			<td colspan="4">
-				<div class="GroupLabel">Stampa documento</div>
-				<div class="Group" style="width:90%">
+				<div class="GroupLabel h3 text-primary">Stampa documento</div>
+				<div class="Group card p-3" style="width:90%">
 					<table>
 						<tr>
 							<% bp.writeFormFieldDoc1210(out, "bonifico_mezzo");%>
