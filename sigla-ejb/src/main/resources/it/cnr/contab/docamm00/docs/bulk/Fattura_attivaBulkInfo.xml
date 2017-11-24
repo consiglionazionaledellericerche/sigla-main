@@ -183,7 +183,7 @@
 		name="cd_precedente"
 		property="cliente.cd_precedente"
 		maxLength="20"
-		inputSize="10"
+		inputSize="20"
 		inputType="TEXT"
 		label="Codice precedente"
 		readonlyPropertyOnEdit="ROcliente"
@@ -208,10 +208,12 @@
 		name="cliente"
 		property="cliente"
 		inputType="SEARCHTOOL"
+		formName="searchtool_small"
 		label="Cliente"
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		readonlyProperty="ROClienteSearchTool"
+		inputCssClass=""
 		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
 		nullable="false"/>
 	<fieldProperty
