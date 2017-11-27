@@ -1400,7 +1400,7 @@ public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,Og
  *
  * @return obbligazione <code>ObbligazioneBulk</code> l'obbligazione con la lista delle nuove linee di attività aggiornata
  */
-public ObbligazioneBulk refreshNuoveLineeAttivitaColl( ObbligazioneBulk obbligazione ) 
+public ObbligazioneBulk refreshNuoveLineeAttivitaColl( UserContext usercontext, ObbligazioneBulk obbligazione ) 
 {
 	
 	V_pdg_obbligazione_speBulk latt;
@@ -1436,7 +1436,15 @@ public ObbligazioneBulk refreshNuoveLineeAttivitaColl( ObbligazioneBulk obbligaz
 		if (!found)
 		{		
 			nuovaLatt = new it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk();
-			nuovaLatt.setLinea_att( osv.getLinea_attivita() );
+
+			try{
+            	PersistentHome laHome = getHomeCache().getHome(WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA", "it.cnr.contab.doccont00.comp.AccertamentoComponent.find.linea_att");
+                nuovaLatt.setLinea_att((WorkpackageBulk)laHome.findByPrimaryKey(osv.getLinea_attivita()));
+                getHomeCache().fetchAll(usercontext);
+            } catch(Exception e) {
+            	nuovaLatt.setLinea_att(osv.getLinea_attivita());
+            }
+
 			if ( osv.getObbligazione_scadenzario().getIm_scadenza().compareTo( new BigDecimal(0)) == 0 )
 			{
 				double nrDettagli = scadenza.getObbligazione_scad_voceColl().size();

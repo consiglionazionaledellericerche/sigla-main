@@ -145,8 +145,13 @@
 	</tr>
 	
 	<tr>
-	<td>	<% bp.getController().writeFormLabel( out, "find_capitolo"); %></td>
-	<td>	<% bp.getController().writeFormInput( out, "default","find_capitolo", bp.isROFindCapitolo(),null,null); %></td>				 
+		<% if (bp.isFlNuovoPdg()) { %>
+			<td>	<% bp.getController().writeFormLabel( out, "find_elemento_voce"); %></td>
+			<td>	<% bp.getController().writeFormInput( out, "default","find_elemento_voce", bp.isROFindCapitolo(),null,null); %></td>				 
+		<% } else { %>
+			<td>	<% bp.getController().writeFormLabel( out, "find_capitolo"); %></td>
+			<td>	<% bp.getController().writeFormInput( out, "default","find_capitolo", bp.isROFindCapitolo(),null,null); %></td>				 
+		<% } %>
 	</tr>
  	
  	<% if (bp.isElementoVoceNewVisible()){ %>
