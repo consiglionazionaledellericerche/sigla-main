@@ -7,6 +7,8 @@
 		name="find_linea_attivita"
 		property="linea_att"
 		inputType="SEARCHTOOL"
+		CRUDBusinessProcessName="CRUDLinea_attivitaBP"
+		columnSet="prg_liv2"
 		enabledOnSearch="true" />
 	<fieldProperty
 		name="crea_linea_attivita"
@@ -153,5 +155,36 @@
 			enabledOnEdit="false"
 			/>	
 	</columnSet>
-		
+
+	<columnSet
+		name="lattNuovoPdg">
+		<columnFieldProperty
+			name="find_linea_attivita"	/>
+		<columnFieldProperty
+			name="cd_centro_responsabilita"
+			enabledOnEdit="true"
+			enabledOnInsert="true" />
+		<columnFieldProperty
+			name="cd_progetto"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			label="Progetto" />			
+		<columnFieldProperty
+			name="cd_linea_attivita"
+			enabledOnEdit="true"
+			enabledOnInsert="true" />
+		<columnFieldProperty
+			name="ds_linea_attivita"
+			enabledOnEdit="false" />
+		<columnFieldProperty
+			name="prcImputazioneFin"
+			headerStyle="text-align: center"
+			columnStyle="text-align: right"
+			enabledOnEdit="true"
+			enabledOnInsert="true" />		
+		<columnFieldProperty
+			name="cd_natura"
+			enabledOnEdit="false"
+			/>	
+	</columnSet>		
 </bulkInfo>

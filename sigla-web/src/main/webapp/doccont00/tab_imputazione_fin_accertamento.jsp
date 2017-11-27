@@ -55,10 +55,10 @@
 	</tr>
 	<tr>
 		<td>
-			<% bp.getLineeDiAttivita().writeHTMLTable(pageContext,null,false,false,false,"100%","200px"); %>
+			<% bp.getLineeDiAttivita().writeHTMLTable(pageContext,bp.isFlNuovoPdg()?"nuovoPdg":null,false,false,false,"100%","200px"); %>
 		</td>
 		<td>
-			<% bp.getNuoveLineeDiAttivita().writeHTMLTable(pageContext,"latt",accertamento.isAddNuoveLattEnabled() && bp.isEditable(),false,true,"100%","200px", false); %>
+			<% bp.getNuoveLineeDiAttivita().writeHTMLTable(pageContext,bp.isFlNuovoPdg()?"lattNuovoPdg":"latt",accertamento.isAddNuoveLattEnabled() && bp.isEditable(),false,true,"100%","200px", false); %>
         </td>
 	</tr>
 </table>
