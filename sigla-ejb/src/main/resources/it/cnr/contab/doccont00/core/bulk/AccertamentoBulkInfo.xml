@@ -220,6 +220,18 @@
 		nullable="false"		
 		/>
 	<fieldProperty
+		name="find_elemento_voce"
+		property="capitolo"
+		inputType="SEARCHTOOL" 
+		label="Voce del Piano"
+		enabledOnSearch="true"
+		readonlyProperty="ROCapitolo"
+		formName="accertamento"
+		columnSet="accertamento_ev"
+		freeSearchSet="accertamento_ev"
+		nullable="false"		
+		/>
+	<fieldProperty
 		name="cd_voce"
 		property="capitolo.cd_voce"
 		readonlyProperty="ROCapitolo"
@@ -241,7 +253,7 @@
 	<fieldProperty
 		name="cd_voceRO"
 		property="capitolo.cd_voce"
-		label="Capitolo"
+		label="Voce del Piano"
 		inputType="ROTEXT"
 		maxLength="20"
 		inputSize="10"
@@ -562,6 +574,9 @@
 		/>
 	<formFieldProperty
 		name="find_capitolo"
+		/>
+	<formFieldProperty
+		name="find_elemento_voce"
 		/>
 	<formFieldProperty
 		name="cd_voceRO"
