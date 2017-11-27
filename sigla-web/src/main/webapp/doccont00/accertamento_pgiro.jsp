@@ -27,6 +27,7 @@
 <body class="Form">
 <%  bp.openFormWindow(pageContext);%>
 
+<div class="Group card">
 	<table class="Panel">
 
 	<tr>
@@ -67,15 +68,13 @@
 		</td>
 	</tr>
 	</table>
-	
-	<div class="Group">
+</div>
+
+<div class="Group card">
 	<table>	
 	<tr>
-	<td>	<% bp.getController().writeFormLabel( out, "cd_terzo"); %></td>
-	<td>	<% bp.getController().writeFormInput( out, "cd_terzo"); %>
-			<% bp.getController().writeFormInput( out, "ds_debitore"); %>
-			<% bp.getController().writeFormInput( out, "find_debitore"); %>
-			<% bp.getController().writeFormInput( out, "crea_debitore" ); %></td>
+	<td>	<% bp.getController().writeFormLabel( out, "find_debitore"); %></td>
+	<td>	<% bp.getController().writeFormInput( out, "find_debitore"); %></td>
 	</tr>
 	<tr>
 	<td>	<% bp.getController().writeFormLabel( out, "cd_terzo_precedente"); %></td>
@@ -90,8 +89,9 @@
 	</td>
 	</tr>
 	</table>	
-    </div>
+</div>
 	
+<div class="Group card">
 	<table>
 	<tr>
 	<td>	<% bp.getController().writeFormLabel( out, "im_accertamento"); %></td>
@@ -99,13 +99,8 @@
 	</tr>
 	
 	<tr>
-	
-	<td>	<% bp.getController().writeFormLabel( out, "cd_voce"); %></td>
-	<td>
-		    <% bp.getController().writeFormInput(out,"default","cd_voce",acc.isFl_isTronco()&&bp.isEditing(),null,null); %>
-		    <% bp.getController().writeFormInput(out,"default","ds_voce", acc.isFl_isTronco()&&bp.isEditing(),null,null); %>
-		    <% bp.getController().writeFormInput(out,"default","find_capitolo",acc.isFl_isTronco()&&bp.isEditing(),null,null); %>
-	</td>
+		<td>	<% bp.getController().writeFormLabel( out, "find_capitolo"); %></td>
+		<td>    <% bp.getController().writeFormInput(out,"default","find_capitolo",acc.isFl_isTronco()&&bp.isEditing(),null,null); %> </td>
 	</tr>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "dt_scadenza"); %></td>
@@ -124,6 +119,7 @@
 	</tr>
 -->	
 	</table>
+</div>
 <!-- 
   <div class="Group">		
   <table border="0" cellspacing="0" cellpadding="2">

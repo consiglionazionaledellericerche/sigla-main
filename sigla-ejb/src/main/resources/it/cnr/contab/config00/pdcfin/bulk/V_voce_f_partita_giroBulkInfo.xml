@@ -33,23 +33,30 @@
 			/>
 	</form>
 	
-<columnSet
-	name="accertamento">
+	<columnSet name="accertamento">
+		<columnFieldProperty
+			name="cd_voce"
+			columnStyle="width:140px; text-align:left"/>
+		<columnFieldProperty
+			name="ds_titolo_capitolo"/>
+	</columnSet>
 
-	<columnFieldProperty
-		name="cd_voce"
-		columnStyle="width:140px; text-align:left"/>
-	<columnFieldProperty
-		name="ds_titolo_capitolo"/>
-</columnSet>
+	<columnSet name="accertamento_ev">
+		<columnFieldProperty
+			name="cd_voce"
+			columnStyle="width:140px; text-align:left"
+			label="Voce del Piano"/>
+		<columnFieldProperty
+			name="ds_titolo_capitolo"
+			label="Descrizione"/>
+	</columnSet>
 
 	<findFieldProperty
 		name="cd_voce" />
 	<findFieldProperty
 		name="ds_titolo_capitolo" />
 
-	<freeSearchSet
-		name="accertamento">
+	<freeSearchSet name="accertamento">
 		<findFieldProperty
 			name="cd_voce" />
 		<findFieldProperty
@@ -60,4 +67,12 @@
 			name="cd_categoria" />
 	</freeSearchSet>
 		
+	<freeSearchSet name="accertamento_ev">
+		<findFieldProperty
+			name="cd_voce" 
+			label="Voce del Piano"/>
+		<findFieldProperty
+			name="ds_titolo_capitolo" 
+			label="Descrizione"/>
+	</freeSearchSet>
 </bulkInfo>
