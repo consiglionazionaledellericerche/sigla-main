@@ -11,8 +11,8 @@
 	CRUDObbligazioneBP bp = (CRUDObbligazioneBP)BusinessProcess.getBusinessProcess(request);
 	it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = (it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk)bp.getModel();
 	if ( obbligazione.getFl_calcolo_automatico()!= null && obbligazione.getFl_calcolo_automatico().booleanValue() ) {
-		bp.getScadenzarioDettaglio().writeHTMLTable(pageContext,null,false,false,false,"100%","100px", true);
+		bp.getScadenzarioDettaglio().writeHTMLTable(pageContext,bp.isFlNuovoPdg()?"nuovoPdg":null,false,false,false,"100%","100px", true);
 	} else {
-		bp.getScadenzarioDettaglio().writeHTMLTable(pageContext,null,false,false,false,"100%","100px", false);
+		bp.getScadenzarioDettaglio().writeHTMLTable(pageContext,bp.isFlNuovoPdg()?"nuovoPdg":null,false,false,false,"100%","100px", false);
 	} 
 %>

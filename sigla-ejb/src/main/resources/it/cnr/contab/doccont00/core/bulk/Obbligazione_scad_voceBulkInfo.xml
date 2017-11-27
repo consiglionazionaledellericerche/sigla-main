@@ -139,6 +139,33 @@
 		inputCssClass="form-control column"
 		/>
 
+	<columnSet name="nuovoPdg">
+		<columnFieldProperty
+			name="cd_centro_responsabilita"
+			columnStyle="width:15%; text-align:left"
+			enabledOnEdit="false" />
+		<columnFieldProperty
+			name="cd_linea_attivita"
+			enabledOnEdit="false"	
+			columnStyle="width:15%;" />
+		<columnFieldProperty
+			name="cd_natura"
+			enabledOnEdit="false"
+			columnStyle="width:10%;" />
+		<columnFieldProperty
+			name="prc"
+			headerStyle="text-align: center"
+			columnStyle="text-align: right"
+			enabledOnEdit="false"
+			inputCssClass="form-control column" />
+		<columnFieldProperty
+			name="im_voce"
+			columnStyle="width:30%; text-align: right"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			inputCssClass="form-control column"	/>
+	</columnSet>
+	
 	<formFieldProperty
 		name="cd_cds"
 		/>

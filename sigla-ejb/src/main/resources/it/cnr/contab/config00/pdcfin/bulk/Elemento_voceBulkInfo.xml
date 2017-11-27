@@ -693,4 +693,25 @@
 			inputType="TEXT"
 			inputSize="50" />
 	</form>
+	<freeSearchSet name="impegnoPGiro">
+		<findFieldProperty
+			name="esercizio"
+			/>
+		<findFieldProperty
+			name="cd_elemento_voce"
+			label = "Codice"
+			/>
+		<findFieldProperty
+			name="ds_elemento_voce"
+			/>
+		<findFieldProperty
+			name="cd_elemento_padre"
+			/>
+		<findFieldProperty
+			name="fl_partita_giro"
+			/>
+		<findFieldProperty
+			name="fl_recon"
+			/>		
+	</freeSearchSet>
 </bulkInfo>

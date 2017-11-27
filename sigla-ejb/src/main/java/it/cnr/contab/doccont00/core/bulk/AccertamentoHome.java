@@ -5,6 +5,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
@@ -1241,7 +1242,7 @@ public java.util.List findCdr( List capitoliList, AccertamentoBulk accertamento 
         }
     }
 
-    public AccertamentoBulk refreshNuoveLineeAttivitaColl(AccertamentoBulk accertamento) {
+    public AccertamentoBulk refreshNuoveLineeAttivitaColl(UserContext usercontext, AccertamentoBulk accertamento) {
 
         V_pdg_accertamento_etrBulk latt;
         boolean found;
@@ -1290,7 +1291,15 @@ public java.util.List findCdr( List capitoliList, AccertamentoBulk accertamento 
 
                 if (found2) {
                     nuovaLatt = new it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk();
-                    nuovaLatt.setLinea_att(osv.getLinea_attivita());
+
+                    try{
+                    	PersistentHome laHome = getHomeCache().getHome(WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA", "it.cnr.contab.doccont00.comp.AccertamentoComponent.find.linea_att");
+	                    nuovaLatt.setLinea_att((WorkpackageBulk)laHome.findByPrimaryKey(osv.getLinea_attivita()));
+	                    getHomeCache().fetchAll(usercontext);
+                    } catch(Exception e) {
+                    	nuovaLatt.setLinea_att(osv.getLinea_attivita());
+                    }
+
                     if (osv.getAccertamento_scadenzario().getIm_scadenza().compareTo(new BigDecimal(0)) == 0) {
                         double nrDettagli = scadenza.getAccertamento_scad_voceColl().size();
                         nuovaLatt.setPrcImputazioneFin(new BigDecimal(100).divide(new BigDecimal(nrDettagli), 2, BigDecimal.ROUND_HALF_UP));
