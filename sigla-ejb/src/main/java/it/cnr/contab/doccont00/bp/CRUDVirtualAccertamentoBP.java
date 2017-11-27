@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
@@ -42,6 +43,7 @@ public abstract class CRUDVirtualAccertamentoBP
 	protected boolean annoSolareInScrivania;
 	protected boolean riportaAvantiIndietro;	
 	private boolean attivoRegolamento_2006 = false;
+	private boolean flNuovoPdg = false;
 	private boolean ribaltato;
 
 public CRUDVirtualAccertamentoBP() {
@@ -173,7 +175,9 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 		setSafePoint(context);
 	super.init(config,context);
 	try {
-		setAttivoRegolamento_2006(Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(),CNRUserContext.getEsercizio(context.getUserContext())).getFl_regolamento_2006().booleanValue());
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(),CNRUserContext.getEsercizio(context.getUserContext()));
+		setAttivoRegolamento_2006(parCnr.getFl_regolamento_2006().booleanValue());
+		setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
 	} catch (ComponentException e) {
 		throw new BusinessProcessException(e);
 	} catch (RemoteException e) {
@@ -444,6 +448,14 @@ public static AccertamentoAbstractComponentSession setSafePoint (
 		attivoRegolamento_2006 = b;
 	}
 
+	public boolean isFlNuovoPdg() {
+		return flNuovoPdg;
+	}
+	
+	private void setFlNuovoPdg(boolean flNuovoPdg) {
+		this.flNuovoPdg = flNuovoPdg;
+	}
+	
 	public boolean initRibaltato(it.cnr.jada.action.ActionContext context)  throws it.cnr.jada.action.BusinessProcessException
 	{
 		try 

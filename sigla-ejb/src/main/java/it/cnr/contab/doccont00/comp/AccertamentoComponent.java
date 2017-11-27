@@ -1846,7 +1846,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 		accertamento.refreshLineeAttivitaSelezionateColl();
 
 		// carica le nuove linee di attività
-		accertamento = accertHome.refreshNuoveLineeAttivitaColl( accertamento );
+		accertamento = accertHome.refreshNuoveLineeAttivitaColl( aUC, accertamento );
 
 		accertamento.setInternalStatus( ObbligazioneBulk.INT_STATO_LATT_CONFERMATE );
 		accertamento.setIm_iniziale_accertamento( accertamento.getIm_accertamento());
