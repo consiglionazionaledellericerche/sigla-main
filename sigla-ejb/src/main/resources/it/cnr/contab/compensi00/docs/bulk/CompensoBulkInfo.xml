@@ -317,8 +317,13 @@
 		name="find_terzo"
 		property="v_terzo"
 		inputType="SEARCHTOOL"
+		formName="searchtool_small"
 		readonlyProperty="ROTerzo"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		completeOnSave = "false"
+		inputCssClass=""
+		nullable="false"
 		label="Terzo" />
 	<fieldProperty
 		name="cd_terzo"
@@ -335,7 +340,7 @@
 		name="cd_precedente"
 		property="v_terzo.cd_terzo_precedente"
 		maxLength="20"
-		inputSize="6"
+		inputSize="20"
 		inputType="TEXT"
 		label="Codice precedente"
 		enabledOnInsert="false"
@@ -364,6 +369,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		enabledOnFreeSearch="true"
+		inputCssClass="w-100 "
 		label="Ragione Sociale"
 		caseSensitiveSearch="false" />
 	<fieldProperty
@@ -420,6 +426,7 @@
 		maxLength="62"
 		inputSize="62"
 		inputType="ROTEXT"
+		inputCssClass="w-100 "
 		label="Via/P.za" />
 	<fieldProperty
 		name="via_fiscale"
@@ -479,6 +486,8 @@
 		property="banca"
 		inputType="BUTTON"
 		img="img/find16.gif"
+		iconClass="fa fa-search text-primary"
+		buttonClass="btn-secondary btn-outline-secondary btn-title text-primary"
 		readonlyProperty="abledToInsertBank"
 		label="Conto/i ..."
 		href="javascript:submitForm('doSearch(main.listaBanche)')" />
