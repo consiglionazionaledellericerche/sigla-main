@@ -22,7 +22,8 @@
 	CompensoBulk compenso = (CompensoBulk)bp.getModel();
 	bp.openFormWindow(pageContext); %>
 
-<table>
+<div class="Group">
+<table class="w-50">
   <tr>
 	<td><% bp.getController().writeFormLabel( out, "esercizio"); %></td>
 	<td><% bp.getController().writeFormInput( out, "esercizio"); %></td>
@@ -38,7 +39,7 @@
   	<% } %>	
   </tr>
 </table>
-
+</div>
 <table class="Panel" width="100%">
   <tr>
 	<td><% JSPUtils.tabbed(

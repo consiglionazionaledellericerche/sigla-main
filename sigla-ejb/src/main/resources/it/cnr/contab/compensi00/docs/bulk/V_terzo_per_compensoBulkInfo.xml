@@ -91,6 +91,8 @@
 		name="cd_terzo"
 		property="cd_terzo"
 		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Terzo" />
 	<fieldProperty
 		name="codice_fiscale"
@@ -220,4 +222,9 @@
 	<columnFieldProperty name="dt_fin_validita" />
 </columnSet>	
 
+	<form
+		name="searchtool_small" >
+		<formFieldProperty
+			name="cd_terzo" />
+	</form>
 </bulkInfo>
