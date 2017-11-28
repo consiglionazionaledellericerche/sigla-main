@@ -13,7 +13,7 @@
 
 <% if (!bp.isSearching()) { %>
   <% if (compenso.isVisualizzaRegioneIrap()) { %>
-  <div class="Group" style="width:100%">
+  <div class="Group card">
   <table>
 	<td width=18%><% bp.getController().writeFormLabel(out,"cd_regione_irap"); %></td>
 	<td><% bp.getController().writeFormInput(out,"cd_regione_irap"); %></td>
@@ -24,7 +24,7 @@
   <% } %>
 
   <% if (compenso.isVisualizzaVoceIva()) { %>
-  <div class="Group" style="width:100%">
+  <div class="Group card">
   <table>
 	<td width=18%><% bp.getController().writeFormLabel(out,"cd_voce_iva"); %></td>
 	<td><% bp.getController().writeFormInput(out,"cd_voce_iva"); %></td>
@@ -35,7 +35,7 @@
   <% } %>
 
   <% if (compenso.isVisualizzaTipologiaRischio()) { %>
-  <div class="Group" style="width:100%">
+  <div class="Group card">
   <table>
   <tr>
 	<td width=18%><% bp.getController().writeFormLabel(out,"cd_tipologia_rischio"); %></td>
@@ -53,7 +53,7 @@
 <% } %>
 
   <% if (!bp.isSearching() && !compenso.isCompensoSoloInailEnte()) { %>
-<div class="Group" style="width:100%">
+<div class="Group card">
 <table>
   <tr>
 	<td width="25%"><% bp.getController().writeFormLabel(out,"im_lordo_percipiente"); %></td>
@@ -84,9 +84,9 @@
 </table>
 </div>
 
-
-<fieldset class="fieldset">
-<legend class="GroupLabel">Detrazioni art. 13 TUIR</legend>
+<fieldset class="fieldset card">
+<legend class="GroupLabel card-header text-primary">Detrazioni art. 13 TUIR</legend>
+<div class="Panel">
 <table>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"detrazioni_personali"); %></td>
@@ -95,10 +95,12 @@
 	<td><% bp.getController().writeFormInput(out,null,"detrazioni_la", !compenso.isSenzaCalcoli(),null, null); %></td>
   </tr>
  </table>
- </fieldset>
-  
- <fieldset class="fieldset">
-<legend class="GroupLabel">Detrazioni per carichi di famiglia</legend>
+</div>
+</fieldset>
+
+<fieldset class="fieldset card">
+<legend class="GroupLabel card-header text-primary">Detrazioni per carichi di famiglia</legend>
+<div class="Panel">
 <table>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"detrazione_coniuge"); %></td>
@@ -109,18 +111,27 @@
 	<td><% bp.getController().writeFormInput(out,null,"detrazione_altri", !compenso.isSenzaCalcoli(),null, null); %></td>
   </tr>
 </table>
- </fieldset>
+</div>
+</fieldset>
 
-
-<div class="Panel" style="width:100%">
-<table width="100%">
+<div class="Panel card">
+<table>
   <tr>
-	<td colspan=2><% JSPUtils.button(out,null,null,"Esegui Calcolo","javascript:submitForm('doEseguiCalcolo')",null,bp.isBottoneEseguiCalcoloEnabled(), bp.getParentRoot().isBootstrap());%></td>
+	<td colspan=2>
+	<% JSPUtils.button(out,
+			bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-calculator text-primary" : null,
+			bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-calculator text-primary" : null,
+			"Esegui Calcolo",
+			"javascript:submitForm('doEseguiCalcolo')",
+			"btn-secondary btn-outline-secondary btn-title text-primary",
+			bp.isBottoneEseguiCalcoloEnabled(), 
+			bp.getParentRoot().isBootstrap());%>
+	</td>
   </tr>
 </table>
 </div>
 
-<div class="Group" style="width:100%">
+<div class="Group card">
 <table>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"cd_linea_attivita_genrc"); %></td>
