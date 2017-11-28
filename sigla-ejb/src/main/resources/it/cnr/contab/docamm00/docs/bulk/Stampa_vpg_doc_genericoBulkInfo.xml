@@ -45,6 +45,7 @@
 		name="findTerzo"
 		property="terzoForPrint"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		label="Terzo" />
 	<fieldProperty
 		name="cdTerzo"
