@@ -173,6 +173,15 @@ public class FatturaPassivaRigaCRUDController extends it.cnr.jada.util.action.Si
                         true, "Sdoppia",
                         "btn-sm btn-outline-success btn-title",
                         HttpActionContext.isFromBootstrap(context));
+            } else {
+                it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+                        context,
+                        isFromBootstrap ? "fa fa-fw fa-magic" : "img/history16.gif",
+                        !(isInputReadonly() || getDetails().isEmpty() || ((CRUDFatturaPassivaBP) getParentController()).isSearching()) ? "javascript:submitForm('doContabilzzaRighePerOrdini')" : null,
+                        true,
+                        "Contabilizza in automatico",
+                        "btn-sm btn-outline-info btn-title",
+                        isFromBootstrap);
             }
         }
     }

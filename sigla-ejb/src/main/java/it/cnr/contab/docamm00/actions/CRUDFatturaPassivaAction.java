@@ -58,6 +58,7 @@ import org.slf4j.LoggerFactory;
 import javax.ejb.EJBException;
 import java.rmi.RemoteException;
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -883,10 +884,10 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
     /**
      * Prepara e apre la ricerca per l'evasione dell'ordine
      */
-    private Forward basicDoRicercaEvasioneOrdine(ActionContext context, Fattura_passivaBulk fatturaPassiva, List<Fattura_passiva_rigaBulk> models) {
+    private Forward basicDoRicercaEvasioneOrdine(ActionContext context, Fattura_passivaBulk fatturaPassiva, List<Fattura_passiva_rigaBulk> models, boolean manually) {
         CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) context.getBusinessProcess();
         return Optional.ofNullable(models)
-                .filter(list -> list.size() == 1)
+                .filter(list -> list.size() == 1 && manually)
                 .map((List<Fattura_passiva_rigaBulk> list) -> {
                     try {
                         final RemoteIterator contabilizzaRigaIterator = bp.find(context, new CompoundFindClause(),
@@ -924,7 +925,23 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                         return handleException(context, e);
                     }
                 }).orElseGet(() -> {
-                    bp.setMessage("Per procedere, bisogna selezionare un unico dettaglio da contabilizzare!");
+                    if (manually) {
+                        bp.setMessage(FormBP.WARNING_MESSAGE, "Per procedere, bisogna selezionare un unico dettaglio da contabilizzare!");
+                    } else {
+                        final Map<Boolean, Long> result = models.stream().map(fattura_passiva_rigaBulk -> {
+                            try {
+                                return bp.associaOrdineRigaFattura(context, fattura_passiva_rigaBulk);
+                            } catch (BusinessProcessException e) {
+                                throw new DetailedRuntimeException(e);
+                            }
+                        }).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+                        final Long righeContabilizzate = Optional.ofNullable(result.get(true)).orElse(Long.valueOf(0));
+                        if (righeContabilizzate.intValue() == models.size()) {
+                            bp.setMessage(FormBP.INFO_MESSAGE,"Tutte le righe selezionate sono state contabilizzate.");
+                        } else {
+                            bp.setMessage(FormBP.ERROR_MESSAGE,"Sono state contabilizzate " + righeContabilizzate + " su " + models.size() + "! Procedere alla conatbilizzazione manuale.");
+                        }
+                    }
                     return context.findDefaultForward();
                 });
     }
@@ -4109,11 +4126,14 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         return context.findDefaultForward();
     }
 
+    public Forward doRicercaObbligazione(ActionContext context) {
+        return doRicercaObbligazione(context, true);
+    }
     /**
      * Ricerca un'obbligazione valida da associare al doc amm
      * richeide la validità delle selezioni effettuate
      */
-    public Forward doRicercaObbligazione(ActionContext context) {
+    public Forward doRicercaObbligazione(ActionContext context, boolean manually) {
 
         try {
             CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
@@ -4150,12 +4170,19 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 }
             }
             if (isDaOrdini)
-                return basicDoRicercaEvasioneOrdine(context, fatturaPassiva, models.get());
+                return basicDoRicercaEvasioneOrdine(context, fatturaPassiva, models.get(), manually);
             else
                 return basicDoRicercaObbligazione(context, fatturaPassiva, models.get());
         } catch (Throwable e) {
             return handleException(context, e);
         }
+    }
+    /**
+     * Ricerca un'obbligazione valida da associare al doc amm
+     * richeide la validità delle selezioni effettuate
+     */
+    public Forward doContabilzzaRighePerOrdini(ActionContext context) {
+        return doRicercaObbligazione(context, false);
     }
 
     public Forward doRiportaAvanti(ActionContext context) throws java.rmi.RemoteException {
@@ -4911,31 +4938,6 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         }
     }
 
-//public Forward doSearchFind_trovato(ActionContext context)
-//{
-//	try{
-//		fillModel(context);
-//		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)context.getBusinessProcess();
-//
-//		BulkList<TrovatoBulk> listaTrovati = bp.listaTrovati(context);
-//
-//		it.cnr.jada.util.action.SelezionatoreListaBP slbp=null;
-//		if (!listaTrovati.isEmpty()) {
-//			slbp = (it.cnr.jada.util.action.SelezionatoreListaBP) select(
-//					context,
-//					new it.cnr.jada.util.ListRemoteIterator((java.util.List)listaTrovati),
-//					it.cnr.jada.bulk.BulkInfo.getBulkInfo(TrovatoBulk.class),
-//					null,
-//					"doBringBackSearchFind_trovato");
-//
-//			slbp.setMultiSelection(false);
-//		} else
-//			bp.setMessage("La ricerca non ha fornito alcun risultato.");
-//		return slbp;
-//	}catch (Throwable ex) {
-//		return handleException(context, ex);
-//	}
-//}
 
     /**
      * Gestisce lo sdoppiamento della riga di dettaglio
@@ -5030,55 +5032,6 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         }
     }
 
-    //public Forward doFreeSearchFind_trovato(ActionContext actioncontext) {
-//    try
-//    {
-//    	BulkBP bulkbp = (BulkBP)actioncontext.getBusinessProcess();
-//		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)bulkbp;
-//		bp.fillModel(actioncontext);
-//
-//		//TrovatoBulk oggettobulk = ((Fattura_attiva_rigaIBulk)bp.getDettaglio().getModel()).getTrovato();
-//		TrovatoBulk oggettobulk = new TrovatoBulk();
-//		FormField formfield = getFormField(actioncontext,"main.Dettaglio.find_trovato");
-//        OggettoBulk oggettobulk1 = formfield.getModel();
-//        RicercaLiberaTrovatoBP ricercaliberabp = (RicercaLiberaTrovatoBP)actioncontext.createBusinessProcess("RicercaLiberaTrovato");
-//        ricercaliberabp.setSearchProvider(bp.getSearchProvider(oggettobulk1, formfield.getField().getProperty()));
-//        ricercaliberabp.setFreeSearchSet(formfield.getField().getFreeSearchSet());
-//        ricercaliberabp.setPrototype(oggettobulk);
-//        ricercaliberabp.setColumnSet(formfield.getField().getColumnSet());
-//        actioncontext.addHookForward("seleziona", this, "doBringBackSearchFind_trovato");
-//        HookForward hookforward = (HookForward)actioncontext.findForward("seleziona");
-//        hookforward.addParameter("field", formfield);
-//        Forward fricercaliberabp = actioncontext.addBusinessProcess(ricercaliberabp);
-//
-//		BulkList<TrovatoBulk> listaTrovati = bp.listaTrovati(actioncontext);
-//        ricercaliberabp.setListaTtovati(listaTrovati);
-//        return fricercaliberabp;
-//    }
-//    catch(Exception exception)
-//    {
-//        return handleException(actioncontext, exception);
-//    }
-//
-//}
-//public Forward doBringBackSearchFind_trovato(ActionContext context)
-//{
-//	try{
-//		HookForward caller = (HookForward)context.getCaller();
-//		TrovatoBulk trovato = (TrovatoBulk)caller.getParameter("focusedElement");
-//
-//		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
-//		if (trovato != null) {
-//			Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) bp.getDettaglio().getModel();
-//			riga.setTrovato(trovato);
-//			riga.setPg_trovato(trovato.getPg_trovato());
-//			riga.setToBeUpdated();
-//		}
-//		return context.findDefaultForward();
-//	}catch (Throwable ex) {
-//		return handleException(context, ex);
-//	}
-//}
     public Forward doBlankSearchFind_trovato(ActionContext context, TrovatoBulk trovato) {
 
         if (trovato != null) {
