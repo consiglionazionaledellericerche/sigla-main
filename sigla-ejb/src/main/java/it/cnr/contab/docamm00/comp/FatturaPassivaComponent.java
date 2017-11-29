@@ -7743,6 +7743,19 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         return true;
     }
 
+    public List<EvasioneOrdineRigaBulk> findContabilizzaRigaByClause(UserContext userContext, Fattura_passiva_rigaBulk fatturaPassivaRiga, CompoundFindClause findclause) throws ComponentException {
+        EvasioneOrdineRigaHome home = Optional.ofNullable(getHome(userContext, EvasioneOrdineRigaBulk.class, "V_EVASIONE_ORDINE"))
+                .filter(EvasioneOrdineRigaHome.class::isInstance)
+                .map(EvasioneOrdineRigaHome.class::cast)
+                .orElseThrow(() -> new ComponentException("Cannot find EvasioneOrdineRigaHome"));
+        try {
+            List<EvasioneOrdineRigaBulk> list = home.fetchAll(selectContabilizzaRigaByClause(userContext, fatturaPassivaRiga, null, findclause));
+            getHomeCache(userContext).fetchAll(userContext);
+            return list;
+        } catch (PersistencyException e) {
+           throw handleException(e);
+        }
+    }
     /**
      * Metodo richiamato dal framework per cercare le righe di consegna
      * @param userContext
@@ -7753,6 +7766,21 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      * @throws ComponentException
      */
     public SQLBuilder selectContabilizzaRigaByClause(CNRUserContext userContext, Fattura_passiva_rigaIBulk fatturaPassivaRiga,
+                                                     EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, CompoundFindClause findclause) throws ComponentException {
+        return selectContabilizzaRigaByClause(userContext, (Fattura_passiva_rigaBulk)fatturaPassivaRiga, evasioneOrdineRigaBulk, findclause);
+    }
+
+    public SQLBuilder selectContabilizzaRigaByClause(CNRUserContext userContext, Nota_di_credito_rigaBulk nota_di_credito_rigaBulk,
+                                                     EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, CompoundFindClause findclause) throws ComponentException {
+        return selectContabilizzaRigaByClause(userContext, (Fattura_passiva_rigaBulk)nota_di_credito_rigaBulk, evasioneOrdineRigaBulk, findclause);
+    }
+
+    public SQLBuilder selectContabilizzaRigaByClause(CNRUserContext userContext, Nota_di_debito_rigaBulk nota_di_debito_rigaBulk,
+                                                     EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, CompoundFindClause findclause) throws ComponentException {
+        return selectContabilizzaRigaByClause(userContext, (Fattura_passiva_rigaBulk)nota_di_debito_rigaBulk, evasioneOrdineRigaBulk, findclause);
+    }
+
+    public SQLBuilder selectContabilizzaRigaByClause(UserContext userContext, Fattura_passiva_rigaBulk fatturaPassivaRiga,
                                                      EvasioneOrdineRigaBulk evasioneOrdineRigaBulk, CompoundFindClause findclause) throws ComponentException {
         EvasioneOrdineRigaHome home = Optional.ofNullable(getHome(userContext, EvasioneOrdineRigaBulk.class, "V_EVASIONE_ORDINE"))
                 .filter(EvasioneOrdineRigaHome.class::isInstance)
