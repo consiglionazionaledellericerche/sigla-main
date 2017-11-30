@@ -13,7 +13,7 @@
 	Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk)bp.getModel();
 %>
 <fieldset class="card fieldset">
-    <legend class="GroupLabel card-header text-primary">Righe di fattura</legend>
+    <legend class="GroupLabel card-header text-primary p-0 pl-2">Righe di fattura</legend>
     <table width="100%">
         <tr>
             <td>
@@ -23,7 +23,7 @@
     </table>
 </fieldset>
 <fieldset class="card fieldset">
-    <legend class="GroupLabel card-header text-primary">Righe di consegna</legend>
+    <legend class="GroupLabel card-header text-primary p-0 pl-2">Righe di consegna</legend>
     <table width="100%">
         <tr>
             <td>
@@ -31,20 +31,20 @@
             </td>
         </tr>
     </table>
-    <fieldset class="card fieldset ">
-        <legend class="GroupLabel card-header text-primary">Rettifiche</legend>
-        <table cellpadding="5px">
-            <tr>
-                <% bp.getFattureRigaOrdiniController().writeFormField(out, "voceIva"); %>
-                <% bp.getFattureRigaOrdiniController().writeFormField(out, "prezzoUnitarioRett"); %>
-            </tr>
-        </table>
-        <table cellpadding="5px">
-            <tr>
-                <% bp.getFattureRigaOrdiniController().writeFormField(out, "sconto1Rett"); %>
-                <% bp.getFattureRigaOrdiniController().writeFormField(out, "sconto2Rett"); %>
-                <% bp.getFattureRigaOrdiniController().writeFormField(out, "sconto3Rett"); %>
-            </tr>
-        </table>
-    </fieldset>
+</fieldset>
+<fieldset class="card fieldset ">
+    <legend class="GroupLabel card-header text-primary p-0 pl-2">Rettifiche</legend>
+    <table cellpadding="5px">
+        <tr>
+            <% bp.getFattureRigaOrdiniController().writeFormField(out, "voceIva"); %>
+            <% bp.getFattureRigaOrdiniController().writeFormField(out, "prezzoUnitarioRett"); %>
+        </tr>
+    </table>
+    <table cellpadding="5">
+        <tr>
+            <% bp.getFattureRigaOrdiniController().writeFormField(out, "sconto1Rett"); %>
+            <% bp.getFattureRigaOrdiniController().writeFormField(out, "sconto2Rett"); %>
+            <% bp.getFattureRigaOrdiniController().writeFormField(out, "sconto3Rett"); %>
+        </tr>
+    </table>
 </fieldset>
