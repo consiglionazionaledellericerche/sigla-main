@@ -121,6 +121,11 @@ public Forward doBlankSearchFind_capitolo(ActionContext context,AccertamentoBulk
 	} 
 	catch(Throwable e) {return handleException(context,e);}
 }
+public Forward doBlankSearchFind_elemento_voce(ActionContext context,AccertamentoBulk accertamento) 
+{
+	return doBlankSearchFind_capitolo(context, accertamento);
+}
+
 public Forward doBlankSearchFind_debitore(ActionContext context,AccertamentoBulk accertamento) 
 {
 	try 
@@ -282,6 +287,11 @@ public Forward doBringBackSearchFind_capitolo(ActionContext context, Accertament
 	} 
 	catch(Throwable e) {return handleException(context,e);}
 }
+public Forward doBringBackSearchFind_elemento_voce(ActionContext context, AccertamentoBulk accertamento, it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk capitolo) 
+{
+	return doBringBackSearchFind_capitolo(context, accertamento, capitolo);
+}
+
 /**
  * <!-- @TODO: da completare -->
  * 
