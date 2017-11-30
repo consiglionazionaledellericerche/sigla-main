@@ -6,7 +6,7 @@
 	<parent>
     	<artifactId>sigla</artifactId>
     	<groupId>it.cnr</groupId>
-	    <version>4.1.35</version>
+	    <version>4.1.36-SNAPSHOT</version>
   	</parent>
 	<modules>
 		<module>sigla-storage-commons</module>
