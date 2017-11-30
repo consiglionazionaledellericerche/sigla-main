@@ -1313,10 +1313,10 @@ public ImportoOrdine calcoloImportoOrdine(ParametriCalcoloImportoOrdine parametr
 	} else {
 		voceIva = parametri.getVoceIva();
 	}
-	BigDecimal importoIva = Utility.round2Decimali((Utility.divide(imponibile, Utility.CENTO)).multiply(voceIva.getPercentuale())); 
-	BigDecimal ivaNonDetraibile = Utility.round2Decimali(importoIva.multiply((Utility.CENTO.subtract(voceIva.getPercentuale_detraibilita()))));
+	BigDecimal importoIva = Utility.round6Decimali((Utility.divide(imponibile, Utility.CENTO, 6)).multiply(voceIva.getPercentuale()));
+	BigDecimal ivaNonDetraibile = Utility.round6Decimali(importoIva.multiply((Utility.CENTO.subtract(voceIva.getPercentuale_detraibilita()))));
 	BigDecimal ivaPerCalcoloProrata = importoIva.subtract(ivaNonDetraibile);
-	BigDecimal ivaDetraibile = Utility.round2Decimali(ivaPerCalcoloProrata.multiply(Utility.nvl(parametri.getPercProrata())));
+	BigDecimal ivaDetraibile = Utility.round6Decimali(ivaPerCalcoloProrata.multiply(Utility.nvl(parametri.getPercProrata())));
 	ivaNonDetraibile = ivaNonDetraibile.add((ivaPerCalcoloProrata.subtract(ivaDetraibile)));
 	
 	if (ivaDetraibile.compareTo(BigDecimal.ZERO) == 0 || ivaNonDetraibile.compareTo(BigDecimal.ZERO) > 0){
@@ -1347,7 +1347,7 @@ public ImportoOrdine calcoloImportoOrdinePerMagazzino(ParametriCalcoloImportoOrd
 		voceIva = parametri.getVoceIva();
 	}
 
-	BigDecimal importoIva = (Utility.divide(imponibile, Utility.CENTO)).multiply(voceIva.getPercentuale()); 
+	BigDecimal importoIva = (Utility.divide(imponibile, Utility.CENTO, 6)).multiply(voceIva.getPercentuale());
 	BigDecimal ivaNonDetraibile = importoIva.multiply((Utility.CENTO.subtract(voceIva.getPercentuale_detraibilita())));
 
 	BigDecimal ivaPerCalcoloProrata = importoIva.subtract(ivaNonDetraibile);
@@ -1380,7 +1380,7 @@ private BigDecimal calcoloImponibile(ParametriCalcoloImportoOrdine parametri) th
 	}
 	if (!parametri.getDivisa().getCd_divisa().equals(parametri.getDivisaRisultato().getCd_divisa())){
 		if (parametri.getDivisaRisultato().getFl_calcola_con_diviso().booleanValue())
-			prezzo = Utility.divide(prezzo, cambio);
+			prezzo = Utility.divide(prezzo, cambio, 6);
 		else
 			prezzo= prezzo.multiply(cambio).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 
