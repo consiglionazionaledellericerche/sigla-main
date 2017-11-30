@@ -26,6 +26,7 @@ import it.cnr.contab.doccont00.core.bulk.Accertamento_vincolo_perenteBulk;
 import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.V_pdg_accertamento_etrBulk;
 import it.cnr.contab.doccont00.core.bulk.V_pdg_obbligazione_speBulk;
 import it.cnr.contab.doccont00.ejb.AccertamentoComponentSession;
 import it.cnr.contab.doccont00.ejb.AccertamentoResiduoComponentSession;
@@ -54,7 +55,7 @@ public class CRUDAccertamentoBP extends CRUDVirtualAccertamentoBP {
 	private final SimpleDetailCRUDController pdgVincoliPerenti= new SimpleDetailCRUDController("VincoliPerenti",Accertamento_vincolo_perenteBulk.class,"accertamentoVincoliPerentiColl",this);
 
 	private final SimpleDetailCRUDController centriDiResponsabilita = new SimpleDetailCRUDController("CentriDiResponsabilita",CdrBulk.class,"cdrColl",this);
-	private final SimpleDetailCRUDController lineeDiAttivita = new SimpleDetailCRUDController("LineeDiAttivita",V_pdg_obbligazione_speBulk.class,"lineeAttivitaColl",this);
+	private final SimpleDetailCRUDController lineeDiAttivita = new SimpleDetailCRUDController("LineeDiAttivita",V_pdg_accertamento_etrBulk.class,"lineeAttivitaColl",this);
 	private final SimpleDetailCRUDController nuoveLineeDiAttivita = new SimpleDetailCRUDController("NuoveLineeDiAttivita",Linea_attivitaBulk.class,"nuoveLineeAttivitaColl",this);
 
 	// "editingScadenza" viene messo a True solo quando si modifica una scadenza (bottone "editing scadenza")
