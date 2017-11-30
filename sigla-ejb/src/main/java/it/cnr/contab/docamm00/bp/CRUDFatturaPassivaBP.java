@@ -27,6 +27,7 @@ import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
@@ -35,6 +36,9 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.SimpleFindClause;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 import javax.servlet.ServletException;
@@ -1701,5 +1705,55 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                 fattura_passiva_rigaBulk,
                 fatturaOrdineBulk
         );
+    }
+
+    public boolean associaOrdineRigaFattura(ActionContext context, Fattura_passiva_rigaBulk fattura_passiva_rigaBulk) throws BusinessProcessException {
+        return Optional.ofNullable(createComponentSession())
+                .filter(FatturaPassivaComponentSession.class::isInstance)
+                .map(FatturaPassivaComponentSession.class::cast)
+                .map(fatturaPassivaComponentSession -> {
+                    try {
+                        List<EvasioneOrdineRigaBulk> evasioneOrdineRigas = fatturaPassivaComponentSession.findContabilizzaRigaByClause(
+                                context.getUserContext(),
+                                fattura_passiva_rigaBulk,
+                                CompoundFindClause.identity(
+                                        new SimpleFindClause("ordineAcqConsegna.ordineAcqRiga.imImponibileDivisa", SQLBuilder.EQUALS, fattura_passiva_rigaBulk.getIm_imponibile())
+                                )
+                        );
+                        return Optional.ofNullable(evasioneOrdineRigas)
+                                .filter(evasioneOrdineRigaBulks -> !evasioneOrdineRigaBulks.isEmpty())
+                                .filter(evasioneOrdineRigaBulks -> evasioneOrdineRigaBulks.size() == 1)
+                                .map(evasioneOrdineRigaBulks -> {
+                                    final EvasioneOrdineRigaBulk evasioneOrdineRigaBulk = evasioneOrdineRigaBulks.get(0);
+                                    try {
+                                        fattura_passiva_rigaBulk.setBene_servizio(Optional.ofNullable(fattura_passiva_rigaBulk.getBene_servizio())
+                                                .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getBeneServizio())
+                                        );
+                                        fattura_passiva_rigaBulk.setVoce_iva(Optional.ofNullable(fattura_passiva_rigaBulk.getVoce_iva())
+                                                .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getVoce_iva())
+                                        );
+                                        fattura_passiva_rigaBulk.setDs_riga_fattura(Optional.ofNullable(fattura_passiva_rigaBulk.getDs_riga_fattura())
+                                                .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getBeneServizio().getDs_bene_servizio())
+                                        );
+                                        fattura_passiva_rigaBulk.setPrezzo_unitario(Optional.ofNullable(fattura_passiva_rigaBulk.getPrezzo_unitario())
+                                                .orElseGet(() -> evasioneOrdineRigaBulk.getOrdineAcqConsegna().getOrdineAcqRiga().getPrezzoUnitario())
+                                        );
+                                        fattura_passiva_rigaBulk.setQuantita(Optional.ofNullable(fattura_passiva_rigaBulk.getQuantita())
+                                                .orElseGet(() -> evasioneOrdineRigaBulk.getQuantitaEvasa())
+                                        );
+                                        associaOrdineRigaFattura(
+                                                context,
+                                                evasioneOrdineRigaBulk,
+                                                fattura_passiva_rigaBulk
+                                        );
+                                    } catch (BusinessProcessException e) {
+                                        throw new DetailedRuntimeException(e);
+                                    }
+                                    return true;
+                                }).orElse(false);
+                    } catch (ComponentException|RemoteException e) {
+                        throw new DetailedRuntimeException(e);
+                    }
+                }).orElse(false);
     }
 }
