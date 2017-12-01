@@ -32,7 +32,7 @@
         </tr>
     </table>
 </fieldset>
-<fieldset class="card fieldset ">
+<fieldset class="card fieldsetc">
     <legend class="GroupLabel card-header text-primary p-0 pl-2">Rettifiche</legend>
     <table cellpadding="5px">
         <tr>
