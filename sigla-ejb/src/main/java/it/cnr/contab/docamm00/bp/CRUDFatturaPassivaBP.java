@@ -4,10 +4,7 @@ import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
-import it.cnr.contab.docamm00.fatturapa.bulk.AllegatoFatturaBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBase;
+import it.cnr.contab.docamm00.fatturapa.bulk.*;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
@@ -39,6 +36,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SimpleFindClause;
+import it.cnr.jada.util.action.CollapsableDetailCRUDController;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 import javax.servlet.ServletException;
@@ -91,6 +89,14 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     private final SimpleDetailCRUDController crudDocEleAllegatiColl = new SimpleDetailCRUDController(
             "RifDocEleAllegatiColl", DocumentoEleAllegatiBulk.class,
             "docEleAllegatiColl", this);
+    private final CollapsableDetailCRUDController crudDocEleAcquistoColl =
+            new CollapsableDetailCRUDController("Riferimenti Acquisto",DocumentoEleAcquistoBulk.class,"docEleAcquistoColl",this){
+                @Override
+                public boolean isEnabled() {
+                    return false;
+                }
+            };
+
     //variabile inizializzata in fase di caricamento Nota da fattura elettronica
     //utilizzata per ritornare sulla fattura elettronica
     public boolean fromFatturaElettronica = Boolean.FALSE;
@@ -355,7 +361,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         return consuntivoController;
     }
 
-    public SimpleDetailCRUDController getFattureRigaOrdiniController() {
+    public OrdiniCRUDController getFattureRigaOrdiniController() {
         return fattureRigaOrdiniController;
     }
 
@@ -1755,5 +1761,9 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                         throw new DetailedRuntimeException(e);
                     }
                 }).orElse(false);
+    }
+
+    public CollapsableDetailCRUDController getCrudDocEleAcquistoColl() {
+        return crudDocEleAcquistoColl;
     }
 }

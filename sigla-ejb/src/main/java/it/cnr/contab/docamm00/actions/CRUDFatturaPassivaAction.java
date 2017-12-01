@@ -939,7 +939,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                         if (righeContabilizzate.intValue() == models.size()) {
                             bp.setMessage(FormBP.INFO_MESSAGE,"Tutte le righe selezionate sono state contabilizzate.");
                         } else {
-                            bp.setMessage(FormBP.ERROR_MESSAGE,"Sono state contabilizzate " + righeContabilizzate + " su " + models.size() + "! Procedere alla conatbilizzazione manuale.");
+                            bp.setMessage(FormBP.ERROR_MESSAGE,"Sono state contabilizzate " + righeContabilizzate + " righe su " + models.size() + "! Procedere alla conatbilizzazione manuale.");
                         }
                     }
                     return context.findDefaultForward();
@@ -5491,6 +5491,16 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         fatturaOrdineBulk.setVoceIva(new Voce_ivaBulk());
         fatturaOrdineBulk.calcolaRettifiche();
         bp.setDirty(true);
+        return context.findDefaultForward();
+    }
+
+    public Forward doToggleOrdiniRettifiche(ActionContext context) {
+        CRUDFatturaPassivaBP bp = Optional.ofNullable(getBusinessProcess(context))
+                .filter(CRUDFatturaPassivaBP.class::isInstance)
+                .map(CRUDFatturaPassivaBP.class::cast)
+                .orElseThrow(() -> new DetailedRuntimeException("Business Process non valido"));
+        Optional.ofNullable(bp.getFattureRigaOrdiniController())
+                .ifPresent(ordiniCRUDController -> ordiniCRUDController.setRettificheCollapse(!ordiniCRUDController.isRettificheCollapse()));
         return context.findDefaultForward();
     }
 }
