@@ -18,7 +18,7 @@
 </head>
 <title>Informazione</title>
 <body class="Workspace">
-<FORM name="mainForm" action="Option.do" method=post onSubmit="return disableDblClick()">
+<FORM name="mainForm" action="Option.do" action-ng="Option.do" method=post onSubmit="return disableDblClick()">
 <input type=hidden name="comando">
 <% 	
 	OptionBP bp = (OptionBP)BusinessProcess.getBusinessProcess(request);
