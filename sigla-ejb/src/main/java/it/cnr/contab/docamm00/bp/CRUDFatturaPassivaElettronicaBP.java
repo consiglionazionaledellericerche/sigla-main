@@ -401,11 +401,10 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	public OggettoBulk completaFatturaPassiva(ActionContext context, Fattura_passivaBulk fatturaPassivaBulk, CRUDFatturaPassivaBP nbp, Fattura_passivaBulk fatturaPassivaDiRiferimento) throws BusinessProcessException {
     	try {    		
 			CRUDFatturaPassivaAction action = new CRUDFatturaPassivaAction();
-			DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
+			FatturaPassivaComponentSession comp = (FatturaPassivaComponentSession)nbp.createComponentSession();
+					DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
 			fatturaPassivaBulk.setDocumentoEleTestata(documentoEleTestata);
-			fatturaPassivaBulk = 
-					((FatturaPassivaComponentSession)nbp.createComponentSession()).
-					caricaAllegatiBulk(context.getUserContext(), fatturaPassivaBulk);
+			fatturaPassivaBulk = comp.caricaAllegatiBulk(context.getUserContext(), fatturaPassivaBulk);
 			fatturaPassivaBulk.setTi_fattura(documentoEleTestata.getTipoDocumentoSIGLA());
 	    	fatturaPassivaBulk.setNr_fattura_fornitore(documentoEleTestata.getNumeroDocumento());
 	    	fatturaPassivaBulk.setDt_fattura_fornitore(documentoEleTestata.getDataDocumento());
@@ -427,7 +426,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	    			documentoEleTestata.getDocEleIVAColl().stream().map(x->x.getImposta()).reduce((x,y)->x.add(y)).get().compareTo(BigDecimal.ZERO)!=0);
 
 	    	if (fatturaPassivaBulk.getFl_split_payment()) {
-	    		java.util.Vector sezionali = ((FatturaPassivaComponentSession)nbp.createComponentSession()).estraeSezionali(context.getUserContext(),fatturaPassivaBulk);
+	    		java.util.Vector sezionali = comp.estraeSezionali(context.getUserContext(),fatturaPassivaBulk);
 	    		fatturaPassivaBulk.setSezionali(sezionali);
 	    		if (sezionali != null && !sezionali.isEmpty())
 	    			fatturaPassivaBulk.setTipo_sezionale((Tipo_sezionaleBulk)sezionali.firstElement());
@@ -452,7 +451,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	    		fatturaPassivaBulk.setIm_totale_fattura(documentoEleTestata.getImportoDocumento());
 	    		fatturaPassivaBulk.setIm_importo_totale_fattura_fornitore_euro(documentoEleTestata.getImportoDocumento());
 	    	}
-
+			fatturaPassivaBulk = comp.valorizzaInfoDocEle(context.getUserContext(), fatturaPassivaBulk);
 	    	nbp.setModel(context, fatturaPassivaBulk);
 
 	    	action.doCalcolaTotaleFatturaFornitoreInEur(context);
