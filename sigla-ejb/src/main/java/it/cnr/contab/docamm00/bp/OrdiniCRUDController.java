@@ -26,6 +26,15 @@ import java.util.Optional;
  * @author: Marco Spasiano
  */
 public class OrdiniCRUDController extends it.cnr.jada.util.action.SimpleDetailCRUDController implements TableCustomizer {
+    private boolean rettificheCollapse = true;
+
+    public boolean isRettificheCollapse() {
+        return rettificheCollapse;
+    }
+
+    public void setRettificheCollapse(boolean rettificheCollapse) {
+        this.rettificheCollapse = rettificheCollapse;
+    }
     /**
      * OrdiniCRUDController constructor comment.
      *
