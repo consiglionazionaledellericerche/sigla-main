@@ -61,7 +61,7 @@ function showStackTrace() {
 </head>
 
 <body>
-<form name="mainForm" action="FormAction.do">
+<form name="mainForm" action="FormAction.do" action-ng="FormAction.do">
 <% 	BusinessProcess.encode(bp,pageContext); %>
 <input type="hidden" name="comando" value="doDefault">
 <P align=center>
