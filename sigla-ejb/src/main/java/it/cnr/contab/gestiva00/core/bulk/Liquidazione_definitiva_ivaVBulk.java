@@ -259,7 +259,8 @@ public boolean isRegistroStampato(String mese) {
 				e.stream().filter(x->{
 					Calendar cal = new GregorianCalendar();
 					cal.setTime(((Liquidazione_ivaBulk)x).getDt_inizio());
-					return cal.get(Calendar.MONTH)==(Integer)this.getMesi_int().get(mese)-1;
+					return (cal.get(Calendar.MONTH)==Calendar.DECEMBER && mese.equals(Stampa_registri_ivaVBulk.DICEMBRE)) ||
+						   (cal.get(Calendar.MONTH)!=Calendar.DECEMBER && cal.get(Calendar.MONTH)==(Integer)this.getMesi_int().get(mese)-1);
 				})
 				.findFirst()
 				.isPresent()
@@ -294,15 +295,22 @@ public BigDecimal getTotaleRipartizioneFinanziaria() {
 	return lis.map(Liquidazione_iva_ripart_finBulk::getIm_variazione).reduce(BigDecimal.ZERO, BigDecimal::add);
 }
 public String getNextMeseForLiquidazioneDefinitiva() { 
+	if (this.getProspetti_stampati()==null)
+		return (String)this.getInt_mesi().get(
+				this.getMesi_int().get(Stampa_registri_ivaVBulk.DICEMBRE));
 	Stream<Liquidazione_ivaBulk> lis = 
-			Optional.ofNullable(this.getProspetti_stampati())
-				.map(e->e.stream().map(Liquidazione_ivaBulk.class::cast))
-				.orElse(Stream.of(Stampa_registri_ivaVBulk.DICEMBRE));
+			this.getProspetti_stampati().stream().map(Liquidazione_ivaBulk.class::cast);
 	return lis.max((e1,e2)->e1.getDt_inizio().compareTo(e2.getDt_inizio()))
 			.map(x->{
-				Calendar cal = new GregorianCalendar();
-				cal.setTime(x.getDt_inizio());
-				return (String)this.getInt_mesi().get(cal.get(Calendar.MONTH)+2);
-			}).get();
+					Calendar cal = new GregorianCalendar();
+					cal.setTime(x.getDt_inizio());
+					if (cal.get(Calendar.MONTH)==Calendar.DECEMBER)
+						return (String)this.getInt_mesi().get(
+								this.getMesi_int().get(Stampa_registri_ivaVBulk.GENNAIO));
+					if (cal.get(Calendar.MONTH)==Calendar.NOVEMBER)
+						return null;
+					return (String)this.getInt_mesi().get(cal.get(Calendar.MONTH)+2);	
+				})
+			.orElse(null);
 }
 }

@@ -1,5 +1,6 @@
 package it.cnr.contab.gestiva00.bp;
 
+import java.util.Optional;
 import java.util.TreeMap;
 
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
@@ -103,8 +104,8 @@ public boolean isTabLiquidazioniVisible() {
 
 public boolean isTabLiquidazioniProvvisorieVisible() {
 	Liquidazione_massa_ivaVBulk model = (Liquidazione_massa_ivaVBulk)this.getModel();
-	return (model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null	&&
-			model.getNextMeseForLiquidazioneDefinitiva().equals(model.getMese()));
+  	return model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null &&
+		   model.getMese().equals(model.getNextMeseForLiquidazioneDefinitiva());
 }
 
 public boolean isTabLiquidazioniDefinitiveVisible() {
