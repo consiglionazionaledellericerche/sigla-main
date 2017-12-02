@@ -38,7 +38,7 @@
 <div class="card border-primary">
     <div class="card-header">
         <h5 class="mb-0">
-            <a href="#" onclick="submitForm('doToggle(ordiniRettifiche)')"><i aria-hidden="true" class="fa <%=collapseIconClass%> text-primary"></i> Rettifiche</a>
+            <a onclick="submitForm('doToggle(ordiniRettifiche)')" class="text-primary"><i aria-hidden="true" class="fa <%=collapseIconClass%>"></i> Rettifiche</a>
         </h5>
     </div>
     <div class="card-block">
