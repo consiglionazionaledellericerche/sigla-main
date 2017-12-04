@@ -23,7 +23,8 @@
 
 <%	bp.openFormWindow(pageContext); %>
 
-<table class="Panel">
+<div class="Group card">
+<table class="Panel w-75">
 	<tr>
 		<td>
 			<fieldset>
@@ -118,7 +119,7 @@
 		</td>
 	</tr>
 </table>
-
+</div>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
 </html>

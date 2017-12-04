@@ -1,5 +1,5 @@
 package it.cnr.contab.doccont00.ejb;
-import java.rmi.*;
+import java.rmi.RemoteException;
 import java.util.List;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
@@ -7,7 +7,6 @@ import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.ejb.*;
 
 public class TransactionalMandatoAutomaticoComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements MandatoAutomaticoComponentSession {
 public it.cnr.contab.doccont00.core.bulk.MandatoBulk aggiungiDocPassivi(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.MandatoBulk param1,java.util.List param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
@@ -534,6 +533,23 @@ public Boolean isVerificataModPagMandato(UserContext param0,
 		throws ComponentException, RemoteException {
 	try {
 		return (java.lang.Boolean)invoke("isVerificataModPagMandato",new Object[] {
+			param0,
+			param1 });
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public it.cnr.jada.bulk.OggettoBulk creaMandatoAutomatico(it.cnr.jada.UserContext param0, it.cnr.jada.bulk.OggettoBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		return (it.cnr.contab.doccont00.core.bulk.MandatoAutomaticoWizardBulk)invoke("creaMandatoAutomatico",new Object[] {
 			param0,
 			param1 });
 	} catch(java.rmi.RemoteException e) {
