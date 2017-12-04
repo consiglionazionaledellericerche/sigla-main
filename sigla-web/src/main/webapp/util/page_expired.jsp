@@ -14,7 +14,7 @@
 restoreWorkspace();
 </script>
 
-<form name="mainForm" action="FormAction.do">
+<form name="mainForm" action="FormAction.do" action-ng="FormAction.do">
 <% BusinessProcess bp = BusinessProcess.getBusinessProcess(request);
 	BusinessProcess.encode(bp,pageContext); %>
 <input type="hidden" name="comando" value="doDefault">
