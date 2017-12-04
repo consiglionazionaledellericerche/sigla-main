@@ -81,8 +81,25 @@
 				<div class="Group card-block">
 					<table width="100%" style="text-align: center;">
 						<tr>
-							<td><%JSPUtils.button(out, "img/compressed.gif", "img/compressed.gif", "Entrate", "if (disableDblClick()) submitForm('doContrattazioneEntrate')",null,pdg_selezionato, bp.getParentRoot().isBootstrap());%></td>
-							<td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Spese", "if (disableDblClick()) submitForm('doContrattazioneSpese')",null,pdg_selezionato, bp.getParentRoot().isBootstrap());%></td>
+							<td>
+								<%JSPUtils.button(out, 
+										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-money text-primary" : "img/compressed.gif",
+										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-money text-primary" : "img/compressed.gif",
+										"Entrate", 
+										"if (disableDblClick()) submitForm('doContrattazioneEntrate')",
+										"btn-secondary btn-outline-secondary btn-title text-primary",
+										pdg_selezionato, 
+										bp.getParentRoot().isBootstrap());%>
+							</td>
+							<td>
+								<%JSPUtils.button(out, 
+										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-briefcase text-primary" : "img/transfer.gif",
+										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-briefcase text-primary" : "img/transfer.gif",
+										"Spese", 
+										"if (disableDblClick()) submitForm('doContrattazioneSpese')",
+										"btn-secondary btn-outline-secondary btn-title text-primary",
+										pdg_selezionato, 
+										bp.getParentRoot().isBootstrap());%></td>
 						</tr>
 					</table>
 				</div>
@@ -98,8 +115,25 @@
 				<div class="Group card-block">
 					<table width="100%" style="text-align: center;">
 						<tr>
-							<td><%JSPUtils.button(out, "img/compressed.gif", "img/compressed.gif", "Entrate", "if (disableDblClick()) submitForm('doGestionaleEntrate')",null,pdg_selezionato&&bp.isGestionaleAccessibile(), bp.getParentRoot().isBootstrap());%></td>
-							<td><%JSPUtils.button(out, "img/transfer.gif", "img/transfer.gif", "Spese", "if (disableDblClick()) submitForm('doGestionaleSpese')",null,pdg_selezionato&&bp.isGestionaleAccessibile(), bp.getParentRoot().isBootstrap());%></td>
+							<td>
+								<%JSPUtils.button(out, 
+										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-money text-primary" : "img/compressed.gif",
+										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-money text-primary" : "img/compressed.gif",
+										"Entrate", 
+										"if (disableDblClick()) submitForm('doGestionaleEntrate')",
+										"btn-secondary btn-outline-secondary btn-title text-primary",
+										pdg_selezionato&&bp.isGestionaleAccessibile(), 
+										bp.getParentRoot().isBootstrap());%>
+							</td>
+							<td>
+								<%JSPUtils.button(out, 
+										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-briefcase text-primary" : "img/transfer.gif",
+										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-briefcase text-primary" : "img/transfer.gif",
+										"Spese", 
+										"if (disableDblClick()) submitForm('doGestionaleSpese')",
+										"btn-secondary btn-outline-secondary btn-title text-primary",
+										pdg_selezionato&&bp.isGestionaleAccessibile(), 
+										bp.getParentRoot().isBootstrap());%></td>
 						</tr>
 					</table>
 				</div>

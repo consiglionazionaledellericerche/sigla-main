@@ -16,9 +16,10 @@
 //	boolean isAbilitato = !(bp.isCdrScrivania() &&bk.isApprovata() && bp.isAbilitatoModificaDescVariazioni());
 	boolean isAbilitato =( isFieldEnabled && !(bp.isCdrScrivania() &&bk.isApprovata() && bp.isAbilitatoModificaDescVariazioni()));
 %>
-<fieldset class="fieldset">
+<div class="Group">
+<fieldset class="fieldset card">
 	<% if (!bp.getParametriCnr().getFl_regolamento_2006().booleanValue() && bk.getDesTipoVariazione()!=null) { %>
-		<legend class="GroupLabel"><% bp.getController().writeFormInput(out,null,"desTipoVariazione",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");%></legend>
+		<legend class="GroupLabel cardLabel card-header text-primary"><% bp.getController().writeFormInput(out,null,"desTipoVariazione",true,"GroupLabel cardLabel card-header text-primary","style=\"border-style : none; cursor:default;\"");%></legend>
 	<% } %> 
 <table class="Panel">	
   <TR>
@@ -100,8 +101,10 @@ if ((bp.isSearching())||(bk.isRespinta())||(bk.isPropostaDefinitiva()&&bp.isUoEn
 <%
 }
 %>
-<BR>
-<div class="Group">
+</fieldset>
+</div>
+<% if (bp.getParent().isBootstrap()) {%><BR><% } %>
+<div class="Group card">
 	<table class="Panel" cellspacing=1 cellpadding=1>
 	  <tr>
 	     <td></td>
@@ -158,5 +161,3 @@ if ((bp.isSearching())||(bk.isRespinta())||(bk.isPropostaDefinitiva()&&bp.isUoEn
 	</table>
 </div>
 <%}%>
-
-</fieldset>
