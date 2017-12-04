@@ -26,13 +26,13 @@
 <body class="Form">
 
 <%	bp.openFormWindow(pageContext); %>
-<table class="Panel">
+<table class="Panel card">
 	<tr>
 		<td><%	bp.getController().writeFormLabel(out,"unita_organizzativa_filter"); %></td>
 		<td><%	bp.getController().writeFormInput(out,null,"unita_organizzativa_filter", bp.isDirty(), null, null); %></td>
 	</tr>
 </table>
-<table class="Panel">
+<table class="Panel card">
 	<tr>
 		<%	if (bp.getCosti_dipendente().isMensile())
 				bp.getController().writeFormField(out,"mese"); %>

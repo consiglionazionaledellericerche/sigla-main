@@ -24,6 +24,7 @@ public class Numerazione_doc_ammBulk extends Numerazione_doc_ammBase {
 	public final static String TIPO_GEN_IVA_E = "GEN_IVA_E";
 	public final static String TIPO_GEN_CH_FON = "GEN_CH_FON";
 	public final static String TIPO_GEN_AP_FON = "GEN_AP_FON";
+	public final static String TIPO_ORDINE = "ORDINE";
 public Numerazione_doc_ammBulk() {
 	super();
 }
