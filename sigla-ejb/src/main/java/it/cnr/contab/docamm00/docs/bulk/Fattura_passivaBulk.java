@@ -7,6 +7,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
@@ -161,6 +162,7 @@ public abstract class Fattura_passivaBulk
     private BulkList fattura_passiva_dettColl = new BulkList();
     private BulkList fattura_passiva_intrastatColl = new BulkList();
     private BulkList riferimenti_bancari = new BulkList();
+    private BulkList<DocumentoEleAcquistoBulk> docEleAcquistoColl = new BulkList<DocumentoEleAcquistoBulk>();
     private Collection fattura_passiva_consuntivoColl = new Vector();
     private ObbligazioniTable fattura_passiva_obbligazioniHash = null;
     private FatturaRigaOrdiniTable fatturaRigaOrdiniHash = null;
@@ -3435,5 +3437,13 @@ public abstract class Fattura_passivaBulk
                 .map(bulkList -> bulkList.stream())
                 .map(stream -> stream.anyMatch(fattura_attiva_rigaBulk -> !((Fattura_passiva_rigaBulk)fattura_attiva_rigaBulk).isStatoIniziale()))
                 .orElse(false);
+    }
+
+    public BulkList<DocumentoEleAcquistoBulk> getDocEleAcquistoColl() {
+        return docEleAcquistoColl;
+    }
+
+    public void setDocEleAcquistoColl(BulkList<DocumentoEleAcquistoBulk> docEleAcquistoColl) {
+        this.docEleAcquistoColl = docEleAcquistoColl;
     }
 }
