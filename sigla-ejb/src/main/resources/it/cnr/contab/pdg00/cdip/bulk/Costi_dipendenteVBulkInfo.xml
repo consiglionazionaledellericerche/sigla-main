@@ -13,7 +13,7 @@
 		name="unita_organizzativa_filter"
 		property="unita_organizzativa_filter"
 		inputType="SEARCHTOOL"
-		formName="searchtool"
+		formName="searchtoolUO"
 		label="Unita Organizzativa" />
 	<fieldProperty
 		name="unita_organizzativa_scarico"
