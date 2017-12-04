@@ -27,10 +27,15 @@
 %>
 
 <div class="Group">
-	<table class="Panel card card-block" border="0" cellspacing="0" cellpadding="0">
+	<table class="Panel card p-2 w-100">
 		<tr>
-			<td><% bp.getController().writeFormField(out,"cd_cdr_ro");%></td>
-			<td><% bp.getController().writeFormField(out,"ds_cdr_ro");%></td>
+		    <td><% bp.getController().writeFormLabel(out,"cd_cdr_ro");%></td>
+		    <td class="w-100">
+		        <div class="input-group input-group-searchtool w-100">
+		            <% bp.getController().writeFormInput(out,"cd_cdr_ro");%>
+		            <% bp.getController().writeFormInput(out,"ds_cdr_ro");%>
+		        </div>
+		    </td>
 		</tr>
 	</table>
 </div>
@@ -48,7 +53,7 @@
 </div>
 
 <div class="Group card">
-	<table border="0" cellspacing="0" cellpadding="2">
+	<table border="0" cellspacing="0" cellpadding="2" class="w-100">
 		<tr>
 			<td>
 			<%	if (bp.getParametriCnr().getFl_nuovo_pdg()) 
@@ -62,82 +67,94 @@
 	<table border="0" cellspacing="0" cellpadding="2" width="100%">
 		<tr>
 			<td colspan="5" width="45%">
- 		    <div class="card">
-				<div class="GroupLabel card-header">Stato del PdG</div>
-				<div class="Group card-block">
-					<table>
-						<tr>
-							<td><% controller.writeFormLabel(out,"cambia_stato");%></td>
-							<td><% controller.writeFormInput( out, null, "cambia_stato", bp.isROStato(), null, null);%></td>
-							<td><center><%JSPUtils.button(out, "img/import24.gif", "img/import24.gif", "Cambia Stato", "if (disableDblClick()) javascript:submitForm('doCambiaStato')", null, !bp.isROStato(), bp.getParentRoot().isBootstrap());%></center></td>
-						</tr>					
-					</table>
-				</div>
-			</div>				
+                <div class="card">
+                    <div class="GroupLabel card-header">Stato del PdG</div>
+                    <div class="Group card-block">
+                        <table>
+                            <tr>
+                                <td><% controller.writeFormLabel(out,"cambia_stato");%></td>
+                                <td><% controller.writeFormInput( out, null, "cambia_stato", bp.isROStato(), null, null);%></td>
+                                <td>
+                                    <center>
+                                    <%JSPUtils.button(out,
+                                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-unlock" : "img/import24.gif",
+                                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-unlock" : "img/import24.gif",
+                                        "Cambia Stato",
+                                        "if (disableDblClick()) javascript:submitForm('doCambiaStato')",
+                                        "btn-secondary btn-outline-info btn-title btn-block",
+                                        !bp.isROStato(),
+                                        bp.getParentRoot().isBootstrap());%>
+                                    </center>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
 			</td>
 			<td>
- 		    <div class="card">
-				<div class="GroupLabel card-header">Contrattazione</div>
-				<div class="Group card-block">
-					<table width="100%" style="text-align: center;">
-						<tr>
-							<td>
-								<%JSPUtils.button(out, 
-										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-money text-primary" : "img/compressed.gif",
-										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-money text-primary" : "img/compressed.gif",
-										"Entrate", 
-										"if (disableDblClick()) submitForm('doContrattazioneEntrate')",
-										"btn-secondary btn-outline-secondary btn-title text-primary",
-										pdg_selezionato, 
-										bp.getParentRoot().isBootstrap());%>
-							</td>
-							<td>
-								<%JSPUtils.button(out, 
-										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-briefcase text-primary" : "img/transfer.gif",
-										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-briefcase text-primary" : "img/transfer.gif",
-										"Spese", 
-										"if (disableDblClick()) submitForm('doContrattazioneSpese')",
-										"btn-secondary btn-outline-secondary btn-title text-primary",
-										pdg_selezionato, 
-										bp.getParentRoot().isBootstrap());%></td>
-						</tr>
-					</table>
-				</div>
-			</div>
+                <div class="card">
+                    <div class="GroupLabel card-header">Contrattazione</div>
+                    <div class="Group card-block">
+                        <table width="100%" style="text-align: center;">
+                            <tr>
+                                <td>
+                                    <%JSPUtils.button(out,
+                                            bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-money" : "img/compressed.gif",
+                                            bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-money" : "img/compressed.gif",
+                                            "Entrate",
+                                            "if (disableDblClick()) submitForm('doContrattazioneEntrate')",
+                                            "btn-secondary btn-outline-primary btn-title btn-block",
+                                            pdg_selezionato,
+                                            bp.getParentRoot().isBootstrap());%>
+                                </td>
+                                <td>
+                                    <%JSPUtils.button(out,
+                                            bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-briefcase" : "img/transfer.gif",
+                                            bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-briefcase" : "img/transfer.gif",
+                                            "Spese",
+                                            "if (disableDblClick()) submitForm('doContrattazioneSpese')",
+                                            "btn-secondary btn-outline-primary btn-title btn-block",
+                                            pdg_selezionato,
+                                            bp.getParentRoot().isBootstrap());%>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
 			</td>
 		</tr>
 		<tr>
-			<td colspan=5>
-			</td>
+			<td colspan=5></td>
 			<td>
- 		    <div class="card">
-				<div class="GroupLabel card-header">Gestionale</div>
-				<div class="Group card-block">
-					<table width="100%" style="text-align: center;">
-						<tr>
-							<td>
-								<%JSPUtils.button(out, 
-										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-money text-primary" : "img/compressed.gif",
-										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-money text-primary" : "img/compressed.gif",
-										"Entrate", 
-										"if (disableDblClick()) submitForm('doGestionaleEntrate')",
-										"btn-secondary btn-outline-secondary btn-title text-primary",
-										pdg_selezionato&&bp.isGestionaleAccessibile(), 
-										bp.getParentRoot().isBootstrap());%>
-							</td>
-							<td>
-								<%JSPUtils.button(out, 
-										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-briefcase text-primary" : "img/transfer.gif",
-										bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-briefcase text-primary" : "img/transfer.gif",
-										"Spese", 
-										"if (disableDblClick()) submitForm('doGestionaleSpese')",
-										"btn-secondary btn-outline-secondary btn-title text-primary",
-										pdg_selezionato&&bp.isGestionaleAccessibile(), 
-										bp.getParentRoot().isBootstrap());%></td>
-						</tr>
-					</table>
-				</div>
-			</div>				
+                <div class="card">
+                    <div class="GroupLabel card-header">Gestionale</div>
+                    <div class="Group card-block">
+                        <table width="100%" style="text-align: center;">
+                            <tr>
+                                <td>
+                                    <%JSPUtils.button(out,
+                                            bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-money" : "img/compressed.gif",
+                                            bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-money" : "img/compressed.gif",
+                                            "Entrate",
+                                            "if (disableDblClick()) submitForm('doGestionaleEntrate')",
+                                            "btn-secondary btn-outline-primary btn-title btn-block",
+                                            pdg_selezionato&&bp.isGestionaleAccessibile(),
+                                            bp.getParentRoot().isBootstrap());%>
+                                </td>
+                                <td>
+                                    <%JSPUtils.button(out,
+                                            bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-briefcase" : "img/transfer.gif",
+                                            bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-briefcase" : "img/transfer.gif",
+                                            "Spese",
+                                            "if (disableDblClick()) submitForm('doGestionaleSpese')",
+                                            "btn-secondary btn-outline-primary btn-title btn-block",
+                                            pdg_selezionato&&bp.isGestionaleAccessibile(),
+                                            bp.getParentRoot().isBootstrap());%>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
 			</td>
 		</tr>
 	</table>
