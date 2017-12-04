@@ -4422,29 +4422,6 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         fattura_passiva = valorizzaInfoDocEle(aUC, fattura_passiva);
         fattura_passiva.setDataInizioSplitPayment(getDataInizioSplitPayment(aUC));
 
-        if (fattura_passiva.isElettronica()) {
-            try {
-                DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) fattura_passiva.getDocumentoEleTestata();
-
-                documentoEleTestata.setDocEleLineaColl(new BulkList<DocumentoEleLineaBulk>(
-                        getHome(aUC, DocumentoEleLineaBulk.class).find(new DocumentoEleLineaBulk(documentoEleTestata))));
-                documentoEleTestata.setDocEleIVAColl(new BulkList<DocumentoEleIvaBulk>(
-                        getHome(aUC, DocumentoEleIvaBulk.class).find(new DocumentoEleIvaBulk(documentoEleTestata))));
-                documentoEleTestata.setDocEleAllegatiColl(new BulkList<DocumentoEleAllegatiBulk>(
-                        getHome(aUC, DocumentoEleAllegatiBulk.class).find(new DocumentoEleAllegatiBulk(documentoEleTestata))));
-                documentoEleTestata.setDocEleTributiColl(new BulkList<DocumentoEleTributiBulk>(
-                        getHome(aUC, DocumentoEleTributiBulk.class).find(new DocumentoEleTributiBulk(documentoEleTestata))));
-                documentoEleTestata.setDocEleScontoMaggColl(new BulkList<DocumentoEleScontoMaggBulk>(
-                        getHome(aUC, DocumentoEleScontoMaggBulk.class).find(new DocumentoEleScontoMaggBulk(documentoEleTestata))));
-                documentoEleTestata.setDocEleAcquistoColl(new BulkList<DocumentoEleAcquistoBulk>(
-                        getHome(aUC, DocumentoEleAcquistoBulk.class).find(new DocumentoEleAcquistoBulk(documentoEleTestata))));
-                documentoEleTestata.setDocEleDdtColl(new BulkList<DocumentoEleDdtBulk>(
-                        getHome(aUC, DocumentoEleDdtBulk.class).find(new DocumentoEleDdtBulk(documentoEleTestata))));
-                getHomeCache(aUC).fetchAll(aUC);
-            } catch (PersistencyException e) {
-                throw handleException(e);
-            }
-        }
         return fattura_passiva;
     }
 
@@ -7338,19 +7315,36 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
     }
 
-    public Fattura_passivaBulk valorizzaInfoDocEle(UserContext userContext, Fattura_passivaBulk fp)
+    public Fattura_passivaBulk valorizzaInfoDocEle(UserContext aUC, Fattura_passivaBulk fattura_passiva)
             throws ComponentException {
         try {
-            fp.setDataInizioFatturaElettronica(getDataInizioFatturazioneElettronica(userContext));
-//		if(fp.getDt_registrazione() != null && fp.getDataInizioFatturaElettronica() != null)
-//		{
-//			if ((fp.getDt_registrazione().compareTo(fp.getDataInizioFatturaElettronica())<0))
-//				fp.setGestione_doc_ele(false);
-//			else
-//				fp.setGestione_doc_ele(true);
-//		}
-//		else fp.setGestione_doc_ele(true);  //non dovrebbe mai verificarsi
-            return fp;
+            fattura_passiva.setDataInizioFatturaElettronica(getDataInizioFatturazioneElettronica(aUC));
+            if (fattura_passiva.isElettronica()) {
+                try {
+                    DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) fattura_passiva.getDocumentoEleTestata();
+                    final List documentoEleAcquistos = getHome(aUC, DocumentoEleAcquistoBulk.class).find(new DocumentoEleAcquistoBulk(documentoEleTestata));
+                    documentoEleTestata.setDocEleLineaColl(new BulkList<DocumentoEleLineaBulk>(
+                            getHome(aUC, DocumentoEleLineaBulk.class).find(new DocumentoEleLineaBulk(documentoEleTestata))));
+                    documentoEleTestata.setDocEleIVAColl(new BulkList<DocumentoEleIvaBulk>(
+                            getHome(aUC, DocumentoEleIvaBulk.class).find(new DocumentoEleIvaBulk(documentoEleTestata))));
+                    documentoEleTestata.setDocEleAllegatiColl(new BulkList<DocumentoEleAllegatiBulk>(
+                            getHome(aUC, DocumentoEleAllegatiBulk.class).find(new DocumentoEleAllegatiBulk(documentoEleTestata))));
+                    documentoEleTestata.setDocEleTributiColl(new BulkList<DocumentoEleTributiBulk>(
+                            getHome(aUC, DocumentoEleTributiBulk.class).find(new DocumentoEleTributiBulk(documentoEleTestata))));
+                    documentoEleTestata.setDocEleScontoMaggColl(new BulkList<DocumentoEleScontoMaggBulk>(
+                            getHome(aUC, DocumentoEleScontoMaggBulk.class).find(new DocumentoEleScontoMaggBulk(documentoEleTestata))));
+                    documentoEleTestata.setDocEleAcquistoColl(new BulkList<DocumentoEleAcquistoBulk>(
+                            documentoEleAcquistos));
+                    fattura_passiva.setDocEleAcquistoColl(new BulkList<DocumentoEleAcquistoBulk>(
+                            documentoEleAcquistos));
+                    documentoEleTestata.setDocEleDdtColl(new BulkList<DocumentoEleDdtBulk>(
+                            getHome(aUC, DocumentoEleDdtBulk.class).find(new DocumentoEleDdtBulk(documentoEleTestata))));
+                    getHomeCache(aUC).fetchAll(aUC);
+                } catch (PersistencyException e) {
+                    throw handleException(e);
+                }
+            }
+            return fattura_passiva;
         } catch (Throwable e) {
             throw handleException(e);
         }
@@ -7838,7 +7832,11 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                 .map(FatturaOrdineHome.class::cast)
                 .orElseThrow(() -> new ComponentException("Home di FatturaOrdineBulk non trovata!"));
         SQLBuilder sqlBuilder = fatturaOrdineHome.createSQLBuilder();
-        sqlBuilder.addClause(FindClause.AND, "fatturaPassivaRiga", SQLBuilder.EQUALS, fattura_passiva_rigaBulk);
+        sqlBuilder.addSQLClause(FindClause.AND, "CD_CDS", SQLBuilder.EQUALS, fattura_passiva_rigaBulk.getCd_cds());
+        sqlBuilder.addSQLClause(FindClause.AND, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, fattura_passiva_rigaBulk.getCd_unita_organizzativa());
+        sqlBuilder.addSQLClause(FindClause.AND, "ESERCIZIO", SQLBuilder.EQUALS, fattura_passiva_rigaBulk.getEsercizio());
+        sqlBuilder.addSQLClause(FindClause.AND, "PG_FATTURA_PASSIVA", SQLBuilder.EQUALS, fattura_passiva_rigaBulk.getPg_fattura_passiva());
+        sqlBuilder.addSQLClause(FindClause.AND, "PROGRESSIVO_RIGA", SQLBuilder.EQUALS, fattura_passiva_rigaBulk.getProgressivo_riga());
         return fatturaOrdineHome.fetchAll(sqlBuilder);
     }
 }
