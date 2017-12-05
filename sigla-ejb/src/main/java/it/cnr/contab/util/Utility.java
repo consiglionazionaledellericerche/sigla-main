@@ -6,10 +6,14 @@
  */
 package it.cnr.contab.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.rmi.RemoteException;
 import java.util.Set;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
@@ -23,6 +27,7 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import org.springframework.core.type.filter.AssignableTypeFilter;
 
 import it.cnr.contab.anagraf00.ejb.TerzoComponentSession;
+import it.cnr.contab.client.docamm.FatturaAttiva;
 import it.cnr.contab.config00.ejb.Classificazione_vociComponentSession;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cdsComponentSession;
@@ -56,6 +61,8 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 public final class Utility {
 	private transient static final Logger logger = LoggerFactory.getLogger(Utility.class);
 
+	public static final String MANIFEST_PATH = "/META-INF/MANIFEST.MF";
+	public static final String APPLICATION_TITLE = "SIGLA - Sistema Informativo per la Gestione delle Linee di Attività";
 	public static final java.math.BigDecimal ZERO = new java.math.BigDecimal(0);
 	public static String TIPO_GESTIONE_SPESA = "S";
 	public static String TIPO_GESTIONE_ENTRATA = "E";
@@ -98,6 +105,23 @@ public final class Utility {
 			return imp;
 		return ZERO;  
 	}
+	
+	public static String getSiglaVersion(){
+		String version  = "01.001.000";
+		InputStream is = FatturaAttiva.class.getResourceAsStream(Utility.MANIFEST_PATH);
+		if (is != null) {
+			try {
+				Manifest manifest = new Manifest(is);
+				Attributes attributes = manifest.getMainAttributes();
+
+				version = attributes.getValue("Implementation-Version");
+			} catch (IOException e) {
+				logger.warn("IOException", e);
+			}
+		}
+		return version;
+	}
+
 	/**
 	 * Restituisce una Stringa ottenuta sostituendo
 	 * nella stringa sorgente alla stringa pattern la stringa replace,
