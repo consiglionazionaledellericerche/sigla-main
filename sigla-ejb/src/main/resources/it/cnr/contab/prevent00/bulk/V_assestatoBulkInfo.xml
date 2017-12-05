@@ -335,4 +335,37 @@
 			enabledOnInsert="false"
 			columnStyle="text-align: right" />
 	</columnSet>
+	<columnSet
+		name="modalitaConsultazione001" >
+		<columnFieldProperty
+			name="esercizio_res" />
+		<columnFieldProperty
+			name="cd_centro_responsabilita" />
+		<columnFieldProperty
+			name="cd_linea_attivita" />
+		<columnFieldProperty
+			name="ds_linea_attivita" />
+		<columnFieldProperty
+			name="cd_elemento_voce"
+			label="Voce di bilancio"/>
+		<columnFieldProperty
+			name="importo_disponibile_netto"
+			inputType="DESCTOOL"
+			descProperty="dett_imp_voce"
+			columnStyle="text-align: right" />
+	</columnSet>
+	
+	<freeSearchSet name="modalitaConsultazione001">
+		<findFieldProperty
+			name="esercizio_res" />
+		<findFieldProperty
+			name="cd_centro_responsabilita"
+			enabledOnInsert="false" />
+		<findFieldProperty
+			name="cd_linea_attivita" />
+		<findFieldProperty
+			name="ds_linea_attivita" />
+		<findFieldProperty
+			name="cd_elemento_voce" />
+	</freeSearchSet>
 </bulkInfo>
