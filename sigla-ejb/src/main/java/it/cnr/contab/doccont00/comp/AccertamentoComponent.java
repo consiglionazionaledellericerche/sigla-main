@@ -4766,6 +4766,7 @@ public SQLBuilder selectVariazioneResiduaByClause (UserContext userContext, Acce
 	sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, Var_stanz_resBulk.STATO_APPROVATA );
 	sql.addClause(FindClause.AND, "tipologia", SQLBuilder.EQUALS, Var_stanz_resBulk.TIPOLOGIA_STO );
 	sql.addClause(FindClause.AND, "fl_perenzione", SQLBuilder.EQUALS, Boolean.TRUE );
+	sql.addClause(FindClause.AND, "tipologia_fin", SQLBuilder.EQUALS, NaturaBulk.TIPO_NATURA_FONTI_ESTERNE );
 	
 	V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(userContext, V_struttura_organizzativaBulk.class);
 	sql.openParenthesis(FindClause.AND);
