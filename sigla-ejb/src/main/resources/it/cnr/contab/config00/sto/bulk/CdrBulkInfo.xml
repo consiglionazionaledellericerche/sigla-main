@@ -162,6 +162,7 @@
 		name="cd_cdr_ro"
 		property="cd_centro_responsabilita"
 		label="Centro di Responsabilit&#224;"
+		inputCssClass=" w-10 "
 		inputType="ROTEXT"
 		inputSize="10"
 		maxLength="30"
