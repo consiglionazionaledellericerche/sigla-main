@@ -6055,33 +6055,31 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
     }
 
     private void controllaQuadraturaOrdini(UserContext aUC, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
-        try {
-            fatturaPassiva.getFatturaRigaOrdiniHash().entrySet().stream()
-                    .filter(fattura_passiva_rigaBulkBulkListEntry -> !fattura_passiva_rigaBulkBulkListEntry.getValue().isEmpty())
-                    .filter(fattura_passiva_rigaBulkBulkListEntry -> {
-                        final BigDecimal totaleImponibile = BigDecimal.valueOf(fattura_passiva_rigaBulkBulkListEntry.getValue().stream()
-                                .mapToDouble(value -> value.getImImponibile().doubleValue())
-                                .sum());
-                        final BigDecimal totaleIva = BigDecimal.valueOf(fattura_passiva_rigaBulkBulkListEntry.getValue().stream()
-                                .mapToDouble(value -> value.getImIva().doubleValue())
-                                .sum());
-                        final BigDecimal differenzaImponibile = fattura_passiva_rigaBulkBulkListEntry.getKey()
-                                .getIm_imponibile().subtract(totaleImponibile);
-                        final BigDecimal differenzaIva = fattura_passiva_rigaBulkBulkListEntry.getKey()
-                                .getIm_iva().subtract(totaleIva);
-                        return differenzaImponibile.compareTo(BigDecimal.ZERO) != 0 || differenzaIva.compareTo(BigDecimal.ZERO) != 0 ;
-                    }).findFirst().ifPresent(fattura_passiva_rigaBulkBulkListEntry -> {
-                throw new DetailedRuntimeException(
-                        "Attenzione l'imponibile o l'iva della riga di fattura \"" +
-                                fattura_passiva_rigaBulkBulkListEntry.getKey().getDs_riga_fattura() +
-                                "\" non quadra con la somma delle righe di consegna!");
-            });
-
-
-
-
-        } catch (DetailedRuntimeException _ex) {
-            throw new ApplicationException(_ex.getMessage());
+        if (Optional.ofNullable(fatturaPassiva.getFatturaRigaOrdiniHash()).isPresent()) {
+            try {
+                fatturaPassiva.getFatturaRigaOrdiniHash().entrySet().stream()
+                        .filter(fattura_passiva_rigaBulkBulkListEntry -> !fattura_passiva_rigaBulkBulkListEntry.getValue().isEmpty())
+                        .filter(fattura_passiva_rigaBulkBulkListEntry -> {
+                            final BigDecimal totaleImponibile = BigDecimal.valueOf(fattura_passiva_rigaBulkBulkListEntry.getValue().stream()
+                                    .mapToDouble(value -> value.getImImponibile().doubleValue())
+                                    .sum());
+                            final BigDecimal totaleIva = BigDecimal.valueOf(fattura_passiva_rigaBulkBulkListEntry.getValue().stream()
+                                    .mapToDouble(value -> value.getImIva().doubleValue())
+                                    .sum());
+                            final BigDecimal differenzaImponibile = fattura_passiva_rigaBulkBulkListEntry.getKey()
+                                    .getIm_imponibile().subtract(totaleImponibile);
+                            final BigDecimal differenzaIva = fattura_passiva_rigaBulkBulkListEntry.getKey()
+                                    .getIm_iva().subtract(totaleIva);
+                            return differenzaImponibile.compareTo(BigDecimal.ZERO) != 0 || differenzaIva.compareTo(BigDecimal.ZERO) != 0 ;
+                        }).findFirst().ifPresent(fattura_passiva_rigaBulkBulkListEntry -> {
+                    throw new DetailedRuntimeException(
+                            "Attenzione l'imponibile o l'iva della riga di fattura \"" +
+                                    fattura_passiva_rigaBulkBulkListEntry.getKey().getDs_riga_fattura() +
+                                    "\" non quadra con la somma delle righe di consegna!");
+                });
+            } catch (DetailedRuntimeException _ex) {
+                throw new ApplicationException(_ex.getMessage());
+            }
         }
     }
 
