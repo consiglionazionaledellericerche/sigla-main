@@ -108,7 +108,9 @@
 				<aspect>strorg:uo</aspect>
 				<aspect>sigla_commons_aspect:terzi</aspect>
 				<aspect>sigla_commons_aspect:utente_applicativo_sigla</aspect>
+				<!--
 				<aspect>sigla_commons_aspect:applicativo</aspect>
+				-->
 			</mandatory-aspects>
 		</type>
 		<type name="sigla_fatture:fatture_passive">
