@@ -407,7 +407,7 @@
 		inputType="DESCTOOL"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		inputSize="15"
+		inputSize="20"
 		maxLength="30"
 		label="Classificazione Ufficiale" />	
 	<fieldProperty
