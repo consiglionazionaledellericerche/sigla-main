@@ -16,27 +16,21 @@
 				pageContext,
 				"insertGestionale",
 				!isDettagliGestionaliEnable,
-				true,
+				false,
 				!isDettagliGestionaliEnable&&!isDettaglioGestionaleEnable,
 				"100%",
 				"200px",
 				true);
 %>
-<table>
+<div class="card">
+<table class="w-100">
 	<tr>
 		<td><% bp.getCrudDettagliGestionali().writeFormLabel(out,"find_cdr_assegnatario");%></td>
 		<td colspan=3><% bp.getCrudDettagliGestionali().writeFormInput(out,null,"find_cdr_assegnatario",isDettaglioGestionaleEnable,null,null);%></td>
 	</tr>
 	<tr>
 		<td><% bp.getCrudDettagliGestionali().writeFormLabel(out,"find_linea_attivita");%></td>
-		<td colspan=3>
-			<table>
-				<tr>
-					<td><% bp.getCrudDettagliGestionali().writeFormInput( out,"default","find_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
-					<td><% bp.getCrudDettagliGestionali().writeFormInput( out,"default","crea_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
-				</tr>
-			</table>
-		</td>
+		<td colspan=3><% bp.getCrudDettagliGestionali().writeFormInput( out,"default","find_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
 	</tr>
 	<tr>
 		<td><% bp.getCrudDettagliGestionali().writeFormLabel(out,"find_elemento_voce");%></td>
@@ -63,4 +57,5 @@
 		<td colspan=3><% bp.getCrudDettagliGestionali().writeFormInput(out,null,"descrizione",isDettaglioGestionaleEnable,null,null);%></td>
 	</tr>
 </table>
+</div>
 </body>

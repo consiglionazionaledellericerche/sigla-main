@@ -18,6 +18,7 @@
 		inputSize="15"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
+		inputCssClass="w-10 "
 		/>
 	<fieldProperty
 		name="cd_cds_origine"

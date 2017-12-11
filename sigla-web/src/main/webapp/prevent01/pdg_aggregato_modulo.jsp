@@ -68,7 +68,7 @@
 		<tr>
 			<td colspan="5" width="45%">
                 <div class="card">
-                    <div class="GroupLabel card-header">Stato del PdG</div>
+                    <div class="GroupLabel card-header"><span class="font-weight-bold text-primary d-flex justify-content-center">Stato del PdG</span></div>
                     <div class="Group card-block">
                         <table>
                             <tr>
@@ -77,8 +77,8 @@
                                 <td>
                                     <center>
                                     <%JSPUtils.button(out,
-                                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-unlock" : "img/import24.gif",
-                                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-unlock" : "img/import24.gif",
+                                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo fa-flip-horizontal" : "img/import24.gif",
+                                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo fa-flip-horizontal" : "img/import24.gif",
                                         "Cambia Stato",
                                         "if (disableDblClick()) javascript:submitForm('doCambiaStato')",
                                         "btn-secondary btn-outline-info btn-title btn-block",
@@ -93,7 +93,7 @@
 			</td>
 			<td>
                 <div class="card">
-                    <div class="GroupLabel card-header">Contrattazione</div>
+                    <div class="GroupLabel card-header"><span class="font-weight-bold text-primary d-flex justify-content-center">Contrattazione</span></div>
                     <div class="Group card-block">
                         <table width="100%" style="text-align: center;">
                             <tr>
@@ -127,7 +127,7 @@
 			<td colspan=5></td>
 			<td>
                 <div class="card">
-                    <div class="GroupLabel card-header">Gestionale</div>
+                    <div class="GroupLabel card-header"><span class="font-weight-bold text-primary d-flex justify-content-center">Gestionale</span></div>
                     <div class="Group card-block">
                         <table width="100%" style="text-align: center;">
                             <tr>
