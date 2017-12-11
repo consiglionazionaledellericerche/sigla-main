@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
  * @author Marco Spasiano
  */
 public class UtilServlet extends HttpServlet {
-	private static final String MANIFEST_PATH = "/META-INF/MANIFEST.MF";
 	private transient final static Logger logger = LoggerFactory.getLogger(UtilServlet.class);
 	/**
 	* @see javax.servlet.http.HttpServlet#void (javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
@@ -144,7 +143,7 @@ public class UtilServlet extends HttpServlet {
 		
 		
 		String version  = "01.001.000";
-		InputStream is = getServletContext().getResourceAsStream(MANIFEST_PATH);
+		InputStream is = getServletContext().getResourceAsStream(Utility.MANIFEST_PATH);
 		if (is != null) {
 			try {
 				Manifest manifest = new Manifest(is);
@@ -155,7 +154,7 @@ public class UtilServlet extends HttpServlet {
 				logger.warn("IOException", e);
 			}
 		}
-		String APPLICATION_TITLE = "SIGLA - Sistema Informativo per la Gestione delle Linee di Attività";
+		String APPLICATION_TITLE = Utility.APPLICATION_TITLE;
 		String APPLICATION_VERSION = "Documenti contabili/amministrativi transact. " + version;
 		String APPLICATION_TITLE_VERSION = APPLICATION_TITLE + " - " + APPLICATION_VERSION;
 
