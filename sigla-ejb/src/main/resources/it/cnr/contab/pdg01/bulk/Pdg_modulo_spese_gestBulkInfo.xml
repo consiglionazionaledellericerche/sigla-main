@@ -116,6 +116,7 @@
 		rows="5"
 		maxLength="300"
 		nullable="true"
+		inputCssClass="w-100 "
 		label="Descrizione" />
 	<fieldProperty
 		name="origine"
@@ -231,6 +232,7 @@
 		enabledOnEdit="true"
 		enabledOnSearch="true"
 		readonlyProperty="ROLinea_attivita"
+		CRUDBusinessProcessName="CRUDLinea_attivitaBP"
 		nullable="false"
 		label="G.a.e." />
 	<fieldProperty

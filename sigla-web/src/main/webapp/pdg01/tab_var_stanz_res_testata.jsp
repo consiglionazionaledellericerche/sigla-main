@@ -15,12 +15,11 @@
 //	boolean isAbilitato = !(bp.isCdrScrivania() && bp.isAbilitatoModificaDescVariazioni());
 	boolean isAbilitato =( isFieldEnabled && !(bp.isCdrScrivania() && bp.isAbilitatoModificaDescVariazioni()));
 %>
-<table class="Panel">	
+<div class="Group card">
+<table class="Panel w-100">	
   <TR>
-   <TD><% bp.getController().writeFormLabel(out,"esercizio");%></TD>
-   <TD><% bp.getController().writeFormInput(out,"esercizio");%></TD>
-   <TD><% bp.getController().writeFormLabel(out,"pg_variazione");%></TD>
-   <TD><% bp.getController().writeFormInput(out,"pg_variazione");%></TD> 
+   <% bp.getController().writeFormField(out,"esercizio");%>
+   <% bp.getController().writeFormField(out,"pg_variazione");%>
   </TR>
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"centroDiSpesa");%></TD>
@@ -48,16 +47,12 @@
   </TR>
   
   <TR>
-   <TD><% bp.getController().writeFormLabel(out,"dt_apertura");%></TD>
-   <TD><% bp.getController().writeFormInput(out,"dt_apertura");%></TD>
-   <TD><% bp.getController().writeFormLabel(out,"dt_approvazione");%></TD>
-   <TD><% bp.getController().writeFormInput(out,"dt_approvazione");%></TD>   
+   <% bp.getController().writeFormField(out,"dt_apertura");%>
+   <% bp.getController().writeFormField(out,"dt_approvazione");%>
   </TR>
   <TR>  
-   <TD><% bp.getController().writeFormLabel(out,"dt_chiusura");%></TD>
-   <TD><% bp.getController().writeFormInput(out,"dt_chiusura");%></TD>
-   <TD><% bp.getController().writeFormLabel(out,"dt_annullamento");%></TD>
-   <TD><% bp.getController().writeFormInput(out,"dt_annullamento");%></TD>      
+   <% bp.getController().writeFormField(out,"dt_chiusura");%>
+   <% bp.getController().writeFormField(out,"dt_annullamento");%>
   </TR>
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"ds_delibera");%></TD>
@@ -68,6 +63,7 @@
    <TD colspan=3><% bp.getController().writeFormInput(out,"default","ds_variazione",isAbilitato,null,null);%></TD>
   </TR>
 </table>
+</div>
 <% if (var_stanz_res != null && var_stanz_res.getStato() != null && 
 	   var_stanz_res.getVar_bilancio() != null && var_stanz_res.getVar_bilancio().getPg_variazione() != null){ %>
 	<div class="GroupLabel">Variazione al bilancio dell'Ente</div>          
