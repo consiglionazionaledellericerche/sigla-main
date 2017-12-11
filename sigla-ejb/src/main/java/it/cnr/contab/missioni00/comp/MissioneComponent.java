@@ -1115,7 +1115,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk, it.cnr.
 	} 	
 }
 private void impostaDatiRimborsoDaCompletare(MissioneBulk missioneTemp) {
-	if (!missioneTemp.isMissioneProvvisoria() && missioneTemp.isMissioneFromGemis()){
+	if (missioneTemp.isMissioneProvvisoria() && missioneTemp.isMissioneFromGemis()){
 		missioneTemp.setDaRimborsoDaCompletare(true);
 	} else {
 		missioneTemp.setDaRimborsoDaCompletare(false);
