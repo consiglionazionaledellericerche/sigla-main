@@ -176,9 +176,10 @@ public class DocumentiCollegatiDocAmmService extends StoreService {
 		List<StorageFile> storageFileCreate = new ArrayList<StorageFile>();
 		List<StorageFile> storageFileAnnullati = new ArrayList<StorageFile>();
 		try {
-			StorageFile storageFile = new StorageFileFatturaAttiva(file, fattura,
+			StorageFileFatturaAttiva storageFile = new StorageFileFatturaAttiva(file, fattura,
 					"application/pdf","FAPP" + fattura.constructCMISNomeFile() + ".pdf");
 			String path = storageFile.getStorageParentPath();
+			StorageObject folder = documentiCollegatiDocAmmService.getStorageObjectByPath(path);
 			try{
 				Optional.ofNullable(documentiCollegatiDocAmmService.restoreSimpleDocument(
 						storageFile,
@@ -190,6 +191,7 @@ public class DocumentiCollegatiDocAmmService extends StoreService {
 				)).ifPresent(storageObject -> {
 					List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
 					aspects.add(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO.value());
+					documentiCollegatiDocAmmService.updateProperties(storageFile.getCMISFolder(fattura), folder);
 					documentiCollegatiDocAmmService.updateProperties(
 							Collections.singletonMap(
 									StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),

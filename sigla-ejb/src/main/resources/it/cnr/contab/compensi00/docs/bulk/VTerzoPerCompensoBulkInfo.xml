@@ -216,6 +216,7 @@
 	<columnFieldProperty name="ti_dipendente_altro" />
 	<columnFieldProperty name="codice_fiscale" />
 	<columnFieldProperty name="ds_tipo_rapporto" />
+	<columnFieldProperty name="ds_comune_fiscale" />
 	<columnFieldProperty name="dt_ini_validita" />
 	<columnFieldProperty name="dt_fin_validita" />
 </columnSet>	
