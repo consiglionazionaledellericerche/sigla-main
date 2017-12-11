@@ -4,7 +4,7 @@
 	<formFieldProperty
 		name="esercizio"
 		property="esercizio"
-		inputSize="2"		
+		inputSize="4"		
 		inputType="ROTEXT"
 		label="Esercizio" />
 
@@ -14,6 +14,7 @@
 		inputType="SEARCHTOOL"
 		nullable="true"
 		readonlyProperty="variazioneForPrintEnabled"
+		formName="searchtool"
 		completeOnSave="true"
 		label="Variazione" />
 	<fieldProperty

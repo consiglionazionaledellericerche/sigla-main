@@ -29,9 +29,11 @@
 	</tr>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "cd_unita_organizzativa"); %></td>
-	<td colspan=2>	
-	    <% bp.getController().writeFormInput( out, "cd_unita_organizzativa"); %>
-		<% bp.getController().writeFormInput( out, "ds_unita_organizzativa"); %></td>				 
+	<td colspan=2>
+		<div class="input-group input-group-searchtool w-100 ">
+	    	<% bp.getController().writeFormInput( out, "cd_unita_organizzativa"); %>
+			<% bp.getController().writeFormInput( out, "ds_unita_organizzativa"); %></td>
+		</div>				 
 	</tr>
 	<tr>  
 	<td><% bp.getController().writeFormLabel( out, "pg_obbligazione"); %></td>	

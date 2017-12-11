@@ -26,60 +26,43 @@
 	       { "tabSpeseGest","<SPAN style='font : bold 13px;'>Ripartizione Previsione</SPAN>","/pdg01/tab_pdg_modulo_spese_gest.jsp" },	                  
                };   
 %>
-<table>
+<div class="Group card">
+<table class="w-100">
 	<tr>
 		<td><% bp.getController().writeFormLabel(out,"cd_centro_responsabilita"); %></td>
 	 	<td colspan=7>
-	 		<% bp.getController().writeFormInput(out,"cd_centro_responsabilita"); %>
-			<% bp.getController().writeFormInput(out,"ds_centro_responsabilita"); %>
+	 		<div class="input-group input-group-searchtool w-100">
+		 		<% bp.getController().writeFormInput(out,"cd_centro_responsabilita"); %>
+				<% bp.getController().writeFormInput(out,"ds_centro_responsabilita"); %>
+			</div>
 		</td>	
 	</tr>
 	<tr>
 		<% if (!bp.isFlNuovoPdg()) { %>
-			<td><% bp.getController().writeFormLabel(out,"modulo"); %></td>
-			<td><% bp.getController().writeFormInput(out,"modulo"); %></td>
-			<td><% bp.getController().writeFormLabel(out,"commessa"); %></td>
-			<td><% bp.getController().writeFormInput(out,"commessa"); %></td>
-			<td><% bp.getController().writeFormLabel(out,"progetto"); %></td>
-			<td><% bp.getController().writeFormInput(out,"progetto"); %></td>
-			<td><% bp.getController().writeFormLabel(out,"desctool_area"); %></td>
-			<td><% bp.getController().writeFormInput(out,"desctool_area"); %></td>
+			<% bp.getController().writeFormField(out,"modulo"); %>
+			<% bp.getController().writeFormField(out,"commessa"); %>
+			<% bp.getController().writeFormField(out,"progetto"); %>
+			<% bp.getController().writeFormField(out,"desctool_area"); %>
 		<% } else { %>
-			<td><% bp.getController().writeFormLabel(out,"cd_progetto_liv2"); %></td>
-			<td><% bp.getController().writeFormInput(out,"cd_progetto_liv2"); %></td>
-			<td><% bp.getController().writeFormLabel(out,"cd_progetto_liv1"); %></td>
-			<td><% bp.getController().writeFormInput(out,"cd_progetto_liv1"); %></td>
-			<td><% bp.getController().writeFormLabel(out,"programma_liv2"); %></td>
-			<td><% bp.getController().writeFormInput(out,"programma_liv2"); %></td>
-			<td><% bp.getController().writeFormLabel(out,"desctool_missione"); %></td>
-			<td><% bp.getController().writeFormInput(out,"desctool_missione"); %></td>
+			<% bp.getController().writeFormField(out,"cd_progetto_liv2"); %>
+			<% bp.getController().writeFormField(out,"cd_progetto_liv1"); %>
+			<% bp.getController().writeFormField(out,"programma_liv2"); %>
+			<% bp.getController().writeFormField(out,"desctool_missione"); %>
 		<% } %>		
 	</tr>
 	<tr>
 		<% if (!bp.isFlNuovoPdg()) { %>
-			<td><% bp.getController().writeFormLabel(out,"dipartimento"); %></td>
-			<td><% bp.getController().writeFormInput(out,"dipartimento"); %></td>
+			<% bp.getController().writeFormField(out,"dipartimento"); %>
 		<% } %>		
-		<td><% bp.getController().writeFormLabel(out,"desctool_classificazione"); %></td>
-		<td><% bp.getController().writeFormInput(out,"desctool_classificazione"); %></td>
-	  	<td><% bp.getController().writeFormLabel(out,"desctool_cofog");%></td>
-		<td><% bp.getController().writeFormInput(out,"desctool_cofog");%></td>
+		<% bp.getController().writeFormField(out,"desctool_classificazione"); %>
+	  	<% bp.getController().writeFormField(out,"desctool_cofog");%>
 		<% if (moduloSpese.getCd_voce_piano()!=null) {%>
-		  	<td><% bp.getController().writeFormLabel(out,"desctool_voce_piano_economico_prg");%></td>
-			<td><% bp.getController().writeFormInput(out,"desctool_voce_piano_economico_prg");%></td>
+		  	<% bp.getController().writeFormField(out,"desctool_voce_piano_economico_prg");%>
 		<% } %>		
 	</tr>
-<!--
-	<tr>
-		<td><% bp.getController().writeFormLabel(out,"previsione_anno_corrente"); %></td>
-		<td><% bp.getController().writeFormInput(out,"previsione_anno_corrente"); %></td>
-		<td><% bp.getController().writeFormLabel(out,"dettagli_gestionali_tot"); %></td>
-		<td><% bp.getController().writeFormInput(out,"dettagli_gestionali_tot"); %></td>
-		<td><% bp.getController().writeFormLabel(out,"dettagli_gestionali_res"); %></td>
-		<td><% bp.getController().writeFormInput(out,"dettagli_gestionali_res"); %></td>
-	</tr>
--->	
 </table>
+</div>
+
    <% JSPUtils.tabbed(
                    pageContext,
                    "tab",

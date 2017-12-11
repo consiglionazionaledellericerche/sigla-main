@@ -18,26 +18,28 @@
     	controller.writeHTMLTable(pageContext,"associazioneCDR",isTableEnabled,false,isTableEnabled,"100%","130px"); 
 %>
 
-<table class="Panel" cellspacing=2>
+<div class="card p-2">
+<table class="Panel w-100" cellspacing="2">
 	<tr>
-  	    <td><% controller.writeFormLabel(out,"default","centro_responsabilita"); %></td>
-		<td colspan=3><% controller.writeFormInput(out,"default","centro_responsabilita",isFieldEnabled,null,null); %></td>
+  	    <td class="w-20"><% controller.writeFormLabel(out,"default","centro_responsabilita"); %></td>
+		<td colspan="4"><% controller.writeFormInput(out,"default","centro_responsabilita",isFieldEnabled,null,null); %></td>
 	</tr>
 	<tr>
   	    <td><% controller.writeFormLabel(out,"default","im_entrata"); %></td>
-		<td><% controller.writeFormInput(out,"default","im_entrata",isFieldEnabled,null,null); %></td>		
-  	    <td><% controller.writeFormLabel(out,"default","im_spesa"); %></td>
-		<td><% controller.writeFormInput(out,"default","im_spesa",isFieldEnabled,null,null); %></td>				
+		<td class="w-20"><% controller.writeFormInput(out,"default","im_entrata",isFieldEnabled,null,null); %></td>		
+		<td class="w-10">&nbsp;</td>
+  	    <td class="w-20"><% controller.writeFormLabel(out,"default","im_spesa"); %></td>
+		<td class="w-20"><% controller.writeFormInput(out,"default","im_spesa",isFieldEnabled,null,null); %></td>				
 	</tr>	
 	<tr>
-  	    <td><% controller.writeFormLabel(out,"default","entrata_ripartita"); %></td>
-		<td><% controller.writeFormInput(out,"default","entrata_ripartita"); %></td>		
-  	    <td><% controller.writeFormLabel(out,"default","spesa_ripartita"); %></td>
-		<td><% controller.writeFormInput(out,"default","spesa_ripartita"); %></td>				
+  	    <% controller.writeFormField(out,"default","entrata_ripartita"); %>
+		<td>&nbsp;</td>
+  	    <% controller.writeFormField(out,"default","spesa_ripartita"); %>				
 	</tr>	
 	<tr>
   	    <td><% controller.writeFormLabel(out,"default","entrata_diff"); %></td>
 		<td><% controller.writeFormInput(out,"default","entrata_diff"); %></td>		
+		<td>&nbsp;</td>
   	    <td><% controller.writeFormLabel(out,"default","spesa_diff"); %></td>
 		<td><% controller.writeFormInput(out,"default","spesa_diff"); %></td>				
 	</tr>	
@@ -46,7 +48,9 @@
 	    <td>&nbsp;</td>
 		<td align=center><% controller.writeFormInput(out,"default","dettagliEntrate"); %></td>	
 		<td>&nbsp;</td>
+		<td>&nbsp;</td>
 		<td align=center><% controller.writeFormInput(out,"default","dettagliSpese"); %></td>
 	</tr>	
 	
 </table>
+</div>
