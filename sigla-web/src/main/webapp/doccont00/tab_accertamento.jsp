@@ -12,13 +12,9 @@
 	it.cnr.contab.doccont00.core.bulk.AccertamentoBulk accertamento = (it.cnr.contab.doccont00.core.bulk.AccertamentoBulk)bp.getModel();
 %>
 <div class="card p-3 m-1">
-	<table border="0" cellspacing="0" cellpadding="2">
+	<table border="0" cellspacing="0" cellpadding="2" class="w-100">
 	
 	<tr>
-<!--
-	<td>	<% bp.getController().writeFormLabel( out, "esercizio_competenza"); %></td>
-	<td>	<% bp.getController().writeFormInput(out,"default","esercizio_competenza", bp.isFromDocAmm(),null,null); %>
--->	
 	<td><% bp.getController().writeFormLabel( out, "esercizio_originale"); %></td>
 	<td><% bp.getController().writeFormInput( out,"default","esercizio_originale",false,null,null); %>
 	  		<% if ( !accertamento.isResiduo()) 
@@ -40,9 +36,12 @@
 	
 	<tr>
 	<td>	<% bp.getController().writeFormLabel( out, "cd_unita_organizzativa"); %></td>
-	<td colspan=2>	
+	<td colspan="3">	
+		<div class="input-group input-group-searchtool w-100 ">
 	        <% bp.getController().writeFormInput( out, "cd_unita_organizzativa"); %>
-			<% bp.getController().writeFormInput( out, "ds_unita_organizzativa"); %></td>				 
+			<% bp.getController().writeFormInput( out, "ds_unita_organizzativa"); %>
+		</div>
+	</td>
 	</tr>
 	
 	<tr>
@@ -79,14 +78,14 @@
 	<%  } %>
 	<tr>
 	<td>	<% bp.getController().writeFormLabel( out, "ds_accertamento"); %></td>
-	<td colspan=2> <% bp.getController().writeFormInput( out, "ds_accertamento"); %></td>
+	<td colspan="3"> <% bp.getController().writeFormInput( out, "ds_accertamento"); %></td>
 	</tr>
 	</table>
 </div>
 
 <div class="Group card p-3 m-1">
 <div class="GroupLabel font-weight-bold text-primary ml-2">Repertorio Contratti</div>  
-	<div class="Group" p-3 m-1 w-100">
+	<div class="Group">
 	<table class="w-100">
 	  <tr>
 		<%if (bp instanceof CRUDAccertamentoResiduoBP && ((CRUDAccertamentoResiduoBP)bp).isContrattoEnabledOnView()) { %>

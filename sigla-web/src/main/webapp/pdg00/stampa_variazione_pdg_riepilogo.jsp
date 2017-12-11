@@ -19,49 +19,35 @@
 
 <%	bp.openFormWindow(pageContext); %>
 
-<table width=100%>
- <tr>
-  <td height="123">
-	<div class="Group">
-	<table>
-	  <tr>
-		<td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
-		<td><% bp.getController().writeFormInput(out,"esercizio"); %></td>
-	  </tr>	
-	  <tr>	
-		<td><% bp.getController().writeFormLabel(out,"findCDSForPrint"); %></td>
-		<td><% bp.getController().writeFormInput(out,"findCDSForPrint"); %></td>
-	  </tr>  
-	  <tr>	
-		<td><% bp.getController().writeFormLabel(out,"findUOForPrint"); %></td>
-		<td><% bp.getController().writeFormInput(out,"findUOForPrint"); %></td>
-	  </tr>  
-	  <tr>	
-		<td><% bp.getController().writeFormLabel(out,"stato"); %></td>
-		<td><% bp.getController().writeFormInput(out,"stato"); %></td>
-	  </tr> 
-	  </table>
-	  </div>
-	  
-	  <div class="Group">
-	  <table>
-	  <tr> 
-		<td><% bp.getController().writeFormLabel(out,"DataApprovazione_da"); %></td>
-		<td><% bp.getController().writeFormInput(out,"DataApprovazione_da"); %></td>
-		<td><% bp.getController().writeFormLabel(out,"DataApprovazione_a"); %></td>
-		<td><% bp.getController().writeFormInput(out,"DataApprovazione_a"); %></td>
-	  </tr> 
-	</table>
-	</div>
-	
-	<div class="Group">
- 	  <% bp.getCrudRiepilogoVariazioni().writeHTMLTable(pageContext,"RiepilogoVariazioni",true,false,true,"95%","300px"); %>
-	</div>
-	
-   </td>
-  </tr>
+<div class="Group card p-2">
+<table class="w-100">
+  <tr>
+	<% bp.getController().writeFormField(out,"esercizio"); %>
+  </tr>	
+  <tr>	
+	<% bp.getController().writeFormField(out,"findCDSForPrint"); %>
+  </tr>  
+  <tr>	
+	<% bp.getController().writeFormField(out,"findUOForPrint"); %>
+  </tr>  
+  <tr>	
+	<% bp.getController().writeFormField(out,"stato"); %>
+  </tr> 
 </table>
-
+</div>
+	  
+<div class="Group card p-2">
+<table>
+  <tr> 
+	<% bp.getController().writeFormField(out,"DataApprovazione_da"); %>
+	<% bp.getController().writeFormField(out,"DataApprovazione_a"); %>
+  </tr> 
+</table>
+</div>
+	
+<div class="Group card">
+  <% bp.getCrudRiepilogoVariazioni().writeHTMLTable(pageContext,"RiepilogoVariazioni",true,false,true,"100%","300px"); %>
+</div>
 
 <% bp.closeFormWindow(pageContext); %>
 
