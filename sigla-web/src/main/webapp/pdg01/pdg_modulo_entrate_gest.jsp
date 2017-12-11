@@ -20,12 +20,15 @@
 	bp.openFormWindow(pageContext);
 	boolean isDettaglioGestionaleEnable = !bp.isDettaglioGestionaleEnable((Pdg_modulo_entrate_gestBulk)bp.getCrudDettagliGestionali().getModel());
 %>
-<table>
+<div class="Group card">
+<table class="w-100">
 	<tr>
 		<td><% bp.getController().writeFormLabel(out,"cd_centro_responsabilita"); %></td>
 	 	<td colspan=7>
-	 		<% bp.getController().writeFormInput(out,"cd_centro_responsabilita"); %>
-			<% bp.getController().writeFormInput(out,"ds_centro_responsabilita"); %>
+	        <div class="input-group input-group-searchtool w-100">
+		 		<% bp.getController().writeFormInput(out,"cd_centro_responsabilita"); %>
+				<% bp.getController().writeFormInput(out,"ds_centro_responsabilita"); %>
+			</div>
 		</td>	
 	</tr>
 	<tr>
@@ -70,22 +73,18 @@
 		<td><% bp.getController().writeFormInput(out,"dettagli_gestionali_res"); %></td>
 	</tr>
 </table>
-<table>
-	  <tr>
-	  	<td colspan = "4">
-		  <% bp.getCrudDettagliGestionali().writeHTMLTable(
+</div>
+<% bp.getCrudDettagliGestionali().writeHTMLTable(
 				pageContext,
 				"insertGestionale",	
 				true,
-				true,
+				false,
 				!isDettaglioGestionaleEnable,
-				"900px",
+				"100%",
 				"150px",
 				true); %>
-		</td>
-	  </tr>
-</table>
-<table>
+<div class="Group card">
+<table class="w-100">
 	<tr>
 		<td><% bp.getCrudDettagliGestionali().writeFormLabel(out,"find_cdr_assegnatario");%></td>
 		<td colspan=3><% bp.getCrudDettagliGestionali().writeFormInput(out,null,"find_cdr_assegnatario",isDettaglioGestionaleEnable,null,null);%></td>
@@ -93,12 +92,7 @@
 	<tr>
 		<td><% bp.getCrudDettagliGestionali().writeFormLabel(out,"find_linea_attivita");%></td>
 		<td colspan=3>
-			<table>
-				<tr>
-					<td><% bp.getCrudDettagliGestionali().writeFormInput( out,"default","find_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
-					<td><% bp.getCrudDettagliGestionali().writeFormInput( out,"default","crea_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
-				</tr>
-			</table>
+			<% bp.getCrudDettagliGestionali().writeFormInput( out,"default","find_linea_attivita",isDettaglioGestionaleEnable,null,null);%>
 		</td>
 	</tr>
 	<tr>
@@ -116,5 +110,6 @@
 		<td colspan=3><% bp.getCrudDettagliGestionali().writeFormInput(out,null,"descrizione",isDettaglioGestionaleEnable,null,null);%></td>
 	</tr>
 </table>
+
 <%	bp.closeFormWindow(pageContext); %>
 </body>

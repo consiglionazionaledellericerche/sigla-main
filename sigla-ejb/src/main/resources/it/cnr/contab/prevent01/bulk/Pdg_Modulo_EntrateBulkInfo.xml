@@ -190,6 +190,7 @@
 		nullable="false"
 		rows="1"
 		maxLength="300"
+		inputCssClass="w-100 "
 		label="Oggetto del contratto" />
 	<fieldProperty
 		name="im_entrata_tot"
@@ -251,6 +252,7 @@
 		cols="50"
 		rows="1"
 		maxLength="300"
+		inputCssClass="w-100 "
 		label="Desc.Spese&lt;BR&gt;vive correlate&lt;BR&gt;all'entrata anno corrente" />	
 	<fieldProperty
         name="area"

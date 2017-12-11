@@ -71,6 +71,7 @@
 		cols="60"
 		rows="3"
 		enabledOnSearch="true"
+		inputCssClass="w-100 "
 		nullable="false"		
 		/>
 	<fieldProperty

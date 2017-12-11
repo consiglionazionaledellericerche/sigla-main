@@ -465,7 +465,8 @@
 		name="searchtool_denominazione" >
 		<formFieldProperty
 			name="cd_linea_attivita"
-			inputType="TEXT" />
+			inputType="TEXT" 
+			inputCssClass="w-20 "/>
 		<formFieldProperty
 			name="denominazione"
 			inputType="TEXT"

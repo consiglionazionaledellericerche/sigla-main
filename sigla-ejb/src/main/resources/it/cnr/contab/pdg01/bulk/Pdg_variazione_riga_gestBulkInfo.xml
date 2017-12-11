@@ -104,7 +104,8 @@
 		rows="5"
 		maxLength="300"
 		nullable="true"
-		label="Descrizione" />
+		label="Descrizione" 
+		inputCssClass="w-100 " />
 	<fieldProperty
 		name="categoria_dettaglio"
 		property="categoria_dettaglio"
@@ -235,6 +236,7 @@
 		enabledOnSearch="true"
 		readonlyProperty="ROLinea_attivita"
 		nullable="false"
+		CRUDBusinessProcessName="CRUDLinea_attivitaBP"
 		label="G.a.e." />
 	<fieldProperty
 		name="find_linea_attivita_liv2"
@@ -245,6 +247,7 @@
 		enabledOnSearch="true"
 		readonlyProperty="ROLinea_attivita"
 		nullable="false"
+		CRUDBusinessProcessName="CRUDLinea_attivitaBP"
 		columnSet="prg_liv2"
 		label="G.a.e." />
 	<fieldProperty
