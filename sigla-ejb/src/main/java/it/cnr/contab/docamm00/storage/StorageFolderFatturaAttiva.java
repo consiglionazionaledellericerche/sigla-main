@@ -1,25 +1,31 @@
 package it.cnr.contab.docamm00.storage;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
+import java.util.stream.Collectors;
+
+import org.springframework.util.StringUtils;
+
+import it.cnr.contab.client.docamm.FatturaAttiva;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.dp.DigitalPreservationProperties;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
-import it.cnr.contab.dp.DigitalPreservationProperties;
-import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.bulk.OggettoBulk;
-
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @StorageType(name="F:sigla_fatture:fatture_attive")
-public class StorageFolderFatturaAttiva extends OggettoBulk {
+public class StorageFolderFatturaAttiva extends StorageFolderFattura {
 	private static final long serialVersionUID = 4110702628275029148L;
 
 	private Fattura_attivaBulk fattura_attivaBulk;
