@@ -448,37 +448,6 @@ public class CMISSiglaStorageConfiguration {
             }
 
             @Override
-            public InputStream zipContent(List<String> keys, String name) {
-                UrlBuilder url = new UrlBuilder(baseURL.concat(ZIP_CONTENT));
-                url.addParameter("destination", getObjectByPath("/User Homes/sigla", true).getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
-                url.addParameter("filename", name);
-                url.addParameter("noaccent", true);
-                url.addParameter("getParent", true);
-                url.addParameter("download", false);
-                final JSONObject json = new JSONObject();
-                json.put("nodes", keys);
-                siglaBindingSession.put(SessionParameter.READ_TIMEOUT, -1);
-                Response resZipContent = CmisBindingsHelper.getHttpInvoker(siglaBindingSession).invokePOST(url, MimeTypes.JSON.mimetype(),
-                        new Output() {
-                            public void write(OutputStream out) throws Exception {
-                                out.write(json.toString().getBytes());
-                            }
-                        }, siglaBindingSession);
-                if (resZipContent.getResponseCode() != HttpStatus.SC_OK) {
-                    throw new StorageException(StorageException.Type.GENERIC, resZipContent.getErrorContent());
-                }
-                try {
-                    JSONObject  jsonObject = new JSONObject(IOUtils.toString(resZipContent.getStream()));
-                    String nodeRef = jsonObject.getString("nodeRef");
-                    final InputStream inputStream = getInputStream(nodeRef);
-                    delete(nodeRef);
-                    return inputStream;
-                } catch (IOException e) {
-                    throw new StorageException(StorageException.Type.GENERIC, e);
-                }
-            }
-
-            @Override
             public String signDocuments(String json, String url) {
                 try {
                     String webScriptURL = baseURL.concat(url);

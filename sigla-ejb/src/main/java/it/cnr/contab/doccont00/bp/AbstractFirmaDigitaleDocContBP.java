@@ -2,19 +2,29 @@ package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
+import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Apparence;
 import it.cnr.contab.doccont00.intcass.bulk.PdfSignApparence;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.StorageException;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBulk;
+import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
@@ -32,17 +42,20 @@ import it.cnr.jada.util.action.ConsultazioniBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.apache.pdfbox.util.PDFMergerUtility;
+
+import javax.servlet.http.HttpServletResponse;
 
 public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	private static final long serialVersionUID = 1L;
@@ -248,8 +261,10 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	public void scaricaDocumenti(ActionContext actioncontext) throws Exception {
 		setSelection(actioncontext);
 		List<StatoTrasmissione> selectelElements = getSelectedElements(actioncontext);
-		if (selectelElements == null || selectelElements.isEmpty()){
-			((HttpActionContext)actioncontext).getResponse().setStatus(HttpStatus.SC_NO_CONTENT);
+        final HttpServletResponse response = ((HttpActionContext) actioncontext).getResponse();
+        final DocumentiContabiliService documentiContabiliService = SpringUtil.getBean(DocumentiContabiliService.class);
+        if (selectelElements == null || selectelElements.isEmpty()){
+			response.setStatus(HttpStatus.SC_NO_CONTENT);
 			return;
 		}
 		StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
@@ -257,17 +272,17 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 			PDFMergerUtility ut = new PDFMergerUtility();
 			ut.setDestinationStream(new ByteArrayOutputStream());
 			for (StatoTrasmissione cons : selectelElements) {
-				InputStream isToAdd = SpringUtil.getBean(DocumentiContabiliService.class).getStreamDocumento(cons);
+				InputStream isToAdd = documentiContabiliService.getStreamDocumento(cons);
 				if (isToAdd != null)
 					ut.addSource(isToAdd);
 			}
 			ut.mergeDocuments();
 			InputStream is = new ByteArrayInputStream(((ByteArrayOutputStream)ut.getDestinationStream()).toByteArray());
 			if (is != null){
-				((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
-				OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
-				((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
-				byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+				response.setContentType("application/pdf");
+				OutputStream os = response.getOutputStream();
+				response.setDateHeader("Expires", 0);
+				byte[] buffer = new byte[response.getBufferSize()];
 				int buflength;
 				while ((buflength = is.read(buffer)) > 0) {
 					os.write(buffer,0,buflength);
@@ -276,23 +291,67 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 				os.flush();
 			}
 		} else {
-			List<String> nodes = new ArrayList<String>();
-			for (StatoTrasmissione cons : selectelElements) {
-				nodes.add(SpringUtil.getBean(DocumentiContabiliService.class).getDocumentKey(cons, true));
-			}
-			InputStream is = SpringUtil.getBean(DocumentiContabiliService.class).zipContent(nodes, "Documenti contabili");
-			if (is != null){
-				((HttpActionContext)actioncontext).getResponse().setContentType("application/zip");
-				OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
-				((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
-				byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
-				int buflength;
-				while ((buflength = is.read(buffer)) > 0) {
-					os.write(buffer,0,buflength);
-				}
-				is.close();
-				os.flush();
-			}
+			final ZipOutputStream zos = new ZipOutputStream(response.getOutputStream());
+            response.setContentType("application/zip");
+            response.setDateHeader("Expires", 0);
+            selectelElements.stream()
+                    .forEach(statoTrasmissione -> {
+                        documentiContabiliService.getChildren(documentiContabiliService.getStorageObjectByPath(statoTrasmissione.getStorePath()).getKey())
+                                .stream()
+                                .forEach(storageObject -> {
+                                    try {
+                                        ZipEntry zipEntryChild = new ZipEntry(statoTrasmissione.getCMISFolderName()
+                                                .concat(SiglaStorageService.SUFFIX)
+                                                .concat(storageObject.getPropertyValue(StoragePropertyNames.NAME.value())));
+                                        zos.putNextEntry(zipEntryChild);
+                                        IOUtils.copyLarge(documentiContabiliService.getResource(storageObject), zos);
+                                    } catch (IOException e) {
+                                        throw new DetailedRuntimeException(e);
+                                    }
+                                });
+                        if (statoTrasmissione.getCd_tipo_documento_cont().equals(Numerazione_doc_contBulk.TIPO_MAN)) {
+                            try {
+                                MandatoBulk mandatoBulk = (MandatoBulk) createComponentSession().findByPrimaryKey(actioncontext.getUserContext(),
+                                        new MandatoIBulk(statoTrasmissione.getCd_cds(), statoTrasmissione.getEsercizio(), statoTrasmissione.getPg_documento_cont()));
+                                createComponentSession().find(actioncontext.getUserContext(), MandatoIBulk.class,
+                                        "findMandato_riga", actioncontext.getUserContext(), mandatoBulk)
+                                        .stream()
+                                        .filter(Mandato_rigaBulk.class::isInstance)
+                                        .map(Mandato_rigaBulk.class::cast)
+                                        .map(mandato_rigaBulk -> {
+                                            mandato_rigaBulk.setMandato(mandatoBulk);
+                                            return Optional.ofNullable(mandato_rigaBulk.getCd_tipo_documento_amm())
+                                                    .filter(cdTipoDocumentoAmm -> cdTipoDocumentoAmm.equals(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA))
+                                                    .map(s -> {
+                                                        try {
+                                                            return Utility.createMandatoComponentSession().inizializzaTi_fattura(actioncontext.getUserContext(), mandato_rigaBulk);
+                                                        } catch (ComponentException | RemoteException e) {
+                                                            throw new DetailedRuntimeException(e);
+                                                        }
+                                                    }).orElseGet(() -> mandato_rigaBulk);
+                                        })
+                                        .forEach(mandato_rigaBulk -> {
+                                            SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class)
+                                                            .getAllegatiDocumentiAmministrativi(mandato_rigaBulk).stream()
+                                            .forEach(allegatoGenericoBulk -> {
+                                                try {
+                                                    ZipEntry zipEntryChild = new ZipEntry(statoTrasmissione.getCMISFolderName()
+                                                        .concat(SiglaStorageService.SUFFIX)
+                                                        .concat(allegatoGenericoBulk.getNome()));
+                                                    zos.putNextEntry(zipEntryChild);
+                                                    IOUtils.copyLarge(documentiContabiliService.getResource(allegatoGenericoBulk.getStorageKey()), zos);
+                                                } catch (IOException e) {
+                                                    throw new DetailedRuntimeException(e);
+                                                }
+                                            });
+                                        });
+                            } catch (ComponentException|RemoteException|BusinessProcessException e) {
+                                throw new DetailedRuntimeException(e);
+                            }
+                        }
+                    });
+			zos.close();
+            response.getOutputStream().flush();
 		}
 	}
 

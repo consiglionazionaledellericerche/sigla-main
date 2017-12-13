@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.docamm00.docs.bulk.Tipo_documento_ammBulk;
+import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
@@ -52,44 +53,8 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
                 }
 
                 private List<AllegatoGenericoBulk> getAllegatiDocumentiAmministrativi(Mandato_rigaBulk mandato_rigaBulk) {
-                    final List<AllegatoGenericoBulk> allegatiDocumentiAmministrativi = Optional.ofNullable(this.getParentModel())
-                            .filter(Mandato_rigaIBulk.class::isInstance)
-                            .map(Mandato_rigaIBulk.class::cast)
-                            .map(mandato_rigaIBulk -> {
-                                try {
-                                    return Optional.ofNullable(Utility.createMandatoComponentSession().getDocumentoAmministrativoSpesaBulk(null, mandato_rigaIBulk))
-                                            .filter(AllegatoStorePath.class::isInstance)
-                                            .map(AllegatoStorePath.class::cast)
-                                            .map(allegatoStorePath -> {
-                                                StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
-                                                return Optional.ofNullable(allegatoStorePath.getStorePath())
-                                                        .filter(storePaths -> !storePaths.isEmpty())
-                                                        .map(storePaths ->
-                                                            storePaths.stream()
-                                                                    .map(storePath -> Optional.ofNullable(storeService.getStorageObjectByPath(storePath))
-                                                                            .map(StorageObject::getKey)
-                                                                            .map(key -> storeService.getChildren(key, -1))
-                                                                            .orElseGet(() -> Collections.emptyList()))
-                                                                    .collect(Collectors.toList()).stream().flatMap(List::stream).collect(Collectors.toList())
-                                                        ).orElseGet(() -> Collections.emptyList());
-                                            }).map(list -> list.stream()
-                                                    .filter(storageObject -> !Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()))
-                                                            .map(String.class::cast)
-                                                            .filter(s -> s.equals(StoragePropertyNames.CMIS_FOLDER.value()))
-                                                            .isPresent())
-                                                    .map(storageObject -> {
-                                                AllegatoGenericoBulk allegato = new AllegatoGenericoBulk(storageObject.getKey());
-                                                allegato.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-                                                allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
-                                                allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
-                                                allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
-                                                return allegato;
-                                            }).collect(Collectors.toCollection(ArrayList<AllegatoGenericoBulk>::new)))
-                                            .orElseGet(() -> new ArrayList<AllegatoGenericoBulk>());
-                                } catch (ComponentException | RemoteException e) {
-                                    return new ArrayList<AllegatoGenericoBulk>();
-                                }
-                            }).orElseGet(() -> new ArrayList<AllegatoGenericoBulk>());
+                    final List<AllegatoGenericoBulk> allegatiDocumentiAmministrativi =
+                            SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class).getAllegatiDocumentiAmministrativi(mandato_rigaBulk);
                     mandato_rigaBulk.setAllegatiDocumentiAmministrativi(allegatiDocumentiAmministrativi);
                     return allegatiDocumentiAmministrativi;
                 }
