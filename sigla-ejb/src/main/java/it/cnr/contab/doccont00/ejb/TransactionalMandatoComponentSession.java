@@ -3,7 +3,9 @@ import java.rmi.*;
 import java.util.List;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
+import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
@@ -496,4 +498,40 @@ public class TransactionalMandatoComponentSession extends it.cnr.jada.ejb.Transa
 				}
 			}
 	}
+
+	public Mandato_rigaBulk inizializzaTi_fattura(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+		try {
+			return (Mandato_rigaBulk)invoke("inizializzaTi_fattura",new Object[] {
+					param0,
+					param1 });
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+
+    public IDocumentoAmministrativoSpesaBulk getDocumentoAmministrativoSpesaBulk(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+        try {
+            return (IDocumentoAmministrativoSpesaBulk)invoke("getDocumentoAmministrativoSpesaBulk",new Object[] {
+                    param0,
+                    param1 });
+        } catch(java.rmi.RemoteException e) {
+            throw e;
+        } catch(java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch(it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch(Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception",ex);
+            }
+        }
+    }
 }

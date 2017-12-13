@@ -10,6 +10,7 @@ import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBase;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
@@ -18,8 +19,12 @@ import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoStorePath;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.OrderedHashtable;
@@ -33,7 +38,8 @@ public abstract class Fattura_passivaBulk
         implements IDocumentoAmministrativoBulk,
         Voidable,
         IDefferUpdateSaldi,
-        AllegatoParentBulk {
+        AllegatoParentBulk,
+        AllegatoStorePath {
 
     public static final char DIVISIONE = '/';
     public static final char MOLTIPLICA = '*';
@@ -3445,5 +3451,18 @@ public abstract class Fattura_passivaBulk
 
     public void setDocEleAcquistoColl(BulkList<DocumentoEleAcquistoBulk> docEleAcquistoColl) {
         this.docEleAcquistoColl = docEleAcquistoColl;
+    }
+
+    public List<String> getStorePath() {
+        return Optional.ofNullable(getDocumentoEleTestata())
+                .map(DocumentoEleTestataBulk::getDocumentoEleTrasmissione)
+                .map(DocumentoEleTrasmissioneBase::getCmisNodeRef)
+                .map(s -> {
+                    return Optional.ofNullable(SpringUtil.getBean("storeService", StoreService.class).getStorageObjectBykey(s))
+                            .map(StorageObject::getPath)
+                            .map(path -> Arrays.asList(path))
+                            .orElse(Collections.emptyList());
+                })
+                .orElse(Collections.emptyList());
     }
 }
