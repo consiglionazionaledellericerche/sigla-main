@@ -2,15 +2,8 @@ package it.cnr.contab.missioni00.docs.bulk;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Vector;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -33,13 +26,18 @@ import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.missioni00.service.MissioniCMISService;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Tipo_missioneBulk;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoStorePath;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkCollections;
@@ -48,13 +46,14 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
 
 @StorageType(name="D:emppay:missione", parentName="D:emppay:document")
 @JsonInclude(value=Include.NON_NULL)
-public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk,AllegatoParentBulk
+public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk,AllegatoParentBulk, AllegatoStorePath
 {
 	// Testata Missione
 	private boolean salvataggioTemporaneo = false;	// indica che sto eseguendo un salvataggio temporaneo
@@ -3670,5 +3669,19 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	}
 	public void setVoceGeMis(String voceGeMis) {
 		this.voceGeMis = voceGeMis;
+	}
+
+	@Override
+	public List<String> getStorePath() {
+		MissioniCMISService missioniCMISService = SpringUtil.getBean("missioniCMISService",
+				MissioniCMISService.class);
+		List<String> paths = new ArrayList<String>();
+		if (Optional.ofNullable(getIdRimborsoMissione()).isPresent()) {
+			paths.add(missioniCMISService.getStorageObjectBykey(getIdFolderOrdineMissione()).getPath());
+			if (isMissioneFromGemis() && getIdFolderRimborsoMissione() != null) {
+				paths.add(missioniCMISService.getCMISPathFromFolderRimborso(this));
+			}
+		}
+		return paths;
 	}
 }

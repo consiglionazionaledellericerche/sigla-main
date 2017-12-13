@@ -405,6 +405,28 @@ public class CMISSiglaStorageConfiguration {
             }
 
             @Override
+            public List<StorageObject> getChildren(String key, int depth) {
+                return Optional.ofNullable(siglaSession.getObject(key))
+                        .map(Folder.class::cast)
+                        .map(folder -> folder.getDescendants(depth))
+                        .map(cmisObjects -> {
+                            List<StorageObject> list = new ArrayList<StorageObject>();
+                            cmisObjects.stream().forEach(cmisObject -> {
+                                list.add(new StorageObject(cmisObject.getItem().getId(),
+                                        getPath(cmisObject.getItem()),
+                                        convertProperties(cmisObject.getItem().getProperties())));
+                                cmisObject.getChildren().forEach(fileableCmisObjectTree ->
+                                        list.add(new StorageObject(fileableCmisObjectTree.getItem().getId(),
+                                                getPath(fileableCmisObjectTree.getItem()),
+                                                convertProperties(fileableCmisObjectTree.getItem().getProperties())))
+                                );
+                            });
+                            return list;
+                        })
+                        .orElse(Collections.EMPTY_LIST);
+            }
+
+            @Override
             public List<StorageObject> search(String query) {
                 return Optional.ofNullable(query)
                         .map(statement -> siglaSession.query(statement, false))
