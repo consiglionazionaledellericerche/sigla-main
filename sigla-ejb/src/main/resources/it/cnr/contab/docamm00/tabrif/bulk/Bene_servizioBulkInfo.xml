@@ -357,7 +357,8 @@
 			name="ds_bene_servizio" 
 		    inputSize="80"  />
 		<formFieldProperty
-			name="unita_misura" />
+			name="unita_misura"
+			inputCssClass="w-10 " />
 	</form>
 	<form name="searchtool_codice">
 		<formFieldProperty
@@ -365,7 +366,7 @@
 		    inputSize="10" />
 		<formFieldProperty
 			name="ds_bene_servizio" 
-		    inputSize="45"  />
+		    inputSize="45" />
 	</form>
 	<formFieldProperty
 		name="cd_bene_servizio" />
