@@ -303,6 +303,11 @@ public class AzureSiglaStorageService implements SiglaStorageService {
     }
 
     @Override
+    public List<StorageObject> getChildren(String key, int depth) {
+        return getChildren(key);
+    }
+
+    @Override
     public List<StorageObject> getChildren(String key) {
         try {
             key = Optional.ofNullable(key)

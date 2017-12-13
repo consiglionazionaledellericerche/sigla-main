@@ -155,6 +155,13 @@ public interface SiglaStorageService {
     List<StorageObject> getChildren(String key);
 
     /**
+     * retrieve all children
+     * @param key
+     * @return
+     */
+    List<StorageObject> getChildren(String key, int depth);
+
+    /**
      * search documents or folders
      * @param query
      * @return

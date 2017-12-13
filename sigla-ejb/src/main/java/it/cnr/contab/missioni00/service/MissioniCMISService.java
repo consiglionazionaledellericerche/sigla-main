@@ -96,7 +96,7 @@ public class MissioniCMISService extends StoreService {
 		}
 	}
 
-	public String createFolderMissioneSiglaIfNotPresent(String  path, MissioneBulk missione) throws ApplicationException{
+	public String createFolderMissioneSiglaIfNotPresent(String  path, MissioneBulk missione) {
 		Map<String, Object> metadataProperties = new HashMap<String, Object>();
 		String name = missione.constructCMISNomeFile();
 		String folderName = name;
