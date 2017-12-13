@@ -2,6 +2,7 @@ package it.cnr.contab.docamm00.docs.bulk;
 
 import java.rmi.RemoteException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -9,6 +10,7 @@ import javax.ejb.EJBException;
 
 
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
 import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.DistintaCassiere1210Bulk;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
@@ -358,5 +360,19 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 	}
 	public String getCMISName() {
 		return getCMISFolderName() + ".pdf";
+	}
+
+	/**
+	 * @return it.cnr.jada.bulk.BulkList
+	 */
+	public it.cnr.jada.bulk.BulkList<Mandato_rigaIBulk> getMandato_rigaColl() {
+		return new BulkList<>(Collections.emptyList());
+	}
+
+	@Override
+	public String toString() {
+		return Optional.ofNullable(getPg_lettera())
+					.map(lettera -> "Lettera di Pagamento estero n. " + lettera)
+				.orElseGet(() -> super.toString());
 	}
 }

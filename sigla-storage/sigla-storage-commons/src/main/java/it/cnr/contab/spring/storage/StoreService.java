@@ -272,6 +272,10 @@ public class StoreService {
         return siglaStorageService.getChildren(key);
     }
 
+    public List<StorageObject> getChildren(String key, int depth) {
+        return siglaStorageService.getChildren(key, depth);
+    }
+
     public List<StorageObject> search(String query) {
         return siglaStorageService.search(query);
     }

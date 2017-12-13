@@ -1,4 +1,4 @@
-<%@ page 
+<%@ page
 	import="it.cnr.jada.util.jsp.*,
 		it.cnr.jada.action.*,
 		java.util.*,
@@ -7,7 +7,7 @@
 		it.cnr.contab.doccont00.bp.*,
 		it.cnr.contab.util00.bp.*"
 %>
-<%	
+<%
 	AllegatiDocContBP bp = (AllegatiDocContBP)BusinessProcess.getBusinessProcess(request);
 %>
 <html>
@@ -16,19 +16,19 @@
 <script language="javascript" src="scripts/css.js"></script>
 <script language="JavaScript" src="scripts/util.js"></script>
 <title>Allegati al <%=bp.getModel().toString()%></title>
-<script language="JavaScript">
-function doScaricaFile() {	
-  doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=bp.getNomeAllegato()!=null?bp.getNomeAllegato().replace("'", "_"):""%>?methodName=scaricaAllegatoGenerico&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
-}
-</script>
 </head>
 <body class="Form">
 <%	bp.openFormWindow(pageContext); %>
-<%  bp.getCrudArchivioAllegati().writeHTMLTable(pageContext,"default",true,false,true,"100%","250px"); %>
-<div class="Group card p-2 mt-1">
-  <table>
-  	<% bp.getCrudArchivioAllegati().writeForm(out, bp.getAllegatiFormName());  %>
-  </table>
-</div> 
+<% JSPUtils.tabbed(
+					pageContext,
+					"tab",
+					new String[][] {
+						{ "tabAllegati","Allegati","/doccont00/tab_allegati_doccont.jsp" },
+						{ "tabDocContAlleagti","Doc. Amministrativi collegati","/doccont00/tab_allegati_docamm_mandato.jsp" }
+					},
+					bp.getTab("tab"),
+					"center",
+					"100%",
+					"300px"); %>
 <% bp.closeFormWindow(pageContext); %>
 </body>
