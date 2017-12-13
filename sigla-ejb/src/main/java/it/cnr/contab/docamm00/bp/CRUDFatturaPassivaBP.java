@@ -1615,14 +1615,9 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     @Override
     protected String getStorePath(Fattura_passivaBulk fattura_passivaBulk, boolean create) throws BusinessProcessException {
         return Optional.ofNullable(fattura_passivaBulk)
-                .map(Fattura_passivaBulk::getDocumentoEleTestata)
-                .map(DocumentoEleTestataBulk::getDocumentoEleTrasmissione)
-                .map(DocumentoEleTrasmissioneBase::getCmisNodeRef)
-                .map(s -> {
-                    return Optional.ofNullable(SpringUtil.getBean("storeService", StoreService.class).getStorageObjectBykey(s))
-                            .map(StorageObject::getPath)
-                            .orElse(null);
-                })
+                .map(Fattura_passivaBulk::getStorePath)
+                .filter(paths -> !paths.isEmpty())
+                .map(paths -> paths.get(0))
                 .orElse(null);
     }
 
