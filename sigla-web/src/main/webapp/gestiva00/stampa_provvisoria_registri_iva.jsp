@@ -26,7 +26,7 @@
 <% StampaProvvisoriaRegistriIvaBP bp = (StampaProvvisoriaRegistriIvaBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); %>
 
-	<div class="Group" style="width:100%">
+	<div class="Group card" style="width:100%">
 		<table width="100%">
 			<tr>
 				<td>
