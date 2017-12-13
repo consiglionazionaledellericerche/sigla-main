@@ -249,6 +249,11 @@ public class S3SiglaStorageService implements SiglaStorageService {
     }
 
     @Override
+    public List<StorageObject> getChildren(String key, int depth) {
+        return getChildren(key);
+    }
+
+    @Override
     public List<StorageObject> getChildren(String key) {
         return amazonS3
                 .listObjects(s3SiglaStorageConfigurationProperties.getBucketName(), key)
