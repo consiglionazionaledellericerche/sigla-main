@@ -122,8 +122,10 @@
 	  <TR><TD>
 	  	<% bp.getController().writeFormLabel(out,"unita_organizzativa");%>
 	  	</TD><TD colspan="3">
+	  	<div class="input-group input-group-searchtool w-100 ">
 	  	<% bp.getController().writeFormInput(out,"cd_unita_organizzativa");%>
 	  	<% bp.getController().writeFormInput(out,"ds_unita_organizzativa");%>
+	  	</div>
 	  </TD></TR>
 	  <TR><TD>
 	  	<% bp.getController().writeFormLabel(out,"responsabile");%>
