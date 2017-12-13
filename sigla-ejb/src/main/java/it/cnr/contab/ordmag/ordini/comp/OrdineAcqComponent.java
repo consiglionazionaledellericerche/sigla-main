@@ -513,23 +513,23 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
     	ordine.setRigheOrdineColl(new it.cnr.jada.bulk.BulkList(homeRiga.fetchAll(sql)));
 
     	for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
-    		OggettoBulk rigabulk= (OggettoBulk) i.next();
-    		OrdineAcqRigaBulk riga= (OrdineAcqRigaBulk) rigabulk;
-    		if (riga.getBeneServizio() != null){
-    			Bene_servizioBulk bene = recuperoBeneServizio(usercontext, riga.getCdBeneServizio());
-    			riga.setBeneServizio(bene);
-    			riga.setTipoConsegnaDefault(bene.getTipoGestione());
-    		}
-    		if (riga.getUnitaMisura() != null){
-    			UnitaMisuraHome home = (UnitaMisuraHome)getHome(usercontext, UnitaMisuraBulk.class);
-    			UnitaMisuraBulk um = (UnitaMisuraBulk)home.findByPrimaryKey(new UnitaMisuraBulk(riga.getCdUnitaMisura()));
-    			riga.setUnitaMisura(um);
-    		}
-    		if (riga.getVoceIva() != null){
-    			Voce_ivaHome home = (Voce_ivaHome)getHome(usercontext, Voce_ivaBulk.class);
-    			Voce_ivaBulk voce = (Voce_ivaBulk)home.findByPrimaryKey(new Voce_ivaBulk(riga.getCdVoceIva()));
-    			riga.setVoceIva(voce);
-    		}
+    		OrdineAcqRigaBulk riga= (OrdineAcqRigaBulk) i.next();
+//    		if (riga.getBeneServizio() != null){
+//    			Bene_servizioBulk bene = recuperoBeneServizio(usercontext, riga.getCdBeneServizio());
+//    			riga.setBeneServizio(bene);
+//    			riga.setTipoConsegnaDefault(bene.getTipoGestione());
+//    		}
+//    		if (riga.getUnitaMisura() != null){
+//    			UnitaMisuraHome home = (UnitaMisuraHome)getHome(usercontext, UnitaMisuraBulk.class);
+//    			UnitaMisuraBulk um = (UnitaMisuraBulk)home.findByPrimaryKey(new UnitaMisuraBulk(riga.getCdUnitaMisura()));
+//    			riga.setUnitaMisura(um);
+//    		}
+//    		if (riga.getVoceIva() != null){
+//    			Voce_ivaHome home = (Voce_ivaHome)getHome(usercontext, Voce_ivaBulk.class);
+//    			Voce_ivaBulk voce = (Voce_ivaBulk)home.findByPrimaryKey(new Voce_ivaBulk(riga.getCdVoceIva()));
+//    			riga.setVoceIva(voce);
+//    		}
+    		
     		it.cnr.jada.bulk.BulkHome homeConsegna= getHome(usercontext, OrdineAcqConsegnaBulk.class);
     	    it.cnr.jada.persistency.sql.SQLBuilder sqlConsegna= homeConsegna.createSQLBuilder();
     	    sqlConsegna.addClause("AND", "numero", sql.EQUALS, ordine.getNumero());
@@ -539,24 +539,29 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
     	    sqlConsegna.addClause("AND", "cdNumeratore", sql.EQUALS, ordine.getCdNumeratore());
     	    sqlConsegna.addClause("AND", "riga", sql.EQUALS, riga.getRiga());
     		sqlConsegna.addOrderBy("consegna");
-        	riga.setRigheConsegnaColl(new it.cnr.jada.bulk.BulkList(homeConsegna.fetchAll(sqlConsegna)));
-        	Obbligazione_scadenzarioBulk scadenzaComune = null;
+
+    		riga.setRigheConsegnaColl(new it.cnr.jada.bulk.BulkList(homeConsegna.fetchAll(sqlConsegna)));
+
+    		getHomeCache(usercontext).fetchAll(usercontext);
+        	
+    		Obbligazione_scadenzarioBulk scadenzaComune = null;
         	Boolean esisteScadenzaComune = false;
         	for (java.util.Iterator c= riga.getRigheConsegnaColl().iterator(); c.hasNext();) {
         		OggettoBulk consbulk= (OggettoBulk) c.next();
         		OrdineAcqConsegnaBulk cons= (OrdineAcqConsegnaBulk) consbulk;
-        		if (cons.getLuogoConsegnaMag() != null){
-        			LuogoConsegnaMagHome home = (LuogoConsegnaMagHome)getHome(usercontext, LuogoConsegnaMagBulk.class);
-        			LuogoConsegnaMagBulk luogo = (LuogoConsegnaMagBulk)home.findByPrimaryKey(new LuogoConsegnaMagBulk(cons.getCdCdsLuogo(), cons.getCdLuogoConsegna()));
-        			cons.setLuogoConsegnaMag(luogo);
-        		}
-        		if (cons.getMagazzino() != null){
-        			MagazzinoBulk mag = recuperoMagazzino(usercontext, cons);
-        			cons.setMagazzino(mag);
-        		}
+//        		if (cons.getLuogoConsegnaMag() != null){
+//        			LuogoConsegnaMagHome home = (LuogoConsegnaMagHome)getHome(usercontext, LuogoConsegnaMagBulk.class);
+//        			LuogoConsegnaMagBulk luogo = (LuogoConsegnaMagBulk)home.findByPrimaryKey(new LuogoConsegnaMagBulk(cons.getCdCdsLuogo(), cons.getCdLuogoConsegna()));
+//        			cons.setLuogoConsegnaMag(luogo);
+//        		}
+//        		if (cons.getMagazzino() != null){
+//        			MagazzinoBulk mag = recuperoMagazzino(usercontext, cons);
+//        			cons.setMagazzino(mag);
+//        		}
         		if (cons.getObbligazioneScadenzario() != null){
-        			Obbligazione_scadenzarioBulk scad = retrieveObbligazioneScadenzario(usercontext, cons);
-        			cons.setObbligazioneScadenzario(scad);
+//        			Obbligazione_scadenzarioBulk scad = retrieveObbligazioneScadenzario(usercontext, cons);
+//        			cons.setObbligazioneScadenzario(scad);
+        			Obbligazione_scadenzarioBulk scad = cons.getObbligazioneScadenzario();
         			if (scadenzaComune == null || scadenzaComune.equalsByPrimaryKey(scad)){
             			esisteScadenzaComune = true;
         				scadenzaComune = scad;
@@ -576,7 +581,6 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
             	riga.setDspObbligazioneScadenzario(scadenzaComune);
         	}
     	}
-
     } catch (PersistencyException e) {
     	throw handleException(e);
     }
