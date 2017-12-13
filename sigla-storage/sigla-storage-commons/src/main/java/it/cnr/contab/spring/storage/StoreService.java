@@ -280,10 +280,6 @@ public class StoreService {
         return siglaStorageService.search(query);
     }
 
-    public InputStream zipContent(List<String> keys, String name) {
-        return siglaStorageService.zipContent(keys, name);
-    }
-
     public String signDocuments(PdfSignApparence pdfSignApparence, String url) throws StorageException{
         if (siglaStorageService.getStoreType().equals(SiglaStorageService.StoreType.CMIS)) {
             return signDocuments(new GsonBuilder().create().toJson(pdfSignApparence), url);
