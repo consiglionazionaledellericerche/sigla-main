@@ -275,14 +275,14 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
                                 .collect(Collectors.toList());
                         v_mandato_reversaleBulk = (V_mandato_reversaleBulk) super.initializeModelForEdit(actioncontext, v_mandato_reversaleBulk);
                         v_mandato_reversaleBulk.setMandato_rigaColl(new BulkList<Mandato_rigaIBulk>(findMandato_riga));
-                        return v_mandato_reversaleBulk;
+                        return (OggettoBulk)v_mandato_reversaleBulk;
                     } catch (ComponentException | RemoteException | BusinessProcessException e) {
                         throw new DetailedRuntimeException(e);
                     }
                 }).orElseGet(() -> {
                     try {
                         return Optional.ofNullable(super.initializeModelForEdit(actioncontext, oggettobulk))
-                                .map(V_mandato_reversaleBulk.class::cast).orElse(null);
+                                .orElse(null);
                     } catch (BusinessProcessException e) {
                         throw new DetailedRuntimeException(e);
                     }
