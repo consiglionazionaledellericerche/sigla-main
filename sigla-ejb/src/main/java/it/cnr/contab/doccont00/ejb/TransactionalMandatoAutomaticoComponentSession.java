@@ -615,7 +615,7 @@ public class TransactionalMandatoAutomaticoComponentSession extends it.cnr.jada.
             }
         }
     }
-    
+
     public IDocumentoAmministrativoSpesaBulk getDocumentoAmministrativoSpesaBulk(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk param1) throws RemoteException, it.cnr.jada.comp.ComponentException {
         try {
             return (IDocumentoAmministrativoSpesaBulk) invoke("getDocumentoAmministrativoSpesaBulk", new Object[]{
