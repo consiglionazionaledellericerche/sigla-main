@@ -69,10 +69,11 @@
 		name="notaRiga"
 		property="notaRiga"
 		inputType="TEXTAREA"
-		cols="200"
+		cols="100"
 		rows="2"
 		maxLength="2000"
 		enabledOnEdit="true"
+		inputCssClass="w-100 "
 		label="Note" />
 	<fieldProperty
 		name="stato"
@@ -145,7 +146,10 @@
 		property="voceIva"
 		inputType="SEARCHTOOL" 		
 		enabledOnSearch="false"
-        enabledOnEdit="true" />	
+		formName="searchtool_large"
+		nullable="false"
+		label="I.V.A."
+		enabledOnEdit="true" />	
 	<fieldProperty
 		name="cd_voce_iva"
 		property="voceIva.cd_voce_iva"
@@ -197,6 +201,7 @@
 		nullable="false"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		enabledOnEdit="true"
+		style="text-align: right"
 		label="Quantità" />
 	<fieldProperty
 		name="sconto1"
@@ -296,7 +301,7 @@
 		property="dspDtPrevConsegna"
 		inputType="TEXT"
 		formatName="date_short"
-		inputSize="10"
+		inputSize="12"
 		enabledOnEdit="true"
 		nullable="false"
 		label="Data Prev. Consegna" />

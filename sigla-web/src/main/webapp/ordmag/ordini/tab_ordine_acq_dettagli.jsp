@@ -11,7 +11,7 @@
 <% CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request);
     OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)bp.getRighe().getModel();
 	bp.getRighe().writeHTMLTable(pageContext,"righeSet",true,false,true,"100%","140px"); %>
-<tr><td colspan=10>
+<div class="mt-2">
 	      <%
 	      	String[][] pages = null;
 	      	if(riga != null && riga.getNumero() != null){
@@ -26,6 +26,6 @@
 	      	}
 	      	JSPUtils.tabbed(pageContext, "tabOrdineAcqDettaglio",
 	      			pages,
-	      			bp.getTab("tabOrdineAcqDettaglio"), "left", "90%", null, true);
+	      			bp.getTab("tabOrdineAcqDettaglio"), "left", "100%", null, true);
 	      %>
-</td></tr>
+</div>
