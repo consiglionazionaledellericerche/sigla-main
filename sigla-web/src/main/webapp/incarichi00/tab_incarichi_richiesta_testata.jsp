@@ -17,7 +17,7 @@
     			bp.getParentRoot().isBootstrap()?null:"style=\"background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;\"");%>
     </legend>    
 	<% } %>
-	<div class="card  p-2 mb-2">
+	<div class="card p-2 mb-2">
     <table class="Panel w-50" align="left" cellspacing=4 cellpadding=4>
 	    <tr>
            <% bp.getController().writeFormField(out,"esercizio");%>

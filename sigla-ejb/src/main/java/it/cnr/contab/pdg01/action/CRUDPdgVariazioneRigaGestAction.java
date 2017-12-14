@@ -213,4 +213,11 @@ public class CRUDPdgVariazioneRigaGestAction extends it.cnr.jada.util.action.CRU
 	public it.cnr.jada.action.Forward doBringBackCRUDCrea_linea_attivita(it.cnr.jada.action.ActionContext context, Pdg_variazione_riga_gestBulk bulk, WorkpackageBulk linea_di_attivita) {
 		return doBringBackSearchFind_linea_attivita(context, bulk, linea_di_attivita);
 	}
+
+	public Forward doCRUDFind_linea_attivita(ActionContext actioncontext) throws FillException, BusinessProcessException {
+		return doCRUDCrea_linea_attivita(actioncontext);
+	}
+	public it.cnr.jada.action.Forward doBringBackCRUDFind_linea_attivita(it.cnr.jada.action.ActionContext context, Pdg_variazione_riga_gestBulk bulk, WorkpackageBulk linea_di_attivita) {
+		return doBringBackCRUDCrea_linea_attivita(context,bulk,linea_di_attivita);
+	}
 }
