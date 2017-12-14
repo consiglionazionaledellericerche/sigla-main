@@ -24,7 +24,8 @@
 			  <tr>
 		         <td><% bp.getController().writeFormField(out,"esercizio");%></td>
 		         <td><% bp.getController().writeFormField(out,"pg_procedura");%></td>
-				 <td><% bp.getController().writeFormInput(out,null,"statoText",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style:none;cursor:default;font-size:16px;font-style:italic;\"");%></td>
+				 <td><% bp.getController().writeFormInput(out,null,"statoText",true,"GroupLabel text-primary h3 inputFieldReadOnly font-italic",
+						 	bp.getParentRoot().isBootstrap()?null:"style=\"background: #F5F5DC;background-color:transparent;border-style:none;cursor:default;font-size:16px;font-style:italic;\"");%></td>
 			  </tr>  
 		   	</table>
 		   	</td></tr>

@@ -934,6 +934,9 @@ public Forward doBringBackCRUDCrea_terzo(ActionContext context, Documento_generi
         return handleException(context, e);
     }
 }
+public Forward doBringBackCRUDTerzo(ActionContext context, Documento_generico_rigaBulk documentoGenericoRiga, TerzoBulk terzo) throws java.rmi.RemoteException {
+    return doBringBackCRUDCrea_terzo(context, documentoGenericoRiga, terzo);
+}
 /**
  * Gestisce un operazione bringback sull'accertamento
  * 
