@@ -169,13 +169,6 @@ public interface SiglaStorageService {
     List<StorageObject> search(String query);
 
     /**
-     * ZIP content
-     * @param keys
-     * @return
-     */
-    InputStream zipContent(List<String> keys, String name);
-
-    /**
      * Sign documents
      * @param json
      * @param url
