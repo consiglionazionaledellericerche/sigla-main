@@ -1,6 +1,8 @@
 package it.cnr.contab.docamm00.service;
 
 import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
 import it.cnr.contab.spring.storage.bulk.StorageFile;
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
@@ -12,6 +14,9 @@ import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.storage.StorageException;
 import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoStorePath;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
@@ -21,6 +26,7 @@ import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.util.PDFMergerUtility;
 
 import java.io.*;
+import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -272,6 +278,44 @@ public class DocumentiCollegatiDocAmmService extends StoreService {
 		return fileName;
 	}
 
-
+	public List<AllegatoGenericoBulk> getAllegatiDocumentiAmministrativi(Mandato_rigaBulk mandato_rigaBulk) {
+		return Optional.ofNullable(mandato_rigaBulk)
+				.filter(Mandato_rigaIBulk.class::isInstance)
+				.map(Mandato_rigaIBulk.class::cast)
+				.map(mandato_rigaIBulk -> {
+					try {
+						return Optional.ofNullable(Utility.createMandatoComponentSession().getDocumentoAmministrativoSpesaBulk(null, mandato_rigaIBulk))
+								.filter(AllegatoStorePath.class::isInstance)
+								.map(AllegatoStorePath.class::cast)
+								.map(allegatoStorePath -> {
+									return Optional.ofNullable(allegatoStorePath.getStorePath())
+											.filter(storePaths -> !storePaths.isEmpty())
+											.map(storePaths ->
+													storePaths.stream()
+															.map(storePath -> Optional.ofNullable(getStorageObjectByPath(storePath))
+																	.map(StorageObject::getKey)
+																	.map(key -> getChildren(key, -1))
+																	.orElseGet(() -> Collections.emptyList()))
+															.collect(Collectors.toList()).stream().flatMap(List::stream).collect(Collectors.toList())
+											).orElseGet(() -> Collections.emptyList());
+								}).map(list -> list.stream()
+										.filter(storageObject -> !Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()))
+												.map(String.class::cast)
+												.filter(s -> s.equals(StoragePropertyNames.CMIS_FOLDER.value()))
+												.isPresent())
+										.map(storageObject -> {
+											AllegatoGenericoBulk allegato = new AllegatoGenericoBulk(storageObject.getKey());
+											allegato.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+											allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
+											allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
+											allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
+											return allegato;
+										}).collect(Collectors.toCollection(ArrayList<AllegatoGenericoBulk>::new)))
+								.orElseGet(() -> new ArrayList<AllegatoGenericoBulk>());
+					} catch (ComponentException | RemoteException e) {
+						return new ArrayList<AllegatoGenericoBulk>();
+					}
+				}).orElseGet(() -> new ArrayList<AllegatoGenericoBulk>());
+	}
 
 }
