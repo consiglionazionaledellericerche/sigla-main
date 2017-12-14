@@ -10,13 +10,19 @@ public class AllegatoDocContBulk extends AllegatoGenericoBulk {
 	private OrderedHashtable rifModalitaPagamentoKeys = new OrderedHashtable();
 	@StoragePolicy(name="P:doccont:rif_modalita_pagamentoAspect", property=@StorageProperty(name="doccont:rif_modalita_pagamento"))
 	private String rifModalitaPagamento;
+	private boolean cancellabile;
+	private boolean modificabile;
 
 	public AllegatoDocContBulk() {
 		super();
+		this.cancellabile = Boolean.TRUE;
+		this.modificabile = Boolean.TRUE;
 	}
 
 	public AllegatoDocContBulk(String storageKey) {
 		super(storageKey);
+		this.cancellabile = Boolean.TRUE;
+		this.modificabile = Boolean.TRUE;
 	}
 
 	public String getRifModalitaPagamento() {
@@ -34,5 +40,21 @@ public class AllegatoDocContBulk extends AllegatoGenericoBulk {
 	public void setRifModalitaPagamentoKeys(
 			OrderedHashtable rifModalitaPagamentoKeys) {
 		this.rifModalitaPagamentoKeys = rifModalitaPagamentoKeys;
+	}
+
+	public boolean isCancellabile() {
+		return cancellabile;
+	}
+
+	public void setCancellabile(boolean cancellabile) {
+		this.cancellabile = cancellabile;
+	}
+
+	public boolean isModificabile() {
+		return modificabile;
+	}
+
+	public void setModificabile(boolean modificabile) {
+		this.modificabile = modificabile;
 	}
 }
