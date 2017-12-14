@@ -11,16 +11,20 @@
 %>
 <% if (model.getNrContrattiAttivati().compareTo(new Integer(0))==0) {%>
 <fieldset class="fieldset">
+	<% if (model.getStatoText()!=null) {%>
     <legend class="GroupLabel ml-2">
     	<% bp.getController().writeFormInput(out,null,"statoText",true,"GroupLabel text-primary h3 inputFieldReadOnly",
     			bp.getParentRoot().isBootstrap()?null:"style=\"background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;\"");%>
     </legend>    
-    <table class="Panel" align="left" cellspacing=4 cellpadding=4>
+	<% } %>
+	<div class="card  p-2 mb-2">
+    <table class="Panel w-50" align="left" cellspacing=4 cellpadding=4>
 	    <tr>
            <% bp.getController().writeFormField(out,"esercizio");%>
            <% bp.getController().writeFormField(out,"pg_richiesta");%>
         </tr>  
     </table>
+    </div>
 <% } %>    
 <table class="Panel w-100">
 <% if (!bp.getParentRoot().isBootstrap()) { %>
@@ -28,7 +32,7 @@
 <% } %>
       <tr>
       	<td>
-	      <div class="GroupLabel h3 text-primary ml-2">Estremi del richiedente</div>         
+	      <div class="GroupLabel h5 text-primary ml-2">Estremi del richiedente</div>         
 	      <div class="Group card p-2 mb-2">
 	      	<table class="w-100">
 			  <tr>
@@ -56,7 +60,7 @@
 	<% } %>
 	  <tr>
 	  	<td>
-	      <div class="GroupLabel h3 text-primary ml-2">Date di validit�</div>
+	      <div class="GroupLabel h5 text-primary ml-2">Date di validit&aacute;</div>
 	      <div class="Group card p-2 mb-2">
 	      <table class="w-100">         
 			  <tr>
@@ -78,24 +82,26 @@
 <% } %>
       <tr>
         <td>
-      	  <div class="GroupLabel h3 text-primary ml-2">Esito ricerca</div>
+      	  <div class="GroupLabel h5 text-primary ml-2">Esito ricerca</div>
 	      <div class="Group card p-2 mb-2">
 	      <table width="100%" class="w-100">
 			<% if (!bp.isSearching() && model.getNr_risorse_da_trovare().compareTo(new Integer(1))==0) {%>
 			<tr>
-	     		<td><% bp.getController().writeFormLabel(out,"nr_risorse_da_trovare");%></td>
-		        <td><% bp.getController().writeFormInput(out,"nr_risorse_da_trovare");%></td>
+	     		<% bp.getController().writeFormField(out,"nr_risorse_da_trovare");%>
 			  	<td><% bp.getController().writeFormLabel(out,"personale_interno");%></td>
-		        <td>
-				   <% if (!model.isRichiestaChiusa())
-		      			bp.getController().writeFormInput(out,"personale_interno");
-			    	  else
-  	   	 	 	        bp.getController().writeFormInput(out,"personale_interno_ro");
-					%>
-				</td>
-			 	<% if (model.getNrContrattiAttivati().compareTo(model.getNr_risorse_da_trovare())==-1) {%>
+		        <td><% bp.getController().writeFormInput(out,null,"personale_interno",model.isRichiestaChiusa(),null,null);%></td>
+			 	<% if (model.getNrContrattiAttivati().compareTo(model.getNr_risorse_da_trovare())<0) {%>
 					 <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		  	 	 	 <td><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Avvia Procedura<BR>Conferimento<BR>Incarico","javascript:submitForm('doRichiediContratto')", null, "Chiude la ricerca e procede ad attivare una richiesta di contratto ", ((CRUDIncarichiRichiestaBP)bp).isButtonRichiediContrattoEnabled(), bp.getParentRoot().isBootstrap()); %></td>
+		  	 	 	 <td><% Button.write(out,
+			 					bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/book_opened.gif",
+	 							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/book_closed.gif",
+	 							bp.getParentRoot().isBootstrap() ? "Avvia Procedura Conferimento Incarico":"Avvia Procedura<BR>Conferimento<BR>Incarico", 
+		  	 	 			 	"javascript:submitForm('doRichiediContratto')", 
+		  						"btn-secondary btn-outline-primary btn-title faa-parent animated-hover",
+		  	 	 			 	"Avvia Procedura Conferimento Incarico", 
+		  	 	 			 	((CRUDIncarichiRichiestaBP)bp).isButtonRichiediContrattoEnabled(), 
+		  	 	 			 	bp.getParentRoot().isBootstrap()); %>
+		  	 	 	 </td>
 		  	 	<% } %>
 		  	</tr>
 			<% } else { %>
@@ -103,30 +109,29 @@
 	     		<td rowspan="3" align="center" valign="middle"><% bp.getController().writeFormLabel(out,"nr_risorse_da_trovare");%></td>
 		        <td rowspan="3" align="center" valign="middle"><% bp.getController().writeFormInput(out,"nr_risorse_da_trovare");%></td>
 	   	  	 	<td rowspan="3" align="center" valign="middle"><SPAN class="FormLabel">di cui:</SPAN></td>
-				<% if (!model.isRichiestaChiusa()) {%>
-		      		<td><% bp.getController().writeFormLabel(out,"nr_risorse_trovate_si");%></td>
-	 	         	<td><% bp.getController().writeFormInput(out,"nr_risorse_trovate_si");%></td>
-				<% } else { %>
-		      		<td><% bp.getController().writeFormLabel(out,"nr_risorse_trovate_si_ro");%></td>
-	 	         	<td><% bp.getController().writeFormInput(out,"nr_risorse_trovate_si_ro");%></td>
- 	         	<% } %>
-		 	    <% if (!bp.isSearching() && model.getNrContrattiAttivati().compareTo(model.getNr_risorse_da_trovare())==-1) {%>				 
-		 	 	 	<td rowspan="3" align="center" valign="middle"><% Button.write(out,bp.encodePath("img/book_opened.gif"),bp.encodePath("img/book_closed.gif"),"Avvia Procedura<BR>Conferimento<BR>Incarico","javascript:submitForm('doRichiediContratto')", null, "Chiude la ricerca e procede ad attivare una richiesta di contratto ", ((CRUDIncarichiRichiestaBP)bp).isButtonRichiediContrattoEnabled(), bp.getParentRoot().isBootstrap()); %></td>
+	      		<td><% bp.getController().writeFormLabel(out,"nr_risorse_trovate_si");%></td>
+	         	<td><% bp.getController().writeFormInput(out,null,"nr_risorse_trovate_si"+(bp.isSearching()?"_search":""),model.isRichiestaChiusa(),null,null);%></td>
+		 	    <% if (!bp.isSearching() && model.getNrContrattiAttivati().compareTo(model.getNr_risorse_da_trovare())<0) {%>				 
+		 	 	 	<td rowspan="3" align="center" valign="middle">
+		 	 	 		<% Button.write(out,
+			 					bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/book_opened.gif",
+	 							bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/book_closed.gif",
+	 							bp.getParentRoot().isBootstrap() ? "Avvia Procedura Conferimento Incarico":"Avvia Procedura<BR>Conferimento<BR>Incarico", 
+		 	 	 				"javascript:submitForm('doRichiediContratto')", 
+		 						"btn-secondary btn-outline-primary btn-title faa-parent animated-hover",
+		 	 	 				"Avvia Procedura Conferimento Incarico", 
+		 	 	 				((CRUDIncarichiRichiestaBP)bp).isButtonRichiediContrattoEnabled(), 
+		 	 	 				bp.getParentRoot().isBootstrap()); %>
+		 	 	 	</td>
  	         	<% } %>
 			</tr>
 			<tr>
-				<% if (!model.isRichiestaChiusa()) {%>
-		      		<% bp.getController().writeFormField(out,"nr_risorse_trovate_na");%>
-				<% } else { %>
-		      		<% bp.getController().writeFormField(out,"nr_risorse_trovate_na_ro");%>
- 	         	<% } %>
+				<td><% bp.getController().writeFormLabel(out,"nr_risorse_trovate_na");%></td>
+	         	<td><% bp.getController().writeFormInput(out,null,"nr_risorse_trovate_na"+(bp.isSearching()?"_search":""),model.isRichiestaChiusa(),null,null);%></td>
 	 	 	</tr>
 	 	 	<tr>
-				<% if (!model.isRichiestaChiusa()) {%>
-		      		<% bp.getController().writeFormField(out,"nr_risorse_trovate_no");%>
-				<% } else { %>
-		      		<% bp.getController().writeFormField(out,"nr_risorse_trovate_no_ro");%>
- 	         	<% } %>
+				<td><% bp.getController().writeFormLabel(out,"nr_risorse_trovate_no");%></td>
+	         	<td><% bp.getController().writeFormInput(out,null,"nr_risorse_trovate_no"+(bp.isSearching()?"_search":""),model.isRichiestaChiusa(),null,null);%></td>
 		    </tr>  	      
 	        <% } %>
 	      </table>
@@ -140,7 +145,7 @@
 
 	  <tr>
 	     <td>
-	 	 	<div class="GroupLabel h3 text-primary ml-2">Ricerca</div>
+	 	 	<div class="GroupLabel h5 text-primary ml-2">Ricerca</div>
 		    <div class="Group card p-2 mb-2">
 		    <table class="w-25">
 		      <tr>
@@ -158,7 +163,7 @@
 
       <tr>
       	<td>
-	      <div class="GroupLabel h3 text-primary ml-2">Informazioni sull'attivit&aacute;</div>
+	      <div class="GroupLabel h5 text-primary ml-2">Informazioni sull'attivit&aacute;</div>
 	      <div class="Group card p-2 mb-2">
 	      <table class="w-100">
 			  <tr>         
@@ -181,7 +186,7 @@
 
       <tr>
       	<td>
-	      <div class="GroupLabel h3 text-primary ml-2">Informazioni aggiuntive</div>
+	      <div class="GroupLabel h5 text-primary ml-2">Informazioni aggiuntive</div>
 	      <div class="Group card p-2 mb-2">
 	      <table class="w-100">
 		 	  <tr>         
@@ -196,5 +201,5 @@
       </tr>
 	</table>   
 <% if (model.getNrContrattiAttivati().compareTo(new Integer(0))==0) {%>
-<%="</fieldset>"%> 	
+</fieldset> 	
 <% } %>
