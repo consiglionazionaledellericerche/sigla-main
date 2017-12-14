@@ -221,8 +221,8 @@
     </div>
 
     <%if (bp==null||bp.isIncarichiProceduraBP()) {%>
-    <div class="Group card p-2 mb-2" width="100%">
-	<table class="Panel w-100" width="100%">
+    <div class="Group card p-2 mb-2">
+	<table class="Panel w-100">
 	  <tr>
          <td><% bp.getController().writeFormLabel(out,"incarichi_richiesta");%></td>
          <td><% bp.getController().writeFormInput(out,"default","incarichi_richiesta",bp.isROIncaricoRichiesta(),null,null); %></td>
@@ -231,8 +231,8 @@
     </div>
 	<% } %>	  
 
-    <div class="Group card p-2 mb-2" width="100%">
-	<table class="Panel w-100" width="100%">
+    <div class="Group card p-2 mb-2">
+	<table class="Panel w-100">
 	  <tr>
          <% bp.getController().writeFormField(out,"incarichi_procedura_padre");%>
       </tr>
