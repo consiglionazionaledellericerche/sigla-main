@@ -7,19 +7,14 @@
 package it.cnr.contab.pdg01.action;
 
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.pdg01.bp.CRUDPdgModuloEntrateGestBP;
-import it.cnr.contab.pdg01.bp.CRUDPdgModuloSpeseGestBP;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
-import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
-import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.FillException;
-import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDAction;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.FormField;
@@ -112,5 +107,8 @@ public class CRUDPdgModuloEntrateGestAction extends CRUDAction {
 		} catch(Throwable e) {
 			return handleException(actioncontext,e);
 		}
+	}
+	public Forward doCRUDFind_linea_attivita(ActionContext actioncontext) throws FillException, BusinessProcessException {
+		return doCRUDCrea_linea_attivita(actioncontext);
 	}
 }
