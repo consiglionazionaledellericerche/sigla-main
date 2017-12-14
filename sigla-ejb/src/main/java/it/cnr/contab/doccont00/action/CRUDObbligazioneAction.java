@@ -501,7 +501,7 @@ public Forward doCRUDCrea_linea_attivita(ActionContext context)
 	 *
 	 * @return <code>Forward</code>
  */
-public Forward doBringBackCRUDCrea_contratto(ActionContext context, ObbligazioneBulk obbligazione, ContrattoBulk contratto) 
+public Forward doBringBackCRUDFind_contratto(ActionContext context, ObbligazioneBulk obbligazione, ContrattoBulk contratto)
 {
 	try 
 	{
