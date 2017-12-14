@@ -4594,7 +4594,7 @@ public SQLBuilder selectLineaAttivita_centro_responsabilitaByClause(UserContext 
 	sql.openParenthesis(FindClause.AND);
 	for (java.util.Iterator j = strHome.findUoCollegateCDS(new Unita_organizzativaBulk(CNRUserContext.getCd_cds(userContext)), CNRUserContext.getEsercizio( userContext )).iterator(); j.hasNext();) {
 		Unita_organizzativaBulk uoAfferente = (Unita_organizzativaBulk) j.next();
-		for (java.util.Iterator x = strHome.findCDRBaseUO(uoAfferente, CNRUserContext.getEsercizio( userContext )).iterator(); x.hasNext();) {
+		for (java.util.Iterator x = strHome.findCDRCollegatiUO(uoAfferente, CNRUserContext.getEsercizio( userContext )).iterator(); x.hasNext();) {
 			CdrBulk cdrAfferente = (CdrBulk) x.next();
 			sql.addClause(FindClause.OR,"cd_centro_responsabilita", SQLBuilder.EQUALS, cdrAfferente.getCd_centro_responsabilita());
 		}
@@ -4619,7 +4619,7 @@ public SQLBuilder selectLineaAttivitaByClause(UserContext userContext, Pdg_vinco
 		sql.openParenthesis(FindClause.AND);
 		for (java.util.Iterator j = strHome.findUoCollegateCDS(new Unita_organizzativaBulk(CNRUserContext.getCd_cds(userContext)), CNRUserContext.getEsercizio( userContext )).iterator(); j.hasNext();) {
 			Unita_organizzativaBulk uoAfferente = (Unita_organizzativaBulk) j.next();
-			for (java.util.Iterator x = strHome.findCDRBaseUO(uoAfferente, CNRUserContext.getEsercizio( userContext )).iterator(); x.hasNext();) {
+			for (java.util.Iterator x = strHome.findCDRCollegatiUO(uoAfferente, CNRUserContext.getEsercizio( userContext )).iterator(); x.hasNext();) {
 				CdrBulk cdrAfferente = (CdrBulk) x.next();
 				sql.addClause(FindClause.OR,"cd_centro_responsabilita", SQLBuilder.EQUALS, cdrAfferente.getCd_centro_responsabilita());
 			}
@@ -4676,7 +4676,7 @@ public SQLBuilder selectAssestatoRisorseCoperturaByClause (UserContext userConte
 	sql.openParenthesis(FindClause.AND);
 	for (java.util.Iterator j = strHome.findUoCollegateCDS(new Unita_organizzativaBulk(CNRUserContext.getCd_cds(userContext)), CNRUserContext.getEsercizio( userContext )).iterator(); j.hasNext();) {
 		Unita_organizzativaBulk uoAfferente = (Unita_organizzativaBulk) j.next();
-		for (java.util.Iterator x = strHome.findCDRBaseUO(uoAfferente, CNRUserContext.getEsercizio( userContext )).iterator(); x.hasNext();) {
+		for (java.util.Iterator x = strHome.findCDRCollegatiUO(uoAfferente, CNRUserContext.getEsercizio( userContext )).iterator(); x.hasNext();) {
 			CdrBulk cdrAfferente = (CdrBulk) x.next();
 			sql.addClause(FindClause.OR,"cd_centro_responsabilita", SQLBuilder.EQUALS, cdrAfferente.getCd_centro_responsabilita());
 		}
@@ -4735,7 +4735,7 @@ public void verificaDisponibilitaVincoliSpese(UserContext aUC,AccertamentoResidu
 				V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(aUC, V_struttura_organizzativaBulk.class);
 				for (java.util.Iterator j = strHome.findUoCollegateCDS(new Unita_organizzativaBulk(CNRUserContext.getCd_cds(aUC)), CNRUserContext.getEsercizio( aUC )).iterator(); j.hasNext();) {
 					Unita_organizzativaBulk uoAfferente = (Unita_organizzativaBulk) j.next();
-					for (java.util.Iterator x = strHome.findCDRBaseUO(uoAfferente, CNRUserContext.getEsercizio( aUC )).iterator(); x.hasNext();) {
+					for (java.util.Iterator x = strHome.findCDRCollegatiUO(uoAfferente, CNRUserContext.getEsercizio( aUC )).iterator(); x.hasNext();) {
 						CdrBulk cdrAfferente = (CdrBulk) x.next();
 						totVariazioneCDS = totVariazioneCDS.add(
 							righeVar.stream().filter(e->e.getCd_cdr().equals(cdrAfferente.getCd_centro_responsabilita()))
@@ -4772,7 +4772,7 @@ public SQLBuilder selectVariazioneResiduaByClause (UserContext userContext, Acce
 	sql.openParenthesis(FindClause.AND);
 	for (java.util.Iterator j = strHome.findUoCollegateCDS(new Unita_organizzativaBulk(CNRUserContext.getCd_cds(userContext)), CNRUserContext.getEsercizio( userContext )).iterator(); j.hasNext();) {
 		Unita_organizzativaBulk uoAfferente = (Unita_organizzativaBulk) j.next();
-		for (java.util.Iterator x = strHome.findCDRBaseUO(uoAfferente, CNRUserContext.getEsercizio( userContext )).iterator(); x.hasNext();) {
+		for (java.util.Iterator x = strHome.findCDRCollegatiUO(uoAfferente, CNRUserContext.getEsercizio( userContext )).iterator(); x.hasNext();) {
 			CdrBulk cdrAfferente = (CdrBulk) x.next();
 			sql.addClause(FindClause.OR,"cd_centro_responsabilita", SQLBuilder.EQUALS, cdrAfferente.getCd_centro_responsabilita());
 		}
