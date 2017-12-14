@@ -133,4 +133,7 @@ public class CRUDPdgModuloSpeseGestAction extends CRUDAction {
 			return handleException(actioncontext,e);
 		}
 	}
+	public Forward doCRUDFind_linea_attivita(ActionContext actioncontext) throws FillException, BusinessProcessException {
+		return doCRUDCrea_linea_attivita(actioncontext);
+	}
 }
