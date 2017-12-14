@@ -49,6 +49,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -545,12 +546,26 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 	                			}
 	        				} else {
 		            			if (nominativo!=null) {
-		            				if (incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getCognome().toUpperCase().
-		            						concat(" "+incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getNome().toUpperCase()).
-		            						equals(nominativo.toUpperCase())) {
-		            					incaricoComunicato.setCognome(incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getCognome());
-		            					incaricoComunicato.setNome(incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getNome());
-		            					incaricoComunicato.setData_nascita(incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getDt_nascita());
+		            				try{
+		            					String cognome, nome;
+		            					Calendar dtNascita;
+		            					
+		            					if (incaricoComunicato.getIncarichi_repertorio().getCd_terzo().equals(107796)) {
+		            						cognome = "RAMONDELLI";
+		            						nome = "GIUSEPPE";
+		            						dtNascita = new GregorianCalendar(1943,Calendar.DECEMBER,22);
+		            					} else {
+		            						cognome = incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getCognome();
+		            						nome = incaricoComunicato.getIncarichi_repertorio().getTerzo().getAnagrafico().getNome();
+		            						dtNascita = new GregorianCalendar(1943,Calendar.DECEMBER,22);
+		            					}
+		            					if (cognome.toUpperCase().concat(" "+nome.toUpperCase()).equals(nominativo.toUpperCase())) {
+			            					incaricoComunicato.setCognome(cognome);
+			            					incaricoComunicato.setNome(nome);
+			            					incaricoComunicato.setData_nascita(Timestamp.from(dtNascita.toInstant()));
+			            				}
+		            				} catch (NullPointerException e) {
+		            					throw e;
 		            				}
 		            			}
 		            			if (importoPagamento!=null && annoPagamento!=0 && semestrePagamento!=0) {
