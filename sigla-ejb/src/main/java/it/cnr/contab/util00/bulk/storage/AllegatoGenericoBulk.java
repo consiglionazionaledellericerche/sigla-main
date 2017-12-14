@@ -9,6 +9,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.StringTokenizer;
 
 @StorageType(name="cmis:document")
@@ -106,5 +107,18 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 				throw new ValidationException("Attenzione: selezionare un File da caricare.");
 		}
 		super.validate();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		AllegatoGenericoBulk that = (AllegatoGenericoBulk) o;
+		return Objects.equals(storageKey, that.storageKey);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(storageKey);
 	}
 }
