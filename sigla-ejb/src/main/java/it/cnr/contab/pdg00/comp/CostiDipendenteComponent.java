@@ -55,7 +55,6 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.comp.RicercaComponent;
-import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
@@ -1351,8 +1350,6 @@ private void validaAss_cdp_uo(UserContext userContext,Ass_cdp_uoBulk ass_cdp_uo)
 	} catch(OutdatedResourceException e) {
 		throw handleException(e);
 	} catch(BusyResourceException e) {
-		throw handleException(e);
-	} catch (IntrospectionException e) {
 		throw handleException(e);
 	}
 }
