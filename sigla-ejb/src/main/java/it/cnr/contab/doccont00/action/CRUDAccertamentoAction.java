@@ -172,7 +172,7 @@ public Forward doBringBackCRUDCrea_debitore(ActionContext context, AccertamentoB
 	 *
 	 * @return <code>Forward</code>
  */
-public Forward doBringBackCRUDCrea_contratto(ActionContext context, AccertamentoBulk accertamento, ContrattoBulk contratto) 
+public Forward doBringBackCRUDFind_contratto(ActionContext context, AccertamentoBulk accertamento, ContrattoBulk contratto)
 {
 	try 
 	{
