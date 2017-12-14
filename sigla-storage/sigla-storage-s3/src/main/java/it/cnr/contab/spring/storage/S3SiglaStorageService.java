@@ -271,12 +271,6 @@ public class S3SiglaStorageService implements SiglaStorageService {
     }
 
     @Override
-    public InputStream zipContent(List<String> keys, String name) {
-        LOGGER.warn("S3 -> Not yet implemented");
-        return null;
-    }
-
-    @Override
     public String signDocuments(String json, String url) {
         LOGGER.warn("S3 -> Not yet implemented -> signDocuments");
         return null;
