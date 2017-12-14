@@ -94,7 +94,7 @@ public class DocumentiContabiliService extends StoreService {
 				.orElse(null)).orElse(null);
 	}
 
-	public InputStream getStreamDocumento(StatoTrasmissione bulk) throws ApplicationException{
+	public InputStream getStreamDocumento(StatoTrasmissione bulk) {
 		return Optional.ofNullable(getStorageObjectByPath(bulk.getStorePath().concat(SiglaStorageService.SUFFIX).concat(bulk.getCMISName())))
 				.map(StorageObject::getKey)
 				.map(key -> getResource(key))
