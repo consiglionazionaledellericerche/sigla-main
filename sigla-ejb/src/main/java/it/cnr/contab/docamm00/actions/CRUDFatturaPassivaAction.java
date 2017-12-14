@@ -1730,7 +1730,13 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
 
         return doBringBackSearchFornitore(context, fattura_passiva, fornitoreTrovato);
     }
-
+    public Forward doBringBackCRUDFornitore(ActionContext context,
+            Fattura_passivaBulk fattura_passiva,
+            TerzoBulk fornitoreTrovato)
+            throws java.rmi.RemoteException {
+    	return doBringBackCRUDCrea_fornitore(context, fattura_passiva, fornitoreTrovato);
+	}
+    
     /**
      * Aggiunge, una volta terminata l'operazione di creazione di buono di carico,
      * tale buono al modello
