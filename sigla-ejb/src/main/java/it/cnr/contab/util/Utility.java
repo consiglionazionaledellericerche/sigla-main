@@ -11,7 +11,11 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.rmi.RemoteException;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
@@ -322,7 +326,13 @@ public final class Utility {
 			return NumberToTextRicorsiva(n / 1000000000) + "miliardi" + 
 					NumberToTextRicorsiva(n % 1000000000);
 		}
-	}	
+	}
+
+	public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
+		Map<Object, Boolean> map = new ConcurrentHashMap<>();
+		return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+	}
+
 	public static Parametri_cnrComponentSession createParametriCnrComponentSession()throws EJBException, RemoteException {
 		return (Parametri_cnrComponentSession)EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession", Parametri_cnrComponentSession.class);		
 	}
