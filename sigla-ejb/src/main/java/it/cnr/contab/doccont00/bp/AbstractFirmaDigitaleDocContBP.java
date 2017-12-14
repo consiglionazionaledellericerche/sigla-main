@@ -4,18 +4,17 @@ import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
-import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
-import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.intcass.bulk.Apparence;
 import it.cnr.contab.doccont00.intcass.bulk.PdfSignApparence;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
+import it.cnr.contab.doccont00.service.ContabiliService;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.StorageException;
+import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
@@ -24,6 +23,7 @@ import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -292,6 +292,8 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 			}
 		} else {
 			final ZipOutputStream zos = new ZipOutputStream(response.getOutputStream());
+            final ContabiliService contabiliService = SpringUtil.getBean("contabiliService", ContabiliService.class);
+            final DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
             response.setContentType("application/zip");
             response.setDateHeader("Expires", 0);
             selectelElements.stream()
@@ -313,6 +315,21 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
                             try {
                                 MandatoBulk mandatoBulk = (MandatoBulk) createComponentSession().findByPrimaryKey(actioncontext.getUserContext(),
                                         new MandatoIBulk(statoTrasmissione.getCd_cds(), statoTrasmissione.getEsercizio(), statoTrasmissione.getPg_documento_cont()));
+                                contabiliService.getNodeRefContabile(mandatoBulk)
+                                        .stream()
+                                        .forEach(key ->  {
+                                            try {
+                                                final StorageObject storageObject = contabiliService.getStorageObjectBykey(key);
+                                                ZipEntry zipEntryChild = new ZipEntry(statoTrasmissione.getCMISFolderName()
+                                                        .concat(SiglaStorageService.SUFFIX)
+                                                        .concat(storageObject.getPropertyValue(StoragePropertyNames.NAME.value())));
+                                                zos.putNextEntry(zipEntryChild);
+                                                IOUtils.copyLarge(contabiliService.getResource(key), zos);
+                                            } catch (IOException e) {
+                                                throw new DetailedRuntimeException(e);
+                                            }
+                                        });
+
                                 createComponentSession().find(actioncontext.getUserContext(), MandatoIBulk.class,
                                         "findMandato_riga", actioncontext.getUserContext(), mandatoBulk)
                                         .stream()
@@ -331,7 +348,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
                                                     }).orElseGet(() -> mandato_rigaBulk);
                                         })
                                         .forEach(mandato_rigaBulk -> {
-                                            SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class)
+                                            documentiCollegatiDocAmmService
                                                             .getAllegatiDocumentiAmministrativi(mandato_rigaBulk).stream()
                                             .forEach(allegatoGenericoBulk -> {
                                                 try {
