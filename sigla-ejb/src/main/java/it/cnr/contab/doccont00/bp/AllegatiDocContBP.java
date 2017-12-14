@@ -6,6 +6,7 @@ import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
+import it.cnr.contab.doccont00.service.ContabiliService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.StoreService;
@@ -13,6 +14,7 @@ import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoStorePath;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
@@ -186,6 +188,70 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
 
     public final SimpleDetailCRUDController getDettaglioAllegati() {
         return dettaglioAllegati;
+    }
+
+    @Override
+    protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
+        return Optional.ofNullable(allegato)
+                .filter(AllegatoDocContBulk.class::isInstance)
+                .map(AllegatoDocContBulk.class::cast)
+                .map(AllegatoDocContBulk::isCancellabile)
+                .orElse(Boolean.TRUE);
+    }
+
+    @Override
+    protected Boolean isPossibileModifica(AllegatoGenericoBulk allegato) {
+        return Optional.ofNullable(allegato)
+                .filter(AllegatoDocContBulk.class::isInstance)
+                .map(AllegatoDocContBulk.class::cast)
+                .map(AllegatoDocContBulk::isModificabile)
+                .orElse(Boolean.TRUE);
+    }
+
+    @Override
+    public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
+        final ContabiliService contabiliService = SpringUtil.getBean("contabiliService", ContabiliService.class);
+        return Optional.ofNullable(oggettobulk)
+                .filter(StatoTrasmissione.class::isInstance)
+                .map(StatoTrasmissione.class::cast)
+                .filter(statoTrasmissione -> statoTrasmissione.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN))
+                .map(statoTrasmissione -> {
+                    try {
+                        OggettoBulk oggettoBulk = super.initializeModelForEditAllegati(actioncontext, oggettobulk);
+                        MandatoBulk mandatoBulk = (MandatoBulk) createComponentSession().findByPrimaryKey(actioncontext.getUserContext(),
+                                new MandatoIBulk(statoTrasmissione.getCd_cds(), statoTrasmissione.getEsercizio(), statoTrasmissione.getPg_documento_cont()));
+                        contabiliService.getNodeRefContabile(mandatoBulk)
+                                .stream()
+                                .forEach(key ->  {
+                                    final StorageObject storageObject = contabiliService.getStorageObjectBykey(key);
+                                    AllegatoDocContBulk allegato = new AllegatoDocContBulk(storageObject.getKey());
+                                    allegato.setRifModalitaPagamento("CONTABILE");
+                                    allegato.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+                                    allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
+                                    allegato.setDescrizione(
+                                            Optional.ofNullable(storageObject.<String>getPropertyValue(StoragePropertyNames.DESCRIPTION.value()))
+                                                .orElse("Contabile")
+                                    );
+                                    allegato.setTitolo(
+                                            Optional.ofNullable(storageObject.<String>getPropertyValue(StoragePropertyNames.TITLE.value()))
+                                                    .orElse("Contabile")
+                                    );
+                                    allegato.setCrudStatus(OggettoBulk.NORMAL);
+                                    allegato.setCancellabile(Boolean.FALSE);
+                                    allegato.setModificabile(Boolean.FALSE);
+                                    ((AllegatoParentBulk)oggettoBulk).addToArchivioAllegati(allegato);
+                                });
+                        return oggettoBulk;
+                    } catch (BusinessProcessException|ComponentException|RemoteException e) {
+                        throw new DetailedRuntimeException(e);
+                    }
+                }).orElseGet(() -> {
+                    try {
+                        return super.initializeModelForEditAllegati(actioncontext, oggettobulk);
+                    } catch (BusinessProcessException e) {
+                        throw new DetailedRuntimeException(e);
+                    }
+                });
     }
 
     @Override
