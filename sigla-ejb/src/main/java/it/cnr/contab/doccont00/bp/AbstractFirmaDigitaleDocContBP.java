@@ -44,10 +44,8 @@ import it.cnr.jada.util.jsp.Button;
 
 import java.io.*;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -347,20 +345,29 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
                                                         }
                                                     }).orElseGet(() -> mandato_rigaBulk);
                                         })
+                                        .filter(Utility.distinctByKey(mandato_rigaBulk ->
+                                                        mandato_rigaBulk.getCd_tipo_documento_amm().concat(
+                                                    mandato_rigaBulk.getCd_cds_doc_amm().concat(
+                                                            String.valueOf(mandato_rigaBulk.getEsercizio_doc_amm()).concat(
+                                                                    String.valueOf(mandato_rigaBulk.getPg_doc_amm())
+                                                            )
+                                                    ))
+                                                ))
+                                        .collect(Collectors.toList())
                                         .forEach(mandato_rigaBulk -> {
                                             documentiCollegatiDocAmmService
                                                             .getAllegatiDocumentiAmministrativi(mandato_rigaBulk).stream()
-                                            .forEach(allegatoGenericoBulk -> {
-                                                try {
-                                                    ZipEntry zipEntryChild = new ZipEntry(statoTrasmissione.getCMISFolderName()
-                                                        .concat(SiglaStorageService.SUFFIX)
-                                                        .concat(allegatoGenericoBulk.getNome()));
-                                                    zos.putNextEntry(zipEntryChild);
-                                                    IOUtils.copyLarge(documentiContabiliService.getResource(allegatoGenericoBulk.getStorageKey()), zos);
-                                                } catch (IOException e) {
-                                                    throw new DetailedRuntimeException(e);
-                                                }
-                                            });
+                                                    .forEach(allegatoGenericoBulk -> {
+                                                        try {
+                                                            ZipEntry zipEntryChild = new ZipEntry(statoTrasmissione.getCMISFolderName()
+                                                                .concat(SiglaStorageService.SUFFIX)
+                                                                .concat(allegatoGenericoBulk.getNome()));
+                                                            zos.putNextEntry(zipEntryChild);
+                                                            IOUtils.copyLarge(documentiContabiliService.getResource(allegatoGenericoBulk.getStorageKey()), zos);
+                                                        } catch (IOException e) {
+                                                            throw new DetailedRuntimeException(e);
+                                                        }
+                                                    });
                                         });
                             } catch (ComponentException|RemoteException|BusinessProcessException e) {
                                 throw new DetailedRuntimeException(e);
