@@ -4,18 +4,19 @@
 		it.cnr.contab.incarichi00.bulk.*,
 		it.cnr.contab.incarichi00.bp.*,
 		it.cnr.jada.util.jsp.*"
+	pageEncoding="ISO-8859-1"
 %>
 
 <%
 CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)BusinessProcess.getBusinessProcess(request);
 SimpleDetailCRUDController controller = bp.getIncarichiColl();
 %>
-<table class="Panel">
+<table class="Panel w-100">
 	<TR><TD>
 <% if (!bp.isSearching()&&
   	   bp.getModel()!=null &&
 	   ((Incarichi_proceduraBulk)bp.getModel()).isProceduraMultiIncarico()) { %>
-		<table>
+		<table class="w-100">
 		<TR><TD>
 			<% controller.writeHTMLTable(
 								pageContext,
