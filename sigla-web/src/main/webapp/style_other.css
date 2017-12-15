@@ -455,3 +455,6 @@ input.inputFieldReadOnly {
 .d-inline-block, .input-group{
     display : inline-block!important;
 }
+.sigla-mb-2{
+	margin-bottom: .5rem!important;
+}

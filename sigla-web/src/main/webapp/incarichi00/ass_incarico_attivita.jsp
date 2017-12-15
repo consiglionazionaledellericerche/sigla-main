@@ -20,8 +20,9 @@ SimpleCRUDBP bp = (SimpleCRUDBP)BusinessProcess.getBusinessProcess(request);
 <%
 	bp.openFormWindow(pageContext);
 %>
-	<fieldset>	
-	 <table class="Panel">
+	<fieldset>
+	 <div class="card p-2">	
+	 <table class="Panel w-100">
     <%--  <table border="0" cellspacing="0" cellpadding="2" align=center> --%>
       <tr>
         <td><% bp.getController().writeFormLabel(out,"esercizio");%></td>
@@ -44,6 +45,7 @@ SimpleCRUDBP bp = (SimpleCRUDBP)BusinessProcess.getBusinessProcess(request);
         <td><% bp.getController().writeFormInput(out,"find_tipo_limite");%></td>
       </tr>      
       </table>
+      </div>
 	</fieldset>
 <%bp.closeFormWindow(pageContext); %>
 </body>

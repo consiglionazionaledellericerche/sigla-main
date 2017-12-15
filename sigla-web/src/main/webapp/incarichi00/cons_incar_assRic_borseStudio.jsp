@@ -25,115 +25,54 @@
 	boolean isFieldReadOnly = true;
 %>
 
-	<div class="Group" style="width:100%">
-	  <div class="Group">
+	<div class="Group card" style="width:100%">
+	  <div class="Group card border-primary p-2 mb-2">
 	    <table>    	  
-	  	  <tr>
-			<td><% bp.getController().writeFormLabel(out,"tipologiaAssegni"); %></td>
-			<td><% bp.getController().writeFormInput(out,"tipologiaAssegni"); %></td>
-	  	  </tr>
-	  	  <tr>
-			<td><% bp.getController().writeFormLabel(out,"tipologiaBorsaDiStudio"); %></td>
-			<td><% bp.getController().writeFormInput(out,"tipologiaBorsaDiStudio"); %></td>
-	  	  </tr>
-	  	  <tr>
-			<td><% bp.getController().writeFormLabel(out,"tipologiaCollOcc"); %></td>
-			<td><% bp.getController().writeFormInput(out,"tipologiaCollOcc"); %></td>
-	  	  </tr>
-	  	  <tr>
-			<td><% bp.getController().writeFormLabel(out,"tipologiaCollProf"); %></td>
-			<td><% bp.getController().writeFormInput(out,"tipologiaCollProf"); %></td>
-	  	  </tr>
-	  	  <tr>
-			<td><% bp.getController().writeFormLabel(out,"tipologiaCococo"); %></td>
-			<td><% bp.getController().writeFormInput(out,"tipologiaCococo"); %></td>
-	  	  </tr>
+	  	  <tr><% bp.getController().writeFormField(out,"tipologiaAssegni"); %></tr>
+	  	  <tr><% bp.getController().writeFormField(out,"tipologiaBorsaDiStudio"); %></tr>
+	  	  <tr><% bp.getController().writeFormField(out,"tipologiaCollOcc"); %></tr>
+	  	  <tr><% bp.getController().writeFormField(out,"tipologiaCollProf"); %></tr>
+	  	  <tr><% bp.getController().writeFormField(out,"tipologiaCococo"); %></tr>
 	    </table>
 	  </div>
+	  
+	  <div class="p-2 mb-2">
 		<table width="100%">
 		    <tr>
-				<td> <% bp.getController().writeFormLabel(out,"esercizioValidita");%></td>
-				<td> <% bp.getController().writeFormInput(out,null,"esercizioValidita",false,null,"");%></td>
-				<td> <% bp.getController().writeFormLabel(out,"dt_validita");%></td>
-				<td> <% bp.getController().writeFormInput(out,null,"dt_validita",false,null,"");%></td>
-  			<td><% bp.getController().writeFormLabel(out,"findUoForPrint"); %></td>
-			<td>
-				<% bp.getController().writeFormInput(out,null,"cdUoForPrint",(bulk!=null?!bulk.isUOForPrintEnabled():false),null,null); %>
-				<% bp.getController().writeFormInput(out,"dsUoForPrint"); %>
-				<% bp.getController().writeFormInput(out,null,"findUoForPrint",(bulk!=null?!bulk.isUOForPrintEnabled():false),null,null); %>
-			</td>
+				<% bp.getController().writeFormField(out,"esercizioValidita");%>
+				<% bp.getController().writeFormField(out,"dt_validita");%>
+	  			<td><% bp.getController().writeFormLabel(out,"findUoForPrint"); %></td>
+				<td>
+					<% bp.getController().writeFormInput(out,null,"cdUoForPrint",(bulk!=null?!bulk.isUOForPrintEnabled():false),null,null); %>
+					<% bp.getController().writeFormInput(out,"dsUoForPrint"); %>
+					<% bp.getController().writeFormInput(out,null,"findUoForPrint",(bulk!=null?!bulk.isUOForPrintEnabled():false),null,null); %>
+				</td>
 			</tr> 
 		</table>
+	  </div>
+	  
+	  <div class="Group card border-primary p-2 mb-2" style="width:100%">
+		<table class="w-100">
+			<tr><% bp.getController().writeFormField(out,"filtroSoggetto");%></tr>
+			<tr><% bp.getController().writeFormField(out,"cd_precedente");%></tr>
+			<tr><% bp.getController().writeFormField(out,"codice_fiscale");%></tr>
+			<tr><% bp.getController().writeFormField(out,"filtroCognome");%></tr>
+			<tr><% bp.getController().writeFormField(out,"filtroNome");%></tr>
+		</table>	
+	  </div>
 
-		<div class="Group" style="width:100%">
-			<table >
-				<tr>
-					<td>
-						<% bp.getController().writeFormLabel(out,"cd_soggetto");%>
-					</td>
-					<td colspan="3">
-						<% bp.getController().writeFormInput(out,"cd_soggetto");%>
-						<% bp.getController().writeFormInput(out,"filtroSoggetto");%>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<% bp.getController().writeFormLabel(out,"cd_precedente");%>
-					</td>
-					<td colspan="3">
-						<% bp.getController().writeFormInput(out, "cd_precedente");%>
-					</td>
-				</tr>
-				<tr>
-					<% bp.getController().writeFormField(out,"codice_fiscale");%>
-				</tr>	
-				<tr>
-					<td>
-						<% bp.getController().writeFormLabel(out,"filtroCognome");%>
-					</td>
-					<td colspan="3">
-						<% bp.getController().writeFormInput(out,"filtroCognome");%>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<% bp.getController().writeFormLabel(out,"filtroNome");%>
-					</td>
-					<td colspan="3">
-						<% bp.getController().writeFormInput(out,"filtroNome");%>
-					</td>
-				</tr>
-			</table>	
-		</div>
-		<table>  
-  <tr>
-    <td>	
-	  <div class="Group">
+	  <div class="Group card border-primary p-2 mb-2">
 	    <table>    	  
-	  	  <tr>
-			<td><% bp.getController().writeFormLabel(out,"statoProvvisorio"); %></td>
-			<td><% bp.getController().writeFormInput(out,"statoProvvisorio"); %></td>
-	  	  </tr>
-	  	  <tr>
-			<td><% bp.getController().writeFormLabel(out,"statoDefinitivo"); %></td>
-			<td><% bp.getController().writeFormInput(out,"statoDefinitivo"); %></td>
-	  	  </tr>
-	  	  <tr>
-			<td><% bp.getController().writeFormLabel(out,"statoAnnullatoEliminato"); %></td>
-			<td><% bp.getController().writeFormInput(out,"statoAnnullatoEliminato"); %></td>
-	  	  </tr>
-	  	  <tr>
-			<td><% bp.getController().writeFormLabel(out,"statoInviato"); %></td>
-			<td><% bp.getController().writeFormInput(out,"statoInviato"); %></td>
-	  	  </tr>
-	  	  <tr>
-			<td><% bp.getController().writeFormLabel(out,"statoChiuso"); %></td>
-			<td><% bp.getController().writeFormInput(out,"statoChiuso"); %></td>
-	  	  </tr>
+	  	  <tr><% bp.getController().writeFormField(out,"statoProvvisorio"); %></tr>
+	  	  <tr><% bp.getController().writeFormField(out,"statoDefinitivo"); %></tr>
+	  	  <tr><% bp.getController().writeFormField(out,"statoAnnullatoEliminato"); %></tr>
+	  	  <tr><% bp.getController().writeFormField(out,"statoInviato"); %></tr>
+	  	  <tr><% bp.getController().writeFormField(out,"statoChiuso"); %></tr>
 	    </table>
 	  </div>
-	  <div class="Group">
-	    <table>    	  
+
+	  <div class="Group card border-primary p-2 mb-2">
+	    <table class="w-50">    	  
 	      <tr>
 		    <td><% bp.getController().writeFormInput(out,"seleziona"); %></td>
 	  	  </tr>	
@@ -147,9 +86,6 @@
 		  </tr>
 	    </table>
 	  </div>
-    </td>
-  </tr>	    
-</table> 
 	</div>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
