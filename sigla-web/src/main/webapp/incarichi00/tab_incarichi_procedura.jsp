@@ -11,12 +11,14 @@
 
 <%@page import="java.math.BigDecimal"%>
 <fieldset class="fieldset">
-    <legend class="GroupLabel">
+    <%if (model!=null & model.getStatoText()!=null) { %>
+	<legend class="GroupLabel">
     	<% bp.getController().writeFormInput(out,null,"statoText",true,"GroupLabel text-primary h3 inputFieldReadOnly",
 		 	bp.getParentRoot().isBootstrap()?null:"style=\"background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;\"");%>
 	</legend>
+	<% } %>
 
-    <div class="Group card p-2 mb-2">
+    <div class="Group card p-2 mb-2 sigla-mb-2">
 	<table class="Panel w-100">
 	  <tr>
 	    <% bp.getController().writeFormField(out,"dt_registrazione");%>
@@ -25,7 +27,7 @@
     </table>
     </div>  	
 
-    <div class="Group card p-2 mb-2">
+    <div class="Group card p-2 mb-2 sigla-mb-2">
 	<table class="Panel w-100">
 	  <tr>
          <td><% bp.getController().writeFormLabel(out,"cds");%></td>
@@ -45,8 +47,6 @@
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"firmatario");%></td>
          <td colspan="2">
-         	<% bp.getController().writeFormInput(out,"cd_firmatario");%>
-            <% bp.getController().writeFormInput(out,"ds_firmatario");%>
 		    <% bp.getController().writeFormInput(out,"firmatario");%>
 		 </td>
       </tr>            
@@ -56,7 +56,7 @@
 	<%if (bp.isSearching()||
 		  model.getDt_pubblicazione()!=null || model.getDt_fine_pubblicazione()!=null ||
 		  model.getDt_scadenza()!=null) {%>
-    <div class="Group card p-2 mb-2">
+    <div class="Group card p-2 mb-2 sigla-mb-2">
 	<table class="Panel w-100">
 	  <tr>
 	    <td><% bp.getController().writeFormField(out,"dt_pubblicazione");%></td>
@@ -69,22 +69,15 @@
     </div>
     <%}%>
 
-    <div class="Group card p-2 mb-2">
+    <div class="Group card p-2 mb-2 sigla-mb-2">
 	<table class="Panel w-100">
 	  <tr><% bp.getController().writeFormField(out,"atto");%></tr>
 	  <tr><% bp.getController().writeFormField(out,"ds_atto");%></tr>
-      <tr>
-         <td><% bp.getController().writeFormLabel(out,"terzo_resp");%></td>
-         <td>
-         	<% bp.getController().writeFormInput(out,"cd_terzo_resp");%>
-            <% bp.getController().writeFormInput(out,"ds_terzo_resp");%>
-		    <% bp.getController().writeFormInput(out,"terzo_resp");%>
-		 </td>
-      </tr>
+      <tr><% bp.getController().writeFormField(out,"terzo_resp");%></tr>
     </table>
     </div>
 
-    <div class="Group card p-2 mb-2">
+    <div class="Group card p-2 mb-2 sigla-mb-2">
 	<table class="Panel w-100">
 	  <tr>         
          <td><% bp.getController().writeFormLabel(out,"oggetto");%></td>
@@ -100,18 +93,23 @@
     </table>
     </div>
 
-    <div class="Group card p-2 mb-2">
-	<table class="Panel w-100">
-	  <tr>         
-		 <%if (bp==null||bp.isIncarichiProceduraBP()||bp.isBorseStudioBP()) {%>
-	         <% bp.getController().writeFormField(out,"find_tipo_attivita");%>
-	         <td>&nbsp;</td>
+	<% boolean writeTipoAttivita = bp==null||bp.isIncarichiProceduraBP()||bp.isBorseStudioBP(); %>
+    <div class="Group card p-2 mb-2 sigla-mb-2">
+	<table class="Panel <% if (writeTipoAttivita) { %>w-100<% } %>">
+	  <tr>
+		 <%if (writeTipoAttivita) {%>
+		    <div>
+	        <% bp.getController().writeFormField(out,"find_tipo_attivita");%>
+	        </div>
+	        <td>&nbsp;</td>
 	     <%}%>
+	     <div>
 	 	 <% bp.getController().writeFormField(out,"tipo_natura");%>
+	 	 </div>
       </tr>
 	  <%if (bp==null||bp.isIncarichiProceduraBP()) {%>
 		  <tr>
-		  	 <% bp.getController().writeFormField(out,"find_tipo_incarico");%>
+		  	<% bp.getController().writeFormField(out,"find_tipo_incarico");%>
 			<% if (model.isMeramenteOccasionaleEnabled()) { %>
 				 <td>&nbsp;</td>
 			 	 <% bp.getController().writeFormField(out,"fl_meramente_occasionale");%>
@@ -124,7 +122,7 @@
     </table>
     </div>
 
-    <div class="Group card p-2 mb-2" width="100%">
+    <div class="Group card p-2 mb-2 sigla-mb-2" width="100%">
 	<table class="Panel w-100" width="100%">
 	<% if (model.getNr_contratti()!=null && model.getNr_contratti().compareTo(new Integer(1))==1) {
 	    String nrRighe="3";
@@ -221,18 +219,18 @@
     </div>
 
     <%if (bp==null||bp.isIncarichiProceduraBP()) {%>
-    <div class="Group card p-2 mb-2">
+    <div class="Group card p-2 mb-2 sigla-mb-2">
 	<table class="Panel w-100">
 	  <tr>
-         <td><% bp.getController().writeFormLabel(out,"incarichi_richiesta");%></td>
+         <td class="w-25"><% bp.getController().writeFormLabel(out,"incarichi_richiesta");%></td>
          <td><% bp.getController().writeFormInput(out,"default","incarichi_richiesta",bp.isROIncaricoRichiesta(),null,null); %></td>
       </tr>
     </table>
     </div>
 	<% } %>	  
 
-    <div class="Group card p-2 mb-2">
-	<table class="Panel w-100">
+    <div class="Group card p-2 mb-2 sigla-mb-2">
+	<table class="Panel w-100 d-flex flex-row">
 	  <tr>
          <% bp.getController().writeFormField(out,"incarichi_procedura_padre");%>
       </tr>
