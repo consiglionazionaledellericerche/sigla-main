@@ -3,6 +3,7 @@
 		it.cnr.contab.incarichi00.bp.*,
 		it.cnr.contab.incarichi00.bulk.*,
 		it.cnr.jada.util.jsp.*"
+	pageEncoding="ISO-8859-1"
 %>
 
 <%
@@ -15,10 +16,8 @@ if (procedura!=null && procedura.getFaseProcesso()!=null &&
 	procedura.getNr_contratti().compareTo(new Integer(1))==1)
 	multi_incarico=true;
 %>
-<table class="Panel">
-	<TR><TD>
-	<fieldset>
-		<table>
+<fieldset>
+	<table CLASS="w-100">
 		<TR><TD>
 <% bp.getRipartizionePerAnno().writeHTMLTable(
 								pageContext,
@@ -29,22 +28,20 @@ if (procedura!=null && procedura.getFaseProcesso()!=null &&
 								"100%",
 								"150px"); %>
 		</TD></TR>
-		</table>	
-<% if (bp.isTabCompensiProceduraAnnoEnabled()) {
-  JSPUtils.tabbed(
-				pageContext,
-				"tabIncarichiProceduraAnno",
-				new String[][] {
-						{ "tabIncarichiProceduraAnnoImporti","Importo","/incarichi00/tab_incarichi_procedura_anno_importi.jsp" },
-						{ "tabIncarichiProceduraAnnoCompensi","Compensi Associati","/incarichi00/tab_incarichi_procedura_anno_compensi.jsp" } },
-				bp.getTab("tabIncarichiProceduraAnno"),
-				"center",
-				"100%",
-				null);
-  } else {
-%>
+	</table>	
+	<% if (bp.isTabCompensiProceduraAnnoEnabled()) {
+	  JSPUtils.tabbed(
+					pageContext,
+					"tabIncarichiProceduraAnno",
+					new String[][] {
+							{ "tabIncarichiProceduraAnnoImporti","Importo","/incarichi00/tab_incarichi_procedura_anno_importi.jsp" },
+							{ "tabIncarichiProceduraAnnoCompensi","Compensi Associati","/incarichi00/tab_incarichi_procedura_anno_compensi.jsp" } },
+					bp.getTab("tabIncarichiProceduraAnno"),
+					"center",
+					"100%",
+					null);
+	  } else {
+	%>
 	<jsp:include page="/incarichi00/tab_incarichi_procedura_anno_importi.jsp" />
-<%}%>
-	</fieldset>
-	</TD></TR>
-</table>	
+	<%}%>
+</fieldset>

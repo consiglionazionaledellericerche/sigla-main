@@ -28,102 +28,112 @@ if (bp.getModel()!=null &&
 	  procedura.getTipo_natura()!=null) {%>
 	  <%if (!multiContratto) {%>
 	      <tr><td colspan=4>
-	      <div class="Group"><table width=70%>
-		  <tr>
-		    <td><% controller.writeFormLabel(out,"pg_repertorio");%></td>
-		    <td><% controller.writeFormInput(out,"pg_repertorio");%></td>
-		    <%if (controller.countDetails()==0) {%>
-	          	<td><%JSPUtils.button(out, "img/edit16.gif", "img/edit16.gif", "Carica Contratto", "if (disableDblClick()) javascript:submitForm('doAddToCRUD(main.IncarichiColl)')", null, true, bp.getParentRoot().isBootstrap());%></td>
-            <% } else if (bp.getIncarichiParametri()==null || bp.getIncarichiParametri().getFl_invio_fp()==null || 
-            		  bp.getIncarichiParametri().getFl_invio_fp().equals("Y")) {%>
-		        <td><% controller.writeFormLabel(out,"fl_inviato_corte_conti");%></td>
-		        <td><% controller.writeFormInput(out,"fl_inviato_corte_conti");%></td>
-            <% } %>
-	      </tr>      
-	      </table></div>
+	      <div class="Group card">
+	      <table width=70%>
+			  <tr>
+			    <% controller.writeFormField(out,"pg_repertorio");%>
+			    <%if (controller.countDetails()==0) {%>
+		          	<td>
+		          		<%JSPUtils.button(out, 
+		          			bp.getParentRoot().isBootstrap()?"fa fa-fw fa-handshake-o text-primary":"img/edit16.gif", 
+		          			bp.getParentRoot().isBootstrap()?"fa fa-fw fa-handshake-o text-primary":"img/edit16.gif", 
+		          			"Carica Contratto", 
+		          			"if (disableDblClick()) javascript:submitForm('doAddToCRUD(main.IncarichiColl)')", 
+		          			"btn-secondary btn-outline-secondary btn-title text-primary", 
+		          			true, 
+		          			bp.getParentRoot().isBootstrap());%>
+		          	</td>
+	            <% } else if (bp.getIncarichiParametri()==null || bp.getIncarichiParametri().getFl_invio_fp()==null || 
+	            		  bp.getIncarichiParametri().getFl_invio_fp().equals("Y")) {%>
+			        <% controller.writeFormField(out,"fl_inviato_corte_conti");%>
+	            <% } %>
+		      </tr>      
+	      </table>
+	      </div>
 	      </td></tr>
       <% } else { %>
 	      <tr><td colspan=4>
-	      <div class="Group"><table>
-		  <tr>
-	        <td><% controller.writeFormField(out,"fl_inviato_corte_conti");%></td>
-	      </tr>      
-	      </table></div>
+	      <div class="Group card">
+	      <table>
+			  <tr>
+		        <% controller.writeFormField(out,"fl_inviato_corte_conti");%>
+		      </tr>      
+	      </table>
+	      </div>
 	      </td></tr>
       <% } %>
 <% } %>      
 	  <% if (incarico!=null && incarico.getFl_inviato_corte_conti().booleanValue()) {%>
 	      <tr><td colspan=4>
-	      <div class="Group"><table <%=widthTable%>>
+	      <div class="Group card">
+	      <table <%=widthTable%>>
 			  <tr>
-			    <td><% controller.writeFormLabel(out,"dt_stipula");%></td>
-			    <td><% controller.writeFormInput(out,"dt_stipula");%></td>
-		        <td><% controller.writeFormLabel(out,"dt_invio_corte_conti");%></td>
-		        <td><% controller.writeFormInput(out,"dt_invio_corte_conti");%></td>
+			    <% controller.writeFormField(out,"dt_stipula");%>
+		        <% controller.writeFormField(out,"dt_invio_corte_conti");%>
 		      </tr>
 			  <tr>
-		        <td><% controller.writeFormLabel(out,"esito_corte_conti");%></td>
-		        <td><% controller.writeFormInput(out,"esito_corte_conti");%></td>
-		        <td><% controller.writeFormLabel(out,"dt_efficacia");%></td>
-		        <td><% controller.writeFormInput(out,"dt_efficacia");%></td>
+		        <% controller.writeFormField(out,"esito_corte_conti");%>
+		        <% controller.writeFormField(out,"dt_efficacia");%>
 		      </tr>
-	      </table></div>
+	      </table>
+	      </div>
 	      </td></tr>
+	      
 	      <tr><td colspan=4>
-	      <div class="Group"><table <%=widthTable%>>
+	      <div class="Group card">
+	      <table <%=widthTable%>>
 			  <tr>
-		        <td><% controller.writeFormLabel(out,"dt_inizio_validita");%></td>
-		        <td><% controller.writeFormInput(out,"dt_inizio_validita");%></td>
-		        <td><% controller.writeFormLabel(out,"dt_fine_validita");%></td>
-		        <td><% controller.writeFormInput(out,"dt_fine_validita");%></td>
+		        <% controller.writeFormField(out,"dt_inizio_validita");%>
+		        <% controller.writeFormField(out,"dt_fine_validita");%>
 		      </tr>
 			  <tr>
 		        <td><% controller.writeFormLabel(out,"dt_proroga");%></td>
 				<td><% controller.writeFormInput(out,"default","dt_proroga",bp.isViewing()||!(bp.isUoEnte()||bp.isUtenteAbilitatoFunzioniIncarichi()),null,null); %></td>
 			  <% if (bp.isUoEnte()) { %>
-		        <td><% controller.writeFormLabel(out,"dt_proroga_pagam");%></td>
-			    <td><% controller.writeFormInput(out,"dt_proroga_pagam");%></td>
+		        <% controller.writeFormField(out,"dt_proroga_pagam");%>
 			  <% } %>
 		      </tr>
-	      </table></div>
+	      </table>
+	      </div>
 	      </td></tr>
       <% } else { %>
 	      <tr><td colspan=4>
-	      <div class="Group"><table <%=widthTable%>>
+	      <div class="Group card">
+	      <table <%=widthTable%>>
 			  <tr>
-			    <td><% controller.writeFormLabel(out,"dt_stipula");%></td>
-			    <td><% controller.writeFormInput(out,"dt_stipula");%></td>
-		        <td><% controller.writeFormLabel(out,"dt_inizio_validita");%></td>
-		        <td><% controller.writeFormInput(out,"dt_inizio_validita");%></td>                	    
+			    <% controller.writeFormField(out,"dt_stipula");%>
+		        <% controller.writeFormField(out,"dt_inizio_validita");%>
 		      </tr>      
 			  <tr>
-		        <td><% controller.writeFormLabel(out,"dt_fine_validita");%></td>
-		        <td><% controller.writeFormInput(out,"dt_fine_validita");%></td>        
+		        <% controller.writeFormField(out,"dt_fine_validita");%>
 		        <td><% controller.writeFormLabel(out,"dt_proroga");%></td>
 				<td><% controller.writeFormInput(out,"default","dt_proroga",bp.isViewing()||!(bp.isUoEnte()||bp.isUtenteAbilitatoFunzioniIncarichi()),null,null); %></td>
 		      </tr>
 			  <% if (bp.isUoEnte()) { %>
 				  <tr>
-			        <td><% controller.writeFormLabel(out,"dt_proroga_pagam");%></td>
-			        <td><% controller.writeFormInput(out,"dt_proroga_pagam");%></td>        
-			      </tr>
+				  	<% controller.writeFormField(out,"dt_proroga_pagam");%>
+				  </tr>
 			  <% } %>
-	      </table></div>
+	      </table>
+	      </div>
 	      </td></tr>
 	  <% } %>
+
       <tr><td colspan=4>
-      <div class="Group"><table <%=widthTable%>>
-  	  <tr>
-		<td><% bp.writeFormLabel(out,"firmatario");%></td>
-		<td><% bp.writeFormInput(out,"default","cd_firmatario",true,null,null);%>
-		    <% bp.writeFormInput(out,"ds_firmatario");%></td>
-	  </tr>            
-      </table></div>
+      <div class="Group card">
+      <table <%=widthTable%>>
+	  	  <tr>
+			<td><% bp.writeFormLabel(out,"firmatario");%></td>
+			<td><% bp.writeFormInput(out,null,"firmatario",true,null,null);%></td>
+		  </tr>            
+      </table>
+      </div>
       </td></tr>
+      
       <tr><td colspan=4>
-      <div class="Group">
+      <div class="Group card">
 	  <fieldset>
-	  <legend class="GroupLabel">Provvedimento di nomina</legend>
+	  <legend class="GroupLabel h3 text-primary">Provvedimento di nomina</legend>
       <table <%=widthTable%>>
 		  <tr>
 		    <td><% controller.writeFormLabel(out,"cd_provv");%></td>
@@ -137,13 +147,12 @@ if (bp.getModel()!=null &&
       </fieldset>
       </div>
       </td></tr>
+      
       <tr><td colspan=4>
-      <div class="Group"><table <%=widthTable%>>
+      <div class="Group card"><table <%=widthTable%>>
 	  <tr>         
 		<% if (!bp.isSearching()) {%>
-			<td><% controller.writeFormLabel(out,"terzo");%></td>
-			<td><% controller.writeFormInput(out,"default", "cd_terzo", false,null,null); %>
-			    <% controller.writeFormInput(out,"default", "terzo", false,null,null); %></td>
+			<% controller.writeFormField(out,"terzo");%>
 		<% } else {%>
 			<td><% controller.writeFormLabel(out,"terzoSearch");%></td>
 			<td><% controller.writeFormInput(out,"default", "cd_terzoSearch", false,null,null); %>
@@ -177,11 +186,13 @@ if (bp.getModel()!=null &&
 		    <% controller.writeFormInput(out,"partita_iva"); %></td>	
 	  </tr>
 	  
-      </table></div>
+      </table>
+      </div>
       </td></tr>
+	  
 	  <%if (incarico!=null && incarico.getDt_inizio_validita()!=null && incarico.getDt_fine_validita()!=null) {%>
 	      <tr><td colspan=4>
-	      <div class="Group"><table>
+	      <div class="Group card"><table>
 			  <tr>
 				<td><% controller.writeFormLabel(out,"ti_istituz_commerc"); %></td>
 				<td><% controller.writeFormInput(out,"ti_istituz_commerc");%></td>

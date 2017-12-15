@@ -454,9 +454,11 @@
 	<form
 		name="searchtool" >
 		<formFieldProperty
-			name="esercizio" />
+			name="esercizio" 
+			inputCssClass="w-20"/>
 		<formFieldProperty
-			name="pg_richiesta" />
+			name="pg_richiesta" 
+			inputCssClass="w-25"/>
 		<formFieldProperty
 			name="attivita"
 			inputType="TEXT"
