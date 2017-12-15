@@ -164,7 +164,7 @@
                     </timeout>
                 </datasource>
                 <datasource jndi-name="java:/jdbc/GECO" pool-name="InformixDSSIGLAPool" enabled="true" use-java-context="true" statistics-enabled="true">
-                    <connection-url>jdbc:informix-sqli://150.146.206.10:1526/geco:INFORMIXSERVER=ius_dbserverdev1_tcp</connection-url>
+                    <connection-url>jdbc:informix-sqli://${env.INFORMIX_HOST:150.146.206.10}:1526/geco:INFORMIXSERVER=ius_dbserverdev1_tcp</connection-url>
                     <driver>informix</driver>
                     <pool>
                         <min-pool-size>3</min-pool-size>
