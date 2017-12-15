@@ -13,7 +13,7 @@ if (((Tipo_limiteBulk)bp.getModel()).getFl_raggruppa())
 else
    controller = bp.getIncarichiXTerzoAll();
 %>
-<table>
+<table class="w-100">
 	<tr><td>
 		<% controller.writeHTMLTable(
 								pageContext,

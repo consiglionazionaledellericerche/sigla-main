@@ -32,7 +32,8 @@
 	SimpleDetailCRUDController controllerDet = bp.getIncarichiRappDetColl();
 	controllerDet.writeHTMLTable(pageContext,null,true,false,true,"100%","100px"); 
 %>
-<table class="Panel" cellspacing=2>
+<div class="card">
+<table class="Panel m-2 p-2" cellspacing=2>
 	<tr>
         <td><% controllerDet.writeFormLabel(out,"default","conferente_rapporto"); %></td>
         <td><% controllerDet.writeFormInput(out,"default","conferente_rapporto", !isEditable,null,null); %></td>
@@ -50,3 +51,4 @@
 		<td><% controllerDet.writeFormInput(out,"default","importo_rapporto", !isEditable,null,null); %></td>
 	</tr>
 </table>
+</div>

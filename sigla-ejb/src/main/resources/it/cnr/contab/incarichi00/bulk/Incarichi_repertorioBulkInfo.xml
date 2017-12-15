@@ -130,6 +130,8 @@
 		property="v_terzo"
 		readonlyProperty="ROSearchtoolTerzo"
 		inputType="SEARCHTOOL"
+		formName="searchtool_small"
+		inputCssClass=""
 		enabledOnSearch="true"
 		label="Contraente" />
 	<fieldProperty
@@ -137,6 +139,7 @@
 		property="v_terzo"
 		readonlyProperty="ROTerzo"
 		inputType="SEARCHTOOL"
+		formName="searchtool_small"
 		enabledOnSearch="true"
 		label="Contraente" />
 	<fieldProperty

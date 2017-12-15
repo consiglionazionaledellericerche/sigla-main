@@ -20,6 +20,7 @@
 		cols="60"
 		rows="5"
 		enabledOnSearch="true"
+		inputCssClass="w-100 "
 		nullable="false"
 		label="Descrizione" />
 	<fieldProperty

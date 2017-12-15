@@ -40,7 +40,8 @@ function doScaricaFile() {
    window.open("<%= (rapporto==null?null:rapporto.getDownloadUrl()) %>","DOWNLOAD","left="+sinistra+",top="+alto+",width="+larghFinestra+", height="+altezFinestra+",menubar=no,toolbar=no,location=no")
 }
 </script>
-<table class="Panel" cellspacing=2>
+<div class="card">
+<table class="Panel m-2 p-2" cellspacing=2>
 	<tr>
 	    <td><% controller.writeFormLabel(out,"default","anno_competenza"); %></td>
 	    <td><% controller.writeFormInput(out,"default","anno_competenza"); %></td>
@@ -77,3 +78,4 @@ function doScaricaFile() {
 		<td colspan=4><% controller.writeFormInput(out,"default","data_creazione",true,null,null); %></td>
 	</tr>
 </table>
+</div>

@@ -10,46 +10,28 @@
 %>
 
 <%if (bp==null||bp.isIncarichiProceduraBP()) {%>
-<div class="Group">
-    <table class="Panel" cellspacing=2>
-		<tr>
-	         <td><% bp.getController().writeFormLabel(out,"find_tipo_attivita_fp0");%></td>
-	         <td><% bp.getController().writeFormInput(out,"find_tipo_attivita_fp0");%></td>
-		</tr>
-		<tr>
-	         <td><% bp.getController().writeFormLabel(out,"find_tipo_attivita_fp1");%></td>
-	         <td><% bp.getController().writeFormInput(out,"find_tipo_attivita_fp1");%></td>
-		</tr>
-		<tr>
-	         <td><% bp.getController().writeFormLabel(out,"find_tipo_attivita_fp");%></td>
-	         <td><% bp.getController().writeFormInput(out,"find_tipo_attivita_fp");%></td>
-		</tr>
+<div class="Group card m-2 p-2">
+    <table class="Panel w-100" cellspacing=2>
+		<tr><% bp.getController().writeFormField(out,"find_tipo_attivita_fp0");%></tr>
+		<tr><% bp.getController().writeFormField(out,"find_tipo_attivita_fp1");%></tr>
+		<tr><% bp.getController().writeFormField(out,"find_tipo_attivita_fp");%></tr>
 	</table>
 </div>	
-&nbsp;
+<% if (!bp.getParentRoot().isBootstrap()) { %>&nbsp; <% } %>
 <% } %>
 <% if (procedura.isApplicazioneNormaAttiva()) { %>
-<div class="Group">
-    <table class="Panel" cellspacing=2>
-		<tr>
-	         <td><% bp.getController().writeFormLabel(out,"tipo_norma_perla");%></td>
-	         <td><% bp.getController().writeFormInput(out,"tipo_norma_perla");%></td>
-		</tr>
+<div class="Group card m-2 p-2">
+    <table class="Panel w-100" cellspacing=2>
+		<tr><% bp.getController().writeFormField(out,"tipo_norma_perla");%></tr>
 		<% if (procedura.getCd_tipo_norma_perla()!=null && procedura.getCd_tipo_norma_perla().equals("999")) { %>
-		<tr>
-	         <td><% bp.getController().writeFormLabel(out,"ds_libera_norma_perla");%></td>
-	         <td><% bp.getController().writeFormInput(out,"ds_libera_norma_perla");%></td>
-		</tr>
+		<tr><% bp.getController().writeFormField(out,"ds_libera_norma_perla");%></tr>
 		<% } %>
 	</table>
 </div>
-&nbsp;
+<% if (!bp.getParentRoot().isBootstrap()) { %>&nbsp; <% } %>
 <% } %>
-<div class="Group">
-    <table class="Panel" cellspacing=2>
-		<tr>
-			<td><% bp.getController().writeFormLabel(out,"procedura_amministrativa_beneficiario");%></td>
-			<td><% bp.getController().writeFormInput(out,"procedura_amministrativa_beneficiario");%></td>
-		</tr>
+<div class="Group card m-2 p-2">
+    <table class="Panel w-100" cellspacing=2>
+		<tr><% bp.getController().writeFormField(out,"procedura_amministrativa_beneficiario");%></tr>
 	</table>
 </div>		
