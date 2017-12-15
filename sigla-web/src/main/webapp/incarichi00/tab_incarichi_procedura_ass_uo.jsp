@@ -11,17 +11,22 @@
 %>
 <table class="Form" width="100%">
   <tr>
-		<td><span class="GroupLabel">Unità organizzative disponibili</span></td>
+		<td><span class="GroupLabel h5 font-weight-bold text-primary">Unità organizzative disponibili</span></td>
 		<td></td>
-		<td><span class="GroupLabel">Unità organizzative assegnate</span></td>
+		<td><span class="GroupLabel h5 font-weight-bold text-primary">Unità organizzative assegnate</span></td>
   </tr>
   <tr>
 		<td rowspan="2">
         <%bp.getCrudAssUODisponibili().writeHTMLTable(pageContext,"codice_descrizione",false,false,false,"100%","300px"); %>
 		</td>
 		<td>
-		<% JSPUtils.button(out,bp.encodePath("img/doublerightarrow24.gif"),bp.encodePath("img/doublerightarrow24.gif"),
-				null,"javascript:submitForm('doAggiungiUO')",bp.getCrudAssUO().isEnabled()&& bp.getStatus()!=bp.VIEW,
+		<% JSPUtils.button(out,
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-hand-o-right" : bp.encodePath("img/doublerightarrow24.gif"),
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-hand-o-right" : bp.encodePath("img/doublerightarrow24.gif"),
+				null,
+				"javascript:submitForm('doAggiungiUO')",
+				"btn-secondary btn-outline-info btn-title btn-block",
+				bp.getCrudAssUO().isEnabled()&& bp.getStatus()!=bp.VIEW,
 				bp.getParentRoot().isBootstrap()); %>
 		</td>
 		<td rowspan="2">
@@ -30,8 +35,13 @@
 	</tr>
 	<tr>
 		<td>
-		<% JSPUtils.button(out,bp.encodePath("img/doubleleftarrow24.gif"),bp.encodePath("img/doubleleftarrow24.gif"),null,
-				"javascript:submitForm('doRimuoviUO')",bp.getCrudAssUO().isEnabled()&& bp.getStatus()!=bp.VIEW,
+		<% JSPUtils.button(out,
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-hand-o-left" : bp.encodePath("img/doubleleftarrow24.gif"),
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-hand-o-left" : bp.encodePath("img/doubleleftarrow24.gif"),
+				null,
+				"javascript:submitForm('doRimuoviUO')",
+				"btn-secondary btn-outline-info btn-title btn-block",
+				bp.getCrudAssUO().isEnabled()&& bp.getStatus()!=bp.VIEW,
 				bp.getParentRoot().isBootstrap()); %>		
 		</td>
 	</tr>

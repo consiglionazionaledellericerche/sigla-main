@@ -6,7 +6,7 @@
 <%
 CRUDConfigRepertorioLimitiBP bp = (CRUDConfigRepertorioLimitiBP)BusinessProcess.getBusinessProcess(request);
 %>
-<table>
+<table class="w-100">
 	<tr><td>
 		<% bp.getRepertorioLimiti().writeHTMLTable(
 								pageContext,

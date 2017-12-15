@@ -1,9 +1,11 @@
+<%@page import="it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk"%>
 <%@ page 
 	import="it.cnr.jada.action.*,
 		it.cnr.jada.util.jsp.*,
 		it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP"%>
 <%
 	CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)BusinessProcess.getBusinessProcess(request);
+    Incarichi_proceduraBulk model = (Incarichi_proceduraBulk)bp.getModel(); 
 %>
 <html>
 

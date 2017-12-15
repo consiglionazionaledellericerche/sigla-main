@@ -109,6 +109,7 @@
 		name="nome_file" />
 	<formFieldProperty
 		name="ds_file"
+		inputCssClass="w-100 "
 		label="Descrizione del File" />
 	<formFieldProperty
 		name="url_file" />

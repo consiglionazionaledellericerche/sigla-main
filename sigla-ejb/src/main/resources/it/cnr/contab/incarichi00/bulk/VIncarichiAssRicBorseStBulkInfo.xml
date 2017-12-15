@@ -414,14 +414,15 @@
 		name="filtroSoggetto"
 		property="filtroSoggetto"
 		inputType="SEARCHTOOL"
+		formName="searchtool_small"
+		inputCssClass=""
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false"
-		label="Soggetto"/>
+		label="Codice Terzo" />
 	<fieldProperty
 		name="cd_soggetto"
 		property="filtroSoggetto.cd_terzo"
 		maxLength="30"
-		inputSize="6"
 		inputType="TEXT"
 		label="Codice Terzo"
 		readonlyProperty="ROsoggetto"
@@ -432,7 +433,6 @@
 		name="cd_precedente"
 		property="filtroSoggetto.cd_precedente"
 		maxLength="20"
-		inputSize="6"
 		inputType="TEXT"
 		label="Codice precedente"
 		readonlyProperty="ROsoggetto"

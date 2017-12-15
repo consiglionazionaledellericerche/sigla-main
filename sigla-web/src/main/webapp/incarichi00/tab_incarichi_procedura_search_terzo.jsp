@@ -7,14 +7,11 @@
 CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)BusinessProcess.getBusinessProcess(request);
 %>
    <fieldset class="fieldset">
-    <legend class="GroupLabel"><% bp.getController().writeFormInput(out,null,"statoText",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;\"");%></legend>    
-	<table class="Panel">
+	<table class="Panel w-100">
       <tr><td colspan=4>
-      <div class="Group"><table>      
+      <div class="Group card"><table>      
 	  <tr>         
-		<td><% bp.getController().writeFormLabel(out,"terzoSearch");%></td>
-		<td><% bp.getController().writeFormInput(out,"default", "cd_terzoSearch", false,null,null); %>
-		    <% bp.getController().writeFormInput(out,"default", "terzoSearch", false,null,null); %></td>
+		<% bp.getController().writeFormField(out,"terzoSearch");%>
 	  </tr>
 	  <tr>
 		<td><% bp.getController().writeFormLabel(out,"nome");%></td>
@@ -23,12 +20,10 @@ CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)BusinessProcess.getBusin
 		    <% bp.getController().writeFormInput(out,"cognome");%></td>
 	  </tr>
 	  <tr>
-		<td><% bp.getController().writeFormLabel(out,"ragione_sociale"); %></td>
-		<td><% bp.getController().writeFormInput(out,"ragione_sociale"); %></td>
+		<% bp.getController().writeFormField(out,"ragione_sociale"); %>
 	  </tr>
 	  <tr>
-		<td><% bp.getController().writeFormLabel(out,"indirizzoTerzo");%></td>
-		<td><% bp.getController().writeFormInput(out,"indirizzoTerzo");%></td>
+		<% bp.getController().writeFormField(out,"indirizzoTerzo");%>
 	  </tr>
 	  <tr>
 		<td><% bp.getController().writeFormLabel(out,"ds_comune");%></td>
