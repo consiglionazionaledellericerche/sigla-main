@@ -26,7 +26,7 @@
 <% RiepilogativiDefinitiviIvaBP bp = (RiepilogativiDefinitiviIvaBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); %>
 
-	<div class="Group" style="width:100%">
+	<div class="Group card" style="width:100%">
 		<table width="100%">
 			<tr>
 				<td>
@@ -93,8 +93,8 @@
 			</tr>
 		</table>
 	</div>
-	<div class="Group" style="width:100%">
-		<div class="GroupLabel">Stampe già eseguite</div>
+    <div class="GroupLabel text-primary h3">Stampe già eseguite</div>
+	<div class="Group card" style="width:100%">
 		<% bp.getRegistri_stampati().writeHTMLTable(pageContext,"default",false,false,false,"100%","200px"); %>
 	</div>
 
