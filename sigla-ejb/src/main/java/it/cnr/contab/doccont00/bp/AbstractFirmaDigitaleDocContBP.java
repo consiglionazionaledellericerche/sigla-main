@@ -294,6 +294,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
             final DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
             response.setContentType("application/zip");
             response.setDateHeader("Expires", 0);
+            response.setHeader("Content-disposition", "attachment; filename=Documenti contabili.zip");
             selectelElements.stream()
                     .forEach(statoTrasmissione -> {
                         documentiContabiliService.getChildren(documentiContabiliService.getStorageObjectByPath(statoTrasmissione.getStorePath()).getKey())
