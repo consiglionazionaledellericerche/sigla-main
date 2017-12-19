@@ -203,6 +203,7 @@
 		inputSize="2"
 		maxLength="2"
 		enabledOnSearch="true"
+		enabledOnView="true"
 		command="doOnPersonaleInternoChange"
 		label="Professionalità interne" />
 	<fieldProperty
@@ -252,7 +253,8 @@
 		nullable="false"
 		maxLength="3"
 		inputSize="3"
-		enabledOnSearch="false"/>
+		enabledOnSearch="false"
+		enabledOnView="true"/>
 	<fieldProperty
 		name="nr_risorse_trovate_no"
 		property="nr_risorse_trovate_no"
@@ -263,7 +265,8 @@
 		nullable="false"
 		maxLength="3"
 		inputSize="3"
-		enabledOnSearch="false"/>
+		enabledOnSearch="false"
+		enabledOnView="true"/>
 	<fieldProperty
 		name="nr_risorse_trovate_na"
 		property="nr_risorse_trovate_na"
@@ -274,7 +277,8 @@
 		nullable="false"
 		maxLength="3"
 		inputSize="3"
-		enabledOnSearch="false"/>
+		enabledOnSearch="false"
+		enabledOnView="true"/>
 	<fieldProperty
 		name="nr_risorse_trovate_si_search"
 		property="nr_risorse_trovate_si"
