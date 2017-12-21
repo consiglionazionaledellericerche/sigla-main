@@ -10,7 +10,19 @@
 		inputSize="5"
 		maxLength="5"
 		readonlyPropertyOnEdit="ROGiaAssociato"
-		label="Progressivo Tipologia Istat" />
+		label="Tipologia Istat" />
+	<fieldProperty
+		name="ds_tipologia"
+		property="tipologie_istat.ds_tipologia"
+		inputType="ROTEXT"
+		inputSize="40"
+		maxLength="40" />	
+	<fieldProperty
+		name="find_tipologie_istat"
+		property="tipologie_istat"
+		inputType="searchtool"
+		readonlyPropertyOnEdit="ROGiaAssociato"
+		enabledOnSearch="true"/>	
  	<fieldProperty
 		name="esercizio_siope"
 		property="codici_siope.esercizio"
@@ -42,8 +54,8 @@
 		label="Codice Siope" 
 		readonlyPropertyOnEdit="ROGiaAssociato"
 		inputType="TEXT"
-		maxLength="4"
-		inputSize="4"
+		maxLength="10"
+		inputSize="10"
 		enabledOnSearch="true"/>
 	<fieldProperty
 		name="ds_siope"
@@ -55,6 +67,8 @@
 	<formFieldProperty
 		name="pg_tipologia" />
 	<formFieldProperty
+		name="ds_tipologia" />	
+	<formFieldProperty
 		name="esercizio_siope" /> 
 	<formFieldProperty
 		name="ti_gestione_siope" />
@@ -64,6 +78,9 @@
 		name="ds_siope" />
 	<formFieldProperty
 		name="find_codici_siope" />
+		
+	<formFieldProperty
+		name="find_tipologie_istat" />	
 		
 	<findFieldProperty
 		name="pg_tipologia" />
