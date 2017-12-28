@@ -480,7 +480,10 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                     if (rigaObj instanceof Fattura_passiva_rigaIBulk) {
                         Fattura_passiva_rigaIBulk fpRiga = (Fattura_passiva_rigaIBulk) rigaObj;
                         if (!titoloCapitoloObbligazione.getFl_inv_beni_patr().equals(fpRiga.getBene_servizio().getFl_gestione_inventario())) {
-                            if (fpRiga.getBene_servizio().getFl_gestione_inventario().booleanValue())
+                            final Optional<Boolean> flGestioneInventario = Optional.ofNullable(fpRiga)
+                                    .flatMap(fattura_passiva_rigaIBulk -> Optional.ofNullable(fattura_passiva_rigaIBulk.getBene_servizio()))
+                                    .flatMap(bene_servizioBulk -> Optional.ofNullable(bene_servizioBulk.getFl_gestione_inventario()));
+                            if (flGestioneInventario.isPresent() && flGestioneInventario.get())
                                 throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non è utilizzabile per beni patrimoniali da inventariare!");
                             else
                                 throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non è utilizzabile per beni/servizi da non inventariare!");
