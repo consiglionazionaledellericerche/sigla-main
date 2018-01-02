@@ -29,6 +29,18 @@ public class Parametri_enteBase extends Parametri_enteKey implements Keyed{
 	// FL_AUTENTICAZIONE_LDAP CHAR(1)
 	private java.lang.Boolean fl_autenticazione_ldap;
 
+	// FL_INFORMIX CHAR(1)
+	private java.lang.Boolean fl_informix;
+
+	// FL_GAE_ES CHAR(1)
+	private java.lang.Boolean fl_gae_es;
+
+	// FL_PRG_PIANOECO CHAR(1)
+	private java.lang.Boolean fl_prg_pianoeco;
+
+	// ABIL_PROGETTO_STRORG VARCHAR2(3)
+	private java.lang.String abil_progetto_strorg;
+
 	private java.lang.String ldap_user;	
 
 	private java.lang.String ldap_password;	
@@ -201,5 +213,44 @@ public class Parametri_enteBase extends Parametri_enteKey implements Keyed{
 	public void setLdap_link_cambio_password(
 			java.lang.String ldap_link_cambio_password) {
 		this.ldap_link_cambio_password = ldap_link_cambio_password;
+	}
+	
+	public java.lang.Boolean getFl_informix() {
+		return fl_informix;
+	}
+
+	public void setFl_informix(java.lang.Boolean fl_informix) {
+		this.fl_informix = fl_informix;
+	}
+	
+	public java.lang.Boolean getFl_gae_es() {
+		return fl_gae_es;
+	}
+	
+	public void setFl_gae_es(java.lang.Boolean fl_gae_es) {
+		this.fl_gae_es = fl_gae_es;
+	}
+	
+	public java.lang.Boolean getFl_prg_pianoeco() {
+		return fl_prg_pianoeco;
+	}
+	
+	public void setFl_prg_pianoeco(java.lang.Boolean fl_prg_pianoeco) {
+		this.fl_prg_pianoeco = fl_prg_pianoeco;
+	}
+	
+	/*
+	 * Indica il livello di abilitazione per l'utilizzazione dei progetti
+	 * UO:  Il progetto deve essere abilitato a livello UO. L'abilitazione del progetto ad una UO 
+	 * 	    lo renderà disponibile solo per la UO indicata.
+	 * CDS: Il progetto deve essere abilitato a livello CDS. L'abilitazione del progetto ad una sola UO del CDS
+	 * 		lo renderà disponibile per tutte le UO del CDS stesso. 
+	 */
+	public java.lang.String getAbil_progetto_strorg() {
+		return abil_progetto_strorg;
+	}
+	
+	public void setAbil_progetto_strorg(java.lang.String abil_progetto_strorg) {
+		this.abil_progetto_strorg = abil_progetto_strorg;
 	}
 }

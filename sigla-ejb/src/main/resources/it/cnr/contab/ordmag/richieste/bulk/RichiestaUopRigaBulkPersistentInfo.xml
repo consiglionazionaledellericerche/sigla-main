@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk"
+	homeClassName="it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaHome">
+	<defaultColumnMap
+		tableName="RICHIESTA_UOP_RIGA">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="richiestaUop.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="richiestaUop.numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="richiestaUop.numerazioneOrd.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE"
+			propertyName="richiestaUop.numerazioneOrd.cdNumeratore" />
+		<columnMapping
+			columnName="NUMERO"
+			propertyName="richiestaUop.numero" />
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="beneServizio.cd_bene_servizio" />
+		<columnMapping
+			columnName="CD_CATEGORIA_GRUPPO"
+			propertyName="categoriaGruppoInvent.cd_categoria_gruppo" />
+		<columnMapping
+			columnName="CD_UNITA_MISURA"
+			propertyName="unitaMisura.cdUnitaMisura" />
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO_DEF"
+			propertyName="beneServizioDef.cd_bene_servizio" />
+		<columnMapping
+			columnName="CD_CDS_OBBL"
+			propertyName="obbligazione.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBL"
+			propertyName="obbligazione.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIG_OBBL"
+			propertyName="obbligazione.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazione.pg_obbligazione" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="centroResponsabilita.cd_centro_responsabilita" />
+		<columnMapping
+			columnName="CD_CENTRO_RESPONSABILITA"
+			propertyName="lineaAttivita.centro_responsabilita.cd_centro_responsabilita" />
+		<columnMapping
+			columnName="CD_LINEA_ATTIVITA"
+			propertyName="lineaAttivita.cd_linea_attivita" />
+		<columnMapping
+			columnName="ESERCIZIO_VOCE"
+			propertyName="elementoVoce.esercizio" 
+			fetchOnly="true"/>
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="elementoVoce.ti_appartenenza" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="elementoVoce.ti_gestione" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="elementoVoce.cd_elemento_voce" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="richiestaUop"
+		partOfOid="true" />
+	<persistentProperty
+		name="beneServizio" />
+	<persistentProperty
+		name="beneServizioDef" />
+	<persistentProperty
+		name="categoriaGruppoInvent" />
+	<persistentProperty
+		name="unitaMisura" />
+	<persistentProperty
+		name="obbligazione" />
+	<persistentProperty
+		name="lineaAttivita" />
+	<persistentProperty
+		name="elementoVoce" />
+	<persistentProperty
+		name="centroResponsabilita" />
+</SQLPersistentInfo>

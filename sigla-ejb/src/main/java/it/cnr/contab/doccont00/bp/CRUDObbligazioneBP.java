@@ -1080,10 +1080,10 @@ private boolean isSiope_attiva() {
 private void setSiope_attiva(boolean siope_attiva) {
 	this.siope_attiva = siope_attiva;
 }
-private boolean isFlNuovoPdg() {
+public boolean isFlNuovoPdg() {
 	return flNuovoPdg;
 }
-public void setFlNuovoPdg(boolean flNuovoPdg) {
+private void setFlNuovoPdg(boolean flNuovoPdg) {
 	this.flNuovoPdg = flNuovoPdg;
 }
 public boolean isROElemento_voce() {

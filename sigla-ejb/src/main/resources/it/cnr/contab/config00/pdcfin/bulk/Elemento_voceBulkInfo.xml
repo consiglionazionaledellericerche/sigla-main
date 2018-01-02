@@ -53,6 +53,7 @@
 		maxLength="30"
 		inputSize="20"
 		enabledOnSearch="true"
+		enabledOnEdit="false"
 		/>
 
 	<fieldProperty
@@ -92,6 +93,15 @@
 		inputSize="20"
 		maxLength="300"
 		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="simple_searchtool_ds_elemento_voce"
+		property="ds_elemento_voce"
+		label="Descrizione"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="300"
+		enabledOnSearch="false"
 		/>
 	<fieldProperty
 		name="esercizio"
@@ -142,13 +152,14 @@
 		enabledOnEdit="true"
 		enabledOnInsert="true"				
 		inputType="CHECKBOX"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true" 
-		/>
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />			
 	<fieldProperty
 		name="find_capoconto_fin"
 		property="capoconto_fin"
 		inputType="SEARCHTOOL"
+		label="Categoria Economica/Finanziaria"
+		formName="searchtool"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		/>
@@ -174,7 +185,7 @@
 		name="classificazione_entrate"
 		property="classificazione_entrate"
 		inputType="SEARCHTOOL"
-		formName="searchtoolclass"
+		formName="searchtool"
 		enabledOnSearch="true"
 		label="Classificazione di Entrata" />		
 	<fieldProperty
@@ -196,7 +207,7 @@
 		name="classificazione_spese"
 		property="classificazione_spese"
 		inputType="SEARCHTOOL"
-		formName="searchtoolclasspe"
+		formName="searchtoolbase"
 		enabledOnSearch="true"
 		label="Classificazione di Spesa" />		
 	<fieldProperty
@@ -370,6 +381,15 @@
 		<formFieldProperty
 		    inputSize="60"
 			name="searchtool_ds_elemento_voce" />
+	</form>
+	<form
+		name="simple_searchtool" >
+		<formFieldProperty
+		    inputSize="20"
+			name="searchtool_cd_elemento_voce" />
+		<formFieldProperty
+		    inputSize="60"
+			name="simple_searchtool_ds_elemento_voce" />
 	</form>
 	<form
 		name="searchtoolclass" >
@@ -673,4 +693,25 @@
 			inputType="TEXT"
 			inputSize="50" />
 	</form>
+	<freeSearchSet name="impegnoPGiro">
+		<findFieldProperty
+			name="esercizio"
+			/>
+		<findFieldProperty
+			name="cd_elemento_voce"
+			label = "Codice"
+			/>
+		<findFieldProperty
+			name="ds_elemento_voce"
+			/>
+		<findFieldProperty
+			name="cd_elemento_padre"
+			/>
+		<findFieldProperty
+			name="fl_partita_giro"
+			/>
+		<findFieldProperty
+			name="fl_recon"
+			/>		
+	</freeSearchSet>
 </bulkInfo>

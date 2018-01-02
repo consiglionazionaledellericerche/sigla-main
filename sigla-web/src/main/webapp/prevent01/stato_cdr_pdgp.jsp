@@ -31,24 +31,39 @@
 	SimpleDetailCRUDController controller = ((CRUDStatoCdrPdGPBP)bp).getCrudDettagli();
 %>
 
-	<div class="Group">
-	<table border="0" cellspacing="0" cellpadding="0">
-	<td>
-		<%	controller.writeHTMLTable(pageContext,null,false,false,false,"100%","250px"); %>
-	</td>
+<div class="Group card">
+	<%	controller.writeHTMLTable(pageContext,null,false,false,false,"100%","250px"); %>
+	<table border="0" cellspacing="0" cellpadding="20" class="w-100">
+		<td><% 
+			if (bp.getParametriCnr().getFl_pdg_contrattazione())
+				controller.writeFormInput( out, "stato" ); 
+			else
+				controller.writeFormInput( out, "statoSenzaContrattazione" ); 
+			%>
+		</td>
+	
+		<td ALIGN="CENTER"> 
+			<% JSPUtils.button(out,
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo fa-flip-horizontal" : bp.encodePath("img/refresh24.gif"),
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo fa-flip-horizontal" : bp.encodePath("img/refresh24.gif"),
+					"Cambia stato",
+					"javascript:submitForm('doCambiaStato')",
+	                "btn-secondary btn-outline-info btn-title btn-block",
+					bp.isCambiaStatoButtonEnabled(),
+					bp.getParentRoot().isBootstrap()); %>
+		</td>	
+	
+		<td ALIGN="CENTER"> 
+			<% JSPUtils.button(out,
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo" : bp.encodePath("img/undo24.gif"),
+					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-undo" : bp.encodePath("img/undo24.gif"),
+					"Riporta a stato precedente",
+					"javascript:submitForm('doRiportaStatoPrecedente')",
+					"btn-secondary btn-outline-info btn-title btn-block",
+					bp.isRiportaStatoPrecedenteButtonEnabled(),
+					bp.getParentRoot().isBootstrap()); %>
+		</td>	
 	</table>
-
-	<table border="0" cellspacing="0" cellpadding="20">
-	<td><% controller.writeFormInput( out, "stato" ); %></td>
-	<td ALIGN="CENTER"> 
-		<% JSPUtils.button(out,bp.encodePath("img/refresh24.gif"),bp.encodePath("img/refresh24.gif"),"Cambia stato","javascript:submitForm('doCambiaStato')",bp.isCambiaStatoButtonEnabled(),bp.getParentRoot().isBootstrap()); %>
-	</td>	
-
-	<td ALIGN="CENTER"> 
-		<% JSPUtils.button(out,bp.encodePath("img/undo24.gif"),bp.encodePath("img/undo24.gif"),"Riporta a stato precedente","javascript:submitForm('doRiportaStatoPrecedente')",bp.isRiportaStatoPrecedenteButtonEnabled(),bp.getParentRoot().isBootstrap()); %>
-	</td>	
-	</table>
-	</div>
-
+</div>
 <%	bp.closeFormWindow(pageContext); %>
 </body>

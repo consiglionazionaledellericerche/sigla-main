@@ -27,4 +27,6 @@
     </bean>
     <bean id="documentiCollegatiDocAmmService" class="it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService" />
     <bean id="missioniCMISService" class="it.cnr.contab.missioni00.service.MissioniCMISService"/>
+    <bean id="richiesteCMISService" class="it.cnr.contab.ordmag.richieste.service.RichiesteCMISService"/>
+    <bean id="ordineAcqCMISService" class="it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService"/>
 </beans>

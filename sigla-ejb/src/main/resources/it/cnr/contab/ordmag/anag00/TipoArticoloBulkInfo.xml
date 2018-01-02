@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Rappresenta l'anagrafica dei tipi articolo relativi ai beni/servizi."
+	longDescription="Rappresenta l'anagrafica dei tipi articolo relativi ai beni/servizi.">
+	<fieldProperty
+		name="cdTipoArticolo"
+		property="cdTipoArticolo"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="dsTipoArticolo"
+		property="dsTipoArticolo"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Cancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdTipoArticolo" />
+		<formFieldProperty
+			name="dsTipoArticolo" />
+	</form>
+	<formFieldProperty
+		name="cdTipoArticolo" />
+	<formFieldProperty
+		name="dsTipoArticolo" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdTipoArticolo" />
+	<findFieldProperty
+		name="dsTipoArticolo" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdTipoArticolo" />
+	<columnFieldProperty
+		name="dsTipoArticolo" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

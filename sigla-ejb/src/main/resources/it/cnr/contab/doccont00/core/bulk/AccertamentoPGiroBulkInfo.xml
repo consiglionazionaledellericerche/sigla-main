@@ -122,6 +122,11 @@
 		inputType="SEARCHTOOL"
 		label="Voce del Piano"
 		enabledOnSearch="true"
+		readonlyProperty="ROCapitolo"
+		formName="accertamento"
+		columnSet="accertamento_ev"
+		freeSearchSet="accertamento_ev"
+		nullable="false"		
 		/>
 	<fieldProperty
 		name="ds_voce"

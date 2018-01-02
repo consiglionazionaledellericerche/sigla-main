@@ -10,6 +10,7 @@ import java.util.Iterator;
 
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneRigaGestBP;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_entrata_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
@@ -18,6 +19,10 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.bulk.FillException;
+import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.OptionBP;
 
 
@@ -179,5 +184,40 @@ public class CRUDPdgVariazioneRigaGestAction extends it.cnr.jada.util.action.CRU
 	}
 	public it.cnr.jada.action.Forward doBringBackSearchFind_linea_attivita_liv2(it.cnr.jada.action.ActionContext context, Pdg_variazione_riga_gestBulk bulk, WorkpackageBulk linea_di_attivita) {
 		return doBringBackSearchFind_linea_attivita(context, bulk, linea_di_attivita);
+	}
+	public Forward doCRUDCrea_linea_attivita(ActionContext actioncontext) throws FillException, BusinessProcessException {
+		CRUDPdgVariazioneRigaGestBP bulkbp = (CRUDPdgVariazioneRigaGestBP)actioncontext.getBusinessProcess();
+
+		FormField formfield;
+		if (bulkbp.isGestioneSpesa()) 
+			formfield = getFormField(actioncontext, "main.RigheVariazioneSpeGest.crea_linea_attivita");
+		else
+			formfield = getFormField(actioncontext, "main.RigheVariazioneEtrGest.crea_linea_attivita");
+		
+		try {
+            CRUDBP crudbp = (CRUDBP)actioncontext.getUserInfo().createBusinessProcess(actioncontext, formfield.getField().getCRUDBusinessProcessName(), new Object[] {
+                    bulkbp.isEditable() ? "MR" : "R", 
+                    bulkbp.isGestioneSpesa()?bulkbp.getRigheVariazioneSpeGest().getModel():bulkbp.getRigheVariazioneEtrGest().getModel(), 
+                    ((Ass_pdg_variazione_cdrBulk)bulkbp.getModel()).getCentro_responsabilita()
+                });
+
+            actioncontext.addHookForward("bringback", this, "doBringBackCRUD");
+			HookForward hookforward = (HookForward)actioncontext.findForward("bringback");
+			hookforward.addParameter("field", formfield);
+			crudbp.setBringBack(true);
+			return actioncontext.addBusinessProcess(crudbp);
+		} catch(Throwable e) {
+			return handleException(actioncontext,e);
+		}
+	}
+	public it.cnr.jada.action.Forward doBringBackCRUDCrea_linea_attivita(it.cnr.jada.action.ActionContext context, Pdg_variazione_riga_gestBulk bulk, WorkpackageBulk linea_di_attivita) {
+		return doBringBackSearchFind_linea_attivita(context, bulk, linea_di_attivita);
+	}
+
+	public Forward doCRUDFind_linea_attivita(ActionContext actioncontext) throws FillException, BusinessProcessException {
+		return doCRUDCrea_linea_attivita(actioncontext);
+	}
+	public it.cnr.jada.action.Forward doBringBackCRUDFind_linea_attivita(it.cnr.jada.action.ActionContext context, Pdg_variazione_riga_gestBulk bulk, WorkpackageBulk linea_di_attivita) {
+		return doBringBackCRUDCrea_linea_attivita(context,bulk,linea_di_attivita);
 	}
 }

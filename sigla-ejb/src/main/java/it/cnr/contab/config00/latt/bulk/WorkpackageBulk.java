@@ -7,6 +7,7 @@ import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -23,6 +24,7 @@ public class WorkpackageBulk extends WorkpackageBase implements CostantiTi_gesti
 	protected it.cnr.contab.progettiric00.core.bulk.ProgettoBulk progetto;
 	protected it.cnr.contab.progettiric00.core.bulk.ProgettoBulk modulo2015;
 	protected it.cnr.contab.progettiric00.core.bulk.ProgettoBulk progetto2016;
+	protected Voce_piano_economico_prgBulk vocePianoEconomico2016;
 	protected TerzoBulk responsabile;
 	public boolean utilizzata2015 = Boolean.FALSE;
 	public boolean utilizzata2016 = Boolean.FALSE;
@@ -31,6 +33,8 @@ public class WorkpackageBulk extends WorkpackageBase implements CostantiTi_gesti
 	private BulkList dettagliPostIt = new BulkList();
 	private java.lang.Integer esercizio;
 	
+	public final static String TI_GESTIONE_ENTRAMBE = "X" ;
+	
 	private final static java.util.Dictionary ti_gestioneKeys;
 	
 	static {
@@ -38,6 +42,16 @@ public class WorkpackageBulk extends WorkpackageBase implements CostantiTi_gesti
 		ti_gestioneKeys.put(TI_GESTIONE_SPESE, "Spese");
 		ti_gestioneKeys.put(TI_GESTIONE_ENTRATE, "Entrate");
 	}	
+
+	private final static java.util.Dictionary ti_gestioneESKeys;
+	
+	static {
+		ti_gestioneESKeys = new it.cnr.jada.util.OrderedHashtable();
+		ti_gestioneESKeys.put(TI_GESTIONE_SPESE, "Spese");
+		ti_gestioneESKeys.put(TI_GESTIONE_ENTRATE, "Entrate");
+		ti_gestioneESKeys.put(TI_GESTIONE_ENTRAMBE, "Entrambe");
+	}	
+
 	private Insieme_laBulk insieme_la;
 
 	private CofogBulk cofog;
@@ -191,6 +205,14 @@ public it.cnr.jada.bulk.BulkList getRisultati() {
  */
 public java.util.Dictionary getTi_gestioneKeys() {
 	return ti_gestioneKeys;
+}
+/**
+ * Restituisce il valore della proprietà 'ti_gestioneKeys'
+ *
+ * @return Il valore della proprietà 'ti_gestioneKeys'
+ */
+public java.util.Dictionary getTi_gestioneESKeys() {
+	return ti_gestioneESKeys;
 }
 /**
  * Restituisce il valore della proprietà 'dettagliPostIt'
@@ -623,6 +645,14 @@ public void validate() throws ValidationException
 	
 	public void setProgetto2016(it.cnr.contab.progettiric00.core.bulk.ProgettoBulk progetto2016) {
 		this.progetto2016 = progetto2016;
+	}
+	
+	public Voce_piano_economico_prgBulk getVocePianoEconomico2016() {
+		return vocePianoEconomico2016;
+	}
+	
+	public void setVocePianoEconomico2016(Voce_piano_economico_prgBulk vocePianoEconomico2016) {
+		this.vocePianoEconomico2016 = vocePianoEconomico2016;
 	}
 	
 	public void setUtilizzata2015(boolean utilizzata2015) {

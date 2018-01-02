@@ -4,6 +4,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.service.SpringUtil;
@@ -36,7 +37,8 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
 	private java.lang.Long pg_distinta;
 	private String documento;
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
-	
+	protected BulkList<Mandato_rigaIBulk> mandato_rigaColl = new BulkList();
+
 	public final static java.util.Dictionary cd_tipo_documento_contKeys;
 	static 
 	{
@@ -282,5 +284,18 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
             return "TableColumnRedBold";
         else
             return null;
+    }
+
+    /**
+     * @return it.cnr.jada.bulk.BulkList
+     */
+    public it.cnr.jada.bulk.BulkList<Mandato_rigaIBulk> getMandato_rigaColl() {
+        return mandato_rigaColl;
+    }
+    /**
+     * @param newMandato_rigaColl it.cnr.jada.bulk.BulkList
+     */
+    public void setMandato_rigaColl(it.cnr.jada.bulk.BulkList<Mandato_rigaIBulk> newMandato_rigaColl) {
+        mandato_rigaColl = newMandato_rigaColl;
     }
 }

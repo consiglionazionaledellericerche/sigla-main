@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBase"
+	keyClassName="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqKey"
+	homeClassName="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqHome">
+	<defaultColumnMap
+		tableName="ORDINE_ACQ">
+		<columnMapping
+			columnName="DATA_ORDINE"
+			propertyName="dataOrdine"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="cdDivisa"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CAMBIO"
+			propertyName="cambio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="false" />
+		<columnMapping
+			columnName="RAGIONE_SOCIALE"
+			propertyName="ragioneSociale"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="NOME"
+			propertyName="nome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="COGNOME"
+			propertyName="cognome"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codiceFiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partitaIva"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERMINI_PAG"
+			propertyName="cdTerminiPag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_BANCA"
+			propertyName="pgBanca"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MODALITA_PAG"
+			propertyName="cdModalitaPag"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="NOTA"
+			propertyName="nota"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NOTA_PRECODIFICATA"
+			propertyName="cdNotaPrecodificata"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_NOTA_PREC"
+			propertyName="cdCdsNotaPrec"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO"
+			propertyName="esercizioContratto"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_CONTRATTO"
+			propertyName="statoContratto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="pgContratto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_ORDINE_DEF"
+			propertyName="dataOrdineDef"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="RESPONSABILE_PROC"
+			propertyName="responsabileProc"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="FIRMATARIO"
+			propertyName="firmatario"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="DIRETTORE"
+			propertyName="direttore"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="CDR"
+			propertyName="cdr"
+			sqlTypeName="DECIMAL"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="REFERENTE_ESTERNO"
+			propertyName="referenteEsterno"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TIPO_ORDINE"
+			propertyName="cdTipoOrdine"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_PROC_AMM"
+			propertyName="cdProcAmm"
+			sqlTypeName="VARCHAR"
+			columnSize="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CIG"
+			propertyName="cdCig"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CUP"
+			propertyName="cdCup"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="true" />
+		<columnMapping
+			columnName="PERC_PRORATA"
+			propertyName="percProrata"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_ATTIVITA"
+			propertyName="tiAttivita"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IMPONIBILE"
+			propertyName="imImponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA"
+			propertyName="imIva"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA_D"
+			propertyName="imIvaD"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TOTALE_ORDINE"
+			propertyName="imTotaleOrdine"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UOP_ORDINE"
+			propertyName="cdUopOrdine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"/>
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dtCancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dataOrdine" />
+	<persistentProperty
+		name="cdDivisa" />
+	<persistentProperty
+		name="cambio" />
+	<persistentProperty
+		name="cdTerzo" />
+	<persistentProperty
+		name="ragioneSociale" />
+	<persistentProperty
+		name="nome" />
+	<persistentProperty
+		name="cognome" />
+	<persistentProperty
+		name="codiceFiscale" />
+	<persistentProperty
+		name="partitaIva" />
+	<persistentProperty
+		name="cdTerminiPag" />
+	<persistentProperty
+		name="pgBanca" />
+	<persistentProperty
+		name="cdModalitaPag" />
+	<persistentProperty
+		name="nota" />
+	<persistentProperty
+		name="cdNotaPrecodificata" />
+	<persistentProperty
+		name="cdCdsNotaPrec" />
+	<persistentProperty
+		name="esercizioContratto" />
+	<persistentProperty
+		name="statoContratto" />
+	<persistentProperty
+		name="pgContratto" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="dataOrdineDef" />
+	<persistentProperty
+		name="responsabileProc" />
+	<persistentProperty
+		name="firmatario" />
+	<persistentProperty
+		name="direttore" />
+	<persistentProperty
+		name="cdr" />
+	<persistentProperty
+		name="referenteEsterno" />
+	<persistentProperty
+		name="cdTipoOrdine" />
+	<persistentProperty
+		name="cdProcAmm" />
+	<persistentProperty
+		name="cdCig" />
+	<persistentProperty
+		name="cdCup" />
+	<persistentProperty
+		name="percProrata" />
+	<persistentProperty
+		name="tiAttivita" />
+	<persistentProperty
+		name="imImponibile" />
+	<persistentProperty
+		name="imIva" />
+	<persistentProperty
+		name="imIvaD" />
+	<persistentProperty
+		name="imTotaleOrdine" />
+	<persistentProperty
+		name="cdUopOrdine" />
+	<persistentProperty
+		name="dtCancellazione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

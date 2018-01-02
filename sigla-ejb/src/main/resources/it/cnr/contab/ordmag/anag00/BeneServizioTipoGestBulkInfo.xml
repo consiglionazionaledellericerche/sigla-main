@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Archivio per l'associazione di default tra articolo e tipologia di gestione"
+	longDescription="Archivio per l'associazione di default tra articolo e tipologia di gestione">
+	<fieldProperty
+		name="findMagazzino"
+		property="magazzino"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Magazzino" />
+	<fieldProperty
+		name="cdCds"
+		property="magazzino.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Cds" />
+	<fieldProperty
+		name="cdMagazzino"
+		property="magazzino.cdMagazzino"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Magazzino" />
+	<fieldProperty
+		name="cdBeneServizio"
+		property="cdBeneServizio"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Bene/Servizio" />
+	<fieldProperty
+		name="dtIniValidita"
+		property="dtIniValidita"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		label="Data inizio Validita" />
+	<fieldProperty
+		name="tipoGestione"
+		property="tipoGestione"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		nullable="false"
+		label="Tipo Gestione" />
+	<fieldProperty
+		name="dtFinValidita"
+		property="dtFinValidita"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Fine Validita" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="cdMagazzino" />
+		<formFieldProperty
+			name="cdBeneServizio" />
+		<formFieldProperty
+			name="dtIniValidita" />
+	</form>
+	<formFieldProperty
+		name="findMagazzino" />
+	<formFieldProperty
+		name="dtIniValidita" />
+	<formFieldProperty
+		name="tipoGestione" />
+	<formFieldProperty
+		name="dtFinValidita" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdMagazzino" />
+	<findFieldProperty
+		name="cdBeneServizio" />
+	<findFieldProperty
+		name="dtIniValidita" />
+	<findFieldProperty
+		name="tipoGestione" />
+	<findFieldProperty
+		name="dtFinValidita" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdMagazzino" />
+	<columnFieldProperty
+		name="cdBeneServizio" />
+	<columnFieldProperty
+		name="dtIniValidita" />
+	<columnFieldProperty
+		name="tipoGestione" />
+	<columnFieldProperty
+		name="dtFinValidita" />
+</bulkInfo>

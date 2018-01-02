@@ -26,6 +26,9 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPFactory;
 import javax.xml.soap.SOAPFault;
 import javax.xml.soap.SOAPMessage;
+import javax.xml.transform.*;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import it.cnr.contab.spring.storage.StorageException;
@@ -115,7 +118,10 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				bStream = estraiFirma(parametersIn.getFile().getInputStream(), jc);
 			else
 				IOUtils.copy(parametersIn.getFile().getInputStream(), bStream);
-			
+
+            JAXBElement<FatturaElettronicaType> fatturaElettronicaType = (JAXBElement<FatturaElettronicaType>)
+                    jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
+
 			String path = saveFattura(
 					isp7m,
 					parametersIn.getNomeFile(), 
@@ -129,10 +135,15 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					parametersIn.getNomeFileMetadati(), 
 					new ByteArrayInputStream(bytesMetadata), 
 					parametersIn.getMetadati().getContentType(),
-					parametersIn.getIdentificativoSdI());
+					parametersIn.getIdentificativoSdI(),
+                    Optional.ofNullable(fatturaElettronicaType)
+                        .map(fatturaElettronicaTypeJAXBElement -> fatturaElettronicaTypeJAXBElement.getValue())
+                        .map(fatturaElettronicaType1 -> fatturaElettronicaType1.getFatturaElettronicaHeader())
+                        .map(fatturaElettronicaHeaderType -> fatturaElettronicaHeaderType.getDatiTrasmissione())
+                        .map(datiTrasmissioneType -> datiTrasmissioneType.getFormatoTrasmissione())
+                        .map(formatoTrasmissioneType -> formatoTrasmissioneType.value())
+                        .orElse(null));
 			
-			JAXBElement<FatturaElettronicaType> fatturaElettronicaType = (JAXBElement<FatturaElettronicaType>) 
-					jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
 			elaboraFattura(fatturaElettronicaType.getValue(), parametersIn.getIdentificativoSdI(), parametersIn.getNomeFile(), replyTo, path);
 			risposta.setEsito(EsitoRicezioneType.ER_01);
 		} catch (Throwable e) {
@@ -193,7 +204,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 	private String saveFattura(boolean isp7m, String name, InputStream stream, String contentTypeFile,
 			String nameMinusP7m, InputStream streamMinusP7m, String contentTypeFileMinusP7m,			
 			String nomeFileMedatati, InputStream streamMetadati,  String contentTypeMetadata, 
-			BigInteger identificativoSdI) throws ApplicationException {
+			BigInteger identificativoSdI, String formatoTrasmissione) throws ApplicationException {
 		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
 		Calendar now = Calendar.getInstance();
 		String year = String.valueOf(now.get(Calendar.YEAR)),
@@ -224,8 +235,48 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			metadataPropertiesMinusP7M.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
 					Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:sigla_fatture_attachment:trasmissione_fattura"));
 			metadataPropertiesMinusP7M.put("sigla_commons_aspect:utente_applicativo", "SDI");
-			storeService.storeSimpleDocument(streamMinusP7m, contentTypeFileMinusP7m, path, metadataPropertiesMinusP7M);
-		} catch(StorageException _ex){
+            final StorageObject storageObject = storeService.storeSimpleDocument(streamMinusP7m, contentTypeFileMinusP7m, path, metadataPropertiesMinusP7M);
+            if (Optional.ofNullable(formatoTrasmissione).isPresent()) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                Source xslDoc = null;
+                if (formatoTrasmissione.equals("FPA12")){
+                    xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.xsl"));
+                } else if (formatoTrasmissione.equals("SDI11")){
+                    xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.1.xsl"));
+                } else {
+                    LOGGER.error("Il formato trasmissione indicato da SDI non rientra tra i formati attesi");
+                }
+                if (Optional.ofNullable(xslDoc).isPresent()) {
+                    try {
+                        Source xmlDoc = new StreamSource(storeService.getResource(storageObject.getKey()));
+                        TransformerFactory factory = TransformerFactory.newInstance();
+                        Transformer trasform = factory.newTransformer(xslDoc);
+                        trasform.transform(xmlDoc, new StreamResult(baos));
+
+                        String htmlName = storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value());
+                        Map<String, Object> metadataProperties = new HashMap<String, Object>();
+                        metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), "D:sigla_fatture_attachment:document");
+                        metadataProperties.put(StoragePropertyNames.NAME.value(), htmlName.substring(0, htmlName.lastIndexOf(".")).concat(".html"));
+                        metadataProperties.put(StoragePropertyNames.TITLE.value(), "Fattura stampabile");
+                        metadataProperties.put(StoragePropertyNames.DESCRIPTION.value(), "Fattura stampabile");
+                        metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:cm:titled"));
+                        metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
+                        storeService.storeSimpleDocument(new ByteArrayInputStream(baos.toByteArray()), "text/html", path, metadataProperties);
+                    } catch(StorageException|TransformerException _ex){
+                        LOGGER.error("Cannot convert to html document with id {}", storageObject.getKey(), _ex);
+                    } finally {
+                        try {
+                            if (baos != null) {
+                                baos.flush();
+                                baos.close();
+                            }
+                        } catch (IOException e) {
+                            LOGGER.error("Cannot convert to html document with id {}", storageObject.getKey(), e);
+                        }
+                    }
+                }
+            }
+        } catch(StorageException _ex){
 			LOGGER.warn("PEC File "+nameMinusP7m+" alredy store!");
 		}
 		try {
@@ -605,6 +656,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			/**
 			 * Carico gli Allegati
 			 */
+
 			if (fatturaElettronicaBody.getAllegati() != null && 
 					!fatturaElettronicaBody.getAllegati().isEmpty()) {
 				int progressivoAllegato = 0;
@@ -802,7 +854,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				DocumentoEleLineaBulk documentoEleLinea = docTestata.getDocEleLineaColl().get(i); 
 				if (numeroLinee.contains(documentoEleLinea.getNumeroLinea())) {
 					documentoEleLinea.setNumeroLinea(i + 1);
-					documentoEleLinea.setAnomalie("Documento da rifiutare, il numero delle linee non è progressivo.");					
+					documentoEleLinea.setAnomalie("Documento da rifiutare, il numero delle linee non ï¿½ progressivo.");					
 				}
 				numeroLinee.add(documentoEleLinea.getNumeroLinea());									
 			}
@@ -913,7 +965,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			riceviFatture(parametersIn, replyTo);
 		} catch(SOAPFaultException _ex) {
 			if (_ex.getFault().getAttribute("cause").equalsIgnoreCase(StorageException.class.getName()))
-				throw new ApplicationException("Fattura già presente!");
+				throw new ApplicationException("Fattura giï¿½ presente!");
 			throw new ApplicationException("Error while riceviFatturaSIGLA", _ex);
 		}
 	}
@@ -931,7 +983,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				Boolean docsDaAggiornare = false;
 				for (DocumentoEleTestataBulk doc : docs) {
 					if (!StringUtils.isEmpty(doc.getFlDecorrenzaTermini()) && doc.getFlDecorrenzaTermini().equals("S")){
-						LOGGER.info("Fatture Elettroniche: Passive: Decorrenza termini. Fattura già elaborata ");
+						LOGGER.info("Fatture Elettroniche: Passive: Decorrenza termini. Fattura giï¿½ elaborata ");
 					} else {
 						docsDaAggiornare = true;
 						List<DocumentoEleTrasmissioneBulk> trasms = component.recuperoTrasmissione(userContext, identificativoSdi);
@@ -985,7 +1037,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			ScartoEsitoCommittenteType scartoEsito = fileScartoEsito.getValue();
 			Long identificativoSdi = scartoEsito.getIdentificativoSdI().longValue();
 			LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito Id SDI: "+identificativoSdi);
-			if (scartoEsito.getNote() != null && scartoEsito.getNote().startsWith("EN02: Notifica di esito già pervenuta al Sistema di Interscambio")){
+			if (scartoEsito.getNote() != null && scartoEsito.getNote().startsWith("EN02: Notifica di esito giï¿½ pervenuta al Sistema di Interscambio")){
 				LOGGER.info("Id SDI: "+identificativoSdi + ".  "+scartoEsito.getNote());
 			} else {
 				List<DocumentoEleTestataBulk> docs = component.recuperoDocumento(userContext, identificativoSdi);
@@ -993,10 +1045,10 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					Boolean docsDaAggiornare = false;
 					for (DocumentoEleTestataBulk doc : docs) {
 						if (!StringUtils.isEmpty(doc.getStatoNotificaEsito()) && doc.getStatoNotificaEsito().equals(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI)){
-							LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Fattura già elaborata ");
+							LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Fattura giï¿½ elaborata ");
 						} else {
 							if (doc.getDataRicevimentoMailRifiuto() != null && doc.getDataRicevimentoMailRifiuto().compareTo(dataRicevimentoMail) > 0){
-								LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Messaggio già processato");
+								LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Messaggio giï¿½ processato");
 							} else {
 								docsDaAggiornare = true;
 								List<DocumentoEleTrasmissioneBulk> trasms = component.recuperoTrasmissione(userContext, identificativoSdi);
@@ -1042,10 +1094,10 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				Boolean docsDaAggiornare = false;
 				for (DocumentoEleTestataBulk doc : docs) {
 					if (!StringUtils.isEmpty(doc.getStatoNotificaEsito()) && doc.getStatoNotificaEsito().equals(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI)){
-						LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Fattura già elaborata ");
+						LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Fattura giï¿½ elaborata ");
 					} else {
 						if (doc.getDataRicevimentoMailRifiuto() != null && doc.getDataRicevimentoMailRifiuto().compareTo(dataRicevimentoMail) > 0){
-							LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Messaggio già processato");
+							LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Messaggio giï¿½ processato");
 						} else {
 							docsDaAggiornare = true;
 						}
@@ -1095,10 +1147,10 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				Boolean docsDaAggiornare = false;
 				for (DocumentoEleTestataBulk doc : docs) {
 					if (!StringUtils.isEmpty(doc.getStatoNotificaEsito()) && doc.getStatoNotificaEsito().equals(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_CONSEGNATO_SDI)){
-						LOGGER.info("Fatture Elettroniche: Passive: Pec: Consegna Esito. Fattura già elaborata ");
+						LOGGER.info("Fatture Elettroniche: Passive: Pec: Consegna Esito. Fattura giï¿½ elaborata ");
 					} else {
 						if (doc.getDataRicevimentoMailRifiuto() != null && doc.getDataRicevimentoMailRifiuto().compareTo(dataRicevimentoMail) > 0){
-							LOGGER.info("Fatture Elettroniche: Passive: Pec: Consegna Esito. Messaggio già processato");
+							LOGGER.info("Fatture Elettroniche: Passive: Pec: Consegna Esito. Messaggio giï¿½ processato");
 						} else {
 							docsDaAggiornare = true;
 						}

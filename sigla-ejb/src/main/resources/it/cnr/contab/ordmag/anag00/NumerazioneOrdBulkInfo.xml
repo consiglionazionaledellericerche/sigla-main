@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Numeratori Ordini"
+	longDescription="Numeratori Ordini">
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaOrd"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Operativa" />
+	<fieldProperty
+		name="cdUnitaOperativa"
+		property="unitaOperativaOrd.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Codice Unità Operativa" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="cdNumeratore"
+		property="cdNumeratore"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice Numeratore" />
+	<fieldProperty
+		name="dsNumeratore"
+		property="dsNumeratore"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descrizione Numeratore" />
+	<fieldProperty
+		name="findTipoOperazioneOrd"
+		property="tipoOperazioneOrd"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Tipo Operazione" />
+	<fieldProperty
+		name="cdTipoOperazione"
+		property="tipoOperazioneOrd.cdTipoOperazione"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Tipo Operazione" />
+	<fieldProperty
+		name="dsTipoOperazione"
+		property="tipoOperazioneOrd.dsTipoOperazione"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descrizione Tipo Operazione" />
+	<fieldProperty
+		name="findTipoSezionale"
+		property="tipoOperazioneOrd"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Tipo Operazione" />
+	<fieldProperty
+		name="cdTipoSezionale"
+		property="tipoSezionale.cd_tipo_sezionale"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Codice Tipo Sezionale" />
+	<fieldProperty
+		name="dsTipoSezionale"
+		property="tipoSezionale.ds_tipo_sezionale"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descrizione Tipo Sezionale" />
+	<fieldProperty
+		name="corrente"
+		property="corrente"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		label="Progressivo Corrente" />
+	<fieldProperty
+		name="dataProgressivo"
+		property="dataProgressivo"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Progressivo" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Cancellazione" />
+	<fieldProperty
+		name="percProrata"
+		property="percProrata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PercentFormat"
+		inputSize="5"
+		maxLength="5"
+		enabledOnEdit="true"
+		label="% Prorata" />
+	<fieldProperty
+		name="ti_istituz_commerc"
+		property="ti_istituz_commerc"
+		inputType="SELECT"
+		label="Tipo"
+		nullable="false"
+		enabledOnSearch="true"
+		keysProperty="ti_istituz_commercKeys" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdNumeratore" />
+		<formFieldProperty
+			name="dsNumeratore" />
+	</form>
+	<formFieldProperty
+		name="findUnitaOperativaOrd" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cdNumeratore" />
+	<formFieldProperty
+		name="dsNumeratore" />
+	<formFieldProperty
+		name="findTipoOperazioneOrd" />
+	<formFieldProperty
+		name="findTipoSezionale" />
+	<formFieldProperty
+		name="ti_istituz_commerc" />
+	<formFieldProperty
+		name="corrente" />
+	<formFieldProperty
+		name="dataProgressivo" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<formFieldProperty
+		name="percProrata" />
+	<findFieldProperty
+		name="cdUnitaOperativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdNumeratore" />
+	<findFieldProperty
+		name="dsNumeratore" />
+	<findFieldProperty
+		name="cdTipoOperazione" />
+	<findFieldProperty
+		name="corrente" />
+	<findFieldProperty
+		name="dataProgressivo" />
+	<findFieldProperty
+		name="cdTipoSezionale" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdNumeratore" />
+	<columnFieldProperty
+		name="dsNumeratore" />
+	<columnFieldProperty
+		name="cdTipoOperazione" />
+	<columnFieldProperty
+		name="dsTipoOperazione" />
+	<columnFieldProperty
+		name="ti_istituz_commerc" />
+	<columnFieldProperty
+		name="corrente" />
+	<columnFieldProperty
+		name="dataProgressivo" />
+	<columnFieldProperty
+		name="cdTipoSezionale" />
+	<columnFieldProperty
+		name="percProrata" />
+	<columnFieldProperty
+		name="dsTipoSezionale" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

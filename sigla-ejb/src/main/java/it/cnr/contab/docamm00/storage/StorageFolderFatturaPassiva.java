@@ -1,25 +1,28 @@
 package it.cnr.contab.docamm00.storage;
 
-import it.cnr.contab.spring.storage.annotation.StoragePolicy;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
-import it.cnr.contab.spring.storage.annotation.StorageType;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.dp.DigitalPreservationProperties;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.StoreService;
-import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.contab.spring.storage.annotation.StoragePolicy;
+import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.contab.spring.storage.annotation.StorageType;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.comp.ApplicationException;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.Optional;
-
 @StorageType(name="F:sigla_fatture:fatture_passive")
-public class StorageFolderFatturaPassiva extends OggettoBulk {
+public class StorageFolderFatturaPassiva extends StorageFolderFattura {
+	private transient final static Logger logger = LoggerFactory.getLogger(StorageFolderFatturaPassiva.class);
 	private static final long serialVersionUID = 4110702628275029148L;
 
 	private final DocumentoEleTestataBulk documentoEleTestata;
@@ -50,11 +53,6 @@ public class StorageFolderFatturaPassiva extends OggettoBulk {
 		return this.documentoEleTestata.getDocumentoEleTrasmissione().getUnitaOrganizzativa().getCd_unita_organizzativa();
 	}
 	
-	@StoragePolicy(name="P:sigla_commons_aspect:utente_applicativo_sigla", property=@StorageProperty(name="sigla_commons_aspect:utente_applicativo"))
-	public String getUtenteSigla() {
-		return "SDI";
-	}
-
 	@StoragePolicy(name="P:sigla_commons_aspect:terzi", property=@StorageProperty(name="sigla_commons_aspect:terzi_cd_terzo"))
 	public String getCodiceTerzo() {
 		if (this.getFattura_passivaBulk() != null && this.getFattura_passivaBulk().getCd_terzo() != null){

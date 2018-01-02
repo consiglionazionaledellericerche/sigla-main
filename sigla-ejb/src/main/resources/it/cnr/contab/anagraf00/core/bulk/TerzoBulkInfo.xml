@@ -77,6 +77,8 @@
 		property="cd_precedente"
 		readonlyPropertyOnEdit="dipendente"
 		label="Codice precedente"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		inputType="TEXT" />
 	<fieldProperty
 		name="cd_unita_organizzativa"
@@ -273,6 +275,30 @@
 			inputSize="30" />
 	</form>
 
+	<form
+		name="searchtool_small" >
+		<formFieldProperty
+			name="cd_terzo" />
+	</form>
+
+	<form
+		name="searchtool_lungo" >
+		<formFieldProperty
+			name="cd_terzo"/>
+		<formFieldProperty
+			name="denominazione_sede"
+			inputSize="50" />
+	</form>
+	<form
+		name="searchtool_large" >
+		<formFieldProperty
+			name="cd_terzo"
+			nullable="false" 
+			inputSize="10"/>
+		<formFieldProperty
+			name="denominazione_sede"
+			inputSize="60" />
+	</form>
 	<form
 		name="fondoEconSearchtool" >
 		<formFieldProperty

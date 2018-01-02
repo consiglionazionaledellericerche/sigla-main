@@ -1,9 +1,9 @@
 package it.cnr.contab.doccont00.ejb;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
-import it.cnr.jada.comp.ComponentException;
-
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.jada.comp.ComponentException;
 
 public class TransactionalSaldoComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements SaldoComponentSession {
 public it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk aggiornaMandatiReversali(it.cnr.jada.UserContext param0,it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param1,java.lang.String param2,java.math.BigDecimal param3,java.lang.String param4) throws RemoteException,it.cnr.jada.comp.ComponentException {
@@ -409,6 +409,57 @@ public void aggiornaSaldiAnniSuccessivi(it.cnr.jada.UserContext param1, String p
 			param5,
 			param6,
 			param7});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public void checkDispPianoEconomicoProgetto(it.cnr.jada.UserContext param1, it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		invoke("checkDispPianoEconomicoProgetto",new Object[] {
+			param1,
+			param2});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public void checkDispPianoEconomicoProgetto(it.cnr.jada.UserContext param1, it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		invoke("checkDispPianoEconomicoProgetto",new Object[] {
+			param1,
+			param2});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public String getMessaggioSfondamentoPianoEconomico(it.cnr.jada.UserContext param1, it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		return (java.lang.String)invoke("getMessaggioSfondamentoPianoEconomico",new Object[] {
+			param1,
+			param2});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {

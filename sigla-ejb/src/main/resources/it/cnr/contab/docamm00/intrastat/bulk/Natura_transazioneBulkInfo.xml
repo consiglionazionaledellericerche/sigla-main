@@ -91,5 +91,14 @@
 	<findFieldProperty
 		name="ds_natura_transazione" />		
 	
-
+	<form name="searchtool_codice">
+		<formFieldProperty
+			name="cd_natura_transazione" 
+			inputSize="4" 
+			inputCssClass="w-25 "/>
+		<formFieldProperty
+			name="ds_natura_transazione" 
+			inputType="ROTEXT" 
+			inputSize="30"/>
+	</form>
 </bulkInfo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.NotaPrecodificataBulk"
+	homeClassName="it.cnr.contab.ordmag.anag00.NotaPrecodificataHome">
+	<defaultColumnMap
+		tableName="NOTA_PRECODIFICATA">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="unitaOrganizzativa.cd_unita_organizzativa" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="unitaOrganizzativa"
+		partOfOid="true" />
+</SQLPersistentInfo>

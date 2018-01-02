@@ -20,6 +20,7 @@
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
+		nullable="false"		
         enabledOnInsert="false"
         enabledOnEdit="false"
         enabledOnSearch="true"		
@@ -64,7 +65,7 @@
         enabledOnEdit="false"
         enabledOnSearch="true"		
 		formatName="date_short"
-		inputSize="8"
+		inputSize="10"
 		nullable="false"
 		label="Data di apertura" />
 	<fieldProperty
@@ -75,6 +76,7 @@
 		rows="3"
         enabledOnSearch="true"		
 		maxLength="300"
+		inputCssClass="w-100 "
 		label="Descrizione della delibera" />
 	<fieldProperty
 		name="ds_variazione"
@@ -85,6 +87,7 @@
         enabledOnSearch="true"		
 		maxLength="1000"
 		nullable="false"
+		inputCssClass="w-100 "
 		label="Descrizione" />
 	<fieldProperty
 		name="dt_chiusura"
@@ -94,7 +97,7 @@
         enabledOnEdit="false"
         enabledOnSearch="true"		
 		formatName="date_short"
-		inputSize="8"
+		inputSize="10"
 		label="Data di chiusura" />
 	<fieldProperty
 		name="dt_approvazione"
@@ -104,7 +107,7 @@
         enabledOnEdit="false"
         enabledOnSearch="true"		
 		formatName="date_short"
-		inputSize="8"
+		inputSize="10"
 		label="Data di approvazione" />
 	<fieldProperty
 		name="dt_annullamento"
@@ -114,7 +117,7 @@
         enabledOnEdit="false"
         enabledOnSearch="true"		
 		formatName="date_short"
-		inputSize="8"
+		inputSize="10"
 		label="Data di annullamento" />
 	<fieldProperty
 		name="ds_aggiuntiva"

@@ -2598,7 +2598,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk obbli
 		obblig.refreshLineeAttivitaSelezionateColl();
 
 		// carica le nuove linee di attività
-		obblig = obbligHome.refreshNuoveLineeAttivitaColl( obblig );
+		obblig = obbligHome.refreshNuoveLineeAttivitaColl( aUC, obblig );
 
 		obblig.setInternalStatus( ObbligazioneBulk.INT_STATO_LATT_CONFERMATE );
 		obblig.setIm_iniziale_obbligazione( obblig.getIm_obbligazione());

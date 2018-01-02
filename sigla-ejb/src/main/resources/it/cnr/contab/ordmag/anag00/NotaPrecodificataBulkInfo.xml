@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Rappresenta l'anagrafica delle note precodificate."
+	longDescription="Rappresenta l'anagrafica delle note precodificate.">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Cds" />
+	<fieldProperty
+		name="cdNotaPrecodificata"
+		property="cdNotaPrecodificata"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="nota"
+		property="nota"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="3"
+		maxLength="1000"
+		nullable="false"
+		label="Nota" />
+	<fieldProperty
+		name="nota2"
+		property="nota2"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="3"
+		maxLength="4000"
+		label="Nota aggiuntiva" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Cancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdNotaPrecodificata" />
+		<formFieldProperty
+			name="nota"
+			inputType="TEXT" />
+	</form>
+	<formFieldProperty
+		name="cdNotaPrecodificata" />
+	<formFieldProperty
+		name="nota" />
+	<formFieldProperty
+		name="nota2" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdNotaPrecodificata" />
+	<findFieldProperty
+		name="nota" />
+	<findFieldProperty
+		name="nota2" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdNotaPrecodificata" />
+	<columnFieldProperty
+		name="nota" />
+	<columnFieldProperty
+		name="nota2" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>
