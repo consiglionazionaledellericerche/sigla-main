@@ -126,21 +126,25 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	 */
 	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 		setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
-		setFl_voce_sac( new Boolean( false ) );
-		setFl_voce_non_sogg_imp_aut( new Boolean( false ) );
-		setFl_recon(new Boolean( false ) );
-		setFl_inv_beni_patr(new Boolean( false ));
-		setFl_voce_fondo(new Boolean( false ) );
-		setFl_check_terzo_siope(new Boolean( false ));
-		setFl_inv_beni_comp(new Boolean(false));
-		setFl_limite_spesa(new Boolean(false));
-		setFl_soggetto_prelievo(new Boolean(false));
+		setFl_voce_sac(Boolean.FALSE);
+		setFl_voce_non_sogg_imp_aut(Boolean.FALSE);
+		setFl_recon(Boolean.FALSE);
+		setFl_inv_beni_patr(Boolean.FALSE);
+		setFl_voce_fondo(Boolean.FALSE);
+		setFl_check_terzo_siope(Boolean.FALSE);
+		setFl_inv_beni_comp(Boolean.FALSE);
+		setFl_limite_spesa(Boolean.FALSE);
+		setFl_soggetto_prelievo(Boolean.FALSE);
 		setPerc_prelievo_pdgp_entrate(Utility.ZERO);
-		setFl_prelievo(new Boolean(false));
-		setFl_solo_competenza(new Boolean(false));
-		setFl_solo_residuo(new Boolean(false));
+		setFl_prelievo(Boolean.FALSE);
+		setFl_solo_competenza(Boolean.FALSE);
+		setFl_solo_residuo(Boolean.FALSE);
 		setFl_trovato( INDICAZIONE_TROVATO_NESSUNA );
-		setFl_azzera_residui(new Boolean(false)); 
+		setFl_azzera_residui(Boolean.FALSE);
+		setFl_limite_ass_obblig(Boolean.FALSE);
+		setFl_voce_personale(Boolean.FALSE);
+		setFl_missioni(Boolean.FALSE);
+		setFl_partita_giro(Boolean.FALSE);
 		return this;
 	}
 	/**

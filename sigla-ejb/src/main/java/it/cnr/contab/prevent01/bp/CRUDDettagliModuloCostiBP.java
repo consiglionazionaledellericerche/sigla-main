@@ -13,9 +13,11 @@ import javax.servlet.ServletException;
 import javax.servlet.jsp.JspWriter;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.ejb.Parametri_livelliComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.pdg00.ejb.CostiDipendenteComponentSession;
+import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_contrattazione_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
@@ -23,9 +25,11 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.ejb.PdgContrSpeseComponentSession;
 import it.cnr.contab.prevent01.ejb.PdgModuloCostiComponentSession;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
@@ -44,12 +48,23 @@ import it.cnr.jada.util.jsp.JSPUtils;
  */
 public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 
+	private Parametri_enteBulk parametriEnte;
 	private Unita_organizzativaBulk uoSrivania;
-	private CrudDettagliSpeseBP crudDettagliSpese = new CrudDettagliSpeseBP( "DettagliSpese", Pdg_modulo_speseBulk.class, "dettagliSpese", this);
+	private CrudDettagliSpeseBP crudDettagliSpese = new CrudDettagliSpeseBP( "DettagliSpese", Pdg_modulo_speseBulk.class, "dettagliSpese", this) {
+	   protected void validate(ActionContext actioncontext, it.cnr.jada.bulk.OggettoBulk oggettobulk) throws it.cnr.jada.bulk.ValidationException {
+		   if (getParametriEnte().getFl_prg_pianoeco() && ((Pdg_modulo_speseBulk)oggettobulk).getVoce_piano_economico()==null) {
+				Progetto_sipBulk progetto = ((Pdg_modulo_speseBulk)oggettobulk).getPdg_modulo_costi().getPdg_modulo().getProgetto();
+				if (progetto!=null && progetto.getFl_piano_economico())
+					throw new it.cnr.jada.bulk.ValidationException("Il progetto selezionato richiede l'indicazione della Voce del Piano Economico.");
+		   }
+	   };
+	};
+
 	private Integer livelloContrattazione;
 	private Boolean pdgApprovatoDefinitivo;
     private boolean cofogObb;
 	private boolean flNuovoPdg = false;
+	private boolean flPdgCodlast = false;
 
 	private SimpleDetailCRUDController crudDettagliContrSpese = new SimpleDetailCRUDController( "DettagliContrSpese", Pdg_contrattazione_speseBulk.class, "dettagliContrSpese", this, false) {
 
@@ -130,6 +145,10 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
 			setCofogObb(parCnr.isCofogObbligatorio());
 			setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+			setFlPdgCodlast(parCnr.getFl_pdg_codlast().booleanValue());
+			
+			setParametriEnte(Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext()));
+			
 		}catch (ComponentException e) {
 			throw new BusinessProcessException(e);
 		} catch (RemoteException e) {
@@ -398,5 +417,21 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 
 	public boolean isDeleteProgettoButtonHidden() {
 		return super.isDeleteButtonHidden() || !this.isFlNuovoPdg();
+	}
+	
+	public boolean isFlPdgCodlast() {
+		return flPdgCodlast;
+	}
+	
+	public void setFlPdgCodlast(boolean flPdgCodlast) {
+		this.flPdgCodlast = flPdgCodlast;
+	}
+	
+	public void setParametriEnte(Parametri_enteBulk parametriEnte) {
+		this.parametriEnte = parametriEnte;
+	}
+
+	public Parametri_enteBulk getParametriEnte() {
+		return parametriEnte;
 	}
 }

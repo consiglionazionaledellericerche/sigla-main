@@ -120,6 +120,47 @@
 		label="cig"
 		inputType="TEXT"
 		/>	
+	<form name="searchtool">
+        <formFieldProperty
+              name="esercizio_originale" 
+              enabledOnSearch="true"
+			  inputSize="5"/>
+        <formFieldProperty
+              name="pg_obbligazione" 
+              enabledOnSearch="true"
+			  inputSize="10"/>   
+        <formFieldProperty
+              name="pg_obbligazione_scadenzario" 
+              enabledOnSearch="true"
+			  inputSize="4"/>   
+        <formFieldProperty
+              name="im_scadenza"
+			  inputSize="15"/> 
+        <formFieldProperty
+              name="dt_scadenza"
+			  inputSize="10"/> 
+        <formFieldProperty
+              name="ds_scadenza"
+			  inputSize="80"/> 
+    </form>
+	<form name="searchtool_ridotto">
+        <formFieldProperty
+              name="esercizio_originale" 
+              enabledOnSearch="true"
+			  inputSize="5"/>
+        <formFieldProperty
+              name="pg_obbligazione" 
+              enabledOnSearch="true"
+			  inputSize="10"/>   
+        <formFieldProperty
+              name="pg_obbligazione_scadenzario" 
+              enabledOnSearch="true"
+			  inputSize="3"/>   
+        <formFieldProperty
+              name="ds_scadenza"
+			  inputSize="20"/> 
+    </form>
+    	
 	<columnFieldProperty
 		name="esercizio"
 		/>

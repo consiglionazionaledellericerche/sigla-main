@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Rappresenta la classificazione dei gruppi merceologici. Utile per classificare i beni/servizi"
+	longDescription="Rappresenta la classificazione dei gruppi merceologici. Utile per classificare i beni/servizi">
+	<fieldProperty
+		name="cdGruppoMerceologico"
+		property="cdGruppoMerceologico"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="dsGruppoMerceologico"
+		property="dsGruppoMerceologico"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Cancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdGruppoMerceologico" />
+		<formFieldProperty
+			name="dsGruppoMerceologico" />
+	</form>
+	<formFieldProperty
+		name="cdGruppoMerceologico" />
+	<formFieldProperty
+		name="dsGruppoMerceologico" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdGruppoMerceologico" />
+	<findFieldProperty
+		name="dsGruppoMerceologico" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdGruppoMerceologico" />
+	<columnFieldProperty
+		name="dsGruppoMerceologico" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

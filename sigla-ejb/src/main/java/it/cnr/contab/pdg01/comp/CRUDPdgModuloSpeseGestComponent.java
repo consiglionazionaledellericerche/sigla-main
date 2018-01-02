@@ -13,6 +13,7 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
@@ -27,6 +28,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
@@ -175,30 +177,39 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 													CompoundFindClause clause) throws ComponentException, PersistencyException {	
 		SQLBuilder sql = getHome(userContext, latt, "V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
  
-		sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
-		sql.addClause("AND","cd_centro_responsabilita",sql.EQUALS,dett.getCd_cdr_assegnatario());
-		sql.addClause("AND","pg_progetto",sql.EQUALS,dett.getPg_progetto());
-		sql.addClause("AND","ti_gestione",sql.EQUALS,Elemento_voceHome.GESTIONE_SPESE);
+		sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addClause(FindClause.AND,"cd_centro_responsabilita",SQLBuilder.EQUALS,dett.getCd_cdr_assegnatario());
+		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,dett.getPg_progetto());
+
+		sql.openParenthesis(FindClause.AND);
+		sql.addClause(FindClause.OR,"ti_gestione",SQLBuilder.EQUALS,WorkpackageBulk.TI_GESTIONE_SPESE);
+		sql.addClause(FindClause.OR,"ti_gestione",SQLBuilder.EQUALS,WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
+		sql.closeParenthesis();
 		
-		if(dett.getPdg_modulo_spese()!=null && dett.getPdg_modulo_spese().getCd_cofog()!=null )
-			sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_COFOG",sql.EQUALS,dett.getPdg_modulo_spese().getCd_cofog());
+		if (dett.getPdg_modulo_spese()!=null && dett.getPdg_modulo_spese().getCd_cofog()!=null )
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_COFOG",SQLBuilder.EQUALS,dett.getPdg_modulo_spese().getCd_cofog());
+
+		if (dett.getPdg_modulo_spese().getVoce_piano_economico()!=null && dett.getPdg_modulo_spese().getVoce_piano_economico().getCd_voce_piano()!=null ) {
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_UNITA_PIANO",SQLBuilder.EQUALS,dett.getPdg_modulo_spese().getVoce_piano_economico().getCd_unita_organizzativa());
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_VOCE_PIANO",SQLBuilder.EQUALS,dett.getPdg_modulo_spese().getVoce_piano_economico().getCd_voce_piano());
+		}
 
 		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
 		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
 		if (parCnrBulk!=null && parCnrBulk.getFl_nuovo_pdg()) {
-			sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_PROGRAMMA",SQLBuilder.ISNOTNULL,null);
-			sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_MISSIONE",SQLBuilder.ISNOTNULL,null);
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_PROGRAMMA",SQLBuilder.ISNOTNULL,null);
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_MISSIONE",SQLBuilder.ISNOTNULL,null);
 			if (dett.getPdg_modulo_spese().getCd_missione()!=null)
-				sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.CD_MISSIONE",sql.EQUALS,dett.getPdg_modulo_spese().getCd_missione());
+				sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_MISSIONE",SQLBuilder.EQUALS,dett.getPdg_modulo_spese().getCd_missione());
 		}
 		
 		sql.addTableToHeader("NATURA");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA","NATURA.CD_NATURA");
-		sql.addSQLClause("AND", "NATURA.FL_SPESA",sql.EQUALS,"Y");
+		sql.addSQLClause(FindClause.AND, "NATURA.FL_SPESA",SQLBuilder.EQUALS,"Y");
 
 		sql.addTableToHeader("FUNZIONE");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_FUNZIONE","FUNZIONE.CD_FUNZIONE");
-		sql.addSQLClause("AND", "FUNZIONE.FL_UTILIZZABILE",sql.EQUALS,"Y");
+		sql.addSQLClause(FindClause.AND, "FUNZIONE.FL_UTILIZZABILE",SQLBuilder.EQUALS,"Y");
 
 		/**
 		 * Escludo la linea di attività dell'IVA C20
@@ -212,7 +223,7 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 			throw new ComponentException(e);
 		}
 		if (config != null){
-			sql.addSQLClause( "AND", "V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",  sql.NOT_EQUALS, config.getVal01());
+			sql.addSQLClause( FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",  SQLBuilder.NOT_EQUALS, config.getVal01());
 		}
 
 		if (clause != null) sql.addClause(clause);

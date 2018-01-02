@@ -194,4 +194,16 @@
 		name="tipologia" />
 	<columnFieldProperty
 		name="tipologia_fin" />
+	
+	<form name="searchtool">
+        <formFieldProperty
+              name="pg_variazione" 
+              enabledOnSearch="true"/>
+        <formFieldProperty
+              name="ds_variazione"
+			  inputType="TEXT"
+			  maxLength="30"
+              inputSize="100"
+              enabledOnSearch="true"/>
+    </form>
 </bulkInfo>

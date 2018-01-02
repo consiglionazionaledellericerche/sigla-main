@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="dt_ini_validita"
+		property="dt_ini_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnFreeSearch="false"
+		label="Inizio validita" />
+	<fieldProperty
+		name="partita_iva"
+		property="partita_iva"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Partita IVA"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="nome"
+		property="nome"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Nome"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_terzo_precedente"
+		property="cd_terzo_precedente"
+		maxLength="20"
+		inputSize="6"
+		inputType="TEXT"
+		label="Codice precedente"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_tipo_rapporto"
+		property="cd_tipo_rapporto"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		enabledOnFreeSearch="false"
+		label="Cod. tipo rapporto"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_anag"
+		property="cd_anag"
+		inputType="TEXT"
+		label="Anagrafico" />
+	<fieldProperty
+		name="ds_comune_fiscale"
+		property="ds_comune_fiscale"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descr. comune"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dt_fin_validita"
+		property="dt_fin_validita"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnFreeSearch="false"
+		label="Fine validita" />
+	<fieldProperty
+		name="ds_regione_fiscale"
+		property="ds_regione_fiscale"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descr. regione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ragione_sociale"
+		property="ragione_sociale"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Ragione sociale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_regione_fiscale"
+		property="cd_regione_fiscale"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Cod. regione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_terzo"
+		property="cd_terzo"
+		inputType="TEXT"
+		label="Terzo" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		label="Codice fiscale"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cd_provincia_fiscale"
+		property="cd_provincia_fiscale"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Cod. provincia"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_tipo_rapporto"
+		property="ds_tipo_rapporto"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descr. tipo rapporto"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cognome"
+		property="cognome"
+		maxLength="50"
+		inputSize="50"
+		inputType="TEXT"
+		label="Cognome"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_provincia_fiscale"
+		property="ds_provincia_fiscale"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descr. provincia"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_dipendente_altro"
+		property="ti_dipendente_altro"
+		maxLength="1"
+		inputSize="1"
+		inputType="TEXT"
+		label="Tipo Anagrafico"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_comune_fiscale"
+		property="pg_comune_fiscale"
+		inputType="TEXT"
+		label="Comune" />
+	<fieldProperty
+		name="dt_fine_validita_terzo"
+		property="dt_fine_validita_terzo"
+		formatName="date_short"
+		inputType="TEXT"
+		enabledOnFreeSearch="true"
+		label="Fine validita terzo" />
+
+	<formFieldProperty name="dt_ini_validita" />
+	<formFieldProperty name="partita_iva" />
+	<formFieldProperty name="nome" />
+	<formFieldProperty name="cd_tipo_rapporto" />
+	<formFieldProperty name="cd_anag" />
+	<formFieldProperty name="ds_comune_fiscale" />
+	<formFieldProperty name="dt_fin_validita" />
+	<formFieldProperty name="ds_regione_fiscale" />
+	<formFieldProperty name="ragione_sociale" />
+	<formFieldProperty name="cd_regione_fiscale" />
+	<formFieldProperty name="cd_terzo" />
+	<formFieldProperty name="cd_terzo_precedente" />
+
+	<formFieldProperty name="codice_fiscale" />
+	<formFieldProperty name="cd_provincia_fiscale" />
+	<formFieldProperty name="ds_tipo_rapporto" />
+	<formFieldProperty name="cognome" />
+	<formFieldProperty name="ds_provincia_fiscale" />
+	<formFieldProperty name="ti_dipendente_altro" />
+	<formFieldProperty name="pg_comune_fiscale" />
+	<formFieldProperty name="dt_fine_validita_terzo" />
+
+	<columnFieldProperty name="nome" />
+	<columnFieldProperty name="cognome" />
+	<columnFieldProperty name="ragione_sociale" />
+	<columnFieldProperty name="cd_terzo" />
+	<columnFieldProperty name="cd_anag" />
+	<columnFieldProperty name="ti_dipendente_altro" />
+	<columnFieldProperty name="codice_fiscale" />
+	<columnFieldProperty name="partita_iva" />
+	<columnFieldProperty name="ds_comune_fiscale" />
+	<columnFieldProperty name="ds_regione_fiscale" />
+	<columnFieldProperty name="ds_provincia_fiscale" />
+	<columnFieldProperty name="dt_fine_validita_terzo" />
+
+	<findFieldProperty name="ti_dipendente_altro" />
+	<findFieldProperty name="cd_terzo" />
+	<findFieldProperty name="cd_terzo_precedente" />
+	<findFieldProperty name="cd_anag" />
+	<findFieldProperty name="cognome" />
+	<findFieldProperty name="nome" />
+	<findFieldProperty name="ragione_sociale" />
+	<findFieldProperty name="partita_iva" />
+	<findFieldProperty name="codice_fiscale" />
+	<findFieldProperty name="cd_tipo_rapporto" />
+	<findFieldProperty name="ds_tipo_rapporto" />
+	<findFieldProperty name="cd_regione_fiscale" />
+	<findFieldProperty name="ds_regione_fiscale" />
+	<findFieldProperty name="dt_ini_validita" />
+	<findFieldProperty name="dt_fin_validita" />
+	<findFieldProperty name="cd_provincia_fiscale" />
+	<findFieldProperty name="ds_provincia_fiscale" />
+	<findFieldProperty name="pg_comune_fiscale" />
+	<findFieldProperty name="ds_comune_fiscale" />
+	<findFieldProperty name="dt_fine_validita_terzo" />
+
+<columnSet name="restService">
+	<columnFieldProperty name="cd_terzo" />
+	<columnFieldProperty name="cd_anag" />
+	<columnFieldProperty name="ti_dipendente_altro" />
+	<columnFieldProperty name="codice_fiscale" />
+	<columnFieldProperty name="ds_tipo_rapporto" />
+	<columnFieldProperty name="ds_comune_fiscale" />
+	<columnFieldProperty name="dt_ini_validita" />
+	<columnFieldProperty name="dt_fin_validita" />
+</columnSet>	
+
+</bulkInfo>

@@ -69,6 +69,8 @@
 		img="img/edit16.gif"
 		style="align: center;"
 		label="Dettagli Spese"
+		iconClass="fa fa-fw fa-briefcase"
+		buttonClass="btn-outline-primary btn-title"
 		readonlyProperty="new"
 		readonlyPropertyOnView="new"
 		enabledOnView="true"

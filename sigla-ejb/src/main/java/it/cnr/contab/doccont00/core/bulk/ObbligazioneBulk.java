@@ -66,6 +66,7 @@ public class ObbligazioneBulk extends ObbligazioneBase implements Cloneable, IDo
 	private Collection lineeAttivitaSelezionateColl = Collections.EMPTY_LIST;
 	private BulkList nuoveLineeAttivitaColl = new BulkList();
 	private boolean enableVoceNext = false;
+	private List<Elemento_voceBulk> listaVociSelezionabili = null;
 
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 
@@ -159,6 +160,7 @@ public int addToObbligazione_scadenzarioColl( Obbligazione_scadenzarioBulk os )
 	os.setObbligazione(this);
 	os.setIm_associato_doc_amm( new java.math.BigDecimal(0));
 	os.setIm_associato_doc_contabile( new java.math.BigDecimal(0));
+	os.setFlAssociataOrdine(false);
 	os.setIm_scadenza( new java.math.BigDecimal(0));
 	if ( os.getPg_obbligazione_scadenzario() == null )
 		os.setPg_obbligazione_scadenzario( getNextPgScadenza());
@@ -714,11 +716,12 @@ public boolean isAddNuoveLattEnabled()
  */
 public boolean isAssociataADocAmm() 
 {
-	for ( Iterator i = obbligazione_scadenzarioColl.iterator(); i.hasNext(); )
-	//	if ( ((Obbligazione_scadenzarioBulk) i.next()).getIm_associato_doc_amm().compareTo( new BigDecimal(0)) != 0 )
-		if ( ((Obbligazione_scadenzarioBulk) i.next()).getPg_doc_passivo() != null )	
+	for ( Iterator<Obbligazione_scadenzarioBulk> i = obbligazione_scadenzarioColl.iterator(); i.hasNext(); ) {
+		Obbligazione_scadenzarioBulk bulk = i.next();
+		if ( bulk.getPg_doc_passivo() != null ||  bulk.getIm_associato_doc_amm().compareTo( new BigDecimal(0)) != 0 )	
 			return true;
-	return false;	
+	}
+	return false;
 }
 /**
  * Verifica se è stato eseguito il controllo sulla disponibilità di cassa.
@@ -1695,6 +1698,7 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 		nuova.setCdrSelezionatiColl( getCdrSelezionatiColl());
 		nuova.setLineeAttivitaColl( getLineeAttivitaColl());
 		nuova.setLineeAttivitaSelezionateColl( getLineeAttivitaSelezionateColl());
+		nuova.setListaVociSelezionabili(getListaVociSelezionabili());
 		nuova.setNuoveLineeAttivitaColl(getNuoveLineeAttivitaColl());
 		nuova.setCd_tipo_documento_cont( getCd_tipo_documento_cont());
 		nuova.setFl_pgiro(getFl_pgiro());
@@ -1940,6 +1944,12 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 	}
 	public void setEnableVoceNext(boolean enableVoceNext) {
 		this.enableVoceNext = enableVoceNext;
+	}
+	public List<Elemento_voceBulk> getListaVociSelezionabili() {
+		return listaVociSelezionabili;
+	}
+	public void setListaVociSelezionabili(List<Elemento_voceBulk> listaVociSelezionabili) {
+		this.listaVociSelezionabili = listaVociSelezionabili;
 	}
 	@Override
 	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {

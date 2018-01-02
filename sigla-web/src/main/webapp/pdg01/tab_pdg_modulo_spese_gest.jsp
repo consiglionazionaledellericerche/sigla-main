@@ -12,30 +12,25 @@
 	CRUDPdgModuloSpeseGestBP bp = (CRUDPdgModuloSpeseGestBP)BusinessProcess.getBusinessProcess(request);
 	boolean isDettaglioGestionaleEnable = !bp.isDettaglioGestionaleEnable((Pdg_modulo_spese_gestBulk)bp.getCrudDettagliGestionali().getModel());
 	boolean isDettagliGestionaliEnable = !bp.isDettagliGestionaliEnable((Pdg_modulo_speseBulk)bp.getModel());
-%>
-<table>
-	  <tr>
-	  	<td colspan = "4">
-		  <% bp.getCrudDettagliGestionali().writeHTMLTable(
+    bp.getCrudDettagliGestionali().writeHTMLTable(
 				pageContext,
-				"insertGestionale",	
+				"insertGestionale",
 				!isDettagliGestionaliEnable,
-				true,
+				false,
 				!isDettagliGestionaliEnable&&!isDettaglioGestionaleEnable,
-				"900px",
-				"150px",
-				true); %>
-		</td>
-	  </tr>
-</table>
-<table>
+				"100%",
+				"200px",
+				true);
+%>
+<div class="card">
+<table class="w-100">
 	<tr>
 		<td><% bp.getCrudDettagliGestionali().writeFormLabel(out,"find_cdr_assegnatario");%></td>
 		<td colspan=3><% bp.getCrudDettagliGestionali().writeFormInput(out,null,"find_cdr_assegnatario",isDettaglioGestionaleEnable,null,null);%></td>
 	</tr>
 	<tr>
 		<td><% bp.getCrudDettagliGestionali().writeFormLabel(out,"find_linea_attivita");%></td>
-		<td colspan=3><% bp.getCrudDettagliGestionali().writeFormInput(out,null,"find_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
+		<td colspan=3><% bp.getCrudDettagliGestionali().writeFormInput( out,"default","find_linea_attivita",isDettaglioGestionaleEnable,null,null);%></td>
 	</tr>
 	<tr>
 		<td><% bp.getCrudDettagliGestionali().writeFormLabel(out,"find_elemento_voce");%></td>
@@ -62,4 +57,5 @@
 		<td colspan=3><% bp.getCrudDettagliGestionali().writeFormInput(out,null,"descrizione",isDettaglioGestionaleEnable,null,null);%></td>
 	</tr>
 </table>
+</div>
 </body>

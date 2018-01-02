@@ -209,6 +209,19 @@
 			inputType="ROTEXT" />
 	</form>
 
+	<form
+		name="searchtool_iso" >
+		<formFieldProperty
+			name="cd_iso"
+			inputType="TEXT"
+			inputSize="4" 
+			inputCssClass="w-25 "/>
+		<formFieldProperty
+			name="ds_nazione"
+			inputType="ROTEXT" 
+			inputSize="30"/>
+	</form>
+	
 	<formFieldProperty name="pg_nazione" />
 	<formFieldProperty name="ds_nazione" />
 	<formFieldProperty name="ti_nazione" />

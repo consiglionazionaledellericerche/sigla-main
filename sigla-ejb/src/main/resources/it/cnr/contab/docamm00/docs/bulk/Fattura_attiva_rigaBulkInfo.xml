@@ -79,7 +79,8 @@
 	<fieldProperty
 		name="tariffario"
 		property="tariffario"
-		inputType="SEARCHTOOL" 		
+		inputType="SEARCHTOOL"
+		formName="searchtool"
 		enabledOnSearch="false"
 		label="Tariffario"
         enabledOnEdit="true" />	
@@ -105,9 +106,12 @@
 		name="bene_servizio"
 		property="bene_servizio"
 		inputType="SEARCHTOOL"
+		formName="searchtool_codice"
 		readonlyProperty="ROBeneServizioSearchTool"
 		enabledOnSearch="true"
-        enabledOnEdit="true" />	
+        enabledOnEdit="true"	
+        label="Bene/Servizio"
+        nullable="false"/>	
 	<fieldProperty
 		name="cd_bene_servizio"
 		property="bene_servizio.cd_bene_servizio"
@@ -130,6 +134,8 @@
 		name="voce_iva"
 		property="voce_iva"
 		inputType="SEARCHTOOL" 		
+		formName="searchtool_large"
+		nullable="false"
 		enabledOnSearch="false"
 		label="I.V.A."
         enabledOnEdit="true" />	
@@ -292,7 +298,8 @@
 		name="ds_bene_servizio" />
 			
 	<formFieldProperty
-		name="ds_riga_fattura" />
+		name="ds_riga_fattura" 
+		inputCssClass="w-100 " />
 	<formFieldProperty
 		name="im_iva"
 		command="doForzaIVA"/>

@@ -24,8 +24,8 @@ function doScaricaFile() {
 </head>
 <body class="Form">
 <%	bp.openFormWindow(pageContext); %>
-<%  bp.getCrudArchivioAllegati().writeHTMLTable(pageContext,"default",true,false,true,"100%","150px"); %>  
-<div class="Group">
+<%  bp.getCrudArchivioAllegati().writeHTMLTable(pageContext,"default",true,false,true,"100%","250px"); %>
+<div class="Group card p-2 mt-1">
   <table>
   	<% bp.getCrudArchivioAllegati().writeForm(out, bp.getAllegatiFormName());  %>
   </table>

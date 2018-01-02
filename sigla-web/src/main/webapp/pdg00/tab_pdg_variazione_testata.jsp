@@ -16,27 +16,28 @@
 //	boolean isAbilitato = !(bp.isCdrScrivania() &&bk.isApprovata() && bp.isAbilitatoModificaDescVariazioni());
 	boolean isAbilitato =( isFieldEnabled && !(bp.isCdrScrivania() &&bk.isApprovata() && bp.isAbilitatoModificaDescVariazioni()));
 %>
+<div class="Group card">
 <fieldset class="fieldset">
 	<% if (!bp.getParametriCnr().getFl_regolamento_2006().booleanValue() && bk.getDesTipoVariazione()!=null) { %>
-		<legend class="GroupLabel"><% bp.getController().writeFormInput(out,null,"desTipoVariazione",true,"GroupLabel","style=\"border-style : none; cursor:default;\"");%></legend>
+		<legend class="GroupLabel cardLabel card-header text-primary"><% bp.getController().writeFormInput(out,null,"desTipoVariazione",true,"GroupLabel cardLabel card-header text-primary","style=\"border-style : none; cursor:default;\"");%></legend>
 	<% } %> 
-<table class="Panel">	
+<table class="Panel w-100">	
   <TR>
-   <TD><% bp.getController().writeFormLabel(out,"esercizio");%></TD>
-   <TD><% bp.getController().writeFormInput(out,"esercizio");%></TD>
-   <TD><% bp.getController().writeFormLabel(out,"pg_variazione_pdg");%></TD>
-   <TD><% bp.getController().writeFormInput(out,"pg_variazione_pdg");%></TD> 
+   <% bp.getController().writeFormField(out,"esercizio");%>
+   <% bp.getController().writeFormField(out,"pg_variazione_pdg");%>
   </TR>
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"centro_responsabilita");%></TD>
-   <TD colspan=5><% bp.getController().writeFormInput(out,"default","centro_responsabilita");%></TD>
+   <TD colspan="5"><% bp.getController().writeFormInput(out,"default","centro_responsabilita");%></TD>
   </TR>  
   <TR>
-   <TD><% bp.getController().writeFormLabel(out,"stato");%></TD>
-   <TD colspan=2><% bp.getController().writeFormInput(out,"default","stato",isFieldEnabled,null,null);%></TD>
-    <TD colspan=3><% bp.getController().writeFormLabel(out,"stato_invio");%>  
-    	<% bp.getController().writeFormInput(out,"default","stato_invio",!(bp.isUoEnte()&&(bk.isPropostaDefinitiva()||bp.isSearching())),null,null);%></TD>
-   </TR> 
+   	<TD><% bp.getController().writeFormLabel(out,"stato");%></TD>
+   	<TD colspan="2"><% bp.getController().writeFormInput(out,"default","stato",isFieldEnabled,null,null);%></TD>
+    <TD colspan="3">
+    	<% bp.getController().writeFormLabel(out,"stato_invio");%>  
+    	<% bp.getController().writeFormInput(out,"default","stato_invio",!(bp.isUoEnte()&&(bk.isPropostaDefinitiva()||bp.isSearching())),null,null);%>
+    </TD>
+  </TR> 
 <% if (bp instanceof CRUDPdgVariazioneGestionaleBP) {  %>
   	<TR>
    	  <TD><% bp.getController().writeFormLabel(out,"tipo_variazione");%></TD>
@@ -84,9 +85,9 @@
 if ((bp.isSearching())||(bk.isRespinta())||(bk.isPropostaDefinitiva()&&bp.isUoEnte())) { 
 %>
 <BR>
-<div class="GroupLabel">Motivazione della Mancata Approvazione</div>
-<div class="Group" style="width:80%">
-	<table class="Panel" align="left" cellspacing=1 cellpadding=1>
+<div class="GroupLabel font-weight-bold text-primary ml-2">Motivazione della Mancata Approvazione</div>
+<div class="Group card p-3 m-1 w-100" style="width:80%">
+	<table class="Panel w-100" align="left" cellspacing=1 cellpadding=1>
 	  <tr>
         <TD><% bp.getController().writeFormLabel(out,"cd_causale_respinta");%></TD>
         <TD colspan=3><% bp.getController().writeFormInput(out,"default","cd_causale_respinta",isFieldNonApprovaEnabled,null,null);%></TD>
@@ -100,14 +101,16 @@ if ((bp.isSearching())||(bk.isRespinta())||(bk.isPropostaDefinitiva()&&bp.isUoEn
 <%
 }
 %>
-<BR>
-<div class="Group">
-	<table class="Panel" cellspacing=1 cellpadding=1>
+</fieldset>
+</div>
+<% if (bp.getParent().isBootstrap()) {%><BR><% } %>
+<div class="Group card">
+	<table class="Panel w-100" cellspacing=1 cellpadding=1>
 	  <tr>
 	     <td></td>
-	     <td align=center><span class="GroupLabel">Variazioni +</span></td>
-	     <td align=center><span class="GroupLabel">Variazioni -</span></td>
-	     <td align=center><span class="GroupLabel">Saldo differenza</span></td>
+	     <td align=center><span class="GroupLabel font-weight-bold text-primary">Variazioni +</span></td>
+	     <td align=center><span class="GroupLabel font-weight-bold text-primary">Variazioni -</span></td>
+	     <td align=center><span class="GroupLabel font-weight-bold text-primary">Saldo differenza</span></td>
 	     <td></td>
 	  </tr>
 	  <tr>
@@ -148,15 +151,18 @@ if ((bp.isSearching())||(bk.isRespinta())||(bk.isPropostaDefinitiva()&&bp.isUoEn
 <% if (bk != null && bk.getStato() != null && 
        bk.getVar_bilancio() != null && bk.getVar_bilancio().getPg_variazione() != null){ %>
 <BR>
-<div class="GroupLabel">Variazione al bilancio dell'Ente</div>          
-<div class="Group">
+<div class="GroupLabel font-weight-bold text-primary ml-2">Variazione al bilancio dell'Ente</div>          
+<div class="Group card p-3 w-100">
 	<table>      
 		<tr>
-			<td><% bp.getController().writeFormField(out,"pg_variazione_bilancio");%></td>
-			<td><% bp.getController().writeFormInput(out,"ds_variazione_bilancio");%></td>         
+		    <td><% bp.getController().writeFormLabel(out,"pg_variazione_bilancio");%></td>
+			<td class="w-100">
+			    <div class="input-group input-group-searchtool">
+					<% bp.getController().writeFormInput(out,"pg_variazione_bilancio");%>
+					<% bp.getController().writeFormInput(out,"ds_variazione_bilancio");%>
+				</div>
+			</td>         
 		</tr>
 	</table>
 </div>
 <%}%>
-
-</fieldset>

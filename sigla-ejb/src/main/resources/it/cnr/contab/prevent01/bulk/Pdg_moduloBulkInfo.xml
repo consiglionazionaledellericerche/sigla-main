@@ -264,6 +264,16 @@
 		inputSize="10"
 		label="Programma" />
 	<fieldProperty
+		name="cd_programma_liv2"
+		property="progetto.progettopadre.cd_programma"
+		descProperty="progetto.progettopadre.pdgProgramma.ds_programma"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		maxLength="25"
+		inputSize="10"
+		label="Programma" />
+	<fieldProperty
 		name="importo_totale"
 		property="importo_progetto"
 		inputType="ROTEXT"
@@ -276,7 +286,8 @@
 		inputType="ROTEXT"
 		maxLength="50"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Tot.Risorse per&lt;BR&gt;Progetto" />				
+		label="Tot.Risorse per&lt;BR&gt;Progetto" />	
+		
 	<formFieldProperty
 		name="esercizio_ro" />
 	<formFieldProperty
@@ -313,6 +324,8 @@
 		name="cd_progetto_liv2" />
 	<formFieldProperty
 		name="cd_dipartimento_liv2" />
+	<formFieldProperty
+		name="cd_programma_liv2" />
 	<formFieldProperty
 		name="importo_totale_liv2" />				
 					
@@ -367,6 +380,61 @@
 		name="stato"
 		label="Stato attuale" />
 
+	<fieldProperty
+		name="existDecisionaleE"
+		property="existDecisionaleE"
+		label="Decisionale Entrata"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="existDecisionaleS"
+		property="existDecisionaleS"
+		label="Decisionale Spesa"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="existDecisionaleC"
+		property="existDecisionaleC"
+		label="Decisionale Costi"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="existDecisionaleR"
+		property="existDecisionaleR"
+		label="Residui"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="existGestionaleE"
+		property="existGestionaleE"
+		label="Gestionale Entrata"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false"
+		/>
+	<fieldProperty
+		name="existGestionaleS"
+		property="existGestionaleS"
+		label="Gestionale Spesa"
+		inputType="CHECKBOX"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false"
+		/>
+
 	<columnSet name="prg_liv2">
 		<columnFieldProperty
 			name="cd_progetto"
@@ -383,5 +451,37 @@
 		<columnFieldProperty
 			name="stato"
 			label="Stato attuale" />
+		<columnFieldProperty
+			name="existDecisionaleE"
+			label="Entrata"
+			headerLabel="Contrattazione" 
+			columnStyle="text-align: center" />
+		<columnFieldProperty
+			name="existDecisionaleS"
+			label="Spesa"
+			headerLabel="Contrattazione" 
+			columnStyle="text-align: center" />
+		<columnFieldProperty
+			name="existGestionaleE"
+			label="Entrata"
+			headerLabel="Gestionale" 
+			columnStyle="text-align: center" />
+		<columnFieldProperty
+			name="existGestionaleS"
+			label="Spesa"
+			headerLabel="Gestionale"
+			enabledOnEdit="true"
+			enabledOnView="true"
+			columnStyle="text-align: center" />
+		<columnFieldProperty
+			name="existDecisionaleC"
+			label="Costi"
+			headerLabel="Costi/Residui" 
+			columnStyle="text-align: center" />
+		<columnFieldProperty
+			name="existDecisionaleR"
+			label="Residui"
+			headerLabel="Costi/Residui" 
+			columnStyle="text-align: center" />
 	</columnSet>
 </bulkInfo>

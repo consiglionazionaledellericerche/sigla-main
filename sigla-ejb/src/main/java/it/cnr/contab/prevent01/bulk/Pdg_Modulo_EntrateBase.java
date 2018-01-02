@@ -43,7 +43,12 @@ public class Pdg_Modulo_EntrateBase extends Pdg_Modulo_EntrateKey implements Key
 
 //	DS_SPESE_VIVE VARCHAR(300) NOT NULL
   	private java.lang.String ds_spese_vive;
-  
+
+//  CD_UNITA_PIANO VARCHAR(30) NOT NULL
+	private java.lang.String cd_unita_piano;
+
+//  CD_VOCE_PIANO VARCHAR(10) NOT NULL
+	private java.lang.String cd_voce_piano;
   	
 	public Pdg_Modulo_EntrateBase() {
 		super();
@@ -135,4 +140,19 @@ public class Pdg_Modulo_EntrateBase extends Pdg_Modulo_EntrateKey implements Key
 		im_entrata_app = decimal;
 	}
 
+	public java.lang.String getCd_unita_piano() {
+		return cd_unita_piano;
+	}
+	
+	public void setCd_unita_piano(java.lang.String cd_unita_piano) {
+		this.cd_unita_piano = cd_unita_piano;
+	}
+	
+	public java.lang.String getCd_voce_piano() {
+		return cd_voce_piano;
+	}
+	
+	public void setCd_voce_piano(java.lang.String cd_voce_piano) {
+		this.cd_voce_piano = cd_voce_piano;
+	}
 }

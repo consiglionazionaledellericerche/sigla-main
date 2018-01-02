@@ -21,24 +21,19 @@
 	Stampa_docamm_per_voce_del_pianoVBulk bulk = (Stampa_docamm_per_voce_del_pianoVBulk)bp.getModel();
 	bp.openFormWindow(pageContext); %>
 
-<table>
+<div class="Group card">
+<table class="w-50">
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
-	<td><% bp.getController().writeFormInput(out,"esercizio"); %></td>
-	<td></td>
-	<td><% bp.getController().writeFormLabel(out,"cd_cds"); %></td>
-	<td><% bp.getController().writeFormInput(out,"cd_cds"); %></td>
+	<% bp.getController().writeFormField(out,"esercizio"); %>
+	<% bp.getController().writeFormField(out,"cd_cds"); %>
   </tr>
 </table>
-  <br>
+</div>
+<div class="Group card">
 <table>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"findUOForPrint"); %></td>
-	<td>
-		<% bp.getController().writeFormInput(out,null,"cdUOForPrint",(bulk!=null?!bulk.isUOForPrintEnabled():false),null,null); %>
-		<% bp.getController().writeFormInput(out,"dsUOForPrint"); %>
-		<% bp.getController().writeFormInput(out,null,"findUOForPrint",(bulk!=null?!bulk.isUOForPrintEnabled():false),null,null); %>
-	</td>
+	<td><% bp.getController().writeFormInput(out,null,"findUOForPrint",(bulk!=null?!bulk.isUOForPrintEnabled():false),null,null); %></td>
   </tr>
   <tr>
     <td><% bp.getController().writeFormLabel(out,"findVoceDPForPrint"); %></td>
@@ -49,7 +44,7 @@
 	</td>
   </tr>
 </table>
-
+</div>
 <% bp.closeFormWindow(pageContext); %>
 
 </body>

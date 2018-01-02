@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 
@@ -100,6 +101,7 @@ public class DipartimentoHome extends BulkHome {
 		sql.addClause("AND", "dt_soppressione", sql.GREATER_EQUALS,  it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
 		sql.addClause("OR","dt_soppressione",sql.ISNULL,null);
 		sql.closeParenthesis();
+		Optional.ofNullable(compoundfindclause).ifPresent(cfc->sql.addClause(cfc));
 		return sql;
 	}
 	public SQLBuilder selectByClause(UserContext uc,CompoundFindClause compoundfindclause)

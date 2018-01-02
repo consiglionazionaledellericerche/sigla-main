@@ -16,7 +16,7 @@
 	boolean roForSplit = fatturaPassiva!=null && !fatturaPassiva.isToBeCreated() && 
 			             fatturaPassiva.getFl_split_payment()!=null && fatturaPassiva.getFl_split_payment();
 %>
-   <div class="Group">
+   <div class="Group card">
 	<table>
 	  <% if (fatturaPassiva.isCongelata() && !bp.isSearching()) { %>	
 	      <tr>
@@ -96,25 +96,17 @@
 				      		<%  bp.getController().writeFormInput(out,null,"stato_pagamento_fondo_ecoForSearch",roOnAutoGen|| isInSpesaMode,null,""); %>
 				      	</td>
 				      </tr>
-	<% 			}
-	    } else { %>
+	      <% } %>
+	<%} else { %>
 	      <tr>      	 
 	      	<% bp.getController().writeFormField(out,"stato_cofi"); %>
 	      	<% bp.getController().writeFormField(out,"ti_associato_manrev"); %>
 	      </tr>
 	      <tr>  
-	      		<% bp.getController().writeFormField(out,"fl_fattura_compenso"); %>
+	      	<% bp.getController().writeFormField(out,"fl_fattura_compenso"); %>
 	      	<td  colspan="2">
       			<% bp.getController().writeFormLabel(out,"fl_liquidazione_differita");%>
       			<% bp.getController().writeFormInput(out,null,"fl_liquidazione_differita",roOnAutoGen,null,"onClick=\"submitForm('doOnLiquidazioneDifferitaChange')\"");%>
-      		</td>
-      		<td colspan="2">
-      			<% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
-      			<% bp.getController().writeFormInput(out,null,"stato_liquidazione",false,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
-      		</td>
-      		<td colspan="2">  
-      			<% bp.getController().writeFormLabel(out,"causale");%>
-      			<% bp.getController().writeFormInput(out,null,"causale",false,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
       		</td>
 	      </tr>
 	      <tr>      	
@@ -126,28 +118,41 @@
 	      	</td>
 	      	<% if (bp instanceof CRUDFatturaPassivaIBP && ((Fattura_passiva_IBulk)bp.getModel()).isByFondoEconomale()) {
 		      		bp.getController().writeFormField(out,"dt_pagamento_fondo_eco");
-		       } %>
+		    } %>
+	      </tr>
+	      <tr>
+            <td>
+                <% bp.getController().writeFormLabel(out,"stato_liquidazione");%>
+            </td>
+            <td>
+                <% bp.getController().writeFormInput(out,null,"stato_liquidazione",false,null,"onChange=\"submitForm('doOnStatoLiquidazioneChange')\"");%>
+            </td>
+            <td>
+                <% bp.getController().writeFormLabel(out,"causale");%>
+             </td>
+             <td>
+                <% bp.getController().writeFormInput(out,null,"causale",false,null,"onChange=\"submitForm('doOnCausaleChange')\"");%>
+            </td>
 	      </tr>
 	<% } %>
-      
     </table>
    </div>
 
-    <div class="Group">
+    <div class="Group card">
   	<table>
 		<tr>
 			<% if (!bp.isSearching()) { %>
 		     	<td>
 		      		<% bp.getController().writeFormLabel(out,"ti_istituz_commerc");%>
 		      	</td>      	
-		     	<td colspan="5">
+		     	<td colspan="10">
 		      		<% bp.getController().writeFormInput(out,null,"ti_istituz_commerc",roOnAutoGen||roForSplit,null,"onChange=\"submitForm('doOnIstituzionaleCommercialeChange')\"");%>
 		      	</td>
 			<% } else { %>
 		     	<td>
 		      		<% bp.getController().writeFormLabel(out,"ti_istituz_commercSearch");%>
 		      	</td>      	
-		     	<td colspan="5">
+		     	<td colspan="10">
 		      		<% bp.getController().writeFormInput(out,null,"ti_istituz_commercSearch",roOnAutoGen||roForSplit,null,"onChange=\"submitForm('doOnIstituzionaleCommercialeChange')\"");%>
 		      	</td>
 			<% } %>
@@ -181,7 +186,7 @@
 	     	<td>
 	      		<% bp.getController().writeFormInput(out,null,"fl_intra_ue",roOnAutoGen,null,"");%>
 	      	</td>      	
-	     	<td width="10">&nbsp;</td>
+	     	<td width="100">&nbsp;</td>
 	     	<td>
 	      		<% bp.getController().writeFormLabel(out,"fl_extra_ue");%>
 	      	</td>      	
@@ -210,7 +215,7 @@
 	     	<td>
 	     		<% bp.getController().writeFormInput(out,null,"fl_san_marino_con_iva",roOnAutoGen,null,"");%>
 	     	</td>
-	     	<td width="10">&nbsp;</td>
+	     	<td width="100">&nbsp;</td>
 	      	<td>
 	      		<% bp.getController().writeFormLabel(out,"fl_san_marino_senza_iva");%>
 	      	</td>      	
@@ -224,6 +229,15 @@
 	     	<td>
 	   			<% bp.getController().writeFormInput(out,null,"fl_bolla_doganale",fatturaPassiva.getFl_merce_intra_ue(),null,"");%>
 			</td>
+			<% if (bp.isAttivoOrdini()) { %>
+			    <td width="100">&nbsp;</td>
+                <td>
+                    <% bp.getController().writeFormLabel(out,"flDaOrdini");%>
+                </td>
+                <td>
+                    <% bp.getController().writeFormInput(out,"flDaOrdini");%>
+                </td>
+            <% } %>
 	      </tr>
 	     <% } %>
       <tr>     	
@@ -263,18 +277,16 @@
 			<td>
 				<% bp.getController().writeFormLabel(out,"pg_fattura_estera");%>
 			</td>
-			<td>
+			<td colspan="10">
 				<% bp.getController().writeFormInput(out, null, "pg_fattura_estera", roOnAutoGen, null, "");%>
 				<% bp.getController().writeFormInput(out, null, "fatturaEstera", roOnAutoGen, null, "");%>
-			</td>
-			<td>
 				<% Button.write(
 						out,
-						"img/open16.gif",
-						"img/open16.gif",
+						bp.getParentRoot().isBootstrap() ? "fa fa-folder-open faa-passing" : "img/open16.gif",
+						bp.getParentRoot().isBootstrap() ? "fa fa-folder-open" : "img/open16.gif",
 						null,
 						"submitForm('doApriFatturaEstera()')",
-						null,
+						"btn animated-hover",
 						"Apri fattura estera",
 						bp.isEditing() && (!bp.isDeleting() || !bp.isModelVoided()), bp.getParentRoot().isBootstrap()); %>
 			</td>
@@ -289,7 +301,7 @@
 		      	<td>
 		      		<% bp.getController().writeFormLabel(out,"ti_bene_servizioForSearch");%>
 		      	</td>      	
-		     	<td>
+		     	<td colspan="10">
 		     		<% bp.getController().writeFormInput(out,null,"ti_bene_servizioForSearch",roOnAutoGen,null,"onChange=\"submitForm('doOnTiBeneServizioChange')\"");%>
 		     	</td>
 		      </tr>
@@ -298,7 +310,7 @@
 		      	<td>
 		      		<% bp.getController().writeFormLabel(out,"ti_bene_servizio");%>
 		      	</td>      	
-		     	<td>
+		     	<td colspan="10">
 		     		<% bp.getController().writeFormInput(out,null,"ti_bene_servizio",roOnAutoGen,null,"onChange=\"submitForm('doOnTiBeneServizioChange')\"");%>
 		     	</td>
 		      </tr>
@@ -309,14 +321,14 @@
       	<td>
       		<% bp.getController().writeFormLabel(out,"sezionale");%>
       	</td>      	
-     	<td colspan="5">
+     	<td colspan="10">
      		<% bp.getController().writeFormInput(out,null,"sezionale",roOnAutoGen,null,"");%>
      	</td>
       </tr>
      </table>
     </div>
 
-     <div class="Group">
+     <div class="Group card">
      <table>
       <tr>      	
       	<% bp.getController().writeFormField(out,"nr_fattura_fornitore");%>     	
@@ -380,7 +392,7 @@
     </table>
    </div>
 
-    <div class="Group">
+    <div class="Group card">
     <table>
        <tr>
 			<td>

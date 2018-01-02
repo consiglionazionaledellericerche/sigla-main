@@ -95,6 +95,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				boolean delete) throws java.io.IOException, javax.servlet.ServletException {
 
 			Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)getParentModel();
+			boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
 
 			if (isGrowable() &&
 					procedura != null &&
@@ -102,20 +103,22 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				if (procedura.getBando() == null && procedura.isProceduraDaPubblicare()) {
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
-							"img/cnr16.gif",
+							isFromBootstrap?"fa fa-fw fa-paper-plane-o text-success":"img/cnr16.gif",
 							"javascript:submitForm('doAddBandoToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Avviso da pubblicare",
-							HttpActionContext.isFromBootstrap(context));
+							"btn btn-sm btn-secondary btn-outline-secondary",
+							isFromBootstrap);
 				}
 				if (procedura.getDecisioneAContrattare() == null) {
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
-							"img/book_leaf.gif",
+							isFromBootstrap?"fa fa-fw fa-file-text-o text-info":"img/book_leaf.gif",
 							"javascript:submitForm('doAddDecisioneAContrattareToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Decisione a Contrattare",
-							HttpActionContext.isFromBootstrap(context));
+							"btn btn-sm btn-secondary btn-outline-secondary",
+							isFromBootstrap);
 				}
 				if (procedura.getProgetto()==null) {
 					try{
@@ -124,21 +127,23 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								(parametri.getIndica_url_progetto()!=null && parametri.getIndica_url_progetto().equals("Y")))) {
 							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 									context,
-									"img/tipoftheday16.gif",
+									isFromBootstrap?"fa fa-fw fa-lightbulb-o text-primary":"img/tipoftheday16.gif",
 									"javascript:submitForm('doAddProgettoToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Progetto",
-									HttpActionContext.isFromBootstrap(context));
+									"btn btn-sm btn-secondary btn-outline-secondary",
+									isFromBootstrap);
 						}
 					} catch (Exception e) {}
 				}
 				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 						context,
-						"img/new16.gif",
+						isFromBootstrap?"fa fa-fw fa-file-o text-primary":"img/new16.gif",
 						"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 						true,
 						"Allegato Generico",
-						HttpActionContext.isFromBootstrap(context));
+						"btn btn-sm btn-secondary btn-outline-secondary",
+						isFromBootstrap);
 				super.writeHTMLToolbar(context, false, false, delete);
 			} else if (procedura != null && isGrowable() &&
 					(procedura.isProceduraDefinitiva() || procedura.isProceduraInviataCorteConti() ||
@@ -146,11 +151,12 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				if (((CRUDIncarichiProceduraBP)getParentController()).isSuperUtente()) {
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
-							"img/new16.gif",
+							isFromBootstrap?"fa fa-fw fa-file-o text-primary":"img/new16.gif",
 							"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Allegato Generico",
-							HttpActionContext.isFromBootstrap(context));
+							"btn btn-sm btn-secondary btn-outline-secondary",
+							isFromBootstrap);
 					super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()));
 				}
 			}
@@ -249,36 +255,41 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				parametri = ((CRUDIncarichiProceduraBP)getParentController()).getIncarichiParametri(HttpActionContext.getUserContext(context.getSession()),procedura);
 			} catch (Exception e) {}
 
+			boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
+
 			if (procedura != null && !procedura.isProceduraAnnullata() && !procedura.isProceduraChiusa() &&
 					!procedura.isProceduraDefinitiva() && isGrowable()) {
 				if (procedura.getBando() == null && procedura.isProceduraDaPubblicare()) {
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
-							"img/cnr16.gif",
+							isFromBootstrap?"fa fa-fw fa-paper-plane-o text-success":"img/cnr16.gif",
 							"javascript:submitForm('doAddBandoToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Avviso da pubblicare",
-							HttpActionContext.isFromBootstrap(context));
+							"btn btn-sm btn-secondary btn-outline-secondary",
+							isFromBootstrap);
 				}
 				if (procedura.getDecisioneAContrattare() == null) {
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
-							"img/book_leaf.gif",
+							isFromBootstrap?"fa fa-fw fa-file-text-o text-info":"img/book_leaf.gif",
 							"javascript:submitForm('doAddDecisioneAContrattareToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Decisione a Contrattare",
-							HttpActionContext.isFromBootstrap(context));
+							"btn btn-sm btn-secondary btn-outline-secondary",
+							isFromBootstrap);
 				}
 				if (procedura.getProgetto()==null) {
 					if (parametri!=null && ((parametri.getAllega_progetto()!=null && parametri.getAllega_progetto().equals("Y"))||
 							(parametri.getIndica_url_progetto()!=null && parametri.getIndica_url_progetto().equals("Y")))) {
 						it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 								context,
-								"img/tipoftheday16.gif",
+								isFromBootstrap?"fa fa-fw fa-lightbulb-o text-primary":"img/tipoftheday16.gif",
 								"javascript:submitForm('doAddProgettoToCRUD(" + getInputPrefix() + ")')",
 								true,
 								"Progetto",
-								HttpActionContext.isFromBootstrap(context));
+								"btn btn-sm btn-secondary btn-outline-secondary",
+								isFromBootstrap);
 					}
 				}
 				if (procedura.getNr_contratti().compareTo(1)==0 &&
@@ -290,52 +301,57 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 					if (incarico.getContratto()==null) {
 						it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 								context,
-								"img/history16.gif",
+								isFromBootstrap?"fa fa-fw fa-handshake-o text-primary":"img/history16.gif",
 								"javascript:submitForm('doAddContrattoToCRUD(" + getInputPrefix() + ")')",
 								true,
 								"Contratto",
-								HttpActionContext.isFromBootstrap(context));
+								"btn btn-sm btn-secondary btn-outline-secondary",
+								isFromBootstrap);
 					}
 					if (incarico.getCurriculumVincitore()==null) {
 						if (parametri!=null && parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) {
 							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 									context,
-									"img/paste16.gif",
+									isFromBootstrap?"fa fa-fw fa-address-card-o text-primary":"img/paste16.gif",
 									"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Curriculum Vincitore",
-									HttpActionContext.isFromBootstrap(context));
+									"btn btn-sm btn-secondary btn-outline-secondary",
+									isFromBootstrap);
 						}
 					}
 					if (incarico.getDecretoDiNomina()==null) {
 						if (parametri!=null && parametri.getAllega_decreto_nomina()!=null && parametri.getAllega_decreto_nomina().equals("Y")) {
 							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 									context,
-									"img/book_closed.gif",
+									isFromBootstrap?"fa fa-fw fa-book text-primary":"img/book_closed.gif",
 									"javascript:submitForm('doAddDecretoDiNominaToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Decreto di Nomina",
-									HttpActionContext.isFromBootstrap(context));
+									"btn btn-sm btn-secondary btn-outline-secondary",
+									isFromBootstrap);
 						}
 					}
 					if (incarico.getFl_inviato_corte_conti() && incarico.getEsito_corte_conti()!=null &&
 							incarico.getAttoEsitoControllo()==null) {
 						it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 								context,
-								"img/bookmarks16.gif",
+								isFromBootstrap?"fa fa-fw fa-certificate text-primary":"img/bookmarks16.gif",
 								"javascript:submitForm('doAddAttoEsitoControlloToCRUD(" + getInputPrefix() + ")')",
 								true,
 								"Documentazione ricevuta dalla Corte dei Conti o Provvedimento Amm. Direttore",
-								HttpActionContext.isFromBootstrap(context));
+								"btn btn-sm btn-secondary btn-outline-secondary",
+								isFromBootstrap);
 					}
 				}
 				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 						context,
-						"img/new16.gif",
+						isFromBootstrap?"fa fa-fw fa-file-o text-primary":"img/new16.gif",
 						"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 						true,
 						"Allegato Generico",
-						HttpActionContext.isFromBootstrap(context));
+						"btn btn-sm btn-secondary btn-outline-secondary",
+						isFromBootstrap);
 				super.writeHTMLToolbar(context, false, false, delete);
 			} else if (procedura != null && isGrowable() &&
 					(procedura.isProceduraDefinitiva() || procedura.isProceduraInviataCorteConti() ||
@@ -352,11 +368,12 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 						if (incarico.getContratto()==null) {
 							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 									context,
-									"img/history16.gif",
+									isFromBootstrap?"fa fa-fw fa-handshake-o text-primary":"img/history16.gif",
 									"javascript:submitForm('doAddContrattoToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Contratto",
-									HttpActionContext.isFromBootstrap(context));
+									"btn btn-sm btn-secondary btn-outline-secondary",
+									isFromBootstrap);
 						}
 						super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isContratto()));
 					}
@@ -369,34 +386,36 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 						if (parametri!=null && parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) {
 							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 									context,
-									"img/paste16.gif",
+									isFromBootstrap?"fa fa-fw fa-address-card-o text-primary":"img/paste16.gif",
 									"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Curriculum Vincitore",
-									HttpActionContext.isFromBootstrap(context));
+									"btn btn-sm btn-secondary btn-outline-secondary",
+									isFromBootstrap);
 						}
 					}
 					if (incarico.getDecretoDiNomina()==null) {
 						if (parametri!=null && parametri.getAllega_decreto_nomina()!=null && parametri.getAllega_decreto_nomina().equals("Y")) {
 							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 									context,
-									"img/book_closed.gif",
+									isFromBootstrap?"fa fa-fw fa-book text-primary":"img/book_closed.gif",
 									"javascript:submitForm('doAddDecretoDiNominaToCRUD(" + getInputPrefix() + ")')",
 									true,
 									"Decreto di Nomina",
-									HttpActionContext.isFromBootstrap(context));
+									"btn btn-sm btn-secondary btn-outline-secondary",
+									isFromBootstrap);
 						}
 					}
 				}
 				if (((CRUDIncarichiProceduraBP)getParentController()).isSuperUtente()){
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
-							HttpActionContext.isFromBootstrap(context)? "fa fa-plus text-primary":"img/new16.gif",
+							isFromBootstrap? "fa fa-plus text-primary":"img/new16.gif",
 							"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Allegato Generico",
-							"btn-sm",
-							HttpActionContext.isFromBootstrap(context));
+							"btn btn-sm btn-secondary btn-outline-secondary",
+							isFromBootstrap);
 					super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()));
 				}
 			}
@@ -445,12 +464,14 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 
 			super.writeHTMLToolbar(context, reset, false, delete&&incarico!=null&&incarico.isIncaricoProvvisorio());
 
+			boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
+
 			if (getModel()!=null) {
 				if (isEditing() && !incarico.isROIncarico()) {
 					String command = "javascript:submitForm('doSalvaDefinitivoContratto')";
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
-							"img/saveall16.gif",
+							isFromBootstrap? "fa fa-floppy-o text-primary":"img/saveall16.gif",
 							!(isInputReadonly() ||
 									getDetails().isEmpty() ||
 									((CRUDIncarichiProceduraBP)getParentController()).isSearching() ||
@@ -460,7 +481,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									incarico.isIncaricoDefinitivo())? command : null,
 							true,
 							"Salva Definitivo",
-							HttpActionContext.isFromBootstrap(context));
+							"btn btn-sm btn-secondary btn-outline-secondary",
+							isFromBootstrap);
 				}
 
 				if (((Incarichi_repertorioBulk)getModel()).isIncaricoDefinitivo() &&
@@ -469,7 +491,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 					String command = "javascript:submitForm('doAnnullaDefinitivoContratto')";
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
-							"img/import16.gif",
+							isFromBootstrap? "fa fa-undo text-primary":"img/import16.gif",
 							!(isInputReadonly() ||
 									getDetails().isEmpty() ||
 									((CRUDIncarichiProceduraBP)getParentController()).isSearching() ||
@@ -477,7 +499,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									!((Incarichi_repertorioBulk)getModel()).isIncaricoDefinitivo())? command : null,
 							true,
 							"Annulla Definitivo",
-							HttpActionContext.isFromBootstrap(context));
+							"btn btn-sm btn-secondary btn-outline-secondary",
+							isFromBootstrap);
 
 					if (bp.isConcludiMonoIncaricoButtonHidden() && isEditing()) {
 						String command2 = "javascript:submitForm('doConcludiIncarico')";
@@ -490,7 +513,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 										getModel()==null )? command2 : null,
 								true,
 								"Concludi Incarico",
-								HttpActionContext.isFromBootstrap(context));
+								"btn btn-sm btn-secondary btn-outline-secondary",
+								isFromBootstrap);
 					}
 				}
 			}
@@ -533,57 +557,62 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				parametri = ((CRUDIncarichiProceduraBP)getParentController().getParentController()).getIncarichiParametri(HttpActionContext.getUserContext(context.getSession()),incarico.getIncarichi_procedura());
 			} catch (Exception e) {}
 
+			boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
+
 			if (isGrowable() &&
 					incarico != null &&
 					!incarico.isIncaricoAnnullato() && !incarico.isIncaricoChiuso() && !incarico.isIncaricoDefinitivo()) {
 				if (incarico.getContratto()==null) {
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
-							"img/history16.gif",
+							isFromBootstrap?"fa fa-fw fa-handshake-o text-primary":"img/history16.gif",
 							"javascript:submitForm('doAddContrattoToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Contratto",
-							HttpActionContext.isFromBootstrap(context));
+							isFromBootstrap);
 				}
 				if (incarico.getCurriculumVincitore()==null) {
 					if (parametri!=null && parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) {
 						it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 								context,
-								"img/paste16.gif",
+								isFromBootstrap?"fa fa-fw fa-address-card-o text-primary":"img/paste16.gif",
 								"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
 								true,
 								"Curriculum Vincitore",
-								HttpActionContext.isFromBootstrap(context));
+								isFromBootstrap);
 					}
 				}
 				if (incarico.getDecretoDiNomina()==null) {
 					if (parametri!=null && parametri.getAllega_decreto_nomina()!=null && parametri.getAllega_decreto_nomina().equals("Y")) {
 						it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 								context,
-								"img/book_closed.gif",
+								isFromBootstrap?"fa fa-fw fa-book text-primary":"img/book_closed.gif",
 								"javascript:submitForm('doAddDecretoDiNominaToCRUD(" + getInputPrefix() + ")')",
 								true,
 								"Decreto di Nomina",
-								HttpActionContext.isFromBootstrap(context));
+								"btn btn-sm btn-secondary btn-outline-secondary",
+								isFromBootstrap);
 					}
 				}
 				if (incarico.getFl_inviato_corte_conti() && incarico.getEsito_corte_conti()!=null &&
 						incarico.getAttoEsitoControllo()==null) {
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
-							"img/bookmarks16.gif",
+							isFromBootstrap?"fa fa-fw fa-certificate text-primary":"img/bookmarks16.gif",
 							"javascript:submitForm('doAddAttoEsitoControlloToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Documentazione ricevuta dalla Corte dei Conti o Provvedimento Amm. Direttore",
-							HttpActionContext.isFromBootstrap(context));
+							"btn btn-sm btn-secondary btn-outline-secondary",
+							isFromBootstrap);
 				}
 				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 						context,
-						"img/new16.gif",
+						isFromBootstrap? "fa fa-plus text-primary":"img/new16.gif",
 						"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 						true,
 						"Allegato Generico",
-						HttpActionContext.isFromBootstrap(context));
+						"btn btn-sm btn-secondary btn-outline-secondary",
+						isFromBootstrap);
 				super.writeHTMLToolbar(context, false, false, delete);
 			} else if (incarico != null && isGrowable() &&
 					(incarico.isIncaricoDefinitivo() || incarico.isIncaricoChiuso() || incarico.isIncaricoAnnullato())) {
@@ -592,11 +621,11 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 					if (incarico.getContratto()==null) {
 						it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 								context,
-								"img/history16.gif",
+								isFromBootstrap?"fa fa-fw fa-handshake-o text-primary":"img/history16.gif",
 								"javascript:submitForm('doAddContrattoToCRUD(" + getInputPrefix() + ")')",
 								true,
 								"Contratto",
-								HttpActionContext.isFromBootstrap(context));
+								isFromBootstrap);
 					}
 					super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isContratto()));
 				}
@@ -604,21 +633,23 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 					if (parametri!=null && parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) {
 						it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 								context,
-								"img/paste16.gif",
+								isFromBootstrap? "fa fa-clipboard text-primary":"img/paste16.gif",
 								"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
 								true,
 								"Curriculum Vincitore",
-								HttpActionContext.isFromBootstrap(context));
+								"btn btn-sm btn-secondary btn-outline-secondary",
+								isFromBootstrap);
 					}
 				}
 				if (((CRUDIncarichiProceduraBP)getParentController().getParentController()).isSuperUtente()){
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
-							"img/new16.gif",
+							isFromBootstrap? "fa fa-plus text-primary":"img/new16.gif",
 							"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
 							true,
 							"Allegato Generico",
-							HttpActionContext.isFromBootstrap(context));
+							"btn btn-sm btn-secondary btn-outline-secondary",
+							isFromBootstrap);
 					super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()));
 				}
 			}
@@ -702,13 +733,14 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 						incaricoVar.isVariazioneIntegrazioneIncarico() &&
 						incaricoVar.getIncarichi_repertorio().isIncaricoDefinitivo()) {
 					String command = "javascript:submitForm('doSalvaDefinitivoVariazioneContratto')";
+					boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);					
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
 							"img/saveall16.gif",
 							command,
 							true,
 							"Salva Definitivo Variazione Contratto",
-							HttpActionContext.isFromBootstrap(context));
+							isFromBootstrap);
 				}
 			}
 		}
@@ -1075,8 +1107,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 
 	public void completaUnitaOrganizzativa(it.cnr.jada.action.ActionContext context, Incarichi_proceduraBulk procedura, Unita_organizzativaBulk uo) throws BusinessProcessException {
-
 		try {
+			procedura.setUnita_organizzativa(uo);
 			setModel(context, ((IncarichiProceduraComponentSession)createComponentSession()).caricaSedeUnitaOrganizzativa(context.getUserContext(),procedura));
 		}catch(it.cnr.jada.comp.ComponentException ex){
 			throw handleException(ex);
@@ -1500,13 +1532,11 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				.filter(Incarichi_proceduraBulk.class::isInstance)
 				.map(Incarichi_proceduraBulk.class::cast)
 				.map(incarichi_proceduraBulk -> {
-					return !(
-                        incarichi_proceduraBulk.isProceduraDefinitiva() ||
+					return !incarichi_proceduraBulk.isProceduraDefinitiva() ||
                         !isUoEnte() ||
                         Optional.ofNullable(incarichi_proceduraBulk.getNr_contratti())
                                 .map(numeroContratti -> numeroContratti.compareTo(1) == 1)
-                        .orElse(false)
-					);
+                        .orElse(false);
 				})
 				.orElse(true);
 	}

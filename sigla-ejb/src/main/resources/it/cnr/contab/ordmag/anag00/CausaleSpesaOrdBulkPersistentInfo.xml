@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.CausaleSpesaOrdBulk"
+	homeClassName="it.cnr.contab.ordmag.anag00.CausaleSpesaOrdHome">
+	<defaultColumnMap
+		tableName="CAUSALE_SPESA_ORD">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="voceIva.cd_voce_iva" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="unitaOrganizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="voceIva" />
+</SQLPersistentInfo>

@@ -272,12 +272,12 @@ public class StoreService {
         return siglaStorageService.getChildren(key);
     }
 
-    public List<StorageObject> search(String query) {
-        return siglaStorageService.search(query);
+    public List<StorageObject> getChildren(String key, int depth) {
+        return siglaStorageService.getChildren(key, depth);
     }
 
-    public InputStream zipContent(List<String> keys, String name) {
-        return siglaStorageService.zipContent(keys, name);
+    public List<StorageObject> search(String query) {
+        return siglaStorageService.search(query);
     }
 
     public String signDocuments(PdfSignApparence pdfSignApparence, String url) throws StorageException{

@@ -91,6 +91,8 @@
 		name="cd_terzo"
 		property="cd_terzo"
 		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Terzo" />
 	<fieldProperty
 		name="codice_fiscale"
@@ -210,4 +212,19 @@
 	<findFieldProperty name="ds_comune_fiscale" />
 	<findFieldProperty name="dt_fine_validita_terzo" />
 
+<columnSet name="restService">
+	<columnFieldProperty name="cd_terzo" />
+	<columnFieldProperty name="cd_anag" />
+	<columnFieldProperty name="ti_dipendente_altro" />
+	<columnFieldProperty name="codice_fiscale" />
+	<columnFieldProperty name="ds_tipo_rapporto" />
+	<columnFieldProperty name="dt_ini_validita" />
+	<columnFieldProperty name="dt_fin_validita" />
+</columnSet>	
+
+	<form
+		name="searchtool_small" >
+		<formFieldProperty
+			name="cd_terzo" />
+	</form>
 </bulkInfo>

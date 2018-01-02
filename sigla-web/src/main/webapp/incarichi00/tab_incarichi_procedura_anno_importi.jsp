@@ -11,29 +11,22 @@ boolean existsVariazioni=false;
 if (model!=null)
 	existsVariazioni = model.hasVariazioni(); 
 %>
-<table class="Panel">
-	<tr>
-		<td><% bp.getRipartizionePerAnno().writeFormLabel(out,"esercizio_limite"); %></td>
-		<td colspan="3"><% bp.getRipartizionePerAnno().writeFormInput(out,"esercizio_limite"); %></td>
-	</tr>
-	<tr>
-  	    <td><% bp.getRipartizionePerAnno().writeFormLabel(out,"importo_iniziale"); %></td>
-		<td colspan="3"><% bp.getRipartizionePerAnno().writeFormInput(out,"importo_iniziale"); %></td>
-	</tr>
+<div class="Group card p-2 mb-2 sigla-mb-2">
+<table class="Panel w-100 d-flex">
+	<tr><% bp.getRipartizionePerAnno().writeFormField(out,"esercizio_limite"); %></tr>
+	<tr><% bp.getRipartizionePerAnno().writeFormField(out,"importo_iniziale"); %></tr>
 	<% if (model.getFaseProcesso().compareTo(Incarichi_proceduraBulk.FASE_INSERIMENTO_CONTRATTO)!=-1) { %> 
-		<tr>
-	  	    <td><% bp.getRipartizionePerAnno().writeFormLabel(out,"importo_complessivo"); %></td>
-			<td colspan="3"><% bp.getRipartizionePerAnno().writeFormInput(out,"importo_complessivo"); %></td>
-		</tr>	
+		<tr><% bp.getRipartizionePerAnno().writeFormField(out,"importo_complessivo"); %></tr>	
 	<% } %>
 </table>
 &nbsp;
 &nbsp;
 &nbsp;
 &nbsp;
-<fieldset class="fieldset">
-<legend class="GroupLabel">Riepilogo Importi</legend>
-<table>
+<div class="card">
+<fieldset class="fieldset mb-2">
+<legend class="GroupLabel card-header text-primary">Riepilogo Importi</legend>
+<table class="m-2 p-2">
 <% if (existsVariazioni) {%>
   <tr>
   	<td colspan=3>&nbsp;</td>
@@ -84,3 +77,4 @@ if (model!=null)
   </tr>                     	
 </table>
 </fieldset>
+</div>

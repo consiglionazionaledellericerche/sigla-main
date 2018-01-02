@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Definisce i contatori per la numerazione dei magazzini."
+	longDescription="Definisce i contatori per la numerazione dei magazzini.">
+	<fieldProperty
+		name="findMagazzino"
+		property="magazzino"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Magazzino" />
+	<fieldProperty
+		name="cdCds"
+		property="magazzino.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Cds" />
+	<fieldProperty
+		name="cdMagazzino"
+		property="magazzino.cdMagazzino"
+		inputType="TEXT"
+		inputSize="5"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice Magazzino" />
+	<fieldProperty
+		name="dsMagazzino"
+		property="magazzino.dsMagazzino"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="100"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Descrizione Magazzino" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="cdNumeratoreMag"
+		property="cdNumeratoreMag"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice Numeratore" />
+	<fieldProperty
+		name="corrente"
+		property="corrente"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="Progressivo corrente" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Cancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdNumeratoreMag" />
+	</form>
+	<form
+		name="searchtool_mag">
+		<formFieldProperty
+			name="cdMagazzino" />
+		<formFieldProperty
+			name="dsMagazzino" />
+	</form>
+	<formFieldProperty
+		name="findMagazzino" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cdNumeratoreMag" />
+	<formFieldProperty
+		name="corrente" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdMagazzino" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdNumeratoreMag" />
+	<findFieldProperty
+		name="corrente" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdMagazzino" />
+	<columnFieldProperty
+		name="dsMagazzino" />
+</bulkInfo>

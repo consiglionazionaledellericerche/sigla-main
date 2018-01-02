@@ -61,7 +61,7 @@ public class V_struttura_organizzativaHome extends BulkHome {
 	 *
 	 * @return result una Collection di Cdr <CdrBulk> appartenenti alla UO richiedente nell'esercizio indicato.
 	 */
-	public Collection findCDRCollegatiUO(Unita_organizzativaBulk uo, Integer esercizio) throws PersistencyException, IntrospectionException
+	public Collection findCDRCollegatiUO(Unita_organizzativaBulk uo, Integer esercizio) throws PersistencyException
 	{
 		PersistentHome homeStrutt = getHomeCache().getHome( V_struttura_organizzativaBulk.class );
 		SQLBuilder sqlStrutt = homeStrutt.createSQLBuilder();
@@ -85,7 +85,7 @@ public class V_struttura_organizzativaHome extends BulkHome {
 	 *
 	 * @return result il Cdr <CdrBulk> di riferimento della CDS cui appartiene la UO richiedente nell'esercizio indicato.
 	 */
-	public CdrBulk findCDRBaseCDS(Unita_organizzativaBulk uo, Integer esercizio) throws PersistencyException, IntrospectionException
+	public CdrBulk findCDRBaseCDS(Unita_organizzativaBulk uo, Integer esercizio) throws PersistencyException
 	{
 		PersistentHome homeStrutt = getHomeCache().getHome( V_struttura_organizzativaBulk.class );
 		SQLBuilder sqlStrutt = homeStrutt.createSQLBuilder();

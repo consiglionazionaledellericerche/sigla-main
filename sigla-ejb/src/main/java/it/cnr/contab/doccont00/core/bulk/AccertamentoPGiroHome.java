@@ -59,7 +59,7 @@ public CdsBulk findCdsSAC () throws it.cnr.jada.persistency.PersistencyException
 public SQLBuilder selectCapitoloByClause(AccertamentoBulk acc, V_voce_f_partita_giroHome home, V_voce_f_partita_giroBulk voce_f, CompoundFindClause clause) throws IntrospectionException, PersistencyException, java.sql.SQLException 
 {
 	AccertamentoPGiroBulk bulk = (AccertamentoPGiroBulk) acc;
-	SQLBuilder sql = getHomeCache().getHome( Voce_fBulk.class, "V_VOCE_F_PARTITA_GIRO" ).createSQLBuilder();
+	SQLBuilder sql = getHomeCache().getHome( V_voce_f_partita_giroBulk.class ).createSQLBuilder();
 	boolean isNuovoPdg = ((Parametri_cnrHome)getHomeCache().getHome( Parametri_cnrBulk.class )).isNuovoPdg(bulk.getEsercizio());
 
 	if (acc instanceof AccertamentoPGiroResiduoBulk)

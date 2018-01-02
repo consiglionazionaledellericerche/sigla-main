@@ -12,7 +12,7 @@
 	Documento_genericoBulk documento = (Documento_genericoBulk)bp.getModel();
 %>
 
-<div class="Group">
+<div class="Group card">
 	<table class="Panel">
 	  <% if (documento.isRiportataInScrivania() && !bp.isSearching()) { %>	
 	      <tr>
@@ -23,7 +23,10 @@
 	  <% } %>
 	  	<tr>
 		 	<% bp.getController().writeFormField(out,"pg_documento_generico"); %>
-		 	<% bp.getController().writeFormField(out,"esercizio"); %>
+			<td colspan="2">
+		 		<% bp.getController().writeFormLabel(out,"esercizio"); %>
+		 		<% bp.getController().writeFormInput(out,"esercizio"); %>
+			</td>		 		
 		</tr>
 	    <% if (!bp.isSearching()) { %>	 
 			<tr>
@@ -36,7 +39,10 @@
 			</tr>
 			<tr>
 			 	<% bp.getController().writeFormField(out,"stato_cofi");%>
-				<% bp.getController().writeFormField(out,"ti_associato_manrev");%>
+				<td colspan="2">
+					<% bp.getController().writeFormLabel(out,"ti_associato_manrev");%>
+					<% bp.getController().writeFormInput(out,"ti_associato_manrev");%>
+				</td>
 			</tr>
 			<tr>
 				<td>
@@ -81,7 +87,10 @@
 					<% boolean isInSpesaMode = (bp instanceof IDocumentoAmministrativoSpesaBP && ((IDocumentoAmministrativoSpesaBP)bp).isSpesaBP()) ? true : false;
 						bp.getController().writeFormInput(out,null,"stato_cofiForSearch",isInSpesaMode,null,""); %>
 				</td>
-				<% bp.getController().writeFormField(out,"ti_associato_manrevForSearch");%>
+				<td colspan="2">
+					<% bp.getController().writeFormLabel(out,"ti_associato_manrevForSearch");%>
+					<% bp.getController().writeFormInput(out,"ti_associato_manrevForSearch");%>
+				</td>					
 			</tr>
 			<tr>
 				<td>
@@ -111,7 +120,8 @@
 		<% } %>
 	</table>
 </div>
-<div class="Group">
+
+<div class="Group card">
 	<table>
 		<% if (!bp.isSearching()) { %>
 			<tr>
@@ -142,15 +152,16 @@
 			<% bp.getController().writeFormField(out,"dt_da_competenza_coge");%>			  
 			<% bp.getController().writeFormField(out,"dt_a_competenza_coge");%>			  
 		</tr>
-	</table>
-	<table>
 		<tr>
-			<% bp.getController().writeFormField(out,"ds_documento_generico");%>
+			<td><% bp.getController().writeFormLabel(out,"ds_documento_generico");%></td>
+			<td colspan="3">
+				<% bp.getController().writeFormInput(out,"ds_documento_generico");%>
+			</td>
 		</tr>  
 	</table>
 </div>
  
- <div class="Group">
+ <div class="Group card">
     <table>
        <tr>
 			<td>
