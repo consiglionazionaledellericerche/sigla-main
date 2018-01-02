@@ -11,15 +11,23 @@
 <% CRUDCompensoBP bp = (CRUDCompensoBP)BusinessProcess.getBusinessProcess(request);
 	CompensoBulk compenso = (CompensoBulk)bp.getModel(); %>
 
-<fieldset>
-<legend ACCESSKEY=G TABINDEX=1 style="font-weight:bold; font-family:sans-serif; font-size:12px; color:blue">Documento Principale</legend>
-<div class="Panel" style="width:100%">
+<fieldset class="fieldset card">
+<legend ACCESSKEY=G TABINDEX=1 class="GroupLabel card-header text-primary">Documento Principale</legend>
+<div class="Panel">
 <table>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"pgDocContPrincipale"); %></td>
 	<td><% bp.getController().writeFormInput(out,"pgDocContPrincipale"); %></td>
 	<td><% bp.getController().writeFormInput(out,"dsDocContPrincipale"); %></td>
-	<td><% it.cnr.jada.util.jsp.Button.write(out,"img/uncheckall16.gif","img/uncheckall16.gif",null,"javascript:submitForm('doVisualizzaDocContPrincipale')",null,"Visualizza documento contabile",bp.isBottoneVisualizzaDocContPrincipaleEnabled(), bp.getParentRoot().isBootstrap()); %></td>
+	<td><% it.cnr.jada.util.jsp.Button.write(out,
+				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-list text-primary":"img/uncheckall16.gif",
+				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-list text-primary":"img/uncheckall16.gif",
+				null,
+				"javascript:submitForm('doVisualizzaDocContPrincipale')",
+				null,
+				"Visualizza documento contabile",
+				bp.isBottoneVisualizzaDocContPrincipaleEnabled(), 
+				bp.getParentRoot().isBootstrap()); %></td>
   </tr>
 </table>
 </div>
@@ -36,11 +44,13 @@
 		"150px",
 		true); %>
 </div>
+
 <br>
+
 <% if (compenso.isDaMissione()) { %>
-<fieldset>
-<legend ACCESSKEY=G TABINDEX=1 style="font-weight:bold; font-family:sans-serif; font-size:12px; color:blue">Missione associata</legend>
-<div class="Panel" style="width:100%">
+<fieldset class="fieldset card">
+<legend ACCESSKEY=G TABINDEX=1 class="GroupLabel card-header text-primary">Missione associata</legend>
+<div class="Panel">
 <table>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"pg_missione"); %></td>
@@ -52,9 +62,9 @@
 <% } %>
 
 <% if (compenso.isDaConguaglio()) { %>
-<fieldset>
-<legend ACCESSKEY=G TABINDEX=1 style="font-weight:bold; font-family:sans-serif; font-size:12px; color:blue">Conguaglio associato</legend>
-<div class="Panel" style="width:100%">
+<fieldset class="fieldset card">
+<legend ACCESSKEY=G TABINDEX=1 class="GroupLabel card-header text-primary">Conguaglio associato</legend>
+<div class="Panel">
 <table>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"pg_conguaglio"); %></td>
@@ -66,8 +76,8 @@
 <% } %>
 
 <% if (compenso.isDaMinicarriera()) { %>
-<fieldset>
-<legend ACCESSKEY=G TABINDEX=1 style="font-weight:bold; font-family:sans-serif; font-size:12px; color:blue">Minicarriera associata</legend>
+<fieldset class="fieldset card">
+<legend ACCESSKEY=G TABINDEX=1 class="GroupLabel card-header text-primary">Minicarriera associata</legend>
 <div class="Panel" style="width:100%">
 <table>
   <tr>

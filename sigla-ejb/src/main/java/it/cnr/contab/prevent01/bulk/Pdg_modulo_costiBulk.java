@@ -171,6 +171,10 @@ public class Pdg_modulo_costiBulk extends Pdg_modulo_costiBase {
 	
 	public int addToDettagliSpese(Pdg_modulo_speseBulk dett) {
 		dett.setPdg_modulo_costi( this );
+		if (this.getPdg_modulo()!=null &&
+			this.getPdg_modulo().getProgetto()!=null &&
+			this.getPdg_modulo().getProgetto().getPdgMissione()!=null)
+			dett.setPdgMissione(this.getPdg_modulo().getProgetto().getPdgMissione());
 		dettagliSpese.add(dett);
 		return dettagliSpese.size()-1;
 	}

@@ -29,7 +29,7 @@ function selezionaRiga(riga) {
 <%
   SelezionatoreAlberoBP bp = (SelezionatoreAlberoBP)BusinessProcess.getBusinessProcess(request);
 %>
-<FORM name=mainForm action="Seleziona.do" method=post>
+<FORM name=mainForm action="Seleziona.do" action-ng="Seleziona.do" method=post>
 <input type=hidden name="comando">
 <input type=hidden name="riga">
 <%

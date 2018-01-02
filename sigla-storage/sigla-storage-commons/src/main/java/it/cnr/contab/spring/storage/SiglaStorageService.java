@@ -155,18 +155,18 @@ public interface SiglaStorageService {
     List<StorageObject> getChildren(String key);
 
     /**
+     * retrieve all children
+     * @param key
+     * @return
+     */
+    List<StorageObject> getChildren(String key, int depth);
+
+    /**
      * search documents or folders
      * @param query
      * @return
      */
     List<StorageObject> search(String query);
-
-    /**
-     * ZIP content
-     * @param keys
-     * @return
-     */
-    InputStream zipContent(List<String> keys, String name);
 
     /**
      * Sign documents

@@ -1,7 +1,9 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
 import java.util.Dictionary;
+import java.util.List;
 
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 
@@ -30,10 +32,12 @@ public class Filtro_ricerca_obbligazioniVBulk
 	private java.lang.String cd_unita_organizzativa = null;
 	private java.lang.String cd_uo_origine = null;
 	private Elemento_voceBulk elemento_voce = null;
+	private ContrattoBulk contratto = null;
 	private java.lang.String ds_obbligazione;
 	private java.lang.String ds_scadenza;
 	private boolean hasDocumentoCompetenzaCOGEInAnnoPrecedente = false;
 	private boolean hasDocumentoCompetenzaCOGESoloInAnnoCorrente = false;
+	private List<Elemento_voceBulk> listaVociSelezionabili = null;
 	private boolean competenzaCOGESuEnte = false;
 /**
  * Filtro_ricerca_obbligazioniVBulk constructor comment.
@@ -444,6 +448,18 @@ public java.lang.String getTipo_obbligazione() {
  */
 public void setTipo_obbligazione(java.lang.String string) {
 	tipo_obbligazione = string;
+}
+public List<Elemento_voceBulk> getListaVociSelezionabili() {
+	return listaVociSelezionabili;
+}
+public void setListaVociSelezionabili(List<Elemento_voceBulk> listaVociSelezionabili) {
+	this.listaVociSelezionabili = listaVociSelezionabili;
+}
+public ContrattoBulk getContratto() {
+	return contratto;
+}
+public void setContratto(ContrattoBulk contratto) {
+	this.contratto = contratto;
 }
 
 }

@@ -7,6 +7,7 @@ import java.util.Collection;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk;
@@ -14,11 +15,15 @@ import it.cnr.contab.doccont00.bp.CRUDAccertamentoBP;
 import it.cnr.contab.doccont00.bp.CRUDAccertamentoModificaBP;
 import it.cnr.contab.doccont00.bp.CRUDAccertamentoResiduoAmministraBP;
 import it.cnr.contab.doccont00.bp.CRUDAccertamentoResiduoBP;
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneResBP;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
+import it.cnr.contab.doccont00.bp.SelezionatoreAssestatoDocContBP;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
@@ -26,6 +31,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.BulkCollections;
+import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
@@ -115,6 +121,11 @@ public Forward doBlankSearchFind_capitolo(ActionContext context,AccertamentoBulk
 	} 
 	catch(Throwable e) {return handleException(context,e);}
 }
+public Forward doBlankSearchFind_elemento_voce(ActionContext context,AccertamentoBulk accertamento) 
+{
+	return doBlankSearchFind_capitolo(context, accertamento);
+}
+
 public Forward doBlankSearchFind_debitore(ActionContext context,AccertamentoBulk accertamento) 
 {
 	try 
@@ -161,7 +172,7 @@ public Forward doBringBackCRUDCrea_debitore(ActionContext context, AccertamentoB
 	 *
 	 * @return <code>Forward</code>
  */
-public Forward doBringBackCRUDCrea_contratto(ActionContext context, AccertamentoBulk accertamento, ContrattoBulk contratto) 
+public Forward doBringBackCRUDFind_contratto(ActionContext context, AccertamentoBulk accertamento, ContrattoBulk contratto)
 {
 	try 
 	{
@@ -276,6 +287,11 @@ public Forward doBringBackSearchFind_capitolo(ActionContext context, Accertament
 	} 
 	catch(Throwable e) {return handleException(context,e);}
 }
+public Forward doBringBackSearchFind_elemento_voce(ActionContext context, AccertamentoBulk accertamento, it.cnr.contab.config00.pdcfin.bulk.V_voce_f_partita_giroBulk capitolo) 
+{
+	return doBringBackSearchFind_capitolo(context, accertamento, capitolo);
+}
+
 /**
  * <!-- @TODO: da completare -->
  * 
@@ -1213,6 +1229,7 @@ public Forward doBlankSearchFindAssestato(ActionContext context, Pdg_vincoloBulk
 		return handleException(context, ex);
 	}
 }
+
 public Forward doOnChangeStato(ActionContext context) {
 	try {
 		CRUDAccertamentoBP bp = (CRUDAccertamentoBP) context.getBusinessProcess();

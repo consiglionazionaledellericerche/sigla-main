@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Anagrafica delle Tipologie dei Movimenti."
+	longDescription="Anagrafica delle Tipologie dei Movimenti.">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Cds" />
+	<fieldProperty
+		name="cdTipoMovimento"
+		property="cdTipoMovimento"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="dsTipoMovimento"
+		property="dsTipoMovimento"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="tipo"
+		property="tipo"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Tipo" />
+	<fieldProperty
+		name="segno"
+		property="segno"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="Segno" />
+	<fieldProperty
+		name="cdCdsStorno"
+		property="cdCdsStorno"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds Storno" />
+	<fieldProperty
+		name="cdTipoMovimentoStorno"
+		property="cdTipoMovimentoStorno"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Codice Movimento di Storno" />
+	<fieldProperty
+		name="cdCdsAlt"
+		property="cdCdsAlt"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Cds Alternativo" />
+	<fieldProperty
+		name="cdTipoMovimentoAlt"
+		property="cdTipoMovimentoAlt"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		label="Codice Movimento Alternativo" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Cancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="cdTipoMovimento" />
+	</form>
+	<formFieldProperty
+		name="cdTipoMovimento" />
+	<formFieldProperty
+		name="dsTipoMovimento" />
+	<formFieldProperty
+		name="tipo" />
+	<formFieldProperty
+		name="segno" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdTipoMovimento" />
+	<findFieldProperty
+		name="dsTipoMovimento" />
+	<findFieldProperty
+		name="tipo" />
+	<findFieldProperty
+		name="segno" />
+	<findFieldProperty
+		name="cdCdsStorno" />
+	<findFieldProperty
+		name="cdTipoMovimentoStorno" />
+	<findFieldProperty
+		name="cdCdsAlt" />
+	<findFieldProperty
+		name="cdTipoMovimentoAlt" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdTipoMovimento" />
+	<columnFieldProperty
+		name="dsTipoMovimento" />
+	<columnFieldProperty
+		name="tipo" />
+	<columnFieldProperty
+		name="segno" />
+	<columnFieldProperty
+		name="cdCdsStorno" />
+	<columnFieldProperty
+		name="cdTipoMovimentoStorno" />
+	<columnFieldProperty
+		name="cdCdsAlt" />
+	<columnFieldProperty
+		name="cdTipoMovimentoAlt" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

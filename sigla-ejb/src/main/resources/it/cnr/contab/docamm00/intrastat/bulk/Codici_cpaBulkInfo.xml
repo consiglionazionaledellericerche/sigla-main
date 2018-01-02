@@ -121,5 +121,15 @@
 		name="cd_cpa" />
 	<columnFieldProperty
 		name="ds_cpa" />
-	
+		
+	<form name="searchtool">
+		<formFieldProperty
+			name="cd_cpa"
+			inputSize="10" 
+			inputCssClass="w-10 "/>
+		<formFieldProperty
+			name="ds_cpa"
+			inputType="ROTEXT" 
+			inputSize="30"/>
+	</form>
 </bulkInfo>

@@ -1,3 +1,4 @@
+# DOCKER-VERSION 17.10.0-ce
 FROM jboss/wildfly:10.0.0.Final
 WORKDIR /opt/jboss/wildfly
 
@@ -5,8 +6,9 @@ ENV SIGLA it/cnr/sigla-ear/4.0.1/sigla-ear-4.0.1-wildfly.ear
 
 COPY SIGLA/target/SIGLA.ear standalone/deployments/SIGLA.ear
 
-CMD ["./bin/standalone.sh", "-b", "0.0.0.0", "--debug", "8787", "-bmanagement", "0.0.0.0", "-Dspring.profiles.active=CMIS"]
+CMD ["./bin/standalone.sh", "-b", "0.0.0.0", "--debug", "8787", "-bmanagement", "0.0.0.0"]
 
+COPY src/main/docker/bin/standalone.conf  ./standalone-custom.conf
 COPY src/main/docker/standalone/configuration/  standalone/configuration/
 COPY src/main/docker/domain/configuration/  domain/configuration/
 COPY src/main/docker/modules/system/layers/base/com/informix/jdbc/ modules/system/layers/base/com/informix/jdbc/

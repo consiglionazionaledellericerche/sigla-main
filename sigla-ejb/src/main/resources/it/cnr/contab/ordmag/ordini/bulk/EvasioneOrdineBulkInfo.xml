@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Evasione ordine, con indicazione dei dati della bolla di consegna."
+	longDescription="Evasione ordine, con indicazione dei dati della bolla di consegna.">
+	<fieldProperty
+		name="findNumerazioneMag"
+		property="numerazioneMag"
+		inputType="searchtool"
+		formName="searchtool_mag"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Magazzino" />
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaAbilitata"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Operativa" />
+	<fieldProperty
+		name="cdUnitaOperativa"
+		property="unitaOperativaAbilitata.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Unità Operativa" />
+	<fieldProperty
+		name="cdCds"
+		property="numerazioneMag.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="cdMagazzino"
+		property="numerazioneMag.cdMagazzino"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdMagazzino" />
+	<fieldProperty
+		name="esercizio"
+		property="numerazioneMag.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="cdNumeratoreMag"
+		property="numerazioneMag.cdNumeratoreMag"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdNumeratoreMag" />
+	<fieldProperty
+		name="numero"
+		property="numero"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="numero" />
+	<fieldProperty
+		name="dataBolla"
+		property="dataBolla"
+		inputType="TEXT"
+		formatName="date_short"
+		nullable="false"
+		label="Data Bolla" />
+	<fieldProperty
+		name="numeroBolla"
+		property="numeroBolla"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		nullable="false"
+		label="Numero Bolla" />
+	<fieldProperty
+		name="dataConsegna"
+		property="dataConsegna"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		nullable="false"
+		label="Data Consegna" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		nullable="false"
+		label="stato" />
+	<fieldProperty
+		name="find_cd_terzo"
+		property="find_cd_terzo"
+		inputSize="5"
+		inputType="TEXT"
+		label="Codice Fornitore" />
+	<fieldProperty
+		name="find_ragione_sociale"
+		property="find_ragione_sociale"
+		inputType="TEXT"
+		inputSize="50"		
+		formatName="it.cnr.jada.util.UppercaseStringFormat"				
+		label="Ragione sociale" />
+	<fieldProperty
+		name="find_cd_precedente"
+		property="find_cd_precedente"
+		inputType="TEXT"
+		maxLength="20"
+		label="Codice precedente" />
+	<fieldProperty
+		name="find_data_ordine"
+		property="find_data_ordine"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data" />
+	<fieldProperty
+		name="find_cd_numeratore_ordine"
+		property="find_cd_numeratore_ordine"
+		inputType="TEXT"
+		maxLength="3"
+		label="Numeratore" />
+	<fieldProperty
+		name="find_cd_uop_ordine"
+		property="find_cd_uop_ordine"
+		inputType="TEXT"
+		maxLength="30"
+		label="Unità Operativa Ordine" />
+	<fieldProperty
+		name="find_numero_ordine"
+		property="find_numero_ordine"
+		inputSize="6"
+		maxLength="6"
+		inputType="TEXT"
+		label="Numero" />
+	<fieldProperty
+		name="find_riga_ordine"
+		property="find_riga_ordine"
+		inputSize="4"
+		maxLength="4"
+		inputType="TEXT"
+		label="Riga" />
+	<fieldProperty
+		name="find_consegna_ordine"
+		property="find_consegna_ordine"
+		inputSize="4"
+		maxLength="4"
+		inputType="TEXT"
+		label="Consegna" />
+	<fieldProperty
+		name="find_esercizio_ordine"
+		property="find_esercizio_ordine"
+		inputSize="4"
+		maxLength="4"
+		inputType="TEXT"
+		label="Esercizio Ordine" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="cdMagazzino" />
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="cdNumeratoreMag" />
+		<formFieldProperty
+			name="numero" />
+	</form>
+	<formFieldProperty
+		name="findUnitaOperativaOrd" />
+	<formFieldProperty
+		name="findNumerazioneMag" />
+	<formFieldProperty
+		name="numero" />
+	<formFieldProperty
+		name="dataBolla" />
+	<formFieldProperty
+		name="numeroBolla" />
+	<formFieldProperty
+		name="dataConsegna" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="find_cd_terzo" />
+	<formFieldProperty
+		name="find_ragione_sociale" />
+	<formFieldProperty
+		name="find_cd_precedente" />
+	<formFieldProperty
+		name="find_esercizio_ordine" />
+	<formFieldProperty
+		name="find_data_ordine" />
+	<formFieldProperty
+		name="find_cd_numeratore_ordine" />
+	<formFieldProperty
+		name="find_numero_ordine" />
+	<formFieldProperty
+		name="find_riga_ordine" />
+	<formFieldProperty
+		name="find_consegna_ordine" />
+	<formFieldProperty
+		name="find_cd_uop_ordine" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdMagazzino" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdNumeratoreMag" />
+	<findFieldProperty
+		name="numero" />
+	<findFieldProperty
+		name="dataBolla" />
+	<findFieldProperty
+		name="numeroBolla" />
+	<findFieldProperty
+		name="dataConsegna" />
+	<findFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdMagazzino" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdNumeratoreMag" />
+	<columnFieldProperty
+		name="numero" />
+	<columnFieldProperty
+		name="dataBolla" />
+	<columnFieldProperty
+		name="numeroBolla" />
+	<columnFieldProperty
+		name="dataConsegna" />
+	<columnFieldProperty
+		name="stato" />
+</bulkInfo>

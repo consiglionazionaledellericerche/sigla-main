@@ -28,22 +28,6 @@
 		nullable="false"
 		label="Identificativo Procedura" />
 	<fieldProperty
-		name="cd_cds"
-		property="cds.cd_unita_organizzativa"
-		inputType="TEXT"
-		inputSize="6"
-		maxLength="30"
-		enabledOnSearch="true"
-		label="Istituto" />
-	<fieldProperty
-		name="ds_cds"
-		property="cds.ds_unita_organizzativa"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="300"
-		enabledOnSearch="true"
-		label="Istituto" />
-	<fieldProperty
 		name="cds"
 		property="cds"
 		readonlyProperty="ROCds"
@@ -53,19 +37,20 @@
 		nullable="false"
 		label="Istituto" />
 	<fieldProperty
+		name="cd_cds"
+		property="cds.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="30"
+		enabledOnSearch="true"
+		label="Codice Istituto" />
+	<fieldProperty
 		name="cd_unita_organizzativa"
 		property="unita_organizzativa.cd_unita_organizzativa"
 		inputType="TEXT"
 		inputSize="6"
 		maxLength="30"
-		label="Unità organizzativa" />
-	<fieldProperty
-		name="ds_unita_organizzativa"
-		property="unita_organizzativa.ds_unita_organizzativa"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="300"
-		label="Unità organizzativa" />
+		label="Codice Unità organizzativa" />
 	<fieldProperty
 		name="indirizzo_unita_organizzativa"
 		property="indirizzo_unita_organizzativa"
@@ -183,48 +168,47 @@
 		property="terzo_resp"
 		readonlyProperty="ROPrimaFaseProcedura"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
 		label="Responsabile del procedimento" />
 	<fieldProperty
 		name="cd_terzo_resp"
 		property="terzo_resp.cd_terzo"
-		readonlyProperty="ROTerzoResp"
 		inputType="TEXT"
-		inputSize="20"
-		maxLength="8"
 		enabledOnSearch="true"
-		label="Responsabile del procedimento" />
+		enabledOnFreeSearch="true"
+		label="Codice Responsabile del procedimento" />
 	<fieldProperty
 		name="ds_terzo_resp"
-		property="ds_terzo_resp"
-		inputType="ROTEXT"
-		inputSize="30"
+		property="terzo_resp.denominazione_sede"
+		inputType="TEXT"
 		enabledOnSearch="true"
-		label="Responsabile del procedimento" />
+		enabledOnFreeSearch="true"
+		label="Nominativo Responsabile del procedimento" />
 	<fieldProperty
 		name="firmatario"
 		property="firmatario"
 		readonlyProperty="ROPrimaFaseProcedura"
 		inputType="SEARCHTOOL"
-		enabledOnSearch="true"
-		label="Dirigente/Direttore" />
-	<fieldProperty
-		name="cd_firmatario"
-		property="firmatario.cd_terzo"
-		readonlyProperty="ROFirmatario"
-		inputType="TEXT"
-		inputSize="20"
-		maxLength="8"
+		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
 		label="Dirigente/Direttore" />
 	<fieldProperty
+		name="cd_firmatario"
+		property="firmatario.cd_terzo"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice Dirigente/Direttore" />
+	<fieldProperty
 		name="ds_firmatario"
-		property="ds_firmatario"
-		inputType="ROTEXT"
-		inputSize="30"
-		label="Dirigente/Direttore" />
+		property="firmatario.denominazione_sede"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Nominativo Dirigente/Direttore" />
 	<fieldProperty
 		name="procedura_amministrativa"
 		property="procedura_amministrativa"
@@ -313,6 +297,7 @@
 		cols="80"
 		rows="3"
 		enabledOnSearch="true"
+		inputCssClass="w-100 "
 		label="Estremi della decisione a contrattare" />
 	<fieldProperty
 		name="cd_protocollo"
@@ -359,6 +344,7 @@
 		cols="90"
 		rows="6"
 		enabledOnSearch="true"
+		inputCssClass="w-100 "
 		nullable="false"
 		label="Oggetto dell'attività" />
 	<fieldProperty
@@ -562,47 +548,18 @@
 		name="terzoSearch"
 		property="v_terzoForSearch"
 		inputType="SEARCHTOOL"
-		enabledOnSearch="true"
-		label="Contraente" />
-	<fieldProperty
-		name="cd_terzoSearch"
-		property="v_terzoForSearch.cd_terzo"
-		inputType="TEXT"
-		inputSize="20"
-		maxLength="8"
-		enabledOnSearch="true"
-		label="Contraente" />
-	<fieldProperty
-		name="ds_terzo"
-		property="ds_terzo"
-		inputType="ROTEXT"
-		inputSize="30"
+		formName="searchtool_small"
+		inputCssClass=""		
 		enabledOnSearch="true"
 		label="Contraente" />
 	<fieldProperty
 		name="incaricoRepertorioSearch"
 		property="incaricoRepertorioForSearch"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		enabledOnSearch="true"
+		inputCssClass=""
 		label="Incarico" />
-	<fieldProperty
-		name="esercizio_repertorioSearch"
-		property="incaricoRepertorioForSearch.esercizio"
-		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
-		enabledOnSearch="true"
-		nullable="true"
-		label="Esercizio" />
-	<fieldProperty
-		name="pg_repertorioSearch"
-		property="incaricoRepertorioForSearch.pg_repertorio"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnSearch="true"
-		nullable="true"
-		label="Identificativo Incarico" />
 	<fieldProperty
 		name="ragione_sociale"
 		property="v_terzoForSearch.ragione_sociale"
@@ -790,8 +747,6 @@
 		name="cds" />
 	<formFieldProperty
 		name="cd_unita_organizzativa" />
-	<formFieldProperty
-		name="ds_unita_organizzativa" />
 	<formFieldProperty
 		name="indirizzo_unita_organizzativa" />
 	<formFieldProperty
@@ -991,10 +946,6 @@
 <!-- DATI PER RICERCA INCARICO -->
 	<formFieldProperty
 		name="incaricoRepertorioSearch" />
-	<formFieldProperty
-		name="esercizio_repertorioSearch"  />
-	<formFieldProperty
-		name="pg_repertorioSearch" />
 <!-- FINE DATI PER RICERCA INCARICO -->
 
 	<columnFieldProperty
@@ -1066,9 +1017,13 @@
 	<findFieldProperty
 		name="fl_meramente_occasionale" />
 	<findFieldProperty
+		name="cd_firmatario" />
+	<findFieldProperty
+		name="ds_firmatario" />
+	<findFieldProperty
 		name="cd_terzo_resp" />
 	<findFieldProperty
-		name="cd_firmatario" />
+		name="ds_terzo_resp" />
 	<findFieldProperty
 		name="cd_proc_amm" />
 	<findFieldProperty
@@ -1095,8 +1050,10 @@
 	<form
 		name="searchtool" >
 		<formFieldProperty
-			name="esercizio" />
+			name="esercizio" 
+			inputCssClass="w-20 "/>
 		<formFieldProperty
-			name="pg_procedura" />
+			name="pg_procedura" 
+			inputCssClass="w-25 "/>
 	</form>
 </bulkInfo>

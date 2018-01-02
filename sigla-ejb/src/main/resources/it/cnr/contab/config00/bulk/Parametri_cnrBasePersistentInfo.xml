@@ -257,7 +257,6 @@
 			sqlTypeName="TIMESTAMP"
 			columnSize="7"
 			nullable="true" />
-
 <columnMapping
 			columnName="FL_TESORERIA_UNICA"
 			propertyName="fl_tesoreria_unica"
@@ -284,6 +283,27 @@
 			sqlTypeName="DECIMAL"
 			columnSize="1"
 			nullable="false" />
+		<columnMapping
+			columnName="FL_PDG_CODLAST"
+			propertyName="fl_pdg_codlast"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
+		<columnMapping
+			columnName="FL_PDG_CONTRATTAZIONE"
+			propertyName="fl_pdg_contrattazione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
+		<columnMapping
+			columnName="FL_PDG_QUADRA_FONTI_ESTERNE"
+			propertyName="fl_pdg_quadra_fonti_esterne"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
 	<columnMapping
 			columnName="FL_NUOVA_GESTIONE_PG"
 			propertyName="fl_nuova_gestione_pg"
@@ -373,9 +393,15 @@
 	<persistentProperty
 		name="data_attivazione_new_voce" />
 	<persistentProperty
+		name="fl_pubblica_contratto" />
+	<persistentProperty
 		name="fl_tesoreria_unica" />
 	<persistentProperty
-		name="fl_pubblica_contratto" />		
+		name="fl_pdg_codlast"/>
+	<persistentProperty
+		name="fl_pdg_contrattazione"/>
+	<persistentProperty
+		name="fl_pdg_quadra_fonti_esterne"/>
 	<persistentProperty
 		name="livello_eco" />
 	<persistentProperty

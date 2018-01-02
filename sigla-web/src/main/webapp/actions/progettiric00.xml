@@ -12,10 +12,22 @@
   </action>
 
   <businessProcess
+      name="TestataProgettiRicercaOldBP" className="it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP">
+    <forward name="default" path="/progettiric00/progetto_ricerca_commesse.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.core.bulk.ProgettoBulk"/>
+    <init-param name="componentSessionName" value="CNRPROGETTIRIC00_EJB_ProgettoRicercaComponentSession"/>
+    <init-param name="freeSearchSet" value="filtro_ricerca_commesse"/>
+    <init-param name="searchResultColumnSet" value="filtro_ricerca_commesse"/>
+	<init-param name="defaultAction" value="CRUDProgettiRicercaAction"/>
+  </businessProcess>
+
+  <businessProcess
       name="TestataProgettiRicercaBP" className="it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP">
     <forward name="default" path="/progettiric00/progetto_ricerca_commesse.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.core.bulk.ProgettoBulk"/>
     <init-param name="componentSessionName" value="CNRPROGETTIRIC00_EJB_ProgettoRicercaComponentSession"/>
+    <init-param name="freeSearchSet" value="filtro_ricerca_prog2"/>
+    <init-param name="searchResultColumnSet" value="filtro_ricerca_prog2"/>
 	<init-param name="defaultAction" value="CRUDProgettiRicercaAction"/>
   </businessProcess>
   
@@ -51,6 +63,14 @@
       name="TipoProgettiRicercaBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
     <forward name="default" path="/progettiric00/tipo_progetto_ricerca.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.tabrif.bulk.Tipo_progettoBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	<init-param name="defaultAction" value="CRUDAction"/>
+  </businessProcess>
+
+  <businessProcess
+      name="VocePianoEconomicoPrgBP" className="it.cnr.contab.progettiric00.bp.VocePianoEconomicoPrgBP">
+    <forward name="default" path="/progettiric00/voce_piano_economico_prg.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
 	<init-param name="defaultAction" value="CRUDAction"/>
   </businessProcess>

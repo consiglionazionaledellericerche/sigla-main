@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Giacenze di Magazzino"
+	longDescription="Giacenze di Magazzino">
+	<fieldProperty
+		name="findNumerazioneMag"
+		property="numerazioneMag"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="NumerazioneMag" />
+	<fieldProperty
+		name="cdCds"
+		property="numerazioneMag.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdCds" />
+	<fieldProperty
+		name="cdMagazzino"
+		property="numerazioneMag.cdMagazzino"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdMagazzino" />
+	<fieldProperty
+		name="esercizio"
+		property="numerazioneMag.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="cdNumeratoreMag"
+		property="numerazioneMag.cdNumeratoreMag"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="cdNumeratoreMag" />
+	<fieldProperty
+		name="pgLotto"
+		property="pgLotto"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="pgLotto" />
+	<fieldProperty
+		name="cdBeneServizio"
+		property="cdBeneServizio"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdBeneServizio" />
+	<fieldProperty
+		name="findMagazzino"
+		property="magazzino"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Magazzino" />
+	<fieldProperty
+		name="cdCdsMag"
+		property="magazzino.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdCdsMag" />
+	<fieldProperty
+		name="cdMagazzinoMag"
+		property="magazzino.cdMagazzino"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdMagazzinoMag" />
+	<fieldProperty
+		name="dtScadenza"
+		property="dtScadenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtScadenza" />
+	<fieldProperty
+		name="giacenza"
+		property="giacenza"
+		inputType="TEXT"
+		inputSize="12"
+		maxLength="12"
+		enabledOnEdit="false"
+		label="giacenza" />
+	<fieldProperty
+		name="quantitaValore"
+		property="quantitaValore"
+		inputType="TEXT"
+		inputSize="12"
+		maxLength="12"
+		enabledOnEdit="false"
+		label="quantitaValore" />
+	<fieldProperty
+		name="lottoFornitore"
+		property="lottoFornitore"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="lottoFornitore" />
+	<fieldProperty
+		name="dtCarico"
+		property="dtCarico"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtCarico" />
+	<fieldProperty
+		name="valoreUnitario"
+		property="valoreUnitario"
+		inputType="TEXT"
+		inputSize="21"
+		maxLength="21"
+		enabledOnEdit="false"
+		label="valoreUnitario" />
+	<fieldProperty
+		name="costoUnitario"
+		property="costoUnitario"
+		inputType="TEXT"
+		inputSize="21"
+		maxLength="21"
+		enabledOnEdit="false"
+		label="costoUnitario" />
+	<fieldProperty
+		name="quantitaCarico"
+		property="quantitaCarico"
+		inputType="TEXT"
+		inputSize="12"
+		maxLength="12"
+		enabledOnEdit="false"
+		label="quantitaCarico" />
+	<fieldProperty
+		name="quantitaInizioAnno"
+		property="quantitaInizioAnno"
+		inputType="TEXT"
+		inputSize="17"
+		maxLength="17"
+		enabledOnEdit="false"
+		label="quantitaInizioAnno" />
+	<fieldProperty
+		name="findOrdineAcqConsegna"
+		property="ordineAcqConsegna"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="OrdineAcqConsegna" />
+	<fieldProperty
+		name="cdCdsOrdine"
+		property="ordineAcqConsegna.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdCdsOrdine" />
+	<fieldProperty
+		name="cdUnitaOperativa"
+		property="ordineAcqConsegna.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdUnitaOperativa" />
+	<fieldProperty
+		name="esercizioOrdine"
+		property="ordineAcqConsegna.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		label="esercizioOrdine" />
+	<fieldProperty
+		name="cdNumeratoreOrdine"
+		property="ordineAcqConsegna.cdNumeratore"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="cdNumeratoreOrdine" />
+	<fieldProperty
+		name="numeroOrdine"
+		property="ordineAcqConsegna.numero"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		label="numeroOrdine" />
+	<fieldProperty
+		name="rigaOrdine"
+		property="ordineAcqConsegna.riga"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		label="rigaOrdine" />
+	<fieldProperty
+		name="consegna"
+		property="ordineAcqConsegna.consegna"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		label="consegna" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="stato" />
+	<fieldProperty
+		name="cdTerzo"
+		property="cdTerzo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdTerzo" />
+	<fieldProperty
+		name="cdDivisa"
+		property="cdDivisa"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cdDivisa" />
+	<fieldProperty
+		name="cambio"
+		property="cambio"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="false"
+		nullable="false"
+		label="cambio" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtCancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdCds" />
+		<formFieldProperty
+			name="cdMagazzino" />
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="cdNumeratoreMag" />
+		<formFieldProperty
+			name="pgLotto" />
+	</form>
+	<formFieldProperty
+		name="findNumerazioneMag" />
+	<formFieldProperty
+		name="pgLotto" />
+	<formFieldProperty
+		name="findMagazzino" />
+	<formFieldProperty
+		name="dtScadenza" />
+	<formFieldProperty
+		name="giacenza" />
+	<formFieldProperty
+		name="quantitaValore" />
+	<formFieldProperty
+		name="lottoFornitore" />
+	<formFieldProperty
+		name="dtCarico" />
+	<formFieldProperty
+		name="valoreUnitario" />
+	<formFieldProperty
+		name="costoUnitario" />
+	<formFieldProperty
+		name="quantitaCarico" />
+	<formFieldProperty
+		name="quantitaInizioAnno" />
+	<formFieldProperty
+		name="findOrdineAcqConsegna" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="cambio" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdMagazzino" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdNumeratoreMag" />
+	<findFieldProperty
+		name="pgLotto" />
+	<findFieldProperty
+		name="cdBeneServizio" />
+	<findFieldProperty
+		name="cdCdsMag" />
+	<findFieldProperty
+		name="cdMagazzinoMag" />
+	<findFieldProperty
+		name="dtScadenza" />
+	<findFieldProperty
+		name="giacenza" />
+	<findFieldProperty
+		name="quantitaValore" />
+	<findFieldProperty
+		name="lottoFornitore" />
+	<findFieldProperty
+		name="dtCarico" />
+	<findFieldProperty
+		name="valoreUnitario" />
+	<findFieldProperty
+		name="costoUnitario" />
+	<findFieldProperty
+		name="quantitaCarico" />
+	<findFieldProperty
+		name="quantitaInizioAnno" />
+	<findFieldProperty
+		name="cdCdsOrdine" />
+	<findFieldProperty
+		name="cdUnitaOperativa" />
+	<findFieldProperty
+		name="esercizioOrdine" />
+	<findFieldProperty
+		name="cdNumeratoreOrdine" />
+	<findFieldProperty
+		name="numeroOrdine" />
+	<findFieldProperty
+		name="rigaOrdine" />
+	<findFieldProperty
+		name="consegna" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="cdTerzo" />
+	<findFieldProperty
+		name="cdDivisa" />
+	<findFieldProperty
+		name="cambio" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdMagazzino" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdNumeratoreMag" />
+	<columnFieldProperty
+		name="pgLotto" />
+	<columnFieldProperty
+		name="cdBeneServizio" />
+	<columnFieldProperty
+		name="cdCdsMag" />
+	<columnFieldProperty
+		name="cdMagazzinoMag" />
+	<columnFieldProperty
+		name="dtScadenza" />
+	<columnFieldProperty
+		name="giacenza" />
+	<columnFieldProperty
+		name="quantitaValore" />
+	<columnFieldProperty
+		name="lottoFornitore" />
+	<columnFieldProperty
+		name="dtCarico" />
+	<columnFieldProperty
+		name="valoreUnitario" />
+	<columnFieldProperty
+		name="costoUnitario" />
+	<columnFieldProperty
+		name="quantitaCarico" />
+	<columnFieldProperty
+		name="quantitaInizioAnno" />
+	<columnFieldProperty
+		name="cdCdsOrdine" />
+	<columnFieldProperty
+		name="cdUnitaOperativa" />
+	<columnFieldProperty
+		name="esercizioOrdine" />
+	<columnFieldProperty
+		name="cdNumeratoreOrdine" />
+	<columnFieldProperty
+		name="numeroOrdine" />
+	<columnFieldProperty
+		name="rigaOrdine" />
+	<columnFieldProperty
+		name="consegna" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="cdTerzo" />
+	<columnFieldProperty
+		name="cdDivisa" />
+	<columnFieldProperty
+		name="cambio" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

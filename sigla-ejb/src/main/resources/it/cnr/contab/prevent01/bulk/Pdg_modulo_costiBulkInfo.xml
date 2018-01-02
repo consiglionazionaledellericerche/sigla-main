@@ -103,6 +103,16 @@
 		inputSize="5"
 		maxLength="10"
 		label="Programma" />
+	<fieldProperty
+		name="cd_programma_liv2"
+		property="pdg_modulo.progetto.progettopadre.cd_programma"
+		descProperty="pdg_modulo.progetto.progettopadre.pdgProgramma.ds_programma"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		maxLength="25"
+		inputSize="10"
+		label="Programma" />
 				
 	<fieldProperty
 		name="ris_es_prec_tit_i"
@@ -474,6 +484,8 @@
 		name="cd_progetto_liv2" />
 	<formFieldProperty
 		name="cd_dipartimento_liv2" />
+	<formFieldProperty
+		name="cd_programma_liv2" />
 	<formFieldProperty
 		name="ris_es_prec_tit_i" 
 		command="doOnRis_es_prec_tit_iChange"/>

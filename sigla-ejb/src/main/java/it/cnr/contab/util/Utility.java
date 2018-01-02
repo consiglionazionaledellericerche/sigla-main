@@ -6,13 +6,24 @@
  */
 package it.cnr.contab.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.rmi.RemoteException;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 
+import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
+import it.cnr.contab.varstanz00.ejb.VariazioniStanziamentoResiduoComponentSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -20,6 +31,7 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import org.springframework.core.type.filter.AssignableTypeFilter;
 
 import it.cnr.contab.anagraf00.ejb.TerzoComponentSession;
+import it.cnr.contab.client.docamm.FatturaAttiva;
 import it.cnr.contab.config00.ejb.Classificazione_vociComponentSession;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cdsComponentSession;
@@ -40,8 +52,6 @@ import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
 import it.cnr.contab.prevent01.ejb.PdgContrSpeseComponentSession;
 import it.cnr.contab.progettiric00.ejb.geco.ProgettoGecoComponentSession;
-import it.cnr.contab.varstanz00.comp.VariazioniStanziamentoResiduoComponent;
-import it.cnr.contab.varstanz00.ejb.VariazioniStanziamentoResiduoComponentSession;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.ejb.AdminSession;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -55,10 +65,12 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 public final class Utility {
 	private transient static final Logger logger = LoggerFactory.getLogger(Utility.class);
 
+	public static final String MANIFEST_PATH = "/META-INF/MANIFEST.MF";
+	public static final String APPLICATION_TITLE = "SIGLA - Sistema Informativo per la Gestione delle Linee di Attività";
 	public static final java.math.BigDecimal ZERO = new java.math.BigDecimal(0);
 	public static String TIPO_GESTIONE_SPESA = "S";
 	public static String TIPO_GESTIONE_ENTRATA = "E";
-
+    public static final BigDecimal CENTO = new BigDecimal(100);
 	/**
 	 * Restituisce true se i due oggetti sono uguali o sono entrambi null
 	 * false altrimenti
@@ -86,11 +98,34 @@ public final class Utility {
 		return false;
 	}
 
+    public static BigDecimal nvl(BigDecimal imp, BigDecimal otherImp){
+        if (imp != null)
+            return imp;
+        return otherImp;
+    }
+
 	public static BigDecimal nvl(BigDecimal imp){
 		if (imp != null)
 			return imp;
 		return ZERO;  
 	}
+	
+	public static String getSiglaVersion(){
+		String version  = "01.001.000";
+		InputStream is = FatturaAttiva.class.getResourceAsStream(Utility.MANIFEST_PATH);
+		if (is != null) {
+			try {
+				Manifest manifest = new Manifest(is);
+				Attributes attributes = manifest.getMainAttributes();
+
+				version = attributes.getValue("Implementation-Version");
+			} catch (IOException e) {
+				logger.warn("IOException", e);
+			}
+		}
+		return version;
+	}
+
 	/**
 	 * Restituisce una Stringa ottenuta sostituendo
 	 * nella stringa sorgente alla stringa pattern la stringa replace,
@@ -133,7 +168,66 @@ public final class Utility {
 		}
 		builder.append(s);
 		return builder.toString();
-	}	
+	}
+	public static BigDecimal round2Decimali(BigDecimal importo) {
+		return round(importo,2);
+	}
+
+	public static BigDecimal round6Decimali(BigDecimal importo) {
+		return round(importo,6);
+	}
+
+	public static BigDecimal roundIntero(BigDecimal importo) {
+		return round(importo,0);
+	}
+
+	public static BigDecimal round(BigDecimal importo, int scale) {
+		importo = nvl(importo);
+		return importo.setScale(scale,RoundingMode.HALF_UP);
+	}
+
+	public static BigDecimal trunc(BigDecimal importo, int scale) {
+		importo = nvl(importo);
+		return importo.setScale(scale,RoundingMode.DOWN);
+	}
+
+	public static BigDecimal ceil(BigDecimal importo, int scale) {
+		importo = nvl(importo);
+		return importo.setScale(scale,RoundingMode.UP);
+	}
+
+
+	public static BigDecimal trunc2Decimali(BigDecimal importo) {
+		return trunc(nvl(importo),2);
+	}
+
+	public static BigDecimal truncIntero(BigDecimal importo) {
+		return trunc(nvl(importo),0);
+	}
+
+	/**
+	 * Metodo che effetua una divisione, il cui risultato viene fornito con 2
+	 * cifre decimali ed arrotondamento per difetto o per eccesso
+	 *
+	 * @param dividendo
+	 *            Dividendo
+	 * @param divisore
+	 *            Divisore
+	 * @return il risultato della divisione
+	 */
+
+	public static BigDecimal divide(BigDecimal dividendo, BigDecimal divisore) {
+		return dividendo.divide(divisore,2, RoundingMode.HALF_UP);
+	}
+
+	public static BigDecimal divide(BigDecimal dividendo, Integer divisore) {
+		return dividendo.divide(new BigDecimal(divisore),2,RoundingMode.HALF_UP);
+	}
+
+	public static BigDecimal divide(BigDecimal dividendo, BigDecimal divisore, Integer arrotondamento) {
+		return dividendo.divide(divisore,arrotondamento,RoundingMode.HALF_UP);
+	}
+
 
 	public static String NumberToText(int n) {
 		// metodo wrapper
@@ -232,7 +326,13 @@ public final class Utility {
 			return NumberToTextRicorsiva(n / 1000000000) + "miliardi" + 
 					NumberToTextRicorsiva(n % 1000000000);
 		}
-	}	
+	}
+
+	public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
+		Map<Object, Boolean> map = new ConcurrentHashMap<>();
+		return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+	}
+
 	public static Parametri_cnrComponentSession createParametriCnrComponentSession()throws EJBException, RemoteException {
 		return (Parametri_cnrComponentSession)EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession", Parametri_cnrComponentSession.class);		
 	}
@@ -349,8 +449,11 @@ public final class Utility {
 	}	
 	public static LiquidIvaInterfComponentSession createLiquidIvaInterfComponentSession() throws javax.ejb.EJBException{
 		return (LiquidIvaInterfComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRGESTIVA00_EJB_LiquidIvaInterfComponentSession", LiquidIvaInterfComponentSession.class);
-	}	
-	public static VariazioniStanziamentoResiduoComponentSession createVariazioniStanziamentoResiduoComponentSession() throws javax.ejb.EJBException{
-		return (VariazioniStanziamentoResiduoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRVARSTANZ00_EJB_VariazioniStanziamentoResiduoComponentSession", VariazioniStanziamentoResiduoComponentSession.class);
-	}	
+	}
+	public static ProgettoRicercaComponentSession createProgettoRicercaComponentSession() throws javax.ejb.EJBException{
+		return (ProgettoRicercaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPROGETTIRIC00_EJB_ProgettoRicercaComponentSession", ProgettoRicercaComponentSession.class);
+	}
+    public static VariazioniStanziamentoResiduoComponentSession createVariazioniStanziamentoResiduoComponentSession() throws javax.ejb.EJBException{
+	    return (VariazioniStanziamentoResiduoComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRVARSTANZ00_EJB_VariazioniStanziamentoResiduoComponentSession", VariazioniStanziamentoResiduoComponentSession.class);
+	}
 }

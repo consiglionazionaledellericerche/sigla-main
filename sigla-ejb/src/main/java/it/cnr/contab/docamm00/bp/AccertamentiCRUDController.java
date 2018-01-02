@@ -91,7 +91,7 @@ public void writeHTMLToolbar(
 		(bp.isViewing() || enabled) ? "javascript:submitForm('doOpenAccertamentiWindow')" : null,
 		true,
 		"Aggiorna in manuale",
-		"btn-sm btn-secondary",
+		"btn-sm btn-secondary btn-outline-secondary",
 		HttpActionContext.isFromBootstrap(context));
 	it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 		context,
@@ -99,7 +99,7 @@ public void writeHTMLToolbar(
 		(!bp.isViewing() && enabled && modelEditable) ? "javascript:submitForm('doModificaScadenzaInAutomatico("+getInputPrefix()+")')" : null,
 		false,
 		"Aggiorna in automatico",
-		"btn-sm btn-secondary",
+		"btn-sm btn-secondary btn-outline-secondary",
 		HttpActionContext.isFromBootstrap(context));
 
 }

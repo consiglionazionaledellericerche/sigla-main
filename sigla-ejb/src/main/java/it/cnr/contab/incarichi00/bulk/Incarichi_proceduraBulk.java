@@ -2,6 +2,11 @@
  * Date 03/04/2008
  */
 package it.cnr.contab.incarichi00.bulk;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Dictionary;
+import java.util.Iterator;
+
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
@@ -23,11 +28,6 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.persistency.Persister;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Dictionary;
-import java.util.Iterator;
 
 public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 
@@ -367,30 +367,6 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 		if (this.getTipo_prestazione() != null)
 			this.getTipo_prestazione().setCd_tipo_prestazione(cd_tipo_prestazione);
 	}
-	
-	/**
-	 * Restituisce il valore della proprietà 'ds_firmatario'
-	 *
-	 * @return Il valore della proprietà 'ds_firmatario'
-	 */
-	public java.lang.String getDs_firmatario() {
-		if ( getFirmatario() != null && getFirmatario().getAnagrafico() != null &&
-		     getFirmatario().getAnagrafico().getCognome()!=null )
-			return getFirmatario().getAnagrafico().getCognome() + " " + getFirmatario().getAnagrafico().getNome();
-		return "";	
-	}
-
-	/**
-	 * Restituisce il valore della proprietà 'ds_terzo_resp'
-	 *
-	 * @return Il valore della proprietà 'ds_terzo_resp'
-	 */
-	public java.lang.String getDs_terzo_resp() {
-		if ( getTerzo_resp() != null && getTerzo_resp().getAnagrafico() != null &&
-		     getTerzo_resp().getAnagrafico().getCognome()!=null )
-			return getTerzo_resp().getAnagrafico().getCognome() + " " + getTerzo_resp().getAnagrafico().getNome();
-		return "";	
-	}
 
 	public BulkList getIncarichi_procedura_annoColl() {
 		return incarichi_procedura_annoColl;
@@ -459,9 +435,6 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 		return isROPrimaFaseProcedura() ||
 		       !getIncarichi_repertorioColl().isEmpty();
 	}
-	public boolean isROTerzoResp() {
-		return getTerzo_resp() == null || getTerzo_resp().getCrudStatus() == NORMAL;
-	}	
 	public String getIndirizzo_unita_organizzativa() {
 		return indirizzo_unita_organizzativa;
 	}
@@ -894,10 +867,6 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 	private String getStatoProcedura() {
 		return statoProcedura;
 	}
-	public boolean isROFirmatario() {
-		return isROPrimaFaseProcedura() || 
-		       getFirmatario() == null || getFirmatario().getCrudStatus() == NORMAL;
-	}	
 	public boolean isROFlMeramenteOccasionale() {
 		if (this.getProcedura_amministrativa()!=null &&
 		    this.getProcedura_amministrativa().isMeramenteOccasionaleRequired() &&
@@ -985,17 +954,6 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 	public void setV_terzoForSearch(V_terzo_per_compensoBulk v_terzoForSearch) {
 		this.v_terzoForSearch = v_terzoForSearch;
 	}
-	/**
-	 * Restituisce il valore della proprietà 'ds_terzo'
-	 *
-	 * @return Il valore della proprietà 'ds_terzo'
-	 */
-	public java.lang.String getDsTerzoForSearch() {
-		if ( getTerzoForSearch() != null && getTerzoForSearch().getAnagrafico() != null &&
-				getTerzoForSearch().getAnagrafico().getCognome()!=null )
-			return getTerzoForSearch().getAnagrafico().getCognome() + " " + getTerzoForSearch().getAnagrafico().getNome();
-		return "";	
-	}	
 	/**
 	 * Ritorna l'indirizzo del terzo contraente ottenuto dalla concatenazione di:
 	 *  - Via

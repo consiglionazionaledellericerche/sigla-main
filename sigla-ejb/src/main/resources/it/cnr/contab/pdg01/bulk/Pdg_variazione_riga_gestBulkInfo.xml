@@ -104,7 +104,8 @@
 		rows="5"
 		maxLength="300"
 		nullable="true"
-		label="Descrizione" />
+		label="Descrizione" 
+		inputCssClass="w-100 " />
 	<fieldProperty
 		name="categoria_dettaglio"
 		property="categoria_dettaglio"
@@ -235,6 +236,7 @@
 		enabledOnSearch="true"
 		readonlyProperty="ROLinea_attivita"
 		nullable="false"
+		CRUDBusinessProcessName="CRUDLinea_attivitaBP"
 		label="G.a.e." />
 	<fieldProperty
 		name="find_linea_attivita_liv2"
@@ -245,6 +247,7 @@
 		enabledOnSearch="true"
 		readonlyProperty="ROLinea_attivita"
 		nullable="false"
+		CRUDBusinessProcessName="CRUDLinea_attivitaBP"
 		columnSet="prg_liv2"
 		label="G.a.e." />
 	<fieldProperty
@@ -307,6 +310,13 @@
 		nullable="false"
 		columnSet="prg_liv2"
 		label="Programma" />
+	<fieldProperty
+		name="crea_linea_attivita"
+		property="linea_attivita"
+		inputType="CRUDTOOL"
+		CRUDBusinessProcessName="CRUDLinea_attivitaBP"
+		readonlyProperty="ROLinea_attivita"
+		enabledOnSearch="true"/>
 		
 	<formFieldProperty
 		name="esercizio" />
@@ -375,6 +385,8 @@
 		name="searchtool_progetto_liv2" />
 	<formFieldProperty
 		name="searchtool_area" />
+	<formFieldProperty
+		name="crea_linea_attivita" />
 
 	<findFieldProperty
 		name="esercizio" />

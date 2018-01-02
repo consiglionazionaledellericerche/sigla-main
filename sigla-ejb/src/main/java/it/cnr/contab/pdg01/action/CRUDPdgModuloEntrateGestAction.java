@@ -7,16 +7,17 @@
 package it.cnr.contab.pdg01.action;
 
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.pdg01.bp.CRUDPdgModuloEntrateGestBP;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
-import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
-import it.cnr.jada.util.action.BulkBP;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.util.action.CRUDAction;
+import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.OptionBP;
 
 
@@ -88,5 +89,26 @@ public class CRUDPdgModuloEntrateGestAction extends CRUDAction {
 	public Forward doEliminaDettagliGestionali(ActionContext actioncontext) throws BusinessProcessException {
 		CRUDPdgModuloEntrateGestBP bp = ((CRUDPdgModuloEntrateGestBP)getBusinessProcess( actioncontext ));
 		return openConfirm(actioncontext,"Tutti i dettagli di entrata relativi al modulo e " + bp.getLabelClassificazione() + " verranno cancellati definitivamente. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfermaEliminaDettagliGestionali");		
+	}
+	public Forward doCRUDCrea_linea_attivita(ActionContext actioncontext) throws FillException, BusinessProcessException {
+		CRUDPdgModuloEntrateGestBP bulkbp = (CRUDPdgModuloEntrateGestBP)actioncontext.getBusinessProcess();
+
+		FormField formfield = getFormField(actioncontext, "main.DettagliGestionali.crea_linea_attivita");
+		try {
+            CRUDBP crudbp = (CRUDBP)actioncontext.getUserInfo().createBusinessProcess(actioncontext, formfield.getField().getCRUDBusinessProcessName(), new Object[] {
+                    bulkbp.isEditable() ? "MR" : "R", bulkbp.getModel(), ((Pdg_modulo_entrate_gestBulk)bulkbp.getCrudDettagliGestionali().getModel()).getCdr_assegnatario()
+                });
+
+            actioncontext.addHookForward("bringback", this, "doBringBackCRUD");
+			HookForward hookforward = (HookForward)actioncontext.findForward("bringback");
+			hookforward.addParameter("field", formfield);
+			crudbp.setBringBack(true);
+			return actioncontext.addBusinessProcess(crudbp);
+		} catch(Throwable e) {
+			return handleException(actioncontext,e);
+		}
+	}
+	public Forward doCRUDFind_linea_attivita(ActionContext actioncontext) throws FillException, BusinessProcessException {
+		return doCRUDCrea_linea_attivita(actioncontext);
 	}
 }

@@ -249,6 +249,11 @@ public class S3SiglaStorageService implements SiglaStorageService {
     }
 
     @Override
+    public List<StorageObject> getChildren(String key, int depth) {
+        return getChildren(key);
+    }
+
+    @Override
     public List<StorageObject> getChildren(String key) {
         return amazonS3
                 .listObjects(s3SiglaStorageConfigurationProperties.getBucketName(), key)
@@ -263,12 +268,6 @@ public class S3SiglaStorageService implements SiglaStorageService {
     public List<StorageObject> search(String query) {
         LOGGER.warn("S3 -> Not yet implemented");
         return Collections.emptyList();
-    }
-
-    @Override
-    public InputStream zipContent(List<String> keys, String name) {
-        LOGGER.warn("S3 -> Not yet implemented");
-        return null;
     }
 
     @Override

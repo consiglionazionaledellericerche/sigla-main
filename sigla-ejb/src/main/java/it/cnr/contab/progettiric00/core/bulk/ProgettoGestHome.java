@@ -1,34 +1,35 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
-import java.sql.Connection;
 import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
 
-import javax.ejb.EJBException;
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.naming.NamingException;
-
-import it.cnr.contab.anagraf00.core.bulk.Anagrafico_esercizioBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.blob.bulk.PostItBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteHome;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.config00.bulk.*;
-import it.cnr.contab.config00.blob.bulk.*;
+import it.cnr.contab.config00.sto.bulk.Ass_uo_areaBulk;
+import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
+import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.consultazioni.bulk.ConsultazioniRestHome;
-import it.cnr.contab.progettiric00.geco.bulk.*;
-import it.cnr.contab.utenze00.bp.*;
-import it.cnr.contab.util.Utility;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.SendMail;
-import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.ObjectNotFoundException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
+import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.SimpleFindClause;
 
 public class ProgettoGestHome extends BulkHome implements ConsultazioniRestHome {
 	public ProgettoGestHome(java.sql.Connection conn) {
@@ -282,15 +283,25 @@ public class ProgettoGestHome extends BulkHome implements ConsultazioniRestHome 
 		sql.addTableToHeader("UNITA_ORGANIZZATIVA");
 		sql.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA", "V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA");
 		sql.openParenthesis("AND");		  
-		sql.addSQLClause("AND","UNITA_ORGANIZZATIVA.CD_UNITA_PADRE",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(aUC));
+
+		Parametri_enteBulk parEnte = ((Parametri_enteHome)getHomeCache().getHome(Parametri_enteBulk.class)).getParametriEnteAttiva();
+		if (parEnte.isAbilProgettoUO())
+			sql.addSQLClause(FindClause.AND,"V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(aUC));
+		else
+			sql.addSQLClause("AND","UNITA_ORGANIZZATIVA.CD_UNITA_PADRE",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(aUC));
+
 		if (uo.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_AREA)==0){
-			SQLBuilder sqlArea = getHomeCache().getHome(Ass_uo_areaBulk.class).createSQLBuilder();
-			sqlArea.addTableToHeader("UNITA_ORGANIZZATIVA UO");
-			sqlArea.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_PADRE", "UO.CD_UNITA_PADRE");
-			sqlArea.addSQLJoin("ASS_UO_AREA.CD_UNITA_ORGANIZZATIVA", "UO.CD_UNITA_ORGANIZZATIVA");
-			sqlArea.addSQLClause("AND","ASS_UO_AREA.CD_AREA_RICERCA",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(aUC));
-			sqlArea.addSQLClause("AND","ASS_UO_AREA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(aUC));
-			sql.addSQLExistsClause("OR",sqlArea);
+			PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+			Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(aUC)));
+			if (!parCNR.getFl_nuovo_pdg()) {
+				SQLBuilder sqlArea = getHomeCache().getHome(Ass_uo_areaBulk.class).createSQLBuilder();
+				sqlArea.addTableToHeader("UNITA_ORGANIZZATIVA UO");
+				sqlArea.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_PADRE", "UO.CD_UNITA_PADRE");
+				sqlArea.addSQLJoin("ASS_UO_AREA.CD_UNITA_ORGANIZZATIVA", "UO.CD_UNITA_ORGANIZZATIVA");
+				sqlArea.addSQLClause("AND","ASS_UO_AREA.CD_AREA_RICERCA",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(aUC));
+				sqlArea.addSQLClause("AND","ASS_UO_AREA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(aUC));
+				sql.addSQLExistsClause("OR",sqlArea);
+			}
 		}
 		sql.closeParenthesis();
 		return sql;    	
@@ -347,16 +358,44 @@ public class ProgettoGestHome extends BulkHome implements ConsultazioniRestHome 
 					if (clause.getPropertyName() != null && clause.getPropertyName().equals("cd_unita_organizzativa") &&
 							operator == SQLBuilder.EQUALS){
 						trovataCondizioneUo = true;
+						
+						Unita_organizzativaBulk uo = (Unita_organizzativaBulk)getHomeCache().getHome(Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk((String)clause.getValue()));
+						
 						ProgettoHome progettoHome = (ProgettoHome) getHomeCache().getHome(ProgettoBulk.class);
 						sqlExists = progettoHome.createSQLBuilder();
 						sqlExists.addTableToHeader("V_ABIL_PROGETTI");
+
+						sqlExists.addTableToHeader("UNITA_ORGANIZZATIVA");
+						sqlExists.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA", "V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA");
+						sqlExists.openParenthesis("AND");		  
+
+						Parametri_enteBulk parEnte = ((Parametri_enteHome)getHomeCache().getHome(Parametri_enteBulk.class)).getParametriEnteAttiva();
+						if (parEnte.isAbilProgettoUO())
+							sqlExists.addSQLClause("AND","UNITA_ORGANIZZATIVA.CD_UNITA_PADRE",SQLBuilder.EQUALS,uo.getCd_unita_organizzativa());
+						else
+							sqlExists.addSQLClause("AND","UNITA_ORGANIZZATIVA.CD_UNITA_PADRE",SQLBuilder.EQUALS,uo.getUnita_padre().getCd_unita_organizzativa());
+						
+						if (uo.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_AREA)==0){
+							PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
+							Parametri_cnrBulk parCNR = (Parametri_cnrBulk)parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)));
+							if (!parCNR.getFl_nuovo_pdg()) {
+								SQLBuilder sqlArea = getHomeCache().getHome(Ass_uo_areaBulk.class).createSQLBuilder();
+								sqlArea.addTableToHeader("UNITA_ORGANIZZATIVA UO");
+								sqlArea.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_PADRE", "UO.CD_UNITA_PADRE");
+								sqlArea.addSQLJoin("ASS_UO_AREA.CD_UNITA_ORGANIZZATIVA", "UO.CD_UNITA_ORGANIZZATIVA");
+								sqlArea.addSQLClause("AND","ASS_UO_AREA.CD_AREA_RICERCA",SQLBuilder.EQUALS,uo.getUnita_padre().getCd_unita_organizzativa());
+								sqlArea.addSQLClause("AND","ASS_UO_AREA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+								sqlExists.addSQLExistsClause("OR",sqlArea);
+							}
+						}
+						sqlExists.closeParenthesis();
+
 						sqlExists.addSQLJoin("PROGETTO.ESERCIZIO", "PROGETTO_GEST.ESERCIZIO");
 						sqlExists.addSQLJoin("PROGETTO.TIPO_FASE", "PROGETTO_GEST.TIPO_FASE");
 						sqlExists.addSQLJoin("PROGETTO.PG_PROGETTO", "PROGETTO_GEST.PG_PROGETTO");
 						sqlExists.addSQLJoin("PROGETTO_GEST.ESERCIZIO", "V_ABIL_PROGETTI.ESERCIZIO_COMMESSA");
 						sqlExists.addSQLJoin("PROGETTO_GEST.TIPO_FASE", "V_ABIL_PROGETTI.TIPO_FASE_COMMESSA");
 						sqlExists.addSQLJoin("PROGETTO_GEST.PG_PROGETTO", "V_ABIL_PROGETTI.PG_COMMESSA");
-						sqlExists.addSQLClause("AND","V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, clause.getValue());
 					} else {
 						newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
 					}

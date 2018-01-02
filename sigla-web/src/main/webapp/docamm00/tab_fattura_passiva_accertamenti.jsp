@@ -13,7 +13,7 @@
 <%	CRUDNotaDiCreditoBP bp = (CRUDNotaDiCreditoBP)BusinessProcess.getBusinessProcess(request);
 	Nota_di_creditoBulk notaDiCredito = (Nota_di_creditoBulk)bp.getModel();
 	it.cnr.contab.anagraf00.core.bulk.TerzoBulk ente = notaDiCredito.getEnte(); %>
-	<div class="Group" style="width:100%">
+	<div class="Group card" style="width:100%">
 		<table width="100%">
 			<tr>
 			  	<td colspan="3">
@@ -42,7 +42,7 @@
 	   		</tr>
 		</table>
 	</div>
-	<div class="Group" style="width:100%">
+	<div class="Group card" style="width:100%">
    		<table width="100%">
 			<tr>
 			  	<td>

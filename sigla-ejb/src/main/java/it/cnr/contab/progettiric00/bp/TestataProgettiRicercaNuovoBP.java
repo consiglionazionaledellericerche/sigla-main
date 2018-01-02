@@ -1,5 +1,7 @@
 package it.cnr.contab.progettiric00.bp;
 
+import java.util.Dictionary;
+
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.jada.bulk.BulkInfo;
 
@@ -12,6 +14,7 @@ import it.cnr.jada.bulk.BulkInfo;
  * Window>Preferences>Java>Code Generation.
  */
 public class TestataProgettiRicercaNuovoBP extends TestataProgettiRicercaBP implements IProgettoBP{
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor for TestataProgettiRicercaNuovoBP.
@@ -31,7 +34,10 @@ public class TestataProgettiRicercaNuovoBP extends TestataProgettiRicercaBP impl
 	public BulkInfo getBulkInfo()
 	{
 		BulkInfo infoBulk = super.getBulkInfo();
-		infoBulk.setShortDescription("Progetti");
+		if (isFlNuovoPdg())
+			infoBulk.setShortDescription(ProgettoBulk.LABEL_AREA_PROGETTUALE);
+		else	
+			infoBulk.setShortDescription("Progetti");
 		return infoBulk;
 	}	
 	/*
@@ -40,7 +46,12 @@ public class TestataProgettiRicercaNuovoBP extends TestataProgettiRicercaBP impl
 	 * */
 	public String getFormTitle()
 	{
-		StringBuffer stringbuffer = new StringBuffer("Progetti di Ricerca");
+		StringBuffer stringbuffer = new StringBuffer();
+		if (isFlNuovoPdg())
+			stringbuffer = stringbuffer.append(ProgettoBulk.LABEL_AREA_PROGETTUALE);
+		else
+			stringbuffer = stringbuffer.append("Progetti di Ricerca");
+		
 		stringbuffer.append(" - ");
 		switch(getStatus())
 		{
@@ -62,12 +73,29 @@ public class TestataProgettiRicercaNuovoBP extends TestataProgettiRicercaBP impl
 		}
 		return stringbuffer.toString();
 	}
+
 	public String getSearchResultColumnSet() {
-
-		return "filtro_ricerca_progetti";
-
+		return "filtro_ricerca_aree_short";
 	}	
+	
+	@Override
+	public String getFreeSearchSet() {
+		return "filtro_ricerca_aree_short";
+	}
+
 	public int getLivelloProgetto() {
 		return ProgettoBulk.LIVELLO_PROGETTO_PRIMO.intValue();
+	}
+
+	@Override
+	public Dictionary getSearchResultColumns() {
+		if (this.isFlNuovoPdg())
+			return getModel().getBulkInfo().getColumnFieldPropertyDictionary("filtro_ricerca_aree_short");
+		return super.getSearchResultColumns();
+	}
+	public String getLabelCd_progetto() {
+		if (this.isFlNuovoPdg())
+			return ProgettoBulk.LABEL_AREA_PROGETTUALE;
+		return ProgettoBulk.LABEL_PROGETTO;
 	}
 }

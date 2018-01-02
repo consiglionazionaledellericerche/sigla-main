@@ -483,7 +483,7 @@ public boolean isResiduo() {
  */
 public boolean isROCapitolo() 
 {
-	return getDt_cancellazione() != null || capitolo == null || capitolo.getCrudStatus() == NORMAL || isAssociataADocCont();
+	return getDt_cancellazione() != null || capitolo == null || isAssociataADocCont();
 }
 /**
  * <!-- @TODO: da completare -->
