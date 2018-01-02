@@ -187,6 +187,13 @@
 			sqlTypeName="VARCHAR"
 			columnSize="10"
 			nullable="true" />
+		 <columnMapping
+			columnName="IM_CONTRATTO_PASSIVO_NETTO"
+			propertyName="im_contratto_passivo_netto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" /> 				
 	</defaultColumnMap>
 	
         <persistentProperty
@@ -250,4 +257,6 @@
                 name="utuv"/>
         <persistentProperty
                 name="pg_ver_rec"/>
+ 		 <persistentProperty
+                name="im_contratto_passivo_netto"/>                   
 </SQLPersistentInfo>
