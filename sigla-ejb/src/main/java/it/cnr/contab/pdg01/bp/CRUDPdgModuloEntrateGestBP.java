@@ -88,7 +88,7 @@ public class CRUDPdgModuloEntrateGestBP extends SimpleCRUDBP {
 	}
 
 	public boolean isDeleteButtonEnabled() {
-		return this.getCrudDettagliGestionali().countDetails()!=0;
+		return super.isDeleteButtonEnabled() && this.getCrudDettagliGestionali().countDetails()!=0;
 	}
 
 	protected void initialize(ActionContext actioncontext) throws BusinessProcessException {

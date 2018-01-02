@@ -1,5 +1,14 @@
 package it.cnr.contab.docamm00.actions;
 
+import java.rmi.RemoteException;
+import java.sql.Date;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
+import javax.ejb.EJBException;
+
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
@@ -60,15 +69,6 @@ import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-
-import java.rmi.RemoteException;
-import java.sql.Date;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
-
-import javax.ejb.EJBException;
 
 public class CRUDFatturaAttivaAction extends it.cnr.jada.util.action.CRUDAction {
 public CRUDFatturaAttivaAction() {
@@ -1302,6 +1302,14 @@ public Forward doBringBackCRUDCrea_cliente(ActionContext context,
 	doBringBackSearchCliente(context,fattura_attiva,fornitoreTrovato);
 	return context.findDefaultForward();
 }
+
+public Forward doBringBackCRUDCliente(ActionContext context,
+		Fattura_attivaBulk fattura_attiva,
+		TerzoBulk fornitoreTrovato) 
+	    throws java.rmi.RemoteException {
+	return doBringBackCRUDCrea_cliente(context,fattura_attiva,fornitoreTrovato);
+}
+
 /**
  * Aggiunge, una volta terminata l'operazione di creazione di buono di scarico,
  * tale buono al modello

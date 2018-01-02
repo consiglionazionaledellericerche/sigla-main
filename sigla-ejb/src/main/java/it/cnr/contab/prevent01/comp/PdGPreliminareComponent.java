@@ -9,13 +9,14 @@ package it.cnr.contab.prevent01.comp;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.sql.PreparedStatement;
 import java.util.Iterator;
 import java.util.List;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
@@ -46,7 +47,6 @@ import it.cnr.contab.prevent01.bulk.V_pdg_piano_ripartoBulk;
 import it.cnr.contab.prevent01.bulk.V_pdg_piano_ripartoHome;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaModuloComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
@@ -60,9 +60,6 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.Persistent;
-import it.cnr.jada.persistency.sql.ColumnMap;
-import it.cnr.jada.persistency.sql.ColumnMapping;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBroker;
@@ -77,10 +74,31 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
  */
 public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent implements Cloneable, Serializable {
 
-	public Pdg_esercizioBulk cambiaStatoConBulk( UserContext userContext,Pdg_esercizioBulk pdg_esercizio) throws it.cnr.jada.comp.ComponentException 
+	public Pdg_esercizioBulk cambiaStatoConBulk( UserContext userContext,Pdg_esercizioBulk pdgEsercizio) throws it.cnr.jada.comp.ComponentException {
+		try {
+			Parametri_cnrBulk parametri = ((Parametri_cnrHome)getHome(userContext,Parametri_cnrBulk.class)).getParametriCnr(userContext);
+			if (parametri.getFl_pdg_contrattazione().equals(Boolean.FALSE) &&
+				pdgEsercizio.getStato().equals(Pdg_esercizioBulk.STATO_CHIUSURA_CDR)) {
+				Pdg_esercizioBulk statoInEsameCDR = innerCambiaStatoConBulk(userContext, pdgEsercizio, false);
+				
+				approvaAllRighePdgContrattazione(userContext, statoInEsameCDR);
+				aggiornaStatoAllModuli(userContext, statoInEsameCDR, Pdg_moduloBulk.STATO_CC);
+				
+				Pdg_esercizioBulk statoEsaminatoCDR = innerCambiaStatoConBulk(userContext, statoInEsameCDR, false);				
+				aggiornaStatoAllModuli(userContext, statoEsaminatoCDR, Pdg_moduloBulk.STATO_AP);
+
+				Pdg_esercizioBulk statoApprovazioneCDR = innerCambiaStatoConBulk(userContext, statoEsaminatoCDR, false);
+				//statoAperturaGestionaleCDR
+				return innerCambiaStatoConBulk(userContext, statoApprovazioneCDR, false);		
+			} else
+				return innerCambiaStatoConBulk(userContext, pdgEsercizio, true);
+		} catch (Exception e) {
+			throw handleException(pdgEsercizio,e);	
+		}
+	}
+
+	private Pdg_esercizioBulk innerCambiaStatoConBulk( UserContext userContext,Pdg_esercizioBulk pdg_esercizio, boolean eseguiControlli) throws it.cnr.jada.comp.ComponentException 
 	{
-
-
 		try 
 		{
 
@@ -90,26 +108,27 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 			if (next!=null) {
 
 				// CONTROLLI
-
-				// solo l'UO 999.000 può avanzare lo stato a STATO_IN_ESAME_CDR e STATO_ESAMINATO_CDR
-				if (next.equals(Pdg_esercizioBulk.STATO_IN_ESAME_CDR)||
-					next.equals(Pdg_esercizioBulk.STATO_ESAMINATO_CDR)) {
-					Unita_organizzativaBulk uo = new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext));
-					uo = (Unita_organizzativaBulk) getHome(userContext,uo).findByPrimaryKey(uo);
-					Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class ).findAll().get(0);
-					if (!uoEnte.equalsByPrimaryKey(uo))
-						throw new ApplicationException( "Lo stato può essere aggiornato unicamente dalla UO "+uoEnte.getCd_unita_organizzativa());
-				}
-	
-				// solo il direttore può progredire lo stato in uno dei seguenti
-				if (next.equals(Pdg_esercizioBulk.STATO_CHIUSURA_CDR)||
-					next.equals(Pdg_esercizioBulk.STATO_APERTURA_GESTIONALE_CDR)||
-					next.equals(Pdg_esercizioBulk.STATO_CHIUSURA_GESTIONALE_CDR)) {
-					if (!UtenteBulk.isAbilitatoApprovazioneBilancio(userContext)) {
-						throw new ApplicationException( "Lo stato può essere aggiornato unicamente dal Direttore dell'Istituto");
+				if (eseguiControlli) {
+					// solo l'UO 999.000 può avanzare lo stato a STATO_IN_ESAME_CDR e STATO_ESAMINATO_CDR
+					if (next.equals(Pdg_esercizioBulk.STATO_IN_ESAME_CDR)||
+						next.equals(Pdg_esercizioBulk.STATO_ESAMINATO_CDR)) {
+						Unita_organizzativaBulk uo = new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext));
+						uo = (Unita_organizzativaBulk) getHome(userContext,uo).findByPrimaryKey(uo);
+						Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class ).findAll().get(0);
+						if (!uoEnte.equalsByPrimaryKey(uo))
+							throw new ApplicationException( "Lo stato può essere aggiornato unicamente dalla UO "+uoEnte.getCd_unita_organizzativa());
+					}
+		
+					// solo il direttore può progredire lo stato in uno dei seguenti
+					if (next.equals(Pdg_esercizioBulk.STATO_CHIUSURA_CDR)||
+						next.equals(Pdg_esercizioBulk.STATO_APERTURA_GESTIONALE_CDR)||
+						next.equals(Pdg_esercizioBulk.STATO_CHIUSURA_GESTIONALE_CDR)) {
+						if (!UtenteBulk.isAbilitatoApprovazioneBilancio(userContext)) {
+							throw new ApplicationException( "Lo stato può essere aggiornato unicamente dal Direttore dell'Istituto");
+						}
 					}
 				}
-
+				
 				lockBulk(userContext, pdg_esercizio);
 
 				// AGGIORNAMENTI O CONTROLLI CON LOCK
@@ -1112,18 +1131,23 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 		try {
 			Pdg_Modulo_EntrateHome home = (Pdg_Modulo_EntrateHome)getHome(userContext,Pdg_Modulo_EntrateBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
-			sql.addTableToHeader("CLASSIFICAZIONE_VOCI");
-			sql.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE","CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
 			CdrBulk cdr = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(pdg.getCdr());
 			cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
 			
-			if (pdg.getCdr().isCdrSAC())
+			if (pdg.getCdr().isCdrSAC()) {
+				sql.addTableToHeader("CLASSIFICAZIONE_VOCI");
+				sql.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE","CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
 				sql.addSQLClause("AND","CLASSIFICAZIONE_VOCI.FL_ESTERNA_DA_QUADRARE_SAC",SQLBuilder.EQUALS,"Y");
+			}
 			sql.addClause("AND","esercizio",SQLBuilder.EQUALS,pdg.getEsercizio());
 			sql.addClause("AND","cd_centro_responsabilita",SQLBuilder.EQUALS,pdg.getCd_centro_responsabilita());
 			sql.addClause("AND","pg_progetto",SQLBuilder.EQUALS,pdg.getPg_progetto());
 			if (cds!=null && cds.getCd_unita_organizzativa()!=null)
 				sql.addClause("AND","cd_cds_area",SQLBuilder.EQUALS,cds.getCd_unita_organizzativa());
+
+			sql.addTableToHeader("NATURA");
+			sql.addSQLJoin("PDG_MODULO_ENTRATE.CD_NATURA","NATURA.CD_NATURA");
+			sql.addSQLClause("AND","NATURA.TIPO",SQLBuilder.EQUALS,NaturaBulk.TIPO_NATURA_FONTI_ESTERNE);
 
 			SQLBroker broker = home.createBroker(sql);
 			
@@ -1251,7 +1275,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 							throw new ApplicationException("Per il " + labelProgetto + " "+ pdg.getCd_progetto()+" il contributo per l'attività ordinaria è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
 									". Impossibile salvare, poichè è stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
 				}	
-				if (impTotaleSpese.compareTo(impTotaleEntrate)!=0){
+				if (parametriCnr.getFl_pdg_quadra_fonti_esterne() && impTotaleSpese.compareTo(impTotaleEntrate)!=0){
 					if ( cds!=null ) {
 						if ( cds.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA) ) 
 							throw new ApplicationException("Per l'area " + cds.getCd_unita_organizzativa() + " e per il " + labelProgetto + " " + pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
@@ -1384,6 +1408,58 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 		catch (Throwable e) 
 		{
 			throw handleException(pdg, e);
+		}
+	}
+	
+	private void approvaAllRighePdgContrattazione(UserContext userContext, Pdg_esercizioBulk pdg) throws ComponentException {
+		try {
+			// Recupera tutte le righe di contrattazione Inserisce le righe con i totali prelevati da pdg_modulo_spese
+
+			BulkHome speHome = getHome(userContext,Pdg_contrattazione_speseBulk.class);
+			SQLBuilder sqlSpese = speHome.createSQLBuilder();
+			sqlSpese.addClause("AND","esercizio",SQLBuilder.EQUALS,pdg.getEsercizio());
+			sqlSpese.addClause("AND","cd_centro_responsabilita",SQLBuilder.EQUALS,pdg.getCd_centro_responsabilita());
+			
+			List<Pdg_contrattazione_speseBulk> listaSpe = speHome.fetchAll(sqlSpese);
+			for (Pdg_contrattazione_speseBulk bulk : listaSpe) {
+				bulk.setAppr_tot_spese_decentr_int(bulk.getTot_spese_decentr_int());
+				bulk.setAppr_tot_spese_decentr_est(bulk.getTot_spese_decentr_est());
+				bulk.setToBeUpdated();
+				updateBulk(userContext, bulk);
+			}
+
+			Pdg_Modulo_EntrateHome etrHome = (Pdg_Modulo_EntrateHome)getHome(userContext,Pdg_Modulo_EntrateBulk.class);
+			SQLBuilder sqlEntrate = etrHome.createSQLBuilder();
+			sqlEntrate.addClause("AND","esercizio",SQLBuilder.EQUALS,pdg.getEsercizio());
+			sqlEntrate.addClause("AND","cd_centro_responsabilita",SQLBuilder.EQUALS,pdg.getCd_centro_responsabilita());
+
+			List<Pdg_Modulo_EntrateBulk> listaEtr = etrHome.fetchAll(sqlEntrate);
+			for (Pdg_Modulo_EntrateBulk bulk : listaEtr) {
+				bulk.setIm_entrata_app(bulk.getIm_entrata());
+				bulk.setToBeUpdated();
+				updateBulk(userContext, bulk);
+			}
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+	}
+
+	private void aggiornaStatoAllModuli(UserContext userContext, Pdg_esercizioBulk pdg, String statoNew) throws ComponentException {
+		try {
+			// aggiorniamo le righe di pdg_modulo in CC
+			BulkHome home = getHome(userContext,Pdg_moduloBulk.class);
+			SQLBuilder sql = home.createSQLBuilder();
+			sql.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS,pdg.getEsercizio());
+			sql.addSQLClause("AND","CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,pdg.getCd_centro_responsabilita());
+			java.util.List moduli_list = getHome(userContext,Pdg_moduloBulk.class).fetchAll(sql);
+			for (java.util.Iterator i = moduli_list.iterator();i.hasNext();) {
+				Pdg_moduloBulk mod = (Pdg_moduloBulk)i.next();
+				mod.setStato(statoNew);
+				mod.setUser(userContext.getUser());
+				updateBulk(userContext,mod);
+			}
+		} catch (PersistencyException e) {
+			throw handleException(e);
 		}
 	}
 }

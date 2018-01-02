@@ -1,24 +1,22 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
-import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
-import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaNuovoBP;
-import it.cnr.contab.progettiric00.tabrif.bulk.*;
+import java.math.BigDecimal;
+import java.util.Dictionary;
+
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.blob.bulk.PostItBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
-import it.cnr.contab.config00.blob.bulk.PostItBulk;
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
-
-import java.math.BigDecimal;
-import java.util.Dictionary;
-import java.util.List;
-import java.util.Vector;
+import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
+import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
+import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaNuovoBP;
+import it.cnr.contab.progettiric00.tabrif.bulk.Tipo_progettoBulk;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
 
 public class ProgettoBulk extends ProgettoBase {
 
@@ -41,6 +39,11 @@ public class ProgettoBulk extends ProgettoBase {
 	public static final String LABEL_PROGETTO = "Progetto";
 	public static final String LABEL_COMMESSA = "Commessa";
 	public static final String LABEL_MODULO = "Modulo";
+
+	public static final String TIPO_FASE_SEARCH_SOLO_PREVISIONE  ="P";
+	public static final String TIPO_FASE_SEARCH_SOLO_GESTIONE ="G";
+	public static final String TIPO_FASE_SEARCH_PREVISIONE_E_GESTIONE ="X";
+	public static final String TIPO_FASE_SEARCH_ALL ="A";
 
 	private it.cnr.jada.bulk.BulkList	workpackage_collegati = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList	workpackage_disponibili  = new it.cnr.jada.bulk.BulkList();
@@ -66,6 +69,15 @@ public class ProgettoBulk extends ProgettoBase {
 		tipo_faseAllKeys.put(TIPO_FASE_NON_DEFINITA,"Non definita");
 	};
 	
+	public final static Dictionary tipo_faseSearchKeys;
+	static {
+		tipo_faseSearchKeys = new it.cnr.jada.util.OrderedHashtable();
+		tipo_faseSearchKeys.put(TIPO_FASE_SEARCH_SOLO_PREVISIONE,"Solo Previsione");
+		tipo_faseSearchKeys.put(TIPO_FASE_SEARCH_SOLO_GESTIONE,"Solo Gestione");
+		tipo_faseSearchKeys.put(TIPO_FASE_SEARCH_PREVISIONE_E_GESTIONE,"Previsione e Gestione");
+		tipo_faseSearchKeys.put(TIPO_FASE_SEARCH_ALL,"Tutto");
+	};
+
 		public final static Dictionary durata_progettoKeys;
 		static {
 		durata_progettoKeys = new it.cnr.jada.util.OrderedHashtable();
@@ -102,17 +114,27 @@ public class ProgettoBulk extends ProgettoBase {
 	private BulkList dettagliFinanziatori = new BulkList();
 	private BulkList dettagliPartner_esterni = new BulkList();
 	private BulkList dettagliPostIt = new BulkList();
+	private BulkList dettagliPianoEconomicoTotale = new BulkList();
+	private BulkList dettagliPianoEconomicoAnnoCorrente = new BulkList();
+	private BulkList dettagliPianoEconomicoAltriAnni = new BulkList();
 	private BulkList speseEsercizio = new BulkList();
 	private Commessa_spesaBulk spese;
 	private Parametri_cdsBulk parametriCds;
-	
-public ProgettoBulk() {
-	super();
-}
-public ProgettoBulk(java.lang.Integer esercizio,java.lang.Integer pg_progetto,java.lang.String tipo_fase) {
-	super(esercizio,pg_progetto,tipo_fase);
-}
-   /**
+	private Pdg_programmaBulk pdgProgramma;
+	private Pdg_missioneBulk pdgMissione;
+	private Boolean fl_previsione;
+	private Boolean fl_gestione;
+	private String tipoFaseToSearch;
+	private Progetto_other_fieldBulk otherField;
+
+	public ProgettoBulk() {
+		super();
+	}
+	public ProgettoBulk(java.lang.Integer esercizio,java.lang.Integer pg_progetto,java.lang.String tipo_fase) {
+		super(esercizio,pg_progetto,tipo_fase);
+	}
+
+	/**
 	* Aggiunge il progetto figlio alla collezione progetti_figli
 	*
 	* @param progetto figlio da aggiungere
@@ -146,8 +168,29 @@ public ProgettoBulk(java.lang.Integer esercizio,java.lang.Integer pg_progetto,ja
 		return dettagliPostIt.size()-1;
 	}
 
+	public int addToDettagliPianoEconomicoTotale(Progetto_piano_economicoBulk dett) {
+		dett.setProgetto( this );
+		dett.setPg_progetto( getPg_progetto() );
+		dettagliPianoEconomicoTotale.add(dett);
+		return dettagliPianoEconomicoTotale.size()-1;
+	}
+
+	public int addToDettagliPianoEconomicoAnnoCorrente(Progetto_piano_economicoBulk dett) {
+		dett.setProgetto( this );
+		dett.setPg_progetto( getPg_progetto() );
+		dettagliPianoEconomicoAnnoCorrente.add(dett);
+		return dettagliPianoEconomicoAnnoCorrente.size()-1;
+	}
+
+	public int addToDettagliPianoEconomicoAltriAnni(Progetto_piano_economicoBulk dett) {
+		dett.setProgetto( this );
+		dett.setPg_progetto( getPg_progetto() );
+		dettagliPianoEconomicoAltriAnni.add(dett);
+		return dettagliPianoEconomicoAltriAnni.size()-1;
+	}
+
 	public it.cnr.jada.bulk.BulkCollection[] getBulkLists() {
-		return new it.cnr.jada.bulk.BulkCollection[] {dettagli,dettagliFinanziatori,dettagliPartner_esterni,dettagliPostIt};
+		return new it.cnr.jada.bulk.BulkCollection[] {dettagli,dettagliFinanziatori,dettagliPartner_esterni,dettagliPostIt,dettagliPianoEconomicoTotale,dettagliPianoEconomicoAnnoCorrente,dettagliPianoEconomicoAltriAnni};
 	}
 
 public java.lang.String getCd_divisa() {
@@ -189,6 +232,15 @@ public it.cnr.jada.bulk.BulkList getDettagliFinanziatori() {
 public it.cnr.jada.bulk.BulkList getDettagliPostIt() {
 	return dettagliPostIt;
 }
+public BulkList getDettagliPianoEconomicoTotale() {
+	return dettagliPianoEconomicoTotale;
+}
+public BulkList getDettagliPianoEconomicoAnnoCorrente() {
+	return dettagliPianoEconomicoAnnoCorrente;
+}
+public BulkList getDettagliPianoEconomicoAltriAnni() {
+	return dettagliPianoEconomicoAltriAnni;
+}
 /**
  * Restituisce il valore della propriet� 'rOprogetto'
  *
@@ -210,8 +262,7 @@ public boolean isROfind_nodo_padre() {
 	if (getCrudStatus() == UNDEFINED)
 		return false;
 
-	return getProgettopadre() == null ||
-	       !getProgettopadre().isOperabile();
+	return getProgettopadre() != null && !getProgettopadre().isOperabile();
 }
 
 /**
@@ -285,6 +336,18 @@ public PostItBulk removeFromDettagliPostIt(int index) {
 	PostItBulk dett = (PostItBulk)dettagliPostIt.remove(index);
 	return dett;
 }
+public Progetto_piano_economicoBulk removeFromDettagliPianoEconomicoTotale(int index) {
+	Progetto_piano_economicoBulk dett = (Progetto_piano_economicoBulk)dettagliPianoEconomicoTotale.remove(index);
+	return dett;
+}
+public Progetto_piano_economicoBulk removeFromDettagliPianoEconomicoAnnoCorrente(int index) {
+	Progetto_piano_economicoBulk dett = (Progetto_piano_economicoBulk)dettagliPianoEconomicoAnnoCorrente.remove(index);
+	return dett;
+}
+public Progetto_piano_economicoBulk removeFromDettagliPianoEconomicoAltriAnni(int index) {
+	Progetto_piano_economicoBulk dett = (Progetto_piano_economicoBulk)dettagliPianoEconomicoAltriAnni.remove(index);
+	return dett;
+}
 
 public void setCd_divisa(java.lang.String cd_divisa) {
 	this.getDivisa().setCd_divisa(cd_divisa);
@@ -313,7 +376,15 @@ public void setDettagliFinanziatori(it.cnr.jada.bulk.BulkList newDettagliFinanzi
 public void setDettagliPostIt(it.cnr.jada.bulk.BulkList newDettagliPostIt) {
 	dettagliPostIt = newDettagliPostIt;
 }
-
+public void setDettagliPianoEconomicoTotale(BulkList dettagliPianoEconomicoTotale) {
+	this.dettagliPianoEconomicoTotale = dettagliPianoEconomicoTotale;
+}
+public void setDettagliPianoEconomicoAnnoCorrente(BulkList dettagliPianoEconomicoAnnoCorrente) {
+	this.dettagliPianoEconomicoAnnoCorrente = dettagliPianoEconomicoAnnoCorrente;
+}
+public void setDettagliPianoEconomicoAltriAnni(BulkList dettagliPianoEconomicoAltriAnni) {
+	this.dettagliPianoEconomicoAltriAnni = dettagliPianoEconomicoAltriAnni;
+}
 /**
  * Insert the method's description here.
  * Creation date: (17/12/2001 15.27.32)
@@ -406,11 +477,11 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	public OggettoBulk initializeForFreeSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 		setProgettopadre(new ProgettoBulk());
 		setDipartimento(new DipartimentoBulk());
-		setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
+//		setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
 		return super.initializeForFreeSearch(bp,context);
 	}
 	public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
-		setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
+		setTipoFaseToSearch(ProgettoBulk.TIPO_FASE_SEARCH_ALL);
 		return super.initializeForSearch(bp,context);
 	}
 	public OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context){
@@ -418,6 +489,8 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 		it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk unita_organizzativa = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
 		setUnita_organizzativa(unita_organizzativa);
 		setStato(ProgettoBulk.TIPO_STATO_PROPOSTA);
+		setFl_previsione(Boolean.FALSE);
+		setFl_gestione(Boolean.FALSE);
 	  }
 	  return this;
 	}
@@ -810,7 +883,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	public boolean isRODipartimento() {
 		/* la prima condizione perch� il campo appariva 
 		 * non utilizzabile nelle ricerchi guidate */ 
-		if (getCrudStatus() == UNDEFINED)
+		if (isToBeCreated() || getCrudStatus() == UNDEFINED)
 			return false;
 		return dipartimento == null || dipartimento.getCrudStatus() == NORMAL || dipartimento.getCrudStatus() == TO_BE_UPDATED;
 	}	
@@ -836,5 +909,102 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	}
 	public boolean isModulo(){
 		return getLivello().equals(ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+	}
+
+	public Pdg_programmaBulk getPdgProgramma() {
+		return pdgProgramma;
+	}
+	
+	public void setPdgProgramma(Pdg_programmaBulk pdgProgramma) {
+		this.pdgProgramma = pdgProgramma;
+	}
+	@Override
+	public String getCd_programma() {
+		Pdg_programmaBulk pdgProgramma = this.getPdgProgramma();
+		if (pdgProgramma == null)
+			return null;
+		return pdgProgramma.getCd_programma();
+	}
+	
+	@Override
+	public void setCd_programma(String cd_programma) {
+		this.getPdgProgramma().setCd_programma(cd_programma);
+	}
+
+	public Pdg_missioneBulk getPdgMissione() {
+		return pdgMissione;
+	}
+	
+	public void setPdgMissione(Pdg_missioneBulk pdgMissione) {
+		this.pdgMissione = pdgMissione;
+	}
+	@Override
+	public String getCd_missione() {
+		Pdg_missioneBulk pdgMissione = this.getPdgMissione();
+		if (pdgMissione == null)
+			return null;
+		return pdgMissione.getCd_missione();
+	}
+	
+	@Override
+	public void setCd_missione(String cd_missione) {
+		this.getPdgMissione().setCd_missione(cd_missione);
+	}
+
+	public Boolean getFl_previsione() {
+		return fl_previsione;
+	}
+	public void setFl_previsione(Boolean fl_previsione) {
+		this.fl_previsione = fl_previsione;
+	}
+	
+	public Boolean getFl_gestione() {
+		return fl_gestione;
+	}
+	public void setFl_gestione(Boolean fl_gestione) {
+		this.fl_gestione = fl_gestione;
+	}
+	
+	public String getTipoFaseToSearch() {
+		return tipoFaseToSearch;
+	}
+	
+	public void setTipoFaseToSearch(String tipoFaseToSearch) {
+		this.tipoFaseToSearch = tipoFaseToSearch;
+	}
+	
+	public void setOtherField(Progetto_other_fieldBulk otherField) {
+		this.otherField = otherField;
+	}
+	
+	public Progetto_other_fieldBulk getOtherField() {
+		return otherField;
+	}
+	
+	public Boolean getFl_piano_economico() {
+		return getOtherField()!=null && 
+			   getOtherField().getFl_piano_economico()!=null &&
+			   getOtherField().getFl_piano_economico();
+	}
+	
+	public void setFl_piano_economico(Boolean fl_piano_economico) {
+		if (getOtherField()==null) {
+			Progetto_other_fieldBulk bulk = new Progetto_other_fieldBulk(this.getPg_progetto());
+			bulk.setFl_piano_economico(Boolean.FALSE);
+			bulk.setToBeCreated();
+			setOtherField(bulk); 
+		}
+		if (getFl_piano_economico()!=null && fl_piano_economico!=null && 
+				getFl_piano_economico()!=fl_piano_economico) {
+			getOtherField().setFl_piano_economico(fl_piano_economico);
+			getOtherField().setToBeUpdated();	
+		}
+	}
+	
+	public boolean isROFlPianoEconomico() {
+		return Boolean.TRUE.equals(getFl_piano_economico()) &&
+				!getDettagliPianoEconomicoTotale().isEmpty() &&
+				!getDettagliPianoEconomicoAnnoCorrente().isEmpty() &&
+				!getDettagliPianoEconomicoAltriAnni().isEmpty();
 	}
 }

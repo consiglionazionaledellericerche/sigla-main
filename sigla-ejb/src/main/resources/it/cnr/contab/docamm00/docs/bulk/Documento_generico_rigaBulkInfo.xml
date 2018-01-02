@@ -68,6 +68,8 @@
 		property="banca"
 		inputType="BUTTON"
 		img="img/find16.gif"
+		iconClass="fa fa-search text-primary"
+		buttonClass="btn-secondary btn-outline-secondary btn-title text-primary"
 		readonlyProperty="abledToInsertBank"
 		label="Conto/i"
 		href="javascript:submitForm('doSearch(main.Dettaglio.listabanche)')" />
@@ -203,10 +205,14 @@
 		name="terzo"
 		property="terzo"
 		inputType="SEARCHTOOL"
-		label="Anagrafica"
+		formName="searchtool_small"
 		readonlyProperty="ROTerzo"
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+		inputCssClass=""
 		enabledOnSearch="false"
-        enabledOnEdit="true" />	
+        enabledOnEdit="true"	
+		label="Anagrafica"
+		nullable="false"/>
 	<fieldProperty
 		name="cd_terzo"
 		property="terzo.cd_terzo"
@@ -223,7 +229,7 @@
 		name="cd_precedente"
 		property="terzo.cd_precedente"
 		maxLength="20"
-		inputSize="6"
+		inputSize="20"
 		inputType="TEXT"
 		label="Codice precedente"
 		readonlyProperty="ROCd_terzo"
@@ -241,9 +247,9 @@
 	<fieldProperty
 		name="denominazione_sede"
 		property="terzo.denominazione_sede"
-		inputSize="15"
+		inputSize="60"
 		inputType="ROTEXT"
-		label=""
+		label="Denom./Sede"
 		caseSensitiveSearch="false"	/>
 	<fieldProperty
 		name="nome"
@@ -269,7 +275,7 @@
 		name="ragione_sociale"
 		property="ragione_sociale"
 		maxLength="100"
-		inputSize="30"
+		inputSize="60"
 		inputType="TEXT"
 		label="Ragione Sociale"
 		readonlyProperty="ROCd_terzo"
@@ -503,15 +509,15 @@
 	<formFieldProperty name="terzo" />
 	<formFieldProperty name="cd_terzo" />
 	<formFieldProperty name="cd_precedente" />
-	<formFieldProperty name="denominazione_sede" />
+	<formFieldProperty name="denominazione_sede" inputCssClass="w-100 "/>
 	<formFieldProperty name="partita_iva" />
-	<formFieldProperty name="nome" />
-	<formFieldProperty name="via_fiscale" />
-	<formFieldProperty name="ragione_sociale" />
+	<formFieldProperty name="nome" inputCssClass="w-100 "/>
+	<formFieldProperty name="via_fiscale" inputCssClass="w-100 "/>
+	<formFieldProperty name="ragione_sociale" inputCssClass="w-100 "/>
 	<formFieldProperty name="codice_fiscale" />
-	<formFieldProperty name="cognome" />
+	<formFieldProperty name="cognome" inputCssClass="w-100 "/>
 	<formFieldProperty name="num_civico" />
-	<formFieldProperty name="ds_comune" />
+	<formFieldProperty name="ds_comune" inputCssClass="w-100 "/>
 	<formFieldProperty name="ds_provincia" />
 	
 <!-- modalita' e termini-->

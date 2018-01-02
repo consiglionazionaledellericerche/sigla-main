@@ -84,7 +84,7 @@ public class MandatoAutomaticoWizardBP extends it.cnr.jada.util.action.SimpleCRU
 	public void create(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
 	{
 		try {
-			setModel(context, ((MandatoAutomaticoComponent)createComponentSession()).creaMandatoAutomatico(context.getUserContext(), getModel()));
+			setModel(context, ((MandatoAutomaticoComponentSession)createComponentSession()).creaMandatoAutomatico(context.getUserContext(), getModel()));
 			setDirty(false);
 			setEditable(false);
 			setStatus(VIEW);

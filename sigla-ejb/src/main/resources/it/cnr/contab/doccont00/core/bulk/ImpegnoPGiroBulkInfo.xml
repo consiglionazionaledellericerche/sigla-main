@@ -101,7 +101,9 @@
 		enabledOnSearch="true"
 		completeOnSave="true"
 		label="Voce del Piano"
+		formName="searchtool"
 		columnSet="impegnoPGiro"
+		freeSearchSet="impegnoPGiro"
 		/>
 	<fieldProperty
 		name="esercizio_originale"

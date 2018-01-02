@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk"
+	homeClassName="it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineHome">
+	<defaultColumnMap
+		tableName="EVASIONE_ORDINE">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="numerazioneMag.magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="numerazioneMag.magazzino.cdMagazzino" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="numerazioneMag.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE_MAG"
+			propertyName="numerazioneMag.cdNumeratoreMag" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="numerazioneMag"
+		partOfOid="true" />
+</SQLPersistentInfo>

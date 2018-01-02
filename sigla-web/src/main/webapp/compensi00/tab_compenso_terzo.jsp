@@ -8,22 +8,21 @@
 <% CRUDCompensoBP bp = (CRUDCompensoBP)BusinessProcess.getBusinessProcess(request);
 	CompensoBulk compenso = (CompensoBulk)bp.getModel(); %>
 
-<div class="Group" style="width:100%">
-<table>
+<div class="Group card">
+<table class="w-75">
   <tr>
-	<td colspan=2><% bp.getController().writeFormInput(out,null,"ti_anagrafico",false,null,"onClick=\"submitForm('doOnTipoAnagraficoChange')\""); %></td>
+	<td colspan="2"><% bp.getController().writeFormInput(out,null,"ti_anagrafico",false,null,"onClick=\"submitForm('doOnTipoAnagraficoChange')\""); %></td>
   </tr>
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"cd_terzo"); %></td>
-	<td colspan=3>
-		<% bp.getController().writeFormInput(out,"cd_terzo"); %>
+	<td><% bp.getController().writeFormLabel(out,"find_terzo"); %></td>
+	<td colspan="3">
 		<% bp.getController().writeFormInput(out,"find_terzo"); %>
 	</td>
   </tr>
 
   <tr>
 	<td><% bp.getController().writeFormLabel( out, "cd_precedente"); %></td>
-	<td><% bp.getController().writeFormInput( out, "cd_precedente"); %></td>
+	<td colspan="3"><% bp.getController().writeFormInput( out, "cd_precedente"); %></td>
   </tr>  
   
   <tr>
@@ -34,11 +33,11 @@
   </tr>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"ragione_sociale"); %></td>
-	<td colspan=3><% bp.getController().writeFormInput(out,"ragione_sociale"); %></td>
+	<td colspan="3"><% bp.getController().writeFormInput(out,"ragione_sociale"); %></td>
   </tr>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"indirizzoTerzo");%></td>
-	<td colspan=3><% bp.getController().writeFormInput(out,"indirizzoTerzo");%></td>
+	<td colspan="3"><% bp.getController().writeFormInput(out,"indirizzoTerzo");%></td>
   </tr>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"ds_comune");%></td>
@@ -54,11 +53,11 @@
   </tr>
   <tr>
  	<td><% bp.getController().writeFormLabel(out,"termini_pagamento");%></td>
- 	<td colspan=3><% bp.getController().writeFormInput(out,"termini_pagamento");%></td> 	
+ 	<td colspan="3"><% bp.getController().writeFormInput(out,"termini_pagamento");%></td> 	
   </tr>
   <tr>
  	<td><% bp.getController().writeFormLabel(out,"modalita_pagamento");%></td>
-    <td colspan=3>
+    <td colspan="3">
     	<% bp.getController().writeFormInput(out,null,"modalita_pagamento",false,null,"onChange=\"submitForm('doOnModalitaPagamentoChange')\"");%>
 		<% if (compenso.getBanca() != null) bp.getController().writeFormInput(out, null, "listaBanche", false, null, ""); %>
 	</td>
@@ -87,7 +86,7 @@
 </table>
 </div>
 
-<div class="Group" style="width:100%">
+<div class="Group card">
 <table>
   <tr>
  	<td><% bp.getController().writeFormLabel(out,"tipoRapporto");%></td>
@@ -107,19 +106,19 @@
 </div>
 
 <% if (bp.isGestioneIncarichiEnabled() && (compenso!=null && compenso.isPrestazioneCompensoEnabled()) && (bp.isSearching() || (compenso!=null && compenso.isIncaricoEnabled()))) { %>
-<div class="Group" style="width:100%">
-<fieldset class="fieldset">
+<div class="Group">
+<fieldset class="fieldset card">
 
 <% if (compenso!=null && compenso.getCd_tipo_rapporto()!=null && compenso.getCd_tipo_rapporto().equals(new String ("BORS"))) { %>
-<legend class="GroupLabel">Borsa di studio</legend>
+	<legend class="Group cardLabel card-header text-primary">Borsa di studio</legend>
 <% } else { %>
 	<% if (compenso!=null && compenso.getCd_tipo_rapporto()!=null && compenso.getCd_tipo_rapporto().equals(new String ("ASS"))) { %>
-	<legend class="GroupLabel">Assegno di ricerca</legend>
+	<legend class="Group cardLabel card-header text-primary">Assegno di ricerca</legend>
 	<% } else {%>
-		<legend class="GroupLabel">Incarico</legend>
+	<legend class="Group cardLabel card-header text-primary">Incarico</legend>
 	<% } %>
 <% } %>
-
+<div class="Panel">
 <table>
   <tr>
   	<td><% bp.getController().writeFormLabel(out,"incarichi_repertorio_anno"); %></td>
@@ -136,14 +135,16 @@
     <td colspan="3"><% bp.getController().writeFormInput(out,"incarichi_oggetto");%></td>
   </tr>
 </table>
+</div>
 </fieldset>
 </div>
 <% } %>
 
 <% if ((compenso!=null && compenso.isPrestazioneCompensoEnabled()) && (bp.isSearching() || (compenso!=null && compenso.isContrattoEnabled()))) { %>
-<div class="Group" style="width:100%">
-<fieldset class="fieldset">
-<legend class="GroupLabel">Repertorio Contratto</legend>
+<div class="Group">
+<fieldset class="fieldset card">
+<legend class="Group cardLabel card-header text-primary">Repertorio Contratto</legend>
+<div class="Panel">
 <table>
   <tr>
   	<td><% bp.getController().writeFormLabel(out,"contratto"); %></td>
@@ -154,15 +155,17 @@
     <td colspan="3"><% bp.getController().writeFormInput(out,"oggetto_contratto");%></td>
   </tr>
 </table>
+</div>
 </fieldset>
 </div>
 <% } %>
 
 
 <% if (compenso.isVisualizzaPignorato()) { %>
-	<div class="Group" style="width:100%">
-	<fieldset class="fieldset">
-	<legend class="GroupLabel">Pignorato</legend>
+<div class="Group">
+	<fieldset class="fieldset card">
+	<legend class="Group cardLabel card-header text-primary">Pignorato</legend>
+	<div class="Panel">
 	<table>
 	  <tr>
 	   <td><% bp.getController().writeFormLabel( out, "cd_terzo_pignorato"); %></td>
@@ -181,11 +184,12 @@
 	   </td>
 	  </tr>
 	</table>
+	</div>
 	</fieldset>	
-    </div>
+</div>
 <% } %>
 <% if (compenso.isVisualizzaCodici_rapporti_inps()) { %>
-<div class="Group" style="width:100%">
+<div class="Group card" style="width:100%">
 <table>
   <tr>
   	<td><% bp.getController().writeFormLabel(out,"codici_rapporti_inps"); %></td>

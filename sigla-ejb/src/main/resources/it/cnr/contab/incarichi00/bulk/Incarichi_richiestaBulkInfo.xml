@@ -63,21 +63,21 @@
 		inputType="TEXT"
 		inputSize="6"
 		maxLength="30"
-		label="Unità organizzativa" />
+		label="Unit&#224; organizzativa" />
 	<fieldProperty
 		name="ds_unita_organizzativa"
 		property="unita_organizzativa.ds_unita_organizzativa"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="300"
-		label="Unità organizzativa" />
+		label="Unit&#224; organizzativa" />
 	<fieldProperty
 		name="indirizzo_unita_organizzativa"
 		property="indirizzo_unita_organizzativa"
 		inputType="ROTEXT"
 		inputSize="70"
 		maxLength="70"
-		label="Unità organizzativa" />
+		label="Unit&#224; organizzativa" />
 	<fieldProperty
 		name="unita_organizzativa"
 		property="unita_organizzativa"
@@ -85,7 +85,7 @@
 		formName="searchtoolUO"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Unità organizzativa" />
+		label="Unit&#224; organizzativa" />
 	<fieldProperty
 		name="attivita"
 		property="attivita"
@@ -95,6 +95,7 @@
 		cols="80"
 		rows="5"
 		enabledOnSearch="true"
+		inputCssClass="w-100 "
 		nullable="false"
 		label="Oggetto" />
 	<fieldProperty
@@ -115,6 +116,7 @@
 		cols="80"
 		rows="3"
 		enabledOnSearch="true"
+		inputCssClass="w-100 "
 		label="Competenze richieste" />
 	<fieldProperty
 		name="durata"
@@ -124,6 +126,7 @@
 		cols="80"
 		rows="2"
 		enabledOnSearch="true"
+		inputCssClass="w-100 "
 		nullable="false"
 		label="Durata" />
 	<fieldProperty
@@ -134,6 +137,7 @@
 		cols="80"
 		rows="2"
 		enabledOnSearch="true"
+		inputCssClass="w-100 "
 		nullable="false"
 		label="Luogo di svolgimento" />
 	<fieldProperty
@@ -144,6 +148,7 @@
 		cols="80"
 		rows="3"
 		enabledOnSearch="true"
+		inputCssClass="w-100 "
 		label="Altre Informazioni" />
 	<fieldProperty
 		name="stato"
@@ -202,23 +207,15 @@
 		command="doOnPersonaleInternoChange"
 		label="Professionalità interne" />
 	<fieldProperty
-		name="personale_interno_ro"
-		property="personale_interno"
-		keysProperty="personale_internoKeys"
-		inputType="SELECT"
-		inputSize="2"
-		maxLength="2"
-		enabledOnSearch="true"
-		label="Professionalità interne" />
-	<fieldProperty
 		name="email_risposte"
 		property="email_risposte"
 		inputType="TEXT"
 		inputSize="100"
 		maxLength="100"
 		enabledOnSearch="true"
+		inputCssClass="w-100 "
 		nullable="false"
-		label="Indirizzo e_mail per risposte " />
+		label="Indirizzo email per risposte " />
 	<fieldProperty
 		name="cd_tematica_attivita"
 		property="tematica_attivita.cd_tematica_attivita"
@@ -256,7 +253,7 @@
 		nullable="false"
 		maxLength="3"
 		inputSize="3"
-		enabledOnSearch="true"
+		enabledOnSearch="false"
 		enabledOnView="true"/>
 	<fieldProperty
 		name="nr_risorse_trovate_no"
@@ -268,7 +265,7 @@
 		nullable="false"
 		maxLength="3"
 		inputSize="3"
-		enabledOnSearch="true"
+		enabledOnSearch="false"
 		enabledOnView="true"/>
 	<fieldProperty
 		name="nr_risorse_trovate_na"
@@ -280,32 +277,35 @@
 		nullable="false"
 		maxLength="3"
 		inputSize="3"
-		enabledOnSearch="true"
+		enabledOnSearch="false"
 		enabledOnView="true"/>
 	<fieldProperty
-		name="nr_risorse_trovate_si_ro"
+		name="nr_risorse_trovate_si_search"
 		property="nr_risorse_trovate_si"
 		label="conformi alla richiesta"
 		inputType="TEXT"
+		nullable="false"		
 		maxLength="3"
-		inputSize="3"
-		enabledOnSearch="true"/>
+		enabledOnSearch="true"
+		inputSize="3"/>		
 	<fieldProperty
-		name="nr_risorse_trovate_no_ro"
+		name="nr_risorse_trovate_no_search"
 		property="nr_risorse_trovate_no"
 		label="non pervenute candidature"
 		inputType="TEXT"
+		nullable="false"		
 		maxLength="3"
-		inputSize="3"
-		enabledOnSearch="true"/>
+		enabledOnSearch="true"
+		inputSize="3"/>		
 	<fieldProperty
-		name="nr_risorse_trovate_na_ro"
+		name="nr_risorse_trovate_na_search"
 		property="nr_risorse_trovate_na"
 		label="non conformi alla richiesta"
 		inputType="TEXT"
+		nullable="false"		
 		maxLength="3"
-		inputSize="3"
-		enabledOnSearch="true"/>
+		enabledOnSearch="true"
+		inputSize="3"/>		
 
 	<formFieldProperty
 		name="esercizio" />
@@ -361,8 +361,6 @@
 	<formFieldProperty
 		name="personale_interno" />
 	<formFieldProperty
-		name="personale_interno_ro" />
-	<formFieldProperty
 		name="email_risposte" />
 	<formFieldProperty
 		name="cd_tematica_attivita" />
@@ -377,11 +375,11 @@
 	<formFieldProperty
 		name="nr_risorse_trovate_na" />
 	<formFieldProperty
-		name="nr_risorse_trovate_si_ro" />
+		name="nr_risorse_trovate_si_search" />
 	<formFieldProperty
-		name="nr_risorse_trovate_no_ro" /> 
+		name="nr_risorse_trovate_no_search" /> 
 	<formFieldProperty
-		name="nr_risorse_trovate_na_ro" />
+		name="nr_risorse_trovate_na_search" />
 
 	<columnFieldProperty
 		name="esercizio" />
@@ -460,9 +458,11 @@
 	<form
 		name="searchtool" >
 		<formFieldProperty
-			name="esercizio" />
+			name="esercizio" 
+			inputCssClass="w-20"/>
 		<formFieldProperty
-			name="pg_richiesta" />
+			name="pg_richiesta" 
+			inputCssClass="w-25"/>
 		<formFieldProperty
 			name="attivita"
 			inputType="TEXT"

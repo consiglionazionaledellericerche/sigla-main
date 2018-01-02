@@ -460,7 +460,7 @@ public Forward doSelezionaSiopeDaCompletare(ActionContext actioncontext) throws 
                 OggettoBulk oggettobulk1 = (OggettoBulk)remoteiterator.nextElement();
                 ((ReversaleBulk)oggettobulk1).setSiopeDaCompletare(true);
                 EJBCommonServices.closeRemoteIterator(actioncontext, remoteiterator);
-                crudbp.setMessage("La ricerca ha fornito un solo risultato.");
+                crudbp.setMessage(FormBP.INFO_MESSAGE,"La ricerca ha fornito un solo risultato.");
                 return doRiportaSelezioneSiopeDaCompletare(actioncontext, oggettobulk1);
             } else
             {

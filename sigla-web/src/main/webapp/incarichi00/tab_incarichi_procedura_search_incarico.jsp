@@ -7,10 +7,9 @@
 CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)BusinessProcess.getBusinessProcess(request);
 %>
    <fieldset class="fieldset">
-    <legend class="GroupLabel"><% bp.getController().writeFormInput(out,null,"statoText",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;\"");%></legend>    
-	<table class="Panel">
+	<table class="Panel w-100">
       <tr><td>
-      <div class="Group">
+      <div class="Group card">
 	      <table>      
 			  <tr>         
 				<td><% bp.getController().writeFormLabel(out,"incaricoRepertorioSearch");%></td>

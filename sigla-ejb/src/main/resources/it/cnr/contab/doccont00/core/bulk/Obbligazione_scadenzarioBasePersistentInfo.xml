@@ -62,6 +62,13 @@
 			columnScale="2"
 			nullable="false" />
 		<columnMapping
+			columnName="FL_ASSOCIATA_ORDINE"
+			propertyName="flAssociataOrdine"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="UTUV"
 			propertyName="utuv"
 			sqlTypeName="VARCHAR"
@@ -86,6 +93,8 @@
 		name="duva" />
 	<persistentProperty
 		name="im_associato_doc_contabile" />
+	<persistentProperty
+		name="flAssociataOrdine" />
 	<persistentProperty
 		name="utuv" />
 </SQLPersistentInfo>

@@ -187,6 +187,23 @@
 	<columnFieldProperty
 		name="ds_linea_attivita" />
 
+	<columnSet name="nuovoPdg">
+		<columnFieldProperty
+			name="cd_centro_responsabilita"
+			columnStyle="width:80px; text-align:left" />
+		<columnFieldProperty
+			name="cd_progetto"
+			columnStyle="width:80px; text-align:left"
+			label="Progetto" />		
+		<columnFieldProperty
+			name="cd_linea_attivita"
+			columnStyle="padding-left:10px"/>		
+		<columnFieldProperty
+			name="cd_natura" />
+		<columnFieldProperty
+			name="ds_linea_attivita" />
+	</columnSet>
+	
 	<findFieldProperty
 		name="ti_appartenenza" />
 	<findFieldProperty

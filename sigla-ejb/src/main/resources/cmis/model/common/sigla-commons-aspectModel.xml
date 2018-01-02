@@ -102,5 +102,18 @@
 				</property>
 			</properties>
 		</aspect>
+		<aspect name="sigla_commons_aspect:applicativo">
+			<title>Applicativo Gestione</title>
+			<properties>
+				<property name="sigla_commons_aspect:applicativo_nome">
+					<title>Nome Applicativo</title>
+					<type>d:text</type>
+				</property>
+				<property name="sigla_commons_aspect:applicativo_numero_versione">
+					<title>Numero Versione Applicativo</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
 	</aspects>
 </model>

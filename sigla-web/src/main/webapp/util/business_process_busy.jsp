@@ -14,7 +14,7 @@
 restoreWorkspace();
 </script>
 
-<form name="mainForm" action="FormAction.do">
+<form name="mainForm" action="FormAction.do" action-ng="FormAction.do">
 <% BusinessProcess bp = BusinessProcess.getBusinessProcess(request);
 	BusinessProcess.encode(bp,pageContext); %>
 <input type="hidden" name="comando" value="doDefault">
@@ -45,10 +45,10 @@ restoreWorkspace();
 	</tr>
 </table>
 <% } else { %>	
-	<div class="col-md-6 offset-md-3">
+	<div class="col-md-6 offset-md-3 mx-auto">
 		<div class="card">
 		  <h3 class="card-header h2 text-danger"><i class="fa fa-exclamation-circle fa-fw fa-2x text-danger" aria-hidden="true"></i> Errore</h3>
-		  <div class="card-block">
+		  <div class="card-block p-3">
 		    <p class="card-title">
 						Operazione in corso.
 				  		<br>L'ultima operazione richiesta è ancora in corso.

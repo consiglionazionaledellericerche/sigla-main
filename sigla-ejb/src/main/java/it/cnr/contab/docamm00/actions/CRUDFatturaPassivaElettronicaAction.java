@@ -21,10 +21,7 @@ import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.CRUDAction;
-import it.cnr.jada.util.action.FormField;
-import it.cnr.jada.util.action.SelezionatoreListaAction;
-import it.cnr.jada.util.action.SelezionatoreListaBP;
+import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.SoggettoEmittenteType;
@@ -57,7 +54,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 	        {
 	            OggettoBulk oggettobulk1 = (OggettoBulk)remoteiterator.nextElement();
 	            EJBCommonServices.closeRemoteIterator(actioncontext,remoteiterator);
-	            fatturaPassivaElettronicaBP.setMessage("La ricerca ha fornito un solo risultato.");
+	            fatturaPassivaElettronicaBP.setMessage(FormBP.INFO_MESSAGE,"La ricerca ha fornito un solo risultato.");
 	            return doRiportaSelezione(actioncontext, oggettobulk1);
 	        } else
 	        {
@@ -221,7 +218,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 				fatturaPassivaElettronicaBP.setMessage("Ricevuta decorrenza termini - non è possibile effettuare il Rifiuto. Registrare il documento e richiedere nota credito, oppure rifiutare il documento secondo le modalità di invio PEC (Vedere Manuale)!");
 			} else {
 				String message = "Inserire il motivo di rifiuto della fattura:";
-				message += "<textarea maxLength=\"255\" name=\"main.motivoRifiuto\" class=\"FormInput\" "+
+				message += "<textarea maxLength=\"255\" name=\"main.motivoRifiuto\" class=\"FormInput w-100\" "+
 						"cols=\"60\" rows=\"5\" onfocus=\"focused(this)\" onclick=\"cancelBubble(event)\"></textarea>";
 				openConfirm( context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmRifiutaFattura");				
 			}

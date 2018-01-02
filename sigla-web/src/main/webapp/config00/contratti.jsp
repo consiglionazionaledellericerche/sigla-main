@@ -29,7 +29,7 @@
 		   (contratto.isProvvisorio() && contratto.getTipo_contratto()!=null && contratto.getTipo_contratto().getFl_pubblica_contratto()!= null && contratto.getTipo_contratto().getFl_pubblica_contratto())))
    tabs = new String[][] {
 	               { "tabTestata","Contratti","/config00/tab_contratti_testata.jsp" },
-	               { "tabCessazione","Dati di cessazione dell’efficacia","/config00/tab_contratti_cessazione.jsp" },
+	               { "tabCessazione","Dati di cessazione dell'efficacia","/config00/tab_contratti_cessazione.jsp" },
 	               { "tabAss_contratto_uo","CdR","/config00/tab_ass_contratto_uo.jsp" },
 	               { "tabAllegati","Allegati","/config00/tab_contratti_allegati.jsp" },
 	               { "tabAss_contratto_ditte","Ditte Invitate","/config00/tab_ass_contratto_ditte.jsp" },

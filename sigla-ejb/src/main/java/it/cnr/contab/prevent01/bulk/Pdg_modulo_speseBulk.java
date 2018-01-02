@@ -8,10 +8,9 @@ import java.sql.Timestamp;
 
 import it.cnr.contab.config00.latt.bulk.CofogBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
-import it.cnr.contab.config00.sto.bulk.Ass_uo_areaBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
@@ -35,6 +34,8 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 	private boolean prevAnnoSucObb=false;
 	private CofogBulk cofog;
 	private Pdg_missioneBulk pdgMissione;
+	private Voce_piano_economico_prgBulk voce_piano_economico;
+
 	public Pdg_modulo_speseBulk() {
 		super();
 	}
@@ -142,7 +143,7 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 		return super.initializeForInsert(crudbp, actioncontext);
 	}	
 	private void inizializzaImporti(){
-		setIm_spese_a2(null);
+		setIm_spese_a2(Utility.ZERO);
 		setIm_spese_a3(Utility.ZERO);
 		setIm_spese_gest_accentrata_est(Utility.ZERO);
 		setIm_spese_gest_accentrata_int(Utility.ZERO);
@@ -448,4 +449,37 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 		this.prevAnnoSucObb = prevAnnoSucObb;
 	}
 
+	public Voce_piano_economico_prgBulk getVoce_piano_economico() {
+		return voce_piano_economico;
+	}
+
+	public void setVoce_piano_economico(Voce_piano_economico_prgBulk voce_piano_economico) {
+		this.voce_piano_economico = voce_piano_economico;
+	}	
+
+	@Override
+	public String getCd_unita_piano() {
+		Voce_piano_economico_prgBulk vocePiano = this.getVoce_piano_economico();
+		if (vocePiano == null)
+			return null;
+		return vocePiano.getCd_unita_organizzativa();
+	}
+	
+	@Override
+	public void setCd_unita_piano(String cd_unita_piano) {
+		this.getVoce_piano_economico().setCd_unita_organizzativa(cd_unita_piano);
+	}
+	
+	@Override
+	public String getCd_voce_piano() {
+		Voce_piano_economico_prgBulk vocePiano = this.getVoce_piano_economico();
+		if (vocePiano == null)
+			return null;
+		return vocePiano.getCd_voce_piano();
+	}
+	
+	@Override
+	public void setCd_voce_piano(String cd_voce_piano) {
+		this.getVoce_piano_economico().setCd_voce_piano(cd_voce_piano);
+	}
 }

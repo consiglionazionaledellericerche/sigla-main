@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.cnr</groupId>
-	<version>4.1.19-SNAPSHOT</version>
+	<version>4.1.43-SNAPSHOT</version>
 	<artifactId>sigla</artifactId>
 	<name>sigla</name>
 	<packaging>pom</packaging>
@@ -24,7 +24,7 @@
     	<sonar.skip>true</sonar.skip>
 		<java.version>1.8</java.version>
 		<spring.version>4.3.3.RELEASE</spring.version>
-		<jada.version>5.0.28</jada.version>
+		<jada.version>5.0.57</jada.version>
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
 		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>
 		<slf4j.version>1.7.21</slf4j.version>
@@ -39,22 +39,6 @@
 					<configuration>
 						<source>${java.version}</source>
 						<target>${java.version}</target>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-eclipse-plugin</artifactId>
-					<configuration>
-						<ejbVersion>3.0</ejbVersion>
-						<projectNameTemplate>
-							[artifactId]-[version]
-						</projectNameTemplate>
-						<wtpmanifest>true</wtpmanifest>
-						<wtpapplicationxml>true</wtpapplicationxml>
-						<wtpversion>2.0</wtpversion>
-						<manifest>
-							${basedir}/src/main/resources/META-INF/MANIFEST.MF
-						</manifest>
 					</configuration>
 				</plugin>
 			</plugins>

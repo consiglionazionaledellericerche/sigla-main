@@ -6,6 +6,9 @@ package it.cnr.contab.docamm00.bp;
 
 import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
 import it.cnr.contab.doccont00.core.bulk.*;
+
+import java.util.Arrays;
+
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
 import it.cnr.contab.docamm00.docs.bulk.*;
@@ -18,6 +21,7 @@ import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.*;
 import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.jsp.JSPUtils;
 
 /**
  * Gestisce le catene di elementi correlate con il documento in uso.
@@ -758,9 +762,17 @@ public void setRibaltato(boolean b) {
 public void writeInventarioToolbar(javax.servlet.jsp.JspWriter writer) throws java.io.IOException,javax.servlet.ServletException {
 
 	if (!isSearching() && !isDeleting()) {
-		openToolbar(writer);
-		it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createInventarioToolbar(),this, this.getParentRoot().isBootstrap());
-		closeToolbar(writer);
+		if (this.getParentRoot().isBootstrap()) {
+			writer.println("<!-- TOOLBAR INVENTARIO -->");
+			writer.println("<div id=\"inventarioToolbar\" class=\"btn-toolbar\" role=\"toolbar\" aria-label=\"Toolbar with button groups\">");
+			JSPUtils.toolbarBootstrap(writer, Arrays.asList(createInventarioToolbar()), this);
+			writer.println("</div>");
+			writer.println("<!-- FINE TOOLBAR INVENTARIO -->");				
+		} else {						
+			openToolbar(writer);
+			it.cnr.jada.util.jsp.JSPUtils.toolbar(writer,createInventarioToolbar(),this, this.getParentRoot().isBootstrap());
+			closeToolbar(writer);
+		}
 	}
 }
 protected it.cnr.jada.util.jsp.Button[] createInventarioToolbar() {

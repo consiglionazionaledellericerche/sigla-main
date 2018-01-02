@@ -11,6 +11,7 @@ import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.PrintFieldProperty;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.util.action.FormBP;
 import it.cnr.jada.util.action.OptionBP;
 
 public class OfflineReportPrintAction extends it.cnr.jada.util.action.FormAction {
@@ -74,7 +75,7 @@ public Forward doPrint(ActionContext context) {
 		if (requiresCommit)
 			context.getBusinessProcess().commitUserTransaction();
 		PrintSpoolerBP printSpoolerBP = (PrintSpoolerBP)context.createBusinessProcess("PrintSpoolerBP");
-		printSpoolerBP.setMessage("Stampa accodata con successo");	
+		printSpoolerBP.setMessage(FormBP.INFO_MESSAGE, "Stampa accodata con successo");
 		return context.addBusinessProcess(printSpoolerBP);
 
 	} catch(Throwable e) {
@@ -99,7 +100,7 @@ public Forward doConfermaStampaInCoda(ActionContext context,int option) throws j
 			Forward forward = context.closeBusinessProcess();
 			if (requiresCommit)
 				context.getBusinessProcess().commitUserTransaction();		
-			printSpoolerBP.setMessage("Stampa accodata con successo");	
+			printSpoolerBP.setMessage(FormBP.INFO_MESSAGE,"Stampa accodata con successo");
 			return context.addBusinessProcess(printSpoolerBP);
 		}
 						

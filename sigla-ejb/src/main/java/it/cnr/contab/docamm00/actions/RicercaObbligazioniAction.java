@@ -281,7 +281,8 @@ public Forward doOpenObbligazioniWindow(ActionContext context) {
 		if (calendar.get(java.util.Calendar.YEAR) != esercizioInScrivania)
 			dataReg = new java.sql.Timestamp(new java.text.SimpleDateFormat("dd/MM/yyyy").parse("31/12/" + esercizioInScrivania).getTime());
 		obbligazione.setDt_registrazione(dataReg);
-
+		obbligazione.setContratto(filtro.getContratto());
+		obbligazione.setListaVociSelezionabili(filtro.getListaVociSelezionabili());
 		obbligazione.setFl_calcolo_automatico(Boolean.TRUE);
 		if (filtro.getIm_importo()==null)
 			filtro.setIm_importo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));

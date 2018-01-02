@@ -131,7 +131,7 @@ public class CRUDObbligazioneResBP extends CRUDObbligazioneBP{
 		if (getStatus()!=VIEW && isEditable())
 			setScadenzaModificabile(true);
 		setStatusAndEditableMap();
-		setStatoModificabile(((ObbligazioneResBulk)getModel()).getStatoResiduo() == null);
+		setStatoModificabile(getModel() instanceof ObbligazioneResBulk && ((ObbligazioneResBulk)getModel()).getStatoResiduo() == null);
 	}
 	/**
 	 * Metodo utilizzato per la conferma dei dati selezionati o immessi, relativi

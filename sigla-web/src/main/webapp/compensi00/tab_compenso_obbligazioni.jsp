@@ -10,61 +10,81 @@
 <%	CRUDCompensoBP bp = (CRUDCompensoBP)BusinessProcess.getBusinessProcess(request);
 	CompensoBulk compenso = (CompensoBulk)bp.getModel(); %>
 
-<div class="Group" style="width:100%">
+<div class="Group card">
 <table>
 
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"esercizio_ori_obbligazione"); %></td>
-	<td><% bp.getController().writeFormInput(out,"esercizio_ori_obbligazione"); %></td>
+	<% bp.getController().writeFormField(out,"esercizio_ori_obbligazione"); %>
   </tr>
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"pg_obbligazione"); %></td>
-	<td><% bp.getController().writeFormInput(out,"pg_obbligazione"); %></td>
+	<% bp.getController().writeFormField(out,"pg_obbligazione"); %>
   </tr>
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"pg_obbligazione_scadenzario"); %></td>
-	<td><% bp.getController().writeFormInput(out,"pg_obbligazione_scadenzario"); %></td>
+	<% bp.getController().writeFormField(out,"pg_obbligazione_scadenzario"); %>
   </tr>
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"cd_cds_obbligazione"); %></td>
-	<td><% bp.getController().writeFormInput(out,"cd_cds_obbligazione"); %></td>
+	<% bp.getController().writeFormField(out,"cd_cds_obbligazione"); %>
   </tr>
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"esercizio_obbligazione"); %></td>
-	<td><% bp.getController().writeFormInput(out,"esercizio_obbligazione"); %></td>
+	<% bp.getController().writeFormField(out,"esercizio_obbligazione"); %>
   </tr>
 
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"scadenza_dt_scadenza"); %></td>
-	<td><% bp.getController().writeFormInput(out,"scadenza_dt_scadenza"); %></td>
+	<% bp.getController().writeFormField(out,"scadenza_dt_scadenza"); %>
   </tr>
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"scadenza_im_scadenza"); %></td>
-	<td><% bp.getController().writeFormInput(out,"scadenza_im_scadenza"); %></td>
+	<% bp.getController().writeFormField(out,"scadenza_im_scadenza"); %>
   </tr>
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"scadenza_ds_scadenza"); %></td>
-	<td><% bp.getController().writeFormInput(out,"scadenza_ds_scadenza"); %></td>
-  </tr>
- <tr>
-	<td><% bp.getController().writeFormLabel(out,"cig"); %></td>
-	<td><% bp.getController().writeFormInput(out,"cig"); %></td>
+	<% bp.getController().writeFormField(out,"scadenza_ds_scadenza"); %>
   </tr>
   <tr>
-	<td colspan=2>
+	<% bp.getController().writeFormField(out,"cig"); %>
+  </tr>
+  <tr>
+	<td colspan="2">
 		<% if (compenso.isStatoCompensoEseguiCalcolo()) { %>
 			<span class="FormLabel" style="color:red">E' necessario eseguire il calcolo prima di continuare</span>
 		<% } %>
 	</td>
   </tr>
+</table>
+<table>
   <tr>
-	<td colspan=2>
-		<% JSPUtils.button(out,"img/new24.gif","img/new24.gif","Crea/Ricerca<br>impegno","if (disableDblClick()) submitForm('doRicercaObbligazione')",null,bp.isBottoneCreaObbligazioneEnabled(), bp.getParentRoot().isBootstrap());%>
-		<% JSPUtils.button(out,"img/remove24.gif","img/remove24.gif","Elimina<br>impegno","if (disableDblClick()) submitForm('doEliminaObbligazione')",null,bp.isBottoneEliminaObbligazioneEnabled(), bp.getParentRoot().isBootstrap());%>
-		<% JSPUtils.button(out,"img/redo24.gif","img/redo24.gif","Aggiorna in<br>manuale","if (disableDblClick()) submitForm('doModificaManualeObbligazione')",null,bp.isBottoneModificaManualeObbligazioneEnabled(), bp.getParentRoot().isBootstrap());%>
-		<% JSPUtils.button(out,"img/refresh24.gif","img/refresh24.gif","Aggiorna in<br>automatico","if (disableDblClick()) submitForm('doModificaAutomaticaObbligazione')",null,bp.isBottoneModificaAutomaticaObbligazioneEnabled(), bp.getParentRoot().isBootstrap());%>
+	<td>
+		<% JSPUtils.button(out,
+				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-plus text-info":"img/new24.gif",
+				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-plus text-info":"img/new24.gif",
+				bp.getParentRoot().isBootstrap()?"Crea/Ricerca impegno":"Crea/Ricerca<br>impegno",
+				"if (disableDblClick()) submitForm('doRicercaObbligazione')",
+				"btn-secondary btn-outline-secondary btn-title text-primary",
+				bp.isBottoneCreaObbligazioneEnabled(), 
+				bp.getParentRoot().isBootstrap());%>
+		<% JSPUtils.button(out,
+				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-trash text-danger":"img/remove24.gif",
+				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-trash text-danger":"img/remove24.gif",
+				bp.getParentRoot().isBootstrap()?"Elimina impegno":"Elimina<br>impegno",
+				"if (disableDblClick()) submitForm('doEliminaObbligazione')",
+				"btn-secondary btn-outline-secondary btn-title text-primary",
+				bp.isBottoneEliminaObbligazioneEnabled(), 
+				bp.getParentRoot().isBootstrap());%>
+		<% JSPUtils.button(out,
+				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-repeat text-info":"img/redo24.gif",
+				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-repeat text-info":"img/redo24.gif",
+				bp.getParentRoot().isBootstrap()?"Aggiorna in manuale":"Aggiorna in<br>manuale",
+				"if (disableDblClick()) submitForm('doModificaManualeObbligazione')",
+				"btn-secondary btn-outline-secondary btn-title text-primary",
+				bp.isBottoneModificaManualeObbligazioneEnabled(), 
+				bp.getParentRoot().isBootstrap());%>
+		<% JSPUtils.button(out,
+				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-refresh text-info":"img/refresh24.gif",
+				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-refresh text-info":"img/refresh24.gif",
+				bp.getParentRoot().isBootstrap()?"Aggiorna in automatico":"Aggiorna in<br>automatico",
+				"if (disableDblClick()) submitForm('doModificaAutomaticaObbligazione')",
+				"btn-secondary btn-outline-secondary btn-title text-primary",
+				bp.isBottoneModificaAutomaticaObbligazioneEnabled(), 
+				bp.getParentRoot().isBootstrap());%>
 	</td>
   </tr>
-
 </table>
 </div>

@@ -1,653 +1,659 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBase"
-	keyClassName="it.cnr.contab.docamm00.docs.bulk.Fattura_passivaKey"
-	homeClassName="it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome" >
-	<defaultColumnMap
-		tableName="FATTURA_PASSIVA" >
-		<columnMapping
-			columnName="DT_CANCELLAZIONE"
-			propertyName="dt_cancellazione"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
-		<columnMapping
-			columnName="PG_BANCA"
-			propertyName="pg_banca"
-			sqlTypeName="DECIMAL"
-			columnSize="10"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_TERZO_UO_CDS"
-			propertyName="cd_terzo_uo_cds"
-			sqlTypeName="DECIMAL"
-			columnSize="8" />
-		<columnMapping
-			columnName="PROTOCOLLO_IVA"
-			propertyName="protocollo_iva"
-			sqlTypeName="DECIMAL"
-			columnSize="10" />
-		<columnMapping
-			columnName="CD_UO_FAT_CLGS"
-			propertyName="cd_uo_fat_clgs"
-			sqlTypeName="VARCHAR"
-			columnSize="30" />
-		<columnMapping
-			columnName="PG_VER_REC"
-			propertyName="pg_ver_rec"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="false" />
-		<columnMapping
-			columnName="STATO_COGE"
-			propertyName="stato_coge"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="CODICE_FISCALE"
-			propertyName="codice_fiscale"
-			sqlTypeName="VARCHAR"
-			columnSize="20" />
-		<columnMapping
-			columnName="ESERCIZIO_FATTURA_FORNITORE"
-			propertyName="esercizio_fattura_fornitore"
-			sqlTypeName="DECIMAL"
-			columnSize="4"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_MODALITA_PAG"
-			propertyName="cd_modalita_pag"
-			sqlTypeName="VARCHAR"
-			columnSize="10"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_TERMINI_PAG"
-			propertyName="cd_termini_pag"
-			sqlTypeName="VARCHAR"
-			columnSize="10" />
-		<columnMapping
-			columnName="IM_TOTALE_IMPONIBILE_DIVISA"
-			propertyName="im_totale_imponibile_divisa"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_TERMINI_PAG_UO_CDS"
-			propertyName="cd_termini_pag_uo_cds"
-			sqlTypeName="VARCHAR"
-			columnSize="10" />
-		<columnMapping
-			columnName="CD_UO_ORIGINE"
-			propertyName="cd_uo_origine"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="false" />
-		<columnMapping
-			columnName="PG_FATTURA_PASSIVA_FAT_CLGS"
-			propertyName="pg_fattura_passiva_fat_clgs"
-			sqlTypeName="DECIMAL"
-			columnSize="10" />
-		<columnMapping
-			columnName="COGNOME"
-			propertyName="cognome"
-			sqlTypeName="VARCHAR"
-			columnSize="50" />
-		<columnMapping
-			columnName="FL_SAN_MARINO_SENZA_IVA"
-			propertyName="fl_san_marino_senza_iva"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="CD_TERZO_CESSIONARIO"
-			propertyName="cd_terzo_cessionario"
-			sqlTypeName="DECIMAL"
-			columnSize="8" />
-		<columnMapping
-			columnName="STATO_PAGAMENTO_FONDO_ECO"
-			propertyName="stato_pagamento_fondo_eco"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="IM_TOTALE_FATTURA"
-			propertyName="im_totale_fattura"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="false" />
-		<columnMapping
-			columnName="DT_FATTURA_FORNITORE"
-			propertyName="dt_fattura_fornitore"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="DS_FATTURA_PASSIVA"
-			propertyName="ds_fattura_passiva"
-			sqlTypeName="VARCHAR"
-			columnSize="1000" />
-		<columnMapping
-			columnName="IM_TOTALE_QUADRATURA"
-			propertyName="im_totale_quadratura"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="false" />
-		<columnMapping
-			columnName="RAGIONE_SOCIALE"
-			propertyName="ragione_sociale"
-			sqlTypeName="VARCHAR"
-			columnSize="100" />
-		<columnMapping
-			columnName="TI_ASSOCIATO_MANREV"
-			propertyName="ti_associato_manrev"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_DIVISA"
-			propertyName="cd_divisa"
-			sqlTypeName="VARCHAR"
-			columnSize="10"
-			nullable="false" />
-		<columnMapping
-			columnName="PG_LETTERA"
-			propertyName="pg_lettera"
-			sqlTypeName="DECIMAL"
-			columnSize="10" />
-		<columnMapping
-			columnName="CD_CDS_ORIGINE"
-			propertyName="cd_cds_origine"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="false" />
-		<columnMapping
-			columnName="DT_PAGAMENTO_FONDO_ECO"
-			propertyName="dt_pagamento_fondo_eco"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
-		<columnMapping
-			columnName="STATO_COFI"
-			propertyName="stato_cofi"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="UTCR"
-			propertyName="utcr"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
-		<columnMapping
-			columnName="DT_A_COMPETENZA_COGE"
-			propertyName="dt_a_competenza_coge"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="FL_EXTRA_UE"
-			propertyName="fl_extra_ue"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="DT_SCADENZA"
-			propertyName="dt_scadenza"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
-		<columnMapping
-			columnName="FL_SAN_MARINO_CON_IVA"
-			propertyName="fl_san_marino_con_iva"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="TI_ISTITUZ_COMMERC"
-			propertyName="ti_istituz_commerc"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_TIPO_SEZIONALE"
-			propertyName="cd_tipo_sezionale"
-			sqlTypeName="VARCHAR"
-			columnSize="10"
-			nullable="false" />
-		<columnMapping
-			columnName="DACR"
-			propertyName="dacr"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="FL_INTRA_UE"
-			propertyName="fl_intra_ue"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="DUVA"
-			propertyName="duva"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="NOTE"
-			propertyName="note"
-			sqlTypeName="VARCHAR"
-			columnSize="300" />
-		<columnMapping
-			columnName="TI_BENE_SERVIZIO"
-			propertyName="ti_bene_servizio"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="IM_TOTALE_IVA"
-			propertyName="im_totale_iva"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="false" />
-		<columnMapping
-			columnName="IM_TOTALE_IMPONIBILE"
-			propertyName="im_totale_imponibile"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="false" />
-		<columnMapping
-			columnName="PROTOCOLLO_IVA_GENERALE"
-			propertyName="protocollo_iva_generale"
-			sqlTypeName="DECIMAL"
-			columnSize="10" />
-		<columnMapping
-			columnName="TI_FATTURA"
-			propertyName="ti_fattura"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="NUMERO_PROTOCOLLO"
-			propertyName="numero_protocollo"
-			sqlTypeName="VARCHAR"
-			columnSize="20" />
-		<columnMapping
-			columnName="NR_FATTURA_FORNITORE"
-			propertyName="nr_fattura_fornitore"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
-		<columnMapping
-			columnName="FL_FATTURA_COMPENSO"
-			propertyName="fl_fattura_compenso"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="CD_MODALITA_PAG_UO_CDS"
-			propertyName="cd_modalita_pag_uo_cds"
-			sqlTypeName="VARCHAR"
-			columnSize="10" />
-		<columnMapping
-			columnName="NOME"
-			propertyName="nome"
-			sqlTypeName="VARCHAR"
-			columnSize="50" />
-		<columnMapping
-			columnName="FL_SPEDIZIONIERE"
-			propertyName="fl_spedizioniere"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="FL_CONGELATA"
-			propertyName="fl_congelata"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="CD_CDS_FAT_CLGS"
-			propertyName="cd_cds_fat_clgs"
-			sqlTypeName="VARCHAR"
-			columnSize="30" />
-		<columnMapping
-			columnName="CD_TERZO"
-			propertyName="cd_terzo"
-			sqlTypeName="DECIMAL"
-			columnSize="8"
-			nullable="false" />
-		<columnMapping
-			columnName="ESERCIZIO_FAT_CLGS"
-			propertyName="esercizio_fat_clgs"
-			sqlTypeName="DECIMAL"
-			columnSize="4" />
-		<columnMapping
-			columnName="UTUV"
-			propertyName="utuv"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
-		<columnMapping
-			columnName="CAMBIO"
-			propertyName="cambio"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="4"
-			nullable="false" />
-		<columnMapping
-			columnName="FL_BOLLA_DOGANALE"
-			propertyName="fl_bolla_doganale"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="STATO_COAN"
-			propertyName="stato_coan"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="FL_AUTOFATTURA"
-			propertyName="fl_autofattura"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="DT_DA_COMPETENZA_COGE"
-			propertyName="dt_da_competenza_coge"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="DT_REGISTRAZIONE"
-			propertyName="dt_registrazione"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="PARTITA_IVA"
-			propertyName="partita_iva"
-			sqlTypeName="VARCHAR"
-			columnSize="20" />
-		<columnMapping
-			columnName="PG_BANCA_UO_CDS"
-			propertyName="pg_banca_uo_cds"
-			sqlTypeName="DECIMAL"
-			columnSize="10" />
-		<columnMapping
-			columnName="ESERCIZIO_LETTERA"
-			propertyName="esercizio_lettera"
-			sqlTypeName="DECIMAL"
-			columnSize="4" />
-		<columnMapping
-			columnName="FL_MERCE_EXTRA_UE"
-			propertyName="fl_merce_extra_ue"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="FL_LIQUIDAZIONE_DIFFERITA"
-			propertyName="fl_liquidazione_differita"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="FL_MERCE_INTRA_UE"
-			propertyName="fl_merce_intra_ue"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
-		<columnMapping
-			columnName="DATA_PROTOCOLLO"
-			propertyName="data_protocollo"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"/>	
-		<columnMapping
-			columnName="PROGR_UNIVOCO"
-			propertyName="progr_univoco"
-			sqlTypeName="DECIMAL"
-			columnSize="10" />		
-		<columnMapping
-			columnName="STATO_LIQUIDAZIONE"
-			propertyName="stato_liquidazione"
-			sqlTypeName="VARCHAR"
-			columnSize="10"/>
-		<columnMapping
-			columnName="CAUSALE"
-			propertyName="causale"
-			sqlTypeName="VARCHAR"
-			columnSize="10"/>
-		<columnMapping
-			columnName="CDS_COMPENSO"
-			propertyName="cds_compenso"
-			sqlTypeName="VARCHAR"
-			columnSize="30" />
-		<columnMapping
-			columnName="PG_COMPENSO"
-			propertyName="pg_compenso"
-			sqlTypeName="DECIMAL"
-			columnSize="10" />
-		<columnMapping
-			columnName="UO_COMPENSO"
-			propertyName="uo_compenso"
-			sqlTypeName="VARCHAR"
-			columnSize="30" />
-		<columnMapping
-			columnName="ESERCIZIO_COMPENSO"
-			propertyName="esercizio_compenso"
-			sqlTypeName="DECIMAL"
-			columnSize="4" />
-		
-		<columnMapping
-			columnName="ID_PAESE"
-			propertyName="idPaese"
-			sqlTypeName="VARCHAR"
-			columnSize="2" />
-		<columnMapping
-			columnName="ID_CODICE"
-			propertyName="idCodice"
-			sqlTypeName="VARCHAR"
-			columnSize="28"/>
-		<columnMapping
-			columnName="IDENTIFICATIVO_SDI"
-			propertyName="identificativoSdi"
-			sqlTypeName="DECIMAL"
-			columnSize="22"/>
-		<columnMapping
-			columnName="PROGRESSIVO"
-			propertyName="progressivo"
-			sqlTypeName="DECIMAL"
-			columnSize="22"/>				
+        persistentClassName="it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBase"
+        keyClassName="it.cnr.contab.docamm00.docs.bulk.Fattura_passivaKey"
+        homeClassName="it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome">
+    <defaultColumnMap
+            tableName="FATTURA_PASSIVA">
+        <columnMapping
+                columnName="DT_CANCELLAZIONE"
+                propertyName="dt_cancellazione"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="PG_BANCA"
+                propertyName="pg_banca"
+                sqlTypeName="DECIMAL"
+                columnSize="10"
+                nullable="false"/>
+        <columnMapping
+                columnName="CD_TERZO_UO_CDS"
+                propertyName="cd_terzo_uo_cds"
+                sqlTypeName="DECIMAL"
+                columnSize="8"/>
+        <columnMapping
+                columnName="PROTOCOLLO_IVA"
+                propertyName="protocollo_iva"
+                sqlTypeName="DECIMAL"
+                columnSize="10"/>
+        <columnMapping
+                columnName="CD_UO_FAT_CLGS"
+                propertyName="cd_uo_fat_clgs"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
+        <columnMapping
+                columnName="PG_VER_REC"
+                propertyName="pg_ver_rec"
+                sqlTypeName="DECIMAL"
+                columnSize="22"
+                nullable="false"/>
+        <columnMapping
+                columnName="STATO_COGE"
+                propertyName="stato_coge"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="CODICE_FISCALE"
+                propertyName="codice_fiscale"
+                sqlTypeName="VARCHAR"
+                columnSize="20"/>
+        <columnMapping
+                columnName="ESERCIZIO_FATTURA_FORNITORE"
+                propertyName="esercizio_fattura_fornitore"
+                sqlTypeName="DECIMAL"
+                columnSize="4"
+                nullable="false"/>
+        <columnMapping
+                columnName="CD_MODALITA_PAG"
+                propertyName="cd_modalita_pag"
+                sqlTypeName="VARCHAR"
+                columnSize="10"
+                nullable="false"/>
+        <columnMapping
+                columnName="CD_TERMINI_PAG"
+                propertyName="cd_termini_pag"
+                sqlTypeName="VARCHAR"
+                columnSize="10"/>
+        <columnMapping
+                columnName="IM_TOTALE_IMPONIBILE_DIVISA"
+                propertyName="im_totale_imponibile_divisa"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="false"/>
+        <columnMapping
+                columnName="CD_TERMINI_PAG_UO_CDS"
+                propertyName="cd_termini_pag_uo_cds"
+                sqlTypeName="VARCHAR"
+                columnSize="10"/>
+        <columnMapping
+                columnName="CD_UO_ORIGINE"
+                propertyName="cd_uo_origine"
+                sqlTypeName="VARCHAR"
+                columnSize="30"
+                nullable="false"/>
+        <columnMapping
+                columnName="PG_FATTURA_PASSIVA_FAT_CLGS"
+                propertyName="pg_fattura_passiva_fat_clgs"
+                sqlTypeName="DECIMAL"
+                columnSize="10"/>
+        <columnMapping
+                columnName="COGNOME"
+                propertyName="cognome"
+                sqlTypeName="VARCHAR"
+                columnSize="50"/>
+        <columnMapping
+                columnName="FL_SAN_MARINO_SENZA_IVA"
+                propertyName="fl_san_marino_senza_iva"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="CD_TERZO_CESSIONARIO"
+                propertyName="cd_terzo_cessionario"
+                sqlTypeName="DECIMAL"
+                columnSize="8"/>
+        <columnMapping
+                columnName="STATO_PAGAMENTO_FONDO_ECO"
+                propertyName="stato_pagamento_fondo_eco"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="IM_TOTALE_FATTURA"
+                propertyName="im_totale_fattura"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="false"/>
+        <columnMapping
+                columnName="DT_FATTURA_FORNITORE"
+                propertyName="dt_fattura_fornitore"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="DS_FATTURA_PASSIVA"
+                propertyName="ds_fattura_passiva"
+                sqlTypeName="VARCHAR"
+                columnSize="1000"/>
+        <columnMapping
+                columnName="IM_TOTALE_QUADRATURA"
+                propertyName="im_totale_quadratura"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="false"/>
+        <columnMapping
+                columnName="RAGIONE_SOCIALE"
+                propertyName="ragione_sociale"
+                sqlTypeName="VARCHAR"
+                columnSize="100"/>
+        <columnMapping
+                columnName="TI_ASSOCIATO_MANREV"
+                propertyName="ti_associato_manrev"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="CD_DIVISA"
+                propertyName="cd_divisa"
+                sqlTypeName="VARCHAR"
+                columnSize="10"
+                nullable="false"/>
+        <columnMapping
+                columnName="PG_LETTERA"
+                propertyName="pg_lettera"
+                sqlTypeName="DECIMAL"
+                columnSize="10"/>
+        <columnMapping
+                columnName="CD_CDS_ORIGINE"
+                propertyName="cd_cds_origine"
+                sqlTypeName="VARCHAR"
+                columnSize="30"
+                nullable="false"/>
+        <columnMapping
+                columnName="DT_PAGAMENTO_FONDO_ECO"
+                propertyName="dt_pagamento_fondo_eco"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="STATO_COFI"
+                propertyName="stato_cofi"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="UTCR"
+                propertyName="utcr"
+                sqlTypeName="VARCHAR"
+                columnSize="20"
+                nullable="false"/>
+        <columnMapping
+                columnName="DT_A_COMPETENZA_COGE"
+                propertyName="dt_a_competenza_coge"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="FL_EXTRA_UE"
+                propertyName="fl_extra_ue"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="DT_SCADENZA"
+                propertyName="dt_scadenza"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="FL_SAN_MARINO_CON_IVA"
+                propertyName="fl_san_marino_con_iva"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="TI_ISTITUZ_COMMERC"
+                propertyName="ti_istituz_commerc"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="CD_TIPO_SEZIONALE"
+                propertyName="cd_tipo_sezionale"
+                sqlTypeName="VARCHAR"
+                columnSize="10"
+                nullable="false"/>
+        <columnMapping
+                columnName="DACR"
+                propertyName="dacr"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="FL_INTRA_UE"
+                propertyName="fl_intra_ue"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="DUVA"
+                propertyName="duva"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="NOTE"
+                propertyName="note"
+                sqlTypeName="VARCHAR"
+                columnSize="300"/>
+        <columnMapping
+                columnName="TI_BENE_SERVIZIO"
+                propertyName="ti_bene_servizio"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="IM_TOTALE_IVA"
+                propertyName="im_totale_iva"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="false"/>
+        <columnMapping
+                columnName="IM_TOTALE_IMPONIBILE"
+                propertyName="im_totale_imponibile"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="false"/>
+        <columnMapping
+                columnName="PROTOCOLLO_IVA_GENERALE"
+                propertyName="protocollo_iva_generale"
+                sqlTypeName="DECIMAL"
+                columnSize="10"/>
+        <columnMapping
+                columnName="TI_FATTURA"
+                propertyName="ti_fattura"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="NUMERO_PROTOCOLLO"
+                propertyName="numero_protocollo"
+                sqlTypeName="VARCHAR"
+                columnSize="20"/>
+        <columnMapping
+                columnName="NR_FATTURA_FORNITORE"
+                propertyName="nr_fattura_fornitore"
+                sqlTypeName="VARCHAR"
+                columnSize="20"
+                nullable="false"/>
+        <columnMapping
+                columnName="FL_FATTURA_COMPENSO"
+                propertyName="fl_fattura_compenso"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="CD_MODALITA_PAG_UO_CDS"
+                propertyName="cd_modalita_pag_uo_cds"
+                sqlTypeName="VARCHAR"
+                columnSize="10"/>
+        <columnMapping
+                columnName="NOME"
+                propertyName="nome"
+                sqlTypeName="VARCHAR"
+                columnSize="50"/>
+        <columnMapping
+                columnName="FL_SPEDIZIONIERE"
+                propertyName="fl_spedizioniere"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="FL_CONGELATA"
+                propertyName="fl_congelata"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="CD_CDS_FAT_CLGS"
+                propertyName="cd_cds_fat_clgs"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
+        <columnMapping
+                columnName="CD_TERZO"
+                propertyName="cd_terzo"
+                sqlTypeName="DECIMAL"
+                columnSize="8"
+                nullable="false"/>
+        <columnMapping
+                columnName="ESERCIZIO_FAT_CLGS"
+                propertyName="esercizio_fat_clgs"
+                sqlTypeName="DECIMAL"
+                columnSize="4"/>
+        <columnMapping
+                columnName="UTUV"
+                propertyName="utuv"
+                sqlTypeName="VARCHAR"
+                columnSize="20"
+                nullable="false"/>
+        <columnMapping
+                columnName="CAMBIO"
+                propertyName="cambio"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="4"
+                nullable="false"/>
+        <columnMapping
+                columnName="FL_BOLLA_DOGANALE"
+                propertyName="fl_bolla_doganale"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="STATO_COAN"
+                propertyName="stato_coan"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="FL_AUTOFATTURA"
+                propertyName="fl_autofattura"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="DT_DA_COMPETENZA_COGE"
+                propertyName="dt_da_competenza_coge"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="DT_REGISTRAZIONE"
+                propertyName="dt_registrazione"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="PARTITA_IVA"
+                propertyName="partita_iva"
+                sqlTypeName="VARCHAR"
+                columnSize="20"/>
+        <columnMapping
+                columnName="PG_BANCA_UO_CDS"
+                propertyName="pg_banca_uo_cds"
+                sqlTypeName="DECIMAL"
+                columnSize="10"/>
+        <columnMapping
+                columnName="ESERCIZIO_LETTERA"
+                propertyName="esercizio_lettera"
+                sqlTypeName="DECIMAL"
+                columnSize="4"/>
+        <columnMapping
+                columnName="FL_MERCE_EXTRA_UE"
+                propertyName="fl_merce_extra_ue"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="FL_LIQUIDAZIONE_DIFFERITA"
+                propertyName="fl_liquidazione_differita"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="FL_MERCE_INTRA_UE"
+                propertyName="fl_merce_intra_ue"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="DATA_PROTOCOLLO"
+                propertyName="data_protocollo"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="PROGR_UNIVOCO"
+                propertyName="progr_univoco"
+                sqlTypeName="DECIMAL"
+                columnSize="10"/>
+        <columnMapping
+                columnName="STATO_LIQUIDAZIONE"
+                propertyName="stato_liquidazione"
+                sqlTypeName="VARCHAR"
+                columnSize="10"/>
+        <columnMapping
+                columnName="CAUSALE"
+                propertyName="causale"
+                sqlTypeName="VARCHAR"
+                columnSize="10"/>
+        <columnMapping
+                columnName="CDS_COMPENSO"
+                propertyName="cds_compenso"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
+        <columnMapping
+                columnName="PG_COMPENSO"
+                propertyName="pg_compenso"
+                sqlTypeName="DECIMAL"
+                columnSize="10"/>
+        <columnMapping
+                columnName="UO_COMPENSO"
+                propertyName="uo_compenso"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
+        <columnMapping
+                columnName="ESERCIZIO_COMPENSO"
+                propertyName="esercizio_compenso"
+                sqlTypeName="DECIMAL"
+                columnSize="4"/>
 
-		<columnMapping
-			columnName="FL_SPLIT_PAYMENT"
-			propertyName="fl_split_payment"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-					
-	</defaultColumnMap>
-	<persistentProperty
-		name="dt_cancellazione" />
-	<persistentProperty
-		name="pg_banca" />
-	<persistentProperty
-		name="cd_terzo_uo_cds" />
-	<persistentProperty
-		name="protocollo_iva" />
-	<persistentProperty
-		name="cd_uo_fat_clgs" />
-	<persistentProperty
-		name="stato_coge" />
-	<persistentProperty
-		name="pg_ver_rec" />
-	<persistentProperty
-		name="esercizio_fattura_fornitore" />
-	<persistentProperty
-		name="codice_fiscale" />
-	<persistentProperty
-		name="cd_modalita_pag" />
-	<persistentProperty
-		name="cd_termini_pag" />
-	<persistentProperty
-		name="im_totale_imponibile_divisa" />
-	<persistentProperty
-		name="cd_termini_pag_uo_cds" />
-	<persistentProperty
-		name="cd_uo_origine" />
-	<persistentProperty
-		name="cognome" />
-	<persistentProperty
-		name="pg_fattura_passiva_fat_clgs" />
-	<persistentProperty
-		name="fl_san_marino_senza_iva" />
-	<persistentProperty
-		name="cd_terzo_cessionario" />
-	<persistentProperty
-		name="stato_pagamento_fondo_eco" />
-	<persistentProperty
-		name="im_totale_fattura" />
-	<persistentProperty
-		name="dt_fattura_fornitore" />
-	<persistentProperty
-		name="ds_fattura_passiva" />
-	<persistentProperty
-		name="ragione_sociale" />
-	<persistentProperty
-		name="im_totale_quadratura" />
-	<persistentProperty
-		name="ti_associato_manrev" />
-	<persistentProperty
-		name="cd_divisa" />
-	<persistentProperty
-		name="pg_lettera" />
-	<persistentProperty
-		name="cd_cds_origine" />
-	<persistentProperty
-		name="dt_pagamento_fondo_eco" />
-	<persistentProperty
-		name="stato_cofi" />
-	<persistentProperty
-		name="dt_a_competenza_coge" />
-	<persistentProperty
-		name="utcr" />
-	<persistentProperty
-		name="fl_extra_ue" />
-	<persistentProperty
-		name="dt_scadenza" />
-	<persistentProperty
-		name="fl_san_marino_con_iva" />
-	<persistentProperty
-		name="ti_istituz_commerc" />
-	<persistentProperty
-		name="cd_tipo_sezionale" />
-	<persistentProperty
-		name="dacr" />
-	<persistentProperty
-		name="fl_intra_ue" />
-	<persistentProperty
-		name="duva" />
-	<persistentProperty
-		name="note" />
-	<persistentProperty
-		name="ti_bene_servizio" />
-	<persistentProperty
-		name="im_totale_iva" />
-	<persistentProperty
-		name="im_totale_imponibile" />
-	<persistentProperty
-		name="ti_fattura" />
-	<persistentProperty
-		name="protocollo_iva_generale" />
-	<persistentProperty
-		name="numero_protocollo" />
-	<persistentProperty
-		name="nr_fattura_fornitore" />
-	<persistentProperty
-		name="fl_fattura_compenso" />
-	<persistentProperty
-		name="cd_modalita_pag_uo_cds" />
-	<persistentProperty
-		name="nome" />
-	<persistentProperty
-		name="fl_spedizioniere" />
-	<persistentProperty
-		name="fl_congelata" />
-	<persistentProperty
-		name="cd_terzo" />
-	<persistentProperty
-		name="cd_cds_fat_clgs" />
-	<persistentProperty
-		name="esercizio_fat_clgs" />
-	<persistentProperty
-		name="utuv" />
-	<persistentProperty
-		name="cambio" />
-	<persistentProperty
-		name="fl_bolla_doganale" />
-	<persistentProperty
-		name="fl_autofattura" />
-	<persistentProperty
-		name="stato_coan" />
-	<persistentProperty
-		name="dt_da_competenza_coge" />
-	<persistentProperty
-		name="dt_registrazione" />
-	<persistentProperty
-		name="partita_iva" />
-	<persistentProperty
-		name="pg_banca_uo_cds" />
-	<persistentProperty
-		name="esercizio_lettera" />
-	<persistentProperty
-		name="fl_merce_extra_ue" />	
-	<persistentProperty
-		name="fl_liquidazione_differita" />		
-	<persistentProperty
-		name="fl_merce_intra_ue" />		
-	<persistentProperty
-		name="data_protocollo" />
-	<persistentProperty
-		name="progr_univoco" />	
-	<persistentProperty
-		name="stato_liquidazione" />
-	<persistentProperty
-		name="causale" />	
-	<persistentProperty
-		name="cds_compenso" />
-	<persistentProperty
-		name="pg_compenso" />
-	<persistentProperty
-		name="uo_compenso" />
-	<persistentProperty
-		name="esercizio_compenso" />
-	
-	<persistentProperty
-		name="idPaese" />
-	<persistentProperty
-		name="idCodice" />
-	<persistentProperty
-		name="identificativoSdi" />
-	<persistentProperty
-		name="progressivo" />		
+        <columnMapping
+                columnName="ID_PAESE"
+                propertyName="idPaese"
+                sqlTypeName="VARCHAR"
+                columnSize="2"/>
+        <columnMapping
+                columnName="ID_CODICE"
+                propertyName="idCodice"
+                sqlTypeName="VARCHAR"
+                columnSize="28"/>
+        <columnMapping
+                columnName="IDENTIFICATIVO_SDI"
+                propertyName="identificativoSdi"
+                sqlTypeName="DECIMAL"
+                columnSize="22"/>
+        <columnMapping
+                columnName="PROGRESSIVO"
+                propertyName="progressivo"
+                sqlTypeName="DECIMAL"
+                columnSize="22"/>
 
-	<persistentProperty
-		name="fl_split_payment" />
-				
+        <columnMapping
+                columnName="FL_SPLIT_PAYMENT"
+                propertyName="fl_split_payment"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+
+        <columnMapping
+                columnName="FL_DA_ORDINI"
+                propertyName="flDaOrdini"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="true"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+    </defaultColumnMap>
+    <persistentProperty
+            name="dt_cancellazione"/>
+    <persistentProperty
+            name="pg_banca"/>
+    <persistentProperty
+            name="cd_terzo_uo_cds"/>
+    <persistentProperty
+            name="protocollo_iva"/>
+    <persistentProperty
+            name="cd_uo_fat_clgs"/>
+    <persistentProperty
+            name="stato_coge"/>
+    <persistentProperty
+            name="pg_ver_rec"/>
+    <persistentProperty
+            name="esercizio_fattura_fornitore"/>
+    <persistentProperty
+            name="codice_fiscale"/>
+    <persistentProperty
+            name="cd_modalita_pag"/>
+    <persistentProperty
+            name="cd_termini_pag"/>
+    <persistentProperty
+            name="im_totale_imponibile_divisa"/>
+    <persistentProperty
+            name="cd_termini_pag_uo_cds"/>
+    <persistentProperty
+            name="cd_uo_origine"/>
+    <persistentProperty
+            name="cognome"/>
+    <persistentProperty
+            name="pg_fattura_passiva_fat_clgs"/>
+    <persistentProperty
+            name="fl_san_marino_senza_iva"/>
+    <persistentProperty
+            name="cd_terzo_cessionario"/>
+    <persistentProperty
+            name="stato_pagamento_fondo_eco"/>
+    <persistentProperty
+            name="im_totale_fattura"/>
+    <persistentProperty
+            name="dt_fattura_fornitore"/>
+    <persistentProperty
+            name="ds_fattura_passiva"/>
+    <persistentProperty
+            name="ragione_sociale"/>
+    <persistentProperty
+            name="im_totale_quadratura"/>
+    <persistentProperty
+            name="ti_associato_manrev"/>
+    <persistentProperty
+            name="cd_divisa"/>
+    <persistentProperty
+            name="pg_lettera"/>
+    <persistentProperty
+            name="cd_cds_origine"/>
+    <persistentProperty
+            name="dt_pagamento_fondo_eco"/>
+    <persistentProperty
+            name="stato_cofi"/>
+    <persistentProperty
+            name="dt_a_competenza_coge"/>
+    <persistentProperty
+            name="utcr"/>
+    <persistentProperty
+            name="fl_extra_ue"/>
+    <persistentProperty
+            name="dt_scadenza"/>
+    <persistentProperty
+            name="fl_san_marino_con_iva"/>
+    <persistentProperty
+            name="ti_istituz_commerc"/>
+    <persistentProperty
+            name="cd_tipo_sezionale"/>
+    <persistentProperty
+            name="dacr"/>
+    <persistentProperty
+            name="fl_intra_ue"/>
+    <persistentProperty
+            name="duva"/>
+    <persistentProperty
+            name="note"/>
+    <persistentProperty
+            name="ti_bene_servizio"/>
+    <persistentProperty
+            name="im_totale_iva"/>
+    <persistentProperty
+            name="im_totale_imponibile"/>
+    <persistentProperty
+            name="ti_fattura"/>
+    <persistentProperty
+            name="protocollo_iva_generale"/>
+    <persistentProperty
+            name="numero_protocollo"/>
+    <persistentProperty
+            name="nr_fattura_fornitore"/>
+    <persistentProperty
+            name="fl_fattura_compenso"/>
+    <persistentProperty
+            name="cd_modalita_pag_uo_cds"/>
+    <persistentProperty
+            name="nome"/>
+    <persistentProperty
+            name="fl_spedizioniere"/>
+    <persistentProperty
+            name="fl_congelata"/>
+    <persistentProperty
+            name="cd_terzo"/>
+    <persistentProperty
+            name="cd_cds_fat_clgs"/>
+    <persistentProperty
+            name="esercizio_fat_clgs"/>
+    <persistentProperty
+            name="utuv"/>
+    <persistentProperty
+            name="cambio"/>
+    <persistentProperty
+            name="fl_bolla_doganale"/>
+    <persistentProperty
+            name="fl_autofattura"/>
+    <persistentProperty
+            name="stato_coan"/>
+    <persistentProperty
+            name="dt_da_competenza_coge"/>
+    <persistentProperty
+            name="dt_registrazione"/>
+    <persistentProperty
+            name="partita_iva"/>
+    <persistentProperty
+            name="pg_banca_uo_cds"/>
+    <persistentProperty
+            name="esercizio_lettera"/>
+    <persistentProperty
+            name="fl_merce_extra_ue"/>
+    <persistentProperty
+            name="fl_liquidazione_differita"/>
+    <persistentProperty
+            name="fl_merce_intra_ue"/>
+    <persistentProperty
+            name="data_protocollo"/>
+    <persistentProperty
+            name="progr_univoco"/>
+    <persistentProperty
+            name="stato_liquidazione"/>
+    <persistentProperty
+            name="causale"/>
+    <persistentProperty
+            name="cds_compenso"/>
+    <persistentProperty
+            name="pg_compenso"/>
+    <persistentProperty
+            name="uo_compenso"/>
+    <persistentProperty
+            name="esercizio_compenso"/>
+    <persistentProperty
+            name="idPaese"/>
+    <persistentProperty
+            name="idCodice"/>
+    <persistentProperty
+            name="identificativoSdi"/>
+    <persistentProperty
+            name="progressivo"/>
+    <persistentProperty
+            name="fl_split_payment"/>
+    <persistentProperty
+            name="flDaOrdini"/>
 </SQLPersistentInfo>

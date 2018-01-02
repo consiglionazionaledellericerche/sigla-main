@@ -83,13 +83,17 @@ public void writeHTMLToolbar(
 
 		super.writeHTMLToolbar(context, reset, find, delete);
 
-		String command = "javascript:submitForm('doRicercaAccertamento')";
+        boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
+
+        String command = "javascript:submitForm('doRicercaAccertamento')";
 		it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 			context,
-			"img/history16.gif",
+			isFromBootstrap ? "fa fa-fw fa-bolt" : "img/history16.gif",
 			!(isInputReadonly() || getDetails().isEmpty() || ((CRUDDocumentoGenericoAttivoBP)getParentController()).isSearching())? command : null,
-			true,"Contabilizza",
-			HttpActionContext.isFromBootstrap(context));
+			true,
+			"Contabilizza",
+			"btn-sm btn-outline-primary btn-title",
+            isFromBootstrap);
 
 		it.cnr.jada.util.action.CRUDBP bp = (it.cnr.jada.util.action.CRUDBP)getParentController();
 	    if (bp instanceof IDocumentoAmministrativoBP) {
@@ -108,10 +112,11 @@ public void writeHTMLToolbar(
 
 			it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 					context,
-					"img/bookmarks16.gif",
+                    isFromBootstrap ? "fa fa-fw fa-clipboard" : "img/bookmarks16.gif",
 					enabled ? "javascript:submitForm('doSdoppiaDettaglio');" : null,
 					true,"Sdoppia",
-					HttpActionContext.isFromBootstrap(context));
+                    "btn-sm btn-outline-success btn-title",
+                    HttpActionContext.isFromBootstrap(context));
 		}
 }
 }

@@ -20,25 +20,10 @@
 		name="findUOForPrint"
 		property="uoForPrint"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		completeOnSave="true"
-		label="Unita Organizzativa" />
-	<fieldProperty
-		name="cdUOForPrint"
-		property="uoForPrint.cd_unita_organizzativa"
-		maxLength="30"
-		inputSize="20"
-		inputType="TEXT"
 		nullable="false"
-		readonlyProperty="ROUoForPrint"
-		label="Codice UO" />
-	<fieldProperty
-		name="dsUOForPrint"
-		property="uoForPrint.ds_unita_organizzativa"
-		maxLength="80"
-		inputSize="60"
-		inputType="ROTEXT"
-		label="Descrizione UO" />
-	
+		label="Unita Organizzativa" />
 	<fieldProperty
 		name="cdUOCRForPrint"
 		property="cdUOCRForPrint"/>
@@ -47,34 +32,13 @@
 		name="findVoceDPForPrint"
 		property="vocedpForPrint"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		completeOnSave="true"
 		enabledOnSearch="true"
 		label="Voce del Piano" />
 	<fieldProperty
-		name="cd_elemento_voce"
-		property="vocedpForPrint.cd_elemento_voce"
-		inputType="TEXT"
-		completeOnSave="true"
-		enabledOnSearch="true"/>
-	<fieldProperty
-		name="ds_elemento_voce"
-		property="vocedpForPrint.ds_elemento_voce"
-		maxLength="80"
-		inputSize="60"
-		inputType="ROTEXT"/>
-		
-	<fieldProperty
 		name="voceDPForPrint"
 		property="voceDPForPrint"/>
-	
-	<!-- <fieldProperty
-        name="stato"
-        property="stato"
-        inputType="SELECT"
-        keysProperty="ti_statoKeys"
-        nullable="false"
-        enabledOnSearch="true"
-        label="Stato" /> -->
 	
 	<fieldProperty
 		name="findTerzo"
@@ -97,6 +61,7 @@
 		inputSize="60"
 		inputType="ROTEXT"
 		label="Descrizione Terzo" />
+
 	<fieldProperty
 		name="cdTerzoForPrint"
 		property="cdTerzoForPrint"/>
@@ -104,25 +69,14 @@
 		
 	<formFieldProperty name="esercizio" />
 	<formFieldProperty name="cd_cds" />
+
 	<formFieldProperty name="findUOForPrint" />
-	<formFieldProperty
-		name="cdUOForPrint"
-		nullable="false" />
-	<formFieldProperty name="dsUOForPrint" />
 	<formFieldProperty name="cdUOCRForPrint" />
 
 	<formFieldProperty name="findVoceDPForPrint" />
-	<formFieldProperty 
-		name="cd_elemento_voce" 
-		enabledOnSearch="true"/>
-	<formFieldProperty name="ds_elemento_voce" />
 	<formFieldProperty name="voceDPForPrint" />
-	<!-- <formFieldProperty name="stato" /> -->
-		
 		
 	<formFieldProperty name="findTerzo" />
 	<formFieldProperty name="cd_terzo" />
 	<formFieldProperty name="ds_terzo" />	
-	
-
 </bulkInfo>

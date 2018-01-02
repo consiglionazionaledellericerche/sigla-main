@@ -116,6 +116,7 @@
 		rows="5"
 		maxLength="300"
 		nullable="true"
+		inputCssClass="w-100 "
 		label="Descrizione" />
 	<fieldProperty
 		name="origine"
@@ -231,6 +232,7 @@
 		enabledOnEdit="true"
 		enabledOnSearch="true"
 		readonlyProperty="ROLinea_attivita"
+		CRUDBusinessProcessName="CRUDLinea_attivitaBP"
 		nullable="false"
 		label="G.a.e." />
 	<fieldProperty
@@ -250,6 +252,14 @@
 		inputSize="10"
 		maxLength="10"
 		label="det" />	
+	<fieldProperty
+		name="crea_linea_attivita"
+		property="linea_attivita"
+		inputType="CRUDTOOL"
+		CRUDBusinessProcessName="CRUDLinea_attivitaBP"
+		readonlyProperty="ROLinea_attivita"
+		enabledOnSearch="true"/>
+		
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -311,7 +321,10 @@
 	<formFieldProperty
 		name="find_cdr_assegnatario" />
 	<formFieldProperty
-		name="pg_dettaglio" />	
+		name="pg_dettaglio" />
+	<formFieldProperty
+		name="crea_linea_attivita" />
+			
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty

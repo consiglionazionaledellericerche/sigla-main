@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBase"
+	keyClassName="it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagKey"
+	homeClassName="it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagHome">
+	<defaultColumnMap
+		tableName="MOVIMENTI_MAG">
+		<columnMapping
+			columnName="PG_MOVIMENTO_RIF"
+			propertyName="pgMovimentoRif"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			nullable="true"/>
+		<columnMapping
+			columnName="PG_MOVIMENTO_ANN"
+			propertyName="pgMovimentoAnn"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			nullable="true"/>
+		<columnMapping
+			columnName="DT_MOVIMENTO"
+			propertyName="dtMovimento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_TIPO_MOVIMENTO"
+			propertyName="cdCdsTipoMovimento"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO"
+			propertyName="cdTipoMovimento"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_BOLLA"
+			propertyName="dataBolla"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_BOLLA"
+			propertyName="numeroBolla"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_RIFERIMENTO"
+			propertyName="dtRiferimento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_ORDINE"
+			propertyName="cdCdsOrdine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA_ORDINE"
+			propertyName="cdUnitaOperativaOrdine"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORDINE"
+			propertyName="esercizioOrdine"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NUMERATORE_ORDINE"
+			propertyName="cdNumeratoreOrdine"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_ORDINE"
+			propertyName="numeroOrdine"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="RIGA_ORDINE"
+			propertyName="rigaOrdine"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="CONSEGNA"
+			propertyName="consegna"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UNITA_MISURA"
+			propertyName="cdUnitaMisura"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="QUANTITA"
+			propertyName="quantita"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			columnScale="5"
+			nullable="true" />
+		<columnMapping
+			columnName="COEFF_CONV"
+			propertyName="coeffConv"
+			sqlTypeName="DECIMAL"
+			columnSize="12"
+			columnScale="5"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UOP"
+			propertyName="cdUop"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_SCADENZA"
+			propertyName="dtScadenza"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="LOTTO_FORNITORE"
+			propertyName="lottoFornitore"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_LOTTO"
+			propertyName="cdCdsLotto"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_MAGAZZINO_LOTTO"
+			propertyName="cdMagazzinoLotto"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_LOTTO"
+			propertyName="esercizioLotto"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_NUMERATORE_LOTTO"
+			propertyName="cdNumeratoreLotto"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_LOTTO"
+			propertyName="pgLotto"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_MAG"
+			propertyName="cdCdsMag"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="cdMagazzino"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="cdBeneServizio"
+			sqlTypeName="VARCHAR"
+			columnSize="15"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_VOCE_IVA"
+			propertyName="cdVoceIva"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="SCONTO1"
+			propertyName="sconto1"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="SCONTO2"
+			propertyName="sconto2"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="SCONTO3"
+			propertyName="sconto3"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_BOLLA_SCA"
+			propertyName="cdCdsBollaSca"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MAGAZZINO_BOLLA_SCA"
+			propertyName="cdMagazzinoBollaSca"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_BOLLA_SCA"
+			propertyName="esercizioBollaSca"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_NUMERATORE_BOLLA_SCA"
+			propertyName="cdNumeratoreBollaSca"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_BOLLA_SCA"
+			propertyName="pgBollaSca"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO"
+			propertyName="importo"
+			sqlTypeName="DECIMAL"
+			columnSize="21"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_CEFF"
+			propertyName="importoCeff"
+			sqlTypeName="DECIMAL"
+			columnSize="19"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_CMP"
+			propertyName="importoCmp"
+			sqlTypeName="DECIMAL"
+			columnSize="19"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_FIFO"
+			propertyName="importoFifo"
+			sqlTypeName="DECIMAL"
+			columnSize="19"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_LIFO"
+			propertyName="importoLifo"
+			sqlTypeName="DECIMAL"
+			columnSize="19"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_CMPP"
+			propertyName="importoCmpp"
+			sqlTypeName="DECIMAL"
+			columnSize="19"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_CMPIST"
+			propertyName="importoCmpist"
+			sqlTypeName="DECIMAL"
+			columnSize="21"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="cdDivisa"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false" />
+		<columnMapping
+			columnName="CAMBIO"
+			propertyName="cambio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="4"
+			nullable="false" />
+		<columnMapping
+			columnName="PREZZO_UNITARIO"
+			propertyName="prezzoUnitario"
+			sqlTypeName="DECIMAL"
+			columnSize="21"
+			columnScale="6"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dtCancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dtMovimento" />
+	<persistentProperty
+		name="cdCdsTipoMovimento" />
+	<persistentProperty
+		name="cdTipoMovimento" />
+	<persistentProperty
+		name="dataBolla" />
+	<persistentProperty
+		name="numeroBolla" />
+	<persistentProperty
+		name="dtRiferimento" />
+	<persistentProperty
+		name="cdCdsOrdine" />
+	<persistentProperty
+		name="cdUnitaOperativaOrdine" />
+	<persistentProperty
+		name="esercizioOrdine" />
+	<persistentProperty
+		name="cdNumeratoreOrdine" />
+	<persistentProperty
+		name="numeroOrdine" />
+	<persistentProperty
+		name="rigaOrdine" />
+	<persistentProperty
+		name="consegna" />
+	<persistentProperty
+		name="cdTerzo" />
+	<persistentProperty
+		name="cdUnitaMisura" />
+	<persistentProperty
+		name="quantita" />
+	<persistentProperty
+		name="coeffConv" />
+	<persistentProperty
+		name="cdUop" />
+	<persistentProperty
+		name="dtScadenza" />
+	<persistentProperty
+		name="lottoFornitore" />
+	<persistentProperty
+		name="cdCdsLotto" />
+	<persistentProperty
+		name="cdMagazzinoLotto" />
+	<persistentProperty
+		name="esercizioLotto" />
+	<persistentProperty
+		name="cdNumeratoreLotto" />
+	<persistentProperty
+		name="pgLotto" />
+	<persistentProperty
+		name="cdCdsMag" />
+	<persistentProperty
+		name="cdMagazzino" />
+	<persistentProperty
+		name="cdBeneServizio" />
+	<persistentProperty
+		name="cdVoceIva" />
+	<persistentProperty
+		name="sconto1" />
+	<persistentProperty
+		name="sconto2" />
+	<persistentProperty
+		name="sconto3" />
+	<persistentProperty
+		name="cdCdsBollaSca" />
+	<persistentProperty
+		name="cdMagazzinoBollaSca" />
+	<persistentProperty
+		name="esercizioBollaSca" />
+	<persistentProperty
+		name="cdNumeratoreBollaSca" />
+	<persistentProperty
+		name="pgBollaSca" />
+	<persistentProperty
+		name="importo" />
+	<persistentProperty
+		name="importoCeff" />
+	<persistentProperty
+		name="importoCmp" />
+	<persistentProperty
+		name="importoFifo" />
+	<persistentProperty
+		name="importoLifo" />
+	<persistentProperty
+		name="importoCmpp" />
+	<persistentProperty
+		name="importoCmpist" />
+	<persistentProperty
+		name="cdDivisa" />
+	<persistentProperty
+		name="cambio" />
+	<persistentProperty
+		name="prezzoUnitario" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="dtCancellazione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="pgMovimentoRif"/>
+	<persistentProperty
+		name="pgMovimentoAnn"/>
+</SQLPersistentInfo>

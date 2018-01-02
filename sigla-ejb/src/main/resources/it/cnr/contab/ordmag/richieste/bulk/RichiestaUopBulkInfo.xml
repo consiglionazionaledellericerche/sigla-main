@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Testata Richieste"
+	longDescription="Testata Richieste">
+	<fieldProperty
+		name="cdCds"
+		property="cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Cds" />
+	<fieldProperty
+		name="findNumerazioneOrd"
+		property="numerazioneOrd"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Numeratore" />
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaOrd"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Operativa" />
+	<fieldProperty
+		name="cdUnitaOperativa"
+		property="numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Unità Operativa" />
+	<fieldProperty
+		name="esercizio"
+		property="numerazioneOrd.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Esercizio" />
+	<fieldProperty
+		name="cdNumeratore"
+		property="numerazioneOrd.cdNumeratore"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Numeratore" />
+	<fieldProperty
+		name="numero"
+		property="numero"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Numero" />
+	<fieldProperty
+		name="dataRichiesta"
+		property="dataRichiesta"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		label="Data Richiesta" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		keysProperty="statoKeys"
+		label="Stato" />
+	<fieldProperty
+		name="statoForSearch"
+		property="stato"
+		inputSize="20"
+		maxLength="20"
+		inputType="SELECT"
+		nullable="true"
+		keysProperty="statoKeysForSearch"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Stato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dsRichiesta"
+		property="dsRichiesta"
+		inputType="TEXTAREA"
+		cols="100"
+		rows="3"
+		nullable="false"
+		maxLength="300"
+		label="Descrizione" />
+	<fieldProperty
+		name="nota"
+		property="nota"
+		inputType="TEXTAREA"
+		cols="100"
+		rows="5"
+		maxLength="2000"
+		label="Nota" />
+	<fieldProperty
+		name="findUnitaOperativaOrdDest"
+		property="unitaOperativaOrdDest"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Operativa di Destinazione" />
+	<fieldProperty
+		name="cdUnitaOperativaDest"
+		property="unitaOperativaOrdDest.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="true"
+		label="Unità Operativa Destinataria" />
+	<fieldProperty
+		name="dsUnitaOperativaDest"
+		property="unitaOperativaOrdDest.dsUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="true"
+		label="dsUnitaOperativaDest" />
+	<fieldProperty
+		name="dataInvio"
+		property="dataInvio"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data Invio" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtCancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdUnitaOperativa" />
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="cdNumeratore" />
+		<formFieldProperty
+			name="numero" />
+	</form>
+	<formFieldProperty
+		name="findUnitaOperativaOrd" />
+	<formFieldProperty
+		name="findNumerazioneOrd" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="numero" />
+	<formFieldProperty
+		name="dataRichiesta" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="dsRichiesta" />
+	<formFieldProperty
+		name="nota" />
+	<formFieldProperty
+		name="findUnitaOperativaOrdDest" />
+	<formFieldProperty
+		name="dataInvio" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdCds" />
+	<findFieldProperty
+		name="cdUnitaOperativa" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdNumeratore" />
+	<findFieldProperty
+		name="numero" />
+	<findFieldProperty
+		name="dataRichiesta" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="dsRichiesta" />
+	<findFieldProperty
+		name="nota" />
+	<findFieldProperty
+		name="cdUnitaOperativaDest" />
+	<findFieldProperty
+		name="dataInvio" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdCds" />
+	<columnFieldProperty
+		name="cdUnitaOperativa" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdNumeratore" />
+	<columnFieldProperty
+		name="numero" />
+	<columnFieldProperty
+		name="dataRichiesta" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="dsRichiesta" />
+	<columnFieldProperty
+		name="nota" />
+	<columnFieldProperty
+		name="cdUnitaOperativaDest" />
+	<columnFieldProperty
+		name="dataInvio" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

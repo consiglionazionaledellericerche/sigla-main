@@ -9,6 +9,8 @@ import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.sql.*;
 
 public class Obbligazione_scadenzarioHome extends BulkHome implements IScadenzaDocumentoContabileHome {
@@ -112,11 +114,11 @@ public V_doc_passivo_obbligazioneBulk findDoc_passivo( Obbligazione_scadenzarioB
 	sql.addSQLClause("AND","PG_OBBLIGAZIONE",sql.EQUALS, os.getPg_obbligazione());
 	sql.addSQLClause("AND","PG_OBBLIGAZIONE_SCADENZARIO",sql.EQUALS, os.getPg_obbligazione_scadenzario());
 	sql.addOrderBy("FL_SELEZIONE DESC");
-	List l =  docHome.fetchAll(sql);
-	if ( l.size() > 0 )
-		return (V_doc_passivo_obbligazioneBulk) l.get(0);
-	else
-		return null;	
+	List<V_doc_passivo_obbligazioneBulk> l = docHome.fetchAll(sql);
+	return Optional.ofNullable(l.stream()
+						.filter(e->e.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_ORDINE))
+						.findFirst().orElse(null))
+				.orElse(l.stream().findFirst().orElse(null));
 }
 /**
  * <!-- @TODO: da completare -->
