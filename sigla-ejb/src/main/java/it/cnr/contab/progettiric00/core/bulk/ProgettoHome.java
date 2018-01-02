@@ -584,8 +584,8 @@ public class ProgettoHome extends BulkHome {
 				progetto_sip.setStato(ProgettoBulk.TIPO_STATO_APPROVATO);
 				progetto_sip.setDurata_progetto(ProgettoBulk.DURATA_PROGETTO_PLURIENNALE);
 				progetto_sip.setLivello(ProgettoBulk.LIVELLO_PROGETTO_TERZO);
-				if ((geco_modulo.getStato_att_scie() != null && geco_modulo.getStato_att_scie().equals(new Long(5)))||
-					(geco_modulo.getStato() != null && geco_modulo.getStato().equals(new Long(3))))
+				// stato att contab '0' terminato - '1' attivo 
+				if ((geco_modulo.getStato_att_contab() != null && geco_modulo.getStato_att_contab().equals(new Long(0))))
 					progetto_sip.setFl_utilizzabile(Boolean.FALSE);
 				else
 					progetto_sip.setFl_utilizzabile(Boolean.TRUE);
