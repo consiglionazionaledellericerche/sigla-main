@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk"
+	homeClassName="it.cnr.contab.ordmag.magazzino.bulk.LottoMagHome">
+	<defaultColumnMap
+		tableName="LOTTO_MAG">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="numerazioneMag.magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="numerazioneMag.magazzino.cdMagazzino" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="numerazioneMag.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE_MAG"
+			propertyName="numerazioneMag.cdNumeratoreMag" />
+  		<columnMapping
+			columnName="CD_BENE_SERVIZIO"
+			propertyName="beneServizio.cd_bene_servizio" />
+		<columnMapping
+			columnName="CD_CDS_MAG"
+			propertyName="magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_MAGAZZINO_MAG"
+			propertyName="magazzino.cdMagazzino" />
+		<columnMapping
+			columnName="CD_CDS_ORDINE"
+			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa" />
+		<columnMapping
+			columnName="ESERCIZIO_ORDINE"
+			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numerazioneOrd.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE_ORDINE"
+			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numerazioneOrd.cdNumeratore" />
+		<columnMapping
+			columnName="NUMERO_ORDINE"
+			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numero" />
+		<columnMapping
+			columnName="RIGA_ORDINE"
+			propertyName="ordineAcqConsegna.ordineAcqRiga.riga" />
+		<columnMapping
+			columnName="CONSEGNA"
+			propertyName="ordineAcqConsegna.consegna" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo" />
+		<columnMapping
+			columnName="CD_DIVISA"
+			propertyName="divisa.cd_divisa" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="numerazioneMag"
+		partOfOid="true" />
+ 	<persistentProperty
+		name="beneServizio" />
+	<persistentProperty
+		name="magazzino" />
+	<persistentProperty
+		name="ordineAcqConsegna" />
+	<persistentProperty
+		name="terzo" />
+	<persistentProperty
+		name="divisa" />
+</SQLPersistentInfo>

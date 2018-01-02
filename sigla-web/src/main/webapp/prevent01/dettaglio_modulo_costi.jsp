@@ -26,14 +26,16 @@
 	               { "tabCosti","<SPAN style='font : bold 13px;'>Costi Generali e Figurativi</SPAN>","/prevent01/tab_modulo_costi.jsp" }
 	               };   
 %>
-<div class="Group" style="width:100%">
+<div class="Group card" style="width:100%">
 	<table class="Panel" cellspacing=2>
 		<tr>
-			<td><% bp.getController().writeFormLabel( out, "cd_centro_di_responsabilita"); %></td>	
-			<td colspan=7>
-			  <% bp.getController().writeFormInput( out, "cd_centro_di_responsabilita"); %>
-			  <% bp.getController().writeFormInput( out, "ds_centro_di_responsabilita"); %>
-			</td>
+		    <td><% bp.getController().writeFormLabel(out,"cd_centro_di_responsabilita");%></td>
+		    <td class="w-100" colspan="7">
+		        <div class="input-group input-group-searchtool w-100">
+		            <% bp.getController().writeFormInput(out,"cd_centro_di_responsabilita");%>
+		            <% bp.getController().writeFormInput(out,"ds_centro_di_responsabilita");%>
+		        </div>
+		    </td>
 		</tr>
 		<tr>
 			<% if (bp.isFlNuovoPdg()) { %>
@@ -41,8 +43,13 @@
 				<td><% bp.getController().writeFormInput( out, "cd_progetto_liv1"); %></td>
 				<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_progetto_liv2"); %></td>	
 				<td><% bp.getController().writeFormInput( out, "cd_progetto_liv2"); %></td>
-				<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_dipartimento_liv2"); %></td>	
-				<td><% bp.getController().writeFormInput( out, "cd_dipartimento_liv2"); %></td>
+				<% if (bp.getParametriEnte().isEnteCNR()) { %>
+					<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_dipartimento_liv2"); %></td>	
+					<td><% bp.getController().writeFormInput( out, "cd_dipartimento_liv2"); %></td>
+				<% } else { %>
+					<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_programma_liv2"); %></td>	
+					<td><% bp.getController().writeFormInput( out, "cd_programma_liv2"); %></td>
+				<% } %>
 			<% } else { %>
 				<td NOWRAP><% bp.getController().writeFormLabel( out, "cd_modulo"); %></td>	
 				<td><% bp.getController().writeFormInput( out, "cd_modulo"); %></td>

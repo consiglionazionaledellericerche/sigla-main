@@ -24,7 +24,7 @@
 		nullable="false"
         enabledOnInsert="false"
         enabledOnEdit="false"
-        enabledOnSearch="true"		
+        enabledOnSearch="true"
 		label="Numero Variazione" />
     <fieldProperty
          name="centro_responsabilita"
@@ -71,7 +71,7 @@
         enabledOnEdit="false"
         enabledOnSearch="true"		
 		formatName="date_short"
-		inputSize="8"
+		inputSize="10"
 		nullable="false"
 		label="Data di registrazione" />
 	<fieldProperty
@@ -82,7 +82,7 @@
         enabledOnEdit="false"
         enabledOnSearch="true"		
 		formatName="date_short"
-		inputSize="8"
+		inputSize="10"
 		label="Data della Proposta definitiva" />
 	<fieldProperty
 		name="dt_approvazione"
@@ -92,7 +92,7 @@
         enabledOnEdit="false"
         enabledOnSearch="true"		
 		formatName="date_short"
-		inputSize="8"
+		inputSize="10"
 		label="Data di lavorazione della sede centrale" />
 	<fieldProperty
 		name="dt_annullamento"
@@ -102,7 +102,7 @@
         enabledOnEdit="false"
         enabledOnSearch="true"		
 		formatName="date_short"
-		inputSize="8"
+		inputSize="10"
 		label="Data di cancellazione" />
 	<fieldProperty
 		name="ds_variazione"
@@ -113,6 +113,7 @@
         enabledOnSearch="true"		
 		maxLength="1000"
 		nullable="false"
+		inputCssClass="w-100 "
 		label="Descrizione e Riferimenti" />
 	<fieldProperty
 		name="ds_delibera"
@@ -123,6 +124,7 @@
         enabledOnSearch="true"		
 		maxLength="200"
 		nullable="false"
+		inputCssClass="w-100 "
 		label="Descrizione delibera" />
 	<fieldProperty
 		name="tipo_variazione"
@@ -172,6 +174,7 @@
         enabledOnSearch="true"		
 		maxLength="500"
 		nullable="false"
+		inputCssClass="w-100 "
 		label="Motivazione" />
 	<fieldProperty
 		name="cd_causale_respinta"
@@ -327,6 +330,7 @@
 		style="align: center;"
 		readonlyProperty="consultazioneAssestatoDisabled"
 		enabledOnView="true"
+		iconClass="fa fa-fw fa-pencil-square-o text-primary"		
 		href="javascript:submitForm('doConsAssestatoSpeseModuloPDG')" />		
 	<fieldProperty
 		name="assestatoEntrate"
@@ -336,6 +340,7 @@
 		style="align: center;"
 		readonlyProperty="consultazioneAssestatoDisabled"
 		enabledOnView="true"
+		iconClass="fa fa-fw fa-pencil-square-o text-primary"		
 		href="javascript:submitForm('doConsAssestatoEntrateModuloPDG')" />		
 	<fieldProperty
 		name="assestatoCosti"
@@ -345,6 +350,7 @@
 		style="align: center;"
 		readonlyProperty="consultazioneAssestatoDisabled"
 		enabledOnView="true"
+		iconClass="fa fa-fw fa-pencil-square-o text-primary"		
 		href="javascript:submitForm('doConsAssestatoCostiModuloPDG')" />		
 	<fieldProperty
 		name="assestatoRicavi"
@@ -354,6 +360,7 @@
 		style="align: center;"
 		readonlyProperty="consultazioneAssestatoDisabled"
 		enabledOnView="true"
+		iconClass="fa fa-fw fa-pencil-square-o text-primary"		
 		href="javascript:submitForm('doConsAssestatoRicaviModuloPDG')" />
 	<fieldProperty
 		name="desTipoVariazione"

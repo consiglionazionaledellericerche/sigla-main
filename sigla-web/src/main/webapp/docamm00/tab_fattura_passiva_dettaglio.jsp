@@ -20,9 +20,9 @@
 		bp.getDettaglio().writeHTMLTable(pageContext,"righeNdCSet",true,false,true,"100%","200px");
 	else 
 		bp.getDettaglio().writeHTMLTable(pageContext,"righeNdDSet",true,false,true,"100%","200px"); %>
-   <div class="Group">
+   <div class="Group card" >
 
-   <table>	  	
+   <table class="w-75">
       <tr>
       	<% if (fatturaPassiva.isPromiscua()) { %>
 		      	<td>
@@ -41,24 +41,16 @@
       	<% } %>
       </tr>
       <tr>
-   		<% bp.getDettaglio().writeFormField(out,"cd_bene_servizio");%>
-     	<td colspan="3">
-     		<% bp.getDettaglio().writeFormInput(out,null,"ds_bene_servizio",false,null,"");%>
-     	</td>
-   		<td>
+		<td><% bp.getDettaglio().writeFormLabel(out,"bene_servizio");%>
+   		<td colspan="5">
    			<% bp.getDettaglio().writeFormInput(out, null, "bene_servizio", roOnAutoGen, null, "");%>
    		</td>
       </tr>
-      <tr>      			
-   		<% bp.getDettaglio().writeFormField(out,"cd_voce_iva");%>
-   		<td>
-	   		<% bp.getDettaglio().writeFormInput(out,"ds_voce_iva");%>
-		</td>
-   		<% bp.getDettaglio().writeFormField(out,"percentuale_voce_iva");%>
-   		<td>
-			<% bp.getDettaglio().writeFormInput(out, null, "voce_iva", false, null, "");%>
-		</td>
-		
+      <tr>
+		<td><% bp.getDettaglio().writeFormLabel(out,"voce_iva");%>
+   		<td colspan="5">
+   			<% bp.getDettaglio().writeFormInput(out, null, "voce_iva", false, null, "");%>
+   		</td>
       </tr>
       <tr>
       	<td>
@@ -78,7 +70,7 @@
       	<td>
       		<% bp.getDettaglio().writeFormLabel(out,"dt_a_competenza_coge");%>
       	</td>      	
-     	<td colspan="3">
+     	<td>
      		<% bp.getDettaglio().writeFormInput(out,null,"dt_a_competenza_coge",false,null,"");%>
      	</td>
       </tr>
@@ -92,9 +84,9 @@
 			     	</td>
 				</tr>
 	    <%	} %>
-      <tr>
 		<%	it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk riga = (it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk)bp.getDettaglio().getModel();
 			if (riga != null && riga.getCollegatoCapitoloPerTrovato()) { %>
+		    <tr>
 			  	  <td>
 				  	<% bp.getDettaglio().writeFormLabel(out,"pg_trovato");%>
 				  </td>
@@ -102,13 +94,14 @@
 				  <% bp.getDettaglio().writeFormInput(out,null,"pg_trovato",false,null,"");%>
 				  	<% bp.getDettaglio().writeFormField(out,"titoloTrovato");%>
 				  	<% bp.getDettaglio().writeFormField(out,"inventoreTrovato");%>
-			  	</td>
+  			  	  </td>
+  			</tr>
 		<%	}  %>
  	  </tr>
     </table>
    </div>
-    <div class="Group">
-  	<table>
+    <div class="Group card">
+  	<table class="w-75">
 	  <tr>
 	  	<td>
 	  		<% bp.getDettaglio().writeFormLabel(out,"quantita");%>
@@ -155,7 +148,7 @@
 	  	</td>
 		<%	if (riga != null && riga.getFl_iva_forzata() != null && riga.getFl_iva_forzata().booleanValue()) { %>
 			  	<td>
-				  	<% bp.getDettaglio().writeFormInput(out,null,"im_iva",false,null,"style=\"color:red\"");%>
+				  	<% bp.getDettaglio().writeFormInput(out,null,"im_iva",false,null,"style=\"color:red;text-align: right\"");%>
 			  	</td>
 			  	<td>
 				  	<span class="FormLabel" style="color:red">L'importo IVA e' forzato.</span>
@@ -168,7 +161,7 @@
       </tr>   
     </table>
    </div>
-   <div class="Group">
+   <div class="Group card">
   	<table>
 	  <tr>
      	<td>
@@ -182,10 +175,8 @@
      	<td>
  	     	<% bp.getDettaglio().writeFormLabel(out,"modalita_pagamento");%>
       	</td>      	
-     	<td>
+     	<td colspan="2">
 	      	<% bp.getDettaglio().writeFormInput(out,null,"modalita_pagamento",roOnAutoGen,null,"onChange=\"submitForm('doOnModalitaPagamentoDetChange')\"");%>	
-      	</td>   
-		<td>
 		    <% if (riga != null && riga.getBanca() != null) {
 					bp.getDettaglio().writeFormInput(out, null, "listabanchedett", roOnAutoGen, null, "");
 				} %>
@@ -220,8 +211,8 @@
     </table>
    </div>
    	<% if (riga != null && riga.getModalita_pagamento() != null && riga.getCessionario() != null) { %>
-		<div class="Group card">   
-			<table>	
+		<div class="Group card">
+		  	<table class="w-75">
 				<tr>
 					<td>
 						<% bp.getDettaglio().writeFormLabel(out,"cd_cessionario");%>

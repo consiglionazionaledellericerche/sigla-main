@@ -136,6 +136,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_VINCOLI"
+			propertyName="importo_vincoli"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="esercizio" 
@@ -186,4 +192,6 @@
 		name="variazioni_definitive" />
 	<persistentProperty
 		name="assestato_finale" />
+	<persistentProperty
+		name="importo_vincoli" />
 </SQLPersistentInfo>

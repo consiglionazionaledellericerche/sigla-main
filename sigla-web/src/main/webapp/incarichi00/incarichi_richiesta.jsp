@@ -3,6 +3,7 @@
 		it.cnr.jada.util.jsp.*,
 	    it.cnr.contab.incarichi00.bulk.*,
 	    it.cnr.contab.incarichi00.bp.*"
+	pageEncoding="ISO-8859-1"
 %>
 
 <%
@@ -21,9 +22,9 @@
 <body class="Form">
 <% bp.openFormWindow(pageContext);%>
 <% if (model.getNrContrattiAttivati().compareTo(new Integer(0))==0) {%>
-<table class="Panel" width="100%" height="100%">
+<table class="Panel">
     <tr><td>
-	<jsp:include page="/incarichi00/tab_incarichi_richiesta_testata.jsp" />
+	<jsp:include page="/incarichi00/tab_incarichi_richiesta_testata.jsp"/>
 	</td></tr>
 </table>
 <% } else {%>

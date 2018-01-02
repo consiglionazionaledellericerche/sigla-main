@@ -126,6 +126,19 @@
 		name="find_classificazione_voci"
 		property="classificazione_voci"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
+		columnSet="searchtool"
+		freeSearchSet="searchtool"
+		nullable="false"
+		completeOnSave = "true"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		readonlyPropertyOnEdit="ROClassificazione_voci"
+		label="Classificazione Ufficiale" />		
+	<fieldProperty
+		name="find_classificazione_voci_codlast"
+		property="classificazione_voci"
+		inputType="SEARCHTOOL"
 		formName="searchtool_codlast"
 		columnSet="searchtool_codlast"
 		freeSearchSet="searchtool_codlast"
@@ -177,6 +190,7 @@
 		nullable="false"
 		rows="1"
 		maxLength="300"
+		inputCssClass="w-100 "
 		label="Oggetto del contratto" />
 	<fieldProperty
 		name="im_entrata_tot"
@@ -238,6 +252,7 @@
 		cols="50"
 		rows="1"
 		maxLength="300"
+		inputCssClass="w-100 "
 		label="Desc.Spese&lt;BR&gt;vive correlate&lt;BR&gt;all'entrata anno corrente" />	
 	<fieldProperty
         name="area"
@@ -350,6 +365,17 @@
 		nullable="false"
 		label="Area" />	
 	<fieldProperty
+		name="desctool_voce_piano_economico_prg"
+		property="voce_piano_economico.cd_voce_piano"
+		descProperty="voce_piano_economico.ds_voce_piano"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="10"
+		maxLength="30"
+		nullable="false"
+		label="Piano Economico" />	
+	<fieldProperty
 		name="previsione_anno_corrente"
 		property="im_entrata"
 		inputType="ROTEXT"
@@ -370,6 +396,12 @@
 		nullable="false"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Importo da Ripartire" />
+	<fieldProperty
+		name="voce_piano"
+		property="voce_piano_economico"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Voce del piano economico" />
 
 
 	<formFieldProperty
@@ -400,6 +432,8 @@
 		name="ds_natura" />
 	<formFieldProperty
 		name="find_classificazione_voci" /> 
+	<formFieldProperty
+		name="find_classificazione_voci_codlast" /> 
 	<formFieldProperty
 		name="pg_dettaglio" />
 	<formFieldProperty
@@ -459,12 +493,16 @@
 	<formFieldProperty
 		name="desctool_area" />	
 	<formFieldProperty
+		name="desctool_voce_piano_economico_prg" />
+	<formFieldProperty
 		name="previsione_anno_corrente" />	
 	<formFieldProperty
 		name="dettagli_gestionali_tot" />
 	<formFieldProperty
 		name="dettagli_gestionali_res" />
-
+	<formFieldProperty 
+		name="voce_piano" />
+		
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty

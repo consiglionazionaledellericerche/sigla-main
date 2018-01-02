@@ -211,8 +211,8 @@ public boolean isTabRipartizioneFinanziariaEnable() {
 
 public boolean isAggiornaIvaDaVersareEnable() {
 	Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
-	return (model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null && 
-			model.getNextMeseForLiquidazioneDefinitiva().equals(model.getMese()));
+	return model!=null && model.isLiquidazione_commerciale() && model.getMese()!=null && 
+		   model.getMese().equals(model.getNextMeseForLiquidazioneDefinitiva());			
 }
 
 public boolean isTabRipartizioneFinanziariaVisible() {

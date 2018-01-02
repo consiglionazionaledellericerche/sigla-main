@@ -23,7 +23,7 @@
 
 	bp.openFormWindow(pageContext); %>
 <%if (cliente!=null){%>
-	<div class="Group">
+	<div class="Group Panel card border-primary p-3 mb-2">
 		<table>
 			<tr>
 				<td>
@@ -131,7 +131,7 @@
 		</table>	
 	</div>
 <%}%>
-	<div class="Group">
+	<div class="Group Panel card border-primary p-3 mb-2">
 		<table>	
 			<tr>
 				<td>
@@ -144,7 +144,7 @@
 			<% 	bp.getController().writeFormField(out,"data_scadenziario"); %>
 		</table>
 	</div>
-	<div class="Group">
+	<div class="Group Panel card border-primary p-3 mb-2">
 		<table>	
 			<tr>
 				<td>
@@ -157,7 +157,7 @@
 			<% 	bp.getController().writeFormField(out,"im_importo"); %>
 		</table>
 	</div>
-	<div class="Group">
+	<div class="Group Panel card border-primary p-3 mb-2">
 		<table>	
 			<tr>
 				<td>

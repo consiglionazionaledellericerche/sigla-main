@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoRigaMagKey">
+	<defaultColumnMap
+		tableName="BOLLA_SCARICO_RIGA_MAG">
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cdCds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="cdMagazzino"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_NUMERATORE_MAG"
+			propertyName="cdNumeratoreMag"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_BOLLA_SCA"
+			propertyName="pgBollaSca"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="RIGA_BOLLA_SCA"
+			propertyName="rigaBollaSca"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="cdCds"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdMagazzino"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="cdNumeratoreMag"
+		partOfOid="true" />
+	<persistentProperty
+		name="pgBollaSca"
+		partOfOid="true" />
+	<persistentProperty
+		name="rigaBollaSca"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -135,17 +135,19 @@ public class FirmaDigitaleDocContAction extends ConsultazioniAction {
 			List<StatoTrasmissione> selectedElements = bp.getSelectedElements(context);
 			if (selectedElements == null || selectedElements.isEmpty() || selectedElements.size() > 1)
 				throw new ApplicationException("Selezionare solo un elemento!");
-			
-			AllegatiDocContBP allegatiDocContBP = (AllegatiDocContBP) context.createBusinessProcess("AllegatiDocContBP", new Object[] {"M"});
+
 			StatoTrasmissione  selectedStatoTrasmissione  = (StatoTrasmissione) bp.getSelectedElements(context).get(0);
+			AllegatiDocContBP allegatiDocContBP;
 			if (selectedStatoTrasmissione.getCd_tipo_documento_cont().equalsIgnoreCase(Numerazione_doc_contBulk.TIPO_MAN)){
+				allegatiDocContBP = (AllegatiDocContBP) context.createBusinessProcess("AllegatiMandatoBP", new Object[] {"M"});
 				allegatiDocContBP.setAllegatiFormName("mandato");				
 				List<Rif_modalita_pagamentoBulk> result = Utility.createMandatoComponentSession().findModPagObbligatorieAssociateAlMandato(context.getUserContext(), 
 						(V_mandato_reversaleBulk) selectedStatoTrasmissione);
 				for (Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk : result) {
 					allegatiDocContBP.addToRifModalitaPagamento(rif_modalita_pagamentoBulk.getCd_modalita_pag(), rif_modalita_pagamentoBulk.getDs_modalita_pag());
-				}				
+				}
 			} else {
+				allegatiDocContBP = (AllegatiDocContBP) context.createBusinessProcess("AllegatiDocContBP", new Object[] {"M"});
 				allegatiDocContBP.setAllegatiFormName("altro");
 			}
 			allegatiDocContBP.setModel(context, allegatiDocContBP.initializeModelForEdit(context, (OggettoBulk) selectedStatoTrasmissione));

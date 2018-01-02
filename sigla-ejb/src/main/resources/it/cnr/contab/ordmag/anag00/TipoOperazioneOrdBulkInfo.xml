@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Rappresenta l'anagrafica dei tipi operazione degli ordini."
+	longDescription="Rappresenta l'anagrafica dei tipi operazione degli ordini.">
+	<fieldProperty
+		name="cdTipoOperazione"
+		property="cdTipoOperazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="dsTipoOperazione"
+		property="dsTipoOperazione"
+		inputType="TEXT"
+		inputSize="100"
+		maxLength="100"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Cancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdTipoOperazione" />
+		<formFieldProperty
+			name="dsTipoOperazione" />
+	</form>
+	<formFieldProperty
+		name="cdTipoOperazione" />
+	<formFieldProperty
+		name="dsTipoOperazione" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdTipoOperazione" />
+	<findFieldProperty
+		name="dsTipoOperazione" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdTipoOperazione" />
+	<columnFieldProperty
+		name="dsTipoOperazione" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

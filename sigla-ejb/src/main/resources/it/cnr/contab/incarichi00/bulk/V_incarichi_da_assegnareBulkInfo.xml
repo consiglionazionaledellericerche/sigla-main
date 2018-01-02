@@ -37,7 +37,7 @@
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
-		label="nr.procedura" />
+		label="Nr.procedura" />
 	<fieldProperty
 		name="esercizio_repertorio"
 		property="esercizio_repertorio"
@@ -51,7 +51,7 @@
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
-		label="nr.repertorio" />
+		label="Nr.repertorio" />
 	<fieldProperty
 		name="cd_terzo"
 		property="cd_terzo"

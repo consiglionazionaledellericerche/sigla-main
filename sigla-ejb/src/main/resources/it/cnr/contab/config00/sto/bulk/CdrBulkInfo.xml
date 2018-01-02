@@ -162,6 +162,7 @@
 		name="cd_cdr_ro"
 		property="cd_centro_responsabilita"
 		label="Centro di Responsabilit&#224;"
+		inputCssClass=" w-10 "
 		inputType="ROTEXT"
 		inputSize="10"
 		maxLength="30"
@@ -230,7 +231,8 @@
 		name="searchtool" >
 		<formFieldProperty
 			name="searchtool_cd_centro_responsabilita" 
-			inputSize="10"/>		    
+			inputSize="10"
+			inputCssClass="w-20 "/>		    
 		<formFieldProperty
 			name="searchtool_ds_cdr"
 			inputSize="30" />

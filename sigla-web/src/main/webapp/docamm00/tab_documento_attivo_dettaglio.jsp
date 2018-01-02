@@ -12,10 +12,10 @@
 <% CRUDDocumentoGenericoAttivoBP bp = (CRUDDocumentoGenericoAttivoBP)BusinessProcess.getBusinessProcess(request);%>
 	<%Documento_generico_rigaBulk riga = (Documento_generico_rigaBulk)bp.getDettaglio().getModel();%>
 	<%bp.getDettaglio().writeHTMLTable(pageContext,"righiSet",true,false,true,"100%","100px"); %>
-<div class="Group">
-  <table>
+<div class="Group card">
+  <table style="width: 75%;">
 		<tr>
-	      	<td>
+	      	<td style="width: 15%;">
 		  		<% bp.getDettaglio().writeFormLabel(out,"im_riga_divisa_euro");%>
 		  	</td>
 		  	<td>
@@ -34,27 +34,28 @@
       	<td>
 	  		<% bp.getDettaglio().writeFormLabel(out,"ds_riga");%>
 	  	</td>
-	  	<td>
+	  	<td colspan="3" class="w-100">
 	  		<% bp.getDettaglio().writeFormInput(out,null,"ds_riga",false,null,"");%>
 	  	</td>
       </tr>
 		<tr>
       		<% bp.getDettaglio().writeFormField(out,"dt_da_competenza_coge");%>
-      		<% bp.getDettaglio().writeFormField(out,"dt_a_competenza_coge");%>
+      		<td>
+      			<% bp.getDettaglio().writeFormLabel(out,"dt_a_competenza_coge");%>
+      			<% bp.getDettaglio().writeFormInput(out,"dt_a_competenza_coge");%>
+      		</td>
       </tr>      
   </table>
 </div>
-<div class="Group">
-  <table class="Panel">
+
+<div class="Group card">
+  <table class="Panel" style="width: 75%;">
   <tr>
   	<td>
-	    <% bp.getDettaglio().writeFormLabel(out,"cd_terzo");%>
+	    <% bp.getDettaglio().writeFormLabel(out,"terzo");%>
     </td>
-      <td>
-	    <% bp.getDettaglio().writeFormInput(out,"cd_terzo");%>
- 	   	<% bp.getDettaglio().writeFormInput(out,"denominazione_sede");%>
+    <td colspan="3">
   	  	<% bp.getDettaglio().writeFormInput(out,"terzo");%>
-  	  	<% bp.getDettaglio().writeFormInput(out, "crea_terzo");%>
       </td>
   	</tr>	
 		<tr>
@@ -73,7 +74,16 @@
 	 		<% bp.getDettaglio().writeFormInput(out,"ragione_sociale");%>
 		</td>
       </tr>
-      
+
+	  <tr>
+		<td>
+			<% bp.getDettaglio().writeFormLabel(out,"denominazione_sede"); %>
+		</td>
+		<td colspan="3">
+			<% bp.getDettaglio().writeFormInput(out,"denominazione_sede"); %>
+		</td>
+	  </tr>
+	        
       <tr>
 		<% bp.getDettaglio().writeFormField(out,"codice_fiscale");%>
 		<% bp.getDettaglio().writeFormField(out,"partita_iva");%>

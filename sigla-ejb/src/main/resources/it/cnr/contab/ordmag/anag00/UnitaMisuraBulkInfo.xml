@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Rappresenta l'anagrafica delle unità di misura."
+	longDescription="Rappresenta l'anagrafica delle unità di misura.">
+	<fieldProperty
+		name="cdUnitaMisura"
+		property="cdUnitaMisura"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Codice" />
+	<fieldProperty
+		name="dsUnitaMisura"
+		property="dsUnitaMisura"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="100"
+		nullable="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="dtCancellazione"
+		property="dtCancellazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Cancellazione" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="cdUnitaMisura" />
+		<formFieldProperty
+			name="dsUnitaMisura" 
+			inputSize="20" />
+	</form>
+	<formFieldProperty
+		name="cdUnitaMisura" />
+	<formFieldProperty
+		name="dsUnitaMisura" />
+	<formFieldProperty
+		name="dtCancellazione" />
+	<findFieldProperty
+		name="cdUnitaMisura" />
+	<findFieldProperty
+		name="dsUnitaMisura" />
+	<findFieldProperty
+		name="dtCancellazione" />
+	<columnFieldProperty
+		name="cdUnitaMisura" />
+	<columnFieldProperty
+		name="dsUnitaMisura" />
+	<columnFieldProperty
+		name="dtCancellazione" />
+</bulkInfo>

@@ -18,50 +18,42 @@
 
 <%	BulkBP bp = (BulkBP)BusinessProcess.getBusinessProcess(request);
 	bp.openFormWindow(pageContext); %>
-
+<div class="Group card">
 <table>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
 	<td colspan="3"><% bp.getController().writeFormInput(out,"esercizio"); %></td>
   </tr>
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"cd_cds"); %></td>
-	<td><% bp.getController().writeFormInput(out,"cd_cds"); %></td>
-	<td><% bp.getController().writeFormLabel(out,"cd_unita_organizzativa"); %></td>
-	<td><% bp.getController().writeFormInput(out,"cd_unita_organizzativa"); %></td>
+	<% bp.getController().writeFormField(out,"cd_cds"); %>
+	<% bp.getController().writeFormField(out,"cd_unita_organizzativa"); %>
   </tr>
 </table>
-  <br>
-<table>
+</div>
+<div class="Group card">
+<table class="w-50">
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"pgInizio"); %></td>
-	<td><% bp.getController().writeFormInput(out,"pgInizio"); %></td>
-	<td><% bp.getController().writeFormLabel(out,"pgFine"); %></td>
-	<td><% bp.getController().writeFormInput(out,"pgFine"); %></td>
+	<% bp.getController().writeFormField(out,"pgInizio"); %></td>
+	<% bp.getController().writeFormField(out,"pgFine"); %>
   </tr>
   <tr>
-	<td><% bp.getController().writeFormLabel(out,"dataInizio"); %></td>
-	<td><% bp.getController().writeFormInput(out,"dataInizio"); %></td>
-	<td><% bp.getController().writeFormLabel(out,"dataFine"); %></td>
-	<td><% bp.getController().writeFormInput(out,"dataFine"); %></td>
+	<% bp.getController().writeFormField(out,"dataInizio"); %>
+	<% bp.getController().writeFormField(out,"dataFine"); %>
   </tr>
 </table>
-  <br>
-<table>
+</div>
+<div class="Group card">
+<table class="w-75">
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"tipo_doc_for_search"); %></td>
 	<td><% bp.getController().writeFormInput(out, null,"tipo_doc_for_search",false,null,"onChange=\"submitForm('doOnTipoDocumentoChange')\""); %></td>	
   </tr>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"findTerzo"); %></td>
-	<td>
-		<% bp.getController().writeFormInput(out,"cdTerzo"); %>
-		<% bp.getController().writeFormInput(out,"dsTerzo"); %>
-		<% bp.getController().writeFormInput(out,"findTerzo"); %>
-	</td>
+	<td><% bp.getController().writeFormInput(out,"findTerzo"); %></td>
   </tr>
 </table>
-
+</div>
 <% bp.closeFormWindow(pageContext); %>
 
 </body>

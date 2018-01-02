@@ -18,26 +18,16 @@
 <body class="Form">
 
 <%	bp.openFormWindow(pageContext); %>
-
-<table width=100%>
- <tr>
-  <td>
-	<div class="Group">
-	<table>
-	  <tr>
-		<td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
-		<td><% bp.getController().writeFormInput(out,"esercizio"); %></td>
-	  </tr>	
-	  <tr>	
-		<td><% bp.getController().writeFormLabel(out,"findpdg_variazioneForPrint"); %></td>
-		<td><% bp.getController().writeFormInput(out,"findpdg_variazioneForPrint"); %></td>
-	  </tr>  
-	</table>
-	</div>
-   </td>
-  </tr>
+<div class="Group card p-2">
+<table class="w-100">
+  <tr>
+	<% bp.getController().writeFormField(out,"esercizio"); %>
+  </tr>	
+  <tr>	
+	<% bp.getController().writeFormField(out,"findpdg_variazioneForPrint"); %>
+  </tr>  
 </table>
-
+</div>
 
 <% bp.closeFormWindow(pageContext); %>
 

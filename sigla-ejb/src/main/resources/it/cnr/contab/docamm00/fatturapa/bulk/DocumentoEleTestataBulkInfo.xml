@@ -39,8 +39,8 @@
 		name="progressivo"
 		property="progressivo"
 		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
+		inputSize="3"
+		maxLength="3"
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
@@ -587,7 +587,7 @@
 	<fieldProperty
 		name="statoNotificaEsitoVisual"
 		property="statoNotificaEsitoVisual"
-		inputType="TEXT"
+		inputType="LABEL"
 		inputSize="100"
 		maxLength="100"
 		enabledOnEdit="false"
@@ -605,10 +605,8 @@
 	<fieldProperty
 		name="ricevutaDecorrenza"
 		property="ricevutaDecorrenza"
-		inputType="ROTEXT"
-		maxLength="100"
-		enabledOnEdit="false"
-		enabledOnSearch="false" />
+		inputType="LABEL"
+		labelStyle="font-style:italic; font-size:large"/>
 
 	<fieldProperty
 		name="motivoRifiuto"
@@ -709,7 +707,7 @@
 		name="codiceDestinatario"		
 		property="documentoEleTrasmissione.codiceDestinatario" 
 		inputType="TEXT"
-		inputSize="6"
+		inputSize="8"
 		maxLength="6"
 		enabledOnSearch="true"
 		enabledOnEdit="false"
@@ -719,7 +717,7 @@
 		property="documentoEleTrasmissione.dataRicezione"
 		inputType="TEXT"
 		formatName="date_short"
-		inputSize="8"
+		inputSize="12"
 		enabledOnSearch="true"
 		enabledOnEdit="false"
 		label="Data Ricezione" />		

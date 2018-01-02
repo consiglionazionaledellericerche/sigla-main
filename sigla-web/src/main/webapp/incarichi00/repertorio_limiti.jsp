@@ -21,7 +21,8 @@ CRUDConfigRepertorioLimitiBP bp = (CRUDConfigRepertorioLimitiBP)BusinessProcess.
 <%
 	bp.openFormWindow(pageContext);
 %>
-	<table class="Panel">
+<div class="card p-2">
+	<table class="Panel w-100">
 		<TR>
 		   <TD><% bp.getController().writeFormLabel(out,"cd_tipo_limite");%></TD>
 		   <TD><% bp.getController().writeFormInput(out,"cd_tipo_limite");%></TD>
@@ -35,11 +36,13 @@ CRUDConfigRepertorioLimitiBP bp = (CRUDConfigRepertorioLimitiBP)BusinessProcess.
 		   <TD><% bp.getController().writeFormInput(out,"fl_raggruppa");%></TD>
 		</TR>
 	</table>
-	<table class="Panel">
+</div>
+<div class="card p-2 mt-2">
+	<table class="Panel w-100">
 		<TR>
 		 	<TD colspan="3">
 			<fieldset>
-				<legend class="GroupLabel">Repertorio Limiti per anno</legend>
+				<legend class="GroupLabel h5 font-weight-bold text-primary">Repertorio Limiti per anno</legend>
 				<table width="100%">
 				<tr>
 					<td colspan="4">
@@ -59,7 +62,8 @@ CRUDConfigRepertorioLimitiBP bp = (CRUDConfigRepertorioLimitiBP)BusinessProcess.
 			</TD>
 		</TR>
 	</table>
-	<table class="Panel">
+
+	<table class="Panel mt-2">
 		<tr>
 			<td><% bp.getRepertorioLimiti().writeFormLabel(out,"esercizio"); %></td>
 			<td><% bp.getRepertorioLimiti().writeFormInput(out,"esercizio"); %></td>
@@ -69,5 +73,6 @@ CRUDConfigRepertorioLimitiBP bp = (CRUDConfigRepertorioLimitiBP)BusinessProcess.
 			<td><% bp.getRepertorioLimiti().writeFormInput(out,"importo_limite"); %></td>
 		</tr>
 	</table>
+</div>
 <%	bp.closeFormWindow(pageContext); %>
 </body>

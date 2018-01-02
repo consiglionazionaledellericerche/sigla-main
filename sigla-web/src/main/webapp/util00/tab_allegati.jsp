@@ -12,8 +12,10 @@ function doScaricaFile() {
   doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=bp.getNomeAllegato()!=null?bp.getNomeAllegato().replace("'", "_"):""%>?methodName=scaricaAllegatoGenerico&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
+<div class="Group m-1">
 <%  bp.getCrudArchivioAllegati().writeHTMLTable(pageContext,bp.getAllegatiFormName(),true,false,true,"100%","150px"); %>  
-<div class="Group">
+</div> 
+<div class="Group card mt-3">
   <table>
   	<% bp.getCrudArchivioAllegati().writeForm(out, bp.getAllegatiFormName());  %>
   </table>

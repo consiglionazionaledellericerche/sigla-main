@@ -303,6 +303,11 @@ public class AzureSiglaStorageService implements SiglaStorageService {
     }
 
     @Override
+    public List<StorageObject> getChildren(String key, int depth) {
+        return getChildren(key);
+    }
+
+    @Override
     public List<StorageObject> getChildren(String key) {
         try {
             key = Optional.ofNullable(key)
@@ -334,12 +339,6 @@ public class AzureSiglaStorageService implements SiglaStorageService {
     public List<StorageObject> search(String query) {
         LOGGER.warn("AZURE -> Not yet implemented");
         return Collections.emptyList();
-    }
-
-    @Override
-    public InputStream zipContent(List<String> keys, String name) {
-        LOGGER.warn("AZURE -> Not yet implemented");
-        return null;
     }
 
     @Override

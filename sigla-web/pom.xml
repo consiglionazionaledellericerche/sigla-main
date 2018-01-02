@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>it.cnr</groupId>
 		<artifactId>sigla</artifactId>
-		<version>4.1.19-SNAPSHOT</version>
+		<version>4.1.43-SNAPSHOT</version>
 	</parent>
 	<build>
 		<pluginManagement>
@@ -13,6 +13,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.7.0</version>
 					<configuration>
 						<source>${java.version}</source>
 						<target>${java.version}</target>
@@ -34,7 +35,8 @@
 			              <Specification-Version>${project.version}</Specification-Version>
 			              <Implementation-Version>${project.version}-${sigla.build.number}</Implementation-Version>
 			            </manifestEntries>
-			          </archive>					
+			          </archive>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
 					</configuration>
 				</plugin>
 			</plugins>

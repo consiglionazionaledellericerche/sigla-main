@@ -6,13 +6,7 @@
  */
 package it.cnr.contab.prevent01.bp;
 
-import java.io.IOException;
-
-import javax.servlet.jsp.JspWriter;
-
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.FieldProperty;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.FormController;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
@@ -37,6 +31,9 @@ public class CrudDettagliEntrataBP extends SimpleDetailCRUDController{
 		return getEntrata().getDescrizioneClassificazione();
 	}
 	public String getLabelFind_classificazione_voci(){
+		return getEntrata().getDescrizioneClassificazione();
+	}
+	public String getLabelFind_classificazione_voci_codlast(){
 		return getEntrata().getDescrizioneClassificazione();
 	}
 	public String getColumnLabelCd_classificazione(){

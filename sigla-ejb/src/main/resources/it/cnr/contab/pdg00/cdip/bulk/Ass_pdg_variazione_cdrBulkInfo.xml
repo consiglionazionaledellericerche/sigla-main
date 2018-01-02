@@ -47,46 +47,54 @@
 		inputType="TEXT"
 		readonlyProperty="ROIm_entrata"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Quota di entrata assegnata" />
+		label="Quota di entrata assegnata" 
+		inputCssClass="w-100 "/>
 	<fieldProperty
 		name="entrata_ripartita"
 		property="entrata_ripartita"
 		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Quota di entrata ripartita" />		
+		label="Quota di entrata ripartita" 
+		inputCssClass="w-100 " />		
 	<fieldProperty
 		name="entrata_diff"
 		property="entrata_diff"
 		inputType="ROTEXT"
 		style="text-align: right"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Differenza" />		
+		label="Differenza"  
+		inputCssClass="w-100 "/>		
 	<fieldProperty
 		name="im_spesa"
 		property="im_spesa"
 		inputType="TEXT"
 		readonlyProperty="ROIm_spesa"
 		formatName="it.cnr.contab.util.EuroFormat"		
-		label="Quota di spesa assegnata" />
+		label="Quota di spesa assegnata"  
+		inputCssClass="w-100 "/>
 	<fieldProperty
 		name="spesa_ripartita"
 		property="spesa_ripartita"
 		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Quota di spesa ripartita" />		
+		label="Quota di spesa ripartita"  
+		inputCssClass="w-100 "/>		
 	<fieldProperty
 		name="spesa_diff"
 		property="spesa_diff"
 		inputType="ROTEXT"
 		style="text-align: right"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Differenza" />		
+		label="Differenza"  
+		inputCssClass="w-100 "/>		
 	<fieldProperty
 		name="dettagliSpese"
 		inputType="BUTTON"
 		img="img/edit16.gif"
 		style="align: center;"
 		label="Dettagli Spese"
+		iconClass="fa fa-fw fa-briefcase"
+		buttonClass="btn-outline-primary btn-title btn-block"
 		readonlyProperty="abledDettagliSpese"
 		readonlyPropertyOnView="abledDettagliSpese"
 		enabledOnView="true"
@@ -97,6 +105,8 @@
 		img="img/edit16.gif"
 		style="align: center;"
 		label="Dettagli Entrate"
+		iconClass="fa fa-fw fa-money"
+		buttonClass="btn-outline-primary btn-title btn-block"
 		readonlyProperty="abledDettagliEntrate"
 		readonlyPropertyOnView="abledDettagliEntrate"
 		enabledOnView="true"
