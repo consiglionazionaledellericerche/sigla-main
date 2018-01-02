@@ -4,6 +4,7 @@
  ?ResourceEdition "1.0"
 -->
 
+<%@page import="it.cnr.contab.doccont00.bp.CRUDAccertamentoPGiroBP"%>
 <%@ page 
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*,it.cnr.jada.util.action.*,it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk"
 %>
@@ -17,7 +18,7 @@
 <script language="JavaScript" src="scripts/disableRightClick.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
 </head>
-<% CRUDBP bp = (CRUDBP)BusinessProcess.getBusinessProcess(request);
+<% CRUDAccertamentoPGiroBP bp = (CRUDAccertamentoPGiroBP)BusinessProcess.getBusinessProcess(request);
 	 AccertamentoPGiroBulk acc = (AccertamentoPGiroBulk) bp.getModel();%>
 <% if ( !acc.isResiduo()) { %>		
 	<title>Gestione Annotazione d'Entrata su Partita di Giro</title>
@@ -122,7 +123,26 @@
 	<td>	<% bp.getController().writeFormLabel( out, "dt_scadenza_contratto"); %></td>
 	<td>	<% bp.getController().writeFormInput( out, "dt_scadenza_contratto"); %></td>
 	</tr>
--->	
+	-->	
+	<% if (bp.isFlNuovaGestionePg()){ %>
+	<tr>
+		<td colspan="3">
+			<div class="Group">  
+			<table>
+			<tr>
+				<td><% bp.getController().writeFormLabel( out, "cd_elemento_voce_contr"); %></td>
+				<td colspan=2>
+				    <% bp.getController().writeFormInput(out,"default","cd_elemento_voce_contr",!bp.isInserting(),null,null); %>
+				    <% bp.getController().writeFormInput(out,"default","ds_elemento_voce_contr",!bp.isInserting(),null,null); %>
+				    <% bp.getController().writeFormInput(out,"default","find_elemento_voce_contr",!bp.isInserting(),null,null); %>
+				</td>				 
+			</tr>
+			</table>
+			</div>
+		</td>
+	</tr>
+    <%}%>
+
 	</table>
 <!-- 
   <div class="Group">		
