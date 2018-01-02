@@ -1,5 +1,7 @@
 package it.cnr.contab.pdg00.bulk;
 
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+
 
 /**
  * Insert the type's description here.
@@ -197,7 +199,7 @@ public class Stampa_libro_giornaleBulk extends it.cnr.jada.bulk.OggettoBulk {
 	 */
 	private java.sql.Timestamp getHighDate() {
 			
-		return java.sql.Timestamp.valueOf("2100-12-31 00:00:00.0");
+		return java.sql.Timestamp.valueOf(getEsercizio()+"-12-31 00:00:00.0");
 	}
 	/**
 	 * Insert the method's description here.
@@ -206,7 +208,7 @@ public class Stampa_libro_giornaleBulk extends it.cnr.jada.bulk.OggettoBulk {
 	 */
 	private java.sql.Timestamp getLowDate() {
 		
-		return java.sql.Timestamp.valueOf("0000-01-01 00:00:00.0");
+		return java.sql.Timestamp.valueOf(getEsercizio()+"-01-01 00:00:00.0");
 	}
 	
 	public java.sql.Timestamp getDa_contabilizzazioneForPrint() {
@@ -220,7 +222,7 @@ public class Stampa_libro_giornaleBulk extends it.cnr.jada.bulk.OggettoBulk {
 	
 	public java.sql.Timestamp getA_contabilizzazioneForPrint() {
 		
-		if (a_contabilizzazione == null)
+		if (a_contabilizzazione == null) 
 			return getHighDate();
 			
 		return a_contabilizzazione;

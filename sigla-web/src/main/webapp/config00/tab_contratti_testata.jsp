@@ -188,7 +188,9 @@
 	      <%} else if(((ContrattoBulk)bp.getModel()).isPassivo()){%>
 		  <tr>
 	        <td><% bp.getController().writeFormLabel(out,"im_contratto_passivo");%></td>
-	        <td colspan="5"><% bp.getController().writeFormInput(out,"default","im_contratto_passivo", bp.isPublishHidden(),null,null);%></td>                	    
+	        <td><% bp.getController().writeFormInput(out,"default","im_contratto_passivo", bp.isPublishHidden(),null,null);%></td>
+	       	<td><% bp.getController().writeFormLabel(out,"im_contratto_passivo_netto");%></td>
+	       	<td><% bp.getController().writeFormInput(out,null,"im_contratto_passivo_netto", false,null,"");%></td>                 	    
 	      </tr>                  
 	      <%}%>
 		  <tr>

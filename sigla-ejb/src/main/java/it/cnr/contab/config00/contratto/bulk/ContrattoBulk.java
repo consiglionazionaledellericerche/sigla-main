@@ -4,6 +4,7 @@
 */
 package it.cnr.contab.config00.contratto.bulk;
 import java.util.Arrays;
+import java.util.Dictionary;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,7 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import it.cnr.contab.anagraf00.core.bulk.Anagrafico_terzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
 import it.cnr.contab.config00.bulk.CigBulk;
@@ -27,13 +29,14 @@ import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 @StorageType(name="F:sigla_contratti:appalti")
 @JsonInclude(value=Include.NON_NULL)
 public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamente{
 	
 	private static final java.util.Dictionary ti_statoKeys = new it.cnr.jada.util.OrderedHashtable();
-
+	
 	final public static String STATO_PROVVISORIO = "P";
 	final public static String STATO_DEFINITIVO = "D";
 	final public static String STATO_CESSSATO = "C";
@@ -43,7 +46,6 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		ti_statoKeys.put(STATO_DEFINITIVO,"Definitivo");
 		ti_statoKeys.put(STATO_CESSSATO,"Cessato");
 	}
-
 	public static final java.util.Dictionary ti_natura_contabileKeys = new it.cnr.jada.util.OrderedHashtable();
 
 	final public static String NATURA_CONTABILE_ATTIVO = "A";
@@ -56,8 +58,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		ti_natura_contabileKeys.put(NATURA_CONTABILE_ATTIVO_E_PASSIVO,"Attivo e Passivo");
 		ti_natura_contabileKeys.put(NATURA_CONTABILE_SENZA_FLUSSI_FINANZIARI,"Senza flussi finanziari");
 	}
-	
-    private ContrattoBulk contratto_padre;
+	private ContrattoBulk contratto_padre;
 	private TerzoBulk figura_giuridica_interna;
 	private TerzoBulk figura_giuridica_esterna;
 	private V_persona_fisicaBulk responsabile;
@@ -77,6 +78,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	
 	private BulkList associazioneUO = new BulkList();
 	private BulkList associazioneUODisponibili = new BulkList();
+		private BulkList ditteInvitate = new BulkList();
 	@Transient
 	private BulkList<AllegatoContrattoDocumentBulk> archivioAllegati = new BulkList();
 	
@@ -87,7 +89,10 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	private java.math.BigDecimal tot_docamm_cont_etr;
 	
 	private java.math.BigDecimal tot_doccont_cont_spe;
+	private java.math.BigDecimal tot_doccont_cont_spe_netto;
 	private java.math.BigDecimal tot_doccont_cont_etr;
+	
+	private java.math.BigDecimal tot_docamm_cont_spe_netto;
 	
 	public ContrattoBulk() {
 		super();
@@ -401,7 +406,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	}
 	
 	public it.cnr.jada.bulk.BulkCollection[] getBulkLists() {
-		return new it.cnr.jada.bulk.BulkCollection[] {getAssociazioneUO(),getAssociazioneUODisponibili(),getArchivioAllegati()};
+		return new it.cnr.jada.bulk.BulkCollection[] {getAssociazioneUO(),getAssociazioneUODisponibili(),getArchivioAllegati(),getDitteInvitate()};
 	}
 	public Ass_contratto_uoBulk removeFromAssociazioneUO(int index) {
 		Ass_contratto_uoBulk dett = (Ass_contratto_uoBulk)getAssociazioneUO().remove(index);
@@ -836,5 +841,34 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	public void setCup(CupBulk cup) {
 		this.cup = cup;
 	}
-	
+	public BulkList getDitteInvitate() {
+		return ditteInvitate;
+	}
+	public void setDitteInvitate(BulkList ditteInvitate) {
+		this.ditteInvitate = ditteInvitate;
+	}
+	public int addToDitteInvitate(Ass_contratto_ditteBulk ass_contratto_ditte) throws ValidationException {
+		ass_contratto_ditte.setContratto(this); 
+		ass_contratto_ditte.setTipologia(Ass_contratto_ditteBulk.LISTA_INVITATE);
+		this.getDitteInvitate().add(ass_contratto_ditte);
+		return getDitteInvitate().size()-1;
+	}		
+
+	public Ass_contratto_ditteBulk removeFromDitteInvitate(int index) {
+		return (Ass_contratto_ditteBulk)ditteInvitate.remove(index);
+	}
+	public java.math.BigDecimal getTot_doccont_cont_spe_netto() {
+		return tot_doccont_cont_spe_netto;
+	}
+	public void setTot_doccont_cont_spe_netto(
+			java.math.BigDecimal tot_doccont_cont_spe_netto) {
+		this.tot_doccont_cont_spe_netto = tot_doccont_cont_spe_netto;
+	}
+	public java.math.BigDecimal getTot_docamm_cont_spe_netto() {
+		return tot_docamm_cont_spe_netto;
+	} 
+	public void setTot_docamm_cont_spe_netto(
+			java.math.BigDecimal tot_docamm_cont_spe_netto) {
+		this.tot_docamm_cont_spe_netto = tot_docamm_cont_spe_netto;
+	}	
 }
