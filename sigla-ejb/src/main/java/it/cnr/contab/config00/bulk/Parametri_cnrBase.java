@@ -53,8 +53,9 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	private Boolean fl_pubblica_contratto;
 	private Integer livello_eco;
 	private Integer livello_pat;
+	private Boolean fl_nuova_gestione_pg;
 	
-	public Boolean getFl_incarico() {
+public Boolean getFl_incarico() {
 		return fl_incarico;
 	}
 	public void setFl_incarico(Boolean fl_incarico) {
@@ -353,4 +354,11 @@ public class Parametri_cnrBase extends Parametri_cnrKey implements Keyed {
 	public void setLivello_pat(Integer integer) {
 		livello_pat = integer;
 	}
+	public Boolean getFl_nuova_gestione_pg() {
+		return fl_nuova_gestione_pg;
+	}
+	public void setFl_nuova_gestione_pg(Boolean fl_nuova_gestione_pg) {
+		this.fl_nuova_gestione_pg = fl_nuova_gestione_pg;
+	}
+	
 }

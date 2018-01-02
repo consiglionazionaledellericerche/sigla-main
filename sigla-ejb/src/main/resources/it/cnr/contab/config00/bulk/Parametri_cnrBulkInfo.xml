@@ -287,7 +287,12 @@
 		maxLength="1"
 		nullable="false"
 		label="Livello Classificazione Economica" />
-	
+	<fieldProperty
+		name="fl_nuova_gestione_pg"
+		property="fl_nuova_gestione_pg"
+		inputType="CHECKBOX"
+		label="Nuova Gestione PGiro" />		
+		
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -375,6 +380,8 @@
 		name="livello_pat" />
 	<formFieldProperty
 		name="livello_eco" />
+	<formFieldProperty
+		name="fl_nuova_gestione_pg" />
 	
 	<columnFieldProperty
 		name="esercizio" />

@@ -15,6 +15,7 @@ import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fHome;
@@ -321,7 +322,13 @@ private void aggiornaSaldiInInserimento(
 					cd_uo = ((CNRUserContext)userContext).getCd_unita_organizzativa();
 				voce = voce_fHome.findVoce_fFor(ass_pgiro, cd_uo);
 			} else
-				voce = new Elemento_voceBulk( ass_pgiro.getCd_voce(), ass_pgiro.getEsercizio(), ass_pgiro.getTi_appartenenza(), ass_pgiro.getTi_gestione());
+				if(ass_pgiro!=null)
+					voce = new Elemento_voceBulk( ass_pgiro.getCd_voce(), ass_pgiro.getEsercizio(), ass_pgiro.getTi_appartenenza(), ass_pgiro.getTi_gestione());
+				else
+					if(imp_pgiro.getElemento_voceContr()!=null)
+						voce = new Elemento_voceBulk( imp_pgiro.getElemento_voceContr().getCd_elemento_voce(), imp_pgiro.getElemento_voceContr().getEsercizio(), imp_pgiro.getElemento_voceContr().getTi_appartenenza(), imp_pgiro.getElemento_voceContr().getTi_gestione());
+					else
+						throw new ApplicationException( "Attenzione! I saldi relativi all'accertamento corrispondente non possono essere aggiornati, voce non recuperta.");
 
 			/*
 			 * Aggiorno i Saldi per CDR/Linea
@@ -439,8 +446,13 @@ private void aggiornaSaldiInModifica(
 						cd_uo = ((CNRUserContext)userContext).getCd_unita_organizzativa();
 					voceEntrata = voce_fHome.findVoce_fFor(ass_pgiro, cd_uo);
 				} else
-					voceEntrata = new Elemento_voceBulk( ass_pgiro.getCd_voce(), ass_pgiro.getEsercizio(), ass_pgiro.getTi_appartenenza(), ass_pgiro.getTi_gestione());
-					
+					if(ass_pgiro!=null)
+						voceEntrata = new Elemento_voceBulk( ass_pgiro.getCd_voce(), ass_pgiro.getEsercizio(), ass_pgiro.getTi_appartenenza(), ass_pgiro.getTi_gestione());
+					else
+						if(imp_pgiro.getElemento_voceContr()!=null)
+							voceEntrata = new Elemento_voceBulk( imp_pgiro.getElemento_voceContr().getCd_elemento_voce(), imp_pgiro.getElemento_voceContr().getEsercizio(), imp_pgiro.getElemento_voceContr().getTi_appartenenza(), imp_pgiro.getElemento_voceContr().getTi_gestione());
+						else
+							throw new ApplicationException( "Attenzione! I saldi relativi all'accertamento corrispondente non possono essere aggiornati, voce non recuperta.");					
 				Accertamento_scad_voceBulk asv;
 				Accertamento_scadenzarioBulk as;		 
 				for ( Iterator j = imp_pgiro.getAssociazione().getAccertamento().getAccertamento_scadenzarioColl().iterator(); j.hasNext(); )
@@ -760,7 +772,14 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	try
 	{
 		ImpegnoPGiroBulk imp_pgiro = ( ImpegnoPGiroBulk ) bulk;
-
+		
+		Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(uc,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(imp_pgiro.getEsercizio()));
+		
+		if (parametriCnr.getFl_nuova_gestione_pg().booleanValue() ) {
+			if(imp_pgiro.getElemento_voceContr()!=null && imp_pgiro.getElemento_voceContr().getCd_elemento_voce()!=null)
+				imp_pgiro.setElemento_voceContr((Elemento_voceBulk)getHome(uc,Elemento_voceBulk.class).findByPrimaryKey(new Elemento_voceBulk(imp_pgiro.getElemento_voceContr().getCd_elemento_voce(),imp_pgiro.getEsercizio(),Elemento_voceHome.APPARTENENZA_CNR, Elemento_voceHome.GESTIONE_ENTRATE)));
+		}
+		
 		imp_pgiro.setCd_cds( imp_pgiro.getUnita_organizzativa().getCd_unita_padre() );
 		
 		if ( imp_pgiro.getCd_unita_organizzativa().equals( imp_pgiro.getCd_uo_ente()) )
@@ -777,7 +796,6 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 		if ( !uc.isTransactional() )
 			//aggiorna i saldi
 			aggiornaCapitoloSaldoObbligazione( uc, imp_pgiro, INSERIMENTO );
-		
 		
 		AccertamentoPGiroBulk accert_pgiro = createAccertamentoPGiroComponent().creaAccertamento( uc, imp_pgiro);
 	
@@ -940,14 +958,40 @@ public ImpegnoPGiroBulk creaObbligazione(
 
         imp_pgiro.setCd_terzo(
             ((it.cnr.contab.anagraf00.core.bulk.TerzoBulk) result.get(0)).getCd_terzo());
-        Ass_partita_giroHome ass_pgiroHome =
-            (Ass_partita_giroHome) getHome(uc, Ass_partita_giroBulk.class);
-		Ass_partita_giroBulk ass_pgiro = ass_pgiroHome.getAssociazionePGiroFor(accert_pgiro);
-		
-        imp_pgiro.setTi_appartenenza(ass_pgiro.getTi_appartenenza_clg());
-        imp_pgiro.setTi_gestione(ass_pgiro.getTi_gestione_clg());
-        imp_pgiro.setCd_elemento_voce(ass_pgiro.getCd_voce_clg());
+        //
+        
+		Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(uc,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(imp_pgiro.getEsercizio()));
+		Ass_partita_giroBulk ass_pgiro =null;
+		if (parametriCnr.getFl_nuova_gestione_pg().booleanValue() ) {
+			if(accert_pgiro.getElemento_voceContr()!=null && accert_pgiro.getElemento_voceContr().getCd_elemento_voce()!=null){
+				if ( accert_pgiro.getElemento_voceContr().getEsercizio()!=null )
+					imp_pgiro.setEsercizio( accert_pgiro.getElemento_voceContr().getEsercizio() );
+				if ( accert_pgiro.getElemento_voceContr().getTi_appartenenza()!=null)
+					imp_pgiro.setTi_appartenenza( accert_pgiro.getElemento_voceContr().getTi_appartenenza() );
+				if ( accert_pgiro.getElemento_voceContr().getTi_gestione()!=null)
+					imp_pgiro.setTi_gestione(  accert_pgiro.getElemento_voceContr().getTi_gestione() );
+				if ( accert_pgiro.getElemento_voceContr().getCd_elemento_voce()!=null)
+					imp_pgiro.setCd_elemento_voce(accert_pgiro.getElemento_voceContr().getCd_elemento_voce() );
+			}
+			else{
+					Ass_partita_giroHome ass_pgiroHome = (Ass_partita_giroHome) getHome( uc, Ass_partita_giroBulk.class );
+					ass_pgiro = ass_pgiroHome.getAssociazionePGiroFor(accert_pgiro);
+					
+			        imp_pgiro.setTi_appartenenza(ass_pgiro.getTi_appartenenza_clg());
+			        imp_pgiro.setTi_gestione(ass_pgiro.getTi_gestione_clg());
+			        imp_pgiro.setCd_elemento_voce(ass_pgiro.getCd_voce_clg());
+				}
 
+		}
+		else{
+			Ass_partita_giroHome ass_pgiroHome = (Ass_partita_giroHome) getHome( uc, Ass_partita_giroBulk.class );
+			ass_pgiro = ass_pgiroHome.getAssociazionePGiroFor(accert_pgiro);
+			
+	        imp_pgiro.setTi_appartenenza(ass_pgiro.getTi_appartenenza_clg());
+	        imp_pgiro.setTi_gestione(ass_pgiro.getTi_gestione_clg());
+	        imp_pgiro.setCd_elemento_voce(ass_pgiro.getCd_voce_clg());
+		}
+		        
         Obbligazione_scadenzarioBulk obblig_scad =
             creaObbligazione_scadenzario(uc, imp_pgiro);
         // creaAccertamento_scad_voce( uc, accert_scad, (Obbligazione_scad_voceBulk)(((Obbligazione_scadenzarioBulk)imp_pgiro.getObbligazione_scadenzarioColl().get(0)).getObbligazione_scad_voceColl().get(0)));
@@ -1347,6 +1391,8 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 		imp_pgiro.setCds( (CdsBulk) getHome( aUC, CdsBulk.class).findByPrimaryKey( imp_pgiro.getUnita_organizzativa().getUnita_padre() ));
 		imp_pgiro.setCd_cds_origine( ((CNRUserContext) aUC).getCd_cds() );
 		verificaStatoEsercizio( aUC, imp_pgiro.getEsercizio(), imp_pgiro.getCd_cds());
+		imp_pgiro.setDt_scadenza( DateServices.getDt_valida( aUC) );
+		
 		/* if (!((ObbligazioneHome)getHome(aUC, obbligazione.getClass())).verificaStatoEsercizio(obbligazione))
 			throw handleException( new ApplicationException( "Non e' possibile creare obbligazioni: esercizio non ancora aperto!") );*/
 			
@@ -1483,7 +1529,13 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 
 			accert_pgiro.setAssociazione( associazione );
 			associazione.setAccertamento( accert_pgiro );
-
+			if(accert_pgiro.getCapitolo()!=null) {
+				Elemento_voceBulk ev=(Elemento_voceBulk)getHome(aUC, Elemento_voceBulk.class).findByPrimaryKey(
+						new Elemento_voceBulk(accert_pgiro.getCapitolo().getCd_voce(),accert_pgiro.getCapitolo().getEsercizio(),
+					  accert_pgiro.getCapitolo().getTi_appartenenza(),accert_pgiro.getCapitolo().getTi_gestione()));
+			  imp_pgiro.setElemento_voceContr(ev);
+			}
+			  
 		//query per recuperare la scadenza dell'accertamento
 		//accertamentoPgiro.getAccertamento_scadenzarioColl().add( scadenza );
 			Accertamento_scadenzarioHome accert_scadHome = (Accertamento_scadenzarioHome) getHome( aUC, Accertamento_scadenzarioBulk.class );
@@ -1680,15 +1732,18 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 		//segnalo impossibilità di modificare importo se ci sono doc amministrativi associati
 		if ( !imp_pgiro.isFromDocAmm() && 
 			imp_pgiro.isAssociataADocAmm() && imp_pgiro.getIm_iniziale_obbligazione() != null &&
-			imp_pgiro.getIm_iniziale_obbligazione().compareTo( imp_pgiro.getIm_obbligazione()) != 0 )
+			imp_pgiro.getIm_iniziale_obbligazione().compareTo( imp_pgiro.getIm_obbligazione()) != 0 ){
+			imp_pgiro.setIm_obbligazione(imp_pgiro.getIm_iniziale_obbligazione());
 			throw new ApplicationException( "Impossibile variare importo Annotazione di Spesa su Partita di Giro perche' e' associata a doc. amministrativi");
-
+		}
 		//segnalo impossibilità di modificare importo se ci sono mandati associati
 		if ( imp_pgiro.isFromDocAmm() && 
 			imp_pgiro.isAssociataADocAmm() && imp_pgiro.getIm_iniziale_obbligazione() != null &&
 			imp_pgiro.getIm_iniziale_obbligazione().compareTo( imp_pgiro.getIm_obbligazione()) != 0 &&
-			imp_pgiro.getPg_mandato() != null )
-			throw new ApplicationException( "Impossibile variare importo Annotazione di Spesa su Partita di Giro perche' e' associata a mandato");
+			imp_pgiro.getPg_mandato() != null ){
+				imp_pgiro.setIm_obbligazione(imp_pgiro.getIm_iniziale_obbligazione());
+				throw new ApplicationException( "Impossibile variare importo Annotazione di Spesa su Partita di Giro perche' e' associata a mandato");
+		}
 		
 		//	segnalo impossibilità di modificare un residuo se l'esercizio precedente è ancora aperto
 		if ( imp_pgiro.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_IMP_RES))
@@ -1834,12 +1889,38 @@ public ImpegnoPGiroBulk modificaObbligazione(UserContext uc,AccertamentoPGiroBul
 		//query per recuperare il nuovo capitolo per l'obbligazione
 		//set capitolo obbligazione
 		//set capitolo obbligazione_scad_voce
-		Ass_partita_giroHome ass_pgiroHome = (Ass_partita_giroHome) getHome( uc, Ass_partita_giroBulk.class );
-		Ass_partita_giroBulk ass_pgiro = ass_pgiroHome.getAssociazionePGiroFor(accert_pgiro);
 		
-        imp_pgiro.setTi_appartenenza(ass_pgiro.getTi_appartenenza_clg());
-        imp_pgiro.setTi_gestione(ass_pgiro.getTi_gestione_clg());
-        imp_pgiro.setCd_elemento_voce(ass_pgiro.getCd_voce_clg());
+		Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(uc,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(imp_pgiro.getEsercizio()));
+		Ass_partita_giroBulk ass_pgiro =null;
+		if (parametriCnr.getFl_nuova_gestione_pg().booleanValue() ) {
+			if(accert_pgiro.getElemento_voceContr()!=null ){
+				if ( accert_pgiro.getElemento_voceContr().getEsercizio()!=null)
+					imp_pgiro.setEsercizio( accert_pgiro.getElemento_voceContr().getEsercizio() );
+				if ( accert_pgiro.getElemento_voceContr().getTi_appartenenza()!=null)
+					imp_pgiro.setTi_appartenenza( accert_pgiro.getElemento_voceContr().getTi_appartenenza() );
+				if ( accert_pgiro.getElemento_voceContr().getTi_gestione()!=null)
+					imp_pgiro.setTi_gestione(  accert_pgiro.getElemento_voceContr().getTi_gestione() );
+				if ( accert_pgiro.getElemento_voceContr().getCd_elemento_voce()!=null)
+					imp_pgiro.setCd_elemento_voce(accert_pgiro.getElemento_voceContr().getCd_elemento_voce() );
+			}
+			else{
+					Ass_partita_giroHome ass_pgiroHome = (Ass_partita_giroHome) getHome( uc, Ass_partita_giroBulk.class );
+					ass_pgiro = ass_pgiroHome.getAssociazionePGiroFor(accert_pgiro);
+					
+			        imp_pgiro.setTi_appartenenza(ass_pgiro.getTi_appartenenza_clg());
+			        imp_pgiro.setTi_gestione(ass_pgiro.getTi_gestione_clg());
+			        imp_pgiro.setCd_elemento_voce(ass_pgiro.getCd_voce_clg());
+				}
+
+		}
+		else{
+			Ass_partita_giroHome ass_pgiroHome = (Ass_partita_giroHome) getHome( uc, Ass_partita_giroBulk.class );
+			ass_pgiro = ass_pgiroHome.getAssociazionePGiroFor(accert_pgiro);
+			
+	        imp_pgiro.setTi_appartenenza(ass_pgiro.getTi_appartenenza_clg());
+	        imp_pgiro.setTi_gestione(ass_pgiro.getTi_gestione_clg());
+	        imp_pgiro.setCd_elemento_voce(ass_pgiro.getCd_voce_clg());
+		}
 //		obblig_scad_voce.setCd_voce( ( (Ass_partita_giroBulk)result.get(0) ).getCd_voce_clg() );
 
 		//data scadenza
@@ -2104,8 +2185,8 @@ protected void verificaObbligazione(UserContext userContext, ImpegnoPGiroBulk im
 		if ( dataUltObbligazione != null && dataUltObbligazione.after( impegno.getDt_registrazione() ) )
 			throw  new ApplicationException( "Non è possibile inserire un'Annotazione di Spesa su Partita di Giro con data anteriore a " +  
    									java.text.DateFormat.getDateTimeInstance().format( dataUltObbligazione ));
-		}
-
+	}
+	
 }
 /**
  * Verifica dello stato dell'esercizio 
