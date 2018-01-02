@@ -77,6 +77,9 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 	@StorageProperty(name="sigla_contratti:importo_passivo_appalto")
 	private java.math.BigDecimal im_contratto_passivo;
  
+//	  IM_CONTRATTO_PASSIVO DECIMAL(15,2)
+//	@StorageProperty(name="sigla_contratti:importo_passivo_appalto_netto")
+	private java.math.BigDecimal im_contratto_passivo_netto;	
 //	CD_TIPO_ATTO VARCHAR(5)
 	private java.lang.String cd_tipo_atto;
 
@@ -517,5 +520,12 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 	}
 	public void setCdCigFatturaAttiva(java.lang.String cdCigFatturaAttiva) {
 		this.cdCigFatturaAttiva = cdCigFatturaAttiva;
+	}
+	public java.math.BigDecimal getIm_contratto_passivo_netto() {
+		return im_contratto_passivo_netto;
+	}
+	public void setIm_contratto_passivo_netto(
+			java.math.BigDecimal im_contratto_passivo_netto) {
+		this.im_contratto_passivo_netto = im_contratto_passivo_netto;
 	}
 }

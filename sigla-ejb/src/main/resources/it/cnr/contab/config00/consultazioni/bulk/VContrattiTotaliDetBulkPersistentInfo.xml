@@ -220,6 +220,21 @@
 			sqlTypeName="VARCHAR"
 			columnSize="30"
 			nullable="true" />	
+		<columnMapping
+			columnName="TOTALE_MANDATI_NETTO"
+			propertyName="totaleMandatiNetto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+         <columnMapping
+			columnName="LIQUIDATO_SPESE_NETTO"
+			propertyName="liquidatoSpeseNetto"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />	
+	
 	</defaultColumnMap>
 	<persistentProperty
 		name="tipo" />
@@ -291,4 +306,8 @@
 		name="totaleEntrateContratto" />	
 	<persistentProperty
 		name="totaleSpeseContratto" />	
+	<persistentProperty
+		name="totaleMandatiNetto" />	
+    <persistentProperty
+		name="liquidatoSpeseNetto" />	
 </SQLPersistentInfo>
