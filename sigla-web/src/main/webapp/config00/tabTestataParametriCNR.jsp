@@ -153,12 +153,22 @@
 		</TD></TR>		
 		<TR><TD>
 			<% bp.getController().writeFormLabel(out,"livello_eco");%>
-			</TD><TD colspan="3">
+			</TD>
+			<TD>
 			<% bp.getController().writeFormInput(out,"default","livello_eco", false, null, null);%>
-		</TD></TR>
-		<TR><TD>
+			</TD>
+			<TD>
 			<% bp.getController().writeFormLabel(out,"livello_pat");%>
-			</TD><TD colspan="3">
+			</TD>
+			<TD>
 			<% bp.getController().writeFormInput(out,"default","livello_pat", false, null, null);%>
-		</TD></TR>			
+			</TD>
+		</TR>
+		<TR>
+		<TD>
+			<% bp.getController().writeFormLabel(out,"fl_nuova_gestione_pg");%>
+			</TD><TD >
+			<% bp.getController().writeFormInput(out,"default","fl_nuova_gestione_pg", false, null, null);%>
+		</TD>
+		</TR>			
 	</table>
