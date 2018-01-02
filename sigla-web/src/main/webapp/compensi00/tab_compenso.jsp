@@ -13,7 +13,7 @@
    CRUDCompensoBP bp = (CRUDCompensoBP)BusinessProcess.getBusinessProcess(request);
    CompensoBulk compenso = (CompensoBulk)bp.getModel();%>
 
-<div class="Group" style="width:100%">
+<div class="Group card">
 <table>
 
   <% if (bp.isSearching()) { %>
@@ -103,7 +103,8 @@
   <% } %>
 
 </table>
-
+</div>
+<div class="Group card">
 <table>
 <tr>
 	<td>
@@ -132,7 +133,9 @@
 	</td>
   </tr>
 </table>
+</div>
 
+<div class="Group card">
 <table>
 <% if(bp.isGestiteDeduzioniIrpef(uc)) {%>
   <tr>   
@@ -165,13 +168,11 @@
 		<%	}  %>
  	  </tr>
 </table>
-
 </div>
 
- 
-<fieldset>
-<legend ACCESSKEY=G TABINDEX=1 style="font-weight:bold; font-family:sans-serif; font-size:12px; color:blue">Dati Fattura</legend>
-<div class="Panel" style="width:100%">
+<fieldset class="fieldset card">
+<legend ACCESSKEY=G TABINDEX=1 class="GroupLabel card-header text-primary">Dati Fattura</legend>
+<div class="Panel">
 <table>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"esercizio_fattura_fornitore"); %></td>

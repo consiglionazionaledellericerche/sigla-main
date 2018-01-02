@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBase"
+	keyClassName="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaKey"
+	homeClassName="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaHome">
+	<defaultColumnMap
+		tableName="ORDINE_ACQ_CONSEGNA">
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="TIPO_CONSEGNA"
+			propertyName="tipoConsegna"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_PREV_CONSEGNA"
+			propertyName="dtPrevConsegna"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="QUANTITA"
+			propertyName="quantita"
+			sqlTypeName="DECIMAL"
+			columnSize="17"
+			columnScale="5"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IMPONIBILE_DIVISA"
+			propertyName="imImponibileDivisa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA_DIVISA"
+			propertyName="imIvaDivisa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IMPONIBILE"
+			propertyName="imImponibile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA"
+			propertyName="imIva"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_TOTALE_CONSEGNA"
+			propertyName="imTotaleConsegna"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_CDS_MAG"
+			propertyName="cdCdsMag"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_LUOGO"
+			propertyName="cdCdsLuogo"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_MAGAZZINO"
+			propertyName="cdMagazzino"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="IM_IVA_D"
+			propertyName="imIvaD"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_IVA_ND"
+			propertyName="imIvaNd"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_LUOGO_CONSEGNA"
+			propertyName="cdLuogoConsegna"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_UOP_DEST"
+			propertyName="cdUopDest"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_OBBL"
+			propertyName="cdCdsObbl"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBL"
+			propertyName="esercizioObbl"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_ORIG_OBBL"
+			propertyName="esercizioOrigObbl"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pgObbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCAD"
+			propertyName="pgObbligazioneScad"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="ARR_ALI_IVA"
+			propertyName="arrAliIva"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_FATT"
+			propertyName="statoFatt"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="false" />
+		<columnMapping
+			columnName="VECCHIA_CONSEGNA"
+			propertyName="vecchiaConsegna"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dtCancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="tipoConsegna" />
+	<persistentProperty
+		name="dtPrevConsegna" />
+	<persistentProperty
+		name="quantita" />
+	<persistentProperty
+		name="imImponibileDivisa" />
+	<persistentProperty
+		name="imIvaDivisa" />
+	<persistentProperty
+		name="imImponibile" />
+	<persistentProperty
+		name="imIva" />
+	<persistentProperty
+		name="imTotaleConsegna" />
+	<persistentProperty
+		name="cdCdsLuogo" />
+	<persistentProperty
+		name="cdLuogoConsegna" />
+	<persistentProperty
+		name="cdCdsMag" />
+	<persistentProperty
+		name="cdMagazzino" />
+	<persistentProperty
+		name="cdUopDest" />
+	<persistentProperty
+		name="cdCdsObbl" />
+	<persistentProperty
+		name="esercizioObbl" />
+	<persistentProperty
+		name="esercizioOrigObbl" />
+	<persistentProperty
+		name="pgObbligazione" />
+	<persistentProperty
+		name="pgObbligazioneScad" />
+	<persistentProperty
+		name="statoFatt" />
+	<persistentProperty
+		name="imIvaD" />
+	<persistentProperty
+		name="imIvaNd" />
+	<persistentProperty
+		name="arrAliIva" />
+	<persistentProperty
+		name="vecchiaConsegna" />
+	<persistentProperty
+		name="dtCancellazione" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

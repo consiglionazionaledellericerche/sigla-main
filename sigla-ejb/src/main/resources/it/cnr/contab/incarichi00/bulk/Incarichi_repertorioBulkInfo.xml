@@ -112,6 +112,11 @@
 		maxLength="10"
 		label="Progressivo Procedura Conferimento" />
 	<fieldProperty
+		name="oggetto_procedura"
+		property="incarichi_procedura.oggetto"
+		inputType="TEXT"
+		label="Oggetto Procedura Conferimento" />
+	<fieldProperty
 		name="incarichi_procedura"
 		property="incarichi_procedura"
 		inputType="SEARCHTOOL"
@@ -125,6 +130,8 @@
 		property="v_terzo"
 		readonlyProperty="ROSearchtoolTerzo"
 		inputType="SEARCHTOOL"
+		formName="searchtool_small"
+		inputCssClass=""
 		enabledOnSearch="true"
 		label="Contraente" />
 	<fieldProperty
@@ -132,6 +139,7 @@
 		property="v_terzo"
 		readonlyProperty="ROTerzo"
 		inputType="SEARCHTOOL"
+		formName="searchtool_small"
 		enabledOnSearch="true"
 		label="Contraente" />
 	<fieldProperty
@@ -662,4 +670,17 @@
 		<formFieldProperty
 			name="pg_repertorio" />
 	</form>
+
+    <form name="searchtool001">
+         <formFieldProperty
+               name="esercizio"
+               inputCssClass="w-8 " />
+         <formFieldProperty
+               name="pg_repertorio"
+               inputCssClass="w-8 " />
+         <formFieldProperty
+               name="oggetto_procedura"
+               inputType="TEXT"
+               inputSize="40" />
+    </form>
 </bulkInfo>

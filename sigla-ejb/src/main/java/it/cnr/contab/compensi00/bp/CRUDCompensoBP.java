@@ -53,12 +53,21 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 			super.writeHTMLToolbar(context, reset, find, delete);
 
 			// Aggiungo alla table dei contributi per visualizzare ulteriori dettagli per ogni riga
+			boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
 			if (getModelIndex()==-1)
-				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/uncheckall16.gif",null,false,"Visualizza dettagli",
-						HttpActionContext.isFromBootstrap(context));
+				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, 
+						isFromBootstrap?"fa fa-fw fa-list text-primary":"img/uncheckall16.gif",
+						null,
+						false,
+						"Visualizza dettagli",
+						isFromBootstrap);
 			else
-				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/uncheckall16.gif","javascript:submitForm('doVisualizzaDettagli')",false,"Visualizza dettagli",
-						HttpActionContext.isFromBootstrap(context));
+				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, 
+						isFromBootstrap?"fa fa-fw fa-list text-primary":"img/uncheckall16.gif",
+						"javascript:submitForm('doVisualizzaDettagli')",
+						false,
+						"Visualizza dettagli",
+						isFromBootstrap);
 				
 		}
 	};
@@ -70,12 +79,21 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 			super.writeHTMLToolbar(context, reset, find, delete);
 
 			// Aggiungo un bottone alla toolbar dei documenti associati per aprire in visualizzazione il documento contabile associato
+			boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
 			if (getModelIndex()==-1)
-				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/uncheckall16.gif",null,false,"Visualizza documento",
-						HttpActionContext.isFromBootstrap(context));
+				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, 
+						isFromBootstrap?"fa fa-fw fa-list text-primary":"img/uncheckall16.gif",
+						null,
+						false,
+						"Visualizza documento",
+						isFromBootstrap);
 			else
-				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/uncheckall16.gif","javascript:submitForm('doVisualizzaDocumentoContabile')",false,"Visualizza documento",
-						HttpActionContext.isFromBootstrap(context));
+				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, 
+						isFromBootstrap?"fa fa-fw fa-list text-primary":"img/uncheckall16.gif",
+						"javascript:submitForm('doVisualizzaDocumentoContabile')",
+						false,
+						"Visualizza documento",
+						isFromBootstrap);
 		}
 	};
 

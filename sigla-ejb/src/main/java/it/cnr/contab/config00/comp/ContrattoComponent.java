@@ -663,6 +663,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			SQLBuilder sql_pag = null;
 			SQLBuilder sql_liq_netto = null;
 			SQLBuilder sql_pag_netto = null;
+			SQLBuilder sqlOrdini = null;
 			if(contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO)){
 			  sql = testataHome.calcolaTotAccertamenti( userContext, contratto);
 			  sql_liq= testataHome.calcolaTotDocumentiAtt(userContext, contratto);
@@ -672,10 +673,13 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			  sql = testataHome.calcolaTotObbligazioni( userContext, contratto);
 			  sql_liq= testataHome.calcolaTotDocumentiPas(userContext, contratto);
 			  sql_pag=testataHome.calcolaTotMandati(userContext, contratto);
+
+			  sqlOrdini = testataHome.calcolaTotOrdini( userContext, contratto);
 			  sql_liq_netto= testataHome.calcolaTotDocumentiPasNetto(userContext, contratto);
 			  sql_pag_netto=testataHome.calcolaTotMandatiNetto(userContext, contratto);
 			}
 			java.math.BigDecimal tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+			java.math.BigDecimal tot_ordini = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			contratto.setTot_doc_cont_etr( tot_doc_cont );
 			contratto.setTot_doc_cont_spe( tot_doc_cont );
 			contratto.setTot_docamm_cont_spe( tot_doc_cont );
@@ -685,6 +689,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			contratto.setTot_docamm_cont_spe_netto(tot_doc_cont );
 			contratto.setTot_doccont_cont_spe_netto( tot_doc_cont );
 			
+			contratto.setTot_ordini( tot_doc_cont );
 			try {
 				java.sql.ResultSet rs = null;
 				LoggableStatement ps = null;
@@ -823,6 +828,32 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 					
 			contratto.setTot_doccont_cont_spe_netto( tot_doc_cont );
 		 }
+
+			if (contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_PASSIVO)) {
+				try {
+					java.sql.ResultSet rs = null;
+					LoggableStatement ps = null;
+					try {
+						ps = sqlOrdini.prepareStatement(getConnection(userContext));
+						try {
+							rs = ps.executeQuery();
+							if (rs.next())
+								tot_ordini = rs.getBigDecimal(1);
+						} catch (java.sql.SQLException e) {
+							throw handleSQLException(e);
+						} finally {
+							if (rs != null) try{rs.close();}catch( java.sql.SQLException e ){};
+						}
+					} finally {
+						if (ps != null) try{ps.close();}catch( java.sql.SQLException e ){};
+					}
+				} catch (java.sql.SQLException ex) {
+					throw handleException(ex);
+				}
+			}
+			contratto.setTot_ordini( tot_ordini );
+			
+			
 			return contratto;		
 		}
 		catch ( Exception e )
@@ -851,7 +882,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			   return contratto;			   
 			Integer esercizio = ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio();
 			ContrattoHome testataHome = (ContrattoHome)getHome(userContext, ContrattoBulk.class);
-			SQLBuilder sqlPagSpeNetto,sqlEtr,sqlSpe, sqlLiqEtr,sqlLiqSpe,sqlPagEtr,sqlPagSpe,sqlLiqSpeNetto = null; 
+			
+			SQLBuilder sqlPagSpeNetto,sqlEtr,sqlSpe, sqlLiqEtr,sqlLiqSpe,sqlPagEtr,sqlOrdini,sqlPagSpe,sqlLiqSpeNetto = null; 
 			sqlEtr = testataHome.calcolaTotAccertamentiPadre( userContext, contratto);
 			sqlSpe = testataHome.calcolaTotObbligazioniPadre( userContext, contratto);
 			sqlLiqEtr =testataHome.calcolaTotDocumentiAttPadre(userContext, contratto);
@@ -860,6 +892,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			sqlPagSpe =testataHome.calcolaTotMandatiPadre(userContext, contratto);
 			sqlPagSpeNetto =testataHome.calcolaTotMandatiPadreNetto(userContext, contratto);
 			sqlLiqSpeNetto=testataHome.calcolaTotDocumentiPasNettoPadre(userContext, contratto);
+			sqlOrdini = testataHome.calcolaTotOrdiniPadre( userContext, contratto);
 			
 			java.math.BigDecimal tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			contratto.setTot_doc_cont_etr( tot_doc_cont );
@@ -1013,6 +1046,34 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			if (tot_doc_cont == null)
 			  tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			contratto.setTot_doccont_cont_spe( tot_doc_cont );			
+
+			java.math.BigDecimal tot_ordini = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+			contratto.setTot_ordini( tot_ordini );
+			try {
+				java.sql.ResultSet rs = null;
+				LoggableStatement ps = null;
+				try {
+					ps = sqlOrdini.prepareStatement(getConnection(userContext));
+					try {
+						rs = ps.executeQuery();
+						if (rs.next())
+						tot_ordini = rs.getBigDecimal(1);
+					} catch (java.sql.SQLException e) {
+						throw handleSQLException(e);
+					} finally {
+						if (rs != null) try{rs.close();}catch( java.sql.SQLException e ){};
+					}
+				} finally {
+					if (ps != null) try{ps.close();}catch( java.sql.SQLException e ){};
+				}
+			} catch (java.sql.SQLException ex) {
+				throw handleException(ex);
+			}	
+			if (tot_ordini == null)
+				tot_ordini = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+			contratto.setTot_ordini( tot_ordini );
+			
+			
 			
 			try {
 				java.sql.ResultSet rs = null;
@@ -1091,14 +1152,14 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			   return contratto;			   
 			Integer esercizio = ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio();
 			ContrattoHome testataHome = (ContrattoHome)getHome(userContext, ContrattoBulk.class);
-			SQLBuilder sqlEtr,sqlSpe,sqlLiqEtr,sqlLiqSpe,sqlPagEtr,sqlPagSpe,sqlPagSpeNetto,sqlLiqSpeNetto = null;
-			
+			SQLBuilder sqlEtr,sqlSpe,sqlLiqEtr,sqlLiqSpe,sqlPagEtr,sqlPagSpe,sqlOrdini,sqlPagSpeNetto,sqlLiqSpeNetto = null;
 			sqlEtr = testataHome.calcolaTotAccertamenti( userContext, contratto);
 			sqlSpe = testataHome.calcolaTotObbligazioni( userContext, contratto);
 			sqlLiqEtr =testataHome.calcolaTotDocumentiAtt(userContext, contratto);
 			sqlLiqSpe =testataHome.calcolaTotDocumentiPas(userContext, contratto);
 			sqlPagEtr =testataHome.calcolaTotReversali(userContext, contratto);
 			sqlPagSpe =testataHome.calcolaTotMandati(userContext, contratto);
+			sqlOrdini =testataHome.calcolaTotOrdini(userContext, contratto);
 			sqlPagSpeNetto =testataHome.calcolaTotMandati(userContext, contratto);
 			sqlLiqSpeNetto =testataHome.calcolaTotDocumentiPasNetto(userContext, contratto);
 		
@@ -1296,6 +1357,33 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			if (tot_doc_cont == null)
 			  tot_doc_cont = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
 			contratto.setTot_docamm_cont_spe_netto( tot_doc_cont );	
+
+			java.math.BigDecimal tot_ordini = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+			contratto.setTot_ordini( tot_ordini );
+			try {
+				java.sql.ResultSet rs = null;
+				LoggableStatement ps = null;
+				try {
+					ps = sqlOrdini.prepareStatement(getConnection(userContext));
+					try {
+						rs = ps.executeQuery();
+						if (rs.next())
+						tot_ordini = rs.getBigDecimal(1);
+					} catch (java.sql.SQLException e) {
+						throw handleSQLException(e);
+					} finally {
+						if (rs != null) try{rs.close();}catch( java.sql.SQLException e ){};
+					}
+				} finally {
+					if (ps != null) try{ps.close();}catch( java.sql.SQLException e ){};
+				}
+			} catch (java.sql.SQLException ex) {
+				throw handleException(ex);
+			}	
+			if (tot_ordini == null)
+				tot_ordini = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
+			contratto.setTot_ordini( tot_ordini );
+			
 			return contratto;		
 		}
 		catch ( Exception e )

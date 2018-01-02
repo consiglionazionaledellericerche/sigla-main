@@ -2,21 +2,39 @@ package it.cnr.contab.pdg00.comp;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.sql.PreparedStatement;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJBException;
-import java.util.Collection;
+
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
-import it.cnr.contab.config00.esercizio.bulk.*;
-import it.cnr.contab.pdg00.cdip.bulk.*;
+import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
-import it.cnr.contab.config00.sto.bulk.*;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.CdrHome;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivoBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_laBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Ass_cdp_uoBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Costi_dipendenteVBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Costo_del_dipendenteBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Stampa_imponibili_dipendentiVBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Stampa_ripartizione_costiVBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Stipendi_coanBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofiBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Stipendi_cofi_obb_scadBulk;
+import it.cnr.contab.pdg00.cdip.bulk.V_cdp_matricolaBulk;
+import it.cnr.contab.pdg00.cdip.bulk.V_cdp_stato_mensilitaBulk;
+import it.cnr.contab.pdg00.cdip.bulk.V_dipendenteBulk;
+import it.cnr.contab.pdg00.cdip.bulk.V_dipendenteHome;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
@@ -26,12 +44,22 @@ import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.contab.segnalazioni00.bulk.Stampa_attivita_siglaBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.BusyResourceException;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.OutdatedResourceException;
+import it.cnr.jada.bulk.ROWrapper;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.IPrintMgr;
+import it.cnr.jada.comp.RicercaComponent;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class CostiDipendenteComponent extends RicercaComponent implements ICostiDipendenteMgr, IPrintMgr {
 /**
@@ -629,7 +657,11 @@ try {
 		sql.addSQLClause(FindClause.AND,"CD_MISSIONE",SQLBuilder.ISNOTNULL,null);
 	}
 //Filtro che estrae solo le linee di attività di spesa: 25/02/2002
-	sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE",SQLBuilder.EQUALS, it.cnr.contab.config00.latt.bulk.WorkpackageBulk.TI_GESTIONE_SPESE);
+	sql.openParenthesis(FindClause.AND);
+	sql.addSQLClause(FindClause.OR, "V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE", SQLBuilder.EQUALS, WorkpackageBulk.TI_GESTIONE_SPESE);
+	sql.addSQLClause(FindClause.OR, "V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE", SQLBuilder.EQUALS, WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
+	sql.closeParenthesis();
+
 	sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
 	sql.addClause(FindClause.AND,"cd_centro_responsabilita",SQLBuilder.EQUALS,cdr.getCd_centro_responsabilita());
 
@@ -1318,8 +1350,6 @@ private void validaAss_cdp_uo(UserContext userContext,Ass_cdp_uoBulk ass_cdp_uo)
 	} catch(OutdatedResourceException e) {
 		throw handleException(e);
 	} catch(BusyResourceException e) {
-		throw handleException(e);
-	} catch (IntrospectionException e) {
 		throw handleException(e);
 	}
 }

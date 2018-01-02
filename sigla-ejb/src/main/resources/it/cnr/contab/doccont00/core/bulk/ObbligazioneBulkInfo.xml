@@ -18,6 +18,7 @@
 		inputSize="15"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
+		inputCssClass="w-10 "
 		/>
 	<fieldProperty
 		name="cd_cds_origine"
@@ -43,9 +44,11 @@
 		name="find_elemento_voce"
 		property="elemento_voce"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		label="Voce del piano"
 		enabledOnSearch="true"
 		completeOnSave="false"
+		nullable="false"
 		/>
 	<fieldProperty
 		name="cd_elemento_voce"
@@ -88,7 +91,10 @@
 		property="creditore"
 		inputType="SEARCHTOOL"
 		label="Creditore"
+		formName="searchtool_large"
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
 		enabledOnSearch="true"
+		nullable="false"
 		/>
 	<fieldProperty
 		name="cd_terzo"
@@ -154,6 +160,7 @@
 		property="tipo_obbligazione"
 		inputType="SEARCHTOOL"
 		label="Tipologia"
+		formName="searchtool"
 		enabledOnSearch="true"
 		/>
 	<fieldProperty
@@ -419,7 +426,9 @@
 		name="find_contratto"
 		property="contratto"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		label="Contratto"
+		CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
 		enabledOnSearch="true" 
 		/>
 	<fieldProperty
@@ -471,6 +480,7 @@
 		property="incarico_repertorio"
 		inputType="SEARCHTOOL"
 		label="Incarico"
+		formName="searchtool001"
 		enabledOnSearch="true" 
 		/>
 	<fieldProperty
@@ -744,7 +754,7 @@
 		/>		
 	<formFieldProperty
 		name="find_contratto"
-		/>
+		/>	
 	<formFieldProperty
 		name="esercizio_contratto"
 		/>		

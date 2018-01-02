@@ -76,12 +76,12 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)context.createBusinessProcess("TestataProgettiRicercaBP");
 			context.addBusinessProcess(bp);
 		
-			it.cnr.jada.util.RemoteIterator roots = bp.getProgetti_sipTree(context).getChildren(context,null);
+			it.cnr.jada.util.RemoteIterator roots = roots = bp.getProgetti_sipTree(context).getChildren(context,null);
 			// Non ci sono Commesse disponibili
 			if (roots.countElements()==0){
 				context.closeBusinessProcess();
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, roots);
-				setErrorMessage(context,"Attenzione: non sono state trovati progetti disponibili");
+				setErrorMessage(context,"Attenzione: non sono stati trovati progetti disponibili");
 				return context.findDefaultForward();
 			}else {
 				context.closeBusinessProcess();
@@ -175,7 +175,6 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 		if (opt == OptionBP.YES_BUTTON) {
 			try {
 				CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)context.getBusinessProcess();
-
 				fillModel(context);
 
 				// controlliamo che gli stati delle righe selezionate siano tra loro congruenti
@@ -186,7 +185,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 					for (Iterator it=listaSel.iterator();it.hasNext();) {
 						Pdg_moduloBulk mod = (Pdg_moduloBulk) it.next();
 						if (!mod.getStato().equals(oldStato)) {
-							setErrorMessage(context,"Attenzione: le righe selezionate devono avere lo stesso stato attuale!");
+							setErrorMessage(context,"Attenzione: le righe selezionate devono avere lo stesso stato attuale! Deselezionare il progetto "+mod.getProgetto().getCd_progetto()+".");
 							return context.findDefaultForward();
 						}
 					}
@@ -199,16 +198,22 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 						try {
 							((PdgAggregatoModuloComponentSession)bp.createComponentSession()).modificaStatoPdg_aggregato(context.getUserContext(),mod);
 							sel.removeFromSelection(iSel);
-							bp.getCrudDettagli().setSelection(context, sel);	
+							bp.getCrudDettagli().setSelection(context, sel);
 						} catch(Throwable e) {
+							bp.cerca(context);
 							setErrorMessage(context,"Modulo di attività "+mod.getCd_progetto()+". "+e.getMessage());
 							return context.findDefaultForward();
 						}
 					}
 				}
 				else {
-					Pdg_moduloBulk pdg_mod = (Pdg_moduloBulk) ((PdgAggregatoModuloComponentSession)bp.createComponentSession()).modificaStatoPdg_aggregato(context.getUserContext(),(Pdg_moduloBulk)bp.getCrudDettagli().getModel());
-					bp.cerca(context);
+					try {
+						((PdgAggregatoModuloComponentSession)bp.createComponentSession()).modificaStatoPdg_aggregato(context.getUserContext(),(Pdg_moduloBulk)bp.getCrudDettagli().getModel());
+						bp.cerca(context);
+					} catch(Throwable e) {
+						bp.cerca(context);
+						throw e;
+					}
 				}
 				return context.findDefaultForward();
 			} catch(Throwable e) {

@@ -86,7 +86,7 @@ public void writeHTMLToolbar(
 				!(isInputReadonly() || getDetails().isEmpty() || ((CRUDObbligazioneBP)getParentController()).isSearching())? command : null,
 				true,
 				"Raggruppa",
-				"btn-sm btn-secondary btn-title",
+				"btn-sm btn-secondary btn-outline-secondary btn-title",
 				HttpActionContext.isFromBootstrap(context));
 		}
 }

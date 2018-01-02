@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk"
+	homeClassName="it.cnr.contab.ordmag.anag00.AbilUtenteUopOperHome">
+	<defaultColumnMap
+		tableName="ABIL_UTENTE_UOP_OPER">
+		<columnMapping
+			columnName="CD_UTENTE"
+			propertyName="utente.cd_utente" />
+		<columnMapping
+			columnName="CD_UNITA_OPERATIVA"
+			propertyName="unitaOperativaOrd.cdUnitaOperativa" />
+		<columnMapping
+			columnName="CD_TIPO_OPERAZIONE"
+			propertyName="tipoOperazioneOrd.cdTipoOperazione" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="utente"
+		partOfOid="true" />
+	<persistentProperty
+		name="unitaOperativaOrd"
+		partOfOid="true" />
+	<persistentProperty
+		name="tipoOperazioneOrd"
+		partOfOid="true" />
+</SQLPersistentInfo>

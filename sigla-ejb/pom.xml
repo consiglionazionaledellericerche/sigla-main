@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>it.cnr</groupId>
 		<artifactId>sigla</artifactId>
-		<version>4.1.19-SNAPSHOT</version>
+		<version>4.1.43-SNAPSHOT</version>
 	</parent>
 	<build>
 		<pluginManagement>
@@ -13,18 +13,20 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.7.0</version>
 					<configuration>
 						<source>${java.version}</source>
 						<target>${java.version}</target>
 						<charset>${project.build.sourceEncoding}</charset>
 						<encoding>${project.build.sourceEncoding}</encoding>
+						<useIncrementalCompilation>false</useIncrementalCompilation>
 					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-ejb-plugin</artifactId>
 					<configuration>
-						<ejbVersion>3.0</ejbVersion>
+						<ejbVersion>3.1</ejbVersion>
 				          <archive>
 				            <manifest>
 				              <addClasspath>true</addClasspath>

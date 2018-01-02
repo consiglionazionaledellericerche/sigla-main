@@ -94,7 +94,9 @@
 		name="find_contratto_eov"
 		property="contratto"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		label="Contratto"
+		CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
 		enabledOnSearch="true" 
 		enabledOnView="true"
 		/>
@@ -233,7 +235,7 @@
 		/> 		
 	<formFieldProperty
 		name="find_contratto_eov"
-		/>
+		/>	
 	<formFieldProperty
 		name="esercizio_contratto_eov"
 		/>		

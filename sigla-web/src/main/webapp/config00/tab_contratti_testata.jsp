@@ -15,8 +15,8 @@
     <legend class="GroupLabel">
     	<% bp.getController().writeFormInput(out,null,"statoText",true,
     			"GroupLabel text-primary h3 inputFieldReadOnly", null);%>
-    </legend>    
-	<table class="Panel">
+    </legend>
+	<table class="Panel w-75">
 	  <tr>
 	    <td><% bp.getController().writeFormLabel(out,"dt_registrazione");%></td>
 	    <td><% bp.getController().writeFormInput(out,"default","dt_registrazione", bp.isPublishHidden(),null,null);%></td>
@@ -26,7 +26,7 @@
       <tr><td colspan=4>
 	      <div class="GroupLabel h3 text-primary">Estremi del protocollo informatico</div>          
 	      <div class="Group card">
-		      <table>      
+		      <table class="Panel w-100">      
 		      <tr>
 		         <td><% bp.getController().writeFormField(out,"esercizio_protocollo");%></td>
 		         <td><% bp.getController().writeFormField(out,"cd_protocollo_generale");%></td>         
@@ -36,7 +36,7 @@
       </td></tr>	      
       <tr><td colspan=4>
       <div class="Group card">
-	      <table>
+	      <table class="w-100">
 		  <tr>
 	         <td><% bp.getController().writeFormLabel(out,"unita_organizzativa");%></td>
 	         <td><% bp.getController().writeFormInput(out,"unita_organizzativa");%></td>
@@ -63,50 +63,54 @@
       </div>
       </td></tr>
       <tr><td colspan=4>
-      <div class="Group card"><table>      
-	  <tr>         
-         <td><% bp.getController().writeFormLabel(out,"figura_giuridica_esterna");%></td>
-         <td colspan="5"><% bp.getController().writeFormInput(out,"default", "figura_giuridica_esterna", bp.isContrattoDefinitivo(),null,null);%></td>
-      </tr>      
-	  <tr>         
-         <td><% bp.getController().writeFormLabel(out,"resp_esterno");%></td>
-         <td colspan="5"><% bp.getController().writeFormInput(out,"default","resp_esterno", bp.isPublishHidden(),null,null);%></td>
-      </tr>            
-      </table></div>
+      <div class="Group card">
+	      <table class="w-100">      
+			  <tr>         
+		         <td><% bp.getController().writeFormLabel(out,"figura_giuridica_esterna");%></td>
+		         <td colspan="5"><% bp.getController().writeFormInput(out,"default", "figura_giuridica_esterna", bp.isContrattoDefinitivo(),null,null);%></td>
+		      </tr>      
+			  <tr>         
+		         <td><% bp.getController().writeFormLabel(out,"resp_esterno");%></td>
+		         <td colspan="5"><% bp.getController().writeFormInput(out,"default","resp_esterno", bp.isPublishHidden(),null,null);%></td>
+		      </tr>            
+	      </table>
+      </div>
       </td></tr>   
       <tr><td colspan=4>
-      <div class="Group card"><table>      
-	  <tr>         
-         <td><% bp.getController().writeFormLabel(out,"atto");%></td>
-         <td><% bp.getController().writeFormInput(out,"default","atto", bp.isPublishHidden(),null,null);%></td>
-         <td><% bp.getController().writeFormInput(out,"default","crea_atto", bp.isPublishHidden(),null,null);%></td>
-      </tr>
-      <% if (((ContrattoBulk)bp.getModel()).isDs_atto_non_definitoVisible()){%>
-	  <tr>         
-         <td><% bp.getController().writeFormLabel(out,"ds_atto_non_definito");%></td>
-         <td colspan=2><% bp.getController().writeFormInput(out,"default","ds_atto_non_definito", bp.isPublishHidden(),null,null);%></td>
-      </tr>      
-      <%}%>
-	  <tr>         
-         <td><% bp.getController().writeFormLabel(out,"ds_atto");%></td>
-         <td colspan=2><% bp.getController().writeFormInput(out,"default","ds_atto", bp.isPublishHidden(),null,null);%></td>
-      </tr>
-	  <tr>         
-         <td><% bp.getController().writeFormLabel(out,"organo");%></td>
-         <td><% bp.getController().writeFormInput(out,"default","organo", bp.isPublishHidden(),null,null);%></td>
-         <td><% bp.getController().writeFormInput(out,"default","crea_organo", bp.isPublishHidden(),null,null);%></td>
-      </tr>
-      <% if (((ContrattoBulk)bp.getModel()).isDs_organo_non_definitoVisible()){%>
-	  <tr>         
-         <td><% bp.getController().writeFormLabel(out,"ds_organo_non_definito");%></td>
-         <td colspan=2><% bp.getController().writeFormInput(out,"default","ds_organo_non_definito", bp.isPublishHidden(),null,null);%></td>
-      </tr>      
-      <%}%>                        
-      </table></div>
+      <div class="Group card">
+	      <table class="w-100">      
+			  <tr>         
+		         <td><% bp.getController().writeFormLabel(out,"atto");%></td>
+		         <td><% bp.getController().writeFormInput(out,"default","atto", bp.isPublishHidden(),null,null);%></td>
+		         <td><% bp.getController().writeFormInput(out,"default","crea_atto", bp.isPublishHidden(),null,null);%></td>
+		      </tr>
+		      <% if (((ContrattoBulk)bp.getModel()).isDs_atto_non_definitoVisible()){%>
+			  <tr>         
+		         <td><% bp.getController().writeFormLabel(out,"ds_atto_non_definito");%></td>
+		         <td colspan=2><% bp.getController().writeFormInput(out,"default","ds_atto_non_definito", bp.isPublishHidden(),null,null);%></td>
+		      </tr>      
+		      <%}%>
+			  <tr>         
+		         <td><% bp.getController().writeFormLabel(out,"ds_atto");%></td>
+		         <td colspan=2><% bp.getController().writeFormInput(out,"default","ds_atto", bp.isPublishHidden(),null,null);%></td>
+		      </tr>
+			  <tr>         
+		         <td><% bp.getController().writeFormLabel(out,"organo");%></td>
+		         <td><% bp.getController().writeFormInput(out,"default","organo", bp.isPublishHidden(),null,null);%></td>
+		         <td><% bp.getController().writeFormInput(out,"default","crea_organo", bp.isPublishHidden(),null,null);%></td>
+		      </tr>
+		      <% if (((ContrattoBulk)bp.getModel()).isDs_organo_non_definitoVisible()){%>
+			  <tr>         
+		         <td><% bp.getController().writeFormLabel(out,"ds_organo_non_definito");%></td>
+		         <td colspan=2><% bp.getController().writeFormInput(out,"default","ds_organo_non_definito", bp.isPublishHidden(),null,null);%></td>
+		      </tr>      
+		      <%}%>                        
+	      </table>
+      </div>
       </td></tr>          
       <tr><td colspan=4>
       <div class="Group card">
-	      <table>            
+	      <table class="w-100">            
 			  <tr>         
 		         <td><% bp.getController().writeFormLabel(out,"oggetto");%></td>
 		         <td colspan="5"><% bp.getController().writeFormInput(out,"default","oggetto", bp.isPublishHidden(),null,null);%></td>
@@ -172,7 +176,7 @@
       </td></tr>
       <tr><td colspan=4>
       <div class="Group card">
-      <table>
+      <table class="w-100">
 	      <% if (((ContrattoBulk)bp.getModel()).isAttivo_e_Passivo()){%>
 		  <tr>
 	        <td><% bp.getController().writeFormLabel(out,"im_contratto_attivo");%></td>
@@ -214,8 +218,8 @@
       </td></tr>
       <tr>                        
          <td colspan=5>
-		   <div class="Group card" style="width:100%;">		
-		   <table border="0" cellspacing="0" cellpadding="2">
+		   <div class="Group card w-100">		
+		   <table class="w-100" cellspacing="0" cellpadding="2">
 			<tr>
 				<td><% bp.getController().writeFormLabel( out, "tot_doc_cont_etr"); %></td>
 				<td><% bp.getController().writeFormInput( out, "tot_doc_cont_etr"); %></td>
@@ -310,6 +314,11 @@
 							((CRUDConfigAnagContrattoBP)bp).isVisualizzaDoccontContSpeButtonEnabled(), 
 							bp.getParentRoot().isBootstrap()); %>
 				</td>
+				<td></td>
+			</tr>
+			<tr>				
+				<td><% bp.getController().writeFormLabel( out, "tot_ordini"); %></td>
+				<td><% bp.getController().writeFormInput( out, "tot_ordini"); %></td>
 				<td></td>
 			</tr>
 		   </table>

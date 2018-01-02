@@ -32,23 +32,17 @@
 	 UserContext uc = HttpActionContext.getUserContext(session);
 	 Elemento_voceBulk voce = (Elemento_voceBulk)bp.getModel();%>
 
-	<table class="Panel">
 	<% if (!bp.isFlNuovoPdg()){%>
-		<tr>
-		<td colspan=4><CENTER><h3>Gestione Capitolo Parte I</h3></CENTER></td>
-		</tr>
+		<div><CENTER><h3 class="text-primary">Gestione Capitolo Parte I</h3></CENTER></div>
 	<% } else { %>
-		<tr>
-		<td colspan=4><CENTER><h3>Gestione Voce di Bilancio di Spesa</h3></CENTER></td>
-		</tr>
+		<div><CENTER><h3 class="text-primary">Gestione Voce di Bilancio di Spesa</h3></CENTER></div>
 	<% } %>
+	<table class="Panel card p-3 mb-2">
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "esercizio"); %></td>
-	<td colspan=3><% bp.getController().writeFormInputByStatus( out, "esercizio"); %></td>
+	  <% bp.getController().writeFormField(out,"esercizio");%>
 	</tr>
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "cd_proprio_elemento"); %></td>	
-	<td colspan=3><% bp.getController().writeFormInputByStatus( out, "cd_proprio_elemento"); %></td>
+	  <% bp.getController().writeFormField(out,"cd_proprio_elemento");%>
 	</tr>
 	<% if (!bp.isFlNuovoPdg()){%>
 		<tr>
@@ -61,90 +55,64 @@
 		</tr>
 	<% } %>
 	<tr>
-	<td><span class="FormLabel">Categoria Economica/Finanziaria</span></td>	
-	<td colspan=3>
-			<% bp.getController().writeFormInput( out, "cd_capoconto_fin"); %>
-			<% bp.getController().writeFormInput( out, "ds_capoconto_fin"); %>
-			<% bp.getController().writeFormInput( out, "find_capoconto_fin"); %>				
-	</td>
+	  <% bp.getController().writeFormField(out,"find_capoconto_fin");%>
 	</tr>
 	<% if (!bp.isFlNuovoPdg()){%>
 		<tr>
-		<td><% bp.getController().writeFormLabel( out, "cd_elemento_voce"); %></td>	
-		<td colspan=3><% bp.getController().writeFormInput( out, "cd_elemento_voce"); %></td>
+		  <% bp.getController().writeFormField(out,"cd_elemento_voce");%>
 		</tr>	
 	<% } %>
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "ds_elemento_voce"); %></td>	
-	<td colspan=3><% bp.getController().writeFormInput( out, "ds_elemento_voce"); %></td>
+	  <% bp.getController().writeFormField(out,"ds_elemento_voce");%>
 	</tr>
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "fl_limite_ass_obblig"); %></td>	
-	<td colspan=3><% bp.getController().writeFormInput( out, "fl_limite_ass_obblig"); %></td>
-	</tr>
-	<tr>
-	<td><% bp.getController().writeFormLabel( out, "fl_voce_personale"); %></td>	
-	<td colspan=3><% bp.getController().writeFormInput( out, "fl_voce_personale"); %></td>
-	</tr>
-	<tr>
-	  <td><% bp.getController().writeFormLabel(out,"classificazione_spese");%></td>
-	  <td>
-	  <TABLE cellspacing="0">
-	   <tr>
-	      <TD><% bp.getController().writeFormInput(out,"esercizio_cla_s");%></TD>
-	  	  <TD><% bp.getController().writeFormInput(out,"cod_cla_s");%></TD>
-	      <TD><% bp.getController().writeFormInput(out,"classificazione_spese");%></TD>
-	   </tr>
-	  </TABLE>
-	  </td>
+	  <% bp.getController().writeFormField(out,"classificazione_spese");%>
 	</tr>	
 	<tr>
-	  <td><% bp.getController().writeFormLabel(out,"find_classificazione_voci");%></td>
-	  <td> 
-	   <TABLE cellspacing="0">
-	   <tr> 
-	      <td><% bp.getController().writeFormInput(out,"find_classificazione_voci");%></td> 
-	  </tr>
-	  </TABLE> 
-	  </td> 	  
+	  <% bp.getController().writeFormField(out,"find_classificazione_voci");%>
 	</tr>				
 	</table>
-	<table>
+	
+	<table class="Panel card p-3">
 	<tr>
-	  <td><% bp.getController().writeFormLabel( out, "fl_recon"); %></td>	
-	  <td><% bp.getController().writeFormInput( out, "fl_recon"); %></td>
+	  <% bp.getController().writeFormField(out,"fl_limite_ass_obblig");%>
 	</tr>
 	<tr>
-	  <td><% bp.getController().writeFormLabel( out, "fl_inv_beni_patr"); %></td>	
-	  <td><% bp.getController().writeFormInput( out, "fl_inv_beni_patr"); %></td>
+	  <% bp.getController().writeFormField(out,"fl_voce_personale");%>
+	</tr>
+	<tr>
+	  <% bp.getController().writeFormField(out,"fl_partita_giro");%>
+	</tr>
+	<tr>
+	  <% bp.getController().writeFormField(out,"fl_recon");%>
+	</tr>
+	<tr>
+	  <% bp.getController().writeFormField(out,"fl_inv_beni_patr");%>
 	</tr>
 	<tr>
 	  <td><% bp.getController().writeFormLabel( out, "fl_check_terzo_siope"); %></td>	
 	  <td><% bp.getController().writeFormInput( out,null,"fl_check_terzo_siope",(voce!=null?!voce.isGestoreOk(uc):false),null,null); %></td>
 	</tr>
 	<tr>
-	  <td><% bp.getController().writeFormLabel( out, "fl_prelievo"); %></td>	
-	  <td><% bp.getController().writeFormInput( out, "fl_prelievo"); %></td>
+	  <% bp.getController().writeFormField(out,"fl_prelievo");%>
 	</tr>
 	<tr>
-	  <td><% bp.getController().writeFormLabel( out, "fl_limite_spesa"); %></td>	
-	  <td><% bp.getController().writeFormInput( out, "fl_limite_spesa"); %></td>
+	  <% bp.getController().writeFormField(out,"fl_limite_spesa");%>
 	</tr>
 	<tr>
-	  <td><% bp.getController().writeFormLabel( out, "fl_solo_residuo"); %></td>	
-	  <td><% bp.getController().writeFormInput( out, "fl_solo_residuo"); %></td>
-	  <td><% bp.getController().writeFormLabel( out, "fl_azzera_residui"); %></td>	
-	  <td><% bp.getController().writeFormInput( out, "fl_azzera_residui"); %></td>
-	  <td><% bp.getController().writeFormLabel( out, "fl_solo_competenza"); %></td>	
-	  <td><% bp.getController().writeFormInput( out, "fl_solo_competenza"); %></td>
+	  <% bp.getController().writeFormField(out,"fl_solo_competenza");%>
 	</tr>
 	<tr>
-	  <td><% bp.getController().writeFormLabel( out, "fl_trovato"); %></td>
-	  <td><% bp.getController().writeFormInput( out, "fl_trovato"); %></td>
+	  <% bp.getController().writeFormField(out,"fl_solo_residuo");%>
+	</tr>
+	<tr>
+	  <% bp.getController().writeFormField(out,"fl_azzera_residui");%>
+	</tr>
+	<tr>
+	  <% bp.getController().writeFormField(out,"fl_trovato");%>
 	</tr>	
 	<tr>
-	  <td><% bp.getController().writeFormLabel( out, "fl_missioni"); %></td>
-	  <td><% bp.getController().writeFormInput( out, "fl_missioni"); %></td>
+	  <% bp.getController().writeFormField(out,"fl_missioni");%>
 	</tr>	
 	</table>		
 	<% if (!bp.isFlNuovoPdg()) ((EV_cds_spese_capitoloBulk) bp.getModel()).writeTable( out, ((EV_cds_spese_capitoloBulk) bp.getModel()).getAssociazioni() ); %>

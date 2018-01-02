@@ -11,6 +11,7 @@ import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
@@ -43,6 +44,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.OutdatedResourceException;
@@ -99,6 +101,21 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 			Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
 			Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
 			testata.setDettagli(new it.cnr.jada.bulk.BulkList(testataHome.findPdgModuloDettagli(userContext, testata, parCnrBulk.getLivelloProgetto())));
+
+			Pdg_moduloHome pdgModuloHome = (Pdg_moduloHome)getHome(userContext, Pdg_moduloBulk.class);
+			for (Iterator iterator = testata.getDettagli().iterator(); iterator.hasNext();) {
+				Pdg_moduloBulk moduloBulk = (Pdg_moduloBulk) iterator.next();
+				moduloBulk.setExistGestionaleE(pdgModuloHome.existsGestionaleE(moduloBulk));
+				moduloBulk.setExistGestionaleS(pdgModuloHome.existsGestionaleS(moduloBulk));
+				moduloBulk.setExistDecisionaleE(moduloBulk.getExistGestionaleE()?Boolean.TRUE:pdgModuloHome.existsDecisionaleE(moduloBulk));
+				moduloBulk.setExistDecisionaleS(moduloBulk.getExistGestionaleS()?Boolean.TRUE:pdgModuloHome.existsDecisionaleS(moduloBulk));
+
+				Pdg_modulo_costiBulk moduloCosti = (Pdg_modulo_costiBulk)((Pdg_modulo_costiHome)getHome(userContext, Pdg_modulo_costiBulk.class)).findByPrimaryKey(new Pdg_modulo_costiBulk(moduloBulk));
+				moduloBulk.setExistDecisionaleR(moduloCosti!=null &&
+						                        (moduloCosti.getTot_risorse_presunte_es_prec().compareTo(BigDecimal.ZERO)>0 ||
+											     moduloCosti.getTot_risorse_provenienti_es_prec().compareTo(BigDecimal.ZERO)>0));
+				moduloBulk.setExistDecisionaleC(moduloCosti!=null && moduloCosti.getTot_costi().compareTo(BigDecimal.ZERO)>0);
+			}
 			getHomeCache(userContext).fetchAll(userContext);
 			return testata;
 		} catch(Exception e) {
@@ -232,7 +249,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 				throw new ApplicationException("Non è possibile modificare lo stato del PdGP poichè risulta chiusa la fase previsionale per il CdR "+es.getCd_centro_responsabilita());
 
 			pdg_modulo.setUser(userContext.getUser());
-
+			
 			// Invoco il metodo modificaStato_x_y()
 			try {
 				it.cnr.jada.util.Introspector.invoke(
@@ -247,6 +264,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 				throw ex.getTargetException();
 			}
 
+			pdg_modulo.setUser(userContext.getUser());
 			pdg_modulo.setStato(pdg_modulo.getCambia_stato());
 			
 			pdg_modulo.setToBeUpdated();
@@ -533,18 +551,25 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 		try {
 			Pdg_Modulo_EntrateHome home = (Pdg_Modulo_EntrateHome)getHome(userContext,Pdg_Modulo_EntrateBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
-			sql.addTableToHeader("CLASSIFICAZIONE_VOCI");
-			sql.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE","CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
-			CdrBulk cdr = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(pdg.getCdr());
-			cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
 
-			if (pdg.getCdr().isCdrSAC())
-				sql.addSQLClause("AND","CLASSIFICAZIONE_VOCI.FL_ESTERNA_DA_QUADRARE_SAC",SQLBuilder.EQUALS,"Y");
 			sql.addClause("AND","esercizio",SQLBuilder.EQUALS,pdg.getEsercizio());
 			sql.addClause("AND","cd_centro_responsabilita",SQLBuilder.EQUALS,pdg.getCd_centro_responsabilita());
 			sql.addClause("AND","pg_progetto",SQLBuilder.EQUALS,pdg.getPg_progetto());
 			if (cds!=null && cds.getCd_unita_organizzativa()!=null)
 				sql.addClause("AND","cd_cds_area",SQLBuilder.EQUALS,cds.getCd_unita_organizzativa());
+
+			sql.addTableToHeader("NATURA");
+			sql.addSQLJoin("PDG_MODULO_ENTRATE.CD_NATURA","NATURA.CD_NATURA");
+			sql.addSQLClause("AND","NATURA.TIPO",SQLBuilder.EQUALS,NaturaBulk.TIPO_NATURA_FONTI_ESTERNE);
+
+			CdrBulk cdr = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(pdg.getCdr());
+			cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
+
+			if (pdg.getCdr().isCdrSAC()) {
+				sql.addTableToHeader("CLASSIFICAZIONE_VOCI");
+				sql.addSQLJoin("PDG_MODULO_ENTRATE.ID_CLASSIFICAZIONE","CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
+				sql.addSQLClause("AND","CLASSIFICAZIONE_VOCI.FL_ESTERNA_DA_QUADRARE_SAC",SQLBuilder.EQUALS,"Y");
+			}
 
 			SQLBroker broker = home.createBroker(sql);
 			
@@ -553,7 +578,6 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 				if (pdge.getIm_entrata()!=null)
 					impTotaleEntrate = impTotaleEntrate.add(pdge.getIm_entrata());
 			}
-
 		} catch (PersistencyException e) {
 			throw handleException(e);
 		} catch (ComponentException e) {
@@ -651,7 +675,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 						throw new ApplicationException("Per il "+labelProgetto+" "+pdg.getCd_progetto()+" il contributo per l'attività ordinaria è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
 									". Impossibile salvare, poichè è stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
 			}
-			if (impTotaleSpese.compareTo(impTotaleEntrate)!=0)
+			if (parCnrBulk.getFl_pdg_quadra_fonti_esterne() && impTotaleSpese.compareTo(impTotaleEntrate)!=0)
 				if ( cds!=null ) {
 					if ( cds.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA) ) 
 						throw new ApplicationException("Per l'area " + cds.getCd_unita_organizzativa() + " e per il "+labelProgetto+" "+ pdg.getCd_progetto()+", il totale degli importi provenienti dalle fonti esterne delle entrate non corrisponde a quello delle spese. Impossibile procedere.");
@@ -811,7 +835,6 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 		}
 	}
 
-
 	private void controllaAdeguamentoContrattazione(UserContext userContext, Pdg_moduloBulk pdg) throws it.cnr.jada.comp.ComponentException {
 		try {
 			// controlliamo per le spese
@@ -942,22 +965,23 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 	}
 	
 	public void stampaBilancioCallAggiornaDati(UserContext userContext, Stampa_pdgp_bilancioBulk bulk, 
-			boolean aggPrevAC, boolean aggResiduiAC, boolean aggResiduiAP, boolean aggCassaAC) throws it.cnr.jada.comp.ComponentException {
+			boolean aggPrevAC, boolean aggResiduiAC, boolean aggPrevAP, boolean aggResiduiAP, boolean aggCassaAC) throws it.cnr.jada.comp.ComponentException {
 		try
 		{
 			LoggableStatement cs = new LoggableStatement(getConnection( userContext ), 
 				"call " +
 				it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +			
-				"PRC_LOAD_TABLE_STAMPA_BILANCIO(?, ?, ?, ?, ?, ?, ?)",false,this.getClass());
+				"PRC_LOAD_TABLE_STAMPA_BILANCIO(?, ?, ?, ?, ?, ?, ?, ?)",false,this.getClass());
 				try
 				{
 					cs.setInt( 1, bulk.getEsercizio().intValue());
 					cs.setString( 2, aggPrevAC?String.valueOf("Y"):String.valueOf("N"));		
 					cs.setString( 3, aggResiduiAC?String.valueOf("Y"):String.valueOf("N"));
-					cs.setString( 4, aggResiduiAP?String.valueOf("Y"):String.valueOf("N"));
-					cs.setString( 5, aggCassaAC?String.valueOf("Y"):String.valueOf("N"));
-					cs.setInt( 6, bulk.getPercCassa()!=null?bulk.getPercCassa():Integer.valueOf(0).intValue());
-					cs.setString( 7, userContext.getUser());
+					cs.setString( 4, aggPrevAP?String.valueOf("Y"):String.valueOf("N"));		
+					cs.setString( 5, aggResiduiAP?String.valueOf("Y"):String.valueOf("N"));
+					cs.setString( 6, aggCassaAC?String.valueOf("Y"):String.valueOf("N"));
+					cs.setInt( 7, bulk.getPercCassa()!=null?bulk.getPercCassa():Integer.valueOf(0).intValue());
+					cs.setString( 8, userContext.getUser());
 
 					cs.executeQuery();
 				}

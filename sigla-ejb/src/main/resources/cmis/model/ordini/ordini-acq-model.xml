@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Definition of new Model -->
+<model name="ordini_acq:ordini_acq_model" 
+	xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<!-- Optional meta-data about the model -->
+	<description>Ordini di Acquisto extension Content Model - Ordini di Acquisto</description>
+	<author>Gianfranco Gasparro</author>
+	<version>1.0</version>
+
+	<!--
+		Imports are required to allow references to definitions in other
+		models
+	-->
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+		<import uri="http://www.cnr.it/str/org/1.0/" prefix="strorg" />
+		<import uri="http://www.cnr.it/model/sigla/commons_aspect/" prefix="sigla_commons_aspect" />
+	</imports>
+
+	<!-- Introduction of new namespaces defined by this model -->
+	<namespaces>
+		<namespace uri="http://www.cnr.it/model/ordini/acq/cmis" prefix="ordini_acq" />
+	</namespaces>
+
+	<types>
+		<type name="ordini_acq:main">
+			<title>Dati Generali Documento Ordini di Acquisto</title>
+			<description>Dati Generali Documento Ordini di Acquisto</description>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="ordini_acq:anno">
+					<title>Anno</title>
+					<type>d:int</type>
+				</property>
+				<property name="ordini_acq:numero">
+					<title>Numero Ordine</title>
+					<type>d:long</type>
+				</property>
+				<property name="ordini_acq:cd_unita_operativa">
+					<title>Unità Operativa</title>
+					<type>d:text</type>
+				</property>
+				<property name="ordini_acq:cd_numeratore">
+					<title>Numeratore Richiesta</title>
+					<type>d:text</type>
+				</property>
+				<property name="ordini_acq:cd_terzo">
+					<title>Codice Fornitore</title>
+					<type>d:long</type>
+				</property>
+				<property name="ordini_acq:ds_terzo">
+					<title>Descrizione Fornitore</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>sigla_commons_aspect:utente_applicativo_sigla</aspect>
+			</mandatory-aspects>
+		</type>
+	</types>
+</model>

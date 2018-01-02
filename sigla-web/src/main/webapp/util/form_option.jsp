@@ -18,7 +18,7 @@
 </head>
 <title>Informazione</title>
 <body class="Workspace">
-<FORM name="mainForm" action="Option.do" method=post onSubmit="return disableDblClick()">
+<FORM name="mainForm" action="Option.do" action-ng="Option.do" method=post onSubmit="return disableDblClick()">
 <input type=hidden name="comando">
 <% 	
 	OptionBP bp = (OptionBP)BusinessProcess.getBusinessProcess(request);
@@ -93,10 +93,10 @@
 		</tr>
 	</table>
 <% } else { %>	
-	<div class="col-md-6 offset-md-3">
+	<div class="col-md-6 offset-md-3 mx-auto">
 		<div class="card">
 		  <h3 class="card-header"><i class="<%=iconClass%>" aria-hidden="true"></i> Informazione</h3>
-		  <div class="card-block">
+		  <div class="card-block p-3">
 		    <p class="card-title"><%=msg%></p>
 		    <div class="col-sm-offset-5 text-center">
 			    <div>

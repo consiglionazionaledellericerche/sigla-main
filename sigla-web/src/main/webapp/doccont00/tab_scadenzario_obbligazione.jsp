@@ -13,31 +13,32 @@
 		CRUDObbligazioneBP bp = (CRUDObbligazioneBP)BusinessProcess.getBusinessProcess(request);
 %>
 
-	<table border="0" cellspacing="0" cellpadding="2">
+<div class="Group card">
+	<table border="0" cellspacing="0" cellpadding="2" class="w-100">
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "cd_elemento_voceRO"); %></td>
-	<td>	
-	    <% bp.getController().writeFormInput( out, "cd_elemento_voceRO"); %>
-		<% bp.getController().writeFormInput( out, "ds_elemento_voce"); %></td>				 
+		<td><% bp.getController().writeFormLabel( out, "cd_elemento_voceRO"); %></td>
+		<td><% bp.getController().writeFormInput( out, "cd_elemento_voceRO"); %></td>
+		<td class="w-100"><% bp.getController().writeFormInput( out, "ds_elemento_voce"); %></td>				 
 	</tr>
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "im_tot_obbligazione"); %></td>
-	<td><% bp.getController().writeFormInput( out, "default", "im_tot_obbligazione", true, null, null); %></td>
+		<td><% bp.getController().writeFormLabel( out, "im_tot_obbligazione"); %></td>
+		<td colspan="2"><% bp.getController().writeFormInput( out, "default", "im_tot_obbligazione", true, null, null); %></td>
 	</tr>
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "im_parz_scadenze"); %></td>
-		<td><% bp.getController().writeFormInput( out, "im_parz_scadenze"); %>
-			<% bp.getController().writeFormLabel( out, "im_residuo_obbligazione"); %>
-			<% bp.getController().writeFormInput( out, "im_residuo_obbligazione"); %></td>
+		<td colspan="2"><% bp.getController().writeFormInput( out, "im_parz_scadenze"); %>
+			            <% bp.getController().writeFormLabel( out, "im_residuo_obbligazione"); %>
+           				<% bp.getController().writeFormInput( out, "im_residuo_obbligazione"); %></td>
 	</tr>
 	
 	<tr>
-	<td colspan=2>
-	      <% bp.getScadenzario().setEnabled( !bp.isEditingScadenza());
-		     bp.getScadenzario().writeHTMLTable(pageContext,"obbligazione",true,false,true,"100%","100px"); %>
-	</td>
+		<td colspan="3">
+		      <% bp.getScadenzario().setEnabled( !bp.isEditingScadenza());
+			     bp.getScadenzario().writeHTMLTable(pageContext,"obbligazione",true,false,true,"100%","100px"); %>
+		</td>
 	</tr>
-  <tr><td colspan=2>
+  	<tr>
+  		<td colspan="3">
   		<br>
 	      <%	JSPUtils.tabbed(
 					pageContext,
@@ -51,5 +52,7 @@
 					!bp.isEditingScadenza() );
 			
 		%>
-	</td></tr>
+		</td>
+	</tr>
   </table>
+</div>

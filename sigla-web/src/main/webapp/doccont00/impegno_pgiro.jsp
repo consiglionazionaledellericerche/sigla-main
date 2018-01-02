@@ -28,6 +28,7 @@
 <body class="Form">
 <%  bp.openFormWindow(pageContext);%>	 
 
+<div class="Group card">
 	<table class="Panel">
 	<tr colspan=3>
 	<td><% bp.getController().writeFormLabel( out, "esercizio_competenza"); %></td>
@@ -69,16 +70,14 @@
 		</td>
 	</tr>
 	</table>
-	
-	<div class="Group">
+</div>	
+
+<div class="Group card">
 	<table>	
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "cd_terzo"); %></td>
+	<td><% bp.getController().writeFormLabel( out, "find_creditore"); %></td>
 	<td colspan=2>
-		<% bp.getController().writeFormInput( out, "cd_terzo"); %>
-		<% bp.getController().writeFormInput( out, "ds_creditore"); %>
 		<% bp.getController().writeFormInput( out, "find_creditore"); %>
-		<% bp.getController().writeFormInput( out, "crea_creditore"); %></td>				 
 	</tr>
 	<tr>
 	<td>	<% bp.getController().writeFormLabel( out, "cd_terzo_precedente"); %></td>
@@ -89,12 +88,13 @@
 	<td>	<% bp.getController().writeFormLabel( out, "codice_fiscale"); %></td>
 	<td>	<% bp.getController().writeFormInput( out, "codice_fiscale"); %>
 	        <% bp.getController().writeFormLabel( out, "partita_iva"); %>
-	        <% bp.getController().writeFormInput( out, "partita_iva"); %>	        
+	        <% bp.getController().writeFormInput( out, "partita_iva"); %>
 	</td>
 	</tr>
 	</table>	
-    </div>
+</div>
 	
+<div class="Group card">
 	<table>
     <tr>
 	<td><% bp.getController().writeFormLabel( out, "im_obbligazione"); %></td>
@@ -105,9 +105,7 @@
 	<td><% bp.getController().writeFormLabel( out, "cd_elemento_voce"); %></td>
 	
 	<td  colspan=2>
-		    <% bp.getController().writeFormInput(out,"default","cd_elemento_voce",imp.isFl_isTronco()&&bp.isEditing(),null,null); %>
-		    <% bp.getController().writeFormInput(out,"default","ds_elemento_voce", imp.isFl_isTronco()&&bp.isEditing(),null,null); %>
-		    <% bp.getController().writeFormInput(out,"default","find_elemento_voce",imp.isFl_isTronco()&&bp.isEditing(),null,null); %>
+	    <% bp.getController().writeFormInput(out,"default","find_elemento_voce",imp.isFl_isTronco()&&bp.isEditing(),null,null); %>
 	</td>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "dt_scadenza"); %></td>
@@ -153,6 +151,7 @@
 	</tr>
 -->	
 	</table>
+</div>	
 <!--
   <div class="Group">		
   <table border="0" cellspacing="0" cellpadding="2">

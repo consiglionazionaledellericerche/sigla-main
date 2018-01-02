@@ -50,6 +50,8 @@ public class Stampa_situazione_sintetica_x_progettoBulk extends OggettoBulk {
 
 	private Boolean printSoloGaeAttive;
 
+	private Boolean printPianoEconomico;
+
 	private String ti_ordine_stampa;
 	
 	public final static String TI_ORDINE_GAE_VOCE_ANNO = "V";
@@ -105,7 +107,7 @@ public class Stampa_situazione_sintetica_x_progettoBulk extends OggettoBulk {
 	public void setGaeForPrint(WorkpackageBulk gaeForPrint) {
 		this.gaeForPrint = gaeForPrint;
 	}
-	
+
 	public TerzoBulk getResponsabileGaeForPrint() {
 		return responsabileGaeForPrint;
 	}
@@ -182,6 +184,14 @@ public class Stampa_situazione_sintetica_x_progettoBulk extends OggettoBulk {
 		return getCdsForPrint()!=null?getCdsForPrint().getCd_unita_organizzativa():null;
 	}
 
+	public Integer getCdResponsabileGaeForPrint() {
+		return getResponsabileGaeForPrint()!=null?getResponsabileGaeForPrint().getCd_terzo():null;
+	}
+
+	public String getDsResponsabileGaeForPrint() {
+		return getResponsabileGaeForPrint()!=null?getResponsabileGaeForPrint().getDenominazione_sede():null;
+	}
+
 	public String getCdUoForPrint() {
 		return getUoForPrint()!=null?getUoForPrint().getCd_unita_organizzativa():null;
 	}
@@ -194,14 +204,6 @@ public class Stampa_situazione_sintetica_x_progettoBulk extends OggettoBulk {
 		return getGaeForPrint()!=null?getGaeForPrint().getCd_linea_attivita():null;
 	}
 
-	public Integer getCdResponsabileGaeForPrint() {
-		return getResponsabileGaeForPrint()!=null?getResponsabileGaeForPrint().getCd_terzo():null;
-	}
-
-	public String getDsResponsabileGaeForPrint() {
-		return getResponsabileGaeForPrint()!=null?getResponsabileGaeForPrint().getDenominazione_sede():null;
-	}
-	
 	public String getCdsUoForPrint() {
 		return getCdUoForPrint()!=null?getCdUoForPrint():getCdCdsForPrint();
 	}
@@ -246,6 +248,14 @@ public class Stampa_situazione_sintetica_x_progettoBulk extends OggettoBulk {
 		this.printSoloGaeAttive = printSoloGaeAttive;
 	}
 	
+	public Boolean getPrintPianoEconomico() {
+		return printPianoEconomico;
+	}
+	
+	public void setPrintPianoEconomico(Boolean printPianoEconomico) {
+		this.printPianoEconomico = printPianoEconomico;
+	}
+
 	@Override
 	public void validate() throws ValidationException {
 		if (getCdUoForPrint()==null)
