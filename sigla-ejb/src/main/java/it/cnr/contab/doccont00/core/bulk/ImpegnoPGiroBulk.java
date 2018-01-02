@@ -27,7 +27,7 @@ public class ImpegnoPGiroBulk extends ObbligazioneBulk {
 		competenzaResiduoKeys.put(Numerazione_doc_contBulk.TIPO_IMP,		"Competenza");
 		competenzaResiduoKeys.put(Numerazione_doc_contBulk.TIPO_IMP_RES,	"Residuo");
 	};
-
+	private it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voceContr = new it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk();
 	protected boolean fl_isTronco = false;
 public ImpegnoPGiroBulk() {
 	super();
@@ -297,5 +297,12 @@ public void validate() throws ValidationException
 	throw new ValidationException( "L' IMPORTO dell'Annotazione di Spesa su Partita di Giro deve essere maggiore di 0." );*/
 
 
+}
+public it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk getElemento_voceContr() {
+	return elemento_voceContr;
+}
+public void setElemento_voceContr(
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voceContr) {
+	this.elemento_voceContr = elemento_voceContr;
 }
 }

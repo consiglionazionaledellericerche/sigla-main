@@ -147,11 +147,12 @@ public it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk creaAccertamento(
 		}
 	}
 }
-public it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk creaAccertamentoDiIncassoIVA(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.ReversaleBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk creaAccertamentoDiIncassoIVA(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.ReversaleBulk param1,boolean param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk)invoke("creaAccertamentoDiIncassoIVA",new Object[] {
 			param0,
-			param1 });
+			param1,
+			param2});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {
