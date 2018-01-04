@@ -8,6 +8,7 @@ package it.cnr.contab.pdg01.consultazioni.action;
 
 import it.cnr.contab.pdg01.consultazioni.bp.ConsPdgpPdggEtrBP;
 import it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_etrBulk;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -16,6 +17,8 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.ConsultazioniAction;
 import it.cnr.jada.util.action.ConsultazioniBP;
+
+import java.util.Optional;
 
 /**
  * @author rpagano
@@ -60,9 +63,17 @@ public class ConsPdgpPdggEtrAction extends ConsultazioniAction {
 	public Forward doBringBackCaricaGestionale(ActionContext context) throws BusinessProcessException
 	{
 		try{
-			ConsultazioniBP bp = (ConsultazioniBP)context.getBusinessProcess();
-			bp.refresh(context);
-			bp.setModel(context,null);
+			Optional.ofNullable(context.getBusinessProcess())
+					.filter(ConsultazioniBP.class::isInstance)
+					.map(ConsultazioniBP.class::cast)
+					.ifPresent(consultazioniBP -> {
+                        try {
+                            consultazioniBP.refresh(context);
+                            consultazioniBP.setModel(context,null);
+                        } catch (BusinessProcessException e) {
+                            throw new DetailedRuntimeException(e);
+                        }
+                    });
 			return context.findDefaultForward();
 		} catch(Throwable e) {
 		  return handleException(context,e);
