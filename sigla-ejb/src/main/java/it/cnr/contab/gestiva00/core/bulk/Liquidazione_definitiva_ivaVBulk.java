@@ -240,6 +240,10 @@ public int addToRipartizione_finanziaria(Liquidazione_iva_ripart_finBulk dett) {
 	dett.setTipo_liquidazione( this.getTipoSezionaleFlag() );
 	dett.setDt_inizio( this.getData_da());
 	dett.setDt_fine(this.getData_a());
+	//Nel caso di liquidazione dicembre dovendo imputare la variazione sui residui 
+	//viene eliminato l'anno corrente
+	if (Liquidazione_ivaVBulk.DICEMBRE.equals(this.getMese()))
+		dett.getAnniList().remove(dett.getEsercizio());
 	ripartizione_finanziaria.add(dett);
 	return ripartizione_finanziaria.size()-1;
 }
