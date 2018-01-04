@@ -295,7 +295,7 @@ public BigDecimal getTotaleRipartizioneFinanziaria() {
 	return lis.map(Liquidazione_iva_ripart_finBulk::getIm_variazione).reduce(BigDecimal.ZERO, BigDecimal::add);
 }
 public String getNextMeseForLiquidazioneDefinitiva() { 
-	if (this.getProspetti_stampati()==null)
+	if (this.getProspetti_stampati()==null || this.getProspetti_stampati().isEmpty())
 		return (String)this.getInt_mesi().get(
 				this.getMesi_int().get(Stampa_registri_ivaVBulk.DICEMBRE));
 	Stream<Liquidazione_ivaBulk> lis = 
