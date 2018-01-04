@@ -493,11 +493,13 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		if (getStatus() == SEARCH)
 			return hidden;
 		ReversaleBulk reversale = (ReversaleBulk)getModel();
-		if (reversale != null && reversale.getPg_reversale() != null && reversale.getStato() != null && 
+		if (reversale != null && reversale.getPg_reversale() != null && reversale.getStato() != null &&
 				reversale.getStato().equalsIgnoreCase(ReversaleBulk.STATO_REVERSALE_INCASSATO) &&
-				reversale.getStato_trasmissione() != null && 
+				reversale.getStato_trasmissione() != null &&
 				reversale.getStato_trasmissione().equalsIgnoreCase(ReversaleBulk.STATO_TRASMISSIONE_TRASMESSO))
-			return contabiliService.getNodeRefContabile(reversale) == null;
+			return Optional.ofNullable(contabiliService.getNodeRefContabile(reversale))
+					.map(contabili -> contabili.isEmpty())
+					.orElse(Boolean.TRUE);
 		return hidden;
 	}
 
