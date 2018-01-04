@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_definitiva_ivaVBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaBulk;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_ivaVBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_ripart_finBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_variazioniBulk;
 import it.cnr.contab.util.Utility;
@@ -181,7 +182,15 @@ public void inizializzaMese(ActionContext context) throws BusinessProcessExcepti
 		Liquidazione_definitiva_ivaVBulk model = (Liquidazione_definitiva_ivaVBulk)this.getModel();
 		this.setModel(context, Utility.createLiquidIvaInterfComponentSession().inizializzaMese(context.getUserContext(), model));
 		Stream<Liquidazione_iva_ripart_finBulk> list = ((Liquidazione_definitiva_ivaVBulk)this.getModel()).getRipartizione_finanziaria().stream().map(Liquidazione_iva_ripart_finBulk.class::cast);
-		list.forEach(e->e.caricaAnniList(context));
+		list.forEach(e->{
+			e.caricaAnniList(context);
+			//Nel caso di liquidazione dicembre dovendo imputare la variazione sui residui 
+			//viene eliminato l'anno corrente
+			if (Liquidazione_ivaVBulk.DICEMBRE.equals(((Liquidazione_definitiva_ivaVBulk)this.getModel()).getMese()))
+				//non lo elimino solo se per caso l'anno risulta imputato
+				if (e.getEsercizio_variazione()==null || !e.getEsercizio_variazione().equals(((Liquidazione_definitiva_ivaVBulk)this.getModel()).getEsercizio()))
+					e.getAnniList().remove(((Liquidazione_definitiva_ivaVBulk)this.getModel()).getEsercizio());
+		});
 		if ((!isTabRipartizioneFinanziariaVisible() && ("tabRipartFin".equals(getTab("tab")) || "tabVariazioniAss".equals(getTab("tab")))) ||
 			 (!isTabMandatoRigheAssociateVisible() && "tabMandatoRigheAss".equals(getTab("tab"))))
 			resetTabs();
