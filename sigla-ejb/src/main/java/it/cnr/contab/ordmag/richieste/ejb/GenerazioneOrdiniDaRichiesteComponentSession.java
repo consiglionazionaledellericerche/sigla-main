@@ -5,13 +5,11 @@ import java.rmi.RemoteException;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
 
-import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
-import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
-import it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.PersistencyException;
 @Remote
 public interface GenerazioneOrdiniDaRichiesteComponentSession extends it.cnr.jada.ejb.CRUDComponentSession{
-	public RichiestaUopRigaBulk selezionaRichiestaPerOrdine (UserContext aUC,VRichiestaPerOrdiniBulk richiesta) throws RemoteException, EJBException, ComponentException;
+	public OrdineAcqBulk generaOrdine (UserContext aUC,OrdineAcqBulk ordine) throws RemoteException, EJBException, ComponentException;
+	public OrdineAcqBulk cercaRichieste(it.cnr.jada.UserContext param0,OrdineAcqBulk ordine) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

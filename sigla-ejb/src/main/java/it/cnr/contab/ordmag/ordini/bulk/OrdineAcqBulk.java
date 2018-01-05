@@ -34,6 +34,7 @@ import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.ordmag.anag00.NotaPrecodificataBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
+import it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;
@@ -60,6 +61,9 @@ implements	IDocumentoAmministrativoBulk,
 	private Map ordineAss_totaliMap = null;
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	private Boolean isAbilitatoTuttiMagazzini = false;
+	protected BulkList listaRichiesteTrasformateInOrdine= new BulkList();
+	protected BulkList richiesteSelezionate= new BulkList();
+	protected BulkList richiesteDaTrasformareInOrdineColl= new BulkList();
 	private java.math.BigDecimal importoTotalePerObbligazione = new java.math.BigDecimal(0);
 	/**
 	 * [NOTA_PRECODIFICATA Rappresenta l'anagrafica delle note precodificate.]
@@ -959,7 +963,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 		// Metti solo le liste di oggetti che devono essere resi persistenti
 
 		return new it.cnr.jada.bulk.BulkCollection[] { 
-				righeOrdineColl
+				listaRichiesteTrasformateInOrdine, righeOrdineColl
 		};
 	}
 	public List getChildren() {
@@ -1288,5 +1292,33 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	public Boolean isOrdineInviatoFornitore(){
 		return getStato()!= null && getStato().equals(STATO_INVIATO_ORDINE);
+	}
+	public BulkList getListaRichiesteTrasformateInOrdine() {
+		return listaRichiesteTrasformateInOrdine;
+	}
+	public void setListaRichiesteTrasformateInOrdine(BulkList listaRichiesteTrasformateInOrdine) {
+		this.listaRichiesteTrasformateInOrdine = listaRichiesteTrasformateInOrdine;
+	}
+	public BulkList getRichiesteSelezionate() {
+		return richiesteSelezionate;
+	}
+	public void setRichiesteSelezionate(BulkList richiesteSelezionate) {
+		this.richiesteSelezionate = richiesteSelezionate;
+	}
+	public BulkList getRichiesteDaTrasformareInOrdineColl() {
+		return richiesteDaTrasformareInOrdineColl;
+	}
+	public void setRichiesteDaTrasformareInOrdineColl(BulkList richiesteDaTrasformareInOrdineColl) {
+		this.richiesteDaTrasformareInOrdineColl = richiesteDaTrasformareInOrdineColl;
+	}
+	public VRichiestaPerOrdiniBulk removeFromRichiesteDaTrasformareInOrdineColl(int index) 
+	{
+		VRichiestaPerOrdiniBulk element = (VRichiestaPerOrdiniBulk)richiesteDaTrasformareInOrdineColl.get(index);
+		return (VRichiestaPerOrdiniBulk)richiesteDaTrasformareInOrdineColl.remove(index);
+	}
+	public int addToRichiesteDaTrasformareInOrdineColl( VRichiestaPerOrdiniBulk nuovoRigo ) 
+	{
+		richiesteDaTrasformareInOrdineColl.add(nuovoRigo);
+		return richiesteDaTrasformareInOrdineColl.size()-1;
 	}
 }

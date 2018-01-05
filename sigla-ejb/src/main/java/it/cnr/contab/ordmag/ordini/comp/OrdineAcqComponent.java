@@ -294,6 +294,12 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 	}
 
 	private void controlliValiditaConsegna(UserContext userContext, OrdineAcqConsegnaBulk consegna)throws it.cnr.jada.comp.ComponentException{
+		if (consegna.getMagazzino() == null || consegna.getMagazzino().getCdMagazzino() == null){
+			throw new ApplicationException ("E' necessario indicare il magazzino.");
+		}
+		if (consegna.getLuogoConsegnaMag() == null || consegna.getLuogoConsegnaMag().getCdLuogoConsegna() == null){
+			throw new ApplicationException ("E' necessario indicare il luogo di consegna.");
+		}
 		if (!consegna.isConsegnaMagazzino()){
 			if (consegna.getCdUopDest() == null){
 				throw new ApplicationException("E' necessario indicare l'unità operativa di destinazione per la riga "+consegna.getRiga()+".");
@@ -590,7 +596,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
     return inizializzaOrdine(usercontext, (OggettoBulk)ordine, false);
 }
 
-private void impostaCampiDspRiga(OrdineAcqRigaBulk riga) {
+protected void impostaCampiDspRiga(OrdineAcqRigaBulk riga) {
 	if (riga.getRigheConsegnaColl().size() == 1){
 		OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)riga.getRigheConsegnaColl().iterator().next();
 		riga.setDspDtPrevConsegna(cons.getDtPrevConsegna());
@@ -2020,60 +2026,7 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,OrdineAcqBulk ordine
 		}
 	}
 
-public OrdineAcqBulk creaOrdineDaRichieste(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine, List<RichiestaUopBulk> lista) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
-	for (RichiestaUopBulk richiesta : lista){
-		for (Object riga : richiesta.getRigheRichiestaColl()){
-			RichiestaUopRigaBulk rigaRichiesta = (RichiestaUopRigaBulk)riga;
-			creaRigaOrdine(userContext,ordine, rigaRichiesta);
-		}
-	}
-	for (Object riga : ordine.getRigheOrdineColl()){
-		OrdineAcqRigaBulk rigaOrdine = (OrdineAcqRigaBulk)riga;
-		impostaCampiDspRiga(rigaOrdine);
-	}
-	return ordine;
-}
-private void creaRigaOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine, RichiestaUopRigaBulk rigaRichiesta) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
-	boolean trovataRiga = false;
-	OrdineAcqRigaBulk rigaOrdine = null;
-	for (Object objectRiga : ordine.getRigheOrdineColl()){
-		OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)objectRiga;
-		if (riga.getBeneServizio().equalsByPrimaryKey(rigaRichiesta.getBeneServizio())){
-			rigaOrdine = riga;
-		}
-	}
-	if (!trovataRiga){
-		rigaOrdine = new OrdineAcqRigaBulk();
-		rigaOrdine = (OrdineAcqRigaBulk)rigaOrdine.inizializzaPerInserimento(userContext);
-		rigaOrdine.setBeneServizio(rigaRichiesta.getBeneServizio());
-		rigaOrdine.setDsBeneServizio(rigaRichiesta.getDsBeneServizio());
-		rigaOrdine.setCdBeneServizio(rigaRichiesta.getCdBeneServizio());
-		Bene_servizioBulk bene;
-		try {
-			bene = recuperoBeneServizio(userContext, rigaRichiesta.getCdBeneServizio());
-			if (bene != null){
-				rigaOrdine.setVoceIva(bene.getVoce_iva());
-			}
-		} catch (PersistencyException e) {
-			throw new ComponentException(e);
-		}
-		rigaOrdine.setUnitaMisura(rigaRichiesta.getUnitaMisura());
-		rigaOrdine.setCoefConv(rigaRichiesta.getCoefConv());
-		rigaOrdine.setNotaRiga(rigaRichiesta.getNotaRiga());
-		rigaOrdine.setOrdineAcq(ordine);
-	}
-	OrdineAcqConsegnaBulk consegna = new OrdineAcqConsegnaBulk();
-	consegna.inizializzaConsegnaNuovaRiga();
-	consegna.setTipoConsegna(Bene_servizioBulk.TIPO_CONSEGNA_TRANSITO);
-	consegna.setUnitaOperativaOrd(rigaRichiesta.getRichiestaUop().getUnitaOperativaOrd());
-	consegna.setQuantita(rigaRichiesta.getQuantitaAutorizzata());
-	consegna.setDtPrevConsegna(rigaOrdine.getDspDtPrevConsegna());
-	consegna.getRigheRichiestaCollegate().add(rigaRichiesta);
-	rigaOrdine.addToRigheConsegnaColl(consegna);
-	ordine.addToRigheOrdineColl(rigaOrdine);
-}
-
-private Bene_servizioBulk recuperoBeneServizio(it.cnr.jada.UserContext userContext, String cdBeneServizio)
+protected Bene_servizioBulk recuperoBeneServizio(it.cnr.jada.UserContext userContext, String cdBeneServizio)
 		throws ComponentException, PersistencyException {
 	Bene_servizioHome home = (Bene_servizioHome)getHome(userContext, Bene_servizioBulk.class);
 	Bene_servizioBulk bene = (Bene_servizioBulk)home.findByPrimaryKey(new Bene_servizioBulk(cdBeneServizio));
