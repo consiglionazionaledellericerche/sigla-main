@@ -59,20 +59,6 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		return 	super.isInputReadonly() || (ordine.getStato() != null && !ordine.isStatoInserito() && !ordine.isStatoInApprovazione()) ;
 	}
 
-	public OrdineAcqBulk creaOrdineDaRichieste(ActionContext context, List<RichiestaUopBulk> lista) throws BusinessProcessException{
-		try {
-			OrdineAcqBulk ordine = (OrdineAcqBulk)getModel();
-			OrdineAcqComponentSession comp = (OrdineAcqComponentSession)createComponentSession();
-			
-			setModel(context, ordine);
-			
-			return ordine;
-		}catch(Throwable ex){
-			throw handleException(ex);
-		}
-
-	}
-
 	private final SimpleDetailCRUDController righe= new OrdineAcqRigaCRUDController("Righe", OrdineAcqRigaBulk.class, "righeOrdineColl", this){
 		public void validateForDelete(ActionContext context, OggettoBulk oggetto) throws ValidationException 
 		{
