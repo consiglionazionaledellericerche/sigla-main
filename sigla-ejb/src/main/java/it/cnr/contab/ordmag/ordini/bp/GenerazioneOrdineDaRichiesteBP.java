@@ -2,391 +2,151 @@ package it.cnr.contab.ordmag.ordini.bp;
 
 import java.util.List;
 
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.doccont00.ejb.OrdineComponentSession;
-import it.cnr.contab.doccont00.ordine.bulk.OrdineBulk;
+import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
-import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
+import it.cnr.contab.ordmag.ordini.ejb.EvasioneOrdineComponentSession;
 import it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniBulk;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.ejb.*;
-import it.cnr.jada.util.action.*;
-import it.cnr.jada.util.jsp.*;
+import it.cnr.contab.ordmag.richieste.ejb.GenerazioneOrdiniDaRichiesteComponentSession;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.action.SimpleCRUDBP;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 /**
  * Business process che gestisce alcune informazioni relative alle obbligazioni.
  * E' utilizzato in combinazione con la <code>CRUDListaObbligazioniAction</code>.
  */
 
-public class GenerazioneOrdineDaRichiesteBP extends it.cnr.jada.util.action.SelezionatoreListaBP implements FindBP
-{
-	private String componentSessioneName;
-	private Class bulkClass;
-	private BulkInfo bulkInfo;
-	private String statoObbligazione;
-	private boolean editable;
-public GenerazioneOrdineDaRichiesteBP() 
-{
-	super();
-	table.setMultiSelection(true);
+public class GenerazioneOrdineDaRichiesteBP extends SimpleCRUDBP {
 
-//	table.setOnselect("javascript:select");
-//	table.setReadonly(false);
-//	table.setStatus(FormController.EDIT);	
-}
-public GenerazioneOrdineDaRichiesteBP( String function ) 
-{
-	table.setMultiSelection(true);
-	editable = function != null && function.indexOf('M') >= 0;
-}
-/**
- * Gestisce un comando "Conferma"
-     * @param context <code>ActionContext</code> in uso.
- 	 *
- 	 * @exception <code>BusinessProcessException</code>, <code>ValidationException</code>
- *
- */
+	private it.cnr.contab.doccont00.core.bulk.OptionRequestParameter userConfirm = null;
+	private boolean carryingThrough = false;
+	private boolean isDeleting = false;
+	private final SimpleDetailCRUDController richieste = new SimpleDetailCRUDController("RichiesteDaTrasformareInOrdine",VRichiestaPerOrdiniBulk.class,"richiesteDaTrasformareInOrdineColl",this){
 
-public void confirm(ActionContext context) throws it.cnr.jada.action.BusinessProcessException,ValidationException 
-{
-	
-	try {
-		it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession crud = (it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession) createComponentSession();
-
-		if (selection.size() > 0) 
-		{
-			for (SelectionIterator i = selection.iterator();i.hasNext();) 
-			{
-				VRichiestaPerOrdiniBulk bulk = (VRichiestaPerOrdiniBulk) getElementAt( context, i.nextIndex());
-//				bulk.setToBeDeleted();
-//				crud.confermaObbligazioneProvvisoria(context.getUserContext(),bulk);
-			}
+		@Override
+		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
+			int index = super.addDetail(oggettobulk);
+			return index;
 		}
-		/*
-		else if (selection.getFocus() > 0) 
-		{
-			crud.eliminaConBulk(context.getUserContext(),getElemenrAt( conetxt, selection.getFocus()));
-		} */
-		else 
-		{
-			throw new MessageToUser( "E' necessario selezionare le obbligazioni da confermare" );
-		}
-		refreshList( context );
 		
-	} 
-	catch(Exception e) 
+	};
+
+	public boolean isInputReadonly() 
 	{
-		throw handleException(e);
+			return false;
 	}
-}
-/**
- * Crea la CRUDComponentSession da usare per effettuare le operazioni di CRUD
- */
-public CRUDComponentSession createComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
-	return (CRUDComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB(componentSessioneName,CRUDComponentSession.class);
-}
-/** 
-	 * @param context <code>ActionContext</code> in uso.
- 	 *
- 	 * @return <code>OggettoBulk</code>
- 	 *
- 	 * @exception <code>BusinessProcessException</code>
- */
-public OggettoBulk createEmptyModelForFreeSearch(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
-	try {
-		return createComponentSession().inizializzaBulkPerRicercaLibera(context.getUserContext(),createModel( context));
-// TODO: initializaForFreeSearch con CRUDListaBP
-	} catch(Exception e) {
-		throw handleException(e);
+
+	public GenerazioneOrdineDaRichiesteBP() {
+		this(OrdineAcqBulk.class);
 	}
-}
-/**
- * @param context <code>ActionContext</code> in uso.
- *
- */
-
-public OggettoBulk createModel(ActionContext context) 
-{
-	VRichiestaPerOrdiniBulk richiesta = new VRichiestaPerOrdiniBulk();
-//	obbligazione.setEsercizio( it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
-//	obbligazione.setCd_uo_origine( it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_organizzativa());
-//	obbligazione.setStato_obbligazione( getStatoObbligazione() );
-	return richiesta;
-
-
-}
-/** 
-	 * @param context <code>ActionContext</code> in uso.
- 	 *
- 	 * @return <code>OggettoBulk</code>
- 	 *
- 	 * @exception <code>BusinessProcessException</code>
- */
-public OggettoBulk createNewBulk(ActionContext context) throws BusinessProcessException {
-	try {
-		OggettoBulk bulk = (OggettoBulk)bulkClass.newInstance();
-		bulk.setUser(context.getUserInfo().getUserid());
-		return bulk;
-	} catch(Exception e) {
-		throw handleException(e);
-	}
-}
-/**
- * Metodo utilizzato per creare una toolbar applicativa personalizzata.
- 	 * @return toolbar La nuova toolbar creata
- *
- */
-
-public it.cnr.jada.util.jsp.Button[] createToolbar() 
-{
-	Button[] toolbar;
 	
-	if ( !isEditable() )
-	{
-		toolbar = new Button[2];
+	public GenerazioneOrdineDaRichiesteBP(Class dettObbligazioniControllerClass) {
+		super("Tr");
+
+	}
+
+	/**
+	 * CRUDAnagraficaBP constructor comment.
+	 * 
+	 * @param function
+	 *            java.lang.String
+	 */
+	public GenerazioneOrdineDaRichiesteBP(String function)
+			throws BusinessProcessException {
+		super(function + "Tr");
+
+	}
+
+	protected it.cnr.jada.util.jsp.Button[] createToolbar() {
+		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[7];
 		int i = 0;
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.freeSearch");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.visualizzaOrdine");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.search");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.startSearch");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.freeSearch");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.new");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.save");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.delete");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.stampa");
+
+		return toolbar;
 	}
-	else
-	{
-			toolbar = new Button[7];
-			int i = 0;
-			toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.freeSearch");
-			toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.edit");
-			toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.confirm");
-			toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.delete");
-			toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.selectAll");
-			toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.deselectAll");
+	public it.cnr.contab.doccont00.core.bulk.OptionRequestParameter getUserConfirm() {
+		return userConfirm;
+	}
+	public void setUserConfirm(it.cnr.contab.doccont00.core.bulk.OptionRequestParameter userConfirm) {
+		this.userConfirm = userConfirm;
+	}
+	public boolean isCarryingThrough() {
+		return carryingThrough;
+	}
+	public void setCarryingThrough(boolean carryingThrough) {
+		this.carryingThrough = carryingThrough;
+	}
+
+	@Override
+	public boolean isDeleteButtonHidden() {
+		return true;
+	}
+
+	@Override
+	public boolean isFreeSearchButtonHidden() {
+		return true;
+	}
+
+	@Override
+	public boolean isSearchButtonHidden() {
+		return true;
+	}
+
+	@Override
+	public boolean isStartSearchButtonHidden() {
+		return true;
+	}
+
+	public OrdineAcqBulk creaOrdineDaRichieste(ActionContext context) throws BusinessProcessException{
+		try {
+			OrdineAcqBulk ordine = (OrdineAcqBulk)getModel();
 			
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.emetteOrdine");
-		
-	}
-
-	return toolbar; 
-}
-/**
- * Gestisce un comando "Cancella"
-	 * @param context <code>ActionContext</code> in uso.
- 	 *
- 	 * @exception <code>BusinessProcessException</code>, <code>ValidationException</code>
- */
-public void delete(ActionContext context) throws it.cnr.jada.action.BusinessProcessException,ValidationException 
-{
-	
-	try {
-		CRUDComponentSession crud = createComponentSession();
-		if (selection.size() > 0) 
-		{
-			for (SelectionIterator i = selection.iterator();i.hasNext();) 
-			{
-				ObbligazioneBulk bulk = (ObbligazioneBulk) getElementAt( context, i.nextIndex());
-				bulk = (ObbligazioneBulk) crud.inizializzaBulkPerModifica( context.getUserContext(), bulk );
-				if (bulk.isObbligazioneResiduo() || bulk.isImpegnoResiduo())
-					throw new MessageToUser( "Eliminazione Impegni Residui non possibile!" );
-				bulk.setToBeDeleted();
-				crud.eliminaConBulk(context.getUserContext(),bulk);
-			}
+			GenerazioneOrdiniDaRichiesteComponentSession comp = (GenerazioneOrdiniDaRichiesteComponentSession)createComponentSession();
+			
+			comp.generaOrdine(context.getUserContext(), ordine);
+			setModel(context, ordine);
+			
+			return ordine;
+		}catch(Throwable ex){
+			throw handleException(ex);
 		}
-		/*
-		else if (selection.getFocus() > 0) 
-		{
-			crud.eliminaConBulk(context.getUserContext(),pageContents[selection.getFocus()]);
-		} */
-		else 
-		{
-			throw new MessageToUser( "E' necessario selezionare gli elementi da cancellare" );
-		}
-		refreshList( context );		
-		
-	} catch(java.rmi.RemoteException e) {
-		throw handleException(e);
-	} catch(ComponentException e) {
-		throw handleException(e);
-	} catch(javax.ejb.EJBException e) {
-		throw handleException(e);
+
 	}
 
-}
-/**
- * find method comment.
- */
-public it.cnr.jada.util.RemoteIterator find(ActionContext context,it.cnr.jada.persistency.sql.CompoundFindClause clauses,OggettoBulk model) throws it.cnr.jada.action.BusinessProcessException {
-	try {
-		return it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator( context, createComponentSession().cerca(context.getUserContext(),clauses,model));
-	} catch(Exception e) {
-		throw handleException(e);
+	@Override
+	public boolean isNewButtonHidden() {
+		return true;
 	}
-}
-/**
- * find method comment.
- */
-public it.cnr.jada.util.RemoteIterator find(ActionContext actionContext,it.cnr.jada.persistency.sql.CompoundFindClause clauses,OggettoBulk bulk,OggettoBulk context,String property) throws it.cnr.jada.action.BusinessProcessException {
-	try {
-		return it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator( actionContext,createComponentSession().cerca(actionContext.getUserContext(),clauses,bulk,context,property));
-	} catch(Exception e) {
-		throw new it.cnr.jada.action.BusinessProcessException(e);
+
+	public SimpleDetailCRUDController getRichieste() {
+		return richieste;
 	}
-}
-/**
- * @return java.lang.Class
- */
-public java.lang.Class getBulkClass() {
-	return bulkClass;
-}
-/**
- * @return it.cnr.jada.bulk.BulkInfo
- */
-public it.cnr.jada.bulk.BulkInfo getBulkInfo() {
-	return bulkInfo;
-}
-/**
- * @return java.lang.String
- */
-public java.lang.String getComponentSessioneName() {
-	return componentSessioneName;
-}
-/**
- * Metodo con cui si ottiene il valore della variabile <code>statoObbligazione</code>.
- *
- * @return statoObbligazione Stato corrente dell'obbligazione
- */
-public java.lang.String getStatoObbligazione() {
-	return statoObbligazione;
-}
-protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
-	try {
-		super.init(config,context);
-		setPageSize( 10 );
-		
-		setBulkClassName(config.getInitParameter("bulkClassName"));
-		setComponentSessioneName(config.getInitParameter("componentSessionName"));
-		setStatoObbligazione(config.getInitParameter("statoObbligazione"));
-		
-		refreshList( context );
 
-	} catch(ClassNotFoundException e) {
-		throw new RuntimeException("Non trovata la classe bulk");
-	} catch(Throwable e) {
-		throw new BusinessProcessException(e);
-	}
-}
-/**
- * <!-- @TODO: da completare -->
- * 
- *
- * @param context	L'ActionContext della richiesta
- * @param bulks	
- * @return 
- * @throws BusinessProcessException	
- */
-public OggettoBulk[] initializeBulks(ActionContext context,OggettoBulk[] bulks) throws BusinessProcessException {
-	return bulks;
-	/*
-	try {
-		CRUDComponentSession crud = createComponentSession();
-		if (crud instanceof MultipleCRUDComponentSession)
-			return ((MultipleCRUDComponentSession)crud).modificaConBulk(context.getUserContext(),bulks);
-		else {
-			for (int i = 0;i < bulks.length;i++)
-				bulks[i] = crud.inizializzaBulkPerModifica(context.getUserContext(),bulks[i]);
-		}
-		return bulks;
-	} catch(Throwable e) {
-		throw new it.cnr.jada.action.BusinessProcessException(e);
-	}
-	*/
-}
-/**
- * @return editable TRUE Se l'obbligazione è editabile
- *					FALSE in caso contrario
- */
-public boolean isEditable() {
-	return editable;
-}
-/**
- * Ritorna TRUE se l'obbligazione e' in fase di modifica/inserimento
- */
-
-public boolean isEditButtonEnabled() {
-	return getSelection().getFocus() != -1;
-
-}
-/**
- *	Abilito il bottone di emissione dell'ordine solo se l'obbligazione e'
- *  in fase di modifica/inserimento
- */
-
-public boolean isEmettiOrdineButtonEnabled() {
-	return getSelection().getFocus() != -1;
-
-}
-/**
- * @param context <code>ActionContext</code> in uso.
- *
- * @exception <code>BusinessProcessException</code>, <code>ValidationException</code>
- */
-
-public void refreshList(ActionContext context) throws it.cnr.jada.action.BusinessProcessException,ValidationException 
-{
-	
-	try
+	public void cercaRichieste(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
 	{
-		VRichiestaPerOrdiniBulk richiesta = (VRichiestaPerOrdiniBulk) createModel( context );
-		setIterator(context,createComponentSession().cerca(context.getUserContext(),null,richiesta ));
-		selection.clear();
-		
-	} catch(Exception e) 
-	{
-		throw handleException(e);
-	} 
+		OrdineAcqBulk bulk = (OrdineAcqBulk) getModel();	
+		try 
+		{
+			bulk.setRichiesteDaTrasformareInOrdineColl(new BulkList<>());
+			GenerazioneOrdiniDaRichiesteComponentSession comp = (GenerazioneOrdiniDaRichiesteComponentSession)createComponentSession();
+			bulk = comp.cercaRichieste(context.getUserContext(), bulk);
 
-}
-/**
- * <!-- @TODO: da completare -->
- * Imposta il valore della proprietà 'bulkClass'
- *
- * @param newBulkClass	Il valore da assegnare a 'bulkClass'
- */
-public void setBulkClass(java.lang.Class newBulkClass) {
-	bulkClass = newBulkClass;
-}
-/**
- * <!-- @TODO: da completare -->
- * Imposta il valore della proprietà 'bulkClassName'
- *
- * @param bulkClassName	Il valore da assegnare a 'bulkClassName'
- * @throws ClassNotFoundException	
- */
-public void setBulkClassName(java.lang.String bulkClassName) throws ClassNotFoundException {
-	bulkClass = getClass().getClassLoader().loadClass(bulkClassName);
-	bulkInfo = it.cnr.jada.bulk.BulkInfo.getBulkInfo(bulkClass);
-	setColumns(bulkInfo.getColumnFieldPropertyDictionary());
-}
-public void setBulkInfo(it.cnr.jada.bulk.BulkInfo newBulkInfo) {
-	bulkInfo = newBulkInfo;
-}
-/**
- * <!-- @TODO: da completare -->
- * Imposta il valore della proprietà 'componentSessioneName'
- *
- * @param newComponentSessioneName	Il valore da assegnare a 'componentSessioneName'
- */
-public void setComponentSessioneName(java.lang.String newComponentSessioneName) {
-	componentSessioneName = newComponentSessioneName;
-}
-public void setEditable(boolean newEditable) {
-	editable = newEditable;
-}
-/**
- * Metodo con cui si definisce il valore della variabile <code>statoObbligazione</code>.
- *
- * @param newStatoObbligazione Stato dell'obbligazione
- */
-public void setStatoObbligazione(java.lang.String newStatoObbligazione) {
-	statoObbligazione = newStatoObbligazione;
-}
-public void deselectAll(ActionContext actioncontext) {}
+			setModel( context, bulk );
+			resyncChildren( context );
+		} catch(Exception e) 
+		{
+			throw handleException(e);
+		}
+	}
+
 }

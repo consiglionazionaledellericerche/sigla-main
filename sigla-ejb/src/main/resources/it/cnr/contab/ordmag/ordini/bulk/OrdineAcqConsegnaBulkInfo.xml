@@ -79,7 +79,7 @@
 		name="stato"
 		property="stato"
 		inputType="TEXT"
-		inputSize="3"
+		inputSize="10"
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
