@@ -172,25 +172,6 @@ public OrdineAcqBulk cancellaOrdine(it.cnr.jada.UserContext userContext, OrdineA
 	}
 }
 
-public OrdineAcqBulk creaOrdineDaRichieste(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine, List<RichiestaUopBulk> lista) throws RemoteException,ComponentException, PersistencyException{
-	try {
-		return (OrdineAcqBulk)invoke("creaOrdineDaRichieste",new Object[] {
-				userContext,
-				ordine,
-				lista});
-	} catch(java.rmi.RemoteException e) {
-		throw e;
-	} catch(java.lang.reflect.InvocationTargetException e) {
-		try {
-			throw e.getTargetException();
-		} catch(it.cnr.jada.comp.ComponentException ex) {
-			throw ex;
-		} catch(Throwable ex) {
-			throw new java.rmi.RemoteException("Uncaugth exception",ex);
-		}
-	}
-}
-
 public Unita_organizzativaBulk recuperoUoPerImpegno(it.cnr.jada.UserContext userContext, OrdineAcqConsegnaBulk consegna) throws RemoteException,ComponentException, PersistencyException{
 	try {
 		return (Unita_organizzativaBulk)invoke("recuperoUoPerImpegno",new Object[] {

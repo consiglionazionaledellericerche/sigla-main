@@ -70,7 +70,7 @@
 		property="notaRiga"
 		inputType="TEXTAREA"
 		cols="100"
-		rows="5"
+		rows="2"
 		maxLength="2000"
 		enabledOnEdit="true"
 		label="Note" />
@@ -161,7 +161,7 @@
 		property="notaUopDest"
 		inputType="TEXTAREA"
 		cols="60"
-		rows="5"
+		rows="2"
 		maxLength="2000"
 		enabledOnEdit="false"
 		label="Nota X Uo Ordine" />

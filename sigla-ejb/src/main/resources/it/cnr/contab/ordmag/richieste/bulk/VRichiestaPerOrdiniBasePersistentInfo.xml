@@ -134,10 +134,28 @@
 			columnSize="20"
 			nullable="true" />
 		<columnMapping
+			columnName="DS_ELEMENTO_VOCE"
+			propertyName="dsElementoVoce"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
 			columnName="PG_PROGETTO"
 			propertyName="pgProgetto"
 			sqlTypeName="DECIMAL"
 			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_PROGETTO"
+			propertyName="dsProgetto"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
+			nullable="true" />
+		<columnMapping
+			columnName="DS_LINEA_ATTIVITA"
+			propertyName="dsLineaAttivita"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
 			nullable="true" />
 		<columnMapping
 			columnName="DATA_RICHIESTA"
@@ -211,6 +229,8 @@
 	<persistentProperty
 		name="cdLineaAttivita" />
 	<persistentProperty
+		name="dsLineaAttivita" />
+	<persistentProperty
 		name="esercizioVoce" />
 	<persistentProperty
 		name="tiAppartenenza" />
@@ -219,7 +239,11 @@
 	<persistentProperty
 		name="cdElementoVoce" />
 	<persistentProperty
+		name="dsElementoVoce" />
+	<persistentProperty
 		name="pgProgetto" />
+	<persistentProperty
+		name="dsProgetto" />
 	<persistentProperty
 		name="dataRichiesta" />
 	<persistentProperty

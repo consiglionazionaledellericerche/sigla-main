@@ -139,7 +139,7 @@
 		property="find_data_ordine"
 		inputType="TEXT"
 		formatName="date_short"
-		label="Data" />
+		label="Data Ordine" />
 	<fieldProperty
 		name="find_cd_numeratore_ordine"
 		property="find_cd_numeratore_ordine"
