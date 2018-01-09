@@ -637,13 +637,14 @@ public AccertamentoPGiroBulk creaAccertamento(UserContext uc,ImpegnoPGiroBulk im
 				if ( imp_pgiro.getElemento_voceContr().getCd_elemento_voce()!=null)
 					accert_pgiro.setCd_voce(imp_pgiro.getElemento_voceContr().getCd_elemento_voce() );
 			} 
-			else{
-				Ass_partita_giroHome ass_pgiroHome = (Ass_partita_giroHome) getHome( uc, Ass_partita_giroBulk.class );
+			else
+				throw new it.cnr.jada.comp.ApplicationException("Indicare la voce del Piano Contr.");
+			/*	{Ass_partita_giroHome ass_pgiroHome = (Ass_partita_giroHome) getHome( uc, Ass_partita_giroBulk.class );
 				ass_pgiro = ass_pgiroHome.getAssociazionePGiroFor(imp_pgiro);
 				accert_pgiro.setTi_appartenenza( ass_pgiro.getTi_appartenenza() );
 				accert_pgiro.setTi_gestione( ass_pgiro.getTi_gestione() );
 				accert_pgiro.setCd_elemento_voce( ass_pgiro.getCd_voce() );
-			}
+			}*/
 		}else{
 			Ass_partita_giroHome ass_pgiroHome = (Ass_partita_giroHome) getHome( uc, Ass_partita_giroBulk.class );
 			ass_pgiro = ass_pgiroHome.getAssociazionePGiroFor(imp_pgiro);
