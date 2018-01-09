@@ -973,14 +973,16 @@ public ImpegnoPGiroBulk creaObbligazione(
 				if ( accert_pgiro.getElemento_voceContr().getCd_elemento_voce()!=null)
 					imp_pgiro.setCd_elemento_voce(accert_pgiro.getElemento_voceContr().getCd_elemento_voce() );
 			}
-			else{
+			else
+				throw new it.cnr.jada.comp.ApplicationException("Indicare la voce del Piano Contr.");
+			/*{
 					Ass_partita_giroHome ass_pgiroHome = (Ass_partita_giroHome) getHome( uc, Ass_partita_giroBulk.class );
 					ass_pgiro = ass_pgiroHome.getAssociazionePGiroFor(accert_pgiro);
 					
 			        imp_pgiro.setTi_appartenenza(ass_pgiro.getTi_appartenenza_clg());
 			        imp_pgiro.setTi_gestione(ass_pgiro.getTi_gestione_clg());
 			        imp_pgiro.setCd_elemento_voce(ass_pgiro.getCd_voce_clg());
-				}
+				}*/
 
 		}
 		else{
