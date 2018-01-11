@@ -65,8 +65,8 @@ public class Geco_modulo_sacBulk extends Geco_modulo_sacBase implements Geco_mod
 				progetto_sip.setToBeUpdated();
 			}
 		}
-		if (Utility.equalsNull(getStato_att_scie(), new Long(5))||
-				Utility.equalsNull(getStato(), new Long(3))){
+		// stato att contab '0' terminato - '1' attivo 
+		if (Utility.equalsNull(getStato_att_contab(), new Long(0))){	
 			if (progetto_sip.getFl_utilizzabile()){
 				progetto_sip.setFl_utilizzabile(Boolean.FALSE);
 				progetto_sip.setToBeUpdated();

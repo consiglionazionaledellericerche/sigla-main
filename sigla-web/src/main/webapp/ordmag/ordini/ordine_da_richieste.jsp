@@ -11,7 +11,7 @@
 		it.cnr.jada.util.action.*,
 		it.cnr.contab.ordmag.anag00.*,
 		it.cnr.contab.ordmag.richieste.*,
-		it.cnr.contab.ordmag.richieste.bp.GenerazioneOrdineDaRichiesteBP"
+		it.cnr.contab.ordmag.ordini.bp.GenerazioneOrdineDaRichiesteBP"
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -29,78 +29,88 @@
 
 <body class="Form">
 
-
-<% bp.openFormWindow(pageContext); %>
+<%  bp.openFormWindow(pageContext); %>
+	<div class="Group card p-2 mb-2">
+		<table cellpadding="2">
+			<tr><% bp.getController().writeFormField(out, "findUnitaOperativaOrd");%></tr>
+			<tr><% bp.getController().writeFormField(out, "findNumerazioneOrd");%></tr>
+		<tr>
+			<td colspan=2 align="center">
+				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca Richieste"), "javascript:submitForm('doCercaRichieste')",null, bp.getParentRoot().isBootstrap()); %>
+			</td>
+		</tr>
+		</table>
+	</div>
 
 	<table class="Panel">
 		<tr>
 			<td colspan=2>
-				<% bp.writeHTMLTable(pageContext,"righeSet",false,false,false,"100%","400px", true); %>
+			    <% bp.getRichieste().writeHTMLTable(pageContext,"default",false,false,false,"100%","350px", true); %>
 			</td>
 		</tr>
       <div>
 	      <table>
 		  <tr>
-	         <td><% bp.writeFormLabel(out,"cdUnitaOperativa");%></td>
-	         <td><% bp.writeFormInput(out,"default","cdUnitaOperativa",true, null, null);%></td>
-	         <td><% bp.writeFormLabel(out,"esercizio");%></td>
-	         <td><% bp.writeFormInput(out,"default","esercizio",true, null, null);%></td>
-	         <td><% bp.writeFormLabel(out,"cdNumeratore");%></td>
-	         <td><% bp.writeFormInput(out,"default","cdNumeratore",true, null, null);%></td>
-	         <td><% bp.writeFormLabel(out,"numero");%></td>
-	         <td><% bp.writeFormInput(out,"default","numero",true, null, null);%></td>
-	         <td><% bp.writeFormLabel(out,"riga");%></td>
-	         <td><% bp.writeFormInput(out,"default","riga",true, null, null);%></td>
+	         <td><% bp.getRichieste().writeFormField(out,"cdUnitaOperativa");%></td>
+	         <td><% bp.getRichieste().writeFormField(out,"esercizio");%></td>
+	         <td><% bp.getRichieste().writeFormField(out,"cdNumeratore");%></td>
+	         <td><% bp.getRichieste().writeFormField(out,"numero");%></td>
+	         <td><% bp.getRichieste().writeFormField(out,"riga");%></td>
 	      </tr>  	      
+	      </table>
+	      <table>
 		  <tr>
-	         <td><% bp.writeFormField(out,"findBeneServizio");%></td>
+	         <td><% bp.getRichieste().writeFormField(out,"findBeneServizio");%></td>
 	      </tr>  	
+	      </table>
 	      <table>
 			  <tr>         
-		         <td><% bp.writeFormLabel(out,"notaRiga");%></td>
-	    	     <td><% bp.writeFormInput(out,"default","notaRiga",true, null, null);%></td>
+		         <td><% bp.getRichieste().writeFormLabel(out,"notaRiga");%></td>
+	    	     <td><% bp.getRichieste().writeFormInput(out,"default","notaRiga",true, null, null);%></td>
 	      	  </tr>            
 	      </table>
+	      <table>
 		  <tr>
-	         <td><% bp.writeFormField(out,"cdUnitaMisuraMinima");%></td>
-	         <td><% bp.writeFormField(out,"findUnitaMisura");%></td>
-	         <td><% bp.writeFormField(out,"coefConv");%></td>
-	         <td><% bp.writeFormField(out,"quantitaRichiesta");%></td>
-	         <td><% bp.writeFormField(out,"quantitaAutorizzata");%></td>
+	         <td><% bp.getRichieste().writeFormField(out,"cdUnitaMisuraMinima");%></td>
+	         <td><% bp.getRichieste().writeFormField(out,"findUnitaMisura");%></td>
+	         <td><% bp.getRichieste().writeFormField(out,"coefConv");%></td>
+	         <td><% bp.getRichieste().writeFormField(out,"quantitaRichiesta");%></td>
+	         <td><% bp.getRichieste().writeFormField(out,"quantitaAutorizzata");%></td>
 	      </tr>  	
+	      </table>
 	      <table>
 			  <tr>         
-		         <td><% bp.writeFormLabel(out,"notaUopDest");%></td>
-	    	     <td><% bp.writeFormInput(out,"default","notaUopDest",true, null, null);%></td>
+		         <td><% bp.getRichieste().writeFormLabel(out,"notaUopDest");%></td>
+	    	     <td><% bp.getRichieste().writeFormInput(out,"default","notaUopDest",true, null, null);%></td>
 	      	  </tr>            
 	      </table>
+	      <table>
 		  <tr>         
-	         <td><% bp.writeFormLabel(out,"categoriaGruppo");%></td>
-	         <td><% bp.writeFormInput(out,"default","categoriaGruppo",true, null, null);%></td>
-	         <td><% bp.writeFormLabel(out,"descObbligazioneScadenzario");%></td>
-	         <td><% bp.writeFormInput(out,"default","descObbligazioneScadenzario", true,null,null);%></td>
+	         <td><% bp.getRichieste().writeFormLabel(out,"categoriaGruppo");%></td>
+	         <td><% bp.getRichieste().writeFormInput(out,"default","categoriaGruppo",true, null, null);%></td>
+	         <td><% bp.getRichieste().writeFormLabel(out,"descObbligazioneScadenzario");%></td>
+	         <td><% bp.getRichieste().writeFormInput(out,"default","descObbligazioneScadenzario", true,null,null);%></td>
 	      </tr>            
+	      </table>
+	      <table>
 		  <tr>         
-	         <td><% bp.writeFormLabel(out,"imImponibile");%></td>
-	         <td><% bp.writeFormInput(out,"default","imImponibile",true, null, null);%></td>
-	         <td><% bp.writeFormLabel(out,"imIva");%></td>
-	         <td><% bp.writeFormInput(out,"default","imIva",true, null, null);%></td>
-	         <td><% bp.writeFormLabel(out,"imIvaD");%></td>
-	         <td><% bp.writeFormInput(out,"default","imIvaD",true, null, null);%></td>
-	         <td><% bp.writeFormLabel(out,"imTotaleConsegna");%></td>
-	         <td><% bp.writeFormInput(out,"default","imTotaleConsegna",true, null, null);%></td>
+	         <td><% bp.getRichieste().writeFormLabel(out,"imImponibile");%></td>
+	         <td><% bp.getRichieste().writeFormInput(out,"default","imImponibile",true, null, null);%></td>
+	         <td><% bp.getRichieste().writeFormLabel(out,"imIva");%></td>
+	         <td><% bp.getRichieste().writeFormInput(out,"default","imIva",true, null, null);%></td>
+	         <td><% bp.getRichieste().writeFormLabel(out,"imIvaD");%></td>
+	         <td><% bp.getRichieste().writeFormInput(out,"default","imIvaD",true, null, null);%></td>
+	         <td><% bp.getRichieste().writeFormLabel(out,"imTotaleConsegna");%></td>
+	         <td><% bp.getRichieste().writeFormInput(out,"default","imTotaleConsegna",true, null, null);%></td>
 	      </tr>
 	      </table>
 	      <table>
 			  <tr>         
-		         <td><% bp.writeFormLabel(out,"notaRigaEstesa");%></td>
-	    	     <td><% bp.writeFormInput(out,"default","notaRigaEstesa",true, null, null);%></td>
+		         <td><% bp.getRichieste().writeFormLabel(out,"notaRigaEstesa");%></td>
+	    	     <td><% bp.getRichieste().writeFormInput(out,"default","notaRigaEstesa",true, null, null);%></td>
 	      	  </tr>            
 	      </table>
       </div>
-		<tr><td>
-		<% bp.writeHTMLNavigator(out); %>
-		</td></tr>
 	</table>
 
 
