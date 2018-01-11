@@ -15,6 +15,7 @@ public interface Geco_moduloIBulk {
 	public abstract java.sql.Timestamp getData_inizio_attivita();
 	public abstract java.lang.Integer getEsito_negoz();
 	public abstract java.lang.Long getStato_att_scie();
+	public abstract java.lang.Long getStato_att_contab();
 	public abstract java.lang.Long getStato();
 	public abstract void aggiornaProgettoSIP(Progetto_sipBulk progetto_sip);
 

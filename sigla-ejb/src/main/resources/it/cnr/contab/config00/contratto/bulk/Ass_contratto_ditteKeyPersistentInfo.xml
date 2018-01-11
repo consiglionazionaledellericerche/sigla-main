@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteKey">
+	<defaultColumnMap
+		tableName="ASS_CONTRATTO_DITTE">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="STATO_CONTRATTO"
+			propertyName="stato_contratto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />			
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="pg_contratto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_DETTAGLIO"
+			propertyName="pg_dettaglio"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="stato_contratto"
+		partOfOid="true" />		
+	<persistentProperty
+		name="pg_contratto"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_dettaglio"
+		partOfOid="true" />
+</SQLPersistentInfo>

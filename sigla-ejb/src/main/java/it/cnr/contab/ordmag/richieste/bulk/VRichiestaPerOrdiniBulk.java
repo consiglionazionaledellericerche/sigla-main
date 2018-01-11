@@ -25,6 +25,7 @@ public class VRichiestaPerOrdiniBulk extends VRichiestaPerOrdiniBase {
 
 	private java.lang.String notaUopDest;
 
+	private String allegatiDocumentale;
 	/**
 	 * [BENE_SERVIZIO Rappresenta la classificazione di beni e servizi il cui dettaglio è esposto in sede di registrazione delle righe fattura passiva.
 
@@ -62,7 +63,7 @@ Nella terna di tabelle relative alle obbligazioni sono gestiti anche i residui (
 	 * [LINEA_ATTIVITA Linea di attività definita per CDR]
 	 **/
 	private WorkpackageBulk lineaAttivita = new WorkpackageBulk();
-	private CdrBulk centroResponsabilita;
+	private CdrBulk centroResponsabilita = new CdrBulk();
 	private ProgettoBulk progetto = new ProgettoBulk();
 	/**
 	 * [ELEMENTO_VOCE Contiene l'anagrafica dei capitoli.
@@ -415,6 +416,10 @@ Capitolo definito dall"utente collegato a Categoria
 	 * Setta il valore di: [cdCentroResponsabilita]
 	 **/
 	public void setCdCentroResponsabilita(java.lang.String cdCentroResponsabilita)  {
+		it.cnr.contab.config00.sto.bulk.CdrBulk centro_responsabilita = this.getLineaAttivita().getCentro_responsabilita();
+		if (centro_responsabilita == null){
+			this.getLineaAttivita().setCentro_responsabilita(new CdrBulk());
+		}
 		this.getLineaAttivita().setCd_centro_responsabilita(cdCentroResponsabilita);
 	}
 	/**
@@ -568,5 +573,11 @@ Capitolo definito dall"utente collegato a Categoria
 			return null;
 		}
 		return getCdCategoriaGruppo()+"-"+getDsCategoriaGruppo();
+	}
+	public String getAllegatiDocumentale() {
+		return allegatiDocumentale;
+	}
+	public void setAllegatiDocumentale(String allegatiDocumentale) {
+		this.allegatiDocumentale = allegatiDocumentale;
 	}
 }

@@ -4397,6 +4397,7 @@ public class DistintaCassiereComponent extends
 		sql2.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,bulk.getCd_unita_organizzativa());
 		sql2.addSQLClause("AND", "PG_DOCUMENTO_CONT_PADRE",SQLBuilder.EQUALS,bulk.getPg_documento_cont());
 		sql2.addSQLClause("AND", "CD_TIPO_DOCUMENTO_CONT",SQLBuilder.EQUALS,it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_REV);
+		sql2.addSQLClause("AND", "CD_TIPO_DOCUMENTO_CONT_PADRE",SQLBuilder.EQUALS,it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_MAN);
 		try {
 			return getHome(usercontext, V_mandato_reversaleBulk.class).fetchAll(sql2);
 		} catch (PersistencyException e) {
