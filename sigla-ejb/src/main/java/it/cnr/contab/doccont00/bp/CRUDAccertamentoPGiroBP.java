@@ -1,17 +1,27 @@
 package it.cnr.contab.doccont00.bp;
 
+import java.rmi.RemoteException;
+
+import javax.ejb.EJBException;
+
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.docamm00.bp.*;
 import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ComponentException;
 
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Accertamento Partita di Giro.
  */
 
 public class CRUDAccertamentoPGiroBP extends CRUDVirtualAccertamentoBP {
+	private boolean flNuovaGestionePg = false;
+	
 public CRUDAccertamentoPGiroBP() {
-	super();
+	super();	
 }
 public CRUDAccertamentoPGiroBP(String function) {
 	super(function);
@@ -95,6 +105,19 @@ public OggettoBulk initializeModelForEdit(ActionContext context,OggettoBulk bulk
 		throw new it.cnr.jada.action.BusinessProcessException(e);
 	}
 }
+@Override
+protected void initialize(ActionContext actioncontext)
+		throws BusinessProcessException {
+	// TODO Auto-generated method stub
+	super.initialize(actioncontext);
+	try {
+		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
+		setFlNuovaGestionePg(parCnr.getFl_nuova_gestione_pg().booleanValue());
+		
+	}catch(Throwable throwable){
+        throw new BusinessProcessException(throwable);
+    }
+}
 //
 //	Abilito il bottone di ELIMINA solo se non si tratta di un resisuo
 //
@@ -151,4 +174,11 @@ public void update(ActionContext context) throws it.cnr.jada.action.BusinessProc
 
 	super.update( context );
 }
+public boolean isFlNuovaGestionePg() {
+	return flNuovaGestionePg;
+}
+public void setFlNuovaGestionePg(boolean flNuovaGestionePg) {
+	this.flNuovaGestionePg = flNuovaGestionePg;
+}
+
 }

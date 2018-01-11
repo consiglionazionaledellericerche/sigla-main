@@ -31,6 +31,7 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.CRUDAction;
 import it.cnr.jada.util.action.SimpleCRUDBP;
+import it.cnr.jada.util.upload.UploadedFile;
 
 /**
  * @author mspasiano
@@ -653,4 +654,27 @@ public it.cnr.jada.action.Forward doVisualizzaDocammContSpe(it.cnr.jada.action.A
 		return handleException(context,e);
 	}
 }
+public Forward doCaricaDitteInvitate(ActionContext context) {
+
+	try{
+		fillModel(context);
+		CRUDConfigAnagContrattoBP bp = (CRUDConfigAnagContrattoBP)getBusinessProcess(context);
+		it.cnr.jada.action.HttpActionContext httpContext = (it.cnr.jada.action.HttpActionContext)context;
+		
+		UploadedFile file =httpContext.getMultipartParameter("file");
+		
+		if (file == null || file.getName().equals("")){
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: selezionare un File da caricare.");
+		}
+		if(file.getFile().getAbsolutePath().endsWith(".xls"))
+			bp.caricaDitteInvitate(context,file.getFile());
+		else
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: estensione File da caricare errata.");	
+		return context.findDefaultForward();
+	}
+	catch(Throwable ex){
+		return handleException(context, ex);
+	}
+}
+
 }

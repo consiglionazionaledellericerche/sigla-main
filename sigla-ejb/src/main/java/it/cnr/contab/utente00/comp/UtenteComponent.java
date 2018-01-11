@@ -9,6 +9,7 @@ import java.util.*;
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.*;
+import it.cnr.contab.utenze00.service.UtenteHDService;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -285,8 +286,37 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 				}	
 
 			}
-			else
+			else{
 				super.creaConBulk(userContext,bulk);
+				
+				if (ute!=null && ute.getFl_autenticazione_ldap() && ute.getCd_utente_uid()!=null) {
+					UtenteHDService.loadProperties();
+					if (!UtenteHDService.getTargetEndpoint().contains("$")){
+						ExternalUser eu=UtenteHDService.getUser( ute.getCd_utente_uid(),"HDEsterno");
+						if(eu==null){
+							ExternalUser xu = new ExternalUser();
+							xu.setFirstName(ute.getNome());
+							xu.setFamilyName(ute.getCognome());
+							xu.setEmail("");
+						    xu.setLogin(ute.getCd_utente_uid());
+						    xu.setProfile(1);//utente semplice
+						    xu.setTelefono("");
+						    if(ute.getCd_cdr()!=null)
+						    	xu.setStruttura((ute.getCd_cdr().substring(0, 7)));
+						    //xu.setStruttura("2");
+						    xu.setEnabled("y");
+						    xu.setMailStop("y");// mettendo il flag a y è possibile non specificare email
+						    try{
+						    	UtenteHDService.newUser(xu, "HDEsterno");
+						    }
+						    catch (Exception e){
+						    	throw new ApplicationException("Inserimento non effettuato! Creazione automatica Utenza Helpdesk non riuscita!");
+						    }
+						    	
+						}
+					}
+				}
+			}
 			return bulk;
 		} catch (CRUDDuplicateKeyException e) 
 		{

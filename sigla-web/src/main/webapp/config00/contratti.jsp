@@ -7,8 +7,8 @@
 		it.cnr.contab.config00.bp.*"
 %>
 
-<%
-	SimpleCRUDBP bp = (SimpleCRUDBP)BusinessProcess.getBusinessProcess(request);
+<% 
+	SimpleCRUDBP bp = (SimpleCRUDBP)BusinessProcess.getBusinessProcess(request);	
 %>
 <%!     static String[][] tabs = null;
 %>
@@ -23,13 +23,24 @@
 
 <body class="Form">
 <% bp.openFormWindow(pageContext);
-   ContrattoBulk contratto = (ContrattoBulk)bp.getModel();	               
+   ContrattoBulk contratto = (ContrattoBulk)bp.getModel();	                
+   if(contratto.isPassivo() &&
+		   ((contratto.getFl_pubblica_contratto()!=null && contratto.getFl_pubblica_contratto()) ||  
+		   (contratto.isProvvisorio() && contratto.getTipo_contratto()!=null && contratto.getTipo_contratto().getFl_pubblica_contratto()!= null && contratto.getTipo_contratto().getFl_pubblica_contratto())))
    tabs = new String[][] {
 	               { "tabTestata","Contratti","/config00/tab_contratti_testata.jsp" },
 	               { "tabCessazione","Dati di cessazione dell'efficacia","/config00/tab_contratti_cessazione.jsp" },
 	               { "tabAss_contratto_uo","CdR","/config00/tab_ass_contratto_uo.jsp" },
-	               { "tabAllegati","Allegati","/config00/tab_contratti_allegati.jsp" }	               
+	               { "tabAllegati","Allegati","/config00/tab_contratti_allegati.jsp" },
+	               { "tabAss_contratto_ditte","Ditte Invitate","/config00/tab_ass_contratto_ditte.jsp" },
 	               };   
+   else
+	   tabs = new String[][] {
+           { "tabTestata","Contratti","/config00/tab_contratti_testata.jsp" },
+           { "tabCessazione","Dati di cessazione dell’efficacia","/config00/tab_contratti_cessazione.jsp" },
+           { "tabAss_contratto_uo","CdR","/config00/tab_ass_contratto_uo.jsp" },
+           { "tabAllegati","Allegati","/config00/tab_contratti_allegati.jsp" },
+           };
 %>
 <table class="Panel" width="100%" height="100%">
 	<tr>

@@ -13,15 +13,22 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 public class VRichiestaPerOrdiniHome extends BulkHome {
 	public VRichiestaPerOrdiniHome(Connection conn) {
-		super(RichiestaUopRigaBulk.class, conn);
+		super(VRichiestaPerOrdiniBulk.class, conn);
 	}
 	public VRichiestaPerOrdiniHome(Connection conn, PersistentCache persistentCache) {
-		super(RichiestaUopRigaBulk.class, conn, persistentCache);
+		super(VRichiestaPerOrdiniBulk.class, conn, persistentCache);
 	}
 	@Override
 	public SQLBuilder selectByClause(UserContext usercontext, CompoundFindClause compoundfindclause)
 			throws PersistencyException {
 		// TODO Auto-generated method stub
-		return super.selectByClause(usercontext, compoundfindclause);
+		SQLBuilder sql = super.selectByClause(usercontext, compoundfindclause);
+		sql.addOrderBy("cd_cds");
+		sql.addOrderBy("cd_unita_operativa");
+		sql.addOrderBy("esercizio");
+		sql.addOrderBy("cd_numeratore");
+		sql.addOrderBy("numero");
+		sql.addOrderBy("riga");
+		return sql;
 	}
 }
