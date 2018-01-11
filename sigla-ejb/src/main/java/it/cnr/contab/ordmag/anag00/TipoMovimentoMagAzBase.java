@@ -95,8 +95,8 @@ public class TipoMovimentoMagAzBase extends TipoMovimentoMagAzKey implements Key
 //    MOD_AGG_VALORE_LOTTO VARCHAR(1)
 	private java.lang.String modAggValoreLotto;
  
-//    MOVIMENTA_LOTTI_BLOCCATI VARCHAR(1)
-	private java.lang.String movimentaLottiBloccati;
+//    FL_MOVIMENTA_LOTTI_BLOCCATI VARCHAR(1)
+	private java.lang.Boolean flMovimentaLottiBloccati;
  
 //    MOD_AGG_QTA_PROP_SCA VARCHAR(1)
 	private java.lang.String modAggQtaPropSca;
@@ -547,15 +547,15 @@ public class TipoMovimentoMagAzBase extends TipoMovimentoMagAzKey implements Key
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [movimentaLottiBloccati]
 	 **/
-	public java.lang.String getMovimentaLottiBloccati() {
-		return movimentaLottiBloccati;
+	public java.lang.Boolean getFlMovimentaLottiBloccati() {
+		return flMovimentaLottiBloccati;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [movimentaLottiBloccati]
 	 **/
-	public void setMovimentaLottiBloccati(java.lang.String movimentaLottiBloccati)  {
-		this.movimentaLottiBloccati=movimentaLottiBloccati;
+	public void setFlMovimentaLottiBloccati(java.lang.Boolean flMovimentaLottiBloccati)  {
+		this.flMovimentaLottiBloccati=flMovimentaLottiBloccati;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
