@@ -66,7 +66,11 @@ public class VRichiestaPerOrdiniBase extends VRichiestaPerOrdiniKey implements K
 //    CD_ELEMENTO_VOCE VARCHAR(20)
 	private java.lang.String cdElementoVoce;
  
-//    PG_PROGETTO DECIMAL(10,0)
+	private java.lang.String dsLineaAttivita;
+	private java.lang.String dsElementoVoce;
+	private java.lang.String dsProgetto;
+
+	//    PG_PROGETTO DECIMAL(10,0)
 	private java.lang.Long pgProgetto;
  
 //  DATA_RICHIESTA TIMESTAMP(7) NOT NULL
@@ -416,5 +420,23 @@ public class VRichiestaPerOrdiniBase extends VRichiestaPerOrdiniKey implements K
 	}
 	public void setDsCategoriaGruppo(java.lang.String dsCategoriaGruppo) {
 		this.dsCategoriaGruppo = dsCategoriaGruppo;
+	}
+	public java.lang.String getDsElementoVoce() {
+		return dsElementoVoce;
+	}
+	public void setDsElementoVoce(java.lang.String dsElementoVoce) {
+		this.dsElementoVoce = dsElementoVoce;
+	}
+	public java.lang.String getDsProgetto() {
+		return dsProgetto;
+	}
+	public void setDsProgetto(java.lang.String dsProgetto) {
+		this.dsProgetto = dsProgetto;
+	}
+	public java.lang.String getDsLineaAttivita() {
+		return dsLineaAttivita;
+	}
+	public void setDsLineaAttivita(java.lang.String dsLineaAttivita) {
+		this.dsLineaAttivita = dsLineaAttivita;
 	}
 }

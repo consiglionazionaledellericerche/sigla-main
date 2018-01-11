@@ -54,6 +54,11 @@
 		<property name="trovatoSiglaRestClientUser" value="${TrovatoSiglaRestClientUser}" />
 		<property name="trovatoSiglaRestClientPassword" value="${TrovatoSiglaRestClientPassword}" />
 	</bean>
+		<bean id="helpdeskProperties" class="it.cnr.contab.utenze00.service.HelpdeskProperties">
+		<property name="helpdeskTargetEndpoint" value="${HelpdeskTargetEndpoint}" />
+		<property name="helpdeskSiglaRestClientUser" value="${HelpdeskSiglaRestClientUser}" />
+		<property name="helpdeskSiglaRestClientPassword" value="${HelpdeskSiglaRestClientPassword}" />
+	</bean>
 	<bean id="digitalPreservationProperties" class="it.cnr.contab.dp.DigitalPreservationProperties">
 		<property name="digitalPreservationCodAmm" value="${DigitalPreservationCodAmm}" />
 		<property name="digitalPreservationCodRegFA" value="${DigitalPreservationCodRegFA}" />

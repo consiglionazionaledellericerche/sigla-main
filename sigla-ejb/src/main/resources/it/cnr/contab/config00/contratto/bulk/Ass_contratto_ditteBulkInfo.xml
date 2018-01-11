@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="contratto.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="Esercizio del Contratto" />
+	<fieldProperty
+		name="stato_contratto"
+		property="contratto.stato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		label="Stato contratto" />	
+	<fieldProperty
+		name="pg_contratto"
+		property="pg_contratto"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo contratto" />
+	<fieldProperty
+		name="pg_dettaglio"
+		property="pg_dettaglio"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		label="Progressivo" />
+	<fieldProperty
+		name="denominazione"
+		property="denominazione"
+		inputType="TEXTAREA"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		cols="60"
+    	rows="3"
+    	maxLength="250"
+		label="Denominazione" />
+	<fieldProperty
+		name="denominazione_rti"
+		property="denominazione_rti"
+		inputType="TEXTAREA"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		cols="60"
+    	rows="3"
+    	maxLength="250"
+		label="Denominazione RTI" />
+	<fieldProperty
+		name="codice_fiscale"
+		property="codice_fiscale"
+		inputType="TEXT"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		inputSize="50"
+		maxLength="16"
+		label="Codice Fiscale Italiano" />
+	<fieldProperty
+		name="id_fiscale"
+		property="id_fiscale"
+		inputType="TEXT"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		inputSize="50"
+		maxLength="30"
+		label="Partita IVA/Id Fiscale Estero" />
+	<fieldProperty
+	    name="tipologia"
+	    property="tipologia"
+	    inputType="TEXT"
+	    nullable="false"
+	    enabledOnSearch="true"
+	    label="tipologia" />
+   <fieldProperty
+	    name="ruolo"
+	    property="ruolo"
+	    inputType="SELECT"
+	    keysProperty="ruoloKeys"
+	    enabledOnSearch="true"
+	    label="Ruolo RTI" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="contratto" />	
+	<formFieldProperty
+		name="pg_contratto" />
+	<formFieldProperty
+		name="stato_contratto" />	
+	<formFieldProperty
+		name="pg_dettaglio" />		
+	<formFieldProperty
+		name="tipologia" />	
+	<formFieldProperty
+		name="denominazione" />
+	<formFieldProperty
+		name="codice_fiscale" />	
+	<formFieldProperty
+		name="id_fiscale" />	
+	<formFieldProperty
+		name="ruolo" />	
+	<formFieldProperty
+		name="denominazione_rti" />	
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="pg_contratto" />
+	<findFieldProperty
+		name="pg_dettaglio" />		
+	<findFieldProperty
+		name="tipologia" />	
+	<findFieldProperty
+		name="denominazione" />
+	<findFieldProperty
+		name="codice_fiscale" />	
+	<findFieldProperty
+		name="id_fiscale" />	
+	<findFieldProperty
+		name="ruolo" />	
+	<findFieldProperty
+		name="denominazione_rti" />	
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="pg_contratto" />
+	<columnFieldProperty
+		name="pg_dettaglio" />		
+	<columnFieldProperty
+		name="tipologia" />	
+	<columnFieldProperty
+		name="denominazione" />
+	<columnFieldProperty
+		name="codice_fiscale" />	
+	<columnFieldProperty
+		name="id_fiscale" />	
+	<columnFieldProperty
+		name="ruolo" />	
+	<columnFieldProperty
+		name="denominazione_rti" />	
+	<columnSet name="ditte">
+		<columnFieldProperty
+			name="denominazione"/>
+		<columnFieldProperty
+			name="codice_fiscale"/>	
+		<columnFieldProperty
+			name="id_fiscale"/>		
+		<columnFieldProperty
+			name="ruolo"/>		
+		<columnFieldProperty
+			name="denominazione_rti"/>	
+	</columnSet>			
+</bulkInfo>

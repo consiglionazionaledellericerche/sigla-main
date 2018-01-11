@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBase"
+	keyClassName="it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteKey"
+	homeClassName="it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteHome">
+	<defaultColumnMap
+		tableName="ASS_CONTRATTO_DITTE">
+		<columnMapping
+			columnName="DENOMINAZIONE"
+			propertyName="denominazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />	
+		<columnMapping
+			columnName="DENOMINAZIONE_RTI"
+			propertyName="denominazione_rti"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />	
+		<columnMapping
+			columnName="TIPOLOGIA"
+			propertyName="tipologia"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />	
+		<columnMapping
+			columnName="RUOLO"
+			propertyName="ruolo"
+			sqlTypeName="VARCHAR"
+			columnSize="16"
+			nullable="true" />		
+		<columnMapping
+			columnName="CODICE_FISCALE"
+			propertyName="codice_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="16"
+			nullable="true" />
+		<columnMapping
+			columnName="ID_FISCALE"
+			propertyName="id_fiscale"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />	
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="denominazione" />
+	<persistentProperty
+		name="denominazione_rti" />
+	<persistentProperty
+		name="tipologia" />
+	<persistentProperty
+		name="ruolo" />
+	<persistentProperty
+		name="codice_fiscale" />
+	<persistentProperty
+		name="id_fiscale" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

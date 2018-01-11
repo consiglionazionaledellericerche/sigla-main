@@ -971,6 +971,7 @@ public it.cnr.jada.action.Forward doSelezionaSospesoDiChiusuraFondo(
 					SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("Selezionatore");
 					nbp.setIterator(context,ri);
 					it.cnr.jada.bulk.BulkInfo bulkInfo = it.cnr.jada.bulk.BulkInfo.getBulkInfo(SospesoBulk.class);
+					nbp.setFormField(bp.getFormField("cd_sospeso_di_chiusura"));
 					nbp.setBulkInfo(bulkInfo);
 					nbp.setColumns(bulkInfo.getColumnFieldPropertyDictionary());
 					context.addHookForward("seleziona",this,"doConfermaChiudiFondo");

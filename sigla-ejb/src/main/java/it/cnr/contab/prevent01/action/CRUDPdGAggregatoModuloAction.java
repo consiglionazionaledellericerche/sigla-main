@@ -20,6 +20,7 @@ import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
@@ -433,7 +434,14 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 		{
 			CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)getBusinessProcess(context);
 			CRUDStatoCdrPdGPBP bpDett;
-	 
+			String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().
+					validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),
+							((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? 
+									((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : 
+										"*","CRUDStatoCdrPdGPBP");
+			if (mode == null || mode.equals("V")) 
+				throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa. Impossibile continuare.");
+			
 			if(bp.isEditable())
 				bpDett = (CRUDStatoCdrPdGPBP)context.createBusinessProcess("CRUDStatoCdrPdGPBP", new Object[] { "M" });
 			else

@@ -18,7 +18,7 @@
       path="/ListaBolleScaricoGenerateAction" actionClass="it.cnr.contab.ordmag.magazzino.action.ListaBolleScaricoGenerateAction">
   </action>
   <action 
-      path="/GenerazioneOrdineDaRichiesteAction" actionClass="it.cnr.contab.ordmag.richieste.action.ListaRichiestePerOrdiniAction">
+      path="/GenerazioneOrdineDaRichiesteAction" actionClass="it.cnr.contab.ordmag.richieste.action.GenerazioneOrdineDaRichiesteAction">
   </action>
   <businessProcess name="CRUDGruppoMerceologicoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
     <forward name="default" path="/ordmag/gruppomerceologico.jsp"/>
@@ -141,7 +141,7 @@
   <businessProcess
       name="GenerazioneOrdineDaRichiesteBP" className="it.cnr.contab.ordmag.ordini.bp.GenerazioneOrdineDaRichiesteBP">
     <forward name="default" path="/ordmag/ordini/ordine_da_richieste.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.ordmag.richieste.bulk.VRichiestaPerOrdiniBulk" />
+	    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk"/>
 		<init-param name="componentSessionName" value="CNRORDMAG00_EJB_GenerazioneOrdiniDaRichiesteComponentSession" />
 		<init-param name="defaultAction" value="GenerazioneOrdineDaRichiesteAction" />
   </businessProcess>
