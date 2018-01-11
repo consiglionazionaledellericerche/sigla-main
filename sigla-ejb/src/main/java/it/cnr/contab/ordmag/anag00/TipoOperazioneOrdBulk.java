@@ -9,6 +9,7 @@ public class TipoOperazioneOrdBulk extends TipoOperazioneOrdBase {
     public final static String OPERAZIONE_RICHIESTA= "RIC";
     public final static String EVASIONE_ORDINE= "RIS";
     public final static String OPERAZIONE_ORDINE= "ORD";
+    public final static String OPERAZIONE_MAGAZZINO= "MAG";
     public final static String OPERAZIONE_APPROVAZIONE_ORDINE= "VO1";
     public final static String OPERAZIONE_FIRMA_ORDINE= "VO2";
 	/**
