@@ -3,6 +3,7 @@
  * Date 21/09/2017
  */
 package it.cnr.contab.ordmag.ordini.bulk;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +29,7 @@ public class EvasioneOrdineBulk extends EvasioneOrdineBase {
 	private String find_ragione_sociale; 
 	private String find_cd_precedente; 
 	private String find_esercizio_ordine; 
-	private String find_data_ordine; 
+	private Timestamp find_data_ordine; 
 	private String find_cd_numeratore_ordine; 
 	private String find_numero_ordine; 
 	private String find_riga_ordine; 
@@ -196,10 +197,10 @@ public class EvasioneOrdineBulk extends EvasioneOrdineBase {
 	public void setFind_esercizio_ordine(String find_esercizio_ordine) {
 		this.find_esercizio_ordine = find_esercizio_ordine;
 	}
-	public String getFind_data_ordine() {
+	public Timestamp getFind_data_ordine() {
 		return find_data_ordine;
 	}
-	public void setFind_data_ordine(String find_data_ordine) {
+	public void setFind_data_ordine(Timestamp find_data_ordine) {
 		this.find_data_ordine = find_data_ordine;
 	}
 	public String getFind_cd_numeratore_ordine() {
