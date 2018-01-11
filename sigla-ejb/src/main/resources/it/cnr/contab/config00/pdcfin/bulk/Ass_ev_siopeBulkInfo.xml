@@ -66,8 +66,8 @@
 		label="Codice Siope" 
 		readonlyPropertyOnEdit="ROGiaAssociato"
 		inputType="TEXT"
-		maxLength="4"
-		inputSize="4"
+		maxLength="10"
+		inputSize="10"
 		enabledOnSearch="true"/>
 	<fieldProperty
 		name="ds_siope"

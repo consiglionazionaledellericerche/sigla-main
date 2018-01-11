@@ -102,7 +102,7 @@ public void callRiportaIndietro (UserContext userContext,it.cnr.contab.doccont00
 */
 
 public abstract it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk creaAccertamento(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.ImpegnoPGiroBulk param1) throws it.cnr.jada.comp.ComponentException;
-public abstract AccertamentoPGiroBulk creaAccertamentoDiIncassoIVA( UserContext userContext, ReversaleBulk reversale ) throws ComponentException;
+public abstract AccertamentoPGiroBulk creaAccertamentoDiIncassoIVA( UserContext userContext, ReversaleBulk reversale,boolean split ) throws ComponentException;
 /** 
   *  creazione
   *    PreCondition:
