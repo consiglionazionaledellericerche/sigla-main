@@ -48,6 +48,7 @@ import it.cnr.contab.gestiva00.ejb.LiquidIvaInterfComponentSession;
 import it.cnr.contab.incarichi00.ejb.IncarichiProceduraComponentSession;
 import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
 import it.cnr.contab.incarichi00.ejb.RepertorioLimitiComponentSession;
+import it.cnr.contab.ordmag.magazzino.ejb.MovimentiMagComponentSession;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
 import it.cnr.contab.prevent01.ejb.PdgContrSpeseComponentSession;
@@ -175,6 +176,10 @@ public final class Utility {
 
 	public static BigDecimal round6Decimali(BigDecimal importo) {
 		return round(importo,6);
+	}
+
+	public static BigDecimal round5Decimali(BigDecimal importo) {
+		return round(importo,5);
 	}
 
 	public static BigDecimal roundIntero(BigDecimal importo) {
@@ -455,5 +460,8 @@ public final class Utility {
 	}
     public static VariazioniStanziamentoResiduoComponentSession createVariazioniStanziamentoResiduoComponentSession() throws javax.ejb.EJBException{
 	    return (VariazioniStanziamentoResiduoComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRVARSTANZ00_EJB_VariazioniStanziamentoResiduoComponentSession", VariazioniStanziamentoResiduoComponentSession.class);
+	}
+    public static MovimentiMagComponentSession createMovimentiMagComponentSession() throws javax.ejb.EJBException{
+	    return (MovimentiMagComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG00_EJB_MovimentiMagComponentSession", MovimentiMagComponentSession.class);
 	}
 }

@@ -3,26 +3,21 @@
  * Date 03/10/2017
  */
 package it.cnr.contab.ordmag.magazzino.bulk;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.BulkCollection;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.action.CRUDBP;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import it.cnr.contab.ordmag.anag00.*;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
+import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
+import it.cnr.contab.ordmag.anag00.NumerazioneMagBulk;
+import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
 public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 	/**
 	 * [MAGAZZINO Rappresenta i magazzini utilizzati in gestione ordine e magazzino.]
 	 **/
 	private MagazzinoBulk magazzino =  new MagazzinoBulk();
 	private MagazzinoBulk magazzinoDest =  new MagazzinoBulk();
-	private BulkList righe =  new BulkList<>();
+	private BulkList<BollaScaricoRigaMagBulk> righeColl =  new BulkList<BollaScaricoRigaMagBulk>();
 	private NumerazioneMagBulk numerazioneMag =  new NumerazioneMagBulk();
 	private String stampaBollaScarico;
 
@@ -235,28 +230,25 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 		this.getNumerazioneMag().setCdNumeratoreMag(cdNumeratoreMag);
 	}
 	public BulkList getRighe() {
-		return righe;
+		return righeColl;
 	}
 	public void setRighe(BulkList righe) {
-		this.righe = righe;
+		this.righeColl = righe;
 	}
 	public BollaScaricoRigaMagBulk removeFromRighe(int index) 
 	{
-		BollaScaricoRigaMagBulk element = (BollaScaricoRigaMagBulk)righe.get(index);
-		return (BollaScaricoRigaMagBulk)righe.remove(index);
+		BollaScaricoRigaMagBulk element = (BollaScaricoRigaMagBulk)righeColl.get(index);
+		return (BollaScaricoRigaMagBulk)righeColl.remove(index);
 	}
-	public int addToRighe( BollaScaricoRigaMagBulk nuovoRigo ) 
+	public int addToRigheColl( BollaScaricoRigaMagBulk nuovoRigo ) 
 	{
 		nuovoRigo.setStato(OrdineAcqRigaBulk.STATO_INSERITA);
-		int max = 0;
-		for (Iterator i = righe.iterator(); i.hasNext();) {
-			int prog = ((BollaScaricoRigaMagBulk)i.next()).getRigaBollaSca();
-			if (prog > max) max = prog;
-		}
-		nuovoRigo.setRigaBollaSca(new Integer(max+1));
-
-		righe.add(nuovoRigo);
-		return righe.size()-1;
+		nuovoRigo.setRigaBollaSca(righeColl.stream()
+									.max((r1, r2)->Integer.compare(r1.getRigaBollaSca(), r2.getRigaBollaSca()))
+									.map(BollaScaricoRigaMagBulk::getRigaBollaSca)
+									.orElse(0)+1);
+		righeColl.add(nuovoRigo);
+		return righeColl.size()-1;
 	}
 	public List getChildren() {
 		return getRighe();
@@ -264,7 +256,7 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 	public BulkCollection[] getBulkLists() {
 
 		return new it.cnr.jada.bulk.BulkCollection[] { 
-				righe
+				righeColl
 		};
 	}
 	public String getStampaBollaScarico() {
