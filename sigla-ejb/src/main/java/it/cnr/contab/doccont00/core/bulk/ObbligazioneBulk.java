@@ -1655,7 +1655,7 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 		anniResidui = hashtable;
 	}
 	public void caricaAnniResidui(ActionContext actioncontext) { 
-		for (int i=CNRUserContext.getEsercizio(actioncontext.getUserContext()).intValue()-1;i>=CNRUserContext.getEsercizio(actioncontext.getUserContext()).intValue()-12;i--)
+		for (int i=CNRUserContext.getEsercizio(actioncontext.getUserContext()).intValue()-1;i>=CNRUserContext.getEsercizio(actioncontext.getUserContext()).intValue()-14;i--)
 			anniResidui.put(new Integer(i), new Integer(i));
 	}
 	/* (non-Javadoc)
