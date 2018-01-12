@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Scarico Manuale Magazzino"
+	longDescription="Scarico Manuale Magazzino">
+	<fieldProperty
+		name="findBeneServizio"
+		property="beneServizio"
+		inputType="searchtool"
+		formName="searchtool_codice"
+		enabledOnSearch="true"
+		label="Articolo" />
+	<fieldProperty
+		name="cdBeneServizio"
+		property="beneServizio.cd_bene_servizio"
+		maxLength="30"
+		inputSize="20"
+		inputType="ROTEXT"
+		nullable="false"
+		label="Cod.Articolo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dsBeneServizio"
+		property="beneServizio.ds_bene_servizio"
+		maxLength="300"
+		inputSize="40"
+		inputType="ROTEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cdUnitaMisuraMinima"
+		property="beneServizio.unitaMisura.cdUnitaMisura"
+		maxLength="30"
+		inputSize="3"
+		inputType="ROTEXT"
+		label="Unità Misura Minima"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="findUnitaMisura"
+		property="unitaMisura"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Misura Scarico" />
+	<fieldProperty
+		name="cdUnitaMisura"
+		property="unitaMisura.cdUnitaMisura"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="Unità Misura Scarico" />
+
+	<fieldProperty
+		name="coefConv"
+		property="coefConv"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.Importo5CifrePositivoFormat"
+		inputSize="8"
+		maxLength="12"
+		nullable="false"
+		enabledOnEdit="true"
+		command="doDefault"
+		readonlyProperty="ROCoefConv"
+		label="Coefficiente Conversione" />
+ 	<fieldProperty
+		name="qtScarico"
+		property="qtScarico"
+		inputType="TEXT"
+		inputSize="10"
+		nullable="false"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		enabledOnEdit="true"
+		command="doDefault"
+		style="text-align: right"
+		label="Quantità" />
+ 	<fieldProperty
+		name="qtScaricoConvertita"
+		property="qtScaricoConvertita"
+		inputType="TEXT"
+		inputSize="10"
+		nullable="false"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		enabledOnEdit="true"
+		style="text-align: right"
+		label="Qt. da Scaricare" />
+ 
+	<fieldProperty
+		name="findUnitaOperativaOrdRic"
+		property="unitaOperativaRicevente"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Operativa Ricevente" />
+	<fieldProperty
+		name="cdUnitaOperativaOrdRic"
+		property="unitaOperativaRicevente.cdUnitaOperativa"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="UOP Ricevente" />
+
+ 	<fieldProperty
+		name="totGiacenzaLotti"
+		property="totGiacenzaLotti"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		style="text-align: right"
+		label="Giacenza" />
+ 	<fieldProperty
+		name="totQtScaricoLotti"
+		property="totQtScaricoLotti"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		style="text-align: right"
+		label="Quantità" />
+ 	<fieldProperty
+		name="totQtScaricoLottiConvertita"
+		property="totQtScaricoLottiConvertita"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		style="text-align: right"
+		label="Qt. da Scaricare" />
+
+	<fieldProperty
+		name="anomalia"
+		property="anomalia"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		inputCssClass="w-100 "
+		label="Anomalia Scarico" />
+
+	<formFieldProperty
+		name="findBeneServizio" />
+	<formFieldProperty
+		name="cdBeneServizio" />
+	<formFieldProperty
+		name="dsBeneServizio" />
+	<formFieldProperty
+		name="cdUnitaMisuraMinima" />
+
+	<formFieldProperty
+		name="findUnitaMisura" />
+	<formFieldProperty
+		name="cdUnitaMisura" />
+	<formFieldProperty
+		name="coefConv" />
+	<formFieldProperty
+		name="qtScarico" />
+ 	<formFieldProperty
+		name="qtScaricoConvertita" />
+	
+	<formFieldProperty
+		name="findUnitaOperativaOrdRic" />
+	<formFieldProperty
+		name="cdUnitaOperativaOrdRic" />
+	<formFieldProperty
+		name="anomalia" />
+
+	<formFieldProperty
+		name="totGiacenzaLotti" />
+	<formFieldProperty
+		name="totQtScaricoLotti" />
+	<formFieldProperty
+		name="totQtScaricoLottiConvertita" />
+
+	<columnFieldProperty
+		name="cdBeneServizio" />	
+	<columnFieldProperty
+		name="dsBeneServizio" />	
+	<columnFieldProperty
+		name="qtScarico" 
+		inputType="ROTEXT"
+		label="Q.tà" />
+
+	<columnFieldProperty
+		name="cdUnitaMisuraMinima"
+		label="UM Minima" />
+	<columnFieldProperty
+		name="cdUnitaMisura"
+		label="UM Scarico" />
+	<columnFieldProperty
+		name="coefConv"
+		inputType="ROTEXT" 
+		label="Coeff." />
+		
+	<columnFieldProperty
+		name="cdUnitaOperativaOrdRic" />
+		
+</bulkInfo>

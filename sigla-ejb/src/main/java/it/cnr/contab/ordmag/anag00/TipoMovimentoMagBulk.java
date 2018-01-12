@@ -6,6 +6,19 @@ package it.cnr.contab.ordmag.anag00;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 public class TipoMovimentoMagBulk extends TipoMovimentoMagBase {
+	public static final String CARICO_MANUALE = "CM";
+	public static final String CARICO_AUTOMATICO = "CA"; 
+	public static final String CARICO_TRASFERIMENTO = "CT"; 
+	public static final String SCARICO_MANUALE = "SM"; 
+	public static final String SCARICO_AUTOMATICO = "SA";
+	public static final String SCARICO_TRASFERIMENTO = "ST";
+	public static final String RETTIFICA_PREZZO = "CV";
+	public static final String RETTIFICA_INVENTARIO = "RI";
+	public static final String CHIUSURE = "CH";
+	public static final String RESI = "RS";
+	public static final String DOTAZIONI = "DT";
+	public static final String STORNI = "SR";
+	
 	/**
 	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
 	 **/

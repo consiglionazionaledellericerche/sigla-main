@@ -675,4 +675,13 @@ public class MagazzinoBulk extends MagazzinoBase {
 	public void setInQuery(boolean isInQuery) {
 		this.isInQuery = isInQuery;
 	}
+	public TipoMovimentoMagBulk getTipoMovimentoMag(String tipoConsegna) {
+		switch (tipoConsegna) {
+			case "MAG":  return this.getTipoMovimentoMagCarMag();
+			case "TRA":  return this.getTipoMovimentoMagCarTra();
+			case "FMA":  return this.getTipoMovimentoMagCarFma();
+			default: return null;
+		}
+	}
+
 }

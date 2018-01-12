@@ -44,23 +44,4 @@ public List<BollaScaricoMagBulk> evadiOrdine(UserContext userContext, EvasioneOr
 		}
 	}
 }
-
-public RemoteIterator preparaQueryBolleScaricoDaVisualizzare(UserContext userContext, List<BollaScaricoMagBulk> bolle)throws ComponentException, RemoteException{
-	try {
-		return (RemoteIterator)invoke("preparaQueryBolleScaricoDaVisualizzare",new Object[] {
-				userContext,
-				bolle});
-	} catch(java.rmi.RemoteException e) {
-		throw e;
-	} catch(java.lang.reflect.InvocationTargetException e) {
-		try {
-			throw e.getTargetException();
-		} catch(it.cnr.jada.comp.ComponentException ex) {
-			throw ex;
-		} catch(Throwable ex) {
-			throw new java.rmi.RemoteException("Uncaugth exception",ex);
-		}
-	}
-}
-
 }
