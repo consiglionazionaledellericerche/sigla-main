@@ -353,7 +353,10 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			if(bulk.getDt_inizio_validita().after(bulk.getDt_fine_validita()))
 				throw new ApplicationException("La data di inizio non può essere superiore alla data fine validita!");
 		}
-		
+		if(bulk.getIm_contratto_passivo() != null && bulk.getIm_contratto_passivo_netto()!=null) {
+			if(bulk.getIm_contratto_passivo_netto().compareTo(bulk.getIm_contratto_passivo())>0)
+				throw new ApplicationException("Importo netto passivo superiore all'importo passivo!");
+		}
 		try {
 			Date data_stipula_contratti = Utility.createParametriCnrComponentSession().
 			getParametriCnr(uc, CNRUserContext.getEsercizio(uc)).getData_stipula_contratti();
