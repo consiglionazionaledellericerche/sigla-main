@@ -16,7 +16,7 @@
 %>
 
 	<%@page import="it.cnr.contab.utenze00.bulk.UtenteBulk"%>
-<table border="1" cellspacing="0" cellpadding="2">
+<table cellspacing="0" cellpadding="2">
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "cd_utente"); %></td>
 	<td><% bp.getController().writeFormInput( out, "cd_utente"); %></td>
