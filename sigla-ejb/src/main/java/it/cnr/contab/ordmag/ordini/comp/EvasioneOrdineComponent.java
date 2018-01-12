@@ -1,124 +1,54 @@
 package it.cnr.contab.ordmag.ordini.comp;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Vector;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
-import it.cnr.contab.anagraf00.core.bulk.Anagrafico_terzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.config00.bulk.CigBulk;
-import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.contab.config00.bulk.Parametri_cdsHome;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
-import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
-import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
-import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
-import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
-import it.cnr.contab.docamm00.ejb.CategoriaGruppoInventComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
-import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
-import it.cnr.contab.doccont00.comp.DateServices;
-import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
-import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileHome;
-import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
-import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contHome;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
-import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
-import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
-import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
-import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperHome;
-import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperMagBulk;
-import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperMagHome;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
-import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagHome;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoHome;
 import it.cnr.contab.ordmag.anag00.NumerazioneMagBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneMagHome;
-import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
-import it.cnr.contab.ordmag.anag00.NumerazioneOrdHome;
-import it.cnr.contab.ordmag.anag00.TipoMovimentoMagAzBulk;
-import it.cnr.contab.ordmag.anag00.TipoMovimentoMagAzHome;
-import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
-import it.cnr.contab.ordmag.anag00.TipoOperazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
-import it.cnr.contab.ordmag.anag00.UnitaMisuraHome;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdKey;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
 import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagHome;
-import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoRigaMagBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.contab.ordmag.magazzino.ejb.MovimentiMagComponentSession;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineHome;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
-import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaHome;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaHome;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqHome;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
-import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineBulk;
-import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineHome;
-import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
-import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
 import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
-import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
-import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.PrimaryKeyHashtable;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
-import it.cnr.jada.ejb.CRUDComponentSession;
-import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class EvasioneOrdineComponent
 	extends it.cnr.jada.comp.CRUDComponent
@@ -353,7 +283,8 @@ public class EvasioneOrdineComponent
     			listaRigheEvase.add(evasioneOrdineRiga);
 
     			try {
-					listaMovimentiScarico = movimentiMagComponent.caricoDaOrdine(userContext, evasioneOrdine, consegna, ordine, evasioneOrdineRiga, listaMovimentiScarico);
+    				Optional.ofNullable(movimentiMagComponent.caricoDaOrdine(userContext, consegna, evasioneOrdineRiga))
+    					.ifPresent(e->listaMovimentiScarico.add(e));
 				} catch (RemoteException e) {
 					throw new ComponentException(e);
 				}
@@ -403,7 +334,7 @@ public class EvasioneOrdineComponent
     		
     		if (!listaMovimentiScarico.isEmpty()){
         		try {
-        			listaBolleScarico = movimentiMagComponent.generaBollaScarico(userContext, listaMovimentiScarico);
+        			listaBolleScarico = movimentiMagComponent.generaBolleScarico(userContext, listaMovimentiScarico);
 				} catch (RemoteException e) {
 					throw handleException(e);
 				}

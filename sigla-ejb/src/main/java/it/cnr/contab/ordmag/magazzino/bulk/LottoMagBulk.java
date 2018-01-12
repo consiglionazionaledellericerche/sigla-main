@@ -10,6 +10,10 @@ import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneMagBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 public class LottoMagBulk extends LottoMagBase {
+	public final static String STATO_INSERITO = "INS";
+	public final static String STATO_SCADUTO = "SCA";
+	public final static String STATO_VERIFICA = "VER";
+	
 	/**
 	 * [NUMERAZIONE_MAG Definisce i contatori per la numerazione dei magazzini.]
 	 **/
@@ -19,6 +23,7 @@ public class LottoMagBulk extends LottoMagBase {
 	private OrdineAcqConsegnaBulk ordineAcqConsegna =  new OrdineAcqConsegnaBulk();
 	private TerzoBulk terzo =  new TerzoBulk();
 	private DivisaBulk divisa =  new DivisaBulk();
+	
 	public LottoMagBulk() {
 		super();
 	}
@@ -66,14 +71,14 @@ public class LottoMagBulk extends LottoMagBase {
 	}
 	public DivisaBulk getDivisa() {
 		return divisa;
-	}	public void setDivisa(DivisaBulk divisa)  {
+	}	
+	public void setDivisa(DivisaBulk divisa)  {
 		this.divisa=divisa;
 	}
 	public java.lang.String getCdCds() {
-		NumerazioneMagBulk numerazioneMag = this.getNumerazioneMag();
-		if (numerazioneMag == null)
+		if (this.getNumerazioneMag() == null)
 			return null;
-		return getNumerazioneMag().getCdCds();
+		return this.getNumerazioneMag().getCdCds();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -87,10 +92,9 @@ public class LottoMagBulk extends LottoMagBase {
 	 * Restituisce il valore di: [cdMagazzino]
 	 **/
 	public java.lang.String getCdMagazzino() {
-		NumerazioneMagBulk numerazioneMag = this.getNumerazioneMag();
-		if (numerazioneMag == null)
+		if (this.getNumerazioneMag() == null)
 			return null;
-		return getNumerazioneMag().getCdMagazzino();
+		return this.getNumerazioneMag().getCdMagazzino();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -104,10 +108,9 @@ public class LottoMagBulk extends LottoMagBase {
 	 * Restituisce il valore di: [esercizio]
 	 **/
 	public java.lang.Integer getEsercizio() {
-		NumerazioneMagBulk numerazioneMag = this.getNumerazioneMag();
-		if (numerazioneMag == null)
+		if (this.getNumerazioneMag() == null)
 			return null;
-		return getNumerazioneMag().getEsercizio();
+		return this.getNumerazioneMag().getEsercizio();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -121,10 +124,9 @@ public class LottoMagBulk extends LottoMagBase {
 	 * Restituisce il valore di: [cdNumeratoreMag]
 	 **/
 	public java.lang.String getCdNumeratoreMag() {
-		NumerazioneMagBulk numerazioneMag = this.getNumerazioneMag();
-		if (numerazioneMag == null)
+		if (this.getNumerazioneMag() == null)
 			return null;
-		return getNumerazioneMag().getCdNumeratoreMag();
+		return this.getNumerazioneMag().getCdNumeratoreMag();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -134,112 +136,100 @@ public class LottoMagBulk extends LottoMagBase {
 		this.getNumerazioneMag().setCdNumeratoreMag(cdNumeratoreMag);
 	}
 	public java.lang.String getCdBeneServizio() {
-		Bene_servizioBulk beneServizio = this.getBeneServizio();
-		if (beneServizio == null)
+		if (this.getBeneServizio() == null)
 			return null;
-		return getBeneServizio().getCd_bene_servizio();
+		return this.getBeneServizio().getCd_bene_servizio();
 	}
 	public void setCdBeneServizio(java.lang.String cdBeneServizio)  {
 		this.getBeneServizio().setCd_bene_servizio(cdBeneServizio);
 	}
 	public java.lang.String getCdCdsMag() {
-		MagazzinoBulk magazzino = this.getMagazzino();
-		if (magazzino == null)
+		if (this.getMagazzino() == null)
 			return null;
-		return getMagazzino().getCdCds();
+		return this.getMagazzino().getCdCds();
 	}
 	public void setCdCdsMag(java.lang.String cdCdsMag)  {
 		this.getMagazzino().setCdCds(cdCdsMag);
 	}
 	public java.lang.String getCdMagazzinoMag() {
-		MagazzinoBulk magazzino = this.getMagazzino();
-		if (magazzino == null)
+		if (this.getMagazzino() == null)
 			return null;
-		return getMagazzino().getCdMagazzino();
+		return this.getMagazzino().getCdMagazzino();
 	}
 	public void setCdMagazzinoMag(java.lang.String cdMagazzinoMag)  {
 		this.getMagazzino().setCdMagazzino(cdMagazzinoMag);
 	}
 	public java.lang.String getCdCdsOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
+		if (this.getOrdineAcqConsegna() == null)
 			return null;
-		return getOrdineAcqConsegna().getCdCds();
+		return this.getOrdineAcqConsegna().getCdCds();
 	}
 	public void setCdCdsOrdine(java.lang.String cdCdsOrdine)  {
 		this.getOrdineAcqConsegna().setCdCds(cdCdsOrdine);
 	}
 	public java.lang.String getCdUnitaOperativa() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
+		if (this.getOrdineAcqConsegna() == null)
 			return null;
-		return getOrdineAcqConsegna().getCdUnitaOperativa();
+		return this.getOrdineAcqConsegna().getCdUnitaOperativa();
 	}
 	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
 		this.getOrdineAcqConsegna().setCdUnitaOperativa(cdUnitaOperativa);
 	}
 	public java.lang.Integer getEsercizioOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
+		
+		if (this.getOrdineAcqConsegna() == null)
 			return null;
-		return getOrdineAcqConsegna().getEsercizio();
+		return this.getOrdineAcqConsegna().getEsercizio();
 	}
 	public void setEsercizioOrdine(java.lang.Integer esercizioOrdine)  {
 		this.getOrdineAcqConsegna().setEsercizio(esercizioOrdine);
 	}
 	public java.lang.String getCdNumeratoreOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
+		if (this.getOrdineAcqConsegna() == null)
 			return null;
-		return getOrdineAcqConsegna().getCdNumeratore();
+		return this.getOrdineAcqConsegna().getCdNumeratore();
 	}
 	public void setCdNumeratoreOrdine(java.lang.String cdNumeratoreOrdine)  {
 		this.getOrdineAcqConsegna().setCdNumeratore(cdNumeratoreOrdine);
 	}
 	public java.lang.Integer getNumeroOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
+		if (this.getOrdineAcqConsegna() == null)
 			return null;
-		return getOrdineAcqConsegna().getNumero();
+		return this.getOrdineAcqConsegna().getNumero();
 	}
 	public void setNumeroOrdine(java.lang.Integer numeroOrdine)  {
 		this.getOrdineAcqConsegna().setNumero(numeroOrdine);
 	}
 	public java.lang.Integer getRigaOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
+		if (this.getOrdineAcqConsegna() == null)
 			return null;
-		return getOrdineAcqConsegna().getRiga();
+		return this.getOrdineAcqConsegna().getRiga();
 	}
 	public void setRigaOrdine(java.lang.Integer rigaOrdine)  {
 		this.getOrdineAcqConsegna().setRiga(rigaOrdine);
 	}
 	public java.lang.Integer getConsegna() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
+		if (this.getOrdineAcqConsegna() == null)
 			return null;
-		return getOrdineAcqConsegna().getConsegna();
+		return this.getOrdineAcqConsegna().getConsegna();
 	}
 	public void setConsegna(java.lang.Integer consegna)  {
 		this.getOrdineAcqConsegna().setConsegna(consegna);
 	}
 	public java.lang.Integer getCdTerzo() {
-		TerzoBulk terzo = this.getTerzo();
-		if (terzo == null)
+		if (this.getTerzo() == null)
 			return null;
-		return getTerzo().getCd_terzo();
+		return this.getTerzo().getCd_terzo();
 	}
 	public void setCdTerzo(java.lang.Integer cdTerzo)  {
 		this.getTerzo().setCd_terzo(cdTerzo);
 	}
 	public java.lang.String getCdDivisa() {
-		DivisaBulk divisa = this.getDivisa();
-		if (divisa == null)
+		if (this.getDivisa() == null)
 			return null;
-		return getDivisa().getCd_divisa();
+		return this.getDivisa().getCd_divisa();
 	}
 	public void setCdDivisa(java.lang.String cdDivisa)  {
 		this.getDivisa().setCd_divisa(cdDivisa);
 	}
-	
 }
