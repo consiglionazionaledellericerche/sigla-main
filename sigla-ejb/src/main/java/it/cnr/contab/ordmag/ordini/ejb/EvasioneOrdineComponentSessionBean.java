@@ -57,23 +57,4 @@ public List<BollaScaricoMagBulk> evadiOrdine(UserContext userContext, EvasioneOr
 		throw uncaughtError(userContext,componentObj,e);
 	}
 }
-
-public RemoteIterator preparaQueryBolleScaricoDaVisualizzare(UserContext userContext, List<BollaScaricoMagBulk> bolle)throws ComponentException,javax.ejb.EJBException {
-	pre_component_invocation(userContext,componentObj);
-	try {
-		RemoteIterator result = ((EvasioneOrdineComponent)componentObj).preparaQueryBolleScaricoDaVisualizzare(userContext, bolle);
-		component_invocation_succes(userContext,componentObj);
-		return result;
-	} catch(it.cnr.jada.comp.NoRollbackException e) {
-		component_invocation_succes(userContext,componentObj);
-		throw e;
-	} catch(it.cnr.jada.comp.ComponentException e) {
-		component_invocation_failure(userContext,componentObj);
-		throw e;
-	} catch(RuntimeException e) {
-		throw uncaughtRuntimeException(userContext,componentObj,e);
-	} catch(Error e) {
-		throw uncaughtError(userContext,componentObj,e);
-	}
-}
 }

@@ -4,10 +4,10 @@
  */
 package it.cnr.contab.ordmag.anag00;
 import java.sql.Connection;
+import java.util.Arrays;
+import java.util.Optional;
 
-import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
@@ -17,6 +17,7 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 public class UnitaOperativaOrdHome extends BulkHome {
@@ -60,5 +61,20 @@ public class UnitaOperativaOrdHome extends BulkHome {
 				}
 			}
 		}
+	}
+	
+	public SQLBuilder selectUnitaOperativeAbilitateByClause(UserContext userContext, CompoundFindClause compoundfindclause, String... tipoOperazione) throws PersistencyException{
+		SQLBuilder sql = this.selectByClause(compoundfindclause);
+		sql.addTableToHeader("ABIL_UTENTE_UOP_OPER");
+		sql.addSQLJoin("UNITA_OPERATIVA_ORD.CD_UNITA_OPERATIVA", "ABIL_UTENTE_UOP_OPER.CD_UNITA_OPERATIVA");
+		sql.addSQLClause(FindClause.AND, "ABIL_UTENTE_UOP_OPER.CD_UTENTE", SQLBuilder.EQUALS, userContext.getUser());
+		Optional.ofNullable(tipoOperazione)
+			.ifPresent(e->{
+				sql.openParenthesis(FindClause.AND);
+				Arrays.asList(e).stream()
+					.forEach(tipoOpe->sql.addSQLClause(FindClause.OR, "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, tipoOpe));
+				sql.closeParenthesis();
+			});
+		return sql;
 	}
 }

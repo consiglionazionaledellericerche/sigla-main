@@ -21,6 +21,7 @@ import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 import it.cnr.contab.ordmag.ordini.ejb.EvasioneOrdineComponentSession;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -63,14 +64,10 @@ public Forward doSalva(ActionContext actioncontext) throws RemoteException {
 			SelezionatoreListaBP nbp = (SelezionatoreListaBP)actioncontext.createBusinessProcess("BolleScaricoGenerate");
 			nbp.setMultiSelection(false);
 
-			BollaScaricoMagBulk bollaScaricoMagBulk = listaBolleScarico.get(0);
-
-			OggettoBulk instance = (OggettoBulk)bollaScaricoMagBulk;
-
-			RemoteIterator iterator = ((EvasioneOrdineComponentSession)bp.createComponentSession()).preparaQueryBolleScaricoDaVisualizzare(actioncontext.getUserContext(), listaBolleScarico);
+			RemoteIterator iterator = Utility.createMovimentiMagComponentSession().preparaQueryBolleScaricoDaVisualizzare(actioncontext.getUserContext(), listaBolleScarico);
 			
 			nbp.setIterator(actioncontext,iterator);
-			BulkInfo bulkInfo = BulkInfo.getBulkInfo(instance.getClass());
+			BulkInfo bulkInfo = BulkInfo.getBulkInfo(BollaScaricoMagBulk.class);
 			nbp.setBulkInfo(bulkInfo);
 
 			String columnsetName = bp.getColumnSetForBollaScarico();
