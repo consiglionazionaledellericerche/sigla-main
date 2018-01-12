@@ -2567,16 +2567,40 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			CompoundFindClause clauses) throws ComponentException,
 			PersistencyException {
 
+		Unita_organizzativaBulk uoScrivania = ((Unita_organizzativaBulk) getHome(
+				userContext, Unita_organizzativaBulk.class).findByPrimaryKey(
+				new Unita_organizzativaBulk(CNRUserContext
+						.getCd_unita_organizzativa(userContext))));
+		boolean isUoEnte = uoScrivania
+				.getCd_tipo_unita()
+				.compareTo(
+						it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE) == 0;
+
 		Var_stanz_resHome home = (Var_stanz_resHome) getHome(userContext,
 				variazione);
 
 		SQLBuilder sql = home.createSQLBuilder();
-		sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS,
-				((it.cnr.contab.utenze00.bp.CNRUserContext) userContext)
-						.getEsercizio());
+		if (!isUoEnte) {
+			sql.addSQLClause("AND", "VAR_STANZ_RES.ESERCIZIO", SQLBuilder.EQUALS,
+					((it.cnr.contab.utenze00.bp.CNRUserContext) userContext)
+							.getEsercizio());
+			sql.addTableToHeader("VAR_STANZ_RES_RIGA");
+			sql.addSQLJoin("VAR_STANZ_RES.ESERCIZIO",
+					"VAR_STANZ_RES_RIGA.ESERCIZIO");
+			sql.addSQLJoin("VAR_STANZ_RES.PG_VARIAZIONE",
+					"VAR_STANZ_RES_RIGA.PG_VARIAZIONE");
+			sql.addSQLClause("AND",
+					"VAR_STANZ_RES_RIGA.CD_CDR", sql.EQUALS,
+					((it.cnr.contab.utenze00.bp.CNRUserContext) userContext)
+							.getCd_cdr());
+			sql.setDistinctClause(true);
+		} else
+			sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS,
+					((it.cnr.contab.utenze00.bp.CNRUserContext) userContext)
+							.getEsercizio());
 
 		sql.addClause(clauses);
-
+		
 		return sql;
 	}
 

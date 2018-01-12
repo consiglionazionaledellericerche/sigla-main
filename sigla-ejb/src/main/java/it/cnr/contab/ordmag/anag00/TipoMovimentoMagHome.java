@@ -4,6 +4,7 @@
  */
 package it.cnr.contab.ordmag.anag00;
 import java.sql.Connection;
+
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.PersistentCache;
 public class TipoMovimentoMagHome extends BulkHome {
