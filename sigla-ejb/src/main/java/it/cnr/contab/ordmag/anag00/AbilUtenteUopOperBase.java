@@ -6,7 +6,7 @@ package it.cnr.contab.ordmag.anag00;
 import it.cnr.jada.persistency.Keyed;
 public class AbilUtenteUopOperBase extends AbilUtenteUopOperKey implements Keyed {
 //    TUTTI_MAGAZZINI VARCHAR(1) NOT NULL
-	private java.lang.String tuttiMagazzini;
+	private java.lang.Boolean tuttiMagazzini;
  
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;
@@ -25,14 +25,14 @@ public class AbilUtenteUopOperBase extends AbilUtenteUopOperKey implements Keyed
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [tuttiMagazzini]
 	 **/
-	public java.lang.String getTuttiMagazzini() {
+	public java.lang.Boolean getTuttiMagazzini() {
 		return tuttiMagazzini;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [tuttiMagazzini]
 	 **/
-	public void setTuttiMagazzini(java.lang.String tuttiMagazzini)  {
+	public void setTuttiMagazzini(java.lang.Boolean tuttiMagazzini)  {
 		this.tuttiMagazzini=tuttiMagazzini;
 	}
 	/**
