@@ -33,6 +33,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
 import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.DivisaHome;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
 import it.cnr.contab.doccont00.comp.DateServices;
@@ -58,8 +59,6 @@ import it.cnr.contab.ordmag.anag00.MagazzinoHome;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdHome;
 import it.cnr.contab.ordmag.anag00.TipoOperazioneOrdBulk;
-import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
-import it.cnr.contab.ordmag.anag00.UnitaMisuraHome;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdKey;
@@ -72,8 +71,6 @@ import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineHome;
 import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
 import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
-import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
-import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -1077,9 +1074,8 @@ private void impostaDatiDivisaCambioDefault(UserContext usercontext, OrdineAcqBu
 private Boolean isAbilitatoTuttiMagazzini(UserContext userContext, OrdineAcqBulk ordine) throws ComponentException {
 	
 	AbilUtenteUopOperBulk abil = recuperoAbilUtenteUo(userContext, ordine, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
-	if (abil != null && abil.getTuttiMagazzini().equals("S")){
+	if (abil != null && abil.getTuttiMagazzini())
 		return true;
-	}
 	return false;
 }
 private void assegnaNumeratoreOrd(UserContext usercontext, OrdineAcqBulk ordine, OrdineAcqHome home)
@@ -1221,31 +1217,15 @@ private Boolean isUoImpegnoDaUopDestinazione(UserContext userContext) throws Com
 
 
 private DivisaBulk getEuro(UserContext userContext) throws ComponentException {
-
-	String cd_euro = null;
 	try {
-		cd_euro = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getVal01(userContext, new Integer(0), "*", "CD_DIVISA", "EURO");
-		if (cd_euro == null)
+		DivisaBulk divisaDefault = ((DivisaHome)getHome(userContext, DivisaBulk.class)).getDivisaDefault(userContext);
+		if (divisaDefault==null || divisaDefault.getCd_divisa()==null)
 			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire un ordine, immettere tale valore.");
-	} catch (javax.ejb.EJBException e) {
-		handleException(e);
-	} catch (java.rmi.RemoteException e) {
+		return divisaDefault;
+	} catch (javax.ejb.EJBException|PersistencyException e) {
 		handleException(e);
 	}
-
-	DivisaBulk valuta = null;
-	
-	try {
-		java.util.List divise = getHome(userContext, DivisaBulk.class).find(new it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk(cd_euro));
-		if (divise == null || divise.isEmpty())
-			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire un ordine, immettere tale valore.");
-		valuta = (DivisaBulk)divise.get(0);
-		if (valuta == null)
-			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire un ordine, immettere tale valore.");
-	} catch (it.cnr.jada.persistency.PersistencyException e) {
-		handleException(e);
-	}
-	return valuta;
+	return null;
 }
 
 /**

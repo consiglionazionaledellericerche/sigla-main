@@ -186,11 +186,12 @@
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
-			columnName="MOVIMENTA_LOTTI_BLOCCATI"
-			propertyName="movimentaLottiBloccati"
-			sqlTypeName="VARCHAR"
+			columnName="FL_MOVIMENTA_LOTTI_BLOCCATI"
+			propertyName="flMovimentaLottiBloccati"
+			sqlTypeName="CHAR"
 			columnSize="1"
-			nullable="true" />
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
 		<columnMapping
 			columnName="MOD_AGG_QTA_PROP_SCA"
 			propertyName="modAggQtaPropSca"
@@ -313,7 +314,7 @@
 	<persistentProperty
 		name="modAggValoreLotto" />
 	<persistentProperty
-		name="movimentaLottiBloccati" />
+		name="flMovimentaLottiBloccati" />
 	<persistentProperty
 		name="modAggQtaPropSca" />
 	<persistentProperty

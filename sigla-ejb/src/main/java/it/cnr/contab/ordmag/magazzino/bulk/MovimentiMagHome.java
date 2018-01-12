@@ -5,9 +5,13 @@
 package it.cnr.contab.ordmag.magazzino.bulk;
 import java.sql.Connection;
 
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.OutdatedResourceException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
 public class MovimentiMagHome extends BulkHome {
 	public MovimentiMagHome(Connection conn) {
@@ -23,5 +27,20 @@ public class MovimentiMagHome extends BulkHome {
 		MovimentiMagBulk movimento = (MovimentiMagBulk)bulk;
 		if (movimento.getPgMovimento() == null)
 			movimento.setPgMovimento(recuperoProgressivoMovimento(userContext));
+	}
+	@Override
+	public void insert(Persistent persistent, UserContext userContext) throws PersistencyException {
+		MovimentiMagBulk movimentiMag = (MovimentiMagBulk)persistent;
+    	LottoMagHome lottoHome = (LottoMagHome)getHomeCache().getHome(LottoMagBulk.class);
+    	LottoMagBulk lotto;
+		try {
+			lotto = (LottoMagBulk)lottoHome.findAndLock(movimentiMag.getLottoMag());
+		} catch (OutdatedResourceException | BusyResourceException e) {
+			throw new PersistencyException("Operazione effettuata al momento da un'altro utente, riprovare successivamente.");
+		}
+		lotto = lottoHome.aggiornaValori(userContext, lotto, movimentiMag);
+		lotto.setToBeUpdated();
+		lottoHome.update(lotto, userContext);
+		super.insert(persistent, userContext);
 	}
 }
