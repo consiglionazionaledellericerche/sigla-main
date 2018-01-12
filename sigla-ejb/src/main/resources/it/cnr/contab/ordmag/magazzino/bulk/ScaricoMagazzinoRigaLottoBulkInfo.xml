@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Riga Lotto Scarico Manuale Magazzino"
+	longDescription="Riga Lotto Scarico Manuale Magazzino">
+	<fieldProperty
+		name="esercizio"
+		property="lottoMagazzino.esercizio"
+		inputType="ROTEXT"
+		label="Anno Lotto" />
+	<fieldProperty
+		name="cdNumeratoreMag"
+		property="lottoMagazzino.numerazioneMag.cdMagazzino"
+		inputType="ROTEXT"
+		label="Tipo Lotto" />
+	<fieldProperty
+		name="pgLotto"
+		property="lottoMagazzino.pgLotto"
+		inputType="ROTEXT"
+		label="Numero Lotto" />
+	<fieldProperty
+		name="dtScadenza"
+		property="lottoMagazzino.dtScadenza"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data Scadenza" />
+	<fieldProperty
+		name="dtCarico"
+		property="lottoMagazzino.dtCarico"
+		inputType="ROTEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="Data di Carico" />
+	<fieldProperty
+		name="giacenza"
+		property="lottoMagazzino.giacenza"
+		inputType="ROTEXT"
+		inputSize="12"
+		maxLength="12"
+		enabledOnEdit="false"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		style="text-align: right"
+		label="Giacenza" />
+	<fieldProperty
+		name="qtScarico"
+		property="qtScarico"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		style="text-align: right"
+		label="Quantità" />
+	<fieldProperty
+		name="qtScaricoConvertita"
+		property="qtScaricoConvertita"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		style="text-align: right"
+		label="Qt. Scarico" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="cdNumeratoreMag" />
+	<formFieldProperty
+		name="pgLotto" />
+	<formFieldProperty
+		name="dtScadenza" />
+	<formFieldProperty
+		name="dtCarico" />
+	<formFieldProperty
+		name="giacenza" />
+	<formFieldProperty
+		name="qtScarico" />
+	<formFieldProperty
+		name="qtScaricoConvertita" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdNumeratoreMag" />
+	<columnFieldProperty
+		name="pgLotto" />
+	<columnFieldProperty
+		name="dtScadenza" />
+	<columnFieldProperty
+		name="dtCarico" />
+	<columnFieldProperty
+		name="giacenza" />
+	<columnFieldProperty
+		name="qtScarico" />
+	<columnFieldProperty
+		name="qtScaricoConvertita" />
+
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="cdNumeratoreMag" />
+	<findFieldProperty
+		name="pgLotto" />
+	<findFieldProperty
+		name="dtScadenza" />
+	<findFieldProperty
+		name="dtCarico" />
+	<findFieldProperty
+		name="giacenza" />
+	<findFieldProperty
+		name="qtScaricoMagazzino" />
+
+	<columnSet
+		name="scaricoMagazzino" >
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="cdNumeratoreMag" />
+		<columnFieldProperty
+			name="pgLotto" />
+		<columnFieldProperty
+			name="dtScadenza" />
+		<columnFieldProperty
+			name="dtCarico" />
+		<columnFieldProperty
+			name="giacenza" />
+	</columnSet>
+
+	<columnSet
+		name="scaricoMagazzinoEditable" >
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="cdNumeratoreMag" />
+		<columnFieldProperty
+			name="pgLotto" />
+		<columnFieldProperty
+			name="dtScadenza" />
+		<columnFieldProperty
+			name="dtCarico" />
+		<columnFieldProperty
+			name="giacenza" />
+		<columnFieldProperty
+			name="qtScarico" />
+		<columnFieldProperty
+			name="qtScaricoConvertita" />
+	</columnSet>
+</bulkInfo>

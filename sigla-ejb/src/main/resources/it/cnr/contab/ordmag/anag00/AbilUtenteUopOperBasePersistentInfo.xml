@@ -10,7 +10,8 @@
 			propertyName="tuttiMagazzini"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
-			nullable="false" />
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
 			columnName="DT_CANCELLAZIONE"
 			propertyName="dtCancellazione"
