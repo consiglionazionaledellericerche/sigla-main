@@ -25,19 +25,16 @@ public class EvasioneOrdineHome extends BulkHome {
 	public EvasioneOrdineHome(Connection conn) {
 		super(EvasioneOrdineBulk.class, conn);
 	}
+	
 	public EvasioneOrdineHome(Connection conn, PersistentCache persistentCache) {
 		super(EvasioneOrdineBulk.class, conn, persistentCache);
 	}
-	public SQLBuilder selectUnitaOperativaAbilitataByClause(UserContext userContext, EvasioneOrdineBulk bulk, 
-			UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk, 
-			CompoundFindClause compoundfindclause) throws PersistencyException{
-		SQLBuilder sql = unitaOperativaHome.selectByClause(userContext, compoundfindclause);
-		sql.addTableToHeader("ABIL_UTENTE_UOP_OPER");
-		sql.addSQLJoin("UNITA_OPERATIVA_ORD.CD_UNITA_OPERATIVA", "ABIL_UTENTE_UOP_OPER.CD_UNITA_OPERATIVA");
-		sql.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.EVASIONE_ORDINE);
-		sql.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER.CD_UTENTE", SQLBuilder.EQUALS, userContext.getUser());
-		return sql;
+	
+	public SQLBuilder selectUnitaOperativaAbilitataByClause(UserContext userContext, EvasioneOrdineBulk bulk, UnitaOperativaOrdHome home, 
+			UnitaOperativaOrdBulk unitaOperativaBulk, CompoundFindClause compoundfindclause) throws PersistencyException{
+		return home.selectUnitaOperativeAbilitateByClause(userContext, compoundfindclause, TipoOperazioneOrdBulk.EVASIONE_ORDINE);
 	}
+
 	public SQLBuilder selectNumerazioneMagByClause(UserContext userContext, EvasioneOrdineBulk bulk, 
 			NumerazioneMagHome numerazioneHome, NumerazioneMagBulk numerazioneBulk, 
 			CompoundFindClause compoundfindclause) throws PersistencyException{
