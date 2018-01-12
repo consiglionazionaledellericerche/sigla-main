@@ -29,7 +29,7 @@
 	CondizioneRicercaBulk condizioneRicerca = bp.getCondizioneCorrente();
 	bp.openFormWindow(pageContext); %>
 
-	<table class="Panel" width="100%" height="100%">
+	<table class="Panel card p-2" width="100%" height="100%">
 	<tr><td>
 		<input type=hidden name="rigaSelezionata">
 		<table class="ToolBar" width="100%">
