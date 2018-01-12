@@ -245,11 +245,9 @@
 		maxLength="1"
 		label="Modalità Aggiornamento Valore Lotto" />
 	<fieldProperty
-		name="movimentaLottiBloccati"
-		property="movimentaLottiBloccati"
-		inputType="TEXT"
-		inputSize="1"
-		maxLength="1"
+		name="flMovimentaLottiBloccati"
+		property="flMovimentaLottiBloccati"
+		inputType="CHECKBOX" 
 		label="Movimenta Lotti Bloccati" />
 	<fieldProperty
 		name="modAggQtaPropSca"
@@ -354,7 +352,7 @@
 	<formFieldProperty
 		name="modAggValoreLotto" />
 	<formFieldProperty
-		name="movimentaLottiBloccati" />
+		name="flMovimentaLottiBloccati" />
 	<formFieldProperty
 		name="modAggQtaPropSca" />
 	<formFieldProperty
@@ -430,7 +428,7 @@
 	<findFieldProperty
 		name="modAggValoreLotto" />
 	<findFieldProperty
-		name="movimentaLottiBloccati" />
+		name="flMovimentaLottiBloccati" />
 	<findFieldProperty
 		name="modAggQtaPropSca" />
 	<findFieldProperty
@@ -506,7 +504,7 @@
 	<columnFieldProperty
 		name="modAggValoreLotto" />
 	<columnFieldProperty
-		name="movimentaLottiBloccati" />
+		name="flMovimentaLottiBloccati" />
 	<columnFieldProperty
 		name="modAggQtaPropSca" />
 	<columnFieldProperty
