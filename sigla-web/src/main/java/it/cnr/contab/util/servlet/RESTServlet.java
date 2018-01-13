@@ -154,8 +154,6 @@ public class RESTServlet extends HttpServlet{
     	            	httpactioncontext.setBusinessProcess(businessProcess);
     	                req.setAttribute(it.cnr.jada.action.BusinessProcess.class.getName(), businessProcess);
     	            	httpactioncontext.perform(null, actionmapping, command);
-    	            	if (iterator != null)
-							EJBCommonServices.closeRemoteIterator(httpactioncontext, iterator);
     	            }catch(ActionPerformingError actionperformingerror)        {
     	            	throw new ComponentException(actionperformingerror.getDetail());
     	            }catch(RuntimeException runtimeexception){
@@ -176,6 +174,7 @@ public class RESTServlet extends HttpServlet{
     	            resp.setHeader("WWW-Authenticate", "Basic realm=\"SIGLA\"");   
     			}
     	        logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". End");
+                req.getSession().invalidate();
     		} catch (ComponentException e) {
     			logger.error("ComponentException", e);
     			resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);			
