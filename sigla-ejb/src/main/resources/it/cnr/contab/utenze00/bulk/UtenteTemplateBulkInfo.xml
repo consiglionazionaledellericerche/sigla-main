@@ -49,6 +49,15 @@
 		inputSize="30"
 		inputType="ROTEXT" 
 		/>
+
+	<form name="searchtool">
+		<formFieldProperty
+				name="cd_utente"
+				inputCssClass="w-20 "/>
+		<formFieldProperty
+				name="ds_utente"
+				inputSize="40"/>
+	</form>
 	<columnFieldProperty
 		name="dt_inizio_validita"
 		/>
