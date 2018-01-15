@@ -157,7 +157,10 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 	}
 
 	public java.math.BigDecimal getIm_quota_inesigibile_da_ripartire() {
-		return getIm_quota_inesigibile().subtract(getIm_quota_inesigibile_ripartita());
+		if(getIm_quota_inesigibile_ripartita()!=null)  
+			return getIm_quota_inesigibile().subtract(getIm_quota_inesigibile_ripartita());
+		else 
+			return getIm_quota_inesigibile();	
 	}
 	
 	public boolean isInesigibile() {

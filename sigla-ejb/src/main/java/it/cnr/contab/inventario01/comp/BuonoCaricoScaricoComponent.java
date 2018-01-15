@@ -1283,7 +1283,7 @@ public SQLBuilder selectBene_bene_principaleByClause(UserContext userContext, Bu
 		sql.addSQLClause("AND","PROGRESSIVO",SQLBuilder.EQUALS,"0");
 		sql.addSQLClause("AND","PG_INVENTARIO",SQLBuilder.EQUALS,dettaglio.getPg_inventario());
 		sql.addSQLClause("AND","FL_TOTALMENTE_SCARICATO",SQLBuilder.EQUALS,Inventario_beniBulk.ISNOTTOTALMENTESCARICATO);
-		sql.addSQLClause("AND","SUBSTR(CD_CATEGORIA_GRUPPO,1,INSTR(CD_CATEGORIA_GRUPPO,'.')-1)",SQLBuilder.EQUALS,cat.getCd_categoria_padre());	
+		sql.addSQLClause("AND","CD_CATEGORIA_GRUPPO",SQLBuilder.EQUALS,cat.getCd_categoria_gruppo());	
 		// Aggiunta clausola che visualizzi solo i beni che abbiano 
 		//	ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.
 		sql.addClause("AND", "esercizio_carico_bene", SQLBuilder.LESS_EQUALS, CNRUserContext.getEsercizio(userContext));
@@ -1317,10 +1317,14 @@ public SQLBuilder selectNuovo_bene_padreByClause(UserContext userContext, Invent
 {			
 		SQLBuilder sql = getHome(userContext, Inventario_beniBulk.class).createSQLBuilder();
 		sql.addClause( clauses );
+		sql.addTableToHeader("CATEGORIA_GRUPPO_INVENT");
+		sql.addSQLJoin("INVENTARIO_BENI.CD_CATEGORIA_GRUPPO","CATEGORIA_GRUPPO_INVENT.CD_CATEGORIA_GRUPPO");
+		sql.addSQLClause("AND","CATEGORIA_GRUPPO_INVENT.DATA_CANCELLAZIONE",SQLBuilder.ISNULL,null);
 		sql.addSQLClause("AND","PROGRESSIVO",SQLBuilder.EQUALS,"0");
 		sql.addSQLClause("AND","PG_INVENTARIO",SQLBuilder.EQUALS,bene.getPg_inventario());
 		sql.addSQLClause("AND","FL_TOTALMENTE_SCARICATO",SQLBuilder.EQUALS,Inventario_beniBulk.ISNOTTOTALMENTESCARICATO);
-		sql.addSQLClause("AND","SUBSTR(CD_CATEGORIA_GRUPPO,1,INSTR(CD_CATEGORIA_GRUPPO,'.')-1)",SQLBuilder.EQUALS,bene.getCategoria_Bene().getCd_categoria_padre());
+		sql.addSQLClause("AND","INVENTARIO_BENI.CD_CATEGORIA_GRUPPO",SQLBuilder.EQUALS,bene.getCd_categoria_gruppo());
+		
 		// Escludo dalla selezione l'attuale bene padre
 		sql.addSQLClause("AND","NR_INVENTARIO",SQLBuilder.NOT_EQUALS,bene.getNr_inventario());
 		// Aggiunta clausola che visualizzi solo i beni che abbiano 
@@ -4873,6 +4877,7 @@ try {
 			List beni =home.fetchAll(sql);
 			for(Iterator iteratore=beni.iterator();iteratore.hasNext();){
 				Inventario_beniBulk bene = (Inventario_beniBulk)iteratore.next();
+				
 				java.util.List accessori = ((Inventario_beniHome)getHome(userContext,Inventario_beniBulk.class)).getBeniAccessoriFor(bene);
 				if (accessori.size() > 0)
 					bene.setAccessori(new SimpleBulkList(accessori));
@@ -6406,6 +6411,7 @@ private void validaBuonoCarico (UserContext aUC,Buono_carico_scaricoBulk buonoCa
 			if (bene.getCategoria_Bene()==null || bene.getCategoria_Bene().getCd_categoria_gruppo()==null)
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione: indicare la Categoria di appartenenza del Bene '" + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":""));
 			else
+				
 			{
 				java.util.Collection ti_ammortamenti = ((it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRINVENTARIO00_EJB_Inventario_beniComponentSession",it.cnr.contab.inventario00.ejb.Inventario_beniComponentSession.class)).findTipiAmmortamento(aUC,bene.getCategoria_Bene());
 				dett.getBene().setTi_ammortamenti(ti_ammortamenti);
@@ -6772,8 +6778,15 @@ private void validaDettagliAssociati (UserContext userContext, Buono_carico_scar
 		SQLBuilder sql=apgHome.createSQLBuilder();
 		sql.addSQLClause("AND","LOCAL_TRANSACTION_ID",sql.EQUALS,buonoS.getLocal_transactionID());
 		List beniApg=apgHome.fetchAll(sql);
-		for (Iterator i=beniApg.iterator();i.hasNext();){
+		for (Iterator i=beniApg.iterator();i.hasNext();){ 
 			Inventario_beni_apgBulk beneApg =(Inventario_beni_apgBulk)i.next();
+			Inventario_beniBulk bene =(Inventario_beniBulk)getHome(userContext,Inventario_beniBulk.class).findByPrimaryKey(new Inventario_beniBulk(beneApg.getNr_inventario(),beneApg.getPg_inventario(),beneApg.getProgressivo()));
+			Categoria_gruppo_inventBulk cat =(Categoria_gruppo_inventBulk)getHome(userContext,Categoria_gruppo_inventBulk.class).findByPrimaryKey(new Categoria_gruppo_inventBulk(bene.getCd_categoria_bene()));
+			
+			if(cat!=null && cat.getData_cancellazione()!= null && buonoS.getData_registrazione()!=null &&
+					cat.getData_cancellazione().before(buonoS.getData_registrazione()))
+				throw new ApplicationException("Il Bene "+bene.getNr_inventario()+" ha un categoria non più valida");
+			
 			hasNoDetails = false;
 			if (beneApg.getFl_totalmente_scaricato()!=null && !beneApg.getFl_totalmente_scaricato()){
 				if (beneApg.getVariazione_meno() == null || beneApg.getVariazione_meno().compareTo(new java.math.BigDecimal(0))==0)
@@ -7331,6 +7344,7 @@ public RemoteIterator cercaBeniAssociabili(UserContext userContext,Ass_inv_bene_
 					accesorio_presente=new Boolean(false);
 					Inventario_beni_apgBulk new_bene_apg = (Inventario_beni_apgBulk)i.next();
 					bene =(Inventario_beniBulk)getHome(userContext,Inventario_beniBulk.class).findByPrimaryKey(new Inventario_beniBulk(new_bene_apg.getNr_inventario(),new_bene_apg.getPg_inventario(),new_bene_apg.getProgressivo()));
+					
 					if(bene.getProgressivo()==0 ){ 
 						deleteBeneAccessoriAlreadyExistsFor(userContext, buonoS, bene);							
 						scaricaBeniAccessoriFor(userContext, buonoS, bene, null);

@@ -106,6 +106,12 @@ import it.cnr.jada.persistency.Persistent;
 		private java.math.BigDecimal totaleEntrateContratto;
 		
 		private java.math.BigDecimal totaleSpeseContratto;
+		
+		private java.math.BigDecimal totaleMandatiNetto;
+		
+		private java.math.BigDecimal liquidatoSpeseNetto;
+
+		
 		/**
 		 * Created by BulkGenerator 2.0 [07/12/2009]
 		 * Table name: V_CONTRATTI_TOTALI_DET
@@ -526,6 +532,22 @@ import it.cnr.jada.persistency.Persistent;
 
 		public void setTotaleSpeseContratto(java.math.BigDecimal totaleSpeseContratto) {
 			this.totaleSpeseContratto = totaleSpeseContratto;
+		}
+
+		public java.math.BigDecimal getTotaleMandatiNetto() {
+			return totaleMandatiNetto;
+		}
+
+		public void setTotaleMandatiNetto(java.math.BigDecimal totaleMandatiNetto) {
+			this.totaleMandatiNetto = totaleMandatiNetto;
+		}
+
+		public java.math.BigDecimal getLiquidatoSpeseNetto() {
+			return liquidatoSpeseNetto;
+		}
+
+		public void setLiquidatoSpeseNetto(java.math.BigDecimal liquidatoSpeseNetto) {
+			this.liquidatoSpeseNetto = liquidatoSpeseNetto;
 		}
 		
 		

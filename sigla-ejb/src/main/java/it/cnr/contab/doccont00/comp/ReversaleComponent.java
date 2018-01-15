@@ -38,6 +38,7 @@ import it.cnr.contab.doccont00.core.bulk.MandatoAccreditamento_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_terzoBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
@@ -1481,6 +1482,21 @@ public ReversaleBulk creaReversaleDiIncassoIVA (UserContext userContext, Mandato
 		AccertamentoPGiroBulk accertamento;
 		Documento_generico_rigaBulk dRiga;
 		BigDecimal importo = ((MandatoIBulk) mandato).getImReversaleDiIncassoIVA();
+		
+		BigDecimal importoSplit = new java.math.BigDecimal(0);
+
+		Mandato_rigaIBulk riga;
+		for ( Iterator i = ((MandatoIBulk) mandato).getMandato_rigaColl().iterator() ;i.hasNext() ;) 
+		{
+			riga = (Mandato_rigaIBulk) i.next();
+			
+			if ( it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA.equals( riga.getCd_tipo_documento_amm())
+				  && riga.getIm_ritenute_riga().compareTo( new BigDecimal(0)) > 0 )
+				  if ( mandato.getMandato_terzo().getTerzo().getAnagrafico()!=null )
+					  mandato.getMandato_terzo().getTerzo().setAnagrafico((AnagraficoBulk) getHome( userContext, AnagraficoBulk.class ).findByPrimaryKey( new AnagraficoBulk(mandato.getMandato_terzo().getTerzo().getAnagrafico().getCd_anag())));
+					  if( mandato.getMandato_terzo().getTerzo().getAnagrafico( ).isItaliano())
+						  importoSplit = importoSplit.add( riga.getIm_ritenute_riga());
+		}
 
 		//REVERSALE
 		ReversaleIBulk reversale = new ReversaleIBulk();
@@ -1509,8 +1525,9 @@ public ReversaleBulk creaReversaleDiIncassoIVA (UserContext userContext, Mandato
 		//DOCUMENTO_GENERICO
 		Documento_genericoBulk documento = docGenerico_creaDocumentoGenerico( userContext, reversale, Numerazione_doc_ammBulk.TIPO_GEN_IVA_E );
 
+		
 		//CREA UN ACCERTAMENTO con una scadenza
-		accertamento = createAccertamentoPGiroComponentSession().creaAccertamentoDiIncassoIVA( userContext, reversale );
+		accertamento = createAccertamentoPGiroComponentSession().creaAccertamentoDiIncassoIVA( userContext, reversale,importoSplit.compareTo(new java.math.BigDecimal(0))!= 0);
 		//CREA UNA RIGA DEL DOCUMENTO CONTABILIZZATA SULLA SCADENZA DELL'ACCERTAMENTO
 		docGenerico_creaDocumentoGenericoRiga( userContext, documento, (Accertamento_scadenzarioBulk) accertamento.getAccertamento_scadenzarioColl().get(0), ((MandatoIBulk)mandato).getImReversaleDiIncassoIVA(), (Mandato_rigaBulk) mandato.getMandato_rigaColl().get(0) );
 

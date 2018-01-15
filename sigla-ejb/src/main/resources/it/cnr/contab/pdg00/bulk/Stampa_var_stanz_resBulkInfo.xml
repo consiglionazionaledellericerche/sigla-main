@@ -15,6 +15,7 @@
 		nullable="true"
 		readonlyProperty="variazioneForPrintEnabled"
 		formName="searchtool"
+		enabledOnSearch="true"
 		completeOnSave="true"
 		label="Variazione" />
 	<fieldProperty

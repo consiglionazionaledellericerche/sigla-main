@@ -7,7 +7,10 @@ import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class ImpegnoPGiroHome extends ObbligazioneHome {
@@ -104,4 +107,21 @@ public SQLBuilder selectElemento_voceByClause( ImpegnoPGiroBulk bulk, Elemento_v
 	return sql;
 		
 }
+public SQLBuilder selectElemento_voceContrByClause(ImpegnoPGiroBulk bulk,Elemento_voceHome home, Elemento_voceBulk voce, CompoundFindClause clause) throws IntrospectionException, PersistencyException, java.sql.SQLException 
+{
+	SQLBuilder sql = getHomeCache().getHome(Elemento_voceBulk.class).createSQLBuilder();
+	if (clause != null) 
+	  sql.addClause(clause);
+
+	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );		
+	sql.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE );
+	if (bulk instanceof ImpegnoPGiroResiduoBulk)
+    	sql.addSQLClause( "AND", "fl_solo_competenza", sql.EQUALS, "N");
+	else if(bulk instanceof ImpegnoPGiroBulk )
+	    	sql.addSQLClause( "AND", "fl_solo_residuo", sql.EQUALS, "N"); 
+	sql.addClause(FindClause.AND, "fl_azzera_residui", SQLBuilder.EQUALS, new Boolean( false) );
+	sql.addSQLClause( "AND", "FL_PARTITA_GIRO", sql.EQUALS, "Y" );
+	
+	return sql;
+ }
 }

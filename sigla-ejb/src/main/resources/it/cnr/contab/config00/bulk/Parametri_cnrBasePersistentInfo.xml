@@ -251,13 +251,13 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
-		<columnMapping
+<columnMapping
 			columnName="DATA_ATTIVAZIONE_NEW_VOCE"
 			propertyName="data_attivazione_new_voce"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7"
 			nullable="true" />
-		<columnMapping
+<columnMapping
 			columnName="FL_TESORERIA_UNICA"
 			propertyName="fl_tesoreria_unica"
 			sqlTypeName="CHAR"
@@ -304,6 +304,14 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
+	<columnMapping
+			columnName="FL_NUOVA_GESTIONE_PG"
+			propertyName="fl_nuova_gestione_pg"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+	
 	</defaultColumnMap>
 	<persistentProperty
 		name="cd_tipo_rapporto" />
@@ -398,5 +406,6 @@
 		name="livello_eco" />
 	<persistentProperty
 		name="livello_pat" />
-		
+	<persistentProperty
+		name="fl_nuova_gestione_pg" />		
 </SQLPersistentInfo>

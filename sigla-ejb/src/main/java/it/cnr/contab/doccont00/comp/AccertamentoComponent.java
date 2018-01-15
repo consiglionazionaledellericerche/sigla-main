@@ -1781,7 +1781,9 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 		
 		accertamento.setPdgVincoliColl( new BulkList( accertHome.findPdgVincoloList( accertamento ) ));
 		accertamento.setAccertamentoVincoliPerentiColl( new BulkList( accertHome.findAccertamentoVincoloPerenteList( accertamento ) ));
-				
+		if (accertamento instanceof AccertamentoResiduoBulk) 
+			((AccertamentoResiduoBulk)bulk).setIm_quota_inesigibile(((AccertamentoResiduoBulk)bulk).getIm_quota_inesigibile_ripartita());
+		
 		accertamento.setAccertamento_scadenzarioColl( new BulkList( accertHome.findAccertamento_scadenzarioList( accertamento ) ));
 		for ( Iterator i = accertamento.getAccertamento_scadenzarioColl().iterator(); i.hasNext(); )
 		{
