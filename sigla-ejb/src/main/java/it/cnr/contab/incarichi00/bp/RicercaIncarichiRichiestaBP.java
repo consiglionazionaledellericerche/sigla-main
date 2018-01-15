@@ -2,9 +2,9 @@ package it.cnr.contab.incarichi00.bp;
 
 import it.cnr.contab.config00.bp.ResponseXMLBP;
 import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
+import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
-import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.util.Constants;
 import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
@@ -361,6 +361,11 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		elementPariva.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 		elementContratto.appendChild(elementPariva);
 		
+		Element elementItaEst = xmldoc.createElement(getTagRadice()+":ita_est");
+		dato = contratto.getFigura_giuridica_esterna().getAnagrafico().getTi_italiano_estero(); 
+		elementItaEst.appendChild(xmldoc.createTextNode(dato!=null? dato.compareTo("I")==0?"I":"E":""));
+		elementContratto.appendChild(elementItaEst);
+		
 		Element elementOggetto = xmldoc.createElement(getTagRadice()+":oggetto");
 		dato = contratto.getOggetto();
 		elementOggetto.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
@@ -371,9 +376,14 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		elementImporto.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 		elementContratto.appendChild(elementImporto);
 		 
-		Element elementImportoLiq = xmldoc.createElement(getTagRadice()+":importo_liquidato");
-		dato = new it.cnr.contab.util.EuroFormat().format(contratto.getTot_docamm_cont_spe()); 
-		elementImportoLiq.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+		Element elementImportoNetto = xmldoc.createElement(getTagRadice()+":importo_netto");
+		dato = new it.cnr.contab.util.EuroFormat().format(contratto.getIm_contratto_passivo_netto());
+		elementImportoNetto.appendChild(xmldoc.createTextNode(dato!=null?dato:"0")); 
+		elementContratto.appendChild(elementImportoNetto);
+		 
+		Element elementImportoLiq = xmldoc.createElement(getTagRadice()+":importo_liquidato_netto");
+		dato = new it.cnr.contab.util.EuroFormat().format(contratto.getTot_docamm_cont_spe_netto()); 
+		elementImportoLiq.appendChild(xmldoc.createTextNode(dato!=null?dato:"0"));
 		elementContratto.appendChild(elementImportoLiq);
 
 		Element elementTipoNorma = xmldoc.createElement(getTagRadice()+":tiponorma");
@@ -447,7 +457,70 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		dato = contratto.getProcedura_amministrativa().getCodice_anac(); 
 		elementCodiceAnac.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
 		elementContratto.appendChild(elementCodiceAnac);
-	
+		
+		if ( !contratto.getDitteInvitate().isEmpty() && contratto.getDitteInvitate().size()!=0 ){ 
+			String oldRag=null;
+			Element ditte = xmldoc.createElement(getTagRadice()+":ditte");
+			Element raggruppamento=null;
+			Element ditta=null;
+			for (java.util.Iterator i=contratto.getDitteInvitate().iterator();i.hasNext();){ 
+				Ass_contratto_ditteBulk ditteInv =(Ass_contratto_ditteBulk)i.next();
+				if(ditteInv.getDenominazione_rti()!=null && (oldRag==null || oldRag.compareTo(ditteInv.getDenominazione_rti())!=0)){
+					raggruppamento = xmldoc.createElement(getTagRadice()+":raggruppamento");
+					for (java.util.Iterator j=contratto.getDitteInvitate().iterator();j.hasNext();){ 
+						Ass_contratto_ditteBulk ditteInvRag =(Ass_contratto_ditteBulk)j.next();	
+						 if(ditteInvRag.getDenominazione_rti()!=null && ditteInv.getDenominazione_rti().compareTo(ditteInvRag.getDenominazione_rti())==0){
+							
+							ditta = xmldoc.createElement(getTagRadice()+":ditta");
+						 	Element denominaz = xmldoc.createElement(getTagRadice()+":denominaz");
+							dato =ditteInvRag.getDenominazione(); 					
+							denominaz.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+							ditta.appendChild(denominaz);
+							
+							Element cf = xmldoc.createElement(getTagRadice()+":cf");
+							dato =ditteInvRag.getCodice_fiscale(); 					
+							cf.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+							ditta.appendChild(cf);
+							
+							Element id_fiscale = xmldoc.createElement(getTagRadice()+":id_fiscale");
+							dato =ditteInvRag.getId_fiscale(); 					
+							id_fiscale.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+							ditta.appendChild(id_fiscale);
+							
+							Element ruolo = xmldoc.createElement(getTagRadice()+":ruolo");
+							dato =ditteInvRag.getRuolo(); 					
+							ruolo.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+							ditta.appendChild(ruolo);
+							oldRag=ditteInvRag.getDenominazione_rti();
+							raggruppamento.appendChild(ditta);
+						} // ditteInv denominazioneRti = ditteInvRag denominazioneRti									    	
+					}  // for ditteInvRag 
+					  ditte.appendChild(raggruppamento);
+				}  // if rti e nuovorag o cambio rag
+				else if(ditteInv.getDenominazione_rti()==null)
+				{
+				    ditta = xmldoc.createElement(getTagRadice()+":ditta");
+					
+					Element denominaz = xmldoc.createElement(getTagRadice()+":denominaz");
+					dato =ditteInv.getDenominazione(); 					
+					denominaz.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+					ditta.appendChild(denominaz);
+					
+					Element cf = xmldoc.createElement(getTagRadice()+":cf");
+					dato =ditteInv.getCodice_fiscale(); 					
+					cf.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+					ditta.appendChild(cf);
+					
+					Element id_fiscale = xmldoc.createElement(getTagRadice()+":id_fiscale");
+					dato =ditteInv.getId_fiscale(); 					
+					id_fiscale.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+					ditta.appendChild(id_fiscale);
+					
+					ditte.appendChild(ditta);	
+				}	
+			}
+		elementContratto.appendChild(ditte);
+		}
 		//eliminata pubblicazione dei file
 		for (AllegatoContrattoDocumentBulk allegato : contratto.getArchivioAllegati()) {
 			if (allegato.getType().equals(AllegatoContrattoDocumentBulk.CONTRATTO)){
@@ -749,7 +822,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 	    	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	    	DocumentBuilder builder = factory.newDocumentBuilder();
 	    	DOMImplementation impl = builder.getDOMImplementation();
-	    	Document xmldoc = impl.createDocument("http://contab.cnr.it/"+getTagRadice(), getTagRadice()+":root", null);
+			Document xmldoc = impl.createDocument("http://contab.cnr.it/"+getTagRadice(), getTagRadice()+":root", null);
 
 	    	Element root = xmldoc.getDocumentElement();
 	    	if (codiceErrore!= null){
