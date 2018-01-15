@@ -24,6 +24,8 @@
 	<fieldProperty
 		name="find_template"
 		property="template"
+		label="Template"
+		formName="searchtool"
 		inputType="SEARCHTOOL" />
 	<fieldProperty
 		name="cd_utente_templ"
