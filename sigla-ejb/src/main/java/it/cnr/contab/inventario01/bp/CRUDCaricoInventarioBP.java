@@ -29,6 +29,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
 import it.cnr.jada.bulk.SimpleBulkList;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.AbstractDetailCRUDController;
 import it.cnr.jada.util.action.SearchProvider;
@@ -501,6 +502,9 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 		for (Iterator i = beni.iterator(); i.hasNext();){	
 			dettCarico = new Buono_carico_scarico_dettBulk();
 			bene = (Inventario_beniBulk)i.next();
+			if(bene.getCategoria_Bene()!=null && buonoC.getData_registrazione()!=null && bene.getCategoria_Bene().getData_cancellazione()!=null &&
+					bene.getCategoria_Bene().getData_cancellazione().before(buonoC.getData_registrazione()))
+				throw new ApplicationException("Il Bene "+bene.getNr_inventario()+" ha un categoria non più valida");
 			dettCarico.setBuono_cs(buonoC);
 			dettCarico.setBene(bene);
 			dettCarico.setQuantita(new Long(1));

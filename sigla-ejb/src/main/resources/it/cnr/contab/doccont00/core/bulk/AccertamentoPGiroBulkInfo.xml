@@ -155,7 +155,44 @@
 		enabledOnSearch = "true"
 		enabledOnFreeSearch = "true"
 		label="Generata dalla sospensione&lt;BR&gt;di un pagamento netto" />		
-
+	<fieldProperty
+		name="esercizio_ev_contr"
+		property="elemento_voceContr.esercizio"
+		label="Esercizio Voce contr"
+		inputType="TEXT"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="ti_appartenenza_ev_contr"
+		property="elemento_voceContr.ti_appartenenza"
+		label="ti_appartenenza_ev_contr"
+		inputType="TEXT" />
+	<fieldProperty
+		name="ti_gestione_ev_contr"
+		property="elemento_voceContr.ti_gestione"
+		label="ti_gestione_ev_contr"
+		inputType="TEXT" />
+	<fieldProperty
+		name="cd_elemento_voce_contr"
+		property="elemento_voceContr.cd_elemento_voce"
+		label="Voce del piano Contr."
+		inputType="TEXT"
+		maxLength="20"
+		inputSize="20"
+		enabledOnSearch="true"
+		nullable="true" />
+	<fieldProperty
+		name="ds_elemento_voce_contr"
+		property="elemento_voceContr.ds_elemento_voce"
+		label=""
+		inputType="ROTEXT"
+		inputSize="60" />
+	<fieldProperty
+		name="find_elemento_voce_contr"
+		property="elemento_voceContr"
+		inputType="SEARCHTOOL"
+		label="Voce del piano"
+		enabledOnSearch="true"
+		completeOnSave="false" />
 	<formFieldProperty
 		name="cd_tipo_documento_cont"
 		/>	
@@ -204,7 +241,18 @@
 	<formFieldProperty
 		name="fl_netto_sospeso"
 		/>
-		
+	<formFieldProperty
+		name="esercizio_ev_contr" />
+	<formFieldProperty
+		name="ti_appartenenza_ev_contr" />
+	<formFieldProperty
+		name="ti_gestione_ev_contr" />
+	<formFieldProperty
+		name="cd_elemento_voce_contr" />
+	<formFieldProperty
+		name="ds_elemento_voce_contr" />
+	<formFieldProperty
+		name="find_elemento_voce_contr" />		
 	<columnFieldProperty
 		name="esercizio"
 		label="Esercizio"

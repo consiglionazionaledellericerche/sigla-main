@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Scarico Manuale Magazzino"
+	longDescription="Scarico Manuale Magazzino">
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaAbilitata"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		readonlyProperty="ROTestata"
+		label="Unità Operativa" />
+	<fieldProperty
+		name="findMagazzino"
+		property="magazzinoAbilitato"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		readonlyProperty="ROTestata"
+		label="Magazzino" />
+	<fieldProperty
+		name="findTipoMovimentoMag"
+		property="tipoMovimentoMag"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		readonlyProperty="ROTestata"
+		label="Tipo Movimento" />
+	<fieldProperty
+		name="findUnitaOperativaOrdRic"
+		property="unitaOperativaRicevente"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Operativa Ricevente" />
+	<fieldProperty
+		name="dataCompetenza"
+		property="dataCompetenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		nullable="false"
+		command="doOnDtCompetenzaChange"
+		readonlyProperty="ROTestata"
+		label="Data Competenza" />
+	<fieldProperty
+		name="dataMovimento"
+		property="dataMovimento"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data Movimento" />
+
+	<formFieldProperty
+		name="findUnitaOperativaOrd" />
+	<formFieldProperty
+		name="findMagazzino" />
+	<formFieldProperty
+		name="findTipoMovimentoMag" />
+	<formFieldProperty
+		name="findUnitaOperativaOrdRic" />
+	<formFieldProperty
+		name="dataCompetenza" />
+	<formFieldProperty
+		name="dataMovimento" />
+</bulkInfo>
