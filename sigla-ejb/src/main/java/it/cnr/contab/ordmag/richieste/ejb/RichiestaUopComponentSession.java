@@ -13,5 +13,5 @@ import it.cnr.jada.persistency.PersistencyException;
 public interface RichiestaUopComponentSession extends it.cnr.jada.ejb.CRUDComponentSession{
 	Boolean isUtenteAbilitatoRichiesta(UserContext usercontext, RichiestaUopBulk richiesta) throws RemoteException,ComponentException, PersistencyException, EJBException;
 	Boolean isUtenteAbilitatoValidazioneRichiesta(UserContext usercontext, RichiestaUopBulk richiesta) throws RemoteException,ComponentException, PersistencyException, EJBException;
-	void completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws RemoteException,ComponentException, PersistencyException;
+	RichiestaUopBulk completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws RemoteException,ComponentException, PersistencyException;
 }
