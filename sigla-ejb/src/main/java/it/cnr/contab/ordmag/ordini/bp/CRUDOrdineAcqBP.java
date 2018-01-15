@@ -570,7 +570,7 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		{
 			OrdineAcqBulk ordine = (OrdineAcqBulk) getModel();
 			if ( !ordine.isStatoInserito()){
-				throw new BusinessProcessException( "Non è possibile cancellare un ordine in stato diverso da inserito");
+				throw new ApplicationException( "Non è possibile cancellare un ordine in stato diverso da inserito");
 			} else {
 				ordine = ((OrdineAcqComponentSession)createComponentSession()).cancellaOrdine(context.getUserContext(),(OrdineAcqBulk)getModel());
 				setModel( context, ordine );
