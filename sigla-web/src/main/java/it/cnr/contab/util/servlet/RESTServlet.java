@@ -30,8 +30,10 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.OrderConstants;
+import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.ConsultazioniBP;
 
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,6 +124,7 @@ public class RESTServlet extends HttpServlet{
     	            		businessProcess = mappings.createBusinessProcess(actionmapping, httpactioncontext);
 
     	                logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". Business Process: "+businessProcess.getName());
+						RemoteIterator iterator = null;
     	            	if (command.equals(COMMAND_POST)) {
     	            		Boolean isEnableBP = false;
     	            		if (actionmapping.needExistingSession())
@@ -141,11 +144,12 @@ public class RESTServlet extends HttpServlet{
     		        			}
     		        			consBP.setFindclause(compoundFindClause);
     		        		}
-    		            	consBP.setIterator(httpactioncontext, 
-    		            			consBP.search(httpactioncontext,
-    		            			consBP.getFindclause(),
-    		        				(OggettoBulk) consBP.getBulkInfo().getBulkClass().newInstance()));
-    		            	parseRequestParameter(req, httpactioncontext, jsonRequest, consBP);		            	
+							iterator = consBP.search(httpactioncontext,
+									consBP.getFindclause(),
+									(OggettoBulk) consBP.getBulkInfo().getBulkClass().newInstance());
+							consBP.setIterator(httpactioncontext,
+									iterator);
+    		            	parseRequestParameter(req, httpactioncontext, jsonRequest, consBP);
     	            	}
     	            	httpactioncontext.setBusinessProcess(businessProcess);
     	                req.setAttribute(it.cnr.jada.action.BusinessProcess.class.getName(), businessProcess);
@@ -170,6 +174,7 @@ public class RESTServlet extends HttpServlet{
     	            resp.setHeader("WWW-Authenticate", "Basic realm=\"SIGLA\"");   
     			}
     	        logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". End");
+                req.getSession().invalidate();
     		} catch (ComponentException e) {
     			logger.error("ComponentException", e);
     			resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);			

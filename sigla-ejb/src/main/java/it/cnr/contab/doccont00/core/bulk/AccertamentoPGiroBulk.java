@@ -28,6 +28,9 @@ public class AccertamentoPGiroBulk extends AccertamentoBulk {
 	};
 
 	protected boolean fl_isTronco = false;
+	
+	private it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voceContr = new it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk();
+	
 public AccertamentoPGiroBulk() {
 	super();
 	initialize();
@@ -344,5 +347,13 @@ public void validate() throws ValidationException {
 		if (gc.get(java.util.GregorianCalendar.YEAR) < getEsercizio().intValue())
 			throw new ValidationException( "Non è possibile inserire una data scadenza antecedente all'esercizio di creazione dell'Annotazione d'Entrata su Partita di Giro." );
 /*	}		*/
+
+}
+public it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk getElemento_voceContr() {
+	return elemento_voceContr;
+}
+public void setElemento_voceContr(
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voceContr) {
+	this.elemento_voceContr = elemento_voceContr;
 } 
 }

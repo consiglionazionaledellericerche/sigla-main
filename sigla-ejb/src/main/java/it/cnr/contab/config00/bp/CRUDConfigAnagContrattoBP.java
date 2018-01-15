@@ -6,7 +6,9 @@
  */
 package it.cnr.contab.config00.bp;
 
+
 import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
+import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
@@ -32,12 +34,13 @@ import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.upload.UploadedFile;
-
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.util.Date;
@@ -48,6 +51,12 @@ import java.util.Optional;
 import javax.ejb.EJBException;
 import javax.ejb.RemoveException;
 import javax.servlet.ServletException;
+
+import org.apache.poi.hssf.record.RecordFormatException;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 /**
  * @author mspasiano
  *
@@ -62,10 +71,16 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	private String tipoAccesso;
 	protected ContrattoService contrattoService;
 	protected Date dataStipulaParametri;
-	protected Boolean flagPubblicaContratto;
+	protected Boolean flagPubblicaContratto; 
 	private SimpleDetailCRUDController crudAssUO = new SimpleDetailCRUDController( "Associazione UO", Ass_contratto_uoBulk.class, "associazioneUO", this);
 	private SimpleDetailCRUDController crudAssUODisponibili = new SimpleDetailCRUDController( "Associazione UO Disponibili", Unita_organizzativaBulk.class, "associazioneUODisponibili", this);
-
+	private SimpleDetailCRUDController crudAssDitte = new SimpleDetailCRUDController( "ditte Invitate", Ass_contratto_ditteBulk.class, "ditteInvitate", this){
+		public void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
+			((Ass_contratto_ditteBulk)oggettobulk).validate();
+			super.validate(actioncontext, oggettobulk);
+		};
+	}; 
+ 
 	@SuppressWarnings("serial")
 	private SimpleDetailCRUDController crudArchivioAllegati = new SimpleDetailCRUDController( "ArchivioAllegati", AllegatoContrattoDocumentBulk.class, "archivioAllegati", this){
 		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
@@ -113,6 +128,47 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	public CRUDConfigAnagContrattoBP()
 	{
 		super();
+	}
+
+	protected void validaDitte(ActionContext actioncontext,
+			Ass_contratto_ditteBulk bulk) throws ValidationException {
+		bulk.validate();
+		
+		for (java.util.Iterator i = bulk.getContratto().getDitteInvitate().iterator();i.hasNext();) {
+			Ass_contratto_ditteBulk b = (Ass_contratto_ditteBulk)i.next();
+			if (!b.equals(bulk) &&
+					((b.getCodice_fiscale() != null && bulk.getCodice_fiscale()!=null && b.getCodice_fiscale().compareTo(bulk.getCodice_fiscale())==0) || 
+					(b.getId_fiscale()!=null && bulk.getId_fiscale()!=null && b.getId_fiscale().compareTo(bulk.getId_fiscale())==0)))			    		
+	 			throw new ValidationException ("Attenzione: esistono più ditte con lo stesso codice fiscale/Id Fiscale!"); 	
+			 	
+		}
+		if( bulk.getDenominazione_rti()!=null){
+			boolean trovato=false;
+			for (java.util.Iterator i = bulk.getContratto().getDitteInvitate().iterator();i.hasNext();) {
+				Ass_contratto_ditteBulk b = (Ass_contratto_ditteBulk)i.next();
+		
+				if(!b.equals(bulk) && b.getDenominazione_rti()!=null &&
+						bulk.getDenominazione_rti().compareTo(b.getDenominazione_rti())==0)
+					trovato=true;
+			}
+			if(!trovato)
+				throw new ValidationException ("Attenzione: devono esistere più ditte con la stessa denominazione rti!");
+		}
+		if( bulk.getRuolo()!=null){
+			boolean trovato=false;
+			for (java.util.Iterator i = bulk.getContratto().getDitteInvitate().iterator();i.hasNext();) {
+				Ass_contratto_ditteBulk b = (Ass_contratto_ditteBulk)i.next();
+		
+				if(!b.equals(bulk) && b.getRuolo()!=null &&  
+						bulk.getDenominazione_rti()!=null &&
+						b.getDenominazione_rti()!=null &&
+						bulk.getDenominazione_rti().compareTo(b.getDenominazione_rti())==0 &&
+						bulk.getRuolo().compareTo(b.getRuolo())!=0)
+					trovato=true;
+			}
+			if(!trovato)
+				throw new ValidationException ("Attenzione: devono esistere ruoli diversi con la stessa denominazione rti!");
+		}
 	}
 
 	public CRUDConfigAnagContrattoBP(String s)
@@ -189,7 +245,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		super.basicEdit(context, bulk, doInitializeForEdit);
 		ContrattoBulk contratto= (ContrattoBulk)getModel();
 		try {
-			dataStipulaParametri = getParametri_cnrBulk(context).getData_stipula_contratti();
+			dataStipulaParametri=getParametri_cnrBulk(context).getData_stipula_contratti();
 			flagPubblicaContratto=getParametri_cnrBulk(context).getFl_pubblica_contratto();
 		} catch (Exception e) {
 			throw handleException(e);
@@ -350,9 +406,16 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 			throw handleException(e);
 		}
 		try {
+			if (((ContrattoBulk) getModel()).getDitteInvitate()!=null && ((ContrattoBulk) getModel()).getDitteInvitate().size()!=0 )
+				for (java.util.Iterator i =((ContrattoBulk) getModel()).getDitteInvitate().iterator();i.hasNext();) {
+					Ass_contratto_ditteBulk b = (Ass_contratto_ditteBulk)i.next();
+					validaDitte(context,b);
+				}
 			ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
 			ContrattoBulk contratto = comp.salvaDefinitivo(context.getUserContext(), (ContrattoBulk)getModel());
 			edit(context,contratto);
+		}catch(ValidationException ex){
+			throw handleException(ex);	
 		}catch(it.cnr.jada.comp.ComponentException ex){
 			throw handleException(ex);
 		}catch(java.rmi.RemoteException ex){
@@ -453,7 +516,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 				ContrattoBulk contratto = getContratto();
 				setModel(actioncontext, contratto);
 				cerca(actioncontext);
-			}
+	}
 		} catch(Exception e) {
 			throw handleException(e);
 		}
@@ -502,6 +565,15 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 			throws BusinessProcessException {
 		super.update(actioncontext);
 		try {
+		if (((ContrattoBulk) getModel()).getDitteInvitate()!=null && ((ContrattoBulk) getModel()).getDitteInvitate().size()!=0 )
+			for (java.util.Iterator i =((ContrattoBulk) getModel()).getDitteInvitate().iterator();i.hasNext();) {
+				Ass_contratto_ditteBulk b = (Ass_contratto_ditteBulk)i.next();
+				validaDitte(actioncontext,b);
+			}
+		} catch (ValidationException e) {
+			throw handleException(e);
+		}
+		try {
 			archiviaAllegati(actioncontext, (ContrattoBulk) getModel());
 		} catch (ApplicationException e) {
 			throw handleException(e);
@@ -520,6 +592,15 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	public void create(ActionContext actioncontext)
 			throws BusinessProcessException {
 		super.create(actioncontext);
+		try {
+			if (((ContrattoBulk) getModel()).getDitteInvitate()!=null && ((ContrattoBulk) getModel()).getDitteInvitate().size()!=0 )
+				for (java.util.Iterator i =((ContrattoBulk) getModel()).getDitteInvitate().iterator();i.hasNext();) {
+					Ass_contratto_ditteBulk b = (Ass_contratto_ditteBulk)i.next();
+					validaDitte(actioncontext,b);
+				}
+			} catch (ValidationException e) {
+				throw handleException(e);
+			}
 		try {
 			archiviaAllegati(actioncontext, (ContrattoBulk) getModel());
 		} catch (ApplicationException e) {
@@ -663,10 +744,10 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	public void setFlagPubblicaContratto(Boolean flagPubblicaContratto) {
 		this.flagPubblicaContratto = flagPubblicaContratto;
 	}
-
 	public ContrattoBulk getContratto() {
 		return contratto;
 	}
+
 
 	public void setContratto(ContrattoBulk contratto) {
 		this.contratto = contratto;
@@ -678,5 +759,124 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 
 	public void setTipoAccesso(String tipoAccesso) {
 		this.tipoAccesso = tipoAccesso;
+	}
+
+public SimpleDetailCRUDController getCrudAssDitte() {
+		return crudAssDitte;
+	}
+
+
+	public void setCrudAssDitte(SimpleDetailCRUDController crudAssDitte) {
+		this.crudAssDitte = crudAssDitte;
+	}
+	public void caricaDitteInvitate(ActionContext context,File file) throws BusinessProcessException, ComponentException, IOException {
+		java.io.InputStream in;
+		Ass_contratto_ditteBulk bulk=null;
+		try {
+			in = new java.io.BufferedInputStream(new FileInputStream(file),(int)file.length());
+			
+		  HSSFWorkbook wb =new HSSFWorkbook(in);
+		  HSSFSheet s =wb.getSheet(wb.getSheetName(0));
+		  HSSFRow r;
+		  HSSFCell c;
+		  String denominazione=new String();
+		  String codice_fiscale=new String();
+		  String id_fiscale=new String();
+		  String ruolo=new String();
+		  String denominazione_rti=new String();
+		  
+		  for(int i=1;i<=s.getLastRowNum();i++){
+			  r=s.getRow(i);	  
+			  if (r==null)
+				  throw new ApplicationException("Formato file non valido!");
+			  c=null;
+			  denominazione=null;
+			  denominazione_rti=null;
+			  codice_fiscale=null;
+			  id_fiscale=null;
+			  ruolo=null;
+			  if(r.getLastCellNum()<2 )
+				  throw new ApplicationException("Formato file non valido!");
+				  c = r.getCell((short)0);
+				  if (c!=null && c.getCellType()==1)
+					  denominazione=c.getStringCellValue();
+				  else if(c!=null && c.getCellType()!=1)
+					  throw new ApplicationException("Formato denominazione non valido!");	
+				  c = r.getCell((short)1);
+				  if (c!=null && c.getCellType()==1)
+					  codice_fiscale=c.getStringCellValue();
+				  else if(c!=null && (c.getCellType()!=1 && c.getCellType()!=3))
+					  throw new ApplicationException("Formato codice fiscale non valido!");	
+				  c = r.getCell((short)2);
+				  if (c!=null && c.getCellType()==1)
+					  id_fiscale=c.getStringCellValue();
+				  else if(c!=null && (c.getCellType()!=1 && c.getCellType()!=3))
+					  throw new ApplicationException("Formato id fiscale non valido!");	
+				  c = r.getCell((short)3);
+				  if (c!=null && c.getCellType()==1)
+					  ruolo=c.getStringCellValue();
+				  else if(c!=null && (c.getCellType()!=1 && c.getCellType()!=3))
+					  throw new ApplicationException("Formato ruolo non valido!");	
+				  c = r.getCell((short)4);
+				  if (c!=null && (c.getCellType()!=1 && c.getCellType()!=3))
+					  denominazione_rti=c.getStringCellValue();
+				  else if(c!=null && c.getCellType()!=1)
+					  throw new ApplicationException("Formato denominazione rti non valido!");	
+				  c = r.getCell((short)5);
+				  if ((denominazione!=null || codice_fiscale!=null || id_fiscale!=null ||ruolo!=null  ||denominazione_rti !=null)
+					  	&& (((denominazione ==null || (denominazione!=null && !(codice_fiscale!=null  || id_fiscale!=null)))
+						  &&((ruolo!=null && denominazione_rti ==null) || (ruolo==null && denominazione_rti !=null)))))
+				  throw new ApplicationException("Formato file non valido!");		  
+		  }  
+		  for(int i=1;i<=s.getLastRowNum();i++){
+			  r=s.getRow(i);	  
+			  c=null;
+			  denominazione=null;
+			  denominazione_rti=null;
+			  codice_fiscale=null;
+			  id_fiscale=null;
+			  ruolo=null;
+				  c = r.getCell((short)0);
+				  if (c !=null && c.getCellType()==1)
+					  denominazione=c.getStringCellValue();
+				  c = r.getCell((short)1);
+				  if (c !=null && c.getCellType()==1)
+					  codice_fiscale=c.getStringCellValue();
+				  c = r.getCell((short)2);
+				  if (c !=null && c.getCellType()==1)
+					  id_fiscale=c.getStringCellValue(); 
+				  c = r.getCell((short)3);
+				  if (c !=null && c.getCellType()==1)
+					  ruolo=c.getStringCellValue();
+				  c = r.getCell((short)4);
+				  if (c !=null && c.getCellType()==1)
+					  denominazione_rti=c.getStringCellValue();
+				  c = r.getCell((short)5);
+				  if(denominazione==null )
+					  break;
+			 	  bulk = new Ass_contratto_ditteBulk();
+				  bulk.setContratto((ContrattoBulk)getModel());
+				  if(denominazione!=null)
+					  bulk.setDenominazione(denominazione.trim());
+				  if(codice_fiscale!=null)
+					  bulk.setCodice_fiscale(codice_fiscale.trim());
+				  if( id_fiscale!= null)
+				     bulk.setId_fiscale(id_fiscale.trim());
+				  if( ruolo!= null)	
+					  bulk.setRuolo(ruolo.trim());
+				  if( denominazione_rti != null)
+					   bulk.setDenominazione_rti(denominazione_rti.trim());
+				  if(bulk !=null)				
+					  getCrudAssDitte().add(context,bulk);  
+		  }
+		} catch (FileNotFoundException e) {
+			  throw new ApplicationException("File non trovato!");
+		}
+		catch (IllegalArgumentException e) {
+			throw new ApplicationException("Formato file non valido!");
+		}
+		catch (RecordFormatException e) {
+			throw new ApplicationException("Errore nella lettura del file!");
+		}
 	}
 }

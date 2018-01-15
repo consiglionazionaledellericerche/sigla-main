@@ -341,7 +341,15 @@
                 enabledOnSearch="true"
                 formatName = "it.cnr.contab.util.EuroFormat"
                 nullable="false"
-                label="Importo passivo" />                
+                label="Importo passivo" />      
+        <fieldProperty
+                name="im_contratto_passivo_netto"
+                property="im_contratto_passivo_netto"
+                inputType="TEXT"
+                enabledOnSearch="true"
+                formatName = "it.cnr.contab.util.EuroFormat"
+                nullable="false"
+                label="Importo passivo netto" />                        
         <fieldProperty
                 name="statoText"
                 property="stato"
@@ -752,6 +760,8 @@
         <formFieldProperty
                 name="im_contratto_passivo"/>                
         <formFieldProperty
+                name="im_contratto_passivo_netto"/>        
+        <formFieldProperty
                 name="stato"/>
         <formFieldProperty
                 name="statoText"/>                
@@ -864,6 +874,8 @@
         <findFieldProperty
                 name="im_contratto_passivo"/>
         <findFieldProperty
+                name="im_contratto_passivo_netto"/>        
+        <findFieldProperty
                 name="dt_stipula"/>
         <findFieldProperty
                 name="cdCigFatturaAttiva"/>
@@ -937,6 +949,8 @@
                 name="im_contratto_attivo"/>
         <columnFieldProperty
                 name="im_contratto_passivo"/>
+        <columnFieldProperty
+                name="im_contratto_passivo_netto"/>        
         <columnFieldProperty
                 name="dt_stipula"/>
         <columnFieldProperty
