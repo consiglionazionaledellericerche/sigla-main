@@ -20,6 +20,9 @@
   <action 
       path="/GenerazioneOrdineDaRichiesteAction" actionClass="it.cnr.contab.ordmag.ordini.action.GenerazioneOrdineDaRichiesteAction">
   </action>
+  <action 
+      path="/ScaricoMagazzinoAction" actionClass="it.cnr.contab.ordmag.magazzino.action.ScaricoMagazzinoAction">
+  </action>
   <businessProcess name="CRUDGruppoMerceologicoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
     <forward name="default" path="/ordmag/gruppomerceologico.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.GruppoMerceologicoBulk"/>
@@ -166,4 +169,10 @@
 		<init-param name="componentSessionName"
 			value="JADAEJB_CRUDComponentSession" />
 	</businessProcess>
+  <businessProcess name="ScaricoManualeMagazzinoBP" className="it.cnr.contab.ordmag.magazzino.bp.ScaricoManualeMagazzinoBP">
+    <forward name="default" path="/ordmag/magazzini/scarico_magazzino.jsp" />
+    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoBulk"/>
+    <init-param name="componentSessionName" value="CNRORDMAG00_EJB_MovimentiMagComponentSession"/>
+	<init-param name="defaultAction" value="ScaricoMagazzinoAction"/>
+  </businessProcess>
 </action-mappings>

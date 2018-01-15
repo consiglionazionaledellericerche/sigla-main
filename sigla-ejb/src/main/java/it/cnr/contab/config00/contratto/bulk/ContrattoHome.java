@@ -312,6 +312,16 @@ public class ContrattoHome extends BulkHome {
 		sql.addSQLClause("AND","PG_CONTRATTO",sql.EQUALS,contratto.getPg_contratto());
 		return sql;
 	}
+	public SQLBuilder calcolaTotDocumentiPasNetto(it.cnr.jada.UserContext userContext,ContrattoBulk contratto) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(VContrattiTotaliDetBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.resetColumns();
+		sql.addColumn("SUM(LIQUIDATO_SPESE_NETTO) TOTALE");
+		sql.addSQLClause("AND","ESERCIZIO_CONTRATTO",sql.EQUALS,contratto.getEsercizio());
+		sql.addSQLClause("AND","STATO_CONTRATTO",SQLBuilder.EQUALS,contratto.getStato());
+		sql.addSQLClause("AND","PG_CONTRATTO",sql.EQUALS,contratto.getPg_contratto());
+		return sql;
+	}
 	public SQLBuilder calcolaTotReversali(it.cnr.jada.UserContext userContext,ContrattoBulk contratto) throws IntrospectionException, PersistencyException {
 		PersistentHome dettHome = getHomeCache().getHome(VContrattiTotaliDetBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
@@ -327,6 +337,16 @@ public class ContrattoHome extends BulkHome {
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.resetColumns();
 		sql.addColumn("SUM(TOTALE_MANDATI) TOTALE");
+		sql.addSQLClause("AND","ESERCIZIO_CONTRATTO",sql.EQUALS,contratto.getEsercizio());
+		sql.addSQLClause("AND","STATO_CONTRATTO",SQLBuilder.EQUALS,contratto.getStato());
+		sql.addSQLClause("AND","PG_CONTRATTO",sql.EQUALS,contratto.getPg_contratto());
+		return sql;
+	}
+	public SQLBuilder calcolaTotMandatiNetto(it.cnr.jada.UserContext userContext,ContrattoBulk contratto) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(VContrattiTotaliDetBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.resetColumns();
+		sql.addColumn("SUM(TOTALE_MANDATI_NETTO) TOTALE");
 		sql.addSQLClause("AND","ESERCIZIO_CONTRATTO",sql.EQUALS,contratto.getEsercizio());
 		sql.addSQLClause("AND","STATO_CONTRATTO",SQLBuilder.EQUALS,contratto.getStato());
 		sql.addSQLClause("AND","PG_CONTRATTO",sql.EQUALS,contratto.getPg_contratto());
@@ -352,11 +372,31 @@ public class ContrattoHome extends BulkHome {
 		sql.addSQLClause("AND","PG_CONTRATTO_PADRE",sql.EQUALS,contratto_padre.getPg_contratto());
 		return sql;
 	}
+	public SQLBuilder calcolaTotDocumentiPasNettoPadre(it.cnr.jada.UserContext userContext,ContrattoBulk contratto_padre) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(VContrattiTotaliDetBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.resetColumns();
+		sql.addColumn("SUM(LIQUIDATO_SPESE_NETTO) TOTALE");
+		sql.addSQLClause("AND","ESERCIZIO_CONTRATTO_PADRE",sql.EQUALS,contratto_padre.getEsercizio());
+		sql.addSQLClause("AND","STATO_CONTRATTO_PADRE",SQLBuilder.EQUALS,contratto_padre.getStato());
+		sql.addSQLClause("AND","PG_CONTRATTO_PADRE",sql.EQUALS,contratto_padre.getPg_contratto());
+		return sql;
+	}
 	public SQLBuilder calcolaTotReversaliPadre(it.cnr.jada.UserContext userContext,ContrattoBulk contratto_padre) throws IntrospectionException, PersistencyException {
 		PersistentHome dettHome = getHomeCache().getHome(VContrattiTotaliDetBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.resetColumns();
 		sql.addColumn("SUM(TOTALE_REVERSALI) TOTALE");
+		sql.addSQLClause("AND","ESERCIZIO_CONTRATTO_PADRE",sql.EQUALS,contratto_padre.getEsercizio());
+		sql.addSQLClause("AND","STATO_CONTRATTO_PADRE",SQLBuilder.EQUALS,contratto_padre.getStato());
+		sql.addSQLClause("AND","PG_CONTRATTO_PADRE",sql.EQUALS,contratto_padre.getPg_contratto());
+		return sql;
+	}
+	public SQLBuilder calcolaTotMandatiPadreNetto(it.cnr.jada.UserContext userContext,ContrattoBulk contratto_padre) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(VContrattiTotaliDetBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.resetColumns();
+		sql.addColumn("SUM(TOTALE_MANDATI_NETTO) TOTALE");
 		sql.addSQLClause("AND","ESERCIZIO_CONTRATTO_PADRE",sql.EQUALS,contratto_padre.getEsercizio());
 		sql.addSQLClause("AND","STATO_CONTRATTO_PADRE",SQLBuilder.EQUALS,contratto_padre.getStato());
 		sql.addSQLClause("AND","PG_CONTRATTO_PADRE",sql.EQUALS,contratto_padre.getPg_contratto());
@@ -371,6 +411,16 @@ public class ContrattoHome extends BulkHome {
 		sql.addSQLClause("AND","STATO_CONTRATTO_PADRE",SQLBuilder.EQUALS,contratto_padre.getStato());
 		sql.addSQLClause("AND","PG_CONTRATTO_PADRE",sql.EQUALS,contratto_padre.getPg_contratto());
 		return sql;
+	}
+	public java.util.Collection findDitteAssociate(it.cnr.jada.UserContext userContext, ContrattoBulk contratto, String tipologia) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(Ass_contratto_ditteBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,contratto.getEsercizio());
+		sql.addSQLClause("AND","STATO_CONTRATTO",SQLBuilder.EQUALS,contratto.getStato());
+		sql.addSQLClause("AND","PG_CONTRATTO",sql.EQUALS,contratto.getPg_contratto());
+		sql.addSQLClause("AND","TIPOLOGIA",sql.EQUALS,tipologia);
+		sql.setOrderBy("denominazione_rti", it.cnr.jada.util.OrderConstants.ORDER_ASC);
+		return dettHome.fetchAll(sql);
 	}
 	public SQLBuilder calcolaTotOrdini(it.cnr.jada.UserContext userContext,ContrattoBulk contratto) throws IntrospectionException, PersistencyException {
 		PersistentHome dettHome = getHomeCache().getHome(VContrattiTotaliDetBulk.class);

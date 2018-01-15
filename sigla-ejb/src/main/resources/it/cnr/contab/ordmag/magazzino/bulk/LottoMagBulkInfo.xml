@@ -110,7 +110,9 @@
 		inputSize="12"
 		maxLength="12"
 		enabledOnEdit="false"
-		label="giacenza" />
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		style="text-align: right"
+		label="Giacenza" />
 	<fieldProperty
 		name="quantitaValore"
 		property="quantitaValore"
@@ -133,7 +135,7 @@
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtCarico" />
+		label="Data di Carico" />
 	<fieldProperty
 		name="valoreUnitario"
 		property="valoreUnitario"
@@ -270,6 +272,7 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="dtCancellazione" />
+		
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -283,6 +286,7 @@
 		<formFieldProperty
 			name="pgLotto" />
 	</form>
+
 	<formFieldProperty
 		name="findNumerazioneMag" />
 	<formFieldProperty
@@ -315,6 +319,7 @@
 		name="cambio" />
 	<formFieldProperty
 		name="dtCancellazione" />
+
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty

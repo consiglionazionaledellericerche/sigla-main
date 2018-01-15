@@ -4,6 +4,7 @@
  ?ResourceEdition "1.0"
 -->
 
+<%@page import="it.cnr.contab.doccont00.bp.CRUDImpegnoPGiroBP"%>
 <%@ page 
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*,it.cnr.jada.util.action.*,it.cnr.contab.doccont00.core.bulk.ImpegnoPGiroBulk"
 %>
@@ -15,7 +16,7 @@
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="JavaScript" src="scripts/disableRightClick.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<% CRUDBP bp = (CRUDBP)BusinessProcess.getBusinessProcess(request);
+<% CRUDImpegnoPGiroBP bp = (CRUDImpegnoPGiroBP)BusinessProcess.getBusinessProcess(request);
  ImpegnoPGiroBulk imp = (ImpegnoPGiroBulk) bp.getModel();%>	 
 
 </head>
@@ -111,6 +112,25 @@
 	<td colspan=2>
 		<% bp.getController().writeFormInput( out, "dt_scadenza"); %></td>
 	</tr>
+	<% if (bp.isFlNuovaGestionePg()){ %>
+	<tr>
+		<td colspan="3">
+			<div class="Group">
+			<table>
+			<tr>
+				<td><% bp.getController().writeFormLabel( out, "cd_elemento_voce_contr"); %></td>
+				<td colspan=2>
+				    <% bp.getController().writeFormInput(out,"default","cd_elemento_voce_contr",!bp.isInserting(),null,null); %>
+				    <% bp.getController().writeFormInput(out,"default","ds_elemento_voce_contr",!bp.isInserting(),null,null); %>
+				    <% bp.getController().writeFormInput(out,"default","find_elemento_voce_contr",!bp.isInserting(),null,null); %>
+				</td>				 
+			</tr>
+			</table>
+			</div>
+		</td>
+	</tr>
+    <%}%>
+	
 <!--	
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "cd_riferimento_contratto"); %></td>
@@ -138,7 +158,7 @@
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "esercizio_doc_passivo"); %></td>
 	<td colspan=2>
-		<% bp.getController().writeFormInput( out, "esercizio_doc_passivo"); %>
+		<% bp.getController().writeFormInput( out, "esercizio_doc_passivo"); %> 
 		<% bp.getController().writeFormLabel( out, "pg_doc_passivo"); %>
 		<% bp.getController().writeFormInput( out, "pg_doc_passivo"); %>
 		<% bp.getController().writeFormLabel( out, "cd_tipo_documento_amm"); %>

@@ -294,6 +294,24 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		label="tipo Contratto" />	
+	<fieldProperty
+		name="totaleMandatiNetto"
+		property="totaleMandatiNetto"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+    maxLength="18"
+    inputSize="18"
+		enabledOnEdit="false"
+		label="totale Pagato Netto" />		
+	<fieldProperty
+		name="liquidatoSpeseNetto"
+		property="liquidatoSpeseNetto"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+    maxLength="18"
+    inputSize="18"
+		enabledOnEdit="false"
+		label="totale Liquidato Netto" />			
 				
 	<form
 		name="searchtool">
@@ -368,7 +386,10 @@
 		name="totaleReversali" />
 	<formFieldProperty
 		name="totaleMandati" />
-	
+	<formFieldProperty
+		name="totaleMandatiNetto" />
+	<formFieldProperty
+		name="liquidatoSpeseNetto" />
 	<findFieldProperty
 		name="esercizioContratto" />
 	<findFieldProperty
