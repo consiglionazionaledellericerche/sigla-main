@@ -18,7 +18,7 @@
       path="/ListaBolleScaricoGenerateAction" actionClass="it.cnr.contab.ordmag.magazzino.action.ListaBolleScaricoGenerateAction">
   </action>
   <action 
-      path="/GenerazioneOrdineDaRichiesteAction" actionClass="it.cnr.contab.ordmag.richieste.action.GenerazioneOrdineDaRichiesteAction">
+      path="/GenerazioneOrdineDaRichiesteAction" actionClass="it.cnr.contab.ordmag.ordini.action.GenerazioneOrdineDaRichiesteAction">
   </action>
   <businessProcess name="CRUDGruppoMerceologicoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
     <forward name="default" path="/ordmag/gruppomerceologico.jsp"/>
