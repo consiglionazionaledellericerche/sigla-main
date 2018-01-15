@@ -122,10 +122,10 @@ public class AccertamentoPGiroComponentSessionBean extends it.cnr.jada.ejb.CRUDC
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk creaAccertamentoDiIncassoIVA(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.ReversaleBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk creaAccertamentoDiIncassoIVA(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.ReversaleBulk param1,boolean split) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
-			it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk result = ((AccertamentoPGiroComponent)componentObj).creaAccertamentoDiIncassoIVA(param0,param1);
+			it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk result = ((AccertamentoPGiroComponent)componentObj).creaAccertamentoDiIncassoIVA(param0,param1,split);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

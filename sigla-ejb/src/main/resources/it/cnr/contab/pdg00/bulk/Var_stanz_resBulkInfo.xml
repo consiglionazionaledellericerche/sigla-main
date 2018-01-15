@@ -13,6 +13,7 @@
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
+        enabledOnSearch="true"
 		label="Progressivo della Variazione" />
 	<fieldProperty
 		name="cd_cds"
@@ -56,6 +57,7 @@
 		cols="60"
 		rows="5"
 		maxLength="1000"
+        enabledOnSearch="true"
 		label="Descrizione della Variazione" />
 	<fieldProperty
 		name="dt_chiusura"

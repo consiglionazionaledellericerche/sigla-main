@@ -44,7 +44,10 @@
 	</tr>
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "pg_tipologia"); %></td>
-		<td><% bp.getController().writeFormInput( out, "pg_tipologia"); %></td>
+		<td><% bp.getController().writeFormInput( out, "pg_tipologia"); %>
+			<% bp.getController().writeFormInput( out, "ds_tipologia"); %>
+			<% bp.getController().writeFormInput( out, "find_tipologie_istat"); %>	
+		</td>
 	</tr>
 	</table>
 

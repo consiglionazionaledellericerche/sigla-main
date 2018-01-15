@@ -16,7 +16,7 @@
   	<table>	
 	  <tr>
 		<td><% bp.getDettaglio().writeFormLabel(out,"find_categoria_bene"); %></td>
-		<td><% bp.getDettaglio().writeFormInput(out,"find_categoria_bene"); %></td>
+		<td><% bp.getDettaglio().writeFormInput(out,null,"find_categoria_bene",true,null,null); %></td>
 	  </tr>
 		<td><% bp.getDettaglio().writeFormLabel(out,"ds_bene"); %></td>
 		<td colspan=2><% bp.getDettaglio().writeFormInput(out,null,"ds_bene",true,null,null); %></td>
