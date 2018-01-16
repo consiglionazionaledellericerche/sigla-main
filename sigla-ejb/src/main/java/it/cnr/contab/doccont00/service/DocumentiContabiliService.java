@@ -5,6 +5,7 @@ import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.StorageObject;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.firma.arss.ArubaSignServiceClient;
 import it.cnr.jada.util.mail.SimplePECMail;
@@ -113,6 +114,21 @@ public class DocumentiContabiliService extends StoreService {
 			result.put(key, value);
 		}
 		return result;
+	}
+
+    public void controllaCodiceFiscale(Map<String, String> subjectDN, UtenteBulk utente) throws Exception {
+        String codiceFiscale = subjectDN.get("SERIALNUMBER");
+        if (Optional.ofNullable(utente.getCodiceFiscaleLDAP())
+                .map(codiceFiscaleLDAP -> !codiceFiscale.contains(codiceFiscaleLDAP))
+                .orElse(Boolean.FALSE)) {
+            throw new ApplicationException("Il codice fiscale \"" + codiceFiscale + "\" presente sul certicato di Firma, " +
+                    "è diverso da quello dell'utente collegato \"" + utente.getCodiceFiscaleLDAP() +"\"!");
+        }
+    }
+	public void controllaCodiceFiscale(String username, String password, UtenteBulk utente) throws Exception {
+		Map<String, String> subjectDN = Optional.ofNullable(getCertSubjectDN(username, password))
+				.orElseThrow(() -> new ApplicationException("Errore nella lettura dei certificati!\nVerificare Nome Utente e Password!"));
+		controllaCodiceFiscale(subjectDN, utente);
 	}
 
 	public void inviaDistintaPEC1210(List<String> nodes) throws EmailException, ApplicationException, IOException {
