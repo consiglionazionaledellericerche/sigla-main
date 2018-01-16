@@ -23,8 +23,8 @@
 	 <% bp.writeHTMLTable(pageContext,"100%","70%"); %>
 	 <% bp.writeHTMLNavigator(out); %>
 	 <% if (bp.isEMailEnabled()){ %>
-		<div class="GroupLabel">E-Mail</div>          
-		<table class="Group" >
+		<div class="GroupLabel text-primary h2">E-Mail</div>
+		<table class="Group card p-2" >
 			<tr>
 				<td><% bp.getController().writeFormLabel(out,"email_a");%> </td>
 				<td><% bp.getController().writeFormInput(out,null,"email_a",true,null,null);%></td>
