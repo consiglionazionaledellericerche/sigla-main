@@ -1438,23 +1438,14 @@ public class CRUDDistintaCassiereBP extends
 
 	public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk)
 			throws Exception {
-        Map<String, String> subjectDN = documentiContabiliService
-				.getCertSubjectDN(firmaOTPBulk.getUserName(),
-						firmaOTPBulk.getPassword());
-		if (subjectDN == null)
-			throw new ApplicationException(
-					"Errore nella lettura dei certificati!\nVerificare Nome Utente e Password!");
-		String codiceFiscale = subjectDN.get("SERIALNUMBER").substring(3);
-		UtenteBulk utente = ((CNRUserInfo) context.getUserInfo()).getUtente();
-		if (controlloCodiceFiscale != null
-				&& controlloCodiceFiscale.equalsIgnoreCase("Y")
-				&& utente.getCodiceFiscaleLDAP() != null
-				&& !utente.getCodiceFiscaleLDAP().equalsIgnoreCase(
-				codiceFiscale)) {
-			throw new ApplicationException("Il codice fiscale \""
-					+ codiceFiscale + "\" presente sul certicato di Firma, "
-					+ "è diverso da quello dell'utente collegato \""
-					+ utente.getCodiceFiscaleLDAP() + "\"!");
+		Map<String, String> subjectDN = Optional.ofNullable(SpringUtil.getBean(DocumentiContabiliService.class).getCertSubjectDN(firmaOTPBulk.getUserName(),
+				firmaOTPBulk.getPassword()))
+				.orElseThrow(() -> new ApplicationException("Errore nella lettura dei certificati!\nVerificare Nome Utente e Password!"));
+		if (Optional.ofNullable(controlloCodiceFiscale).filter(s -> s.equalsIgnoreCase("Y")).isPresent()) {
+			SpringUtil.getBean(DocumentiContabiliService.class).controllaCodiceFiscale(
+					subjectDN,
+					((CNRUserInfo)context.getUserInfo()).getUtente()
+			);
 		}
 		if (!this.isFlusso()) {
 			Distinta_cassiereBulk distintaProvvisoria = (Distinta_cassiereBulk) getModel();
