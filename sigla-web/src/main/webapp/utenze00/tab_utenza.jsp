@@ -87,6 +87,7 @@
                 <td><% bp.getController().writeFormInput( out, "ruolo_supervisore"); %></td>
             </tr>
         <%} %>
+        <% if (bulk != null && bulk.getFl_autenticazione_ldap()) {%>
             <tr>
                 <td colspan="2" align="center">
                     <% JSPUtils.button(out,
@@ -99,5 +100,6 @@
                         bp.getParentRoot().isBootstrap()); %>
                 </td>
             </tr>
+        <% } %>
         </table>
     </div>
