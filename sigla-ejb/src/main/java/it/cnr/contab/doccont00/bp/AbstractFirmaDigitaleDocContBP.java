@@ -418,15 +418,15 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	}
 
     protected void executeSign(ActionContext actioncontext, List<StatoTrasmissione> selectelElements, FirmaOTPBulk firmaOTPBulk) throws Exception{
-        Map<String, String> subjectDN = SpringUtil.getBean(DocumentiContabiliService.class).getCertSubjectDN(firmaOTPBulk.getUserName(), firmaOTPBulk.getPassword());
-        if (subjectDN == null)
-            throw new ApplicationException("Errore nella lettura dei certificati!\nVerificare Nome Utente e Password!");
-        String codiceFiscale = subjectDN.get("SERIALNUMBER").substring(3);
-        UtenteBulk utente = ((CNRUserInfo)actioncontext.getUserInfo()).getUtente();
-        if (controlloCodiceFiscale != null && controlloCodiceFiscale.equalsIgnoreCase("Y") && utente.getCodiceFiscaleLDAP() != null && !codiceFiscale.equalsIgnoreCase(utente.getCodiceFiscaleLDAP())) {
-            throw new ApplicationException("Il codice fiscale \"" + codiceFiscale + "\" presente sul certicato di Firma, " +
-                    "è diverso da quello dell'utente collegato \"" + utente.getCodiceFiscaleLDAP() +"\"!");
-        }
+		Map<String, String> subjectDN = Optional.ofNullable(SpringUtil.getBean(DocumentiContabiliService.class).getCertSubjectDN(firmaOTPBulk.getUserName(),
+				firmaOTPBulk.getPassword()))
+				.orElseThrow(() -> new ApplicationException("Errore nella lettura dei certificati!\nVerificare Nome Utente e Password!"));
+		if (Optional.ofNullable(controlloCodiceFiscale).filter(s -> s.equalsIgnoreCase("Y")).isPresent()) {
+			SpringUtil.getBean(DocumentiContabiliService.class).controllaCodiceFiscale(
+					subjectDN,
+					((CNRUserInfo)actioncontext.getUserInfo()).getUtente()
+			);
+		}
         List<String> nodes = new ArrayList<String>();
         for (StatoTrasmissione bulk : selectelElements) {
             nodes.add(SpringUtil.getBean(DocumentiContabiliService.class).getDocumentKey(bulk, true));
