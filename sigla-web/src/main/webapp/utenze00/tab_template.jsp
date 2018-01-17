@@ -13,21 +13,21 @@
 		CRUDUtenzaBP bp = (CRUDUtenzaBP)BusinessProcess.getBusinessProcess(request);
 %>
 
-	<table border="1" cellspacing="0" cellpadding="2">
+<table cellspacing="0" cellpadding="2">
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "cd_utente"); %></td>
-	<td><% bp.getController().writeFormInputByStatus( out, "cd_utente"); %></td>
+        <td><% bp.getController().writeFormLabel( out, "cd_utente"); %></td>
+        <td><% bp.getController().writeFormInputByStatus( out, "cd_utente"); %></td>
 	</tr>
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "ds_utente"); %></td>
-	<td><% bp.getController().writeFormInput( out, "ds_utente"); %></td>
+        <td><% bp.getController().writeFormLabel( out, "ds_utente"); %></td>
+        <td><% bp.getController().writeFormInput( out, "ds_utente"); %></td>
 	</tr>
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "dt_inizio_validita"); %></td>
-	<td><% bp.getController().writeFormInput( out, "dt_inizio_validita"); %></td>
+        <td><% bp.getController().writeFormLabel( out, "dt_inizio_validita"); %></td>
+        <td><% bp.getController().writeFormInput( out, "dt_inizio_validita"); %></td>
 	</tr>
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "dt_fine_validita"); %></td>
-	<td><% bp.getController().writeFormInput( out, "dt_fine_validita"); %></td>
+        <td><% bp.getController().writeFormLabel( out, "dt_fine_validita"); %></td>
+        <td><% bp.getController().writeFormInput( out, "dt_fine_validita"); %></td>
 	</tr>
-	</table>
+</table>

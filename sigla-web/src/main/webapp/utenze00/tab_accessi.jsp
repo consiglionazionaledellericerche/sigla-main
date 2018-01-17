@@ -13,35 +13,49 @@
 		CRUDUtenzaBP bp = (CRUDUtenzaBP)BusinessProcess.getBusinessProcess(request);
 %>
 
+<div class="card p-2 mt-2">
+    <table class="Form" width="100%">
+      <tr>
+        <%bp.getController().writeFormField( out, "find_uo_per_accesso"); %>
+      </tr>
+    </table>
+</div>
+<div class="card p-2 mt-2">
 <table class="Form" width="100%">
   <tr>
-		<td><%bp.getController().writeFormLabel( out, "cd_uo_per_accesso"); %></td>
-		<td><%bp.getController().writeFormInput( out, "cd_uo_per_accesso"); %>
-				<%bp.getController().writeFormInput( out, "ds_uo_per_accesso"); %>
-				<%bp.getController().writeFormInput( out, "find_uo_per_accesso"); %>								
-		</td>
-  </tr>
-</table>
-<table class="Form" width="100%">
-  <tr>
-		<td><span class="GroupLabel">Accessi disponibili</span></td>
+		<td><span class="GroupLabel text-primary h2">Accessi disponibili</span></td>
 		<td></td>
-		<td><span class="GroupLabel">Accessi assegnati</span></td>
+		<td><span class="GroupLabel text-primary h2">Accessi assegnati</span></td>
   </tr>
   <tr>
 		<td rowspan="2">
-      <%	bp.getCrudAccessi_disponibili().writeHTMLTable(pageContext,null,false,true,false,"100%","300px"); %>
+            <%	bp.getCrudAccessi_disponibili().writeHTMLTable(pageContext,null,false,true,false,"100%","300px"); %>
 		</td>
 		<td>
-		<% JSPUtils.button(pageContext,bp.encodePath("img/doublerightarrow24.gif"),"javascript:submitForm('doAggiungiAccesso')", bp.getParentRoot().isBootstrap()); %>
+		    <% JSPUtils.button(out,
+                bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-right faa-passing" : "img/doublerightarrow24.gif",
+                bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-right" : "img/doublerightarrow24.gif",
+                null,
+                "javascript:submitForm('doAggiungiAccesso')",
+                "btn-outline-primary faa-parent animated-hover btn-block",
+                true,
+                bp.getParentRoot().isBootstrap()); %>
 		</td>
 		<td rowspan="2">
-      <%	bp.getCrudAccessi().writeHTMLTable(pageContext,null,false,false,false,"100%","300px"); %>
+            <%	bp.getCrudAccessi().writeHTMLTable(pageContext,null,false,false,false,"100%","300px"); %>
 		</td>
 	</tr>
 	<tr>
 		<td>
-		<% JSPUtils.button(pageContext,bp.encodePath("img/doubleleftarrow24.gif"),"javascript:submitForm('doRimuoviAccesso')", bp.getParentRoot().isBootstrap()); %>
+            <% JSPUtils.button(out,
+                bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-left faa-passing-reverse" : "img/doubleleftarrow24.gif",
+                bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-left" : "img/doubleleftarrow24.gif",
+                null,
+                 "javascript:submitForm('doRimuoviAccesso')",
+                "btn-outline-primary faa-parent animated-hover btn-block",
+                true,
+                bp.getParentRoot().isBootstrap()); %>
 		</td>
 	</tr>
 </table>
+</div>
