@@ -15,6 +15,7 @@ import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
 import it.cnr.contab.doccont00.intcass.xmlbnl.FlussoOrdinativi;
 import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato;
+import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione;
 import it.cnr.contab.doccont00.intcass.xmlbnl.ObjectFactory;
 import it.cnr.contab.doccont00.intcass.xmlbnl.Reversale;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
@@ -108,7 +109,9 @@ public class CRUDDistintaCassiereBP extends
 	protected DocumentiContabiliService documentiContabiliService;
 	private UtenteFirmaDettaglioBulk firmatarioDistinta;
 	protected String controlloCodiceFiscale;
+	protected String tagCup;
 	protected String formatoflusso;
+	
 	public CRUDDistintaCassiereBP() {
 		super("Tn");
 
@@ -257,6 +260,10 @@ public class CRUDDistintaCassiereBP extends
 					formatoflusso = sess.getVal01(context.getUserContext(),it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context), null, "COSTANTI", "FORMATO_FLUSSO_BANCA");
 				else
 					throw new ApplicationException("Configurazione formato flusso banca mancante");
+			if (sess.getVal02( context.getUserContext(),it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context), null, "COSTANTI", "FORMATO_FLUSSO_BANCA") != null)				
+				tagCup = sess.getVal02(context.getUserContext(),it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context), null, "COSTANTI", "FORMATO_FLUSSO_BANCA");
+			else
+				throw new ApplicationException("Configurazione val02 formato flusso banca mancante N - No tag Cup - S -Si tag Cup.");
 		} catch (ComponentException e) {
 			throw handleException(e);
 		} catch (RemoteException e) {
@@ -842,7 +849,8 @@ public class CRUDDistintaCassiereBP extends
 					obb_conto = true;
 				} else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO) == 0
 						&& docContabile.getModalitaPagamento() != null
-						&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0) {
+						&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0 //&& docContabile.getDt_pagamento_richiesta()==null
+						) {
 					throw new ApplicationException(
 							"Impossibile generare il flusso, Modalita di pagamento non valida per il terzo "
 									+ docContabile.getCdTerzo()
@@ -862,10 +870,37 @@ public class CRUDDistintaCassiereBP extends
 						userContext, bulk);
 				BigDecimal totAssSiope = BigDecimal.ZERO;
 				BigDecimal totAssCup = BigDecimal.ZERO;
-				VDocumentiFlussoBulk oldDoc = null;
+				VDocumentiFlussoBulk oldDoc = null; 
 				for (Iterator c = listClass.iterator(); c.hasNext();) {
 					VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c.next();
-					if (doc.getCdSiope() != null) {
+					// 17/01/2018 per non indicare cup nel tag ma solo nella causale e ripartire gli importi solo per siope 
+					boolean salta= false;
+					
+					if (tagCup!=null && tagCup.compareTo("N")==0){ 
+						if(doc.getCdCup()!=null){ 
+							if (infoben.getCausale() != null) {
+								if (!infoben.getCausale().contains(
+									doc.getCdCup()))
+									infoben.setCausale(infoben.getCausale()
+										+ "-" + doc.getCdCup());
+							} else
+								infoben.setCausale("CUP " + doc.getCdCup());
+							doc.setCdCup(null);
+						}
+					
+						if (infoben.getClassificazione()!=null && infoben.getClassificazione().size()!=0){
+							for (Iterator it=infoben.getClassificazione().iterator();it.hasNext();){
+								Classificazione presente= (Classificazione)it.next();
+								if (doc.getCdSiope().compareTo(presente.getCodiceCgu())==0){
+									salta=true;
+									break;	
+								}							
+							}	
+						}	
+					}
+					if(!salta){
+						// 17/01/2018 per non indicare cup nel tag - fine aggiunta
+					  if (doc.getCdSiope() != null) {
 						// cambio codice siope senza cup dovrebbe essere il
 						// resto
 						if (oldDoc != null
@@ -980,7 +1015,8 @@ public class CRUDDistintaCassiereBP extends
 											}
 						oldDoc = doc;
 					}
-				}
+				 } // if(!salta){ -- 17/01/2018 per non indicare cup nel tag  
+				}	
 				// differenza ultimo
 				if (totAssSiope.subtract(totAssCup).compareTo(BigDecimal.ZERO) > 0) {
 					if (totAssCup.compareTo(BigDecimal.ZERO) != 0
@@ -1067,7 +1103,9 @@ public class CRUDDistintaCassiereBP extends
 						sepa.setBic(docContabile.getBic());
 					else
 						throw new ApplicationException(
-								"Formato del codice bic non valido.");
+								"Formato del codice bic non valido per il terzo "
+										+ docContabile.getCdTerzo()										
+								);
 					sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
 							.toString()
 							+ "-"
