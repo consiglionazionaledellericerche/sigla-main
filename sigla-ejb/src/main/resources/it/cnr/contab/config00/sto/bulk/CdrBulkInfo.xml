@@ -6,6 +6,7 @@
 		name="find_unita_padre"
 		property="unita_padre"
 		inputType="SEARCHTOOL" 
+		formName="searchtool"
 		enabledOnSearch="true"
 		/>
 	<fieldProperty
@@ -37,6 +38,8 @@
 		name="find_responsabile"
 		property="responsabile"
 		inputType="SEARCHTOOL" 
+		formName="searchtool"
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
 		enabledOnSearch="true"
 		/>
 	<fieldProperty
@@ -105,6 +108,7 @@
 		property="ds_cdr"
 		label="Descrizione"
 		inputType="TEXTAREA"
+		inputCssClass="w-100"
 		cols="70"
 		rows="5"
 		inputSize="250"
@@ -135,8 +139,10 @@
 		property="indirizzo"
 		label="Indirizzo"
 		inputType="TEXTAREA"
+		inputCssClass="w-100"
 		maxLength="200"
 		inputSize="100"
+		rows="3"
 		enabledOnSearch="true"
 		/>
 	<fieldProperty
