@@ -8,6 +8,8 @@
 		property="unita_org_per_ruolo"
 		optionsProperty="unita_org_per_ruolo"
 		readonlyProperty="ROFind_unita_org_per_ruolo"
+		formName="searchtool"
+		label="Unit&#224; organizzativa"
 		inputType="SEARCHTOOL" 
 		enabledOnView="true"
 		/>
@@ -30,8 +32,10 @@
 		name="find_uo_per_accesso"
 		property="unita_org_per_accesso"
 		optionsProperty="unita_org_per_accesso"
+		formName="searchtool"
 		readonlyProperty="ROFind_unita_org_per_accesso"
-		inputType="SEARCHTOOL" 
+		inputType="SEARCHTOOL"
+		label="Unit&#224; organizzativa"
 		enabledOnView="true"
 		/>
 	<fieldProperty
