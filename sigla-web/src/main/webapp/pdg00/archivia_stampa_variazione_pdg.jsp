@@ -30,23 +30,24 @@ function doScaricaAllegato() {
 <body class="Form">
 
 <%	bp.openFormWindow(pageContext); %>
-
-<table width=100%>
- <tr>
-  <td>
-	<fieldset class="fieldset">
-    <legend class="GroupLabel"><% bp.getController().writeFormInput(out,null,"ti_signedText",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;\"");%></legend>
-		<table>
-		  <tr>	
-			<td><% bp.getController().writeFormLabel(out,"findpdg_variazioneForPrint"); %></td>
-			<td><% bp.getController().writeFormInput(out,"findpdg_variazioneForPrint"); %></td>
-			<td><% bp.getController().writeFormInput(out,"default","attivaFile");%></td>
-		  </tr>  
-		</table>
-	</fieldset>
-   </td>
-  </tr>
-</table>
+<div class="card p-2">
+	<table width=100%>
+	 <tr>
+	  <td>
+		<fieldset class="fieldset">
+	    <legend class="GroupLabel"><% bp.getController().writeFormInput(out,null,"ti_signedText",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;\"");%></legend>
+			<table>
+			  <tr>	
+				<td><% bp.getController().writeFormLabel(out,"findpdg_variazioneForPrint"); %></td>
+				<td><% bp.getController().writeFormInput(out,"findpdg_variazioneForPrint"); %></td>
+				<td><% bp.getController().writeFormInput(out,"default","attivaFile");%></td>
+			  </tr>  
+			</table>
+		</fieldset>
+	   </td>
+	  </tr>
+	</table>
+</div>	
 <fieldset class="fieldset">
 <legend class="GroupLabel"><span class="GroupLabel" style="background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;">Allegati</span></legend>
 	<table width=100%>

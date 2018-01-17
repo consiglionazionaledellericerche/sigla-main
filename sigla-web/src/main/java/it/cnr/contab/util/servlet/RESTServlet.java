@@ -53,6 +53,7 @@ import java.util.*;
 
 public class RESTServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
+	private static final Integer MAX_ITEMS_PER_PAGE = 5000;
 	private List<String> restExtension;
     private File actionDirFile;    
     private ActionMappings mappings;
@@ -345,12 +346,14 @@ public class RESTServlet extends HttpServlet{
 	
 	private void parseRequestParameter(HttpServletRequest req, HttpActionContext actioncontext,
 			JSONRequest jsonRequest, ConsultazioniBP consBP) throws RemoteException, BusinessProcessException {
-		if (jsonRequest != null) {			
-			if (jsonRequest.getMaxItemsPerPage() != null && jsonRequest.getMaxItemsPerPage().compareTo(0) > 0){
-                logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". MaxItemsPerPage: "+jsonRequest.getMaxItemsPerPage());
-	    		consBP.setPageSize(jsonRequest.getMaxItemsPerPage());
-	    		consBP.refresh(actioncontext);
-			}
+		if (jsonRequest != null) {
+			Integer maxItemsPerPage = Optional.ofNullable(jsonRequest.getMaxItemsPerPage())
+					.filter(maxItems -> maxItems.compareTo(0) > 0 && maxItems.compareTo(MAX_ITEMS_PER_PAGE) < 0)
+					.orElse(10);
+			logger.info("RequestedSessionId: {}. MaxItemsPerPage: {}", req.getRequestedSessionId(), maxItemsPerPage);
+			consBP.setPageSize(maxItemsPerPage);
+			consBP.refresh(actioncontext);
+
 			if (jsonRequest.getActivePage() != null && jsonRequest.getActivePage().compareTo(0) > 0){
                 logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". ActivePage: "+jsonRequest.getActivePage());
 	    		consBP.goToPage(actioncontext, jsonRequest.getActivePage());
