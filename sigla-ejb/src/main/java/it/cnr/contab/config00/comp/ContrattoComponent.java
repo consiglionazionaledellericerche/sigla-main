@@ -1457,9 +1457,11 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 					else
 						contratto.setFl_pubblica_contratto(Boolean.FALSE);					
 				}
+				else
+					contratto.setFl_pubblica_contratto(Boolean.FALSE);
 		    }else 
 		    	contratto.setFl_pubblica_contratto(Boolean.FALSE);
-		    if (contratto.isPassivo() && contratto.getFl_pubblica_contratto())  
+		    if (contratto.isPassivo() && contratto.getFl_pubblica_contratto()!=null && contratto.getFl_pubblica_contratto())  
 					if (contratto.getDitteInvitate()!=null && contratto.getDitteInvitate().size()==0 )
 						throw handleException(new ApplicationException("Bisogna indicare le ditte invitate!"));
 
