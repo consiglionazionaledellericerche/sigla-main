@@ -29,6 +29,7 @@ import it.cnr.jada.bulk.UserInfo;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.OrderConstants;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.ConsultazioniBP;
@@ -141,7 +142,12 @@ public class RESTServlet extends HttpServlet{
     		        			CompoundFindClause compoundFindClause = new CompoundFindClause();
     		        			for (Clause clause : jsonRequest.getClauses()) {
     		    	                logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". Clause. Condition: "+clause.getCondition()+", fieldName: "+clause.getFieldName()+", Operator: "+clause.getOperator()+", fieldValue: "+clause.getFieldValue());
-    		        				compoundFindClause.addClause(clause.getCondition(), clause.getFieldName(), clause.getSQLOperator(), clause.getFieldValue());
+                                    clause.validate();
+    		    	                compoundFindClause.addClause(
+                                            clause.getCondition(),
+                                            clause.getFieldName(),
+                                            clause.getSQLOperator(),
+                                            clause.getFieldValue());
     		        			}
     		        			consBP.setFindclause(compoundFindClause);
     		        		}
