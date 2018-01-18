@@ -1,8 +1,10 @@
 package it.cnr.contab.util.servlet;
 
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.util.List;
+import java.util.Optional;
 
 public class JSONRequest extends JSONRESTRequest{
 	private Integer activePage;
@@ -114,6 +116,24 @@ public class JSONRequest extends JSONRESTRequest{
 			else if (operator.equalsIgnoreCase("isnotnull"))
 				return SQLBuilder.ISNOTNULL;
 			return SQLBuilder.EQUALS;
+		}
+
+		@Override
+		public String toString() {
+			return "Clause {" +
+					"condition='" + condition + '\'' +
+					", fieldName='" + fieldName + '\'' +
+					", operator='" + operator + '\'' +
+					", fieldValue=" + fieldValue +
+					'}';
+		}
+
+		public void validate() throws ComponentException{
+			if (!Optional.ofNullable(getSQLOperator()).isPresent() || !Optional.ofNullable(getFieldName()).isPresent())
+				throw new ComponentException("Cannot add clause " + this);
+			if (!(getSQLOperator() == SQLBuilder.ISNULL || getSQLOperator() == SQLBuilder.ISNOTNULL) &&
+					!Optional.ofNullable(getFieldValue()).isPresent())
+				throw new ComponentException("Cannot add clause " + this);
 		}
 	}
 
