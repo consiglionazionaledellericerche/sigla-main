@@ -8,9 +8,9 @@ import it.cnr.jada.persistency.PersistencyException;
 
 public class TransactionalRichiestaUopComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements RichiestaUopComponentSession {
 
-	public void completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws RemoteException,ComponentException, PersistencyException{
+	public RichiestaUopBulk completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws RemoteException,ComponentException, PersistencyException{
 		try {
-			invoke("completaRichiesta",new Object[] {
+			return (RichiestaUopBulk)invoke("completaRichiesta",new Object[] {
 				userContext,
 				richiesta });
 		} catch(java.rmi.RemoteException e) {

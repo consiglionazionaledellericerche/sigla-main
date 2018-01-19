@@ -88,15 +88,16 @@ public Forward doBringBackSearchFindUnitaOperativaOrd(ActionContext context,
 		throws java.rmi.RemoteException {
 
 		richiesta.setUnitaOperativaOrd(uop);
+		richiesta.getNumerazioneOrd().setUnitaOperativaOrd(uop);
 		((CRUDBP)context.getBusinessProcess()).setDirty(true);
 		if (uop != null){
 			CRUDRichiestaUopBP bp = (CRUDRichiestaUopBP)context.getBusinessProcess();
 
 			try {
 				RichiestaUopComponentSession h = (RichiestaUopComponentSession)bp.createComponentSession();
-				h.completaRichiesta(context.getUserContext(), richiesta);
+				RichiestaUopBulk richiestaCompleta = h.completaRichiesta(context.getUserContext(), richiesta);
 				try {
-					bp.setModel(context,richiesta);
+					bp.setModel(context,richiestaCompleta);
 				} catch (BusinessProcessException e) {
 				}
 			} catch (BusinessProcessException e) {

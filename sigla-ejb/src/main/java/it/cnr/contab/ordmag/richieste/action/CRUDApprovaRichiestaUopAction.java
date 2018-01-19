@@ -21,6 +21,13 @@ public Forward doInviaOrdine(ActionContext actioncontext) throws RemoteException
 		RichiestaUopBulk richiesta = (RichiestaUopBulk) bp.getModel();
 		if (richiesta.isDefinitiva()){
 			richiesta.setStato(RichiestaUopBulk.STATO_INVIATA_ORDINE);
+			java.sql.Timestamp dataReg = null;
+			try {
+				dataReg = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+				richiesta.setDataInvio(dataReg);
+			} catch (javax.ejb.EJBException e) {
+				throw new it.cnr.jada.DetailedRuntimeException(e);
+			}
 		}
 		getBusinessProcess(actioncontext).save(actioncontext);
 		return actioncontext.findDefaultForward();

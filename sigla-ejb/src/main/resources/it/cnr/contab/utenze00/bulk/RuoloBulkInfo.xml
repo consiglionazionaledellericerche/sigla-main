@@ -54,6 +54,7 @@
 		property="tipo_ruolo"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
+		CRUDBusinessProcessName="CRUDTipoRuoloBP"
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		label="Tipo"/>
