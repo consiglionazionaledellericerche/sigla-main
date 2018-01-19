@@ -10,8 +10,10 @@ import it.cnr.contab.ordmag.anag00.NumerazioneOrdHome;
 import it.cnr.contab.ordmag.anag00.TipoOperazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
@@ -65,6 +67,7 @@ public class RichiestaUopHome extends BulkHome {
 			throw new PersistencyException("Selezionare prima l'unità operativa");
 		}
 		SQLBuilder sql = numerazioneHome.selectByClause(userContext, compoundfindclause);
+		sql.addSQLClause("AND", "NUMERAZIONE_ORD.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
 		sql.addSQLClause("AND", "NUMERAZIONE_ORD.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, richiestaBulk.getCdUnitaOperativa());
 		sql.addSQLClause("AND", "NUMERAZIONE_ORD.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_RICHIESTA);
 		return sql;
@@ -72,14 +75,15 @@ public class RichiestaUopHome extends BulkHome {
 
 	public SQLBuilder selectUnitaOperativaOrdDestByClause(UserContext userContext, RichiestaUopBulk richiestaBulk, 
 			UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk, 
-			CompoundFindClause compoundfindclause) throws PersistencyException{
+			CompoundFindClause compoundfindclause) throws PersistencyException, ApplicationException{
 		SQLBuilder sql = unitaOperativaHome.createSQLBuilder();
 		sql.addClause(compoundfindclause);
 
 		sql.addTableToHeader("ASS_UNITA_OPERATIVA_ORD");
 		sql.addSQLJoin("UNITA_OPERATIVA_ORD.CD_UNITA_OPERATIVA", "ASS_UNITA_OPERATIVA_ORD.CD_UNITA_OPERATIVA_RIF");
-		if (richiestaBulk == null || richiestaBulk.getCdUnitaOperativa() == null){
-			throw new PersistencyException("Selezionare prima l'unità operativa");
+		if (richiestaBulk == null || ((richiestaBulk.getNumerazioneOrd() == null|| richiestaBulk.getNumerazioneOrd().getCdUnitaOperativa() == null) && 
+				(richiestaBulk.getUnitaOperativaOrd() == null|| richiestaBulk.getUnitaOperativaOrd().getCdUnitaOperativa() == null))){
+			throw new ApplicationException("Selezionare prima l'unità operativa");
 		}
 		sql.addSQLClause("AND", "ASS_UNITA_OPERATIVA_ORD.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, richiestaBulk.getCdUnitaOperativa());
 
