@@ -18,7 +18,7 @@
       path="/ListaBolleScaricoGenerateAction" actionClass="it.cnr.contab.ordmag.magazzino.action.ListaBolleScaricoGenerateAction">
   </action>
   <action 
-      path="/GenerazioneOrdineDaRichiesteAction" actionClass="it.cnr.contab.ordmag.richieste.action.GenerazioneOrdineDaRichiesteAction">
+      path="/GenerazioneOrdineDaRichiesteAction" actionClass="it.cnr.contab.ordmag.ordini.action.GenerazioneOrdineDaRichiesteAction">
   </action>
   <action 
       path="/ScaricoMagazzinoAction" actionClass="it.cnr.contab.ordmag.magazzino.action.ScaricoMagazzinoAction">

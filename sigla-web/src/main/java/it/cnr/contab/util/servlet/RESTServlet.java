@@ -29,9 +29,12 @@ import it.cnr.jada.bulk.UserInfo;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.OrderConstants;
+import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.ConsultazioniBP;
 
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,6 +54,7 @@ import java.util.*;
 
 public class RESTServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
+	private static final Integer MAX_ITEMS_PER_PAGE = 5000;
 	private List<String> restExtension;
     private File actionDirFile;    
     private ActionMappings mappings;
@@ -122,6 +126,7 @@ public class RESTServlet extends HttpServlet{
     	            		businessProcess = mappings.createBusinessProcess(actionmapping, httpactioncontext);
 
     	                logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". Business Process: "+businessProcess.getName());
+						RemoteIterator iterator = null;
     	            	if (command.equals(COMMAND_POST)) {
     	            		Boolean isEnableBP = false;
     	            		if (actionmapping.needExistingSession())
@@ -137,15 +142,21 @@ public class RESTServlet extends HttpServlet{
     		        			CompoundFindClause compoundFindClause = new CompoundFindClause();
     		        			for (Clause clause : jsonRequest.getClauses()) {
     		    	                logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". Clause. Condition: "+clause.getCondition()+", fieldName: "+clause.getFieldName()+", Operator: "+clause.getOperator()+", fieldValue: "+clause.getFieldValue());
-    		        				compoundFindClause.addClause(clause.getCondition(), clause.getFieldName(), clause.getSQLOperator(), clause.getFieldValue());
+                                    clause.validate();
+    		    	                compoundFindClause.addClause(
+                                            clause.getCondition(),
+                                            clause.getFieldName(),
+                                            clause.getSQLOperator(),
+                                            clause.getFieldValue());
     		        			}
     		        			consBP.setFindclause(compoundFindClause);
     		        		}
-    		            	consBP.setIterator(httpactioncontext, 
-    		            			consBP.search(httpactioncontext,
-    		            			consBP.getFindclause(),
-    		        				(OggettoBulk) consBP.getBulkInfo().getBulkClass().newInstance()));
-    		            	parseRequestParameter(req, httpactioncontext, jsonRequest, consBP);		            	
+							iterator = consBP.search(httpactioncontext,
+									consBP.getFindclause(),
+									(OggettoBulk) consBP.getBulkInfo().getBulkClass().newInstance());
+							consBP.setIterator(httpactioncontext,
+									iterator);
+    		            	parseRequestParameter(req, httpactioncontext, jsonRequest, consBP);
     	            	}
     	            	httpactioncontext.setBusinessProcess(businessProcess);
     	                req.setAttribute(it.cnr.jada.action.BusinessProcess.class.getName(), businessProcess);
@@ -170,6 +181,7 @@ public class RESTServlet extends HttpServlet{
     	            resp.setHeader("WWW-Authenticate", "Basic realm=\"SIGLA\"");   
     			}
     	        logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". End");
+                req.getSession().invalidate();
     		} catch (ComponentException e) {
     			logger.error("ComponentException", e);
     			resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);			
@@ -340,12 +352,14 @@ public class RESTServlet extends HttpServlet{
 	
 	private void parseRequestParameter(HttpServletRequest req, HttpActionContext actioncontext,
 			JSONRequest jsonRequest, ConsultazioniBP consBP) throws RemoteException, BusinessProcessException {
-		if (jsonRequest != null) {			
-			if (jsonRequest.getMaxItemsPerPage() != null && jsonRequest.getMaxItemsPerPage().compareTo(0) > 0){
-                logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". MaxItemsPerPage: "+jsonRequest.getMaxItemsPerPage());
-	    		consBP.setPageSize(jsonRequest.getMaxItemsPerPage());
-	    		consBP.refresh(actioncontext);
-			}
+		if (jsonRequest != null) {
+			Integer maxItemsPerPage = Optional.ofNullable(jsonRequest.getMaxItemsPerPage())
+					.filter(maxItems -> maxItems.compareTo(0) > 0 && maxItems.compareTo(MAX_ITEMS_PER_PAGE) < 0)
+					.orElse(10);
+			logger.info("RequestedSessionId: {}. MaxItemsPerPage: {}", req.getRequestedSessionId(), maxItemsPerPage);
+			consBP.setPageSize(maxItemsPerPage);
+			consBP.refresh(actioncontext);
+
 			if (jsonRequest.getActivePage() != null && jsonRequest.getActivePage().compareTo(0) > 0){
                 logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". ActivePage: "+jsonRequest.getActivePage());
 	    		consBP.goToPage(actioncontext, jsonRequest.getActivePage());
