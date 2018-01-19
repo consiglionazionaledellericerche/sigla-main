@@ -177,8 +177,8 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
         				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" è necessario indicare il progetto.");
         			}
     			}
-    			if (richiesta.isDefinitivaOInviata() && riga.getCentroResponsabilita() == null || riga.getCentroResponsabilita().getCd_centro_responsabilita() == null || 
-    					riga.getLineaAttivita() == null || riga.getLineaAttivita().getCd_linea_attivita() == null){
+    			if (richiesta.isDefinitivaOInviata() && (riga.getCentroResponsabilita() == null || riga.getCentroResponsabilita().getCd_centro_responsabilita() == null || 
+    					riga.getLineaAttivita() == null || riga.getLineaAttivita().getCd_linea_attivita() == null)){
     				value = null;
     				try {
         				value = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, richiesta.getEsercizio(), null, Configurazione_cnrBulk.PK_OBBLIGATORIETA_ORDINI, Configurazione_cnrBulk.SK_GAE_RICHIESTA).getVal01();
@@ -549,7 +549,7 @@ private OggettoBulk inizializzaRichiesta(UserContext usercontext, OggettoBulk og
 }
 
 private void assegnaUnitaOperativaDest(UserContext usercontext, RichiestaUopBulk richiesta, RichiestaUopHome home,
-		UnitaOperativaOrdHome uopHome) throws PersistencyException {
+		UnitaOperativaOrdHome uopHome) throws PersistencyException, ComponentException {
 	if (richiesta.getCdUnitaOperativaDest() == null){
 		SQLBuilder sqlAss = home.selectUnitaOperativaOrdDestByClause(usercontext, richiesta, uopHome, new UnitaOperativaOrdBulk(), new CompoundFindClause());
 		List listAssUop=uopHome.fetchAll(sqlAss);
@@ -600,11 +600,12 @@ private Boolean isUtenteAbilitato(UserContext usercontext, RichiestaUopBulk rich
 	return true;
 }
 
-public void completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws PersistencyException, ComponentException{
+public RichiestaUopBulk completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws PersistencyException, ComponentException{
 	RichiestaUopHome home = (RichiestaUopHome) getHomeCache(userContext).getHome(RichiestaUopBulk.class);
 	assegnaNumeratoreOrd(userContext, richiesta, home);
 	UnitaOperativaOrdHome uopHome = (UnitaOperativaOrdHome)getHome(userContext, UnitaOperativaOrdBulk.class);
 	assegnaUnitaOperativaDest(userContext, richiesta, home, uopHome);
+	return richiesta;
 }
 
 @Override

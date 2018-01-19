@@ -133,8 +133,11 @@ public class RichiestaUopBulk extends RichiestaUopBase implements AllegatoParent
 	 **/
 	public java.lang.String getCdUnitaOperativa() {
 		NumerazioneOrdBulk numerazioneOrd = this.getNumerazioneOrd();
-		if (numerazioneOrd == null)
-			return null;
+		if (numerazioneOrd == null){
+			if (this.getUnitaOperativaOrd() == null)
+				return null;
+			return this.getUnitaOperativaOrd().getCdUnitaOperativa();
+		}
 		return getNumerazioneOrd().getCdUnitaOperativa();
 	}
 	public java.lang.String getCdUopRichiesta() {

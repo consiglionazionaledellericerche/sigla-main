@@ -60,11 +60,12 @@ public Boolean isUtenteAbilitatoValidazioneRichiesta(UserContext usercontext, Ri
 		throw uncaughtError(usercontext,componentObj,e);
 	}
 }
-public void completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws PersistencyException,ComponentException, javax.ejb.EJBException, RemoteException {
+public RichiestaUopBulk completaRichiesta(UserContext userContext, RichiestaUopBulk richiesta) throws PersistencyException,ComponentException, javax.ejb.EJBException, RemoteException {
 	pre_component_invocation(userContext,componentObj);
 	try {
-		((RichiestaUopComponent)componentObj).completaRichiesta(userContext, richiesta);
+		RichiestaUopBulk result = ((RichiestaUopComponent)componentObj).completaRichiesta(userContext, richiesta);
 		component_invocation_succes(userContext,componentObj);
+		return result;
 	} catch(it.cnr.jada.comp.NoRollbackException e) {
 		component_invocation_succes(userContext,componentObj);
 		throw e;
