@@ -15,6 +15,7 @@ import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
 import it.cnr.contab.doccont00.intcass.xmlbnl.FlussoOrdinativi;
 import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato;
+import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione;
 import it.cnr.contab.doccont00.intcass.xmlbnl.ObjectFactory;
 import it.cnr.contab.doccont00.intcass.xmlbnl.Reversale;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
@@ -108,7 +109,9 @@ public class CRUDDistintaCassiereBP extends
 	protected DocumentiContabiliService documentiContabiliService;
 	private UtenteFirmaDettaglioBulk firmatarioDistinta;
 	protected String controlloCodiceFiscale;
-
+	protected String tagCup;
+	protected String formatoflusso;
+	
 	public CRUDDistintaCassiereBP() {
 		super("Tn");
 
@@ -253,7 +256,14 @@ public class CRUDDistintaCassiereBP extends
 					.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
 			controlloCodiceFiscale = sess.getVal01(context.getUserContext(),
 					"CONTROLLO_CF_FIRMA_DOCCONT");
-
+			if (sess.getVal01( context.getUserContext(),it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context), null, "COSTANTI", "FORMATO_FLUSSO_BANCA") != null)				
+					formatoflusso = sess.getVal01(context.getUserContext(),it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context), null, "COSTANTI", "FORMATO_FLUSSO_BANCA");
+				else
+					throw new ApplicationException("Configurazione formato flusso banca mancante");
+			if (sess.getVal02( context.getUserContext(),it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context), null, "COSTANTI", "FORMATO_FLUSSO_BANCA") != null)				
+				tagCup = sess.getVal02(context.getUserContext(),it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context), null, "COSTANTI", "FORMATO_FLUSSO_BANCA");
+			else
+				throw new ApplicationException("Configurazione val02 formato flusso banca mancante N - No tag Cup - S -Si tag Cup.");
 		} catch (ComponentException e) {
 			throw handleException(e);
 		} catch (RemoteException e) {
@@ -677,8 +687,11 @@ public class CRUDDistintaCassiereBP extends
 					.recuperaIbanUo(context.getUserContext(),
 							((Distinta_cassiereBulk) getModel())
 									.getUnita_organizzativa());
-			currentFlusso.setCodiceEnteBT(currentFlusso.getCodiceEnte() + "-"
-					+ banca.getCodice_iban() + "-" + extcas.getCodiceSia());
+//			currentFlusso.setCodiceEnteBT(currentFlusso.getCodiceEnte() + "-"
+//					+ banca.getCodice_iban() + "-" + extcas.getCodiceSia());
+			//modifica per tesorà 
+			currentFlusso.setCodiceEnteBT(Formatta(extcas.getCodiceProto(), "D",
+					7, "0"));
 			currentFlusso.setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo
 					.getEsercizio(context));
 
@@ -694,7 +707,8 @@ public class CRUDDistintaCassiereBP extends
 						.next();
 				currentReversale = (Reversale) recuperaDatiReversaleFlusso(
 						context.getUserContext(), bulk);
-				if (bulk.getTi_cc_bi().compareTo(SospesoBulk.TIPO_BANCA_ITALIA) == 0) {
+				//modifica per tesorà 
+				/*if (bulk.getTi_cc_bi().compareTo(SospesoBulk.TIPO_BANCA_ITALIA) == 0) {
 					// bisogna aggiornare l'iban se banca d'italia ma lo posso
 					// sapere solo in questo punto
 					currentFlusso.setCodiceEnteBT(currentFlusso.getCodiceEnte()
@@ -702,7 +716,7 @@ public class CRUDDistintaCassiereBP extends
 							+ component.getContoSpecialeEnteF24(context
 							.getUserContext()) + "-"
 							+ extcas.getCodiceSia());
-				}
+				}*/
 				currentFlusso.getReversale().add(currentReversale);
 			}
 			List dettagliMan = ((DistintaCassiereComponentSession) createComponentSession())
@@ -719,7 +733,7 @@ public class CRUDDistintaCassiereBP extends
 						context.getUserContext(), bulk);
 				currentFlusso.getMandato().add(currentMandato);
 			}
-			String fileName = currentFlusso.getIdentificativoFlusso() + ".xslt";
+			String fileName = currentFlusso.getIdentificativoFlusso() + "."+formatoflusso;
 			File file = new File(System.getProperty("tmp.dir.SIGLAWeb")
 					+ "/tmp/", fileName);
 
@@ -783,7 +797,10 @@ public class CRUDDistintaCassiereBP extends
 				man.setDataMandato(xgc);
 				man.setImportoMandato(docContabile.getImDocumento().setScale(2,
 						BigDecimal.ROUND_HALF_UP));
-				man.setContoEvidenza(bancauo.getNumero_conto());
+				//man.setContoEvidenza(bancauo.getNumero_conto());
+				//modifica per tesorà 
+				man.setContoEvidenza("1");
+				
 				infoben.setProgressivoBeneficiario(1);// Dovrebbe essere sempre
 				// 1 ?
 				infoben.setImportoBeneficiario(docContabile.getImDocumento()
@@ -832,7 +849,8 @@ public class CRUDDistintaCassiereBP extends
 					obb_conto = true;
 				} else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO) == 0
 						&& docContabile.getModalitaPagamento() != null
-						&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0) {
+						&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0 //&& docContabile.getDt_pagamento_richiesta()==null
+						) {
 					throw new ApplicationException(
 							"Impossibile generare il flusso, Modalita di pagamento non valida per il terzo "
 									+ docContabile.getCdTerzo()
@@ -846,14 +864,43 @@ public class CRUDDistintaCassiereBP extends
 				// if(bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute())==0)
 				// infoben.setTipoPagamento("COMPENSAZIONE");
 				// Classificazioni
+				infoben.setDestinazione("LIBERA");
+				//infoben.setTipoContabilitaEnteRicevente("INFRUTTIFERA");
 				List listClass = componentDistinta.findDocumentiFlussoClass(
 						userContext, bulk);
 				BigDecimal totAssSiope = BigDecimal.ZERO;
 				BigDecimal totAssCup = BigDecimal.ZERO;
-				VDocumentiFlussoBulk oldDoc = null;
+				VDocumentiFlussoBulk oldDoc = null; 
 				for (Iterator c = listClass.iterator(); c.hasNext();) {
 					VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c.next();
-					if (doc.getCdSiope() != null) {
+					// 17/01/2018 per non indicare cup nel tag ma solo nella causale e ripartire gli importi solo per siope 
+					boolean salta= false;
+					
+					if (tagCup!=null && tagCup.compareTo("N")==0){ 
+						if(doc.getCdCup()!=null){ 
+							if (infoben.getCausale() != null) {
+								if (!infoben.getCausale().contains(
+									doc.getCdCup()))
+									infoben.setCausale(infoben.getCausale()
+										+ "-" + doc.getCdCup());
+							} else
+								infoben.setCausale("CUP " + doc.getCdCup());
+							doc.setCdCup(null);
+						}
+					
+						if (infoben.getClassificazione()!=null && infoben.getClassificazione().size()!=0){
+							for (Iterator it=infoben.getClassificazione().iterator();it.hasNext();){
+								Classificazione presente= (Classificazione)it.next();
+								if (doc.getCdSiope().compareTo(presente.getCodiceCgu())==0){
+									salta=true;
+									break;	
+								}							
+							}	
+						}	
+					}
+					if(!salta){
+						// 17/01/2018 per non indicare cup nel tag - fine aggiunta
+					  if (doc.getCdSiope() != null) {
 						// cambio codice siope senza cup dovrebbe essere il
 						// resto
 						if (oldDoc != null
@@ -968,7 +1015,8 @@ public class CRUDDistintaCassiereBP extends
 											}
 						oldDoc = doc;
 					}
-				}
+				 } // if(!salta){ -- 17/01/2018 per non indicare cup nel tag  
+				}	
 				// differenza ultimo
 				if (totAssSiope.subtract(totAssCup).compareTo(BigDecimal.ZERO) > 0) {
 					if (totAssCup.compareTo(BigDecimal.ZERO) != 0
@@ -1055,7 +1103,9 @@ public class CRUDDistintaCassiereBP extends
 						sepa.setBic(docContabile.getBic());
 					else
 						throw new ApplicationException(
-								"Formato del codice bic non valido.");
+								"Formato del codice bic non valido per il terzo "
+										+ docContabile.getCdTerzo()										
+								);
 					sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
 							.toString()
 							+ "-"
@@ -1165,8 +1215,9 @@ public class CRUDDistintaCassiereBP extends
 				rev.setDataReversale(xgc);
 				rev.setImportoReversale(docContabile.getImDocumento().setScale(
 						2, BigDecimal.ROUND_HALF_UP));
-				rev.setContoEvidenza(docContabile.getNumeroConto());
-
+				//rev.setContoEvidenza(docContabile.getNumeroConto());
+				//modifica per tesorà 
+				rev.setContoEvidenza("1");
 				infover.setProgressivoVersante(1);// Dovrebbe essere sempre 1 ?
 				infover.setImportoVersante(docContabile.getImDocumento()
 						.setScale(2, BigDecimal.ROUND_HALF_UP));
@@ -1176,6 +1227,7 @@ public class CRUDDistintaCassiereBP extends
 				if (docContabile.getTiDocumento().compareTo(
 						ReversaleBulk.TIPO_REGOLAM_SOSPESO) == 0)
 					infover.setTipoRiscossione("REGOLARIZZAZIONE");
+				
 				// da committare
 				// if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO)==0
 				// &&
@@ -1184,7 +1236,9 @@ public class CRUDDistintaCassiereBP extends
 						ReversaleBulk.TIPO_INCASSO) == 0)
 					infover.setTipoRiscossione("CASSA");
 				// Classificazioni
-
+				infover.setTipoEntrata("INFRUTTIFERO");
+				infover.setDestinazione("LIBERA");
+				
 				List listClass = componentDistinta
 						.findDocumentiFlussoClassReversali(userContext, bulk);
 				VDocumentiFlussoBulk oldDoc = null;
@@ -1422,23 +1476,14 @@ public class CRUDDistintaCassiereBP extends
 
 	public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk)
 			throws Exception {
-        Map<String, String> subjectDN = documentiContabiliService
-				.getCertSubjectDN(firmaOTPBulk.getUserName(),
-						firmaOTPBulk.getPassword());
-		if (subjectDN == null)
-			throw new ApplicationException(
-					"Errore nella lettura dei certificati!\nVerificare Nome Utente e Password!");
-		String codiceFiscale = subjectDN.get("SERIALNUMBER").substring(3);
-		UtenteBulk utente = ((CNRUserInfo) context.getUserInfo()).getUtente();
-		if (controlloCodiceFiscale != null
-				&& controlloCodiceFiscale.equalsIgnoreCase("Y")
-				&& utente.getCodiceFiscaleLDAP() != null
-				&& !utente.getCodiceFiscaleLDAP().equalsIgnoreCase(
-				codiceFiscale)) {
-			throw new ApplicationException("Il codice fiscale \""
-					+ codiceFiscale + "\" presente sul certicato di Firma, "
-					+ "è diverso da quello dell'utente collegato \""
-					+ utente.getCodiceFiscaleLDAP() + "\"!");
+		Map<String, String> subjectDN = Optional.ofNullable(SpringUtil.getBean(DocumentiContabiliService.class).getCertSubjectDN(firmaOTPBulk.getUserName(),
+				firmaOTPBulk.getPassword()))
+				.orElseThrow(() -> new ApplicationException("Errore nella lettura dei certificati!\nVerificare Nome Utente e Password!"));
+		if (Optional.ofNullable(controlloCodiceFiscale).filter(s -> s.equalsIgnoreCase("Y")).isPresent()) {
+			SpringUtil.getBean(DocumentiContabiliService.class).controllaCodiceFiscale(
+					subjectDN,
+					((CNRUserInfo)context.getUserInfo()).getUtente()
+			);
 		}
 		if (!this.isFlusso()) {
 			Distinta_cassiereBulk distintaProvvisoria = (Distinta_cassiereBulk) getModel();
@@ -1540,7 +1585,7 @@ public class CRUDDistintaCassiereBP extends
 									.concat(String.valueOf(distinta.getEsercizio()))
 									.concat("-").concat(distinta.getCd_unita_organizzativa())
 									.concat("-").concat(String.valueOf(distinta.getPg_distinta_def()))
-									.concat("-I.xslt.p7m")))
+									.concat("-I.").concat(formatoflusso).concat(".p7m")))
 							.ifPresent(storageObject -> documentiContabiliService.delete(storageObject));
 
 					String nomeFile = file.getName();
@@ -1592,7 +1637,7 @@ public class CRUDDistintaCassiereBP extends
 					.concat(distinta.getCd_unita_organizzativa() == null ? ""
 							: distinta.getCd_unita_organizzativa()).concat("-")
 					.concat(String.valueOf(distinta.getPg_distinta_def()))
-					.concat("-I.xslt");
+					.concat("-I.").concat(formatoflusso);
 		}
 		return null;
 	}
@@ -1611,7 +1656,8 @@ public class CRUDDistintaCassiereBP extends
 									.concat("-")
 									.concat(distinta.getCd_unita_organizzativa())
 									.concat("-")
-									.concat(String.valueOf(distinta.getPg_distinta_def())).concat("-I.xslt")
+									.concat(String.valueOf(distinta.getPg_distinta_def()))
+									.concat("-I.").concat(formatoflusso)
 					))
 							.ifPresent(storageObject -> {
 								httpActionContext.getResponse().setCharacterEncoding("UTF-8");
@@ -1645,7 +1691,7 @@ public class CRUDDistintaCassiereBP extends
 						.concat("-")
 						.concat(String.valueOf(distinta
 								.getPg_distinta_def()))
-						.concat("-I.xslt.p7m");
+								.concat("-I.").concat(formatoflusso).concat(".p7m");
 			} else {
 				path = distinta.getStorePath()
 						.concat(SiglaStorageService.SUFFIX)
@@ -1692,7 +1738,7 @@ public class CRUDDistintaCassiereBP extends
 							.concat(distinta.getCd_unita_organizzativa())
 							.concat("-")
 							.concat(String.valueOf(distinta.getPg_distinta_def()))
-							.concat("-I.xslt.p7m");
+							.concat("-I.").concat(formatoflusso).concat(".p7m");
 				} else {
 					path = distinta.getStorePath()
 							.concat(SiglaStorageService.SUFFIX)
@@ -1709,7 +1755,7 @@ public class CRUDDistintaCassiereBP extends
 						.concat(distinta.getCd_unita_organizzativa())
 						.concat("-")
 						.concat(String.valueOf(distinta.getPg_distinta_def()))
-						.concat("-I.xslt");
+						.concat("-I.").concat(formatoflusso);
 			}
 			return Optional.ofNullable(documentiContabiliService.getStorageObjectByPath(path)).isPresent();
 		}
@@ -1761,7 +1807,7 @@ public class CRUDDistintaCassiereBP extends
 								: distinta.getCd_unita_organizzativa())
 						.concat("-")
 						.concat(String.valueOf(distinta.getPg_distinta_def()))
-						.concat("-I.xslt.p7m");
+						.concat("-I.").concat(formatoflusso).concat(".p7m");
 		}
 		return null;
 	}
