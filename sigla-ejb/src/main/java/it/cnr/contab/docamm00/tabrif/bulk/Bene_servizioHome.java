@@ -13,9 +13,9 @@ public Bene_servizioHome(java.sql.Connection conn,PersistentCache persistentCach
 	super(Bene_servizioBulk.class,conn,persistentCache);
 }
 @Override
-public SQLBuilder createSQLBuilder() {
-	SQLBuilder sql=super.createSQLBuilder();
-//		sql.addClause("AND", "fl_valido", SQLBuilder.EQUALS, true);
+public SQLBuilder createSQLBuilder() { 
+	SQLBuilder sql=super.createSQLBuilder();  
+		sql.addClause("AND", "fl_valido", SQLBuilder.EQUALS,"Y");
 	return sql;
 }
 }
