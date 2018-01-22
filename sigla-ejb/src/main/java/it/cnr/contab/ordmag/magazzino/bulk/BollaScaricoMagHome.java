@@ -7,21 +7,20 @@ import java.sql.Connection;
 import java.util.Calendar;
 import java.util.List;
 
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_ammVBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneMagBulk;
 import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 public class BollaScaricoMagHome extends BulkHome {
 	public BollaScaricoMagHome(Connection conn) {
@@ -33,7 +32,7 @@ public class BollaScaricoMagHome extends BulkHome {
 
 	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,OggettoBulk bulk) throws PersistencyException,ApplicationException {
 		try {
-			NumeratoriOrdMagComponentSession progressiviSession = (NumeratoriOrdMagComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG_EJB_NumeratoriOrdMagComponentSession", NumeratoriOrdMagComponentSession.class);
+			NumeratoriOrdMagComponentSession progressiviSession = Utility.createNumeratoriOrdMagComponentSession();
 			NumerazioneMagBulk numerazione = new NumerazioneMagBulk();
 			BollaScaricoMagBulk bolla = (BollaScaricoMagBulk)bulk;
 			numerazione.setCdCds(CNRUserContext.getCd_cds(userContext));
@@ -44,7 +43,7 @@ public class BollaScaricoMagHome extends BulkHome {
 			numerazione.setCdNumeratoreMag(NumerazioneMagBulk.NUMERAZIONE_BOLLA_SCARICO);
 			bolla.setNumerazioneMag(numerazione);
 			bolla.setPgBollaSca(progressiviSession.getNextPG(userContext, numerazione).intValue());
-		}catch(Throwable e) {
+		}catch(Exception e) {
 			throw new PersistencyException(e);
 		}
 	}
@@ -78,5 +77,18 @@ public class BollaScaricoMagHome extends BulkHome {
 				"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
 				"title='Visualizza Documenti Collegati'><img align='middle' class='Button' src='img/application-pdf.png'></button>");
 		return super.completeBulkRowByRow(userContext, persistent);
-		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public java.util.List<BollaScaricoRigaMagBulk> findBollaScaricoRigaMagList( BollaScaricoMagBulk bollaScaricoMag ) throws IntrospectionException,PersistencyException {
+		PersistentHome rigaHome = getHomeCache().getHome(BollaScaricoRigaMagBulk.class);
+		SQLBuilder sql = rigaHome.createSQLBuilder();
+		sql.addClause(FindClause.AND,"cdCds",SQLBuilder.EQUALS, bollaScaricoMag.getCdCds());
+		sql.addClause(FindClause.AND,"cdMagazzino",SQLBuilder.EQUALS, bollaScaricoMag.getCdMagazzino());
+		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS, bollaScaricoMag.getEsercizio());
+		sql.addClause(FindClause.AND,"cdNumeratoreMag",SQLBuilder.EQUALS, bollaScaricoMag.getCdNumeratoreMag());
+		sql.addClause(FindClause.AND,"pgBollaSca",SQLBuilder.EQUALS, bollaScaricoMag.getPgBollaSca());
+		sql.addOrderBy("rigaBollaSca");
+		return rigaHome.fetchAll(sql);
+	}	
 }
