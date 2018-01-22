@@ -3,8 +3,6 @@ package it.cnr.contab.ordmag.magazzino.action;
 import java.util.List;
 
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
-import it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.magazzino.bp.ScaricoManualeMagazzinoBP;
 import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
@@ -25,6 +23,11 @@ public class ScaricoMagazzinoAction extends it.cnr.jada.util.action.CRUDAction {
         super();
     }
 	
+	public Forward doBlanckSearchFindUnitaOperativaOrd(ActionContext context, ScaricoMagazzinoBulk scaricoMagazzino) {
+		scaricoMagazzino.setMagazzinoAbilitato(null);
+		return context.findDefaultForward();
+	}
+
 	public Forward doBringBackSearchFindBeneServizio(ActionContext context, ScaricoMagazzinoRigaBulk scaricoRiga, Bene_servizioBulk beneServizio) {
 		try {
 			fillModel(context);
@@ -34,7 +37,7 @@ public class ScaricoMagazzinoAction extends it.cnr.jada.util.action.CRUDAction {
 				bp.setDirty(true);
 			}
 			return context.findDefaultForward();
-		}catch (Throwable ex) {
+		}catch (Exception ex) {
 			return handleException(context, ex);
 		}
 	}
@@ -48,11 +51,16 @@ public class ScaricoMagazzinoAction extends it.cnr.jada.util.action.CRUDAction {
 				bp.setDirty(true);
 			}
 			return context.findDefaultForward();
-		}catch (Throwable ex) {
+		}catch (Exception ex) {
 			return handleException(context, ex);
 		}
 	}
 	
+	public Forward doBlanckSearchFindUnitaMisura(ActionContext context, ScaricoMagazzinoRigaBulk scaricoRiga) {
+		scaricoRiga.setCoefConv(null);
+		return context.findDefaultForward();
+	}
+
 	public Forward doScaricaMagazzino(ActionContext context) {
 		try {
 			fillModel(context);
@@ -108,14 +116,14 @@ public class ScaricoMagazzinoAction extends it.cnr.jada.util.action.CRUDAction {
 			scarico.validaDate();
 			return context.findDefaultForward();
 		}
-		catch (Throwable ex) {
+		catch (Exception ex) {
 			// In caso di errore ripropongo la data precedente
 			scarico.setDataCompetenza(oldDate);
 			try
 			{
 				return handleException(context, ex);			
 			}
-			catch (Throwable e) 
+			catch (Exception e) 
 			{
 				return handleException(context, e);
 			}
