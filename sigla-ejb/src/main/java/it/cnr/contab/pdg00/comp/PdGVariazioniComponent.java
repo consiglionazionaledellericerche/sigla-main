@@ -2580,7 +2580,11 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 				variazione);
 
 		SQLBuilder sql = home.createSQLBuilder();
-		if (!isUoEnte) {
+		if (isUoEnte)  
+			sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS,
+					((it.cnr.contab.utenze00.bp.CNRUserContext) userContext)
+							.getEsercizio());
+		else if(!uoScrivania.isUoCds()) {
 			sql.addSQLClause("AND", "VAR_STANZ_RES.ESERCIZIO", SQLBuilder.EQUALS,
 					((it.cnr.contab.utenze00.bp.CNRUserContext) userContext)
 							.getEsercizio());
@@ -2590,15 +2594,24 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			sql.addSQLJoin("VAR_STANZ_RES.PG_VARIAZIONE",
 					"VAR_STANZ_RES_RIGA.PG_VARIAZIONE");
 			sql.addSQLClause("AND",
-					"VAR_STANZ_RES_RIGA.CD_CDR", sql.EQUALS,
+					"VAR_STANZ_RES_RIGA.CD_CDR", sql.STARTSWITH,
 					((it.cnr.contab.utenze00.bp.CNRUserContext) userContext)
-							.getCd_cdr());
-			sql.setDistinctClause(true);
-		} else
-			sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS,
+							.getCd_unita_organizzativa());
+		} else if (uoScrivania.isUoCds()) {
+			sql.addSQLClause("AND", "VAR_STANZ_RES.ESERCIZIO", SQLBuilder.EQUALS,
 					((it.cnr.contab.utenze00.bp.CNRUserContext) userContext)
 							.getEsercizio());
-
+			sql.addTableToHeader("VAR_STANZ_RES_RIGA");
+			sql.addSQLJoin("VAR_STANZ_RES.ESERCIZIO",
+					"VAR_STANZ_RES_RIGA.ESERCIZIO");
+			sql.addSQLJoin("VAR_STANZ_RES.PG_VARIAZIONE",
+					"VAR_STANZ_RES_RIGA.PG_VARIAZIONE");
+			sql.addSQLClause("AND",
+					"VAR_STANZ_RES_RIGA.CD_CDR", sql.STARTSWITH,
+					((it.cnr.contab.utenze00.bp.CNRUserContext) userContext)
+							.getCd_cds());
+		} 	
+		sql.setDistinctClause(true);			
 		sql.addClause(clauses);
 		
 		return sql;
