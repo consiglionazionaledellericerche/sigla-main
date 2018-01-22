@@ -7,7 +7,6 @@ import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.util.RemoteIterator;
 
 public class TransactionalEvasioneOrdineComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements EvasioneOrdineComponentSession {
 public EvasioneOrdineBulk cercaOrdini(it.cnr.jada.UserContext param0,EvasioneOrdineBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {

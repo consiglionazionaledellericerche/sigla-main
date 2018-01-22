@@ -5,10 +5,14 @@
 package it.cnr.contab.ordmag.anag00;
 import java.sql.Connection;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoRigaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -77,4 +81,9 @@ public class UnitaOperativaOrdHome extends BulkHome {
 			});
 		return sql;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<UnitaOperativaOrdBulk> findUnitaOperativeAbilitate(UserContext userContext, String tipoOperazione) throws PersistencyException {
+		return this.fetchAll(selectUnitaOperativeAbilitateByClause(userContext, new CompoundFindClause(), tipoOperazione));
+	}	
 }
