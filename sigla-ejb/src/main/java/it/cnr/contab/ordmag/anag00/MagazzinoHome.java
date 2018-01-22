@@ -6,6 +6,7 @@ package it.cnr.contab.ordmag.anag00;
 import java.sql.Connection;
 
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ApplicationException;
@@ -36,17 +37,20 @@ public class MagazzinoHome extends BulkHome {
 		return repHome.fetchAll(sql);
 	}
 	
-	public SQLBuilder selectMagazziniAbilitatiByClause(UserContext userContext, UnitaOperativaOrdBulk unitaOperativa, String tipoOperazione, CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException {
+	public SQLBuilder selectMagazziniAbilitatiByClause(UserContext userContext, UnitaOperativaOrdBulk unitaOperativa, String tipoOperazione, CompoundFindClause compoundfindclause) throws PersistencyException {
 		SQLBuilder sql = this.selectByClause(compoundfindclause);
+		sql.addClause(FindClause.AND, "cdCds", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));
 
 		AbilUtenteUopOperBulk abil = (AbilUtenteUopOperBulk)getHomeCache().getHome(AbilUtenteUopOperBulk.class).findByPrimaryKey(new AbilUtenteUopOperBulk(userContext.getUser(), unitaOperativa.getCdUnitaOperativa(), tipoOperazione));
-		if (abil == null || Boolean.FALSE.equals(abil.getTuttiMagazzini())) {
-			sql.addTableToHeader("ABIL_UTENTE_UOP_OPER_MAG", "B");		
+		if (abil == null) {
+			sql.addSQLClause(FindClause.AND, "1!=1");
+		} else if (Boolean.FALSE.equals(abil.getTuttiMagazzini())) {
+			sql.addTableToHeader("ABIL_UTENTE_UOP_OPER_MAG", "B");
 			sql.addSQLJoin("MAGAZZINO.CD_CDS", "B.CD_CDS");
 			sql.addSQLJoin("MAGAZZINO.CD_MAGAZZINO", "B.CD_MAGAZZINO");
-			sql.addSQLClause(FindClause.AND, "B.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, tipoOperazione);
-			sql.addSQLClause(FindClause.AND, "B.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, unitaOperativa.getCdUnitaOperativa());
-			sql.addSQLClause(FindClause.AND, "B.CD_UTENTE", SQLBuilder.EQUALS, userContext.getUser());
+			sql.addSQLClause(FindClause.AND, "B.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, abil.getCdTipoOperazione());
+			sql.addSQLClause(FindClause.AND, "B.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, abil.getCdUnitaOperativa());
+			sql.addSQLClause(FindClause.AND, "B.CD_UTENTE", SQLBuilder.EQUALS, abil.getCdUtente());
 		}
 		return sql;
 	}
