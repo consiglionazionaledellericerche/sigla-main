@@ -10,7 +10,6 @@ import it.cnr.contab.ordmag.ordini.comp.EvasioneOrdineComponent;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.util.RemoteIterator;
 @Stateless(name="CNRORDMAG00_EJB_EvasioneOrdineComponentSession")
 public class EvasioneOrdineComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements EvasioneOrdineComponentSession {
 @PostConstruct

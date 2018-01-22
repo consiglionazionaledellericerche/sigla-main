@@ -21,29 +21,26 @@
  <title>Evasione Ordini</title>
 <body class="Form">
 <% 	bp.openFormWindow(pageContext); %>
-	<table border="0" cellspacing="0" cellpadding="2">
-		
-				<tr>
-					<%
-						bp.getController().writeFormField(out, "findUnitaOperativaOrd");
-					%>
-					<%
-						bp.getController().writeFormField(out, "findNumerazioneMag");
-					%>
-				</tr>
-			
-		
+<div class="Group card p-2">
+	<table class="Panel" width="100%">
+		<tr class="w-100">
+			<td><% bp.getController().writeFormLabel(out, "findUnitaOperativaOrd"); %></td>
+			<td colspan="5"><% bp.getController().writeFormInput(out, "findUnitaOperativaOrd"); %></td>
+		</tr>
+		<tr>
+			<td><% bp.getController().writeFormLabel(out, "findMagazzino"); %></td>
+			<td colspan="5"><% bp.getController().writeFormInput(out, "findMagazzino"); %></td>
+		</tr>
+		<tr>
 			<% bp.getController().writeFormField(out, "dataBolla");%>
 			<% bp.getController().writeFormField(out, "numeroBolla");%>
 			<% bp.getController().writeFormField(out, "dataConsegna");%>
-		
-	
+		</tr>
 	</table>
-		
-	<table >
-<tr><td >
-	      <%
-			JSPUtils.tabbed(
+</div>		
+
+<%
+	JSPUtils.tabbed(
 					pageContext,
 					"tab",
 					new String[][] {
@@ -52,12 +49,9 @@
 					bp.getTab("tab"),
 					"center",
 					"100%",
-					null );
-	      %>
-</td></tr>
-	</table>
-	<%
-		bp.closeFormWindow(pageContext);
-	%>
+					null);
+
+	bp.closeFormWindow(pageContext);
+%>
 </body>
 </html>

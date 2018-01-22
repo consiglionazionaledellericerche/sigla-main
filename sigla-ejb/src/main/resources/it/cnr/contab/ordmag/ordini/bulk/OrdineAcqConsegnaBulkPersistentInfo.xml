@@ -99,4 +99,18 @@
 		name="unitaOperativaOrd" />
 	<persistentProperty
 		name="obbligazioneScadenzario" />
+
+	<fetchPolicy
+		name="it.cnr.contab.ordmag.ordini.comp.EvasioneOrdineComponent.cercaOrdini">
+		<exclude pattern="*"/>
+		<include pattern="ordineAcqRiga"/>
+		<include pattern="ordineAcqRiga.ordineAcq"/>
+		<include pattern="ordineAcqRiga.beneServizio"/>
+		<include pattern="ordineAcqRiga.voceIva"/>
+		<include pattern="ordineAcqRiga.unitaMisura"/>
+		<include pattern="obbligazione_scadenzario"/>		
+		<include pattern="magazzino"/>				
+		<include pattern="unitaOperativaOrd"/>		
+		<include pattern="luogoConsegnaMag"/>
+	</fetchPolicy>
 </SQLPersistentInfo>
