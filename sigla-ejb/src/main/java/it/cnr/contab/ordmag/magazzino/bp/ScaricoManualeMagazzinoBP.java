@@ -161,6 +161,7 @@ public class ScaricoManualeMagazzinoBP extends SimpleCRUDBP {
 			throw new BusinessProcessException(e);
 		}
 	}
+
 	public void inizializeUnitaMisura(ActionContext actioncontext, ScaricoMagazzinoRigaBulk scaricoRiga, UnitaMisuraBulk unitaMisura) throws BusinessProcessException {
 		Optional.ofNullable(scaricoRiga).ifPresent(sr->{
 			Optional.ofNullable(unitaMisura).ifPresent(um->{
@@ -172,6 +173,7 @@ public class ScaricoManualeMagazzinoBP extends SimpleCRUDBP {
 			});
 		});
 	}
+
 	public String[][] getTabsArticolo() {
 		if (this.getBeniServiziColl().getModel()!=null && 
 				((ScaricoMagazzinoRigaBulk)this.getBeniServiziColl().getModel()).getBeneServizio()!=null &&

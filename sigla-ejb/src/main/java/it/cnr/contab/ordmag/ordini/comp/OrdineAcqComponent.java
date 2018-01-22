@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Vector;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
@@ -1214,13 +1215,12 @@ private Boolean isUoImpegnoDaUopDestinazione(UserContext userContext) throws Com
 	return false;
 }
 
-
-
 private DivisaBulk getEuro(UserContext userContext) throws ComponentException {
 	try {
 		DivisaBulk divisaDefault = ((DivisaHome)getHome(userContext, DivisaBulk.class)).getDivisaDefault(userContext);
-		if (divisaDefault==null || divisaDefault.getCd_divisa()==null)
-			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire un ordine, immettere tale valore.");
+		Optional.ofNullable(divisaDefault)
+				.map(DivisaBulk::getCd_divisa)
+				.orElseThrow(()->new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire un ordine, immettere tale valore."));
 		return divisaDefault;
 	} catch (javax.ejb.EJBException|PersistencyException e) {
 		handleException(e);

@@ -35,7 +35,7 @@
 		maxLength="30"
 		inputSize="3"
 		inputType="ROTEXT"
-		label="Unità Misura Minima"
+		label="UM Minima"
 		caseSensitiveSearch="false" />
 
 	<fieldProperty
@@ -44,7 +44,7 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Unità Misura Scarico" />
+		label="UM Scarico" />
 	<fieldProperty
 		name="cdUnitaMisura"
 		property="unitaMisura.cdUnitaMisura"
@@ -52,7 +52,7 @@
 		inputSize="3"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="Unità Misura Scarico" />
+		label="UM Scarico" />
 
 	<fieldProperty
 		name="coefConv"
@@ -65,7 +65,7 @@
 		enabledOnEdit="true"
 		command="doDefault"
 		readonlyProperty="ROCoefConv"
-		label="Coefficiente Conversione" />
+		label="Coeff. Conversione" />
  	<fieldProperty
 		name="qtScarico"
 		property="qtScarico"
@@ -94,7 +94,7 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Unità Operativa Ricevente" />
+		label="UOP Ricevente" />
 	<fieldProperty
 		name="cdUnitaOperativaOrdRic"
 		property="unitaOperativaRicevente.cdUnitaOperativa"
