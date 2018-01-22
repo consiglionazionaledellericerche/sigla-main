@@ -801,27 +801,27 @@ public SimpleDetailCRUDController getCrudAssDitte() {
 				  if (c!=null && c.getCellType()==1)
 					  denominazione=c.getStringCellValue();
 				  else if(c!=null && c.getCellType()!=1)
-					  throw new ApplicationException("Formato denominazione non valido!");	
+					  throw new ApplicationException("Formato denominazione non valido riga:"+(i+1));	
 				  c = r.getCell((short)1);
 				  if (c!=null && c.getCellType()==1)
 					  codice_fiscale=c.getStringCellValue();
 				  else if(c!=null && (c.getCellType()!=1 && c.getCellType()!=3))
-					  throw new ApplicationException("Formato codice fiscale non valido!");	
+					  throw new ApplicationException("Formato codice fiscale non valido riga:"+(i+1));	
 				  c = r.getCell((short)2);
 				  if (c!=null && c.getCellType()==1)
 					  id_fiscale=c.getStringCellValue();
 				  else if(c!=null && (c.getCellType()!=1 && c.getCellType()!=3))
-					  throw new ApplicationException("Formato id fiscale non valido!");	
+					  throw new ApplicationException("Formato id fiscale non valido riga:"+(i+1));	
 				  c = r.getCell((short)3);
 				  if (c!=null && c.getCellType()==1)
 					  ruolo=c.getStringCellValue();
 				  else if(c!=null && (c.getCellType()!=1 && c.getCellType()!=3))
-					  throw new ApplicationException("Formato ruolo non valido!");	
+					  throw new ApplicationException("Formato ruolo non valido riga:"+(i+1));	
 				  c = r.getCell((short)4);
 				  if (c!=null && (c.getCellType()!=1 && c.getCellType()!=3))
 					  denominazione_rti=c.getStringCellValue();
 				  else if(c!=null && c.getCellType()!=1)
-					  throw new ApplicationException("Formato denominazione rti non valido!");	
+					  throw new ApplicationException("Formato denominazione rti non valido riga:"+(i+1));	
 				  c = r.getCell((short)5);
 				  if ((denominazione!=null || codice_fiscale!=null || id_fiscale!=null ||ruolo!=null  ||denominazione_rti !=null)
 					  	&& (((denominazione ==null || (denominazione!=null && !(codice_fiscale!=null  || id_fiscale!=null)))
