@@ -12,37 +12,37 @@
 <%  
     CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request);
 	OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)bp.getConsegne().getModel();
-	bp.getConsegne().writeHTMLTable(pageContext,"consegneSet",true,false,true,"100%","100px"); 
+	bp.getConsegne().writeHTMLTable(pageContext,"consegneSetOrdine",true,false,true,"100%","140px"); 
 %>
 
-<div class="Group">
-	<table>
+<div class="Group card p-2 mb-2">
+	<table class="w-100">
 		<tr>
-			<%
-				bp.getConsegne().writeFormField(out, "quantita");
-			    bp.getConsegne().writeFormField(out, "tipoConsegna");
-				bp.getConsegne().writeFormField(out, "dtPrevConsegna");
-			%>
+			<td><% bp.getConsegne().writeFormLabel(out, "quantita"); %></td>
+			<td><% bp.getConsegne().writeFormInput(out, "quantita"); %></td>
+			<td colspan="6">
+				<table width="100%">
+				    <tr>
+						<%
+						    bp.getConsegne().writeFormField(out, "tipoConsegna");
+							bp.getConsegne().writeFormField(out, "dtPrevConsegna");
+						%>
+					</tr>
+				</table>
+			</td>
 		</tr>
-	</table>
-	<table>
 		<tr>
-			<%
-		    bp.getConsegne().writeFormField(out, "findMagazzino");
-		    bp.getConsegne().writeFormField(out, "findLuogoConsegnaMag");
-			%>
+			<td><% bp.getConsegne().writeFormLabel(out, "findMagazzino"); %></td>
+		    <td colspan="3"><% bp.getConsegne().writeFormInput(out, "findMagazzino"); %></td>
+			<td><% bp.getConsegne().writeFormLabel(out, "findLuogoConsegnaMag"); %></td>
+		    <td colspan="3"><% bp.getConsegne().writeFormInput(out, "findLuogoConsegnaMag"); %></td>
 		</tr>
-	</table>
-	<table>
+		<% if (cons != null && cons.getTipoConsegna() != null && !cons.getTipoConsegna().equals("MAG")) { %>
 		<tr>
-			<%
-			if (cons != null && cons.getTipoConsegna() != null && !cons.getTipoConsegna().equals("MAG")) {
-				bp.getConsegne().writeFormField(out, "findUnitaOperativaOrdDest");
-			}
-			%>
+			<td><% bp.getConsegne().writeFormLabel(out, "findUnitaOperativaOrdDest"); %></td>
+		    <td colspan="6"><% bp.getConsegne().writeFormInput(out, "findUnitaOperativaOrdDest"); %></td>
 		</tr>
-	</table>
-	<table>
+		<% } %>
 		<tr>
 			<%
 				bp.getConsegne().writeFormField(out, "imImponibile");
@@ -51,12 +51,9 @@
 			    bp.getConsegne().writeFormField(out, "imTotaleConsegna");
 			%>
 		</tr>
-	</table>
-	<table>
 		<tr>
-			<%
-				bp.getConsegne().writeFormField(out, "findObbligazioneScadenzario");
-			%>
+			<td><%bp.getConsegne().writeFormLabel(out, "findObbligazioneScadenzario"); %></td>
+			<td colspan="7"><%bp.getConsegne().writeFormInput(out, "findObbligazioneScadenzario"); %></td>
 		</tr>
 	</table>
 </div>
