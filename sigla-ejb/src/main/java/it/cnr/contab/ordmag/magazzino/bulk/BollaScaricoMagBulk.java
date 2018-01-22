@@ -242,6 +242,7 @@ public class BollaScaricoMagBulk extends BollaScaricoMagBase {
 	}
 	public int addToRigheColl( BollaScaricoRigaMagBulk nuovoRigo ) 
 	{
+		nuovoRigo.setBollaScaricoMag(this);
 		nuovoRigo.setStato(OrdineAcqRigaBulk.STATO_INSERITA);
 		nuovoRigo.setRigaBollaSca(righeColl.stream()
 									.max((r1, r2)->Integer.compare(r1.getRigaBollaSca(), r2.getRigaBollaSca()))
