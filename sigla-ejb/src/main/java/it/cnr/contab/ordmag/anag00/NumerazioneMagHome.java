@@ -3,10 +3,11 @@
  * Date 26/04/2017
  */
 package it.cnr.contab.ordmag.anag00;
-import java.sql.Connection;
 
+import java.sql.Connection;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.PersistentCache;
+
 public class NumerazioneMagHome extends BulkHome {
 	public NumerazioneMagHome(Connection conn) {
 		super(NumerazioneMagBulk.class, conn);

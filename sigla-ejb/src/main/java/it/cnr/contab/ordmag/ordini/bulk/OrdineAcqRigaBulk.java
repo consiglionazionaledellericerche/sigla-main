@@ -32,7 +32,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.CRUDBP;
 public class OrdineAcqRigaBulk extends OrdineAcqRigaBase implements IDocumentoAmministrativoRigaBulk, Voidable {
-	protected BulkList righeConsegnaColl= new BulkList();
+	protected BulkList<OrdineAcqConsegnaBulk> righeConsegnaColl= new BulkList<OrdineAcqConsegnaBulk>();
 	private java.lang.String dspTipoConsegna;
 
 	private java.lang.String tipoConsegnaDefault;
@@ -361,10 +361,10 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 		}
 		return this;
 	}
-	public BulkList getRigheConsegnaColl() {
+	public BulkList<OrdineAcqConsegnaBulk> getRigheConsegnaColl() {
 		return righeConsegnaColl;
 	}
-	public void setRigheConsegnaColl(BulkList righeConsegnaColl) {
+	public void setRigheConsegnaColl(BulkList<OrdineAcqConsegnaBulk> righeConsegnaColl) {
 		this.righeConsegnaColl = righeConsegnaColl;
 	}
 	public OrdineAcqConsegnaBulk removeFromRigheConsegnaColl(int index) 
@@ -509,5 +509,10 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	}
 	public void setTipoConsegnaDefault(java.lang.String tipoConsegnaDefault) {
 		this.tipoConsegnaDefault = tipoConsegnaDefault;
+	}
+	public String getRigaOrdineString() {
+		return getOrdineAcq().getOrdineString()
+				.concat("/")
+				.concat(String.valueOf(this.getRiga()));
 	}
 }
