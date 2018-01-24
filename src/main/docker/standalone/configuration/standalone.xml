@@ -142,7 +142,33 @@
                         <password>sa</password>
                     </security>
                 </datasource>
-                <datasource jndi-name="java:/jdbc/CIR" pool-name="OracleDSSIGLAPool" enabled="true" use-java-context="true" statistics-enabled="true">
+                <datasource jndi-name="java:/jdbc/CIR" pool-name="PostgresDSSIGLAPool" enabled="${env.SIGLA_POSTGRES_ENABLE:false}" use-java-context="true" statistics-enabled="true">
+                    <connection-url>${env.SIGLA_CONNECTION_URL:jdbc:postgresql://localhost:5432/mydb?schema=public}</connection-url>
+                    <driver>postgres</driver>
+                    <new-connection-sql>select 1;</new-connection-sql>
+                    <pool>
+                        <min-pool-size>5</min-pool-size>
+                        <max-pool-size>20</max-pool-size>
+                    </pool>
+                    <security>
+                        <user-name>${env.SIGLA_CONNECTION_USERNAME:sigla}</user-name>
+                        <password>${env.SIGLA_CONNECTION_PASSWORD:siglapw}</password>
+                    </security>
+                    <validation>
+                        <validate-on-match>false</validate-on-match>
+                        <background-validation>false</background-validation>
+                    </validation>
+                    <timeout>
+                        <set-tx-query-timeout>false</set-tx-query-timeout>
+                        <blocking-timeout-millis>0</blocking-timeout-millis>
+                        <idle-timeout-minutes>0</idle-timeout-minutes>
+                        <query-timeout>0</query-timeout>
+                        <use-try-lock>0</use-try-lock>
+                        <allocation-retry>0</allocation-retry>
+                        <allocation-retry-wait-millis>0</allocation-retry-wait-millis>
+                    </timeout>
+                </datasource>
+                <datasource jndi-name="java:/jdbc/CIR" pool-name="OracleDSSIGLAPool" enabled="${env.SIGLA_ORACLE_ENABLE:true}" use-java-context="true" statistics-enabled="true">
                     <connection-url>${env.SIGLA_CONNECTION_URL:jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF}</connection-url>
                     <driver>ojdbc</driver>
                     <pool>
@@ -188,6 +214,9 @@
                     </driver>
                     <driver name="informix" module="com.informix.jdbc">
                         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+                    </driver>
+                    <driver name="postgres" module="org.postgresql.postgresql">
+                        <driver-class>org.postgresql.Driver</driver-class>
                     </driver>
                 </drivers>
             </datasources>
