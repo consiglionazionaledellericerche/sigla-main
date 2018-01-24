@@ -47,7 +47,7 @@ public class Pdg_vincoloHome extends BulkHome {
 	{
 		SQLBuilder sql = this.createSQLBuilder();	
 		
-		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.GREATER_EQUALS,saldo.getEsercizio());
+		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.LESS_EQUALS,saldo.getEsercizio());
 		sql.addClause(FindClause.AND,"esercizio_res",SQLBuilder.EQUALS,saldo.getEsercizio_res());
 	    sql.addClause(FindClause.AND,"cd_centro_responsabilita",SQLBuilder.EQUALS,saldo.getCd_centro_responsabilita());
 	    sql.addClause(FindClause.AND,"cd_linea_attivita",SQLBuilder.EQUALS,saldo.getCd_linea_attivita());

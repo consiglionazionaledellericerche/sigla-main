@@ -6,12 +6,13 @@
 	shortDescription="Evasione ordine, con indicazione dei dati della bolla di consegna."
 	longDescription="Evasione ordine, con indicazione dei dati della bolla di consegna.">
 	<fieldProperty
-		name="findNumerazioneMag"
-		property="numerazioneMag"
+		name="findMagazzino"
+		property="magazzinoAbilitato"
 		inputType="searchtool"
-		formName="searchtool_mag"
+		formName="searchtool"
 		enabledOnEdit="true"
 		enabledOnSearch="true"
+		readonlyProperty="ROMagazzino"
 		label="Magazzino" />
 	<fieldProperty
 		name="findUnitaOperativaOrd"
@@ -196,7 +197,7 @@
 	<formFieldProperty
 		name="findUnitaOperativaOrd" />
 	<formFieldProperty
-		name="findNumerazioneMag" />
+		name="findMagazzino" />
 	<formFieldProperty
 		name="numero" />
 	<formFieldProperty

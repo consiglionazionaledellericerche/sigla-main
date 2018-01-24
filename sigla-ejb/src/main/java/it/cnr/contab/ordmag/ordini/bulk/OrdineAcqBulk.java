@@ -51,7 +51,7 @@ implements	IDocumentoAmministrativoBulk,
 			Voidable,
 			IDefferUpdateSaldi,
 		AllegatoParentBulk {
-	protected BulkList righeOrdineColl= new BulkList();
+	protected BulkList<OrdineAcqRigaBulk> righeOrdineColl= new BulkList<OrdineAcqRigaBulk>();
 //	private java.util.Collection modalita;
 	private java.util.Collection termini;
 	private ObbligazioniTable ordineObbligazioniHash = null;
@@ -783,10 +783,10 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public void setIsForFirma(Boolean isForFirma) {
 		this.isForFirma = isForFirma;
 	}
-	public BulkList getRigheOrdineColl() {
+	public BulkList<OrdineAcqRigaBulk> getRigheOrdineColl() {
 		return righeOrdineColl;
 	}
-	public void setRigheOrdineColl(BulkList righeOrdineColl) {
+	public void setRigheOrdineColl(BulkList<OrdineAcqRigaBulk> righeOrdineColl) {
 		this.righeOrdineColl = righeOrdineColl;
 	}
 	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
@@ -1320,5 +1320,12 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	{
 		richiesteDaTrasformareInOrdineColl.add(nuovoRigo);
 		return richiesteDaTrasformareInOrdineColl.size()-1;
+	}
+	public String getOrdineString() {
+		return String.valueOf(this.getEsercizio())
+				.concat("/")
+				.concat(this.getCdNumeratore())
+				.concat("/")
+				.concat(String.valueOf(this.getNumero()));
 	}
 }
