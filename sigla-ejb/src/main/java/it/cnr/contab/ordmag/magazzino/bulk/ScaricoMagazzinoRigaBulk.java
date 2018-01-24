@@ -131,13 +131,13 @@ public class ScaricoMagazzinoRigaBulk extends OggettoBulk implements KeyedPersis
 	}
 	
 	public boolean isROCoefConv(){
-		return Optional.ofNullable(this.getBeneServizio()).flatMap(bs->{
-					return Optional.ofNullable(this.getBeneServizio().getUnitaMisura()).map(umBene->{
-						return Optional.ofNullable(this.getUnitaMisura())
-									.filter(e->umBene.equalsByPrimaryKey(unitaMisura))
-									.isPresent();
-					});
-				})
-				.orElse(Boolean.FALSE);
+		return !Optional.ofNullable(this.getUnitaMisura())
+				.map(UnitaMisuraBulk::getCdUnitaMisura)
+				.filter(cdUM->!Optional.ofNullable(this.getBeneServizio())
+								.map(Bene_servizioBulk::getUnitaMisura)
+								.filter(umBene->umBene.getCdUnitaMisura().equals(cdUM))
+								.isPresent()
+				)
+				.isPresent();
 	}
 }

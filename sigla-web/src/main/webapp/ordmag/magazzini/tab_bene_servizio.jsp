@@ -22,12 +22,18 @@
 	<tr>
 		<td><% bp.getBeniServiziColl().writeFormLabel(out, "findBeneServizio");	%></td>
 		<td colspan="3"><% bp.getBeniServiziColl().writeFormInput(out, "findBeneServizio");	%></td>
-		<% bp.getBeniServiziColl().writeFormField(out, "cdUnitaMisuraMinima");	%>
+		<td class="pl-5"><% bp.getBeniServiziColl().writeFormLabel(out, "cdUnitaMisuraMinima");	%></td>
+		<td><% bp.getBeniServiziColl().writeFormInput(out, "cdUnitaMisuraMinima");	%></td>
 	</tr>
 	<tr>
 		<td><% bp.getBeniServiziColl().writeFormLabel(out, "findUnitaMisura");	%></td>
 		<td colspan="3"><% bp.getBeniServiziColl().writeFormInput(out, "findUnitaMisura");	%></td>
-		<% bp.getBeniServiziColl().writeFormField(out, "coefConv");	%>
+		<td class="pl-5"><% bp.getBeniServiziColl().writeFormLabel(out, "coefConv");	%></td>
+		<td><% bp.getBeniServiziColl().writeFormInput(out, "coefConv");	%></td>
+	</tr>
+	<tr>
+		<td><% bp.getBeniServiziColl().writeFormLabel(out, "findUnitaOperativaOrdRic");%></td>
+		<td colspan="5"><% bp.getBeniServiziColl().writeFormInput(out, "findUnitaOperativaOrdRic");%></td>
 	</tr>
 	<tr>
 		<td>
@@ -65,10 +71,6 @@
 				</tr>
 			</table>
 		</td>
-	</tr>
-	<tr>
-		<td><% bp.getBeniServiziColl().writeFormLabel(out, "findUnitaOperativaOrdRic");%></td>
-		<td colspan="5"><% bp.getBeniServiziColl().writeFormInput(out, "findUnitaOperativaOrdRic");%></td>
 	</tr>
 	<% if (modelRiga!=null && modelRiga.getAnomalia()!=null) {%>
 	<tr>

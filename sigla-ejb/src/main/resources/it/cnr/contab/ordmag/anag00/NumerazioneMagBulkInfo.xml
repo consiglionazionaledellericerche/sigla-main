@@ -41,8 +41,8 @@
 		inputSize="40"
 		maxLength="100"
 		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
 		nullable="false"
 		label="Descrizione Magazzino" />
 	<fieldProperty
@@ -91,22 +91,30 @@
 		<formFieldProperty
 			name="cdMagazzino" />
 		<formFieldProperty
-			name="dsMagazzino" />
+			name="dsMagazzino"/>
 	</form>
+
 	<formFieldProperty
 		name="findMagazzino" />
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
+		name="cdMagazzino" />
+	<formFieldProperty
+		name="dsMagazzino" />
+	<formFieldProperty
 		name="cdNumeratoreMag" />
 	<formFieldProperty
 		name="corrente" />
 	<formFieldProperty
 		name="dtCancellazione" />
+
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty
 		name="cdMagazzino" />
+	<findFieldProperty
+		name="dsMagazzino" />
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -115,6 +123,7 @@
 		name="corrente" />
 	<findFieldProperty
 		name="dtCancellazione" />
+
 	<columnFieldProperty
 		name="cdMagazzino" />
 	<columnFieldProperty

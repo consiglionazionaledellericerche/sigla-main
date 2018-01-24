@@ -102,15 +102,17 @@ public class Ass_contratto_ditteBulk extends Ass_contratto_ditteBase {
    					  throw new it.cnr.jada.bulk.ValidationException("Indicare il Codice Fiscale o Partita Iva/Id Fiscale Estero.");
    				if ((getRuolo()!=null && getDenominazione_rti() ==null) || (getRuolo()==null && getDenominazione_rti() !=null))
    					throw new it.cnr.jada.bulk.ValidationException("Devone essere valorizzati sia il Ruolo che la Denominazione RTI, oppure entrambi non valorizzati.");
-   				if(getCodice_fiscale() != null
+   				if(getCodice_fiscale() != null && !getCodice_fiscale().contains(" ")
    		   				&& ((getCodice_fiscale().length()!=11 && getCodice_fiscale().length() != 16)
-   		   				|| (getCodice_fiscale().length() == 16 && !it.cnr.contab.anagraf00.util.CodiceFiscaleControllo.checkCC(getCodice_fiscale()))))
+   		   				|| (getCodice_fiscale().length() == 16 &&  !it.cnr.contab.anagraf00.util.CodiceFiscaleControllo.checkCC(getCodice_fiscale()))))
    		   					throw new it.cnr.jada.bulk.ValidationException("Codice fiscale inserito errato.");
-   				if(getCodice_fiscale() != null && (getCodice_fiscale().length()==11) )
+   				if(getCodice_fiscale() != null  && !getCodice_fiscale().contains(" ") && (getCodice_fiscale().length()==11) )
    					for (int i = 0;i < getCodice_fiscale().length();i++)
    						if (!Character.isDigit(getCodice_fiscale().charAt(i)))
    							throw new ValidationException( "Il codice fiscale può essere composto solo da cifre in questo caso." );
-   		   						
+   				if(getCodice_fiscale() != null && getCodice_fiscale().contains(" ")	)
+   					throw new ValidationException( "Il codice fiscale non può contenere spazi." );
+   					
    				super.validate();
    	}
    	

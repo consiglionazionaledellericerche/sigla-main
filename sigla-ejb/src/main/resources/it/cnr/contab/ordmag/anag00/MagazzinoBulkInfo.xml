@@ -33,6 +33,8 @@
 		inputType="TEXT"
 		maxLength="100"
 		inputSize="100"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Descrizione" />
 	<fieldProperty
@@ -41,6 +43,8 @@
 		inputType="TEXT"
 		maxLength="30"
 		inputSize="100"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Descrizione" />
 	<fieldProperty
