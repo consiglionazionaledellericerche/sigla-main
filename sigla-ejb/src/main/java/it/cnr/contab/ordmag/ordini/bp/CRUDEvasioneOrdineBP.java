@@ -1,18 +1,26 @@
 package it.cnr.contab.ordmag.ordini.bp;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Optional;
 
-import it.cnr.contab.docamm00.bp.DocumentiAmministrativiFatturazioneElettronicaBP;
-import it.cnr.contab.docamm00.bp.DocumentiAmministrativiProtocollabiliBP;
-import it.cnr.contab.docamm00.bp.DocumentiAmministrativiRistampabiliBP;
+import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
+import it.cnr.contab.ordmag.anag00.NumerazioneMagBulk;
+import it.cnr.contab.ordmag.anag00.TipoOperazioneOrdBulk;
+import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
+import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.ejb.EvasioneOrdineComponentSession;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.DetailedRuntimeException;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
@@ -23,14 +31,32 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 
 	private it.cnr.contab.doccont00.core.bulk.OptionRequestParameter userConfirm = null;
 	private boolean carryingThrough = false;
-	private boolean isDeleting = false;
+	
+    private boolean criteriRicercaCollapse = false;
+    private boolean dettConsegneCollapse = false;
+
+    public boolean isCriteriRicercaCollapse() {
+        return criteriRicercaCollapse;
+    }
+
+    public void setCriteriRicercaCollapse(boolean criteriRicercaCollapse) {
+        this.criteriRicercaCollapse = criteriRicercaCollapse;
+    }
+    
+    public boolean isDettConsegneCollapse() {
+		return dettConsegneCollapse;
+	}
+    
+    public void setDettConsegneCollapse(boolean dettConsegneCollapse) {
+		this.dettConsegneCollapse = dettConsegneCollapse;
+	}
+    
 	public boolean isInputReadonly() 
 	{
 			return false;
 	}
 
 	private final SimpleDetailCRUDController consegne = new SimpleDetailCRUDController("ConsegneDaEvadere",OrdineAcqConsegnaBulk.class,"righeConsegnaDaEvadereColl",this){
-
 		@Override
 		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
 			OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)oggettobulk;
@@ -38,7 +64,6 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 			int index = super.addDetail(oggettobulk);
 			return index;
 		}
-		
 	};
 
 	public final it.cnr.jada.util.action.SimpleDetailCRUDController getConsegne() {
@@ -55,35 +80,20 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 
 	public CRUDEvasioneOrdineBP(Class dettObbligazioniControllerClass) {
 		super("Tr");
-
 		setTab();
-
 	}
 
-	/**
-	 * CRUDAnagraficaBP constructor comment.
-	 * 
-	 * @param function
-	 *            java.lang.String
-	 */
 	public CRUDEvasioneOrdineBP(String function)
 			throws BusinessProcessException {
 		super(function + "Tr");
-
 		setTab();
 
 	}
 
 	protected it.cnr.jada.util.jsp.Button[] createToolbar() {
-		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[7];
+		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[1];
 		int i = 0;
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.search");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.startSearch");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.freeSearch");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.new");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.save");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.delete");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.stampa");
 
 		return toolbar;
 	}
@@ -163,17 +173,85 @@ public class CRUDEvasioneOrdineBP extends SimpleCRUDBP {
 		return true;
 	}
 	
-	public Boolean isConsegnaEvasaMaggioreQuantitaOrdinata(){
-		OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)getConsegne().getModel();	
-		if (consegna != null)
-			return consegna.isQuantitaEvasaMaggioreOrdine();
-		return false;
+	@Override
+	public OggettoBulk initializeModelForInsert(ActionContext actioncontext, OggettoBulk oggettobulk)
+			throws BusinessProcessException {
+		try {
+			oggettobulk = super.initializeModelForInsert(actioncontext, oggettobulk);
+
+			Optional.ofNullable(oggettobulk)
+				.filter(EvasioneOrdineBulk.class::isInstance)
+                .map(EvasioneOrdineBulk.class::cast)
+				.ifPresent(obj->{
+					try {
+						List<UnitaOperativaOrdBulk> listUop = 
+								((EvasioneOrdineComponentSession)this.createComponentSession()).find(actioncontext.getUserContext(), UnitaOperativaOrdBulk.class, "findUnitaOperativeAbilitate", actioncontext.getUserContext(), TipoOperazioneOrdBulk.EVASIONE_ORDINE);
+						UnitaOperativaOrdBulk unitaOperativa = Optional.ofNullable(listUop)
+																.map(e->{
+																	if (e.stream().count()>1) {
+																		return null;
+																	};
+																	return e.stream().findFirst().orElse(null);
+																}).orElse(null);
+						
+						this.initializeUnitaOperativaOrd(actioncontext, obj, unitaOperativa);
+					} catch (ComponentException | RemoteException | BusinessProcessException e) {
+						throw new DetailedRuntimeException(e);
+					}
+				});
+		
+			return oggettobulk;
+		} catch (BusinessProcessException e) {
+			throw new BusinessProcessException(e);
+		}
 	}
-	
-	public Boolean isConsegnaEvasaMinoreQuantitaOrdinata(){
-		OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)getConsegne().getModel();	
-		if (consegna != null)
-			return consegna.isQuantitaEvasaMinoreOrdine();
-		return false;
+
+	public void initializeUnitaOperativaOrd(ActionContext actioncontext, EvasioneOrdineBulk evasioneOrdine, UnitaOperativaOrdBulk unitaOperativa) throws BusinessProcessException {
+		try {
+			if (unitaOperativa != null) {
+				evasioneOrdine.setUnitaOperativaAbilitata(unitaOperativa);
+				List<MagazzinoBulk> listMag = 
+						((EvasioneOrdineComponentSession)this.createComponentSession()).find(actioncontext.getUserContext(), EvasioneOrdineBulk.class, "findMagazziniAbilitati", actioncontext.getUserContext(), evasioneOrdine);
+				MagazzinoBulk magazzino = Optional.ofNullable(listMag)
+														.map(e->{
+															if (e.stream().count()>1) {
+																return null;
+															};
+															return e.stream().findFirst().orElse(null);
+														}).orElse(null);
+				this.initializeMagazzino(actioncontext, evasioneOrdine, magazzino);
+			}			
+		} catch (ComponentException | RemoteException e) {
+			throw new BusinessProcessException(e);
+		}
+	}
+
+	public EvasioneOrdineBulk initializeMagazzino(ActionContext actioncontext, EvasioneOrdineBulk evasioneOrdine, MagazzinoBulk magazzino) throws BusinessProcessException {
+		try {
+			if (magazzino!=null) {
+				evasioneOrdine.setMagazzinoAbilitato(magazzino);
+
+				NumerazioneMagBulk numerazioneMag = new NumerazioneMagBulk(CNRUserContext.getCd_cds(actioncontext.getUserContext()), 
+						magazzino.getCdMagazzino(), CNRUserContext.getEsercizio(actioncontext.getUserContext()), TipoOperazioneOrdBulk.EVASIONE_ORDINE);
+				numerazioneMag = (NumerazioneMagBulk)((EvasioneOrdineComponentSession)this.createComponentSession()).findByPrimaryKey(actioncontext.getUserContext(), numerazioneMag);
+
+				evasioneOrdine.setNumerazioneMag(numerazioneMag);
+			}
+			return evasioneOrdine;
+		} catch (ComponentException | RemoteException e) {
+			throw new BusinessProcessException(e);
+		}
+	}
+
+	public void inizializeUnitaMisuraEvasa(ActionContext actioncontext, OrdineAcqConsegnaBulk consegna, UnitaMisuraBulk unitaMisura) throws BusinessProcessException {
+		Optional.ofNullable(consegna).ifPresent(cns->{
+			Optional.ofNullable(unitaMisura).ifPresent(um->{
+				cns.setUnitaMisuraEvasa(um);
+				Optional.ofNullable(cns.getOrdineAcqRiga().getBeneServizio())
+					.filter(bene->bene.getUnitaMisura().equalsByPrimaryKey(unitaMisura)).ifPresent(bs->{
+					cns.setCoefConvEvasa(BigDecimal.ONE);
+				});
+			});
+		});
 	}
 }

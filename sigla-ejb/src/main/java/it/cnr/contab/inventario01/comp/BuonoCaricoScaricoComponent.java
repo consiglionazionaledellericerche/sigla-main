@@ -6780,13 +6780,13 @@ private void validaDettagliAssociati (UserContext userContext, Buono_carico_scar
 		List beniApg=apgHome.fetchAll(sql);
 		for (Iterator i=beniApg.iterator();i.hasNext();){ 
 			Inventario_beni_apgBulk beneApg =(Inventario_beni_apgBulk)i.next();
-			Inventario_beniBulk bene =(Inventario_beniBulk)getHome(userContext,Inventario_beniBulk.class).findByPrimaryKey(new Inventario_beniBulk(beneApg.getNr_inventario(),beneApg.getPg_inventario(),beneApg.getProgressivo()));
+			/*Inventario_beniBulk bene =(Inventario_beniBulk)getHome(userContext,Inventario_beniBulk.class).findByPrimaryKey(new Inventario_beniBulk(beneApg.getNr_inventario(),beneApg.getPg_inventario(),beneApg.getProgressivo()));
 			Categoria_gruppo_inventBulk cat =(Categoria_gruppo_inventBulk)getHome(userContext,Categoria_gruppo_inventBulk.class).findByPrimaryKey(new Categoria_gruppo_inventBulk(bene.getCd_categoria_bene()));
 			
 			if(cat!=null && cat.getData_cancellazione()!= null && buonoS.getData_registrazione()!=null &&
 					cat.getData_cancellazione().before(buonoS.getData_registrazione()))
 				throw new ApplicationException("Il Bene "+bene.getNr_inventario()+" ha un categoria non più valida");
-			
+			*/
 			hasNoDetails = false;
 			if (beneApg.getFl_totalmente_scaricato()!=null && !beneApg.getFl_totalmente_scaricato()){
 				if (beneApg.getVariazione_meno() == null || beneApg.getVariazione_meno().compareTo(new java.math.BigDecimal(0))==0)
