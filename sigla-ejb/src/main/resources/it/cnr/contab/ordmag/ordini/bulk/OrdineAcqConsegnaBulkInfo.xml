@@ -160,20 +160,59 @@
 		name="quantita"
 		property="quantita"
 		inputType="TEXT"
-		inputSize="8"
+		inputSize="10"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		enabledOnEdit="true"
 		nullable="false"
-		label="Quantità" />
+		style="text-align: right"
+		label="Quantità Ordinata" />
 	<fieldProperty
-		name="quantitaOriginaria"
-		property="quantitaOriginaria"
+		name="qtConvertita"
+		property="qtConvertita"
+		inputType="ROTEXT"
+		inputSize="10"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		style="text-align: right"
+		label="Quantità Ordinata" />
+ 	<fieldProperty
+		name="quantitaEvasa"
+		property="quantitaEvasa"
 		inputType="TEXT"
-		inputSize="8"
+		inputSize="10"
+		nullable="false"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		enabledOnEdit="true"
+		command="doDefault"
+		style="text-align: right"
+		label="Quantità Consegnata" />
+ 	<fieldProperty
+		name="qtEvasaConvertita"
+		property="qtEvasaConvertita"
+		inputType="ROTEXT"
+		inputSize="10"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		style="text-align: right"
+		label="Quantità Evasa" />
+	<fieldProperty
+		name="findUnitaMisuraEvasa"
+		property="unitaMisuraEvasa"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="UM Carico" />
+	<fieldProperty
+		name="coefConvEvasa"
+		property="coefConvEvasa"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.Importo5CifrePositivoFormat"
+		inputSize="8"
+		maxLength="12"
 		nullable="false"
-		label="Quantità Originaria" />
+		enabledOnEdit="true"
+		command="doDefault"
+		readonlyProperty="ROCoefConvEvasa"
+		label="Coeff. Conversione" />
+
 	<fieldProperty
 		name="imImponibileDivisa"
 		property="imImponibileDivisa"
@@ -240,7 +279,7 @@
 		name="findObbligazioneScadenzario"
 		property="obbligazioneScadenzario"
 		inputType="SEARCHTOOL"
-		formName="searchtool"
+		formName="searchtool_ridotto"
 		label="Scadenza Impegno" />
 	<fieldProperty
 		name="descObbligazioneScadenzario"
@@ -296,7 +335,7 @@
 		inputType="SEARCHTOOL"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Unità Operativa" />
+		label="UOP Destinazione" />
 	<fieldProperty
 		name="cdUopDest"
 		property="unitaOperativaOrd.cdUnitaOperativa"
@@ -369,7 +408,7 @@
 		inputSize="20"
 		inputType="TEXT"
 		nullable="false"
-		label="Bene/Servizio"
+		label="Cod.Articolo"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="dsBeneServizio"
@@ -377,7 +416,7 @@
 		maxLength="300"
 		inputSize="40"
 		inputType="ROTEXT"
-		label="Descr. Bene/Servizio"
+		label="Descrizione"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="dsBeneServizioEsteso"
@@ -388,12 +427,18 @@
 		label="Descr. Bene/Servizio"
 		caseSensitiveSearch="false" />
 	<fieldProperty
+		name="findBeneServizio"
+		property="ordineAcqRiga.beneServizio"
+		inputType="searchtool"
+		formName="searchtool_codice"
+		label="Bene/Servizio" />
+	<fieldProperty
 		name="cdUnitaMisuraMinima"
 		property="ordineAcqRiga.beneServizio.unitaMisura.cdUnitaMisura"
 		maxLength="30"
 		inputSize="3"
 		inputType="ROTEXT"
-		label="Unità Misura Minima"
+		label="UM Minima"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="cdUnitaMisura"
@@ -422,23 +467,6 @@
 		label="I.V.A."
 		caseSensitiveSearch="false" />
 	<fieldProperty
-		name="voceIvaCompleta"
-		property="voceIvaCompleta"
-		maxLength="100"
-		inputSize="50"
-		inputType="TEXT"
-		nullable="false"
-		label="I.V.A."
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="uopDestCompleta"
-		property="uopDestCompleta"
-		maxLength="70"
-		inputSize="70"
-		inputType="TEXT"
-		nullable="false"
-		label="Unità Operativa Destinazione"/>
-	<fieldProperty
 		name="notaRiga"
 		property="ordineAcqRiga.notaRiga"
 		inputType="TEXT"
@@ -448,10 +476,12 @@
 	<fieldProperty
 		name="notaRigaEstesa"
 		property="ordineAcqRiga.notaRiga"
-		inputType="TEXT"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="3"
 		maxLength="2000"
-		inputSize="250"
 		enabledOnEdit="true"
+		inputCssClass="w-100 "
 		label="Note" />
 	<fieldProperty
 		name="prezzoUnitario"
@@ -463,6 +493,13 @@
 		nullable="false"
 		formatName="it.cnr.contab.util.Importo6CifreFormat"
 		label="Prezzo Unitario" />
+	<fieldProperty
+		name="consegnaOrdineString"
+		property="consegnaOrdineString"
+		inputSize="20"
+		inputType="ROTEXT"
+		label="Ordine" />
+		
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -481,37 +518,57 @@
 			name="consegna" />
 	</form>
 	<columnSet
-		name="consegneSet">
+		name="consegneSetOrdine">
 		<columnFieldProperty
-			name="esercizio" />
+			name="consegna" 
+			label="Riga Consegna"/>
 		<columnFieldProperty
-			name="cdNumeratore" />
+			name="tipoConsegna" />
 		<columnFieldProperty
-			name="numero" />
+			name="dtPrevConsegna" />
 		<columnFieldProperty
-			name="riga" />
+			name="cdMagazzino" />
 		<columnFieldProperty
-			name="consegna" />
+			name="cdluogoConsegna" />
 		<columnFieldProperty
-			name="cdBeneServizio" />
-		<columnFieldProperty
-			name="dsBeneServizio" />
-		<columnFieldProperty
-			name="cd_voce_iva" />
-		<columnFieldProperty
-			inputSize="40"
-			name="notaRiga" />
-		<columnFieldProperty
-			name="cdUopDest"/>
-		<columnFieldProperty
-			name="cdUnitaMisuraMinima"/>
-		<columnFieldProperty
-			name="cdUnitaMisura"/>
-		<columnFieldProperty
-			name="coefConv"/>
+			name="cdUopDest"
+			label="UOp Ricevente"/>
 		<columnFieldProperty
 			name="quantita"/>
 		<columnFieldProperty
+			name="imTotaleConsegna" />
+	</columnSet>
+	<columnSet
+		name="consegneSet">
+		<columnFieldProperty
+			name="consegnaOrdineString" />
+		<columnFieldProperty
+			name="cdUopDest"/>
+		<columnFieldProperty
+			headerLabel="ARTICOLO"
+			name="cdBeneServizio" 
+			label="Codice" />
+		<columnFieldProperty
+			headerLabel="ARTICOLO"
+			name="dsBeneServizio" />
+		<columnFieldProperty
+			name="cdUnitaMisuraMinima"
+			headerLabel="ARTICOLO"
+			label="UM Minima" />
+		<columnFieldProperty
+			name="cdUnitaMisura"
+			headerLabel="ORDINE"
+			label="UM" />
+		<columnFieldProperty
+			name="coefConv"
+			headerLabel="ORDINE"
+			label="Coeff." />
+		<columnFieldProperty
+			name="quantita"
+			headerLabel="ORDINE"
+			label="Q.tà" />
+		<columnFieldProperty
+			headerLabel="ORDINE"
 			name="prezzoUnitario"/>
 		<columnFieldProperty
 			name="imTotaleConsegna" />
@@ -540,7 +597,17 @@
 		name="quantita"   
 		command="doOnQuantitaChange"/>
 	<formFieldProperty
-		name="quantitaOriginaria"/>
+		name="qtConvertita" />
+	<formFieldProperty
+		name="quantitaEvasa"/>
+	<formFieldProperty
+		name="qtEvasaConvertita" />
+	<formFieldProperty
+		name="findUnitaMisuraEvasa" />
+	<formFieldProperty
+		name="coefConvEvasa" />
+	<formFieldProperty
+		name="coefConv" />
 	<formFieldProperty
 		name="imImponibileDivisa" />
 	<formFieldProperty
@@ -562,10 +629,6 @@
 	<formFieldProperty
 		name="descObbligazioneScadenzario" />
 	<formFieldProperty
-		name="voceIvaCompleta" />
-	<formFieldProperty
-		name="uopDestCompleta" />
-	<formFieldProperty
 		name="notaRigaEstesa"/>
 	<formFieldProperty
 		name="findUnitaOperativaOrdDest" />
@@ -575,6 +638,11 @@
 	<formFieldProperty name="dsBeneServizioEsteso"/>
 	<formFieldProperty name="dsBeneServizio" />
 	<formFieldProperty name="voceIvaCompleto" />
+	<formFieldProperty 
+		name="findBeneServizio" />
+	<formFieldProperty 
+		name="cdUnitaMisuraMinima" />
+		
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty
