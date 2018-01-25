@@ -805,7 +805,9 @@ public class CRUDDistintaCassiereBP extends
 				// 1 ?
 				infoben.setImportoBeneficiario(docContabile.getImDocumento()
 						.setScale(2, BigDecimal.ROUND_HALF_UP));
-				if (docContabile.getTiDocumento().compareTo(
+				if(bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute())==0)
+					 infoben.setTipoPagamento("COMPENSAZIONE");
+				else if (docContabile.getTiDocumento().compareTo(
 						MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0)
 					infoben.setTipoPagamento("REGOLARIZZAZIONE");
 				else if (docContabile.getTiDocumento().compareTo(
