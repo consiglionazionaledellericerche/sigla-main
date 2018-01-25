@@ -65,6 +65,7 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.PropertyNames;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
@@ -405,7 +406,7 @@ public class GestioneLoginComponent
 	public void registerUser(UserContext userContext,String id_clone) throws it.cnr.jada.comp.ComponentException {
 		unregisterUser(userContext);
 		try {
-			java.sql.CallableStatement stm = getConnection(userContext).prepareCall("{  call CNRCTB850.register(?,?,?,?,?) }");
+			java.sql.CallableStatement stm = getConnection(userContext).prepareCall(PropertyNames.getProperty("package.cnrctb850.register"));
 			stm.setString(1,CNRUserContext.getCd_cds(userContext));
 			stm.setInt(2,CNRUserContext.getEsercizio(userContext).intValue());
 			stm.setString(3,CNRUserContext.getUser(userContext));
@@ -422,7 +423,7 @@ public class GestioneLoginComponent
 	}
 	public void unregisterUser(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
 		try {
-			java.sql.CallableStatement stm = getConnection(userContext).prepareCall("{  call CNRCTB850.unregister(?) }");
+			java.sql.CallableStatement stm = getConnection(userContext).prepareCall(PropertyNames.getProperty("package.cnrctb850.unregister"));
 			stm.setString(1,userContext.getSessionId());
 			try {
 				stm.execute();
@@ -436,7 +437,7 @@ public class GestioneLoginComponent
 	public void unregisterUsers(String id_clone) throws it.cnr.jada.comp.ComponentException {
 		try {
 			Connection conn = it.cnr.jada.util.ejb.EJBCommonServices.getConnection();
-			java.sql.CallableStatement stm = conn.prepareCall("{  call CNRCTB850.unregisterAll(?) }");
+			java.sql.CallableStatement stm = conn.prepareCall(PropertyNames.getProperty("package.cnrctb850.unregisterall"));
 			stm.setString(1,id_clone);
 			try {
 				stm.execute();
