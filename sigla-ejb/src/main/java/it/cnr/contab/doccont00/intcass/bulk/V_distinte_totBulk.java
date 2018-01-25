@@ -14,7 +14,7 @@ public class V_distinte_totBulk extends  V_distinte_totBase {
 		tipoKeys = new it.cnr.jada.util.OrderedHashtable();
 		tipoKeys.put("Altro","Altro");
 		tipoKeys.put("Flusso","Flusso");
-		tipoKeys.put("Sepa","Sepa");
+		tipoKeys.put("Estera","Estera");
 		tipoKeys.put("Annulli","Annulli");
 	};
 	public V_distinte_totBulk() {
