@@ -1,5 +1,6 @@
 package it.cnr.contab.util.servlet;
 
+import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.SessionTraceBulk;
 import it.cnr.jada.UserContext;
@@ -15,6 +16,7 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
@@ -145,16 +147,23 @@ public class ExpireSessionServlet extends HttpServlet implements Serializable,Ht
 	}
 	public void sessionDestroyed(HttpSessionEvent se) {
 		UserContext userContext = (UserContext) se.getSession().getAttribute("UserContext");
-		if (userContext != null){
-	        StringBuffer infoUser = new StringBuffer();
-	        infoUser.append("LogOut User:"+userContext.getUser());
-	    	log.warn(infoUser.toString());
-		}
 		try {
+			Optional.ofNullable(userContext)
+					.ifPresent(userContext1 -> {
+						try {
+							StringBuffer infoUser = new StringBuffer();
+							infoUser.append("LogOut User:"+userContext1.getUser());
+							log.warn(infoUser.toString());
+							createGestioneLoginComponentSession().unregisterUser(userContext1);
+						} catch (ComponentException|RemoteException e) {
+							log.error("", e);
+						}
+					});
 			SessionTraceBulk sessionTrace = (SessionTraceBulk)createCRUDComponentSession().inizializzaBulkPerModifica(new CNRUserContext("SESSIONTRACE",se.getSession().getId(),null,null,null,null), new SessionTraceBulk(se.getSession().getId()));
 			sessionTrace.setToBeDeleted();
 			createCRUDComponentSession().eliminaConBulk(new CNRUserContext("SESSIONTRACE",se.getSession().getId(),null,null,null,null), sessionTrace);
 		} catch (Exception e) {
+			log.error("", e);
 		}
 		HttpEJBCleaner httpejbcleaner = (HttpEJBCleaner)se.getSession().getAttribute("it.cnr.jada.util.ejb.HttpEJBCleaner");
 		if (httpejbcleaner != null)
@@ -164,5 +173,8 @@ public class ExpireSessionServlet extends HttpServlet implements Serializable,Ht
 	public CRUDComponentSession createCRUDComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
 		return (CRUDComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession");
 	}
-	
+
+	public GestioneLoginComponentSession createGestioneLoginComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
+		return (GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession");
+	}
 }
