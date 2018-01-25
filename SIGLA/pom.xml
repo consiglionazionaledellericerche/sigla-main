@@ -138,7 +138,9 @@
                     <archive>
                         <manifestEntries>
                             <Dependencies>
-                                com.oracle.jdbc, org.apache.xerces,
+                                com.oracle.jdbc,
+                                org.postgresql.postgresql,
+                                org.apache.xerces,
                                 org.apache.commons.collections,
                                 org.codehaus.jackson.jackson-mapper-asl,
                                 com.fasterxml.jackson.core.jackson-annotations,
