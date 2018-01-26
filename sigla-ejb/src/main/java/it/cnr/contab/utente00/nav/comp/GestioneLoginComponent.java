@@ -43,21 +43,9 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.LdapLogin;
 import it.cnr.contab.utenze00.bp.PasswordNonValidaException;
 import it.cnr.contab.utenze00.bp.UtenteNonAbilitatoException;
-import it.cnr.contab.utenze00.bulk.Albero_mainBulk;
-import it.cnr.contab.utenze00.bulk.Albero_mainHome;
-import it.cnr.contab.utenze00.bulk.Ldap_serverBulk;
-import it.cnr.contab.utenze00.bulk.Ldap_serverHome;
-import it.cnr.contab.utenze00.bulk.PreferitiBulk;
-import it.cnr.contab.utenze00.bulk.PreferitiHome;
-import it.cnr.contab.utenze00.bulk.Ruolo_bloccoBulk;
-import it.cnr.contab.utenze00.bulk.SessionTraceBulk;
-import it.cnr.contab.utenze00.bulk.SessionTraceHome;
-import it.cnr.contab.utenze00.bulk.UtenteBulk;
-import it.cnr.contab.utenze00.bulk.UtenteComuneBulk;
-import it.cnr.contab.utenze00.bulk.UtenteHome;
-import it.cnr.contab.utenze00.bulk.Utente_unita_ruoloBulk;
-import it.cnr.contab.utenze00.bulk.Utente_unita_ruoloHome;
+import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -75,6 +63,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 public class GestioneLoginComponent
 	extends it.cnr.jada.comp.GenericComponent
@@ -123,32 +112,21 @@ public class GestioneLoginComponent
 			throw handleException(e);
 		}
 	}
-	public boolean controllaAccesso(UserContext userContext,String cd_accesso) throws it.cnr.jada.comp.ComponentException {
+	public boolean controllaAccesso(UserContext userContext, String cd_accesso) throws it.cnr.jada.comp.ComponentException {
 		try {
-	        Integer esercizio = it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext);
-	        String cd_unita_organizzativa = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext);
-	        if (cd_unita_organizzativa == null) {
-	        	cd_unita_organizzativa = "*";
-	        	esercizio = new Integer(0);
-	        }
-	        LoggableStatement stm = new LoggableStatement(getConnection(userContext),"SELECT 1 FROM DUAL WHERE EXISTS ( SELECT * FROM "
-	        		+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
-	        		+"V_UTENTE_ACCESSO WHERE CD_UTENTE = ? AND CD_UNITA_ORGANIZZATIVA = ? AND CD_ACCESSO = ? AND ESERCIZIO = ?)",
-	        		true,this.getClass());
-			try {
-				stm.setString(1,it.cnr.contab.utenze00.bp.CNRUserContext.getUser(userContext));
-				stm.setString(2,cd_unita_organizzativa);
-				stm.setString(3,cd_accesso);
-				stm.setInt(4,esercizio.intValue());
-				java.sql.ResultSet rs = stm.executeQuery();
-				try {
-					return rs.next();
-				} finally {
-					try{rs.close();}catch( java.sql.SQLException e ){};
-				}
-			} finally {
-				try{stm.close();}catch( java.sql.SQLException e ){};
-			}
+			final Optional<String> cd_unita_organizzativaOptional = Optional.ofNullable(CNRUserContext.getCd_unita_organizzativa(userContext));
+			Integer esercizio = cd_unita_organizzativaOptional
+				.map(s -> CNRUserContext.getEsercizio(userContext))
+					.orElse(Integer.valueOf(0));
+			String cd_unita_organizzativa = cd_unita_organizzativaOptional
+					.orElse("*");
+			final BulkHome v_utente_accessoHome = getHome(userContext, Utente_unita_accessoBulk.class, "V_UTENTE_ACCESSO");
+			SQLBuilder sqlBuilder = v_utente_accessoHome.createSQLBuilder();
+			sqlBuilder.addClause(FindClause.AND,"cd_utente", SQLBuilder.EQUALS, CNRUserContext.getUser(userContext));
+			sqlBuilder.addClause(FindClause.AND,"cd_unita_organizzativa", SQLBuilder.EQUALS, cd_unita_organizzativa);
+			sqlBuilder.addClause(FindClause.AND,"cd_accesso", SQLBuilder.EQUALS, cd_accesso);
+			sqlBuilder.addClause(FindClause.AND,"esercizio", SQLBuilder.EQUALS, esercizio);
+			return sqlBuilder.executeExistsQuery(getConnection(userContext));
 		} catch(java.sql.SQLException e) {
 			throw handleException(e);
 		}
