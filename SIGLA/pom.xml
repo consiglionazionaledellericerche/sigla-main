@@ -7,7 +7,7 @@
     <parent>
         <groupId>it.cnr</groupId>
         <artifactId>sigla</artifactId>
-        <version>4.1.60-SNAPSHOT</version>
+        <version>4.1.61-SNAPSHOT</version>
     </parent>
     <properties>
         <wildfly.deployment.filename>SIGLA.ear</wildfly.deployment.filename>
@@ -138,7 +138,9 @@
                     <archive>
                         <manifestEntries>
                             <Dependencies>
-                                com.oracle.jdbc, org.apache.xerces,
+                                com.oracle.jdbc,
+                                org.postgresql.postgresql,
+                                org.apache.xerces,
                                 org.apache.commons.collections,
                                 org.codehaus.jackson.jackson-mapper-asl,
                                 com.fasterxml.jackson.core.jackson-annotations,
