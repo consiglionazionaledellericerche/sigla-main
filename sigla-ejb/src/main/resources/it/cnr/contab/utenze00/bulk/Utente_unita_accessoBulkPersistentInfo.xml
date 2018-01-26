@@ -8,6 +8,35 @@
 			propertyName="accesso.cd_accesso"
 			/>
 	</defaultColumnMap>
+	<columnMap
+			name="V_UTENTE_ACCESSO"
+			tableName="V_UTENTE_ACCESSO">
+		<columnMapping
+				columnName="CD_UTENTE"
+				propertyName="cd_utente"
+				sqlTypeName="VARCHAR"
+				columnSize="20"/>
+		<columnMapping
+				columnName="CD_UNITA_ORGANIZZATIVA"
+				propertyName="cd_unita_organizzativa"
+				sqlTypeName="VARCHAR"
+				columnSize="30"/>
+		<columnMapping
+				columnName="CD_ACCESSO"
+				propertyName="cd_accesso"
+				sqlTypeName="VARCHAR"
+				columnSize="20"/>
+		<columnMapping
+				columnName="ESERCIZIO"
+				propertyName="esercizio"
+				sqlTypeName="DECIMAL"
+				columnSize="4"/>
+		<columnMapping
+				columnName="ORIGINE"
+				propertyName="origine"
+				sqlTypeName="VARCHAR"
+				columnSize="250"/>
+	</columnMap>
 	<persistentProperty
 		name="accesso"
 		partOfOid="true"/>
