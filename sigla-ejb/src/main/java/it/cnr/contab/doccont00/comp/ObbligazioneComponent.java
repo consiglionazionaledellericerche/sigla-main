@@ -584,7 +584,7 @@ private void checkDispObbligazioniAccertamenti(UserContext userContext, Obbligaz
 					   cd_linea_attivita,
 					   voce,
 					   obbligazione.getEsercizio_originale(),
-					   obbligazione.isObbligazioneResiduoImproprio()?Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_IMPROPRIO:Voce_f_saldi_cdr_lineaBulk.TIPO_COMPETENZA,
+					   (obbligazione.isObbligazioneResiduo()||obbligazione.isObbligazioneResiduoImproprio())?Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_IMPROPRIO:Voce_f_saldi_cdr_lineaBulk.TIPO_COMPETENZA,
 					   parametri_cds.getBlocco_impegni_cdr_gae());
 				  if (parametri_cds != null && mess != null && parametri_cds.getBlocco_impegni_cdr_gae().equals(Parametri_cdsBulk.BLOCCO_IMPEGNI_ERROR))
 					throw new ApplicationException(mess);			       
