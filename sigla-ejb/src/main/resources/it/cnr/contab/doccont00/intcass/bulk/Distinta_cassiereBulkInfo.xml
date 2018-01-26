@@ -342,7 +342,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		enabledOnFreeSearch="true"
-		label="Sepa" />
+		label="Estero" />
 		<fieldProperty
 		name="fl_annulli"
 		property="fl_annulli"
