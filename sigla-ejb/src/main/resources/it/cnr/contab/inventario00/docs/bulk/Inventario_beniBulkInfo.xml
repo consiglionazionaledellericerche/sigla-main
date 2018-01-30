@@ -473,6 +473,27 @@
 		property="fl_trasf_come_principale"
 		inputType="CHECKBOX"
 		label="Trasferisci come bene principale" />
+	<fieldProperty
+		name="find_nuova_categoria"
+		property="nuova_categoria"
+		inputType="SEARCHTOOL" 	
+		formName="searchtool" 	
+		label="Nuova Categoria"
+		completeOnSave="false"/>
+	 <fieldProperty
+		name="cd_categoria_gruppo_new"
+		property="nuova_categoria.cd_categoria_gruppo"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="6"
+		label="Nuovo Categoria"	
+		caseSensitiveSearch="false" />
+	 <fieldProperty
+		name="ds_categoria_gruppo_new"
+		property="nuova_categoria.ds_categoria_gruppo"
+		inputType="ROTEXT"
+		inputSize="30"
+		caseSensitiveSearch="false" />	
 	<fieldProperty 
 		name="id_bene_origine"
 		property="id_bene_origine"
@@ -606,6 +627,12 @@
 		name="ds_nuovo_bene_padre" />
 	<formFieldProperty 
 		name="fl_trasf_come_principale" />
+	<formFieldProperty
+		name="find_nuova_categoria" />
+	<formFieldProperty
+		name="cd_categoria_bene_new" />
+	<formFieldProperty 
+		name="ds_categoria_bene_new" />
 	<formFieldProperty 
 		name="id_bene_origine" />		
 	<formFieldProperty

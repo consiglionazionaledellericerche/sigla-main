@@ -100,7 +100,17 @@
 			<td><% bp.getController().writeFormLabel(out,"ds_buono_carico_scarico"); %></td>
 			<td colspan=3><% bp.getController().writeFormInput(out,null,"ds_buono_carico_scarico",bp.isEditing(),null,null); %></td>
 		</tr>
-
+       <% if (bp.isTrasferimentoIntraInv() &&  bp.isAmministratore()){ %>
+			<tr>
+			<td>
+			  <% bp.getController().writeFormLabel(out,"fl_cambio_categoria");%>
+			 </td>
+			 <td>
+				<% bp.getController().writeFormInput(out,null,"fl_cambio_categoria",false,null,null);%>
+			  </td>
+			</tr>
+		<% } %>		
+		
 	</table>
    </td></tr>
    </table>
