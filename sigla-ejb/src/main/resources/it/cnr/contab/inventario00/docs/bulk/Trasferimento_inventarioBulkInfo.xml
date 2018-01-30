@@ -75,6 +75,11 @@
 		property="fl_scarica_tutti"
 		inputType="CHECKBOX"
 		label="Trasferimento inventario completo" />
+	<fieldProperty
+		name="fl_cambio_categoria"
+		property="fl_cambio_categoria"
+		inputType="CHECKBOX"
+		label="Cambio Categoria" />
 
 
 	<formFieldProperty name="data_registrazione" />
@@ -88,6 +93,7 @@
 	<formFieldProperty name="ds_inventario_dest" />	
 
 	<formFieldProperty name="fl_scarica_tutti" />	
+	<formFieldProperty name="fl_cambio_categoria" />
 	
 
 </bulkInfo>
