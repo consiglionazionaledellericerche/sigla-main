@@ -56,6 +56,10 @@
 				<% bp.getController().writeFormInput( out, "dt_emissione"); %></td>
 			<td><% bp.getController().writeFormLabel( out, "stato"); %></td>
 			<td><% bp.getController().writeFormInput( out, "stato"); %></td>
+	<% if ( bp.isSupervisore()){ %>		 
+			<td><% bp.getController().writeFormLabel( out, "dt_pagamento_richiesta"); %></td>
+			<td><% bp.getController().writeFormInput( out, "dt_pagamento_richiesta"); %></td>
+	<% } %>		
 	</tr>
 	<tr>
 			<td><% bp.getController().writeFormLabel( out, "dt_trasmissione"); %></td>

@@ -23,7 +23,9 @@ import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
+import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.varstanz00.ejb.VariazioniStanziamentoResiduoComponentSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -402,6 +404,9 @@ public final class Utility {
 	 */
 	public static Unita_organizzativaComponentSession createUnita_organizzativaComponentSession() throws javax.ejb.EJBException{
 		return (Unita_organizzativaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Unita_organizzativaComponentSession", Unita_organizzativaComponentSession.class);
+	}	
+	public static UtenteComponentSession createUtenteComponentSession() throws javax.ejb.EJBException{
+		return (UtenteComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_EJB_UtenteComponentSession", UtenteComponentSession.class);
 	}	
 	/**
 	 * Crea la Local TerzoComponentSession da usare per effettuare operazioni

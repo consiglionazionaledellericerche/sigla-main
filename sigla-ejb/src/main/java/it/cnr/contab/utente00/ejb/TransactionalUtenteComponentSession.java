@@ -3,6 +3,8 @@ import java.rmi.*;
 
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
 import it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.ejb.*;
 
@@ -408,6 +410,24 @@ public class TransactionalUtenteComponentSession extends it.cnr.jada.ejb.Transac
 		try {
 			return (UtenteFirmaDettaglioBulk)invoke("isUtenteAbilitatoFirma",new Object[] {
 					param0, codice});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+	@Override
+	public boolean isSupervisore(UserContext param0) throws ComponentException,
+			RemoteException {
+		try {
+			return ((Boolean)(invoke("isSupervisore",new Object[] {
+					param0})));
 		} catch(java.rmi.RemoteException e) {
 			throw e;
 		} catch(java.lang.reflect.InvocationTargetException e) {

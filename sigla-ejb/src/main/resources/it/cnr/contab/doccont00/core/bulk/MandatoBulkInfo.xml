@@ -297,6 +297,16 @@
 		inputType="ROTEXT"
 		label=""
 		caseSensitiveSearch="false" />	
+	<fieldProperty
+		name="dt_pagamento_richiesta"
+		property="dt_pagamento_richiesta"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		label="Data Pagamento Rich."
+		enabledOnInsert="true"
+		enabledOnSearch="true"/>
+		
 	<form name="searchtool">
 		<formFieldProperty
 			name="pg_mandato"
@@ -309,7 +319,6 @@
 			inputSize="70"
 			inputType="TEXT" />
 	</form>
-
 	<formFieldProperty
 		name="im_disp_cassa" />
 	<formFieldProperty
@@ -371,7 +380,9 @@
 	<formFieldProperty
 		name="ds_documento_cont" />
 	<formFieldProperty
-		name="find_documento_cont" />	
+		name="find_documento_cont" />
+	<formFieldProperty
+		name="dt_pagamento_richiesta" />	
 	<columnFieldProperty
 		name="esercizio"/>
 	<columnFieldProperty
