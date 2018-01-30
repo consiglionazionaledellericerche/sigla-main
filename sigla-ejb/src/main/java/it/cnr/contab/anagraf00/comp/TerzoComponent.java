@@ -529,8 +529,8 @@ public void verificaIntegritaBanche(UserContext userContext,TerzoBulk terzo) thr
 			/* Se la Banca ha ORIGINE = 'S', (è stata creata dalla migrazioen per un dipendente)
 				viene lanciata una eccezione di tipo <code>ReferentialIntegrityException</code>.
 			*/
-			if (banca.getOrigine().equals(BancaBulk.ORIGINE_STIPENDI))
-				throw new ReferentialIntegrityException();
+			//if (banca.getOrigine().equals(BancaBulk.ORIGINE_STIPENDI))
+				//throw new ReferentialIntegrityException();
 			try {
 				deleteBulk(userContext, banca);
 			} catch(ReferentialIntegrityException ex){
