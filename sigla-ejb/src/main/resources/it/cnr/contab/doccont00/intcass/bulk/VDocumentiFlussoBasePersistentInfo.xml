@@ -227,7 +227,13 @@
 		  propertyName="modalitaPagamento"
 		  sqlTypeName="VARCHAR"
 		  columnSize="10"
-		  nullable="true"/>			
+		  nullable="true"/>		
+		<columnMapping
+			columnName="DT_PAGAMENTO_RICHIESTA"
+			propertyName="dtPagamentoRichiesta"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />	
 	</defaultColumnMap>
 	
 	<columnMap 
@@ -446,4 +452,6 @@
 		name="pgDocAmm" />	
 	<persistentProperty
 		name ="modalitaPagamento" />
+	<persistentProperty
+		name ="dtPagamentoRichiesta" />
 </SQLPersistentInfo>

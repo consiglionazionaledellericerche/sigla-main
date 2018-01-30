@@ -70,6 +70,8 @@ public class MandatoBase extends MandatoKey implements Keyed {
 	
 	private java.sql.Timestamp dt_firma_annullo;
 		
+	private java.sql.Timestamp dt_pagamento_richiesta;
+
 	public MandatoBase() {
 		super();
 	}
@@ -322,5 +324,11 @@ public class MandatoBase extends MandatoKey implements Keyed {
 	}
 	public void setPg_mandato_riemissione(java.lang.Long pg_mandato_riemissione) {
 		this.pg_mandato_riemissione = pg_mandato_riemissione;
+	}
+	public java.sql.Timestamp getDt_pagamento_richiesta() {
+		return dt_pagamento_richiesta;
+	}
+	public void setDt_pagamento_richiesta(java.sql.Timestamp dt_pagamento_richiesta) {
+		this.dt_pagamento_richiesta = dt_pagamento_richiesta;
 	}
 }

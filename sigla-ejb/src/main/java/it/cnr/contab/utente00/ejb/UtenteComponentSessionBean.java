@@ -1,8 +1,11 @@
 package it.cnr.contab.utente00.ejb;
+import java.rmi.RemoteException;
+
 import it.cnr.contab.utente00.comp.UtenteComponent;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
 import it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 
 import javax.annotation.PostConstruct;
@@ -213,5 +216,25 @@ public class UtenteComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSes
 		} catch(Error e) {
 			throw uncaughtError(param0,componentObj,e);
 		}		
+	}
+	@Override
+	public boolean isSupervisore(UserContext param0) throws ComponentException,
+			RemoteException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			Boolean result = ((UtenteComponent)componentObj).isSupervisore(param0);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
 	}
 }

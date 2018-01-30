@@ -1025,4 +1025,14 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 			throw handleException(e);
 		}
   	}
+	public boolean isSupervisore(UserContext userContext)throws ComponentException{
+		try {
+			UtenteBulk utenteScrivania = (UtenteBulk)getHome(userContext,UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext)));
+			if (utenteScrivania.isSupervisore())
+				return true;
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+		return false;
+	}
 }

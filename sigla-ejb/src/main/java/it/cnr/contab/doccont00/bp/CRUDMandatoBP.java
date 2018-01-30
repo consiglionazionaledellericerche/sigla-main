@@ -16,6 +16,7 @@ import it.cnr.contab.doccont00.core.bulk.V_doc_attivo_accertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.V_doc_passivo_obbligazioneBulk;
 import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -54,6 +55,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP {
 	private boolean cup_attivo =false;
 	private boolean siope_cup_attivo =false;
 	private boolean tesoreria_unica =false;
+	private boolean supervisore=false;
 public CRUDMandatoBP() {
 	super();
 	setTab("tab","tabMandato");
@@ -319,6 +321,7 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 			setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
 			setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
 			setTesoreria_unica(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_tesoreria_unica().booleanValue());
+			setSupervisore(Utility.createUtenteComponentSession().isSupervisore(actioncontext.getUserContext()));			
 //		}
 	}
     catch(Throwable throwable)
@@ -518,6 +521,14 @@ public boolean isTesoreria_unica() {
 
 public void setTesoreria_unica(boolean tesoreria_unica) {
 	this.tesoreria_unica = tesoreria_unica;
+}
+
+public boolean isSupervisore() {
+	return supervisore;
+}
+
+public void setSupervisore(boolean supervisore) {
+	this.supervisore = supervisore;
 }
 
 

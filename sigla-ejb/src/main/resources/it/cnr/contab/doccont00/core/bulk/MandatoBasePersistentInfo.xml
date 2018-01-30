@@ -167,7 +167,12 @@
 			columnName="PG_MANDATO_RIEMISSIONE"
 			propertyName="pg_mandato_riemissione"
 			sqlTypeName="DECIMAL"
-			columnSize="10"/>		
+			columnSize="10"/>	
+		<columnMapping
+			columnName="DT_PAGAMENTO_RICHIESTA"
+			propertyName="dt_pagamento_richiesta"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />		
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_annullamento" />
@@ -224,5 +229,7 @@
 	<persistentProperty
 		name="dt_firma_annullo" />		
 	<persistentProperty
-		name="pg_mandato_riemissione" />	
+		name="pg_mandato_riemissione" />
+	<persistentProperty		
+		name="dt_pagamento_richiesta" />
 </SQLPersistentInfo>
