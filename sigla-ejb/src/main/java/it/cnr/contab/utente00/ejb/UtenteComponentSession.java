@@ -20,4 +20,5 @@ it.cnr.contab.utenze00.bulk.SelezionaCdsBulk findUo(it.cnr.jada.UserContext para
 it.cnr.contab.config00.sto.bulk.CdrBulk findCdrEnte(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void validaSelezionaCds(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.SelezionaCdsBulk param1, Integer param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 UtenteFirmaDettaglioBulk isUtenteAbilitatoFirma(UserContext param0, AbilitatoFirma codice) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+boolean isSupervisore(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

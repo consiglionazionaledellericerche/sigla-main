@@ -5513,6 +5513,17 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 if (rifModPag.isMandatoRegSospeso() && !mandato.isRegolamentoSospeso())
                     throw new ApplicationException(
                             "Attenzione per la modalità di pagamento indicata il mandato deve essere a regolamento sospeso.");
+                if(rifModPag.getCd_modalita_pag().compareTo("F24EP")==0 && mandato.getDt_pagamento_richiesta()==null )
+                	throw new ApplicationException(
+                            "Attenzione per la modalità di pagamento indicata il mandato deve avere la data pagamento richiesta.");
+                if(rifModPag.getCd_modalita_pag().compareTo("F24EP")!=0 && mandato.getDt_pagamento_richiesta()!=null )
+                	throw new ApplicationException(
+                            "Attenzione per la modalità di pagamento "+rifModPag.getCd_modalita_pag()+" la data pagamento richiesta non deve essere indicata."); 
+                if(rifModPag.getCd_modalita_pag().compareTo("F24EP")==0 && mandato.getDt_pagamento_richiesta()!=null && 
+                	mandato.getDt_emissione()!=null && 	mandato.getDt_pagamento_richiesta().before(mandato.getDt_emissione()))
+                	throw new ApplicationException(
+                            "Attenzione per la modalità di pagamento "+rifModPag.getCd_modalita_pag()+" la data pagamento richiesta non può essere inferiore alla data contabilizzazione.");    	
+            
             }
             if (riga.getBanca() == null
                     || Rif_modalita_pagamentoBulk.ALTRO.equals(riga.getBanca()

@@ -851,16 +851,41 @@ public class CRUDDistintaCassiereBP extends
 					obb_conto = true;
 				} else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO) == 0
 						&& docContabile.getModalitaPagamento() != null
-						&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0 //&& docContabile.getDt_pagamento_richiesta()==null
+						&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0 && docContabile.getDtPagamentoRichiesta()==null
 						) {
 					throw new ApplicationException(
-							"Impossibile generare il flusso, Modalita di pagamento non valida per il terzo "
-									+ docContabile.getCdTerzo()
+							"Impossibile generare il flusso, indicare data richiesta pagamento nel mandato cds "
+									+ docContabile.getCdCds()
+									+ " n. "
+									+ docContabile.getPgDocumento());
+				} else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO) == 0
+						&& docContabile.getModalitaPagamento() != null
+						&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0 && docContabile.getDtPagamentoRichiesta()!=null &&
+								(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().after(docContabile.getDtPagamentoRichiesta())))
+						 {
+					throw new ApplicationException(
+							"Impossibile generare il flusso, indicare data richiesta pagamento nel mandato "
 									+ " cds "
 									+ docContabile.getCdCds()
 									+ " mandato "
-									+ docContabile.getPgDocumento());
-				}
+									+ docContabile.getPgDocumento()+ " superiore alla data odierna!");
+						 }
+					else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO) == 0
+							&& docContabile.getModalitaPagamento() != null
+							&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0 && docContabile.getDtPagamentoRichiesta()!=null &&
+									(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().before(docContabile.getDtPagamentoRichiesta())))
+					{
+						infoben.setTipoPagamento("F24EP");
+						gcdi.setTime(docContabile.getDtPagamentoRichiesta());
+						xgc = DatatypeFactory.newInstance()
+								.newXMLGregorianCalendar(gcdi);
+						xgc.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
+						xgc.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+						xgc.setSecond(DatatypeConstants.FIELD_UNDEFINED);
+						xgc.setMinute(DatatypeConstants.FIELD_UNDEFINED);
+						xgc.setHour(DatatypeConstants.FIELD_UNDEFINED);
+						infoben.setDataScadenzaPagamento(xgc);
+					}
 				// 19/11/2015 MANDATI a NETTO 0, richiesta modifica tipo
 				// pagamento
 				// if(bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute())==0)
@@ -1097,8 +1122,9 @@ public class CRUDDistintaCassiereBP extends
 					sepa.setIban(docContabile.getCodiceIban());
 					if (docContabile.getBic() != null
 							&& docContabile.getCodiceIban() != null
-							&& (docContabile.getBic().length() >= 8 && docContabile
-							.getBic().length() <= 11))// &&
+							&& (docContabile.getBic().length() == 8 || 
+							    docContabile.getBic().length() == 11) && 
+							    !docContabile.getBic().contains(" "))// &&
 						// docContabile.getNumeroConto().substring(0,
 						// 2).compareTo("IT")!=0
 						// )
