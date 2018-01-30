@@ -72,6 +72,8 @@ public class Inventario_beni_apgBase extends Inventario_beni_apgKey implements K
 	
 	private String cd_tipo_documento_amm;
 	
+	private java.lang.String cd_categoria_gruppo_new;
+	
 	public java.lang.Long getPg_buono_c_s() {
 		return pg_buono_c_s;
 	}
@@ -224,6 +226,12 @@ public class Inventario_beni_apgBase extends Inventario_beni_apgKey implements K
 	}
 	public void setCd_tipo_documento_amm(String cd_tipo_documento_amm) {
 		this.cd_tipo_documento_amm = cd_tipo_documento_amm;
+	}
+	public java.lang.String getCd_categoria_gruppo_new() {
+		return cd_categoria_gruppo_new;
+	}
+	public void setCd_categoria_gruppo_new(java.lang.String cd_categoria_gruppo_new) {
+		this.cd_categoria_gruppo_new = cd_categoria_gruppo_new;
 	}
 	
 }

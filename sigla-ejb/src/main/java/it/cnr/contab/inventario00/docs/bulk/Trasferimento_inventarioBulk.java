@@ -27,7 +27,8 @@ public class Trasferimento_inventarioBulk extends it.cnr.contab.inventario01.bul
 	//	all'interno dello stesso.
 	private boolean trasferimentoExtraInv;	
 	private boolean trasferimentoIntraInv;
-
+	
+	private boolean fl_cambio_categoria =false;
 
 /**
  * Trasferimento_inventarioBulk constructor comment.
@@ -196,5 +197,11 @@ public void setTrasferimentoIntraInv(boolean newTrasferimentoIntraInv) {
  */
 public void setUo_destinazione(it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk newUo_destinazione) {
 	uo_destinazione = newUo_destinazione;
+}
+public boolean isFl_cambio_categoria() {
+	return fl_cambio_categoria;
+}
+public void setFl_cambio_categoria(boolean fl_cambio_categoria) {
+	this.fl_cambio_categoria = fl_cambio_categoria;
 }
 }

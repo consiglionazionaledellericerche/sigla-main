@@ -185,6 +185,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="10"
 			nullable="true" />		
+		<columnMapping
+			columnName="CD_CATEGORIA_GRUPPO_NEW"
+			propertyName="cd_categoria_gruppo_new"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />	
 	</defaultColumnMap>
 	<persistentProperty
 		name="cd_cds" />
@@ -244,4 +250,6 @@
 		name="imp_fattura" />	
 	<persistentProperty
 		name="cd_tipo_documento_amm" />	
+	<persistentProperty
+		name="cd_categoria_gruppo_new" />	
 </SQLPersistentInfo>

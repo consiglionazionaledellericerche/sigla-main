@@ -5668,7 +5668,7 @@ private void modificaBeneTrasferito(UserContext userContext,Buono_carico_scarico
 	Inventario_beni_apgHome home=(Inventario_beni_apgHome)getHome(userContext,Inventario_beni_apgBulk.class);
 	SQLBuilder sql=home.createSQLBuilder();
 	sql.addSQLClause("AND","INVENTARIO_BENI_APG.PG_INVENTARIO",sql.EQUALS,bene.getPg_inventario());
-	sql.addSQLClause("AND","INVENTARIO_BENI_APG.NR_INVENTARIO",sql.EQUALS,bene.getNr_inventario());
+	sql.addSQLClause("AND","INVENTARIO_BENI_APG.NR_INVENTARIO",sql.EQUALS,bene.getNr_inventario()); 
 	//	 Se il bene che si sta trasferendo ï¿½ un bene principale, (PROGRESSIVO = 0),
 	//	allora il nuovo bene padre viene copiato anche negli EVENTUALI beni accessori
 	//	scaricati insieme al padre.
@@ -5689,6 +5689,16 @@ private void modificaBeneTrasferito(UserContext userContext,Buono_carico_scarico
 			bene_apg.setNr_inventario_principale(bene.getNuovo_bene_padre().getNr_inventario());
 			bene_apg.setProgressivo_principale(bene.getNuovo_bene_padre().getProgressivo());
 		}else{
+			bene_apg.setPg_inventario_principale(null);
+			bene_apg.setNr_inventario_principale(null);
+			bene_apg.setProgressivo_principale(null);
+		}
+		bene_apg.setCd_categoria_gruppo_new(null);
+		// viene già controllato che è di tipo (Trasferimento_inventarioBulk)
+		if (((Trasferimento_inventarioBulk)buonoS).isFl_cambio_categoria()){
+			if (bene.getNuova_categoria() != null && bene.getNuova_categoria().getCd_categoria_gruppo() != null){
+				bene_apg.setCd_categoria_gruppo_new(bene.getNuova_categoria().getCd_categoria_gruppo());
+			}
 			bene_apg.setPg_inventario_principale(null);
 			bene_apg.setNr_inventario_principale(null);
 			bene_apg.setProgressivo_principale(null);
@@ -5753,12 +5763,30 @@ private void validaDettagliTrasferiti (UserContext userContext, Trasferimento_in
 			sql_princ.addSQLClause("AND","INVENTARIO_BENI_APG.PG_INVENTARIO_PRINCIPALE",SQLBuilder.ISNULL,"null");
 			sql_princ.addSQLClause("AND","INVENTARIO_BENI_APG.NR_INVENTARIO_PRINCIPALE",SQLBuilder.ISNULL,"null");
 			sql_princ.addSQLClause("AND","INVENTARIO_BENI_APG.PROGRESSIVO_PRINCIPALE",SQLBuilder.ISNULL,"null");
-			if (sql_princ.executeCountQuery(home.getConnection())!=0){ 
+
+			SQLBuilder sql_cat = home.createSQLBuilder();
+			sql_cat.addSQLClause("AND","INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID",SQLBuilder.EQUALS,buonoT.getLocal_transactionID());
+			sql_cat.addSQLClause("AND","INVENTARIO_BENI_APG.CD_CATEGORIA_GRUPPO_NEW",SQLBuilder.ISNOTNULL,"null");
+		
+			SQLBuilder sql_count = home.createSQLBuilder();
+			sql_count.addSQLClause("AND","INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID",SQLBuilder.EQUALS,buonoT.getLocal_transactionID());
+			if (((Trasferimento_inventarioBulk)buonoT).isFl_cambio_categoria() &&
+				    sql_cat.executeCountQuery(home.getConnection())!=sql_count.executeCountQuery(home.getConnection()) ){
+					StringBuffer msg = new StringBuffer("Attenzione indicare la nuova categoria su tutti i beni selezionati.");
+					List Inv_canc=home.fetchAll(sql); 
+				    for (Iterator i=Inv_canc.iterator();i.hasNext();){
+				    	Inventario_beni_apgBulk canc=(Inventario_beni_apgBulk)i.next();
+				    	canc.setToBeDeleted();							
+						super.eliminaConBulk(userContext,canc);
+				    }
+					throw new it.cnr.jada.comp.ApplicationException (msg.toString());					
+			}	    
+			else if (sql_princ.executeCountQuery(home.getConnection())!=0 ){
 				StringBuffer msg = new StringBuffer("Attenzione: ");
 				msg.append("un bene principale può essere trasferito solo come accessorio di un altro bene.\n");
 				msg.append("Oppure un bene accessorio può essere trasferito o come nuovo bene principale, ");
 				msg.append("o come accessorio di un bene padre diverso.\n");
-			    List Inv_canc=home.fetchAll(sql);
+				List Inv_canc=home.fetchAll(sql);
 			    for (Iterator i=Inv_canc.iterator();i.hasNext();){
 			    	Inventario_beni_apgBulk canc=(Inventario_beni_apgBulk)i.next();
 			    	canc.setToBeDeleted();							
@@ -5766,7 +5794,6 @@ private void validaDettagliTrasferiti (UserContext userContext, Trasferimento_in
 			    }
 				throw new it.cnr.jada.comp.ApplicationException (msg.toString());
 			}
-		
 		}
 	} 
 	catch (SQLException e) 
@@ -7434,6 +7461,17 @@ public RemoteIterator cercaBeniAssociabili(UserContext userContext,Ass_inv_bene_
 			}
 		return null;			
 		}	
+	public SQLBuilder selectNuova_categoriaByClause(UserContext userContext, Inventario_beniBulk modello,Categoria_gruppo_inventBulk cat, CompoundFindClause clauses) 
+			throws ComponentException
+	{			
+			SQLBuilder sql = getHome(userContext, Categoria_gruppo_inventBulk.class).createSQLBuilder();
+			sql.addClause( clauses );
+			sql.addSQLClause("AND","FL_GESTIONE_INVENTARIO",sql.EQUALS, "Y");
+			sql.addSQLClause("AND","DATA_CANCELLAZIONE",sql.ISNULL, null);
+			sql.addSQLClause("AND","LIVELLO",sql.GREATER, "0");
+			return sql;		
+	}
+
 }
 
 
