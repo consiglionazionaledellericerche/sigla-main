@@ -347,18 +347,25 @@ public void validate(OggettoBulk parent) throws ValidationException {
 			validaIban();
 		else
 			setCodice_iban(null);
-	}
-	if (!isROBanca() &&((Rif_modalita_pagamentoBulk.IBAN.equals(getTi_pagamento())||Rif_modalita_pagamentoBulk.BANCARIO.equals(getTi_pagamento())))){
+	} 
+	if ((this.getFl_cancellato()== null|| !this.getFl_cancellato().booleanValue()) &&
+			((Rif_modalita_pagamentoBulk.IBAN.equals(getTi_pagamento())||Rif_modalita_pagamentoBulk.BANCARIO.equals(getTi_pagamento())))){
 		if(this.getNazione_iban()!=null && this.getNazione_iban().getFl_iban()){
-			if ((this.getNazione_iban()==null)||(this.getNazione_iban()!=null && this.getNazione_iban().getCd_iso().compareTo(new String("IT"))!=0 ))
-				if(this.getCodice_swift()==null) 
+			if ((this.getNazione_iban()==null)||(this.getNazione_iban()!=null && this.getNazione_iban().getCd_iso().compareTo(new String("IT"))!=0 )){
+				if(this.getCodice_swift()==null) {
 					throw new ValidationException("Il codice swift è obbligatorio.");
-		  
-			if (this.getCodice_swift()!=null && (this.getCodice_swift().length()<8 || this.getCodice_swift().length()>11)) 
-				throw new ValidationException("Formato del codice bic non valido.");
+				}		
+				else{
+					if (!(this.getCodice_swift().length()==8 || this.getCodice_swift().length()==11) ||this.getCodice_swift().contains(" ")) 
+					throw new ValidationException("Formato del codice swift/bic non valido, non può contenere spazi e deve essere di 8 o 11 caratteri.");
+				for (int i = 0;i < getCodice_swift().length();i++)
+						if (!Character.isLetterOrDigit(getCodice_swift().charAt(i)))
+							throw new ValidationException( "Formato del codice swift/bic non valido può essere composto solo da lettere e cifre." );
+				
+			}	
 		}
 	}
-			
+	}		
 }
 public NazioneBulk getNazione_iban() {
 	return nazione_iban;

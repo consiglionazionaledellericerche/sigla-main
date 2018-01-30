@@ -388,6 +388,13 @@
 		maxLength="10"
 		enabledOnEdit="false"
 		label="modalitaPagamento" />		
+	<fieldProperty
+		name="dtPagamentoRichiesta"
+		property="dtPagamentoRichiesta"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dtPagamentoRichiesta" />	
 	<form
 		name="searchtool">
 	</form>
@@ -486,7 +493,10 @@
 	<formFieldProperty
 		name="pgDocAmm" />		
 	<formFieldProperty
-		name="modalitaPagamento" />	
+		name="modalitaPagamento" />
+	<formFieldProperty
+		name="dtPagamentoRichiesta" />	
+			
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty
