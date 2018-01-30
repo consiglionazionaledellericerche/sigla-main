@@ -146,7 +146,7 @@ public class VDocumentiFlussoBase extends OggettoBulk implements Persistent {
 	
 	private java.lang.String modalitaPagamento;
 
- 
+	private java.sql.Timestamp dtPagamentoRichiesta;
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: V_DOCUMENTI_FLUSSO
@@ -746,5 +746,11 @@ public class VDocumentiFlussoBase extends OggettoBulk implements Persistent {
 	}
 	public void setCin(java.lang.String cin) {
 		this.cin = cin;
+	}
+	public java.sql.Timestamp getDtPagamentoRichiesta() {
+		return dtPagamentoRichiesta;
+	}
+	public void setDtPagamentoRichiesta(java.sql.Timestamp dtPagamentoRichiesta) {
+		this.dtPagamentoRichiesta = dtPagamentoRichiesta;
 	}
 }
