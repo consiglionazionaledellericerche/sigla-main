@@ -17,7 +17,7 @@
 
 <script language="JavaScript">
 function doVisualizzaDocumentiCollegati() {
-  doPrint('genericdownload/DocumentiCollegati/<%=bp.getNomeAllegatoDettaglio()%>?methodName=scaricaDocumentoDettaglioCollegato&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
+  doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/DocumentiCollegati/<%=bp.getNomeAllegato()!=null?bp.getNomeAllegato().replace("'", "_"):""%>?methodName=scaricaDocumentoDettaglioCollegato&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 
