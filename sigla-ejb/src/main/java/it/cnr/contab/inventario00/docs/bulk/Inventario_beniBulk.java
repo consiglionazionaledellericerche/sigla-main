@@ -78,6 +78,8 @@ public class Inventario_beniBulk extends Inventario_beniBase {
 	*/
 	private Inventario_beniBulk nuovo_bene_padre;
 
+    private Categoria_gruppo_inventBulk nuova_categoria;
+	
 	// Flag che indica, durante un trasferimento intra UO, che un bene accessorio diventa bene principale.
 	private Boolean fl_trasf_come_principale;
 public Inventario_beniBulk() {
@@ -869,6 +871,12 @@ public void setHa_dettagli(Boolean boolean1) {
 	}
 	public void setBuoni_dettColl(SimpleBulkList buoni_dettColl) {
 		this.buoni_dettColl = buoni_dettColl;
+	}
+	public Categoria_gruppo_inventBulk getNuova_categoria() {
+		return nuova_categoria;
+	}
+	public void setNuova_categoria(Categoria_gruppo_inventBulk nuova_categoria) {
+		this.nuova_categoria = nuova_categoria;
 	}
 
 }

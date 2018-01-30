@@ -31,7 +31,10 @@
 		<addColumnMapping
 			propertyName="nuovo_bene_padre.nr_inventario" />
 		<addColumnMapping
-			propertyName="nuovo_bene_padre.progressivo" />				
+			propertyName="nuovo_bene_padre.progressivo" />	
+		<addColumnMapping
+			propertyName="nuova_categoria.cd_categoria_gruppo" />				
+					
 	</defaultColumnMap>
 	
 	<columnMap
@@ -87,6 +90,12 @@
 			propertyName="nuovo_bene_padre.progressivo"
 			sqlTypeName="DECIMAL"
 			columnSize="10" />
+		<columnMapping
+			columnName="CD_CATEGORIA_GRUPPO_NEW"
+			propertyName="nuova_categoria.cd_categoria_gruppo"
+			sqlTypeName="CHAR"
+			columnSize="11"
+			columnScale="11" />	
 	</columnMap>
 
 	<columnMap
@@ -123,6 +132,8 @@
 		name="fl_trasf_come_principale" />
 	<persistentProperty
 		name="nuovo_bene_padre" />
+	<persistentProperty
+		name="nuova_categoria" />
     <fetchPolicy
 		name="it.cnr.contab.inventario00.comp.Aggiornamento_inventarioComponent.findAssegnatarioCondizione">
 		<exclude pattern="*"/>
