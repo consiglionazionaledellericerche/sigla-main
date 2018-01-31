@@ -16,10 +16,10 @@
     	</property>
 		<property name="schemas">
 			<list>
-				<value>/xsd/TrasmissioneTypes_v1.1.xsd</value>
-				<value>/xsd/MessaggiTypes_v1.1.xsd</value>
-				<value>/xsd/RicezioneTypes_v1.0.xsd</value>
-				<value>/xsd/MonitoraggioTypes_v1.0.xsd</value>
+				<value>classpath:xsd/TrasmissioneTypes_v1.1.xsd</value>
+				<value>classpath:xsd/MessaggiTypes_v1.1.xsd</value>
+				<value>classpath:xsd/RicezioneTypes_v1.0.xsd</value>
+				<value>classpath:xsd/MonitoraggioTypes_v1.0.xsd</value>
 			</list>
 		</property>
 	</bean>

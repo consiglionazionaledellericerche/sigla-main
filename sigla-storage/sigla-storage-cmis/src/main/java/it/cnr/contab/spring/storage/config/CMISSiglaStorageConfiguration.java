@@ -83,8 +83,13 @@ public class CMISSiglaStorageConfiguration {
 
             @Override
             public void init() {
-                this.siglaSession = createSession();
-                createBindingSession();
+                try {
+                    this.siglaSession = createSession();
+                    createBindingSession();
+                } catch (CmisConnectionException _ex) {
+                    logger.error("Cannot access to CMIS repository", _ex);
+                }
+
             }
 
             public Session createSession(){
