@@ -11,6 +11,16 @@
 	<listener>
 		<listener-class>it.cnr.contab.util.servlet.ExpireSessionServlet</listener-class>
 	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:it/cnr/contab/service/sigla-service-context.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
 	<servlet>
 		<servlet-name>ActionServlet</servlet-name>
 		<servlet-class>it.cnr.jada.action.ActionServlet</servlet-class>
