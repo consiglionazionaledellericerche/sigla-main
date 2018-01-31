@@ -1,0 +1,25 @@
+"id","descrizione","attivo","dacr","utcr","duva","utuv","pg_ver_rec","cancella_stampe","box_scadenze","box_comunicazioni","tipo_db","fl_autenticazione_ldap","ldap_user","ldap_password","ldap_base_dn","ldap_app_name","dt_ldap_migrazione","ldap_link_cambio_password","fl_informix","fl_gae_es","fl_prg_pianoeco","abil_progetto_strorg"
+"2","ISS","Y","2004-11-04T17:35:25.000","CNRTUTTO","2017-06-07T13:18:22.000","ISSTUTTO","2","1","Si sollecita l'invio all'indirizzo e-mail
+\"segreteria.bilancio@cnr.it\" delle
+comunicazioni e degli atti richiesti
+al fine di attivare le nuove modalit?
+di consultazione dei movimenti
+bancari, come richiesto con la nota
+dell'Ufficio Contabilit? Generale e
+Bilancio prot. 205/2011 del 26
+luglio u.s.","Si informa che sul sito
+www.bilancio.dg.cnr.it
+? stato pubblicato il 
+Rendiconto generale 2010","T","N","NULL","NULL","NULL","NULL","NULL","NULL","N","Y","Y","UO"
+"1","CNR","N","2004-11-04T17:35:25.000","CNRTUTTO","2017-10-31T12:56:06.000","ISSTUTTO","5","1","Si sollecita l'invio all'indirizzo e-mail
+\"segreteria.bilancio@cnr.it\" delle
+comunicazioni e degli atti richiesti
+al fine di attivare le nuove modalit?
+di consultazione dei movimenti
+bancari, come richiesto con la nota
+dell'Ufficio Contabilit? Generale e
+Bilancio prot. 205/2011 del 26
+luglio u.s.","Si informa che sul sito
+www.bilancio.dg.cnr.it
+? stato pubblicato il 
+Rendiconto generale 2010","T","Y","cn=mastercnrapp1,ou=account,o=cnr,c=it","pippa","o=cnr,c=it","cnrapp1","2009-01-01T00:00:00.000","https://utenti.cnr.it","Y","Y","N","CDS"
