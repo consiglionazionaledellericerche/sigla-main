@@ -1,0 +1,5 @@
+"cd_tipo","ds_tipo","fl_binario","root","upd_callback","del_callback","dacr","duva","utuv","utcr","pg_ver_rec"
+"ESTR_INPS","OUTPUT FILE ESTRAZIONE INPS MENSILE","N","/inps/","NULL","NULL","2005-04-26T00:00:00.000","2005-04-26T00:00:00.000","CED","CED","1"
+"ESTRAI_770","OUTPUT FILE ESTRAZIONE 770","N","/770/","NULL","NULL","2004-12-02T17:23:42.000","2004-12-02T17:23:42.000","TARDIOLAC","TARDIOLAC","1"
+"INT_CASS00","Interfaccia di ritorno cassiere","N","/cassiere/","CNRCTB750.carica_ext_cassiere","CNRCTB750.checkRemoveFile","2003-10-13T16:32:59.000","2003-10-13T16:32:59.000","$$$$$MIGRAZIONE$$$$$","$$$$$MIGRAZIONE$$$$$","1"
+"ESTRAI_CUD","OUTPUT FILE ESTRAZIONE CUD","N","/cud/","NULL","NULL","2004-02-02T00:00:00.000","2004-02-02T00:00:00.000","$$$$$MIGRAZIONE$$$$$","$$$$$MIGRAZIONE$$$$$","1"
