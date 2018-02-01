@@ -1,0 +1,6 @@
+"cd_tipo_incarico","ds_tipo_incarico","prc_incremento","fl_cancellato","utcr","dacr","utuv","duva","pg_ver_rec","cd_tipo_rapporto","prc_incremento_var","tipo_associazione","dt_fine_validita"
+"4","Assegni di ricerca","27","N","cr","2012-10-08T15:37:39.000","CR","2012-10-08T00:00:00.000","1","ASS","2","ASR","NULL"
+"5","Borsa di studio","15","N","CROSATI","2012-10-17T11:41:56.000","CROSATI","2012-10-17T11:41:56.000","1","BORS","2","BST","NULL"
+"1","Collaborazione occasionale (senza partita IVA)","29","N","106C","2007-09-24T15:37:20.000","CED","2014-02-17T00:00:00.000","3","OCCA","2","INC","NULL"
+"2","Collaborazione professionale (con partita IVA)","28","N","106C","2007-09-24T15:37:31.000","CED","2014-02-17T15:39:29.000","3","PROF","4","INC","NULL"
+"3","Collaborazione coordinata e continuativa","30","N","106C","2007-09-24T15:37:39.000","CED","2014-02-17T00:00:00.000","3","COLL","2","INC","2017-12-31T00:00:00.000"
