@@ -3340,17 +3340,6 @@
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
-    <changeSet author="francesco (generated)" id="1516802834820-177">
-        <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/codici_siope_bnl.csv" quotchar="&quot;" separator="," tableName="codici_siope_bnl">
-            <column header="cod_siope" name="cod_siope" type="STRING"/>
-            <column header="cod_ente" name="cod_ente" type="STRING"/>
-            <column header="ordinativo" name="ordinativo" type="STRING"/>
-            <column header="tipo_mr" name="tipo_mr" type="STRING"/>
-            <column header="importo" name="importo" type="NUMERIC"/>
-            <column header="anno" name="anno" type="NUMERIC"/>
-            <column header="nrfile" name="nrfile" type="STRING"/>
-        </loadData>
-    </changeSet>
     <changeSet author="francesco (generated)" id="1516802834820-178">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/cofog.csv" quotchar="&quot;" separator="," tableName="cofog">
             <column header="cd_cofog" name="cd_cofog" type="STRING"/>
