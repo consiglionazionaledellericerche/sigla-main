@@ -1,4 +1,0 @@
-"cd_cds","cd_unita_operativa","esercizio","cd_numeratore","numero","data_richiesta","stato","ds_richiesta","nota","cd_unita_operativa_dest","data_invio","dt_cancellazione","dacr","utcr","duva","utuv","pg_ver_rec","cd_uop_richiesta"
-"000","CNMR","2017","RIC","3","2018-01-05T00:00:00.000","INV","FDS","NULL","CNMR.1","2018-01-08T00:00:00.000","NULL","2018-01-05T16:29:53.000","GGASPARRO","2018-01-08T14:53:23.000","GGASPARRO","3","CNMR"
-"000","CNMR","2017","RIC","4","2018-01-08T00:00:00.000","INV","DESCR","NULL","PI.MALATTIE","2018-01-08T00:00:00.000","NULL","2018-01-08T10:19:54.000","GGASPARRO","2018-01-08T14:53:14.000","GGASPARRO","3","CNMR"
-"000","CNMR","2018","RIC","5","2018-01-08T00:00:00.000","INV","fsfd","NULL","PI.MALATTIE","2018-01-08T00:00:00.000","NULL","2018-01-08T14:47:15.000","GGASPARRO","2018-01-08T14:49:24.000","GGASPARRO","4","CNMR"
