@@ -283,8 +283,6 @@
             ass_tipo_ruolo_privilegio
             WHERE (((ruolo_accesso.cd_ruolo)::text = (ruolo.cd_ruolo)::text) AND ((ruolo.tipo)::text = (ass_tipo_ruolo_privilegio.tipo)::text) AND ((ass_tipo_ruolo_privilegio.cd_privilegio)::text = 'SUPVIS'::text)))));</createView>
     </changeSet>
-
-
     <changeSet dbms="h2, postgresql" author="sigla" id="createView-v_albero_main_unita_utente">
         <createView fullDefinition="false" viewName="v_albero_main_unita_utente"> SELECT v_unita_organizzativa.esercizio,
             utente.cd_utente,
@@ -450,5 +448,87 @@
             FROM utente,
             albero_main
             WHERE (albero_main.fl_terminale = 'N'::bpchar);</createView>
+    </changeSet>
+    <changeSet dbms="h2, postgresql" author="sigla" id="createView-v_terzo_cf_pi">
+        <createView fullDefinition="false" viewName="v_terzo_cf_pi"> SELECT t.cd_terzo,
+            t.frazione_sede,
+            t.cd_anag,
+            t.dt_fine_rapporto,
+            t.ti_terzo,
+            t.cd_precedente,
+            t.denominazione_sede,
+            t.via_sede,
+            t.numero_civico_sede,
+            t.pg_comune_sede,
+            t.cap_comune_sede,
+            t.pg_rapp_legale,
+            t.cd_unita_organizzativa,
+            t.nome_unita_organizzativa,
+            t.note,
+            t.dt_canc,
+            t.dacr,
+            t.utcr,
+            t.duva,
+            t.utuv,
+            t.pg_ver_rec,
+            a.codice_fiscale AS codice_fiscale_anagrafico,
+            a.partita_iva AS partita_iva_anagrafico,
+            t.codice_univoco_ufficio_ipa,
+            t.codice_univoco_pcc,
+            t.denominazione_pcc
+            FROM terzo t,
+            anagrafico a
+            WHERE (t.cd_anag = a.cd_anag);</createView>
+    </changeSet>
+    <changeSet dbms="h2, postgresql" author="sigla" id="createView-v_utente_accesso">
+        <createView fullDefinition="false" viewName="v_utente_accesso"> SELECT utente_unita_accesso.cd_utente,
+            utente_unita_accesso.cd_accesso,
+            v_unita_organizzativa.cd_unita_organizzativa,
+            v_unita_organizzativa.esercizio,
+            'UTENTE_UNITA_ACCESSO'::text AS origine
+            FROM utente_unita_accesso,
+            v_unita_organizzativa
+            WHERE ((v_unita_organizzativa.cd_uo)::text = (utente_unita_accesso.cd_unita_organizzativa)::text)
+            UNION ALL
+            SELECT utente_unita_ruolo.cd_utente,
+            ruolo_accesso.cd_accesso,
+            v_unita_organizzativa.cd_unita_organizzativa,
+            v_unita_organizzativa.esercizio,
+            'RUOLO_ACCESSO'::text AS origine
+            FROM utente_unita_ruolo,
+            ruolo_accesso,
+            ruolo,
+            v_unita_organizzativa
+            WHERE (((ruolo_accesso.cd_ruolo)::text = (ruolo.cd_ruolo)::text) AND ((ruolo.cd_ruolo)::text = (utente_unita_ruolo.cd_ruolo)::text) AND ((v_unita_organizzativa.cd_unita_organizzativa)::text = (utente_unita_ruolo.cd_unita_organizzativa)::text))
+            UNION ALL
+            SELECT utente.cd_utente,
+            utente_unita_accesso.cd_accesso,
+            v_unita_organizzativa.cd_unita_organizzativa,
+            v_unita_organizzativa.esercizio,
+            'UTENTE_TEMPL_UNITA_ACCESSO'::text AS origine
+            FROM utente_unita_accesso,
+            utente,
+            v_unita_organizzativa
+            WHERE (((utente_unita_accesso.cd_utente)::text = (utente.cd_utente_templ)::text) AND ((v_unita_organizzativa.cd_uo)::text = (utente_unita_accesso.cd_unita_organizzativa)::text))
+            UNION ALL
+            SELECT utente.cd_utente,
+            ruolo_accesso.cd_accesso,
+            v_unita_organizzativa.cd_unita_organizzativa,
+            v_unita_organizzativa.esercizio,
+            'RUOLO_TEMPL_ACCESSO'::text AS origine
+            FROM utente_unita_ruolo,
+            ruolo_accesso,
+            ruolo,
+            utente,
+            v_unita_organizzativa
+            WHERE (((ruolo.cd_ruolo)::text = (utente_unita_ruolo.cd_ruolo)::text) AND ((ruolo_accesso.cd_ruolo)::text = (ruolo.cd_ruolo)::text) AND ((utente_unita_ruolo.cd_utente)::text = (utente.cd_utente_templ)::text) AND ((v_unita_organizzativa.cd_uo)::text = (utente_unita_ruolo.cd_unita_organizzativa)::text))
+            UNION ALL
+            SELECT utente_unita_accesso.cd_utente,
+            utente_unita_accesso.cd_accesso,
+            '*'::character varying AS cd_unita_organizzativa,
+            0 AS esercizio,
+            'UTENTE_*_ACCESSO'::text AS origine
+            FROM utente_unita_accesso
+            WHERE ((utente_unita_accesso.cd_unita_organizzativa)::text = '*'::text);</createView>
     </changeSet>
 </databaseChangeLog>
