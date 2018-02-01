@@ -5,6 +5,7 @@ import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
@@ -36,6 +37,7 @@ public class S3StoreServiceTest {
     private StoreService storeService;
 
     @Test
+    @Ignore
     public void testStore() throws IOException {
         InputStream is = IOUtils.toInputStream(TEXT, Charset.defaultCharset());
         Map<String, Object> map = new HashMap();
@@ -56,6 +58,7 @@ public class S3StoreServiceTest {
     }
 
     @Test
+    @Ignore
     public void testGetAndDelete() throws IOException {
         InputStream is = storeService.getResource("/foo/ciaone");
         assertEquals(TEXT, IOUtils.toString(is, Charset.defaultCharset()));
