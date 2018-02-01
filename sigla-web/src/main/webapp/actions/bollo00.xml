@@ -1,0 +1,13 @@
+<action-mappings>
+  <action 
+      path="/TipoAttoBolloAction" actionClass="it.cnr.contab.bollo00.action.TipoAttoBolloAction">
+  </action>
+
+  <businessProcess
+      name="CRUDConfigTipoAttoBolloBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+    <forward name="default" path="/bollo00/tipo_atto.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk"/>
+    <init-param name="componentSessionName" value="CNRBOLLO00_EJB_TipoAttoBolloComponentSession"/>
+	<init-param name="defaultAction" value="TipoAttoBolloAction"/>
+  </businessProcess>
+</action-mappings>
