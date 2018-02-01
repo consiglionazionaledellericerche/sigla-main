@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="codice"
+		property="codice"
+		maxLength="3"
+		inputSize="5"
+		inputType="TEXT"
+		label="Codice Identificativo"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		enabledOnEdit="false"				
+		nullable="false" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		maxLength="1000"
+		cols="60"
+		rows="4"
+		inputType="TEXTAREA"
+		label="Tipologia"
+		nullable="false" />
+	<fieldProperty
+		name="descNorma"
+		property="descNorma"
+		maxLength="1000"
+		cols="60"
+		rows="4"
+		inputType="TEXTAREA"
+		label="Articolo di riferimento"
+		nullable="false" />
+	<fieldProperty
+		name="imBollo"
+		property="imBollo"
+		label="Importo Unitario Bollo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="tipoCalcolo"
+		property="tipoCalcolo"
+		keysProperty="tipoCalcoloKeys"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		command="doOnTipoCalcoloChange"
+		nullable="false"
+		label="Tipo Calcolo" />
+	<fieldProperty
+		name="impLimiteCalcolo"
+		property="limiteCalcolo"
+		label="Valore per Applicazione Bollo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="numFogliCalcolo"
+		property="limiteCalcolo"
+		label="Valore per Applicazione Bollo"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="4"
+		style="text-align: right"
+		nullable="false" />
+	<fieldProperty
+		name="numEsemplariCalcolo"
+		property="limiteCalcolo"
+		label="Valore per Applicazione Bollo"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="4"
+		style="text-align: right"
+		nullable="false" />
+	<fieldProperty
+		name="righeFoglio"
+		property="righeFoglio"
+		label="Numero Righe per Foglio"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="4"
+		style="text-align: right"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="dtIniValidita"
+		property="dtIniValidita"
+		label="Data Inizio Validità"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="dtFinValidita"
+		property="dtFinValidita"
+		label="Data Fine Validità"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		nullable="true" />
+
+	<formFieldProperty
+		name="codice" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="descNorma" />
+	<formFieldProperty
+		name="imBollo" />
+	<formFieldProperty
+		name="tipoCalcolo" />
+	<formFieldProperty
+		name="impLimiteCalcolo" 
+		label="Importo Minimo per Applicazione Bollo" />
+	<formFieldProperty
+		name="numFogliCalcolo" 
+		label="Numero Fogli per Applicazione Bollo" />
+	<formFieldProperty
+		name="numEsemplariCalcolo"
+		label="Numero Esemplari per Applicazione Bollo" />
+	<formFieldProperty
+		name="righeFoglio" />
+	<formFieldProperty
+		name="dtIniValidita" />
+	<formFieldProperty
+		name="dtFinValidita" />
+
+	<columnFieldProperty
+		name="codice" />
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="descNorma" />
+	<columnFieldProperty
+		name="imBollo" />
+	<columnFieldProperty
+		name="tipoCalcolo" />
+	<columnFieldProperty
+		name="dtIniValidita" />
+	<columnFieldProperty
+		name="dtFinValidita" />
+
+	<findFieldProperty
+		name="codice" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="descNorma" />
+	<findFieldProperty
+		name="imBollo" />
+	<findFieldProperty
+		name="tipoCalcolo" />
+	<findFieldProperty
+		name="dtIniValidita" />
+	<findFieldProperty
+		name="dtFinValidita" />
+</bulkInfo>
