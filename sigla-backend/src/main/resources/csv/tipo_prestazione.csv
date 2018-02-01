@@ -1,0 +1,6 @@
+"cd_tipo_prestazione","ds_tipo_prestazione","tipo_classificazione","fl_cancellato","utcr","dacr","utuv","duva","pg_ver_rec"
+"00001","Adempimenti sicurezza sul lavoro (d.lgs 81/2008)","LEGGE","N","S.I.","2012-01-02T00:00:00.000","S.I.","2012-01-02T00:00:00.000","1"
+"00002","Sorveglianza sanitaria","LEGGE","N","S.I.","2012-01-02T00:00:00.000","S.I.","2012-01-02T00:00:00.000","1"
+"00003","Audit su programmi quadro UE","LEGGE","N","S.I.","2012-01-02T00:00:00.000","S.I.","2012-01-02T00:00:00.000","1"
+"00004","Prestazione notarile","LEGGE","N","S.I.","2012-01-02T00:00:00.000","S.I.","2012-01-02T00:00:00.000","1"
+"00005","Prestazione generica di natura discrezionale","DISCR","N","S.I.","2012-01-02T00:00:00.000","S.I.","2012-01-02T00:00:00.000","1"
