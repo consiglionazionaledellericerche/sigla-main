@@ -113,7 +113,7 @@
                 <configuration>
                     <jbossHome>${project.build.directory}/wildfly-${wildfly.version}</jbossHome>
                     <server-args>
-                        <server-arg>-Dspring.profiles.active=CMIS</server-arg>
+                        <server-arg>-Dspring.profiles.active=CMIS,liquibase</server-arg>
                     </server-args>
                     <java-opts>
                         <java-opt>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</java-opt>
@@ -231,6 +231,12 @@
         <dependency>
             <groupId>it.cnr</groupId>
             <artifactId>sigla-ws-client</artifactId>
+            <version>${project.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>it.cnr</groupId>
+            <artifactId>sigla-backend</artifactId>
             <version>${project.version}</version>
             <type>jar</type>
         </dependency>
