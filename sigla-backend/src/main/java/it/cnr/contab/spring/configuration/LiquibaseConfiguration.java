@@ -7,7 +7,6 @@ import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
-import liquibase.resource.ClassLoaderResourceAccessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -21,7 +20,7 @@ public class LiquibaseConfiguration {
     public Liquibase liquibase() throws LiquibaseException, SQLException {
         Connection connection = it.cnr.jada.util.ejb.EJBCommonServices.getDatasource().getConnection();
         Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
-        Liquibase liquibase = new Liquibase("db-changelog-master.xml", new ClassLoaderResourceAccessor(), database);
+        Liquibase liquibase = new Liquibase("db-changelog-master.xml", new GzipClassLoaderResourceAccessor(), database);
         liquibase.update(new Contexts(), new LabelExpression());
         return liquibase;
     }
