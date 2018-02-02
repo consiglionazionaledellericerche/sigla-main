@@ -132,6 +132,17 @@
 	<formFieldProperty
 		name="dtFinValidita" />
 
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="codice"
+			inputType="TEXT" />
+		<formFieldProperty
+			name="descrizione"
+			inputType="TEXT"
+			inputSize="30" />
+	</form>
+	
 	<columnFieldProperty
 		name="codice" />
 	<columnFieldProperty
