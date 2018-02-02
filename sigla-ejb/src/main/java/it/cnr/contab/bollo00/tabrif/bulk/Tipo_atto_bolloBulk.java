@@ -3,7 +3,6 @@ package it.cnr.contab.bollo00.tabrif.bulk;
 import java.util.Dictionary;
 import java.util.Optional;
 
-import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 
 public class Tipo_atto_bolloBulk extends Tipo_atto_bolloBase {
@@ -42,6 +41,10 @@ public class Tipo_atto_bolloBulk extends Tipo_atto_bolloBase {
 		return TIPO_IMPORTO.equals(getTipoCalcolo());
 	}
 	
+	public boolean isCalcoloPerEsemplare() {
+		return TIPO_ESEMPLARE.equals(getTipoCalcolo());
+	}
+
 	@Override
 	public void validate() throws ValidationException {
         if (isCalcoloPerFoglio() && !Optional.ofNullable(getRigheFoglio()).isPresent()) 
