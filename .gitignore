@@ -6,3 +6,4 @@ target/
 .settings
 /sigla-ejb/bin
 /sigla-web/bin
+.sts4-cache/
