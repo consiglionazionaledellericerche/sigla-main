@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		label="Esercizio"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		nullable="false" />
+	<fieldProperty
+		name="findUnitaOrganizzativa"
+		property="unitaOrganizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Unit&#224; organizzativa"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"/>
+	<fieldProperty
+		name="findTipoAttoBollo"
+		property="tipoAttoBollo"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Tipo Atto"
+		nullable="false"/>
+	<fieldProperty
+		name="descrizioneAtto"
+		property="descrizioneAtto"
+		maxLength="300"
+		cols="60"
+		rows="4"
+		inputType="TEXTAREA"
+		label="Descrizione"
+		nullable="false" />
+	<fieldProperty
+		name="numFogli"
+		property="numDettagli"
+		label="Numero Dettagli per Calcolo Bollo"
+		inputType="TEXT"
+		command="doOnNumFogliChange"
+		readonlyProperty="RONumFogli"
+		maxLength="6"
+		inputSize="7"
+		style="text-align: right"
+		nullable="false" />
+	<fieldProperty
+		name="numRighe"
+		property="numRighe"
+		label="Numero Righe"
+		inputType="TEXT"
+		command="doOnNumRigheChange"
+		maxLength="6"
+		inputSize="7"
+		style="text-align: right" />
+	<fieldProperty
+		name="numEsemplari"
+		property="numDettagli"
+		label="Numero Dettagli per Calcolo Bollo"
+		inputType="TEXT"
+		command="doDefault"
+		maxLength="6"
+		inputSize="7"
+		style="text-align: right"
+		nullable="false" />
+
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="findUnitaOrganizzativa" />
+	<formFieldProperty
+		name="findTipoAttoBollo" />
+	<formFieldProperty
+		name="descrizioneAtto" />
+	<formFieldProperty
+		name="numFogli"
+		label="Numero Fogli" />
+	<formFieldProperty
+		name="numRighe" />
+	<formFieldProperty
+		name="numEsemplari" 
+		label="Numero Esemplari" />
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="findUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="findTipoAttoBollo" />
+	<columnFieldProperty
+		name="descrizioneAtto" />
+	<columnFieldProperty
+		name="numFogli" />
+	<columnFieldProperty
+		name="numEsemplari" />
+
+	<findFieldProperty
+		name="findTipoAttoBollo" />
+	<findFieldProperty
+		name="descrizioneAtto" />
+	<findFieldProperty
+		name="numFogli" />
+	<findFieldProperty
+		name="numEsemplari" />
+</bulkInfo>
