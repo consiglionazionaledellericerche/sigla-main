@@ -437,5 +437,10 @@
             <artifactId>sigla-storage-azure</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>sigla-storage-s3</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

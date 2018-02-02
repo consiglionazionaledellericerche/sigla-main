@@ -1,1 +1,0 @@
-"statement_id","timestamp","remarks","operation","options","object_node","object_owner","object_name","object_instance","object_type","optimizer","search_columns","id","parent_id","position","cost","cardinality","bytes","other_tag","partition_start","partition_stop","partition_id","other","distribution"
