@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bollo00.bulk.Atto_bolloBase"
+	keyClassName="it.cnr.contab.bollo00.bulk.Atto_bolloKey"
+	homeClassName="it.cnr.contab.bollo00.bulk.Atto_bolloHome" >
+	<defaultColumnMap
+		tableName="ATTO_BOLLO" >
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DESCRIZIONE_ATTO"
+			propertyName="descrizioneAtto"
+			sqlTypeName="VARCHAR"
+			columnSize="300"
+			nullable="false" />
+		<columnMapping
+			columnName="ID_TIPO_ATTO_BOLLO"
+			propertyName="idTipoAttoBollo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			nullable="false" />			
+		<columnMapping
+			columnName="NUM_DETTAGLI"
+			propertyName="numDettagli"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="false" />
+		<columnMapping
+			columnName="NUM_RIGHE"
+			propertyName="numRighe"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="false" />
+		<columnMapping
+			columnName="NUM_REGISTRO"
+			propertyName="numRegistro"
+			sqlTypeName="DECIMAL"
+			columnSize="6"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="cdUnitaOrganizzativa" />
+	<persistentProperty
+		name="descrizioneAtto" />
+	<persistentProperty
+		name="idTipoAttoBollo" />
+	<persistentProperty
+		name="numDettagli" />
+	<persistentProperty
+		name="numRighe" />
+	<persistentProperty
+		name="numRegistro" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

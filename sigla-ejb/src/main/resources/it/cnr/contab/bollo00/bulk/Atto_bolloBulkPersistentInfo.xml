@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bollo00.bulk.Atto_bolloBulk"
+	homeClassName="it.cnr.contab.bollo00.bulk.Atto_bolloHome">
+	<defaultColumnMap
+		tableName="ATTO_BOLLO" >
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unitaOrganizzativa.cd_unita_organizzativa"/>
+		<columnMapping
+			columnName="ID_TIPO_ATTO_BOLLO"
+			propertyName="tipoAttoBollo.id"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="unitaOrganizzativa" />	
+	<persistentProperty
+		name="tipoAttoBollo" />	
+</SQLPersistentInfo>
