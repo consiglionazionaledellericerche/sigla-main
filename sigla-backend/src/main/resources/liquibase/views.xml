@@ -531,4 +531,18 @@
             FROM utente_unita_accesso
             WHERE ((utente_unita_accesso.cd_unita_organizzativa)::text = '*'::text);</createView>
     </changeSet>
+    <changeSet dbms="h2, postgresql" author="sigla" id="createView-prt_prev_dip">
+        <createView fullDefinition="false" viewName="prt_prev_dip"> SELECT  Distinct
+            cnr_anadip.matricola, cnr_anadip.nominativo,
+            cnr_anadip.rapp_impiego as rapporto, cnr_anadip.ente_prev as ente,
+            terzo.cd_terzo, cnr_anadip.tit_afferen as sede
+            FROM cnr_anadip, terzo, unita_organizzativa,rapporto,anagrafico
+            WHERE     anagrafico.codice_fiscale = cnr_anadip.dip_cod_fis and
+            anagrafico.cd_anag                 = terzo.cd_anag and
+            coalesce(terzo.dt_fine_rapporto::text, '') = '' and
+            anagrafico.cd_anag                 = rapporto.cd_anag and
+            rapporto.matricola_dipendente = cnr_anadip.matricola and
+            unita_organizzativa.cd_unita_organizzativa = SUBSTR(cnr_anadip.tit_afferen, 1, 3)|| '.'|| SUBSTR(cnr_anadip.tit_afferen, 4, 3)
+            ORDER BY cnr_anadip.nominativo;</createView>
+    </changeSet>
 </databaseChangeLog>
