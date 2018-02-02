@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bollo00.bulk.Atto_bolloKey" >
+	<defaultColumnMap
+		tableName="ATTO_BOLLO" >
+		<columnMapping
+			columnName="ID"
+			propertyName="id"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="id"
+		partOfOid="true" />
+</SQLPersistentInfo>
