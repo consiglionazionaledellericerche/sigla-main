@@ -11,7 +11,7 @@
 	<parameter name="UO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new String ("*")]]></defaultValueExpression>
 	</parameter>
-	<parameter name="Matricola" class="java.lang.Integer" isForPrompting="false">arg
+	<parameter name="Matricola" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Integer(0)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Terzo" class="java.lang.Integer" isForPrompting="false">
