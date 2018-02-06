@@ -5781,7 +5781,7 @@ private void validaDettagliTrasferiti (UserContext userContext, Trasferimento_in
 				    }
 					throw new it.cnr.jada.comp.ApplicationException (msg.toString());					
 			}	    
-			else if (sql_princ.executeCountQuery(home.getConnection())!=0 ){
+			else if (sql_princ.executeCountQuery(home.getConnection())!=0 && !buonoT.isFl_cambio_categoria()){
 				StringBuffer msg = new StringBuffer("Attenzione: ");
 				msg.append("un bene principale può essere trasferito solo come accessorio di un altro bene.\n");
 				msg.append("Oppure un bene accessorio può essere trasferito o come nuovo bene principale, ");
