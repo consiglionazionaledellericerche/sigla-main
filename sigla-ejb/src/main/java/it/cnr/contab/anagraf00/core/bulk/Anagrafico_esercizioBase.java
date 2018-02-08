@@ -32,6 +32,8 @@ public class Anagrafico_esercizioBase extends Anagrafico_esercizioKey implements
 	
 	private Boolean fl_no_credito_irpef;
 	
+	private Boolean fl_detrazioni_altri_tipi;
+	
 public Anagrafico_esercizioBase() {
 	super();
 }
@@ -127,5 +129,10 @@ public void setIm_detrazione_personale_anag(java.math.BigDecimal im_detrazione_p
 	public void setFl_no_credito_irpef(Boolean fl_no_credito_irpef) {
 		this.fl_no_credito_irpef = fl_no_credito_irpef;
 	}
-
+	public Boolean getFl_detrazioni_altri_tipi() {
+		return fl_detrazioni_altri_tipi;
+	}
+	public void setFl_detrazioni_altri_tipi(Boolean fl_detrazioni_altri_tipi) {
+		this.fl_detrazioni_altri_tipi = fl_detrazioni_altri_tipi;
+	}
 }
