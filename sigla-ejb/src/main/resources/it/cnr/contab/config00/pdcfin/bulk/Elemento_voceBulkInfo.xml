@@ -294,7 +294,7 @@
 	<fieldProperty
 		name="fl_inv_beni_comp"
 		property="fl_inv_beni_comp"
-		label="utilizzabile da Compenso"
+		label="Soggetta ad inventario utilizzabile da Compenso"
 		enabledOnEdit="true"
 		enabledOnInsert="true"				
 		inputType="CHECKBOX"
@@ -606,6 +606,8 @@
 		name="fl_check_terzo_siope" />
    <formFieldProperty
 		name="fl_inv_beni_patr" />
+	<formFieldProperty
+		name="fl_inv_beni_comp" />
    <formFieldProperty
 		name="fl_limite_spesa" />
 	<formFieldProperty
