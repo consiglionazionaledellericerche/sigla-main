@@ -547,6 +547,12 @@
 		property="anagrafico_esercizio.fl_no_credito_irpef"
 		inputType="CHECKBOX"
 		label="No Credito Irpef" 		
+		nullable="false" />
+	<fieldProperty
+		name="fl_detrazioni_altri_tipi"
+		property="anagrafico_esercizio.fl_detrazioni_altri_tipi"
+		inputType="CHECKBOX"
+		label="Applica altri tipi detrazioni" 		
 		nullable="false" />		
 	<fieldProperty
 		name="fl_non_obblig_p_iva"
@@ -929,7 +935,10 @@
 	<formFieldProperty
 		name="fl_no_credito_irpef" />
 	<formFieldProperty
-		name="fl_non_obblig_p_iva"/>	<formFieldProperty
+		name="fl_detrazioni_altri_tipi" />
+	<formFieldProperty
+		name="fl_non_obblig_p_iva"/>	
+	<formFieldProperty
 		name="pg_tipologia_istat"/>
 	<formFieldProperty
 		name="ds_tipologia_istat"/>   
