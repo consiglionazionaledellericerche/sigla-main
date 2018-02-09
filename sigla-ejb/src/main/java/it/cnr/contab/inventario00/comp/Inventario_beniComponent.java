@@ -1017,19 +1017,20 @@ public RemoteIterator selectBeniAccessoriFor(
   * @param clauses <code>CompoundFindClause</code> le clausole della selezione
   *
   * @return sql <code>SQLBuilder</code> Risultato della selezione.
+ * @throws PersistencyException 
 **/
 public SQLBuilder selectCategoria_BeneByClause(UserContext userContext, Inventario_beniBulk bene, it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk cat_gruppo, CompoundFindClause clauses) 
-		throws ComponentException
+		throws ComponentException, PersistencyException
 {		
+	Inventario_beniBulk ori =((Inventario_beniBulk)getHome(userContext,Inventario_beniBulk.class).findByPrimaryKey(bene));
 	SQLBuilder sql = getHome(userContext, it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk.class).createSQLBuilder();
 	sql.addClause( clauses );
 	sql.addSQLClause("AND","FL_GESTIONE_INVENTARIO",sql.EQUALS, "Y");
 	sql.addSQLClause("AND","DATA_CANCELLAZIONE",sql.ISNULL, null);
 	sql.addSQLClause("AND","LIVELLO",sql.GREATER, "0");
-	if (bene.getDa_fattura()!=null )
-		if (bene.getDa_fattura().booleanValue()||bene.isContab().booleanValue()||bene.isMigrato()||bene.isBeneAccessorio()
-    		||(!bene.getEsercizio_carico_bene().equals(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext)))){
-		sql.addSQLClause("AND","CD_CATEGORIA_PADRE",sql.EQUALS, bene.getCategoria_Bene().getCd_padre());
+	if ((bene.getDa_fattura()!=null && bene.getDa_fattura().booleanValue())||bene.isContab().booleanValue()||bene.isMigrato()||bene.isBeneAccessorio()
+		||(!bene.getEsercizio_carico_bene().equals(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext)))){
+		sql.addSQLClause("AND","CD_CATEGORIA_GRUPPO",SQLBuilder.EQUALS,ori.getCd_categoria_gruppo());
     }
 	return sql;		
 }

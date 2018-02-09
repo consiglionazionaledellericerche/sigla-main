@@ -4,6 +4,7 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioHome;
@@ -53,6 +54,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -779,9 +781,16 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                             "E' possibile selezionare solo doc passivi dello stesso tipo COMPETENZA/RESIDUO.");
                 // creo mandato_riga
                 riga = creaMandatoRiga(aUC, mandato, docPassivo);
-                //controllo cap
-                if (riga.getBanca() != null && (Rif_modalita_pagamentoBulk.BANCARIO.equals(riga.getBanca()
-                        .getTi_pagamento()))) {
+                //controllo cap /swift
+                if (riga.getBanca() != null && 
+                		((Rif_modalita_pagamentoBulk.BANCARIO.equals(riga.getBanca().getTi_pagamento())
+             			||(Rif_modalita_pagamentoBulk.IBAN.equals(riga.getBanca().getTi_pagamento()))))) {
+                	
+                	  BancaBulk banca = (BancaBulk) getHome(aUC,
+                			  BancaBulk.class).findByPrimaryKey(
+                              new BancaBulk(riga.getCd_terzo(),riga.getPg_banca()));
+                    
+                	if (banca!=null && banca.getCodice_iban()!=null && riga.getBanca().getAbi()!=null && banca.getCodice_iban().startsWith("IT")){
                     if (riga.getCd_terzo() != null) {
                         TerzoBulk terzo = (TerzoBulk) getHome(aUC,
                                 TerzoBulk.class).findByPrimaryKey(
@@ -794,7 +803,18 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                 throw new ApplicationException(
                                         "Attenzione per la modalità di pagamento presente sul documento è necessario indicare il cap sul terzo.");
                         }
+                      }
                     }
+                	else if (banca!=null && banca.getCodice_iban()!=null && riga.getBanca().getAbi()==null ){
+                        NazioneHome nazioneHome = (NazioneHome) getHome(aUC,
+                                NazioneBulk.class);
+                        SQLBuilder sqlExists = nazioneHome.createSQLBuilder();
+                        sqlExists.addSQLClause("AND","NAZIONE.CD_ISO",SQLBuilder.EQUALS,banca.getCodice_iban().substring(0, 2));
+                        sqlExists.addSQLClause("AND","NAZIONE.FL_SEPA",SQLBuilder.EQUALS,"Y");
+                        if (sqlExists.executeCountQuery(getConnection(aUC))!=0 && riga.getBanca().getCodice_swift()==null) 
+                		          throw new ApplicationException(
+                                            "Attenzione per la modalità di pagamento presente sul documento è necessario indicare il codice swift/bic.");
+                        }
                 }
                 // estrae le eventuali note di credito/debito
                 docPassiviCollegati = ((MandatoIHome) getHome(aUC, mandato
