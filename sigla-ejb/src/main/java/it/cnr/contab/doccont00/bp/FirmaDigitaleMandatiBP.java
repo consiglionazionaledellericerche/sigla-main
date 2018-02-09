@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.pdfbox.util.PDFMergerUtility;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
 /**
  *
  * @author mspasiano

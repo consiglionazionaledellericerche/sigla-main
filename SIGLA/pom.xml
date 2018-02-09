@@ -365,7 +365,7 @@
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
-            <version>1.8.5</version>
+            <version>${pdfbox.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-logging</artifactId>
