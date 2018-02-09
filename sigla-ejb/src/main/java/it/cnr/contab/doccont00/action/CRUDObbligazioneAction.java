@@ -1303,9 +1303,9 @@ public Forward handleException(ActionContext context, Throwable ex)
 		{
 			CRUDObbligazioneBP bp= (CRUDObbligazioneBP) getBusinessProcess(context);
 			ObbligazioneBulk obbligazione = (ObbligazioneBulk) bp.getModel();
-			if (obbligazione.getFl_gara_in_corso().booleanValue() &&
+			if (obbligazione.getFl_gara_in_corso()!=null && obbligazione.getFl_gara_in_corso().booleanValue() &&
 					obbligazione.isObbligazioneResiduo()
-					&& obbligazione.getStato_obbligazione().equals( obbligazione.STATO_OBB_PROVVISORIO ))
+					&& obbligazione.getStato_obbligazione()!=null && obbligazione.getStato_obbligazione().equals( obbligazione.STATO_OBB_PROVVISORIO ))
 			throw new ApplicationException("Non e' possibile modificare un'impegno residuo con gara di appalto in corso di espletamento, si prega di riportarlo indietro dall'esercizio precedente e di renderlo definitivo.");
 			CRUDObbligazioneModificaBP newbp = null;
 			newbp = (CRUDObbligazioneModificaBP) context.getUserInfo().createBusinessProcess(context,"CRUDObbligazioneModificaBP",new Object[] { "V",  obbligazione, CRUDObbligazioneModificaBP.TIPO_ACCESSO_VISUALIZZAZIONE });
