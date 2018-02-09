@@ -1270,12 +1270,20 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 	public void setAbilitatoAutorizzareDiaria(boolean abilitatoAutorizzareDiaria) {
 		this.abilitatoAutorizzareDiaria = abilitatoAutorizzareDiaria;
 	}
+	private boolean supervisore=false;
 	
+public boolean isSupervisore() {
+		return supervisore;
+	}
+	public void setSupervisore(boolean supervisore) {
+		this.supervisore = supervisore;
+	}
 protected void initialize(ActionContext context) throws BusinessProcessException {
 	try {
 		setAbilitatoECF(UtenteBulk.isAbilitatoECF(context.getUserContext()));
 		setAbilitatoSospensioneCori(UtenteBulk.isAbilitatoSospensioneCori(context.getUserContext()));
 		setAbilitatoAutorizzareDiaria(UtenteBulk.isAbilitatoAutorizzareDiaria(context.getUserContext()));
+		setSupervisore(Utility.createUtenteComponentSession().isSupervisore(context.getUserContext()));
 	} catch (ComponentException e1) {
 		throw handleException(e1);
 	} catch (RemoteException e1) {
@@ -1287,6 +1295,7 @@ protected void initialize(ActionContext context) throws BusinessProcessException
 public OggettoBulk initializeModelForInsert(ActionContext context,OggettoBulk bulk) throws BusinessProcessException {
 	AnagraficoBulk anagrafico = (AnagraficoBulk)super.initializeModelForInsert(context,bulk);
 	try {
+		setSupervisore(Utility.createUtenteComponentSession().isSupervisore(context.getUserContext()));
 		anagrafico.setNotGestoreIstat(!UtenteBulk.isGestoreIstatSiope(context.getUserContext()));
 		if (isUoEnte(context))
 			anagrafico.setUo_ente(true);
@@ -1306,6 +1315,7 @@ public OggettoBulk initializeModelForEdit(ActionContext actioncontext,OggettoBul
 	if (oggettobulk instanceof AnagraficoBulk) {
 		AnagraficoBulk anagrafico = (AnagraficoBulk)oggettobulk;
 		try {
+			setSupervisore(Utility.createUtenteComponentSession().isSupervisore(actioncontext.getUserContext()));
 			anagrafico.setNotGestoreIstat(!UtenteBulk.isGestoreIstatSiope(actioncontext.getUserContext()));
 			if (isUoEnte(actioncontext))
 				anagrafico.setUo_ente(true);

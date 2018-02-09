@@ -1,0 +1,13 @@
+CREATE OR REPLACE TRIGGER BI_OBBLIGAZIONE
+AFTER INSERT
+on OBBLIGAZIONE
+for each row
+DISABLE
+begin
+IF :NEW.ESERCIZIO = 2006 And :NEW.CD_ELEMENTO_VOCE != '1.01.452' Then
+  ibmerr001.RAISE_ERR_GENERICO('Funzione al momento non disponibile.');
+END IF;
+end;
+/
+
+

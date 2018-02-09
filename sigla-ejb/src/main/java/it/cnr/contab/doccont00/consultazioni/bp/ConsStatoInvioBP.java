@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.HttpStatus;
-import org.apache.pdfbox.util.PDFMergerUtility;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
 
 public class ConsStatoInvioBP extends ConsultazioniBP {
 	private static final long serialVersionUID = 1L;
