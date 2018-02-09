@@ -21,7 +21,7 @@
 			columnName="CD_SIOPE"
 			propertyName="cd_siope"
 			sqlTypeName="VARCHAR"
-			columnSize="4"
+			columnSize="10"
 			nullable="false"
 			primary="true" />
 	</defaultColumnMap>

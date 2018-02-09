@@ -64,6 +64,11 @@
 		property="fl_no_credito_irpef"
 		inputType="CHECKBOX"
 		label="No Credito Irpef" />		
+	<fieldProperty
+		name="fl_detrazioni_altri_tipi"
+		property="fl_detrazioni_altri_tipi"
+		inputType="CHECKBOX"
+		label="Applica altri tipi detrazioni" />		
 	<formFieldProperty
 		name="fl_notaxarea" />
 	<formFieldProperty
@@ -88,6 +93,8 @@
 		name="fl_applica_detr_pers_max" />
 	<formFieldProperty
 		name="fl_no_credito_irpef" />									
+	<formFieldProperty
+		name="fl_detrazioni_altri_tipi" />	
 	<columnFieldProperty
 		name="fl_notaxarea" />
 	<columnFieldProperty
