@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.pdfbox.io.MemoryUsageSetting;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.pdfbox.exceptions.COSVisitorException;
-import org.apache.pdfbox.util.PDFMergerUtility;
 
 public class ContabiliService extends StoreService {
 	private transient static final Logger logger = LoggerFactory.getLogger(ContabiliService.class);
@@ -63,11 +63,9 @@ public class ContabiliService extends StoreService {
 					for (String id : ids) {
 						ut.addSource(getResource(id));
 					}
-					ut.mergeDocuments();
+					ut.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
 					return new ByteArrayInputStream(((ByteArrayOutputStream)ut.getDestinationStream()).toByteArray());
-				} catch (COSVisitorException e) {
-					throw e;
-				} catch (IOException e) {
+				}  catch (IOException e) {
 					throw e;
 				}
 			}

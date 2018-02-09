@@ -4365,7 +4365,8 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 		if (obbligazione.getFl_gara_in_corso().booleanValue() &&
 				obbligazione.isObbligazioneResiduo()
 				&& obbligazione.getStato_obbligazione().equals( obbligazione.STATO_OBB_PROVVISORIO ))
-			throw new ApplicationException("Non e' possibile modificare un'impegno residuo con gara di appalto in corso di espletamento.");
+			throw new ApplicationException("Non e' possibile modificare un'impegno residuo con gara di appalto in corso di espletamento, si prega di riportarlo indietro dall'esercizio precedente e di renderlo definitivo");
+		
 		
 		if (obbligazione.getFl_gara_in_corso().booleanValue() && 
 			(obbligazione.getPg_contratto() != null || obbligazione.getPg_repertorio() != null))
