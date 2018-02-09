@@ -1581,7 +1581,7 @@ public Forward doSelezionaDettaglioPerNdC(ActionContext context) {
 				bp.setMessage("Attenzione! Non è possibile associare alla Nota Credito dettagli di fattura Split Payment e dettagli di fattura non Split Payment.");
 				return context.findDefaultForward();
 			} else if (contaSplit>0) {
-				if (!((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment()) {
+				if (((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment()!=null && !((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment()) {
 					//se la nota originariamente era split la rimetto tale
 					if (isOriginalNotaSplit) {					
 						((Nota_di_creditoBulk)bp.getModel()).setFl_split_payment(Boolean.TRUE);

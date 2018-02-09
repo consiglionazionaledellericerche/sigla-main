@@ -1,15 +1,23 @@
 package it.cnr.contab.bollo00.bp;
 
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import it.cnr.contab.bollo00.bulk.Atto_bolloBulk;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.contab.util00.bp.AllegatiCRUDBP;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
 
 /**
- * BP che gestisce l'annullamento massivo di documenti contabili
+ * BP che gestisce gli atti da assoggettare a bollo virtuale
  */
-
-public class CRUDAttoBolloBP extends it.cnr.jada.util.action.SimpleCRUDBP {
+public class CRUDAttoBolloBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Atto_bolloBulk> {
+	private static final long serialVersionUID = 1L;
 
 	public CRUDAttoBolloBP() {
 		super();
@@ -29,5 +37,25 @@ public class CRUDAttoBolloBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 				model.setNumRighe(0);
 			}
 		}
+	}
+
+	protected String getStorePath(Atto_bolloBulk allegatoParentBulk, boolean create) throws BusinessProcessException {
+		return Arrays.asList(
+				SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+				Optional.ofNullable(allegatoParentBulk.getCdUnitaOrganizzativa())
+						.orElse(""),
+				"Atti Bollo Virtuale",
+				Optional.ofNullable(allegatoParentBulk.getEsercizio())
+						.map(esercizio -> String.valueOf(esercizio))
+						.orElse("0"),
+				String.valueOf(allegatoParentBulk.getId())
+		).stream().collect(
+				Collectors.joining(SiglaStorageService.SUFFIX)
+		);
+	}
+
+	@Override
+	protected Class<AllegatoGenericoBulk> getAllegatoClass() {
+		return AllegatoGenericoBulk.class;
 	}
 }
