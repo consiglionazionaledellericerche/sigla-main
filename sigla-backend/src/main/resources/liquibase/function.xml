@@ -71,4 +71,11 @@
                 path="../postgresql/function/cnrctb850_ins_controllo_accesso_utente.sql"
                 relativeToChangelogFile="true"/>
     </changeSet>
+    <changeSet author="sigla" id="createProcedure-decode">
+        <createProcedure
+                dbms="h2, postgresql"
+                encoding="utf8"
+                path="../postgresql/function/decode.sql"
+                relativeToChangelogFile="true"/>
+    </changeSet>
 </databaseChangeLog>

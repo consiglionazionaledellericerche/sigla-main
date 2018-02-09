@@ -1,0 +1,1035 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+  <changeSet author="francesco" id="sigla-sql-3">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb930.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-6">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb680.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-9">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrutl003.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-12">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb030.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-15">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb560.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-18">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb040.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-21">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb005.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-24">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmutl800.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-27">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb505.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-30">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb650.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-33">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb110.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-36">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb900.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-39">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrutl001.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-42">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/controllo_importi.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-45">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrmig100.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-48">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb265.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-51">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb043.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-54">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb048.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-57">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb577.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-60">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb220.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-63">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb205.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-66">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb061.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-69">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrmig400.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-72">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb920.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-75">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb130.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-78">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmutl205.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-81">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb100.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-84">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb215.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-87">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb545.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-90">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb200.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-93">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/class_comp_doc_cont_nmp.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-96">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmutl050.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-99">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb750.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-102">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb800.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-105">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb046.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-108">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb576.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-111">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb107.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-114">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb080.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-117">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/clbanca.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-120">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cir_funzgest.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-123">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb550.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-126">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmutl100.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-129">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrmar037.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-132">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmutl015.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-135">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb037.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-138">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb925.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-141">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb075.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-144">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrmar010.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-147">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb755.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-150">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/acconto.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-153">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb573.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-156">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmutl210.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-159">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb051.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-162">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrmar030.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-165">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb575.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-168">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmerr001.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-171">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrutl002.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-174">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrmat001.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-177">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmutl010.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-180">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrsto050.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-183">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb061_lello.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-186">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb039.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-189">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb056.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-192">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/clconfigurazione_cnr.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-195">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/util_bilancio.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-198">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb060.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-201">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/prt_cir_sitcas.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-204">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb054.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-207">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb120.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-210">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb552.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-213">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb105.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-216">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrsto010.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-219">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb850.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-222">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb062.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-225">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/pipe.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-228">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb016.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-231">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmprt000.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-234">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrsto090.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-237">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb050.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-240">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb570.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-243">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrmar050.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-246">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb240.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-249">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmres001.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-252">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrtst070.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-255">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmcst001.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-258">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb002.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-261">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrsto035.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-264">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb009.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-267">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmutl005.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-270">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb270.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-273">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb610.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-276">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/util_variazioni.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-279">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb070.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-282">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmutl200.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-285">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb204.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-288">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb600.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-291">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb250.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-294">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb255.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-297">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb150.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-300">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrsto040.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-303">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb580.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-306">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmutl900.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-309">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb890.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-312">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb001.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-315">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb035.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-318">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb210.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-321">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrsto070.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-324">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb000.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-327">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrmig090.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-330">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb260.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-333">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb400.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-336">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/clesercizio.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-339">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cal_assestato.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-342">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb940.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-345">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb008.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-348">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb551.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-351">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb061_appoggio.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-354">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb053.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-357">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb055.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-360">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb585.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-363">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb300.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-366">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmutl020.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-369">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb207.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-372">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrsto060.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-375">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmutl001.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-378">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb020.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-381">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmcls001.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-384">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb018.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-387">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb038.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-390">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb500.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-393">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb047.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-396">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrtst060.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-399">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb253.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-402">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrmig080.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-405">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb206.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-408">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrsto080.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-411">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb012.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-414">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrutil.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-417">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/car_saldi.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-420">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb015.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-423">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb605.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-426">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/ibmutl011.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-429">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb010.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-432">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrmig030.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-435">
+    <sqlFile dbms="oracle" path="../expsigladb/Package/cnrctb553.pks" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-438">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/calcolaaltreborse.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-441">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/decode_zero_null.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-444">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/getcurrentcdelementovoce.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-447">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/somma_doc_pass_per_scadenza.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-450">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/fnc_ccnconcat.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-453">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/iseligibileannull.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-456">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/func_prt_s_sp_riclassificato.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-459">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/iseligibileribalt_elenco_lello.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-462">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/getim_riscontrato.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-465">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/get_dip_from_modulo.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-468">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/getmodpagcessionario.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-471">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/get_coge_ult_terzo.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-474">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/iseligibileribalt_elenco.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-477">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/func_prt_s_ce_riclassificato_j.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-480">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/prt_getdes_vocecap.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-483">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/getflselezione.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-486">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/get_coge_ult_fondo.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-489">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/isscrinterno.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-492">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/get_coge_ult_voce.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-495">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/somma_fatt_pass_per_scadenza.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-498">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/dwh_getpgmodulofromgae.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-501">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/iseligibilederibalt.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-504">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/iseligibileribalt.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-507">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/getpgcomuneliquidcori.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-510">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/prt_getdati_confcnr.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-513">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/creacodiceprogetto.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-516">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/somma_fatt_att_per_scadenza.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-519">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/somma_doc_att_per_scadenza.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-522">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/getcdregioneliquidcori.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-525">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/is_docamm_rip_una_volta.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-528">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/squirrel_get_error_offset.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-531">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/getstatodoccont.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-534">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/dwh_getuofromcdr.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-537">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/dwh_getcdsfromcdr.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-540">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/dwh_getcdraccentrfromidclass.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-543">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/getcdrprimo.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-546">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/getpgdistintaprec.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-549">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/dwh_getla_personale.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-552">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/get_coge_ult_stato_doccont.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-555">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/disp_cassa_mandati.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-558">
+    <sqlFile dbms="oracle" path="../expsigladb/Function/getflfaireversale.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-561">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_partitario_compensi.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-564">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/pulisci_voci_per_funzione.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-567">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/migrazione_sospesi.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-570">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/s_ana_progetti.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-573">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/prt_s_sit_cassa_parifica.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-576">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/ins_progetto_sic_fase.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-579">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/update_utuv_utcr.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-582">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/spedisci_mail.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-585">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/insert_vpg_reversale.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-588">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/popola_gestionale_spese_2016.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-591">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/regliqivacoge.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-594">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/migrazione_residui_pass_pgiro.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-597">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/assegna_iban.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-600">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/prc_confronto_sigla_dwh.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-603">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/prt_s_sp_riclassificato.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-606">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/prt_rend_fin_ent_spe_dec.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-609">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/rettifiche_crediti_accorpati.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-612">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/prt_s_sit_cassa_all_j.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-615">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/prt_s_ce_riclassificato_j.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-618">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_certificazione.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-621">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/estrai_flusso_per_iban.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-624">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/regliqivamensilecoge_stani.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-627">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/popolamento_costo_dip.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-630">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/prt_s_sit_cassa_j.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-633">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/controlla_squadra_cdr_cmp_rev.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-636">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/prc_load_table_stampa_rendic.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-639">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_missione.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-642">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/apri_fondo.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-645">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/annulla_contabilizzazione.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-648">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_mandato.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-651">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_singolo_conto.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-654">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_dpdg_cdr_primo.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-657">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_reversale.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-660">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/verifica_cassa.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-663">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/popola_pcc_modello2_semp.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-666">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/elabora_ritorno_iban.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-669">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_certificazione_770.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-672">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/prt_prev_fin_ent_spe_dec.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-675">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/analyze_all_table.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-678">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/popolamento_costo_dip_prev.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-681">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/dropnegativeobblig.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-684">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_fondo_economale.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-687">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/popola_pcc_modello3.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-690">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/popola_gestionale_entrate_2016.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-693">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/torna_alle.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-696">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/ins_tmp_registro_inv_quote.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-699">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_conguaglio.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-702">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/s_pdg_variazione_det.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-705">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/prc_load_situazione_prog_test.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-708">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/ins_progetto_sic.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-711">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/prc_load_situazione_prog2.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-714">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/aggiungi_moduli_da_saldi.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-717">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_man_rev_ass.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-720">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/pop_storico_indicatore.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-723">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/popola_art_22_bis.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-726">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/martello_residui.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-729">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_doc_generico.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-732">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/prc_load_table_stampa_bilancio.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-735">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/prc_load_situazione_progetti.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-738">
+    <sqlFile dbms="oracle" path="../expsigladb/Procedure/inserisci_coordinate_iban.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-741">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_pdg_variazione.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-744">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_limite_spesa_det.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-747">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bi_liquidazione_iva.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-750">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bi_obbligazione.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-753">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_ass_ev_funz_tipocds.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-756">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_incarichi_procedura.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-759">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_incarichi_procedura_arch.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-762">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/biprint_spooler_param.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-765">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_l_esercizio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-768">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_linea_attivita_su_pdg.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-771">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_incarichi_repertorio_arch.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-774">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_accertamento.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-777">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_obbligazione_scad_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-780">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bi_documento_generico_riga.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-783">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_bframe_blob.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-786">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_obbligazione_scad_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-789">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_documento_generico.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-792">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_incarichi_procedura.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-795">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_minicarriera.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-798">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_variazione_formale_acc.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-801">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_ass_linea_attivita_eser.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-804">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_var_stanz_res_riga.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-807">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_obbligazione.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-810">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_obbligazione_mod_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-813">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_incarichi_repertorio_anno.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-816">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_semaforo_base.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-819">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_l_ass_comp_doc_cont_nmp.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-822">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_l_configurazione_cnr.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-825">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_incarichi_repertorio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-828">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_obbligazione_scadenzario.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-831">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_elemento_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-834">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bcrud_saldi.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-837">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_movimento_coge.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-840">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_print_spooler.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-843">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_movimento_coge.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-846">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_parametri_ente_tipo_db.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-849">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_incarichi_repertorio_anno.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-852">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_l_banca.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-855">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_saldi_imp_acc.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-858">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_voce_f.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-861">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bi_fattura_attiva.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-864">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_incarichi_richiesta.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-867">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_semaforo_statico.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-870">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_l_esercizio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-873">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_esercizio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-876">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_minicarriera_rata.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-879">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_pdg_esercizio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-882">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_incarichi_procedura_arch.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-885">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_accertamento.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-888">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_l_banca.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-891">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_minicarriera_rata.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-894">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_cdr.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-897">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_saldi_pag_inc.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-900">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_incarichi_richiesta.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-903">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_incarichi_repertorio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-906">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_voce_f.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-909">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_unita_organizzativa.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-912">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_ass_ev_funz_tipocds.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-915">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_print_spooler.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-918">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_l_ass_comp_doc_cont_nmp.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-921">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_l_esercizio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-924">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_incarichi_procedura_anno.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-927">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_l_banca.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-930">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_liquidazione_iva.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-933">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_accertamento_mod_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-936">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_elemento_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-939">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_bframe_blob.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-942">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_pdg_esercizio_blocco_temp.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-945">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_saldi_stanziamenti.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-948">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_esercizio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-951">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_incarichi_repertorio_arch.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-954">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_pdg_preventivo_chiuso.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-957">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_obbligazione_scad_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-960">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_cdr.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-963">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_incarichi_procedura_anno.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-966">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_obbligazione_scad_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-969">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_fattura_attiva_intra.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-972">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bi_pdg_modulo.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-975">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_ass_partita_giro.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-978">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_scrittura_partita_doppia.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-981">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_l_configurazione_cnr.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-984">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_l_ass_comp_doc_cont_nmp.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-987">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_l_configurazione_cnr.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-990">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_movimento_coge.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-993">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_pdg_preventivo.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-996">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_contratto.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-999">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_elemento_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-1002">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_minicarriera.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-1005">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_pdg_aggregato.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-1008">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_ass_ev_ev.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-1011">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_liquidazione_iva.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-1014">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_esercizio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-1017">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_fattura_passiva_intra.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-1020">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/biu_fattura_passiva.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-1023">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_accertamento.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-1026">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_ass_ev_funz_tipocds.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-1029">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_pdg_residuo.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+  <changeSet author="francesco" id="sigla-sql-1032">
+    <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_obbligazione.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+  </changeSet>
+</databaseChangeLog>
