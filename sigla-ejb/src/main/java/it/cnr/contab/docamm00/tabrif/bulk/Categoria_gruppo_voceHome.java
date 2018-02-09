@@ -20,7 +20,7 @@ public Categoria_gruppo_voceBulk findCategoria_gruppo_voceforvoce(Elemento_voceB
 	sql.addSQLClause("AND","TI_APPARTENENZA",sql.EQUALS,elem.getTi_appartenenza());
 	sql.addSQLClause("AND","TI_GESTIONE",sql.EQUALS,elem.getTi_gestione());
 	sql.addSQLClause("AND","CD_ELEMENTO_VOCE",sql.EQUALS,elem.getCd_elemento_voce());
-	sql.addSQLClause("AND","CATEGORIA_GRUPPO_INVENT.CD_CATEGORIA_PADRE",sql.ISNULL,null);
+	//sql.addSQLClause("AND","CATEGORIA_GRUPPO_INVENT.CD_CATEGORIA_PADRE",sql.ISNULL,null);
 	java.util.List lista = fetchAll(sql);
 	if ( lista.size()>0 )
 		return (Categoria_gruppo_voceBulk)lista.get(0);
