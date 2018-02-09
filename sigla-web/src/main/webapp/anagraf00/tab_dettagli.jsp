@@ -126,7 +126,13 @@
 			<td><% bp.getController().writeFormLabel(out,"fl_no_credito_irpef");%></td>
 			<td colspan="2"><% bp.getController().writeFormInput(out,"fl_no_credito_irpef");%></td>
 		  </tr>	
-		<% } %>  
-	<% } %>
+		<% } %>
+		<% if(bp.isSupervisore()) {%> 
+          <tr>
+			<td><% bp.getController().writeFormLabel(out,"fl_detrazioni_altri_tipi");%></td>
+			<td colspan="2"><% bp.getController().writeFormInput(out,"fl_detrazioni_altri_tipi");%></td>
+		  </tr>	
+		<% } %>    
 	
+	<% } %>    
 </table>
