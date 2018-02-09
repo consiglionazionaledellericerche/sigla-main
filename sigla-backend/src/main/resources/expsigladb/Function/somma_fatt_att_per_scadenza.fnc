@@ -1,0 +1,54 @@
+CREATE OR REPLACE FUNCTION Somma_Fatt_Att_Per_Scadenza
+   (CD_CDS_ACC     VARCHAR2,
+    ES_ACC         NUMBER,
+    ES_ORI_ACC     NUMBER,
+    PG_ACC         NUMBER,
+    PG_SCAD        NUMBER)
+
+RETURN NUMBER IS
+
+RISULTATO NUMBER;
+
+BEGIN
+ SELECT NVL(
+            SUM(
+                DECODE(FA.TI_FATTURA, 'C', -NVL(FAR.IM_IMPONIBILE, 0), NVL(FAR.IM_IMPONIBILE, 0))+
+                DECODE(FA.TI_FATTURA, 'C', -NVL(FAR.IM_IVA, 0), NVL(FAR.IM_IVA, 0))
+               )
+            , 0)
+ INTO   RISULTATO
+ FROM   FATTURA_ATTIVA_RIGA FAR, FATTURA_ATTIVA FA
+ WHERE  FAR.CD_CDS_ACCERTAMENTO          = CD_CDS_ACC  AND
+        FAR.ESERCIZIO_ACCERTAMENTO       = ES_ACC      AND
+        FAR.ESERCIZIO_ORI_ACCERTAMENTO   = ES_ORI_ACC  AND
+        FAR.PG_ACCERTAMENTO              = PG_ACC      AND
+        FAR.PG_ACCERTAMENTO_SCADENZARIO  = PG_SCAD     AND
+        FA.CD_CDS                        = FAR.CD_CDS                      AND
+        FA.CD_UNITA_ORGANIZZATIVA        = FAR.CD_UNITA_ORGANIZZATIVA      AND
+        FA.ESERCIZIO                     = FAR.ESERCIZIO                   AND
+        FA.PG_FATTURA_ATTIVA             = FAR.PG_FATTURA_ATTIVA AND
+        FAR.STATO_COFI != 'A';
+
+ SELECT RISULTATO +
+        NVL(
+            SUM(NVL(FAR.IM_IMPONIBILE, 0) + NVL(FAR.IM_IVA, 0))
+            , 0)
+ INTO   RISULTATO
+ FROM   FATTURA_PASSIVA_RIGA FAR, FATTURA_PASSIVA FA
+ WHERE  FAR.CD_CDS_ACCERTAMENTO          = CD_CDS_ACC  AND
+        FAR.ESERCIZIO_ACCERTAMENTO       = ES_ACC      AND
+        FAR.ESERCIZIO_ORI_ACCERTAMENTO   = ES_ORI_ACC  AND
+        FAR.PG_ACCERTAMENTO              = PG_ACC      AND
+        FAR.PG_ACCERTAMENTO_SCADENZARIO  = PG_SCAD     AND
+        FA.CD_CDS                        = FAR.CD_CDS                      AND
+        FA.CD_UNITA_ORGANIZZATIVA        = FAR.CD_UNITA_ORGANIZZATIVA      AND
+        FA.ESERCIZIO                     = FAR.ESERCIZIO                   AND
+        FA.PG_FATTURA_PASSIVA            = FAR.PG_FATTURA_PASSIVA AND
+        FA.TI_FATTURA = 'C' AND
+        FAR.STATO_COFI != 'A';
+
+RETURN NVL(RISULTATO, 0);
+END;
+/
+
+
