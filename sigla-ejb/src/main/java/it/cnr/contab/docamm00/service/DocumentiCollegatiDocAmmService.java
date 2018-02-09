@@ -1,6 +1,5 @@
 package it.cnr.contab.docamm00.service;
 
-import it.cnr.contab.docamm00.actions.CRUDFatturaPassivaAction;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
@@ -26,17 +25,11 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.GenerazioneReportException;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaType;
-import org.apache.commons.io.IOUtils;
-import org.apache.pdfbox.exceptions.COSVisitorException;
-import org.apache.pdfbox.util.PDFImageWriter;
-import org.apache.pdfbox.util.PDFMergerUtility;
+import org.apache.pdfbox.io.MemoryUsageSetting;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -44,7 +37,6 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.rmi.RemoteException;
-import java.rmi.UnmarshalException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -160,7 +152,7 @@ public class DocumentiCollegatiDocAmmService extends StoreService {
     }
 
     private InputStream getStream(List<String> ids)
-            throws ApplicationException, COSVisitorException, IOException {
+            throws ApplicationException, IOException {
         if (ids != null) {
             if (ids.size() == 1) {
                 try {
@@ -174,10 +166,8 @@ public class DocumentiCollegatiDocAmmService extends StoreService {
                     for (String id : ids) {
                         ut.addSource(getResource(id));
                     }
-                    ut.mergeDocuments();
+                    ut.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
                     return new ByteArrayInputStream(((ByteArrayOutputStream) ut.getDestinationStream()).toByteArray());
-                } catch (COSVisitorException e) {
-                    throw e;
                 } catch (IOException e) {
                     throw e;
                 } catch (StorageException _ex) {
@@ -375,9 +365,9 @@ public class DocumentiCollegatiDocAmmService extends StoreService {
                     .map(DocumentoEleTrasmissioneBulk::getFormatoTrasmissione)
                     .orElse("FPA12");
             Source xslDoc = null;
-            if (formatoTrasmissione.equals("FPA12")){
+            if (formatoTrasmissione.equals("FPA12")) {
                 xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.xsl"));
-            } else if (formatoTrasmissione.equals("SDI11")){
+            } else if (formatoTrasmissione.equals("SDI11")) {
                 xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.1.xsl"));
             } else {
                 throw new ApplicationException("Il formato trasmissione indicato da SDI non rientra tra i formati attesi");
@@ -396,7 +386,7 @@ public class DocumentiCollegatiDocAmmService extends StoreService {
                 metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), Arrays.asList("P:sigla_commons_aspect:utente_applicativo_sigla", "P:cm:titled"));
                 metadataProperties.put("sigla_commons_aspect:utente_applicativo", "SDI");
                 return storeSimpleDocument(new ByteArrayInputStream(baos.toByteArray()), "text/html", storePath, metadataProperties);
-            } catch(StorageException _ex){
+            } catch (StorageException _ex) {
                 logger.error("Cannot convert to html document with id {}", storageObject.getKey(), _ex);
                 return null;
             }

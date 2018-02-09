@@ -9,7 +9,6 @@ import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
-import it.cnr.contab.util.PDAppearanceCustom;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -30,13 +29,12 @@ import java.util.List;
 
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSString;
-import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
-import org.apache.pdfbox.pdmodel.interactive.form.PDCheckbox;
+import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
-import org.apache.pdfbox.pdmodel.interactive.form.PDVariableText;
+
 /**
  *
  * @author mspasiano
@@ -87,7 +85,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 					statoTrasmissione.getEsercizio(), statoTrasmissione.getPg_documento_cont());
 			lettera = (Lettera_pagam_esteroBulk) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(), lettera);
 			if (!statoTrasmissione.getStato_trasmissione().equals(lettera.getStato_trasmissione()))
-				throw new ApplicationException("Risorsa non pi? valida, eseguire nuovamente la ricerca!");
+				throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");
 			lettera.setStato_trasmissione(stato);
 			if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
 				lettera.setDt_firma(EJBCommonServices.getServerTimestamp());
@@ -106,17 +104,15 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 	private void valorizzaField(PDAcroForm pdAcroForm, String fieldName, String fieldValue, boolean autosize) throws IOException {
 		PDField field = pdAcroForm.getField(fieldName);
 		if (field != null && fieldValue != null) {
-			if (field instanceof PDCheckbox) {
+			if (field instanceof PDCheckBox) {
 				if (Boolean.valueOf(fieldValue))
-					((PDCheckbox)field).check();
+					((PDCheckBox)field).check();
 				else
-					((PDCheckbox)field).unCheck();
+					((PDCheckBox)field).unCheck();
 			} else {
-				field.getWidget().getDictionary().setItem( COSName.V, new COSString(fieldValue));
+				field.getCOSObject().setItem( COSName.V, new COSString(fieldValue));
 				if (autosize) {
-					field.getWidget().getDictionary().setString(COSName.DA, "/F2 0 Tf 0 g");
-					PDAppearanceCustom appearance = new PDAppearanceCustom( pdAcroForm, (PDVariableText)field , "/F2 0 Tf 0 g");
-					appearance.setAppearanceValue(fieldValue);
+					field.getCOSObject().setString(COSName.DA, "/F2 0 Tf 0 g");
 				}
 			}
 		}
@@ -155,7 +151,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 
 				for (Object obj : pdAcroForm.getFields()) {
 					PDField field = (PDField)obj;
-					field.setReadonly(true);
+					field.setReadOnly(true);
 				}
 				ByteArrayOutputStream output = new ByteArrayOutputStream();
 				document.save(output);
@@ -175,8 +171,6 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 		} catch (ComponentException e) {
 			throw handleException(e);
 		} catch (IOException e) {
-			throw handleException(e);
-		} catch (COSVisitorException e) {
 			throw handleException(e);
 		}
 	}
