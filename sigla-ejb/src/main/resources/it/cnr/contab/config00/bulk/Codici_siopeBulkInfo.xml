@@ -17,9 +17,9 @@
 	<fieldProperty
 		name="ti_gestione"
 		property="ti_gestione"
-		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
+		inputType="TEXT"
 		label="Gestione" />
 	<fieldProperty
 		name="cd_siope"
