@@ -51,7 +51,8 @@ import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
-import org.apache.pdfbox.util.PDFMergerUtility;
+import org.apache.pdfbox.io.MemoryUsageSetting;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -274,7 +275,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 				if (isToAdd != null)
 					ut.addSource(isToAdd);
 			}
-			ut.mergeDocuments();
+			ut.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
 			InputStream is = new ByteArrayInputStream(((ByteArrayOutputStream)ut.getDestinationStream()).toByteArray());
 			if (is != null){
 				response.setContentType("application/pdf");
