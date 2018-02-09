@@ -1,0 +1,40 @@
+CREATE OR REPLACE TRIGGER BI_DOCUMENTO_GENERICO_RIGA
+  BEFORE Update Or Insert Of STATO_COFI On DOCUMENTO_GENERICO_RIGA
+  For EACH ROW
+Declare
+  STATO_COGE_PADRE  DOCUMENTO_GENERICO.STATO_COGE%Type;
+
+Begin
+--
+-- Trigger attivato su DOCUMENTO_GENERICO_RIGA che popola il nuovo STATO_COGE prendendolo dal DOCUMENTO_GENERICO
+--
+-- Date: 07/05/2007
+-- Version: 1.0
+--
+-- Body:
+--
+
+If INSERTING Then
+ Select STATO_COGE
+ Into   STATO_COGE_PADRE
+ From   DOCUMENTO_GENERICO
+ Where  CD_CDS                 = :New.CD_CDS                 And
+        CD_UNITA_ORGANIZZATIVA = :New.CD_UNITA_ORGANIZZATIVA And
+        ESERCIZIO              = :New.ESERCIZIO              And
+        CD_TIPO_DOCUMENTO_AMM  = :New.CD_TIPO_DOCUMENTO_AMM  And
+        PG_DOCUMENTO_GENERICO  = :New.PG_DOCUMENTO_GENERICO;
+
+ :New.STATO_COGE := stato_coge_padre;
+End If;
+
+If UPDATING Then
+  If :New.STATO_COFI = CNRCTB100.STATO_GEN_COFI_ANN And :OLD.STATO_COFI != CNRCTB100.STATO_GEN_COFI_ANN And
+     :OLD.STATO_COGE = 'C' Then
+       :New.STATO_COGE := 'R';
+  End If;
+End If;
+
+End;
+/
+
+
