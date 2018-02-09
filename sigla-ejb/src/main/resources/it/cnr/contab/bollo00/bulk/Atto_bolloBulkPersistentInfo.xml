@@ -14,6 +14,18 @@
 			columnSize="15"
 			nullable="false" />
 	</defaultColumnMap>
+
+    <columnMap
+            name="V_ATTO_BOLLO"
+            tableName="ATTO_BOLLO"
+            extends="default">
+        <columnMapping
+                columnName="TIPO_ATTO_BOLLO.CODICE"
+                propertyName="tipoAttoBollo.codice"
+                sqlTypeName="VARCHAR"
+                columnSize="6"/>
+	</columnMap>
+			
 	<persistentProperty
 		name="unitaOrganizzativa" />	
 	<persistentProperty
