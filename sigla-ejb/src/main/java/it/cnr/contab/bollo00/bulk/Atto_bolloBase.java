@@ -17,6 +17,15 @@ public class Atto_bolloBase extends Atto_bolloKey implements Keyed {
 	// ID_TIPO_ATTO_BOLLO NUMBER NOT NULL
 	private java.lang.Integer idTipoAttoBollo;
 
+	// CD_PROVV VARCHAR(20)
+	private java.lang.String cd_provv;
+
+	// NUMERO_PROVV DECIMAL(10,0)
+	private java.lang.Integer nr_provv;
+
+	// DT_PROVV TIMESTAMP(7)
+	private java.sql.Timestamp dt_provv;
+
 	// NUM_DETTAGLI NUMBER(6) NOT NULL
 	private java.lang.Integer numDettagli;
 
@@ -64,6 +73,30 @@ public class Atto_bolloBase extends Atto_bolloKey implements Keyed {
 
 	public void setIdTipoAttoBollo(java.lang.Integer idTipoAttoBollo) {
 		this.idTipoAttoBollo = idTipoAttoBollo;
+	}
+
+	public java.lang.String getCd_provv() {
+		return cd_provv;
+	}
+	
+	public void setCd_provv(java.lang.String cdProvv) {
+		cd_provv = cdProvv;
+	}
+	
+	public java.lang.Integer getNr_provv() {
+		return nr_provv;
+	}
+	
+	public void setNr_provv(java.lang.Integer nrProvv) {
+		nr_provv = nrProvv;
+	}
+	
+	public java.sql.Timestamp getDt_provv() {
+		return dt_provv;
+	}
+	
+	public void setDt_provv(java.sql.Timestamp dtProvv) {
+		dt_provv = dtProvv;
 	}
 
 	public java.lang.Integer getNumDettagli() {
