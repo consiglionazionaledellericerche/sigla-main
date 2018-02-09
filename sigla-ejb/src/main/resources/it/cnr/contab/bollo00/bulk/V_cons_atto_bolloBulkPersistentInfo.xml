@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.bollo00.bulk.V_cons_atto_bolloBulk"
+	homeClassName="it.cnr.contab.bollo00.bulk.V_cons_atto_bolloHome">
+	<defaultColumnMap
+		tableName="V_CONS_ATTO_BOLLO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="DESCRIZIONE_ATTO"
+			propertyName="descrizioneAtto"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="DS_UNITA_ORGANIZZATIVA"
+			propertyName="dsUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="CD_TIPO_ATTO"
+			propertyName="cdTipoAtto"
+			sqlTypeName="VARCHAR"
+			columnSize="3" />
+		<columnMapping
+			columnName="DS_TIPO_ATTO"
+			propertyName="dsTipoAtto"
+			sqlTypeName="VARCHAR"
+			columnSize="1000" />
+		<columnMapping
+			columnName="RIFERIMENTO"
+			propertyName="riferimento"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />			
+		<columnMapping
+			columnName="TI_DETTAGLI"
+			propertyName="tiDettagli"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="NUM_DETTAGLI"
+			propertyName="numDettagli"
+			sqlTypeName="DECIMAL"
+			columnSize="6" />
+		<columnMapping
+			columnName="IM_BOLLO"
+			propertyName="imBollo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="IM_TOTALE_BOLLO"
+			propertyName="imTotaleBollo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="esercizio" />
+	<persistentProperty
+		name="descrizioneAtto" />
+	<persistentProperty
+		name="cdUnitaOrganizzativa" />
+	<persistentProperty
+		name="dsUnitaOrganizzativa" />
+	<persistentProperty
+		name="cdTipoAtto" />
+	<persistentProperty
+		name="dsTipoAtto" />
+	<persistentProperty
+		name="riferimento" />	
+	<persistentProperty
+		name="tiDettagli" />	
+	<persistentProperty
+		name="numDettagli" />	
+	<persistentProperty
+		name="imBollo" />	
+	<persistentProperty
+		name="imTotaleBollo" />
+		
+    <columnMap
+            name="BASE"
+            tableName="V_CONS_ATTO_BOLLO">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="IM_TOTALE_BOLLO"
+			propertyName="imTotaleBollo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+	</columnMap>
+
+    <columnMap
+            name="BASETIP"
+            tableName="V_CONS_ATTO_BOLLO"
+            extends="BASE" >
+		<columnMapping
+			columnName="CD_TIPO_ATTO"
+			propertyName="cdTipoAtto"
+			sqlTypeName="VARCHAR"
+			columnSize="3" />
+		<columnMapping
+			columnName="IM_BOLLO"
+			propertyName="imBollo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="TI_DETTAGLI"
+			propertyName="tiDettagli"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="NUM_DETTAGLI"
+			propertyName="numDettagli"
+			sqlTypeName="DECIMAL"
+			columnSize="6" />
+	</columnMap>
+
+    <columnMap
+            name="BASETIPUO"
+            tableName="V_CONS_ATTO_BOLLO"
+            extends="BASETIP" >
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+	</columnMap>
+
+    <columnMap
+            name="BASEUO"
+            tableName="V_CONS_ATTO_BOLLO"
+            extends="BASE" >
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cdUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />            
+	</columnMap>
+	
+    <columnMap
+            name="BASEUOTIP"
+            tableName="V_CONS_ATTO_BOLLO"
+            extends="BASEUO" >
+		<columnMapping
+			columnName="CD_TIPO_ATTO"
+			propertyName="cdTipoAtto"
+			sqlTypeName="VARCHAR"
+			columnSize="3" />
+		<columnMapping
+			columnName="IM_BOLLO"
+			propertyName="imBollo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2" />
+		<columnMapping
+			columnName="TI_DETTAGLI"
+			propertyName="tiDettagli"
+			sqlTypeName="CHAR"
+			columnSize="1" />
+		<columnMapping
+			columnName="NUM_DETTAGLI"
+			propertyName="numDettagli"
+			sqlTypeName="DECIMAL"
+			columnSize="6" />
+	</columnMap>
+
+    <columnMap
+            name="TIP"
+            tableName="V_CONS_ATTO_BOLLO"
+            extends="BASETIP">
+		<columnMapping
+			columnName="DS_TIPO_ATTO"
+			propertyName="dsTipoAtto"
+			sqlTypeName="VARCHAR"
+			columnSize="1000" />
+	</columnMap>
+	
+    <columnMap
+            name="TIPUO"
+            tableName="V_CONS_ATTO_BOLLO"
+            extends="BASETIPUO" >
+		<columnMapping
+			columnName="DS_UNITA_ORGANIZZATIVA"
+			propertyName="dsUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+	</columnMap>	
+
+    <columnMap
+            name="TIPUODET"
+            tableName="V_CONS_ATTO_BOLLO"
+            extends="BASETIPUO" >
+		<columnMapping
+			columnName="DESCRIZIONE_ATTO"
+			propertyName="descrizioneAtto"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+		<columnMapping
+			columnName="RIFERIMENTO"
+			propertyName="riferimento"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />	
+	</columnMap>
+	
+	<columnMap
+            name="UO"
+            tableName="V_CONS_ATTO_BOLLO" 
+            extends="BASEUO">
+		<columnMapping
+			columnName="DS_UNITA_ORGANIZZATIVA"
+			propertyName="dsUnitaOrganizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="300" />
+	</columnMap>	
+	
+	<columnMap
+            name="UOTIP"
+            tableName="V_CONS_ATTO_BOLLO"
+            extends="BASEUOTIP" >
+		<columnMapping
+			columnName="DS_TIPO_ATTO"
+			propertyName="dsTipoAtto"
+			sqlTypeName="VARCHAR"
+			columnSize="1000" />
+	</columnMap>	
+
+    <columnMap
+            name="UOTIPDET"
+            tableName="V_CONS_ATTO_BOLLO"
+            extends="TIPUODET" >
+	</columnMap>	
+</SQLPersistentInfo>
