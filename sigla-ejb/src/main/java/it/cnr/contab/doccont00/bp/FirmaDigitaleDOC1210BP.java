@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSString;
@@ -150,7 +151,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
                 fields.add(valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_"+lettera.getCommissioni_spese(), "X", false));
                 fields.add(valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_ESTERE_"+lettera.getCommissioni_spese_estere(), "X", false));
 
-                pdAcroForm.flatten(fields, true);
+                pdAcroForm.flatten(fields.stream().filter(pdField -> Optional.ofNullable(pdField).isPresent()).collect(Collectors.toList()), true);
 
                 ByteArrayOutputStream output = new ByteArrayOutputStream();
 				document.save(output);
