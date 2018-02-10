@@ -113,7 +113,8 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
             } else {
                 field.setValue(
                         Optional.ofNullable(fieldValue)
-                            .map(s -> s.replace("\r", "\n"))
+                            .map(s -> s.replace("\r", " "))
+                                .map(s -> s.replace("\n", " "))
                             .orElse(""));
             }
         }
@@ -151,7 +152,9 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
                 fields.add(valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_"+lettera.getCommissioni_spese(), "X", false));
                 fields.add(valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_ESTERE_"+lettera.getCommissioni_spese_estere(), "X", false));
 
-                pdAcroForm.flatten(fields.stream().filter(pdField -> Optional.ofNullable(pdField).isPresent()).collect(Collectors.toList()), true);
+                pdAcroForm.flatten(fields.stream()
+                        .filter(pdField -> Optional.ofNullable(pdField).isPresent())
+                        .collect(Collectors.toList()), true);
 
                 ByteArrayOutputStream output = new ByteArrayOutputStream();
 				document.save(output);
