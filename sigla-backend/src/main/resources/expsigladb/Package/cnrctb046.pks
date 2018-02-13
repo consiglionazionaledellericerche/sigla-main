@@ -872,7 +872,6 @@ Procedure ripPgiroCdsEntrambe(
 
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB046 is
@@ -3729,6 +3728,5 @@ Procedure deriportoPGiroCds(aObb in out obbligazione%rowtype, aUser varchar2, aT
  end;
 
 end;
-/
 
 

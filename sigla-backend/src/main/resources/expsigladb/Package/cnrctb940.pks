@@ -13,7 +13,6 @@ PROCEDURE job_estrazioneIndicatore
     inUtente VARCHAR2
    );
   End;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB940 AS
@@ -85,6 +84,5 @@ BEGIN
    END;
 END job_estrazioneIndicatore;
 End;
-/
 
 

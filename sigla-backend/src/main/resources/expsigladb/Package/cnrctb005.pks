@@ -37,7 +37,6 @@ CREATE OR REPLACE package CNRCTB005 as
  procedure onCreazioneEsercizio(aEsercizio esercizio%rowtype);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB005 is
@@ -77,6 +76,5 @@ CREATE OR REPLACE package body CNRCTB005 is
   CNRCTB055.CREAESPLSALDI(aEsercizio.esercizio, aEsercizio.cd_cds, aEsercizio.utcr);
  end;
 end;
-/
 
 

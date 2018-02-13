@@ -896,7 +896,6 @@ procedure creaRipartEntrate(aEs number,aCdCdr varchar2, aUser varchar2);
   procedure setcassainiassucc(aEs number, aCd_cds varchar2, aTi_appartenenza char, aTi_gestione char, aCd_voce varchar2,  aTi_competenza_residuo char, aUser varchar2);
 
 End;
-/
 
 
 CREATE OR REPLACE package body CNRCTB055 is
@@ -3318,6 +3317,5 @@ End Loop;
 		end if; -- Fine if di controllo su ti_competenza_residuo
 	end;
 end;
-/
 
 

@@ -330,7 +330,6 @@ function getDescDocumento(aBS buono_carico_scarico_dett%rowtype) return varchar2
  function trovaContoContrEp(aEs number,aTiAppartenza char,aTiGestione Char, aEV varchar2,aVocein varchar2) return voce_ep%rowtype;
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB204 is
@@ -1747,6 +1746,5 @@ End;
   return aContoEp;
  end;
 end;
-/
 
 

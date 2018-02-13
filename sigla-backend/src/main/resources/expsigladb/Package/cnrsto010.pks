@@ -6,7 +6,6 @@ CREATE OR REPLACE package         CNRSTO010 as
 --
  procedure scaricaSuStorico( aPgStorico number, aDsStorico varchar2, aOld contratto%rowtype);
 End;
-/
 
 
 CREATE OR REPLACE package body  CNRSTO010 is
@@ -122,6 +121,5 @@ Insert into CONTRATTO_S
 		aDsStorico);
  end;
 end;
-/
 
 

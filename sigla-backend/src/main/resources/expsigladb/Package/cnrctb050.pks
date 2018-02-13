@@ -584,7 +584,6 @@ procedure inizializzaAggregatoPDG(aEs number, aCdCdr varchar2, aUser VARCHAR2, d
  function getCdrAggregatore(aEs number, aCdCdr varchar2) return varchar2;
 
 end;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY         CNRCTB050 is
@@ -1024,8 +1023,7 @@ CREATE OR REPLACE PACKAGE BODY         CNRCTB050 is
           Ltrim(To_Char(aDetAggregatoModificato.IM_RT_SSC_COSTI_OGC_ALTRA_UO, '999g999g999g999g999g990d00'))||
           '   PdG '||Ltrim(To_Char(aVPdgAggregato.IM_RT_SSC_COSTI_OGC_ALTRA_UO, '999g999g999g999g999g990d00'))||
           '   (diff. '||Ltrim(To_Char(aDetAggregatoModificato.IM_RT_SSC_COSTI_OGC_ALTRA_UO-aVPdgAggregato.IM_RT_SSC_COSTI_OGC_ALTRA_UO, '999g999g999g999g999g990d00'))||')';
-        End If;
-/*
+        End If;*
         if aDetAggregatoModificato.IM_RAA_A2_COSTI_FINALI<aVPdgAggregato.IM_RAA_A2_COSTI_FINALI Then
                 err_col := err_col||
 aDetAggregatoModificato.IM_RAA_A2_COSTI_FINALI||' PdG '||aVPdgAggregato.IM_RAA_A2_COSTI_FINALI ||'. ';
@@ -1855,6 +1853,5 @@ aDetAggregatoModificato.IM_RAO_A3_SPESE_OGC_ALTRA_UO||' PdG '||aVPdgAggregato.IM
  end;
 
 end;
-/
 
 

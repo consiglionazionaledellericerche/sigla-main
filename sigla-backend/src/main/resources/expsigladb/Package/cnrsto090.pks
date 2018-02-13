@@ -12,7 +12,6 @@ CREATE OR REPLACE package         CNRSTO090 as
  procedure sto_minicarriera (aPgStorico number, aDest MINICARRIERA%rowtype);
  procedure sto_minicarriera_rata (aPgStorico number, aDest MINICARRIERA_RATA%rowtype);
 end;
-/
 
 
 CREATE OR REPLACE package body         CNRSTO090 is
@@ -166,6 +165,5 @@ CREATE OR REPLACE package body         CNRSTO090 is
     ,aDest.PG_VER_REC );
  end;
 End;
-/
 
 

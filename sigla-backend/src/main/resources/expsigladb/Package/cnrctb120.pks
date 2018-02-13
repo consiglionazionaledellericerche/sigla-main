@@ -188,7 +188,6 @@ FUNCTION getFtDiffConIvaPassiva
 
 
 END;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB120 IS
@@ -704,6 +703,5 @@ BEGIN
 
 END getFatturaRiferimento;
 END;
-/
 
 
