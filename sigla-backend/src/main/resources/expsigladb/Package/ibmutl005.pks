@@ -68,7 +68,6 @@ gStatoEse constant char(1) := 'S';
 				       aFilename BFRAME_BLOB.FILENAME%type,
 					   aClob IN OUT clob);
 end;
-/
 
 
 CREATE OR REPLACE package body IBMUTL005
@@ -409,6 +408,5 @@ is
 	end;
 
 END;
-/
 
 

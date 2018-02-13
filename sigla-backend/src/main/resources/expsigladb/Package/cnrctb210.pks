@@ -295,7 +295,6 @@ num_movimento_doc NUMBER;
 
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB210 is
@@ -809,6 +808,5 @@ Begin
  End;
 
 end;
-/
 
 

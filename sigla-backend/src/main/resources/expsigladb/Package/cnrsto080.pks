@@ -14,7 +14,6 @@ CREATE OR REPLACE package CNRSTO080 as
  procedure sto_FATTURA_ATTIVA_INTRA (aPgStorico number, aDest FATTURA_ATTIVA_INTRA%rowtype);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRSTO080 is
@@ -164,6 +163,5 @@ CREATE OR REPLACE package body CNRSTO080 is
  end;
 
 End;
-/
 
 

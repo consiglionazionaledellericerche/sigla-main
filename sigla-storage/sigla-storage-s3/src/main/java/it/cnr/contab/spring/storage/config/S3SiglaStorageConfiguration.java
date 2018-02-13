@@ -52,22 +52,4 @@ public class S3SiglaStorageConfiguration {
                 .withCredentials(Optional.ofNullable(awsCredentials).map(awsCredential -> new AWSStaticCredentialsProvider(awsCredential)).orElse(null))
                 .build();
     }
-
-    @Bean
-    Bucket Bucket(AmazonS3 amazonS3, S3SiglaStorageConfigurationProperties s3SiglaStorageConfigurationProperties) {
-        boolean doesBucketExist = amazonS3.doesBucketExist(s3SiglaStorageConfigurationProperties.getBucketName());
-
-        if(doesBucketExist) {
-            return amazonS3
-                    .listBuckets()
-                    .stream()
-                    .filter(bucket -> bucket.getName().equals(s3SiglaStorageConfigurationProperties.getBucketName()))
-                    .findFirst()
-                    .get();
-        } else {
-            return amazonS3.createBucket(s3SiglaStorageConfigurationProperties.getBucketName());
-        }
-
-    }
-
 }

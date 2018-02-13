@@ -60,7 +60,6 @@ CREATE OR REPLACE PACKAGE ACCONTO AS
       );
 
 END ACCONTO;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY ACCONTO As
@@ -274,6 +273,5 @@ End calcolaAddTerritorioAcconto;
 
 
 END;
-/
 
 

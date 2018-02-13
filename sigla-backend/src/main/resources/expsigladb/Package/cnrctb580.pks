@@ -185,7 +185,6 @@ CREATE OR REPLACE PACKAGE CNRCTB580 AS
  procedure sganciaAnticipoDaMissione(aCdCds varchar2, aCdUo varchar2, aEs number, aPgAnticipo number, aUser varchar2,aTSNow date);
 
 END;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY         CNRCTB580 AS
@@ -591,6 +590,5 @@ declare
   rimborsoAnticipo(aAnticipo, aUser, aTSNow, aEsercizioScrivania);
  end;
 END;
-/
 
 

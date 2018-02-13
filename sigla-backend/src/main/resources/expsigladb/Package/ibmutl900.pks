@@ -23,7 +23,6 @@ CREATE OR REPLACE package IBMUTL900 is
  procedure view_builder(aName varchar2, tabelle IBMCST001.vcarray);
 
 end;
-/
 
 
 CREATE OR REPLACE package body IBMUTL900 as
@@ -98,6 +97,5 @@ CREATE OR REPLACE package body IBMUTL900 as
       IBMUTL010.scrivi(');');
      end;
 end;
-/
 
 

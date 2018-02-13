@@ -151,7 +151,6 @@ CREATE OR REPLACE package CNRCTB215 as
  procedure doRiproc(aObb obbligazione%rowtype, aPgStorico number default null);
  procedure doRiproc(aAcc accertamento%rowtype, aPgStorico number default null);
 end;
-/
 
 
 CREATE OR REPLACE package body         CNRCTB215 is
@@ -641,6 +640,5 @@ Dbms_Output.PUT_LINE ('D');
   end loop;
  end;
 end;
-/
 
 

@@ -172,7 +172,6 @@ DESC_INS_SCR_N5_AREA CONSTANT varchar2(200) := 'Insieme di collegamento entrata 
  function creaInsiemeScrArea(aEs number, aCdCdrArea varchar2, aUser varchar2) return insieme_la%rowtype;
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB010 is
@@ -532,6 +531,5 @@ End;
     );
  end;
 end;
-/
 
 

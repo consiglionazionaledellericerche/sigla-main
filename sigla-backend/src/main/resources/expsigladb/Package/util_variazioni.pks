@@ -19,7 +19,6 @@ CREATE OR REPLACE PACKAGE         UTIL_VARIAZIONI AS
     oPgVar Out NUMBER
     );
 End UTIL_VARIAZIONI;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY         UTIL_VARIAZIONI AS
@@ -597,6 +596,5 @@ aTiAppartenenza||'/'||aTiGestione||'/'||aCdElementoVoce||') per l''esercizio '||
    End If;
  End generaStornoTraCdsMonoEv;
 End UTIL_VARIAZIONI;
-/
 
 
