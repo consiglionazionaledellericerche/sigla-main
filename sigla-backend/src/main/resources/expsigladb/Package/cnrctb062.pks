@@ -18,7 +18,6 @@ CREATE OR REPLACE package CNRCTB062 as
  function getDataMandato(cds varchar2, uo varchar2, esercizio number, tipo_doc_amm varchar2, pg_doc_amm number) return date;
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB062 is
@@ -129,6 +128,5 @@ CREATE OR REPLACE package body CNRCTB062 is
 	return m.dt_trasmissione;
  end;
 End;
-/
 
 

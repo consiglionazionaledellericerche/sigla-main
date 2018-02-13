@@ -58,7 +58,6 @@ CREATE OR REPLACE PACKAGE CLBANCA AS
   --   aNomeTrg -> Nome del trigger che vogliamo disattivare
   procedure disattivaTrg(aNomeTab varchar2, aNomeTrg varchar2, aUser varchar2 );
 end;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CLBANCA AS
@@ -248,6 +247,5 @@ CREATE OR REPLACE PACKAGE BODY CLBANCA AS
     end if;
   end;
 end;
-/
 
 

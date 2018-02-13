@@ -145,7 +145,6 @@ LC_CENTRO_ATTIVA CONSTANT VARCHAR2(100):='CENTRO_ATTIVA';
  function getDesc(aLGC liquid_gruppo_cori%rowtype) return varchar2;
 
 END;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB575 AS
@@ -447,6 +446,5 @@ CREATE OR REPLACE PACKAGE BODY CNRCTB575 AS
     );
  end;
 END;
-/
 
 

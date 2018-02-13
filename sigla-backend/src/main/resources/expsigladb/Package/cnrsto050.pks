@@ -33,7 +33,6 @@ CREATE OR REPLACE package CNRSTO050 as
  procedure sto_PDG_PREVENTIVO_SPE_DET (aPgStorico number, aDsStorico varchar2, aDest PDG_PREVENTIVO_SPE_DET%rowtype);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRSTO050 is
@@ -289,6 +288,5 @@ CREATE OR REPLACE package body CNRSTO050 is
     );
  end;
 end;
-/
 
 

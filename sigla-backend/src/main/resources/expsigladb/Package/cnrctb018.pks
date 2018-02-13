@@ -233,7 +233,6 @@ LAST_FULL_RANGE CONSTANT NUMBER   := 9999999999;
  function getNextNumDocCont(aTipo varchar2, aEs number, aCdCDS varchar2, aUser varchar2) return number;
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB018 is
@@ -703,6 +702,5 @@ CREATE OR REPLACE package body CNRCTB018 is
     );
  end;
 end;
-/
 
 

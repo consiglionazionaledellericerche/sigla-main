@@ -224,7 +224,6 @@ CREATE OR REPLACE package CNRCTB207 as
  procedure ins_ASS_CDP_MESE_ROUND (aDest ASS_CDP_MESE_ROUND%rowtype);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB207 is
@@ -885,8 +884,7 @@ procedure regStipendiCOGE(aEs number, aMese number, aUser varchar2) is
    and mese = aMese;
 */
 
-  i:=0;
-/* stani 04.11  aTotDistribuito:=0;*/
+  i:=0;* stani 04.11  aTotDistribuito:=0;*/
   for aStipObb in (select * from STIPENDI_COFI_OBB_SCAD where
        esercizio = aEs
    and mese = aMese
@@ -900,10 +898,8 @@ procedure regStipendiCOGE(aEs number, aMese number, aUser varchar2) is
     and pg_obbligazione = aStipObb.pg_obbligazione
    for update nowait;
    -- Generazione movimento di default
-   aContoEp:=trovaContoEp(aObb);
-/*   aImporto:=aStipObb.im_totale * (aTotLordoScadenze-aTotCaricoEnte)/aTotLordoScadenze; stani per Franca 04.11.2004 sostituito aimporto*/
-   aImporto:=aStipObb.im_totale;
-/*   aTotDistribuito:=aTotDistribuito+aImporto; stani per Franca 04.11*/
+   aContoEp:=trovaContoEp(aObb);*   aImporto:=aStipObb.im_totale * (aTotLordoScadenze-aTotCaricoEnte)/aTotLordoScadenze; stani per Franca 04.11.2004 sostituito aimporto*/
+   aImporto:=aStipObb.im_totale;*   aTotDistribuito:=aTotDistribuito+aImporto; stani per Franca 04.11*/
    -- Distribuzione dei rotti su ultimo movimento
 /* stani per Franca 04.11
     if i=aNumObb then
@@ -915,8 +911,7 @@ procedure regStipendiCOGE(aEs number, aMese number, aUser varchar2) is
     	aContoEpAnag:=CNRCTB204.trovaContoContrEp(aObb.esercizio,null,null,null,aContoEp.cd_voce_ep);
    		CNRCTB204.buildMovPrinc(aObb.cd_cds,aObb.esercizio,aObb.cd_unita_organizzativa,aContoEpAnag,aImporto,CNRCTB100.IS_AVERE,aComp.dt_da_competenza_coge,aComp.dt_a_competenza_coge,aObb.cd_terzo,aListaMovimenti,aUser,aTSnow);
    end if;
-  end loop;
-/* stani per Franca 04.11.2004
+  end loop;* stani per Franca 04.11.2004
   select * into aDocTst from v_doc_amm_coge_tsta where
                  pg_numero_documento=aComp.pg_compenso
              and cd_tipo_documento = CNRCTB100.TI_COMPENSO
@@ -993,6 +988,5 @@ fine stani per Franca per stipendi 04.11.2004*/
  end;
 
 end;
-/
 
 
