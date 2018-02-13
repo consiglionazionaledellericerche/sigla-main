@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import java.util.Optional;
+
 /**
  * Created by mspasiano on 6/5/17.
  */
@@ -26,7 +28,10 @@ public class S3SiglaStorageConfiguration {
 
     @Bean
     AWSCredentials basicAWSCredentials(S3SiglaStorageConfigurationProperties s3SiglaStorageConfigurationProperties) {
-        return new BasicAWSCredentials(s3SiglaStorageConfigurationProperties.getAccessKey(), s3SiglaStorageConfigurationProperties.getSecretKey());
+        return Optional.ofNullable(s3SiglaStorageConfigurationProperties.getAccessKey())
+                .filter(s -> !s.isEmpty())
+                .map(s -> new BasicAWSCredentials(s, s3SiglaStorageConfigurationProperties.getSecretKey()))
+                .orElse(null);
     }
 
     @Bean
@@ -34,10 +39,6 @@ public class S3SiglaStorageConfiguration {
 
         ClientConfiguration clientConfig = new ClientConfiguration();
         clientConfig.setProtocol(Protocol.HTTP);
-
-        // TODO: workaround relativo alla generazione dell'hash usando HTTP (doppia lettura dell'InputStream)
-        // altri workaround possibili: settare putObjectRequest.putCustomRequestHeader(Headers.CONTENT_LENGTH, "1234");
-        clientConfig.setSignerOverride("S3SignerType");
 
         AwsClientBuilder.EndpointConfiguration endpoint =
                 new AwsClientBuilder.EndpointConfiguration(s3SiglaStorageConfigurationProperties.getAuthUrl(), "???");
@@ -47,7 +48,7 @@ public class S3SiglaStorageConfiguration {
                 .withPathStyleAccessEnabled(true)
                 .withClientConfiguration(clientConfig)
                 .withEndpointConfiguration(endpoint)
-                .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+                .withCredentials(Optional.ofNullable(awsCredentials).map(awsCredential -> new AWSStaticCredentialsProvider(awsCredential)).orElse(null))
                 .build();
     }
 
