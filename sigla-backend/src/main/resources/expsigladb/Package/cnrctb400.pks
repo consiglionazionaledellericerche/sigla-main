@@ -753,7 +753,6 @@ Procedure updCaricoBeniAumentoValDoc
        aDtRegistrazione DATE,
        aMessaggio IN OUT VARCHAR2);
 End;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB400 AS
@@ -4433,6 +4432,5 @@ BEGIN
 
 END updCaricoBeniAumentoValDoc;
 end;
-/
 
 

@@ -184,7 +184,6 @@ procedure endLogRibaltamentoAltro(aEs number, aPgEsec number, aStato in out char
 procedure ins_RIBALTAMENTO_LOG (aDest RIBALTAMENTO_LOG%rowtype);
 --
 end;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY         CNRMIG100 is
@@ -1446,8 +1445,7 @@ begin
 		ribaltaStruttOrg(aEs, aEsPrec, aPgEsec, stato_fine, aMessage);
 
     -- Ribaltamento limiti di spesa
-    ribaltaLimitiSpesa(aEs, aEsPrec, aPgEsec, stato_fine, aMessage);
-/*  spostato in ribaltamento_altro  rospuc
+    ribaltaLimitiSpesa(aEs, aEsPrec, aPgEsec, stato_fine, aMessage);*  spostato in ribaltamento_altro  rospuc
 		-- Ribaltamento del piano dei conti E/P
 		ribaltaEP(aEs, aEsPrec, aPgEsec, stato_fine, aMessage);
 
@@ -1774,8 +1772,7 @@ begin
 					||aAssEVEV.CD_NATURA||') gi? esistente','','');
 			aStato := 'W';
 		end;
-	end loop;
-/* spostato in ribaltamento_altro rospuc
+	end loop;* spostato in ribaltamento_altro rospuc
 	-- Ribaltamento associazioni tra categorie e voci del piano dei conti
 	lock table categoria_gruppo_voce in exclusive mode nowait;
 	aMessage := 'Ribaltamento associazioni tra categorie e voci del piano dei conti sull''esercizio '||aEsDest||'. Lock tabella CATEGORIA_GRUPPO_VOCE';
@@ -3776,6 +3773,5 @@ begin
 end;
 ----------------------------------------------------------------------------
 end;
-/
 
 

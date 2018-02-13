@@ -154,7 +154,6 @@ DESCR_VAR_TOT   Constant  VARCHAR(60) := 'Variazione tra Istituti diversi';
  procedure checkEliminAssEvEv(aAss ass_ev_ev%rowtype);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB000 is
@@ -1079,6 +1078,5 @@ End If;
 End;
 
 End;
-/
 
 

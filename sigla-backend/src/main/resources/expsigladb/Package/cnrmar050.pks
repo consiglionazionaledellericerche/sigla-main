@@ -43,7 +43,6 @@ D_SPESA005 CONSTANT VARCHAR2(70):='D_SPESA005-DATA_PAGAMENTO_FONDO';
  function MSG_DIS_PRIMI(aTipo varchar2,aFondo fondo_Economale%rowtype,aNota varchar2) return varchar2;
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRMAR050 is
@@ -307,6 +306,5 @@ CREATE OR REPLACE package body CNRMAR050 is
 					    NULL);
   end; -- MAIN
 end;
-/
 
 

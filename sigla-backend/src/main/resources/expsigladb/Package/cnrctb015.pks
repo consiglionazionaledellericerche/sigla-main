@@ -139,7 +139,6 @@ CREATE OR REPLACE package CNRCTB015 as
 
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB015 is
@@ -396,6 +395,5 @@ Function get_LINEA_PGIRO_cds (aEsercizio NUMBER, aCDS VARCHAR2, ati_gestione CHA
  End;
 
 end;
-/
 
 

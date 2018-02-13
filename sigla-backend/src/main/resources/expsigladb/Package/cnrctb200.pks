@@ -759,7 +759,6 @@ procedure creaScrittStornoCoge(
  function isChiusuraCoepProva(aEs number,aCdCds varchar2) return char;
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB200 is
@@ -2304,6 +2303,5 @@ Dbms_Output.PUT_LINE ('INS '||aScrittura.ESERCIZIO||' '||aScrittura.CD_CDS||' '|
     );
  end;
 end;
-/
 
 

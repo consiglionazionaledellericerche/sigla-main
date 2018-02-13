@@ -17,7 +17,6 @@ CREATE OR REPLACE package IBMUTL020 as
 
  function vsx_get_pg_call return number;
 end;
-/
 
 
 CREATE OR REPLACE package body IBMUTL020 is
@@ -29,6 +28,5 @@ CREATE OR REPLACE package body IBMUTL020 is
   return aNum;
  end;
 end;
-/
 
 

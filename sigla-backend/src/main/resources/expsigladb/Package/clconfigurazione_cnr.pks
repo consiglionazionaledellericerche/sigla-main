@@ -58,7 +58,6 @@ CREATE OR REPLACE PACKAGE CLCONFIGURAZIONE_CNR AS
   --   aNomeTrg -> Nome del trigger che vogliamo disattivare
   procedure disattivaTrg(aNomeTab varchar2, aNomeTrg varchar2, aUser varchar2 );
 end;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CLCONFIGURAZIONE_CNR AS
@@ -240,6 +239,5 @@ CREATE OR REPLACE PACKAGE BODY CLCONFIGURAZIONE_CNR AS
     end if;
   end;
 end;
-/
 
 
