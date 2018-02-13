@@ -83,7 +83,7 @@ public class MissioniCMISService extends StoreService {
 		query.append(" join strorg:cds cds on mis.cmis:objectId = cds.cmis:objectId ");
 		query.append(" where mis.missioni_sigla:anno = ").append(missione.getEsercizio());
 		query.append(" and mis.missioni_sigla:numero = ").append(missione.getPg_missione());
-		query.append(" and uo.strorguo:codice like '").append(missione.getCd_unita_organizzativa().substring(0, posizionePunto)+"%").append("'");
+		query.append(" and uo.strorguo:codice = '").append(missione.getCd_unita_organizzativa()).append("'");
 		query.append(" and cds.strorgcds:codice = '").append(missione.getCd_cds()).append("'");
 		List<StorageObject> resultsFolder = search(query.toString());
 		if (resultsFolder.size() == 0)
