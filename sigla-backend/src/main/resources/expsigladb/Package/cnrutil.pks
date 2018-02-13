@@ -77,7 +77,6 @@ CREATE OR REPLACE package CNRUTIL as
 
  function getLabelGaeEst Return VARCHAR2;
 End;
-/
 
 
 CREATE OR REPLACE package body CNRUTIL Is
@@ -184,6 +183,5 @@ CREATE OR REPLACE package body CNRUTIL Is
  End;
 
 End;
-/
 
 

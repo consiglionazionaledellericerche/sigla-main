@@ -61,7 +61,6 @@ CREATE OR REPLACE package CNRSTO035 as
  procedure sto_OBBLIGAZIONE_PGIRO_MODIF (aPgStorico number, imp_iniziale NUMBER, imp_variazione NUMBER,aDest OBBLIGAZIONE%rowtype);
 
 end;
-/
 
 
 CREATE OR REPLACE package body         CNRSTO035 is
@@ -328,6 +327,5 @@ CREATE OR REPLACE package body         CNRSTO035 is
     );
  end;
 end;
-/
 
 

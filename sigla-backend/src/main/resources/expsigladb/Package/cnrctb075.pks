@@ -191,7 +191,6 @@ Procedure genera_varente_da_Varstanzres (aEsercizio NUMBER, aPG_VARIAZIONE NUMBE
                                          pg_var_bil     Out NUMBER);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB075 is
@@ -1327,6 +1326,5 @@ pg_var_bil     := aVar.pg_variazione;
 End;
 
 end;
-/
 
 

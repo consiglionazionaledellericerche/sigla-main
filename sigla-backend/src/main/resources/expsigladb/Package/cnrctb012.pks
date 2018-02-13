@@ -69,7 +69,6 @@ CREATE OR REPLACE package CNRCTB012 as
  procedure estrazLdAcessate(aEs number,aUser varchar2);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB012 is
@@ -230,6 +229,5 @@ CREATE OR REPLACE package body CNRCTB012 is
  end;
 
 end;
-/
 
 

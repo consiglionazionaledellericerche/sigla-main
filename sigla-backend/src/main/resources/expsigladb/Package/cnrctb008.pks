@@ -101,7 +101,6 @@ function getTimestampContabile(aEs number, aTSNow date) return date;
 -- alla creazione del cds
 function isEsercizioApertoSenzaBlocco(aEs number, aCdCds varchar2) return boolean;
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB008 as
@@ -253,6 +252,5 @@ begin
 end;
 
 end;
-/
 
 

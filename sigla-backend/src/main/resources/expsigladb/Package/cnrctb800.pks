@@ -123,7 +123,6 @@ SEMAFORO_VERDE CONSTANT CHAR(1) := 'G';
  procedure ins_SEMAFORO_STATICO (aDest SEMAFORO_STATICO%rowtype);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB800 is
@@ -349,6 +348,5 @@ CREATE OR REPLACE package body CNRCTB800 is
  end;
 
 end;
-/
 
 

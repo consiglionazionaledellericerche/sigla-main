@@ -52,7 +52,6 @@ STATO_NON_ACCESSIBILE CONSTANT CHAR(1) := 'N';
  procedure ins_CONTROLLO_ACCESSO (aDest CONTROLLO_ACCESSO%rowtype);
  procedure ins_CONTROLLO_ACCESSO_UTENTE (aDest CONTROLLO_ACCESSO_UTENTE%rowtype);
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB850 as
@@ -211,6 +210,5 @@ CREATE OR REPLACE package body CNRCTB850 as
     );
  end;
 end;
-/
 
 

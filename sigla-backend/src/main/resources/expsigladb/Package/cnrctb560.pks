@@ -392,7 +392,6 @@ TI_REVERSALE CONSTANT CHAR(1):='R';
  procedure ins_ASS_COMP_DOC_CONT_NMP (aDest ASS_COMP_DOC_CONT_NMP%rowtype);
 
 END;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB560 AS
@@ -1126,8 +1125,7 @@ procedure gestioneNoCori(
     	and esercizio = aAccScad.esercizio
     	and esercizio_originale = aAccScad.esercizio_originale
     	and pg_accertamento= aAccScad.pg_accertamento
-    	and pg_accertamento_scadenzario = aAccScad.pg_accertamento_scadenzario;
-/*
+    	and pg_accertamento_scadenzario = aAccScad.pg_accertamento_scadenzario;*
     -- Aggiornamento CORI
     update contributo_ritenuta set
         stato_cofi_cr = CNRCTB100.STATO_COM_COFI_TOT_MR,
@@ -2010,6 +2008,5 @@ procedure gestioneNoCori(
   end if;
  END;
 END;
-/
 
 

@@ -300,7 +300,6 @@ gPgLog  NUMBER:=0;
    Procedure ins_STIPENDI_COFI_LOGS (aLog STIPENDI_COFI_LOGS%Rowtype);
 
 End;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB680 AS
@@ -2111,6 +2110,5 @@ end if;
   End;
 
 END;
-/
 
 

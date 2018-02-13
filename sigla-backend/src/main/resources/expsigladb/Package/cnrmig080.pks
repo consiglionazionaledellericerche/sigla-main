@@ -357,7 +357,6 @@ gPgLog number;
 --Flavia -- Modificata procedura: aggiunti i parametri di input aAnnoRif, aMeseRif e aAnaDip
 --procedure ALLINEA_MONTANTE(aData date, aUtente varchar2, aAnnoRif Number, aMeseRif Number, aAnaDip cnr_Anadip%rowtype);
 end;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY         CNRMIG080   is
@@ -1259,8 +1258,7 @@ procedure ALLINEA_INQUADRAMENTO(aAnaDip cnr_anadip%rowtype,
 				end if;
                  Exception When No_Data_Found Then
                        Null;
-                 End;
-/*	if aAnaDip.mese_rif = 1 then
+                 End;*	if aAnaDip.mese_rif = 1 then
  		aMeseRif_prec := 12;
  		aAnnoRif_prec := aAnaDip.anno_rif-1;
  	else
@@ -2874,6 +2872,5 @@ procedure UPD_INQUADRAMENTO (aAnaDip cnr_Anadip%rowtype
 	  end loop;
  end;*/
 end;
-/
 
 

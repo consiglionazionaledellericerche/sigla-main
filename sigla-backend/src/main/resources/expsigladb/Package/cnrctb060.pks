@@ -516,7 +516,6 @@ TIPO_CONSUNTIVO CONSTANT CHAR(1) :='C';
  procedure ins_ASS_CDP_ROUND (aDest ASS_CDP_ROUND%rowtype);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB060 is
@@ -1027,8 +1026,7 @@ CREATE OR REPLACE package body CNRCTB060 is
 				   and id_matricola=aAssCdpRnd.ti_rapporto
 			)
    ) loop
-    isProcessato:=false;
-/* stani     if
+    isProcessato:=false;* stani     if
 	      not isProcessato
 	  and     aAssCdpRnd.ti_rapporto=CDP_TI_RAPP_DETERMINATO
 	  and not aAssCdpRnd.cd_elemento_voce = aVoceTFR.cd_elemento_voce
@@ -1358,8 +1356,7 @@ CREATE OR REPLACE package body CNRCTB060 is
 							  and cd_centro_responsabilita != aCDRPersonale.cd_centro_responsabilita) loop
     if checkScaricoCDPCompleto(aEsercizio, aCdrNonPersonale.cd_centro_responsabilita)='N' then
 	 return 'N';
-	end if;
-/*
+	end if;*
 	begin
 	 select * into aPDGConScarichi from pdg_preventivo a where
 	      a.esercizio = aEsercizio
@@ -1633,6 +1630,5 @@ CREATE OR REPLACE package body CNRCTB060 is
  end;
 
 end;
-/
 
 

@@ -129,7 +129,6 @@ CREATE OR REPLACE package CNRCTB240 as
       );
 
 END;
-/
 
 
 CREATE OR REPLACE package body CNRCTB240 is
@@ -806,6 +805,5 @@ BEGIN
 END segnaLiquidazione;
 
 END;
-/
 
 

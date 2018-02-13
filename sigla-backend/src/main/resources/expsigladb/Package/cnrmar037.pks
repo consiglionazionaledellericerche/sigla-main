@@ -129,7 +129,6 @@ D_AUTOR615 CONSTANT VARCHAR2(70):='REV-D_AUTOR615-TOT CAP RES-SALDO'; -- Totale 
  function MSG_DIS_AUTOR(aTipo varchar2, aRev reversale%rowtype, aNota varchar2) return varchar2;
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRMAR037 is
@@ -591,6 +590,5 @@ CREATE OR REPLACE package body CNRMAR037 is
   END;
  end;
 end;
-/
 
 
