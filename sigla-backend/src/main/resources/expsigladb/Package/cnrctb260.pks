@@ -805,7 +805,6 @@ PROCEDURE InsDataDiffFatturePassAuto
     aDataInizio DATE,
     aDataFine DATE );
 END CNRCTB260;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB260 AS
@@ -6178,6 +6177,5 @@ BEGIN
 End InsDataDiffFatturePassAuto;
 
 END Cnrctb260; -- PACKAGE END;
-/
 
 

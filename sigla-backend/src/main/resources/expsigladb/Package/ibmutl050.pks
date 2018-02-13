@@ -38,7 +38,6 @@ PROCEDURE schedula_compilazione_triggers;
 PROCEDURE compila_tutto;
 
 end;
-/
 
 
 CREATE OR REPLACE package body IBMUTL050 is
@@ -201,6 +200,5 @@ CREATE OR REPLACE package body IBMUTL050 is
 	end;
 
 end;
-/
 
 

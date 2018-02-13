@@ -256,7 +256,6 @@ Function GETDESDIPARTIMENTO (aCd_dip VARCHAR2) return VARCHAR2;
 
  function getCdCdrEnte return cdr.cd_centro_responsabilita%type;
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB020 is
@@ -985,6 +984,5 @@ Procedure ins_CDR (aDest CDR%rowtype) is
 	  end if;
  end;
 end;
-/
 
 

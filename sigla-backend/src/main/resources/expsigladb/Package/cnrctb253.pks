@@ -68,7 +68,6 @@ procedure tabCodIvaAcquisti(aId number,aEs number,aFlEsclusione char);
 procedure tabCodIvaVendite(aId number, aEs number,aFlEsclusione char);
 
 END CNRCTB253;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB253 AS
@@ -656,6 +655,5 @@ begin
 end;
 
 END CNRCTB253;
-/
 
 

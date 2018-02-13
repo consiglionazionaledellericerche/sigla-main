@@ -319,7 +319,6 @@ CREATE OR REPLACE PACKAGE CNRCTB900 AS
    );
 
 END CNRCTB900;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB900 AS
@@ -5545,6 +5544,5 @@ END estrazioneCUD;
 -- =================================================================================================
 
 END; -- PACKAGE END;
-/
 
 

@@ -166,7 +166,6 @@ CREATE OR REPLACE PACKAGE CNRCTB925 AS
 
 
 END CNRCTB925;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB925 AS
@@ -1836,6 +1835,5 @@ END estrazioneINPSmensile;
 -- =================================================================================================
 
 END; -- PACKAGE END;
-/
 
 

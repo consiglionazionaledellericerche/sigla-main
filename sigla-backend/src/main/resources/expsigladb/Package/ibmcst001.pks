@@ -31,6 +31,5 @@ TESTRECORD_PG_VER_REC constant number := 99999999;
 MIGRECORD_IDENTIFIER constant varchar2(20):='$$$$$MIGRAZIONE$$$$$';
 
 end;
-/
 
 

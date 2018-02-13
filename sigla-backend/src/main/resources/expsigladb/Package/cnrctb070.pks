@@ -62,7 +62,6 @@ VARIAZIONE_CHIUSA CONSTANT CHAR(1):='C';
  procedure ins_PDG_AGGREGATO_ETR_VAR (aDest PDG_AGGREGATO_ETR_VAR%rowtype);
  procedure ins_PDG_AGGREGATO_SPE_VAR (aDest PDG_AGGREGATO_SPE_VAR%rowtype);
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB070 as
@@ -314,6 +313,5 @@ CREATE OR REPLACE package body CNRCTB070 as
     );
  end;
 end;
-/
 
 

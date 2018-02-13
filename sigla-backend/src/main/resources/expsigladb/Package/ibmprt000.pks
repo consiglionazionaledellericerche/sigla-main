@@ -18,6 +18,5 @@ CREATE OR REPLACE package IBMPRT000 as
 --
  type t_cursore is ref cursor;
 end;
-/
 
 

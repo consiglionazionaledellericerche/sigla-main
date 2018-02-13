@@ -89,7 +89,6 @@ PROCEDURE insPrintSpoolerParam
     aTSNow DATE
    );
 END CNRCTB890;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB890 AS
@@ -311,6 +310,5 @@ BEGIN
 END insPrintSpoolerParam;
 
 END;
-/
 
 
