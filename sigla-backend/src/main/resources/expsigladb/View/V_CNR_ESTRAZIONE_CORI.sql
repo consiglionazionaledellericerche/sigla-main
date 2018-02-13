@@ -1,0 +1,30 @@
+--------------------------------------------------------
+--  DDL for View V_CNR_ESTRAZIONE_CORI
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "V_CNR_ESTRAZIONE_CORI" ("ESERCIZIO", "MESE", "DT_ESTRAZIONE", "ESERCIZIO_COMPENSO", "CD_CONTRIBUTO_RITENUTA", "TOTALE_IMPONIBILE", "TOTALE_RITENUTA", "TOTALE_RITENUTA_SOSPESA") AS 
+  SELECT DISTINCT
+--
+-- Date: 03/03/2009
+-- Version: 1.0
+--
+-- Per la gestione dello stralcio mensile Dipendenti
+--
+-- History:
+--
+-- Date: 03/03/2009
+-- Version: 1.0
+-- Creazione
+--
+-- Body:
+--
+ ESERCIZIO,
+ MESE,
+ DT_ESTRAZIONE,
+ ESERCIZIO_COMPENSO,
+ CD_CONTRIBUTO_RITENUTA,
+ Nvl(SUM(IMPONIBILE),0),
+ Nvl(SUM(IM_RITENUTA),0),
+ Nvl(SUM(IM_CORI_SOSPESO),0)
+FROM CNR_ESTRAZIONE_CORI_AGG
+GROUP BY ESERCIZIO,MESE,DT_ESTRAZIONE,ESERCIZIO_COMPENSO,CD_CONTRIBUTO_RITENUTA;

@@ -41,7 +41,8 @@ public class S3SiglaStorageConfiguration {
         clientConfig.setProtocol(Protocol.HTTP);
 
         AwsClientBuilder.EndpointConfiguration endpoint =
-                new AwsClientBuilder.EndpointConfiguration(s3SiglaStorageConfigurationProperties.getAuthUrl(), "???");
+                new AwsClientBuilder.EndpointConfiguration(s3SiglaStorageConfigurationProperties.getAuthUrl(),
+                        s3SiglaStorageConfigurationProperties.getSigningRegion());
 
         return AmazonS3ClientBuilder
                 .standard()
