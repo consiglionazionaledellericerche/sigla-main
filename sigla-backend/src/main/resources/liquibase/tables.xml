@@ -37354,4 +37354,19 @@
             <column name="ESERCIZIO"/>
         </createIndex>
     </changeSet>
+    <changeSet author="sigla" id="create-temp-table-TMP_REPORT_GENERICO">
+        <sqlFile dbms="oracle" path="../expsigladb/temporary-table/TMP_REPORT_GENERICO.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-temp-table-TMP_STAMPA_REGISTRO_INV_QUOTE">
+        <sqlFile dbms="oracle" path="../expsigladb/temporary-table/TMP_STAMPA_REGISTRO_INV_QUOTE.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-temp-table-IX_REGISTRO_INVENTARIO_QUOTE">
+        <sqlFile dbms="oracle" path="../expsigladb/temporary-table/IX_REGISTRO_INVENTARIO_QUOTE.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-temp-table-TMP_STAMPA_RENDICONTO">
+        <sqlFile dbms="oracle" path="../expsigladb/temporary-table/TMP_STAMPA_RENDICONTO.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-temp-table-TMP_STAMPA_SITUAZIONE_PROGETTI">
+        <sqlFile dbms="oracle" path="../expsigladb/temporary-table/TMP_STAMPA_SITUAZIONE_PROGETTI.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
+    </changeSet>
 </databaseChangeLog>
