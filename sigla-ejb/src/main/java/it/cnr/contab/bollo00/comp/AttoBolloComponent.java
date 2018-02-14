@@ -6,6 +6,7 @@ import it.cnr.contab.bollo00.bp.ConsAttoBolloBP;
 import it.cnr.contab.bollo00.bulk.Atto_bolloBulk;
 import it.cnr.contab.bollo00.bulk.Atto_bolloHome;
 import it.cnr.contab.bollo00.bulk.V_cons_atto_bolloBulk;
+import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
@@ -267,4 +268,18 @@ public class AttoBolloComponent extends CRUDComponent {
 		if (addColumn)
 			sql.addColumn(valore);
 	}
+	
+	public SQLBuilder selectTipoAttoBolloByClause(UserContext userContext, Atto_bolloBulk attoBollo, Tipo_atto_bolloBulk tipoAttoBollo, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException { 
+		SQLBuilder sql = getHome(userContext,Tipo_atto_bolloBulk.class).createSQLBuilder();
+		if (clauses != null) 
+		  sql.addClause(clauses);
+
+		sql.openParenthesis(FindClause.AND);
+		sql.addClause(FindClause.OR, "tipoCalcolo", SQLBuilder.EQUALS, Tipo_atto_bolloBulk.TIPO_FOGLIO );		
+		sql.addClause(FindClause.OR, "tipoCalcolo", SQLBuilder.EQUALS, Tipo_atto_bolloBulk.TIPO_ESEMPLARE );		
+		sql.closeParenthesis();
+		
+		return sql; 
+	}
+	
 }
