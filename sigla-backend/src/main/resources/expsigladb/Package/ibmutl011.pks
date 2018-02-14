@@ -16,10 +16,8 @@ CREATE OR REPLACE package IBMUTL011 as
 
  function isLogEnabled return boolean;
 end;
-/
 
 
 CREATE OR REPLACE package body IBMUTL011 is function isLogEnabled return boolean is begin return false; end; end;
-/
 
 

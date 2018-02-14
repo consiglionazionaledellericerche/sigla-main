@@ -79,7 +79,6 @@ CREATE OR REPLACE package IBMUTL010 as
  procedure logFoot(aKey varchar2, aPgRiga number, aMsg varchar2, aNote varchar2 default null);
  procedure logSeparator(aKey varchar2, aPgRiga number, aMsg varchar2, aNote varchar2 default null);
 end;
-/
 
 
 CREATE OR REPLACE package body IBMUTL010 is
@@ -255,6 +254,5 @@ CREATE OR REPLACE package body IBMUTL010 is
  end;
 
 end;
-/
 
 

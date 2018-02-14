@@ -104,7 +104,6 @@ CREATE OR REPLACE package CNRCTB043 as
  procedure troncaPraticaAccPgiroInv(aEs number,aCdCds varchar2,aEsOri number,aPgAcc number,aTSNow date,aUser varchar2);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB043 is
@@ -882,6 +881,5 @@ procedure troncaPraticaObbPgiroInv(aEs number,aCdCds varchar2,aEsOri number,aPgO
  end;
 
 end;
-/
 
 

@@ -23,6 +23,8 @@ public class S3SiglaStorageConfigurationProperties {
     private String bucketName;
     @Value("${cnr.aws.deleteAfter}")
     private Integer deleteAfter;
+    @Value("${cnr.aws.signingRegion}")
+    private String signingRegion;
 
     @Value("#{${store.metadataKeys}}")
     private Map<String, String> metadataKeys;
@@ -65,6 +67,14 @@ public class S3SiglaStorageConfigurationProperties {
 
     public void setDeleteAfter(Integer deleteAfter) {
         this.deleteAfter = deleteAfter;
+    }
+
+    public String getSigningRegion() {
+        return signingRegion;
+    }
+
+    public void setSigningRegion(String signingRegion) {
+        this.signingRegion = signingRegion;
     }
 
     public Map<String, String> getMetadataKeys() {

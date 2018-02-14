@@ -474,7 +474,6 @@ FUNCTION isBeneServScontoAbbuono(aCdBeneServ VARCHAR2) RETURN BOOLEAN;
  procedure aggiorna_data_differita_attive(es NUMBER,cds VARCHAR2,uo VARCHAR2,pg_fattura NUMBER,riga NUMBER);
  procedure insProgrUnivocoFatturaPassiva(es NUMBER,data_a date);
 END;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB100 IS
@@ -1664,6 +1663,5 @@ exception when CNRCTB850.RESOURCE_BUSY then
       IBMERR001.RAISE_ERR_GENERICO('Funzionalit? temporaneamente non accessibile per l''esercizio e la data selezionata.');
 end;
 END;
-/
 
 

@@ -142,7 +142,6 @@ CDP_TI_RAPP_INDETERMINATO CONSTANT VARCHAR2(10) :='IND';
  procedure annullaCDPSuPdg(aEsercizio number, aCdCdr varchar2, aUser varchar2);
 
 End;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY         CNRCTB061 is
@@ -2194,6 +2193,5 @@ CREATE OR REPLACE PACKAGE BODY         CNRCTB061 is
    When esci then null;
  End;
 End;
-/
 
 

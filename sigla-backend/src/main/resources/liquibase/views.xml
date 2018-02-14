@@ -1,5 +1,1949 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="sigla" id="create-view-CASSA_FONDI_STA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/CASSA_FONDI_STA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-CNR_IFAC_DETT_OBBLIGAZIONI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/CNR_IFAC_DETT_OBBLIGAZIONI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-CNR_IFAC_FATTURA_PASSIVA_RIGA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/CNR_IFAC_FATTURA_PASSIVA_RIGA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-COMPENSO_BREVETTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/COMPENSO_BREVETTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-CONTROLLO_730">
+        <sqlFile dbms="oracle" path="../expsigladb/View/CONTROLLO_730.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-CONTROLLO_VARIAZIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/CONTROLLO_VARIAZIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-DATABASE_INFO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/DATABASE_INFO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-DIP_DA_CONG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/DIP_DA_CONG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-DIP_DA_CONG_NEW">
+        <sqlFile dbms="oracle" path="../expsigladb/View/DIP_DA_CONG_NEW.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-ELEMENTO_VOCE_CLASS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/ELEMENTO_VOCE_CLASS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-ELENCO_CF">
+        <sqlFile dbms="oracle" path="../expsigladb/View/ELENCO_CF.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-FATTURE_BREVETTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/FATTURE_BREVETTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-FATTURE_BREVETTI_ATTIVE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/FATTURE_BREVETTI_ATTIVE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-NEW_VIEW_DHW">
+        <sqlFile dbms="oracle" path="../expsigladb/View/NEW_VIEW_DHW.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-OLD_VIEW_DHW">
+        <sqlFile dbms="oracle" path="../expsigladb/View/OLD_VIEW_DHW.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PROGETTO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PROGETTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PROGETTO_GEST">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PROGETTO_GEST.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PROGETTO_GEST_UO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PROGETTO_GEST_UO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PROGETTO_PREV">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PROGETTO_PREV.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PROGETTO_TEMP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PROGETTO_TEMP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_ANALITICA_LDA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_ANALITICA_LDA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_ANALITICA_LDA_ENT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_ANALITICA_LDA_ENT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_ANALITICA_LDA_PDG_ENT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_ANALITICA_LDA_PDG_ENT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_ANALITICA_LDA_PDG_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_ANALITICA_LDA_PDG_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_ANA_PROGETTO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_ANA_PROGETTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_ANN_PGIRO_ENTR_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_ANN_PGIRO_ENTR_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_ANN_PGIRO_ENTR_CNR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_ANN_PGIRO_ENTR_CNR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_ANN_PGIRO_SPESE_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_ANN_PGIRO_SPESE_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_ANN_PGIRO_SPESE_CNR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_ANN_PGIRO_SPESE_CNR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_AVANZO_DISAVANZO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_AVANZO_DISAVANZO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_AVV_MND">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_AVV_MND.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_AVV_MND_TOT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_AVV_MND_TOT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_COMPENSI_VOCE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_COMPENSI_VOCE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_CONS_PARTITE_GIRO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_CONS_PARTITE_GIRO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_CONS_PARTITE_GIRO_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_CONS_PARTITE_GIRO_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_CUP_MANDATO_GAE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_CUP_MANDATO_GAE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_ELENCO_CONTRATTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_ELENCO_CONTRATTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_ELENCO_FATT_PER_CLIENTE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_ELENCO_FATT_PER_CLIENTE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_ELENCO_FATT_PER_FORNITORE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_ELENCO_FATT_PER_FORNITORE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_FC_FINALE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_FC_FINALE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_GENERICI_PASSIVI_VOCE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_GENERICI_PASSIVI_VOCE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_IMP_DIP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_IMP_DIP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_LIBRO_GIORNALE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_LIBRO_GIORNALE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_MAND_ELENCO_CNR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_MAND_ELENCO_CNR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_OBB_DOC_AMM">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_OBB_DOC_AMM.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_PAGA_ESTERO_CNR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_PAGA_ESTERO_CNR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_PDCECON">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_PDCECON.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_PDCF_ENTR_CNR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_PDCF_ENTR_CNR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_PDCF_SPESE_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_PDCF_SPESE_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_PDG_ETR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_PDG_ETR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_PDG_ETR_MOD">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_PDG_ETR_MOD.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_PDG_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_PDG_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_PDG_SPE_MOD">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_PDG_SPE_MOD.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_PREV_DIP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_PREV_DIP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_PROG_COM_MOD">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_PROG_COM_MOD.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REG_ACCERT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REG_ACCERT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REG_OBBLIG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REG_OBBLIG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_ENTRATE_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_ENTRATE_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_ENTRATE_CDS_ALL">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_ENTRATE_CDS_ALL.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_ENTR_CNR_ART">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_ENTR_CNR_ART.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_ENTR_CNR_ART_ALL">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_ENTR_CNR_ART_ALL.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_ENT_GEST">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_ENT_GEST.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_ENT_GEST_CAPITOLO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_ENT_GEST_CAPITOLO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_ENT_GEST_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_ENT_GEST_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_ENT_GEST_DET_PIE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_ENT_GEST_DET_PIE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_ENT_GEST_PIE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_ENT_GEST_PIE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_SPESE_ART_CNR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_SPESE_ART_CNR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_SPESE_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_SPESE_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_SPESE_CDS_ALL">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_SPESE_CDS_ALL.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_SPESE_CDS_SAC">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_SPESE_CDS_SAC.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_SPESE_CDS_SAC_ALL">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_SPESE_CDS_SAC_ALL.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_SPESE_CNR_ART_ALL">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_SPESE_CNR_ART_ALL.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_SPE_GEST">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_SPE_GEST.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_SPE_GEST_CAPITOLO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_SPE_GEST_CAPITOLO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FIN_SPE_GEST_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FIN_SPE_GEST_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FI_E_CNR_ART_XCDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FI_E_CNR_ART_XCDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FI_E_CNR_ART_XCDS_ALL">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FI_E_CNR_ART_XCDS_ALL.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FI_S_ART_CNR_XCDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FI_S_ART_CNR_XCDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REND_FI_S_CNR_ART_XCDS_ALL">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REND_FI_S_CNR_ART_XCDS_ALL.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_REVE_ELENCO_CNR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_REVE_ELENCO_CNR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_SCAD_ACCERT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_SCAD_ACCERT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_SCAD_OBBL">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_SCAD_OBBL.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_SINTESI_IMPEGNATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_SINTESI_IMPEGNATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_SINTESI_LDA_ENT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_SINTESI_LDA_ENT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_SINTESI_LDA_PDG_ENT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_SINTESI_LDA_PDG_ENT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_SINTESI_LDA_PDG_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_SINTESI_LDA_PDG_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_SINTESI_LDA_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_SINTESI_LDA_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_BENI_SENZA_UTILIZZ">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_BENI_SENZA_UTILIZZ.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_FATTURE_VOCE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_FATTURE_VOCE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_OBBL_LINEE_ATTIVITA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_OBBL_LINEE_ATTIVITA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_OBBL_RIPORTABILI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_OBBL_RIPORTABILI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_ORDINE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_ORDINE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_PERSONALE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_PERSONALE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_PERSONALE_DANIELA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_PERSONALE_DANIELA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_REGISTRO_INVENTARIO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_REGISTRO_INVENTARIO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_REGISTRO_INV_QUOTE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_REGISTRO_INV_QUOTE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_RISCONTRI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_RISCONTRI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_RISCONTRI_MOD">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_RISCONTRI_MOD.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_SOSP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_SOSP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_SOSP_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_SOSP_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_SOSP_DA_ASS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_SOSP_DA_ASS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_SOSP_MND">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_SOSP_MND.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_STAMPA_SOSP_REV">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_STAMPA_SOSP_REV.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_VPG_BIL_RICLASSIFICATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_VPG_BIL_RICLASSIFICATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_VPG_PREV_FIN_ENT_SPE_DEC">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_VPG_PREV_FIN_ENT_SPE_DEC.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_VPG_PREV_FIN_ENT_SPE_DEC_D">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_VPG_PREV_FIN_ENT_SPE_DEC_D.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_VPG_REND_FIN_ENT_SPE_DEC">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_VPG_REND_FIN_ENT_SPE_DEC.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_VPG_REND_FIN_ENT_SPE_DEC_D">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_VPG_REND_FIN_ENT_SPE_DEC_D.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_VPG_SIT_CASSA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_VPG_SIT_CASSA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PRT_VPG_SIT_CASSA_PARIFICA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PRT_VPG_SIT_CASSA_PARIFICA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PZ_COSTI_DIP_PREV_PRE_VIEW">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PZ_COSTI_DIP_PREV_PRE_VIEW.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-PZ_COSTI_DIP_PREV_VIEW">
+        <sqlFile dbms="oracle" path="../expsigladb/View/PZ_COSTI_DIP_PREV_VIEW.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-RIAPERTURE_CASSA_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/RIAPERTURE_CASSA_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-RICONCILIAZIONE_CNR_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/RICONCILIAZIONE_CNR_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VCOMPENSOSIP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VCOMPENSOSIP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VFATTURAPASSIVASIP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VFATTURAPASSIVASIP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VMISSIONESIP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VMISSIONESIP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VM_COSTI_DIP_GEST_PRE_VIEW">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VM_COSTI_DIP_GEST_PRE_VIEW.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VM_COSTI_DIP_GEST_VIEW">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VM_COSTI_DIP_GEST_VIEW.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VM_COSTI_DIP_PREV_PRE_VIEW">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VM_COSTI_DIP_PREV_PRE_VIEW.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VM_COSTI_DIP_PREV_PRE_VIEW_AP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VM_COSTI_DIP_PREV_PRE_VIEW_AP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VM_COSTI_DIP_PREV_VIEW">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VM_COSTI_DIP_PREV_VIEW.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VM_COSTI_DIP_PREV_VIEW_AP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VM_COSTI_DIP_PREV_VIEW_AP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VOCE_F_SALDI_CDR_LINEA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VOCE_F_SALDI_CDR_LINEA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VOCE_F_SALDI_CDR_LINEA_RICLASS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VOCE_F_SALDI_CDR_LINEA_RICLASS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VPG_ANA_PROGETTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VPG_ANA_PROGETTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VPG_CERTIFICAZIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VPG_CERTIFICAZIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VPG_CERTIFICAZIONE_770">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VPG_CERTIFICAZIONE_770.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VPG_CONGUAGLIO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VPG_CONGUAGLIO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VPG_DOC_GENERICO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VPG_DOC_GENERICO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VPG_DPDG_CDR_PRIMO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VPG_DPDG_CDR_PRIMO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VPG_FONDO_ECONOMALE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VPG_FONDO_ECONOMALE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VPG_MANDATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VPG_MANDATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VPG_MISSIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VPG_MISSIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VPG_PARTITARIO_COMPENSI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VPG_PARTITARIO_COMPENSI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VPG_PDG_VARIAZIONE_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VPG_PDG_VARIAZIONE_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VPG_REVERSALE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VPG_REVERSALE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VPG_SINGOLO_CONTO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VPG_SINGOLO_CONTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VPG_SIT_PROGETTI_DIP_IST_UO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VPG_SIT_PROGETTI_DIP_IST_UO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_BATCH_LOG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_BATCH_LOG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_COMPENSO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_COMPENSO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DBIL_FIN_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DBIL_FIN_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DBIL_FIN_CDS_DZ">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DBIL_FIN_CDS_DZ.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DBIL_FIN_CNR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DBIL_FIN_CNR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DBIL_FIN_CNR_DZ">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DBIL_FIN_CNR_DZ.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DISCREPANZE_INSIEME">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DISCREPANZE_INSIEME.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DISTINTA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DISTINTA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DISTINTA_PROV">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DISTINTA_PROV.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DPDG_AGGREGATO_ETR_VAR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DPDG_AGGREGATO_ETR_VAR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DPDG_AGGREGATO_SPE_VAR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DPDG_AGGREGATO_SPE_VAR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DPDG_CDR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DPDG_CDR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DPDG_CDR_PRIMO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DPDG_CDR_PRIMO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DPDG_ENTE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DPDG_ENTE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DPDG_ETR_CDR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DPDG_ETR_CDR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DPDG_ETR_CDR_PRIMO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DPDG_ETR_CDR_PRIMO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DPDG_ETR_ENTE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DPDG_ETR_ENTE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DPDG_LA_CDR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DPDG_LA_CDR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DPDG_SPE_CDR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DPDG_SPE_CDR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DPDG_SPE_CDR_PRIMO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DPDG_SPE_CDR_PRIMO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_DPDG_SPE_ENTE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_DPDG_SPE_ENTE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_FATTURA_ATTIVA_N">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_FATTURA_ATTIVA_N.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_LINEA_ATTIVITA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_LINEA_ATTIVITA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_LIQUIDAZIONE_IVA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_LIQUIDAZIONE_IVA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_LIQUID_IVA_ANNUALE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_LIQUID_IVA_ANNUALE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_MANDATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_MANDATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_MINICARRIERA_BDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_MINICARRIERA_BDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_MISSIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_MISSIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_PARTITARIO_COMPENSI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_PARTITARIO_COMPENSI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_PDG_AGGREGATO_ETR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_PDG_AGGREGATO_ETR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_PDG_AGGREGATO_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_PDG_AGGREGATO_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_PDG_STATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_PDG_STATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_PDG_VARIAZIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_PDG_VARIAZIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_REGISTRO_IVA_ACQUISTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_REGISTRO_IVA_ACQUISTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_REGISTRO_IVA_ACQUISTI_PRE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_REGISTRO_IVA_ACQUISTI_PRE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_REGISTRO_IVA_VENDITE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_REGISTRO_IVA_VENDITE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_REVERSALE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_REVERSALE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_REVERSALE_ASS_MANDATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_REVERSALE_ASS_MANDATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_STAMPA_LIQUID_IVA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_STAMPA_LIQUID_IVA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_STM_ESTRAZIONE_INPS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_STM_ESTRAZIONE_INPS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_STM_IVA_DIFFERITA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_STM_IVA_DIFFERITA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_STM_REGISTRO_IVA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_STM_REGISTRO_IVA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_STM_RIEPILOGATIVO_CENTRO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_STM_RIEPILOGATIVO_CENTRO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_STM_RIEPILOGATIVO_UO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_STM_RIEPILOGATIVO_UO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_STRUTTURA_ORGANIZZATIVA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_STRUTTURA_ORGANIZZATIVA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_UTENTE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_UTENTE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_UTENTE_GRANTS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_UTENTE_GRANTS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VP_VARIAZIONI_BILANCIO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VP_VARIAZIONI_BILANCIO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VSX_CHIUSURA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VSX_CHIUSURA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VSX_LIQUIDAZIONE_CORI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VSX_LIQUIDAZIONE_CORI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VSX_LIQUIDAZIONE_RATE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VSX_LIQUIDAZIONE_RATE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VSX_MAN_ACC">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VSX_MAN_ACC.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VSX_REINTEGRO_FONDO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VSX_REINTEGRO_FONDO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VSX_RIF_PROTOCOLLO_IVA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VSX_RIF_PROTOCOLLO_IVA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VS_DB_INFO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VS_DB_INFO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VS_DIPENDENZE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VS_DIPENDENZE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VS_FK_CHAIN_00">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VS_FK_CHAIN_00.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-VS_SOSPESO_SPESA_CNR_PER_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/VS_SOSPESO_SPESA_CNR_PER_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ABIL_PROGETTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ABIL_PROGETTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ABIL_PROGETTI_MARCO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ABIL_PROGETTI_MARCO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ABIL_PROGETTI_PROVA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ABIL_PROGETTI_PROVA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ABIL_PROGETTI_SIP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ABIL_PROGETTI_SIP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ACCERTAMENTO_IM_REVERSALE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ACCERTAMENTO_IM_REVERSALE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ALBERO_MAIN_UNITA_UTENTE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ALBERO_MAIN_UNITA_UTENTE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_AMMORTAMENTO_BENI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_AMMORTAMENTO_BENI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ANAGRAFICO_TERZO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ANAGRAFICO_TERZO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ANAGRAFICO_TUTTO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ANAGRAFICO_TUTTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ANALITICA_LDA_COMRES">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ANALITICA_LDA_COMRES.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ANALITICA_LDA_COMRES_PDG_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ANALITICA_LDA_COMRES_PDG_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ASSESTATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ASSESTATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ASSESTATO_LELLO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ASSESTATO_LELLO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ASSESTATO_LELLOBIS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ASSESTATO_LELLOBIS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ASSESTATO_MODULO_PDG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ASSESTATO_MODULO_PDG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ASSESTATO_MODULO_VAR_PDG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ASSESTATO_MODULO_VAR_PDG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ASSESTATO_RESIDUO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ASSESTATO_RESIDUO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ASSESTATO_VOCE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ASSESTATO_VOCE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ASSOCIAZIONI_DISPONIBILI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ASSOCIAZIONI_DISPONIBILI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ASS_BP_ACCESSO_UNITA_UTENTE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ASS_BP_ACCESSO_UNITA_UTENTE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ASS_DOC_CONTABILI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ASS_DOC_CONTABILI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ASS_INCARICO_ATTIVITA_REPLIM">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ASS_INCARICO_ATTIVITA_REPLIM.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ASS_INV_BENE_FATTURA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ASS_INV_BENE_FATTURA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ASS_MANDATO_FONDO_ECO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ASS_MANDATO_FONDO_ECO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ASS_OBBSCAD_FONDO_SPESA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ASS_OBBSCAD_FONDO_SPESA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_AVANZO_AMM_CNR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_AVANZO_AMM_CNR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_AVANZO_CASSA_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_AVANZO_CASSA_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_BANCA_ANAG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_BANCA_ANAG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_BATCH_CONTROL_JOBS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_BATCH_CONTROL_JOBS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_BFRAME_BLOB_DIR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_BFRAME_BLOB_DIR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_BFRAME_BLOB_FILE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_BFRAME_BLOB_FILE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_BFRAME_CLUSTER">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_BFRAME_CLUSTER.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_BIL_PREV_SOTTOARTICOLI_CNR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_BIL_PREV_SOTTOARTICOLI_CNR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_BUONO_CARICO_SCARICO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_BUONO_CARICO_SCARICO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CALCOLA_LIQUID_CORI_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CALCOLA_LIQUID_CORI_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDP_MATRICOLA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDP_MATRICOLA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDP_MATRICOLA_UO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDP_MATRICOLA_UO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDP_SPACCATO_CDR_LA_MATR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDP_SPACCATO_CDR_LA_MATR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDP_SPACCATO_CDR_LA_VOCE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDP_SPACCATO_CDR_LA_VOCE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDP_SPACC_CDR_LA_VOCE_LE2">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDP_SPACC_CDR_LA_VOCE_LE2.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDP_SPACC_CDR_LA_VOCE_LE3">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDP_SPACC_CDR_LA_VOCE_LE3.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDP_SPACC_CDR_LA_VOCE_LELLO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDP_SPACC_CDR_LA_VOCE_LELLO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDP_STATO_MENSILITA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDP_STATO_MENSILITA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDP_TOTALI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDP_TOTALI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDP_TOT_PRC">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDP_TOT_PRC.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDP_TOT_PRC_LELLO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDP_TOT_PRC_LELLO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDP_TOT_PRC_SCR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDP_TOT_PRC_SCR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDP_TOT_PRC_SCR_ALUO_LINEA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDP_TOT_PRC_SCR_ALUO_LINEA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDR_ASS_TIPO_LA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDR_ASS_TIPO_LA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDR_CDS_PER_UO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDR_CDS_PER_UO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDR_PDG_AGGREGATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDR_PDG_AGGREGATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDR_TIPO_LINEA_ATTIVITA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDR_TIPO_LINEA_ATTIVITA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDR_VALIDO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDR_VALIDO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDR_VALIDO_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDR_VALIDO_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CDR_VALIDO_LIV1">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CDR_VALIDO_LIV1.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CLASSIFICAZIONE_VOCI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CLASSIFICAZIONE_VOCI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CLASSIFICAZIONE_VOCI_ALL">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CLASSIFICAZIONE_VOCI_ALL.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CLASSIFICAZIONE_VOCI_EP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CLASSIFICAZIONE_VOCI_EP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CNR_ABICAB">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CNR_ABICAB.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CNR_ESTRAZIONE_CORI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CNR_ESTRAZIONE_CORI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COAN_DOCUMENTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COAN_DOCUMENTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COAN_DOCUMENTI_DETT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COAN_DOCUMENTI_DETT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COAN_MOVIMENTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COAN_MOVIMENTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COAN_MOVIMENTI_EPR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COAN_MOVIMENTI_EPR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COAN_MOVIMENTI_PLUS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COAN_MOVIMENTI_PLUS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COAN_MOVIMENTI_PLUS_EPR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COAN_MOVIMENTI_PLUS_EPR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COAN_SCADENZE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COAN_SCADENZE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COAN_SCADENZE_EPR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COAN_SCADENZE_EPR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COAN_SCR_MOV">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COAN_SCR_MOV.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COGE_SCR_MOV">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COGE_SCR_MOV.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COMPENSO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COMPENSO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COMPENSO_770">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COMPENSO_770.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COMPENSO_CERTIFICAZIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COMPENSO_CERTIFICAZIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COMPENSO_CONGUAGLIO_BASE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COMPENSO_CONGUAGLIO_BASE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COMPENSO_DIPENDENTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COMPENSO_DIPENDENTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COMUNICAZIONE_PIGNORATI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COMUNICAZIONE_PIGNORATI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONFRONTO_RES_FIN_INI_ENTE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONFRONTO_RES_FIN_INI_ENTE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONFR_RES_FIN_INI_CDS_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONFR_RES_FIN_INI_CDS_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_ACCERTAMENTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_ACCERTAMENTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_ACCERTAMENTI_TERZO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_ACCERTAMENTI_TERZO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_ACC_GAE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_ACC_GAE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_ASSESTATO_COMP_PER_DATA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_ASSESTATO_COMP_PER_DATA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_COMMESSE_CONTRATTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_COMMESSE_CONTRATTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_CONFRONTO_ENT_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_CONFRONTO_ENT_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_CONFRONTO_ENT_SPE_TOT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_CONFRONTO_ENT_SPE_TOT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_CONFRONTO_SIGLA_DWH">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_CONFRONTO_SIGLA_DWH.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_CUP_MANDATI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_CUP_MANDATI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_CUP_REVERSALI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_CUP_REVERSALI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_DISP_COMP_RES">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_DISP_COMP_RES.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_DISP_COMP_RES_ENT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_DISP_COMP_RES_ENT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_DISP_COMP_RES_LELLO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_DISP_COMP_RES_LELLO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_DISP_COMP_RES_SINTESI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_DISP_COMP_RES_SINTESI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_DISP_ELEM_VOCE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_DISP_ELEM_VOCE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_FATTURA_GAE_SPLIT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_FATTURA_GAE_SPLIT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_GAE_COMPETENZA_ENT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_GAE_COMPETENZA_ENT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_GAE_COMPETENZA_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_GAE_COMPETENZA_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_GAE_COMPETENZA_SPE2">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_GAE_COMPETENZA_SPE2.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_GAE_COMP_RES_SINTESI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_GAE_COMP_RES_SINTESI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_GAE_COMP_RES_SINTESI2">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_GAE_COMP_RES_SINTESI2.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_GAE_RESIDUI_ENT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_GAE_RESIDUI_ENT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_GAE_RESIDUI_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_GAE_RESIDUI_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_GAE_RESIDUI_SPE2">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_GAE_RESIDUI_SPE2.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_GIORNALIERA_CASSA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_GIORNALIERA_CASSA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_LINEE_SFONDATE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_LINEE_SFONDATE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_MANDATI_PER_PERIODO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_MANDATI_PER_PERIODO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_MANDATI_RISCONTRATI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_MANDATI_RISCONTRATI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_MANDATI_TERZO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_MANDATI_TERZO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_MODULI_CONTRATTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_MODULI_CONTRATTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_OBBLIGAZIONI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_OBBLIGAZIONI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_OBBLIGAZIONI_GAE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_OBBLIGAZIONI_GAE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_OBBL_ACC_CONTRATTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_OBBL_ACC_CONTRATTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_OBBL_LINEE_ATTIVITA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_OBBL_LINEE_ATTIVITA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_OBBL_LINEE_ATTIVITA2">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_OBBL_LINEE_ATTIVITA2.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_OBBL_LINEE_ATTIVITA_PRO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_OBBL_LINEE_ATTIVITA_PRO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_OBBL_RIPORTABILI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_OBBL_RIPORTABILI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PARTITE_GIRO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PARTITE_GIRO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PARTITE_GIRO_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PARTITE_GIRO_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDGG_ETR_ASSESTATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDGG_ETR_ASSESTATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDGG_ETR_BIL_IST_DIP_FO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDGG_ETR_BIL_IST_DIP_FO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDGG_ETR_X_AREA_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDGG_ETR_X_AREA_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDGG_SPE_ASSESTATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDGG_SPE_ASSESTATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDGG_SPE_BIL_IST_DIP_FN">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDGG_SPE_BIL_IST_DIP_FN.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDGG_SPE_BIL_IST_DIP_FO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDGG_SPE_BIL_IST_DIP_FO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDGG_SPE_X_AREA_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDGG_SPE_X_AREA_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDGP_PDGG_ETR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDGP_PDGG_ETR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDGP_PDGG_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDGP_PDGG_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_ETR_ASSESTATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_ETR_ASSESTATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_ETR_BIL_IST_DIP_FN">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_ETR_BIL_IST_DIP_FN.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_ETR_BIL_IST_DIP_FO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_ETR_BIL_IST_DIP_FO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_ETR_GESTIONALE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_ETR_GESTIONALE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_ETR_PRELIMINARE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_ETR_PRELIMINARE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_ETR_PRELIMINARE_V">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_ETR_PRELIMINARE_V.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_ETR_X_AREA_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_ETR_X_AREA_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_MODULO_CLASS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_MODULO_CLASS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_PIANO_RIPARTO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_PIANO_RIPARTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_SPE_ASSESTATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_SPE_ASSESTATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_SPE_ASSESTATO_PRO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_SPE_ASSESTATO_PRO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_SPE_ASSESTATO_TEST">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_SPE_ASSESTATO_TEST.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_SPE_BIL_IST_DIP_FO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_SPE_BIL_IST_DIP_FO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_SPE_GESTIONALE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_SPE_GESTIONALE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_SPE_PRELIMINARE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_SPE_PRELIMINARE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_SPE_PRELIMINARE_V">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_SPE_PRELIMINARE_V.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_SPE_X_AREA_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_SPE_X_AREA_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_PDG_VAR_GESTIONALE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_PDG_VAR_GESTIONALE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_REGISTRO_ACCERTAMENTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_REGISTRO_ACCERTAMENTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_REGISTRO_INVENTARIO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_REGISTRO_INVENTARIO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_REVERSALI_RISCONTRATE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_REVERSALI_RISCONTRATE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_REVERSALI_TERZO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_REVERSALI_TERZO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_RIEP_COMPENSI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_RIEP_COMPENSI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_SALDI_COMPETENZA_ENT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_SALDI_COMPETENZA_ENT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_SALDI_COMPETENZA_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_SALDI_COMPETENZA_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_SALDI_RESIDUI_ENT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_SALDI_RESIDUI_ENT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_SALDI_RESIDUI_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_SALDI_RESIDUI_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_SCAD_ACCERT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_SCAD_ACCERT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_SCAD_OBBL">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_SCAD_OBBL.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_SIOPE_BNL_ENT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_SIOPE_BNL_ENT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_SIOPE_BNL_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_SIOPE_BNL_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_SIOPE_MANDATI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_SIOPE_MANDATI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_SIOPE_REVERSALI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_SIOPE_REVERSALI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_SOSPESI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_SOSPESI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_STATO_INVIO_MANDATI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_STATO_INVIO_MANDATI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_STATO_INVIO_REVERSALI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_STATO_INVIO_REVERSALI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_VAR_BILANCIO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_VAR_BILANCIO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_VAR_COMP_RES">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_VAR_COMP_RES.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_VAR_PDGG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_VAR_PDGG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONS_VAR_PDGG_AREA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONS_VAR_PDGG_AREA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONTATTO_ANAG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONTATTO_ANAG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONTRATTI_TOTALI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONTRATTI_TOTALI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONTRATTI_TOTALI_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONTRATTI_TOTALI_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CONTRATTO_ANAG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CONTRATTO_ANAG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_CORI_CONGUAGLIO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_CORI_CONGUAGLIO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COSTI_PDGP_ENTRATE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COSTI_PDGP_ENTRATE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COSTI_PDGP_USCITE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COSTI_PDGP_USCITE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_COSTI_PER_PDGP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_COSTI_PER_PDGP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DIPENDENTE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DIPENDENTE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DISCREPANZE_INSIEME">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DISCREPANZE_INSIEME.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DISP_CASSA_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DISP_CASSA_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DISP_CASSA_CNR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DISP_CASSA_CNR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DISP_RES_IMPROPRIE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DISP_RES_IMPROPRIE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DISTINTA_CASS_IM_MAN_REV">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DISTINTA_CASS_IM_MAN_REV.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DISTINTE_TOT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DISTINTE_TOT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOCUMENTI_FLUSSO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOCUMENTI_FLUSSO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOCUMENTO_ELE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOCUMENTO_ELE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_ACC">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_ACC.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_ANAG_MANREV">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_ANAG_MANREV.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_ATTIVI_BREVETTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_ATTIVI_BREVETTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_BREVETTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_BREVETTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_COFI_FONDO_RIGA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_COFI_FONDO_RIGA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_COGE_CORI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_COGE_CORI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_COGE_CORI_AUTOFATT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_COGE_CORI_AUTOFATT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_COGE_NOGEN_TER_FON">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_COGE_NOGEN_TER_FON.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_COGE_PAGATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_COGE_PAGATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_COGE_RIGA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_COGE_RIGA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_COGE_RIGA_EPR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_COGE_RIGA_EPR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_COGE_RIGHE_ANNULLATE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_COGE_RIGHE_ANNULLATE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_COGE_TSTA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_COGE_TSTA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_OBB">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_OBB.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_OBBLIG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_OBBLIG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_AMM_RIGA_KEY">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_AMM_RIGA_KEY.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_ATTIVI_DA_RISCONTRARE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_ATTIVI_DA_RISCONTRARE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_ATTIVO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_ATTIVO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_ATTIVO_ACCERTAMENTO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_ATTIVO_ACCERTAMENTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_ATTIVO_ANAG_REV">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_ATTIVO_ANAG_REV.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_CONT_COMP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_CONT_COMP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_PASSIVO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_PASSIVO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_PASSIVO_ANAG_MAND">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_PASSIVO_ANAG_MAND.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_PASSIVO_OBBLIGAZIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_PASSIVO_OBBLIGAZIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_PASSIVO_OBB_TEMPORANEO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_PASSIVO_OBB_TEMPORANEO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_ULT_COGE_RIGA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_ULT_COGE_RIGA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DOC_ULT_COGE_TSTA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DOC_ULT_COGE_TSTA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DPDG_AGGREGATO_ETR_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DPDG_AGGREGATO_ETR_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DPDG_AGGREGATO_ETR_DETCDR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DPDG_AGGREGATO_ETR_DETCDR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DPDG_AGGREGATO_ETR_DET_D">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DPDG_AGGREGATO_ETR_DET_D.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DPDG_AGGREGATO_ETR_DET_SPN">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DPDG_AGGREGATO_ETR_DET_SPN.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DPDG_AGGREGATO_ETR_VAR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DPDG_AGGREGATO_ETR_VAR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DPDG_AGGREGATO_SPE_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DPDG_AGGREGATO_SPE_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DPDG_AGGREGATO_SPE_DETCDR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DPDG_AGGREGATO_SPE_DETCDR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DPDG_AGGREGATO_SPE_DET_D">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DPDG_AGGREGATO_SPE_DET_D.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DPDG_AGGREGATO_SPE_DET_SPN">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DPDG_AGGREGATO_SPE_DET_SPN.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DPDG_AGGREGATO_SPE_VAR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DPDG_AGGREGATO_SPE_VAR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DPDG_ETR_LA_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DPDG_ETR_LA_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DPDG_SPE_LA_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DPDG_SPE_LA_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DPDG_TOT_BIL_RICFIGCDR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DPDG_TOT_BIL_RICFIGCDR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_DT_MANREV_COMP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_DT_MANREV_COMP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ELEMENTO_VOCE_PDG_ETR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ELEMENTO_VOCE_PDG_ETR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ELEMENTO_VOCE_PDG_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ELEMENTO_VOCE_PDG_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ELENCO_INVENTARIO_BENI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ELENCO_INVENTARIO_BENI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ESERCIZI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ESERCIZI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ESTRAI_DATI_INPS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ESTRAI_DATI_INPS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ESTRAI_GLA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ESTRAI_GLA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_ESTRAI_IMPONIBILE_CUD">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_ESTRAI_IMPONIBILE_CUD.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_EXT_CASSIERE00">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_EXT_CASSIERE00.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_F24EP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_F24EP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_F24EP2">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_F24EP2.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_FATCOM_BLACKLIST">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_FATCOM_BLACKLIST.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_FATTURA_ATTIVA_RIGA_BREVETTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_FATTURA_ATTIVA_RIGA_BREVETTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_FATTURA_PASSIV_RIGA_BREVETTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_FATTURA_PASSIV_RIGA_BREVETTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_FONDO_DOC_AMM">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_FONDO_DOC_AMM.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_FONDO_ECONOMALE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_FONDO_ECONOMALE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_FONTI_ESTERNE_GIACOBBI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_FONTI_ESTERNE_GIACOBBI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_GAE_TOTALE_STORICO_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_GAE_TOTALE_STORICO_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_IMPEGNATO_PER_TIPO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_IMPEGNATO_PER_TIPO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_IMPEGNI_INVENTARIO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_IMPEGNI_INVENTARIO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_IMPEGNI_INVENTARIO_DETT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_IMPEGNI_INVENTARIO_DETT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_IMPEGNO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_IMPEGNO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_IMP_PAG_PER_TIPO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_IMP_PAG_PER_TIPO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INCARICHI_ASS_RIC_BORSE_ST">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_ASS_RIC_BORSE_ST.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INCARICHI_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INCARICHI_COLLABORAZIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_COLLABORAZIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INCARICHI_CONTROLLO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_CONTROLLO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INCARICHI_DA_ASSEGNARE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_DA_ASSEGNARE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INCARICHI_ELENCO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_ELENCO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INCARICHI_ELENCO_CORR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_ELENCO_CORR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INCARICHI_ELENCO_FP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_ELENCO_FP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INCARICHI_ELENCO_FP_2">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_ELENCO_FP_2.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INCARICHI_RICHIESTA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_RICHIESTA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INCARICHI_TERZO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_TERZO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INCARICHI_UO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_UO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INDICATORE_PAGAMENTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INDICATORE_PAGAMENTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INSIEME_ETR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INSIEME_ETR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INSIEME_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INSIEME_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INTRA12">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INTRA12.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INTRASTAT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INTRASTAT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INTRASTAT_INVIATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INTRASTAT_INVIATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INVENTARIO_BENI_APG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INVENTARIO_BENI_APG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INVENTARIO_PER_CONTO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INVENTARIO_PER_CONTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INVENTARIO_RICOGNIZIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INVENTARIO_RICOGNIZIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INVENTARIO_UTILIZZATORI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INVENTARIO_UTILIZZATORI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_INVENT_BENI_APG_TRASF">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INVENT_BENI_APG_TRASF.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LETTERA_PAGAM_ESTERO_DOC">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LETTERA_PAGAM_ESTERO_DOC.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LETTERA_PAGAM_ESTERO_DOC_OS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LETTERA_PAGAM_ESTERO_DOC_OS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIMITE_SPESA_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIMITE_SPESA_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIMITE_SPESA_DET_PDGP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIMITE_SPESA_DET_PDGP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIMITE_SPESA_PDGP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIMITE_SPESA_PDGP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LINEA_ATTIVITA_PROGETTO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LINEA_ATTIVITA_PROGETTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LINEA_ATTIVITA_VALIDA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LINEA_ATTIVITA_VALIDA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LINEA_ATTIVITA_VALIDA_LELLO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LINEA_ATTIVITA_VALIDA_LELLO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LINEA_ATT_NOT_IN_PDG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LINEA_ATT_NOT_IN_PDG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LINEA_ATT_NOT_IN_PDG_ETR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LINEA_ATT_NOT_IN_PDG_ETR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LINEA_ATT_NOT_IN_PDG_ETR_OLD">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LINEA_ATT_NOT_IN_PDG_ETR_OLD.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIQUIDAZIONE_IVA_ACQUISTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUIDAZIONE_IVA_ACQUISTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIQUIDAZIONE_IVA_VENDITE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUIDAZIONE_IVA_VENDITE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIQUID_CAPITOLI_CORI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUID_CAPITOLI_CORI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIQUID_CENTRO_UO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUID_CENTRO_UO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIQUID_CORI_MANCANTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUID_CORI_MANCANTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIQUID_GRUPPO_CORI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUID_GRUPPO_CORI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIQUID_GRUPPO_CORI_CR_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUID_GRUPPO_CORI_CR_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIQUID_GRUPPO_CORI_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUID_GRUPPO_CORI_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIQUID_IVA_ACQUISTI_ESIG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUID_IVA_ACQUISTI_ESIG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIQUID_IVA_ACQUISTI_PRE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUID_IVA_ACQUISTI_PRE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIQUID_IVA_ANN_ACQUISTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUID_IVA_ANN_ACQUISTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIQUID_IVA_ANN_VENDITE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUID_IVA_ANN_VENDITE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_LIQUID_IVA_VENDITE_ESIG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUID_IVA_VENDITE_ESIG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_ACCREDITAMENTO_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_ACCREDITAMENTO_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_NON_ASSOCIABILE_REV">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_NON_ASSOCIABILE_REV.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_OBBLSCAD">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_OBBLSCAD.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_REVERSALE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_REVERSALE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_REVERSALE_DISTINTA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_REVERSALE_DISTINTA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_REVERSALE_DIST_ANN">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_REVERSALE_DIST_ANN.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_REVERSALE_DIST_SEPA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_REVERSALE_DIST_SEPA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_REVERSALE_DIST_XML">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_REVERSALE_DIST_XML.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_REVERSALE_PRE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_REVERSALE_PRE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_REVERSALE_SCAD_VOCE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_REVERSALE_SCAD_VOCE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_REVERSALE_VER_CORI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_REVERSALE_VER_CORI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_REVERSALE_VER_CORI_N">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_REVERSALE_VER_CORI_N.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_REVERSALE_VOCE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_REVERSALE_VOCE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_RIGA_DP_SOSP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_RIGA_DP_SOSP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_TERZO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_TERZO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_UPG_STATO_DOCAMM">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_UPG_STATO_DOCAMM.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MANDATO_VOCE_F_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MANDATO_VOCE_F_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MAN_REV_VOCE_CDR_LINEA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MAN_REV_VOCE_CDR_LINEA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MESSAGGI_UTENTE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MESSAGGI_UTENTE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MODALITA_PAGAMENTO_ANAG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MODALITA_PAGAMENTO_ANAG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MOD_SALDI_ACCERT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MOD_SALDI_ACCERT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MOD_SALDI_ACCERT_SCAD_VOCE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MOD_SALDI_ACCERT_SCAD_VOCE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MOD_SALDI_OBBLIG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MOD_SALDI_OBBLIG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_MOD_SALDI_OBBLIG_SCAD_VOCE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_MOD_SALDI_OBBLIG_SCAD_VOCE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_OBBLIGAZIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_OBBLIGAZIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_OBBLIGAZIONE_ACCERTAMENTO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_OBBLIGAZIONE_ACCERTAMENTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_OBBLIGAZIONE_IM_MANDATO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_OBBLIGAZIONE_IM_MANDATO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_OBBLIG_CONTROLLO_A1">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_OBBLIG_CONTROLLO_A1.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_OBBLIG_CONTROLLO_A2">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_OBBLIG_CONTROLLO_A2.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_OBBLIG_CONTROLLO_A3">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_OBBLIG_CONTROLLO_A3.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_OBBLIG_CONTROLLO_RESIDUI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_OBBLIG_CONTROLLO_RESIDUI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_OBBLIG_PDG_SALDO_LA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_OBBLIG_PDG_SALDO_LA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_OBB_ACC_ANNULLA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_OBB_ACC_ANNULLA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_OBB_ACC_DERIPORTA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_OBB_ACC_DERIPORTA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_OBB_ACC_RIPORTA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_OBB_ACC_RIPORTA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PAGATO_PER_TIPO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PAGATO_PER_TIPO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDGP_CDR_RUO_NRUO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDGP_CDR_RUO_NRUO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_ACCERTAMENTO_ETR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_ACCERTAMENTO_ETR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_CDR_FIGLI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_CDR_FIGLI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_CDR_FIGLI_PADRE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_CDR_FIGLI_PADRE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_CDR_GESTIBILI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_CDR_GESTIBILI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_CDR_PADRE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_CDR_PADRE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_CDR_RUO_NRUO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_CDR_RUO_NRUO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_ENTRATE_UO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_ENTRATE_UO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_ETR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_ETR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_ETR_MOD">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_ETR_MOD.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_LA_SERVITO_SERVENTE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_LA_SERVITO_SERVENTE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_LA_SERVITO_SERVENTE_PRE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_LA_SERVITO_SERVENTE_PRE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_OBBLIGAZIONE_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_OBBLIGAZIONE_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_PDG_FIGLI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_PDG_FIGLI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_PDG_PADRE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_PDG_PADRE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_PDG_SAUOP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_PDG_SAUOP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_PIANO_RIPARTO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_PIANO_RIPARTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_RESIDUO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_RESIDUO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_RESIDUO_COMPLETA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_RESIDUO_COMPLETA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_RESIDUO_VAR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_RESIDUO_VAR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_SPESE_RUBRICA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_SPESE_RUBRICA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_SPE_BILANCIO_PREV">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_SPE_BILANCIO_PREV.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_SPE_MOD">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_SPE_MOD.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_VARIAZIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_VARIAZIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_VARIAZIONE_ETR_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_VARIAZIONE_ETR_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_VARIAZIONE_ETR_DET_TEST">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_VARIAZIONE_ETR_DET_TEST.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_VARIAZIONE_RIEPILOGO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_VARIAZIONE_RIEPILOGO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_VARIAZIONE_SPE_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_VARIAZIONE_SPE_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PDG_VARIAZIONE_SPE_DET_TEST">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PDG_VARIAZIONE_SPE_DET_TEST.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PREVENTIVO_PAREGGIO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PREVENTIVO_PAREGGIO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PREV_DIP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PREV_DIP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PREV_FASE_ETR_CNR_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PREV_FASE_ETR_CNR_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PREV_FASE_SPE_CNR_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PREV_FASE_SPE_CNR_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PRE_SCAGLIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PRE_SCAGLIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PROGETTO_ANAG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PROGETTO_ANAG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PROGETTO_PADRE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PROGETTO_PADRE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_PROG_COM_MOD">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_PROG_COM_MOD.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_QUOTE_UTILIZZATORI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_QUOTE_UTILIZZATORI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_RAPP_DIP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_RAPP_DIP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_RATEIZZA_CLASSIFIC_CORI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_RATEIZZA_CLASSIFIC_CORI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_REGISTROUNICOFATPASSIVE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_REGISTROUNICOFATPASSIVE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_REGISTRO_IVA_ACQUISTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_REGISTRO_IVA_ACQUISTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_REGISTRO_IVA_ACQUISTI_PRE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_REGISTRO_IVA_ACQUISTI_PRE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_REGISTRO_IVA_VENDITE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_REGISTRO_IVA_VENDITE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_RENDICONTAZIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_RENDICONTAZIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_REPERTORIO_LIMITI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_REPERTORIO_LIMITI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_REVERSALE_ACCERSCAD">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_REVERSALE_ACCERSCAD.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_REVERSALE_TERZO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_REVERSALE_TERZO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_REVERSALE_UPG_STATO_DOCAMM">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_REVERSALE_UPG_STATO_DOCAMM.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_RICONCIL_CDP_PDG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_RICONCIL_CDP_PDG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_RICO_RESIDUI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_RICO_RESIDUI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SALDI_PIANO_ECONOM_PROGETTO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SALDI_PIANO_ECONOM_PROGETTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SCAGLIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SCAGLIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SINTESI_LDA_COMRES">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SINTESI_LDA_COMRES.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SIP_MODULI_NUOVA_PREVISIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SIP_MODULI_NUOVA_PREVISIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SIP_MODULI_UTILIZZATI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SIP_MODULI_UTILIZZATI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SIP_MODULI_VALIDI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SIP_MODULI_VALIDI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SITUAZIONE_LINEE_COMP_RES">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SITUAZIONE_LINEE_COMP_RES.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SIT_ANALITICA_GAE_COMPETENZA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SIT_ANALITICA_GAE_COMPETENZA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SIT_ANALITICA_GAE_RESIDUI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SIT_ANALITICA_GAE_RESIDUI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SIT_ANAL_GAE_RESIDUI_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SIT_ANAL_GAE_RESIDUI_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SIT_BIL_CDS_CNR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SIT_BIL_CDS_CNR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SIT_DETT_GAE_RESIDUI_SPE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SIT_DETT_GAE_RESIDUI_SPE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SIT_GAE_RESIDUI_ENTRATA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SIT_GAE_RESIDUI_ENTRATA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SIT_GAE_RESIDUI_SPESA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SIT_GAE_RESIDUI_SPESA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SOSPESO_IM_FIGLI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SOSPESO_IM_FIGLI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SOSPESO_MAN_IMP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SOSPESO_MAN_IMP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SOSPESO_REV_ACCERT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SOSPESO_REV_ACCERT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SPESOMETRO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SPESOMETRO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_SPESOMETRO_NEW">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SPESOMETRO_NEW.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STAMPA_BILANCIO_PREVDEC">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STAMPA_BILANCIO_PREVDEC.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STAMPA_BILANCIO_RENDIC">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STAMPA_BILANCIO_RENDIC.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STAMPA_BILANCIO_RENDIC_TEMP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STAMPA_BILANCIO_RENDIC_TEMP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STAMPA_BILANCIO_RENDIC_X_CDR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STAMPA_BILANCIO_RENDIC_X_CDR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STIPENDI_COFI_DETT">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STIPENDI_COFI_DETT.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STIPENDI_COFI_OBB_IMP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STIPENDI_COFI_OBB_IMP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STIPENDI_MONTANTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STIPENDI_MONTANTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STIPENDI_MONTANTI_PRE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STIPENDI_MONTANTI_PRE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STM_IVA_DIFF_ATTIVA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STM_IVA_DIFF_ATTIVA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STM_IVA_DIFF_PASSIVA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STM_IVA_DIFF_PASSIVA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STM_IVA_DIFF_PASSIVA_PRE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STM_IVA_DIFF_PASSIVA_PRE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STM_PARAMIN_FT_ATTIVA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STM_PARAMIN_FT_ATTIVA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STM_PARAMIN_PDG_VARIAZIONE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STM_PARAMIN_PDG_VARIAZIONE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STM_PARAMIN_SING_CONTO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STM_PARAMIN_SING_CONTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STM_PARAMIN_SIT_SINT_GAE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STM_PARAMIN_SIT_SINT_GAE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_STRUTTURA_ORGANIZZATIVA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_STRUTTURA_ORGANIZZATIVA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TELEFONO_ANAG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TELEFONO_ANAG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TERMINI_PAGAMENTO_ANAG">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TERMINI_PAGAMENTO_ANAG.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TERZI_DA_COMPLETARE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TERZI_DA_COMPLETARE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TERZI_DA_CONGUAGLIARE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TERZI_DA_CONGUAGLIARE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TERZI_DA_CONGUAGLIARE_DET">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TERZI_DA_CONGUAGLIARE_DET.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TERZO_ANAGRAFICO_SIP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TERZO_ANAGRAFICO_SIP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TERZO_CF_PI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TERZO_CF_PI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TERZO_PERSONA_FISICA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TERZO_PERSONA_FISICA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TERZO_PER_COMPENSO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TERZO_PER_COMPENSO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TERZO_SIP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TERZO_SIP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TEST">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TEST.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TIPO_TRATTAMENTO_TIPO_CORI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TIPO_TRATTAMENTO_TIPO_CORI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TOTALE_IVA_ACQUISTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TOTALE_IVA_ACQUISTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TOTALE_IVA_ACQUISTI_PRE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TOTALE_IVA_ACQUISTI_PRE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TOTALE_IVA_VENDITE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TOTALE_IVA_VENDITE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_TOT_DISTINTA_REV">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_TOT_DISTINTA_REV.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_UNITA_ORGANIZZATIVA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_UNITA_ORGANIZZATIVA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_UNITA_ORGANIZZATIVA_VALIDA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_UNITA_ORGANIZZATIVA_VALIDA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_UTENTE_ACCESSO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_UTENTE_ACCESSO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_UTENTE_CDR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_UTENTE_CDR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_UTENTE_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_UTENTE_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_UTENTE_LDAP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_UTENTE_LDAP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_UTENTE_UNITA_ORGANIZZATIVA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_UTENTE_UNITA_ORGANIZZATIVA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_UTENTI_SAC">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_UTENTI_SAC.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_VAR_PDG_VOCE_CNR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_VAR_PDG_VOCE_CNR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_VAR_STANZ_RES">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_VAR_STANZ_RES.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_VAR_STANZ_RES_RIGA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_VAR_STANZ_RES_RIGA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_VAR_STANZ_RES_VOCE_CNR">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_VAR_STANZ_RES_VOCE_CNR.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_VOCE_F_PARTITA_GIRO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_VOCE_F_PARTITA_GIRO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_VOCE_F_SALDI_CDR_LINEA">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_VOCE_F_SALDI_CDR_LINEA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_VOCE_F_SALDI_CDS">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_VOCE_F_SALDI_CDS.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_VOCE_F_SALDI_CMP">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_VOCE_F_SALDI_CMP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_VOCE_F_SING_CONTO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_VOCE_F_SING_CONTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="sigla" id="create-view-V_VOCI_STIPENDIALI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_VOCI_STIPENDIALI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
     <changeSet dbms="h2, postgresql" author="sigla" id="createView-v_esercizi">
         <createView fullDefinition="false" viewName="v_esercizi"> SELECT esercizio_base.esercizio
             FROM esercizio_base;</createView>

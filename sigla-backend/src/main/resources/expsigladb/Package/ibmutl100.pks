@@ -90,7 +90,6 @@ CREATE OR REPLACE package           IBMUTL100 is
  procedure creaInsertSelectStatement(destinazione varchar2, origine varchar2);
 
 end;
-/
 
 
 CREATE OR REPLACE package BODY           IBMUTL100 is
@@ -600,6 +599,5 @@ CREATE OR REPLACE package BODY           IBMUTL100 is
         IBMUTL010.SCRIVI(' end;');
      end;
 end;
-/
 
 

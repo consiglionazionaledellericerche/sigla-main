@@ -134,7 +134,6 @@ CREATE OR REPLACE package CNRCTB040 as
  );
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB040 is
@@ -665,6 +664,5 @@ CREATE OR REPLACE package body CNRCTB040 is
   CNRCTB035.creaScadAccertamento(aAcc,aScadenza10,10,aDettScadenza10);
  end;
 end;
-/
 
 

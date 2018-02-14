@@ -273,7 +273,6 @@ procedure job_riporto_next_doc_cont_voce(job number, pg_exec number, next_date d
 Procedure ribalta_disp_improprie (aEs NUMBER, aCDS VARCHAR2, aUser VARCHAR2,pg_esec number default null);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB047 is
@@ -1573,6 +1572,5 @@ End Loop;
 
 End;
 End;
-/
 
 

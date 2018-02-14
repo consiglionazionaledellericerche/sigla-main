@@ -11,7 +11,6 @@ CREATE OR REPLACE PACKAGE CNRUTL003 AS
                         v_sesso CHAR,
                         pg_comune_di_nascita number) RETURN varchar2;
   END CNRUTL003;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRUTL003 AS
@@ -353,6 +352,5 @@ end data_nascita;
   END calcola;
 
 END CNRUTL003;
-/
 
 

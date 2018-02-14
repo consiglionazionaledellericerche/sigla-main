@@ -90,7 +90,6 @@ CDP_TI_RAPP_INDETERMINATO CONSTANT VARCHAR2(10) :='IND';
  Procedure scaricaCDPSuPdgLello(aEsercizio number, aCdCdr varchar2, aUser varchar2);
 
 End;
-/
 
 
 CREATE OR REPLACE Package Body CNRCTB061_lello is
@@ -397,8 +396,7 @@ contaaASSCDPLA := contaaASSCDPLA + 1;
              tabModuloSpeseGest(i).TI_GESTIONE = aASSCDPLA.ti_gestione And
              tabModuloSpeseGest(i).CD_ELEMENTO_VOCE = aASSCDPLA.cd_elemento_voce Then
 
-             Setimporto(aASSCDPLA, tabModuloSpeseGest, i);
-/*
+             Setimporto(aASSCDPLA, tabModuloSpeseGest, i);*
              tabModuloSpeseGest(i).IM_SPESE_GEST_DECENTRATA_EST := Nvl(tabModuloSpeseGest(i).IM_SPESE_GEST_DECENTRATA_EST, 0) +
                                                                Nvl(aDestS.IM_SPESE_GEST_DECENTRATA_EST, 0);
              tabModuloSpeseGest(i).IM_SPESE_GEST_DECENTRATA_INT := Nvl(tabModuloSpeseGest(i).IM_SPESE_GEST_DECENTRATA_INT, 0) +
@@ -808,8 +806,7 @@ contaaASSCDPLA := contaaASSCDPLA + 1;
 
           If Sql%Rowcount != 1 Then
              IBMERR001.RAISE_ERR_GENERICO('Update 3 non logica');
-          End If;
-/*
+          End If;*
           Update voce_f_saldi_cdr_linea
           Set IM_STANZ_INIZIALE_A1 = IM_STANZ_INIZIALE_A1 +
                                              (NVL(tabModuloSpeseGest(i).IM_SPESE_GEST_ACCENTRATA_INT, 0) -
@@ -950,6 +947,5 @@ Dbms_Output.put_line('Differenza: '||To_Char(diff, '999g999g999g999g990d00'));
    When esci then null;
  End;
 End;
-/
 
 

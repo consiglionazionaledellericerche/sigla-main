@@ -33,6 +33,5 @@ CD_TITOLO_PERSONALE_TEST CONSTANT varchar2(10) := '1.03';
  procedure creaCDPTest(aUOCDS unita_organizzativa%rowtype);
 
 end;
-/
 
 

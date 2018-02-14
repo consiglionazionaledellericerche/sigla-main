@@ -90,7 +90,6 @@ CREATE OR REPLACE package CNRCTB039 as
  );
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB039 is
@@ -556,6 +555,5 @@ CREATE OR REPLACE package body CNRCTB039 is
   end if; -- Fine controlli a partire da MANDATO
  end;
 end;
-/
 
 

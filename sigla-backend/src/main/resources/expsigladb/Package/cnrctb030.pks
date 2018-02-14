@@ -450,7 +450,6 @@ CREATE OR REPLACE package CNRCTB030 as
 
 
 end;
-/
 
 
 CREATE OR REPLACE package body         CNRCTB030 is
@@ -1279,8 +1278,7 @@ Else -- NON PER VARIAZIONE
     -- L'importo dell'impegno non può essere inferiore al saldo dei documenti amministrativi
 
     if aSaldo.im_stanz_iniziale_a1 + aSaldo.VARIAZIONI_PIU - aSaldo.VARIAZIONI_MENO < aObbligScad.im_associato_doc_amm then
-     aNuovoImporto := aObbligScad.im_associato_doc_amm;
-/*
+     aNuovoImporto := aObbligScad.im_associato_doc_amm;*
          IBMERR001.RAISE_ERR_GENERICO('Attenzione !! Lo stanziamento sulla voce '||aSaldo.cd_voce||' ('||
 aSaldo.im_stanz_iniziale_a1||') risulterebbe inferiore a quanto già associato '||
 'a documenti amministrativi ('||aObbligScad.im_associato_doc_amm||')');
@@ -2245,6 +2243,5 @@ procedure creaObbligazioneResidua(
  End;
 
 End;
-/
 
 

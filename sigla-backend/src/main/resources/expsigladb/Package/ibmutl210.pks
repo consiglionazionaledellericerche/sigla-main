@@ -170,7 +170,6 @@ CREATE OR REPLACE package IBMUTL210 is
  function getJobOwner(aPgJob number) return varchar2;
 
 end;
-/
 
 
 CREATE OR REPLACE package BODY IBMUTL210 is
@@ -551,6 +550,5 @@ CREATE OR REPLACE package BODY IBMUTL210 is
   IBMERR001.RAISE_ERR_GENERICO('Errore di attivazione Job n.'||aPgJob||' in batch dinamico. Stack: '||DBMS_UTILITY.format_error_stack);
  end;
 end;
-/
 
 

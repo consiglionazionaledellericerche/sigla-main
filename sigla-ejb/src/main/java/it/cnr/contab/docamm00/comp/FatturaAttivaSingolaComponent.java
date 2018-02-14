@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.UUID;
 import java.util.Vector;
@@ -46,6 +47,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.anagraf00.tabter.bulk.ProvinciaBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ProvinciaHome;
+import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -167,6 +169,7 @@ import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
@@ -2196,6 +2199,42 @@ public Boolean isAttivaFatturazioneElettronica(UserContext aUC, AnagraficoBulk a
 		return false;
 	}
 	return true;
+}
+
+public BigDecimal getImportoBolloVirtuale(UserContext aUC, Fattura_attivaBulk fatt) throws ComponentException {
+	final BigDecimal ret = null;
+	try {
+		Configurazione_cnrBulk config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( aUC, fatt.getEsercizio(), null, Configurazione_cnrBulk.PK_BOLLO_VIRTUALE, Configurazione_cnrBulk.SK_BOLLO_VIRTUALE_CODICE_FATTURA_ATTIVA);
+		return Optional.ofNullable(config)
+				.map(Configurazione_cnrBulk::getVal01)
+				.map(v->{
+					Tipo_atto_bolloBulk tipoAtto;
+					try {
+						tipoAtto = Utility.createTipoAttoBolloComponentSession().getTipoAttoBollo(aUC, fatt.getDt_registrazione(), v);
+						return Optional.ofNullable(tipoAtto).map(Tipo_atto_bolloBulk::getImBollo).orElse(null);
+					} catch (Exception e) {
+						throw new DetailedRuntimeException(e);
+					}
+				})
+				.orElse(null);
+	} catch (ComponentException | RemoteException | EJBException | DetailedRuntimeException  e) {
+		throw handleException(e);
+	}
+}
+
+
+private BigDecimal getImportoLimiteBolloVirtuale(UserContext aUC) throws ComponentException {
+	BigDecimal importoLimite;
+	try {
+		importoLimite = Utility.createConfigurazioneCnrComponentSession().getIm01(aUC, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC), null, Configurazione_cnrBulk.PK_BOLLO_VIRTUALE, Configurazione_cnrBulk.SK_BOLLO_VIRTUALE_IMPORTO_LIMITE);
+	} catch (ComponentException e) {
+    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+	} catch (RemoteException e) {
+    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+	} catch (EJBException e) {
+    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+	}
+	return importoLimite;
 }
 
 //^^@@
@@ -5373,7 +5412,6 @@ public void validaFattura(UserContext aUC, Fattura_attivaBulk fatturaAttiva) thr
         throw new it.cnr.jada.comp.ApplicationException("Attenzione: non possono esistere fatture senza almeno un dettaglio");
     else {
         BulkList dettaglio= fatturaAttiva.getFattura_attiva_dettColl();
-        Boolean esisteRigaConBollo = false;
         for (Iterator i= dettaglio.iterator(); i.hasNext();) {
             Fattura_attiva_rigaBulk riga= (Fattura_attiva_rigaBulk) i.next();
             if (fatturaAttiva.getTi_causale_emissione() != null && fatturaAttiva.getTi_causale_emissione().equals(fatturaAttiva.TARIFFARIO)) {
@@ -5381,13 +5419,8 @@ public void validaFattura(UserContext aUC, Fattura_attivaBulk fatturaAttiva) thr
                     throw new it.cnr.jada.comp.ApplicationException("Attenzione: inserire un tariffario valido per ogni riga");
             }
             validaRiga(aUC, riga);
-            if (riga.getBene_servizio().getFl_bollo()){
-            	if (esisteRigaConBollo){
-                    throw new it.cnr.jada.comp.ApplicationException("Attenzione: esiste più di una riga con un bene/servizio di tipo Bollo");
-            	}
-            	esisteRigaConBollo = true;
-            }
         }
+        controlliGestioneBolloVirtuale(aUC, fatturaAttiva, dettaglio);
     }
 
 	try {
@@ -5420,6 +5453,50 @@ public void validaFattura(UserContext aUC, Fattura_attivaBulk fatturaAttiva) thr
     controllaContabilizzazioneDiTutteLeRighe(aUC, fatturaAttiva);
     controllaQuadraturaAccertamenti(aUC, fatturaAttiva);
     controllaQuadraturaIntrastat(aUC, fatturaAttiva);
+}
+public void controlliGestioneBolloVirtuale(UserContext aUC, Fattura_attivaBulk fatturaAttiva, BulkList dettaglio)
+		throws ApplicationException, ComponentException {
+	Boolean esisteRigaConBollo = false;
+	BigDecimal totaleImportoRigheSoggetteBollo = BigDecimal.ZERO;
+	for (Iterator i= dettaglio.iterator(); i.hasNext();) {
+	    Fattura_attiva_rigaBulk riga= (Fattura_attiva_rigaBulk) i.next();
+	    Bene_servizioBulk bene;
+		try {
+			bene = (Bene_servizioBulk)completaOggetto(aUC, riga.getBene_servizio());
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+	    if (bene.getFl_bollo()){
+	    	if (esisteRigaConBollo){
+	            throw new it.cnr.jada.comp.ApplicationException("Attenzione: esiste più di una riga con un bene/servizio di tipo Bollo");
+	    	}
+	    	BigDecimal importoBollo = getImportoBolloVirtuale(aUC, fatturaAttiva);
+	    	if (importoBollo != null && importoBollo.compareTo(riga.getIm_imponibile()) != 0){
+	            throw new it.cnr.jada.comp.ApplicationException("Attenzione: l'importo indicato per il bollo "+riga.getIm_imponibile().doubleValue()+
+	            		" è diverso dall'importo Bollo Virtuale stabilito sui parametri "+importoBollo.doubleValue());
+	    	}
+	    	esisteRigaConBollo = true;
+	    }
+	    Voce_ivaBulk voceIva;
+		try {
+			voceIva = (Voce_ivaBulk)completaOggetto(aUC, riga.getVoce_iva());
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+	    if (voceIva.isCodiceIvaSoggettoBollo()){
+	    	totaleImportoRigheSoggetteBollo = totaleImportoRigheSoggetteBollo.add(riga.getIm_imponibile()).add(riga.getIm_iva());
+	    }
+	}
+	BigDecimal importoLimiteBolloVirtuale = getImportoLimiteBolloVirtuale(aUC);
+	if (importoLimiteBolloVirtuale != null){
+		if (totaleImportoRigheSoggetteBollo.compareTo(importoLimiteBolloVirtuale) > 0 && !esisteRigaConBollo){
+	        throw new it.cnr.jada.comp.ApplicationException("La somma delle righe soggette a bollo: "+totaleImportoRigheSoggetteBollo.doubleValue()+" supera "
+	        		+ "l'importo limite previsto per il bollo: "+importoLimiteBolloVirtuale.doubleValue()+". E' necessario indicare la riga con il bollo.");
+		} else if (totaleImportoRigheSoggetteBollo.compareTo(importoLimiteBolloVirtuale) <= 0 && esisteRigaConBollo){
+	        throw new it.cnr.jada.comp.ApplicationException("La somma delle righe soggette a bollo: "+totaleImportoRigheSoggetteBollo.doubleValue()+" non supera "
+	        		+ "l'importo limite previsto per il bollo: "+importoLimiteBolloVirtuale.doubleValue()+". E' necessario eliminare la riga con il bollo.");
+		}
+	}
 }
 //^^@@
 /** 
