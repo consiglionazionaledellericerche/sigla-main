@@ -420,7 +420,6 @@ Function isAccEsaurito (aAcc accertamento%Rowtype) Return Boolean;
 -- restituisce true se l'obbligazione ? stata completamente incassata
 Function isObbEsaurita (aObb obbligazione%Rowtype) Return Boolean;
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB048 is
@@ -2460,6 +2459,5 @@ Begin
 End;
 
 end;
-/
 
 

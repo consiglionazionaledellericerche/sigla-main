@@ -30,7 +30,6 @@ ENABLED CONSTANT boolean:=true;
  procedure rollbackRbsBig;
 
 end;
-/
 
 
 CREATE OR REPLACE package body IBMUTL015 is
@@ -55,6 +54,5 @@ CREATE OR REPLACE package body IBMUTL015 is
   setRbsBig;
  end;
 end;
-/
 
 

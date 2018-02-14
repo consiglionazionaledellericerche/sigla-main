@@ -252,7 +252,6 @@ FUNCTION spezzaGruppiDi3(numero VARCHAR2) RETURN V_ARR;
 Function getDBRefreshDate RETURN DATE;
 
 end;
-/
 
 
 CREATE OR REPLACE package body IBMUTL001 is
@@ -905,6 +904,5 @@ BEGIN
 END getDaysCommBetween;
 
 END;
-/
 
 

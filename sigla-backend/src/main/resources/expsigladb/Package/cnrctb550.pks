@@ -1413,7 +1413,6 @@ FUNCTION arrotondaCredito
       ) RETURN scaglione%ROWTYPE;
 
 End CNRCTB550;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY         CNRCTB550 AS
@@ -7118,8 +7117,7 @@ BEGIN
            IBMERR001.RAISE_ERR_GENERICO
               ('Record scaglione per detrazioni personali non definito');
 
-   END;
-/* PRIMA DELLA MODIFICA DETRAZIONE A PARTIRE DAL 01/01/2014
+   END;* PRIMA DELLA MODIFICA DETRAZIONE A PARTIRE DAL 01/01/2014
    If aImportoRiferimento <= 8000 Then
         aImportoDetrazPe := aRecDetrazioniLavoro.im_detrazione;
    Elsif aImportoRiferimento <= 15000 Then
@@ -7812,6 +7810,5 @@ EXCEPTION
 END getRegConScaglioneSpe;
 
 END;
-/
 
 

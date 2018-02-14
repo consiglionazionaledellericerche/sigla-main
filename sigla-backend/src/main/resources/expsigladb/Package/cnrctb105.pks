@@ -313,7 +313,6 @@ function isRiportato(aCdCds varchar2,aCdUo varchar2, aEs number, aPg number, aCd
 function getStatoRiportatoInScrivania(aCdCds varchar2,aCdUo varchar2, aEs number, aPg number, aCdTipoDocAmm varchar2, aEsScr number) return varchar2;
 
 END;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB105 IS
@@ -832,6 +831,5 @@ begin
 end;
 
 END;
-/
 
 

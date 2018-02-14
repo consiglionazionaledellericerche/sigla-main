@@ -307,7 +307,6 @@ Procedure aggiornaLimiteSpesaImp(aDett elemento_voce%rowtype,aEsercizio number,
 -- 19/09/2011 Procedura per l'aggiornamento dei Limiti di spesa in fase decisionale
 Procedure aggiornaLimiteSpesaDec(aEsercizio number,cdr VARCHAR2,stato VARCHAR2,aUser VARCHAR2);
 End;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY         CNRCTB053 is
@@ -1841,8 +1840,7 @@ If aEV.ti_gestione = 'S' Then -- SPESA
 
    If aEV.ti_appartenenza = 'C' Then -- SPESE PER IL BILANCIO DELL'ENTE
 
-        aVocef := Null;
-/*
+        aVocef := Null;*
       If CNRCTB020.ISCDRENTE(aCDR) Then -- spesa ente per SAC
          Select *
          Into   aVocef
@@ -3625,6 +3623,5 @@ Begin
  end if;  -- end if livello_pgd_dec_spe = livello_clas_spe
 end;
 end;
-/
 
 

@@ -1,0 +1,46 @@
+--------------------------------------------------------
+--  DDL for View V_BATCH_CONTROL_JOBS
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "V_BATCH_CONTROL_JOBS" ("PG_BATCH", "DS_BATCH", "PG_JOB", "MESSAGE", "FL_EXEC_CONC", "FL_ATTIVATO", "UTENTE", "INTERVALLO", "DT_PARTENZA", "LAST_DATE", "NEXT_DATE", "BROKEN", "FAILURES", "DACR", "DUVA", "UTCR", "UTUV", "PG_VER_REC") AS 
+  SELECT
+--
+-- Date: 18/10/2002
+-- Version: 1.0
+--
+-- Vista di estrazione dello stato di esecuzione dei job dinamici
+--
+-- History:
+--
+-- Date: 18/10/2002
+-- Version: 1.0
+-- Creazione
+--
+-- Body:
+--
+	BATCH_CONTROL.PG_BATCH,
+	BATCH_CONTROL.DS_BATCH,
+	BATCH_CONTROL.PG_JOB,
+	BATCH_CONTROL.MESSAGE,
+	BATCH_CONTROL.FL_EXEC_CONC,
+	BATCH_CONTROL.FL_ATTIVATO,
+	BATCH_CONTROL.UTENTE,
+	BATCH_CONTROL.INTERVALLO,
+	BATCH_CONTROL.DT_PARTENZA,
+	USER_JOBS.LAST_DATE,
+  USER_JOBS.NEXT_DATE,
+	USER_JOBS.BROKEN,
+	USER_JOBS.FAILURES,
+	BATCH_CONTROL.DACR,
+	BATCH_CONTROL.DUVA,
+	BATCH_CONTROL.UTCR,
+	BATCH_CONTROL.UTUV,
+	BATCH_CONTROL.PG_VER_REC
+FROM
+	BATCH_CONTROL,
+	USER_JOBS
+WHERE
+  BATCH_CONTROL.PG_JOB = USER_JOBS.JOB (+)
+;
+
+   COMMENT ON TABLE "V_BATCH_CONTROL_JOBS"  IS 'Vista di estrazione dello stato di esecuzione dei job dinamici';

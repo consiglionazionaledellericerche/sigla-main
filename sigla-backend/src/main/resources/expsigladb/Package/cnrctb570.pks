@@ -657,7 +657,6 @@ CREATE OR REPLACE PACKAGE         CNRCTB570 As
  Procedure CREA_ASS_PGIRO_GR_C(tb_ass_pgiro tab_ass_pgiro, aUser varchar2, aTSNow date);
 
 END;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY         CNRCTB570 AS
@@ -4928,6 +4927,5 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
 	End Loop;
  end;
 End;
-/
 
 

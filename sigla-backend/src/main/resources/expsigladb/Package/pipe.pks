@@ -2,7 +2,6 @@ CREATE OR REPLACE PACKAGE pipe As
  PROCEDURE get_message;
  Procedure send_message  (MESSAGGIO IN varchar2);
 End pipe;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY pipe AS
@@ -44,6 +43,5 @@ CREATE OR REPLACE PACKAGE BODY pipe AS
     End Loop;
   END get_message;
 End pipe;
-/
 
 

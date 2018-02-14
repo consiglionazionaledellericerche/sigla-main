@@ -301,7 +301,6 @@ ABIBNL number(5);
    aPgDistinta number
  );
 END;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB750 AS
@@ -1604,6 +1603,5 @@ Procedure processaInterfaccia(aEs number, aNomeFile varchar2,aUser varchar2) is
 
  end;
 END;
-/
 
 

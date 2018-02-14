@@ -57,7 +57,6 @@ MESSAGE_USER CONSTANT VARCHAR2(20) := '$$$$$MESSG_USER$$$$$';
  procedure ins_MESSAGGIO (aDest MESSAGGIO%rowtype);
 
 end;
-/
 
 
 CREATE OR REPLACE package BODY IBMUTL205 is
@@ -169,6 +168,5 @@ CREATE OR REPLACE package BODY IBMUTL205 is
  end;
 
 End;
-/
 
 
