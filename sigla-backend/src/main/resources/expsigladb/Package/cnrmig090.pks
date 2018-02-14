@@ -101,7 +101,6 @@ gPgLog number;
 
  procedure INS_RECAPITO (aRecapito telefono%rowtype);
 end;
-/
 
 
 CREATE OR REPLACE package body CNRMIG090 is
@@ -935,6 +934,5 @@ procedure creaTerzi(aAnagSci cnr_anagrafico%rowtype, aAnagrafico anagrafico%rowt
  end;
 
 end;
-/
 
 

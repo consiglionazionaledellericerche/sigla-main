@@ -253,7 +253,6 @@ CREATE OR REPLACE package CNRMIG030 is
    procedure SetResiduiPassiviCanc(aData date);
 
 END;
-/
 
 
 CREATE OR REPLACE package body CNRMIG030 is
@@ -2943,6 +2942,5 @@ savepoint canc_altro_imp;
 
 
 END;
-/
 
 

@@ -172,7 +172,6 @@ RISC_PREFIX CONSTANT VARCHAR2(4):='XSRC';
  function getDesc(aRev reversale%rowtype) return varchar2;
 
  end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB038 is
@@ -787,6 +786,5 @@ End;
   end;
  end;
 end;
-/
 
 

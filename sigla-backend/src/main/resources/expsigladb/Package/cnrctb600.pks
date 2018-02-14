@@ -413,7 +413,6 @@ PROCEDURE getNumeroGGRateInPeriodo
       );
 
 END CNRCTB600;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB600 AS
@@ -2917,6 +2916,5 @@ BEGIN
 END getAliquotaMediaIrpef;
 
 END;
-/
 
 

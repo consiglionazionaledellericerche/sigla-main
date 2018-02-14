@@ -309,7 +309,6 @@ function descSottoArtCDSProprio(aCodiceSA varchar2, aArticolo voce_f%rowtype) re
 function descSottoArtCDSArea(aCodiceSA varchar2, aArticolo voce_f%rowtype) return varchar2;
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB001 is
@@ -2338,6 +2337,5 @@ Begin
 
 
 end;
-/
 
 

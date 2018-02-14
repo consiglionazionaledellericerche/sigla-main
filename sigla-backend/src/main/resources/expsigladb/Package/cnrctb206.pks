@@ -378,7 +378,6 @@ TIPO_LOG_JOB_CHIUSURA_COGE CONSTANT VARCHAR2(20) := 'CHIUSURA_COGE00';
  procedure checkChiudibilitaDef(aEs number, aCdCds varchar2);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB206 is
@@ -1746,6 +1745,5 @@ End;
   end loop;
  end;
 end;
-/
 
 

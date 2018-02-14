@@ -24,7 +24,6 @@ CREATE OR REPLACE package CNRSTO060 as
  procedure scaricaSuStorico(aOldEs pdg_esercizio%rowtype, aEs pdg_esercizio%rowtype);
 
 End;
-/
 
 
 CREATE OR REPLACE package body CNRSTO060 is
@@ -244,6 +243,5 @@ CREATE OR REPLACE package body CNRSTO060 is
     End Loop;
  End;
 End;
-/
 
 

@@ -1,5 +1,6 @@
 package it.cnr.contab.bollo00.comp;
 
+import java.sql.Timestamp;
 import java.util.Optional;
 
 import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
@@ -9,6 +10,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
@@ -40,6 +42,13 @@ public class TipoAttoBolloComponent extends CRUDComponent {
 			} catch (java.sql.SQLException e) {
 				throw handleException(e);
 			}
+		}
+	}
+	public Tipo_atto_bolloBulk getTipoAttoBollo(it.cnr.jada.UserContext param0, Timestamp data, java.lang.String codiceTipoAttoBollo) throws it.cnr.jada.comp.ComponentException{
+		try {
+			return ((Tipo_atto_bolloHome)getHome(param0, Tipo_atto_bolloBulk.class)).findByCodiceAndData(codiceTipoAttoBollo, data);
+		} catch (PersistencyException e) {
+			throw handleException(e);
 		}
 	}
 }

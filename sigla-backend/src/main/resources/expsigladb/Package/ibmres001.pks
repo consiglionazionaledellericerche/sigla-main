@@ -43,7 +43,6 @@ DOLLARO CONSTANT char(1) := '$';
  procedure restoreFoto(aNumImmagine number);
 
 end;
-/
 
 
 CREATE OR REPLACE package BODY IBMRES001 is
@@ -174,6 +173,5 @@ CREATE OR REPLACE package BODY IBMRES001 is
  end;
  
 end;
-/
 
 

@@ -117,7 +117,6 @@ PROCEDURE scriviFileQuadroSY
     inUtente VARCHAR2
    );
 End;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB930 AS
@@ -884,8 +883,7 @@ BEGIN
    END LOOP;
 
    CLOSE gen_cur;
-   END;
-/*
+   END;*
    -------------------------------------------------------------------------------------------------
    -- Chiusura CLOB
 
@@ -1036,8 +1034,7 @@ BEGIN
                            aStringa);
    end if;
    CLOSE gen_cur;
-   END;
-/*
+   END;*
    -------------------------------------------------------------------------------------------------
    -- Chiusura CLOB
 
@@ -2073,6 +2070,5 @@ END scriviFileQuadroSCSY;
 -- =================================================================================================
 
 END; -- PACKAGE END;
-/
 
 

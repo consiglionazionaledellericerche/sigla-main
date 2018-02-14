@@ -205,7 +205,6 @@ TIT_SPE_FUNZ_CDS CONSTANT VARCHAR2(100):='TITOLO_SPESE_FUNZIONAMENTO_CDS';
 
  procedure aggiornaStanziamentoResidui(aSaldo voce_f_saldi_cmp%rowtype, aDelta number, aUser varchar2,aTSNow date);
 end;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY         CNRCTB054 is
@@ -835,8 +834,7 @@ Ltrim(
          NVL(aDeltasaldo.IM_OBBL_ACC_COMP, 0), '999g999g999g999g999g990d99'))
 ||'). [Esercizio '||aDeltaSaldo.ESERCIZIO||', Es. Residuo '||aDeltaSaldo.ESERCIZIO_RES||', CdR '||aDeltaSaldo.CD_CENTRO_RESPONSABILITA||', GAE '||aDeltaSaldo.CD_LINEA_ATTIVITA||', Voce '||aDeltaSaldo.CD_VOCE||']');
 
-End If;
-/*
+End If;*
 Dbms_Output.put_line ('update 54 VAR_MENO_OBBL_RES_IMP  '||NVL(aOldsaldo.IM_OBBL_RES_PRO, 0)||' '||NVL(aDeltasaldo.IM_OBBL_RES_PRO, 0)||' '||cod_chiamante||' '||
 aOldSaldo.ESERCIZIO||' '||
 aOldSaldo.ESERCIZIO_RES||' '||
@@ -1297,6 +1295,5 @@ Procedure ins_BILANCIO_PREVENTIVO (aDest BILANCIO_PREVENTIVO%rowtype) is
     );
  end;
 end;
-/
 
 

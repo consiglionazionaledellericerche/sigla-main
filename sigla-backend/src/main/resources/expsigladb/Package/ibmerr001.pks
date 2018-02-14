@@ -75,7 +75,6 @@ CREATE OR REPLACE package IBMERR001 as
  procedure raise_wrn_generico(aMessage varchar2);
 
 end;
-/
 
 
 CREATE OR REPLACE package body IBMERR001 as
@@ -131,6 +130,5 @@ CREATE OR REPLACE package body IBMERR001 as
  end;
 
 end;
-/
 
 
