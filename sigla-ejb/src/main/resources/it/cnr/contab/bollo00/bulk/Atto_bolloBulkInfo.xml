@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="id"
+		property="id"
+		label="Id."
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		style="text-align: right"
+		nullable="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		label="Esercizio"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		nullable="false" />
+	<fieldProperty
+		name="findUnitaOrganizzativa"
+		property="unitaOrganizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Unit&#224; organizzativa"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"/>
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="unitaOrganizzativa.cd_unita_organizzativa"
+		inputType="TEXT"
+		label="Unit&#224; organizzativa" />
+	<fieldProperty
+		name="findTipoAttoBollo"
+		property="tipoAttoBollo"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Tipo Atto"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		nullable="false"/>
+	<fieldProperty
+		name="cdTipoAttoBollo"
+		property="tipoAttoBollo.codice"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Codice Tipo Atto" />
+	<fieldProperty
+		name="descrizioneAtto"
+		property="descrizioneAtto"
+		maxLength="300"
+		cols="60"
+		rows="4"
+		inputType="TEXTAREA"
+		label="Descrizione"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="cd_provv"
+		property="cd_provv"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="20"
+		enabledOnSearch="true"
+		label="Codice Protocollo" />
+	<fieldProperty
+		name="nr_provv"
+		property="nr_provv"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		label="Numero Protocollo" />
+	<fieldProperty
+		name="dt_provv"
+		property="dt_provv"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		enabledOnSearch="true"
+		label="Data Protocollo" />
+	<fieldProperty
+		name="numFogli"
+		property="numDettagli"
+		label="Num. Fogli/Esemplari"
+		inputType="TEXT"
+		command="doOnNumFogliChange"
+		readonlyProperty="RONumFogli"
+		maxLength="6"
+		inputSize="7"
+		style="text-align: right"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="numRighe"
+		property="numRighe"
+		label="Numero Righe"
+		inputType="TEXT"
+		command="doOnNumRigheChange"
+		maxLength="6"
+		inputSize="7"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		style="text-align: right" />
+	<fieldProperty
+		name="numEsemplari"
+		property="numDettagli"
+		label="Num. Fogli/Esemplari"
+		inputType="TEXT"
+		command="doDefault"
+		maxLength="6"
+		inputSize="7"
+		style="text-align: right"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false" />
+
+	<formFieldProperty
+		name="id" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="findUnitaOrganizzativa" />
+	<formFieldProperty
+		name="findTipoAttoBollo" />
+	<formFieldProperty
+		name="descrizioneAtto" />
+	<formFieldProperty
+		name="cd_provv" 
+		label="Codice&lt;BR&gt;Protocollo" />
+	<formFieldProperty
+		name="nr_provv" 
+		label="Numero&lt;BR&gt;Protocollo" />
+	<formFieldProperty
+		name="dt_provv" 
+		label="Data&lt;BR&gt;Protocollo" />
+	<formFieldProperty
+		name="numFogli"
+		label="Numero Fogli" />
+	<formFieldProperty
+		name="numRighe" />
+	<formFieldProperty
+		name="numEsemplari" 
+		label="Numero Esemplari" />
+
+	<columnFieldProperty
+		name="id" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+		name="cdTipoAttoBollo" />
+	<columnFieldProperty
+		name="descrizioneAtto" />
+	<columnFieldProperty
+		name="cd_provv" />
+	<columnFieldProperty
+		name="nr_provv" />
+	<columnFieldProperty
+		name="dt_provv" />
+	<columnFieldProperty
+		name="numFogli" />
+
+	<findFieldProperty
+		name="id" />
+	<findFieldProperty
+		name="findTipoAttoBollo" />
+	<findFieldProperty
+		name="cdTipoAttoBollo" />
+	<findFieldProperty
+		name="descrizioneAtto" />
+	<findFieldProperty
+		name="cd_provv" />
+	<findFieldProperty
+		name="nr_provv" />
+	<findFieldProperty
+		name="dt_provv" />
+	<findFieldProperty
+		name="numFogli" />
+</bulkInfo>

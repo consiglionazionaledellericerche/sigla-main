@@ -821,15 +821,25 @@ public class CRUDDistintaCassiereBP extends
 				} else if (docContabile.getTiDocumento().compareTo(
 						MandatoBulk.TIPO_PAGAMENTO) == 0
 						&& docContabile.getCdIso() != null
-						&& docContabile.getCdIso().compareTo("IT") == 0) {
+						&& docContabile.getCdIso().compareTo("IT") == 0 
+						&& docContabile.getAbi()!=null) {
 					// 18/06/2014 BNL non gestisce sepa
 					// infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
 					infoben.setTipoPagamento("BONIFICO BANCARIO E POSTALE");
+					
 					// 08/09/2014 resi obbligatori come da mail ricevuta da
 					// ANGELINI/MESSERE
 					obb_dati_beneficiario = true;
 					obb_iban = true;
-				} else if (docContabile.getTiDocumento().compareTo(
+				}else if (docContabile.getTiDocumento().compareTo(
+						MandatoBulk.TIPO_PAGAMENTO) == 0
+						&& docContabile.getCdIso() != null
+						&& docContabile.getCdIso().compareTo("IT") == 0 
+						&& docContabile.getAbi()==null) {
+					infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
+					obb_iban = true;
+				}  
+				else if (docContabile.getTiDocumento().compareTo(
 						MandatoBulk.TIPO_PAGAMENTO) == 0
 						&& docContabile.getCdIso() != null
 						&& docContabile.getCdIso().compareTo("IT") != 0) {
@@ -885,6 +895,9 @@ public class CRUDDistintaCassiereBP extends
 						xgc.setMinute(DatatypeConstants.FIELD_UNDEFINED);
 						xgc.setHour(DatatypeConstants.FIELD_UNDEFINED);
 						infoben.setDataScadenzaPagamento(xgc);
+						infoben.setDataEsecuzionePagamento(xgc);
+						infoben.setNumeroContoBancaItaliaEnteRicevente("0001777");
+						infoben.setTipoContabilitaEnteRicevente("INFRUTTIFERA");
 					}
 				// 19/11/2015 MANDATI a NETTO 0, richiesta modifica tipo
 				// pagamento
@@ -1083,7 +1096,7 @@ public class CRUDDistintaCassiereBP extends
 							.getCdProvincia());
 				}
 				infoben.setBeneficiario(benef);
-				if (obb_iban && docContabile.getCdIso().compareTo("IT") == 0) {
+				if (obb_iban && docContabile.getCdIso().compareTo("IT") == 0 && docContabile.getAbi()!=null) {
 					piazzatura.setAbiBeneficiario(docContabile.getAbi());
 					piazzatura.setCabBeneficiario(docContabile.getCab());
 					piazzatura.setNumeroContoCorrenteBeneficiario(docContabile
@@ -1117,7 +1130,7 @@ public class CRUDDistintaCassiereBP extends
 							.getNumeroConto().toString());
 					infoben.setInformazioniAggiuntive(aggiuntive);
 				}
-				if (obb_iban && docContabile.getCdIso().compareTo("IT") != 0) {
+				if (obb_iban && (docContabile.getCdIso().compareTo("IT") != 0 || docContabile.getAbi()==null)) {
 					// 11/07/2015 BNL non gestisce sepa
 					sepa.setIban(docContabile.getCodiceIban());
 					if (docContabile.getBic() != null
