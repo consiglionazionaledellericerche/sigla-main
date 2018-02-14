@@ -1,4 +1,5 @@
 package it.cnr.contab.docamm00.ejb;
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -12,6 +13,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 
@@ -1889,4 +1891,39 @@ public List findListaCondizioneConsegnaWS(UserContext userContext, String query,
 			}
 		}
 	}
+
+	public BigDecimal getImportoBolloVirtuale(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException,java.rmi.RemoteException {
+		try {
+			return (BigDecimal)invoke("getImportoBolloVirtuale",new Object[] {
+					userContext,
+					fattura});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+
+	public void controlliGestioneBolloVirtuale(UserContext param0, Fattura_attivaBulk fatturaAttiva, BulkList dettaglio) throws ComponentException,java.rmi.RemoteException,javax.ejb.EJBException  {
+		try {
+			invoke("controlliGestioneBolloVirtuale",new Object[] {param0,fatturaAttiva, dettaglio});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+
 }
