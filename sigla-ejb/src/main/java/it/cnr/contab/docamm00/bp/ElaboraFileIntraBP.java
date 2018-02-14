@@ -372,7 +372,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append(Formatta(null,"S",15," "));//bw.append(Formatta(det.getNrFattura(),"S",15," "));
     			bw.append(Formatta(null,"S",6," "));//bw.append(Formatta(det.getDtFattura(),"S",6," "));
     			bw.append(Formatta(det.getCdCpa(),"D",5,"0"));
-    			bw.append(Formatta(null,"S",1," "));//diminuzione 1 carattere codice cpa
+    			bw.append(Formatta(null,"S",1,"0"));//diminuzione 1 carattere codice cpa
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
     			bw.append(Formatta(det.getProvenienza(),"S",2," "));
@@ -418,7 +418,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append(Formatta(null,"S",15," "));//bw.append(Formatta(det.getNrFattura(),"S",15," "));
     			bw.append(Formatta(null,"S",6," "));//bw.append(Formatta(det.getDtFattura(),"S",6," "));
     			bw.append(Formatta(null,"D",5,"0"));
-    			bw.append(Formatta(null,"S",1," "));//diminuzione 1 carattere codice cpa
+    			bw.append(Formatta(null,"S",1,"0"));//diminuzione 1 carattere codice cpa
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
     			bw.append(Formatta(null,"S",2," "));//bw.append(Formatta(det.getProvenienza(),"S",2," "));
@@ -632,7 +632,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append(Formatta(null,"S",15," "));//bw.append(Formatta(det.getNrFattura(),"S",15," "));
     			bw.append(Formatta(null,"S",6," "));//bw.append(Formatta(det.getDtFattura(),"S",6," "));
     			bw.append(Formatta(det.getCdCpa(),"D",5,"0"));
-    			bw.append(Formatta(null,"S",1," "));//diminuzione 1 carattere codice cpa
+    			bw.append(Formatta(null,"S",1,"0"));//diminuzione 1 carattere codice cpa
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
     			bw.append(Formatta(det.getDest(),"S",2," "));
@@ -666,8 +666,8 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append(Formatta(null,"D",13,"0"));//bw.append(Formatta(new BigDecimal(det.getAmmontareEuro()).abs().toString(),"D",13,"0"));  
     			bw.append(Formatta(null,"S",15," "));//bw.append(Formatta(det.getNrFattura(),"S",15," "));
     			bw.append(Formatta(null,"S",6," "));//bw.append(Formatta(det.getDtFattura(),"S",6," "));
-    			bw.append(Formatta(det.getCdCpa(),"D",5,"0"));
-    			bw.append(Formatta(null,"S",1," "));//diminuzione 1 carattere codice cpa
+    			bw.append(Formatta(det.getCdCpa(),"D",5,"0")); 
+    			bw.append(Formatta(null,"S",1,"0"));//diminuzione 1 carattere codice cpa
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
     			bw.append(Formatta(null,"S",2," "));//bw.append(Formatta(det.getDest(),"S",2," "));
