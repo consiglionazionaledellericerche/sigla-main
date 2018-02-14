@@ -539,7 +539,6 @@ procedure GENERADETT_ETR_SOSPESO(
  PROCEDURE verificaTracciabilitaPag (aEs In NUMBER, aDataEmis In DATE, aCdModPag In VARCHAR2, aCdTipoDocAmm In VARCHAR2, aImMandatoNetto In NUMBER);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB037 is
@@ -3341,6 +3340,5 @@ Begin
 End;
 
 end;
-/
 
 

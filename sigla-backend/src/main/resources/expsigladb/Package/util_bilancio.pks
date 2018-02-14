@@ -21,7 +21,6 @@ PROCEDURE Popola_Sp_Per_Conto_Uo (INTIPO         IN VARCHAR2, -- SP / CE
 
 
 End;
-/
 
 
 CREATE OR REPLACE package body UTIL_BILANCIO is
@@ -3186,6 +3185,5 @@ END;
 
 
 end;
-/
 
 

@@ -92,7 +92,6 @@ CREATE OR REPLACE PACKAGE CNRCTB577 AS
 
  Procedure stralcioMensile(aEs number, aMese NUMBER, aUser varchar2);
 END;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB577 AS
@@ -1510,6 +1509,5 @@ procedure scaricaDettNonLiquid(aLiquidFitt liquid_cori%rowtype,aTSNow date,aUser
     );
  end;
 END;
-/
 
 

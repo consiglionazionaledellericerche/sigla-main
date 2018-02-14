@@ -1,0 +1,296 @@
+--------------------------------------------------------
+--  DDL for View PRT_REND_FIN_ENTR_CNR_ART_ALL
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "PRT_REND_FIN_ENTR_CNR_ART_ALL" ("ESER", "CDS", "TITOLO", "DS_TITOLO", "CATEGORIA", "DS_CATEGORIA", "CAPITOLO", "DS_CAPITOLO", "ARTICOLO", "DS_ARTICOLO", "INIZIALE", "VAR_PIU", "VAR_MENO", "ASSESTATO", "ACCERTAMENTI", "RISCOSSIONI", "DA_RISC", "IN_PIU", "IN_MENO", "INIZIALE_R", "VAR_PIU_R", "VAR_MENO_R", "ASSESTATO_R", "RISCOSSIONI_R", "IN_PIU_R", "IN_MENO_R", "TOT_RISCOSS", "RES_ATT", "IM_VAR", "CDS_OR") AS 
+  Select ESER, CDS, TITOLO, DS_TITOLO, CATEGORIA,
+ DS_CATEGORIA, CAPITOLO, DS_CAPITOLO, ARTICOLO, DS_ARTICOLO,
+ Sum(INIZIALE), Sum(VAR_PIU), Sum(VAR_MENO), Sum(ASSESTATO), Sum(ACCERTAMENTI),
+ Sum(RISCOSSIONI), Sum(DA_RISC), Sum(IN_PIU), Sum(IN_MENO), Sum(INIZIALE_R),
+ Sum(VAR_PIU_R), Sum(VAR_MENO_R), Sum(ASSESTATO_R), Sum(RISCOSSIONI_R), Sum(IN_PIU_R),
+ Sum(IN_MENO_R), Sum(TOT_RISCOSS), Sum(RES_ATT), Sum(IM_VAR), CDS_OR
+From
+((
+SELECT  DISTINCT
+--
+-- Date: 02/03/2004
+-- Version: 1.0
+--
+-- Vista di stampa Rendiconto Finanziario CNR ENTRATE (compresi importi a zero)
+--
+-- History:
+--
+-- Date: 02/03/2004
+-- Version: 1.0
+-- Creazione
+--
+-- Body
+--
+ESER,CDS, TITOLO, Prt_Getdes_Vocecap('E', eser, 'C', 'E', titolo, 'T') AS DS_TITOLO,
+CATEGORIA,Prt_Getdes_Vocecap('E', eser, 'C', 'E', CATEGORIA, 'G') AS DS_CATEGORIA,
+CAPITOLO, Prt_Getdes_Vocecap('E', eser, 'C', 'E', CAPITOLO, 'C') AS DS_CAPITOLO,
+ARTICOLO, Prt_Getdes_Vocecap('F', eser, 'C', 'E', ARTICOLO, 'A') AS DS_ARTICOLO,
+Sum(INIZIALE) INIZIALE, Sum(VAR_PIU) VAR_PIU, Sum(VAR_MENO) VAR_MENO, Sum(ASSESTATO) ASSESTATO, Sum(ACCERTAMENTI) ACCERTAMENTI, Sum(RISCOSSIONI) RISCOSSIONI,
+Sum(DA_RISC) DA_RISC, Sum(IN_PIU) IN_PIU, Sum(IN_MENO) IN_MENO,
+Sum(INIZIALE_R) INIZIALE_R, Sum(VAR_PIU_R) VAR_PIU_R, Sum(VAR_MENO_R) VAR_MENO_R, Sum(ASSESTATO_R) ASSESTATO_R, Sum(RISCOSSIONI_R) RISCOSSIONI_R, Sum(IN_PIU_R) IN_PIU_R,
+Sum(IN_MENO_R) IN_MENO_R, Sum(TOT_RISCOSS) TOT_RISCOSS, Sum(RES_ATT) RES_ATT, Sum(DECODE(IM_VAR, NULL, 0, im_var)) IM_VAR, SUBSTR(ARTICOLO,11,3) CDS_OR
+FROM
+(SELECT
+a.ESERCIZIO eser,
+a.CD_CDS cds,
+SUBSTR(a.CD_VOCE,1,2) titolo,
+SUBSTR(a.CD_VOCE,1,5) CATEGORIA,
+SUBSTR(a.CD_VOCE,1,9) CAPITOLO,
+SUBSTR(a.CD_VOCE,1,17) ARTICOLO,
+SUM(NVL(a.IM_STANZ_INIZIALE_A1,0)) iniziale,
+SUM(NVL(a.VARIAZIONI_PIU,0)) var_piu,
+SUM(NVL(a.VARIAZIONI_MENO,0)) var_meno,
+SUM((NVL(a.IM_STANZ_INIZIALE_A1,0)+NVL(a.VARIAZIONI_PIU,0)-NVL(a.VARIAZIONI_MENO,0))) assestato,
+SUM(NVL(a.IM_OBBLIG_IMP_ACR,0)) ACCERTAMENTI,
+SUM(NVL(a.IM_MANDATI_REVERSALI,0)) RISCOSSIONI,
+SUM((NVL(a.IM_OBBLIG_IMP_ACR,0)) - (NVL(a.IM_MANDATI_REVERSALI,0))) da_risc,
+DECODE(SUM(NVL(a.IM_OBBLIG_IMP_ACR,0)-(NVL(a.IM_STANZ_INIZIALE_A1,0)+NVL(a.VARIAZIONI_PIU,0)-NVL(a.VARIAZIONI_MENO,0))),
+       ABS(SUM(NVL(a.IM_OBBLIG_IMP_ACR,0)-(NVL(a.IM_STANZ_INIZIALE_A1,0)+NVL(a.VARIAZIONI_PIU,0)-NVL(a.VARIAZIONI_MENO,0)))),
+       SUM(NVL(a.IM_OBBLIG_IMP_ACR,0)-(NVL(a.IM_STANZ_INIZIALE_A1,0)+NVL(a.VARIAZIONI_PIU,0)-NVL(a.VARIAZIONI_MENO,0))),
+       0) in_piu,
+DECODE(SUM((NVL(a.IM_STANZ_INIZIALE_A1,0)+NVL(a.VARIAZIONI_PIU,0)-NVL(a.VARIAZIONI_MENO,0))-NVL(a.IM_OBBLIG_IMP_ACR,0)),
+       ABS(SUM((NVL(a.IM_STANZ_INIZIALE_A1,0)+NVL(a.VARIAZIONI_PIU,0)-NVL(a.VARIAZIONI_MENO,0))-NVL(a.IM_OBBLIG_IMP_ACR,0))),
+       SUM((NVL(a.IM_STANZ_INIZIALE_A1,0)+NVL(a.VARIAZIONI_PIU,0)-NVL(a.VARIAZIONI_MENO,0))-NVL(a.IM_OBBLIG_IMP_ACR,0)),
+       0) in_meno,
+SUM(NVL(ar.IM_STANZ_INIZIALE_A1,0)) iniziale_r,
+SUM(NVL(ar.VARIAZIONI_PIU,0)) var_piu_r,
+SUM(NVL(ar.VARIAZIONI_MENO,0)) var_meno_r,
+SUM((NVL(ar.IM_STANZ_INIZIALE_A1,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0))) assestato_r,
+SUM(NVL(ar.IM_MANDATI_REVERSALI,0)) RISCOSSIONI_r,
+SUM(NVL(ar.IM_MANDATI_REVERSALI,0)  - (NVL(ar.IM_STANZ_INIZIALE_A1,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0))) in_piu_r,
+SUM((NVL(ar.IM_STANZ_INIZIALE_A1,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0))-NVL(ar.IM_MANDATI_REVERSALI,0)) in_meno_r,
+(SUM(NVL(a.IM_MANDATI_REVERSALI,0))+SUM(NVL(ar.IM_MANDATI_REVERSALI,0))) AS TOT_RISCOSS,
+SUM((NVL(a.IM_OBBLIG_IMP_ACR,0)) - (NVL(a.IM_MANDATI_REVERSALI,0)))+SUM((NVL(ar.IM_STANZ_INIZIALE_A1,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0))-NVL(ar.IM_MANDATI_REVERSALI,0)) AS RES_ATT
+FROM VOCE_F_SALDI_CMP A, VOCE_F_SALDI_CMP ar
+WHERE
+a.ESERCIZIO=ar.ESERCIZIO
+AND a.ti_appartenenza=ar.ti_appartenenza
+AND a.ti_gestione=ar.ti_gestione
+AND a.cd_voce=ar.cd_voce
+AND a.ti_competenza_residuo='C'
+AND ar.ti_competenza_residuo='R'
+AND a.ti_appartenenza='C'
+AND a.ti_gestione='E'
+AND A.ESERCIZIO IN (SELECT ESERCIZIO FROM PARAMETRI_CNR WHERE FL_REGOLAMENTO_2006 = 'N')
+AND a.cd_voce NOT LIKE SUBSTR(PRT_GETDATI_CONFCNR(A.ESERCIZIO, 'VOCEF_SPECIALE', 'AVANZO_E_CNR'),1,9)||'%'
+GROUP BY
+a.ESERCIZIO,
+a.CD_CDS,
+SUBSTR(a.CD_VOCE,1,2) ,
+SUBSTR(a.CD_VOCE,1,5) ,
+SUBSTR(a.CD_VOCE,1,9) ,
+SUBSTR(a.CD_VOCE,1,17)
+) z,
+(SELECT  VAR_BILANCIO_DET.ESERCIZIO ESERCIZIO, VAR_BILANCIO_DET.CD_CDS cd_cds,
+VAR_BILANCIO_DET.PG_VARIAZIONE PG_VAR,VAR_BILANCIO_DET.CD_VOCE VOCE,
+NVL(VAR_BILANCIO_DET.IM_VARIAZIONE,0) im_var
+FROM
+VAR_BILANCIO, VAR_BILANCIO_DET
+WHERE
+VAR_BILANCIO.TI_APPARTENENZA = 'C'
+AND VAR_BILANCIO.TI_VARIAZIONE = 'STORNO_E'
+AND VAR_BILANCIO.CD_CAUSALE_VAR_BILANCIO = 'RIP_AUT_EN'
+AND VAR_BILANCIO.STATO = 'D'
+AND VAR_BILANCIO.ESERCIZIO=VAR_BILANCIO_DET.ESERCIZIO
+AND VAR_BILANCIO.TI_APPARTENENZA=VAR_BILANCIO_DET.TI_APPARTENENZA
+AND VAR_BILANCIO.PG_VARIAZIONE(+)=VAR_BILANCIO_DET.PG_VARIAZIONE
+AND VAR_BILANCIO_DET.TI_GESTIONE='E'
+AND VAR_BILANCIO_DET.IM_VARIAZIONE<>0
+AND VAR_BILANCIO_DET.ESERCIZIO IN (SELECT ESERCIZIO FROM PARAMETRI_CNR WHERE FL_REGOLAMENTO_2006 = 'N')
+) w
+WHERE
+z.eser=w.ESERCIZIO(+)
+AND z.cds=w.cd_cds(+)
+AND z.articolo=w.voce(+)
+Group By ESER, CDS, TITOLO, Prt_Getdes_Vocecap('E', eser, 'C', 'E', titolo, 'T'),
+CATEGORIA,Prt_Getdes_Vocecap('E', eser, 'C', 'E', CATEGORIA, 'G'),
+CAPITOLO, Prt_Getdes_Vocecap('E', eser, 'C', 'E', CAPITOLO, 'C'),
+ARTICOLO, Prt_Getdes_Vocecap('F', eser, 'C', 'E', ARTICOLO, 'A'),
+Substr(ARTICOLO,11,3)
+)
+UNION ALL -- 2006
+(
+SELECT  DISTINCT
+        -- COMPETENZA 2006
+        COMPETENZA.ESER, CDS, TITOLO, Prt_Getdes_Vocecap('E', COMPETENZA.eser, 'C', 'E', titolo, 'T') AS DS_TITOLO,
+        CATEGORIA,Prt_Getdes_Vocecap('E', COMPETENZA.eser, 'C', 'E', CATEGORIA, 'G') AS DS_CATEGORIA,
+        CAPITOLO, Prt_Getdes_Vocecap('E', COMPETENZA.eser, 'C', 'E', CAPITOLO, 'C') AS DS_CAPITOLO,
+        ARTICOLO, Prt_Getdes_Vocecap('F', COMPETENZA.eser, 'C', 'E', ARTICOLO, 'A') AS DS_ARTICOLO,
+        SUM(NVL(INIZIALE, 0)),
+        SUM(NVL(VAR_PIU, 0)),
+        SUM(NVL(VAR_MENO, 0)),
+        SUM(NVL(ASSESTATO, 0)),
+        SUM(NVL(ACCERTAMENTI, 0)),
+        SUM(NVL(RISCOSSIONI, 0)),
+        SUM(NVL(DA_RISC, 0)),
+        SUM(NVL(IN_PIU, 0)),
+        SUM(NVL(IN_MENO, 0)),
+        -- RESIDUI
+        SUM(NVL(INIZIALE_R, 0)),
+        SUM(NVL(VAR_PIU_R, 0)),
+        SUM(NVL(VAR_MENO_R, 0)),
+        SUM(NVL(ASSESTATO_R, 0)),
+        SUM(NVL(RISCOSSIONI_R, 0)),
+        SUM(NVL(IN_PIU_R, 0)),
+        SUM(NVL(IN_MENO_R, 0)),
+        SUM(NVL(RISCOSSIONI, 0))+SUM(NVL(RISCOSSIONI_R, 0)),
+        SUM(NVL(DA_RISC, 0)) + SUM(NVL(INIZIALE_R, 0)) + SUM(NVL(var_piu_r, 0)) - SUM(NVL(var_meno_r, 0)) - SUM(NVL(RISCOSSIONI_R, 0)),
+        SUM(0),
+        CDS_OR
+FROM (
+      SELECT a.ESERCIZIO eser,
+	     CNRCTB020.GETCDCDSENTE (A.ESERCIZIO) CDS,
+             SUBSTR(a.CD_VOCE,1,2) titolo,
+             SUBSTR(a.CD_VOCE,1,5) CATEGORIA,
+             SUBSTR(a.CD_VOCE,1,9) CAPITOLO,
+             SUBSTR(a.CD_VOCE,1,17) ARTICOLO,
+             a.CD_VOCE,
+             A.CD_LINEA_ATTIVITA,
+             A.CD_CENTRO_RESPONSABILITA,
+             SUM(NVL(a.IM_STANZ_INIZIALE_A1,0)) iniziale,
+             SUM(NVL(a.VARIAZIONI_PIU,0)) var_piu,
+             SUM(NVL(a.VARIAZIONI_MENO,0)) var_meno,
+             SUM((NVL(a.IM_STANZ_INIZIALE_A1,0)+NVL(a.VARIAZIONI_PIU,0)-NVL(a.VARIAZIONI_MENO,0))) assestato,
+             SUM(NVL(a.IM_OBBL_ACC_COMP,0)) ACCERTAMENTI,
+             SUM(NVL(a.IM_MANDATI_REVERSALI_PRO,0)) RISCOSSIONI,
+             SUM((NVL(a.IM_OBBL_ACC_COMP,0)) - (NVL(a.IM_MANDATI_REVERSALI_PRO,0))) da_risc,
+             DECODE(SUM(NVL(a.IM_OBBL_ACC_COMP,0)-(NVL(a.IM_STANZ_INIZIALE_A1,0)+NVL(a.VARIAZIONI_PIU,0)-NVL(a.VARIAZIONI_MENO,0))),
+                    ABS(SUM(NVL(a.IM_OBBL_ACC_COMP,0)-(NVL(a.IM_STANZ_INIZIALE_A1,0)+NVL(a.VARIAZIONI_PIU,0)-NVL(a.VARIAZIONI_MENO,0)))),
+                    SUM(NVL(a.IM_OBBL_ACC_COMP,0)-(NVL(a.IM_STANZ_INIZIALE_A1,0)+NVL(a.VARIAZIONI_PIU,0)-NVL(a.VARIAZIONI_MENO,0))),
+                    0) IN_PIU,
+             DECODE(SUM((NVL(a.IM_STANZ_INIZIALE_A1,0)+NVL(a.VARIAZIONI_PIU,0)-NVL(a.VARIAZIONI_MENO,0))-NVL(a.IM_OBBL_ACC_COMP,0)),
+                    ABS(SUM((NVL(a.IM_STANZ_INIZIALE_A1,0)+NVL(a.VARIAZIONI_PIU,0)-NVL(a.VARIAZIONI_MENO,0))-NVL(a.IM_OBBL_ACC_COMP,0))),
+                    SUM((NVL(a.IM_STANZ_INIZIALE_A1,0)+NVL(a.VARIAZIONI_PIU,0)-NVL(a.VARIAZIONI_MENO,0))-NVL(a.IM_OBBL_ACC_COMP,0)),
+                    0) in_meno,
+             CNRUTL001.getCdsFromCdr(a.CD_CENTRO_RESPONSABILITA) CDS_OR
+      FROM   VOCE_F_SALDI_CDR_LINEA A
+      WHERE  a.ESERCIZIO                 = a.ESERCIZIO_res AND
+             A.ESERCIZIO IN (SELECT ESERCIZIO FROM PARAMETRI_CNR WHERE FL_REGOLAMENTO_2006 = 'Y') AND
+             a.ti_appartenenza           = 'C' AND
+             a.ti_gestione               = 'E' AND
+             a.cd_voce NOT LIKE SUBSTR(PRT_GETDATI_CONFCNR(A.ESERCIZIO, 'VOCEF_SPECIALE', 'AVANZO_E_CNR'),1,9)||'%'
+      GROUP BY a.ESERCIZIO, CNRUTL001.getCdsFromCdr(a.CD_CENTRO_RESPONSABILITA), SUBSTR(a.CD_VOCE,1,2) , SUBSTR(a.CD_VOCE,1,5) , SUBSTR(a.CD_VOCE,1,9) , SUBSTR(a.CD_VOCE,1,17),
+               a.CD_VOCE, A.CD_LINEA_ATTIVITA, A.CD_CENTRO_RESPONSABILITA) COMPETENZA,
+     (SELECT AR.ESERCIZIO ESER,
+             AR.CD_VOCE,
+             AR.CD_LINEA_ATTIVITA,
+             AR.CD_CENTRO_RESPONSABILITA,
+             SUM(NVL(ar.IM_OBBL_RES_PRO,0)) iniziale_r,
+             SUM(NVL(ar.VAR_PIU_OBBL_RES_PRO,0)) var_piu_r,
+             SUM(NVL(ar.VAR_MENO_OBBL_RES_PRO,0)) var_meno_r,
+             SUM((NVL(ar.IM_OBBL_RES_PRO,0)+NVL(ar.VAR_PIU_OBBL_RES_PRO,0)-NVL(ar.VAR_MENO_OBBL_RES_PRO,0))) assestato_r,
+             SUM(NVL(ar.IM_MANDATI_REVERSALI_PRO,0)) RISCOSSIONI_r,
+             DECODE(SUM(NVL(ar.IM_MANDATI_REVERSALI_PRO,0)-(NVL(ar.IM_OBBL_RES_PRO,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0))),
+                    ABS(SUM(NVL(ar.IM_MANDATI_REVERSALI_PRO,0)-(NVL(ar.IM_OBBL_RES_PRO,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0)))),
+                    SUM(NVL(ar.IM_MANDATI_REVERSALI_PRO,0)-(NVL(ar.IM_OBBL_RES_PRO,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0))),
+                    0) in_piu_r,
+             DECODE(SUM((NVL(ar.IM_OBBL_RES_PRO,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0))-NVL(ar.IM_MANDATI_REVERSALI_PRO,0)),
+                    ABS(SUM((NVL(ar.IM_OBBL_RES_PRO,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0))-NVL(ar.IM_MANDATI_REVERSALI_PRO,0))),
+                    SUM((NVL(ar.IM_OBBL_RES_PRO,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0))-NVL(ar.IM_MANDATI_REVERSALI_PRO,0)),
+                    0) in_meno_r
+      FROM   VOCE_F_SALDI_CDR_LINEA AR
+      WHERE  AR.ESERCIZIO                 > AR.ESERCIZIO_res AND
+             AR.ESERCIZIO IN (SELECT ESERCIZIO FROM PARAMETRI_CNR WHERE FL_REGOLAMENTO_2006 = 'Y') AND
+             AR.ti_appartenenza           = 'C' AND
+             AR.ti_gestione               = 'E' AND
+             AR.cd_voce NOT LIKE SUBSTR(PRT_GETDATI_CONFCNR(AR.ESERCIZIO, 'VOCEF_SPECIALE', 'AVANZO_E_CNR'),1,9)||'%'
+      GROUP BY AR.ESERCIZIO, AR.CD_VOCE, AR.CD_LINEA_ATTIVITA, AR.CD_CENTRO_RESPONSABILITA) RESIDUI
+WHERE   RESIDUI.ESER (+)                    = COMPETENZA.ESER                     AND
+        RESIDUI.CD_CENTRO_RESPONSABILITA (+) = COMPETENZA.CD_CENTRO_RESPONSABILITA AND
+        RESIDUI.CD_LINEA_ATTIVITA (+)       = COMPETENZA.CD_LINEA_ATTIVITA        AND
+        RESIDUI.CD_VOCE (+)                 = COMPETENZA.CD_VOCE
+GROUP BY -- COMPETENZA 2006
+        COMPETENZA.ESER, CDS, TITOLO, Prt_Getdes_Vocecap('E', COMPETENZA.eser, 'C', 'E', titolo, 'T'),
+        CATEGORIA, Prt_Getdes_Vocecap('E', COMPETENZA.eser, 'C', 'E', CATEGORIA, 'G'),
+        CAPITOLO, Prt_Getdes_Vocecap('E', COMPETENZA.eser, 'C', 'E', CAPITOLO, 'C'),
+        ARTICOLO, Prt_Getdes_Vocecap('F', COMPETENZA.eser, 'C', 'E', ARTICOLO, 'A'), CDS_OR
+)
+Union All -- SOLO RESIDUI
+(
+Select  Distinct
+        residui.ESER, CDS, TITOLO, Prt_Getdes_Vocecap('E', residui.eser, 'C', 'E', titolo, 'T') DS_TITOLO,
+        CATEGORIA,Prt_Getdes_Vocecap('E', residui.eser, 'C', 'E', CATEGORIA, 'G') AS DS_CATEGORIA,
+        CAPITOLO, Prt_Getdes_Vocecap('E', residui.eser, 'C', 'E', CAPITOLO, 'C') AS DS_CAPITOLO,
+        ARTICOLO, Prt_Getdes_Vocecap('F', residui.eser, 'C', 'E', ARTICOLO, 'A') AS DS_ARTICOLO,
+        SUM(0) INIZIALE,
+        SUM(0) VAR_PIU,
+        Sum(0) VAR_MENO,
+        SUM(0) ASSESTATO,
+        SUM(0) ACCERTAMENTI,
+        SUM(0) RISCOSSIONI,
+        SUM(0) DA_RISC,
+        SUM(0) IN_PIU,
+        Sum(0) IN_MENO,
+        -- RESIDUI
+        SUM(NVL(INIZIALE_R, 0)),
+        SUM(NVL(VAR_PIU_R, 0)),
+        SUM(NVL(VAR_MENO_R, 0)),
+        SUM(NVL(ASSESTATO_R, 0)),
+        SUM(NVL(RISCOSSIONI_R, 0)),
+        SUM(NVL(IN_PIU_R, 0)),
+        SUM(NVL(IN_MENO_R, 0)),
+        Sum(NVL(RISCOSSIONI_R, 0)),
+        Sum(NVL(INIZIALE_R, 0)) + SUM(NVL(var_piu_r, 0)) - SUM(NVL(VAR_MENO_R, 0)) - SUM(NVL(RISCOSSIONI_R, 0)),
+        SUM(0),
+        CDS_OR
+From (
+      Select ar.ESERCIZIO eser,
+	     CNRCTB020.GETCDCDSENTE (ar.ESERCIZIO) CDS,
+             SUBSTR(ar.CD_VOCE,1,2) titolo,
+             SUBSTR(ar.CD_VOCE,1,5) CATEGORIA,
+             SUBSTR(ar.CD_VOCE,1,9) CAPITOLO,
+             SUBSTR(ar.CD_VOCE,1,17) ARTICOLO,
+             ar.CD_VOCE,
+             Ar.CD_LINEA_ATTIVITA,
+             Ar.CD_CENTRO_RESPONSABILITA,
+             SUM(NVL(ar.IM_OBBL_RES_PRO,0)) iniziale_r,
+             SUM(NVL(ar.VAR_PIU_OBBL_RES_PRO,0)) var_piu_r,
+             SUM(NVL(ar.VAR_MENO_OBBL_RES_PRO,0)) var_meno_r,
+             SUM((NVL(ar.IM_OBBL_RES_PRO,0)+NVL(ar.VAR_PIU_OBBL_RES_PRO,0)-NVL(ar.VAR_MENO_OBBL_RES_PRO,0))) assestato_r,
+             SUM(NVL(ar.IM_MANDATI_REVERSALI_PRO,0)) RISCOSSIONI_r,
+             DECODE(SUM(NVL(ar.IM_MANDATI_REVERSALI_PRO,0)-(NVL(ar.IM_OBBL_RES_PRO,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0))),
+                    ABS(SUM(NVL(ar.IM_MANDATI_REVERSALI_PRO,0)-(NVL(ar.IM_OBBL_RES_PRO,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0)))),
+                    SUM(NVL(ar.IM_MANDATI_REVERSALI_PRO,0)-(NVL(ar.IM_OBBL_RES_PRO,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0))),
+                    0) in_piu_r,
+             DECODE(SUM((NVL(ar.IM_OBBL_RES_PRO,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0))-NVL(ar.IM_MANDATI_REVERSALI_PRO,0)),
+                    ABS(SUM((NVL(ar.IM_OBBL_RES_PRO,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0))-NVL(ar.IM_MANDATI_REVERSALI_PRO,0))),
+                    SUM((NVL(ar.IM_OBBL_RES_PRO,0)+NVL(ar.VARIAZIONI_PIU,0)-NVL(ar.VARIAZIONI_MENO,0))-NVL(ar.IM_MANDATI_REVERSALI_PRO,0)),
+                    0) in_meno_r,
+             CNRUTL001.getCdsFromCdr(ar.CD_CENTRO_RESPONSABILITA) CDS_OR
+      FROM   VOCE_F_SALDI_CDR_LINEA AR
+      WHERE  AR.ESERCIZIO                 > AR.ESERCIZIO_res AND
+             AR.ESERCIZIO IN (SELECT ESERCIZIO FROM PARAMETRI_CNR WHERE FL_REGOLAMENTO_2006 = 'Y') AND
+             AR.ti_appartenenza           = 'C' AND
+             AR.ti_gestione               = 'E' AND
+             AR.cd_voce NOT LIKE SUBSTR(PRT_GETDATI_CONFCNR(AR.ESERCIZIO, 'VOCEF_SPECIALE', 'AVANZO_E_CNR'),1,9)||'%' And
+             Not Exists (Select 1 From VOCE_F_SALDI_CDR_LINEA C
+                         Where  C.ESERCIZIO                 = AR.ESERCIZIO                AND
+                                C.ESERCIZIO_RES             = AR.ESERCIZIO                AND
+                                C.CD_CENTRO_RESPONSABILITA  = AR.CD_CENTRO_RESPONSABILITA AND
+                                C.CD_LINEA_ATTIVITA         = AR.CD_LINEA_ATTIVITA        AND
+                                C.TI_APPARTENENZA           = AR.TI_APPARTENENZA          AND
+                                C.TI_GESTIONE               = AR.TI_GESTIONE              AND
+                                C.CD_VOCE                   = AR.CD_VOCE)
+      GROUP BY ar.ESERCIZIO,
+	     CNRCTB020.GETCDCDSENTE (ar.ESERCIZIO),
+             SUBSTR(ar.CD_VOCE,1,2),
+             SUBSTR(ar.CD_VOCE,1,5),
+             SUBSTR(ar.CD_VOCE,1,9),
+             SUBSTR(ar.CD_VOCE,1,17),
+             ar.CD_VOCE,
+             Ar.CD_LINEA_ATTIVITA,
+             Ar.CD_CENTRO_RESPONSABILITA,
+             CNRUTL001.getCdsFromCdr(ar.CD_CENTRO_RESPONSABILITA)) residui
+Group By residui.ESER, CDS, TITOLO, Prt_Getdes_Vocecap('E', residui.eser, 'C', 'E', titolo, 'T'),
+        CATEGORIA,Prt_Getdes_Vocecap('E', residui.eser, 'C', 'E', CATEGORIA, 'G'),
+        CAPITOLO, Prt_Getdes_Vocecap('E', residui.eser, 'C', 'E', CAPITOLO, 'C'),
+        ARTICOLO, Prt_Getdes_Vocecap('F', residui.eser, 'C', 'E', ARTICOLO, 'A'),
+        CDS_OR
+))
+Group By ESER, CDS, TITOLO, DS_TITOLO, CATEGORIA, DS_CATEGORIA, CAPITOLO, DS_CAPITOLO, ARTICOLO, DS_ARTICOLO, CDS_OR
+;

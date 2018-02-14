@@ -24,6 +24,5 @@ CODICE_DIVERSI_IMPEGNI CONSTANT VARCHAR2(100):='CODICE_DIVERSI_IMPEGNI';
 -- Functions & Procedures:
 
 end;
-/
 
 

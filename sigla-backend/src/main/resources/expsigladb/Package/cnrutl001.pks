@@ -52,7 +52,6 @@ CREATE OR REPLACE package CNRUTL001 As
   FUNCTION getCdsFromCdr( cd_centro_resp In VARCHAR2)
   RETURN VARCHAR2;
 End;
-/
 
 
 CREATE OR REPLACE package body CNRUTL001 Is
@@ -273,6 +272,5 @@ CREATE OR REPLACE package body CNRUTL001 Is
        IBMERR001.RAISE_ERR_GENERICO('Parametri_CDS non trovati per l''anno: '||To_Char(inEsercizio)||' e Cds: '||inCds);
   End getRecParametriCds;
 End CNRUTL001;
-/
 
 

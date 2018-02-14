@@ -223,7 +223,6 @@ D_PRIMI525 CONSTANT VARCHAR2(60):='OBB-D_PRIMI525-SCAD.IM_ASS_DOC_AMM<>IM_SCAD';
 
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRMAR030 is
@@ -1366,6 +1365,5 @@ CREATE OR REPLACE package body CNRMAR030 is
 	  END; -- livello 1
  end; -- MAIN
 end;
-/
 
 

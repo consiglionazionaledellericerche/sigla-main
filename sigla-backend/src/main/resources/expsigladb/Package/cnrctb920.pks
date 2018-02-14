@@ -271,7 +271,6 @@ CREATE OR REPLACE PACKAGE CNRCTB920 AS
       );
 
 END CNRCTB920;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB920 AS
@@ -1768,6 +1767,5 @@ END estrazioneINPS;
 -- =================================================================================================
 
 END; -- PACKAGE END;
-/
 
 

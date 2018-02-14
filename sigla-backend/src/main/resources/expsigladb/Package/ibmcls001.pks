@@ -17,7 +17,6 @@ CREATE OR REPLACE package IBMCLS001 as
 -- Functions e Procedures:
  function getBestUrl(aClusterUrl varchar2) return varchar2;
 end;
-/
 
 
 CREATE OR REPLACE package body IBMCLS001 is
@@ -48,6 +47,5 @@ CREATE OR REPLACE package body IBMCLS001 is
   return aBestServerUrl;
  end;
 end;
-/
 
 
