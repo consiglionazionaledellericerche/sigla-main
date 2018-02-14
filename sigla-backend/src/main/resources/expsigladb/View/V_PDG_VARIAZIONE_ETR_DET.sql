@@ -1,0 +1,216 @@
+--------------------------------------------------------
+--  DDL for View V_PDG_VARIAZIONE_ETR_DET
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "V_PDG_VARIAZIONE_ETR_DET" ("ESERCIZIO", "CD_CENTRO_RESPONSABILITA", "DS_CDR", "CD_LINEA_ATTIVITA", "DENOMINAZIONE", "DS_LINEA_ATTIVITA", "PG_PROGETTO", "TI_GESTIONE", "CD_ELEMENTO_VOCE", "DS_ELEMENTO_VOCE", "VARIAZIONE", "ASSESTATO_ENTRATA", "STATO", "CD_NATURA", "DS_NATURA", "PG_VARIAZIONE_PDG", "ESERCIZIO_VARIAZIONE_PDG", "CD_CENTRO_RESPONSABILITA_CLGS", "DS_CDR_CLGS", "ID_CLASSIFICAZIONE", "DS_CLASSIFICAZIONE", "TITOLO", "CATEGORIA", "CD_MODULO", "DS_MODULO", "LIVELLO_PROGETTO") AS 
+  SELECT g.esercizio, g.cd_centro_responsabilita, g.ds_cdr,
+          g.cd_linea_attivita, g.denominazione, g.ds_linea_attivita,
+          g.pg_progetto, g.ti_gestione, g.cd_elemento_voce,
+          g.ds_elemento_voce, g.variazione,
+          cal_assestato.assestato_entrata
+                               (g.esercizio,
+                                NULL,
+                                NULL,
+                                NULL,
+                                g.cd_centro_responsabilita,
+                                g.cd_elemento_voce,
+                                g.cd_linea_attivita,
+                                g.pg_variazione_pdg,
+                                g.titolo,
+                                g.categoria,
+                                NULL,
+                                NULL,
+                                NULL,
+                                NULL,
+                                NULL,
+                                NULL
+                               ) assestato_entrata,
+          g.stato, g.cd_natura, g.ds_natura, g.pg_variazione_pdg,
+          g.esercizio_pdg_variazione, g.cd_centro_responsabilita_clgs,
+          g.ds_cdr_clgs, g.id_classificazione, g.ds_classificazione, g.titolo,
+          g.categoria, modulo.cd_progetto cd_modulo,
+          modulo.ds_progetto ds_modulo, modulo.livello livello_progetto
+     FROM (SELECT f.esercizio, f.cd_centro_responsabilita, f.ds_cdr,
+                  f.cd_linea_attivita,
+                  SUBSTR (linea_attivita.denominazione, 1, 80) denominazione,
+                  SUBSTR (linea_attivita.ds_linea_attivita,
+                          1,
+                          80
+                         ) ds_linea_attivita,
+                  linea_attivita.pg_progetto, f.ti_gestione,
+                  f.cd_elemento_voce, f.ds_elemento_voce, f.variazione,
+                  f.stato, f.cd_natura, f.ds_natura, f.pg_variazione_pdg,
+                  f.esercizio_pdg_variazione, f.cd_centro_responsabilita_clgs,
+                  f.ds_cdr_clgs, f.id_classificazione, f.ds_classificazione,
+                  f.titolo, f.categoria
+             FROM (SELECT e.esercizio, e.cd_centro_responsabilita, e.ds_cdr,
+                          e.cd_linea_attivita, e.ti_gestione,
+                          e.cd_elemento_voce, e.ds_elemento_voce,
+                          e.variazione, e.stato, e.cd_natura, e.ds_natura,
+                          e.pg_variazione_pdg, e.esercizio_pdg_variazione,
+                          e.cd_centro_responsabilita_clgs, e.ds_cdr_clgs,
+                          e.id_classificazione,
+                          classificazione_voci.ds_classificazione,
+                          classificazione_voci.cd_livello1 titolo,
+                          classificazione_voci.cd_livello2 categoria
+                     FROM (SELECT d.esercizio, d.cd_centro_responsabilita,
+                                  d.ds_cdr, d.cd_linea_attivita,
+                                  d.ti_gestione, d.cd_elemento_voce,
+                                  elemento_voce.ds_elemento_voce,
+                                  d.variazione, d.stato, d.cd_natura,
+                                  d.ds_natura, d.pg_variazione_pdg,
+                                  d.esercizio_pdg_variazione,
+                                  d.cd_centro_responsabilita_clgs,
+                                  d.ds_cdr_clgs,
+                                  elemento_voce.id_classificazione
+                             FROM (SELECT c.esercizio,
+                                          c.cd_centro_responsabilita,
+                                          c.ds_cdr, c.cd_linea_attivita,
+                                          c.ti_gestione, c.cd_elemento_voce,
+                                          c.variazione, c.stato, c.cd_natura,
+                                          natura.ds_natura,
+                                          c.pg_variazione_pdg,
+                                          c.esercizio_pdg_variazione,
+                                          c.cd_centro_responsabilita_clgs,
+                                          c.ds_cdr_clgs
+                                     FROM (SELECT b.esercizio,
+                                                  b.cd_centro_responsabilita,
+                                                  SUBSTR (cdr.ds_cdr,
+                                                          1,
+                                                          80
+                                                         ) ds_cdr,
+                                                  b.cd_linea_attivita,
+                                                  b.ti_gestione,
+                                                  b.cd_elemento_voce,
+                                                  b.variazione, b.stato,
+                                                  b.cd_natura,
+                                                  b.pg_variazione_pdg,
+                                                  b.esercizio_pdg_variazione,
+                                                  b.cd_centro_responsabilita_clgs,
+                                                  SUBSTR
+                                                     (cdr_clgs.ds_cdr,
+                                                      1,
+                                                      80
+                                                     ) ds_cdr_clgs
+                                             FROM (SELECT DISTINCT a.esercizio,
+                                                                   a.cd_centro_responsabilita,
+                                                                   a.cd_linea_attivita,
+                                                                   a.ti_gestione,
+                                                                   a.cd_elemento_voce,
+                                                                   a.variazione,
+                                                                   e.stato,
+                                                                   e.cd_natura,
+                                                                   e.pg_variazione_pdg,
+                                                                   e.esercizio_pdg_variazione,
+                                                                   e.cd_centro_responsabilita_clgs
+                                                              FROM (SELECT   pdg_preventivo_etr_det.esercizio,
+                                                                             pdg_preventivo_etr_det.cd_centro_responsabilita,
+                                                                             pdg_preventivo_etr_det.cd_linea_attivita,
+                                                                             pdg_preventivo_etr_det.ti_appartenenza,
+                                                                             pdg_preventivo_etr_det.ti_gestione,
+                                                                             pdg_preventivo_etr_det.cd_elemento_voce,
+                                                                             pdg_preventivo_etr_det.pg_entrata,
+                                                                             NVL
+                                                                                (SUM
+                                                                                    (  NVL
+                                                                                          (im_ra_rce,
+                                                                                           0
+                                                                                          )
+                                                                                     + NVL
+                                                                                          (im_rc_esr,
+                                                                                           0
+                                                                                          )
+                                                                                    ),
+                                                                                 0
+                                                                                )
+                                                                                variazione
+                                                                        FROM pdg_preventivo_etr_det,
+                                                                             parametri_cnr
+                                                                       WHERE pdg_preventivo_etr_det.esercizio =
+                                                                                parametri_cnr.esercizio
+                                                                         AND parametri_cnr.fl_regolamento_2006 =
+                                                                                'N'
+                                                                    GROUP BY pdg_preventivo_etr_det.esercizio,
+                                                                             pdg_preventivo_etr_det.cd_centro_responsabilita,
+                                                                             pdg_preventivo_etr_det.cd_linea_attivita,
+                                                                             pdg_preventivo_etr_det.ti_appartenenza,
+                                                                             pdg_preventivo_etr_det.ti_gestione,
+                                                                             pdg_preventivo_etr_det.cd_elemento_voce,
+                                                                             pdg_preventivo_etr_det.pg_entrata) a,
+                                                                   pdg_preventivo_etr_det e
+                                                             WHERE a.esercizio =
+                                                                      e.esercizio
+                                                               AND a.cd_centro_responsabilita =
+                                                                      e.cd_centro_responsabilita
+                                                               AND a.cd_linea_attivita =
+                                                                      e.cd_linea_attivita
+                                                               AND a.ti_appartenenza =
+                                                                      e.ti_appartenenza
+                                                               AND a.ti_gestione =
+                                                                      e.ti_gestione
+                                                               AND a.cd_elemento_voce =
+                                                                      e.cd_elemento_voce
+                                                               AND a.pg_entrata =
+                                                                      e.pg_entrata
+                                                   UNION ALL
+                                                   SELECT DISTINCT a.esercizio,
+                                                                   a.cd_cdr_assegnatario
+                                                                      cd_centro_responsabilita,
+                                                                   a.cd_linea_attivita,
+                                                                   a.ti_gestione,
+                                                                   a.cd_elemento_voce,
+                                                                   NVL
+                                                                      (a.im_entrata,
+                                                                       0
+                                                                      )
+                                                                      variazione,
+                                                                   var.stato,
+                                                                   la.cd_natura,
+                                                                   a.pg_variazione_pdg,
+                                                                   a.esercizio
+                                                                      esercizio_pdg_variazione,
+                                                                   a.cd_cdr_assegnatario_clgs
+                                                                      cd_centro_responsabilita_clgs
+                                                              FROM pdg_variazione_riga_gest a,
+                                                                   parametri_cnr,
+                                                                   pdg_variazione var,
+                                                                   linea_attivita la
+                                                             WHERE a.esercizio =
+                                                                      parametri_cnr.esercizio
+                                                               AND a.ti_gestione =
+                                                                           'E'
+                                                               AND parametri_cnr.fl_regolamento_2006 =
+                                                                           'Y'
+                                                               AND a.esercizio =
+                                                                      var.esercizio
+                                                               AND a.pg_variazione_pdg =
+                                                                      var.pg_variazione_pdg
+                                                               AND a.cd_cdr_assegnatario =
+                                                                      la.cd_centro_responsabilita
+                                                               AND a.cd_linea_attivita =
+                                                                      la.cd_linea_attivita) b,
+                                                  cdr,
+                                                  cdr cdr_clgs
+                                            WHERE b.cd_centro_responsabilita =
+                                                     cdr.cd_centro_responsabilita
+                                              AND b.cd_centro_responsabilita_clgs =
+                                                                           cdr_clgs.cd_centro_responsabilita(+)) c,
+                                          natura
+                                    WHERE c.cd_natura = natura.cd_natura) d,
+                                  elemento_voce
+                            WHERE d.cd_elemento_voce =
+                                                elemento_voce.cd_elemento_voce
+                              AND d.esercizio_pdg_variazione =
+                                                       elemento_voce.esercizio
+                              AND elemento_voce.ti_gestione = 'E') e,
+                          classificazione_voci
+                    WHERE e.id_classificazione =
+                                       classificazione_voci.id_classificazione) f,
+                  v_linea_attivita_valida linea_attivita
+            WHERE f.esercizio = linea_attivita.esercizio
+              AND f.cd_linea_attivita = linea_attivita.cd_linea_attivita
+              AND f.cd_centro_responsabilita =
+                                       linea_attivita.cd_centro_responsabilita) g,
+          progetto_gest modulo
+    WHERE g.pg_progetto = modulo.pg_progetto(+)
+      AND (modulo.esercizio IS NULL OR modulo.esercizio = g.esercizio) ;

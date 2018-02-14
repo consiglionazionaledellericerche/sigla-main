@@ -33,6 +33,7 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import org.springframework.core.type.filter.AssignableTypeFilter;
 
 import it.cnr.contab.anagraf00.ejb.TerzoComponentSession;
+import it.cnr.contab.bollo00.ejb.AttoBolloComponentSession;
 import it.cnr.contab.bollo00.comp.TipoAttoBolloComponent;
 import it.cnr.contab.bollo00.ejb.TipoAttoBolloComponentSession;
 import it.cnr.contab.client.docamm.FatturaAttiva;
@@ -478,6 +479,9 @@ public final class Utility {
 	}
     public static NumeratoriOrdMagComponentSession createNumeratoriOrdMagComponentSession() throws javax.ejb.EJBException{
 	    return (NumeratoriOrdMagComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRORDMAG_EJB_NumeratoriOrdMagComponentSession", NumeratoriOrdMagComponentSession.class);
+	}
+    public static AttoBolloComponentSession createAttoBolloComponentSession() throws javax.ejb.EJBException{
+    	return (AttoBolloComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRBOLLO00_EJB_AttoBolloComponentSession", AttoBolloComponentSession.class);
 	}
     public static TipoAttoBolloComponentSession createTipoAttoBolloComponentSession() throws javax.ejb.EJBException{
 	    return (TipoAttoBolloComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRBOLLO00_EJB_TipoAttoBolloComponentSession", TipoAttoBolloComponentSession.class);

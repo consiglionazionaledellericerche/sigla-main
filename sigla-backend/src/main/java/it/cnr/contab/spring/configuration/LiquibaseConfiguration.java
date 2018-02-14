@@ -20,7 +20,9 @@ public class LiquibaseConfiguration {
     public Liquibase liquibase() throws LiquibaseException, SQLException {
         Connection connection = it.cnr.jada.util.ejb.EJBCommonServices.getDatasource().getConnection();
         Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
+
         Liquibase liquibase = new Liquibase("db-changelog-master.xml", new GzipClassLoaderResourceAccessor(), database);
+
         liquibase.update(new Contexts(), new LabelExpression());
         return liquibase;
     }
