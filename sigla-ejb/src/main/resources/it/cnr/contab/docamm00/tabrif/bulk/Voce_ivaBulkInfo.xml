@@ -175,6 +175,17 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="true"
 	 	label="Servizio/Bene"/>
+	<fieldProperty
+		name="ti_bollo"
+		property="ti_bollo"
+		keysProperty="ti_bolloKeys"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+	 	label="Soggetto a Bollo"/>
 	 <fieldProperty
 		name="fl_solo_italia"
 		property="fl_solo_italia"
@@ -261,6 +272,8 @@
 	<formFieldProperty
 		name="ti_bene_servizio" />	
 	<formFieldProperty
+		name="ti_bollo" />	
+	<formFieldProperty
 		name="fl_obb_dichiarazione_intento" />		
 	<columnFieldProperty
 		name="cd_voce_iva" />
@@ -300,6 +313,8 @@
 		name="fl_solo_italia" />	
 	<columnFieldProperty
 		name="ti_bene_servizio" />	
+	<columnFieldProperty
+		name="ti_bollo" />	
 	<columnFieldProperty
 		name="fl_obb_dichiarazione_intento" />			
 	<findFieldProperty

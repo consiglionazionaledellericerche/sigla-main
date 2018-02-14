@@ -107,6 +107,7 @@ function escludiPrimo(index){
 			
 				<% bp.getController().writeFormField(out,"ti_applicazione"); %>
 				<% bp.getController().writeFormField(out,"ti_bene_servizio"); %>
+				<% bp.getController().writeFormField(out,"ti_bollo"); %>
 			</tr>	 
 			<tr>
 					<% bp.getController().writeFormLabel(out,"cd_gruppo_iva"); %>

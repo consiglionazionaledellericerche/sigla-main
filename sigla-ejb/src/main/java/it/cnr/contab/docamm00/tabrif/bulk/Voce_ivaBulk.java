@@ -36,12 +36,24 @@ public class Voce_ivaBulk extends Voce_ivaBase {
 	}
 
 
+	public final static String SOGGETTO_BOLLO = "S";
+	public final static String NON_SOGGETTO_BOLLO = "N";
+	public final static String SPECIFICA_DICITURA_BOLLO = "D";
 	public final static String BENE_SERVIZIO = "*";
 	public final static String SERVIZIO = "S";
 	public final static String BENE = "B";
 
 	public final static Dictionary BENI_SERVIZI;
 
+	public final static Dictionary BOLLO;
+
+	static {
+		BOLLO = new it.cnr.jada.util.OrderedHashtable();
+		BOLLO.put(NON_SOGGETTO_BOLLO,"No");
+		BOLLO.put(SOGGETTO_BOLLO,"Sì");
+		BOLLO.put(SPECIFICA_DICITURA_BOLLO,"Specifica Dicitura");
+	}
+	
 	static {
 		BENI_SERVIZI = new it.cnr.jada.util.OrderedHashtable();
 		BENI_SERVIZI.put(BENE,"Bene");
@@ -266,5 +278,15 @@ public void validate() throws ValidationException {
 public Dictionary getTi_bene_servizioKeys() {
 	
 	return BENI_SERVIZI;
+}
+public Dictionary getTi_bolloKeys() {
+	
+	return BOLLO;
+}
+public Boolean isCodiceIvaSoggettoBollo(){
+	if (SOGGETTO_BOLLO.equals(getTi_bollo())){
+		return true;
+	}
+	return false;
 }
 }

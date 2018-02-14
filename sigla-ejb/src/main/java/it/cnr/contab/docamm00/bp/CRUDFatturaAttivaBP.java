@@ -1,6 +1,20 @@
 package it.cnr.contab.docamm00.bp;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.ejb.EJBException;
+
+import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.docs.bulk.AllegatoFatturaAttivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Consuntivo_rigaVBulk;
@@ -30,6 +44,7 @@ import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.jada.DetailedException;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -37,19 +52,8 @@ import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
-
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 /**
@@ -108,6 +112,8 @@ public CRUDFatturaAttivaBP(Class dettAccertamentiControllerClass) {
 			}
 		};
 }
+
+
 public CRUDFatturaAttivaBP(String function) throws BusinessProcessException{
 	this(function, Fattura_attiva_rigaBulk.class);
 }
@@ -1125,6 +1131,21 @@ public boolean isROBank(UserContext context, Fattura_attivaBulk fattura) throws 
 //		}
 //		return null;
 //	}
+	public void gestioneBeneBolloVirtuale(ActionContext actioncontext) throws BusinessProcessException{
+		Fattura_attiva_rigaBulk riga = (Fattura_attiva_rigaIBulk)getDettaglio().getModel();
+		if (riga.getBene_servizio().getFl_bollo() && !Fattura_attivaBulk.TARIFFARIO.equals(riga.getFattura_attiva().getTi_causale_emissione())) {
+			try {
+				BigDecimal importoBollo = ((FatturaAttivaSingolaComponentSession)createComponentSession()).getImportoBolloVirtuale(actioncontext.getUserContext(), riga.getFattura_attiva());
+				if (importoBollo != null){
+					riga.setPrezzo_unitario(importoBollo);
+					riga.setQuantita(BigDecimal.ONE);
+				};
+			} catch (ComponentException | RemoteException | EJBException | DetailedRuntimeException  e) {
+				throw handleException(e);
+			}
+		}
+	}
+	
 	public void visualizzaDocumentoAttivo(ActionContext actioncontext) throws Exception {
 		Fattura_attivaBulk fattura = (Fattura_attivaBulk)getModel();
 		InputStream is = docCollService.getStreamDocumento(fattura);
