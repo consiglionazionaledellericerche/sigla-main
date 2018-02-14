@@ -1,13 +1,39 @@
 <action-mappings>
-  <action 
-      path="/TipoAttoBolloAction" actionClass="it.cnr.contab.bollo00.action.TipoAttoBolloAction">
-  </action>
+	<action 
+		path="/CRUDAction" actionClass="it.cnr.jada.util.action.CRUDAction">
+	</action>
+	<action 
+      	path="/TipoAttoBolloAction" actionClass="it.cnr.contab.bollo00.action.TipoAttoBolloAction">
+  	</action>
+	<action 
+      	path="/AttoBolloAction" actionClass="it.cnr.contab.bollo00.action.AttoBolloAction">
+  	</action>
+	<action 
+      	path="/ConsAttoBolloAction" actionClass="it.cnr.contab.bollo00.action.ConsAttoBolloAction">
+  	</action>
 
   <businessProcess
       name="CRUDConfigTipoAttoBolloBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-    <forward name="default" path="/bollo00/tipo_atto.jsp"/>
+    <forward name="default" path="/bollo00/tipo_atto_bollo.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk"/>
     <init-param name="componentSessionName" value="CNRBOLLO00_EJB_TipoAttoBolloComponentSession"/>
 	<init-param name="defaultAction" value="TipoAttoBolloAction"/>
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDAttoBolloBP" className="it.cnr.contab.bollo00.bp.CRUDAttoBolloBP">
+    <forward name="default" path="/bollo00/atto_bollo.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.bollo00.bulk.Atto_bolloBulk"/>
+    <init-param name="componentSessionName" value="CNRBOLLO00_EJB_AttoBolloComponentSession"/>
+	<init-param name="defaultAction" value="AttoBolloAction"/>
+  </businessProcess>
+  
+  <businessProcess
+	  name="ConsAttoBolloBP" className="it.cnr.contab.bollo00.bp.ConsAttoBolloBP">
+	<forward name="default" path="/bollo00/cons_atto_bollo.jsp"/>
+	<init-param name="bulkClassName" value="it.cnr.contab.bollo00.bulk.V_cons_atto_bolloBulk"/>
+	<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+	<init-param name="defaultAction" value="ConsAttoBolloAction" />
+	<init-param name="multiSelezione" value="Y" />
   </businessProcess>
 </action-mappings>

@@ -76,7 +76,14 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" 
-			nullable="false"/>	
+			nullable="false"/>
+		<columnMapping
+			columnName="FL_DETRAZIONI_ALTRI_TIPI"
+			propertyName="fl_detrazioni_altri_tipi"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" 
+			nullable="false"/>			
 		<columnMapping
 			columnName="IM_REDDITO_COMPLESSIVO"
 			propertyName="im_reddito_complessivo"
@@ -135,5 +142,7 @@
 	<persistentProperty
 		name="fl_applica_detr_pers_max" />	
 	<persistentProperty
-		name="fl_no_credito_irpef" />						
+		name="fl_no_credito_irpef" />
+	<persistentProperty
+		name="fl_detrazioni_altri_tipi" />	
 </SQLPersistentInfo>

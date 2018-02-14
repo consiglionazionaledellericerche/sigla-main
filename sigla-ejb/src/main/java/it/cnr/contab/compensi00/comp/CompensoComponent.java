@@ -19,6 +19,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoHome;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.RegioneHome;
 import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
@@ -1370,23 +1371,41 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		if(compenso.getStato_liquidazione()!=null && !compenso.getStato_liquidazione().equals(compenso.LIQ))
 			throw new it.cnr.jada.comp.ApplicationException(
 					"Lo stato della liquidazione non è compatibile");
-		if(compenso.getTerzo()!=null &&  compenso.getBanca()!=null && (Rif_modalita_pagamentoBulk.BANCARIO.equals(compenso.getBanca()
-					.getTi_pagamento()))){
-				if (compenso.getCd_terzo()!=null){
-					
-						TerzoBulk terzo = (TerzoBulk) getHome(userContext,
-								TerzoBulk.class).findByPrimaryKey(
-								new TerzoBulk(compenso.getCd_terzo()));
-						if(terzo.getPg_comune_sede()!=null){
-							ComuneBulk comune = (ComuneBulk) getHome(userContext,
-									ComuneBulk.class).findByPrimaryKey(
-									new ComuneBulk(terzo.getPg_comune_sede()));
-							if (comune.getTi_italiano_estero().equals(NazioneBulk.ITALIA) && terzo.getCap_comune_sede()==null)
-									throw new ApplicationException(
-											"Attenzione per la modalità di pagamento presente sul documento è necessario indicare il cap sul terzo.");
-						}
-					}										
-			}
+		  //controllo cap /swift
+        if (compenso.getBanca() != null && 
+        		((Rif_modalita_pagamentoBulk.BANCARIO.equals(compenso.getBanca().getTi_pagamento())
+     			||(Rif_modalita_pagamentoBulk.IBAN.equals(compenso.getBanca().getTi_pagamento()))))) {
+        	
+        	  BancaBulk banca = (BancaBulk) getHome(userContext,
+        			  BancaBulk.class).findByPrimaryKey(
+                      new BancaBulk(compenso.getCd_terzo(),compenso.getPg_banca()));
+            
+        	if (banca!=null && banca.getCodice_iban()!=null && compenso.getBanca().getAbi()!=null && banca.getCodice_iban().startsWith("IT")){
+            if (compenso.getCd_terzo() != null) {
+                TerzoBulk terzo = (TerzoBulk) getHome(userContext,
+                        TerzoBulk.class).findByPrimaryKey(
+                        new TerzoBulk(compenso.getCd_terzo()));
+                if (terzo.getPg_comune_sede() != null) {
+                    ComuneBulk comune = (ComuneBulk) getHome(userContext,
+                            ComuneBulk.class).findByPrimaryKey(
+                            new ComuneBulk(terzo.getPg_comune_sede()));
+                    if (comune.getTi_italiano_estero().equals(NazioneBulk.ITALIA) && terzo.getCap_comune_sede() == null)
+                        throw new ApplicationException(
+                                "Attenzione per la modalità di pagamento presente sul documento è necessario indicare il cap sul terzo.");
+                }
+              }
+            }
+        	else if (banca!=null && banca.getCodice_iban()!=null && compenso.getBanca().getAbi()==null ){
+                NazioneHome nazioneHome = (NazioneHome) getHome(userContext,
+                        NazioneBulk.class);
+                SQLBuilder sqlExists = nazioneHome.createSQLBuilder();
+                sqlExists.addSQLClause("AND","NAZIONE.CD_ISO",SQLBuilder.EQUALS,banca.getCodice_iban().substring(0, 2));
+                sqlExists.addSQLClause("AND","NAZIONE.FL_SEPA",SQLBuilder.EQUALS,"Y");
+                if (sqlExists.executeCountQuery(getConnection(userContext))!=0 && compenso.getBanca().getCodice_swift()==null) 
+        		          throw new ApplicationException(
+                                    "Attenzione per la modalità di pagamento presente sul documento è necessario indicare il codice swift/bic.");
+                }
+        }
 		validaCompensoPerContabilizzazione(userContext, compenso);
 		contabilizzaCompensoCofi(userContext, compenso);
 

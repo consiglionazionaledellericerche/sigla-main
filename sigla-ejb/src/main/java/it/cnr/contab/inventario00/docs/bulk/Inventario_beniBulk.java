@@ -570,7 +570,10 @@ public boolean isROcategoriaBene() {
 	java.math.BigDecimal val_alienazione = (getValore_alienazione()!=null?getValore_alienazione():zero);
 	java.math.BigDecimal val_ammortizzato = (getValore_ammortizzato()!=null?getValore_ammortizzato():zero);
 
-	
+	if((this.getDa_fattura()!=null && this.getDa_fattura().booleanValue())||(this.isContab()!=null && this.isContab().booleanValue())||
+			(this.isMigrato())||(this.isBeneAccessorio())){
+			return true;
+	}else
 	return (!(
 			(val_alienazione.compareTo(zero)==0) &&
 			(val_ammortizzato.compareTo(zero)==0)
