@@ -3216,10 +3216,13 @@ public Forward doBringBackSearchBene_servizio(ActionContext context,
 	
 	try {
 		Voce_ivaBulk voceIvaB = null;
+		CRUDFatturaAttivaIBP bp = (CRUDFatturaAttivaIBP)context.getBusinessProcess();
 		if (beneTrovato!=null) {
 			fattura_riga.setBene_servizio(beneTrovato);
 			fattura_riga.setDs_riga_fattura(beneTrovato.getDs_bene_servizio());
 			voceIvaB = beneTrovato.getVoce_iva();
+
+			bp.gestioneBeneBolloVirtuale(context);
 		}
 		return doBringBackSearchVoce_iva(context, fattura_riga, voceIvaB);
 
