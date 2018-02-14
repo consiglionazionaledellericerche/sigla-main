@@ -25,6 +25,7 @@ public class TipoAttoBolloComponent extends CRUDComponent {
 				Tipo_atto_bolloHome home = (Tipo_atto_bolloHome)getHome(usercontext, Tipo_atto_bolloBulk.class);
 				SQLBuilder sql = home.createSQLBuilder();
 				sql.addClause(FindClause.AND,"codice",SQLBuilder.EQUALS, bulk.getCodice());
+				Optional.ofNullable(bulk.getId()).ifPresent(el->sql.addClause(FindClause.AND,"id",SQLBuilder.NOT_EQUALS, bulk.getId()));
 				sql.openParenthesis(FindClause.AND);
 				sql.addClause(FindClause.OR,"dtFinValidita",SQLBuilder.ISNULL, null);
 				sql.addClause(FindClause.OR,"dtFinValidita",SQLBuilder.GREATER_EQUALS, bulk.getDtIniValidita());
