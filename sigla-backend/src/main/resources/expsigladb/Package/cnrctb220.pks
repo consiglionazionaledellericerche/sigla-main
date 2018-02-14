@@ -220,7 +220,6 @@ CREATE OR REPLACE package CNRCTB220 as
  procedure job_registraAnnCogeEsChiuso(job number, pg_exec number, next_date date, aEsAnn number, aCdCds varchar2);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB220 is
@@ -839,6 +838,5 @@ For aEsRT in (select esercizio from esercizio_base where
 
 
 end;
-/
 
 

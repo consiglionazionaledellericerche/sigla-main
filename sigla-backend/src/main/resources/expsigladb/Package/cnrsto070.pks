@@ -30,7 +30,6 @@ CREATE OR REPLACE package CNRSTO070 as
  procedure sto_INCARICHI_REPERTORIO_ARCH (aPgStorico number, aDsStorico varchar2, aDest INCARICHI_REPERTORIO_ARCHIVIO%rowtype);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRSTO070 is
@@ -377,6 +376,5 @@ CREATE OR REPLACE package body CNRSTO070 is
     ,aDest.PG_VER_REC);
   end;
 end;
-/
 
 

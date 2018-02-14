@@ -42,7 +42,6 @@ CREATE OR REPLACE PACKAGE CNRCTB576 As
    			     aTSNow date,
    			     aUser varchar2) return liquid_gruppo_centro%rowtype;
 End;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB576 As
@@ -249,6 +248,5 @@ CREATE OR REPLACE PACKAGE BODY CNRCTB576 As
     return aLGC;
  end;
 End;
-/
 
 

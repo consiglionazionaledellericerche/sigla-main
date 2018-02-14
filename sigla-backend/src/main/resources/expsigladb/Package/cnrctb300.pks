@@ -447,7 +447,6 @@ PROCEDURE checkIniziale(
    procedure checkDocAmmCambiato (aTiDocAmm varchar2,aCdCds varchar2,aEs number,aCdUo varchar2,aPgDocAmm number, aPgVerRec number);
 
 END CNRCTB300;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY         CNRCTB300 AS
@@ -1709,6 +1708,5 @@ begin
  end;
 
 END;
-/
 
 

@@ -141,7 +141,6 @@ TIPO_LOG_JOB_CONG_FAT_ES_CH CONSTANT VARCHAR2(20):='CONG_FAT_ES_CH';
  procedure job_congelaFatturaEsChiuso(job number, pg_exec number, next_date date, aTiDoc varchar2, aCdCds varchar2, aEs number, aCdUo varchar2, aPgDoc number);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB107 is
@@ -582,6 +581,5 @@ CREATE OR REPLACE package body CNRCTB107 is
   end if;
  end;
 end;
-/
 
 

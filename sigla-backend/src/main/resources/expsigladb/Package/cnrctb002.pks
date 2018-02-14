@@ -214,7 +214,6 @@ function getVoceEpErarioCIvaGirocontoUO(aEs number) return voce_ep%rowtype;
  -- Recupera le voci economiche di costo e ricavo per la registrazione economida su pgiro
  procedure getVociEpPgiro(aEs number, aTiAppartenenza char, aTiGestione char, aCdEv varchar2, aCosto out voce_ep%rowtype, aRicavo out voce_ep%rowtype);
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB002 is
@@ -768,6 +767,5 @@ begin
  end;
 
 end;
-/
 
 

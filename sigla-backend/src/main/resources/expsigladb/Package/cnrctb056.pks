@@ -224,7 +224,6 @@ CREATE OR REPLACE PACKAGE CNRCTB056 IS
     aStringa         IN varchar2 default null)
   RETURN NUMBER;
 END CNRCTB056;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB056 IS
@@ -361,8 +360,7 @@ CREATE OR REPLACE PACKAGE BODY CNRCTB056 IS
 
     If recParametri.aStringa is not null Then
        Costruisci_Stringa(Stringa, '('||recParametri.aStringa||')');
-    End If;
-/*
+    End If;*
 dbms_output.put_line(substr(Stringa,1,200));
 dbms_output.put_line(substr(Stringa,201,200));
 dbms_output.put_line(substr(Stringa,401,200));
@@ -737,6 +735,5 @@ dbms_output.put_line(substr(Stringa,801,200));
                                                      aCdLiv6, aCdLiv7, aStringa)));
   End getAssestatoPreVarGestionale;
 END CNRCTB056;
-/
 
 

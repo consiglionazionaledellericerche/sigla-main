@@ -7,7 +7,6 @@ CREATE OR REPLACE package CAR_SALDI as
  Function TIPO_VAR_PDG (aEsercizio NUMBER, aNumVar NUMBER)  Return  VARCHAR2;
 
 end;
-/
 
 
 CREATE OR REPLACE package body CAR_SALDI is
@@ -449,6 +448,5 @@ Return TIPO;
 End;
 
 End;
-/
 
 

@@ -49,7 +49,6 @@ CREATE OR REPLACE package CNRSTO040 as
  procedure sto_ACCERTAMENTO_PGIRO_MODIF (aPgStorico number, imp_iniziale NUMBER, imp_variazione NUMBER,aDest ACCERTAMENTO%rowtype);
 
 end;
-/
 
 
 CREATE OR REPLACE package body         CNRSTO040 is
@@ -298,6 +297,5 @@ CREATE OR REPLACE package body         CNRSTO040 is
     );
  end;
 end;
-/
 
 

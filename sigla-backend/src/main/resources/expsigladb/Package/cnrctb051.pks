@@ -95,7 +95,6 @@ STATO_PDGP_APPROVATO CONSTANT VARCHAR2(5):='AP';
  procedure resetCampiImporto(aDett in out pdg_modulo_spese_gest%rowtype);
 
 End;
-/
 
 
 CREATE OR REPLACE package body CNRCTB051 is
@@ -724,6 +723,5 @@ End;
 
 
 End;
-/
 
 
