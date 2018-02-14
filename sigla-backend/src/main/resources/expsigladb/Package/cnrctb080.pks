@@ -411,7 +411,6 @@ FUNCTION getImponibilePagatoDip
        aAnag TERZO.cd_anag%TYPE
        ) RETURN NUMBER;
 END;
-/
 
 
 CREATE OR REPLACE PACKAGE BODY CNRCTB080 IS
@@ -1633,6 +1632,5 @@ BEGIN
 END getImponibilePagatoDip;
 
 End;
-/
 
 

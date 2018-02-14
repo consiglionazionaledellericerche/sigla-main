@@ -103,7 +103,6 @@ Function IM_MANDATI_REVERSALI_IMP (INES            VOCE_F_SALDI_CDR_LINEA.ESERCI
                                INELVOCE        VOCE_F_SALDI_CDR_LINEA.CD_ELEMENTO_VOCE%Type) Return NUMBER;
 
 End;
-/
 
 
 CREATE OR REPLACE package body CONTROLLO_IMPORTI is
@@ -760,6 +759,5 @@ END;
 
 
 End;
-/
 
 

@@ -188,7 +188,6 @@ procedure checkEsercizioChiusura(aEs number, aCds varchar2, aUser varchar2);
 -- procedure gestioneAvanzo(aCds varchar2, aEs number, aUser varchar2);
 
 end;
-/
 
 
 CREATE OR REPLACE package body CNRCTB009 as
@@ -1096,6 +1095,5 @@ begin
 end;
 
 end;
-/
 
 

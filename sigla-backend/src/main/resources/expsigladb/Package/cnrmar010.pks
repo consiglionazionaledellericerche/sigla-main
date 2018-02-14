@@ -121,7 +121,6 @@ TIPO_LOG_MAR_SALDI CONSTANT VARCHAR2(20):='MAR_SALDI00';
 
  function MSGCSV_DIFF_SALDI_CDR_LINEA(aDesc varchar2,aSaldoDoc V_VOCE_F_SALDI_CDR_LINEA%rowtype, aSaldo VOCE_F_SALDI_CDR_LINEA%rowtype) return varchar2;
 end;
-/
 
 
 CREATE OR REPLACE package body CNRMAR010 is
@@ -2005,6 +2004,5 @@ End Loop;
 End;
 
 End;
-/
 
 

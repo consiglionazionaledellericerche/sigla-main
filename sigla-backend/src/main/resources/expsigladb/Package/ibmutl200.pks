@@ -231,7 +231,6 @@ procedure logErr_TEMP(
  Function get_err_batch_log_riga_temp Return Boolean;
 
 end;
-/
 
 
 CREATE OR REPLACE package BODY IBMUTL200 is
@@ -845,6 +844,5 @@ End;
  End;
 
 end;
-/
 
 

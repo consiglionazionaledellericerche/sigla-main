@@ -1,0 +1,51 @@
+--------------------------------------------------------
+--  DDL for View VP_PDG_VARIAZIONE
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "VP_PDG_VARIAZIONE" ("ESERCIZIO", "PG_VARIAZIONE_PDG", "CD_CENTRO_RESPONSABILITA", "DS_CDR", "DT_APERTURA", "DT_CHIUSURA", "DT_APPROVAZIONE", "DT_ANNULLAMENTO", "DS_VARIAZIONE", "DS_DELIBERA", "STATO", "RIFERIMENTI", "CD_CAUSALE_RESPINTA", "DS_CAUSALE_RESPINTA", "DACR", "UTCR", "DUVA", "UTUV", "PG_VER_REC", "DT_APP_FORMALE", "TIPOLOGIA", "TIPOLOGIA_FIN", "TI_APPARTENENZA", "TI_GESTIONE", "CD_ELEMENTO_VOCE", "FL_VISTO_DIP_VARIAZIONI", "STATO_INVIO", "DT_FIRMA") AS 
+  select
+--
+-- Date: 21/11/2006
+-- Version: 1.0
+--
+-- Vista per la visualizzazione della descrizione del cdr nello stanziamento di competenza
+--
+-- History:
+--
+-- Date: 21/11/2006
+-- Version: 1.0
+-- Creazione
+--
+--
+-- Body:
+--
+v.ESERCIZIO,
+v.PG_VARIAZIONE_PDG,
+v.CD_CENTRO_RESPONSABILITA,
+c.DS_CDR,
+v.DT_APERTURA,
+v.DT_CHIUSURA,
+v.DT_APPROVAZIONE,
+v.DT_ANNULLAMENTO,
+v.DS_VARIAZIONE,
+v.DS_DELIBERA,
+v.STATO,
+v.RIFERIMENTI,
+v.CD_CAUSALE_RESPINTA,
+v.DS_CAUSALE_RESPINTA,
+v.DACR,
+v.UTCR,
+v.DUVA,
+v.UTUV,
+v.PG_VER_REC,
+v.DT_APP_FORMALE,
+v.TIPOLOGIA,
+v.TIPOLOGIA_FIN,
+v.TI_APPARTENENZA,
+v.TI_GESTIONE,
+v.CD_ELEMENTO_VOCE,
+v.FL_VISTO_DIP_VARIAZIONI,
+v.stato_invio,
+v.dt_firma
+from pdg_variazione v, cdr c
+where v.CD_CENTRO_RESPONSABILITA = c.CD_CENTRO_RESPONSABILITA;

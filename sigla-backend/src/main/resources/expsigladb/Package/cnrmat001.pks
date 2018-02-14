@@ -10,7 +10,6 @@ CREATE OR REPLACE package CNRMAT001 as
  Procedure job_deleteBatch_log_riga(aJob number, aPg_exec number, aNext_date DATE);
  TIPO_LOG_DEL_BATCH CONSTANT VARCHAR2(20):='LOG_DEL_BATCH';
 End;
-/
 
 
 CREATE OR REPLACE package body         CNRMAT001 is
@@ -55,6 +54,5 @@ CREATE OR REPLACE package body         CNRMAT001 is
     End;
   End;
 End;
-/
 
 

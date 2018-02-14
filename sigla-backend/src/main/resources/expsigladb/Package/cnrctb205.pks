@@ -1346,7 +1346,6 @@ procedure regDocAmmCOGE(aEs number, aCds varchar2, aUO varchar2, aTiDocumento va
 -- parametro da valutare in molte procedure
  recParametriCNR PARAMETRI_CNR%Rowtype;
 end;
-/
 
 
 CREATE OR REPLACE package body         CNRCTB205 is
@@ -6436,6 +6435,5 @@ Dbms_Output.put_line ('h');
  end;
 
 End;
-/
 
 
