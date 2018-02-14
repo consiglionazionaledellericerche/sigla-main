@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		label="Esercizio"
+		inputType="TEXT" />
+	<fieldProperty
+		name="descrizioneAtto"
+		property="descrizioneAtto"
+		inputType="TEXT"
+		label="Descrizione Atto" />
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="cdUnitaOrganizzativa"
+		inputType="TEXT"
+		label="Unit&#224; organizzativa" />
+	<fieldProperty
+		name="dsUnitaOrganizzativa"
+		property="dsUnitaOrganizzativa"
+		inputType="TEXT"
+		label="Unit&#224; organizzativa" />
+	<fieldProperty
+		name="cdTipoAtto"
+		property="cdTipoAtto"
+		inputType="TEXT"
+		label="Codice Tipo Atto" />
+	<fieldProperty
+		name="dsTipoAtto"
+		property="dsTipoAtto"
+		inputType="TEXT"
+		label="Descrizione Tipo Atto" />
+	<fieldProperty
+		name="riferimento"
+		property="riferimento"
+		inputType="TEXT"
+		label="Riferimento" />
+	<fieldProperty
+		name="tiDettagli"
+		property="tiDettagli"
+		label="Fogli/Esemplari"
+		keysProperty="tiDettagliKeys"
+		inputType="SELECT" />
+	<fieldProperty
+		name="numDettagli"
+		property="numDettagli"
+		label="Num. Fogli/Esemplari"
+		inputType="TEXT"
+		style="text-align: right" />
+	<fieldProperty
+		name="imBollo"
+		property="imBollo"
+		label="Importo Unitario Bollo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		style="text-align: right" />
+	<fieldProperty
+		name="imTotaleBollo"
+		property="imTotaleBollo"
+		label="Importo Totale Bollo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		style="text-align: right" />
+	<fieldProperty
+		name="tipoConsultazione"
+		property="tipoConsultazione"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL"
+		keysProperty="tiTipoConsultazioneKeys"
+		label="Visualizza Consultazione in modalità" />		
+
+	<formFieldProperty 
+		name="tipoConsultazione"/>
+
+	<columnSet name="TIP">
+		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="cdTipoAtto" label="Codice" headerLabel="Tipo Atto"/>
+		<columnFieldProperty name="dsTipoAtto" label="Descrizione" headerLabel="Tipo Atto"/>
+		<columnFieldProperty name="imBollo" label="Importo Unitario Bollo" headerLabel="Tipo Atto"/>
+		<columnFieldProperty name="tiDettagli" label="Tipo" headerLabel="Fogli/Esemplari"/>
+		<columnFieldProperty name="numDettagli" label="Numero" headerLabel="Fogli/Esemplari"/>
+		<columnFieldProperty name="imTotaleBollo" label="Importo Totale Bollo"/>
+	</columnSet>
+	<freeSearchSet name="TIP">
+		<findFieldProperty name="esercizio" />
+		<findFieldProperty name="cdTipoAtto" />
+		<findFieldProperty name="tiDettagli" />
+		<findFieldProperty name="numDettagli" />
+	</freeSearchSet>
+
+	<columnSet name="TIPUO">
+		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="cdTipoAtto" label="Codice" headerLabel="Tipo Atto"/>
+		<columnFieldProperty name="imBollo" label="Importo Unitario Bollo" headerLabel="Tipo Atto"/>
+		<columnFieldProperty name="cdUnitaOrganizzativa" label="Codice" headerLabel="Unità Organizzativa"/>
+		<columnFieldProperty name="dsUnitaOrganizzativa" label="Descrizione" headerLabel="Unità Organizzativa"/>
+		<columnFieldProperty name="tiDettagli" label="Tipo" headerLabel="Fogli/Esemplari"/>
+		<columnFieldProperty name="numDettagli" label="Numero" headerLabel="Fogli/Esemplari"/>
+		<columnFieldProperty name="imTotaleBollo" label="Importo Totale Bollo"/>
+	</columnSet>
+	<freeSearchSet name="TIPUO">
+		<findFieldProperty name="esercizio" />
+		<findFieldProperty name="cdTipoAtto" />
+		<findFieldProperty name="cdUnitaOrganizzativa" />
+		<findFieldProperty name="tiDettagli" />
+		<findFieldProperty name="numDettagli" />
+	</freeSearchSet>
+
+	<columnSet name="TIPUODET">
+		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="cdTipoAtto" label="Codice" headerLabel="Tipo Atto"/>
+		<columnFieldProperty name="imBollo" label="Importo Unitario Bollo" headerLabel="Tipo Atto"/>
+		<columnFieldProperty name="cdUnitaOrganizzativa" label="Unità Organizzativa"/>
+		<columnFieldProperty name="descrizioneAtto" label="Descrizione Atto"/>
+		<columnFieldProperty name="riferimento" label="Riferimento"/>
+		<columnFieldProperty name="tiDettagli" label="Tipo" headerLabel="Fogli/Esemplari"/>
+		<columnFieldProperty name="numDettagli" label="Numero" headerLabel="Fogli/Esemplari"/>
+		<columnFieldProperty name="imTotaleBollo" label="Importo Totale Bollo"/>
+	</columnSet>
+	<freeSearchSet name="TIPUODET">
+		<findFieldProperty name="esercizio" />
+		<findFieldProperty name="cdTipoAtto" />
+		<findFieldProperty name="cdUnitaOrganizzativa" />
+		<findFieldProperty name="descrizioneAtto" />
+		<findFieldProperty name="riferimento" />
+		<findFieldProperty name="tiDettagli" />
+		<findFieldProperty name="numDettagli" />
+	</freeSearchSet>
+
+	<columnSet name="UO">
+		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="cdUnitaOrganizzativa" label="Codice" headerLabel="Unità Organizzativa"/>
+		<columnFieldProperty name="dsUnitaOrganizzativa" label="Descrizione" headerLabel="Unità Organizzativa"/>
+		<columnFieldProperty name="imTotaleBollo" label="Importo Totale Bollo"/>
+	</columnSet>
+	<freeSearchSet name="UO">
+		<findFieldProperty name="esercizio" />
+		<findFieldProperty name="cdUnitaOrganizzativa" />
+		<findFieldProperty name="imTotaleBollo" />
+	</freeSearchSet>
+
+	<columnSet name="UOTIP">
+		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="cdUnitaOrganizzativa" label="Unità Organizzativa"/>
+		<columnFieldProperty name="cdTipoAtto" label="Codice" headerLabel="Tipo Atto"/>
+		<columnFieldProperty name="dsTipoAtto" label="Descrizione" headerLabel="Tipo Atto"/>
+		<columnFieldProperty name="imBollo" label="Importo Unitario Bollo" headerLabel="Tipo Atto"/>
+		<columnFieldProperty name="tiDettagli" label="Tipo" headerLabel="Fogli/Esemplari"/>
+		<columnFieldProperty name="numDettagli" label="Numero" headerLabel="Fogli/Esemplari"/>
+		<columnFieldProperty name="imTotaleBollo" label="Importo Totale Bollo"/>
+	</columnSet>
+	<freeSearchSet name="UOTIP">
+		<findFieldProperty name="esercizio" />
+		<findFieldProperty name="cdUnitaOrganizzativa" />
+		<findFieldProperty name="cdTipoAtto" />
+		<findFieldProperty name="tiDettagli" />
+		<findFieldProperty name="numDettagli" />
+	</freeSearchSet>
+
+	<columnSet name="UOTIPDET">
+		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="cdUnitaOrganizzativa" label="Unità Organizzativa"/>
+		<columnFieldProperty name="cdTipoAtto" label="Codice" headerLabel="Tipo Atto"/>
+		<columnFieldProperty name="imBollo" label="Importo Unitario Bollo" headerLabel="Tipo Atto"/>
+		<columnFieldProperty name="descrizioneAtto" label="Descrizione Atto"/>
+		<columnFieldProperty name="riferimento" label="Riferimento"/>
+		<columnFieldProperty name="tiDettagli" label="Tipo" headerLabel="Fogli/Esemplari"/>
+		<columnFieldProperty name="numDettagli" label="Numero" headerLabel="Fogli/Esemplari"/>
+		<columnFieldProperty name="imTotaleBollo" label="Importo Totale Bollo"/>
+	</columnSet>
+	<freeSearchSet name="UOTIPDET">
+		<findFieldProperty name="esercizio" />
+		<findFieldProperty name="cdUnitaOrganizzativa" />
+		<findFieldProperty name="cdTipoAtto" />
+		<findFieldProperty name="descrizioneAtto" />
+		<findFieldProperty name="riferimento" />
+		<findFieldProperty name="numDettagli" />
+	</freeSearchSet>
+</bulkInfo>

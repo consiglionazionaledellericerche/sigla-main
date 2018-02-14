@@ -203,23 +203,23 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
     @Override
     public void update(ActionContext actioncontext)
             throws BusinessProcessException {
+        super.update(actioncontext);
         try {
             archiviaAllegati(actioncontext);
         } catch (ApplicationException e) {
             throw handleException(e);
         }
-        super.update(actioncontext);
     }
 
     @Override
     public void create(ActionContext actioncontext)
             throws BusinessProcessException {
+        super.create(actioncontext);
         try {
             archiviaAllegati(actioncontext);
         } catch (ApplicationException e) {
             throw handleException(e);
         }
-        super.create(actioncontext);
     }
 
     @Override

@@ -4,6 +4,8 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 
+import java.util.Optional;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value=Include.NON_NULL)
@@ -335,6 +337,11 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 		else
 			return false	;
 	}
+
+	public boolean isUoEnte() {
+		return Tipo_unita_organizzativaHome.TIPO_UO_ENTE.equals(getCd_tipo_unita());
+	}
+	
 	/**
 	 * <!-- @TODO: da completare -->
 	 * Imposta il valore della proprietà 'area_scientifica'
