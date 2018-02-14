@@ -895,6 +895,9 @@ public class CRUDDistintaCassiereBP extends
 						xgc.setMinute(DatatypeConstants.FIELD_UNDEFINED);
 						xgc.setHour(DatatypeConstants.FIELD_UNDEFINED);
 						infoben.setDataScadenzaPagamento(xgc);
+						infoben.setDataEsecuzionePagamento(xgc);
+						infoben.setNumeroContoBancaItaliaEnteRicevente("0001777");
+						infoben.setTipoContabilitaEnteRicevente("INFRUTTIFERA");
 					}
 				// 19/11/2015 MANDATI a NETTO 0, richiesta modifica tipo
 				// pagamento
