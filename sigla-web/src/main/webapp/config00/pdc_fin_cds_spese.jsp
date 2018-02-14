@@ -90,6 +90,9 @@
 	  <% bp.getController().writeFormField(out,"fl_inv_beni_patr");%>
 	</tr>
 	<tr>
+	  <% bp.getController().writeFormField(out,"fl_inv_beni_comp");%>
+	</tr>
+	<tr>
 	  <td><% bp.getController().writeFormLabel( out, "fl_check_terzo_siope"); %></td>	
 	  <td><% bp.getController().writeFormInput( out,null,"fl_check_terzo_siope",(voce!=null?!voce.isGestoreOk(uc):false),null,null); %></td>
 	</tr>

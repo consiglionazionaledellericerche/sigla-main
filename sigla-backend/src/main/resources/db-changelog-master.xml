@@ -9,5 +9,6 @@
     <include file="liquibase/data.xml"/>
     <include file="liquibase/constraints.xml"/>
     <include file="liquibase/views.xml"/>
+    <include file="liquibase/oracle-sql4.xml"/>
     <include file="liquibase/function.xml"/>
 </databaseChangeLog>

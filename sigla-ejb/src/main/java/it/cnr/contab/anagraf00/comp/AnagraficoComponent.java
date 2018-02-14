@@ -542,7 +542,7 @@ public TerzoBulk getDefaultTerzo(UserContext userContext,AnagraficoBulk anagrafi
 		anagrafico_esercizio.setIm_reddito_complessivo(new java.math.BigDecimal(0));
 		anagrafico_esercizio.setIm_reddito_abitaz_princ(new java.math.BigDecimal(0));
 		anagrafico_esercizio.setFl_no_credito_irpef(Boolean.FALSE);
-		
+		anagrafico_esercizio.setFl_detrazioni_altri_tipi(Boolean.FALSE);
 		anagrafico_esercizio.setToBeCreated();		
 		anagrafico.setAnagrafico_esercizio(anagrafico_esercizio);
 		anagrafico.setFl_sospensione_irpef(Boolean.FALSE);
@@ -1044,10 +1044,10 @@ public SQLBuilder selectTipo_rapportoByClause(UserContext userContext,RapportoBu
 		sql.openParenthesis("AND");
 		sql.openParenthesis("AND");
 		sql.addClause("AND","ti_dipendente_altro",sql.NOT_EQUALS,tipo_rapporto.DIPENDENTE);
-		if (rapporto != null &&  rapporto.getAnagrafico() != null && rapporto.getAnagrafico().getTi_entita()!= null && 
-				rapporto.getAnagrafico().getTi_entita().equals(AnagraficoBulk.GIURIDICA)) {
-			sql.addSQLClause("AND","cd_tipo_rapporto = (select CD_TIPO_RAPPORTO_PROF from parametri_cnr where esercizio = "+((CNRUserContext)userContext).getEsercizio()+")");
-		}
+//		if (rapporto != null &&  rapporto.getAnagrafico() != null && rapporto.getAnagrafico().getTi_entita()!= null && 
+//				rapporto.getAnagrafico().getTi_entita().equals(AnagraficoBulk.GIURIDICA)) {
+//			sql.addSQLClause("AND","cd_tipo_rapporto = (select CD_TIPO_RAPPORTO_PROF from parametri_cnr where esercizio = "+((CNRUserContext)userContext).getEsercizio()+")");
+//		}
 		sql.closeParenthesis();
 		sql.openParenthesis("AND");
 		sql.addSQLClause("AND","fl_visibile_a_tutti",sql.EQUALS,"Y");
@@ -1402,7 +1402,8 @@ private void validaCreaModificaAnagrafico_esercizio(UserContext userContext, Ana
 					||(anag_eserc.getIm_reddito_abitaz_princ() != null && anag_eserc.getIm_reddito_abitaz_princ().compareTo(new java.math.BigDecimal(0))>0)
 					||(anag_eserc.getFl_applica_detr_pers_max() != null && anag_eserc.getFl_applica_detr_pers_max().booleanValue())
 				    ||(anag_eserc.getIm_deduzione_family_area() != null && anag_eserc.getIm_deduzione_family_area().compareTo(new java.math.BigDecimal(0))>0)
-				    			    ||(anag_eserc.getFl_no_credito_irpef() != null && anag_eserc.getFl_no_credito_irpef().booleanValue())){
+				    ||(anag_eserc.getFl_no_credito_irpef() != null && anag_eserc.getFl_no_credito_irpef().booleanValue())
+				    ||(anag_eserc.getFl_detrazioni_altri_tipi()!= null && anag_eserc.getFl_detrazioni_altri_tipi().booleanValue())){
 					
 					//inizializzo i flag se non valorizzati
 					if (anag_eserc.getFl_nofamilyarea()== null)
@@ -1442,6 +1443,11 @@ private void validaCreaModificaAnagrafico_esercizio(UserContext userContext, Ana
 						// else
 						//		anag_eserc.setFl_no_credito_irpef(new Boolean(true));
 						anag_eserc.setFl_no_credito_irpef(new Boolean(false));
+					}
+					if (anag_eserc.getFl_detrazioni_altri_tipi()== null)
+					{
+						// lo inizializziamo sempre a NO  
+						anag_eserc.setFl_detrazioni_altri_tipi(new Boolean(false));
 					}
 					anag_eserc.setCd_anag(anagrafico.getCd_anag());				
 					insertBulk(userContext, anag_eserc);

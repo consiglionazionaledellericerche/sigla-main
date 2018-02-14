@@ -9,7 +9,6 @@ import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
-import it.cnr.contab.util.PDAppearanceCustom;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -26,17 +25,17 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSString;
-import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
-import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
-import org.apache.pdfbox.pdmodel.interactive.form.PDCheckbox;
-import org.apache.pdfbox.pdmodel.interactive.form.PDField;
-import org.apache.pdfbox.pdmodel.interactive.form.PDVariableText;
+import org.apache.pdfbox.pdmodel.interactive.form.*;
+
 /**
  *
  * @author mspasiano
@@ -87,7 +86,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 					statoTrasmissione.getEsercizio(), statoTrasmissione.getPg_documento_cont());
 			lettera = (Lettera_pagam_esteroBulk) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(), lettera);
 			if (!statoTrasmissione.getStato_trasmissione().equals(lettera.getStato_trasmissione()))
-				throw new ApplicationException("Risorsa non pi? valida, eseguire nuovamente la ricerca!");
+				throw new ApplicationException("Risorsa non pi� valida, eseguire nuovamente la ricerca!");
 			lettera.setStato_trasmissione(stato);
 			if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
 				lettera.setDt_firma(EJBCommonServices.getServerTimestamp());
@@ -103,23 +102,23 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 		return new Lettera_pagam_esteroBulk(cds,uo, esercizio,numero_documento);
 	}
 
-	private void valorizzaField(PDAcroForm pdAcroForm, String fieldName, String fieldValue, boolean autosize) throws IOException {
-		PDField field = pdAcroForm.getField(fieldName);
-		if (field != null && fieldValue != null) {
-			if (field instanceof PDCheckbox) {
-				if (Boolean.valueOf(fieldValue))
-					((PDCheckbox)field).check();
-				else
-					((PDCheckbox)field).unCheck();
-			} else {
-				field.getWidget().getDictionary().setItem( COSName.V, new COSString(fieldValue));
-				if (autosize) {
-					field.getWidget().getDictionary().setString(COSName.DA, "/F2 0 Tf 0 g");
-					PDAppearanceCustom appearance = new PDAppearanceCustom( pdAcroForm, (PDVariableText)field , "/F2 0 Tf 0 g");
-					appearance.setAppearanceValue(fieldValue);
-				}
-			}
-		}
+	private PDField valorizzaField(PDAcroForm pdAcroForm, String fieldName, String fieldValue, boolean autosize) throws IOException {
+        PDField field = pdAcroForm.getField(fieldName);
+        if (field != null) {
+            if (field instanceof PDCheckBox) {
+                if (Boolean.valueOf(fieldValue))
+                    ((PDCheckBox)field).check();
+                else
+                    ((PDCheckBox)field).unCheck();
+            } else {
+                field.setValue(
+                        Optional.ofNullable(fieldValue)
+                            .map(s -> s.replace("\r", " "))
+                                .map(s -> s.replace("\n", " "))
+                            .orElse(""));
+            }
+        }
+        return field;
 	}
 
 	@Override
@@ -134,30 +133,30 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 				PDDocument document = PDDocument.load(this.getClass().getResourceAsStream("1210.pdf"));
 				PDDocumentCatalog pdCatalog = document.getDocumentCatalog();
 				PDAcroForm pdAcroForm = pdCatalog.getAcroForm();
-				valorizzaField(pdAcroForm, "LUOGO", "ROMA", false);
-				valorizzaField(pdAcroForm, "DATA", new SimpleDateFormat("dd/MM/yyyy").format(lettera.getDt_registrazione()), false);
-				valorizzaField(pdAcroForm, "NUM_RIF", String.valueOf(lettera.getPg_lettera()) + " - " + lettera.getCd_unita_organizzativa(), false);
-				valorizzaField(pdAcroForm, "BONIFICO_MEZZO_"+lettera.getBonifico_mezzo(), "X", false);
-				valorizzaField(pdAcroForm, "DIVISA", lettera.getDivisa(), false);
-				valorizzaField(pdAcroForm, "IMPORTO", new java.text.DecimalFormat("#,##0.00").format(lettera.getIm_pagamento()), false);
-				valorizzaField(pdAcroForm, "IMPORTO_LETTERE", Utility.NumberToText(lettera.getIm_pagamento()), false);
-				valorizzaField(pdAcroForm, "BENEFICIARIO_1", lettera.getBeneficiario(), true);
-				valorizzaField(pdAcroForm, "NUM_CONTO", lettera.getNum_conto_ben(), true);
-				valorizzaField(pdAcroForm, "IBAN", lettera.getIban(), false);
-				valorizzaField(pdAcroForm, "PRESSO_TRAMITE", lettera.getIndirizzo(), true);
-				valorizzaField(pdAcroForm, "SWIFT_BIC_ADDRESS", lettera.getIndirizzo_swift(), false);
-				valorizzaField(pdAcroForm, "MOTIVO_PAGAMENTO", lettera.getMotivo_pag(), true);
-				valorizzaField(pdAcroForm, "AMMONTARE_DEBITO_"+lettera.getAmmontare_debito(), "X", false);
-				valorizzaField(pdAcroForm, "CONTO_PROVVISORIO_"+lettera.getAmmontare_debito(), lettera.getConto_debito(), false);
-				valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_"+lettera.getCommissioni_spese(), "X", false);
-				valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_ESTERE_"+lettera.getCommissioni_spese_estere(), "X", false);
+                List<PDField> fields = new ArrayList<PDField>();
+				fields.add(valorizzaField(pdAcroForm, "LUOGO", "ROMA", false));
+                fields.add(valorizzaField(pdAcroForm, "DATA", new SimpleDateFormat("dd/MM/yyyy").format(lettera.getDt_registrazione()), false));
+                fields.add(valorizzaField(pdAcroForm, "NUM_RIF", String.valueOf(lettera.getPg_lettera()) + " - " + lettera.getCd_unita_organizzativa(), false));
+                fields.add(valorizzaField(pdAcroForm, "BONIFICO_MEZZO_"+lettera.getBonifico_mezzo(), "X", false));
+                fields.add(valorizzaField(pdAcroForm, "DIVISA", lettera.getDivisa(), false));
+                fields.add(valorizzaField(pdAcroForm, "IMPORTO", new java.text.DecimalFormat("#,##0.00").format(lettera.getIm_pagamento()), false));
+                fields.add(valorizzaField(pdAcroForm, "IMPORTO_LETTERE", Utility.NumberToText(lettera.getIm_pagamento()), false));
+                fields.add(valorizzaField(pdAcroForm, "BENEFICIARIO_1", lettera.getBeneficiario(), true));
+                fields.add(valorizzaField(pdAcroForm, "NUM_CONTO", lettera.getNum_conto_ben(), true));
+                fields.add(valorizzaField(pdAcroForm, "IBAN", lettera.getIban(), false));
+                fields.add(valorizzaField(pdAcroForm, "PRESSO_TRAMITE", lettera.getIndirizzo(), true));
+                fields.add(valorizzaField(pdAcroForm, "SWIFT_BIC_ADDRESS", lettera.getIndirizzo_swift(), false));
+                fields.add(valorizzaField(pdAcroForm, "MOTIVO_PAGAMENTO", lettera.getMotivo_pag(), true));
+                fields.add(valorizzaField(pdAcroForm, "AMMONTARE_DEBITO_"+lettera.getAmmontare_debito(), "X", false));
+                fields.add(valorizzaField(pdAcroForm, "CONTO_PROVVISORIO_"+lettera.getAmmontare_debito(), lettera.getConto_debito(), false));
+                fields.add(valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_"+lettera.getCommissioni_spese(), "X", false));
+                fields.add(valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_ESTERE_"+lettera.getCommissioni_spese_estere(), "X", false));
 
+                pdAcroForm.flatten(fields.stream()
+                        .filter(pdField -> Optional.ofNullable(pdField).isPresent())
+                        .collect(Collectors.toList()), true);
 
-				for (Object obj : pdAcroForm.getFields()) {
-					PDField field = (PDField)obj;
-					field.setReadonly(true);
-				}
-				ByteArrayOutputStream output = new ByteArrayOutputStream();
+                ByteArrayOutputStream output = new ByteArrayOutputStream();
 				document.save(output);
 				document.close();
 				SpringUtil.getBean("storeService", StoreService.class).restoreSimpleDocument(
@@ -175,8 +174,6 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 		} catch (ComponentException e) {
 			throw handleException(e);
 		} catch (IOException e) {
-			throw handleException(e);
-		} catch (COSVisitorException e) {
 			throw handleException(e);
 		}
 	}
