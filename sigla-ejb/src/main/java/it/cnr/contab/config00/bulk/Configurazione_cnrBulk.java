@@ -13,6 +13,12 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_LINEA_ATTIVITA_SPECIALE = "LINEA_ATTIVITA_SPECIALE";
 	public final static String SK_LINEA_COMUNE_VERSAMENTO_IVA = "LINEA_COMUNE_VERSAMENTO_IVA";
 	
+	public final static String PK_BOLLO_VIRTUALE = "BOLLO_VIRTUALE";
+	public final static String SK_BOLLO_VIRTUALE_CODICE_FATTURA_ATTIVA = "CODICE_DOCUMENTO_FATTURA_ATTIVA";
+	
+
+	public final static String SK_BOLLO_VIRTUALE_IMPORTO_LIMITE = "IMPORTO_LIMITE";
+	
 	public final static String SK_GG_DT_PREV_CONSEGNA = "GIORNI_DATA_PREVISTA_CONSEGNA";
 
 	public final static String SK_PROGETTO_RICHIESTA = "PROGETTO_RICHIESTA";
