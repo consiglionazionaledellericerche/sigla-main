@@ -1,5 +1,6 @@
 package it.cnr.contab.docamm00.ejb;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -16,6 +17,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 @Stateless(name="CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession")
@@ -1861,4 +1863,41 @@ public Fattura_attivaBulk aggiornaFatturaTrasmissioneNonRecapitataSDI(UserContex
 	}
 	
 }
+public BigDecimal getImportoBolloVirtuale(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException,java.rmi.RemoteException {
+	pre_component_invocation(userContext,componentObj);
+	try {
+		BigDecimal result = ((FatturaAttivaSingolaComponent)componentObj).getImportoBolloVirtuale(userContext, fattura);
+		component_invocation_succes(userContext,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
+	}
+	
+}
+public void controlliGestioneBolloVirtuale(UserContext param0, Fattura_attivaBulk fatturaAttiva, BulkList dettaglio) throws ComponentException,java.rmi.RemoteException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		((FatturaAttivaSingolaComponent)componentObj).controlliGestioneBolloVirtuale(param0,fatturaAttiva, dettaglio);
+		component_invocation_succes(param0,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+
 }

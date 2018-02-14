@@ -172,6 +172,12 @@
 			columnSize="1"
 			nullable="false" />			
 		<columnMapping
+			columnName="TI_BOLLO"
+			propertyName="ti_bollo"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false" />			
+		<columnMapping
 			columnName="FL_OBB_DICHIARAZIONE_INTENTO"
 			propertyName="fl_obb_dichiarazione_intento"
 			sqlTypeName="CHAR"
@@ -229,6 +235,8 @@
 		name="fl_iva_non_recuperabile" />	
 	<persistentProperty
 		name="ti_bene_servizio" />	
+	<persistentProperty
+		name="ti_bollo" />	
 	<persistentProperty
 		name="fl_solo_italia" />	
 	<persistentProperty
