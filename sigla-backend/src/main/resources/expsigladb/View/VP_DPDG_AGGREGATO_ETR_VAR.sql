@@ -1,0 +1,43 @@
+--------------------------------------------------------
+--  DDL for View VP_DPDG_AGGREGATO_ETR_VAR
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "VP_DPDG_AGGREGATO_ETR_VAR" ("ESERCIZIO", "CD_CDS", "DS_CDS", "CD_CENTRO_RESPONSABILITA", "DS_CDR", "CD_NATURA", "DS_NATURA", "CD_ELEMENTO_VOCE", "DS_ELEMENTO_VOCE", "IM_RA_RCE", "IM_RB_RSE", "IM_RC_ESR", "IM_RD_A2_RICAVI", "IM_RE_A2_ENTRATE", "IM_RF_A3_RICAVI", "IM_RG_A3_ENTRATE", "MIM_RA_RCE", "MIM_RB_RSE", "MIM_RC_ESR", "MIM_RD_A2_RICAVI", "MIM_RE_A2_ENTRATE", "MIM_RF_A3_RICAVI", "MIM_RG_A3_ENTRATE", "DIM_RA_RCE", "DIM_RB_RSE", "DIM_RC_ESR", "DIM_RD_A2_RICAVI", "DIM_RE_A2_ENTRATE", "DIM_RF_A3_RICAVI", "DIM_RG_A3_ENTRATE") AS 
+  (select
+--
+-- Date: 23/01/2003
+-- Version: 1.0
+--
+-- Vista di stampa differenze tra aggregato iniziale e modificato per variazioni pdg
+--
+-- History:
+--
+-- Date: 23/01/2003
+-- Version: 1.0
+-- Creazione
+--
+-- Body:
+--
+ ESERCIZIO,
+CD_CDS, DS_CDS, CD_CENTRO_RESPONSABILITA, DS_CDR,
+CD_NATURA, DS_NATURA, CD_ELEMENTO_VOCE, DS_ELEMENTO_VOCE,
+IM_RA_RCE, IM_RB_RSE, IM_RC_ESR, IM_RD_A2_RICAVI,
+IM_RE_A2_ENTRATE, IM_RF_A3_RICAVI, IM_RG_A3_ENTRATE, MIM_RA_RCE,
+MIM_RB_RSE, MIM_RC_ESR, MIM_RD_A2_RICAVI, MIM_RE_A2_ENTRATE,
+MIM_RF_A3_RICAVI, MIM_RG_A3_ENTRATE, DIM_RA_RCE, DIM_RB_RSE,
+DIM_RC_ESR, DIM_RD_A2_RICAVI, DIM_RE_A2_ENTRATE, DIM_RF_A3_RICAVI,
+DIM_RG_A3_ENTRATE
+from V_DPDG_AGGREGATO_ETR_VAR where
+(
+      DIM_RA_RCE!=0
+   or DIM_RB_RSE!=0
+   or DIM_RC_ESR!=0
+   or DIM_RD_A2_RICAVI!=0
+   or DIM_RE_A2_ENTRATE!=0
+   or DIM_RF_A3_RICAVI!=0
+   or DIM_RG_A3_ENTRATE!=0
+)
+)
+;
+
+   COMMENT ON TABLE "VP_DPDG_AGGREGATO_ETR_VAR"  IS 'Vista di stampa differenze tra aggregato iniziale e modificato per variazioni pdg';
