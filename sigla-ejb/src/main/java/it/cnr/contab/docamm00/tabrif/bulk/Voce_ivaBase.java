@@ -6,6 +6,8 @@ public class Voce_ivaBase extends Voce_ivaKey implements Keyed {
 
 	private java.lang.String ti_bene_servizio;
 		
+	private java.lang.String ti_bollo;
+
 	// CD_GRUPPO_IVA VARCHAR(10) NOT NULL
 	private java.lang.String cd_gruppo_iva;
 	
@@ -330,6 +332,14 @@ public java.lang.Boolean getFl_obb_dichiarazione_intento() {
 public void setFl_obb_dichiarazione_intento(
 		java.lang.Boolean fl_obb_dichiarazione_intento) {
 	this.fl_obb_dichiarazione_intento = fl_obb_dichiarazione_intento;
+}
+
+public java.lang.String getTi_bollo() {
+	return ti_bollo;
+}
+
+public void setTi_bollo(java.lang.String ti_bollo) {
+	this.ti_bollo = ti_bollo;
 }
 
 }
