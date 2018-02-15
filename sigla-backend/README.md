@@ -3,6 +3,8 @@
 ```
 -Dspring.profiles.active=CMIS,liquibase
 ```
+#### Il ChangeLog file master è src/main/resources/db-changelog-master.xml
+ 
 **Esempi liquibase**
    * http://www.liquibase.org/quickstart.html
    * http://www.liquibase.org/bestpractices.html
