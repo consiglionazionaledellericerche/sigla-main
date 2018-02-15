@@ -11,5 +11,9 @@ export SIGLA_CONNECTION_URL=jdbc:oracle:thin:@localhost:1521:xe
 ```
 mvn wildfly:run
 ```
+#### _Per attivare il profilo liquibase aggiungerlo ai jvm param_
+```
+-Dspring.profiles.active=CMIS,liquibase
+```
 **Esempi liquibase**
    * http://www.liquibase.org/quickstart.html
