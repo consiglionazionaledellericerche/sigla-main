@@ -31,7 +31,7 @@ CREATE OR REPLACE FUNCTION calcolaAltreBorse
    ,aCdCds VARCHAR2
    ,aCdUo VARCHAR2
    ,aEs2 NUMBER
-   ,aPgMini NUMBER) RETURN NUMBER IS;
+   ,aPgMini NUMBER) RETURN NUMBER IS
 
    imAltreBorse NUMBER(15,2);
    aImMandato NUMBER(15,2);
@@ -79,5 +79,3 @@ BEGIN
 
 END calcolaAltreBorse;
 /
-
-
