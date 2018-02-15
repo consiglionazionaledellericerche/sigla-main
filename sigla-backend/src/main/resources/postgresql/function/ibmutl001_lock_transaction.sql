@@ -6,9 +6,9 @@ CREATE OR REPLACE FUNCTION ibmutl001_lock_transaction()
   RETURNS void AS
 $BODY$
 DECLARE
-  aSID integer;
+  aSID text;
 BEGIN
-  select pg_backend_pid() into aSID;
+  select to_char(pg_backend_pid(), '999999999') into aSID;
   insert into TRANSLOCK(SID,STATUS) VALUES (aSID,0);
 END;
 
