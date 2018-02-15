@@ -1,0 +1,1352 @@
+--------------------------------------------------------
+--  DDL for Package CNRCTB205
+--------------------------------------------------------
+
+  CREATE OR REPLACE PACKAGE "CNRCTB205" as
+--
+-- CNRCTB205 - Package scritture COEP
+-- Date: 14/07/2006
+-- Version: 8.53
+--
+-- Package per la gestione delle scritture COEP
+--
+-- Dependency: CNRCTB 001/002/008/038/100/200/204 IBMERR 001
+--
+-- History:
+--
+-- Date: 16/02/2002
+-- Version: 1.0
+-- Creazione
+--
+-- Date: 04/03/2002
+-- Version: 1.1
+-- Fix per gestone causali COGE
+--
+-- Date: 05/03/2002
+-- Version: 1.2
+-- Aggiunte scritture ultime
+--
+-- Date: 07/03/2002
+-- Version: 1.3
+-- Messaggistica per logs
+--
+-- Date: 10/03/2002
+-- Version: 1.4
+-- Introduzione job registrazione economica
+--
+-- Date: 28/03/2002
+-- Version: 1.5
+-- Introduzione del lock della testata del documento,
+-- Introduzione del filtro (STATO_COGE, FL_MODIFICA_COGE)
+--       sui documenti di cui bisogna effettuare la scrittura
+-- Introduzione dell'aggiornamento dello stato coge per i documenti trattati
+-- Introduzione del movimento COAN
+--
+-- Date: 03/05/2002
+-- Version: 1.6
+-- Gestione scritture COEP/COAN per UO e testata scrittura COAN
+--
+-- Date: 06/05/2002
+-- Version: 1.7
+-- UO e CDS della scrittura sono UO e CDS origine
+--
+-- Date: 08/05/2002
+-- Version: 1.8
+-- Riorganizzazione
+--
+-- Date: 15/05/2002
+-- Version: 1.9
+-- Corretto recupero del conto economico IVA con la sezeion del documento su effetto COEP CORI
+--
+-- Date: 15/05/2002
+-- Version: 2.0
+-- Introduzione contabilizzazione COEP del compenso
+--
+-- Date: 16/05/2002
+-- Version: 2.1
+-- Integrazione IVA a contabilizzazione CORI
+--
+-- Date: 16/05/2002
+-- Version: 2.2
+-- Gestione scrittura ultima anche per compenso
+-- Snellito passaggio utuv/duva etc. a Scritt. movimenti
+--
+-- Date: 19/05/2002
+-- Version: 2.3
+-- Gestione sconti/abbuoni
+--
+-- Date: 20/05/2002
+-- Version: 2.4
+-- Fix errori su sconti/abbuoni
+--
+-- Date: 21/05/2002
+-- Version: 2.5
+-- Vendita di bene durevole
+--
+-- Date: 22/05/2002
+-- Version: 2.6
+-- Registrazione economica del fondo economale
+--
+-- Date: 27/05/2002
+-- Version: 2.7
+-- Gestione della non contabilizzazione doc. uscita da pgiro
+--
+-- Date: 28/05/2002
+-- Version: 2.8
+-- Corretta gestione dell'UO e CDS di appartenenza del documento
+-- Aggiunta nuova gestione dell'origine del documento (DOC AMM DOC CONT)
+-- Scrittura singola cassa/banca su fondo
+--
+-- Date: 29/05/2002
+-- Version: 2.9
+-- Eliminata prima scrittura coge per generico di apertura fondo
+-- Aggiunto man_rev per discriminare tra tabella mandato e reversale
+--
+-- Date: 30/05/2002
+-- Version: 3.0
+-- Introduzione documento di anticipo su missione
+--
+-- Date: 31/05/2002
+-- Version: 3.1
+-- Test motore
+--
+-- Date: 31/05/2002
+-- Version: 3.2
+-- Gestione aggiornamento stato documenti direttamente nel motore
+--
+-- Date: 31/05/2002
+-- Version: 3.3
+-- Utilizzo Banca CDS su trasferimenti
+-- Corretta gestione Banca CDS/Ente in scitture ultime
+--
+-- Date: 03/06/2002
+-- Version: 3.4
+-- Introduzione causali
+--
+-- Date: 06/06/2002
+-- Version: 3.5
+-- Se il documento amministrativo è stato annullato, viene solo stornato e non riemesso in COGE
+-- Aggiunta la data di esito doc. autorizzatorio in scrittura pagamento/incasso
+--
+-- Date: 07/06/2002
+-- Version: 3.6
+-- Gestione della missione
+--
+-- Date: 07/06/2002
+-- Version: 3.7
+-- Corretta la gestione della sezione principale del documento amministrativo
+--
+-- Date: 10/06/2002
+-- Version: 3.8
+-- Fix errore determinaz. contropartita
+--
+-- Date: 11/06/2002
+-- Version: 3.9
+-- Fix up COEP compenso
+--
+-- Date: 14/06/2002
+-- Version: 4.0
+-- La missione che transita per il compenso non va in COEP
+--
+-- Date: 19/06/2002
+-- Version: 4.1
+-- Fix - La missione senza anticipo non deve generare movimenti relativi all'anticipo
+--
+-- Date: 21/06/2002
+-- Version: 4.2
+-- Fix su gestione sconto/abbuono
+--
+-- Date: 27/06/2002
+-- Version: 4.3
+-- Fix recupero sezione per note di creadito/debito
+--
+-- Date: 28/06/2002
+-- Version: 4.4
+-- Fix recupero sezione per documento economico
+--
+-- Date: 28/06/2002
+-- Version: 4.5
+-- Fix su sezione notecreadito/debito
+--
+-- Date: 04/07/2002
+-- Version: 4.6
+-- Fix su errore reg ultima + dismissione bene duevole per vendita
+--
+-- Date: 04/07/2002
+-- Version: 4.7
+-- Registrazione COEP versamento ente mensile dell'IVA
+--
+-- Date: 06/07/2002
+-- Version: 4.8
+-- Aggiunta COEP per dismissione bene durevole
+--
+-- Date: 08/07/2002
+-- Version: 4.9
+-- Terzo 0 su registrazione dismissione bene durevole
+--
+-- Date: 16/07/2002
+-- Version: 5.0
+-- Fix estrazione scritture attive per documento
+--
+-- Date: 16/07/2002
+-- Version: 5.1
+-- Partita di giro e normale fuse in una sola scrittura
+--
+-- Date: 17/07/2002
+-- Version: 5.2
+-- Introdotto controllo che la scrittura coge sia effettivamente modificata
+--
+-- Date: 18/07/2002
+-- Version: 5.3
+-- Fix errori su controllo di scrittura modificata
+--
+-- Date: 18/07/2002
+-- Version: 5.4
+-- Se la lista dei movimenti da chiudere in contropartita è vuota, il metodo
+-- ceh costruisce il movimento di contropartita PEP ritorna subito senza errore
+--
+-- Date: 18/07/2002
+-- Version: 5.5
+-- Aggiornamento documentazione
+--
+-- Date: 30/07/2002
+-- Version: 5.6
+-- Fix-gestione compenso proveniente da missione con anticipo
+--
+-- Date: 31/07/2002
+-- Version: 5.7
+-- Fix estrazione dell'importo delle spese anticipate da anticipo
+--
+-- Date: 16/10/2002
+-- Version: 5.8
+-- Aggiornamento dello stato coge dei documenti dopo l'annullamento a 'C'
+-- Aggiornamento ad X dello stato coge dei COGE esclusi (temporaneo)
+--
+-- Date: 25/10/2002
+-- Version: 6.0
+-- Registrazione economica su partita di giro
+--
+-- Date: 24/10/2002
+-- Version: 5.9
+-- Nuova gestione economica delle partite di giro
+--
+-- Date: 27/10/2002
+-- Version: 6.1
+-- Gestione corretta del recupero del conto di contropartita cliente/fornitore utilizzando la sezione principale del documento
+-- Fix della documentazione
+--
+-- Date: 30/10/2002
+-- Version: 6.2
+-- Nuova gestione su documenti con CORI o IVA su partite di giro
+--
+-- Date: 04/11/2002
+-- Version: 6.3
+-- Gestione scritture speciali in deroga per esercizio inizio 2003 quando la competenza economica è nel 2002 (fine periodo competenza)
+--
+-- Date: 07/11/2002
+-- Version: 6.4
+-- Fix messaggio di errore nel caso non venga trovato il conto di contropartita sul terzo
+--
+-- Date: 08/11/2002
+-- Version: 6.5
+-- Introduzione conto debiti iniziali
+--
+-- Date: 09/11/2002
+-- Version: 6.6
+-- Riorganizzata registrazione ultima
+--
+-- Date: 11/11/2002
+-- Version: 6.7
+-- Sistemati CORI IVA e RIVALSA su conto di costo compenso tranne che per IVA in compenso COMMERCIALE
+-- Sistemato movimento anticipo sempre in dare in reg. economica compenso con anticipo (via missione)
+--
+-- Date: 17/11/2002
+-- Version: 6.8
+-- Gestione corretta versamenti CORI
+-- Gestione economica compensi senza costo principale
+--
+-- Date: 18/11/2002
+-- Version: 6.9
+-- Package spaccato in 2 parti: parte di servizio spostata in CNRCTB204
+--
+-- Date: 19/11/2002
+-- Version: 7.0
+-- Fix su registrazione del compenso (nuova gestione cori)
+--
+-- Date: 26/11/2002
+-- Version: 7.1
+-- Gestione anticipi su missione e compenso completata
+--
+-- Date: 28/11/2002
+-- Version: 7.2
+-- Gestione tipo istituzionale/commerciale
+--
+-- Date: 06/12/2002
+-- Version: 7.3
+-- Fix scrittura con causale per differenze di cambio (su esitato non emesso)
+--
+-- Date: 11/12/2002
+-- Version: 7.4
+-- Fix interna su terzo UO
+--
+-- Date: 13/12/2002
+-- Version: 7.5
+-- Fix su contabil. compenso/missione senza anticipo
+--
+-- Date: 13/12/2002
+-- Version: 7.6
+-- Uso del lordo del mandato su movimento ultimo fornitore
+--
+-- Date: 23/12/2002
+-- Version: 7.7
+-- Concentrata scrittura ultima dcumenti di reintegro al momento di esito del mandato
+--
+-- Date: 08/01/2003
+-- Version: 7.8
+-- Fix su registrazione pagamenti (estrazione dettaglio coep per tipo doc contabile)
+--
+-- Date: 15/01/2003
+-- Version: 7.9
+-- Modifica scritture ultime per gestione COEP pagamenti per reintegri fondo economale fatti su documenti con terzi diversi
+--
+-- Date: 04/02/2003
+-- Version: 8.0
+-- Corretta gestione apertura debito verso erario su COEP compenso nel caso non esista mandato principale
+-- Gestione del ricavo su documenti collegabili a obbligazione e accertamento (compenso):
+-- nel caso importo documento COEP sia negativo, gestisce l'inversione della sezione e l'abs sull'importo
+--
+-- Date: 05/02/2003
+-- Version: 8.1
+-- Corretta generazione movimento anagrafica ENTE su CORI negativi ente
+--
+-- Date: 14/03/2003
+-- Version: 8.2
+-- Fix scrittura utile/perdita su cambi sotituito im_totale_fattura (che è in divisa per la fattura passiva) con im_imponibile + im_iva
+--
+-- Date: 17/06/2003
+-- Version: 8.3
+-- Modificata la cont. econ. dei vers. CORi
+--
+-- Date: 17/06/2003
+-- Version: 8.4
+-- Fix su registrazione contr. compenso in scrittura ultima
+--
+-- Date: 19/06/2003
+-- Version: 8.5
+-- Tolto l'aggiornamento su duva e utuv nei documenti origine della scrittura
+-- Nuova gestione  per CDS di origine del documento
+--
+-- Date: 08/07/2003
+-- Version: 8.6
+-- Aggiunte scritture speciali in esercizio precedente (ratei e fatt. da emettere) e scrittura risconti
+-- Annullamento documenti di esercizi chiusi
+--
+-- Date: 09/07/2003
+-- Version: 8.7
+-- Gestione separata del rateo parte1 (registrazione economica del documento) e parte2 (alla chiusura)
+---
+-- Date: 12/07/2003
+-- Version: 8.8
+-- Creato il package 206 per le scritture di chiusura
+--
+-- Date: 15/07/2003
+-- Version: 8.9
+-- Modificato recupero conto di contropartita anagrafica
+-- Aggiunto annullamento documenti di esercizi chiusi
+-- Controllo apertura esercizio in scrittura ultima
+-- Tolti controlli inutili su doc ultimo esitato visto che il processo di pagamento
+-- in economica è attivato solo al riscontro
+-- Primo aggiornamento pre-post
+--
+-- Date: 16/07/2003
+-- Version: 8.10
+-- Completamento pre-post scrittura ultima
+-- Fix errore in determinazione sezione movimento versamenti cori in scrittura ultima
+--
+-- Date: 17/07/2003
+-- Version: 8.11
+-- Introduzione  causali 1210, cassa banca e annullamento doc. esercizio chiuso
+--
+-- Date: 18/07/2003
+-- Version: 8.12
+-- Risistemazione completa della liquidazione mensile IVA e relative pre-post
+--
+-- Date: 01/08/2003
+-- Version: 8.13
+-- Modifice richiesta il 01/08/2003: nel caso la competenza econ. sia in es. prec. chiuso, la scrittura è del tutto normale
+--
+-- Date: 06/08/2003
+-- Version: 8.14
+-- Lettura lockante del buono di scarico in dismissione bene durevole
+-- Fix errore in economica liq. iva mensile
+--
+-- Date: 07/08/2003
+-- Version: 8.15
+-- Gestione speciale fatture istituzionali intraue/san marino senz'iva beni in scrittura ultima (RICH. CINECA del 06/08/2003)
+-- Le commissioni 1210 sono annegate nella scrittura di utile perdita su cambi
+--
+-- Date: 07/08/2003
+-- Version: 8.16
+-- Correzione su gestione introdotta in versione 8.15
+-- Sistemazione recupero configurazioni da esercizio mandato in scritture ultime e non da esercizio doc amministrativo
+--
+-- Date: 08/08/2003
+-- Version: 8.17
+-- Escluso da contabilizzazione prima il GENERICO DI ENTRATA PER IVA
+-- Escluso da contabilizzazione ultima reversale di recupero IVA
+--
+-- Date: 25/08/2003
+-- Version: 8.18
+-- Fix errore n. 579
+-- Reintrodotta la gestione in deroga del movimento di contropartita angrafica nel caso di prime scritture di doc. del primo anno
+-- d'esercizio dell'applicazione con competenza economica in esercizio precedente
+--
+-- Date: 28/08/2003
+-- Version: 8.19
+-- Se il documento è riportato anche parzialmente non può essere processato in economica (prima scrittura)
+--
+-- Date: 08/09/2003
+-- Version: 8.20
+-- Gestione completa del fl_congelata in annullamento fatture di esercizi precedenti chiusi
+--
+-- Date: 16/09/2003
+-- Version: 8.21
+-- Fix errore 641. in dismissione bene durevole: usare l'assestato e non il valore iniziale
+--
+-- Date: 12/11/2003
+-- Version: 8.22
+-- Fix errore 681 su dismissione bene durevole
+-- Fix errore 682 su scrittura ultima di apertura del fondo economale
+--
+-- Date: 13/11/2003
+-- Version: 8.23
+-- Se l'esercizio n-1 non è chiuso, il documento è con comp. in es. prec, l'IVA su fatture attive (non note credeb) non viene gestita
+-- infatti in questo caso  la scrittura viene fatta al 3112(n-1) come RATEO parte 1.
+-- Ai controlli di chiusura dell'esercizio finanziario sono stati sostituiti quelli di chiusura definitiva di quello economico
+-- Bloccate tutte le scritture COEP
+--
+-- Date: 13/11/2003
+-- Version: 8.24
+-- Fix recupero conto crediti da terzi nel caso di fattura attiva con competenza in esercizio precedente al primo esercizio
+-- dell'applicazione
+--
+-- Date: 18/11/2003
+-- Version: 8.24
+-- Fix errore 686: per compensi senza mandato principale vengono create tante scritture quanti sono i CORI
+-- Per ogni scrittura il terzo è sempre quello del compenso tranne il caso in cui il CORI sia ENTE < 0
+-- Viene utilizzato il conto CREDITORIO o DEBITORIO sulla base del segno del contributo ritenuta
+-- Utilizzo del valore assestato del bene in dismissione per vendita
+--
+-- Date: 28/01/2004
+-- Version: 8.25
+-- Fix errori 756 e 757
+-- Sistemazione scrittura CASSA BANCA su fondo economale
+--
+-- Date: 29/01/2004
+-- Version: 8.26
+-- Fix errori 756 e 757
+-- Il mandato di regolarizzazione per chiusura fondo economale non effettua la scrittura banca cassa
+--
+-- Date: 19/02/2004
+-- Version: 8.27
+-- Aggiunta gestione estrazione giusto conto fatture da emettere/ricevere per ratei su fatture passive/note di credito/deb.
+-- I ratei parte 1 devono poter essere registrati anche quando l'esercizio precedente NON E' CHIUSO DEFINITIVAMENTE
+--
+-- Date: 26/02/2004
+-- Version: 8.28
+-- Nuova gestione dell'economica della registrazione liquidazione IVA
+-- Viene eseguita per tutte le UO tranne quella di versamento accentrato
+-- Per l'UO di versamento accentrato, viene registrata la scrittura CONTO ERARIO IVA a BANCA
+--
+-- Date: 02/03/2004
+-- Version: 8.29
+-- Aggiunta gestione ISTITUZIONALE/COMMERCIALE corretta (n.685)
+-- Nelle prime scritture: separazione movimenti istituzionali e commerciali di costo
+-- Nelle prime scritture: gestione ti_istituz_commerc=P nel caso di documenti promiscui (fatture passive)
+-- Nelle ultime scritture: il movimento anagrafico è di tipo I/C/P a seconda del tipo ist/comm/prom del documento
+-- amministrativo collegato alla riga di mandato/reversale.
+-- Il movimento verso banca o cassa pone ti_istituz_commerc=P se il mandato copre documenti sia istituzionali che commerciali o documenti promiscui
+-- Le altre scritture girano sempre come istituzionali (cori, versamenti, scritture cassa banca iva etc.)
+--
+-- Date: 05/03/2004
+-- Version: 8.30
+-- Richiesta n. 793 (gestione iva intra ue per beni istituzionale)
+-- Gestione completa delle commissioni alla registrazione dell'ultima scrittura
+--
+-- Date: 12/03/2004
+-- Version: 8.31
+-- Fix errore su dismissione bene durevole: il movimento per beni deve usare l'assestato
+-- prima della dismissione
+-- Fix errore introdotto 02/2004, nelle fatture di vendita di beni l'IVA deve essere aggiunta nel caso il bene sia istituzionale al caricamento
+--
+-- Date: 15/03/2004
+-- Version: 8.32
+-- Gestione speciale righe di generico di spesa su capitoli di parte 1 nell'ente
+-- Tali righe non generano movimenti
+--
+-- Date: 16/03/2004
+-- Version: 8.33
+-- Richiesta n. 801 - i mandati di regolarizzazione dell'ente fatti dall'ente sono
+-- esclusi dalleconomica
+--
+-- Date: 22/04/2004
+-- Version: 8.34
+-- Sistemazione finale liquidazione IVA e scritture ultime su mandati di liquidazione IVA
+-- La scrittura che gira il conto erario iva sulla banca viene fatta sul mandato di versamento del centro
+-- La scrittura sui mandati di versamento iva collegati a generici di tipo TI_GEN_CORI_VER_SPESA vengono
+-- comunque eseguite
+--
+-- Date: 23/04/2004
+-- Version: 8.35
+-- Le reversali di versamento CORI non venivano processate per errore in buildMovVersCoriUEP
+--
+-- Date: 18/05/2004
+-- Version: 8.36
+-- Modifica del 18/05/2004 err. 825 -> se la competenza è in esercizio precedente e l'esercizio attuale è il primo dell'applicazione
+-- Il conto di costo/ricavo è SP Iniziale
+--
+-- Date: 20/05/2004
+-- Version: 8.37
+-- Gestione registrazione economica del carico di bene mediante buono di carico non collegato a fattura
+--
+-- Date: 30/05/2004
+-- Version: 8.38
+-- Richiesta n. 693
+-- Consolidamento scrittura economica carico bene mediante buono di carico non collegato a fattura
+--
+-- Date: 08/06/2004
+-- Version: 8.39
+-- Test richiesta 693 + sistemazione documentazione pre-post
+--
+-- Date: 22/06/2004
+-- Version: 8.40
+-- Errore 829 - il mandato di regolarizzazione per chiusura del fondo economale non fa cassa banca
+-- Errore 830 - al posto di iva_credito va utilizzata l'iva a credito senza prorata (campo iva_credito_no_prorata della liquidazione)
+--
+-- Date: 10/08/2004
+-- Version: 8.41
+-- Fix errore 834 - sistemate le scritture di compensi con anticipi > dell'importo netto del compenso
+--
+-- Date: 25/08/2004
+-- Version: 8.42
+-- Completata la fix evitando di generare la scrittura del debito verso l'erario sul pagamento
+-- Sistemato il recupero del conto DEBITI su di un compenso
+-- Spostati i getAnticipo e check com con antic > netto comp su CNRCTB204
+-- Riportate le modifica su 205EPR
+--
+-- Date: 06/09/2004
+-- Version: 8.43
+-- Modificata la scrittura ultima sulla lettera di pagamento estero
+-- In particolare utile/perdita su cambi viene gestito per la differenza tra pagato-commissioni meno totale documentoa amm.
+-- Le commissioni vanno in DARE e il debito sul terzo è aperto per mandato-commissioni (viene generato un movimento
+-- di storno per l'importo delle commissioni in AVERE sul conto del terzo)
+--
+-- Date: 24/09/2004
+-- Version: 8.44
+-- Richiets 843: I controlli sull'esercizio (finanziario ed economico) del documento in processo sono cambiati
+-- La parte di controlli riguardante l'esercizio del documento (che è quello di registrazione economica) sono
+-- stati spostati nel metodo: CNRCTB204.checkChiusuraEsercizio
+--
+-- Date: 18/10/2004
+-- Version: 8.45
+-- Fix richiesta n. 844: corretta gestione conto commissioni+utilizzo netto iva in movmento sul terzo
+-- nel caso di fattura passiva San Marino o intra ue che siano anche istituzionale e per acquisto di beni
+--
+-- Date: 05/11/2004
+-- Version: 8.46
+-- Modifiche minimali a regAnnullaDocEsChiuso (aggiunto il controllo che l'esercizio precedente a quello
+-- in cui si è effettuato l'annullamento sia chiuso definitivamente economicamente)
+--
+-- Date: 10/11/2004
+-- Version: 8.47
+-- Fix al controllo sullo stato riportato in scrivania in regAnnullaDocEsChiuso
+--
+-- Date: 10/11/2004
+-- Version: 8.48
+-- Nella registrazione annullamento doc. amm. esercizio chiuso, pone a C anche lo stato COAN del documento
+-- Verifica che il documento sia stato processato almeno una volta in economica
+--
+-- Date: 12/11/2004
+-- Version: 8.49
+-- Inserimento, nel ciclo generali del job di registrazione COGE, dell'economica da migrazione inventario
+--
+-- Date: 16/11/2004
+-- Version: 8.50
+-- Errore in documentazione parametri per migrazione inventario e spegnimento controllo per storno scritture coge
+-- (non applicabile alla gestione)
+--
+-- Date: 17/11/2004
+-- Version: 8.51
+-- Fix generazione economica per carico e dismissione bene durevole da trasferimento
+--
+-- Date: 17/11/2004
+-- Version: 8.52
+-- Fix errore in generazione coge da migrazione beni
+--
+-- Date: 14/07/2006
+-- Version: 8.53
+-- Gestione Impegni/Accertamenti Residui:
+-- aggiornata la funzione per tener conto anche del campo Esercizio Originale Impegno/Accertamento
+--
+-- Constants:
+
+-- Costanti relative alla dismissione del bene durevole
+
+TI_DOC_FITT_SCR_BENE CONSTANT VARCHAR2(10) := 'DISMBD_SCR';
+
+-- Costanti relative al caricamento del bene durevole
+
+TI_DOC_FITT_CAR_BENE CONSTANT VARCHAR2(10) := 'CARIBD_SCR';
+
+-- Costanti relative alla migrazione bene durevole
+
+TI_DOC_FITT_MIGRA_BENE CONSTANT VARCHAR2(10) := 'MIGRBD_SCR';
+
+-- Tipi CORI
+
+TI_CORI_ENTE CONSTANT CHAR(1) := 'E';
+TI_CORI_PERCIPIENTE CONSTANT CHAR(1) := 'P';
+
+-- Functions e Procedures:
+
+-- =============================================================
+-- Registra in COEP la liquidazione ente mensile dell'IVA
+-- =============================================================
+
+-- Registrazione in COEP della liquidazione ente mensile dell.IVA
+--
+-- Registrazione in contabilità economico patrimoniale della liquidazione ente mensile dell'IVA
+--
+-- pre-post-name: Controlli su esercizio finanziario ed economico di registrazione del documento
+-- pre: L'esercizio contabile in cui effettuare la liquidazione non risulta aperto o
+--      chiuso finanziariamente o risulta in fase di chiusura economica o chiuso economicamente in modo definitivo
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Esercizio economico precedente non chiuso definitivamente
+-- pre: L'esercizio economico precedente a quello di origine del documento non è chiuso definitivamente
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Esercizio economico precedente non chiuso definitivamente
+-- pre: L'esercizio economico precedente a quello di origine del documento non è chiuso definitivamente
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Parametri non specificati correttamente
+-- pre: alcuni parametri della liquidazione IVA non sono stati specificati correttamente
+-- post: viene sollevata un'eccezione
+--
+-- pre-post-name: L'UO di liquidazione è l'ENTE
+-- pre: l'UO della liquidazione IVA specificata è l'UO ente
+-- post: Viene generata una scrittura se esiste generico di versamento
+--       che gira il conto voce ep erario iva sulla banca UO
+--
+-- pre-post-name: Liquidazione definitiva mensile IVA non trovata per il periodo di validità
+-- pre: non trova la liquidazione mensile IVA per il periodo di validità
+-- post: viene sollevata un'eccezione
+--
+-- pre-post-name: Operazione di contabilizzazione già effettuata
+-- pre: Viene cercata e trovata una scrittura con origine LIQUID_IVA per la liquidazione IVA in processo
+-- (campo cd_comp_documento)
+-- post: viene sollevata un'eccezione
+--
+-- pre-post-name: Documento generico di versamento IVA non trovato
+-- pre: l'iva non è stata versata con la liquidazione
+-- post:
+--       il terzo delle scritture effettuate (solo quelle acquisti/vendite) = 0
+--       la data di contabilizzazione = data di sistema
+--
+-- pre-post-name: Documento generico di versamento IVA trovato
+-- pre: l'iva è stata versata con la liquidazione
+-- post:
+--       il terzo delle scritture effettuate = terzo del generico di versamento
+--       la data di contabilizzazione = data di registrazione del documento generico
+--
+-- pre-post-name: Liquidazione ente mensile dell'IVA: conto economico associato a terzo non trovato
+-- pre: non trova il conto economico di contropartita associato al terzo
+-- post: viene sollevata un'eccezione
+--
+-- pre-post-name: Liquidazione ente mensile dell'IVA
+-- pre: non è soddisfatta nessuna pre-post precedente
+-- post: individua la liquidazione definitiva mensile IVA, individua il documento generico di versamento IVA
+-- (se presente) e il dettaglio di versamento dello stesso.
+-- Le scritture vengono tutte create con cds e uo = a quelli dell'UO di versamento IVA (mentre la liquidazione
+-- è fatta sull'uo ente).
+-- Crea la scrittura per le vendite in partita doppia:
+--    tipo -> definitivo,
+--    riferimento a doc generico (nullo se tale documento non esiste)
+--    cd_comp_documento -> una stringa di testo con la chiave della liquidazione così costuita cds-es-uo-dt_inizio-dt_fine
+--    origine -> ORIGINE_LIQUID_IVA
+--    causale -> LIQUID_IVA_VENDITE
+--    movimenti
+--         un movimento in DARE sul conto speciale dell'IVA a debito ed un movimento in AVERE
+--         sul conto speciale erario c/IVA.
+-- Da qui in poi l'importo di iva a credito deve essere senza il prorata (iva credito no prorata)
+-- Crea la scrittura per gli acquisti in partita doppia:
+--    tipo -> definitivo,
+--    riferimento a doc generico (nullo se tale documento non esiste)
+--    cd_comp_documento -> una stringa di testo con la chiave della liquidazione così costuita cds-es-uo-dt_inizio-dt_fine
+--    origine -> ORIGINE_LIQUID_IVA
+--    causale -> LIQUID_IVA_ACQUISTI
+--    movimenti
+--         un movimento in DARE sul conto speciale erario c/IVA ed un movimento in AVERE sul conto speciale dell'IVA
+--         a credito
+-- Se esiste il documento generico di versamento
+--  Genera la scrittura in partita doppia per il saldo, la quota versata e la differenza (su conto di costo o ricavo)
+--    tipo -> definitivo,
+--    riferimento a doc generico
+--    cd_comp_documento -> una stringa di testo con la chiave della liquidazione così costuita cds-es-uo-dt_inizio-dt_fine
+--    origine -> ORIGINE_LIQUID_IVA
+--    causale -> LIQUID_IVA_SALDO
+--    movimento 1
+--	  	   importo = valore assoluto del saldo crediti/debiti
+--         se il saldo debito credito è negativo
+--          un movimento in AVERE sul conto speciale erario c/IVA
+--         altrimenti
+--          un movimento in DARE sul conto speciale erario c/IVA
+--    movimento 2
+--	  	   importo = valore assoluto dell' (importo mandato versamento - saldo crediti/debiti)
+--         se la differenza tra l'importo del mandato di versamento e il saldo debiti/crediti < 0
+--          un movimento in AVERE sul conto di ricavo identificato in configurazione CNR (RICAVO_IVA_NON_DETRAIBILE)
+--         altrimenti
+--          un movimento in DARE sul conto di costo identificato in configurazione CNR (COSTO_IVA_NON_DETRAIBILE)
+--    movimento 3
+--         importo = importo del mandato di versamento
+--         movimento in dare sul conto debiti da erario (identificato via terzo mandato di versamento)
+-- Altrimenti
+--  Genera la scrittura in partita doppia per il saldo, la quota versata e la differenza (su conto di costo o ricavo)
+--    tipo -> definitivo,
+--    riferimento a doc generico
+--    cd_comp_documento -> una stringa di testo con la chiave della liquidazione così costuita cds-es-uo-dt_inizio-dt_fine
+--    origine -> ORIGINE_LIQUID_IVA
+--    causale -> LIQUID_IVA_SALDO
+--    movimento 1
+--	  	   importo = valore assoluto del saldo crediti/debiti
+--         se il saldo debito credito è negativo
+--          un movimento in AVERE sul conto speciale erario c/IVA
+--         altrimenti
+--          un movimento in DARE sul conto speciale erario c/IVA
+--    movimento 2
+--	  	   importo = valore assoluto del saldo crediti/debiti
+--         se la differenza tra l'importo del mandato di versamento e il saldo debiti/crediti < 0
+--          un movimento in AVERE sul conto di ricavo identificato in configurazione CNR (RICAVO_IVA_NON_DETRAIBILE)
+--         altrimenti
+--          un movimento in DARE sul conto di costo identificato in configurazione CNR (COSTO_IVA_NON_DETRAIBILE)
+--
+-- Al pagamento del mandato viene registrata in automatico la scrittura ultima terzo su banca secondo le regole del batch
+--
+-- Parametri:
+-- aEs -> esercizio di riferimento
+-- aCdCds -> CdS che effettua la liquidazione dell.IVA
+-- aCdUo -> unità organizzativa che effettua la liquidazione dell.IVA
+-- aTipo -> tipo di liquidazione (I, S, C)
+-- aDtDa -> data di inizio validità
+-- aDtA -> data di fine validità
+-- aUser -> utente che effettua la modifica
+--
+
+ procedure regLiqIvaMensileCOGE(aEs number, aCds varchar2, aUO varchar2, aTipo char, aDtDa date, aDtA date, aUser varchar2);
+
+ function getDesc(aLiqIva liquidazione_iva%rowtype) return VARCHAR2;
+
+-- =============================================================
+-- Registra in COEP la dismissione di bene durevole
+-- =============================================================
+
+-- Dismissione di un bene durevole senza riferimenti esterni
+--
+-- Registrazione in contabilità economica patrimoniale della dismissione di un bene durevole senza riferimenti esterni,
+-- ovvero senza bisogno di movimenti finanziari nè documenti amministrativi, oppure per obsolescenza.
+--
+-- pre-post-name: Controlli su esercizio finanziario ed economico di registrazione del documento
+-- pre: L'esercizio contabile in cui effettuare la liquidazione non risulta aperto o
+--      chiuso finanziariamente o risulta in fase di chiusura economica o chiuso economicamente in modo definitivo
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Esercizio economico precedente non chiuso definitivamente
+-- pre: L'esercizio economico precedente a quello di origine del documento non è chiuso definitivamente
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Dismissione di un bene durevole: bene non trovato
+-- pre: bene non trovato in inventario per numero progressivo d.inventario
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Dismissione di un bene durevole: gruppo inventariale non trovato
+-- pre: il bene non ha un gruppo inventariale corrispondente in CATEGORIA_GRUPPO_INVENT
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Dismissione di un bene durevole: nessun conto economico associato a categoria
+-- pre: non esiste un conto economico associato alla categoria di appartenenza del bene
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Dismissione di un bene durevole
+-- pre: esiste un bene nell.inventario relativo al buono, esiste un gruppo inventariale relativo al bene, esiste un
+-- conto economico associato al gruppo inventariale
+-- post: per ogni buono di scarico non contabilizzato oppure da contabilizzare nuovamente in COGE, determina il conto
+-- economico e il conto economico di contropartita associato alla categoria del bene nella tabella VOCE_EP. Calcola il
+-- residuo del valore del bene: se positivo, genera un movimento principale in DARE sul conto economico speciale della
+-- minus valenza. Genera un movimento principale in AVERE sul conto economico della categoria gruppo inventario per il
+-- valore iniziale del bene. Se il valore ammortizzato del bene è positivo, genera un movimento principale in DARE sul
+-- conto economico di contropartita associato alla categoria del bene stesso per il valore ammortizzato.
+-- Crea la scrittura in partita doppia (causale coge di tipo dismissione di bene durevole). Aggiorna lo stato COGE del
+-- buono di scarico, definendolo come processato.
+--
+-- Parametri:
+-- aEs -> esercizio di riferimento
+-- aPgInv -> numero progressivo del bene in inventario
+-- aUser -> utente che effettua le modifiche
+
+ procedure regDismBeneDurevoleCOGE(aTBS buono_carico_scarico_dett%rowtype, aUser varchar2, aTSNow date);
+
+-- =============================================================
+-- Registra in COEP il carico di un bene durevole
+-- =============================================================
+
+-- Caricamento di un bene durevole senza riferimenti esterni
+--
+-- Registrazione in contabilità economica patrimoniale del caricamento senza riferimenti esterni,
+-- ovvero senza bisogno di movimenti finanziari nè documenti amministrativi.
+--
+-- pre-post-name: Controlli su esercizio finanziario ed economico di registrazione del documento
+-- pre: L'esercizio contabile in cui effettuare la liquidazione non risulta aperto o
+--      chiuso finanziariamente o risulta in fase di chiusura economica o chiuso economicamente in modo definitivo
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Esercizio economico precedente non chiuso definitivamente
+-- pre: L'esercizio economico precedente a quello di origine del documento non è chiuso definitivamente
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Caricamento di un bene durevole: bene non trovato
+-- pre: bene non trovato in inventario per numero progressivo d.inventario
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Caricamento di un bene durevole: gruppo inventariale non trovato
+-- pre: il bene non ha un gruppo inventariale corrispondente in CATEGORIA_GRUPPO_INVENT
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Caricamento di un bene durevole: nessun conto economico associato a categoria
+-- pre: non esiste un conto economico associato alla categoria di appartenenza del bene
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Caricamento di un bene durevole
+-- pre: esiste un bene nell.inventario relativo al buono, esiste un gruppo inventariale relativo al bene, esiste un
+-- conto economico associato al gruppo inventariale
+-- post: per ogni buono di carico non contabilizzato oppure da contabilizzare nuovamente in COGE, determina il conto
+-- economico associato alla categoria del bene nella tabella VOCE_EP.
+-- Crea un movimento in DARE sul conto recuperato utilizzando l'importo del BUONO di carico (valore unitario*quantità)
+-- Crea un movimento in AVERE sul conto sopravvenienze attive che chiude la scrittura
+-- Crea la scrittura in partita doppia (utilizza la causale di caricamento del bene durevole). Aggiorna lo stato COGE del
+-- buono di carico, definendolo come processato.
+--
+-- Parametri:
+-- aEs -> esercizio di riferimento
+-- aPgInv -> numero progressivo del bene in inventario
+-- aUser -> utente che effettua le modifiche
+
+ procedure regCaricBeneDurevoleCOGE(aTBS buono_carico_scarico_dett%rowtype, aUser varchar2, aTSNow date);
+
+-- =============================================================
+-- Registra in COEP la migrazione beni durevoli
+-- =============================================================
+
+-- Caricamento di un bene migrato in inventario
+--
+-- Registrazione in contabilità economica patrimoniale del caricamento senza riferimenti esterni,
+-- ovvero senza bisogno di movimenti finanziari nè documenti amministrativi.
+--
+-- pre-post-name: Controlli su esercizio finanziario ed economico di registrazione del documento
+-- pre:           L'esercizio contabile in cui effettuare la liquidazione non risulta aperto o
+--                chiuso finanziariamente o risulta in fase di chiusura economica o chiuso economicamente in modo definitivo
+-- post:          Viene sollevata un'eccezione
+--
+-- pre-post-name: Esercizio economico precedente non chiuso definitivamente
+-- pre:           L'esercizio economico precedente a quello di origine del documento non è chiuso definitivamente
+-- post:          Viene sollevata un'eccezione
+--
+-- pre-post-name: Caricamento di un bene durevole migrato: gruppo inventariale non trovato
+-- pre:           Il bene non ha un gruppo inventariale corrispondente in CATEGORIA_GRUPPO_INVENT
+-- post:          Viene sollevata un.eccezione
+--
+-- pre-post-name: Caricamento di un bene durevole migrato: nessun conto economico associato a categoria
+-- pre:           Non esiste un conto economico associato alla categoria di appartenenza del bene
+-- post:          viene sollevata un.eccezione
+--
+-- pre-post-name: Caricamento di un bene durevole migrato
+-- pre:   Genera economica per beni durevoli migrati, input da CNR_INVENTARIO_BENI_MIG
+-- post:  Per ogni blocco UO e categoria gruppo non contabilizzato oppure da contabilizzare nuovamente in COGE, determina
+--        il conto economico associato alla categoria del bene nella tabella VOCE_EP.
+--        Crea un movimento in DARE sul conto recuperato utilizzando l'importo assestato
+--        Crea un movimento in AVERE sul conto contropartita della categoria gruppo se il valore ammortizzato à diverso da 0.
+--        Crea un movimento in AVERE sul conto speciale recuperato da CONFIGURAZIONE_CNR (CONTROPARTITA_MIGRAZIONE_BENI) con
+--        i seguenti importi:
+--           Se valore ammortizzato = 0 allora importo assestato
+--           Se valore ammortizzato > 0 allora importo assestato - valore ammortizzato.
+--        Crea la scrittura in partita doppia (utilizza la causale di caricamento del bene durevole). Aggiorna lo stato
+--        COGE del gruppo UO e categoria gruppo definendolo come processato.
+--
+-- Parametri:
+-- aEs -> esercizio di riferimento
+-- aCdCds -> Cds di riferimento
+-- aCdUo -> UO di riferimento
+-- aCdCategoriaGruppo -> Codice categoria gruppo
+-- aValoreAssestato -> Valore assestato del bene
+-- aValoreAmmortizzato -> Valore ammortizzato
+-- aUser -> utente che effettua le modifiche
+-- aTSNow -> Data di riferimento
+
+ procedure regMigrazioneBeniCoge(aEs NUMBER,
+                                 aCdCds VARCHAR2,
+                                 aCdUo VARCHAR2,
+                                 aCdCategoriaGruppo VARCHAR2,
+                                 aValoreAssestato NUMBER,
+                                 aValoreAmmortizzato NUMBER,
+                                 aUser VARCHAR2,
+                                 aTSNow DATE,
+                                 aStato CHAR);
+
+-- =============================================================
+-- Registra in COEP un documento amministrativo
+-- =============================================================
+
+-- Registrazione scritture prime in COEP di un documento amministrativo
+--
+-- Effettua la registrazione della scrittura prima in partita doppia di un documento amministrativo.
+-- Riceve in ingresso la testata del documento, estratta dalla vista V_DOC_AMM_TSTA, interfaccia uniforme dei
+-- documenti amministrativi FATTURA_PASSIVA, FATTURA_ATTIVA, DOCUMENTO_GENERICO, COMPENSO, ANTICIPO, RIMBORSO.
+-- Utilizza la vista V_DOC_AMM_COGE_RIGA per recuperare l.associazione tra conto finanziario e conto economico,
+-- la vista è un.estrazione dei dettagli dei documenti amministrativi (FATTURA_PASSIVA, FATTURA_ATTIVA,
+-- DOCUMENTO_GENERICO, COMPENSO, ANTICIPO, RIMBORSO) con valorizzazione ai fini COGE.
+-- Viene utilizzata la tabella ASS_ANAG_VOCE_EP per le associazioni tra l'anagrafico ed il codice economico,
+-- individuato grazie alla chiava primaria definita su ESERCIZIO, TI_TERZO dalla sezione economica principale
+-- del documento (creditorio -> C debitorio -> D, no asterisco no entrambi E), ITALIANO_ESTERO, TI_ENTITA (entità
+-- giuridica, entità fisica, unità organizzativa o diversi), ENTE_ALTRO (solo per entità giuridiche distiguo in enti
+-- pubblici o altro) e CD_CLASSIFIC_ANAG (codice di classificazione). Si tratta di una tabella che supporta gli
+-- asterischi:
+-- i record di una tabella vengono ordinati secondo la definizione della primary key. I primi elementi sono quelli
+-- con i campi definiti (non asterischi) nella primary key, seguono poi quelli con asterischi e l.ordine segue la
+-- sequenza dei campi della primary key. Esempio di ordinamento: ESERCIZIO	TI_TERZO	ITALIANO_ESTERO	TI_ENTITA
+-- ENTE_ALTRO	CD_CLASSIFIC_ANAG	...
+-- 2002	C	I	G	P	CONSORZIO	...
+-- 2002	C	I	D	*	*	...
+-- 2002	C	I	*	*	*	...
+--
+-- pre-post-name: Documenti amministrativi che non vanno in COGE come prime scritture
+-- pre: il documento amministrativo è un generico di entrata/spesa di accreditamenti dal CNR al CdS,
+-- o generico di reintegro/apertura fondo economale, oppure si tratta di missione che transita per il compenso
+-- post: viene aggiornato lo stato COGE del documento a X e il programma termina senza sollevare eccezioni
+--
+-- pre-post-name: Documento da non processare
+-- pre: Lo stato coge del documento amministrativo non è N (da processare) o R (da riprocessare)
+-- post: il programma termina senza eccezioni
+--
+-- pre-post-name: Controlli su esercizio finanziario ed economico di registrazione del documento
+-- pre: L'esercizio contabile in cui effettuare la liquidazione non risulta aperto o
+--      chiuso finanziariamente o risulta in fase di chiusura economica o chiuso economicamente in modo definitivo
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Esercizio economico precedente non chiuso definitivamente
+-- pre: L'esercizio economico precedente a quello di origine del documento non è chiuso definitivamente
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Documento (parzialmente) riportato in nuovo esercizio
+-- pre: Il documento è associato a doc contabili riportati a nuovo esercizio
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Esistono scritture già registrate per il documento amministrativo
+-- pre: esistono scritture già registrate per il documento amministrativo e tali scritture sono DIVERSE da quelle
+-- nuove generate per il documento amministrativo
+-- post: viene creato uno storno per ogni scrittura e viene poi emessa la scrittura aggiornata, opposta in sezione
+-- alla scrittura originale
+--
+-- pre-post-name: Documento amministrativo annullato
+-- pre: il documento amministrativo è annullato
+-- post: viene creata solo una scrittura di storno
+--
+-- pre-post-name: Gestione vendita bene durevole in fattura attiva
+-- pre: il documento amministrativo è di tipo fattura attiva e la causale dell.emissione è per beni durevoli, il
+-- documento ammette un.associazione con l.inventario beni (ASS_INV_BENI_FATTURA)
+-- post: generazione dei movimenti di minus/plus valenza del bene estraendo il conto economico speciale in minus/plus
+-- valenza dalla configurazione del CNR. Generazione dei movimenti per conto economico di minus/plus valenza: il movimento
+-- è in sezione AVERE se in plus valenza, in sezione DARE se in minus valenza. Generazione dei movimenti principali
+-- per il valore iniziale e per il valore ammortizzato del bene.
+-- Vedi Generazione movimenti e creazione scrittura nella pre-post Creazione della scrittura prima in partita doppia
+-- per il documento amministrativo (situazione generale non su partita di giro).
+--
+-- pre-post-name: Gestione vendita bene durevole in fattura attiva  bene non trovato
+-- pre: il documento amministrativo è di tipo fattura attiva e la causale dell.emissione è per beni durevoli, il bene
+-- non ha un.associazione con l.inventario (ASS_INV_BENI_FATTURA)
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Gestione vendita bene durevole in fattura attiva  gruppo inventariale non trovato
+-- pre: il documento amministrativo è di tipo fattura attiva e la causale dell.emissione è per beni durevoli, il bene
+-- non ha un gruppo inventariale corrispondente in CATEGORIA_GRUPPO_INVENT
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Gestione vendita bene durevole in fattura attiva  nessun conto economico associato alla categoria
+-- pre: il documento amministrativo è di tipo fattura attiva e la causale dell.emissione è per beni durevoli, il bene
+-- appartiene ad una categoria priva di associazione con il conto economico in CATEGORIA_GRUPPO_VOCE_EP
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Creazione della scrittura prima in partita doppia per il documento amministrativo di tipo missione
+-- pre: il documento amministrativo è di tipo missione
+-- post: generazione dei movimenti principali della scrittura avendo determinato il conto economico associato dalla
+-- configurazione del CNR: se l.anticipo è minore della missione, l.anticipo va in AVERE; se l.anticipo è maggiore
+-- della missione, l.anticipo va in DARE. Generazione dei movimenti della scrittura in DARE per l.importo totale della
+-- missione, avendo determinato il conto economico associato da ASS_EV_VOCEEP per esercizio, gestione, appartenenza e
+-- conto finanziario del documento amministrativo.
+-- Vedi Generazione movimenti e creazione scrittura nella pre-post Creazione della scrittura prima in partita doppia
+-- per il documento amministrativo (situazione generale non su partita di giro).
+--
+-- pre-post-name: Creazione della scrittura prima in partita doppia per il documento amministrativo di tipo compenso
+-- collegato a missione con anticipo
+-- pre: il documento amministrativo è di compenso ed è collegato a missione e la missione ha un importo di spese
+-- anticipate non nullo
+-- post: il compenso viene contabilizzato COEP come un normale compenso. La scrittura viene estesa con un movimento
+-- relativo all'anticipo secondo le stesse regole
+-- utilizzate per la gestione dell'anticipo su missione. Per l'applicazione di tali regole al posto dell'importo della
+-- missione viene utilizzato l'importo lordi del compenso.
+--
+-- pre-post-name: Documento amministrativo di tipo missione non trovato
+-- pre: il documento amministrativo di tipo missione non è trovato
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Documento amministrativo privo di associazione a conto economico
+-- pre: il documento amministrativo non è un documento di uscita di partita di giro, non ha un.associazione con un
+-- conto economico in VOCE_EP (per documenti amministrativi di tipo MISSIONE, per documenti amministrativi di tipo
+-- FATTURA PASSIVA con riga di dettaglio di sconto o abbuono) o in ASS_EV_VOCE_EP (per tutti gli altri documenti)
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Documento amministrativo privo di associazione cori/coep
+-- pre: il documento amministrativo non è un documento di uscita di partita di giro, ma non c'è un.associazione
+-- cori/coep per il documento in ASS_TIPO_CORI_VOCE_EP
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Documento amministrativo privo di conto economico associato a contributo ritenuta
+-- pre: il documento amministrativo non è un documento di uscita di partita di giro, esiste un.associazione cori/coep
+-- in ASS_TIPO_CORI_VOCE_EP, non viene trovato il conto economico associato al contributo ritenuta in VOCE_EP
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Costruzione del movimento di contropartita per la scrittura prima per la quadratura della scrittura
+-- non esistono movimenti
+-- pre: documento amministrativo non è un documento di uscita di partita di giro, la lista dei movimenti è vuota
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Creazione della scrittura prima in partita doppia per il documento amministrativo su partita di giro,
+-- non esiste un.associazione con la partita di giro
+-- pre: i dettagli del documento amministrativo sono su partita di giro, il documento amministrativo non ammette
+-- un'associazione con la partita di giro per esercizio, CdS, numero progressivo del documento amministrativo
+-- (di accertamento o obbligazione) e per sezione corrispondente (in ASS_OBB_ACR_PGIRO).
+-- post: non vengono generate scritture
+--
+-- pre-post-name: Creazione della scrittura prima in partita doppia per il documento amministrativo su partita di
+-- giro - conto economico su partita di giro non trovato
+-- pre: i dettagli del documento amministrativo sono su partita di giro, il documento amministrativo ammette un'associazione
+-- con la partita di giro per esercizio, CdS, numero progressivo del documento amministrativo (di accertamento o
+-- obbligazione) e per sezione corrispondente (in ASS_OBB_ACR_PGIRO). Non viene individuato il conto economico per
+-- il costo e/o per il ricavo in ASS_PARTITA_GIRO e/o in ASS_EV_VOCEEP.
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Creazione della scrittura prima in partita doppia per il documento amministrativo (situazione
+-- generale su partita di giro)
+-- pre: i dettagli del documento amministrativo sono su partita di giro, il documento amministrativo ammette un'associazione
+-- con la partita di giro per esercizio, CdS, numero progressivo del documento amministrativo (di accertamento o
+-- obbligazione) e per sezione corrispondente (in ASS_OBB_ACR_PGIRO).
+-- post: generazione di movimenti principali in DARE per il costo e di movimenti principali in AVERE per il ricavo.
+-- Il conto economico del costo e del ricavo sono determinati dalla tabella VOCE_EP, ma in funzione del tipo di gestione:
+-- se si tratta di entrate, per il costo si individua preventivamente il collegamento con il conto su partita di giro
+-- in ASS_PARTITA_GIRO e quindi  attraverso la tabella ASS_EV_VOCEEP. Se si tratta di spese, questa operazione viene fatta per il ricavo.
+-- Creazione e inserimento della scrittura prima in partita doppia (con numerazione della scrittura inserita):
+-- inserisce la testata, i movimenti della scrittura e aggiorna i saldi.
+-- Aggiorna per chiave primaria la testata del documento.
+--
+-- pre-post-name: Creazione della scrittura prima in partita doppia per il documento amministrativo (situazione
+-- generale - non su partita di giro)
+-- pre:  i dettagli del documento amministrativo non sono su partita di giro
+-- post: generazione dei movimenti di default, individuando il conto economico da ASS_EV_VOCEEP per esercizio,
+-- gestione, appartenenza e conto finanziario del documento amministrativo, e determinando la sezione del documento amministrativo: se esiste già un movimento con lo stesso conto economico, sezione e intervallo temporale di competenza, viene sommato l.importo al movimento esistente; se non esiste già un movimento, viene creato ed aggiunto alla lista dei movimenti. Per il compenso, l'importo del movimento è il lordo del percipiente.
+-- Vengono create tante scritture quante sono le entità anagrafiche specificate (individuate tramite la vista
+-- V_DOC_AMM_COGE_RIGA).
+-- Generazione movimenti e creazione scrittura:
+-- Generazione dei movimenti di contributi ritenuta e IVA del documento individuando il conto economico attraverso
+-- l.associazione tra elemento voce e contributi ritenuta in ASS_TIPO_CORI_VOCE_EP: se esiste già un movimento con lo
+-- stesso conto economico, sezione e intervallo temporale di competenza, viene sommato l.importo al movimento esistente; se non esiste già un movimento, viene creato ed aggiunto alla lista dei movimenti. L'importo del movimento è dato dal totale dell'ammontare dei contributi ritenuta.
+-- Costruzione del movimento di contropartita per la scrittura prima per la quadratura della scrittura, individuando
+-- il conto economico attraverso l.anagrafica completa del terzo nella vista V_ANAGRAFICO_TERZO e la tabella
+-- ASS_ANAG_VOCE_EP, associazione fra anagrafico e elemento voce. Se il totale DARE dei movimenti supera il totale
+-- AVERE, la sezione principale è DARE (contropartita in AVERE). Se il totale AVERE dei movimenti supera il totale
+-- DARE, la sezione principale è AVERE (contropartita in DARE). Se la partita doppia è già chiusa non devo generare
+-- movimenti.
+-- Creazione e inserimento della scrittura prima in partita doppia (con numerazione della scrittura inserita):
+-- inserisce la testata, i movimenti della scrittura e aggiorna i saldi.
+-- Aggiorna per chiave primaria la testata del documento.
+--
+-- pre-post-name: Scrittura di rateo parte 1
+-- pre: Il documento amministrativo è creato con competenza economica in esercizio aperto precedente a quello del
+-- documento
+-- post: Viene creata una scrittura economica uguale ad un scrittura dell'anno con le seguenti deroghe:
+--           1. la scrittura è registrata nell'esercizio precedente a quello del documento amministrativo
+--           2. al posto del conto creditore/debitore, viene utilizzato l'opportuno conto dei ratei attivi/passivi
+-- recuperato da CONFIGURAZIONE_CNR
+--           3. la data di contabilizzazione della scrittura è 3112<anno precedente a quello del documento>
+--       Lo stato COGE del documento viene aggiornato di conseguenza
+--
+-- Parametri:
+-- aDocTst ->Testata di un documento amministrativo, estratta dalla vista V_DOC_AMM_COGE_TSTA
+-- aUser -> Utente che effettua la variazione
+-- aTSNow -> Timestamp modifica
+
+procedure regDocAmmCOGE(aDocTst V_DOC_AMM_COGE_TSTA%rowtype, aUser varchar2, aTSNow date);
+
+-- Parametri:
+-- aEs -> Esercizio documento amministrativo
+-- aCds -> Codice del CDS documento amministrativo
+-- aUO -> Codice unità organizzativa documento amministrativo
+-- aTiDocumento -> Tipo documento amministrativo
+-- aPgDocAmm -> Progressivo del documento amministrativo
+-- aUser -> Utente che effettua la variazione
+-- aTSNow -> Timestamp modifica
+
+procedure regDocAmmCOGE(aEs number, aCds varchar2, aUO varchar2, aTiDocumento varchar2, aPgDocAmm number, aUser varchar2, aTSNow date);
+
+-- =============================================================
+-- Registra il pagamento di un documento amministrativo in COGE
+-- =============================================================
+
+-- Registrazione scritture ultime e singole in COEP di un documento autorizzatorio
+--
+-- Registrazione del pagamento di un documento autorizzatorio: scritture ultime e singole.
+-- Riceve in ingresso la testata di un documento, estratta dalla vista V_DOC_ULT_COGE_TSTA, interfaccia uniforme dei documenti autorizzatori (MANDATO e REVERSALE).
+--
+-- pre-post-name: Stato documento autorizzatorio non compatibile
+-- pre: Lo stato del mandato/reversale non è ESITATO o ANNULLATO
+-- post: Il programma termina senza sollevare eccezioni
+--
+-- pre-post-name: Controlli su esercizio finanziario ed economico di registrazione del documento
+-- pre: L'esercizio contabile in cui effettuare la liquidazione non risulta aperto o
+--      chiuso finanziariamente o risulta in fase di chiusura economica o chiuso economicamente in modo definitivo
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Esercizio economico precedente non chiuso definitivamente
+-- pre: L'esercizio economico precedente a quello di origine del documento non è chiuso definitivamente
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Documento non supportato
+-- pre: il tipo di documento autorizzatorio non è supportato
+-- post: viene sollevata un.eccezione
+--
+-- pre-post-name: Documento autorizzatorio contabilizzato in COGE oppure da non contabilizzare
+-- pre: il documento autorizzatorio è già contabilizzato in COGE oppure non è da contabilizzare
+-- post: Il programma termina senza sollevare eccezioni
+--
+-- pre-post-name: Documento autorizzatorio annullato
+-- pre: il documento autorizzatorio è stato annullato
+-- post: viene creato uno storno per ogni scrittura ultima e singola (di tipo Banca/Cassa) già registrata emettendo
+-- la scrittura opposta in sezione alla scrittura originale.
+-- Vedi pre-post Aggiornamento dello stato COGE.
+--
+-- pre-post-name: Stato pagamento fondo economale non trovato
+-- pre: Non viene determinato lo stato pagamento fondo economale dei documenti amministrativi collegati al doc. aturoizzatorio
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Terzo non trovato nel documento autorizzatorio
+-- pre: il documento autorizzatorio non risulta annullato, non risulta un terzo associato al tipo di
+-- documento per l'esercizio, il centro di spesa e il progressivo del documento contabile.
+-- post: viene sollevata un'eccezione
+--
+-- pre-post-name: Creazione ed inserimento di scrittura ultima o singola in COGE  utente non specificato
+-- pre: non viene specificato l'utente che effettua la modifica
+-- post: viene sollevata un'eccezione
+--
+-- pre-post-name: Conto economico non trovato
+-- pre: non viene trovato il conto economico nella tabella VOCE_EP
+-- post: viene sollevata un'eccezione
+--
+-- pre-post-name: Documento amministrativo associato al documento autorizzatorio non trovato
+-- pre: nella vista V_DOC_AMM_COGE_TSTA non viene trovato il documento amministrativo associato al documento
+-- autorizzatorio per centro di spesa, esercizio, tipo di documneto contabile,
+-- unità organizzativa e numero progressivo del documento.
+-- post: viene sollevata un'eccezione
+--
+-- pre-post-name: Documento amministrativo GENERICO di reintegro fondo economale
+-- pre: il documento amministrativo collegato al documento autorizzatorio è generico di reintegro fondo economale
+-- post: nelle pre-post Documento autorizzatorio associato a fondo economale, la scrittura di default che viene
+-- registrata è di tipo singolo e non di tipo ultimo.
+--
+-- pre-post-name: Documento amministrativo GENERICO di VERSAMENTO ENTRATA O SPESA
+-- pre: il documento amministrativo collegato al documento autorizzatorio è generico di VERSAMENTO ENTRATA o SPESA
+--      viene chiuso il debito/credito verso l'erario con il versamento
+-- post: il movimento principale è gestito in deroga come segue:
+--       1. Determina a partire dalla riga di doc generico l'obbligazione o accertamento che apre la partita di giro del versamento (se non trova esce senza sollevare eccezioni)
+--       2. Dall'accertamento/obbligazione risale al contributo ritenuta versato (se non trova esce senza sollevare eccezioni)
+--       3. Determina l'associazione tra CORI e VOCE ECONOMICA tramite tabella ASS_TIPO_CORI_VOCE_EP
+--          entrando con esercizio,codice cori,ente/percipiente,sezione (DARE se >0 AVERE viceversa)
+--       4. Dall'associazione estrae il conto di contropartita patrimoniale associato al CORI
+--       5. La sezione del movimento è DARE se cori >0 AVERE se CORI <0
+--
+-- pre-post-name: Documento autorizzatorio di tipo mandato di accreditamento
+-- pre: il documento autorizzatorio è di tipo mandato di accreditamento, generato in automatico da trasferimento
+-- CNR --> CdS. Esiste solo per bilancio Cnr.
+-- post: il conto utilizzato per il movimento principale è banca CdS.
+--
+-- pre-post-name: Documento amministrativo di tipo COMPENSO
+-- pre: il documento amministrativo collegato al documento autorizzatorio è di tipo COMPENSO,
+--      viene aperto il debito/credito verso l'erario
+-- post: Si ha una diversa generazione dei movimenti di contropartita secondo il seguente schema:
+--       Determina tutti i CORI del compenso
+--        Per ogni CORI
+--         Se il CORI non è IVA o RIVALSA (identificati tramite classificazione CORI)
+--          1. Determina l'associazione tra CORI e VOCE ECONOMICA tramite tabella ASS_TIPO_CORI_VOCE_EP
+--             entrando con esercizio,codice cori,ente/percipiente,sezione (DARE se >0 AVERE viceversa)
+--          2. Dall'associazione estrae il conto di contropartita patrimoniale associato al CORI
+--          3. La sezione del movimento è DARE se cori <0 AVERE se CORI >0
+--
+-- pre-post-name: Individuazione conto economico di contropartita
+-- pre: è necessario individuare il conto economico di contropartita
+-- post: nelle pre-post Documento autorizzatorio associato a fondo economale , Documento autorizzatorio
+-- non  associato a fondo economale il conto economico di contropartita viene individuato per tipologia
+-- di documento dalla tabella VOCE_EP:
+-- 1. il documento autorizzatorio è una REVERSALE di REGOLARIZZAZIONE: il conto economico è individuato come
+--    voce speciale di tipo insussitenza di credito;
+-- 2. il documento autorizzatorio è collegato a doc. amministrativo associato a fondo economale (sia nel caso sia già registrata la spese,
+--    sia in quello in cui non sia ancora registrata): il conto economico è individuato come voce speciale
+--    di tipo cassa;
+-- 3. il documento autorizzatorio appartiene al CNR: il conto economico è individuato come voce speciale di
+--    tipo banca (conto dell'ente);
+-- 4. il documento autorizzatorio non appartiene al CNR: il conto economico è individuato come voce speciale
+--    di tipo banca del CdS (conto CdS).
+--
+-- pre-post-name: Documento autorizzatorio associato a fondo economale
+-- pre: il documento autorizzatorio è associato a fondo economale (sia nel caso sia già registrata la spese,
+-- sia in quello in cui non sia ancora registrata).
+-- post: generazione del movimento principale di default della scrittura ultima per ogni riga del documento
+-- autorizzatorio: si determina il conto economico associato al documento attraverso la vista V_ANAGRAFICO_TERZO,
+-- le tabelle ASS_ANAG_VOCE_EP e VOCE_EP.
+-- Generazione dei movimenti di contropartita di default per ogni riga del documento autorizzatorio individuando
+-- il conto economico di contropartita nella tabella VOCE_EP per codice di documento (vedi pre-post Individuazione
+-- conto economico di contropartita).
+-- Creazione ed inserimento della scrittura ultima di default in partita doppia (con numerazione della scrittura
+-- inserita): inserisce la testata della scrittura ed aggiorna i saldi.
+-- Generazione di un movimento sul conto economico della cassa in sezione opposta alla sezione del documento
+-- autorizzatorio, e di un moviimento sul conto economico della banca del CdS nella stessa sezione del documento.
+-- Creazione ed inserimento della scrittura singola in partita doppia (con numerazione della scrittura inserita):
+-- inserisce la testata della scrittura ed aggiorna i saldi.
+-- Gestione del 1210 su riscontro: dal documento amministrativo determino la differenza tra l'effettivo pagamento,
+-- la commisione della banca e l.importo della fattura. Se risulta una differenza non nulla registro il movimento
+-- principale in DARE o AVERE in dipendenza della differenza appena calcolata (importo del movimento), determinando
+-- il conto economico associato dalla tabella VOCE_EP in perdita sul cambio o utile su cambio rispettivamente.
+-- Registro anche un movimento in sezione opposta sul conto economico del terzo attraverso la vista
+-- V_ANAGRAFICO_TERZO (vista estrazione dei terzi con tutte le informazioni di base della anagrafica a cui appartengono)
+-- e la tabella ASS_ANAG_VOCE_EP. Creazione ed inserimento della scrittura singola in partita doppia
+-- (con numerazione della scrittura inserita): inserisce la testata della scrittura ed aggiorna i saldi.
+-- Vedi pre-post Aggiornamento dello stato COGE
+--
+-- pre-post-name: Documento autorizzatorio non  associato a fondo economale
+-- pre: il documento autorizzatorio non è associato a fondo economale. Non esistono scritture ultime in partita
+-- doppia associate per esercizio, centro di spesa, unità organizzativa, numero progressivo di documento contabile.
+-- post: generazione del movimento principale di default della scrittura ultima per ogni riga del documento
+-- autorizzatorio: si determina il conto economico associato al documento attraverso la vista V_ANAGRAFICO_TERZO,
+-- le tabelle ASS_ANAG_VOCE_EP e VOCE_EP.
+-- Generazione dei movimenti di contropartita di default per ogni riga del documento autorizzatorio individuando
+-- il conto economico di contropartita nella tabella VOCE_EP per codice di documento (vedi pre-post Individuazione
+-- conto economico di contropartita).
+-- Creazione ed inserimento della scrittura ultima di default in partita doppia (con numerazione della scrittura
+-- inserita): inserisce la testata della scrittura ed aggiorna i saldi.
+-- Gestione del 1210 su riscontro: dal documento amministrativo determino la differenza tra l'effettivo pagamento,
+-- la commisione della banca e l.importo della fattura. Se risulta una differenza non nulla registro il movimento
+-- principale in DARE o AVERE in dipendenza della differenza appena calcolata (importo del movimento), determinando
+-- il conto economico associato dalla tabella VOCE_EP in perdita sul cambio o utile su cambio rispettivamente.
+-- Registro anche un movimento in sezione opposta sul conto economico del terzo attraverso la vista
+-- V_ANAGRAFICO_TERZO (vista estrazione dei terzi con tutte le informazioni di base della anagrafica a cui appartengono)
+-- e la tabella ASS_ANAG_VOCE_EP. Creazione ed inserimento della scrittura singola in partita doppia
+-- (con numerazione della scrittura inserita): inserisce la testata della scrittura ed aggiorna i saldi.
+-- Vedi pre-post Aggiornamento dello stato COGE
+--
+-- pre-post-name: Aggiornamento dello stato COGE
+-- pre: il documento autorizzatorio è un MANDATO o una REVERSALE
+-- post: vengono aggiornate le tabelle MANDATO o REVERSALE (in dipendenza della tipologia di documento autorizzatorio)
+-- definendo lo stato COGE del documento, l.utente che effettua la modifica, la data della modifica e incrementando il
+-- numero progressivo del documento in corrispondenza dell.esercizio, del centro di spesa e del numero progressivo del
+-- documento contabile.
+--
+-- Parametri:
+-- aDocTst -> testata di un documento amministrativo estratta dalla vista V_DOC_ULT_COGE_TSTA
+-- aUser -> utente che effettua le modifiche
+
+ procedure regDocPagCOGE(aDocTst V_DOC_ULT_COGE_TSTA%rowtype, aUser varchar2, aTSNow date);
+
+ -- =============================================================
+ -- Registra annullamento post chiusura esercizio
+ -- =============================================================
+
+ -- pre-post-name: Cds origine del documento non più valido nell'esercizio di registrazione economica dell'annullamento
+ -- pre: Il cds origine del documento non è più valido nell'esercizio di registrazione economica dell'annullamento
+ -- post: Viene sollevata un'eccezione
+
+ -- pre-post-name: Esercizio in cui si annulla il documento non ancora aperto o chiuso finanziariamente
+ -- pre: L'esercizio in cui si annulla il documento non ancora aperto per il cds specificato
+ -- post: Viene sollevata un'eccezione
+
+ -- pre-post-name: Esercizio precedente a quello in cui si è annulato il documento nonn è chiuso
+ -- economicamente definitivamente
+ -- pre: L'esercizio di origine del documento non è ancora chiuso
+ -- post: Viene sollevata un'eccezione
+
+ -- pre-post-name: Esercizio economico di origine del documento non chiuso
+ -- pre: L'esercizio economico di origine del documento non è ancora chiuso
+ -- post: Viene sollevata un'eccezione
+
+ -- pre-post-name: Verifica che il documento sia stato riportato all'esercizio economico di annullamento e non oltre
+ -- pre: non è vero che il documento è stato riportato all'esercizio di annullamento e non oltre
+ -- post: Viene sollevata un'eccezione
+
+ -- pre-post-name: Verifica che il documento sia stato processato almeno una volta in economica
+ -- pre: Il documento non è mai stato processato in economica (stato_coge='N')
+ -- post: Viene sollevata un'eccezione
+
+ -- pre-post-name: Documento non ancora processato in economica
+ -- pre: Il doc. amministrativo non è stato processato con scrittura PRIMA economica nell'esercizio in chiusura
+ -- post: La procedura esce senza sollevare eccezioni
+
+ -- pre-post-name: Annullamento già eseguito
+ -- pre: Vengono ricercate e trovate le scritture di annullamento speciale per il doc. amministrativo
+ -- post: La procedura esce senza sollevare eccezioni
+
+ -- pre-post-name: Importo movimento minore o uguale a 0
+ -- pre: L'importo del movimento di sopravveninenza attiva o passiva risulta negativo o nullo
+ -- post: Viene sollevata un'eccezione
+
+ -- pre-post-name: Registrazione economica dell'annulamento
+ -- pre: E' richiesta la registrazione dell'annullamento del documento amministrativo in esercizio diverso da quello di origine quest'ultimo chiuso economicamente
+ -- post:
+ --     Vengono recuperate le scritture prime del documento nel'esercizio ORIGINE dello stesso
+ --     per ogni scrittura prima associata al documento (solo il generico ha event. più di una scrittura per i singoli terzi)
+ --      Recupera il movimento del terzo per estrarre:
+ --          aCodTerzo -> codice terzo
+ --          aImMovimento -> importo del movimento
+ --          aSez -> sezione del movimento
+ --          aTiIstitComm -> tipo istituzionale commerciale del movimento
+ --      Se il documento è generico o fattura passiva o attiva
+ --       Estrae da mandato riga la quota pagata/incassata (aImPagatoIncassato) del documento amministrativo per il terzo in processo
+ --      Crea un movimento nell'esercizio aEs di destinazione con:
+ --		 	  intervallo competenza coge => data di sistema
+ --           importo movimento = aImMovimento (- aImPagatoIncassatoper generici e fatture)
+ --           terzo = aCdTerzo
+ --           tipo istituzionale commerciale = aTiIstituzComm
+ --           sezione = sezione opposta ad aSez
+ --           voce economica = conto associato a aCdTerzo nell'esercizio aEs
+ --      Crea il movimento di contropartita sulla voce delle sopravvenienze (attive o passive a seconda del caso)
+ --      Crea la scrittura economica con le seguenti caratteristiche:
+ --          Data di contabilizzazione -> data di sistema
+ --          La causale coge -> ANNULLAMENTO_DOC_ESERCIZIO_CHIUSO
+ --          Origine della scrittura -> ORIGINE_DOCUMENTO_AMM
+ --          Terzo -> aCdTerzo
+ -- Parametri:
+ -- aEs -> esercizio in cui si annulla (congela) il documento proveniente da esercizio chiuso economicamente
+ -- aDocTst -> Documento registrato in esercizio succ. a quello in chiusura e cono competenza nell'esercizio precedente
+ -- aUser -> Utente che effettua la variazione
+ -- aTSNow -> Timestamp modifica
+
+ procedure regAnnullaDocEsChiusoCOGE(aEs number, aDocTst V_DOC_AMM_COGE_TSTA%rowtype, aUser varchar2, aTSNow date);
+
+ Procedure regAnnullaRigheDocEsChiusoCOGE(aEs number, aRigheAnn V_DOC_AMM_COGE_RIGHE_ANNULLATE%rowtype, aUser varchar2, aTSNow date);
+-- parametro da valutare in molte procedure
+ recParametriCNR PARAMETRI_CNR%Rowtype;
+end;
