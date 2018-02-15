@@ -17,3 +17,9 @@ mvn wildfly:run
 ```
 **Esempi liquibase**
    * http://www.liquibase.org/quickstart.html
+   * Aggiunta di una colonna 
+        * http://www.liquibase.org/documentation/changes/add_column.html
+   * Aggiornamento di una VIEW
+        * http://www.liquibase.org/documentation/changes/create_view.html
+   * Esecuzione di uno script sql
+        * http://www.liquibase.org/documentation/changes/sql_file.html
