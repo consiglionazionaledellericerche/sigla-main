@@ -5,6 +5,7 @@
 ```
 **Esempi liquibase**
    * http://www.liquibase.org/quickstart.html
+   * http://www.liquibase.org/bestpractices.html
    * Aggiunta di una colonna 
          http://www.liquibase.org/documentation/changes/add_column.html
    * Aggiornamento di una VIEW
