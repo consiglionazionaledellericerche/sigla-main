@@ -28,7 +28,7 @@
 		<![CDATA[select vp_fattura_attiva_n.* ,VP_FATTURA_ATTIVA_N.CD_CDS||VP_FATTURA_ATTIVA_N.CD_UNITA_ORGANIZZATIVA||
 to_char(VP_FATTURA_ATTIVA_N.ESERCIZIO)||
 to_char(VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA)||ti_stampa
-chiave,fl_pagamento_anticipato,decode(Cnr.dt01-f.dt_emissione,abs(Cnr.dt01-f.dt_emissione),'N',fl_liquidazione_differita) split, decode(vp_fattura_attiva_n.ti_bollo,'D',cnr_ese.CD_CHIAVE_PRIMARIA,' ') motivo_esenzione, cnr_ass.VAL01 motivo_assolvimento, (select count(0)
+chiave,fl_pagamento_anticipato,decode(Cnr.dt01-f.dt_emissione,abs(Cnr.dt01-f.dt_emissione),'N',fl_liquidazione_differita) split, decode(vp_fattura_attiva_n.ti_bollo,'D',cnr_ese.VAL01,' ') motivo_esenzione, cnr_ass.VAL01 motivo_assolvimento, (select count(0)
 			from fattura_attiva_riga R, BENE_SERVIZIO B where F.ESERCIZIO = R.ESERCIZIO AND F.CD_CDS = R.CD_CDS AND F.CD_UNITA_ORGANIZZATIVA = R.CD_UNITA_ORGANIZZATIVA AND
 			F.PG_FATTURA_ATTIVA = R.PG_FATTURA_ATTIVA AND R.CD_BENE_SERVIZIO = B.CD_BENE_SERVIZIO AND B.FL_BOLLO = 'Y') CONTA_ESISTE_BOLLO from vp_fattura_attiva_n,fattura_attiva f,configurazione_cnr cnr,configurazione_cnr cnr_ese,configurazione_cnr cnr_ass
 where
