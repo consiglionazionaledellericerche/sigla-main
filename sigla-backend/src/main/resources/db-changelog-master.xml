@@ -11,4 +11,5 @@
     <include file="liquibase/views.xml"/>
     <include file="liquibase/oracle-sql4.xml"/>
     <include file="liquibase/function.xml"/>
+    <include file="liquibase/oracle_compile_objects.xml"/>
 </databaseChangeLog>
