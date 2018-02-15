@@ -157,7 +157,7 @@ VP_FATTURA_ATTIVA_N.ESERCIZIO,ti_stampa,VP_FATTURA_ATTIVA_N.PG_FATTURA_ATTIVA,ti
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement/>
-					<text><![CDATA[CESSIONE O PRESTAZIONE ESEGUITA DA]]></text>
+					<text><![CDATA[CESSIONE O PRESTAZIONE ESEGUITA DA -TEST]]></text>
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-67" style="TNR10BOLD" positionType="Float" x="254" y="3" width="87" height="12"/>
