@@ -9,6 +9,7 @@ DECLARE
   aSID text;
 BEGIN
   select to_char(pg_backend_pid(), '999999999') into aSID;
+  ---LELLO
   insert into TRANSLOCK(SID,STATUS) VALUES (aSID,0);
 END;
 
