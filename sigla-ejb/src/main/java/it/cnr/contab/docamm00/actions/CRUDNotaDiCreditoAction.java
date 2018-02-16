@@ -12,6 +12,7 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
 import it.cnr.contab.docamm00.comp.DocumentoAmministrativoComponentSession;
 import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
@@ -1564,9 +1565,14 @@ public Forward doSelezionaDettaglioPerNdC(ActionContext context) {
 			List<Fattura_passiva_rigaBulk> allDetail = new ArrayList<Fattura_passiva_rigaBulk>();
 			allDetail.addAll(elementsToBeAdded);
 			allDetail.addAll(((Nota_di_creditoBulk)bp.getModel()).getFattura_passiva_dettColl());
-			boolean isOriginalNotaSplit =false;
-			if(((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment() !=null)
-				isOriginalNotaSplit = ((Nota_di_creditoBulk)bp.getModel()).getFl_split_payment() ||((Nota_di_creditoBulk)bp.getModel()).getDocumentoEleTestata().isDocumentoSplitPayment();
+
+			boolean isOriginalNotaSplit = Optional.ofNullable(bp)
+					.flatMap(crudNotaDiCreditoBP -> Optional.ofNullable(crudNotaDiCreditoBP.getModel()))
+					.filter(Nota_di_creditoBulk.class::isInstance)
+					.map(Nota_di_creditoBulk.class::cast)
+					.map(nota_di_creditoBulk -> nota_di_creditoBulk.getFl_split_payment() ||
+							Optional.ofNullable(nota_di_creditoBulk.getDocumentoEleTestata()).map(DocumentoEleTestataBulk::isAttivoSplitPayment).orElse(false))
+					.orElse(false);
 
 			long contaSplit=allDetail.stream()
 						.filter(e->{
