@@ -2207,8 +2207,12 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
             for (Iterator<AllegatoMissioneDettaglioSpesaBulk> iterator = dettaglio.getDettaglioSpesaAllegati().deleteIterator(); iterator.hasNext(); ) {
                 AllegatoMissioneDettaglioSpesaBulk allegato = iterator.next();
                 if (allegato.isToBeDeleted()) {
-                    missioniCMISService.delete(allegato.getStorageKey());
-                    allegato.setCrudStatus(OggettoBulk.NORMAL);
+                    if (!isDocumentoDettaglioProvenienteDaGemis(allegato)) {
+                        missioniCMISService.delete(allegato.getStorageKey());
+                        allegato.setCrudStatus(OggettoBulk.NORMAL);
+                    } else {
+                        throw new ApplicationException("Cancellazione non possibile! Documento proveniente dalla procedura Missioni");
+                    }
                 }
             }
         }
