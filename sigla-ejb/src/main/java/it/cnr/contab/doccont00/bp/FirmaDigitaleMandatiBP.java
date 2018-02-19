@@ -231,6 +231,15 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						break;
 					}
 					boolean isReversaleCollegataSiope = true;
+					try {
+						Utility.createMandatoComponentSession().esistonoPiuModalitaPagamento(actioncontext.getUserContext(),
+								new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()));
+					} catch (ApplicationException _ex) {
+						message += "\nSul mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont() + " , le modalità di pagamento dei dettagli del mandato sono diverse, " +
+								"pertanto è stato escluso dalla selezione.";
+						continue;
+					}
+
 					if (!Utility.createMandatoComponentSession().isCollegamentoSiopeCompleto(
 							actioncontext.getUserContext(),new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()))) {
 						message += "\nIl mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associato completamente a codici Siope, pertanto è stato escluso dalla selezione.";
