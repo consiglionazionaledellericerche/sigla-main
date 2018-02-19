@@ -25,7 +25,14 @@
 		nullable="false"
 		caseSensitiveSearch="false"
 		enabledOnFreeSearch="true"/>
-		
+
+	<form name="searchtool">
+		<formFieldProperty
+				name="cd_gruppo_iva" />
+		<formFieldProperty
+				name="ds_gruppo_iva"/>
+	</form>
+
 	<formFieldProperty
 		name="cd_gruppo_iva" />
 	<formFieldProperty
