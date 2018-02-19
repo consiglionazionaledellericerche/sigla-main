@@ -2782,7 +2782,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     private Boolean isDocumentoDettaglioProvenienteDaGemis(AllegatoGenericoBulk allegato) {
         return Optional.ofNullable(allegato.getStorageKey())
                 .map(key -> missioniCMISService.getStorageObjectBykey(key))
-                .map(storageObject -> missioniCMISService.hasAspect(storageObject, MissioniCMISService.ASPECT_MISSIONE_SIGLA_DETTAGLIO))
+                .map(storageObject -> missioniCMISService.hasAspect(storageObject, MissioniCMISService.ASPECT_MISSIONE_RIMOBORSO_DETTAGLIO_SCONTRINI))
                 .orElse(false);
     }
 
