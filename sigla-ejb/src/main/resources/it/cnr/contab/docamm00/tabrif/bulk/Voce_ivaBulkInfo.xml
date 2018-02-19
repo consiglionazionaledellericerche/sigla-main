@@ -9,6 +9,7 @@
 		property="gruppo_iva"
 		inputType="SEARCHTOOL" 		
 		label="Gruppo Iva"
+		formName="searchtool"
 		enabledOnSearch="false"
 		enabledOnEdit="true" />	
 	<fieldProperty
@@ -107,7 +108,7 @@
 		property="naturaOperNonImpSdi"
 		keysProperty="naturaOperazioniNonImponibiliKeys"
 		label="Natura Operazioni non imponibili per invio SDI"
-		enabledOnEdit="true"
+        enabledOnEdit="true"
 		enabledOnInsert="true"				
 		inputType="SELECT"
 		enabledOnSearch="true"
