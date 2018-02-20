@@ -1,7 +1,7 @@
 package it.cnr.contab.coepcoan00.action;
 
 /**
- * Action che gestisce le attivit‡ di CRUD per una Scrittura in Partita Doppia
+ * Action che gestisce le attivit√† di CRUD per una Scrittura in Partita Doppia
  */
 
 public class CRUDScritturaPDoppiaAction extends it.cnr.jada.util.action.CRUDAction {

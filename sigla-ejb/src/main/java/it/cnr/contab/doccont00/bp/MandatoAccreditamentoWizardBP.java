@@ -12,7 +12,7 @@ import it.cnr.jada.util.jsp.Button;
 import java.math.*;
 
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Mandato di Accreditamento
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Mandato di Accreditamento
  */
 
 public class MandatoAccreditamentoWizardBP extends it.cnr.jada.util.action.SimpleCRUDBP {
@@ -32,7 +32,7 @@ public MandatoAccreditamentoWizardBP(String function)
  * <!-- @TODO: da completare -->
  * 
  *
- * @param function	La funzione con cui Ë stato creato il BusinessProcess
+ * @param function	La funzione con cui √® stato creato il BusinessProcess
  * @param codice_cds	
  * @param importo	
  */
@@ -104,7 +104,7 @@ public void create(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.
 }
 /**
  * Metodo utilizzato per creare una toolbar applicativa personalizzata.
- * @return null In questo caso la toolbar Ë vuota
+ * @return null In questo caso la toolbar √® vuota
  */
 
 protected it.cnr.jada.util.jsp.Button[] createToolbar() 
@@ -113,18 +113,18 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'codice_cds'
+ * Restituisce il valore della propriet√† 'codice_cds'
  *
- * @return Il valore della propriet‡ 'codice_cds'
+ * @return Il valore della propriet√† 'codice_cds'
  */
 public java.lang.String getCodice_cds() {
 	return codice_cds;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_mandato'
+ * Restituisce il valore della propriet√† 'im_mandato'
  *
- * @return Il valore della propriet‡ 'im_mandato'
+ * @return Il valore della propriet√† 'im_mandato'
  */
 public java.math.BigDecimal getIm_mandato() {
 	return im_mandato;
@@ -144,7 +144,7 @@ public final it.cnr.jada.util.action.SimpleDetailCRUDController getMandati() {
 /**
  *	Abilito il bottone di emissione del mandato.
  *	@return			TRUE 	Abilitato se non sono ancora stati emessi mandati
- *					FALSE 	Non Ë abilitato se sono gi‡ stati emessi i mandati
+ *					FALSE 	Non √® abilitato se sono gi√† stati emessi i mandati
  */
 public boolean isEmettiMandatoButtonEnabled() {
 	return ((MandatoAccreditamentoWizardBulk)getModel()).getMandatiColl().size() ==  0 ;
@@ -152,8 +152,8 @@ public boolean isEmettiMandatoButtonEnabled() {
 }
 /**
  *	Abilito il flag di calcolo automatico.
- *	@return			TRUE 	Il flag di calcolo automatico Ë abilitato
- *					FALSE 	Il flag di calcolo automatico non Ë abilitato 
+ *	@return			TRUE 	Il flag di calcolo automatico √® abilitato
+ *					FALSE 	Il flag di calcolo automatico non √® abilitato 
  */
 public boolean isFlCalcoloAutomaticoCheckboxEnabled() {
 	return ((MandatoAccreditamentoWizardBulk)getModel()).getMandatiColl().size() ==  0 ;
@@ -161,7 +161,7 @@ public boolean isFlCalcoloAutomaticoCheckboxEnabled() {
 /**
  *	Gestisce l'abilitazione o meno del bottone di visualizzazione di un mandato di accreditamento
  *	@return			TRUE 	Abilitato se un mandato e' stato selezionato nella lista dei mandati
- *					FALSE 	Non Ë abilitato se nessun mandato e' stato selezionato nella lista dei mandati
+ *					FALSE 	Non √® abilitato se nessun mandato e' stato selezionato nella lista dei mandati
  */
 public boolean isVisualizzaMandatoButtonEnabled() {
 //	return ((MandatoAccreditamentoWizardBulk)getModel()).getMandatiColl().size() >  0 ;
@@ -169,7 +169,7 @@ public boolean isVisualizzaMandatoButtonEnabled() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'codice_cds'
+ * Imposta il valore della propriet√† 'codice_cds'
  *
  * @param newCodice_cds	Il valore da assegnare a 'codice_cds'
  */
@@ -178,7 +178,7 @@ public void setCodice_cds(java.lang.String newCodice_cds) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'im_mandato'
+ * Imposta il valore della propriet√† 'im_mandato'
  *
  * @param newIm_mandato	Il valore da assegnare a 'im_mandato'
  */

@@ -17,7 +17,7 @@ import java.io.Serializable;
 import java.util.*;
 
 /*
- * Gestione attivit‡ di CRUD sulle Associazioni tra tipi di linee di attivit‡ e CDR
+ * Gestione attivit√† di CRUD sulle Associazioni tra tipi di linee di attivit√† e CDR
  */
 public class Tipologia_linea_attivitaComponent extends it.cnr.jada.comp.CRUDDetailComponent implements ITipologia_linea_attivitaMgr, Cloneable,Serializable {
 	public  Tipologia_linea_attivitaComponent() {
@@ -25,7 +25,7 @@ public class Tipologia_linea_attivitaComponent extends it.cnr.jada.comp.CRUDDeta
 /** 
   *  Default
   *    PreCondition:
-  *      L'utente ha annullato l'associazione tar cdr e una tipologia linea attivit‡
+  *      L'utente ha annullato l'associazione tar cdr e una tipologia linea attivit√†
   *    PostCondition:
   *		 Effettua un rollback al savepoint impostato in inizializzaCdrAssociati
  */
@@ -39,11 +39,11 @@ public void annullaModificaCdrAssociati(it.cnr.jada.UserContext userContext, it.
 /** 
   *  Default
   *    PreCondition:
-  *      Viene richiesta l'associazione di una tipologia linea attivit‡ con tutti i cdr disponibili
+  *      Viene richiesta l'associazione di una tipologia linea attivit√† con tutti i cdr disponibili
   *    PostCondition:
   *		 Inserisce nella tabella ASS_TIPO_LA_CDR tante righe quanti sono i cdr mancanti nella associazione
-  *		 con la tipologia linea attivit‡ specificata;
-  *		 Per ogni cdr associato crea una linea attivit‡ secondo le specifiche di modificaCdrAssociati
+  *		 con la tipologia linea attivit√† specificata;
+  *		 Per ogni cdr associato crea una linea attivit√† secondo le specifiche di modificaCdrAssociati
  */
 public void associaTuttiCdr(UserContext userContext,Tipo_linea_attivitaBulk tipo_la) throws ComponentException {
 	try {
@@ -94,7 +94,7 @@ public void associaTuttiCdr(UserContext userContext,Tipo_linea_attivitaBulk tipo
   *      Viene richiesto l'elenco dei cdr associabli ad una tipologia linea attivita
   *    PostCondition:
   *		 Effettua una query sulla tabella dei cdr che NON compaiono nella tabella ASS_TIPO_LA_CDR per
-  *		 la tipologia linea attivit‡ specificata per l'esercizio di scrivania
+  *		 la tipologia linea attivit√† specificata per l'esercizio di scrivania
  */
 public RemoteIterator cercaCdrAssociabili(UserContext userContext,Tipo_linea_attivitaBulk tipo_la) throws ComponentException {
 	SQLBuilder sql = getHome(userContext,CdrBulk.class,"V_CDR_VALIDO").createSQLBuilder();
@@ -106,7 +106,7 @@ public RemoteIterator cercaCdrAssociabili(UserContext userContext,Tipo_linea_att
 /** 
   *  Default
   *    PreCondition:
-  *      Viene richiesto la creazione di una nuova tipologia linea attivita e delle associazioni della stessa con uno o pi˘ CDR
+  *      Viene richiesto la creazione di una nuova tipologia linea attivita e delle associazioni della stessa con uno o pi√π CDR
   *    PostCondition:
   *		 Imposta ti_tipo_la = 'C'
  */
@@ -123,7 +123,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 /** 
   *  Default
   *    PreCondition:
-  *		 L'utente ha creato una associazione tra una tipologia linea attivit‡ e un cdr e viene chiesta la creazione della corrispondente linea di attivita comune.
+  *		 L'utente ha creato una associazione tra una tipologia linea attivit√† e un cdr e viene chiesta la creazione della corrispondente linea di attivita comune.
   *    PostCondition:
   *		 Viene creata una nuova linea di attivita con i seguenti attributi:
   *			linea_attivita.Cd_tipo_linea_attivita = tipo_la.Cd_tipo_linea_attivita
@@ -204,7 +204,7 @@ public void eliminaCdrAssociatiConBulk(UserContext userContext,Tipo_linea_attivi
   *    PreCondition:
   *      L'utente ha richiesto l'inserimento di una tipologia linea attivita
   *    PostCondition:
-  *		 Il tipo linea attivit‡ viene inizializzato con CD_CDR_CREATORE uguale al
+  *		 Il tipo linea attivit√† viene inizializzato con CD_CDR_CREATORE uguale al
   *		 codice del CDR dell'utente
  */
 public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,OggettoBulk bulk) throws ComponentException {
@@ -222,7 +222,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
   *    PreCondition:
   *      L'utente ha richiesto la modifica di una tipologia linea attivita
   *    PostCondition:
-  *		 Viene posto un lock sulla tipologia linea attivit‡ specificata
+  *		 Viene posto un lock sulla tipologia linea attivit√† specificata
  */
 public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBulk bulk) throws ComponentException {
 	try {
@@ -239,7 +239,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 /** 
   *  Default
   *    PreCondition:
-  *      L'utente ha richiesto l'associazione di nuovi cdr ad una tipologia linea attivit‡
+  *      L'utente ha richiesto l'associazione di nuovi cdr ad una tipologia linea attivit√†
   *    PostCondition:
   *		 Inizializza un SAVEPOINT sulla transazione utente per poter eventualmente annullare
   *		 le modifiche alle associazioni
@@ -254,12 +254,12 @@ public void inizializzaCdrAssociatiPerModifica(it.cnr.jada.UserContext userConte
 /** 
   *  Default
   *    PreCondition:
-  *      Viene richiesta la modifica delle associazioni di una tipologia linea attivit‡ con uno
-  * 	 o pi˘ cdr.
+  *      Viene richiesta la modifica delle associazioni di una tipologia linea attivit√† con uno
+  * 	 o pi√π cdr.
   *    PostCondition:
   *		 Per ogni cdr specificato viene eliminata o creata una associazione con la tipologia
-  * 	 linea attivit‡ specificata. Per ogni nuova associazione creata viene inserita una linea
-  * 	 di attivit‡ con le seguenti informazioni:
+  * 	 linea attivit√† specificata. Per ogni nuova associazione creata viene inserita una linea
+  * 	 di attivit√† con le seguenti informazioni:
   *			CD_LINEA_ATTIVITA = "C"+tipo_la.CD_TIPO_LINEA_ATTIVITA
   *			CD_CENTRO_RESPONSABILITA = CD_CDR (dal cdr corrente)
   *			CD_TIPO_LINEA_ATTIVITA = tipo_la.CD_TIPO_LINEA_ATTIVITA
@@ -310,7 +310,7 @@ public void modificaCdrAssociati(UserContext userContext,Tipo_linea_attivitaBulk
 /** 
   *  Default
   *    PreCondition:
-  *      Viene richiesto una ricerca di tipologie di linee attivit‡
+  *      Viene richiesto una ricerca di tipologie di linee attivit√†
   *    PostCondition:
   *		 Effettua una query sulla tabella delle tipologie con le clausole richieste filtrando solo le tipologie comuni
  */
@@ -330,7 +330,7 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
   *      Viene richiesto l'elenco dei cdr associati ad una tipologia linea attivita
   *    PostCondition:
   *		 Effettua una query sulla tabella dei cdr che compaiono nella tabella ASS_TIPO_LA_CDR per
-  *		 la tipologia linea attivit‡ specificata per l'esercizio di scrivania
+  *		 la tipologia linea attivit√† specificata per l'esercizio di scrivania
  */
 public SQLBuilder selectCdrAssociatiByClause(UserContext userContext, Tipo_linea_attivitaBulk tipo_la, Class bulkClass, CompoundFindClause clauses)  throws ComponentException {
 	if (tipo_la.getCd_tipo_linea_attivita() == null) return null;

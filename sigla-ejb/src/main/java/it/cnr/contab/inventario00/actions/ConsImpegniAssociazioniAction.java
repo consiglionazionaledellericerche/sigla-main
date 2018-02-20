@@ -22,7 +22,7 @@ public class ConsImpegniAssociazioniAction extends ConsultazioniAction {
 			ConsultazioniBP bp = (ConsultazioniBP)context.getBusinessProcess();
 			CompoundFindClause clauses = new CompoundFindClause();
 			if(bp.getElementsCount()==0){
-				bp.setMessage("Non è stata selezionata nessuna riga.");
+				bp.setMessage("Non Ã¨ stata selezionata nessuna riga.");
 				return context.findDefaultForward();
 			}
 				
@@ -33,7 +33,7 @@ public class ConsImpegniAssociazioniAction extends ConsultazioniAction {
 					return (Forward)context.findDefaultForward();
 				
 				if (bp.getSelectedElements(context).isEmpty()) {
-					bp.setMessage("Non è stata selezionata nessuna riga.");
+					bp.setMessage("Non Ã¨ stata selezionata nessuna riga.");
 					return context.findDefaultForward();
 				}							
 				for (Iterator i = bp.getSelectedElements(context).iterator();i.hasNext();) 
@@ -72,7 +72,7 @@ public class ConsImpegniAssociazioniAction extends ConsultazioniAction {
 			ConsultazioniBP bp = (ConsultazioniBP)context.getBusinessProcess();
 			CompoundFindClause clauses = new CompoundFindClause();
 			if(bp.getElementsCount()==0){
-				bp.setMessage("Non è stata selezionata nessuna riga.");
+				bp.setMessage("Non Ã¨ stata selezionata nessuna riga.");
 				return context.findDefaultForward();
 			}
 			if (bp.getSelection() != null && bp.getSelection().size() != bp.getElementsCount() ){
@@ -82,7 +82,7 @@ public class ConsImpegniAssociazioniAction extends ConsultazioniAction {
 					return (Forward)context.findDefaultForward();
 				
 				if (bp.getSelectedElements(context).isEmpty()) {
-					bp.setMessage("Non è stata selezionata nessuna riga.");
+					bp.setMessage("Non Ã¨ stata selezionata nessuna riga.");
 					return context.findDefaultForward();
 				}							
 				for (Iterator i = bp.getSelectedElements(context).iterator();i.hasNext();) 

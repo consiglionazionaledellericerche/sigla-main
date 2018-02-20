@@ -52,7 +52,7 @@
 				}
 			} else if (carriera.getModalita_pagamento() != null && (percipiente != null && percipiente.getCrudStatus() != percipiente.UNDEFINED)) { %>
 				<span class="FormLabel" style="color:red">
-					Nessun riferimento trovato per la modalit‡ di pagamento selezionata!
+					Nessun riferimento trovato per la modalit√† di pagamento selezionata!
 				</span>
 		<%	} %>
 			<td>

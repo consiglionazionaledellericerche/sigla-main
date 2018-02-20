@@ -34,9 +34,9 @@ public class CRUDConfigAssEvoldEvnewComponent extends it.cnr.jada.comp.CRUDCompo
 				sqlObb.addSQLClause(FindClause.AND, "CD_ELEMENTO_VOCE_NEXT", SQLBuilder.ISNOTNULL, null);
 
 				if (sqlObb.executeCountQuery(getConnection(usercontext)) > 0)
-					throw new it.cnr.jada.comp.ApplicationException("Non è possibile creare associazioni per la voce "+
+					throw new it.cnr.jada.comp.ApplicationException("Non Ã¨ possibile creare associazioni per la voce "+
 						ass.getEsercizio_old()+"/"+ass.getTi_gestione_old()+"/"+ass.getCd_elemento_voce_old()+
-						" in quanto esistono impegni sulla voce in oggetto in cui è stata indicata la voce di ribaltamento!");
+						" in quanto esistono impegni sulla voce in oggetto in cui Ã¨ stata indicata la voce di ribaltamento!");
 			} else {
 				SQLBuilder sqlAcc = ((AccertamentoHome)getHome(usercontext, AccertamentoBulk.class)).createSQLBuilder();
 				sqlAcc.addSQLClause(FindClause.AND, "ESERCIZIO", SQLBuilder.EQUALS, ass.getElemento_voce_old().getEsercizio());
@@ -49,9 +49,9 @@ public class CRUDConfigAssEvoldEvnewComponent extends it.cnr.jada.comp.CRUDCompo
 				sqlAcc.addSQLClause(FindClause.AND, "CD_ELEMENTO_VOCE_NEXT", SQLBuilder.ISNOTNULL, null);
 
 				if (sqlAcc.executeCountQuery(getConnection(usercontext)) > 0)
-					throw new it.cnr.jada.comp.ApplicationException("Non è possibile creare associazioni per la voce "+
+					throw new it.cnr.jada.comp.ApplicationException("Non Ã¨ possibile creare associazioni per la voce "+
 						ass.getEsercizio_old()+"/"+ass.getTi_gestione_old()+"/"+ass.getCd_elemento_voce_old()+
-						" in quanto esistono accertamenti sulla voce in oggetto in cui è stata indicata la voce di ribaltamento!");
+						" in quanto esistono accertamenti sulla voce in oggetto in cui Ã¨ stata indicata la voce di ribaltamento!");
 			}
 		}catch(Exception ex){
 			throw handleException(ex);

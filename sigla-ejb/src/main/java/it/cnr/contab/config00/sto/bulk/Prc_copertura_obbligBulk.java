@@ -17,9 +17,9 @@ public Prc_copertura_obbligBulk(java.lang.String cd_unita_organizzativa,java.lan
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cds'
+ * Restituisce il valore della propriet√† 'cds'
  *
- * @return Il valore della propriet‡ 'cds'
+ * @return Il valore della propriet√† 'cds'
  */
 public CdsBulk getCds() {
 	return cds;
@@ -33,7 +33,7 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'cds'
+ * Imposta il valore della propriet√† 'cds'
  *
  * @param newCds	Il valore da assegnare a 'cds'
  */

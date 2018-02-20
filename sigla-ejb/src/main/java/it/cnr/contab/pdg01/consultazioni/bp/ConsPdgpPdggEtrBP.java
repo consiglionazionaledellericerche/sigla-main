@@ -89,6 +89,6 @@ public class ConsPdgpPdggEtrBP extends ConsultazioniBP {
 		if (this.isFlNuovoPdg())
 			return ProgettoBulk.LABEL_PROGETTO;
 		else
-			return "Modulo di Attivit‡";
+			return "Modulo di Attivit√†";
 	}	
 }

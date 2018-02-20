@@ -3,7 +3,7 @@
 		it.cnr.jada.util.jsp.*,
 	    it.cnr.contab.incarichi00.bulk.*,
 	    it.cnr.contab.incarichi00.bp.*"
-	pageEncoding="ISO-8859-1"
+	pageEncoding="UTF-8"
 %>
 
 <%
@@ -16,7 +16,7 @@
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="javascript" src="scripts/css.js"></script>
 <script language="JavaScript" src="scripts/util.js"></script>
-<title>Verifica professionalit‡ interne</title>
+<title>Verifica professionalit√† interne</title>
 </head>
 
 <body class="Form">
@@ -51,7 +51,7 @@
 		                   pageContext,
 		                   "tab",
 		   				   new String[][]{																
-			   						{ "tabTestata","Verifica Professionalit‡","/incarichi00/tab_incarichi_richiesta_testata.jsp" },
+			   						{ "tabTestata","Verifica Professionalit√†","/incarichi00/tab_incarichi_richiesta_testata.jsp" },
 			   						{ "tabIncarichiProcedura","Elenco Procedure Incarichi Associate","/incarichi00/tab_incarichi_richiesta_procedura.jsp" }},
 					       bp.getTab("tab"),
 		                   "center",

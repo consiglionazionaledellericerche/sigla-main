@@ -10,7 +10,7 @@ import it.cnr.jada.persistency.sql.*;
 
 /**
  * Adatta e implementa: {@link Pdg_aggregato_etr_detBase } e  {@link Pdg_aggregato_det } 
- * 		perchË si ottengano e si settino gli oggetti complessi.
+ * 		perch√® si ottengano e si settino gli oggetti complessi.
  * 
  * @author: Bisquadro Vincenzo
  */
@@ -68,7 +68,7 @@ public void copiaImportiDa(Pdg_aggregato_etr_detBulk etr_iniziale) {
 	setIm_rg_a3_entrate(etr_iniziale.getIm_rg_a3_entrate());
 }
 /**
- * Restituisce il centro di responsabilit‡ per le Entrate.
+ * Restituisce il centro di responsabilit√† per le Entrate.
  * 
  * @return java.lang.String Cd_centro_responsabilita
  */
@@ -169,13 +169,13 @@ protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.a
 	setCdr(((CRUDEtrDetPdGAggregatoBP)bp).getCdr());
 	setElemento_voce(new Elemento_voceBulk());
 	// (08/11/2002 13:10:54) CNRADM
-	// Tolti il seguente set perchË non Ë legato al searchtool ma a combo box
+	// Tolti il seguente set perch√® non √® legato al searchtool ma a combo box
 	// e provoca un setDirty()
     //setNatura(new NaturaBulk());
 	return this;
 }
 /**
- * Imposta il centro di responsabilit‡.
+ * Imposta il centro di responsabilit√†.
  *
  * @param cd_centro_responsabilita java.lang.String 
  */
@@ -199,7 +199,7 @@ public void setCd_natura(java.lang.String cd_natura) {
 	this.getNatura().setCd_natura(cd_natura);
 }
 /**
- * Imposta il centro di responsabilit‡.
+ * Imposta il centro di responsabilit√†.
  *
  * @param newCdr it.cnr.contab.config00.sto.bulk.CdrBulk
  */

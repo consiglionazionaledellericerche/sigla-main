@@ -76,7 +76,7 @@ public class ConsCostiDelPersonaleMensileAction extends BulkAction{
 			Param_cons_costi_personaleBulk parametri = (Param_cons_costi_personaleBulk)bp.getModel();
 			
 			if( parametri.getMese() == null)
-				throw new it.cnr.jada.comp.ApplicationException("Selezionare l'Unit‡ Organizzativa");
+				throw new it.cnr.jada.comp.ApplicationException("Selezionare l'Unit√† Organizzativa");
 			
 			return freeSearch(context,bp.getFormField("find_modulo"));
 		} 
@@ -96,7 +96,7 @@ public class ConsCostiDelPersonaleMensileAction extends BulkAction{
 			Param_cons_costi_personaleBulk parametri = (Param_cons_costi_personaleBulk)bp.getModel();
 			
 			if( parametri.getMese() == null)
-				throw new it.cnr.jada.comp.ApplicationException("Selezionare l'Unit‡ Organizzativa");
+				throw new it.cnr.jada.comp.ApplicationException("Selezionare l'Unit√† Organizzativa");
 			
 			return freeSearch(context,bp.getFormField("find_commessa"));
 		} 

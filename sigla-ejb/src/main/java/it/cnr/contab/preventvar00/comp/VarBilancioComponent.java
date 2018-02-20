@@ -208,8 +208,8 @@ public OggettoBulk eseguiModificaConBulk(UserContext userContext, OggettoBulk bu
 
 /** Nuovo metodo per eliminare una variazione. 
  * 	Nell'eliminazione veniva richiamato il metodo eseguiModificaConBulk
- *  e quindi anche checkVariazioneBilancio che non è necessario tale controllo
- *  è rimasto solo per il salvataggio.  
+ *  e quindi anche checkVariazioneBilancio che non Ã¨ necessario tale controllo
+ *  Ã¨ rimasto solo per il salvataggio.  
  *  Ora viene solo impostato lo stato ad A nel BP**/
 
 public Var_bilancioBulk eliminaVariazione(UserContext userContext, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException , it.cnr.jada.persistency.PersistencyException{
@@ -309,7 +309,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
   * Pre:	L'OggettoBulk specificato esiste.
   * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
   *			per l'operazione di presentazione e modifica nell'interfaccia visuale.
-  *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome è
+  *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ã¨
   *			ottenuto concatenando il nome della component con la stringa ".edit"
   *
   *			In particolare vengono caricate tutti i dettagli associati alla Variazione di Bilancio selezionata
@@ -436,7 +436,7 @@ private Bilancio_preventivoBulk loadBilancio(UserContext userContext) throws Com
 		Bilancio_preventivoHome homeBil = (Bilancio_preventivoHome)getHome(userContext, Bilancio_preventivoBulk.class);
 		Bilancio_preventivoBulk bil = (Bilancio_preventivoBulk)homeBil.findByPrimaryKey(new Bilancio_preventivoBulk(cdCds, ese, tipoApp));
 		if (bil==null)
-			throw new it.cnr.jada.comp.ApplicationException("Non è stato definito il Bilancio preventivo per il Cds " + cdCds.toString() + " ed esercizio " + ese.toString() );
+			throw new it.cnr.jada.comp.ApplicationException("Non Ã¨ stato definito il Bilancio preventivo per il Cds " + cdCds.toString() + " ed esercizio " + ese.toString() );
 
 		getHomeCache(userContext).fetchAll(userContext);
 
@@ -539,7 +539,7 @@ public Var_bilancioBulk salvaDefinitivo(UserContext userContext, Var_bilancioBul
     try {
     	 if (varBilancio.getTi_variazione()!=null && (varBilancio.getTi_variazione().compareTo(varBilancio.VAR_QUADRATURA)==0)||(varBilancio.getTi_variazione().compareTo(varBilancio.STORNO_E)==0)||(varBilancio.getTi_variazione().compareTo(varBilancio.STORNO_S)==0))
   			if (!verificaQuadratura(varBilancio))
-  				throw new it.cnr.jada.comp.ApplicationException("Attenzione, la variazione non è in quadratura, impossibile procedere al salvataggio definitivo.");
+  				throw new it.cnr.jada.comp.ApplicationException("Attenzione, la variazione non Ã¨ in quadratura, impossibile procedere al salvataggio definitivo.");
 	    lockBulk(userContext, varBilancio);
 	    validaModificaConBulk(userContext, varBilancio);
 	    varBilancio.setToBeUpdated();
@@ -549,14 +549,14 @@ public Var_bilancioBulk salvaDefinitivo(UserContext userContext, Var_bilancioBul
 		// solo nel salvataggio definitivo (almeno per ora, in caso contrario inserire
 		// questo codice in validaModificaConBulk)
 		// verifichiamo che i dati della voce siano stati caricati correttamente, 
-		// cioè che siano presenti nella tabella dei saldi VOCE_F_SALDI_CDR_LINEA
+		// cioÃ¨ che siano presenti nella tabella dei saldi VOCE_F_SALDI_CDR_LINEA
 		Iterator it = varBilancio.getDettagli().iterator();
 		while(it.hasNext()) {
 			Var_bilancio_detBulk varBilDett = (Var_bilancio_detBulk)it.next();
 //			aggiunta la condizione sul getCrudStatus()!=OggettoBulk.UNDEFINED
-//			perchè la riga in tabella viene aggiunta nel package CNRCTB055 e deve poter continuare
+//			perchÃ¨ la riga in tabella viene aggiunta nel package CNRCTB055 e deve poter continuare
 			if (varBilDett.getVoceFSaldi().getCrudStatus()!=OggettoBulk.NORMAL && varBilDett.getVoceFSaldi().getCrudStatus()!=OggettoBulk.UNDEFINED)
-				throw new it.cnr.jada.comp.ApplicationException("La voce "+varBilDett.getCd_voce()+" non è corretta. Modificare o eliminare il dettaglio relativo.");
+				throw new it.cnr.jada.comp.ApplicationException("La voce "+varBilDett.getCd_voce()+" non Ã¨ corretta. Modificare o eliminare il dettaglio relativo.");
 		}
 
     } catch (it.cnr.jada.persistency.PersistencyException e) {
@@ -742,7 +742,7 @@ public void validaCreaConBulk(UserContext userContext, OggettoBulk bulk) throws 
 	// 05/09/2003
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(userContext))
-		throw new it.cnr.jada.comp.ApplicationException("Non è possibile creare variazioni di bilancio ad esercizio chiuso.");
+		throw new it.cnr.jada.comp.ApplicationException("Non Ã¨ possibile creare variazioni di bilancio ad esercizio chiuso.");
 
 	((Var_bilancioBulk)bulk).setPg_variazione(recuperaNuovoProgressivo(userContext, ((Var_bilancioBulk)bulk)));
 	((Var_bilancioBulk)bulk).setStato(Var_bilancioBulk.PROVVISORIA);
@@ -783,7 +783,7 @@ public void validaModificaConBulk(UserContext userContext, OggettoBulk bulk) thr
 	// 05/09/2003
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(userContext))
-		throw new it.cnr.jada.comp.ApplicationException("Non è possibile modificare variazioni di bilancio ad esercizio chiuso.");
+		throw new it.cnr.jada.comp.ApplicationException("Non Ã¨ possibile modificare variazioni di bilancio ad esercizio chiuso.");
 		
 	super.validaModificaConBulk(userContext, bulk);
 
@@ -824,7 +824,7 @@ private boolean verificaQuadratura(Var_bilancioBulk varBilancio) {
   * Nome: Variazione di bilancio NON quadrata
   * Pre: Viene richiesta la quadratura degli importi di una Variazione di Bilancio
   * Post: Viene restituita una ComponentException con il messaggio:
-  * 		"Non è verificata la quadratura"
+  * 		"Non Ã¨ verificata la quadratura"
   *
   * Nome: Variazione di bilancio con dettagli
   * Pre: Viene richiesta l'esistenza di dettagli legati alla Variazione di Bilancio
@@ -955,7 +955,7 @@ public Var_bilancioBulk creaVariazioneBilancioDiRegolarizzazione(UserContext use
 				java.lang.String voceCnr = PDCFinSession.getVoceCnr(userContext, voceCds, osv.getLinea_attivita());
 
 				if (voceCnr==null) 
-					throw new it.cnr.jada.comp.ApplicationException("Non è stato possibile ottenere, partendo dalla voce del CDS " + voceCds.getCd_elemento_voce() + " la corrispondente voce Ente.");
+					throw new it.cnr.jada.comp.ApplicationException("Non Ã¨ stato possibile ottenere, partendo dalla voce del CDS " + voceCds.getCd_elemento_voce() + " la corrispondente voce Ente.");
 
 				totaleVoceCnr = (BigDecimal) hashAssestatoVociCnr.get( voceCnr );			
 				if ( totaleVoceCnr == null || totaleVoceCnr.compareTo(new BigDecimal(0)) == 0)
@@ -990,7 +990,7 @@ public Var_bilancioBulk creaVariazioneBilancioDiRegolarizzazione(UserContext use
 			V_assestato_voceBulk assestatoVoce = ((Var_bilancio_detHome)getHome(userContext, Var_bilancio_detBulk.class)).caricaVoceFSaldi(userContext, varBilDett, varBilancio); 
 
 			if (assestatoVoce==null)
-				throw new ApplicationException("Attenzione, non è stato possibile recuperare i saldi per la voce Ente " + key + ".");
+				throw new ApplicationException("Attenzione, non Ã¨ stato possibile recuperare i saldi per la voce Ente " + key + ".");
 
 			varBilDett.setVoceFSaldi( assestatoVoce );
 		}

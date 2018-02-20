@@ -19,11 +19,11 @@
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
 </head>
-<title>Gestione Unit‡ Organizzativa</title>
+<title>Gestione Unit√† Organizzativa</title>
 <body class="Form">
 <% bp.openFormWindow(pageContext);
    tabs = new String[][] {
-	               { "tabUnitaOrganizzativa","Unit‡ Organizzativa","/config00/tab_unita_organizzativa.jsp" },
+	               { "tabUnitaOrganizzativa","Unit√† Organizzativa","/config00/tab_unita_organizzativa.jsp" },
 	               { "tabAreeRicerca","Aree Ricerca Associate","/config00/tab_ass_uo_area.jsp" },
 	               };   
 %>

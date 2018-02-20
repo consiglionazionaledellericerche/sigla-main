@@ -130,7 +130,7 @@ public void setBulkClass(java.lang.Class newClass) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'bulkClassName'
+ * Imposta il valore della propriet√† 'bulkClassName'
  *
  * @param bulkClassName	Il valore da assegnare a 'bulkClassName'
  * @throws ClassNotFoundException	
@@ -159,7 +159,7 @@ private void setSearchBulkClass(java.lang.Class searchBulkClass) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'bulkClassName'
+ * Imposta il valore della propriet√† 'bulkClassName'
  *
  * @param bulkClassName	Il valore da assegnare a 'bulkClassName'
  * @throws ClassNotFoundException	

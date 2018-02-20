@@ -52,7 +52,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 
 		CRUDBP bp = getBusinessProcess(context);
 		if (!bp.isEditing()) {
-			bp.setMessage("Non Ë possibile cancellare in questo momento");
+			bp.setMessage("Non √® possibile cancellare in questo momento");
 		} else {
 			bp.delete(context);
 			bp.reset(context);
@@ -117,8 +117,8 @@ public Forward doConfirmTipoMovimento(ActionContext context, OptionBP optionBP) 
 /**
   * Calcola il valore totale del bene.
   *
-  *	L'utente ha inserito la quantit‡ o il prezzo unitario del bene: questo invoca il metodo 
-  *	che calcoler‡ il totale dei beni, invocando a sua volta il metodo Buono_carico_dettBulk.calcolaTotaleBene.
+  *	L'utente ha inserito la quantit√† o il prezzo unitario del bene: questo invoca il metodo 
+  *	che calcoler√† il totale dei beni, invocando a sua volta il metodo Buono_carico_dettBulk.calcolaTotaleBene.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
   *
@@ -140,9 +140,9 @@ public Forward doCalcolaValoreTotaleBene(ActionContext context) {
 	java.math.BigDecimal val_unit = riga.getValore_unitario();
 	try{
 		fillModel(context);
-		// Se la riga Ë per un bene accessorio, controlla che la Quantit‡ indicata NON sia superiore a 999
+		// Se la riga √® per un bene accessorio, controlla che la Quantit√† indicata NON sia superiore a 999
 		if (riga.isBeneAccessorio() && riga.getQuantita() != null && riga.getQuantita().compareTo(new Long(999))>0){
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: non Ë possibile indicare una Quantit‡ maggiore di 999 per un Bene Accessorio.");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: non √® possibile indicare una Quantit√† maggiore di 999 per un Bene Accessorio.");
 		}
 	
 		riga.CalcolaTotaleBene();
@@ -159,7 +159,7 @@ public Forward doCalcolaValoreTotaleBene(ActionContext context) {
   *   Gestisce l'aggiunta di un nuovo bene nel Buono di Carico.
   *	Controlla, prima di tutto che l'utente abbia specificato in testata un tipo di movimento 
   *	per il buono di Carico.
-  * 	Nel caso che il Buono di Carico sia per una variazione di valore di un bene gi‡ presente 
+  * 	Nel caso che il Buono di Carico sia per una variazione di valore di un bene gi√† presente 
   *	nel DB, allora mostra all'utente una finestra di ricerca guidata per la selezione del 
   *	Bene da variare.
   *
@@ -171,7 +171,7 @@ public Forward doCalcolaValoreTotaleBene(ActionContext context) {
   *   Gestisce l'aggiunta di un nuovo bene nel Buono di Carico.
   *	Controlla, prima di tutto che l'utente abbia specificato in testata un tipo di movimento 
   *	per il buono di Carico.
-  * 	Nel caso che il Buono di Carico sia per una variazione di valore di un bene gi‡ presente 
+  * 	Nel caso che il Buono di Carico sia per una variazione di valore di un bene gi√† presente 
   *	nel DB, allora mostra all'utente una finestra di ricerca guidata per la selezione del 
   *	Bene da variare.
   *
@@ -189,7 +189,7 @@ public Forward doAddToCRUDMain_Dettaglio(ActionContext context) {
 			return handleException(context, new it.cnr.jada.bulk.ValidationException("Attenzione: specificare un tipo di movimento nella testata"));
 		}
 		
-		// Controlla se il Tipo Movimento Ë di tipo AUMENTO DI VALORE, ma NON proveniente da fattura
+		// Controlla se il Tipo Movimento √® di tipo AUMENTO DI VALORE, ma NON proveniente da fattura
 		else if (buonoC.isPerAumentoValore() && !buonoC.isByFatturaPerAumentoValore() && !buonoC.isByDocumentoPerAumentoValore()){
 			if (buonoC.getData_registrazione()==null){
 				return handleException(context, new it.cnr.jada.bulk.ValidationException("Attenzione: specificare la data di carico nella testata"));
@@ -257,7 +257,7 @@ public Forward doBlankSearchFind_categoria_bene(ActionContext context,
 
 /**
   * Gestisce il risultato di una ricerca sulla Categoria Gruppo Inventario del Bene:
-  *	controlla se la categoria Ë una Pubblicazione e setta la propriet‡ del BP di conseguenza.
+  *	controlla se la categoria √® una Pubblicazione e setta la propriet√† del BP di conseguenza.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
   * @param dettaglio il <code>Buono_carico_dettBulk</code> dettaglio 
@@ -299,9 +299,9 @@ public Forward doBringBackSearchFind_categoria_bene(ActionContext context, Buono
 }
 /**
   *  Richiamato nel caso che l'utente selezioni il Check-Box "Bene Accessorio", (il quale
-  * indica che il bene in quesione Ë accessorio di un altro bene): in tal caso, va
-  *	a controllare che al bene stesso non fossero gi‡ stati associati degli Utilizzatori.
-  *	In tal caso lancia un WARNING, che avvisa l'Utente che Ë impossibile fare questa
+  * indica che il bene in quesione √® accessorio di un altro bene): in tal caso, va
+  *	a controllare che al bene stesso non fossero gi√† stati associati degli Utilizzatori.
+  *	In tal caso lancia un WARNING, che avvisa l'Utente che √® impossibile fare questa
   *	operazione se prima non vengono cancellati i CdR Utilizzatori associati.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
@@ -320,13 +320,13 @@ public Forward doSelezionaBeneAccessorio(ActionContext context) {
 		 }
 		if (riga.isAssociatoConAccessorioContestuale()){
 			riga.setFl_bene_accessorio(new Boolean(false));
-			// Il bene Ë un Bene Padre di beni contestuali
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione. Questo bene non puÚ essere accessorio poichË ha dei beni associati ad esso");
+			// Il bene √® un Bene Padre di beni contestuali
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione. Questo bene non pu√≤ essere accessorio poich√® ha dei beni associati ad esso");
 		}
 		if (riga.hasUtilizzatori()){
 			riga.setFl_bene_accessorio(new Boolean(false));
-			// Il bene Ë associato a dei CdR Utilizzatori
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione. Non Ë possibile continuare nell'operazione poichË questo bene ha degli Utilizzatori");
+			// Il bene √® associato a dei CdR Utilizzatori
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione. Non √® possibile continuare nell'operazione poich√® questo bene ha degli Utilizzatori");
 		}
 
 		return context.findDefaultForward();
@@ -340,7 +340,7 @@ public Forward doSelezionaBeneAccessorio(ActionContext context) {
   *	Il metodo provvede a cercare, tra i dettagli precedentemente creati, quelli che corrispondono 
   *	alle caratteristiche per essere utilizzati come beni padre. Tali caratteristiche sono:
   *		- il bene specificato nella riga NON deve essere un bene accessorio;
-  *		- la quantit‡ espressa nella riga di dettaglio deve essere uguale ad 1.
+  *		- la quantit√† espressa nella riga di dettaglio deve essere uguale ad 1.
   * 
   *	Se ci sono righe che corrispondono a tali requsiti, esse vengono visualizzate in modo 
   *	che l'utente possa scegliere il bene padre.
@@ -388,12 +388,12 @@ public Forward doFindAccessoriContestuali(ActionContext context) {
 /**
   *  Si sta creando un Buono di Carico da una Fattura Passiva.
   *	Ci si trova nel pannello di creazione dei gruppi per le righe di Fattura.
-  * L'utente ha indicato il gruppo appena creato come gruppo che conterr‡ beni accessori di 
+  * L'utente ha indicato il gruppo appena creato come gruppo che conterr√† beni accessori di 
   *	un bene creato nello stesso Buono di Carico.
   *	Il metodo provvede a cercare, tra i gruppi precedentemente creati, quelli che corrispondono 
   *	alle caratteristiche per essere utilizzati come beni padre. Tali caratteristiche sono:
   *		- il bene specificato nella riga NON deve essere un bene accessorio;
-  *		- la quantit‡ espressa nella riga di dettaglio deve essere uguale ad 1.
+  *		- la quantit√† espressa nella riga di dettaglio deve essere uguale ad 1.
   * 
   *	Se ci sono righe che corrispondono a tali requsiti, esse vengono visualizzate in modo 
   *	che l'utente possa scegliere il bene padre.
@@ -410,7 +410,7 @@ public Forward doFindAccessoriContestualiByFattura(ActionContext context) {
 
 		if (riga_da_associare.isAssociatoConAccessorioContestuale()){
 			riga_da_associare.setFl_bene_accessorio(new Boolean(false));
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: questo bene non puÚ essere accessorio poichË ha dei beni associati ad esso");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: questo bene non pu√≤ essere accessorio poich√® ha dei beni associati ad esso");
 		}
 		Buono_carico_scaricoBulk buonoCS = (Buono_carico_scaricoBulk)bp.getModel();
 		Fattura_passiva_rigaIBulk dett_fattura_selezionato = (Fattura_passiva_rigaIBulk)bp.getDettagliFattura().getModel();
@@ -457,7 +457,7 @@ public Forward doFindAccessoriContestualiByFattura(ActionContext context) {
   *  Assegna bene principale ad un bene accessorio "contestuale".
   *
   *	 E' stata generata la richiesta di cercare il bene di rifermento per un bene accessorio.
-  *	La situazione Ë quella di un Buono di Carico creato da una Fattura Passiva.
+  *	La situazione √® quella di un Buono di Carico creato da una Fattura Passiva.
   * Sia il bene padre che quello accessorio fanno parte del Buono di Carico attuale. 
   * Il FrameWork, dopo che l'utente ha selezionato il bene padre, richiama questo metodo che 
   *	ha il compito di assegnare al bene accessorio l'Ubicazione e l'Assegnatario del bene padre.
@@ -484,7 +484,7 @@ public Forward doFreeSearchFind_bene_principale(ActionContext context) {
   *  Assegna bene principale ad un bene accessorio "contestuale".
   *
   *	 E' stata generata la richiesta di cercare il bene di rifermento per un bene accessorio.
-  *	La situazione Ë quella di un Buono di Carico creato da una Fattura Passiva.
+  *	La situazione √® quella di un Buono di Carico creato da una Fattura Passiva.
   * Sia il bene padre che quello accessorio fanno parte del Buono di Carico attuale. 
   * Il FrameWork, dopo che l'utente ha selezionato il bene padre, richiama questo metodo che 
   *	ha il compito di assegnare al bene accessorio l'Ubicazione e l'Assegnatario del bene padre.
@@ -524,8 +524,8 @@ public Forward doBringBackAccessoriContestualiByFattura(ActionContext context) {
 	}
 }
 /**
-  *  Durante la creazione di un Buono di Carico, l'utente ha deselezionato la propriet‡
-  *	<code>Associa a Bene non registrato</code>: il metodo provvede a resettare alcune propriet‡
+  *  Durante la creazione di un Buono di Carico, l'utente ha deselezionato la propriet√†
+  *	<code>Associa a Bene non registrato</code>: il metodo provvede a resettare alcune propriet√†
   *	del bene, quali l'Assegnatario e l'Ubicazione, che erano state ereditate dal bene padre.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta  
@@ -555,8 +555,8 @@ public Forward doDeselezionaAccessoriContestuali(ActionContext context) {
 }
 /**
   *  Durante la creazione di un Buono di Carico da Fattura Passiva, l'utente ha deselezionato 
-  *	la propriet‡ <code>Associa a Bene non registrato</code>: il metodo provvede a resettare 
-  *	alcune propriet‡ del bene, quali l'Assegnatario e l'Ubicazione, che erano state ereditate 
+  *	la propriet√† <code>Associa a Bene non registrato</code>: il metodo provvede a resettare 
+  *	alcune propriet√† del bene, quali l'Assegnatario e l'Ubicazione, che erano state ereditate 
   *	dal bene padre.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta  
@@ -587,8 +587,8 @@ public Forward doDeselezionaAccessoriContestualiByFattura(ActionContext context)
 }
 /**
   *  Durante la creazione di un Buono di Carico, l'utente ha deselezionato 
-  *	la propriet‡ <code>Bene Accessorio</code>: il metodo provvede a resettare 
-  *	alcune propriet‡ del bene, quali l'Assegnatario e l'Ubicazione, che erano state ereditate 
+  *	la propriet√† <code>Bene Accessorio</code>: il metodo provvede a resettare 
+  *	alcune propriet√† del bene, quali l'Assegnatario e l'Ubicazione, che erano state ereditate 
   *	dal bene padre.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta  
@@ -732,9 +732,9 @@ public Forward doRemoveFromCRUDMain_Dettaglio(ActionContext context)
 
 	Buono_carico_scarico_dettBulk riga = (Buono_carico_scarico_dettBulk)bp.getDettaglio().getModel();
 	if (riga!=null){
-		// Il bene Ë un bene padre di beni segnalati come accessori, presenti nel Buono di Carico
+		// Il bene √® un bene padre di beni segnalati come accessori, presenti nel Buono di Carico
 		if (riga.isAssociatoConAccessorioContestuale()){
-			return handleException(context, new it.cnr.jada.comp.ApplicationException("Il bene selezionato non puÚ essere cancellato, poichË associato ad altri beni"));
+			return handleException(context, new it.cnr.jada.comp.ApplicationException("Il bene selezionato non pu√≤ essere cancellato, poich√® associato ad altri beni"));
 		}
 		try{		
 			bp.getDettaglio().remove(context);
@@ -767,12 +767,12 @@ public Forward doRemoveFromCRUDMain_Dettaglio_VUtilizzatori(ActionContext contex
 /**
  *  E' stata generata la richiesta di cercare un CdR Utilizzatore.
  *	Questo metodo, gestisce il risultato della ricerca:
- *	controlla se il CdR selezionato Ë gi‡ stato indicato come utilizzatore del bene: in caso 
+ *	controlla se il CdR selezionato √® gi√† stato indicato come utilizzatore del bene: in caso 
  *	affermativo, lancia un messaggio d'errore all'utente.
  *
  * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
  * @param v_Utilizzatore <code>Utilizzatore_CdrVBulk</code> l'oggetto che contiene le informazioni 
- *		relative al CdR, alle Linee di Attivit‡ ed alle percentuali di utilizzo
+ *		relative al CdR, alle Linee di Attivit√† ed alle percentuali di utilizzo
  * @param cdrSelezionato il <code>CdrBulk</code> CdR selezionato
  *
  * @return forward <code>Forward</code>
@@ -796,7 +796,7 @@ public Forward doBringBackSearchFind_cdr(
 			  if(cdrSelezionato!= null)
 				if (v_cdr.getCdr() != null && v_cdr.getCdr().equalsByPrimaryKey(cdrSelezionato)&&  i.hasNext()){
 					((Utilizzatore_CdrVBulk)dett.getV_utilizzatoriColl().get(dett.getV_utilizzatoriColl().size()-1)).setCdr(new it.cnr.contab.config00.sto.bulk.CdrBulk());
-					return handleException(context, new it.cnr.jada.bulk.ValidationException ("CdR Utilizzatore duplicato. Non Ë possibile indicare pi˘ volte uno stesso CdR come Utilizzatore"));
+					return handleException(context, new it.cnr.jada.bulk.ValidationException ("CdR Utilizzatore duplicato. Non √® possibile indicare pi√π volte uno stesso CdR come Utilizzatore"));
 				}
 			}
 		}
@@ -836,8 +836,8 @@ public Forward doBlankSearchFind_cdr(ActionContext context,
 }	
 /**
  *  Gestisce l'aggiunta di un nuovo CDR Utilizzatore. Prima di permettere l'aggiunta
- *	di un Utilizzatore, va a fare il controllo di validit‡ su quello attuale,
- *	e sulle Linee di Attivit‡ ad esso associate.
+ *	di un Utilizzatore, va a fare il controllo di validit√† su quello attuale,
+ *	e sulle Linee di Attivit√† ad esso associate.
  *
  * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
  *
@@ -851,7 +851,7 @@ public Forward doAddToCRUDMain_Dettaglio_VUtilizzatori(ActionContext context) {
 		Buono_carico_scarico_dettBulk dett = (Buono_carico_scarico_dettBulk)bp_carico.getDettaglio().getModel();
 		Utilizzatore_CdrVBulk v_utitliz = (Utilizzatore_CdrVBulk)bp_carico.getVUtilizzatori().getModel();
 		
-		// Controlla la validit‡ del CdR inserito
+		// Controlla la validit√† del CdR inserito
 		if (dett.getV_utilizzatoriColl().size()>0 && v_utitliz!=null){
 			// CdR NON specificato
 			if (v_utitliz.getCdr()==null || v_utitliz.getCdr().getCd_centro_responsabilita()==null)
@@ -861,11 +861,11 @@ public Forward doAddToCRUDMain_Dettaglio_VUtilizzatori(ActionContext context) {
 			if (v_utitliz.getPercentuale_utilizzo_cdr().compareTo(new java.math.BigDecimal(0))==0)
 				return handleException(context, new it.cnr.jada.bulk.ValidationException("Attenzione: specificare una percentuale di utilizzo per il CDR Utilizzatore"));
 
-			// Valida le Percentuali di utilizzo delle Linee di Attivit‡ indicate per il CdR Utilizzatore
+			// Valida le Percentuali di utilizzo delle Linee di Attivit√† indicate per il CdR Utilizzatore
 			if (v_utitliz.getBuono_cs_utilizzatoriColl().size()>0)
 				bp_carico.validate_Percentuali_LA(context, v_utitliz);
 			else
-				// Nessuna Linea di Attivit‡ specificata per il CdR
+				// Nessuna Linea di Attivit√† specificata per il CdR
 				return handleException(context, new it.cnr.jada.bulk.ValidationException("Attenzione: specificare almeno un GAE con la relativa Percentuale di Utilizzo"));
 		}
 		
@@ -878,7 +878,7 @@ public Forward doAddToCRUDMain_Dettaglio_VUtilizzatori(ActionContext context) {
 }
 /**
  *  Richiamato nel caso in cui l'utente selezioni un Tipo di Ammortamento dalla select
- *	presente nel tab "Ammortamento", durante il Carico Diretto. Il metodo setta la proprit‡
+ *	presente nel tab "Ammortamento", durante il Carico Diretto. Il metodo setta la proprit√†
  *	ti_ammortamento del bene.
  *
  * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
@@ -907,12 +907,12 @@ public Forward doSelezionaTiAmmortamento(ActionContext context) {
  *
  *  E' stata generata la richiesta di creare un Buono di Carico da una Fattura Passiva.
  *	In questa fase ci si trova nel pannello che serve a creare, per ogni riga di Fattura ed 
- *	in base alla quantit‡ della riga stessa, dei gruppi che saranno poi le righe di dettaglio 
+ *	in base alla quantit√† della riga stessa, dei gruppi che saranno poi le righe di dettaglio 
  *	del Buono di Carico. L'utente ha richiesto di creare i gruppi relativi ad una riga di Fattura.
- *	Il sistema, esegue vari controlli sul numero di blocchi indicato dall'utente; dopodichË
+ *	Il sistema, esegue vari controlli sul numero di blocchi indicato dall'utente; dopodich√®
  *	si passa alla creazione dei blocchi che saranno poi le righe di dettaglio del Buono di Carico: 
  * si creano tante righe di dettaglio, (Buono_carico_detBulk), con i rispettivi beni, (Inventario_beniBulk),
- *	le cui propriet‡, (Categoria_gruppo, valore_iniziale, tipo ISTITUZIONALE/COMMERCIALE, etc.) saranno 
+ *	le cui propriet√†, (Categoria_gruppo, valore_iniziale, tipo ISTITUZIONALE/COMMERCIALE, etc.) saranno 
  *	ereditate dalla riga di Fattura.
  *
  * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta  
@@ -938,13 +938,13 @@ public Forward doCreaGruppi(ActionContext context) {
 	java.math.BigDecimal valore_unitario = new java.math.BigDecimal(0);
 	
 	try{
-		// Non Ë stata indicata la riga di Fattura di riferimento
+		// Non √® stata indicata la riga di Fattura di riferimento
 		if (riga_fattura==null){
 			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: selezionare una Bene/Servizio");
 		}
-		// Non Ë stato indicato il numero di gruppi
+		// Non √® stato indicato il numero di gruppi
 		if (getGroups() == null){
-			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: numero di blocchi non valido. Il numero dei blocchi non puÚ essere nullo");
+			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: numero di blocchi non valido. Il numero dei blocchi non pu√≤ essere nullo");
 		}
 		else{
 			try{
@@ -955,17 +955,17 @@ public Forward doCreaGruppi(ActionContext context) {
 				return handleException(context, new it.cnr.jada.bulk.FillException("Errore di formattazione sul campo N. Gruppi",e));
 			}
 		}
-		// Il numero di gruppi Ë minore di 0.
+		// Il numero di gruppi √® minore di 0.
 		if (gruppi<0){
-			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: numero di blocchi non valido. Il numero dei blocchi non puÚ essere negativo");
+			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: numero di blocchi non valido. Il numero dei blocchi non pu√≤ essere negativo");
 		}
-		// Il numero di gruppi Ë uguale a 0.
+		// Il numero di gruppi √® uguale a 0.
 		if (gruppi==0){
-			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: numero di blocchi non valido. Il numero dei blocchi non puÚ essere zero");
+			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: numero di blocchi non valido. Il numero dei blocchi non pu√≤ essere zero");
 		}
-		// Il numero di gruppi Ë superiore alla quantit‡ indicata nella riga di Fattura
+		// Il numero di gruppi √® superiore alla quantit√† indicata nella riga di Fattura
 		if (gruppi>riga_fattura.getQuantita().intValue()){
-			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: numero di blocchi non valido. Il numero dei blocchi non puÚ essere superiore alla quantit‡ del Bene");
+			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: numero di blocchi non valido. Il numero dei blocchi non pu√≤ essere superiore alla quantit√† del Bene");
 		}
 		// Valida i gruppi
 		validaCreaGruppi(buono_cs, riga_fattura);
@@ -994,7 +994,7 @@ public Forward doCreaGruppi(ActionContext context) {
 		else{
 			bp.setIsQuantitaEnabled(true);
 		}		
-		// Assegna il Prezzo unitario: il prezzo Ë diverso a seconda che il dettaglio della Fattura sia ISTITUZIONALE o COMMERCIALE
+		// Assegna il Prezzo unitario: il prezzo √® diverso a seconda che il dettaglio della Fattura sia ISTITUZIONALE o COMMERCIALE
 		if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE)){
 			valore_unitario = riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 			valore_unitario = valore_unitario.divide(riga_fattura.getQuantita(), 2 ,java.math.BigDecimal.ROUND_HALF_UP);
@@ -1040,10 +1040,10 @@ public Forward doCreaGruppi(ActionContext context) {
  *
  *  E' stata generata la richiesta di creare un Buono di Carico da una Fattura Passiva.
  *	In questa fase ci si trova nel pannello che serve a creare, per ogni riga di Fattura ed 
- *	in base alla quantit‡ della riga stessa, dei gruppi che saranno poi le righe di dettaglio 
+ *	in base alla quantit√† della riga stessa, dei gruppi che saranno poi le righe di dettaglio 
  *	del Buono di Carico. L'utente ha richiesto di creare proprio questi dettagli dopo aver 
  *	compiuto tutte le operazioni di raggruppamento.
- *	Il sistema, prima di tutto, controlla la validit‡ dei gruppi creati, (metodo validaCreaDettagli);
+ *	Il sistema, prima di tutto, controlla la validit√† dei gruppi creati, (metodo validaCreaDettagli);
  *	in seguito crea i dettagli del Buono di Carico e li setta come collezione del Buono.
  *
  * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta  
@@ -1092,9 +1092,9 @@ public java.lang.String getGroups() {
   *	da una Fattura Passiva.
   *	Il metodo si occupa del controllo sui gruppi creati per ogni riga di Fattura.
   *	Prima di tutto controlla che siano stati indicati dei gruppi per ogni dettaglio della Fattura;
-  *	per ogni gruppo, poi, controlla che sia stata indicata una quantit‡;
-  *	infine, controlla che il totale delle quantit‡ indicate per tutti i gruppi relativi ad 
-  *	una riga di Fattura corrisponda con la quantit‡ indicata nella riga di Fattura.
+  *	per ogni gruppo, poi, controlla che sia stata indicata una quantit√†;
+  *	infine, controlla che il totale delle quantit√† indicate per tutti i gruppi relativi ad 
+  *	una riga di Fattura corrisponda con la quantit√† indicata nella riga di Fattura.
   *
   * @param righeDaFatturaHash la <code>PrimaryKeyHashtable</code> tabella contenente le associazioni 
   *		tra le righe di Fattura ed i gruppi ad esse associati
@@ -1112,7 +1112,7 @@ private void validaCreaDettagli(ActionContext context, PrimaryKeyHashtable righe
 		// Non sono stati specificati dei gruppi per una riga di Fattura
 		if (righeInventario.size()==0){
 			throw new it.cnr.jada.bulk.ValidationException ("Attenzione: " +
-				"Ë necessario specificare dei gruppi per ogni riga di Fattura.\n" + 
+				"√® necessario specificare dei gruppi per ogni riga di Fattura.\n" + 
 				"Non sono stati specificati dei gruppi per la riga di fattura '"+
 				riga_fattura.getDs_riga_fattura() + 
 				"'");
@@ -1120,12 +1120,12 @@ private void validaCreaDettagli(ActionContext context, PrimaryKeyHashtable righe
 		
 		for (java.util.Iterator i = righeInventario.iterator(); i.hasNext();){
 			Buono_carico_scarico_dettBulk riga_inventario = (Buono_carico_scarico_dettBulk)i.next();
-			// Non Ë stata indicata la quantit‡ nella riga di dettaglio del Buono di Carico
+			// Non √® stata indicata la quantit√† nella riga di dettaglio del Buono di Carico
 			if (riga_inventario.getQuantita()==null || (riga_inventario.getQuantita().compareTo(new Long(0)))==0){
 				throw new it.cnr.jada.bulk.ValidationException ("Attenzione: "+
-					"uno o pi˘ dettagli specificati per la riga di Fattura '" + 
+					"uno o pi√π dettagli specificati per la riga di Fattura '" + 
 					riga_fattura.getDs_riga_fattura() + 
-					"' non hanno Quantit‡");
+					"' non hanno Quantit√†");
 			}
 			totale = totale.add(new BigDecimal(riga_inventario.getQuantita().longValue()));
 			
@@ -1146,10 +1146,10 @@ private void validaCreaDettagli(ActionContext context, PrimaryKeyHashtable righe
 		}	
 		}
 		
-		// Il totale dei gruppi associati ad una riga di Fattura non corrisponde con la quantit‡ espressa nella riga di Fattura stessa.
+		// Il totale dei gruppi associati ad una riga di Fattura non corrisponde con la quantit√† espressa nella riga di Fattura stessa.
 		if (!((totale.compareTo(riga_fattura.getQuantita()))==0)){
 			throw new it.cnr.jada.bulk.ValidationException ("Attenzione: " +
-				"il totale delle quantit‡ indicate per la riga di Fattura '" + 
+				"il totale delle quantit√† indicate per la riga di Fattura '" + 
 				riga_fattura.getDs_riga_fattura() + 
 				"' non corrisponde al totale della riga stessa");			
 		}
@@ -1158,7 +1158,7 @@ private void validaCreaDettagli(ActionContext context, PrimaryKeyHashtable righe
 }
 /**
   *  E' stata generata la richiesta di creare i gruppi associati ad una riga di Fattura Passiva.
-  *	Il metodo si occupa di controllare la validit‡ della righe di dettaglio create.
+  *	Il metodo si occupa di controllare la validit√† della righe di dettaglio create.
   *
   * @param buonoCS il <code>Buono_caricoBulk</code> Buono di Carico
   * @param riga_fattura la <code>Fattura_passiva_rigaBulk</code> riga di Fattura
@@ -1179,17 +1179,17 @@ private void validaCreaGruppi(
 	//	righe di Inventario "Figlie"
 	PrimaryKeyHashtable accessori_contestuali = buonoCS.getAccessoriContestualiHash();
 
-	/* Controlla se, tra le righe create precedentemente, ce n'Ë qualcuna a cui
-	*	Ë associato uno o pi˘ Beni.
+	/* Controlla se, tra le righe create precedentemente, ce n'√® qualcuna a cui
+	*	√® associato uno o pi√π Beni.
 	*/
 	for (java.util.Iterator i = righe_inventario.iterator(); i.hasNext();){
 		Buono_carico_scarico_dettBulk dettaglio_inventario = (Buono_carico_scarico_dettBulk)i.next();
 		if (accessori_contestuali != null && accessori_contestuali.containsKey(dettaglio_inventario.getChiaveHash())){
-			throw new it.cnr.jada.bulk.ValidationException("Attenzione: non Ë possibile ricreare i gruppi poichË una delle righe Ë associata a dei beni Accessori");
+			throw new it.cnr.jada.bulk.ValidationException("Attenzione: non √® possibile ricreare i gruppi poich√® una delle righe √® associata a dei beni Accessori");
 		}
 
 		if (dettaglio_inventario.isAccessorioContestuale()){
-			throw new it.cnr.jada.bulk.ValidationException("Attenzione: non Ë possibile ricreare i gruppi poichË una delle righe Ë indicata come Bene Accessorio");
+			throw new it.cnr.jada.bulk.ValidationException("Attenzione: non √® possibile ricreare i gruppi poich√® una delle righe √® indicata come Bene Accessorio");
 		}
 	}	
 }
@@ -1210,8 +1210,8 @@ public Forward doOnData_registrazioneChange(ActionContext context)  {
 }
 	/**
 	 *  Durante la creazione di un Buono di Carico da Fattura Passiva, l'utente ha deselezionato 
-	 *	la propriet” <code>Associa a Bene non registrato</code>: il metodo provvede a resettare 
-	 *	alcune propriet” del bene, quali l'Assegnatario e l'Ubicazione, che erano state ereditate 
+	 *	la propriet√ì <code>Associa a Bene non registrato</code>: il metodo provvede a resettare 
+	 *	alcune propriet√ì del bene, quali l'Assegnatario e l'Ubicazione, che erano state ereditate 
 	 *	dal bene padre.
 	 *
 	 * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta  
@@ -1256,13 +1256,13 @@ public Forward doOnData_registrazioneChange(ActionContext context)  {
 		java.math.BigDecimal valore_unitario = new java.math.BigDecimal(0);
 		
 		try{
-			// Non Ë stata indicata la riga di riferimento
+			// Non √® stata indicata la riga di riferimento
 			if (riga==null){
 				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: selezionare una riga");
 			}
-			// Non Ë stato indicato il numero di gruppi
+			// Non √® stato indicato il numero di gruppi
 			if (getGroups() == null){
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: numero di blocchi non valido. Il numero dei blocchi non puÚ essere nullo");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: numero di blocchi non valido. Il numero dei blocchi non pu√≤ essere nullo");
 			}
 			else{
 				try{
@@ -1273,13 +1273,13 @@ public Forward doOnData_registrazioneChange(ActionContext context)  {
 					return handleException(context, new it.cnr.jada.bulk.FillException("Errore di formattazione sul campo N. Gruppi",e));
 				}
 			}
-			// Il numero di gruppi Ë minore di 0.
+			// Il numero di gruppi √® minore di 0.
 			if (gruppi<0){
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: numero di blocchi non valido. Il numero dei blocchi non puÚ essere negativo");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: numero di blocchi non valido. Il numero dei blocchi non pu√≤ essere negativo");
 			}
-			// Il numero di gruppi Ë uguale a 0.
+			// Il numero di gruppi √® uguale a 0.
 			if (gruppi==0){
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: numero di blocchi non valido. Il numero dei blocchi non puÚ essere zero");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: numero di blocchi non valido. Il numero dei blocchi non pu√≤ essere zero");
 			}
 			// Valida i gruppi
 			validaCreaGruppiDoc(buono_cs, riga);
@@ -1349,7 +1349,7 @@ public Forward doOnData_registrazioneChange(ActionContext context)  {
 	}
 	/**
 	 *  E' stata generata la richiesta di creare i gruppi associati ad una riga di Fattura Documento.
-	 *	Il metodo si occupa di controllare la validit” della righe di dettaglio create.
+	 *	Il metodo si occupa di controllare la validit√ì della righe di dettaglio create.
 	 *
 	 * @param buonoCS il <code>Buono_caricoBulk</code> Buono di Carico
 	 * @param riga la <code>Documento_generico_rigaBulk</code> riga di Documento
@@ -1371,16 +1371,16 @@ public Forward doOnData_registrazioneChange(ActionContext context)  {
 		PrimaryKeyHashtable accessori_contestuali = buonoCS.getAccessoriContestualiHash();
 
 		/* Controlla se, tra le righe create precedentemente, qualcuna a cui
-		*	Ë associato uno o pi˘ Beni.
+		*	√® associato uno o pi√π Beni.
 		*/
 		for (java.util.Iterator i = righe_inventario.iterator(); i.hasNext();){
 			Buono_carico_scarico_dettBulk dettaglio_inventario = (Buono_carico_scarico_dettBulk)i.next();
 			if (accessori_contestuali != null && accessori_contestuali.containsKey(dettaglio_inventario.getChiaveHash())){
-				throw new it.cnr.jada.bulk.ValidationException("Attenzione: non Ë possibile ricreare i gruppi poichË una delle righe Ë associata a dei beni Accessori");
+				throw new it.cnr.jada.bulk.ValidationException("Attenzione: non √® possibile ricreare i gruppi poich√® una delle righe √® associata a dei beni Accessori");
 			}
 
 			if (dettaglio_inventario.isAccessorioContestuale()){
-				throw new it.cnr.jada.bulk.ValidationException("Attenzione: non Ë possibile ricreare i gruppi poichË una delle righe Ë indicata come Bene Accessorio");
+				throw new it.cnr.jada.bulk.ValidationException("Attenzione: non √® possibile ricreare i gruppi poich√® una delle righe √® indicata come Bene Accessorio");
 			}
 		}	
 	}
@@ -1392,7 +1392,7 @@ public Forward doOnData_registrazioneChange(ActionContext context)  {
 
 			if (riga_da_associare.isAssociatoConAccessorioContestuale()){
 				riga_da_associare.setFl_bene_accessorio(new Boolean(false));
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: questo bene non puÚ essere accessorio poichË ha dei beni associati ad esso");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: questo bene non pu√≤ essere accessorio poich√® ha dei beni associati ad esso");
 			}
 			Buono_carico_scaricoBulk buonoCS = (Buono_carico_scaricoBulk)bp.getModel();
 			Documento_generico_rigaBulk dett_selezionato = (Documento_generico_rigaBulk)bp.getDettagliDocumento().getModel();
@@ -1509,19 +1509,19 @@ public Forward doOnData_registrazioneChange(ActionContext context)  {
 			// Non sono stati specificati dei gruppi per una riga di Fattura
 			if (righeInventario.size()==0){
 				throw new it.cnr.jada.bulk.ValidationException ("Attenzione: " +
-					"Ë necessario specificare dei gruppi per ogni riga di Documento.\n" + 
+					"√® necessario specificare dei gruppi per ogni riga di Documento.\n" + 
 					"Non sono stati specificati dei gruppi per la riga di documento '"+
 					riga.getDs_riga() + 
 					"'");
 			}
 			for (java.util.Iterator i = righeInventario.iterator(); i.hasNext();){
 				Buono_carico_scarico_dettBulk riga_inventario = (Buono_carico_scarico_dettBulk)i.next();
-				// Non ﬁ stata indicata la quantit” nella riga di dettaglio del Buono di Carico
+				// Non √û stata indicata la quantit√ì nella riga di dettaglio del Buono di Carico
 				if (riga_inventario.getQuantita()==null || (riga_inventario.getQuantita().compareTo(new Long(0)))==0){
 					throw new it.cnr.jada.bulk.ValidationException ("Attenzione: "+
-						"uno o pi˘ dettagli specificati per la riga di Documento '" + 
+						"uno o pi√π dettagli specificati per la riga di Documento '" + 
 						riga.getDs_riga() + 
-						"' non hanno Quantit‡");
+						"' non hanno Quantit√†");
 				}
 				totale = totale.add(new BigDecimal(riga_inventario.getQuantita().longValue()));
 							

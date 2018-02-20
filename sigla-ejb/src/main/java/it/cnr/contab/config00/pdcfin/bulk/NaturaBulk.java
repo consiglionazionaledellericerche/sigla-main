@@ -37,9 +37,9 @@ public NaturaBulk(java.lang.String cd_natura) {
 	 return super.equals(obj);
 	}
 /**
- * Restituisce il valore della propriet‡ 'cd_ds_natura'
+ * Restituisce il valore della propriet√† 'cd_ds_natura'
  *
- * @return Il valore della propriet‡ 'cd_ds_natura'
+ * @return Il valore della propriet√† 'cd_ds_natura'
  */
 public String getCd_ds_natura() {
 	return getCd_natura() + " - " + getDs_natura();

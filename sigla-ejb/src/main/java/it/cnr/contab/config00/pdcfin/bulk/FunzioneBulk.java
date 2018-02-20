@@ -25,9 +25,9 @@ public FunzioneBulk(java.lang.String cd_funzione) {
 	 return super.equals(obj);
 	}
 /**
- * Restituisce il valore della propriet‡ 'cd_ds_funzione'
+ * Restituisce il valore della propriet√† 'cd_ds_funzione'
  *
- * @return Il valore della propriet‡ 'cd_ds_funzione'
+ * @return Il valore della propriet√† 'cd_ds_funzione'
  */
 public String getCd_ds_funzione() {
 	return getCd_funzione() + " - " + getDs_funzione();

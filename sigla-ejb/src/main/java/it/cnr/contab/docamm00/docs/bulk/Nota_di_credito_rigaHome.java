@@ -63,7 +63,7 @@ private SQLBuilder selectRigaFor(Fattura_passiva_rigaIBulk rigaFattura) {
 			sql.addSQLClause("AND", "FATTURA_PASSIVA_RIGA.ESERCIZIO_ASSNCNA_FIN", sql.EQUALS, rigaFattura.getEsercizio());
 		/*
 		 * Modifica effettuata da marco il 03/11/2004 per gestire il caso in cui la 
-		 * fattura non è ancora salvata
+		 * fattura non Ã¨ ancora salvata
 		 */	
 		if(rigaFattura.getPg_fattura_passiva() != null)	
 		   sql.addSQLClause("AND", "FATTURA_PASSIVA_RIGA.PG_FATTURA_ASSNCNA_FIN", sql.EQUALS, rigaFattura.getPg_fattura_passiva());

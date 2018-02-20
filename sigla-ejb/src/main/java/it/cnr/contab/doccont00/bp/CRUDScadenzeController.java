@@ -28,7 +28,7 @@ public CRUDScadenzeController(String name, Class modelClass, String listProperty
 	super(name, modelClass, listPropertyName, parent);
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  * @param context Il contesto dell'azione
  * @param scadenza La scadenza dell'accertamento
@@ -40,7 +40,7 @@ public void validateForDelete(ActionContext context, Accertamento_scadenzarioBul
 
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  * @param context Il contesto dell'azione
  * @param scadenza La scadenza dell'obbligazione
@@ -52,7 +52,7 @@ public void validateForDelete(ActionContext context, Obbligazione_scadenzarioBul
 
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  * @param context Il contesto dell'azione
  * @param scadenza La scadenza dell'oggetto bulk in uso

@@ -98,7 +98,7 @@
 					}
 				} else if (notaDiCredito.getModalita_pagamento_uo() != null && (ente != null && ente.getCrudStatus() != ente.UNDEFINED)) { %>
 					<span class="FormLabel" style="color:red">
-						Nessun riferimento trovato per la modalit‡ di pagamento selezionata!
+						Nessun riferimento trovato per la modalit√† di pagamento selezionata!
 					</span>
 			<%	} %>
 			<td>

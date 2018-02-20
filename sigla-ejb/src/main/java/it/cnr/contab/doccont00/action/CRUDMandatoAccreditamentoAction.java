@@ -152,7 +152,7 @@ public Forward doCambiaModalitaPagamento(ActionContext context)
 	
 }
 /**
- * Gestisce il caricamento di tutti i centri di spesa e della loro disponibilit‡ di cassa 
+ * Gestisce il caricamento di tutti i centri di spesa e della loro disponibilit√† di cassa 
 	 * @param context <code>ActionContext</code> in uso.
 	 *
 	 * @return <code>Forward</code>
@@ -210,7 +210,7 @@ public Forward doConfermaEmettiMandato(ActionContext context,int option)
 				if ( wizard.getFl_imputazione_manuale())
 					setMessage( context,0, "E' necessario specificare almeno un importo da trasferire!");
 				else
-					setMessage( context,0, "E' necessario specificare almeno una priorit‡!");				
+					setMessage( context,0, "E' necessario specificare almeno una priorit√†!");				
 			else
 			{
 				wizard.validate();

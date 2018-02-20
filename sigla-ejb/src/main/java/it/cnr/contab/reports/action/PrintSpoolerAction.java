@@ -66,7 +66,7 @@ public class  PrintSpoolerAction extends it.cnr.jada.util.action.SelezionatoreLi
 						method.setHeader("Accept-Language", Locale.getDefault().toString());
 						httpclient.execute(method);
 					} catch(java.io.IOException e) {
-						// Non posso fare molto... le stampe sono gi‡ state cancellate dalla
+						// Non posso fare molto... le stampe sono gi√† state cancellate dalla
 						// tabella della coda!!
 					}
 				}

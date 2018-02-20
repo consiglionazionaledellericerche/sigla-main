@@ -192,7 +192,7 @@ private void associaTuttiGruppiPerModifica(UserContext userContext,Tipo_ammortam
   *		  	- siano soggetti a gestione Inventario, (FL_GESTIONE_INVENTARIO = 'Y');
   *			- siano soggetti ad ammortamento, (FL_AMMORTAMENTO = 'Y');
   *			- siano di livello maggiore di 0, (ossia siano Gruppi e non Categorie);
-  *			- NON siano gi‡ associati ad altri Tipi Ammortamento;
+  *			- NON siano gi√† associati ad altri Tipi Ammortamento;
   *			- NON siano stati cacellati logicamente.
   *    PostCondition:
   *     Viene costruito e restituito l'Iteratore sui gruppi disponibili.
@@ -232,7 +232,7 @@ public it.cnr.jada.util.RemoteIterator cercaGruppiAssociabili(UserContext userCo
   *		  	- siano soggetti a gestione Inventario, (FL_GESTIONE_INVENTARIO = 'Y');
   *			- siano soggetti ad ammortamento, (FL_AMMORTAMENTO = 'Y');
   *			- siano di livello maggiore di 0, (ossia siano Gruppi e non Categorie);
-  *			- NON siano gi‡ associati ad altri Tipi Ammortamento;
+  *			- NON siano gi√† associati ad altri Tipi Ammortamento;
   *			- NON siano stati cacellati logicamente.
   *    PostCondition:
   *     Viene costruito e restituito l'Iteratore sui gruppi disponibili.
@@ -289,9 +289,9 @@ public it.cnr.jada.util.RemoteIterator cercaGruppiAssociabiliPerModifica(UserCon
 /** 
   * Invocato in fase di modifica del Tipo_Ammortamento, se l'utente decide di aggiungere
   *	 un gruppo al Tipo Ammortamento che sta modificando.
-  *	 Il metodo controlla che il gruppo indicato non sia stato gi‡ associato e poi
+  *	 Il metodo controlla che il gruppo indicato non sia stato gi√† associato e poi
   *  cancellato logicamente (ASS_TIPO_AMM_CAT_GRUP_INV_APG.DT_CANCELLAZIONE!=NULL): in
-  *	 tal caso, il gruppo NON viene inserito, bensÏ viene fatta una operazione di UPDATE
+  *	 tal caso, il gruppo NON viene inserito, bens√¨ viene fatta una operazione di UPDATE
   *	 sul record esistente, settando il campo ASS_TIPO_AMM_CAT_GRUP_INV_APG.DT_CANCELLAZIONE = a NULL.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
@@ -324,7 +324,7 @@ private boolean checkGroupAlreadyExistsInApgForModify(UserContext userContext, T
 		ps.setString(1,tipo_ammortamento.getLocal_transactionID());   // LOCAL_TRANSACTION_ID
 		ps.setString(2,gruppo.getCd_categoria_gruppo()); //CD_CATEGORIA_GRUPPO
 		
-		// Controlla che il gruppo non sia gi‡ presente in ASS_TIPO_AMM_CAT_GRUP_INV_APG
+		// Controlla che il gruppo non sia gi√† presente in ASS_TIPO_AMM_CAT_GRUP_INV_APG
 		rs = ps.executeQuery();
 		if (rs.next()){
 			alreadyExist = true;
@@ -332,7 +332,7 @@ private boolean checkGroupAlreadyExistsInApgForModify(UserContext userContext, T
 		try{ps.close();}catch( java.sql.SQLException e ){};
 		try{rs.close();}catch( java.sql.SQLException e ){};
 
-		// Se il gruppo gi‡ esiste, allora effettua l'UPDATE sul campo DT_CANCELLAZIONE
+		// Se il gruppo gi√† esiste, allora effettua l'UPDATE sul campo DT_CANCELLAZIONE
 		if(alreadyExist){	
 			ps = new LoggableStatement(getConnection(userContext),query_update,true,this.getClass());	
 			ps.setString(1,tipo_ammortamento.getLocal_transactionID());   // LOCAL_TRANSACTION_ID
@@ -359,7 +359,7 @@ private boolean checkGroupAlreadyExistsInApgForModify(UserContext userContext, T
   *
   *  Validazione del codice del Tipo Ammortamento
   *    PreCondition:
-  *      Il codice specificato per il Tipo Ammortamento Ë gi‡ utilizzato.
+  *      Il codice specificato per il Tipo Ammortamento √® gi√† utilizzato.
   *    PostCondition:
   *      Un messaggio di errore viene mostrato all'utente. Non  viene consentita la registrazione del Tipo Ammortamento.
   * 
@@ -788,7 +788,7 @@ public it.cnr.jada.util.RemoteIterator getAmmortamentoRemoteIteratorPerRiassocia
   *    PreCondition:
   *      E' stato richiesto di recuperare/generare l'identificativo di transazione.
   *    PostCondition:
-  *      Viene richiesto l'ID e, se questo non esiste, verr‡ generato, se richiesto.
+  *      Viene richiesto l'ID e, se questo non esiste, verr√† generato, se richiesto.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta.
   * @param force <code>boolean</code> il flag che indica se forzare la generazione dell'ID.
@@ -1012,7 +1012,7 @@ AND ( cat.LIVELLO > '0' ) AND
   *      E' stata generata la richiesta di creazione, modifica o eliminazione logica di un Tipo
   *		Ammortamento.
   *    PostCondition:
-  *      Viene richiamata la procedura che scriver‡ sulle tabelle del Tipo Ammortamento
+  *      Viene richiamata la procedura che scriver√† sulle tabelle del Tipo Ammortamento
   *		le operazione fatte dall'utente.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -1083,7 +1083,7 @@ private void makePersistentAssociazioni(UserContext aUC, Tipo_ammortamentoBulk t
   *    PreCondition:
   *      E' stata generata la richiesta di modifica di un Tipo Ammortamento per riassocia.
   *    PostCondition:
-  *      Viene richiamata la procedura che scriver‡ sulle tabelle del Tipo Ammortamento
+  *      Viene richiamata la procedura che scriver√† sulle tabelle del Tipo Ammortamento
   *		le operazione fatte dall'utente.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -1133,7 +1133,7 @@ private void makePersistentRiassocia(UserContext aUC, Tipo_ammortamentoBulk tipo
   *    PreCondition:
   *      E' stata generata la richiesta di creazione di un Tipo Ammortamento.
   *    PostCondition:
-  *      Viene richiamata la procedura che scriver‡ sulle tabelle del Tipo Ammortamento
+  *      Viene richiamata la procedura che scriver√† sulle tabelle del Tipo Ammortamento
   *		i dati inseriti dall'utente.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -1460,10 +1460,10 @@ private void updatePercentualiTipoAmmortamento(UserContext aUC, Tipo_ammortament
 /** 
   *  Valida codice Tipo Ammortamento - codice duplicato
   *    PreCondition:
-  *      Si sta tentando di creare un nuovo Tipo Ammortamento il cui codice Ë gi‡ utilizzato 
+  *      Si sta tentando di creare un nuovo Tipo Ammortamento il cui codice √® gi√† utilizzato 
   *		da un altro Tipo Ammortamento, presente sul DB.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit‡ di specificare un altro codice.
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit√† di specificare un altro codice.
   *
   *  
   *  Valida codice Tipo Ammortamento - Tutti i controlli superati.
@@ -1491,7 +1491,7 @@ private void validaCDTipo_Ammortamento(UserContext userContext, Tipo_ammortament
 		ps.setString(1, ti_ammort.getCd_tipo_ammortamento()); // CD_TIPO_AMMORTAMENTO
 		rs = ps.executeQuery();
 		if (rs.next()){
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: il Codice indicato Ë gi‡ utilizzato. Indicare un codice diverso");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: il Codice indicato √® gi√† utilizzato. Indicare un codice diverso");
 		}
 		
 		try{rs.close();}catch( java.sql.SQLException e ){};
@@ -1509,32 +1509,32 @@ private void validaCDTipo_Ammortamento(UserContext userContext, Tipo_ammortament
 /** 
   *  Valida Tipo Ammortamento - codice non specificato
   *    PreCondition:
-  *      Si sta tentando di salvare un Tipo Ammortamento di cui non si Ë specificato il codice.
+  *      Si sta tentando di salvare un Tipo Ammortamento di cui non si √® specificato il codice.
   *    PostCondition:
   *      Un messaggio di errore viene visualizzato all'utente.
   *  
   *  Valida Tipo Ammortamento - descrizione mancante
   *    PreCondition:
-  *      Non Ë stata specificata una descrizione per il Tipo Ammortamento.
+  *      Non √® stata specificata una descrizione per il Tipo Ammortamento.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente indicando la necessit‡ di specificare la descrizione.
+  *      Un messaggio di errore viene visualizzato all'utente indicando la necessit√† di specificare la descrizione.
   *  
   *  Valida Tipo Ammortamento - esercizio di competenza non specificato
   *    PreCondition:
-  *		 Si sta tentando di salvare un Tipo Ammortamento di cui non Ë stato specificato 
+  *		 Si sta tentando di salvare un Tipo Ammortamento di cui non √® stato specificato 
   *		l'esercizio di competenza.
   *    PostCondition:
   *      Un messaggio di errore viene visualizzato all'utente.
   *  
   *  Valida Tipo Ammortamento - nessun tipo specificato
   *    PreCondition:
-  *		 Si sta tentando di salvare un Tipo Ammortamento di cui non Ë stato specificato il tipo.
+  *		 Si sta tentando di salvare un Tipo Ammortamento di cui non √® stato specificato il tipo.
   *    PostCondition:
   *      Un messaggio di errore viene visualizzato all'utente.
   *
   *  Valida Tipo Ammortamento - perc. primo anno ORDINARIO non specificata
   *    PreCondition:
-  *		 Si sta tentando di salvare un Tipo Ammortamento ORDINARIO di cui non Ë stata specificata
+  *		 Si sta tentando di salvare un Tipo Ammortamento ORDINARIO di cui non √® stata specificata
   *		la percentuale del primo anno.
   *    PostCondition:
   *      Un messaggio di errore viene visualizzato all'utente con l'indicazione di indicare 
@@ -1542,13 +1542,13 @@ private void validaCDTipo_Ammortamento(UserContext userContext, Tipo_ammortament
   *
   *  Valida Tipo Ammortamento - tot percentuali tipo ORDINARIO non valide
   *    PreCondition:
-  *		 La somma delle percentuali specificate per il tipo ORDINARIO non Ë 100.
+  *		 La somma delle percentuali specificate per il tipo ORDINARIO non √® 100.
   *    PostCondition:
   *      Un messaggio di errore viene visualizzato all'utente.
   *
   *  Valida Tipo Ammortamento - perc. primo anno ANTICIPATO non specificata
   *    PreCondition:
-  *		 Si sta tentando di salvare un Tipo Ammortamento ANTICIPATO di cui non Ë stata specificata
+  *		 Si sta tentando di salvare un Tipo Ammortamento ANTICIPATO di cui non √® stata specificata
   *		la percentuale del primo anno.
   *    PostCondition:
   *      Un messaggio di errore viene visualizzato all'utente con l'indicazione di indicare 
@@ -1556,13 +1556,13 @@ private void validaCDTipo_Ammortamento(UserContext userContext, Tipo_ammortament
   *
   *  Valida Tipo Ammortamento - tot percentuali tipo ANTICIPATO non valide
   *    PreCondition:
-  *		 La somma delle percentuali specificate per il tipo ANTICIPATO non Ë 100.
+  *		 La somma delle percentuali specificate per il tipo ANTICIPATO non √® 100.
   *    PostCondition:
   *      Un messaggio di errore viene visualizzato all'utente.  
   *
   *  Valida Tipo Ammortamento - perc. primo anno ALTRO non specificata
   *    PreCondition:
-  *		 Si sta tentando di salvare un Tipo Ammortamento ALTRO di cui non Ë stata specificata
+  *		 Si sta tentando di salvare un Tipo Ammortamento ALTRO di cui non √® stata specificata
   *		la percentuale del primo anno.
   *    PostCondition:
   *      Un messaggio di errore viene visualizzato all'utente con l'indicazione di indicare 
@@ -1570,14 +1570,14 @@ private void validaCDTipo_Ammortamento(UserContext userContext, Tipo_ammortament
   *
   *  Valida Tipo Ammortamento - tot percentuali tipo ALTRO non valide
   *    PreCondition:
-  *		 La somma delle percentuali specificate per il tipo ALTRO non Ë 100.
+  *		 La somma delle percentuali specificate per il tipo ALTRO non √® 100.
   *    PostCondition:
   *      Un messaggio di errore viene visualizzato all'utente.
   *
   *  Valida Tipo Ammortamento - Tipo Ammortamento per riassocia non specificato
   *    PreCondition:
   *		 Si sta tentando di salvare un Tipo Ammortamento i cui gruppi sono stati riassociati 
-  *		ad un altro Tipo Ammortamento, ma non Ë stato specificato il Tipo Ammortamento di destinazione.
+  *		ad un altro Tipo Ammortamento, ma non √® stato specificato il Tipo Ammortamento di destinazione.
   *    PostCondition:
   *      Un messaggio di errore viene visualizzato all'utente.
   *  
@@ -1617,10 +1617,10 @@ private void validaTipo_Ammortamento(UserContext userContext, Tipo_ammortamentoB
 			throw new it.cnr.jada.comp.ApplicationException("Attenzione: indicare almeno un tipo di Ammortamento");
 		}
 		
-		// Se Ë stato selezionato il TIPO ORDINARIO
+		// Se √® stato selezionato il TIPO ORDINARIO
 		if (ti_ammort.isOrdinario()){
 			if (ti_ammort.getPerc_primo_anno_ord()==null || ti_ammort.getPerc_primo_anno_ord().compareTo(zero)==0 || ti_ammort.getPerc_primo_anno_ord().compareTo(cento)>0){
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: la percentuale primo anno per il Tipo Ordinario non Ë valida");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: la percentuale primo anno per il Tipo Ordinario non √® valida");
 			}
 
 			if ((ti_ammort.getPerc_successivi_ord()!= null) && (ti_ammort.getPerc_primo_anno_ord().add(ti_ammort.getPerc_successivi_ord())).compareTo(cento)>0){
@@ -1631,10 +1631,10 @@ private void validaTipo_Ammortamento(UserContext userContext, Tipo_ammortamentoB
 				ti_ammort.setPerc_successivi_ord(zero);
 		}
 		
-		// Se Ë stato selezionato il TIPO ANTICIPATO
+		// Se √® stato selezionato il TIPO ANTICIPATO
 		if (ti_ammort.isAnticipato()){
 			if (ti_ammort.getPerc_primo_anno_ant()==null || ti_ammort.getPerc_primo_anno_ant().compareTo(zero)==0){
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: la percentuale primo anno per il Tipo Anticipato non Ë valida");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: la percentuale primo anno per il Tipo Anticipato non √® valida");
 			}
 			
 			if ((ti_ammort.getPerc_successivi_ant()!= null) && (ti_ammort.getPerc_primo_anno_ant().add(ti_ammort.getPerc_successivi_ant())).compareTo(cento)>0){
@@ -1645,10 +1645,10 @@ private void validaTipo_Ammortamento(UserContext userContext, Tipo_ammortamentoB
 				ti_ammort.setPerc_successivi_ant(zero);
 		}
 		
-		// Se Ë stato selezionato il TIPO ALTRO
+		// Se √® stato selezionato il TIPO ALTRO
 		if (ti_ammort.isAltro()){
 			if (ti_ammort.getPerc_primo_anno_altro()==null || ti_ammort.getPerc_primo_anno_altro().compareTo(zero)==0){
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: la percentuale primo anno per il Tipo Altro non Ë valida");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: la percentuale primo anno per il Tipo Altro non √® valida");
 			}
 
 			if ((ti_ammort.getPerc_successivi_altro()!= null) && (ti_ammort.getPerc_primo_anno_altro().add(ti_ammort.getPerc_successivi_altro())).compareTo(cento)>0){
@@ -1663,7 +1663,7 @@ private void validaTipo_Ammortamento(UserContext userContext, Tipo_ammortamentoB
 
 		// CONTROLLA, NEL CASO CHE SIA STATA RICHIESTA UNA OPERAZIONE DI RIASSOCIA, CHE SIA STATO SPECIFICATO UN TIPO AMMORTAMENTO
 		if (ti_ammort.isPerRiassocia() && ti_ammort.getAmmortamento_associato() == null)
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: Ë necessario specificare un Tipo Ammortamento per l'operazione di Riassocia");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: √® necessario specificare un Tipo Ammortamento per l'operazione di Riassocia");
 		
 	}catch(Throwable t){
 		throw handleException(ti_ammort, t);		

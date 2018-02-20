@@ -91,7 +91,7 @@ public class RicercaFatturaPassivaBP extends BusinessProcess implements Response
 	    	StreamResult streamResult = new StreamResult(pagecontext.getOut());
 	    	TransformerFactory tf = TransformerFactory.newInstance();
 	    	Transformer serializer = tf.newTransformer();
-	    	serializer.setOutputProperty(OutputKeys.ENCODING,"ISO-8859-1");
+	    	serializer.setOutputProperty(OutputKeys.ENCODING,"UTF-8");
 	    	serializer.setOutputProperty(OutputKeys.INDENT,"yes");
 	    	serializer.setOutputProperty(OutputKeys.STANDALONE,"no");
 	    	serializer.transform(domSource, streamResult); 

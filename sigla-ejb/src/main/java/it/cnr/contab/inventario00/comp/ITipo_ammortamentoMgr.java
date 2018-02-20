@@ -45,7 +45,7 @@ public abstract void associaTuttiGruppi(it.cnr.jada.UserContext param0,it.cnr.co
   *		  	- siano soggetti a gestione Inventario, (FL_GESTIONE_INVENTARIO = 'Y');
   *			- siano soggetti ad ammortamento, (FL_AMMORTAMENTO = 'Y');
   *			- siano di livello maggiore di 0, (ossia siano Gruppi e non Categorie);
-  *			- NON siano gi‡ associati ad altri Tipi Ammortamento;
+  *			- NON siano gi√† associati ad altri Tipi Ammortamento;
   *			- NON siano stati cacellati logicamente.
   *    PostCondition:
   *     Viene costruito e restituito l'Iteratore sui gruppi disponibili.
@@ -66,7 +66,7 @@ public abstract it.cnr.jada.util.RemoteIterator cercaGruppiAssociabili(it.cnr.ja
   *		  	- siano soggetti a gestione Inventario, (FL_GESTIONE_INVENTARIO = 'Y');
   *			- siano soggetti ad ammortamento, (FL_AMMORTAMENTO = 'Y');
   *			- siano di livello maggiore di 0, (ossia siano Gruppi e non Categorie);
-  *			- NON siano gi‡ associati ad altri Tipi Ammortamento;
+  *			- NON siano gi√† associati ad altri Tipi Ammortamento;
   *			- NON siano stati cacellati logicamente.
   *    PostCondition:
   *     Viene costruito e restituito l'Iteratore sui gruppi disponibili.
@@ -87,7 +87,7 @@ public abstract it.cnr.jada.util.RemoteIterator cercaGruppiAssociabiliPerModific
   *
   *  Validazione del codice del Tipo Ammortamento
   *    PreCondition:
-  *      Il codice specificato per il Tipo Ammortamento Ë gi‡ utilizzato.
+  *      Il codice specificato per il Tipo Ammortamento √® gi√† utilizzato.
   *    PostCondition:
   *      Un messaggio di errore viene mostrato all'utente. Non  viene consentita la registrazione del Tipo Ammortamento.
   * 
@@ -171,7 +171,7 @@ public abstract it.cnr.jada.util.RemoteIterator getAmmortamentoRemoteIteratorPer
   *    PreCondition:
   *      E' stato richiesto di recuperare/generare l'identificativo di transazione.
   *    PostCondition:
-  *      Viene richiesto l'ID e, se questo non esiste, verr‡ generato, se richiesto.
+  *      Viene richiesto l'ID e, se questo non esiste, verr√† generato, se richiesto.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta.
   * @param force <code>boolean</code> il flag che indica se forzare la generazione dell'ID.

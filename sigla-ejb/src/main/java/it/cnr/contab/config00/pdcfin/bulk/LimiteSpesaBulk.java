@@ -235,11 +235,11 @@ Capitolo definito dall"utente collegato a Categoria
 	public void validate() throws ValidationException {
 		super.validate();
 		if (getCd_elemento_voce()==null)
-			throw new ValidationException("Il campo voce è obbligatorio.");
+			throw new ValidationException("Il campo voce Ã¨ obbligatorio.");
 		if (getFonte()==null)
-			throw new ValidationException("Il campo fonte è obbligatorio.");
+			throw new ValidationException("Il campo fonte Ã¨ obbligatorio.");
 		if (getImporto_limite()==null)
-			throw new ValidationException("Il campo importo limite è obbligatorio.");
+			throw new ValidationException("Il campo importo limite Ã¨ obbligatorio.");
 		
 	}
 }

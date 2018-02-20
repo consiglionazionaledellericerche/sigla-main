@@ -33,7 +33,7 @@ public void assegnaProgressivo(Id_inventarioBulk id_inventario) throws Persisten
 /**
   *
   *  Carica il consegnatario relativo all'Inventario "inv"
-  *		Ritorna null se non è definita un'associazione
+  *		Ritorna null se non Ã¨ definita un'associazione
   *
   *  
  */
@@ -51,7 +51,7 @@ public it.cnr.contab.anagraf00.core.bulk.TerzoBulk findConsegnatarioFor(Id_inven
 /**
   *
   *  Carica il delegato relativo all'Inventario "inv"
-  *		Ritorna null se non è definita un'associazione
+  *		Ritorna null se non Ã¨ definita un'associazione
   *
   *  
  */

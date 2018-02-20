@@ -137,7 +137,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 //  *      Viene richiesto il salvataggio di un nuovo documento ma le validazioni
 //  *      non vengono superate
 //  *    PostCondition:
-//  *      Informa l'utente della causa per la quale non Ë possibile salvare
+//  *      Informa l'utente della causa per la quale non √® possibile salvare
 // */
 ////^^@@
 	public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext userContext, it.cnr.jada.bulk.OggettoBulk bulk, it.cnr.contab.doccont00.core.bulk.OptionRequestParameter status)
@@ -276,7 +276,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 
 	private void controlloEsistenzaRigheOrdine(OrdineAcqBulk ordine) throws ApplicationException {
 		if (ordine.getRigheOrdineColl() == null || ordine.getRigheOrdineColl().size() == 0){
-			throw new ApplicationException ("Non Ë possibile salvare un ordine senza dettagli.");
+			throw new ApplicationException ("Non √® possibile salvare un ordine senza dettagli.");
 		} else {
     		boolean esisteRigaValida = false;
 	    	for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
@@ -286,7 +286,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 	    		}
 	    	}
 	    	if (!esisteRigaValida){
-				throw new ApplicationException ("Non Ë possibile salvare un ordine senza dettagli.");
+				throw new ApplicationException ("Non √® possibile salvare un ordine senza dettagli.");
 	    	}
 		}
 	}
@@ -300,11 +300,11 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 		}
 		if (!consegna.isConsegnaMagazzino()){
 			if (consegna.getCdUopDest() == null){
-				throw new ApplicationException("E' necessario indicare l'unit‡ operativa di destinazione per la riga "+consegna.getRiga()+".");
+				throw new ApplicationException("E' necessario indicare l'unit√† operativa di destinazione per la riga "+consegna.getRiga()+".");
 			}
 		} else {
 			if (consegna.getCdUopDest() != null){
-				throw new ApplicationException("Per una consegna a magazzino non Ë possibile selezionare l'unit‡ operativa di destinazione per la riga "+consegna.getRiga()+".");
+				throw new ApplicationException("Per una consegna a magazzino non √® possibile selezionare l'unit√† operativa di destinazione per la riga "+consegna.getRiga()+".");
 			}
 		}
     	if (consegna.getOrdineAcqRiga().getOrdineAcq().getDataOrdine() == null){
@@ -318,7 +318,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
     		
     	}
 		if (consegna.getDtPrevConsegna() != null && consegna.getDtPrevConsegna().before(consegna.getOrdineAcqRiga().getOrdineAcq().getDataOrdine())){
-			throw new ApplicationException("La data di prevista consegna non puÚ essere precedente alla data dell'ordine per la riga "+consegna.getRiga()+".");
+			throw new ApplicationException("La data di prevista consegna non pu√≤ essere precedente alla data dell'ordine per la riga "+consegna.getRiga()+".");
 		}
 
 	}
@@ -383,7 +383,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 				try {
 					titoliCapitoliCatGrp = h.findAssVoceFList(userContext, bene.getCategoria_gruppo());
 					if (titoliCapitoliCatGrp == null)
-						throw new it.cnr.jada.comp.ApplicationException("Alla categoria " + bene.getCd_categoria_gruppo() + "\" non Ë stato attribuita l'associazione al capitolo di spesa");
+						throw new it.cnr.jada.comp.ApplicationException("Alla categoria " + bene.getCd_categoria_gruppo() + "\" non √® stato attribuita l'associazione al capitolo di spesa");
 					boolean trovataVoce = false;
 					for (java.util.Iterator k = titoliCapitoliCatGrp.iterator(); k.hasNext();) {
 						Categoria_gruppo_voceBulk assVoce = (Categoria_gruppo_voceBulk)k.next();
@@ -392,7 +392,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 						}
 					}
 					if (!trovataVoce){
-						throw new ApplicationException ("Per la riga "+riga.getRiga()+" la voce dell'obbligazione collegata "+obb.getElemento_voce().getCd_elemento_voce()+" non Ë associata alla categoria/gruppo del bene/servizio "+riga.getCdBeneServizio());
+						throw new ApplicationException ("Per la riga "+riga.getRiga()+" la voce dell'obbligazione collegata "+obb.getElemento_voce().getCd_elemento_voce()+" non √® associata alla categoria/gruppo del bene/servizio "+riga.getCdBeneServizio());
 					}
 				} catch (IntrospectionException | RemoteException e) {
 					throw new ComponentException(e);
@@ -407,7 +407,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 		if (obb.getCd_unita_organizzativa() != null){
 			Unita_organizzativaBulk uoOrdine = recuperoUoPerImpegno(userContext, cons);
 			if (uoOrdine != null && !uoOrdine.getCd_unita_organizzativa().equals(obb.getCd_unita_organizzativa())){
-				throw new ApplicationException ("Per la consegna "+cons.getConsegna()+" della riga "+cons.getRiga()+ " la uo dell'obbligazione non Ë corretta.");
+				throw new ApplicationException ("Per la consegna "+cons.getConsegna()+" della riga "+cons.getRiga()+ " la uo dell'obbligazione non √® corretta.");
 			}
 		}
 	}
@@ -418,7 +418,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 //				(riga.getRigheConsegnaColl() != null && riga.getRigheConsegnaColl().size() == 1)
 				){
 			if (riga.getDspQuantita() == null){
-				throw new ApplicationException ("E' necessario indicare la quantit‡.");
+				throw new ApplicationException ("E' necessario indicare la quantit√†.");
 			}
 			if (riga.getDspDtPrevConsegna() == null){
 				throw new ApplicationException ("E' necessario indicare la data di prevista consegna.");
@@ -427,7 +427,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 				throw new ApplicationException ("E' necessario indicare il tipo di consegna.");
 			} else {
 				if ((!riga.getDspTipoConsegna().equals(Bene_servizioBulk.TIPO_CONSEGNA_MAGAZZINO)) && (riga.getDspUopDest() == null || riga.getDspUopDest().getCdUnitaOperativa() == null)){
-					throw new ApplicationException ("E' necessario indicare l'unit‡ operativa per i tipi consegna in 'Transito' o 'Fuori Magazzino'.");
+					throw new ApplicationException ("E' necessario indicare l'unit√† operativa per i tipi consegna in 'Transito' o 'Fuori Magazzino'.");
 				}
 				
 			}
@@ -734,7 +734,7 @@ protected Boolean isCdrUo(UserContext userContext) throws ComponentException, Pe
 //	if (dett.getCdCentroResponsabilita() != null){
 //		sql.addClause(FindClause.AND,"cd_centro_responsabilita",SQLBuilder.EQUALS,dett.getCdCentroResponsabilita());
 //	} else {
-//		throw new ApplicationException ("GAE non selezionabile senza aver prima indicato il centro di responsabilit‡!");
+//		throw new ApplicationException ("GAE non selezionabile senza aver prima indicato il centro di responsabilit√†!");
 //	}
 //
 //	sql.openParenthesis(FindClause.AND);
@@ -762,7 +762,7 @@ protected Boolean isCdrUo(UserContext userContext) throws ComponentException, Pe
 //	sql.addSQLClause(FindClause.AND,"PROGETTO_GEST.FL_UTILIZZABILE",SQLBuilder.EQUALS,"Y");
 //
 //	/**
-//	 * Escludo la linea di attivit‡ dell'IVA C20
+//	 * Escludo la linea di attivit√† dell'IVA C20
 //	 */
 //	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 //	try {
@@ -853,7 +853,7 @@ public SQLBuilder selectObbligazioneScadenzarioByClause(UserContext userContext,
 		if (uo != null && uo.getCd_unita_organizzativa() != null){
 			filtro.setCd_unita_organizzativa( uo.getCd_unita_organizzativa() );
 		} else {
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë stato possibile individuare l'unit‡ organizzativa.");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® stato possibile individuare l'unit√† organizzativa.");
 		}
 		filtro.setFl_importo(Boolean.FALSE);
 
@@ -876,7 +876,7 @@ private java.util.List recuperoListaCapitoliSelezionabili(UserContext userContex
 		if (bene != null) {
 			java.util.List titoliCapitoliCatGrp = session.findAssVoceFList(userContext, bene.getCategoria_gruppo());
 			if (titoliCapitoliCatGrp == null)
-				throw new it.cnr.jada.comp.ApplicationException("Alla categoria " + bene.getCategoria_gruppo().getCd_categoria_gruppo() + "\" non Ë stato attribuita l'associazione al capitolo di spesa");
+				throw new it.cnr.jada.comp.ApplicationException("Alla categoria " + bene.getCategoria_gruppo().getCd_categoria_gruppo() + "\" non √® stato attribuita l'associazione al capitolo di spesa");
 			for (java.util.Iterator k = titoliCapitoliCatGrp.iterator(); k.hasNext();) {
 				Categoria_gruppo_voceBulk assVoce = (Categoria_gruppo_voceBulk)k.next();
 				listaCapitoli.add(assVoce.getElemento_voce());
@@ -1161,15 +1161,15 @@ private void controlliCambioStato(UserContext usercontext, OrdineAcqBulk ordine)
 		if (ordineDB != null && !ordineDB.getStato().equals(ordine.getStato())){
 			if (ordineDB.isOrdineInserito()){
 				if (!ordine.isOrdineInviatoApprovazione()){
-					throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile indicare uno stato diverso da 'in approvazione'");
+					throw new it.cnr.jada.comp.ApplicationException("Non √® possibile indicare uno stato diverso da 'in approvazione'");
 				}
 			} else if (ordineDB.isOrdineDefinitivo()){
 				if (!ordine.isOrdineInviatoFornitore()){
-					throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile indicare uno stato diverso da inviato al fornitore");
+					throw new it.cnr.jada.comp.ApplicationException("Non √® possibile indicare uno stato diverso da inviato al fornitore");
 				}
 			} else if (ordineDB.isOrdineAllaFirma()){
 				if (!(ordine.isStatoDefinitivo() || ordine.isStatoInApprovazione())){
-					throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile indicare uno stato diverso da definito o in approvazione");
+					throw new it.cnr.jada.comp.ApplicationException("Non √® possibile indicare uno stato diverso da definito o in approvazione");
 				}
 			} else if (ordineDB.isOrdineInviatoApprovazione()){
 				AbilUtenteUopOperHome abilHome = (AbilUtenteUopOperHome) getHomeCache(usercontext).getHome(AbilUtenteUopOperBulk.class);
@@ -1177,10 +1177,10 @@ private void controlliCambioStato(UserContext usercontext, OrdineAcqBulk ordine)
 					throw new it.cnr.jada.comp.ApplicationException("Utente non abilitato ad operare su ordini in approvazione");
 				}
 				if (!(ordine.isStatoAllaFirma() || ordine.isStatoInserito())){
-					throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile indicare uno stato diverso da inserito o alla firma");
+					throw new it.cnr.jada.comp.ApplicationException("Non √® possibile indicare uno stato diverso da inserito o alla firma");
 				}
 			} else if (ordineDB.isOrdineInviatoFornitore()){
-				throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile cambiare lo stato di un ordine inviato al fornitore");
+				throw new it.cnr.jada.comp.ApplicationException("Non √® possibile cambiare lo stato di un ordine inviato al fornitore");
 			}
 		}
 	} catch (PersistencyException e) {
@@ -1230,8 +1230,8 @@ private DivisaBulk getEuro(UserContext userContext) throws ComponentException {
 
 /**
  * Pre:  Ricerca CIG
- * Post: Il CIG puÚ essere collegato ad un contratto solo se vengono rispettate le seguenti regole:				
-		CD_TERZO_RUP del CIG Ë il medesimo del contratto che si sta inserendo quindi : 
+ * Post: Il CIG pu√≤ essere collegato ad un contratto solo se vengono rispettate le seguenti regole:				
+		CD_TERZO_RUP del CIG √® il medesimo del contratto che si sta inserendo quindi : 
 		CIG. CD_TERZO_RUP = CONTRATTO. CD_TERZO_RESP
 		Il CIG non deve risultare associato ad altri contratti.
  */
@@ -1251,7 +1251,7 @@ public SQLBuilder selectCigByClause (UserContext userContext, OrdineAcqBulk ordi
 
 /**
  * Pre:  Ricerca Figura giuridica interna
- * Post: Limitazione ai terzi di tipo Unit‡ Organizzativa
+ * Post: Limitazione ai terzi di tipo Unit√† Organizzativa
  */
 public SQLBuilder selectTerzoCdrByClause (UserContext userContext, OggettoBulk bulk, TerzoBulk terzo,CompoundFindClause clause)	throws ComponentException, PersistencyException
 {
@@ -1510,7 +1510,7 @@ public OrdineAcqBulk contabilizzaDettagliSelezionati(
 						if (cons.getObbligazioneScadenzario() == null || cons.getEsercizioOrigObbl() == null || cons.getObbligazioneScadenzario().equalsByPrimaryKey(riga.getDspObbligazioneScadenzario())){
 							ordine.addToOrdineObbligazioniHash(obbligazioneSelezionata, cons);
 						} else {
-							throw new it.cnr.jada.DetailedRuntimeException("L'impegno sulla riga di consegna Ë diverso dall'impegno indicato sulla riga d'ordine.");
+							throw new it.cnr.jada.DetailedRuntimeException("L'impegno sulla riga di consegna √® diverso dall'impegno indicato sulla riga d'ordine.");
 						}
 					}
 				}
@@ -1604,7 +1604,7 @@ private void validaScadenze(OrdineAcqBulk ordine, Obbligazione_scadenzarioBulk n
 			if(scad.getObbligazione() instanceof ObbligazioneResBulk){
 				if (scad.getObbligazione().equalsByPrimaryKey(newScad.getObbligazione()) && ((ObbligazioneResBulk)scad.getObbligazione()).getObbligazione_modifica()!=null
 					&& ((ObbligazioneResBulk)scad.getObbligazione()).getObbligazione_modifica().getPg_modifica()!=null) {
-					throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'impegno residuo "+scad.getPg_obbligazione()+" poichË È stata effettuata una modifica in questo ordine!");									
+					throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'impegno residuo "+scad.getPg_obbligazione()+" poich√® √© stata effettuata una modifica in questo ordine!");									
 				}
 			}
 		}
@@ -1618,7 +1618,7 @@ private void validaScadenze(OrdineAcqBulk ordine, Obbligazione_scadenzarioBulk n
     		if(scad.getObbligazione() instanceof ObbligazioneResBulk){
     			if (scad.getObbligazione().equalsByPrimaryKey(newScad.getObbligazione()) && ((ObbligazioneResBulk)scad.getObbligazione()).getObbligazione_modifica()!=null
 					&& ((ObbligazioneResBulk)scad.getObbligazione()).getObbligazione_modifica().getPg_modifica()!=null) {
-    				throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'impegno residuo "+scad.getPg_obbligazione()+" poichË Ë stata effettuata una modifica in questo ordine!");									
+    				throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'impegno residuo "+scad.getPg_obbligazione()+" poich√® √® stata effettuata una modifica in questo ordine!");									
     			}
     		}
     	}
@@ -1989,7 +1989,7 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,OrdineAcqBulk ordine
 						sb.append("Attenzione: La scadenza ");
 						sb.append(scadenza.getDs_scadenza());
 						sb.append(" di " + scadenza.getIm_scadenza().doubleValue() + " EUR");
-						sb.append(" Ë stata coperta solo per ");
+						sb.append(" √® stata coperta solo per ");
 						sb.append(totale.doubleValue() + " EUR!");
 						throw new it.cnr.jada.comp.ApplicationException(sb.toString());
 					} else if (delta.compareTo(new java.math.BigDecimal(0)) < 0) {
@@ -1997,7 +1997,7 @@ public void controllaQuadraturaObbligazioni(UserContext aUC,OrdineAcqBulk ordine
 						sb.append("Attenzione: La scadenza ");
 						sb.append(scadenza.getDs_scadenza());
 						sb.append(" di " + scadenza.getIm_scadenza().doubleValue() + " EUR");
-						sb.append(" Ë scoperta per ");
+						sb.append(" √® scoperta per ");
 						sb.append(delta.abs().doubleValue() + " EUR!");
 						throw new it.cnr.jada.comp.ApplicationException(sb.toString());
 					}					
@@ -2194,7 +2194,7 @@ public Unita_organizzativaBulk recuperoUoPerImpegno
 							return uop.getUnitaOrganizzativa();
 						}
 					} else {
-						throw new ApplicationException("E' necessario indicare l'unit‡ operativa per la consegna "+consegna.getConsegna() + " della riga "+consegna.getRiga());
+						throw new ApplicationException("E' necessario indicare l'unit√† operativa per la consegna "+consegna.getConsegna() + " della riga "+consegna.getRiga());
 					}
 				} else {
 					if (consegna.getCdMagazzino() != null && consegna.getCdCdsMag() != null){
@@ -2225,6 +2225,6 @@ private Unita_organizzativaBulk recuperoUoOrdinante(UserContext aUC, OrdineAcqCo
 	if (uop != null){
 		return uop.getUnitaOrganizzativa();
 	}
-	throw new ApplicationException("Non Ë stato possibile recuperare l'unita' organizzativa ordinante");
+	throw new ApplicationException("Non √® stato possibile recuperare l'unita' organizzativa ordinante");
 }
 }

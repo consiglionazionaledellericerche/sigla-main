@@ -27,9 +27,9 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'area_scientifica'
+	 * Restituisce il valore della propriet√† 'area_scientifica'
 	 *
-	 * @return Il valore della propriet‡ 'area_scientifica'
+	 * @return Il valore della propriet√† 'area_scientifica'
 	 */
 	public Area_scientificaBulk getArea_scientifica() {
 		return area_scientifica;
@@ -78,9 +78,9 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'ds_cds_area_ricerca'
+	 * Restituisce il valore della propriet√† 'ds_cds_area_ricerca'
 	 *
-	 * @return Il valore della propriet‡ 'ds_cds_area_ricerca'
+	 * @return Il valore della propriet√† 'ds_cds_area_ricerca'
 	 */
 	public java.lang.String getDs_cds_area_ricerca() {
 		if ( cds_area_ricerca != null )
@@ -89,18 +89,18 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'ds_estesa'
+	 * Restituisce il valore della propriet√† 'ds_estesa'
 	 *
-	 * @return Il valore della propriet‡ 'ds_estesa'
+	 * @return Il valore della propriet√† 'ds_estesa'
 	 */
 	public java.lang.String getDs_estesa() {
 		return getCd_unita_organizzativa() + " - " + getDs_unita_organizzativa();	
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'ds_responsabile'
+	 * Restituisce il valore della propriet√† 'ds_responsabile'
 	 *
-	 * @return Il valore della propriet‡ 'ds_responsabile'
+	 * @return Il valore della propriet√† 'ds_responsabile'
 	 */
 	public java.lang.String getDs_responsabile() {
 		if ( responsabile != null && responsabile.getAnagrafico() != null ) {
@@ -117,9 +117,9 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'ds_responsabile_amm'
+	 * Restituisce il valore della propriet√† 'ds_responsabile_amm'
 	 *
-	 * @return Il valore della propriet‡ 'ds_responsabile_amm'
+	 * @return Il valore della propriet√† 'ds_responsabile_amm'
 	 */
 	public java.lang.String getDs_responsabile_amm() {
 		if ( responsabile_amm != null && responsabile_amm.getAnagrafico() != null ) {
@@ -136,9 +136,9 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'ds_unita_padre'
+	 * Restituisce il valore della propriet√† 'ds_unita_padre'
 	 *
-	 * @return Il valore della propriet‡ 'ds_unita_padre'
+	 * @return Il valore della propriet√† 'ds_unita_padre'
 	 */
 	public java.lang.String getDs_unita_padre() {
 		if (unita_padre != null )
@@ -208,11 +208,11 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 	 */
 
 	public boolean isROCds_area_ricerca() {
-		// Check se l'unit‡ padre Ë di tipo area
+		// Check se l'unit√† padre √® di tipo area
 		if(
 				getUnita_padre().getCd_tipo_unita() == null ||
 				unita_padre.getCrudStatus() == UNDEFINED ||
-				// Se l' UO padre Ë un'area, non posso collegare a questa UO un'area
+				// Se l' UO padre √® un'area, non posso collegare a questa UO un'area
 				((unita_padre.getCrudStatus() == NORMAL) && getUnita_padre().getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA))
 				) {
 			this.setCds_area_ricerca(null);
@@ -222,13 +222,13 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'rOFindUoDiRiferimento'
+	 * Restituisce il valore della propriet√† 'rOFindUoDiRiferimento'
 	 *
-	 * @return Il valore della propriet‡ 'rOFindUoDiRiferimento'
+	 * @return Il valore della propriet√† 'rOFindUoDiRiferimento'
 	 */
 	public boolean isROFindUoDiRiferimento() 
 	{
-		// Check se l'unit‡ padre Ë di tipo SAC
+		// Check se l'unit√† padre √® di tipo SAC
 		if(
 				getUnita_padre() == null ||
 				getUnita_padre().getCd_tipo_unita() == null ||
@@ -247,13 +247,13 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'rOFl_rubrica'
+	 * Restituisce il valore della propriet√† 'rOFl_rubrica'
 	 *
-	 * @return Il valore della propriet‡ 'rOFl_rubrica'
+	 * @return Il valore della propriet√† 'rOFl_rubrica'
 	 */
 	public boolean isROFl_rubrica() 
 	{
-		// Check se l'unit‡ padre Ë di tipo SAC
+		// Check se l'unit√† padre √® di tipo SAC
 		if(
 				getUnita_padre() == null ||
 				getUnita_padre().getCd_tipo_unita() == null ||
@@ -290,13 +290,13 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'rOUoDiRiferimento'
+	 * Restituisce il valore della propriet√† 'rOUoDiRiferimento'
 	 *
-	 * @return Il valore della propriet‡ 'rOUoDiRiferimento'
+	 * @return Il valore della propriet√† 'rOUoDiRiferimento'
 	 */
 	public boolean isROUoDiRiferimento() 
 	{
-		// Check se l'unit‡ padre Ë di tipo SAC
+		// Check se l'unit√† padre √® di tipo SAC
 		if(
 				uoDiRiferimento == null || 
 				uoDiRiferimento.getCrudStatus() == NORMAL ||
@@ -316,7 +316,7 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 			return false;
 	}
 	/**
-	 * Ritorna true se il ricevente Ë una UO area.
+	 * Ritorna true se il ricevente √® una UO area.
 	 * Creation date: (20/04/2001 16:29:07)
 	 * @return true se UO area
 	 */
@@ -325,7 +325,7 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 		return getCd_tipo_unita() == null ? false : (getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA));
 	}
 	/**
-	 * Ritorna true se il ricevente Ë una UO-CDS.
+	 * Ritorna true se il ricevente √® una UO-CDS.
 	 * Creation date: (20/04/2001 16:29:07)
 	 * @return true se UO-CDS
 	 */
@@ -344,7 +344,7 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 	
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'area_scientifica'
+	 * Imposta il valore della propriet√† 'area_scientifica'
 	 *
 	 * @param newArea_scientifica	Il valore da assegnare a 'area_scientifica'
 	 */
@@ -392,7 +392,7 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'uoDiRiferimento'
+	 * Imposta il valore della propriet√† 'uoDiRiferimento'
 	 *
 	 * @param newUoDiRiferimento	Il valore da assegnare a 'uoDiRiferimento'
 	 */
@@ -411,17 +411,17 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 			throw new ValidationException( "Il campo Esercizio di Terminazione deve essere valorizzato. " );
 		}
 		if ( getEsercizio_fine().compareTo( getEsercizio_inizio()) < 0 )
-			throw new ValidationException( "L' esercizio di terminazione non puÚ essere minore dell'esercizio di creazione. " );
+			throw new ValidationException( "L' esercizio di terminazione non pu√≤ essere minore dell'esercizio di creazione. " );
 
 		if ( getEsercizio_fine().toString().length() != 4 )
 			throw new ValidationException( "Il campo Esercizio di terminazione deve essere di quattro cifre. " );
 
 		if ( getUnita_padre() != null && unita_padre.getCd_unita_organizzativa() == null || unita_padre.getCd_unita_organizzativa().equals(""))
-			throw new ValidationException( "Il campo CODICE CDS Ë obbligatorio. " );
+			throw new ValidationException( "Il campo CODICE CDS √® obbligatorio. " );
 		if ( responsabile.getCd_terzo() == null )
-			throw new ValidationException( "Il campo RESPONSABILE Ë obbligatorio. " );	
+			throw new ValidationException( "Il campo RESPONSABILE √® obbligatorio. " );	
 		//	if ( responsabile_amm.getCd_terzo() == null )
-		//		throw new ValidationException( "Il campo RESPONSABILE AMM. Ë obbligatorio. " );				
+		//		throw new ValidationException( "Il campo RESPONSABILE AMM. √® obbligatorio. " );				
 		if ( !isNullOrEmpty( getCd_proprio_unita() ) )
 		{
 			long cdLong;

@@ -29,9 +29,9 @@ public class SelezionatoreUnitaOrganizzativaBP extends it.cnr.jada.util.action.S
 	
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'userInfo'
+	 * Restituisce il valore della propriet√† 'userInfo'
 	 *
-	 * @return Il valore della propriet‡ 'userInfo'
+	 * @return Il valore della propriet√† 'userInfo'
 	 */
 	public it.cnr.contab.utenze00.bulk.CNRUserInfo getUserInfo() {
 		return userInfo;
@@ -44,7 +44,7 @@ public class SelezionatoreUnitaOrganizzativaBP extends it.cnr.jada.util.action.S
 	
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'userInfo'
+	 * Imposta il valore della propriet√† 'userInfo'
 	 *
 	 * @param newUserInfo	Il valore da assegnare a 'userInfo'
 	 */

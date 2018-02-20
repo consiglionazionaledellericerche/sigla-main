@@ -153,7 +153,7 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 	/**
 	 * Inizializza il ricevente per la visualizzazione in un <code>FormController</code>.
 	 * Questo metodo viene invocato da {@link #initializeForEdit}, {@link #initializeForInsert},
-	 * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e può contenere
+	 * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e puÃ² contenere
 	 * inizializzazioni comuni ai 4 stati del <code>FormController</code>
 	 */
 	protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
@@ -178,7 +178,7 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 	/**
 	 * Inizializza il ricevente per la visualizzazione in un <code>FormController</code>.
 	 * Questo metodo viene invocato da {@link #initializeForEdit}, {@link #initializeForInsert},
-	 * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e può contenere
+	 * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e puÃ² contenere
 	 * inizializzazioni comuni ai 4 stati del <code>FormController</code>
 	 */
 	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
@@ -245,7 +245,7 @@ public class Bene_servizioBulk extends Bene_servizioBase {
 		if (getFl_gestione_inventario()==null)
 			setFl_gestione_inventario(FALSE);
 		if (getFl_gestione_inventario().booleanValue() && getFl_gestione_magazzino().booleanValue())
-			throw new ValidationException("Attenzione: non è possibile che un bene servizio sia a magazzino e ad inventario");
+			throw new ValidationException("Attenzione: non Ã¨ possibile che un bene servizio sia a magazzino e ad inventario");
 		if (getFl_gestione_inventario().booleanValue() && (getCategoria_gruppo()==null || getCategoria_gruppo().getDs_categoria_gruppo()==null))
 			throw new ValidationException("Inserire un gruppo inventariale");
 	}

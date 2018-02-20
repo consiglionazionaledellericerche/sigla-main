@@ -18,7 +18,7 @@
 <table class="Form" width="100%">
   <tr>
 	<td>
-	<b ALIGN="CENTER"><big>Centri di responsabilità</big></b></td>
+	<b ALIGN="CENTER"><big>Centri di responsabilitÃ </big></b></td>
   </tr>
   <tr>	
 	<td>

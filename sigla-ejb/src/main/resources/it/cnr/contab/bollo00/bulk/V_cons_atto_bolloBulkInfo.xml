@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -70,7 +70,7 @@
 		inputType="RADIOGROUP"
 		layout="HORIZONTAL"
 		keysProperty="tiTipoConsultazioneKeys"
-		label="Visualizza Consultazione in modalità" />		
+		label="Visualizza Consultazione in modalitÃ " />		
 
 	<formFieldProperty 
 		name="tipoConsultazione"/>
@@ -95,8 +95,8 @@
 		<columnFieldProperty name="esercizio" />
 		<columnFieldProperty name="cdTipoAtto" label="Codice" headerLabel="Tipo Atto"/>
 		<columnFieldProperty name="imBollo" label="Importo Unitario Bollo" headerLabel="Tipo Atto"/>
-		<columnFieldProperty name="cdUnitaOrganizzativa" label="Codice" headerLabel="Unità Organizzativa"/>
-		<columnFieldProperty name="dsUnitaOrganizzativa" label="Descrizione" headerLabel="Unità Organizzativa"/>
+		<columnFieldProperty name="cdUnitaOrganizzativa" label="Codice" headerLabel="UnitÃ  Organizzativa"/>
+		<columnFieldProperty name="dsUnitaOrganizzativa" label="Descrizione" headerLabel="UnitÃ  Organizzativa"/>
 		<columnFieldProperty name="tiDettagli" label="Tipo" headerLabel="Fogli/Esemplari"/>
 		<columnFieldProperty name="numDettagli" label="Numero" headerLabel="Fogli/Esemplari"/>
 		<columnFieldProperty name="imTotaleBollo" label="Importo Totale Bollo"/>
@@ -113,7 +113,7 @@
 		<columnFieldProperty name="esercizio" />
 		<columnFieldProperty name="cdTipoAtto" label="Codice" headerLabel="Tipo Atto"/>
 		<columnFieldProperty name="imBollo" label="Importo Unitario Bollo" headerLabel="Tipo Atto"/>
-		<columnFieldProperty name="cdUnitaOrganizzativa" label="Unità Organizzativa"/>
+		<columnFieldProperty name="cdUnitaOrganizzativa" label="UnitÃ  Organizzativa"/>
 		<columnFieldProperty name="descrizioneAtto" label="Descrizione Atto"/>
 		<columnFieldProperty name="riferimento" label="Riferimento"/>
 		<columnFieldProperty name="tiDettagli" label="Tipo" headerLabel="Fogli/Esemplari"/>
@@ -132,8 +132,8 @@
 
 	<columnSet name="UO">
 		<columnFieldProperty name="esercizio" />
-		<columnFieldProperty name="cdUnitaOrganizzativa" label="Codice" headerLabel="Unità Organizzativa"/>
-		<columnFieldProperty name="dsUnitaOrganizzativa" label="Descrizione" headerLabel="Unità Organizzativa"/>
+		<columnFieldProperty name="cdUnitaOrganizzativa" label="Codice" headerLabel="UnitÃ  Organizzativa"/>
+		<columnFieldProperty name="dsUnitaOrganizzativa" label="Descrizione" headerLabel="UnitÃ  Organizzativa"/>
 		<columnFieldProperty name="imTotaleBollo" label="Importo Totale Bollo"/>
 	</columnSet>
 	<freeSearchSet name="UO">
@@ -144,7 +144,7 @@
 
 	<columnSet name="UOTIP">
 		<columnFieldProperty name="esercizio" />
-		<columnFieldProperty name="cdUnitaOrganizzativa" label="Unità Organizzativa"/>
+		<columnFieldProperty name="cdUnitaOrganizzativa" label="UnitÃ  Organizzativa"/>
 		<columnFieldProperty name="cdTipoAtto" label="Codice" headerLabel="Tipo Atto"/>
 		<columnFieldProperty name="dsTipoAtto" label="Descrizione" headerLabel="Tipo Atto"/>
 		<columnFieldProperty name="imBollo" label="Importo Unitario Bollo" headerLabel="Tipo Atto"/>
@@ -162,7 +162,7 @@
 
 	<columnSet name="UOTIPDET">
 		<columnFieldProperty name="esercizio" />
-		<columnFieldProperty name="cdUnitaOrganizzativa" label="Unità Organizzativa"/>
+		<columnFieldProperty name="cdUnitaOrganizzativa" label="UnitÃ  Organizzativa"/>
 		<columnFieldProperty name="cdTipoAtto" label="Codice" headerLabel="Tipo Atto"/>
 		<columnFieldProperty name="imBollo" label="Importo Unitario Bollo" headerLabel="Tipo Atto"/>
 		<columnFieldProperty name="descrizioneAtto" label="Descrizione Atto"/>

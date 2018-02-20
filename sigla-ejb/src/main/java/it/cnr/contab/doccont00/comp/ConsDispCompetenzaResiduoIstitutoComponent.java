@@ -223,8 +223,8 @@ public class ConsDispCompetenzaResiduoIstitutoComponent extends CRUDComponent {
 		 * @param sql l'SQLBuilder da aggiornare
 		 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 		 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-		 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-		 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+		 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+		 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 		 */
 		private void addColumnCDS(SQLBuilder sql, boolean isBaseSQL,String pathDestinazione ){ 
 			if (pathDestinazione.indexOf("DIPCDS")>=0){
@@ -244,8 +244,8 @@ public class ConsDispCompetenzaResiduoIstitutoComponent extends CRUDComponent {
 			 * @param sql l'SQLBuilder da aggiornare
 			 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 			 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-			 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-			 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+			 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+			 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 			 */
 			private void addColumnPROG(SQLBuilder sql, boolean isBaseSQL,String pathDestinazione ){ 
 				if (pathDestinazione.indexOf("BASECDSPROG")>=0 || pathDestinazione.indexOf("BASECDSVOCEPROG")>=0 
@@ -265,8 +265,8 @@ public class ConsDispCompetenzaResiduoIstitutoComponent extends CRUDComponent {
 			 * @param sql l'SQLBuilder da aggiornare
 			 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 			 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-			 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-			 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+			 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+			 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 			 */
 			private void addColumnCOMM(SQLBuilder sql, boolean isBaseSQL,String pathDestinazione){ 
 				if (pathDestinazione.indexOf("BASECDSPROGCOMM")>=0 || pathDestinazione.indexOf("BASECDSVOCEPROGCOMM")>=0
@@ -286,8 +286,8 @@ public class ConsDispCompetenzaResiduoIstitutoComponent extends CRUDComponent {
 			 * @param sql l'SQLBuilder da aggiornare
 			 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 			 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-			 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-			 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+			 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+			 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 			 */
 			private void addColumnMOD(SQLBuilder sql, boolean isBaseSQL,String pathDestinazione){ 
 				if (pathDestinazione.indexOf("BASECDSPROGCOMMMOD")>=0 || pathDestinazione.indexOf("BASECDSVOCEPROGCOMMMOD")>=0
@@ -307,8 +307,8 @@ public class ConsDispCompetenzaResiduoIstitutoComponent extends CRUDComponent {
 			 * @param sql l'SQLBuilder da aggiornare
 			 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 			 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-			 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-			 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+			 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+			 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 			 */
 			private void addColumnCDR(SQLBuilder sql, boolean isBaseSQL,String pathDestinazione){ 
 				if (pathDestinazione.indexOf("BASECDSPROGCOMMMODCDR")>=0||pathDestinazione.indexOf("BASECDSCDR")>=0 ||
@@ -330,8 +330,8 @@ public class ConsDispCompetenzaResiduoIstitutoComponent extends CRUDComponent {
 			 * @param sql l'SQLBuilder da aggiornare
 			 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 			 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-			 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-			 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+			 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+			 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 			 */
 			private void addColumnGAE(SQLBuilder sql,  boolean isBaseSQL,String pathDestinazione){ 
 				if (pathDestinazione.indexOf("BASECDSPROGCOMMMODCDRGAE")>=0||pathDestinazione.indexOf("BASECDSCDRGAE")>=0 ||
@@ -367,8 +367,8 @@ public class ConsDispCompetenzaResiduoIstitutoComponent extends CRUDComponent {
 			 * @param sql l'SQLBuilder da aggiornare
 			 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 			 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-			 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-			 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+			 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+			 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 			 */
 			private void addColumnVOCE(SQLBuilder sql,boolean isBaseSQL,String pathDestinazione){ 
 				if (pathDestinazione.indexOf("BASECDSPROGCOMMMODCDRGAEDET")>=0||pathDestinazione.indexOf("BASECDSCDRGAEDET")>=0||
@@ -445,10 +445,10 @@ public class ConsDispCompetenzaResiduoIstitutoComponent extends CRUDComponent {
 			
 			/**
 			 * Individua e completa l'SQLBuilder da utilizzare:
-			 * 1) è stata effettuata una ricerca mirata (<findClause> != null)
-			 * 	  la select finale è costruita come interrogazione di una view costruita sulla select principale <baseClause>
-			 * 2) non è stata fatta una ricerca mirata
-			 * 	  la select finale è uguale alla select principale
+			 * 1) Ã¨ stata effettuata una ricerca mirata (<findClause> != null)
+			 * 	  la select finale Ã¨ costruita come interrogazione di una view costruita sulla select principale <baseClause>
+			 * 2) non Ã¨ stata fatta una ricerca mirata
+			 * 	  la select finale Ã¨ uguale alla select principale
 			 *
 			 * @param sql la select principale contenente le Sum e i GroupBy
 			 * @param sqlEsterna la select esterna necessaria per interrogare la select principale come view

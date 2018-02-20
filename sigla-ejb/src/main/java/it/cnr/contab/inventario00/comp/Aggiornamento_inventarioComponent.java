@@ -126,7 +126,7 @@ public Id_inventarioBulk caricaInventario(UserContext aUC)
 		
 	// L'INVENTARIO NON E' APERTO
 	if (!inventarioHome.isAperto(inventario,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC)))
-		throw new it.cnr.jada.comp.ApplicationException("Attenzione: l'inventario non Ë in stato 'APERTO'");
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione: l'inventario non √® in stato 'APERTO'");
 
 	return inventario;
 }
@@ -135,7 +135,7 @@ public Id_inventarioBulk caricaInventario(UserContext aUC)
 /**
   *  Cerca l'Inventario associato alla Uo di scrivania
   *    PreCondition:
-  *      Non c'Ë un Inventario associato alla Uo di scrivania, oppure l'Inventario non Ë in stato "Aperto"
+  *      Non c'√® un Inventario associato alla Uo di scrivania, oppure l'Inventario non √® in stato "Aperto"
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -144,7 +144,7 @@ public Id_inventarioBulk caricaInventario(UserContext aUC)
   *      E' stato richiesto di cercare un Bene
   *    PostCondition:
   *		E' stato creato il SQLBuilder con le clausole implicite (presenti nell'istanza di Inventario_beniBulk):
-  *		i beni devono altresÏ appartenere all'Inventario associato alla Uo di scrivania e
+  *		i beni devono altres√¨ appartenere all'Inventario associato alla Uo di scrivania e
   *		non devono essere totalmente scaricati.
   *		I beni utilizzabili, inoltre, devono avere ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.  
   *
@@ -190,17 +190,17 @@ public SQLBuilder selectCdrByClause(UserContext userContext, Utilizzatore_CdrVBu
 }
 
 /**
-  *  Ricerca di una Linea di Attivit‡ per il CdR Utilizzatore
+  *  Ricerca di una Linea di Attivit√† per il CdR Utilizzatore
   *    PreCondition:
-  *      E' stata generata la richiesta di ricerca di una Linea di Attivit‡ per il
+  *      E' stata generata la richiesta di ricerca di una Linea di Attivit√† per il
   *		CdR Utilizzatore
   *    PostCondition:
   *		Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
-  *		clausole che la Linea di Attivit‡ appartenga al CdR indicato.
+  *		clausole che la Linea di Attivit√† appartenga al CdR indicato.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param utilizzatori_la il <code>Inventario_utilizzatori_laBulk</code> CdR di riferimento
-  * @param l_att la <code>Linea_attivitaBulk</code> Linea di Attivit‡ modello  
+  * @param l_att la <code>Linea_attivitaBulk</code> Linea di Attivit√† modello  
   * @param clauses <code>CompoundFindClause</code> le clausole della selezione
   *
   * @return sql <code>SQLBuilder</code> Risultato della selezione.
@@ -250,7 +250,7 @@ public SQLBuilder selectLinea_attivitaByClause(UserContext userContext, Inventar
   *      E' stata generata la richiesta di ricercare una Ubicazione.
   *    PostCondition:
   *		E' stato creato il SQLBuilder con le clausole implicite (presenti nell'istanza di Ubicazione_beneBulk),
-  *		ed Ë stata aggiunta la clausola che l'Ubicazione sia associata alla UO di scrivania.
+  *		ed √® stata aggiunta la clausola che l'Ubicazione sia associata alla UO di scrivania.
   *  
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param bene il <code>Inventario_beniBulk</code> bene di riferimento
@@ -300,35 +300,35 @@ public SQLBuilder selectUbicazione_destinazioneByClause(UserContext userContext,
 /** 
   *  validaUtilizzatori - CdR Utilizzatore non valido
   *    PreCondition:
-  *      Si sta tentando di salvare un CdR Utilizzatore di cui non si Ë specificato il codice.
+  *      Si sta tentando di salvare un CdR Utilizzatore di cui non si √® specificato il codice.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit‡ di 
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit√† di 
   *		specificare il codice del CdR.
   *
   *  validaUtilizzatori - CdR Utilizzatore non valido
   *    PreCondition:
-  *      Il CdR Utilizzatore Ë stato indicato gi‡ in precedenza.
+  *      Il CdR Utilizzatore √® stato indicato gi√† in precedenza.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ 
-  *		utilizzare pi˘ volte lo stesso CdR
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† 
+  *		utilizzare pi√π volte lo stesso CdR
   *
   *  validaUtilizzatori - CdR Utilizzatore non valido
   *    PreCondition:
-  *      Si sta tentando di salvare un CdR Utilizzatore di cui non si Ë specificata la percentuale di utilizzo.
+  *      Si sta tentando di salvare un CdR Utilizzatore di cui non si √® specificata la percentuale di utilizzo.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit‡ di 
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit√† di 
   *		specificare la percentuale di utilizzo.
   *
   *  validaUtilizzatori - CdR Utilizzatore non valido
   *    PreCondition:
-  *      Si sta tentando di salvare un CdR Utilizzatore di cui non si Ë specificata alcuna Linea di Attivit‡
+  *      Si sta tentando di salvare un CdR Utilizzatore di cui non si √® specificata alcuna Linea di Attivit√†
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit‡ di 
-  *		specificare per ogni CdR almeno una Linea di Attivit‡.
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit√† di 
+  *		specificare per ogni CdR almeno una Linea di Attivit√†.
   *  
   *  validaUtilizzatori - Percentuale utilizzo dei CdR non valida
   *    PreCondition:
-  *      Il totale delle percentuali di utilizzo indicate per ogni CdR, non Ë 100.
+  *      Il totale delle percentuali di utilizzo indicate per ogni CdR, non √® 100.
   *    PostCondition:
   *      Un messaggio di errore viene visualizzato all'utente per segnalare che il totale deve essere 100.
   *    
@@ -354,7 +354,7 @@ public void validaUtilizzatori (UserContext aUC,Aggiornamento_inventarioBulk agg
 			
 			Utilizzatore_CdrVBulk utilizzatore = (Utilizzatore_CdrVBulk)i.next();
 
-			// validazione delle singole Linee di Attivit‡
+			// validazione delle singole Linee di Attivit√†
 			
 			SimpleBulkList utilizzatori_LA = utilizzatore.getBuono_cs_utilizzatoriColl();
 			java.math.BigDecimal percentuale_utilizzo_LA = new java.math.BigDecimal("0");
@@ -366,43 +366,43 @@ public void validaUtilizzatori (UserContext aUC,Aggiornamento_inventarioBulk agg
 				while (a.hasNext()){
 					Inventario_utilizzatori_laBulk utilizzatore_LA = (Inventario_utilizzatori_laBulk)a.next();
 
-					// Controlla che sia stata specificata la line di Attivit‡
+					// Controlla che sia stata specificata la line di Attivit√†
 					if (utilizzatore_LA.getLinea_attivita()==null || utilizzatore_LA.getLinea_attivita().getCd_linea_attivita() == null){
 							throw new it.cnr.jada.comp.ApplicationException ("GAE non valido. Indicare sia il codice del GAE, sia la sua percentuale di utilizzo");								
 					}
 			
-					// Controlla che non vi siano Linee di Attivit‡ DUPLICATE
+					// Controlla che non vi siano Linee di Attivit√† DUPLICATE
 					if (BulkCollections.containsByPrimaryKey(cdr_la,utilizzatore_LA.getLinea_attivita())){
-							throw new it.cnr.jada.comp.ApplicationException ("GAE duplicato. Non Ë possibile indicare pi˘ volte uno stesso GAE");
+							throw new it.cnr.jada.comp.ApplicationException ("GAE duplicato. Non √® possibile indicare pi√π volte uno stesso GAE");
 					}
 					else {
 						cdr_la.add(utilizzatore_LA.getLinea_attivita());
 					}
 			
-					// Controlla che sia stata indicata una PERCENTUALE DI UTILIZZO VALIDA per Linea di Attivit‡
+					// Controlla che sia stata indicata una PERCENTUALE DI UTILIZZO VALIDA per Linea di Attivit√†
 					if (utilizzatore_LA.getPercentuale_utilizzo_la()!=null){
 						percentuale_utilizzo_LA = percentuale_utilizzo_LA.add(utilizzatore_LA.getPercentuale_utilizzo_la());
 					}
 					else{
-						throw new it.cnr.jada.comp.ApplicationException ("La percentuale di utilizzo per i GAE non puÚ essere nulla");
+						throw new it.cnr.jada.comp.ApplicationException ("La percentuale di utilizzo per i GAE non pu√≤ essere nulla");
 					}
 				}
 
-				// Controlla che il totale delle percentuali di utilizzo delle Linee di Attivit‡ sia 100
+				// Controlla che il totale delle percentuali di utilizzo delle Linee di Attivit√† sia 100
 				if (percentuale_utilizzo_LA.compareTo(cento)!=0)
-					throw new it.cnr.jada.comp.ApplicationException ("La percentuale di utilizzo per i GAE non Ë valida");
+					throw new it.cnr.jada.comp.ApplicationException ("La percentuale di utilizzo per i GAE non √® valida");
 				}
 
 				// Controlla che sia stato specificato il CdR
 				if (utilizzatore.getCdr()==null || utilizzatore.getCdCdr()==null){
-					throw new it.cnr.jada.comp.ApplicationException ("Attenzione: Ë necessario indicare il codice del CdR Utilizzatore.\n " +
-					"Il CdR alla riga " + riga + " non Ë valido");
+					throw new it.cnr.jada.comp.ApplicationException ("Attenzione: √® necessario indicare il codice del CdR Utilizzatore.\n " +
+					"Il CdR alla riga " + riga + " non √® valido");
 				}
 			
 				// Controlla che non vi siano CdR DUPLICATI
 				if (it.cnr.jada.bulk.BulkCollections.containsByPrimaryKey(cdr,utilizzatore.getCdr())){
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non Ë possibile indicare pi˘ volte uno stesso CdR come Utilizzatore\n " +
-					"Il CdR " + utilizzatore.getCdCdr() +" Ë duplicato.");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non √® possibile indicare pi√π volte uno stesso CdR come Utilizzatore\n " +
+					"Il CdR " + utilizzatore.getCdCdr() +" √® duplicato.");
 			}
 			else {
 				cdr.add(utilizzatore.getCdr());
@@ -413,14 +413,14 @@ public void validaUtilizzatori (UserContext aUC,Aggiornamento_inventarioBulk agg
 				percentuale_utilizzo_CdR = percentuale_utilizzo_CdR.add(utilizzatore.getPercentuale_utilizzo_cdr());				 
 			}
 			else if (utilizzatore.getPercentuale_utilizzo_cdr()==null){
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: la percentuale di utilizzo per i CdR Utilizzatori non puÚ essere nulla\n " +
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: la percentuale di utilizzo per i CdR Utilizzatori non pu√≤ essere nulla\n " +
 					"Specificare la perc. di utilizzo per il CdR " + utilizzatore.getCdCdr());
 			}
 			
-			// Controlla che per ogni CdR specificato siano state indicate anche delle Linee di Attivit‡
+			// Controlla che per ogni CdR specificato siano state indicate anche delle Linee di Attivit√†
 			if (utilizzatore.getBuono_cs_utilizzatoriColl()==null || (utilizzatore.getBuono_cs_utilizzatoriColl().size()==0)){
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: Ë necessario specificare i GAE per ogni Utilizzatore\n "+
-					"Indicare le Linee di Attivit‡ per il CdR " + utilizzatore.getCdCdr());
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: √® necessario specificare i GAE per ogni Utilizzatore\n "+
+					"Indicare le Linee di Attivit√† per il CdR " + utilizzatore.getCdCdr());
 			}
 		}
 
@@ -434,7 +434,7 @@ public void validaUtilizzatori (UserContext aUC,Aggiornamento_inventarioBulk agg
 /** 
   *  Cerca l'Inventario associato alla Uo di scrivania
   *    PreCondition:
-  *      Non c'Ë un Inventario associato alla Uo di scrivania, oppure l'Inventario non Ë in stato "Aperto"
+  *      Non c'√® un Inventario associato alla Uo di scrivania, oppure l'Inventario non √® in stato "Aperto"
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -497,15 +497,15 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC, OggettoBulk o
 **/
 private void valida (UserContext userContext, Aggiornamento_inventarioBulk aggiorno) throws ComponentException {
 	if (aggiorno.getDettagli().size() ==0 )
-	  throw new it.cnr.jada.comp.ApplicationException ("Attenzione: Ë necessario specificare almeno un bene da aggiornare!");
+	  throw new it.cnr.jada.comp.ApplicationException ("Attenzione: √® necessario specificare almeno un bene da aggiornare!");
 	if ((aggiorno.getassegnatario() == null)&&(aggiorno.getUbicazione_destinazione()==null)&&(aggiorno.getV_utilizzatoriColl().size() ==0 ))
-		  throw new it.cnr.jada.comp.ApplicationException ("Attenzione: Ë necessario specificare almeno un dato da aggiornare!");
+		  throw new it.cnr.jada.comp.ApplicationException ("Attenzione: √® necessario specificare almeno un dato da aggiornare!");
 }
 /** 
   *     PreCondition:
   *     E' stata generata la richiesta di riportare i beni selezionati dall'utente nella tabella 
   *		L'utente, in questa fase, si trova a selezionare dei 
-  *		beni gi‡ presenti sul DB, per una operazione di aggiornamento.
+  *		beni gi√† presenti sul DB, per una operazione di aggiornamento.
   *  
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param  aggiornamento il <code> Aggiornamento_inventarioBulk </code>.
@@ -521,13 +521,13 @@ public void modificaBeniAggiornati(UserContext userContext,Aggiornamento_inventa
 				if (old_ass.get(i) != ass.get(i)) {
 						
 					if (ass.get(i)) {		
-						// Locko il bene che Ë stato selezionato per essere aggiornato.
+						// Locko il bene che √® stato selezionato per essere aggiornato.
 						try{
 							lockBulk(userContext, bene)	;
 						} catch (OutdatedResourceException oe){
 							throw handleException(oe);
 						} catch (BusyResourceException bre){
-							throw new ApplicationException("Risorsa occupata.\nIl bene " + bene.getNumeroBeneCompleto() + " Ë bloccato da un altro utente.");
+							throw new ApplicationException("Risorsa occupata.\nIl bene " + bene.getNumeroBeneCompleto() + " √® bloccato da un altro utente.");
 						} catch (it.cnr.jada.persistency.PersistencyException pe){
 							throw handleException(pe);
 						} 

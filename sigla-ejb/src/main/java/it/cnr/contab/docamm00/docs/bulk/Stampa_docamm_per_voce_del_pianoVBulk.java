@@ -220,7 +220,7 @@ public void setCdTerzoForPrintEnabled(boolean newCdterzoForPrintEnabled) {
 	cdTerzoForPrintEnabled = newCdterzoForPrintEnabled;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws it.cnr.jada.bulk.ValidationException {

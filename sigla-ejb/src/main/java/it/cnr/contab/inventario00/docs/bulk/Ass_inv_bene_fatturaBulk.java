@@ -17,12 +17,12 @@ public class Ass_inv_bene_fatturaBulk extends Ass_inv_bene_fatturaBase {
 	// Collezione di tutti i buoni selezionati
 	private BulkList buoniColl = new BulkList();
 
-	/* ID di transazione: è univoco e permette di identificare la fattura sulla
+	/* ID di transazione: Ã¨ univoco e permette di identificare la fattura sulla
 	 *	tabella INVENTARIO_BENI_APG (tabella di appoggio).
 	*/ 
 	private String local_transactionID;
 
-	// Indica che l'associazione è PER AUMENTO VALORE
+	// Indica che l'associazione Ã¨ PER AUMENTO VALORE
 	private Boolean perAumentoValore = new Boolean(false);
 
 	protected Boolean fl_bene_accessorio;
@@ -48,7 +48,7 @@ public class Ass_inv_bene_fatturaBulk extends Ass_inv_bene_fatturaBase {
 	private Id_inventarioBulk inventario;	
 	
 	private Documento_generico_rigaBulk riga_doc_gen; 
-//	 Indica che l'associazione è PER AUMENTO VALORE
+//	 Indica che l'associazione Ã¨ PER AUMENTO VALORE
 	private Boolean perAumentoValoreDoc = new Boolean(false);
 	
 public Ass_inv_bene_fatturaBulk() {

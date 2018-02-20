@@ -146,7 +146,7 @@ public class RepertorioLimitiComponent extends CRUDComponent implements ICRUDMgr
 				for (Iterator i = tipoLimiteHome.findRepertorioLimitiList( (Tipo_limiteBulk)oggettobulk ).iterator();i.hasNext();){
 					Repertorio_limitiBulk bulk = (Repertorio_limitiBulk)i.next();
 					if (bulk.getImporto_utilizzato().compareTo(Utility.ZERO)!=0)
-						throw new ComponentException("Eliminazione non possibile! Risultano gi‡ essere state assegnate, per il limite di spesa da eliminare, somme per l'esercizio " + bulk.getEsercizio());
+						throw new ComponentException("Eliminazione non possibile! Risultano gi√† essere state assegnate, per il limite di spesa da eliminare, somme per l'esercizio " + bulk.getEsercizio());
 				}
 				
 				((Tipo_limiteBulk)oggettobulk).setFl_cancellato(Boolean.TRUE);
@@ -238,7 +238,7 @@ public class RepertorioLimitiComponent extends CRUDComponent implements ICRUDMgr
 		                    "- Tipo Incarico: "+tipoIncaricoBulk.getDs_tipo_incarico()+"\n"+
 		                    "- Tipo Attivita: "+tipoAttivitaBulk.getDs_tipo_attivita()+"\n"+
 		                    "- Natura: "+NaturaBulk.tipo_naturaKeys.get(cd_tipo_natura)+"\n\n"+
-					        "Ë stato raggiunto il limite.");
+					        "√® stato raggiunto il limite.");
 			else {
 				if (reperBulk.getImporto_residuo().compareTo(Utility.ZERO)==0 && importo.compareTo(Utility.ZERO)==1)
 					  throw new ApplicationException(
@@ -247,7 +247,7 @@ public class RepertorioLimitiComponent extends CRUDComponent implements ICRUDMgr
 	                    "- Tipo Incarico: "+tipoIncaricoBulk.getDs_tipo_incarico()+"\n"+
 	                    "- Tipo Attivita: "+tipoAttivitaBulk.getDs_tipo_attivita()+"\n"+
 	                    "- Natura: "+NaturaBulk.tipo_naturaKeys.get(cd_tipo_natura)+"\n\n"+
-				        "la disponibilit‡ ad attivare incarichi risulta essere esaurita.");
+				        "la disponibilit√† ad attivare incarichi risulta essere esaurita.");
 				else if (reperBulk.getImporto_residuo().subtract(importo).compareTo(Utility.ZERO)<0 && importo.compareTo(Utility.ZERO)==1)
 					  throw new ApplicationException(
 						"Impossibile effettuare l'operazione !\n\n"+
@@ -255,7 +255,7 @@ public class RepertorioLimitiComponent extends CRUDComponent implements ICRUDMgr
 	                    "- Tipo Incarico: "+tipoIncaricoBulk.getDs_tipo_incarico()+"\n"+
 	                    "- Tipo Attivita: "+tipoAttivitaBulk.getDs_tipo_attivita()+"\n"+
 	                    "- Natura: "+NaturaBulk.tipo_naturaKeys.get(cd_tipo_natura)+"\n\n"+
-				        "la disponibilit‡ ad attivare incarichi (" + new it.cnr.contab.util.EuroFormat().format(reperBulk.getImporto_residuo()) +
+				        "la disponibilit√† ad attivare incarichi (" + new it.cnr.contab.util.EuroFormat().format(reperBulk.getImporto_residuo()) +
 				        ") risulta essere inferiore a quella necessaria (" + new it.cnr.contab.util.EuroFormat().format(importo) + ").");
 			}
 

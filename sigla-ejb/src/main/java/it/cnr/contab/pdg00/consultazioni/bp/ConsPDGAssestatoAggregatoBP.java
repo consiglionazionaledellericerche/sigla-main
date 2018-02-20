@@ -187,7 +187,7 @@ public class ConsPDGAssestatoAggregatoBP extends ConsultazioniBP {
 		return getPathConsultazione().indexOf(LIVELLO_CDS)>=0;
 	}
 	/**
-	 * Indica se la consultazione attuale contiene anche i campi relativi all'Unit‡ Organizzativa
+	 * Indica se la consultazione attuale contiene anche i campi relativi all'Unit√† Organizzativa
      *
 	 * @return boolean 
 	 */
@@ -217,7 +217,7 @@ public class ConsPDGAssestatoAggregatoBP extends ConsultazioniBP {
 		if (isPresenteLIV1()) title = title.concat("\\Titolo");
 		if (isPresenteLIV2()) title = title.concat("\\Categoria");
 		if (isPresenteCDS()) title = title.concat("\\Cds");
-		if (isPresenteUO()) title = title.concat("\\Unit‡ Organizzativa");
+		if (isPresenteUO()) title = title.concat("\\Unit√† Organizzativa");
 		if (isPresenteDET()) title = title.concat("\\Dettagli");
 		getBulkInfo().setShortDescription(title);
 		if (this instanceof ConsPDGAssestatoAggregatoEtrBP)

@@ -141,12 +141,12 @@ public Forward doStornaIncarico(ActionContext actioncontext) throws RemoteExcept
 	    		if (!crudbp.isUoEnte()&&!crudbp.isUtenteAbilitatoFunzioniIncarichi())
    				    throw new ValidationException( "Eliminazione consentita solo ad utenti con l'abilitazione alle funzioni di direttore di istituto.");
 	    		if (crudbp.isIncaricoUtilizzato(actioncontext))
-	    			return openConfirm(actioncontext, "Attenzione! L'incarico, in quanto gi‡ utilizzato, non sar‡ eliminato/stornato ma chiuso. \n" +
-	    					"Dopo l'operazione non sar‡ piu' possibile utilizzare l'incarico. \n" +
+	    			return openConfirm(actioncontext, "Attenzione! L'incarico, in quanto gi√† utilizzato, non sar√† eliminato/stornato ma chiuso. \n" +
+	    					"Dopo l'operazione non sar√† piu' possibile utilizzare l'incarico. \n" +
 	    					"Vuoi procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmChiudiIncarico");
 	    	}
 			return openConfirm(actioncontext, "Attenzione! \n" +
-					"Dopo l'operazione non sar‡ piu' possibile utilizzare l'incarico. \n" +
+					"Dopo l'operazione non sar√† piu' possibile utilizzare l'incarico. \n" +
 					"Vuoi procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmStornaIncarico");
 	    }
 	    return actioncontext.findDefaultForward();
@@ -195,7 +195,7 @@ public Forward doSalvaDefinitivo(ActionContext context){
 		CRUDIncarichiRepertorioBP bp = (CRUDIncarichiRepertorioBP)getBusinessProcess(context);
 		bp.completeSearchTools(context, bp);
         bp.validate(context);
-		return openConfirm(context, "Attenzione! Dopo il salvataggio definitivo non sar‡ pi˘ possibile modificare l'incarico di collaborazione. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmSalvaDefinitivo");
+		return openConfirm(context, "Attenzione! Dopo il salvataggio definitivo non sar√† pi√π possibile modificare l'incarico di collaborazione. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmSalvaDefinitivo");
 	}		
 	catch(Throwable e) 
 	{
@@ -223,7 +223,7 @@ public Forward doAnnullaDefinitivo(ActionContext context){
 	try 
 	{
 		fillModel( context );
-		return openConfirm(context, "Attenzione! Si desidera annullare la definitivit‡ dell'incarico di collaborazione?", OptionBP.CONFIRM_YES_NO, "doConfirmAnnullaDefinitivo");
+		return openConfirm(context, "Attenzione! Si desidera annullare la definitivit√† dell'incarico di collaborazione?", OptionBP.CONFIRM_YES_NO, "doConfirmAnnullaDefinitivo");
 	}		
 	catch(Throwable e) 
 	{
@@ -252,7 +252,7 @@ public Forward doApriIncarichiProcedura(ActionContext context) {
 		Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)bp.getModel();
 
 		if (incarico==null || incarico.getCrudStatus()==CRUDBP.SEARCH){
-			bp.setMessage("Non Ë stato selezionato alcun incarico.");
+			bp.setMessage("Non √® stato selezionato alcun incarico.");
 			return context.findDefaultForward();
 		}
 		else if (incarico.getIncarichi_procedura()==null) {

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -9,7 +9,7 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Unità organizzativa" />
+		label="UnitÃ  organizzativa" />
 	<fieldProperty
 		name="cd_cds"
 		property="cd_cds"
@@ -136,7 +136,7 @@
 		inputType="TEXT"
 		inputSize="22"
 		maxLength="22"
-		label="Quantità" />
+		label="QuantitÃ " />
 	<fieldProperty
 		name="valore_unitario"
 		property="valore_unitario"

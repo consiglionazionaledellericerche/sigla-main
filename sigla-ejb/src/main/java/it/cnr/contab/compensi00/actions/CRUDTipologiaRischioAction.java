@@ -26,7 +26,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 
 		CRUDTipologiaRischioBP bp = (CRUDTipologiaRischioBP)getBusinessProcess(context);
 		if (!bp.isEditing()) {
-			bp.setMessage("Non è possibile cancellare in questo momento");
+			bp.setMessage("Non Ã¨ possibile cancellare in questo momento");
 		} else {
 			bp.delete(context);
 			Tipologia_rischioBulk tipologia = (Tipologia_rischioBulk)bp.getModel();

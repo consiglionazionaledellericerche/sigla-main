@@ -25,7 +25,7 @@ public class MandatoIBulk extends MandatoBulk {
 	protected Var_bilancioBulk var_bilancio;
 	private boolean erroreEsitaVariazioneBilancio = false;
 
-	/*impostato a true solo quando Ë necessario generare la reversale di incasso IVA:
+	/*impostato a true solo quando √® necessario generare la reversale di incasso IVA:
 	  fatture passive istituzionali di beni intra ue o san marino */
 	protected boolean faiReversale = false;	
 public MandatoIBulk() {
@@ -50,9 +50,9 @@ public int addToMandato_rigaColl( Mandato_rigaBulk riga, V_doc_passivo_obbligazi
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'accertamentoPerRegolarizzazione'
+ * Restituisce il valore della propriet√† 'accertamentoPerRegolarizzazione'
  *
- * @return Il valore della propriet‡ 'accertamentoPerRegolarizzazione'
+ * @return Il valore della propriet√† 'accertamentoPerRegolarizzazione'
  */
 public AccertamentoBulk getAccertamentoPerRegolarizzazione() {
 	return accertamentoPerRegolarizzazione;
@@ -169,8 +169,8 @@ public boolean isGeneraReversaleDaDocAmm() {
 	return generaReversaleDaDocAmm;
 }
 /**
- * Verifica se il mandato Ë di tipo accreditamento.
- * @return 			FALSE 	Il mandato non Ë di tipo accreditamento
+ * Verifica se il mandato √® di tipo accreditamento.
+ * @return 			FALSE 	Il mandato non √® di tipo accreditamento
  */
 public boolean isMandatoAccreditamentoBulk() 
 {
@@ -208,18 +208,18 @@ public boolean isROFind_doc_generico() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOFind_terzoAnag'
+ * Restituisce il valore della propriet√† 'rOFind_terzoAnag'
  *
- * @return Il valore della propriet‡ 'rOFind_terzoAnag'
+ * @return Il valore della propriet√† 'rOFind_terzoAnag'
  */
 public boolean isROFind_terzoAnag() {
 	return getFind_doc_passivi().getTerzoAnag().getCrudStatus() == this.NORMAL;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOPg_accertamento'
+ * Restituisce il valore della propriet√† 'rOPg_accertamento'
  *
- * @return Il valore della propriet‡ 'rOPg_accertamento'
+ * @return Il valore della propriet√† 'rOPg_accertamento'
  */
 public boolean isROPg_accertamento() 
 {
@@ -245,7 +245,7 @@ public Mandato_rigaBulk removeFromMandato_rigaColl(int index)
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'accertamentoPerRegolarizzazione'
+ * Imposta il valore della propriet√† 'accertamentoPerRegolarizzazione'
  *
  * @param newAccertamentoPerRegolarizzazione	Il valore da assegnare a 'accertamentoPerRegolarizzazione'
  */
@@ -311,7 +311,7 @@ public void setTipoBolloOptions(java.util.List newTipoBolloOptions) {
 	tipoBolloOptions = newTipoBolloOptions;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
