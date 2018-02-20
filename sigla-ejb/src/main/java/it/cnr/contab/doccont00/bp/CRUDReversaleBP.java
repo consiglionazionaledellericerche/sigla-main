@@ -29,7 +29,7 @@ import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.jsp.Button;
 
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Reversale
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Reversale
  */
 
 public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
@@ -110,10 +110,10 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 			{
 				sospeso = (SospesoBulk) i.next();
 				sde = reversale.addToSospeso_det_etrColl( sospeso );
-				// nella lista dei sospesi disponibili sono stati selezionati pi˘ elementi
+				// nella lista dei sospesi disponibili sono stati selezionati pi√π elementi
 				if( sospesi.size() > 1 )
 					sde.setIm_associato( sospeso.getIm_disponibile() );
-				// nella lista dei sospesi disponibili Ë stato selezionato un solo elemento
+				// nella lista dei sospesi disponibili √® stato selezionato un solo elemento
 				else if( sospesi.size() == 1 )
 				{
 					if( sospeso.getIm_disponibile().compareTo( reversale.getIm_residuo_reversale() ) > 0 )
@@ -144,7 +144,7 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 			if ( reversale != null && !reversale.getCd_uo_origine().equals( it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa( context ).getCd_unita_organizzativa()))
 			{
 				setStatus(VIEW);
-				setMessage("Reversale creata dall'Unit‡ Organizzativa " + reversale.getCd_uo_origine() + ". Non consentita la modifica.");
+				setMessage("Reversale creata dall'Unit√† Organizzativa " + reversale.getCd_uo_origine() + ". Non consentita la modifica.");
 			}
 			else if ( reversale != null &&  reversale.getStato().equals( reversale.STATO_REVERSALE_ANNULLATO )&& (reversale.getFl_riemissione()==null || !reversale.getFl_riemissione()))
 			{
@@ -174,7 +174,7 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 				}
 				else if (session.isRevProvvLiquidCoriCentroAperta(context.getUserContext(), reversale))
 				{
-					setMessage("Reversale Provvisoria relativa a Liquidazioni CORI ancora aperte. La modifica Ë comunque consentita.");
+					setMessage("Reversale Provvisoria relativa a Liquidazioni CORI ancora aperte. La modifica √® comunque consentita.");
 				}
 			}catch(Exception e){
 				throw handleException(e);
@@ -350,10 +350,10 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		printbp.addToPrintSpoolerParam(param);
 	}
 	/**
-	 * Abilito il bottone di Caricamento dei Sospesi solo se la reversale non Ë stata incassata o annullata e
+	 * Abilito il bottone di Caricamento dei Sospesi solo se la reversale non √® stata incassata o annullata e
 	 * se non e' di regolarizzazione ne' di incasso
-	 * @return			TRUE	Il bottone di Caricamento dei Sospesi Ë abilitato 			
-	 *					FALSE 	Il bottone di Caricamento dei Sospesi non Ë abilitato
+	 * @return			TRUE	Il bottone di Caricamento dei Sospesi √® abilitato 			
+	 *					FALSE 	Il bottone di Caricamento dei Sospesi non √® abilitato
 	 */
 	public boolean isCaricaSospesiButtonEnabled() {
 		return
@@ -364,9 +364,9 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 				!((ReversaleBulk)getModel()).isAnnullato();
 	}
 	/**
-	 * Abilito il bottone di Delete solo se la reversale non Ë stata incassata o annullata.
-	 * @return			TRUE	Il bottone di Delete Ë abilitato 			
-	 *					FALSE 	Il bottone di Delete non Ë abilitato
+	 * Abilito il bottone di Delete solo se la reversale non √® stata incassata o annullata.
+	 * @return			TRUE	Il bottone di Delete √® abilitato 			
+	 *					FALSE 	Il bottone di Delete non √® abilitato
 	 */
 	public boolean isDeleteButtonEnabled() {
 		return (super.isDeleteButtonEnabled() || 
@@ -383,26 +383,26 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		return super.isPrintButtonHidden() || isInserting() || isSearching();
 	}
 	/**
-	 * Abilito il tab di Ricerca dei Documenti solo se la reversale non Ë stata incassata o annullata.
-	 * @return			TRUE	Il tab di Ricerca dei Documenti Ë abilitato 			
-	 *					FALSE 	Il tab di Ricerca dei Documenti non Ë abilitato
+	 * Abilito il tab di Ricerca dei Documenti solo se la reversale non √® stata incassata o annullata.
+	 * @return			TRUE	Il tab di Ricerca dei Documenti √® abilitato 			
+	 *					FALSE 	Il tab di Ricerca dei Documenti non √® abilitato
 	 */
 	public boolean isRicercaDocumentiTabEnabled() {
 		return isEditable() && !((ReversaleBulk)getModel()).isIncassato() && !((ReversaleBulk)getModel()).isAnnullato() ;	
 	}
 	/**
-	 * Abilito il bottone di Rimozione dei Sospesi solo se la reversale non Ë stata incassata o annullata.
-	 * @return			TRUE	Il bottone di Rimozione dei Sospesi Ë abilitato 			
-	 *					FALSE 	Il bottone di Rimozione dei Sospesi non Ë abilitato
+	 * Abilito il bottone di Rimozione dei Sospesi solo se la reversale non √® stata incassata o annullata.
+	 * @return			TRUE	Il bottone di Rimozione dei Sospesi √® abilitato 			
+	 *					FALSE 	Il bottone di Rimozione dei Sospesi non √® abilitato
 	 */
 	public boolean isRimuoviSospesiButtonEnabled() {
 		return /*!((ReversaleBulk)getModel()).isIncassato() && */
 				!((ReversaleBulk)getModel()).isAnnullato() ;
 	}
 	/**
-	 * Abilito il bottone di Salva solo se la reversale non Ë stata annullata.
-	 * @return			TRUE	Il bottone di Salva Ë abilitato 			
-	 *					FALSE 	Il bottone di Salva non Ë abilitato
+	 * Abilito il bottone di Salva solo se la reversale non √® stata annullata.
+	 * @return			TRUE	Il bottone di Salva √® abilitato 			
+	 *					FALSE 	Il bottone di Salva non √® abilitato
 	 */
 	public boolean isSaveButtonEnabled() {
 		return (super.isSaveButtonEnabled() //&& !((ReversaleBulk)getModel()).isAnnullato()
@@ -427,7 +427,7 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	}
 	/**
 	 * Effettua un salvataggio del modello corrente.
-	 * Valido solo se il ricevente Ë nello stato di INSERT o EDIT.
+	 * Valido solo se il ricevente √® nello stato di INSERT o EDIT.
 	 *
 	 * @param context <code>ActionContext</code> in uso.
 	 */
@@ -606,21 +606,21 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		java.math.BigDecimal tot_col=java.math.BigDecimal.ZERO;
 		if (bulk!=null && bulk.getReversale_riga()!=null && bulk.getReversale_riga().getReversaleCupColl()!=null && !bulk.getReversale_riga().getReversaleCupColl().isEmpty()){
 			if(bulk.getCdCup()==null)
-				throw new ValidationException("Attenzione. Il codice Cup Ë obbligatorio");
+				throw new ValidationException("Attenzione. Il codice Cup √® obbligatorio");
 			if(bulk.getImporto()==null)
-				throw new ValidationException("Attenzione. L'importo associato al codice Cup Ë obbligatorio");
+				throw new ValidationException("Attenzione. L'importo associato al codice Cup √® obbligatorio");
 
 			BulkList list=bulk.getReversale_riga().getReversaleCupColl();
 			for (Iterator i = list.iterator(); i.hasNext();){
 				ReversaleCupBulk l=(ReversaleCupBulk)i.next();
 				if(l.getCdCup()!=null){
 					if(bulk!=l && bulk.getCdCup().compareTo(l.getCdCup())==0)
-						throw new ValidationException("Attenzione. Ogni Cup puÚ essere utilizzato una sola volta per ogni riga della reversale. ");
+						throw new ValidationException("Attenzione. Ogni Cup pu√≤ essere utilizzato una sola volta per ogni riga della reversale. ");
 					tot_col=tot_col.add(l.getImporto());
 				}
 			}
 			if(tot_col.compareTo(bulk.getReversale_riga().getIm_reversale_riga())>0)
-				throw new ValidationException("Attenzione. Il totale associato al CUP Ë superiore all'importo della riga della reversale.");
+				throw new ValidationException("Attenzione. Il totale associato al CUP √® superiore all'importo della riga della reversale.");
 		}
 
 	}
@@ -638,21 +638,21 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		BigDecimal tot_col=BigDecimal.ZERO;
 		if (bulk!=null && bulk.getReversaleSiope()!=null && bulk.getReversaleSiope().getReversaleSiopeCupColl()!=null && !bulk.getReversaleSiope().getReversaleSiopeCupColl().isEmpty()){
 			if(bulk.getCdCup()==null)
-				throw new ValidationException("Attenzione. Il codice Cup Ë obbligatorio");
+				throw new ValidationException("Attenzione. Il codice Cup √® obbligatorio");
 			if(bulk.getImporto()==null)
-				throw new ValidationException("Attenzione. L'importo associato al codice Cup Ë obbligatorio");
+				throw new ValidationException("Attenzione. L'importo associato al codice Cup √® obbligatorio");
 
 			BulkList list=bulk.getReversaleSiope().getReversaleSiopeCupColl();
 			for (Iterator i = list.iterator(); i.hasNext();){
 				ReversaleSiopeCupBulk l=(ReversaleSiopeCupBulk)i.next();
 				if(l.getCdCup()!=null){
 					if(bulk!=l && bulk.getCdCup().compareTo(l.getCdCup())==0)
-						throw new ValidationException("Attenzione. Ogni Cup puÚ essere utilizzato una sola volta per ogni riga della reversale/siope. ");
+						throw new ValidationException("Attenzione. Ogni Cup pu√≤ essere utilizzato una sola volta per ogni riga della reversale/siope. ");
 					tot_col=tot_col.add(l.getImporto());
 				}
 			}
 			if(tot_col.compareTo(bulk.getReversaleSiope().getImporto())>0)
-				throw new ValidationException("Attenzione. Il totale associato al CUP Ë superiore all'importo della riga della reversale associato al siope.");
+				throw new ValidationException("Attenzione. Il totale associato al CUP √® superiore all'importo della riga della reversale associato al siope.");
 		}
 	}
 

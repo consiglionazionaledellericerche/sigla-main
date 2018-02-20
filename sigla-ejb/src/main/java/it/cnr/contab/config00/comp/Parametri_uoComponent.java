@@ -41,8 +41,8 @@ public class Parametri_uoComponent extends CRUDComponent {
 
 	/**
 	 *  
-	 * Verifica, in caso di disattivazione della gestione, se Ë possibile effettuarla
-	 * Se Ë stata gi‡ avviata la gestione non Ë possibile modificare il valore.  
+	 * Verifica, in caso di disattivazione della gestione, se √® possibile effettuarla
+	 * Se √® stata gi√† avviata la gestione non √® possibile modificare il valore.  
 	 * 
 	 * TODO Metodo da implementare
 	 * 
@@ -54,14 +54,14 @@ public class Parametri_uoComponent extends CRUDComponent {
 	private void validaGestioneModuli(UserContext userContext, Parametri_uoBulk parUo) throws ComponentException{
 		if (parUo.getFl_gestione_moduli().booleanValue() == false) {
 			if (parUo.getPg_modulo_default()==null)
-				throw new ApplicationException("Attenzione! Non essendo attivata la Gestione Moduli Ë ' " +
-					"obbligatorio indicare almeno un modulo di default che sar‡ automaticamente utilizzato " +
+				throw new ApplicationException("Attenzione! Non essendo attivata la Gestione Moduli √® ' " +
+					"obbligatorio indicare almeno un modulo di default che sar√† automaticamente utilizzato " +
 					"nelle movimentazioni.");
 		}
 	}
 
 	/**
-	 * Verifica se Ë possibile modificare il valore del flag 'Gestione Moduli'
+	 * Verifica se √® possibile modificare il valore del flag 'Gestione Moduli'
 	 * 
 	 * @param userContext
 	 * @param parCnr
@@ -92,7 +92,7 @@ public class Parametri_uoComponent extends CRUDComponent {
 	/**
 	 *  Normale
 	 *    PreCondition:
-	 *      E' stata generata la richiesta di inserire/aggiornare il Modulo di Attivit‡ di default.
+	 *      E' stata generata la richiesta di inserire/aggiornare il Modulo di Attivit√† di default.
 	 *    PostCondition:
 	 *      Viene restituita una query sulla tabella PROGETTO con le clausole specificate
 	 */

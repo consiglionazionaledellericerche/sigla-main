@@ -75,7 +75,7 @@
 									} else if (fondo.getModalita_pagamento() != null && (economo != null && economo.getCrudStatus() != economo.UNDEFINED)) { %>
 										<td colspan="5">
 										<span class="FormLabel" style="color:red">
-											Nessun riferimento trovato per la modalit‡ di pagamento selezionata!
+											Nessun riferimento trovato per la modalit√† di pagamento selezionata!
 										</span>
 								<%	} %>
 							</td>

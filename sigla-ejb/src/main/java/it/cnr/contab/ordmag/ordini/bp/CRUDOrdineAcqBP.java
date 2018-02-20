@@ -236,7 +236,7 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		return righe;
 	}
 	/**
-	 * Imposta il valore della proprietà 'userConfirm'
+	 * Imposta il valore della proprietÃ  'userConfirm'
 	 *
 	 * @param newUserConfirm	Il valore da assegnare a 'userConfirm'
 	 */
@@ -570,7 +570,7 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		{
 			OrdineAcqBulk ordine = (OrdineAcqBulk) getModel();
 			if ( !ordine.isStatoInserito()){
-				throw new ApplicationException( "Non è possibile cancellare un ordine in stato diverso da inserito");
+				throw new ApplicationException( "Non Ã¨ possibile cancellare un ordine in stato diverso da inserito");
 			} else {
 				ordine = ((OrdineAcqComponentSession)createComponentSession()).cancellaOrdine(context.getUserContext(),(OrdineAcqBulk)getModel());
 				setModel( context, ordine );

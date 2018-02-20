@@ -40,7 +40,7 @@ public void validate(ActionContext context,OggettoBulk model) throws ValidationE
 		if ((Documento_generico_rigaBulk)model!=null && ((Documento_generico_rigaBulk)model).getDs_riga()==null)
 			throw new ValidationException("Inserire una descrizione");
 		if ((Documento_generico_rigaBulk)model!=null && ((Documento_generico_rigaBulk)model).getModalita_pagamento_uo_cds()==null)
-			throw new ValidationException("Inserire una modalit‡ di pagamento");
+			throw new ValidationException("Inserire una modalit√† di pagamento");
 		if ((Documento_generico_rigaBulk)model!=null && (((Documento_generico_rigaBulk)model).getIm_riga()==null || ((Documento_generico_rigaBulk)model).getIm_riga().compareTo(new java.math.BigDecimal(0))==0))
 			throw new ValidationException("Inserire un importo positivo");
 		if ((Documento_generico_rigaBulk)model!=null && ((Documento_generico_rigaBulk)model).getBanca_uo_cds()==null)
@@ -64,7 +64,7 @@ public void validateForDelete(ActionContext context, OggettoBulk detail) throws 
 											((riga.getDs_riga() != null) ?
 												riga.getDs_riga() :
 												String.valueOf(riga.getProgressivo_riga().longValue())) + 
-											"\" perchË associato a mandato.");
+											"\" perch√® associato a mandato.");
 		((DocumentoGenericoComponentSession)(((SimpleCRUDBP)getParentController()).createComponentSession())).eliminaRiga(context.getUserContext(), (Documento_generico_rigaBulk)detail);
 	} catch (it.cnr.jada.comp.ApplicationException e) {
 		throw new ValidationException(e.getMessage());

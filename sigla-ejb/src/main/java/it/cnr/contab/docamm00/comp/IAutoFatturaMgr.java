@@ -65,7 +65,7 @@ public abstract it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk ca
   *      Viene rilanciata una ComponentExcpetion con messaggio relativo alla validazione non verificata.
   *  Assegnazione di un progressivo
   *    PreCondition:
-  *      Non Ë possibile assegnare un progressivo per l'autofattura
+  *      Non √® possibile assegnare un progressivo per l'autofattura
   *    PostCondition:
   *      Viene rilanciata una ComponentExcpetion con messaggio relativo.
  */
@@ -100,50 +100,50 @@ public abstract void eliminaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.b
   *    PreCondition:
   *      E' stata selezionata una fattura di tipo non valido.
   *    PostCondition:
-  *      Viene inviato il messaggio: "Il tipo di fattura selezionato non Ë valido".
+  *      Viene inviato il messaggio: "Il tipo di fattura selezionato non √® valido".
   *  Tipo sezionale autofattura
   *    PreCondition:
-  *      Il tipo sezionale ricercato non Ë di tipo autofattura
+  *      Il tipo sezionale ricercato non √® di tipo autofattura
   *    PostCondition:
   *      Non viene aggiunto al vettore.
   *  Tipo sezionale per autofatture intra UE
   *    PreCondition:
-  *      Il tipo sezionale ricercato non Ë contemporaneamente di tipo autofattura e tipo intra UE
+  *      Il tipo sezionale ricercato non √® contemporaneamente di tipo autofattura e tipo intra UE
   *    PostCondition:
   *      Viene ricercato il tipo sezionale generico per autofattura.
   *  Tipo sezionale per fatture S. Marino senza iva
   *    PreCondition:
-  *      Il tipo sezionale ricercato non Ë contemporaneamente di tipo autofattura e tipo S. Marino senza iva
+  *      Il tipo sezionale ricercato non √® contemporaneamente di tipo autofattura e tipo S. Marino senza iva
   *    PostCondition:
   *      Viene ricercato il tipo sezionale generico per autofattura.
   *  Ricerca del tipo sezionale generico per autofatture
   *    PreCondition:
-  *      Il tipo sezionale per autofattura non Ë definito
+  *      Il tipo sezionale per autofattura non √® definito
   *    PostCondition:
   *      Non viene aggiunto al vettore.
   *  Tipo fatture commerciali
   *    PreCondition:
-  *      Il tipo di sezionale non Ë commerciale
+  *      Il tipo di sezionale non √® commerciale
   *    PostCondition:
   *      Non viene aggiunto al vettore.
   *  Tipo fatture vendita
   *    PreCondition:
-  *      Il tipo di sezionale non Ë definito per la vendita
+  *      Il tipo di sezionale non √® definito per la vendita
   *    PostCondition:
   *      Non viene aggiunto al vettore.
   *  Tipo della fattura
   *    PreCondition:
-  *      Il tipo della fattura non Ë 'autofattura'
+  *      Il tipo della fattura non √® 'autofattura'
   *    PostCondition:
   *      Non viene restituito alcun elemento
   *  Esercizio del tipo sezionale dell'autofattura
   *    PreCondition:
-  *      Il tipo sezionale non Ë definito per l'esercizio corrente
+  *      Il tipo sezionale non √® definito per l'esercizio corrente
   *    PostCondition:
   *      Non viene aggiunto al vettore.
-  *  Unit‡ Organizzativa del tipo sezionale dell'autofattura
+  *  Unit√† Organizzativa del tipo sezionale dell'autofattura
   *    PreCondition:
-  *      Il tipo sezionale non Ë definito per la UO corrente
+  *      Il tipo sezionale non √® definito per la UO corrente
   *    PostCondition:
   *      Non viene aggiunto al vettore.
   */

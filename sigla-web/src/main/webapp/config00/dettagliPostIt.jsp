@@ -23,7 +23,7 @@
 	
 	/*
 	** Quando navigo la prima volta nella tab e non ci sono 
-	** record selezionati, il valore restituito è -1. 
+	** record selezionati, il valore restituito Ã¨ -1. 
 	** In questo caso imposto il valore a 0.
 	*/
 	if (sel == -1)
@@ -45,7 +45,7 @@
 		  idPost = ((PostItBulk) ((ProgettoBulk)bp.getModel()).getDettagliPostIt().get(sel)).getId();	   
 	      // Recupero il nome del file del postit selezionato
 	      nomePost = ((PostItBulk) ((ProgettoBulk)bp.getModel()).getDettagliPostIt().get(sel)).getNome_file();
-	       // Se c'è un record in insert valorizzo con false il flag di gestione dell'inserimento multiplo senza salvare
+	       // Se c'Ã¨ un record in insert valorizzo con false il flag di gestione dell'inserimento multiplo senza salvare
 	       if (((PostItBulk) ((ProgettoBulk)bp.getModel()).getDettagliPostIt().get(i)).getCrudStatus()!= it.cnr.jada.bulk.OggettoBulk.NORMAL )    
 	          inseribile = false;
 	    }
@@ -57,7 +57,7 @@
 		  idPost = ((PostItBulk) ((WorkpackageBulk)bp.getModel()).getDettagliPostIt().get(sel)).getId();	       
 	      // Recupero il nome del file del postit selezionato
 	      nomePost = ((PostItBulk) ((WorkpackageBulk)bp.getModel()).getDettagliPostIt().get(sel)).getNome_file();		  
-	      // Se c'è un record in insert valorizzo con false il flag di gestione dell'inserimento multiplo senza salvare
+	      // Se c'Ã¨ un record in insert valorizzo con false il flag di gestione dell'inserimento multiplo senza salvare
 	      if (((PostItBulk) ((WorkpackageBulk)bp.getModel()).getDettagliPostIt().get(i)).getCrudStatus()!= it.cnr.jada.bulk.OggettoBulk.NORMAL )    
 	          inseribile = false;	      
 	    }   

@@ -89,7 +89,7 @@ public void selectAll(it.cnr.jada.action.ActionContext context) throws it.cnr.ja
 }
 
 /**
- * Gestisce la richiesta utente di modifica dei cdr associati al tipo di linea di attivit‡
+ * Gestisce la richiesta utente di modifica dei cdr associati al tipo di linea di attivit√†
  *
  * @param context	L'ActionContext della richiesta
  * @param bulks	Collezione di oggetti bulk

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -35,7 +35,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="true"
 		readonlyProperty="ROFindV_uo"
-		label="Unità organizzativa"/>
+		label="UnitÃ  organizzativa"/>
 	<fieldProperty
 		name="cd_uo"
 		property="v_uo.cd_unita_organizzativa"

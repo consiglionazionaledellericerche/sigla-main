@@ -44,7 +44,7 @@
 			</tr>
 			<%if (cambio.isCambioDefault() && !bp.isSearching()) {%>
 			    <span class="FormLabel" style="color:red">
-				Non è possibile modificare la valuta di default!
+				Non Ã¨ possibile modificare la valuta di default!
 	     		</span>
 	     	<%}%>
 		</table>

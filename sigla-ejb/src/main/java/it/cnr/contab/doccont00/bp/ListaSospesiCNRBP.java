@@ -217,7 +217,7 @@ public void setBulkClass(java.lang.Class newBulkClass) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'bulkClassName'
+ * Imposta il valore della propriet√† 'bulkClassName'
  *
  * @param bulkClassName	Il valore da assegnare a 'bulkClassName'
  * @throws ClassNotFoundException	

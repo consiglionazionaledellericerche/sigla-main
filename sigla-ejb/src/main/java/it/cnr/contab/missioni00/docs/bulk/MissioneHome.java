@@ -60,7 +60,7 @@ public class MissioneHome extends BulkHome implements
 	public void confermaMissioneTemporanea(UserContext userContext,
 			MissioneBulk missioneTemp, Long pg) throws IntrospectionException,
 			PersistencyException {
-		// Il progressivo della missione ricevuto come parametro è quello
+		// Il progressivo della missione ricevuto come parametro Ã¨ quello
 		// definitivo
 		LoggableStatement ps = null;
 		java.io.StringWriter sql = new java.io.StringWriter();

@@ -6,7 +6,7 @@ import it.cnr.contab.prevent00.bulk.Pdg_aggregatoBulk;
 import it.cnr.contab.prevent00.ejb.PdgAggregatoComponentSession;
 
 /**
- * Adatta e implementa la {@link it.cnr.jada.util.action.BulkAction } affinchË 
+ * Adatta e implementa la {@link it.cnr.jada.util.action.BulkAction } affinch√® 
  * 		la JSP non disegni il CRUD.
  * 
  * @author: Bisquadro Vincenzo
@@ -78,7 +78,7 @@ public it.cnr.jada.action.Forward doCambiaStato(it.cnr.jada.action.ActionContext
 }
 /**
  * A seconda dello stato del PdG viene istanziato un nuovo Business Process che 
- * 		che consentir‡ la "M"odifica/"V"isualizzazione delle Entrate (risp. Stato A/B).
+ * 		che consentir√† la "M"odifica/"V"isualizzazione delle Entrate (risp. Stato A/B).
  * 
  * @param context {@link it.cnr.jada.action.ActionContext } in uso.
  *
@@ -91,7 +91,7 @@ public it.cnr.jada.action.Forward doContrattazioneEntrate(it.cnr.jada.action.Act
 }
 /**
  * A seconda dello stato del PdG viene istanziato un nuovo Business Process che 
- * 		che consentir‡ la "M"odifica/"V"isualizzazione delle Spese (risp. Stato A/B).
+ * 		che consentir√† la "M"odifica/"V"isualizzazione delle Spese (risp. Stato A/B).
  * 
  * @param context {@link it.cnr.jada.action.ActionContext } in uso.
  *

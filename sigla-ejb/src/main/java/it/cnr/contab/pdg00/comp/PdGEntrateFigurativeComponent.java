@@ -33,26 +33,26 @@ public class PdGEntrateFigurativeComponent extends PdGComponent implements Clone
  */
 //^^@@
 	public void eliminaConBulk (UserContext userContext,OggettoBulk bulk) throws ComponentException {
-		throw new ApplicationException("Non Ë possibile eliminare il dettaglio caricato!");
+		throw new ApplicationException("Non √® possibile eliminare il dettaglio caricato!");
 	}
 
     //^^@@
 /** 
   *  Piano di gestione chiuso
   *    PreCondition:
-  *      Il piano di gestione del servito o del servente Ë chiuso (vedi checkChiusuraPdg)
+  *      Il piano di gestione del servito o del servente √® chiuso (vedi checkChiusuraPdg)
   *    PostCondition:
   *      Restituisce un'eccezione
-  *  Controllo livello di responsabilit‡
+  *  Controllo livello di responsabilit√†
   *    PreCondition:
-  *      L'utente che effettua la richiesta non ha un livello di responsabilit‡ sufficiente per la modifica di un dettaglio nel centro servente (vedi checkLivelloResponsabilita)
+  *      L'utente che effettua la richiesta non ha un livello di responsabilit√† sufficiente per la modifica di un dettaglio nel centro servente (vedi checkLivelloResponsabilita)
   *    PostCondition:
   *      Restituisce un'eccezione
   *  default
   *    PreCondition:
   *      Viene richiesto di aggiornare lo stato del dettaglio
   *    PostCondition:
-  *      Lo stato del dettaglio Ë aggiornato sulla base della scelta dell'utente sul servito e sul servente
+  *      Lo stato del dettaglio √® aggiornato sulla base della scelta dell'utente sul servito e sul servente
  */
 //^^@@	
 	public OggettoBulk eseguiModificaConBulk(UserContext userContext,OggettoBulk bulk) throws ComponentException {
@@ -65,13 +65,13 @@ public class PdGEntrateFigurativeComponent extends PdGComponent implements Clone
 	        if (isPdgApertoPerVariazioni(userContext,pdg) && Pdg_preventivo_spe_detBulk.ST_NESSUNA_AZIONE.equals(pdgEtr.getStato())) {
 				Pdg_preventivo_etr_detBulk pdgEtrOriginale = (Pdg_preventivo_etr_detBulk)getHome(userContext,pdgEtr).findByPrimaryKey(pdgEtr);
 				if (!pdgEtr.getStato().equals(pdgEtrOriginale.getStato()))
-					throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile riportare lo stato del dettaglio a 'Nessuna azione' in fase di variazione del pdg.");
+					throw new it.cnr.jada.comp.ApplicationException("Non √® possibile riportare lo stato del dettaglio a 'Nessuna azione' in fase di variazione del pdg.");
 	        }
 
 			// 05/09/2003
 			// Aggiunto controllo sulla chiusura dell'esercizio
 			if (isEsercizioChiuso(userContext,pdg))
-				throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile modificare dettagli del pdg ad esercizio chiuso.");
+				throw new it.cnr.jada.comp.ApplicationException("Non √® possibile modificare dettagli del pdg ad esercizio chiuso.");
 
             CdrBulk cdr = cdrFromUserContext(userContext);
 

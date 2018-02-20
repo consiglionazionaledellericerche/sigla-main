@@ -64,9 +64,9 @@ public class UtenteBulk extends UtenteBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'passwordInChiaro'
+	 * Restituisce il valore della propriet√† 'passwordInChiaro'
 	 *
-	 * @return Il valore della propriet‡ 'passwordInChiaro'
+	 * @return Il valore della propriet√† 'passwordInChiaro'
 	 */
 	public String getPasswordInChiaro() {
 		return null;
@@ -118,7 +118,7 @@ public class UtenteBulk extends UtenteBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'gestore'
+	 * Imposta il valore della propriet√† 'gestore'
 	 *
 	 * @param newGestore	Il valore da assegnare a 'gestore'
 	 */
@@ -127,7 +127,7 @@ public class UtenteBulk extends UtenteBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'passwordInChiaro'
+	 * Imposta il valore della propriet√† 'passwordInChiaro'
 	 *
 	 * @param password	Il valore da assegnare a 'passwordInChiaro'
 	 */
@@ -154,18 +154,18 @@ public class UtenteBulk extends UtenteBase {
 	{
 		String cd_utente = getCd_utente();
 		if ( cd_utente == null || cd_utente.length() == 0)
-			throw new ValidationException( "Il campo CODICE UTENTE Ë obbligatorio." );
+			throw new ValidationException( "Il campo CODICE UTENTE √® obbligatorio." );
 		for (int i = 0;i < cd_utente.length();i++)
 			if (!Character.isLetterOrDigit(cd_utente.charAt(i)))
-				throw new ValidationException( "Il codice utente puÚ essere composto solo da cifre o lettere e non puÚ contenere spazi." );
+				throw new ValidationException( "Il codice utente pu√≤ essere composto solo da cifre o lettere e non pu√≤ contenere spazi." );
 		if ( getDt_inizio_validita() == null )
-			throw new ValidationException( "Il campo DATA INIZIO VALIDITA' Ë obbligatorio." );	
+			throw new ValidationException( "Il campo DATA INIZIO VALIDITA' √® obbligatorio." );	
 		if ( getDt_fine_validita() != null && getDt_fine_validita().before(getDt_inizio_validita()))
-			throw new ValidationException( "La data di fine validit‡ deve essere posteriore alla data di inizio validit‡." );	
+			throw new ValidationException( "La data di fine validit√† deve essere posteriore alla data di inizio validit√†." );	
 		if ( getNome() == null || getNome().length() == 0)
-			throw new ValidationException( "Il campo NOME Ë obbligatorio." );
+			throw new ValidationException( "Il campo NOME √® obbligatorio." );
 		if ( getCognome() == null || getCognome().length() == 0)
-			throw new ValidationException( "Il campo COGNOME Ë obbligatorio." );
+			throw new ValidationException( "Il campo COGNOME √® obbligatorio." );
 	}
 	public static boolean isAbilitatoApprovazioneBilancio(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException{
 		return getRuoloComponentSession().isAbilitatoApprovazioneBilancio(param0);

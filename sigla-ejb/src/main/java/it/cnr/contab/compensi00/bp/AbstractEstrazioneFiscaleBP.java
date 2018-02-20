@@ -28,8 +28,8 @@ public AbstractEstrazioneFiscaleBP(String function) {
  * 
  *
  * @return 
- * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non è possibile effettuare l'operazione
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non Ã¨ possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public CompensoComponentSession createComponentSession()
 	throws javax.ejb.EJBException,

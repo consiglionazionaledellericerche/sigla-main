@@ -71,7 +71,7 @@ private boolean isCancellabile(UserContext aUC,OggettoBulk bulk) throws Componen
 			cancellabile = false;
 		else{
 			if (!detr.getDt_fine_validita().equals(it.cnr.contab.config00.esercizio.bulk.EsercizioHome.DATA_INFINITO) && (detr.isToBeUpdated() || detr.isToBeDeleted()))
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione, l'unico intervallo che Ë possibile cancellare/modificare Ë l'ultimo");	  
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione, l'unico intervallo che √® possibile cancellare/modificare √® l'ultimo");	  
 			else{
 				sql.addSQLClause("AND","DT_FINE_VALIDITA",sql.EQUALS,it.cnr.contab.compensi00.docs.bulk.CompensoBulk.decrementaData(detr.getDt_inizio_validita()));
 
@@ -104,9 +104,9 @@ public void validaCreaConBulk(UserContext userContext,OggettoBulk bulk) throws C
   *      Viene consentito il salvataggio del nuovo Detrazioni
   *  Periodo di Inizio/Fine validita del nuovo Detrazioni non valido.
   *    PreCondition:
-  *      Si Ë verificato un errore non salvo.
+  *      Si √® verificato un errore non salvo.
   *    PostCondition:
-  *      Viene inviato il messaggio : "Attenzione sovrapposizione con intervalli di validit‡ preesistenti"
+  *      Viene inviato il messaggio : "Attenzione sovrapposizione con intervalli di validit√† preesistenti"
 **/
 private void validaDate(UserContext userContext,Detrazioni_familiariBulk detraz) throws ComponentException{
 
@@ -114,7 +114,7 @@ private void validaDate(UserContext userContext,Detrazioni_familiariBulk detraz)
 
 		Detrazioni_familiariHome home = (Detrazioni_familiariHome)getHome(userContext,Detrazioni_familiariBulk.class);
 		if (!home.checkValidita(userContext,detraz))
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione sovrapposizione con intervalli di validit‡ preesistenti");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione sovrapposizione con intervalli di validit√† preesistenti");
 
 	}catch(it.cnr.jada.persistency.PersistencyException ex){
 		throw handleException(ex);
@@ -128,16 +128,16 @@ private void validaDate(UserContext userContext,Detrazioni_familiariBulk detraz)
   *      Viene consentito il salvataggio del nuovo Detrazioni
   *  Periodo di Inizio/Fine validita del nuovo Detrazioni non valido.
   *    PreCondition:
-  *      Si Ë verificato un errore non salvo.
+  *      Si √® verificato un errore non salvo.
   *    PostCondition:
-  *      Viene inviato il messaggio : "Attenzione sovrapposizione con intervalli di validit‡ preesistenti"
+  *      Viene inviato il messaggio : "Attenzione sovrapposizione con intervalli di validit√† preesistenti"
 **/
 private void validaDetrazione(UserContext userContext,Detrazioni_familiariBulk detraz) throws ComponentException{
 
 	try{
 
 		if (detraz.getNumero()==null)
-			throw new it.cnr.jada.comp.ApplicationException("Il campo Numero non puÚ essere vuoto");
+			throw new it.cnr.jada.comp.ApplicationException("Il campo Numero non pu√≤ essere vuoto");
 		if (detraz.getNumero()!=null && detraz.getNumero().intValue()==0)
 			throw new it.cnr.jada.comp.ApplicationException("Il campo Numero deve essere maggiore di zero");
 

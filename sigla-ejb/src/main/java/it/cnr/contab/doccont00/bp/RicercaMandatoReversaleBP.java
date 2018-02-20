@@ -149,7 +149,7 @@ public java.util.BitSet setSelection(it.cnr.jada.action.ActionContext context, i
 
 	try 
 	{
-		// per i mandati CORI/IVA l'aggiunta è gia avvenuta in RicercaMandatoReversaleAction.doCerca
+		// per i mandati CORI/IVA l'aggiunta Ã¨ gia avvenuta in RicercaMandatoReversaleAction.doCerca
 		if (bpp.isInserisciMandatiVersamentoCori(context)) {
 
 			for (int i = 0;i < bulks.length;i++) {
@@ -186,7 +186,7 @@ public java.util.BitSet setSelection(it.cnr.jada.action.ActionContext context, i
 				man = (V_mandato_reversaleBulk) nbp.getElementAt(context,nbp.getCurrentPage()*nbp.getPageSize()+i);
 				if (man.getVersamento_cori().booleanValue())
 					if (!models.isSelected(nbp.getCurrentPage()*nbp.getPageSize()+i)) {
-						throw new it.cnr.jada.action.MessageToUser("Non è possibile deselezionare i mandati di versamento CORI/IVA accentrati!"); 
+						throw new it.cnr.jada.action.MessageToUser("Non Ã¨ possibile deselezionare i mandati di versamento CORI/IVA accentrati!"); 
 					}
 			}
 

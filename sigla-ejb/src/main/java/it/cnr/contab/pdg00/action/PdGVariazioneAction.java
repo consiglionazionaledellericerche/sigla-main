@@ -394,7 +394,7 @@ public class PdGVariazioneAction extends it.cnr.jada.util.action.CRUDAction {
 
 			PdGVariazioneBP bp = (PdGVariazioneBP)getBusinessProcess(context);
 			if (!bp.isEditing()) {
-				bp.setMessage("Non è possibile cancellare in questo momento");
+				bp.setMessage("Non Ã¨ possibile cancellare in questo momento");
 			} else {
 				bp.delete(context);
 				bp.edit(context, bp.getModel());

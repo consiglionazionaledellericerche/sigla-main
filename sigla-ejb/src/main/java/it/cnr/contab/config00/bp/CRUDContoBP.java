@@ -69,11 +69,11 @@ public class CRUDContoBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		{
 			// 
 			if ( bulk.getV_classificazione_voci_ep() == null || bulk.getV_classificazione_voci_ep().getCd_classificazione()==null ||bulk.getV_classificazione_voci_ep().getCd_classificazione().equals("") )
-				throw new ValidationException("Il campo classificazione è obbligatorio.");
+				throw new ValidationException("Il campo classificazione Ã¨ obbligatorio.");
 		}
 		// controllo su campo DESCRIZIONE 
 			if ( bulk.getDs_voce_ep() == null || bulk.getDs_voce_ep().equals("") )
-				throw new ValidationException("Il campo NOME CONTO è obbligatorio.");
+				throw new ValidationException("Il campo NOME CONTO Ã¨ obbligatorio.");
 			// controllo su campo SEZIONE
 			if ( bulk.getTi_sezione() == null || bulk.getTi_sezione().equals("") )
 				throw new ValidationException( "Il campo SEZIONE deve essere selezionato." );

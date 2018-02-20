@@ -65,7 +65,7 @@ public void cancellaDatiPerStampaIva(
   *  		Le scadenze vengono aggiunte alla lista delle scadenze congruenti.
   *	Validazione lista delle Accertamenti per le fatture 
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle scadenze delle Accertamenti.
+  *			Si √® verificato un errore nel caricamento delle scadenze delle Accertamenti.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	Accertamento definitiva
@@ -95,7 +95,7 @@ public void cancellaDatiPerStampaIva(
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Disabilitazione filtro di selezione sul debitore dell'Accertamento
   *		PreCondition:
-  *			La scadenza dell'Accertamento ha un debitore diverso da quello della fattura  e non Ë di tipo "diversi"
+  *			La scadenza dell'Accertamento ha un debitore diverso da quello della fattura  e non √® di tipo "diversi"
   * 	PostCondition:
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Abilitazione filtro di selezione sulla data di scadenza
@@ -156,12 +156,12 @@ public abstract it.cnr.jada.util.RemoteIterator cercaDettagliFatturaPerNdD(it.cn
   *  		La fattura viene aggiunta alla lista delle fatture congruenti.
   *	Validazione lista delle fatture per le note di credito
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle fatture.
+  *			Si √® verificato un errore nel caricamento delle fatture.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	Fornitore nota di credito = fornitore fattura 
   *		PreCondition:
-  *			Il fornitore della fattura non Ë lo stesso di quello della nota di credito
+  *			Il fornitore della fattura non √® lo stesso di quello della nota di credito
   * 	PostCondition:
   *  		La fattura non viene aggiunta alla lista delle fatture congruenti.
   *	CDS di appartenenza
@@ -171,12 +171,12 @@ public abstract it.cnr.jada.util.RemoteIterator cercaDettagliFatturaPerNdD(it.cn
   *  		La fattura non viene aggiunta alla lista delle fatture congruenti.
   *	Esercizio di appartenenza
   *		PreCondition:
-  *			L'esercizio della fattura non Ë lo stesso di quello della nota di credito
+  *			L'esercizio della fattura non √® lo stesso di quello della nota di credito
   * 	PostCondition:
   *  		La fattura non viene aggiunta alla lista delle fatture congruenti.
-  *	Unit‡ organizzativa di appartenenza
+  *	Unit√† organizzativa di appartenenza
   *		PreCondition:
-  *			La UO della fattura non Ë la stessa di quella della nota di credito
+  *			La UO della fattura non √® la stessa di quella della nota di credito
   * 	PostCondition:
   *  		La fattura non viene aggiunta alla lista delle fatture congruenti.
  */
@@ -190,12 +190,12 @@ public abstract it.cnr.jada.util.RemoteIterator cercaFatturaPerNdC(it.cnr.jada.U
   *  		La fattura viene aggiunta alla lista delle fatture congruenti.
   *	Validazione lista delle fatture per le note di debito
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle fatture.
+  *			Si √® verificato un errore nel caricamento delle fatture.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	Fornitore nota di debito = fornitore fattura 
   *		PreCondition:
-  *			Il fornitore della fattura non Ë lo stesso di quello della nota di debito
+  *			Il fornitore della fattura non √® lo stesso di quello della nota di debito
   * 	PostCondition:
   *  		La fattura non viene aggiunta alla lista delle fatture congruenti.
   *	CDS di appartenenza
@@ -205,12 +205,12 @@ public abstract it.cnr.jada.util.RemoteIterator cercaFatturaPerNdC(it.cnr.jada.U
   *  		La fattura non viene aggiunta alla lista delle fatture congruenti.
   *	Esercizio di appartenenza
   *		PreCondition:
-  *			L'esercizio della fattura non Ë lo stesso di quello della nota di debito
+  *			L'esercizio della fattura non √® lo stesso di quello della nota di debito
   * 	PostCondition:
   *  		La fattura non viene aggiunta alla lista delle fatture congruenti.
-  *	Unit‡ organizzativa di appartenenza
+  *	Unit√† organizzativa di appartenenza
   *		PreCondition:
-  *			La UO della fattura non Ë la stessa di quella della nota di debito
+  *			La UO della fattura non √® la stessa di quella della nota di debito
   * 	PostCondition:
   *  		La fattura non viene aggiunta alla lista delle fatture congruenti.
  */
@@ -254,7 +254,7 @@ public abstract it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk contabilizza
   *	Quadratura delle scadenze Accertamenti di fattura non estera o estera senza lettera di pagamento.
   *		PreCondition:
   * 		La somma algebrica dei dettagli, storni e addebiti (metodo 'calcolaTotaleAccertamentoPer') insistenti sull'elenco di dettagli associati
-  *			alla scadenza Accertamento Ë uguale all'importo della scadenza Accertamento stessa
+  *			alla scadenza Accertamento √® uguale all'importo della scadenza Accertamento stessa
   *   	PostCondition:
   *  		Permette la continuazione.
   *	Controlli non superati.
@@ -303,7 +303,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext
   *    PreCondition:
   *      E' stata eliminata una fattura in stato B or C
   *    PostCondition:
-  *      Viene inviato un messaggio:"Attenzione non si puÚ eliminare una fattura in stato IVA B o C"
+  *      Viene inviato un messaggio:"Attenzione non si pu√≤ eliminare una fattura in stato IVA B o C"
  */
 
 public abstract void eliminaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
@@ -312,10 +312,10 @@ public abstract void eliminaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.b
   *    PreCondition:
   *      E' stato eliminato un dettaglio in  in una fattura in stato IVA B o C.
   *    PostCondition:
-  *      Viene inviato un messaggio:"Attenzione non si puÚ eliminare un dettaglio in una fattura in stato IVA B o C".
+  *      Viene inviato un messaggio:"Attenzione non si pu√≤ eliminare un dettaglio in una fattura in stato IVA B o C".
   *  tutti i controlli superati
   *    PreCondition:
-  *      Nessun errore Ë stato rilevato.
+  *      Nessun errore √® stato rilevato.
   *    PostCondition:
   *      Viene dato il consenso per l'eliminazione della riga.
   *      
@@ -323,12 +323,12 @@ public abstract void eliminaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.b
   *    PreCondition:
   *      E' stato eliminato un dettaglio in stato P.
   *    PostCondition:
-  *      Viene inviato un messaggio:"Attenzione non si puÚ eliminare un dettaglio pagato".
+  *      Viene inviato un messaggio:"Attenzione non si pu√≤ eliminare un dettaglio pagato".
   *  eliminazione dettaglio in fattura pagata.
   *    PreCondition:
   *      E' stato eliminato un dettaglio in una fattura con testata in stato P
   *    PostCondition:
-  *      Viene inviato un messaggio:"Attenzione non si puÚ eliminare un dettaglio in una fattura pagata".
+  *      Viene inviato un messaggio:"Attenzione non si pu√≤ eliminare un dettaglio in una fattura pagata".
  */
 
 public abstract void eliminaRiga(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk param1) throws it.cnr.jada.comp.ComponentException;
@@ -345,7 +345,7 @@ public boolean esistonoDatiPerStampaIva(
   *    PreCondition:
   *      E' stata selezionato sezionale non valido.
   *    PostCondition:
-  *      Viene inviato il messaggio: "Il tipo di sezionale non Ë valido".
+  *      Viene inviato il messaggio: "Il tipo di sezionale non √® valido".
   *  tutti i controlli superati.
   *    PreCondition:
   *      E' stata selezionato sezionale valido.
@@ -360,7 +360,7 @@ public abstract java.util.Vector estraeSezionali(it.cnr.jada.UserContext param0,
   *    PreCondition:
   *      E' stata selezionato sezionale non valido.
   *    PostCondition:
-  *      Viene inviato il messaggio: "Il tipo di sezionale non Ë valido".
+  *      Viene inviato il messaggio: "Il tipo di sezionale non √® valido".
   *  tutti i controlli superati.
   *    PreCondition:
   *      E' stata selezionato sezionale valido.
@@ -427,7 +427,7 @@ public abstract it.cnr.jada.util.RemoteIterator findNotaDiDebitoFor(it.cnr.jada.
 /** 
   *  Ricerca dei tariffari
   *    	PreCondition:
-  *     	Un nuovo tariffario Ë stato selezionato dall'utente.
+  *     	Un nuovo tariffario √® stato selezionato dall'utente.
   *    	PostCondition:
   *    		Restituisce la collezione dei tariffari validi per la fattura 
  */
@@ -590,15 +590,15 @@ public abstract it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBul
   *      Sono stati modificati campi relativi all' esercizio, stato iva  e tipo fattura.
   *      
   *    PostCondition:
-  *      Viene inviato un messaggio "Attenzione: Sono stati modificati campi relativi all' esercizio, stato iva  e tipo fattura. Non Ë possibile validare le modifiche apportate".
+  *      Viene inviato un messaggio "Attenzione: Sono stati modificati campi relativi all' esercizio, stato iva  e tipo fattura. Non √® possibile validare le modifiche apportate".
   *  tutti i controlli superati
   *    PreCondition:
-  *      Nessuna situazione di errore di validazione Ë stata rilevata.
+  *      Nessuna situazione di errore di validazione √® stata rilevata.
   *    PostCondition:
   *      Consentita la registrazione.
   *  validazione numero di dettagli maggiore di zero.
   *    PreCondition:
-  *      Il numero di dettagli nella fattura Ë zero
+  *      Il numero di dettagli nella fattura √® zero
   *    PostCondition:
   *      Viene inviato un messaggio: "Attenzione non possono esistere fatture senza almeno un dettaglio".
   *  validazione aggiunta dettagli n fatture con stato iva B o C.
@@ -625,7 +625,7 @@ public abstract it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBul
   *    PreCondition:
   *      E' satata eseguita una modifica in fattura con testata in stato P.
   *    PostCondition:
-  *      Viene inviato un messaggio:"Attenzione non si puÚ modificare nulla in una fattura pagata".
+  *      Viene inviato un messaggio:"Attenzione non si pu√≤ modificare nulla in una fattura pagata".
   *  validazione associazione scadenze
   *    PreCondition:
   *      Esistono dettagli non collegati ad accertamento.
@@ -639,7 +639,7 @@ public abstract void validaFattura(it.cnr.jada.UserContext param0,it.cnr.contab.
   *    PreCondition:
   *      Il bene  relativo alla riga fattura in via di variazione risulta di tipo soggetto ad inventario.
   *    PostCondition:
-  *      Viene inviato un messaggio all'utente "Questo bene Ë soggetto ad inventario".
+  *      Viene inviato un messaggio all'utente "Questo bene √® soggetto ad inventario".
   *      NOTA: Vanno dettagliate le condizioni di inventario non appena disponibile il relativo use case
   *  tutti i controli superati
   *    PreCondition:
@@ -650,17 +650,17 @@ public abstract void validaFattura(it.cnr.jada.UserContext param0,it.cnr.contab.
   *    PreCondition:
   *      Sono stati modificati i campi  imponibile, iva, totale, aliquiota (G2) in fattura in stato B or C
   *    PostCondition:
-  *      Viene inviato un messaggio "Attenzione:  questa modifica non Ë permessa"
+  *      Viene inviato un messaggio "Attenzione:  questa modifica non √® permessa"
   *  validazione modifica dettaglio pagato.
   *    PreCondition:
   *      E' stato modificato un dettaglio in stato P.
   *    PostCondition:
-  *      Viene inviato un messaggio:"Attenzione non si puÚ eliminare un dettaglio gi‡ pagato".
-  *  validazione modifica dettaglio di fattura gi‡ pagata.
+  *      Viene inviato un messaggio:"Attenzione non si pu√≤ eliminare un dettaglio gi√† pagato".
+  *  validazione modifica dettaglio di fattura gi√† pagata.
   *    PreCondition:
   *      E' stato modificato un dettaglio di fattura in stato P.
   *    PostCondition:
-  *      Viene inviato un messaggio:"Attenzione non si puÚ modificare un dettaglio in una fattura gi‡ pagata".
+  *      Viene inviato un messaggio:"Attenzione non si pu√≤ modificare un dettaglio in una fattura gi√† pagata".
  */
 
 public abstract void validaRiga(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk param1) throws it.cnr.jada.comp.ComponentException;
@@ -669,17 +669,17 @@ public abstract void validaRiga(it.cnr.jada.UserContext param0,it.cnr.contab.doc
   *    PreCondition:
   *      Nessuna condizione di errore rilevata.
   *    PostCondition:
-  *      Viene consentita l'attivit‡ richiesta
+  *      Viene consentita l'attivit√† richiesta
   *  L'inventario non esiste
   *    PreCondition:
   *      L'inventario per CDS e UO correnti non esiste
   *    PostCondition:
   *      Viene visualizzato messaggio "non esiste un inventario per questo CDS"
-  *  L'inventario non Ë aperto
+  *  L'inventario non √® aperto
   *    PreCondition:
-  *      L'inventario per CDS e UO correnti esiste ma non Ë aperto
+  *      L'inventario per CDS e UO correnti esiste ma non √® aperto
   *    PostCondition:
-  *      Viene visualizzato messaggio "l'inventario per questo CDS non Ë aperto"
+  *      Viene visualizzato messaggio "l'inventario per questo CDS non √® aperto"
  */
 
 public abstract void verificaEsistenzaEdAperturaInventario(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk param1) throws it.cnr.jada.comp.ComponentException;

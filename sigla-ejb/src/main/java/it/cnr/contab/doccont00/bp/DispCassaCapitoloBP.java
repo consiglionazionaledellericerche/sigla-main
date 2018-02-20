@@ -46,7 +46,7 @@ public final it.cnr.jada.util.action.SimpleDetailCRUDController getDispCassaRes(
 }
 public String getFormTitle() 
 {
-	return "Disponibilit‡ sul Capitolo";
+	return "Disponibilit√† sul Capitolo";
 }
 /**
  * Serve per aggiornare le spese del Cdr

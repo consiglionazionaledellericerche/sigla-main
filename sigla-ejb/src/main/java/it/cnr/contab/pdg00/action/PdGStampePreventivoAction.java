@@ -60,7 +60,7 @@ public Forward doStampaDettagliata(ActionContext context) {
 }
 
 /**
- * Stampa aggregata per unit‡ organizzativa per capitolo
+ * Stampa aggregata per unit√† organizzativa per capitolo
  * Permessa solo su CDR responsabili di UO
  */
 public Forward doStampaDiscrepanzeInsieme(ActionContext context) {
@@ -101,7 +101,7 @@ public Forward doStampaFunzione(ActionContext context) {
 }
 
 /**
- * Gestione funzione stampa PDG per linea di attivit‡
+ * Gestione funzione stampa PDG per linea di attivit√†
  *
  * @param context	L'ActionContext della richiesta
  * @return Il Forward alla pagina di risposta
@@ -310,7 +310,7 @@ public Forward doStampaCDSCapitoloC(ActionContext context) {
 
 
 /**
- * Stampa aggregata per unit‡ organizzativa per capitolo
+ * Stampa aggregata per unit√† organizzativa per capitolo
  * Permessa solo su CDR responsabili di UO
  */
 public Forward doStampaUOCapitolo(ActionContext context) {
@@ -335,7 +335,7 @@ public Forward doStampaUOCapitolo(ActionContext context) {
 }
 
 /**
- * Stampa aggregata per unit‡ organizzativa per funzione
+ * Stampa aggregata per unit√† organizzativa per funzione
  * Permessa solo su CDR responsabili di UO
  */
 public Forward doStampaUOFunzione(ActionContext context) {
@@ -360,7 +360,7 @@ public Forward doStampaUOFunzione(ActionContext context) {
 }
 
 /**
- * Stampa aggregata per unit‡ organizzativa per natura
+ * Stampa aggregata per unit√† organizzativa per natura
  * Permessa solo su CDR responsabili di UO
  */
 public Forward doStampaUONatura(ActionContext context) {

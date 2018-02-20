@@ -12,7 +12,7 @@
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<title>Modalit‡ Erogazione</title>
+<title>Modalit√† Erogazione</title>
 </head>
 <body class="Form">
 

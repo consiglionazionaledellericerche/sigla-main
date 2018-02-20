@@ -102,7 +102,7 @@ public Integer getCd_terzo() {
  * Metodo con cui si ottiene il valore della variabile <code>classeDiPagamentoKeys</code>
  * di tipo <code>Hashtable</code>.
  * In particolare, questo metodo carica in una Hashtable l'elenco dei possibili valori 
- * che puÚ assumere il campo <code>ti_pagamento</code>.
+ * che pu√≤ assumere il campo <code>ti_pagamento</code>.
  * @return java.util.Hashtable classeDiPagamentoKeys I valori del campo <code>ti_pagamento</code>.
  */
 public java.util.Dictionary getClasseDiPagamentoKeys() {
@@ -110,9 +110,9 @@ public java.util.Dictionary getClasseDiPagamentoKeys() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'codice_fiscale'
+ * Restituisce il valore della propriet√† 'codice_fiscale'
  *
- * @return Il valore della propriet‡ 'codice_fiscale'
+ * @return Il valore della propriet√† 'codice_fiscale'
  */
 public java.lang.String getCodice_fiscale() {
 	it.cnr.contab.anagraf00.core.bulk.V_all_anagrafico_terzoBulk at = this.getTerzoAnag();
@@ -121,7 +121,7 @@ public java.lang.String getCodice_fiscale() {
 	return at.getCodice_fiscale();
 }
 /**
- * Metodo che ritorna il codice del terzo cedente se Ë stata scelta uns cessione di credito
+ * Metodo che ritorna il codice del terzo cedente se √® stata scelta uns cessione di credito
  * @return Integer  il terzo cedente
  */
 public Integer getCodice_terzo_cedente() {
@@ -148,9 +148,9 @@ public java.lang.String getCognome() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'ds_tipo_documento_amm'
+ * Restituisce il valore della propriet√† 'ds_tipo_documento_amm'
  *
- * @return Il valore della propriet‡ 'ds_tipo_documento_amm'
+ * @return Il valore della propriet√† 'ds_tipo_documento_amm'
  */
 public java.lang.String getDs_tipo_documento_amm() 
 {
@@ -162,18 +162,18 @@ public java.lang.String getDs_tipo_documento_amm()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'fatturaAttivaKeys'
+ * Restituisce il valore della propriet√† 'fatturaAttivaKeys'
  *
- * @return Il valore della propriet‡ 'fatturaAttivaKeys'
+ * @return Il valore della propriet√† 'fatturaAttivaKeys'
  */
 public static java.util.Hashtable getFatturaAttivaKeys() {
 	return fatturaAttivaKeys;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'fatturaPassivaKeys'
+ * Restituisce il valore della propriet√† 'fatturaPassivaKeys'
  *
- * @return Il valore della propriet‡ 'fatturaPassivaKeys'
+ * @return Il valore della propriet√† 'fatturaPassivaKeys'
  */
 public static java.util.Hashtable getFatturaPassivaKeys() {
 	return fatturaPassivaKeys;
@@ -182,7 +182,7 @@ public static java.util.Hashtable getFatturaPassivaKeys() {
  * Metodo con cui si ottiene il valore della variabile <code>fl_pgiro_Keys</code>
  * di tipo <code>Hashtable</code>.
  * In particolare, questo metodo carica in una Hashtable l'elenco dei possibili valori 
- * che puÚ assumere il flag <code>fl_pgiro</code>.
+ * che pu√≤ assumere il flag <code>fl_pgiro</code>.
  * @return java.util.Hashtable fl_pgiro_Keys I valori del flag <code>fl_pgiro</code>.
  */
 public java.util.Hashtable getFl_pgiro_Keys() {
@@ -194,9 +194,9 @@ public java.util.Hashtable getFl_pgiro_Keys() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'partita_iva'
+ * Restituisce il valore della propriet√† 'partita_iva'
  *
- * @return Il valore della propriet‡ 'partita_iva'
+ * @return Il valore della propriet√† 'partita_iva'
  */
 
 
@@ -227,9 +227,9 @@ public java.lang.String getNome() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'partita_iva'
+ * Restituisce il valore della propriet√† 'partita_iva'
  *
- * @return Il valore della propriet‡ 'partita_iva'
+ * @return Il valore della propriet√† 'partita_iva'
  */
 public java.lang.String getPartita_iva() {
 	it.cnr.contab.anagraf00.core.bulk.V_all_anagrafico_terzoBulk at = this.getTerzoAnag();
@@ -251,9 +251,9 @@ public it.cnr.contab.anagraf00.core.bulk.V_all_anagrafico_terzoBulk getTerzoAnag
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'ti_competenza_residuo'
+ * Restituisce il valore della propriet√† 'ti_competenza_residuo'
  *
- * @return Il valore della propriet‡ 'ti_competenza_residuo'
+ * @return Il valore della propriet√† 'ti_competenza_residuo'
  */
 public String getTi_competenza_residuo() {
 	if ( Numerazione_doc_contBulk.TIPO_IMP_RES.equals( getCd_tipo_documento_cont()) )
@@ -275,7 +275,7 @@ public void setCd_terzo( Integer cd_terzo) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'codice_fiscale'
+ * Imposta il valore della propriet√† 'codice_fiscale'
  *
  * @param str	Il valore da assegnare a 'codice_fiscale'
  */
@@ -290,7 +290,7 @@ public void setNome( String str) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'partita_iva'
+ * Imposta il valore della propriet√† 'partita_iva'
  *
  * @param str	Il valore da assegnare a 'partita_iva'
  */
@@ -314,9 +314,9 @@ public void setTipoDocumentoKeys(java.util.Hashtable newTipoDocumentoKeys) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'competenza'
+ * Restituisce il valore della propriet√† 'competenza'
  *
- * @return Il valore della propriet‡ 'competenza'
+ * @return Il valore della propriet√† 'competenza'
  */
 public boolean isCompetenza()
 {

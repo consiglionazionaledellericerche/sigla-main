@@ -19,7 +19,7 @@ public interface IAnticipoMgr extends it.cnr.jada.comp.ICRUDMgr
   *  		Le scadenze vengono aggiunte alla lista delle scadenze congruenti.
   *	Validazione lista delle obbligazioni per le fatture passive
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle scadenze delle obbligazioni.
+  *			Si √® verificato un errore nel caricamento delle scadenze delle obbligazioni.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	Obbligazione definitiva
@@ -49,7 +49,7 @@ public interface IAnticipoMgr extends it.cnr.jada.comp.ICRUDMgr
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Disabilitazione filtro di selezione sul debitore dell'obbligazione
   *		PreCondition:
-  *			La scadenza dell'obbligazione ha un debitore diverso da quello della fattura passiva e non Ë di tipo "diversi"
+  *			La scadenza dell'obbligazione ha un debitore diverso da quello della fattura passiva e non √® di tipo "diversi"
   * 	PostCondition:
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Abilitazione filtro di selezione sulla data di scadenza
@@ -98,9 +98,9 @@ public abstract it.cnr.contab.missioni00.docs.bulk.AnticipoBulk completaTerzo(it
  *
  * Pre-post-conditions:
  *
- * Nome: Crea anticipo con obbligazione gi‡ esistente
+ * Nome: Crea anticipo con obbligazione gi√† esistente
  * Pre:  L'utente ha completato l'inserimento dei dati relativi ad un nuovo anticipo e ne chiede il salvataggio
- *       L'utente ha selezionato una scadenza di obbligazione gi‡ esistente
+ *       L'utente ha selezionato una scadenza di obbligazione gi√† esistente
  * Post: Il sistema aggiona l'obbligazione e i suoi saldi( metodo 'aggiornaObbligazione' ), imposta lo stato dell'anticipo a CONTABILIZZATO e ne salva i dati
  *
  * Nome: Crea anticipo con obbligazione nuova
@@ -125,9 +125,9 @@ public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext
  * Pre:  La scadenza legata all'anticipo passa la validazione
  * Post: Il sistema prosegue con la creazione dell'anticipo
  *
- * Nome: Crea anticipo con obbligazione gi‡ esistente
+ * Nome: Crea anticipo con obbligazione gi√† esistente
  * Pre:  L'utente ha completato l'inserimento dei dati relativi ad un nuovo anticipo e ne chiede il salvataggio
- *       L'utente ha selezionato una scadenza di obbligazione gi‡ esistente
+ *       L'utente ha selezionato una scadenza di obbligazione gi√† esistente
  * Post: Il sistema aggiona l'obbligazione e i suoi saldi( metodo 'aggiornaObbligazione' ), imposta lo stato dell'anticipo a CONTABILIZZATO e ne salva i dati
  *
  * Nome: Crea anticipo con obbligazione nuova
@@ -150,17 +150,17 @@ public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext
  * Pre-post-conditions:
  *
  * Nome: Crea rimborso
- * Pre:  Una richiesta di creazione di un rimborso completo di un anticipo Ë stata generata
+ * Pre:  Una richiesta di creazione di un rimborso completo di un anticipo √® stata generata
  *       L'anticipo e' in stato pagato
- *       L'utente ha selezionato la linea di attivit‡ per cui creare l'accertamento su cui contabilizzare il rimborso
+ *       L'utente ha selezionato la linea di attivit√† per cui creare l'accertamento su cui contabilizzare il rimborso
  * Post: Viene chiamata la stored procedure che 
  *       - crea un accertamento nel bilancio del CNR con voce del piano uguale
- *         a quella specificata in Configurazione CNR e linea di attivit‡ uguale a quella speciifcata dall'utente
+ *         a quella specificata in Configurazione CNR e linea di attivit√† uguale a quella speciifcata dall'utente
  *       - crea un rimborso contabilizzato sull'accertamento precedente 
  *
  * Nome: Crea rimborso - errore 
- * Pre:  Una richiesta di creazione di un rimborso completo di un anticipo Ë stata generata
- *       L'utente non ha selezionato una linea di attivit‡ per cui creare l'accertamento su cui contabilizzare il rimborso
+ * Pre:  Una richiesta di creazione di un rimborso completo di un anticipo √® stata generata
+ *       L'utente non ha selezionato una linea di attivit√† per cui creare l'accertamento su cui contabilizzare il rimborso
  * Post: Una segnalazione di errore viene restituita all'utente
  *
  *
@@ -272,7 +272,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
  * Pre-post-conditions:
  *
  * Nome: inizializzazione
- * Pre:  L'utente ha richiesto l'inizializzzaione dei dati di un anticipo gi‡ inserito per una eventuale modifica
+ * Pre:  L'utente ha richiesto l'inizializzzaione dei dati di un anticipo gi√† inserito per una eventuale modifica
  * Post: Il sistema restituisce l'anticipo con impostati tutti i dati relativi al terzo (metodo 'caricaTerzoInModificaAnticipo') 
  *       e all'eventuale rimborso (metodo 'inizializzaRimborso') e missione collegata
  *
@@ -289,16 +289,16 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
   * Pre-post-conditions
   *
   *	Nome: Anticipo ANNULLATO - Stato COFI uguale ad 'A' 
-  *	Pre: L'anticipo Ë annullato
-  *	Post: Ritorna <true>. L'anticipo Ë annullato
+  *	Pre: L'anticipo √® annullato
+  *	Post: Ritorna <true>. L'anticipo √® annullato
   *
   *	Nome: Anticipo NON ANNULLATO - Stato COFI diverso da 'A'
-  *	Pre: L'anticipo non Ë annullato
-  *	Post: Ritorna <false>. L'anticipo non Ë annullato
+  *	Pre: L'anticipo non √® annullato
+  *	Post: Ritorna <false>. L'anticipo non √® annullato
   *
   * @param userContext 	lo UserContext che ha generato la richiesta
   * @param anticipo 	L'anticipo da controllare  
-  * @return vero se l'anticipo Ë anullato
+  * @return vero se l'anticipo √® anullato
   *			falso altrimenti
   *
 **/
@@ -390,13 +390,13 @@ public abstract void setSavePoint(UserContext userContext, String savePointName)
   *		  	Generata una ApplicationException con il messaggio:	"Nessuna obbligazione associata!"
   *
   * Nome: 	Importi obbligazione/scadenza NULLI
-  *	Pre: 	L'importo della obbligazione e/o della scadenza Ë nullo
+  *	Pre: 	L'importo della obbligazione e/o della scadenza √® nullo
   *	Post: 	Non viene consentita l'associazione della scadenza con l'anticipo
   *		  	Generata una ApplicationException con il messaggio:	
-  *			"L'importo dell'obbligazione/scadenza Ë un dato obbligatorio"
+  *			"L'importo dell'obbligazione/scadenza √® un dato obbligatorio"
   *
   * Nome: 	Importo scadenza diverso da quello dell'anticipo
-  *	Pre: 	L'importo della scadenza Ë diverso da quello dell' anticipo
+  *	Pre: 	L'importo della scadenza √® diverso da quello dell' anticipo
   *	Post: 	Non viene consentita l'associazione della scadenza con l'anticipo
   *		  	Generata una ApplicationException con il messaggio:
   *			"La scadenza di obbligazione associata ha un importo diverso da quello dell'anticipo!"
@@ -408,7 +408,7 @@ public abstract void setSavePoint(UserContext userContext, String savePointName)
   *			"La data della scadenza dell'obbligazione deve essere successiva alla data di registrazione dell' anticipo!"
   *  
   * Nome: 	Terzo selezionato NON valido
-  *	Pre: 	Il terzo selezionato Ë diverso dal terzo dell'anticipo oppure il tipo entit‡ NON Ë DIVERSI
+  *	Pre: 	Il terzo selezionato √® diverso dal terzo dell'anticipo oppure il tipo entit√† NON √® DIVERSI
   *	Post: 	Non viene consentita l'associazione della scadenza con l'anticipo
   *		  	Generata una ApplicationException con il messaggio:
   *			"L'obbligazione deve avere un creditore valido!"

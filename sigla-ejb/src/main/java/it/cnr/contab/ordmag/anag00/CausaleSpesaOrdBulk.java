@@ -8,11 +8,11 @@ import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 public class CausaleSpesaOrdBulk extends CausaleSpesaOrdBase {
 	/**
-	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	private Unita_organizzativaBulk unitaOrganizzativa =  new Unita_organizzativaBulk();
 	/**
-	 * [VOCE_IVA La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entit‡ si riferisce alla normativa vigente sull'iva.]
+	 * [VOCE_IVA La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entit√† si riferisce alla normativa vigente sull'iva.]
 	 **/
 	private Voce_ivaBulk voceIva =  new Voce_ivaBulk();
 	/**
@@ -32,28 +32,28 @@ public class CausaleSpesaOrdBulk extends CausaleSpesaOrdBase {
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	public Unita_organizzativaBulk getUnitaOrganizzativa() {
 		return unitaOrganizzativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa)  {
 		this.unitaOrganizzativa=unitaOrganizzativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entit‡ si riferisce alla normativa vigente sull'iva.]
+	 * Restituisce il valore di: [La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entit√† si riferisce alla normativa vigente sull'iva.]
 	 **/
 	public Voce_ivaBulk getVoceIva() {
 		return voceIva;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entit‡ si riferisce alla normativa vigente sull'iva.]
+	 * Setta il valore di: [La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entit√† si riferisce alla normativa vigente sull'iva.]
 	 **/
 	public void setVoceIva(Voce_ivaBulk voceIva)  {
 		this.voceIva=voceIva;

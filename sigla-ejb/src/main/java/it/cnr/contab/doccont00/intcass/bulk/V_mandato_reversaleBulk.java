@@ -148,20 +148,20 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
 	
 		return this;
 	}
-	// l'oggetto è un Mandato
+	// l'oggetto Ã¨ un Mandato
 	public boolean isMandato() {
 		return Numerazione_doc_contBulk.TIPO_MAN.equals( getCd_tipo_documento_cont());
 	}
-	// l'oggetto è un Mandato di Accreditamento
+	// l'oggetto Ã¨ un Mandato di Accreditamento
 	public boolean isMandatoAccreditamento() {
 		return Numerazione_doc_contBulk.TIPO_MAN.equals( getCd_tipo_documento_cont()) && 
 		       MandatoBulk.TIPO_ACCREDITAMENTO.equals( getTi_documento_cont());
 	}
-	// l'oggetto è una Reversale
+	// l'oggetto Ã¨ una Reversale
 	public boolean isReversale() {
 		return Numerazione_doc_contBulk.TIPO_REV.equals( getCd_tipo_documento_cont());
 	}
-	//l'oggetto è una Reversale di Trasferimento
+	//l'oggetto Ã¨ una Reversale di Trasferimento
 	public boolean isReversaleTrasferimento() {
 		return Numerazione_doc_contBulk.TIPO_REV.equals( getCd_tipo_documento_cont()) && 
 			   ReversaleBulk.TIPO_TRASFERIMENTO.equals( getTi_documento_cont());

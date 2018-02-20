@@ -80,20 +80,20 @@ public class Linea_attivitaComponent extends CRUDComponent implements ILinea_att
 {
 
 /**
-  *  Controlla che l'esercizio di fine validit‡ sia corretto.
-  *  Esercizio fine validit‡ maggiore di quello del cdr
+  *  Controlla che l'esercizio di fine validit√† sia corretto.
+  *  Esercizio fine validit√† maggiore di quello del cdr
   *	   PreCondition:
-  *		 L'esercizio di fine validit‡ Ë maggiore di quello del cdr
+  *		 L'esercizio di fine validit√† √® maggiore di quello del cdr
   *    PostCondition:
   *		 Viene generata una ApplicationException con il messaggio "Esercizio di terminazione deve essere minore o uguale a <esercizio cdr>"
-  *  Esercizio fine validit‡ minore dell'esercizio di qualche dettaglio di pdg
+  *  Esercizio fine validit√† minore dell'esercizio di qualche dettaglio di pdg
   *	   PreCondition:
-  *		 Esiste qualche dettaglio di qualche pdg con questa linea di attivit‡ con esercizio maggiore della fine validit‡
+  *		 Esiste qualche dettaglio di qualche pdg con questa linea di attivit√† con esercizio maggiore della fine validit√†
   *    PostCondition:
   *		 Viene generata una ApplicationException con il messaggio "L'Esercizio di terminazione deve essere superiore agli esercizi per cui sono stati definiti dei preventivi"
   *  Default
   *    PreCondition:
-  *      Nessun'altra precondizione Ë verificata
+  *      Nessun'altra precondizione √® verificata
   *    PostCondition:
   *		 Esce senza alcuna eccezione
  */
@@ -135,14 +135,14 @@ protected void checkCessazioneLa(UserContext userContext,WorkpackageBulk la) thr
 	}	
 }
 /** 
-  *  Esercizio fine validit‡ non impostato 
+  *  Esercizio fine validit√† non impostato 
   *	   PreCondition:
-  *		 L'esercizio di fine validit‡ Ë nullo o minore dell'esercizio di inizio validit‡
+  *		 L'esercizio di fine validit√† √® nullo o minore dell'esercizio di inizio validit√†
   *    PostCondition:
-  *		 L'esercizio di fine validit‡ viene impostato uguale all'esercizio di fine validit‡ del cdr.
-  *  Tipo linea attivit‡ non specificato
+  *		 L'esercizio di fine validit√† viene impostato uguale all'esercizio di fine validit√† del cdr.
+  *  Tipo linea attivit√† non specificato
   *    PreCondition:
-  *      Non Ë stato specificato il tipo linea attivit‡
+  *      Non √® stato specificato il tipo linea attivit√†
   *    PostCondition:
   *		 Imposta cd_tipo_linea_attivita = 'PROP' 
   *  Normale
@@ -158,40 +158,40 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(uc,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(uc),latt))
-			throw new ApplicationException("Non Ë possibile creare nuovi GAE ad esercizio chiuso.");
+			throw new ApplicationException("Non √® possibile creare nuovi GAE ad esercizio chiuso.");
 		
 		if (latt.getTi_gestione()==null ) throw new ApplicationException( "E' obbligatorio indicare il tipo di gestione. " );
 		
 		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(uc, CNRUserContext.getEsercizio(uc)); 
 
 		if (latt.getTi_gestione().compareTo(Tipo_linea_attivitaBulk.TI_GESTIONE_SPESE)==0 && parCnr.isCofogObbligatorio() && latt.getCd_cofog()==null)
-			throw new ApplicationException("Non Ë possibile creare GAE di spesa senza indicare la classificazione Cofog.");	
+			throw new ApplicationException("Non √® possibile creare GAE di spesa senza indicare la classificazione Cofog.");	
 
 		if ((latt.getPdgMissione()==null || latt.getPdgMissione().getCd_missione()==null) &&
 			(parCnr.getFl_nuovo_pdg() || (latt.getProgetto2016()!=null && latt.getProgetto2016().getPg_progetto()!=null))) 
-			throw new ApplicationException("Non Ë possibile creare GAE senza indicare il codice missione.");	
+			throw new ApplicationException("Non √® possibile creare GAE senza indicare il codice missione.");	
 
 		if (isCommessaObbligatoria(uc,latt )) {
 			String cdProgramma = null;
 			if (!parCnr.getFl_nuovo_pdg() || latt.getEsercizio_inizio().compareTo(Integer.valueOf(2016))==-1) { 
 				if ((latt.getModulo2015() == null ||(latt.getModulo2015() != null && latt.getModulo2015().getPg_progetto() == null)))
-					throw new ApplicationException( "La Commessa sul GAE non puÚ essere nulla.");
+					throw new ApplicationException( "La Commessa sul GAE non pu√≤ essere nulla.");
 				if (latt!=null && latt.getModulo2015()!=null && 
 					latt.getModulo2015().getProgettopadre()!=null && latt.getModulo2015().getProgettopadre().getProgettopadre()!=null)
 					cdProgramma = latt.getModulo2015().getProgettopadre().getProgettopadre().getCd_programma();
 			}
 			if (parCnr.getFl_nuovo_pdg()) {
 				if (latt.getProgetto2016() == null ||(latt.getProgetto2016() != null && latt.getProgetto2016().getPg_progetto() == null))
-					throw new ApplicationException( "Il Progetto sul GAE non puÚ essere nullo. " );
+					throw new ApplicationException( "Il Progetto sul GAE non pu√≤ essere nullo. " );
 				if (latt!=null && latt.getProgetto2016()!=null && latt.getProgetto2016().getProgettopadre()!=null)
 					if (cdProgramma != null && !cdProgramma.equals(latt.getProgetto2016().getProgettopadre().getCd_programma()))
-						throw new ApplicationException( "Il Codice Dipartimento del Modulo di attivit‡ ("+cdProgramma+") non puÚ essere differente da quello del Progetto ("+latt.getProgetto2016().getProgettopadre().getCd_programma()+")." );
+						throw new ApplicationException( "Il Codice Dipartimento del Modulo di attivit√† ("+cdProgramma+") non pu√≤ essere differente da quello del Progetto ("+latt.getProgetto2016().getProgettopadre().getCd_programma()+")." );
 					cdProgramma = latt.getProgetto2016().getProgettopadre().getCd_programma();
 			}
 			if (cdProgramma!=null) {
 				if (latt.getPdgProgramma()!=null && !cdProgramma.equals(latt.getPdgProgramma().getCd_programma()))
-					throw new ApplicationException( "Il Codice Dipartimento del Modulo di attivit‡ e del Progetto ("+cdProgramma+") risulta differente dal Codice Programma indicato sulla "+
-							" Linea di attivit‡ ("+latt.getPdgProgramma().getCd_programma()+")." );
+					throw new ApplicationException( "Il Codice Dipartimento del Modulo di attivit√† e del Progetto ("+cdProgramma+") risulta differente dal Codice Programma indicato sulla "+
+							" Linea di attivit√† ("+latt.getPdgProgramma().getCd_programma()+")." );
 				latt.setPdgProgramma((Pdg_programmaBulk)findByPrimaryKey(uc, new Pdg_programmaBulk(cdProgramma)));
 			}
 		}				
@@ -221,7 +221,7 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 			}
 			/*Fine valorizzazione id PostIt*/
 		  ((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).setCd_centro_responsabilita(latt.getCd_centro_responsabilita());
-		  /*Attenzione qui il codice linea attivita Ë ancora nullo !*/
+		  /*Attenzione qui il codice linea attivita √® ancora nullo !*/
 		  ((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).setCd_linea_attivita(latt.getCd_linea_attivita());
 		}
 		/*Fine PostIt*/		
@@ -262,16 +262,16 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 }
 //^^@@
 /** 
-  *  Linea di attivit‡ CSSAC gi‡ esistente
+  *  Linea di attivit√† CSSAC gi√† esistente
   *    PreCondition:
-  *      Viene cercata E TROVATA una linea di attivit‡ con TIPO=CSSAC, cd_cdr_collegato=CDR LA origine, e cd_lacollegato=cd_linea_attivita origine.
+  *      Viene cercata E TROVATA una linea di attivit√† con TIPO=CSSAC, cd_cdr_collegato=CDR LA origine, e cd_lacollegato=cd_linea_attivita origine.
   *    PostCondition:
   *      Quest'istanza viene restituita all'utente.
-  *  Linea di attivit‡ CSSAC non esiste
+  *  Linea di attivit√† CSSAC non esiste
   *    PreCondition:
-  *      Viene cercata E NON TROVATA una linea di attivit‡ con TIPO=CSSAC, cd_cdr_collegato=CDR LA origine, e cd_lacollegato=cd_linea_attivita origine.
+  *      Viene cercata E NON TROVATA una linea di attivit√† con TIPO=CSSAC, cd_cdr_collegato=CDR LA origine, e cd_lacollegato=cd_linea_attivita origine.
   *    PostCondition:
-  *      Viene creata una linea di attivit‡ con codice CdR = aCdrBulk.cd_centro_responsabilita, TIPO=CSSAC, cd_cdr_collegato=CDR LA origine, cd_lacollegato=cd_linea_attivita origine, Funzione = funzione LA origine, e Natura = 4, denominazione = Denominazione LA origine, Descrizione=descrizione LA origine, e Risultati=risultati LA origine. La numerazione segue le logiche della numerazione delle linee di attivit‡ di tipo Sistema (SXX..XX) dove XX..XX progressivo numerico di numero di cifre = a quanto specificato in lunghezza chiavi per tabella LINEA_ATTIVITA - 1.
+  *      Viene creata una linea di attivit√† con codice CdR = aCdrBulk.cd_centro_responsabilita, TIPO=CSSAC, cd_cdr_collegato=CDR LA origine, cd_lacollegato=cd_linea_attivita origine, Funzione = funzione LA origine, e Natura = 4, denominazione = Denominazione LA origine, Descrizione=descrizione LA origine, e Risultati=risultati LA origine. La numerazione segue le logiche della numerazione delle linee di attivit√† di tipo Sistema (SXX..XX) dove XX..XX progressivo numerico di numero di cifre = a quanto specificato in lunghezza chiavi per tabella LINEA_ATTIVITA - 1.
   *      
  */
 //^^@@
@@ -324,16 +324,16 @@ public WorkpackageBulk creaLineaAttivitaCSSAC (UserContext aUC,CdrBulk aCdrBulk,
         }
 //^^@@
 /** 
-  *  Linea di attivit‡ SAUO gi‡ esistente
+  *  Linea di attivit√† SAUO gi√† esistente
   *    PreCondition:
-  *      Viene cercata E TROVATA una linea di attivit‡ con TIPO=SAUO, Funzione=Funzione LA origine, e Natura=Natura LA origine se diversa da 5, altrimenti 1 che corresponde per codice CdR.
+  *      Viene cercata E TROVATA una linea di attivit√† con TIPO=SAUO, Funzione=Funzione LA origine, e Natura=Natura LA origine se diversa da 5, altrimenti 1 che corresponde per codice CdR.
   *    PostCondition:
   *      Quest'istanza viene restituita all'utente.
-  *  Linea di attivit‡ SAUO non esiste
+  *  Linea di attivit√† SAUO non esiste
   *    PreCondition:
-  *      Viene cercata MA NON TROVATA una linea di attivit‡ con TIPO=SAUO, Funzione=Funzione LA origine, e Natura=Natura LA origine se diversa da 5 altirmenti 1, che corresponde per codice CdR.
+  *      Viene cercata MA NON TROVATA una linea di attivit√† con TIPO=SAUO, Funzione=Funzione LA origine, e Natura=Natura LA origine se diversa da 5 altirmenti 1, che corresponde per codice CdR.
   *    PostCondition:
-  *      Viene creata una Linea di attivit‡ per il CdR richiesto con TIPO=SAUO, Funzione=Funzione LA origine, Natura=Natura LA origine e denominazione = 'Spese per costi altrui'. La numerazione per il codice linea di attivit‡ segue le logiche della numerazione delle linee di attivit‡ di tipo Sistema (SXX..XX) dove XX..XX progressivo numerico di numero di cifre = a quanto specificato in lunghezza chiavi per tabella LINEA_ATTIVITA - 1.
+  *      Viene creata una Linea di attivit√† per il CdR richiesto con TIPO=SAUO, Funzione=Funzione LA origine, Natura=Natura LA origine e denominazione = 'Spese per costi altrui'. La numerazione per il codice linea di attivit√† segue le logiche della numerazione delle linee di attivit√† di tipo Sistema (SXX..XX) dove XX..XX progressivo numerico di numero di cifre = a quanto specificato in lunghezza chiavi per tabella LINEA_ATTIVITA - 1.
  */
 //^^@@
 public WorkpackageBulk creaLineaAttivitaSAUO (UserContext aUC,CdrBulk aCdrBulk,WorkpackageBulk aLABulk) throws ComponentException
@@ -403,16 +403,16 @@ protected void initializeKeysAndOptionsInto(UserContext aUC, OggettoBulk bulk) t
 }
 //^^@@
 /** 
-  *  Linea di attivit‡ SAUOP gi‡ esistente
+  *  Linea di attivit√† SAUOP gi√† esistente
   *    PreCondition:
-  *      Viene cercata E TROVATA una linea di attivit‡ con TIPO=SAUOP, Funzione=01 e Natura=1 che corresponde per codice CdR.
+  *      Viene cercata E TROVATA una linea di attivit√† con TIPO=SAUOP, Funzione=01 e Natura=1 che corresponde per codice CdR.
   *    PostCondition:
-  *      Quest'istanza viene restituita all'utente, perchÈ esiste per ogni CDR (servente) una e una sola LA SAUOP.
-  *  Linea di attivit‡ SAUOP non esiste
+  *      Quest'istanza viene restituita all'utente, perch√© esiste per ogni CDR (servente) una e una sola LA SAUOP.
+  *  Linea di attivit√† SAUOP non esiste
   *    PreCondition:
-  *      Viene cercata MA NON TROVATA una linea di attivit‡ con TIPO=SAUOP, Funzione=01 e Natura=1 che corresponde per codice CdR.
+  *      Viene cercata MA NON TROVATA una linea di attivit√† con TIPO=SAUOP, Funzione=01 e Natura=1 che corresponde per codice CdR.
   *    PostCondition:
-  *      Viene creata una Linea di attivit‡ per il CdR richiesto con TIPO=SAUOP, Funzione=01, Natura=1, e denominazione = 'Spese per costi altrui'. La numerazione per il codice linea di attivit‡ segue le logiche della numerazione delle linee di attivit‡ di tipo Sistema (SXX..XX) dove XX..XX progressivo numerico di numero di cifre = a quanto specificato in lunghezza chiavi per tabella LINEA_ATTIVITA - 1.
+  *      Viene creata una Linea di attivit√† per il CdR richiesto con TIPO=SAUOP, Funzione=01, Natura=1, e denominazione = 'Spese per costi altrui'. La numerazione per il codice linea di attivit√† segue le logiche della numerazione delle linee di attivit√† di tipo Sistema (SXX..XX) dove XX..XX progressivo numerico di numero di cifre = a quanto specificato in lunghezza chiavi per tabella LINEA_ATTIVITA - 1.
  */
 //^^@@
 public WorkpackageBulk creaLineaAttivitaSAUOP (UserContext aUC,CdrBulk aCdrBulk) throws ComponentException
@@ -461,20 +461,20 @@ public WorkpackageBulk creaLineaAttivitaSAUOP (UserContext aUC,CdrBulk aCdrBulk)
 			}
         }
 /**
- * Esegue una operazione di eliminazione di una Linea di Attivit‡
+ * Esegue una operazione di eliminazione di una Linea di Attivit√†
  *
  * Pre-post-conditions:
  *
- * Nome: Cancellazione di una Linea di attivit‡ non utilizzata
- * Pre:  La richiesta di cancellazione di una Linea di attivit‡ e' stata generata
- * Post: La Linea di attivit‡ e' stato cancellata
+ * Nome: Cancellazione di una Linea di attivit√† non utilizzata
+ * Pre:  La richiesta di cancellazione di una Linea di attivit√† e' stata generata
+ * Post: La Linea di attivit√† e' stato cancellata
  *
- * Nome: Cancellazione di una Linea di attivit‡ utilizzata
- * Pre:  La richiesta di cancellazione di una Linea di attivit‡ utilizzata e' stata generata
+ * Nome: Cancellazione di una Linea di attivit√† utilizzata
+ * Pre:  La richiesta di cancellazione di una Linea di attivit√† utilizzata e' stata generata
  * Post: Un messaggio di errrore viene geenrato che suggerisce l'impostazione dell'Esercizio di Terminazione
  * 
  * @param userContext lo userContext che ha generato la richiesta
- * @param bulk l'istanza di Linea di attivit‡ che deve essere cancellata 
+ * @param bulk l'istanza di Linea di attivit√† che deve essere cancellata 
  */
 
 public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
@@ -483,7 +483,7 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws it.c
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext,(WorkpackageBulk)bulk))
-			throw new ApplicationException("Non Ë possibile eliminare GAE con esercizio di fine validit‡ chiuso.");
+			throw new ApplicationException("Non √® possibile eliminare GAE con esercizio di fine validit√† chiuso.");
 		  /*Se sto cancellando il Workpackage cancello anche tutti i dettagli */
 		  if (bulk instanceof WorkpackageBulk){
 			for(int i = 0; ((WorkpackageBulk)bulk).getDettagliPostIt().size() > i; i++) {
@@ -508,8 +508,8 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws it.c
 }
 /**
  * Reimplementato per poter intercettare la DuplicateKeyException: nel
- * caso della linea di attivit‡ non viene intercettato prima (nel validaCreaConBulk)
- * perchË l'utente inserisce un codice che poi viene modificato dall'initializePrimaryKey
+ * caso della linea di attivit√† non viene intercettato prima (nel validaCreaConBulk)
+ * perch√® l'utente inserisce un codice che poi viene modificato dall'initializePrimaryKey
  * (ci aggiunge la 'P' davanti!)
  */
 protected OggettoBulk eseguiCreaConBulk(UserContext userContext,OggettoBulk bulk) throws ComponentException,PersistencyException {
@@ -525,9 +525,9 @@ protected OggettoBulk eseguiCreaConBulk(UserContext userContext,OggettoBulk bulk
  *
  *  Normale
  *    PreCondition:
- *      Nessun'altra per-post condition Ë verificata
+ *      Nessun'altra per-post condition √® verificata
  *    PostCondition:
- *      Viene riletta la linea attivit‡ e caricato l'elenco dei risultati collegati.
+ *      Viene riletta la linea attivit√† e caricato l'elenco dei risultati collegati.
  */	
 public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 	try {
@@ -573,8 +573,8 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 			}
 		}
 		
-		//Verifico se Ë stata utilizzata nel 2015 e/o nel 2016
-		//Rospuc i controlli effettuati in isGaeUtilizzata sono insufficienti, in accordo con l'ufficio competente non sono pi˘ modificabili 
+		//Verifico se √® stata utilizzata nel 2015 e/o nel 2016
+		//Rospuc i controlli effettuati in isGaeUtilizzata sono insufficienti, in accordo con l'ufficio competente non sono pi√π modificabili 
 		if (aLA.getModulo2015()!=null)
 			aLA.setUtilizzata2015(true);
 		if (aLA.getProgetto2016()!=null)
@@ -585,7 +585,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext,aLA))
-			return asRO(aLA,"Non Ë possibile modificare GAE con esercizio di fine validit‡ chiuso.");
+			return asRO(aLA,"Non √® possibile modificare GAE con esercizio di fine validit√† chiuso.");
 		return aLA;
 		
 	} catch(Exception e) {
@@ -595,9 +595,9 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 /**
  *  Normale
  *    PreCondition:
- *      E' stato modificata la natura o il cdr di una linea di attivit‡ con gestione spesa
+ *      E' stato modificata la natura o il cdr di una linea di attivit√† con gestione spesa
  *    PostCondition:
- *      Viene impostato l'insieme uguale a quello della prima linea attivit‡ con la stessa natura e cdr di quella specificata.
+ *      Viene impostato l'insieme uguale a quello della prima linea attivit√† con la stessa natura e cdr di quella specificata.
  */
 public WorkpackageBulk inizializzaNaturaPerInsieme(UserContext userContext,WorkpackageBulk linea_attivita) throws it.cnr.jada.comp.ComponentException {
 	try {
@@ -680,21 +680,21 @@ protected boolean isEsercizioChiuso(UserContext userContext,Integer esercizio,Wo
 	}
 }
 /**
-  *  Esercizio fine validit‡ non valido
+  *  Esercizio fine validit√† non valido
   *	   PreCondition:
   *		 Viene invocato il metodo aggiornaEsercizioFine e quest'ultimo genera una eccezione di validazione
   *    PostCondition:
-  *		 Viene lasciata uscire l'eccezione senza salvare la linea di attivit‡
+  *		 Viene lasciata uscire l'eccezione senza salvare la linea di attivit√†
   *  Default
   *    PreCondition:
-  *      Nessun'altra precondizione Ë verificata
+  *      Nessun'altra precondizione √® verificata
   *    PostCondition:
   *		 Invoca:
   *        validaFunzione()
   *        validaModificaInsieme()
   *        validaNaturaPerInsieme()
   *        validaModificaFunzioneNatura()
-  *      ed infine viene salvata la linea di attivit‡ specificata.
+  *      ed infine viene salvata la linea di attivit√† specificata.
  */
 public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 	try{
@@ -703,24 +703,24 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext,linea_attivita))
-			throw new ApplicationException("Non Ë possibile modificare GAE con esercizio di fine validit‡ chiuso.");
+			throw new ApplicationException("Non √® possibile modificare GAE con esercizio di fine validit√† chiuso.");
 		
 		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext)); 
 
 		if (linea_attivita.getTi_gestione().compareTo(Tipo_linea_attivitaBulk.TI_GESTIONE_SPESE)==0 && parCnr.isCofogObbligatorio() && linea_attivita.getCd_cofog()==null)
-			throw new ApplicationException("Non Ë possibile modificare GAE di spesa senza indicare la classificazione Cofog.");
+			throw new ApplicationException("Non √® possibile modificare GAE di spesa senza indicare la classificazione Cofog.");
 
 		if ((linea_attivita.getPdgMissione()==null || linea_attivita.getPdgMissione().getCd_missione()==null) &&
 			(parCnr.getFl_nuovo_pdg() || (linea_attivita.getProgetto2016()!=null && linea_attivita.getProgetto2016().getPg_progetto()!=null))) 
-			throw new ApplicationException("Non Ë possibile modificare GAE senza indicare il codice missione.");	
+			throw new ApplicationException("Non √® possibile modificare GAE senza indicare il codice missione.");	
 
 		if (isCommessaObbligatoria(userContext,linea_attivita )) {
 			if (!parCnr.getFl_nuovo_pdg() || linea_attivita.getEsercizio_inizio().compareTo(Integer.valueOf(2016))==-1) { 
 				if ((linea_attivita.getModulo2015() == null ||(linea_attivita.getModulo2015() != null && linea_attivita.getModulo2015().getPg_progetto() == null)))
-					throw new ApplicationException( "La Commessa sul GAE non puÚ essere nulla. " );
+					throw new ApplicationException( "La Commessa sul GAE non pu√≤ essere nulla. " );
 			}
 			if (parCnr.getFl_nuovo_pdg() && (linea_attivita.getProgetto2016() == null ||(linea_attivita.getProgetto2016() != null && linea_attivita.getProgetto2016().getPg_progetto() == null)))
-				throw new ApplicationException( "Il Progetto sul GAE non puÚ essere nullo. " );
+				throw new ApplicationException( "Il Progetto sul GAE non pu√≤ essere nullo. " );
 		}				
 
 		aggiornaEsercizioFine(userContext, linea_attivita);
@@ -759,7 +759,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 					assGaeEsercizio2015.setToBeDeleted();
 				else if (!linea_attivita.getModulo2015().getPg_progetto().equals(assGaeEsercizio.getProgetto().getPg_progetto())) {
 					if (isGaeUtilizzata(userContext,linea_attivita,true)) 
-						throw new ApplicationException( "Il Modulo di attivit‡ non puÚ essere modificato in quanto la GAE risulta gi‡ utilizzata." );
+						throw new ApplicationException( "Il Modulo di attivit√† non pu√≤ essere modificato in quanto la GAE risulta gi√† utilizzata." );
 					assGaeEsercizio2015.setProgetto(linea_attivita.getModulo2015());
 					assGaeEsercizio2015.setToBeUpdated();
 				}
@@ -768,7 +768,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 				if (linea_attivita.getProgetto2016()==null || linea_attivita.getProgetto2016().getPg_progetto()==null ||
 					linea_attivita.getEsercizio_fine().compareTo(assGaeEsercizio2016.getEsercizio())<0) {
 					if (isGaeUtilizzata(userContext,linea_attivita,false)) 
-						throw new ApplicationException( "Il Progetto non puÚ essere eliminato in quanto la GAE risulta gi‡ utilizzata." );
+						throw new ApplicationException( "Il Progetto non pu√≤ essere eliminato in quanto la GAE risulta gi√† utilizzata." );
 					assGaeEsercizio2016.setToBeDeleted();
 				} else if (linea_attivita.getProgetto2016()!=null && linea_attivita.getProgetto2016().getPg_progetto()!=null &&
 						linea_attivita.getProgetto2016().getFl_piano_economico() && 
@@ -790,7 +790,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 						   (linea_attivita.getVocePianoEconomico2016()!=null && assGaeEsercizio.getVoce_piano_economico() == null) ||
 						   (linea_attivita.getVocePianoEconomico2016()==null && assGaeEsercizio.getVoce_piano_economico() != null)) {
 					if (isGaeUtilizzata(userContext,linea_attivita,false)) 
-						throw new ApplicationException( "Il Progetto non puÚ essere modificato in quanto la GAE risulta gi‡ utilizzata." );
+						throw new ApplicationException( "Il Progetto non pu√≤ essere modificato in quanto la GAE risulta gi√† utilizzata." );
 					assGaeEsercizio2016.setProgetto(linea_attivita.getProgetto2016());
 					assGaeEsercizio2016.setEsercizio_fine(linea_attivita.getEsercizio_fine());
 					assGaeEsercizio2016.setVoce_piano_economico(linea_attivita.getVocePianoEconomico2016());
@@ -838,12 +838,12 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 /**
   *  Default
   *	   PreCondition:
-  *		 Viene richiesta una ricerca di linee di attivit‡
+  *		 Viene richiesta una ricerca di linee di attivit√†
   *    PostCondition:
   *		 Viene creata una query sulla tabella LINEA_ATTIVITA con le clausole
-  *		 richieste pi˘ le seguenti clausole:
-  *		 - L'esercizio di scrivania Ë compreso tra ESERCIZIO_INIZIO e ESERCIZIO_FINE
-  *		 - Il cdr della linea di attivit‡ Ë gestibile dal cdr dell'utente (secondo
+  *		 richieste pi√π le seguenti clausole:
+  *		 - L'esercizio di scrivania √® compreso tra ESERCIZIO_INIZIO e ESERCIZIO_FINE
+  *		 - Il cdr della linea di attivit√† √® gestibile dal cdr dell'utente (secondo
   *			le regole definite dalla query V_PDG_CDR_GESTIBILI)
  */
 protected Query select(UserContext userContext,CompoundFindClause clauses,OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
@@ -986,10 +986,10 @@ public SQLBuilder selectProgetto2016ByClause (UserContext userContext,
 /**
   *  Default
   *	   PreCondition:
-  *		 Viene richiesto l'elenco dei cdr assegnabili ad una linea di attivit‡
+  *		 Viene richiesto l'elenco dei cdr assegnabili ad una linea di attivit√†
   *    PostCondition:
   *		 Viene creata una query sulla tabella dei CDR con le seguenti clausole
-  *		 - Il cdr della linea di attivit‡ Ë gestibile dal cdr dell'utente (secondo
+  *		 - Il cdr della linea di attivit√† √® gestibile dal cdr dell'utente (secondo
   *			le regole definite dalla query V_PDG_CDR_GESTIBILI)
  */
 public SQLBuilder selectCentro_responsabilitaByClause(UserContext userContext, WorkpackageBulk linea_attivita, CdrBulk cdr, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
@@ -1006,21 +1006,21 @@ public SQLBuilder selectCentro_responsabilitaByClause(UserContext userContext, W
 		return sql;
 }
 /**
-  *  CDR non Ë specificato
+  *  CDR non √® specificato
   *	   PreCondition:
-  *		 La linea di attivit‡ specificata ha il cdr nullo
+  *		 La linea di attivit√† specificata ha il cdr nullo
   *    PostCondition:
   *		 Viene generata una ApplicationException con il messaggio "Selezionare prima un CDR"
   *  Default
   *	   PreCondition:
-  *		 Viene richiesto l'elenco degli insiemi assegnabili ad una linea di attivit‡
+  *		 Viene richiesto l'elenco degli insiemi assegnabili ad una linea di attivit√†
   *    PostCondition:
-  *		 Viene creata una query sulla tabella INSIEME_LA con le clausole specificate pi˘ la clausola CD_CDR = cdr della linea attivit‡
+  *		 Viene creata una query sulla tabella INSIEME_LA con le clausole specificate pi√π la clausola CD_CDR = cdr della linea attivit√†
  */
 public SQLBuilder selectInsieme_laByClause(UserContext userContext, WorkpackageBulk linea_attivita, Insieme_laBulk insieme_la, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
 	// (11/06/2002 15.14.46) CNRADM
 	// Modificato per selezionare gli insiemi compatibili col cdr
-	// della linea attivit‡.
+	// della linea attivit√†.
 
 	//return ((Insieme_laHome)getHome(userContext,insieme_la)).selectInsieme_laVisibiliByClauses(userContext,clauses);
 
@@ -1034,7 +1034,7 @@ public SQLBuilder selectInsieme_laByClause(UserContext userContext, WorkpackageB
 /**
   *  Default
   *	   PreCondition:
-  *		 Viene richiesto l'elenco tipi linea attivitÚ assegnabili ad una linea di attivit‡
+  *		 Viene richiesto l'elenco tipi linea attivit√≤ assegnabili ad una linea di attivit√†
   *    PostCondition:
   *		 Viene creata una query sulla tabella TIPO_LINEA_ATTIVITA con le seguenti clausole:
   *		 - ti_tipo_la != 'S' (sistema)
@@ -1050,14 +1050,14 @@ public SQLBuilder selectTipo_linea_attivitaByClause(UserContext userContext, Wor
 /** 
   *  Tipo gestione non specificato
   *	   PreCondition:
-  *		 Non Ë stato specificato il flag ti_gestione
+  *		 Non √® stato specificato il flag ti_gestione
   *    PostCondition:
   *		 Viene forzato ti_gestione = 'E' (entrate)
   *  Funzione non specificata
   *    PreCondition:
-  *      Non Ë stato specificato una funzione
+  *      Non √® stato specificato una funzione
   *    PostCondition:
-  *		 Viene generata una ApplicationException con il messaggio "E' necessario impostare la funzione per le linee di attivit‡ di spesa"
+  *		 Viene generata una ApplicationException con il messaggio "E' necessario impostare la funzione per le linee di attivit√† di spesa"
  */
 private void validaFunzione(it.cnr.jada.UserContext uc,WorkpackageBulk linea_attivita) throws ComponentException {
 	if (linea_attivita.TI_GESTIONE_ENTRATE.equals(linea_attivita.getTi_gestione()))
@@ -1068,19 +1068,19 @@ private void validaFunzione(it.cnr.jada.UserContext uc,WorkpackageBulk linea_att
 /**
  *  Natura e funzione non modificati
  *    PreCondition:
- *      La natura e la funzione della linea di attivit‡ non sono stati modificati 
+ *      La natura e la funzione della linea di attivit√† non sono stati modificati 
  *    PostCondition:
  *      Esce senza eccezioni
- *  Linea di attivit‡ spese
+ *  Linea di attivit√† spese
  *    PreCondition:
- *      La linea di attivit‡ Ë di gestione spese ed esiste qualche dettaglio di spesa del pdg preventivo che vi fa riferimento
+ *      La linea di attivit√† √® di gestione spese ed esiste qualche dettaglio di spesa del pdg preventivo che vi fa riferimento
  *    PostCondition:
- *      Viene generata una ApplicationException con messaggio "Non Ë possibile cambiare funzione o natura perchË la linea di attivit‡ Ë utilizzata in piani di gestione"
- *  Linea di attivit‡ entrate
+ *      Viene generata una ApplicationException con messaggio "Non √® possibile cambiare funzione o natura perch√® la linea di attivit√† √® utilizzata in piani di gestione"
+ *  Linea di attivit√† entrate
  *    PreCondition:
- *      La linea di attivit‡ Ë di gestione entrate ed esiste qualche dettaglio di entrata del pdg preventivo che vi fa riferimento
+ *      La linea di attivit√† √® di gestione entrate ed esiste qualche dettaglio di entrata del pdg preventivo che vi fa riferimento
  *    PostCondition:
- *      Viene generata una ApplicationException con messaggio "Non Ë possibile cambiare funzione o natura perchË la linea di attivit‡ Ë utilizzata in piani di gestione"
+ *      Viene generata una ApplicationException con messaggio "Non √® possibile cambiare funzione o natura perch√® la linea di attivit√† √® utilizzata in piani di gestione"
  */
 private void validaModificaFunzioneNatura(UserContext userContext,WorkpackageBulk linea_attivita) throws ComponentException {
 	try {
@@ -1102,7 +1102,7 @@ private void validaModificaFunzioneNatura(UserContext userContext,WorkpackageBul
 			if (sql.executeExistsQuery(getConnection(userContext))) {
 			    linea_attivita.setFunzione(linea_attivita_originale.getFunzione());
 			    linea_attivita.setNatura(linea_attivita_originale.getNatura());
-				throw new ApplicationException("Non Ë possibile cambiare funzione o natura perchË il GAE Ë utilizzato in piani di gestione");
+				throw new ApplicationException("Non √® possibile cambiare funzione o natura perch√® il GAE √® utilizzato in piani di gestione");
 			}
 		}
 	} catch(PersistencyException e) {
@@ -1114,14 +1114,14 @@ private void validaModificaFunzioneNatura(UserContext userContext,WorkpackageBul
 /**
  *  Insieme non modificato
  *    PreCondition:
- *      La linea di attivit‡ specificata ha lo stesso insieme rispetto all'ultima modifica
+ *      La linea di attivit√† specificata ha lo stesso insieme rispetto all'ultima modifica
  *    PostCondition:
  *      Esce senza eccezioni
- *  Linea di attivit‡ gi‡ usata nel pdg
+ *  Linea di attivit√† gi√† usata nel pdg
  *    PreCondition:
- *      Esiste un dettaglio del pdg che fa riferimento alla linea di attivit‡ specificata
+ *      Esiste un dettaglio del pdg che fa riferimento alla linea di attivit√† specificata
  *    PostCondition:
- *      Genera una ApplicationException con il messaggio "Non Ë possibile cambiare insieme perchË la linea di attivit‡ Ë usata nel piano di gestione."
+ *      Genera una ApplicationException con il messaggio "Non √® possibile cambiare insieme perch√® la linea di attivit√† √® usata nel piano di gestione."
  *
 */
 private void validaModificaInsieme(UserContext userContext,WorkpackageBulk linea_attivita) throws ComponentException {
@@ -1139,7 +1139,7 @@ private void validaModificaInsieme(UserContext userContext,WorkpackageBulk linea
 			sql.addSQLClause("AND","CD_CENTRO_RESPONSABILITA",sql.EQUALS,linea_attivita_originale.getCd_centro_responsabilita());
 			sql.addSQLClause("AND","CD_LINEA_ATTIVITA",sql.EQUALS,linea_attivita_originale.getCd_linea_attivita());
 			if (sql.executeExistsQuery(getConnection(userContext)))
-				throw new ApplicationException("Non Ë possibile cambiare insieme perchË il GAE Ë usato nel piano di gestione.");
+				throw new ApplicationException("Non √® possibile cambiare insieme perch√® il GAE √® usato nel piano di gestione.");
 		}
 	} catch(PersistencyException e) {
 		throw handleException(e);
@@ -1148,22 +1148,22 @@ private void validaModificaInsieme(UserContext userContext,WorkpackageBulk linea
 	}
 }
 /** 
-  *  Linea attivit‡ di tipo entrate gi‡ esistente nell'insieme
+  *  Linea attivit√† di tipo entrate gi√† esistente nell'insieme
   *	   PreCondition:
-  *		 La linea di attivit‡ ha gestione entrate ed esiste un'altra linea di attivit‡ nell'insieme specificato con la
+  *		 La linea di attivit√† ha gestione entrate ed esiste un'altra linea di attivit√† nell'insieme specificato con la
   *		 stessa gestione.
   *    PostCondition:
-  *		 Genera una ApplicationException con il messaggio: "Esiste gi‡ una linea di attivit‡ con gestione entrata in questo insieme"
-  *  Linea di attivit‡ con natura diversa da quella delle altre linee dell'insieme - 1
+  *		 Genera una ApplicationException con il messaggio: "Esiste gi√† una linea di attivit√† con gestione entrata in questo insieme"
+  *  Linea di attivit√† con natura diversa da quella delle altre linee dell'insieme - 1
   *    PreCondition:
-  *      La linea di attivit‡ ha gestione entrate e le altre linee di attivit‡ dell'insieme specificato hanno natura diversa da quella specificata
+  *      La linea di attivit√† ha gestione entrate e le altre linee di attivit√† dell'insieme specificato hanno natura diversa da quella specificata
   *    PostCondition:
-  *		 Viene generata una ApplicationException con il messaggio "Esistono linee di attivit‡ dello stesso insieme con natura diversa"
-  *  Linea di attivit‡ con natura diversa da quella delle altre linee dell'insieme - 2
+  *		 Viene generata una ApplicationException con il messaggio "Esistono linee di attivit√† dello stesso insieme con natura diversa"
+  *  Linea di attivit√† con natura diversa da quella delle altre linee dell'insieme - 2
   *    PreCondition:
-  *      La linea di attivit‡ ha gestione spese ed esiste una linea di attivit‡ con gestione entrate e natura diversa da quella specificata
+  *      La linea di attivit√† ha gestione spese ed esiste una linea di attivit√† con gestione entrate e natura diversa da quella specificata
   *    PostCondition:
-  *		 Viene generata una ApplicationException con il messaggio "In questo insieme esiste una linea di attivit‡ con gestione entrate ma natura diversa"
+  *		 Viene generata una ApplicationException con il messaggio "In questo insieme esiste una linea di attivit√† con gestione entrate ma natura diversa"
  */
 private void validaNaturaPerInsieme(UserContext userContext,WorkpackageBulk linea_attivita) throws it.cnr.jada.comp.ComponentException {
 	try {
@@ -1179,7 +1179,7 @@ private void validaNaturaPerInsieme(UserContext userContext,WorkpackageBulk line
 				if (linea_attivita2.getCd_linea_attivita().equals(linea_attivita.getCd_linea_attivita()))
 					continue;
 				if (linea_attivita2.TI_GESTIONE_ENTRATE.equals(linea_attivita2.getTi_gestione()))
-					throw new ApplicationException("Esiste gi‡ un GAE con gestione entrata in questo insieme");
+					throw new ApplicationException("Esiste gi√† un GAE con gestione entrata in questo insieme");
 				if (!linea_attivita2.getCd_natura().equals(linea_attivita.getCd_natura()))
 					throw new ApplicationException("Esistono GAE dello stesso insieme con natura diversa");
 			}

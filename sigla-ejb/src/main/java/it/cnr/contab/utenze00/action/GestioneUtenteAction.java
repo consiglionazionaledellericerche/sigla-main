@@ -34,7 +34,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 		}
 	}
 	/**
-	 * Gestisce la richiesta di espansione di un nodo del menù applicativo
+	 * Gestisce la richiesta di espansione di un nodo del menu applicativo
 	 *
 	 * @param context	L'ActionContext della richiesta
 	 * @param cd_nodo codice del nodo da aprire	
@@ -57,7 +57,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 			bp.espandiNodo(nodo);
 			return context.findForward("menu_tree");
 		}catch(NullPointerException e){
-			setMessage(context, 0, "Selezionare l'Unità Organizzativa");
+			setMessage(context, 0, "Selezionare l'Unitè  Organizzativa");
 			return context.findDefaultForward();
 		}catch(Throwable e) {
 			return handleException(context,e);
@@ -119,7 +119,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 			CNRUserInfo ui = (CNRUserInfo)context.getUserInfo();
 			if (ui.getUnita_organizzativa()==null) {
 				SelezionatoreListaBP bp = (SelezionatoreListaBP)context.getBusinessProcess();
-				bp.setErrorMessage("Selezionare l'Unità organizzativa");
+				bp.setErrorMessage("Selezionare l'Unitè  organizzativa");
 				return context.findDefaultForward();
 			}
 			UtenteBulk utente = ui.getUtente();
@@ -345,7 +345,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 	
 	/**
 	 * Gestisce l'azione di costruzione della gerarchia applicativa (albero main) in funzione delle abilitazioni (accessi)
-	 * e unità organizzativa di scrivania selezionata dall'utente
+	 * e unitè  organizzativa di scrivania selezionata dall'utente
 	 *
 	 * @param context	L'ActionContext della richiesta
 	 * @return Il Forward alla pagina di risposta
@@ -377,9 +377,9 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della proprietà 'componentSession'
+	 * Restituisce il valore della proprietà  'componentSession'
 	 *
-	 * @return Il valore della proprietà 'componentSession'
+	 * @return Il valore della proprietà  'componentSession'
 	 * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non è possibile effettuare l'operazione
 	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
 	 */

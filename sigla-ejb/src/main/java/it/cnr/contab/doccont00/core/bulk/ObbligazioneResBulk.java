@@ -105,16 +105,16 @@ public class ObbligazioneResBulk extends ObbligazioneBulk {
 	}
 	public void validate() throws ValidationException {
 		if ( getIm_obbligazione() == null )
-			throw new ValidationException( "Il campo IMPORTO è obbligatorio." );
+			throw new ValidationException( "Il campo IMPORTO Ã¨ obbligatorio." );
 		// controllo su campo ESERCIZIO_ORIGINALE
 		if ( getEsercizio_originale() == null || getEsercizio_originale().equals("") )
-			throw new ValidationException( "Il campo ESERCIZIO IMPEGNO è obbligatorio." );
+			throw new ValidationException( "Il campo ESERCIZIO IMPEGNO Ã¨ obbligatorio." );
 		if (getEsercizio_originale().compareTo(getEsercizio())!=-1)
 			throw new ValidationException("L'esercizio dell'impegno residuo deve essere inferiore al " + getEsercizio());
 
 		// controllo su campo PG_OBBLIGAZIONE
 		if (getPg_obbligazione()==null)
-			throw new ValidationException("Il campo NUMERO IMPEGNO è obbligatorio.");
+			throw new ValidationException("Il campo NUMERO IMPEGNO Ã¨ obbligatorio.");
 
 		super.validate();
 	}
@@ -126,7 +126,7 @@ public class ObbligazioneResBulk extends ObbligazioneBulk {
 		this.obbligazione_modifica = obbligazione_modifica;
 	}
 	/**
-	 * se sono da aggiornare i saldi in modifica perchè
+	 * se sono da aggiornare i saldi in modifica perchÃ¨
 	 * l'obbligazione non proviene da modifiche in documenti
 	 * amministrativi, dato che i saldi verrebbero aggiornati
 	 * attraverso "deferredSaldi"
@@ -137,7 +137,7 @@ public class ObbligazioneResBulk extends ObbligazioneBulk {
 		return saldiDaAggiornare;
 	}
 	/**
-	 * imposta che sono da aggiornare i saldi in modifica perchè
+	 * imposta che sono da aggiornare i saldi in modifica perchÃ¨
 	 * l'obbligazione non proviene da modifiche in documenti
 	 * amministrativi, dato che i saldi verrebbero aggiornati
 	 * attraverso "deferredSaldi"

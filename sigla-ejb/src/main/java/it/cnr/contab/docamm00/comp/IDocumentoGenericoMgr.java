@@ -10,16 +10,16 @@ import it.cnr.jada.comp.ComponentException;
 public interface IDocumentoGenericoMgr extends IDocumentoAmministrativoMgr
 {
 /** 
-  *  aggiorna le modalit‡ e i temini di pagamento e la lista delle banche 
+  *  aggiorna le modalit√† e i temini di pagamento e la lista delle banche 
   *    PreCondition:
-  *      E' stato aggiunto un dettaglio ad un generico attivo con righe gi‡ inserite.
+  *      E' stato aggiunto un dettaglio ad un generico attivo con righe gi√† inserite.
   *    PostCondition:
   *      Vengono riportate le modalita,termini e banche della prima riga (default)
  */
 
 public abstract it.cnr.jada.bulk.OggettoBulk aggiornaModalita(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk param1,it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk param2,it.cnr.contab.anagraf00.core.bulk.TerzoBulk param3) throws it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException,it.cnr.jada.persistency.IntrospectionException;
 /** 
-  *  Non Ë utilizzato
+  *  Non √® utilizzato
  */
 
 public abstract void aggiornaStatoDocumentiAmministrativi(it.cnr.jada.UserContext param0,java.lang.String param1,java.lang.String param2,java.lang.String param3,java.lang.Integer param4,java.lang.Long param5,java.lang.String param6) throws it.cnr.jada.comp.ComponentException;
@@ -51,7 +51,7 @@ public abstract it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk ca
   *  		Le scadenze vengono aggiunte alla lista delle scadenze congruenti.
   *	Validazione lista delle accertamenti per le documenti generici
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle scadenze degli accertamenti.
+  *			Si √® verificato un errore nel caricamento delle scadenze degli accertamenti.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	accertamento definitiva
@@ -81,7 +81,7 @@ public abstract it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk ca
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Disabilitazione filtro di selezione sul debitore dell'accertamento
   *		PreCondition:
-  *			La scadenza dell'accertamento ha un debitore diverso da quello della documento generico e non Ë di tipo "diversi"
+  *			La scadenza dell'accertamento ha un debitore diverso da quello della documento generico e non √® di tipo "diversi"
   * 	PostCondition:
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Abilitazione filtro di selezione sulla data di scadenza
@@ -124,7 +124,7 @@ public abstract it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk cercaCam
   *  		Le scadenze vengono aggiunte alla lista delle scadenze congruenti.
   *	Validazione lista delle obbligazioni per le documenti generici
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle scadenze delle obbligazioni.
+  *			Si √® verificato un errore nel caricamento delle scadenze delle obbligazioni.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	Obbligazione definitiva
@@ -154,7 +154,7 @@ public abstract it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk cercaCam
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Disabilitazione filtro di selezione sul debitore dell'obbligazione
   *		PreCondition:
-  *			La scadenza dell'obbligazione ha un debitore diverso da quello della documento generico e non Ë di tipo "diversi"
+  *			La scadenza dell'obbligazione ha un debitore diverso da quello della documento generico e non √® di tipo "diversi"
   * 	PostCondition:
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Abilitazione filtro di selezione sulla data di scadenza
@@ -211,7 +211,7 @@ public abstract it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk contabil
   *  Controllo della quadratura
   *    PreCondition:
   *      viene contabilizzata una riga/accertamento o modificato un'importo e
-  *      la quadratura non Ë superata
+  *      la quadratura non √® superata
   *    PostCondition:
   *      Invia un messaggio all'utente di coperto/scoperto
  */
@@ -221,7 +221,7 @@ public abstract void controllaQuadraturaAccertamenti(it.cnr.jada.UserContext par
   *  Controllo della quadratura
   *    PreCondition:
   *      viene contabilizzata una riga/obbligazione o modificato un'importo e
-  *      la quadratura non Ë superata
+  *      la quadratura non √® superata
   *    PostCondition:
   *      Invia un messaggio all'utente di coperto/scoperto
  */
@@ -239,7 +239,7 @@ public abstract void controllaQuadraturaObbligazioni(it.cnr.jada.UserContext par
   *      Viene richiesto il salvataggio di un nuovo documento ma le validazioni
   *      non vengono superate
   *    PostCondition:
-  *      Informa l'utente della causa per la quale non Ë possibile salvare
+  *      Informa l'utente della causa per la quale non √® possibile salvare
  */
 
 public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1,it.cnr.contab.doccont00.core.bulk.OptionRequestParameter param2) throws it.cnr.jada.comp.ComponentException;
@@ -247,12 +247,12 @@ public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext
   *  Eliminazione di un documento
   *	 Elimina
   *    PreCondition:
-  *      Il documento Ë eliminabile
+  *      Il documento √® eliminabile
   *    PostCondition:
   *      richiama la funzione deletePhisically.
   *  Annulla
   *    PreCondition:
-  *      Il documento Ë annullabile
+  *      Il documento √® annullabile
   *    PostCondition:
   *      richiama la funzione deleteLogically.
  */
@@ -263,12 +263,12 @@ public Documento_genericoBulk eliminaLetteraPagamentoEstero(
 	Documento_genericoBulk param1)
 	throws ComponentException;
 /** 
-  *  Controlla se una riga del documento Ë eliminabile
-  *  lo stato del documento Ë PAGATO
+  *  Controlla se una riga del documento √® eliminabile
+  *  lo stato del documento √® PAGATO
   *    PreCondition:
   *      Richiesta di eliminare una riga
   *    PostCondition:
-  *      Avverte l'utente che non Ë possibile eliminare dei dettagli in un documento gi‡ pagato
+  *      Avverte l'utente che non √® possibile eliminare dei dettagli in un documento gi√† pagato
  */
 
 public abstract void eliminaRiga(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk param1) throws it.cnr.jada.comp.ComponentException;
@@ -404,12 +404,12 @@ public abstract it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBul
 /**  Validazione dell'intero documento amministrativo ativo/passivo
   *  tutti i controlli superati
   *    PreCondition:
-  *      Nessuna situazione di errore di validazione Ë stata rilevata.
+  *      Nessuna situazione di errore di validazione √® stata rilevata.
   *    PostCondition:
   *      Consentita la registrazione.
   *  validazione numero di dettagli maggiore di zero.
   *    PreCondition:
-  *      Il numero di dettagli nel documento Ë zero
+  *      Il numero di dettagli nel documento √® zero
   *    PostCondition:
   *      Viene inviato un messaggio: "Attenzione non possono esistere documenti senza almeno un dettaglio".
   *  validazione associazione scadenze
@@ -435,12 +435,12 @@ public abstract void validaDocumento(it.cnr.jada.UserContext param0,it.cnr.conta
   *    PreCondition:
   *      Le date di competenza non sono esatte
   *    PostCondition:
-  *      Viene inviato un messaggio:"La data di inizio competenza non puÚ essere successiva alla fine competenza.
+  *      Viene inviato un messaggio:"La data di inizio competenza non pu√≤ essere successiva alla fine competenza.
   *  validazione modifica  campi di dettaglio di un documento pagato.
   *    PreCondition:
-  *      Non sono state inseririte le modalit‡ di pagamento per la riga
+  *      Non sono state inseririte le modalit√† di pagamento per la riga
   *    PostCondition:
-  *      Viene inviato un messaggio "Inserire le modalit‡ di pagamento per la riga xxx"
+  *      Viene inviato un messaggio "Inserire le modalit√† di pagamento per la riga xxx"
  */
 
 public abstract void validaRiga(it.cnr.jada.UserContext param0,it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk param1) throws it.cnr.jada.comp.ComponentException;

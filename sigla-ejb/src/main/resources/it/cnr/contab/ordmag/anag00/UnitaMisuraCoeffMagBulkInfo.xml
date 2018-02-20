@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -54,14 +54,14 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false"
-		label="Data Inizio Validità" />
+		label="Data Inizio ValiditÃ " />
 	<fieldProperty
 		name="findUnitaMisura"
 		property="unitaMisura"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Unità di Misura" />
+		label="UnitÃ  di Misura" />
 	<fieldProperty
 		name="cdUnitaMisuraCar"
 		property="unitaMisura.cdUnitaMisura"
@@ -71,7 +71,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
-		label="Codice Unità Misura di carico" />
+		label="Codice UnitÃ  Misura di carico" />
 	<fieldProperty
 		name="coefConvCar"
 		property="coefConvCar"
@@ -91,7 +91,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
-		label="Codice Unità Misura di scarico" />
+		label="Codice UnitÃ  Misura di scarico" />
 	<fieldProperty
 		name="coefConvSca"
 		property="coefConvSca"
@@ -110,7 +110,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
-		label="Data Fine Validità" />
+		label="Data Fine ValiditÃ " />
 	<form
 		name="searchtool">
 		<formFieldProperty

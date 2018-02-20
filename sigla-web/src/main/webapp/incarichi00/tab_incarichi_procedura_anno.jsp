@@ -3,7 +3,7 @@
 		it.cnr.contab.incarichi00.bp.*,
 		it.cnr.contab.incarichi00.bulk.*,
 		it.cnr.jada.util.jsp.*"
-	pageEncoding="ISO-8859-1"
+	pageEncoding="UTF-8"
 %>
 
 <%

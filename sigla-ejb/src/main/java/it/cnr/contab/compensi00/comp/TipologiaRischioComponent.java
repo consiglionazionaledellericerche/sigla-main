@@ -30,7 +30,7 @@ public TipologiaRischioComponent() {
   * Pre: Viene richeisto l'inserimento di un oggetto con data Inizio/Fine validita non compatibile
   * 	 con intervalli precedenti
   * Post: L'oggetto non viene inserito
-  *		  Viene inviato il messaggio: "La Data Inizio Validita non è valida. Deve essere maggiore di xxx"
+  *		  Viene inviato il messaggio: "La Data Inizio Validita non Ã¨ valida. Deve essere maggiore di xxx"
   *
   * Nome: Tutte le validazioni precedenti superate
   * Pre:  E' stata richiesta la creazione di oggetto che supera tutte le validazioni
@@ -113,19 +113,19 @@ public void eliminaConBulk(UserContext userContext, OggettoBulk bulk) throws Com
  *		2.2. la data di inizio validita' del nuovo record deve essere maggiore della data fine validita del record piu' recente
  *			==> la data di fine validita' del record piu' recente viene aggiornata con la data di inizio validita' del nuovo record meno un giorno
  * 		Altrimenti viene emesso il messaggio:
- *			 "La Data Inizio Validita non è valida. Deve essere maggiore di xxx"
+ *			 "La Data Inizio Validita non Ã¨ valida. Deve essere maggiore di xxx"
  *
  * Pre-post-conditions
  *
  * Nome: Sovrapposizione con intervalli precedenti: periodo di Inizio/Fine validita del nuovo oggetto non valido
- * Pre: La data inizio validita dell'oggetto corrente è contenuta in un intervallo pre-esistente
+ * Pre: La data inizio validita dell'oggetto corrente Ã¨ contenuta in un intervallo pre-esistente
  * Post: L'oggetto non viene inserito
  *		 Viene inviato il messaggio:
- *			 "La Data Inizio Validita non è valida. Deve essere maggiore di xxx"
+ *			 "La Data Inizio Validita non Ã¨ valida. Deve essere maggiore di xxx"
  *
  * Nome: Validazioni precedenti superate
  * Pre: Validazioni precedenti superate
- * Post: Viene aggiornata la data fine validità del record più recente e viene consentito l'inserimento
+ * Post: Viene aggiornata la data fine validitÃ  del record piÃ¹ recente e viene consentito l'inserimento
  * 		 dell'oggetto bulk corrente
  *
 */

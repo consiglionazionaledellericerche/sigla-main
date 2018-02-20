@@ -130,7 +130,7 @@ public void setTi_sospeso_riscontro(java.lang.String ti_sospeso_riscontro) {
 	this.getSospeso().setTi_sospeso_riscontro(ti_sospeso_riscontro);
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
@@ -138,7 +138,7 @@ public void validate() throws ValidationException {
 
 	// controllo su campo IMPORTO SOSPESO
 	if ( getIm_associato() == null  )
-		throw new ValidationException( "Il campo IMPORTO del Sospeso non puÚ essere nullo." );
+		throw new ValidationException( "Il campo IMPORTO del Sospeso non pu√≤ essere nullo." );
 	if ( getIm_associato().compareTo( new java.math.BigDecimal(0)) <= 0 )
 		throw new ValidationException( "Il campo IMPORTO del Sospeso deve essere maggiore di zero." );
 	if ( getIm_associato().compareTo( getReversale().getIm_reversale()) > 0 )

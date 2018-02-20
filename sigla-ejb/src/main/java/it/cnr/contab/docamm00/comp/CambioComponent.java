@@ -31,7 +31,7 @@ public class CambioComponent
   *      Consente la modifica del cambio.
   *  validaCambio  non superata
   *    PreCondition:
-  *      L'inizio del periodo Ë incongruente.
+  *      L'inizio del periodo √® incongruente.
   *    PostCondition:
   *      Viene inviato il messaggio "Attenzione, non si possono creare cambi con data inizio validita inferiore a quella esistente".
  */
@@ -40,13 +40,13 @@ public OggettoBulk creaConBulk(UserContext aUC, OggettoBulk cambio) throws Compo
     /*  
     validaCambio(aUC,(CambioBulk)cambio);*/
     if (!validaCambio(aUC, (CambioBulk) cambio))
-        throw handleException(new it.cnr.jada.comp.ApplicationException("Attenzione, il cambio per il periodo impostato gi‡ esiste"));
+        throw handleException(new it.cnr.jada.comp.ApplicationException("Attenzione, il cambio per il periodo impostato gi√† esiste"));
     ((CambioBulk) cambio).setCd_divisa(((CambioBulk) cambio).getDivisa().getCd_divisa());
     return super.creaConBulk(aUC, cambio);
 }
 /**
   *  Controllo cambio di default
-  *    PreCondition: Il cambio Ë quello di default
+  *    PreCondition: Il cambio √® quello di default
   *    PostCondition: Viene sollevata un'eccezione
   *
   *  Tutti i controlli superati.
@@ -58,7 +58,7 @@ public OggettoBulk creaConBulk(UserContext aUC, OggettoBulk cambio) throws Compo
 public void eliminaConBulk(UserContext aUC,OggettoBulk cambio) throws it.cnr.jada.comp.ComponentException {
 
 	if (((CambioBulk)cambio).iscambioDefault())
-    	throw handleException( new it.cnr.jada.comp.ApplicationException("Attenzione, l' eliminazione di questi dati non Ë consentita"))	;
+    	throw handleException( new it.cnr.jada.comp.ApplicationException("Attenzione, l' eliminazione di questi dati non √® consentita"))	;
     
     super.eliminaConBulk( aUC, cambio );
 	
@@ -106,7 +106,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
   *    PreCondition:
   *      validaCambio = false
   *    PostCondition:
-  *      Viene inviato il messaggio "Attenzione, la modifica di questi dati non Ë consentita".
+  *      Viene inviato il messaggio "Attenzione, la modifica di questi dati non √® consentita".
  */
 //^^@@
 public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk cambio) throws ComponentException

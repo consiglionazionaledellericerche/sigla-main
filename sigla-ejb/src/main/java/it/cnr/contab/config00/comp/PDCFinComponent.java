@@ -51,7 +51,7 @@ public class PDCFinComponent extends it.cnr.jada.comp.CRUDComponent implements I
  * Pre-post-conditions:
  *
  * Nome: Ricerca di Elemento voce
- * Pre:  La richiesta di ricerca di un Elemento voce Ë stata generata
+ * Pre:  La richiesta di ricerca di un Elemento voce √® stata generata
  * Post: La lista di Elemento_vocebulk che soddisfano i criteri di ricerca sono stati recuperati
  *
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -150,21 +150,21 @@ private OggettoBulk creaCnrSpeseCapitoloBulk( UserContext userContext,EV_cnr_spe
  * Pre-post-conditions:
  *
  * Nome: Creazione di Elemento_voce senza codice proprio
- * Pre:  La richiesta di creazione di un Elemento_voce senza aver specificato un codice proprio Ë stata generata
+ * Pre:  La richiesta di creazione di un Elemento_voce senza aver specificato un codice proprio √® stata generata
  * Post: Un Elemento_voceBulk stato creato con i dati inseriti dall'utente e il suo codice e' stato generato 
  *       automaticamente 
  *
  * Nome: Creazione di Elemento_voce con codice proprio
- * Pre:  La richiesta di creazione di un Elemento_voce con codice proprio specificato Ë stata generata
+ * Pre:  La richiesta di creazione di un Elemento_voce con codice proprio specificato √® stata generata
  * Post: Un Elemento_voceBulk stato creato con i dati inseriti dall'utente e il suo codice e' stato formattato
  *
  * Nome: Creazione di Elemento_voce di tipo CNR Spese Capitolo
- * Pre:  La richiesta di creazione di un Elemento_voce di tipo Capitolo di Spesa CNR Ë stata generata
+ * Pre:  La richiesta di creazione di un Elemento_voce di tipo Capitolo di Spesa CNR √® stata generata
  * Post: Un Capitolo di Spesa del CNR viene creato con i dati inseriti dall'utente; come elemento padre di tale capitolo
- *       viene ricercata la categoria con Codice = 2 (gi‡ creata in automatico) sotto al Titolo specificato dall'utente; .
+ *       viene ricercata la categoria con Codice = 2 (gi√† creata in automatico) sotto al Titolo specificato dall'utente; .
  *
  * Nome: Creazione di Elemento_voce di tipo CDS Spese Capitolo
- * Pre:  La richiesta di creazione di un Elemento_voce di tipo CDS Spese Capitolo Ë stata generata
+ * Pre:  La richiesta di creazione di un Elemento_voce di tipo CDS Spese Capitolo √® stata generata
  * Post: Un capitolo di spesa del CDS  e' stato creato e tutte le associazioni Ass_ev_funz_tipoCdsBulk 
  *       selezionate dall'utente sono state create
  * 
@@ -174,7 +174,7 @@ private OggettoBulk creaCnrSpeseCapitoloBulk( UserContext userContext,EV_cnr_spe
  *       visualizzare all'utente
  *
  * Nome: Errore di chiave duplicata
- * Pre:  Esiste gi‡ un Elemento_voceBulk persistente che possiede la stessa chiave
+ * Pre:  Esiste gi√† un Elemento_voceBulk persistente che possiede la stessa chiave
  * 		 primaria di quello specificato.
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
@@ -190,7 +190,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 	// 05/09/2003
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(userContext))
-		throw new ApplicationException("Non Ë possibile creare nuove voci ad esercizio chiuso.");
+		throw new ApplicationException("Non √® possibile creare nuove voci ad esercizio chiuso.");
 	
 	Elemento_voceBulk evBulk = (Elemento_voceBulk) bulk;
 	Elemento_voceHome subEvHome = (Elemento_voceHome) getHome(userContext,evBulk);
@@ -198,7 +198,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 	{
 	
 		if (evBulk.getFl_prelievo().booleanValue() && findElementoVocePrelievo(userContext) != null)
-			throw new  it.cnr.jada.comp.ApplicationException("Attenzione: esiste gi‡ un elemento voce di prelievo per l'esercizio.");
+			throw new  it.cnr.jada.comp.ApplicationException("Attenzione: esiste gi√† un elemento voce di prelievo per l'esercizio.");
 		
 	
 		if (!((Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getFl_nuovo_pdg().booleanValue()) {
@@ -240,7 +240,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 	}	
 	catch ( it.cnr.jada.persistency.FindException e )
 	{
-		throw handleException( new ApplicationException( "L'elemento voce padre non Ë definito", e ));
+		throw handleException( new ApplicationException( "L'elemento voce padre non √® definito", e ));
 	}
 	catch (it.cnr.jada.persistency.sql.DuplicateKeyException e) 
 	{
@@ -291,7 +291,7 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk)  throws it.
 	// 05/09/2003
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(userContext))
-		throw new ApplicationException("Non Ë possibile eliminare voci ad esercizio chiuso.");
+		throw new ApplicationException("Non √® possibile eliminare voci ad esercizio chiuso.");
 	
 	try
 	{
@@ -299,7 +299,7 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk)  throws it.
 //		lockBulk( evBulk ); lo fa la makeBulkPersistent()
 
 		if ( esistonoReferenzeAElementoVoce( userContext,evBulk ))
-			throw new ApplicationException( "Non Ë possibile cancellare l'elemento voce perchË utilizzato nelle associazioni" );
+			throw new ApplicationException( "Non √® possibile cancellare l'elemento voce perch√® utilizzato nelle associazioni" );
 
 		if ( evBulk instanceof EV_cds_spese_capitoloBulk )
 		{
@@ -442,7 +442,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext))
-			bulk = asRO(bulk,"Non Ë possibile modificare voci ad esercizio chiuso.");
+			bulk = asRO(bulk,"Non √® possibile modificare voci ad esercizio chiuso.");
 	
 		return bulk;
 	} catch(Exception e) {
@@ -544,11 +544,11 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 	// 05/09/2003
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(userContext))
-		throw new ApplicationException("Non Ë possibile modificare voci ad esercizio chiuso.");
+		throw new ApplicationException("Non √® possibile modificare voci ad esercizio chiuso.");
 	try{
 		Elemento_voceBulk evBulk = (Elemento_voceBulk) bulk;
 		if (evBulk.getFl_prelievo().booleanValue() && findElementoVocePrelievo(userContext) != null)
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: esiste gi‡ un elemento voce di prelievo per l'esercizio.");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: esiste gi√† un elemento voce di prelievo per l'esercizio.");
 	} catch (it.cnr.jada.persistency.PersistencyException pe){
 		throw handleException(pe);
 	}
@@ -622,11 +622,11 @@ public SQLBuilder selectV_classificazione_vociByClause(UserContext userContext,
  *    PreCondition:
  *      E' stata generata la richiesta di recuperare la voce di bilancio del CNR
  *    PostCondition:
- *      Viene recuperata la voce di bilancio CNR in base alla linea di attivit‡ e la voce del CDS indicati
+ *      Viene recuperata la voce di bilancio CNR in base alla linea di attivit√† e la voce del CDS indicati
  *
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
  * @param voceCds <code>Elemento_voceBulk</code> la voce del CDS
- * @param linea_attivita <code>WorkpackageBulk</code> la linea di attivit‡ del CDS
+ * @param linea_attivita <code>WorkpackageBulk</code> la linea di attivit√† del CDS
  *
  * @return voceCnr <code>String</code> il codice della voce CNR individuata
  */
