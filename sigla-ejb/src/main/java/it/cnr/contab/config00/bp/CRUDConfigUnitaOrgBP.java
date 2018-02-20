@@ -8,7 +8,7 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.*;
 
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Unita Organizzativa
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Unita Organizzativa
  */
 
 public class CRUDConfigUnitaOrgBP extends it.cnr.jada.util.action.SimpleCRUDBP {
@@ -56,7 +56,7 @@ public it.cnr.jada.util.jsp.Button[] createToolbar()
 	return newToolbar; 
 }
 /**
- *	Abilito il bottone di ricerca del terzo solo se l'unit‡ organizzativa e'
+ *	Abilito il bottone di ricerca del terzo solo se l'unit√† organizzativa e'
  *  in fase di modifica
  */
 

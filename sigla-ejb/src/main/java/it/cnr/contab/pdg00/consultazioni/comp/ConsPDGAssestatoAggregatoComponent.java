@@ -82,10 +82,10 @@ public class ConsPDGAssestatoAggregatoComponent extends CRUDComponent {
 
 	/**
 	 * Individua e completa l'SQLBuilder da utilizzare:
-	 * 1) Ë stata effettuata una ricerca mirata (<findClause> != null)
-	 * 	  la select finale Ë costruita come interrogazione di una view costruita sulla select principale <baseClause>
-	 * 2) non Ë stata fatta una ricerca mirata
-	 * 	  la select finale Ë uguale alla select principale
+	 * 1) √® stata effettuata una ricerca mirata (<findClause> != null)
+	 * 	  la select finale √® costruita come interrogazione di una view costruita sulla select principale <baseClause>
+	 * 2) non √® stata fatta una ricerca mirata
+	 * 	  la select finale √® uguale alla select principale
 	 *
 	 * @param sql la select principale contenente le Sum e i GroupBy
 	 * @param sqlEsterna la select esterna necessaria per interrogare la select principale come view
@@ -144,8 +144,8 @@ public class ConsPDGAssestatoAggregatoComponent extends CRUDComponent {
 	 * @param sql l'SQLBuilder da aggiornare
 	 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 	 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-	 * @param isBaseSQL indica se il parametro sql indicato Ë l'SQLBuilder principale
-	 * 		  (necessario perchË solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+	 * @param isBaseSQL indica se il parametro sql indicato √® l'SQLBuilder principale
+	 * 		  (necessario perch√® solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 	 */
 	private void addColumnDIP(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
 		tabAlias = getAlias(tabAlias);
@@ -165,8 +165,8 @@ public class ConsPDGAssestatoAggregatoComponent extends CRUDComponent {
 	 * @param sql l'SQLBuilder da aggiornare
 	 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 	 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-	 * @param isBaseSQL indica se il parametro sql indicato Ë l'SQLBuilder principale
-	 * 		  (necessario perchË solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+	 * @param isBaseSQL indica se il parametro sql indicato √® l'SQLBuilder principale
+	 * 		  (necessario perch√® solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 	 */
 	private void addColumnCDS(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
 		tabAlias = getAlias(tabAlias);
@@ -176,13 +176,13 @@ public class ConsPDGAssestatoAggregatoComponent extends CRUDComponent {
 		addSQLGroupBy(sql,tabAlias.toLowerCase().concat("des_cds"),isBaseSQL&&addDescrizione);
 	}
 	/**
-	 * Aggiunge nell'SQLBuilder <sql> le colonne dell'Unit‡ Organizzativa.
+	 * Aggiunge nell'SQLBuilder <sql> le colonne dell'Unit√† Organizzativa.
 	 *
 	 * @param sql l'SQLBuilder da aggiornare
 	 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 	 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-	 * @param isBaseSQL indica se il parametro sql indicato Ë l'SQLBuilder principale
-	 * 		  (necessario perchË solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+	 * @param isBaseSQL indica se il parametro sql indicato √® l'SQLBuilder principale
+	 * 		  (necessario perch√® solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 	 */
 	private void addColumnUO(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
 		tabAlias = getAlias(tabAlias);
@@ -197,8 +197,8 @@ public class ConsPDGAssestatoAggregatoComponent extends CRUDComponent {
 	 * @param sql l'SQLBuilder da aggiornare
 	 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 	 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-	 * @param isBaseSQL indica se il parametro sql indicato Ë l'SQLBuilder principale
-	 * 		  (necessario perchË solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+	 * @param isBaseSQL indica se il parametro sql indicato √® l'SQLBuilder principale
+	 * 		  (necessario perch√® solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 	 */
 	private void addColumnLIV1(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
 		tabAlias = getAlias(tabAlias);
@@ -227,8 +227,8 @@ public class ConsPDGAssestatoAggregatoComponent extends CRUDComponent {
 	 * @param sql l'SQLBuilder da aggiornare
 	 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 	 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-	 * @param isBaseSQL indica se il parametro sql indicato Ë l'SQLBuilder principale
-	 * 		  (necessario perchË solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+	 * @param isBaseSQL indica se il parametro sql indicato √® l'SQLBuilder principale
+	 * 		  (necessario perch√® solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 	 */
 	private void addColumnLIV2(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
 		tabAlias = getAlias(tabAlias);
@@ -257,8 +257,8 @@ public class ConsPDGAssestatoAggregatoComponent extends CRUDComponent {
 	 * @param sql l'SQLBuilder da aggiornare
 	 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 	 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-	 * @param isBaseSQL indica se il parametro sql indicato Ë l'SQLBuilder principale
-	 * 		  (necessario perchË solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+	 * @param isBaseSQL indica se il parametro sql indicato √® l'SQLBuilder principale
+	 * 		  (necessario perch√® solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 	 */
 	private void addColumnDET(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
 		tabAlias = getAlias(tabAlias);

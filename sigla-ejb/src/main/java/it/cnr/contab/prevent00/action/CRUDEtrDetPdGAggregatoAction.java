@@ -3,7 +3,7 @@ import it.cnr.contab.reports.bp.*;
 
 /**
  * Adatta e implementa la {@link it.cnr.jada.util.action.CRUDAction } per le
- * 		funzionalit‡ del dettaglio Entrate
+ * 		funzionalit√† del dettaglio Entrate
  * 
  * @author: Bisquadro Vincenzo
  */

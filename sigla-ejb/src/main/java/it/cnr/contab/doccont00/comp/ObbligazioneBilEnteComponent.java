@@ -246,7 +246,7 @@ public void aggiornaCogeCoanInDifferita(it.cnr.jada.UserContext userContext, it.
 }
 /**
  * Aggiornamento in differita dei saldi dell'impegno su bilancio ente.
- * Un documento amministrativo di spesa che agisce in modalit‡ transazionale ha creato/modificato gli importi 
+ * Un documento amministrativo di spesa che agisce in modalit√† transazionale ha creato/modificato gli importi 
  * relativi ad un impegno; i saldi di tale impegno non possono essere aggiornati subito in quanto
  * tale operazione genererebbe dei lock sulle voci del piano che non ne consentirebbere l'utilizzo ad altri utenti;
  * pertanto l'aggiornamento dei saldi dell'impegno su bilancio ente viene differito al momento del salvataggio
@@ -361,7 +361,7 @@ private void aggiornaSaldiInModifica(
 	SaldoComponentSession session = createSaldoComponentSession();			
 	List saldiDaAggiornare = ((V_mod_saldi_obbligHome)getHome( userContext, V_mod_saldi_obbligBulk.class )).findModificheSaldiFor( imp, pg_ver_rec );
 	if ( userContext.isTransactional() && saldiDaAggiornare.size() == 0 )
-		throw new ApplicationException( "Attenzione! I saldi relativi all'impegno " + imp.getEsercizio_originale() + "/" + imp.getPg_obbligazione() + " non possono essere aggiornati perchË l'impegno non e' presente nello storico.");
+		throw new ApplicationException( "Attenzione! I saldi relativi all'impegno " + imp.getEsercizio_originale() + "/" + imp.getPg_obbligazione() + " non possono essere aggiornati perch√® l'impegno non e' presente nello storico.");
 
 	String ti_competenza_residuo;
 	if ( imp.isResiduo() )
@@ -376,7 +376,7 @@ private void aggiornaSaldiInModifica(
 		if ( modSaldo.getIm_delta_voce().compareTo( new BigDecimal(0)) != 0 )
 		{
 
-			/* il check della disponabilit‡ di cassa deve essere eseguito solo se 
+			/* il check della disponabilit√† di cassa deve essere eseguito solo se 
 			    l'importo delta del saldo e' positivo e
 		 	   l'utente non ha ancora avuto il warning sulla disp.cassa oppure
 			    l'utente ha avuto il warning sulla disp.cassa e ha risposto no */
@@ -395,7 +395,7 @@ private void aggiornaSaldiInModifica(
 	*/	
 	List saldiDaAggiornareCdrLinea = ((V_mod_saldi_obblig_scad_voceHome)getHome( userContext, V_mod_saldi_obblig_scad_voceBulk.class )).findModificheSaldiFor( imp, pg_ver_rec );
 	if ( userContext.isTransactional() && saldiDaAggiornareCdrLinea.size() == 0 )
-		throw new ApplicationException( "Attenzione! I saldi relativi all'impegno " + imp.getEsercizio_originale() + "/" + imp.getPg_obbligazione() + " non possono essere aggiornati perchË l'impegno non e' presente nello storico.");
+		throw new ApplicationException( "Attenzione! I saldi relativi all'impegno " + imp.getEsercizio_originale() + "/" + imp.getPg_obbligazione() + " non possono essere aggiornati perch√® l'impegno non e' presente nello storico.");
 	for ( Iterator i = saldiDaAggiornareCdrLinea.iterator(); i.hasNext(); )
 	{
 		V_mod_saldi_obblig_scad_voceBulk modSaldo = (V_mod_saldi_obblig_scad_voceBulk) i.next();
@@ -438,7 +438,7 @@ private void aggiornaStatoCOAN_COGEDocAmm( UserContext userContext, Obbligazione
   *      La richiesta di cancellazione di un impegno su bilancio ente e' stata generata ma esistono
   *      documenti amministrativi contabilizzati sulla scadenza dell'obbligazione
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di effettuare la cancellazione
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di effettuare la cancellazione
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param imp <code>ImpegnoBulk</code> l'impegno su bilancio ente da cancellare (logicamente)
@@ -450,7 +450,7 @@ public ImpegnoBulk annullaObbligazione(UserContext userContext, ImpegnoBulk imp 
 	try
 	{
 		verificaStatoEsercizio( userContext, imp.getEsercizio(), imp.getCd_cds());
-		//	segnalo impossibilit‡ di annullare un residuo se l'esercizio precedente Ë ancora aperto
+		//	segnalo impossibilit√† di annullare un residuo se l'esercizio precedente √® ancora aperto
 		if ( imp.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_IMP_RES))
 			verificaStatoEsercizioEsPrecedente( userContext, imp.getEsercizio(), imp.getCd_cds());
 		
@@ -533,7 +533,7 @@ public void callDoRiprocObb(
   *	 PostCondition:
   *		Il sistema identifica quale delle 2 parti della partita di giro deve essere passata come parametro
   *      alla stored procedure (metodo 'findPGiroDaRiportareAvanti').
-  *		Il doc.contabile Ë stato riportato all'esercizio successivo richiamando 
+  *		Il doc.contabile √® stato riportato all'esercizio successivo richiamando 
   *      la stored procedure CNRCTB046.riportoEsNextDocCont
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -582,7 +582,7 @@ public void callRiportaAvanti (UserContext userContext,IDocumentoContabileBulk d
   *	 PostCondition:
   *		Il sistema identifica quale delle 2 parti della partita di giro deve essere passata come parametro
   *      alla stored procedure (metodo 'findPGiroDaRiportareIndietro').
-  *		Il doc.contabile Ë stato riportato all'esercizio successivo richiamando 
+  *		Il doc.contabile √® stato riportato all'esercizio successivo richiamando 
   *      la stored procedure CNRCTB046.deriportoEsNextDocCont
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -645,7 +645,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	{
 		ImpegnoBulk imp = ( ImpegnoBulk ) bulk;
 
-		// controlliamo che non esista gi‡ un impegno su bilancio ente per la voce selezionata
+		// controlliamo che non esista gi√† un impegno su bilancio ente per la voce selezionata
 		//ObbligazioneHome vocehome =(ObbligazioneHome)getHome(uc, ObbligazioneBulk.class);
 		Obbligazione_scad_voceHome vocehome =(Obbligazione_scad_voceHome)getHome(uc, Obbligazione_scad_voceBulk.class);
 		SQLBuilder sql = vocehome.createSQLBuilder();
@@ -661,7 +661,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 
 		List result = vocehome.fetchAll( sql );
 		if (!result.isEmpty())
-			throw new ApplicationException("Impossibile creare l'impegno con la voce del piano selezionata poichË Ë gi‡ stato creato un impegno su bilancio ente per tale voce.");
+			throw new ApplicationException("Impossibile creare l'impegno con la voce del piano selezionata poich√® √® gi√† stato creato un impegno su bilancio ente per tale voce.");
 
 		imp.setCd_cds( imp.getUnita_organizzativa().getCd_unita_padre() );
 		
@@ -673,7 +673,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 		verificaObbligazione( uc, imp );
 
 		// impostiamo la voce del piano in testata coerentemente con quella nelle scadenze
-		// viene gi‡ impostato nel doBringBack ma lo rifacciamo
+		// viene gi√† impostato nel doBringBack ma lo rifacciamo
 		if (imp.getVoce_f()!=null)
 			imp.setElemento_voce(((ImpegnoHome)getHome(uc, ImpegnoBulk.class)).findElementoVoceFor(imp.getVoce_f()));
 
@@ -710,7 +710,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
   *    PostCondition:
   *      L'impegno (ImpegnoBulk) viene creato con importo pari a quello dell'accertamento, codice terzo
   *      recuperato dalla Configurazione CNR come codice DIVERSI per PARTITA di GIRO, capitolo di entrata ricavato
-  *      (metodo findVoce_f) dall'associazione fra Capitoli di Entrata e di Spesa per Partita di Giro, cds e unit‡
+  *      (metodo findVoce_f) dall'associazione fra Capitoli di Entrata e di Spesa per Partita di Giro, cds e unit√†
   *		 organizzativa di appartenenza e di origine uguali a quelli dell'accertamento, data di scadenza uguale a 
   *		 quella della scadenza dell'accertamento su partita di giro.
   *      Viene inoltre creata una scadenza (metodo creaObbligazione_scadenzario) e
@@ -723,8 +723,8 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
   *    PostCondition:
   *      L'impegno (ImpegnoBulk) viene creato con importo pari a quello dell'accertamento, codice terzo
   *      recuperato dalla Configurazione CNR come codice DIVERSI per PARTITA di GIRO, capitolo di entrata ricavato
-  *      (metodo findVoce_f) dall'associazione fra Capitoli di Entrata e di Spesa per Partita di Giro, cds e unit‡
-  *		 organizzativa di appartenenza uguali a quelli dell'accertamento e cds e unit‡ organizzativa di origine
+  *      (metodo findVoce_f) dall'associazione fra Capitoli di Entrata e di Spesa per Partita di Giro, cds e unit√†
+  *		 organizzativa di appartenenza uguali a quelli dell'accertamento e cds e unit√† organizzativa di origine
   *		 uguali a quelli dell'ente.
   *      Viene inoltre creata una scadenza (metodo creaObbligazione_scadenzario) e
   *      un dettaglio di scadenza (metodo creaObbligazione_scad_voce). I saldi relativi alla voce del piano
@@ -881,12 +881,12 @@ public ImpegnoBulk creaObbligazione(
   *      una scadenza di un impegno pgiro e' stata creata ed e' necessario creare il suo dettaglio
   *    PostCondition:
   *      Il dettaglio di scadenza (Obbligazione_scad_voceBulk) viene creato
-  *      con linea attivit‡ uguale alla linea di attivit‡ definita nella Configurazione CNR come Linea attivit‡ Spesa ENTE
+  *      con linea attivit√† uguale alla linea di attivit√† definita nella Configurazione CNR come Linea attivit√† Spesa ENTE
   *      e importo uguale all'importo della scadenza dell'obbligazione
   *  errore - Configurazione CNR
   *    PreCondition:
   *      una richiesta di creazione di un dettaglio di scadenza di un impegno pgiro e' stata generata
-  *      ma non e' stata definita in Configurazione CNR la Linea attivit‡ Spesa ENTE
+  *      ma non e' stata definita in Configurazione CNR la Linea attivit√† Spesa ENTE
   *    PostCondition:
   *      Un messaggio di errore segnala all'utente la mancata definizione in Configurazione CNR della linea di attivita' Spesa ENTE
   *
@@ -969,7 +969,7 @@ private Obbligazione_scadenzarioBulk creaObbligazione_scadenzario (UserContext u
 		// altri campi
 		obblig_scad.setDt_scadenza( imp.getDt_scadenza() );
 		/*
-		// controllo se l'anno di emissione dell'impegno Ë maggiore dell'anno corrente
+		// controllo se l'anno di emissione dell'impegno √® maggiore dell'anno corrente
 		gc.set(java.util.GregorianCalendar.MONTH,1);
 		gc.set(java.util.GregorianCalendar.DATE,1);
 		
@@ -1070,7 +1070,7 @@ public void eliminaConBulk (UserContext aUC,OggettoBulk bulk) throws ComponentEx
   *      La richiesta di cancellazione di un'obbligazione su partita di giro e' stata generata ma esistono
   *      documenti amministrativi contabilizzati sulla scadenza dell'obbligazione
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di effettuare la cancellazione
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di effettuare la cancellazione
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param imp <code>ImpegnoBulk</code> l'impegno su partita di giro da cancellare (logicamente)
@@ -1105,17 +1105,17 @@ public void eliminaObbligazione(UserContext aUC,ImpegnoBulk imp ) throws Compone
 	}
 }
 /** 
-  *  ricerca Unit‡ Organizzative
+  *  ricerca Unit√† Organizzative
   *    PreCondition:
-  *      La richiesta di identificazione delle Unit‡ Organizzative per cui e' possibile creare un'impegno
-  *      Ë stata generata
+  *      La richiesta di identificazione delle Unit√† Organizzative per cui e' possibile creare un'impegno
+  *      √® stata generata
   *    PostCondition:
   *      Una lista contente l'UO Ente + l'UO di scrivania (se diverso da Ente) viene restituita
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param impegno <code>ImpegnoBulk</code> l'impegno su partita di giro da creare
   *
-  * @return result la lista delle unit‡ organizzative definite per l'impegno su partita di giro
+  * @return result la lista delle unit√† organizzative definite per l'impegno su partita di giro
  */
 public List findUnitaOrganizzativaOptions (UserContext userContext,ImpegnoBulk impegno) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException, ComponentException
 {
@@ -1136,9 +1136,9 @@ public List findUnitaOrganizzativaOptions (UserContext userContext,ImpegnoBulk i
   *		 il codice Cds e il codice Cds di origine con il codice Cds di scrivania
   *  inizializzazione per inserimento - errore
   *    PreCondition:
-  *      L'unit‡ organizzativa Ë uguale a quella dell'Ente
+  *      L'unit√† organizzativa √® uguale a quella dell'Ente
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente che l'Ente non Ë abilitato a creare documenti su partita di giro
+  *      Un messaggio di errore segnala all'utente che l'Ente non √® abilitato a creare documenti su partita di giro
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> l'impegno su partita di giro da inizializzare per l'inserimento
@@ -1170,7 +1170,7 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 		/* if (!((ObbligazioneHome)getHome(aUC, obbligazione.getClass())).verificaStatoEsercizio(obbligazione))
 			throw handleException( new ApplicationException( "Non e' possibile creare obbligazioni: esercizio non ancora aperto!") );*/
 			
-		// se l'unit‡ organizzativa NON Ë uguale a quella dell'Ente, non Ë possibile creare documenti su partita di giro
+		// se l'unit√† organizzativa NON √® uguale a quella dell'Ente, non √® possibile creare documenti su partita di giro
 		if ( !imp.getCd_unita_organizzativa().equals( uoEnte.getCd_unita_organizzativa() ))
 			throw new ApplicationException("Funzione consentita unicamente per utente abilitato a " + uoEnte.getCd_unita_organizzativa() ); 
 		return super.inizializzaBulkPerInserimento( aUC, imp );
@@ -1376,7 +1376,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 
 		verificaStatoEsercizio( aUC, imp.getEsercizio(), imp.getCd_cds());		
 
-		// controlliamo che non esista gi‡ un impegno su bilancio ente per la voce selezionata
+		// controlliamo che non esista gi√† un impegno su bilancio ente per la voce selezionata
 		//ObbligazioneHome vocehome =(ObbligazioneHome)getHome(uc, ObbligazioneBulk.class);
 		Obbligazione_scad_voceHome vocehome =(Obbligazione_scad_voceHome)getHome(aUC, Obbligazione_scad_voceBulk.class);
 		SQLBuilder sql = vocehome.createSQLBuilder();
@@ -1397,22 +1397,22 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 
 		List result = vocehome.fetchAll( sql );
 		if (!result.isEmpty())
-			throw new ApplicationException("Impossibile creare l'impegno con la voce del piano selezionata poichË Ë gi‡ stato creato un impegno su bilancio ente per tale voce.");
+			throw new ApplicationException("Impossibile creare l'impegno con la voce del piano selezionata poich√® √® gi√† stato creato un impegno su bilancio ente per tale voce.");
 
-		//segnalo impossibilit‡ di modificare importo se ci sono doc amministrativi associati
+		//segnalo impossibilit√† di modificare importo se ci sono doc amministrativi associati
 		if ( !imp.isFromDocAmm() && 
 			imp.isAssociataADocAmm() && imp.getIm_iniziale_obbligazione() != null &&
 			imp.getIm_iniziale_obbligazione().compareTo( imp.getIm_obbligazione()) != 0 )
 			throw new ApplicationException( "Impossibile variare importo dell'Impegno su bilancio Ente perche' e' associata a doc. amministrativi");
 
-		//segnalo impossibilit‡ di modificare importo se ci sono mandati associati
+		//segnalo impossibilit√† di modificare importo se ci sono mandati associati
 		if ( imp.isFromDocAmm() && 
 			imp.isAssociataADocAmm() && imp.getIm_iniziale_obbligazione() != null &&
 			imp.getIm_iniziale_obbligazione().compareTo( imp.getIm_obbligazione()) != 0 &&
 			imp.getPg_mandato() != null )
 			throw new ApplicationException( "Impossibile variare importo dell'Impegno su bilancio Ente perche' e' associata a mandato");
 		
-		//	segnalo impossibilit‡ di modificare un residuo se l'esercizio precedente Ë ancora aperto
+		//	segnalo impossibilit√† di modificare un residuo se l'esercizio precedente √® ancora aperto
 		if ( imp.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_IMP_RES))
 			verificaStatoEsercizioEsPrecedente( aUC, imp.getEsercizio(), imp.getCd_cds());
 			
@@ -1439,7 +1439,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 		//aggiorna il db:
 
 		// impostiamo la voce del piano in testata coerentemente con quella nelle scadenze
-		// viene gi‡ impostato nel doBringBack ma lo rifacciamo
+		// viene gi√† impostato nel doBringBack ma lo rifacciamo
 		if (imp.getVoce_f()!=null)
 			imp.setElemento_voce(((ImpegnoHome)getHome(aUC, ImpegnoBulk.class)).findElementoVoceFor(imp.getVoce_f()));
 		
@@ -1452,7 +1452,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 			updateBulk( aUC, obblig_scad_voce );
 		else
 			// se e' stato modificato il capitolo e' necessario ricreare lo scad_voce 
-			// perchË non e' possibile aggiornare la chiave
+			// perch√® non e' possibile aggiornare la chiave
 		{
 			Obbligazione_scad_voceBulk newObblig_scad_voce = new Obbligazione_scad_voceBulk();
 			newObblig_scad_voce.setLinea_attivita( obblig_scad_voce.getLinea_attivita());
@@ -1526,7 +1526,7 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
 	//aggiorno importo testata
 	ImpegnoBulk imp = (ImpegnoBulk) scadenza.getObbligazione();
 	if ( imp.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_IMP_RES) )
-		throw handleException( new ApplicationException( "Non Ë consentita la modifica dell'importo di testata di un'annotazione residua." ));					
+		throw handleException( new ApplicationException( "Non √® consentita la modifica dell'importo di testata di un'annotazione residua." ));					
 	
 	imp.setIm_obbligazione( nuovoImporto );
 	imp.setToBeUpdated();
@@ -1568,16 +1568,16 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 /** 
   *  Tutti controlli superati
   *    PreCondition:
-  *      La data di registrazione dell'obbligazione su partita di giro Ë corretta.
+  *      La data di registrazione dell'obbligazione su partita di giro √® corretta.
   *    PostCondition:
-  *      L'obbligazione su partita di giro Ë valida. E' consentito eseguire l'attivit‡ di salvataggio.
-  *  La data di registrazione dell'obbligazione su partita di giro non Ë corretta.
+  *      L'obbligazione su partita di giro √® valida. E' consentito eseguire l'attivit√† di salvataggio.
+  *  La data di registrazione dell'obbligazione su partita di giro non √® corretta.
   *    PreCondition:
   *     E' stata inserita dall'utente una data di registrazione antecedente a quella dell'ultima obbligazione pgiro
   *		salvata sul database
   *    PostCondition:
-  *      L'utente viene avvisato tramite un messaggio di errore che non Ë possibile inserire un'obbligazione su partita 
-  *		 di giro con data anteriore a quella dell'ultima obbligazione salvata su database. L'attivit‡ non Ë consentita.
+  *      L'utente viene avvisato tramite un messaggio di errore che non √® possibile inserire un'obbligazione su partita 
+  *		 di giro con data anteriore a quella dell'ultima obbligazione salvata su database. L'attivit√† non √® consentita.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param impegno <code>ImpegnoBulk</code> l'obbligazione su partita di giro da validare
@@ -1601,7 +1601,7 @@ protected void verificaObbligazione(UserContext userContext, ImpegnoBulk impegno
 
 		Timestamp dataUltObbligazione = ((ImpegnoHome) getHome( userContext, ImpegnoBulk.class )).findDataUltimaObbligazionePerCds( impegno );
 		if ( dataUltObbligazione != null && dataUltObbligazione.after( impegno.getDt_registrazione() ) )
-			throw  new ApplicationException( "Non Ë possibile inserire un'Annotazione di Spesa su Partita di Giro con data anteriore a " +  
+			throw  new ApplicationException( "Non √® possibile inserire un'Annotazione di Spesa su Partita di Giro con data anteriore a " +  
    									java.text.DateFormat.getDateTimeInstance().format( dataUltObbligazione ));
 		}
 
@@ -1611,7 +1611,7 @@ protected void verificaObbligazione(UserContext userContext, ImpegnoBulk impegno
  *
  * @param userContext <code>UserContext</code> 
  *
- * @return FALSE se per il cds interessato non Ë stato inserito nessun esercizio o se l'esercizio non Ë in stato di "aperto"
+ * @return FALSE se per il cds interessato non √® stato inserito nessun esercizio o se l'esercizio non √® in stato di "aperto"
  *		   TRUE in tutti gli altri casi
  *
  */
@@ -1631,7 +1631,7 @@ void verificaStatoEsercizio( UserContext userContext, Integer es, String cd_cds 
  *
  * @param userContext <code>UserContext</code> 
  *
- * @return FALSE se per il cds interessato l'esercizio precedente non Ë in stato di "chiuso"
+ * @return FALSE se per il cds interessato l'esercizio precedente non √® in stato di "chiuso"
  *		   TRUE in tutti gli altri casi
  *
  */
@@ -1646,7 +1646,7 @@ void verificaStatoEsercizioEsPrecedente( UserContext userContext, Integer es, St
 }	
 /**
  *  Recupera l'elemento voce di tipo categoria, da cui discende la voce
- *  passata come parametro, questo elemento voce verr‡ inserito in testata
+ *  passata come parametro, questo elemento voce verr√† inserito in testata
  *  all'impegno per bilancio ente corrispondente alla voce inserita nel
  *  dettaglio della scadenza
  * @param voce

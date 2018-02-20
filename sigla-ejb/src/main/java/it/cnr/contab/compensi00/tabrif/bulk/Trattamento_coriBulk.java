@@ -153,26 +153,26 @@ public void setTipoTrattamento(Tipo_trattamentoBulk newTipoTrattamento) {
 public void validaDate() throws it.cnr.jada.comp.ApplicationException{
 
 	if (getDt_inizio_validita()==null)
-		throw new it.cnr.jada.comp.ApplicationException("Il campo DATA INIZIO VALIDITA non può essere vuoto");
+		throw new it.cnr.jada.comp.ApplicationException("Il campo DATA INIZIO VALIDITA non puÃ² essere vuoto");
 		
 	if (getDt_fine_validita()==null)
 		setDt_fine_validita(EsercizioHome.DATA_INFINITO);
 
 	if (getDt_inizio_validita().compareTo(getDt_fine_validita()) > 0)
-		throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita non può essere superiore alla Data Fine Validita");
+		throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita non puÃ² essere superiore alla Data Fine Validita");
 }
 public void validaTrattamento() throws it.cnr.jada.comp.ApplicationException{
 
 	if (getCd_trattamento()==null)
-		throw new it.cnr.jada.comp.ApplicationException("Il campo TRATTAMENTO non può essere vuoto");
+		throw new it.cnr.jada.comp.ApplicationException("Il campo TRATTAMENTO non puÃ² essere vuoto");
 	if (getCd_contributo_ritenuta()==null)
-		throw new it.cnr.jada.comp.ApplicationException("Il campo CODICE CO/RI non può essere vuoto");
+		throw new it.cnr.jada.comp.ApplicationException("Il campo CODICE CO/RI non puÃ² essere vuoto");
 	if (getId_riga()==null)
-		throw new it.cnr.jada.comp.ApplicationException("Il campo ID RIGA non può essere vuoto");
+		throw new it.cnr.jada.comp.ApplicationException("Il campo ID RIGA non puÃ² essere vuoto");
 	if (getSegno()==null)
-		throw new it.cnr.jada.comp.ApplicationException("Il campo SEGNO non può essere vuoto");
+		throw new it.cnr.jada.comp.ApplicationException("Il campo SEGNO non puÃ² essere vuoto");
 	if (getCalcolo_imponibile()==null)
-		throw new it.cnr.jada.comp.ApplicationException("Il campo ALGORITMO non può essere vuoto");
+		throw new it.cnr.jada.comp.ApplicationException("Il campo ALGORITMO non puÃ² essere vuoto");
 
 	validaDate();
 }

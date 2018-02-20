@@ -367,7 +367,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 		Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk) compenso
 				.getObbligazioneScadenzario();
-		// la scadenza pu� essere NULL poich� il compenso pu� avere importo
+		// la scadenza puè essere NULL poichè il compenso puè avere importo
 		// lordo <= 0
 		if (scadenza != null) {
 			aggiornaSaldi(userContext, compenso, scadenza.getObbligazione(),
@@ -653,7 +653,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * richiesta di stampa di un registro provvisorio o definitivo
 	 * PostCondition: crea il prospetto di stampa liquidazione PreCondition:
 	 * liquidazione provvisoria o definitiva PostCondition: crea la liquidazione
-	 * Si � verificato un errore. PreCondition: Si � verificato un errore.
+	 * Si è verificato un errore. PreCondition: Si è verificato un errore.
 	 * PostCondition: Viene inviato un messaggio e non permette l'operazione
 	 */
 	// ^^@@
@@ -688,7 +688,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	/**
 	 * Richiama la procedure sul DB per l'elaborazione INPS
 	 * 
-	 * Si � verificato un errore. PreCondition: Si � verificato un errore.
+	 * Si è verificato un errore. PreCondition: Si è verificato un errore.
 	 * PostCondition: Viene inviato un messaggio e non permette l'operazione
 	 */
 
@@ -757,7 +757,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * di obbligazioni congruenti con la fattura passiva che si sta
 	 * creando/modificando. PostCondition: Le scadenze vengono aggiunte alla
 	 * lista delle scadenze congruenti. Validazione lista delle obbligazioni per
-	 * le fatture passive PreCondition: Si � verificato un errore nel
+	 * le fatture passive PreCondition: Si è verificato un errore nel
 	 * caricamento delle scadenze delle obbligazioni. PostCondition: Viene
 	 * inviato il messaggio corrispondente all'errore segnalato. Obbligazione
 	 * definitiva PreCondition: La scadenza non appartiene ad un'obbligazione
@@ -777,7 +777,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * scadenza non viene aggiunta alla lista delle scadenze congruenti.
 	 * Disabilitazione filtro di selezione sul debitore dell'obbligazione
 	 * PreCondition: La scadenza dell'obbligazione ha un debitore diverso da
-	 * quello della fattura passiva e non � di tipo "diversi" PostCondition: La
+	 * quello della fattura passiva e non è di tipo "diversi" PostCondition: La
 	 * scadenza non viene aggiunta alla lista delle scadenze congruenti.
 	 * Abilitazione filtro di selezione sulla data di scadenza PreCondition: La
 	 * scadenza dell'obbligazione ha una data scadenza precedente alla data di
@@ -946,7 +946,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			compenso.setV_terzo(loadVTerzo(userContext, compenso));
 			completaTerzo(userContext, compenso);
 
-			// I tipi trattamento dipendono dal conguaglio. Prima di caricarli �
+			// I tipi trattamento dipendono dal conguaglio. Prima di caricarli è
 			// necessario caricare il conguaglio
 			loadConguaglio(userContext, compenso);
 			compenso.setTipiTrattamento(findTipiTrattamento(userContext,
@@ -1108,21 +1108,21 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	}
 
 	/**
-	 * Ritorna il conguaglio a cui � stato associato il compenso selezionato
+	 * Ritorna il conguaglio a cui è stato associato il compenso selezionato
 	 * 
 	 * Pre-post_conditions
 	 * 
 	 * Nome: Compenso associato a conguaglio Pre: Viene richiesta il conguaglio
 	 * a cui il compenso risulta associato Post: Viene restituito il conguaglio
 	 * 
-	 * Nome: Compenso NON associato a conguaglio Pre: Il compenso non � stato
+	 * Nome: Compenso NON associato a conguaglio Pre: Il compenso non è stato
 	 * associato a nessun conguaglio Post: Viene restituito il valore NULL
 	 * 
 	 * @param userContext
 	 *            lo UserContext che ha generato la richiesta
 	 * @param compenso
 	 *            il compenso da aggiornare
-	 * @return il conguaglio a cui � associato il compenso
+	 * @return il conguaglio a cui è associato il compenso
 	 * 
 	 **/
 	public ConguaglioBulk conguaglioAssociatoACompenso(UserContext userContext,
@@ -1293,7 +1293,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 						&& compenso.getBonus().getIm_bonus().compareTo(
 								compenso.getIm_netto_percipiente()) != 0)
 					throw new ApplicationException(
-							"Attenzione l'importo del bonus previsto � di -"
+							"Attenzione l'importo del bonus previsto è di -"
 									+ compenso.getBonus().getIm_bonus());
 			}
 			if (!compenso.isDaMinicarriera()) {
@@ -1370,7 +1370,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		Long current = compenso.getPg_compenso();
 		if(compenso.getStato_liquidazione()!=null && !compenso.getStato_liquidazione().equals(compenso.LIQ))
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Lo stato della liquidazione non � compatibile");
+					"Lo stato della liquidazione non è compatibile");
 		  //controllo cap /swift
         if (compenso.getBanca() != null && 
         		((Rif_modalita_pagamentoBulk.BANCARIO.equals(compenso.getBanca().getTi_pagamento())
@@ -1391,7 +1391,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
                             new ComuneBulk(terzo.getPg_comune_sede()));
                     if (comune.getTi_italiano_estero().equals(NazioneBulk.ITALIA) && terzo.getCap_comune_sede() == null)
                         throw new ApplicationException(
-                                "Attenzione per la modalit� di pagamento presente sul documento � necessario indicare il cap sul terzo.");
+                                "Attenzione per la modalità di pagamento presente sul documento è necessario indicare il cap sul terzo.");
                 }
               }
             }
@@ -1403,7 +1403,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 sqlExists.addSQLClause("AND","NAZIONE.FL_SEPA",SQLBuilder.EQUALS,"Y");
                 if (sqlExists.executeCountQuery(getConnection(userContext))!=0 && compenso.getBanca().getCodice_swift()==null) 
         		          throw new ApplicationException(
-                                    "Attenzione per la modalit� di pagamento presente sul documento � necessario indicare il codice swift/bic.");
+                                    "Attenzione per la modalità di pagamento presente sul documento è necessario indicare il codice swift/bic.");
                 }
         }
 		validaCompensoPerContabilizzazione(userContext, compenso);
@@ -1425,7 +1425,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * del CUD. PreCondition: richiesta di elaborare un CUD PostCondition:
 	 * richiama callEstrazioneCUD, per l'elaborazione del report richiesto
 	 * 
-	 * Si � verificato un errore. PreCondition: Si � verificato un errore.
+	 * Si è verificato un errore. PreCondition: Si è verificato un errore.
 	 * PostCondition: Viene inviato un messaggio e non permette l'operazione
 	 */
 	// ^^@@
@@ -1588,7 +1588,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 						throw new it.cnr.jada.comp.ApplicationException(
 								"Impossibile collegare una scadenza dell'impegno residuo "
 										+ scad.getPg_obbligazione()
-										+ " poich� � stata effettuata una modifica in questo documento amministrativo!");
+										+ " poiché è stata effettuata una modifica in questo documento amministrativo!");
 					}
 				}
 			}
@@ -1632,20 +1632,20 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * Pre-post-conditions:
 	 * 
 	 * Nome: Validazione superata e compenso NON cancellabile fisicamente Pre:
-	 * Il compenso passa i criteri di validit� di business per l'operazione di
-	 * cancellazione ed � in stato Pagato o associato a Mandato/Reversale Post:
+	 * Il compenso passa i criteri di validità di business per l'operazione di
+	 * cancellazione ed è in stato Pagato o associato a Mandato/Reversale Post:
 	 * Viene consentita la cancellazione logica del compenso con relativi
 	 * aggiornamenti degli importi dell'obbligazione associata
 	 * 
 	 * Nome: Validazione superata e compenso cancellabile fisicamente Pre: Il
-	 * compenso passa i criteri di validit� di business per l'operazione di
-	 * cancellazione ed � in stato Iniziale oppure Contabilizzato ma non
+	 * compenso passa i criteri di validità di business per l'operazione di
+	 * cancellazione ed è in stato Iniziale oppure Contabilizzato ma non
 	 * associato a Mandato/Reversale Post: Viene consentita la cancellazione
 	 * fisica del compenso con relativi aggiornamenti degli importi
 	 * dell'obbligazione associata
 	 * 
 	 * Nome: Validazione NON superata Pre: Il compenso non passa i criteri di
-	 * validit� di business per l'operazione di cancellazione Post: Viene
+	 * validità di business per l'operazione di cancellazione Post: Viene
 	 * impedita la cancellazione sia fisica che logica del compenso
 	 * 
 	 * @param userContext
@@ -1667,7 +1667,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			if (compenso.getBonus() != null
 					&& compenso.getBonus().getFl_trasmesso()) {
 				throw new ApplicationException(
-						"Compenso collegato a Bonus gi� trasmesso, eliminazione non possibile");
+						"Compenso collegato a Bonus già trasmesso, eliminazione non possibile");
 			}
 			// Controllo dello stato dell'es COEP prec. per compensi riportati
 			// Da ese. prec. (isRiportataInScrivania())
@@ -1843,7 +1843,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 	/**
 	 * Richiama la procedura Oracle CNRCTB550.ESEGUIDELCOMPENSO che verifica se
-	 * il compenso � cancellabile logicamente, fisicamente oppure no
+	 * il compenso è cancellabile logicamente, fisicamente oppure no
 	 * 
 	 **/
 	private int eseguiDelCompenso(UserContext userContext, CompensoBulk compenso)
@@ -1894,12 +1894,12 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * 
 	 * Pre-post-conditions:
 	 * 
-	 * Nome: Terzo NON selezionato Pre: Non � stato selezionato un Terzo per il
+	 * Nome: Terzo NON selezionato Pre: Non è stato selezionato un Terzo per il
 	 * compenso Post: Non vengono caricate le banche.
 	 * 
 	 * Nome: Terzo selezionato Pre: E' stato selezionato un Terzo valido per il
 	 * compenso Post: Viene restituita la lista delle Banche associate al Terzo
-	 * e alla Modalit� di Pagamento selezionata
+	 * e alla Modalità di Pagamento selezionata
 	 * 
 	 * @param userContext
 	 *            lo UserContext che ha generato la richiesta
@@ -1928,7 +1928,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * 
 	 * Pre-post-conditions:
 	 * 
-	 * Nome: Terzo NON selezionato Pre: Non � stato selezionato un Terzo per il
+	 * Nome: Terzo NON selezionato Pre: Non è stato selezionato un Terzo per il
 	 * compenso Post: Non vengono caricate le modalita di pagamento
 	 * 
 	 * Nome: Terzo selezionato Pre: E' stato selezionato un Terzo valido per il
@@ -1967,7 +1967,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * 
 	 * Pre-post-conditions:
 	 * 
-	 * Nome: Terzo NON selezionato Pre: Non � stato selezionato un Terzo per il
+	 * Nome: Terzo NON selezionato Pre: Non è stato selezionato un Terzo per il
 	 * compenso Post: Non vengono caricati i termini di pagamento
 	 * 
 	 * Nome: Terzo selezionato Pre: E' stato selezionato un Terzo valido per il
@@ -2006,7 +2006,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * 
 	 * Pre-post-conditions:
 	 * 
-	 * Nome: Terzo NON selezionato Pre: Non � stato selezionato un Terzo per il
+	 * Nome: Terzo NON selezionato Pre: Non è stato selezionato un Terzo per il
 	 * compenso Post: Non vengono caricati i Tipi di rapporto
 	 * 
 	 * Nome: Terzo selezionato Pre: E' stato selezionato un Terzo valido per il
@@ -2044,7 +2044,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * 
 	 * Pre-post-conditions:
 	 * 
-	 * Nome: Tipo di Rapporto NON selezionato Pre: Non � stato selezionato il
+	 * Nome: Tipo di Rapporto NON selezionato Pre: Non è stato selezionato il
 	 * tipo di rapporto Post: Non vengono caricati i Tipi Trattamento
 	 * 
 	 * Nome: Terzo selezionato Pre: E' stato selezionato un tipo di rapporto
@@ -2100,8 +2100,8 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 						exit = true;
 						if (r.getCd_ente_prev_sti() == null)
 							// throw new
-							// it.cnr.jada.comp.ApplicationException("Non � stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
-							// non blocco perch� potrebbero esserci trattamenti
+							// it.cnr.jada.comp.ApplicationException("Non è stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
+							// non blocco perchè potrebbero esserci trattamenti
 							// che non prevedono contributi previdenziali
 							// quindi passo il codice fittizio 'XX'
 							filtro.setEntePrev("XX");
@@ -2109,7 +2109,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 							filtro.setEntePrev(r.getCd_ente_prev_sti());
 						if (r.getCd_rapp_impiego_sti() == null)
 							throw new it.cnr.jada.comp.ApplicationException(
-									"Per il dipendente in esame non � definito un Rapporto di Impiego!");
+									"Per il dipendente in esame non è definito un Rapporto di Impiego!");
 						else {
 							Ass_rapp_impiegoHome assHome = (Ass_rapp_impiegoHome) getHome(
 									userContext, Ass_rapp_impiegoBulk.class);
@@ -2281,10 +2281,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	}
 
 	/**
-	 * Pre: L'esercizio di scrivania � antecedente a quello corrente Post: La
+	 * Pre: L'esercizio di scrivania è antecedente a quello corrente Post: La
 	 * data restituita viene inizializzata al 31/12/esercizio scrivania
 	 * 
-	 * Pre: L'esercizio di scrivania NON � antecedente a quello corrente Post:
+	 * Pre: L'esercizio di scrivania NON è antecedente a quello corrente Post:
 	 * La data restituita viene inizializzata alla data odierna
 	 * 
 	 * @param aUC
@@ -2362,7 +2362,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	/**
 	 * Identificativo univoco progressivo per la gestione delle estrazioni
 	 * fiscali PreCondition: Viene richiesta un progressivo PostCondition:
-	 * ritorna un valore PreCondition: Si � verificato un errore. PostCondition:
+	 * ritorna un valore PreCondition: Si è verificato un errore. PostCondition:
 	 * Viene inviato un messaggio con il relativo errore ritornato dal DB
 	 */
 	// ^^@@
@@ -2434,7 +2434,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * 
 	 * errorCode Significato ========= =========== 0 Tutto bene 1 Terzo assente
 	 * 2 Terzo non valido alla data registrazione 3 Controllo se ho inserito le
-	 * modalit� di pagamento 4 Controllo se la modalit� di pagamento � valida
+	 * modalità di pagamento 4 Controllo se la modalità di pagamento è valida
 	 * (ha una banca associata) 5 Tipo rapporto assente 6 Tipo di rapporto non
 	 * valido in data inizio competenza coge 7 Tipo trattamento assente 8 Tipo
 	 * trattamento non valido alla data registrazione
@@ -2448,15 +2448,15 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		}
 		case 2: {
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Il Terzo selezionato non � valido in Data Registrazione");
+					"Il Terzo selezionato non è valido in Data Registrazione");
 		}
 		case 3: {
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Selezionare la Modalit� di pagamento");
+					"Selezionare la Modalità di pagamento");
 		}
 		case 4: {
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Selezionare una Modalit� di Pagamento valida");
+					"Selezionare una Modalità di Pagamento valida");
 		}
 		case 5: {
 			throw new it.cnr.jada.comp.ApplicationException(
@@ -2464,7 +2464,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		}
 		case 6: {
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Il Tipo Rapporto selezionato non � valido alla Data Inizio Competenza");
+					"Il Tipo Rapporto selezionato non è valido alla Data Inizio Competenza");
 		}
 		case 7: {
 			throw new it.cnr.jada.comp.ApplicationException(
@@ -2472,7 +2472,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		}
 		case 8: {
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Il Tipo Trattamento selezionato non � valido alla Data Registrazione");
+					"Il Tipo Trattamento selezionato non è valido alla Data Registrazione");
 		}
 		case 9: {
 			throw new it.cnr.jada.comp.ApplicationException(
@@ -2480,7 +2480,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		}
 		case 10: {
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Selezionare il Tipo Attivit� INPS");
+					"Selezionare il Tipo Attività INPS");
 		}
 		case 11: {
 			throw new it.cnr.jada.comp.ApplicationException(
@@ -2488,7 +2488,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		}
 		case 12: {
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Selezionare il Comune in cui viene svolta l'Attivit� lavorativa");
+					"Selezionare il Comune in cui viene svolta l'Attività lavorativa");
 		}
 		case 13: {
 			throw new it.cnr.jada.comp.ApplicationException(
@@ -2555,7 +2555,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 					userContext, bulk));
 			compenso.setStato_liquidazione(compenso.SOSP);
 			compenso.setCausale(compenso.ATTLIQ);
-			// r.p. 20/10/2008 commentato perch� non vengono valorizzate in
+			// r.p. 20/10/2008 commentato perchè non vengono valorizzate in
 			// automatico data inizio e fine competenze
 			// compenso.setDt_a_competenza_coge(compenso.getDt_registrazione());
 			// compenso.setDt_da_competenza_coge(compenso.getDt_registrazione());
@@ -2584,7 +2584,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti
 	 * collegati e preparato per l'operazione di presentazione e modifica
 	 * nell'interfaccia visuale. L'operazione di lettura viene effettuata con
-	 * una FetchPolicy il cui nome � ottenuto concatenando il nome della
+	 * una FetchPolicy il cui nome è ottenuto concatenando il nome della
 	 * component con la stringa ".edit"
 	 * 
 	 * @param uc
@@ -2617,7 +2617,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 		if (compenso.getEsercizio() == null)
 			throw new it.cnr.jada.comp.ApplicationException(
-					"L'esercizio del documento non � valorizzato! Impossibile proseguire.");
+					"L'esercizio del documento non è valorizzato! Impossibile proseguire.");
 
 		if (compenso.getEsercizio().intValue() > it.cnr.contab.utenze00.bp.CNRUserContext
 				.getEsercizio(userContext).intValue())
@@ -2902,7 +2902,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		compenso.impostaTipoRapporto(minicarriera.getTipo_rapporto());
 		if (compenso.getTipoRapporto() == null)
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Il tipo rapporto specificato non � valido per il periodo definito per la/e rata/e selezionata/e!");
+					"Il tipo rapporto specificato non è valido per il periodo definito per la/e rata/e selezionata/e!");
 		compenso.impostaTipoTrattamento(minicarriera.getTipo_trattamento());
 		
 		compenso.impostaTipoPrestazioneCompenso(minicarriera.getTipoPrestazioneCompenso()); 
@@ -2924,7 +2924,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				.getFl_escludi_qvaria_deduzione() == null ? Boolean.FALSE
 				: minicarriera.getFl_escludi_qvaria_deduzione());
 
-		// Se almeno una delle rate � a tassazione separata (data scad rata <
+		// Se almeno una delle rate è a tassazione separata (data scad rata <
 		// esercizio minicarr)...
 		// In minicarriera su creazione compenso viene eseguita validazione di
 		// congruenza
@@ -2940,7 +2940,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		} else {
 			// No tassazione sep
 			compenso.setFl_compenso_mcarriera_tassep(Boolean.FALSE);
-			// NB: l'aliquota media � a precisione 6
+			// NB: l'aliquota media è a precisione 6
 			compenso.setAliquota_irpef_tassep(new java.math.BigDecimal(0)
 					.setScale(6, java.math.BigDecimal.ROUND_HALF_EVEN));
 		}
@@ -2974,7 +2974,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		compenso.impostaTipoRapporto(bonus.getTipo_rapporto());
 		if (compenso.getTipoRapporto() == null)
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Il tipo rapporto specificato non � valido per il periodo definito!");
+					"Il tipo rapporto specificato non è valido per il periodo definito!");
 		Tipo_trattamentoHome home = (Tipo_trattamentoHome) getHome(userContext,
 				Tipo_trattamentoBulk.class);
 		try {
@@ -3026,7 +3026,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 		// Settaggio Testata Compenso
 		java.sql.Timestamp dataReg = compenso.getDt_registrazione();
-		// commentato perch� non deve essere sovrascritta con quella della
+		// commentato perchè non deve essere sovrascritta con quella della
 		// missione
 		// compenso.setDt_registrazione(missione.getDt_registrazione());
 
@@ -3097,7 +3097,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		compenso.setDt_fattura_fornitore(fp.getDt_fattura_fornitore());
 		compenso.setNr_fattura_fornitore(fp.getNr_fattura_fornitore());
 	
-		compenso.setFl_generata_fattura(fp.getFl_fattura_compenso()); // sar� sempre Y
+		compenso.setFl_generata_fattura(fp.getFl_fattura_compenso()); // sarà sempre Y
 		compenso.setData_protocollo(fp.getData_protocollo());
 		compenso.setNumero_protocollo(fp.getNumero_protocollo());
 		compenso.setDt_scadenza(fp.getDt_scadenza());
@@ -3261,17 +3261,17 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * 
 	 * Pre-post-conditions
 	 * 
-	 * Nome: Compenso ANNULLATO - Stato COFI uguale ad 'A' Pre: Il compenso �
-	 * annullato Post: Ritorna <true>. Il compenso � annullato
+	 * Nome: Compenso ANNULLATO - Stato COFI uguale ad 'A' Pre: Il compenso è
+	 * annullato Post: Ritorna <true>. Il compenso è annullato
 	 * 
 	 * Nome: Compenso NON ANNULLATO - Stato COFI diverso da 'A' Pre: Il compenso
-	 * non � annullato Post: Ritorna <false>. Il compenso non � annullato
+	 * non è annullato Post: Ritorna <false>. Il compenso non è annullato
 	 * 
 	 * @param userContext
 	 *            lo UserContext che ha generato la richiesta
 	 * @param compenso
 	 *            il compenso da controllare
-	 * @return vero se il compenso � anullato, falso altrimenti
+	 * @return vero se il compenso è anullato, falso altrimenti
 	 * 
 	 **/
 	public boolean isCompensoAnnullato(UserContext userContext,
@@ -3352,8 +3352,8 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 						exit = true;
 						if (r.getCd_ente_prev_sti() == null)
 							// throw new
-							// it.cnr.jada.comp.ApplicationException("Non � stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
-							// non blocco perch� potrebbero esserci trattamenti
+							// it.cnr.jada.comp.ApplicationException("Non è stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
+							// non blocco perchè potrebbero esserci trattamenti
 							// che non prevedono contributi previdenziali
 							// quindi passo il codice fittizio 'XX'
 							filtro.setEntePrev("XX");
@@ -3361,7 +3361,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 							filtro.setEntePrev(r.getCd_ente_prev_sti());
 						if (r.getCd_rapp_impiego_sti() == null)
 							throw new it.cnr.jada.comp.ApplicationException(
-									"Per il dipendente in esame non � definito un Rapporto di Impiego!");
+									"Per il dipendente in esame non è definito un Rapporto di Impiego!");
 						else {
 							Ass_rapp_impiegoHome assHome = (Ass_rapp_impiegoHome) getHome(
 									userContext, Ass_rapp_impiegoBulk.class);
@@ -3531,7 +3531,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * Nome: Compenso non pagato Pre: Viene richiesta la lista dei Documenti
 	 * Contabili per un compenso non pagato Post: Viene restituita una
 	 * ApplicationException con la descrizione dell'errore
-	 * "Il compenso non � pagato"
+	 * "Il compenso non è pagato"
 	 * 
 	 * Nome: Compenso pagato Pre: Viene richiesta la lista dei Documenti
 	 * Contabili per un compenso pagato Post: Viene restituita la lista dei
@@ -3698,8 +3698,8 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 						exit = true;
 						if (r.getCd_ente_prev_sti() == null)
 							// throw new
-							// it.cnr.jada.comp.ApplicationException("Non � stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
-							// non blocco perch� potrebbero esserci trattamenti
+							// it.cnr.jada.comp.ApplicationException("Non è stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
+							// non blocco perchè potrebbero esserci trattamenti
 							// che non prevedono contributi previdenziali
 							// quindi passo il codice fittizio 'XX'
 							filtro.setEntePrev("XX");
@@ -3707,7 +3707,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 							filtro.setEntePrev(r.getCd_ente_prev_sti());
 						if (r.getCd_rapp_impiego_sti() == null)
 							throw new it.cnr.jada.comp.ApplicationException(
-									"Per il dipendente in esame non � definito un Rapporto di Impiego!");
+									"Per il dipendente in esame non è definito un Rapporto di Impiego!");
 						else {
 							Ass_rapp_impiegoHome assHome = (Ass_rapp_impiegoHome) getHome(
 									userContext, Ass_rapp_impiegoBulk.class);
@@ -3807,7 +3807,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			if (isCompensoSoloInailEnte(tratt)){
 				if (compenso.isDaMinicarriera()){
 					throw new ApplicationException(
-							"Attenzione! Non � possibile utilizzare un trattamento di tipo 'Torno Subito con solo INAIL a carico ente' per una minicarriera");
+							"Attenzione! Non è possibile utilizzare un trattamento di tipo 'Torno Subito con solo INAIL a carico ente' per una minicarriera");
 				}
 				compenso.setCompensoSoloInailEnte(true);
 			}
@@ -3919,7 +3919,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 					&& compenso.getBonus().getIm_bonus().compareTo(
 							compenso.getIm_netto_percipiente()) != 0)
 				throw new ApplicationException(
-						"Attenzione l'importo del bonus previsto � di "
+						"Attenzione l'importo del bonus previsto è di "
 								+ compenso.getBonus().getIm_bonus());
 		}
 		validaCompenso(userContext, compenso);
@@ -4248,17 +4248,17 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	}
 
 	/**
-	 * Questo metodo risolve il problema di "Integrit� Refrenziale Violata" fra
+	 * Questo metodo risolve il problema di "Integrità Refrenziale Violata" fra
 	 * il compenso e l'obbligazione.
 	 * 
 	 * Spiegazione del problema: Il compenso viene salvato temporaneamente sul
-	 * db durante la sua elaborazione. Pu� capitare che dopo aver collegato
+	 * db durante la sua elaborazione. Puè capitare che dopo aver collegato
 	 * un'obbligazione al compenso, decida di cambiare qualche dato e rieseguire
 	 * il calcolo. Quest'operazione comporta il salvataggio (temporaneo) del
 	 * compenso (compresi i dati dell'obbligazione collegata). Implicazioni ==>
 	 * in fase di salvataggio definitivo del compenso, quando viene resa
-	 * definitiva l'obbligazione, il sistema fornisce un'eccezione di Integrit�
-	 * Refrenziale Violata poich� si tenta di cancellare l'obbligazione
+	 * definitiva l'obbligazione, il sistema fornisce un'eccezione di Integrità
+	 * Refrenziale Violata poichè si tenta di cancellare l'obbligazione
 	 * temporanea precedentemente referenziata dal compenso
 	 * 
 	 **/
@@ -4758,7 +4758,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				if (isCompensoSoloInailEnte(compenso.getTipoTrattamento())){
 					if (compenso.isDaMinicarriera()){
 						throw new ApplicationException(
-								"Attenzione! Non � possibile utilizzare un trattamento di tipo 'Torno Subito con solo INAIL a carico ente' per una minicarriera");
+								"Attenzione! Non è possibile utilizzare un trattamento di tipo 'Torno Subito con solo INAIL a carico ente' per una minicarriera");
 					}
 					compenso.setCompensoSoloInailEnte(true);
 				}
@@ -4850,7 +4850,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			StampaCompensiBulk stampa) throws ComponentException {
 		if (stampa.getPgFine() == null || stampa.getPgInizio() == null)
 			throw new ApplicationException(
-					"E' necessario selezionare uno o pi� compensi");
+					"E' necessario selezionare uno o piè compensi");
 		return stampa;
 	}
 
@@ -4888,7 +4888,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	/**
 	 * Viene validato il compenso prima del salvataggio - validazione data
 	 * registrazione, date competenza, descrizione compenso - validazioni dati
-	 * fattura (se uno � presente, allora devono esserci tutti) - validazione
+	 * fattura (se uno è presente, allora devono esserci tutti) - validazione
 	 * terzo - validazione dati liquidazione (regione Irap, voce iva, tipologia
 	 * rischio) - eseguito il calcolo dei contributi/ritenute - creata
 	 * obbligazione e aggiornata con l'importo totale del compenso - terzo
@@ -4911,7 +4911,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * desrizione dell'errore
 	 * 
 	 * Nome: Validazione Regione IRAP, Voce IVA, Tipologia Rischio NON superata
-	 * Pre: Non � stato selezionata una regione IRAP, voce IVA o Tipologia
+	 * Pre: Non è stato selezionata una regione IRAP, voce IVA o Tipologia
 	 * Rischio valida Post: Viene restituita una ComponentException con la
 	 * desrizione dell'errore
 	 * 
@@ -4920,8 +4920,8 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * una ComponentException con la desrizione dell'errore
 	 * 
 	 * Nome: Obbligazione non creata o Importo dell'obbligazione non coerente
-	 * con l'importo del compenso Pre: Non � stata creata l'obbligazione o
-	 * l'importo della stessa non � coerente con l'importo del compenso Post:
+	 * con l'importo del compenso Pre: Non è stata creata l'obbligazione o
+	 * l'importo della stessa non è coerente con l'importo del compenso Post:
 	 * Viene restituita una ComponentException con la desrizione dell'errore
 	 * 
 	 * Nome: Obbligazione non valida Pre: L'obbligazione non supera i controlli
@@ -4943,7 +4943,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		if (isCompensoSoloInailEnte(compenso.getTipoTrattamento())){
 			if (compenso.isDaMinicarriera()){
 				throw new ApplicationException(
-						"Attenzione! Non � possibile utilizzare un trattamento di tipo 'Torno Subito con solo INAIL a carico ente' per una minicarriera");
+						"Attenzione! Non è possibile utilizzare un trattamento di tipo 'Torno Subito con solo INAIL a carico ente' per una minicarriera");
 			}
 		}
 		try {
@@ -4989,7 +4989,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			if ((compenso.getDt_fattura_fornitore().compareTo(data_limite) < 0)||(data_limite_sup!=null && compenso.getDt_fattura_fornitore().compareTo(data_limite_sup) > 0)) {
 				compenso.setFl_liquidazione_differita(false);
 				throw new it.cnr.jada.comp.ApplicationException(
-						"Non � possibile indicare la liquidazione differita con la data fattura fornitore indicata.");
+						"Non è possibile indicare la liquidazione differita con la data fattura fornitore indicata.");
 			}
 		}
 		// Controlli aggiunti per l'Art.35 DL n.223/2006
@@ -4998,17 +4998,17 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				&& !compenso.LIBERO_FONDO_ECO.equals(compenso
 						.getStato_pagamento_fondo_eco()))
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Il compenso non pu� essere associato a fondo economale per il tipo di trattamento prescelto");
+					"Il compenso non può essere associato a fondo economale per il tipo di trattamento prescelto");
 		if (compenso.getFl_generata_fattura()
 				&& compenso.getPartita_iva() == null
 				&& !((TerzoBulk) compenso.getTerzo()).getAnagrafico()
 						.getFl_non_obblig_p_iva())
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Per poter generare la fattura � necessario che il terzo abbia la Partita Iva");
+					"Per poter generare la fattura è necessario che il terzo abbia la Partita Iva");
 		if (compenso.getFl_generata_fattura()
 				&& compenso.getCodice_fiscale() == null)
 			throw new it.cnr.jada.comp.ApplicationException(
-					"Per poter generare la fattura � necessario che il terzo abbia il Codice Fiscale valorizzato");
+					"Per poter generare la fattura è necessario che il terzo abbia il Codice Fiscale valorizzato");
 
 		validaDatiLiquidazione(compenso);
 
@@ -5042,7 +5042,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		    	compenso.setPg_trovato(null);
 		    if (isObbligatoriaIndicazioneTrovato(voce) && compenso.getPg_trovato()==null )
 		        throw new it.cnr.jada.comp.ApplicationException(
-		            "Attenzione! Non � stato inserito il Brevetto/Trovato mentre la voce di bilancio utilizzata per la contabilizzazione del dettaglio collegato ne prevede l'indicazione obbligatoria");
+		            "Attenzione! Non è stato inserito il Brevetto/Trovato mentre la voce di bilancio utilizzata per la contabilizzazione del dettaglio collegato ne prevede l'indicazione obbligatoria");
 		}
 	}
 
@@ -5108,10 +5108,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * 
 	 * Pre-post-conditions
 	 * 
-	 * Name: Importo totale compenso negativo e Linea Attivit� non selezionata
+	 * Name: Importo totale compenso negativo e Linea Attivitè non selezionata
 	 * Pre: Viene richiesta la contabilizzazione di un compenso negativo senza
 	 * linea di attivita Post: Viene impedita la contabilizzazione ed emesso il
-	 * messaggio "Inserire la Linea di Attivit�!"
+	 * messaggio "Inserire la Linea di Attivitè!"
 	 * 
 	 * Name: Importo totale compenso negativo o nullo e compenso assegnato a
 	 * fondo economale Pre: Viene richiesta la contabilizzazione di un compenso
@@ -5148,10 +5148,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 						.getStato_pagamento_fondo_eco()))
 			if (compenso.isDaMissione())
 				throw new it.cnr.jada.comp.ApplicationException(
-						"Il compenso non pu� essere associato a fondo economale poich� l'importo dell'anticipo � superiore al netto percipiente");
+						"Il compenso non può essere associato a fondo economale poichè l'importo dell'anticipo è superiore al netto percipiente");
 			else
 				throw new it.cnr.jada.comp.ApplicationException(
-						"Il compenso non pu� essere associato a fondo economale poich� l'importo netto percipiente � negativo");
+						"Il compenso non può essere associato a fondo economale poichè l'importo netto percipiente è negativo");
 	}
 
 	/**
@@ -5202,7 +5202,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * desrizione dell'errore
 	 * 
 	 * Nome: Validazione Regione IRAP, Voce IVA, Tipologia Rischio NON superata
-	 * Pre: Non � stato selezionata una regione IRAP, voce IVA o Tipologia
+	 * Pre: Non è stato selezionata una regione IRAP, voce IVA o Tipologia
 	 * Rischio valida Post: Viene restituita una ComponentException con la
 	 * desrizione dell'errore
 	 * 
@@ -5289,15 +5289,15 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * 
 	 * Pre-post_conditions
 	 * 
-	 * Nome: Validazione Regione IRAP NON superata Pre: Non � stato selezionata
+	 * Nome: Validazione Regione IRAP NON superata Pre: Non è stato selezionata
 	 * una regione IRAP Post: Viene restituita una ComponentException con la
 	 * desrizione dell'errore
 	 * 
-	 * Nome: Validazione Voce IVA NON superata Pre: Non � stato selezionata una
+	 * Nome: Validazione Voce IVA NON superata Pre: Non è stato selezionata una
 	 * voce IVA Post: Viene restituita una ComponentException con la desrizione
 	 * dell'errore
 	 * 
-	 * Nome: Validazione Tipologia Rischio NON superata Pre: Non � stato
+	 * Nome: Validazione Tipologia Rischio NON superata Pre: Non è stato
 	 * selezionata una Tipologia Rischio Post: Viene restituita una
 	 * ComponentException con la desrizione dell'errore
 	 * 
@@ -5324,7 +5324,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 						"Inserire la Tipologia di Rischio");
 			if (compenso.getImponibile_inail() == null)
 				throw new it.cnr.jada.comp.ApplicationException(
-						"L'imponibile INAIL non pu� essere vuoto");
+						"L'imponibile INAIL non può essere vuoto");
 		}
 	}
 
@@ -5333,7 +5333,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * scadenza su compenso con importo negativo o nullo - Nessuna scadenza
 	 * inserita - Importo obbligazione e importo scadenza NON NULLI - Importo
 	 * sadenza uguale a importo compenso - Terzo dell'obbligazione uguale al
-	 * terzo del compenso o di tipo entit� DIVERSI
+	 * terzo del compenso o di tipo entitè DIVERSI
 	 * 
 	 * Pre-post-conditions
 	 * 
@@ -5351,18 +5351,18 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * "Nessuna obbligazione associata!!!"
 	 * 
 	 * Nome: Importi obblig./scadenza NULLI Pre: L'importo della obblig. e/o
-	 * della scadenza � nullo Post: Non viene consentita la creazione/modifica
+	 * della scadenza è nullo Post: Non viene consentita la creazione/modifica
 	 * dell'obbligazione Generata una ApplicationException con il messaggio:
-	 * "L'Importo dell'obbligazione/scadenza � un dato obbligatorio"
+	 * "L'Importo dell'obbligazione/scadenza è un dato obbligatorio"
 	 * 
 	 * Nome: Importi scadenza diverso da importo lordo compenso Pre: L'importo
-	 * della scadenza � diverso dall'importo lordo del compenso Post: Non viene
+	 * della scadenza è diverso dall'importo lordo del compenso Post: Non viene
 	 * consentita la creazione/modifica dell'obbligazione Generata una
 	 * ApplicationException con il messaggio:
 	 * "L'importo dell scadenza deve corrispondere all'importo del compenso"
 	 * 
-	 * Nome: Terzo selezionato NON valido Pre: Il terzo selezionato � diverso
-	 * dal terzo del compenso oppure il tipo entit� NON � DIVERSI Post: Non
+	 * Nome: Terzo selezionato NON valido Pre: Il terzo selezionato è diverso
+	 * dal terzo del compenso oppure il tipo entitè NON è DIVERSI Post: Non
 	 * viene consentita la creazione/modifica dell'obbligazione Generata una
 	 * ApplicationException con il messaggio:
 	 * "L'obbligazione deve avere un creditore valido!"
@@ -5400,10 +5400,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 			if (obblig.getIm_obbligazione() == null)
 				throw new it.cnr.jada.comp.ApplicationException(
-						"L'Importo dell'impegno � un dato obbligatorio");
+						"L'Importo dell'impegno è un dato obbligatorio");
 			if (scadenza.getIm_scadenza() == null)
 				throw new it.cnr.jada.comp.ApplicationException(
-						"L'Importo della scadenza � un dato obbligatorio");
+						"L'Importo della scadenza è un dato obbligatorio");
 
 			// Importo della scadenza diverso da quello del compenso
 			if (scadenza.getIm_scadenza().compareTo(
@@ -5417,7 +5417,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 							.getEsercizio_limite().compareTo(
 									obblig.getEsercizio_originale()) != 0)
 				throw new it.cnr.jada.comp.ApplicationException(
-						"La tipologia dell'impegno (competenza/residuo) non � coerente con la riga del contratto prescelta.");
+						"La tipologia dell'impegno (competenza/residuo) non è coerente con la riga del contratto prescelta.");
 
 			validaTerzoObbligazione(userContext, compenso, obblig);
 		}
@@ -5449,20 +5449,20 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			/**** Controlli sulle Date DA A *****/
 			if (stampa.getDataInizio() == null)
 				throw new ValidationException(
-						"Il campo DATA INIZIO PERIODO � obbligatorio");
+						"Il campo DATA INIZIO PERIODO è obbligatorio");
 			if (stampa.getDataFine() == null)
 				throw new ValidationException(
-						"Il campo DATA FINE PERIODO � obbligatorio");
+						"Il campo DATA FINE PERIODO è obbligatorio");
 
-			// La Data di Inizio Periodo � superiore alla data di Fine Periodo
+			// La Data di Inizio Periodo è superiore alla data di Fine Periodo
 			if (stampa.getDataInizio().compareTo(stampa.getDataFine()) > 0)
 				throw new ValidationException(
-						"La DATA di INIZIO PERIODO non pu� essere superiore alla DATA di FINE PERIODO");
+						"La DATA di INIZIO PERIODO non puè essere superiore alla DATA di FINE PERIODO");
 
 			if (stampa.getAnagraficoForPrint() == null
 					|| stampa.getAnagraficoForPrint().getCd_anag() == null)
 				throw new ValidationException(
-						"Attenzione: il campo Anagrafico � obbligatorio");
+						"Attenzione: il campo Anagrafico è obbligatorio");
 
 		} catch (ValidationException ex) {
 			throw new ApplicationException(ex);
@@ -5482,7 +5482,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			if (stampa.getTerzoForPrint() == null
 					|| stampa.getTerzoForPrint().getCd_terzo() == null)
 				throw new ValidationException(
-						"Attenzione: il campo Terzo � obbligatorio");
+						"Attenzione: il campo Terzo è obbligatorio");
 
 		} catch (ValidationException ex) {
 			throw new ApplicationException(ex);
@@ -5524,7 +5524,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 				if (status.compareTo("Y") != 0) {
 					throw new it.cnr.jada.comp.ApplicationException(
-							"Attenzione: non � possibile eliminare il documento, poich� l'esercizio economico precedente non � chiuso.");
+							"Attenzione: non è possibile eliminare il documento, poichè l'esercizio economico precedente non è chiuso.");
 				}
 			}
 
@@ -5546,50 +5546,50 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * 
 	 * errorCode Significato ========= =========== 0 Tutto bene 1 Terzo assente
 	 * 2 Terzo non valido alla data registrazione 3 Controllo se ho inserito le
-	 * modalit� di pagamento 4 Banca non inserita 5 Tipo rapporto assente 6 Tipo
+	 * modalità di pagamento 4 Banca non inserita 5 Tipo rapporto assente 6 Tipo
 	 * di rapporto non valido in data inizio competenza coge 7 Tipo trattamento
 	 * assente 8 Tipo trattamento non valido alla data registrazione
 	 * 
 	 * Pre-post-conditions
 	 * 
-	 * Nome: Terzo assente Pre: Non � stato selezionato un terzo Post: Ritorna
+	 * Nome: Terzo assente Pre: Non è stato selezionato un terzo Post: Ritorna
 	 * una ApplicationException con la descrizione dell'errore
 	 * "Inserire il terzo"
 	 * 
 	 * Nome: Terzo non valido alla data registrazione Pre: Il terzo selezionato
-	 * non � valido alla data registrazione Post: Ritorna una
+	 * non è valido alla data registrazione Post: Ritorna una
 	 * ApplicationException con la descrizione dell'errore
-	 * "Il Terzo selezionato non � valido in Data Registrazione"
+	 * "Il Terzo selezionato non è valido in Data Registrazione"
 	 * 
-	 * Nome: Modalita di pagamento assente Pre: Non � stato selezionata una
+	 * Nome: Modalita di pagamento assente Pre: Non è stato selezionata una
 	 * modalita di pagamento Post: Ritorna una ApplicationException con la
-	 * descrizione dell'errore "Selezionare la Modalit� di pagamento"
+	 * descrizione dell'errore "Selezionare la Modalità di pagamento"
 	 * 
-	 * Nome: Modalita di pagamento non valida Pre: Non � stato selezionata una
+	 * Nome: Modalita di pagamento non valida Pre: Non è stato selezionata una
 	 * modalita di pagamento valida (con banca) Post: Ritorna una
 	 * ApplicationException con la descrizione dell'errore
-	 * "Selezionare una Modalit� di pagamento valida"
+	 * "Selezionare una Modalità di pagamento valida"
 	 * 
-	 * Nome: Tipo rapporto assente Pre: Non � stato selezionato un tipo rapporto
+	 * Nome: Tipo rapporto assente Pre: Non è stato selezionato un tipo rapporto
 	 * Post: Ritorna una ApplicationException con la descrizione dell'errore
 	 * "Selezionare il Tipo Rapporto"
 	 * 
 	 * Nome: Tipo rapporto non valido alla data inizio competenza coge Pre: Il
-	 * tipo rapporto selezionato non � valido in data competenza coge Post:
+	 * tipo rapporto selezionato non è valido in data competenza coge Post:
 	 * Ritorna una ApplicationException con la descrizione dell'errore
-	 * "Il Tipo Rapporto selezionato non � valido alla Data Inizio Competenza"
+	 * "Il Tipo Rapporto selezionato non è valido alla Data Inizio Competenza"
 	 * 
-	 * Nome: Tipo trattamento assente Pre: Non � stato selezionato un tipo
+	 * Nome: Tipo trattamento assente Pre: Non è stato selezionato un tipo
 	 * trattamento Post: Ritorna una ApplicationException con la descrizione
 	 * dell'errore "Selezionare il Tipo Trattamento"
 	 * 
-	 * Nome: Tipo trattamento non valido alla data registrazione Pre: Non �
+	 * Nome: Tipo trattamento non valido alla data registrazione Pre: Non è
 	 * stato selezionato un tipo trattamento Post: Ritorna una
 	 * ApplicationException con la descrizione dell'errore
-	 * "Il Tipo Trattamento selezionato non � valido alla Data Registrazione"
+	 * "Il Tipo Trattamento selezionato non è valido alla Data Registrazione"
 	 * 
 	 * Nome: Terzo valido Pre: Il terzo selezionato non ha errori Post: Il terzo
-	 * � valido e prosegue con l'operazione
+	 * è valido e prosegue con l'operazione
 	 * 
 	 * @param userContext
 	 *            lo UserContext che genera la richiesta
@@ -5610,35 +5610,35 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * 
 	 * errorCode Significato ========= =========== 0 Tutto bene 1 Terzo assente
 	 * 2 Terzo non valido alla data registrazione 3 Controllo se ho inserito le
-	 * modalit� di pagamento 4 Banca non inserita 5 Tipo rapporto assente 6 Tipo
+	 * modalità di pagamento 4 Banca non inserita 5 Tipo rapporto assente 6 Tipo
 	 * di rapporto non valido in data inizio competenza coge 7 Tipo trattamento
 	 * assente 8 Tipo trattamento non valido alla data registrazione
 	 * 
 	 * Pre-post-conditions
 	 * 
-	 * Nome: Terzo assente Pre: Non � stato selezionato un terzo Post: Ritorna
+	 * Nome: Terzo assente Pre: Non è stato selezionato un terzo Post: Ritorna
 	 * il valore 1
 	 * 
 	 * Nome: Terzo non valido alla data registrazione Pre: Il terzo selezionato
-	 * non � valido alla data registrazione Post: Ritorna il valore 2
+	 * non è valido alla data registrazione Post: Ritorna il valore 2
 	 * 
-	 * Nome: Modalita di pagamento assente Pre: Non � stato selezionata una
+	 * Nome: Modalita di pagamento assente Pre: Non è stato selezionata una
 	 * modalita di pagamento Post: Ritorna il valore 3
 	 * 
-	 * Nome: Banca non inserita Pre: Non � stato selezionato un conto corretto
+	 * Nome: Banca non inserita Pre: Non è stato selezionato un conto corretto
 	 * Post: Ritorna il valore 4
 	 * 
-	 * Nome: Tipo rapporto assente Pre: Non � stato selezionato un tipo rapporto
+	 * Nome: Tipo rapporto assente Pre: Non è stato selezionato un tipo rapporto
 	 * Post: Ritorna il valore 5
 	 * 
 	 * Nome: Tipo rapporto non valido alla data inizio competenza coge Pre: Il
-	 * tipo rapporto selezionato non � valido in data competenza coge Post:
+	 * tipo rapporto selezionato non è valido in data competenza coge Post:
 	 * Ritorna il valore 6
 	 * 
-	 * Nome: Tipo trattamento assente Pre: Non � stato selezionato un tipo
+	 * Nome: Tipo trattamento assente Pre: Non è stato selezionato un tipo
 	 * trattamento Post: Ritorna il valore 7
 	 * 
-	 * Nome: Tipo trattamento non valido alla data registrazione Pre: Non �
+	 * Nome: Tipo trattamento non valido alla data registrazione Pre: Non è
 	 * stato selezionato un tipo trattamento Post: Ritorna il valore 8
 	 * 
 	 * Nome: Terzo valido Pre: Il terzo selezionato non ha errori Post: Ritorna
@@ -5666,7 +5666,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 						compenso.getDt_registrazione()) < 0)
 			return 2;
 
-		// Controllo se ho inserito le modalit� di pagamento
+		// Controllo se ho inserito le modalità di pagamento
 		if (checkModPag && compenso.getModalitaPagamento() == null)
 			return 3;
 
@@ -5732,7 +5732,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * 
 	 * Pre-post-conditions
 	 * 
-	 * Nome: Terzo obbligazione non valido Pre: Non � stato selezionato il terzo
+	 * Nome: Terzo obbligazione non valido Pre: Non è stato selezionato il terzo
 	 * nell'obbligazione Post: Ritorna un ApplicationException con la
 	 * descrizione dell'errore
 	 * 
@@ -5744,7 +5744,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * L'anagafica associata al terzo dell'obbligazione ha come tipo entita
 	 * DIVERSI Post: Viene validato il terzo
 	 * 
-	 * Nome: Nessuna delle due condizioni precedenti � verificata Pre: Il terzo
+	 * Nome: Nessuna delle due condizioni precedenti è verificata Pre: Il terzo
 	 * selezionato NON corrisponde al terzo del compenso e l'anagrafica
 	 * associata NON ha tipo entita DIVERSI Post: Ritorna un
 	 * ApplicationException con la descrizione dell'errore
@@ -5812,7 +5812,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 * PreCondition: richiesta di elaborare un 770 PostCondition: richiama
 	 * callEstrazione770, per l'elaborazione del report richiesto
 	 * 
-	 * Si � verificato un errore. PreCondition: Si � verificato un errore.
+	 * Si è verificato un errore. PreCondition: Si è verificato un errore.
 	 * PostCondition: Viene inviato un messaggio e non permette l'operazione
 	 */
 	public it.cnr.contab.compensi00.docs.bulk.Estrazione770Bulk doElabora770(
@@ -5839,7 +5839,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	/**
 	 * Richiama la procedure sul DB per l'estrazione 770
 	 * 
-	 * Si � verificato un errore. PreCondition: Si � verificato un errore.
+	 * Si è verificato un errore. PreCondition: Si è verificato un errore.
 	 * PostCondition: Viene inviato un messaggio e non permette l'operazione
 	 */
 	private void callEstrazione770(UserContext userContext,
@@ -6020,10 +6020,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			CompensoBulk compenso) throws ComponentException {
 		if (isImportoOk(userContext, compenso))
 			return true;
-		// controllo la modalit� di pagamento
+		// controllo la modalità di pagamento
 		if (!compenso.getModalitaPagamento().getFl_utilizzabile_art35())
 			throw new ApplicationException(
-					"Modalit� di pagamento non coerente con il trattamento prescelto (Art.35 DL n.223/2006)");
+					"Modalità di pagamento non coerente con il trattamento prescelto (Art.35 DL n.223/2006)");
 		// return false;
 		else
 			return true;
@@ -6138,7 +6138,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				java.sql.Timestamp data_emis_mand = it.cnr.jada.util.ejb.EJBCommonServices
 						.getServerDate();
 
-				// Se data_emis_mand � compreso nel periodo di validit�, deve
+				// Se data_emis_mand è compreso nel periodo di validità, deve
 				// essere calcolato l'acconto
 				// altrimenti no
 				if (compenso.getCd_terzo() != null) {
@@ -6579,9 +6579,9 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		      )
 		    )
 			throw new it.cnr.jada.comp.ApplicationException(
-					"La competenza del compenso non � interna alle date di validit� del contratto. ");
+					"La competenza del compenso non è interna alle date di validità del contratto. ");
 
-		//le borse e gli assegni possono andare su pi� fondi
+		//le borse e gli assegni possono andare su piè fondi
 		if (compenso.getTipoPrestazioneCompenso().getFl_controllo_fondi())
 		{
 			Obbligazione_scadenzarioHome obblHome = (Obbligazione_scadenzarioHome) getHome(
@@ -6601,7 +6601,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 									.getIncarichi_repertorio()
 									.getIncarichi_procedura().getTipo_natura()))
 						throw new it.cnr.jada.comp.ApplicationException(
-								"La tipologia della natura dell'impegno � diversa da quella del contratto prescelto.");
+								"La tipologia della natura dell'impegno è diversa da quella del contratto prescelto.");
 				}
 			} catch (it.cnr.jada.persistency.PersistencyException e) {
 				throw handleException(e);
@@ -6663,7 +6663,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		     	)
 		    )
 			throw new it.cnr.jada.comp.ApplicationException(
-					"La competenza del compenso non � interna alle date di validit� del contratto. ");
+					"La competenza del compenso non è interna alle date di validità del contratto. ");
 	}
 
 	public BigDecimal prendiUtilizzato(UserContext userContext,
@@ -6867,7 +6867,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 						.getElemento_voce().getFl_inv_beni_comp()
 						.booleanValue())
 			throw new ApplicationException(
-					"Il titolo capitolo selezionato non � utilizzabile dai Compensi! ");
+					"Il titolo capitolo selezionato non è utilizzabile dai Compensi! ");
 		else if (compenso.getObbligazioneScadenzario() != null
 				&& compenso.getObbligazioneScadenzario().getObbligazione() != null
 				&& compenso.getObbligazioneScadenzario().getObbligazione()
@@ -6877,7 +6877,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 						.booleanValue()
 				&& compenso.hasCompetenzaCOGEInAnnoPrecedente())
 			throw new ApplicationException(
-					"Non � possibile utilizzare questo titolo capitolo con queste date competenza! ");
+					"Non è possibile utilizzare questo titolo capitolo con queste date competenza! ");
 		else if (compenso.getObbligazioneScadenzario() != null
 				&& compenso.getObbligazioneScadenzario().getObbligazione() != null
 				&& compenso.getObbligazioneScadenzario().getObbligazione()
@@ -6917,7 +6917,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			java.sql.Timestamp data_emis_mand = it.cnr.jada.util.ejb.EJBCommonServices
 					.getServerDate();
 
-			// Se data_emis_mand � compreso nel periodo di validit� e se il
+			// Se data_emis_mand è compreso nel periodo di validità e se il
 			// terzo ed il cori la prevedono
 			// deve essere calcolata la sospensione, altrimenti no
 			if (compenso.getCd_terzo() != null) {

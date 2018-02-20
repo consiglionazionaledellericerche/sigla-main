@@ -49,7 +49,7 @@ public interface IUnita_organizzativaMgr extends ICRUDMgr
  * Pre-post-conditions:
  *
  * Nome: Ricerca di un CdsBulk o di una Unita_organizzativaBulk
- * Pre:  La richiesta di ricerca di un CdsBulk o di una Unita_organizzativaBulk Ë stata generata
+ * Pre:  La richiesta di ricerca di un CdsBulk o di una Unita_organizzativaBulk √® stata generata
  * Post: La lista di CdsBulk o di Unita_organizzativaBulk che soddisfano i criteri di ricerca sono stati recuperati
  *
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -66,24 +66,24 @@ public abstract it.cnr.jada.util.RemoteIterator cerca(it.cnr.jada.UserContext pa
  * Pre-post-conditions:
  ************************************   CDS *************************************************
  * Nome: Creazione di Cds 
- * Pre:  La richiesta di creazione di un Cds Ë stata generata
+ * Pre:  La richiesta di creazione di un Cds √® stata generata
  * Post: Un Cds viene creato con i dati inseriti dall'utente, il suo codice se non specificato dall'utente  
  *       viene generato automaticamente; vengono create l'Unita' Organizzativa UO-CDS e il Cdr Responsabile dell'U0_CDS.
  *       Al Cdr viene assegnato un livello in base alla regola descritta nel metodo 'creaCdrBulk'
  *
  *
  * Nome: Cds di tipo SAC gia' esistente
- * Pre:  La richiesta di creazione di un Cds con tiplogia SAC Ë stata generata
+ * Pre:  La richiesta di creazione di un Cds con tiplogia SAC √® stata generata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  * 
  * Nome: Errore di Responsabile inesistente
- * Pre:  Il Codice Terzo definito come responsabile del Cds non Ë presente
+ * Pre:  Il Codice Terzo definito come responsabile del Cds non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Errore di chiave duplicata
- * Pre:  Esiste gi‡ un CdsBulk persistente che possiede la stessa chiave
+ * Pre:  Esiste gi√† un CdsBulk persistente che possiede la stessa chiave
  * 		 primaria di quello specificato.
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
@@ -96,50 +96,50 @@ public abstract it.cnr.jada.util.RemoteIterator cerca(it.cnr.jada.UserContext pa
  *
  ************************************   UNITA ORGANIZZATIVA *************************************************
  *
- * Nome: Creazione di Unit‡ organizzativa dipendente da un CDS di tipo AREA
- * Pre:  La richiesta di creazione di una unit‡ organizzativa che dipende da un CDS di tipo 
- *       Area di ricerca Ë stata generata
- * Post: Viene generate una ApplicationException con il messaggio "Non Ë possibile aggiungere una unit‡ organizzativa ad un'area
+ * Nome: Creazione di Unit√† organizzativa dipendente da un CDS di tipo AREA
+ * Pre:  La richiesta di creazione di una unit√† organizzativa che dipende da un CDS di tipo 
+ *       Area di ricerca √® stata generata
+ * Post: Viene generate una ApplicationException con il messaggio "Non √® possibile aggiungere una unit√† organizzativa ad un'area
  * 		 di ricerca"
  *
  * Nome: Creazione di Unita' organizzativa con specifica di area di ricerca collegata
- * Pre:  La richiesta di creazione di un' Unita' organizzativa Ë stata generata con specifica di codice CDS di area di ricerca collegata
+ * Pre:  La richiesta di creazione di un' Unita' organizzativa √® stata generata con specifica di codice CDS di area di ricerca collegata
  * Post:
  *      Un' unita organizzativa viene creata con i dati inseriti dall'utente, il suo codice se non specificato dall'utente viene generato automaticamente; viene creato il Cdr Responsabile dell'U0 a cui viene assegnato un livello in base alla seguente regola:
- *      - Se il CDS da cui dipende Ë di tipo SAC, il CDR Ë di I livello.
- *      - Se il CDS da cui dipende non Ë di tipo SAC, il CDR Ë di II livello.
+ *      - Se il CDS da cui dipende √® di tipo SAC, il CDR √® di I livello.
+ *      - Se il CDS da cui dipende non √® di tipo SAC, il CDR √® di II livello.
  *
  *      Viene aggiornato il piano dei conti finanziari per la parte 1 spese cnr categoria 1 come segue:
  *      - Si determina se esiste il CDS area come SOTTOARTICOLO della linea del PDC Finanziario parte 1 spese cnr categoria 1 che contiene il CDS presidente dell'area collegata all'UO in processo come CAPITOLO. Nel caso tale SOTTOARTICOLO non sia presente, viene creato
  *
- * Nome: Creazione di Unita' organizzativa collegata ad area di ricerca che Ë Presidente dell'Area
- * Pre: La richiesta di creazione di un' Unita' organizzativa collegata ad Area di ricerca e che sia Presidente dell'area Ë stata generata
+ * Nome: Creazione di Unita' organizzativa collegata ad area di ricerca che √® Presidente dell'Area
+ * Pre: La richiesta di creazione di un' Unita' organizzativa collegata ad Area di ricerca e che sia Presidente dell'area √® stata generata
  * Post: Un' unita organizzativa viene creata collegata ad un area come Presidente dell'area
  *
  * Nome: Creazione di Unita' organizzativa
- * Pre:  La richiesta di creazione di un' Unita' organizzativa Ë stata generata
+ * Pre:  La richiesta di creazione di un' Unita' organizzativa √® stata generata
  * Post: Un' unita organizzativa viene creata con i dati inseriti dall'utente, il suo codice se non specificato 
  *       dall'utente viene generato automaticamente; viene creato il Cdr Responsabile dell'U0 a cui viene assegnato
  *       un livello in base alla regola descritta nel metodo 'creaCdrBulk':
  *
  * Nome: Errore di Responsabile inesistente
- * Pre:  Il Codice Terzo definito come responsabile dell' Unita' organizzativa non Ë presente
+ * Pre:  Il Codice Terzo definito come responsabile dell' Unita' organizzativa non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Errore di Responsabile amministrativo inesistente
- * Pre:  Il Codice Terzo definito come responsabile amministrativo dell' Unita' organizzativa non Ë presente
+ * Pre:  Il Codice Terzo definito come responsabile amministrativo dell' Unita' organizzativa non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente 
  *
  * Nome: Errore di chiave duplicata
- * Pre:  Esiste gi‡ un' Unita_organizzativaBulk persistente che possiede la stessa chiave
+ * Pre:  Esiste gi√† un' Unita_organizzativaBulk persistente che possiede la stessa chiave
  * 		 primaria di quella specificato.
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
- * Nome: Errore Presidente dell'area gi‡ definito
- * Pre:  Esiste gi‡ di un presidente dell'area a cui Ë collegata l'UO
+ * Nome: Errore Presidente dell'area gi√† definito
+ * Pre:  Esiste gi√† di un presidente dell'area a cui √® collegata l'UO
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
@@ -153,13 +153,13 @@ public abstract it.cnr.jada.util.RemoteIterator cerca(it.cnr.jada.UserContext pa
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
- * Nome: Una UO del SAC non puÚ essere presidente dell'AREA
- * Pre:  L'UO appartiene al SAC ed Ë richiesto che sia Presidente dell'area a cui Ë collegata
+ * Nome: Una UO del SAC non pu√≤ essere presidente dell'AREA
+ * Pre:  L'UO appartiene al SAC ed √® richiesto che sia Presidente dell'area a cui √® collegata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Errore di Esercizio Fine non valido per unita padre
- * Pre:  L'esercio fine dell'UO Ë superiore all'esercizio fine del Cds da cui l'UO dipende
+ * Pre:  L'esercio fine dell'UO √® superiore all'esercizio fine del Cds da cui l'UO dipende
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
@@ -213,7 +213,7 @@ public abstract void eliminaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.b
  * Pre: L'OggettoBulk specificato esiste.
  * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
  *			per l'operazione di presentazione e modifica nell'interfaccia visuale.
- *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ë
+ *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome √®
  *			ottenuto concatenando il nome della component con la stringa ".edit"
  * 
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -229,59 +229,59 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
  * Pre-post-conditions:
  *
  * Nome: Modifica di Cds 
- * Pre:  La richiesta di modifica di un Cds Ë stata generata
+ * Pre:  La richiesta di modifica di un Cds √® stata generata
  * Post: Un Cds e' stato modificato con i dati inseriti dall'utente 
  *
  * Nome: Modifica della descrizione di un  Cds 
- * Pre:  La richiesta di modifica della descrizione di un Cds Ë stata generata
+ * Pre:  La richiesta di modifica della descrizione di un Cds √® stata generata
  * Post: La descrizione del Cds e' stata modificata e la descrizione dell'UO-CDS e' stata modificata 
  *
  * Nome: Modifica dell'esercizio fine di un  Cds - OK
- * Pre:  La richiesta di modifica dell'esercizio fine di un CDS Ë stata generata e il nuovo esercizio fine e' valido
+ * Pre:  La richiesta di modifica dell'esercizio fine di un CDS √® stata generata e il nuovo esercizio fine e' valido
  *       (metodo 'verificaEsercizioFine')
  * Post: L'esercizio fine del Cds e' stato modificato; sono stati aggiornati in cascata anche tutti gli esercizi fine di
  *       tutte le UO che dipendono dal CDS e hanno esercizio fine maggiore rispetto a quello del Cds; sono stati aggiornati 
  *       in cascata anche tutti gli esercizi fine di tutti i Cdr che dipendono dalle UO che dipendono dal Cds e che hanno
  *       esercizio fine maggiore rispetto a quello del Cds; sono stati aggiornati in cascata anche tutti gli esercizi fine di
- *       tutte le linee di attivit‡ definite per i Cdr che dipendono dalle UO che dipendono dal Cds e che hanno esercizio 
+ *       tutte le linee di attivit√† definite per i Cdr che dipendono dalle UO che dipendono dal Cds e che hanno esercizio 
  *       fine maggiore rispetto a quello del Cds.
  *
  * Nome: Modifica dell'esercizio fine di un  Cds - Errore
- * Pre:  La richiesta di modifica dell'esercizio fine di un CDS Ë stata generata e il nuovo esercizio fine non e' valido
+ * Pre:  La richiesta di modifica dell'esercizio fine di un CDS √® stata generata e il nuovo esercizio fine non e' valido
  *       (metodo 'verificaEsercizioFine')
- * Post: Una ApplicationException viene lanciata per segnalare all'utente l'impossibilit‡ di aggiornare l'esercizio fine
+ * Post: Una ApplicationException viene lanciata per segnalare all'utente l'impossibilit√† di aggiornare l'esercizio fine
  *
  * Nome: Modifica dell'esercizio fine di una Unita organizzativa - OK
- * Pre:  La richiesta di modifica dell'esercizio fine di un'Unita organizzativa Ë stata generata e il nuovo esercizio fine e' valido
+ * Pre:  La richiesta di modifica dell'esercizio fine di un'Unita organizzativa √® stata generata e il nuovo esercizio fine e' valido
  *       (metodo 'verificaEsercizioFine')
  * Post: L'esercizio fine dell'Unita organizzativa e' stato modificato; sono stati aggiornati 
  *       in cascata anche tutti gli esercizi fine di tutti i Cdr che dipendono dall'Unita organizzativa e che hanno
  *       esercizio fine maggiore rispetto a quello dell'Unita organizzativa; sono stati aggiornati in cascata anche tutti 
- *       gli esercizi fine di tutte le linee di attivit‡ definite per i Cdr che dipendono dall'Unita organizzativa e che hanno esercizio 
+ *       gli esercizi fine di tutte le linee di attivit√† definite per i Cdr che dipendono dall'Unita organizzativa e che hanno esercizio 
  *       fine maggiore rispetto a quello dell'Unita organizzativa
  *
  * Nome: Modifica dell'esercizio fine di un'Unita organizzativa - Errore
- * Pre:  La richiesta di modifica dell'esercizio fine di un'Unita organizzativa Ë stata generata e il nuovo esercizio fine non e' valido
+ * Pre:  La richiesta di modifica dell'esercizio fine di un'Unita organizzativa √® stata generata e il nuovo esercizio fine non e' valido
  *       (metodo 'verificaEsercizioFine')
- * Post: Una ApplicationException viene lanciata per segnalare all'utente l'impossibilit‡ di aggiornare l'esercizio fine
+ * Post: Una ApplicationException viene lanciata per segnalare all'utente l'impossibilit√† di aggiornare l'esercizio fine
 
  * Nome: Errore di Responsabile inesistente
- * Pre:  Il Codice Terzo definito come responsabile del Cds non Ë presente
+ * Pre:  Il Codice Terzo definito come responsabile del Cds non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Modifica di Unita' Organizzativa
- * Pre:  La richiesta di modifica di un' Unita' Organizzativa Ë stata generata
+ * Pre:  La richiesta di modifica di un' Unita' Organizzativa √® stata generata
  * Post: L'Unita' Organizzativa e' stato modificata con i dati inseriti dall'utente e il piano dei conti finanziario e' stato
  *       aggiornato di conseguenza
  * 
  * Nome: Errore di Responsabile inesistente
- * Pre:  Il Codice Terzo definito come responsabile dell' Unita' organizzativa non Ë presente
+ * Pre:  Il Codice Terzo definito come responsabile dell' Unita' organizzativa non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Errore di Responsabile amministrativo inesistente
- * Pre:  Il Codice Terzo definito come responsabile amministrativo dell' Unita' organizzativa non Ë presente
+ * Pre:  Il Codice Terzo definito come responsabile amministrativo dell' Unita' organizzativa non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente 
  *
@@ -291,26 +291,26 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
  *       visualizzare all'utente
  *
  * Nome: Modifica di Unita' Organizzativa con modifica di Area di Ricerca specificata
- * Pre: L'area di ricerca specificata Ë cambiata
- * Post: L'Unit‡ Organizzativa Ë stata modificata con i dati inseriti dall'utente e il piano dei conti finanziario e' stato aggiornato eventualemente eliminando il SOTTOARTICOLO corrispondente all'area di origine e creando quello corrispondente all'area di destinazione
+ * Pre: L'area di ricerca specificata √® cambiata
+ * Post: L'Unit√† Organizzativa √® stata modificata con i dati inseriti dall'utente e il piano dei conti finanziario e' stato aggiornato eventualemente eliminando il SOTTOARTICOLO corrispondente all'area di origine e creando quello corrispondente all'area di destinazione
  *       n.b. "eventualmente" si riferisce al fatto che l'aggiunta o l'eliminazione del SOTTOARTICOLO sono subordinati al cambiamento o eliminazione di presidente di area. In uqesto caso l'intervento sul PDC finanziario potrebbe essere diretto all'aggiunzione o eliminazione di sottoarticoli relativi alle due aree iniziale e finale.
  *
  * Nome: Modifica di Unita' Organizzativa con rimozione di Area di Ricerca specificata
- * Pre: L'area di ricerca non Ë pi˘ specificata.
- * Post: L'Unit‡ Organizzativa Ë stata modificata con i dati inseriti dall'utente e il piano dei conti finanziario e' stato aggiornato eventualemente eliminando il SOTTOARTICOLO corrispondente all'area di origine
- *       n.b. "eventualmente" si riferisce al fatto che l'eliminazione del SOTTOARTICOLO Ë subordinato al fatto che l'uo eliminata era il presidente dell'areadente dell'area. Per una definizione di SOTTOARTICOLO vedi specifica di "creaConBulk"
+ * Pre: L'area di ricerca non √® pi√π specificata.
+ * Post: L'Unit√† Organizzativa √® stata modificata con i dati inseriti dall'utente e il piano dei conti finanziario e' stato aggiornato eventualemente eliminando il SOTTOARTICOLO corrispondente all'area di origine
+ *       n.b. "eventualmente" si riferisce al fatto che l'eliminazione del SOTTOARTICOLO √® subordinato al fatto che l'uo eliminata era il presidente dell'areadente dell'area. Per una definizione di SOTTOARTICOLO vedi specifica di "creaConBulk"
  *
  * Nome: Modifica di Unita' Organizzativa con aggiunzione di Area di Ricerca specificata
- * Pre: L'area di ricerca non era specificata ed ora lo Ë
- * Post: L'Unit‡ Organizzativa Ë stata modificata con i dati inseriti dall'utente e il piano dei conti finanziario e' stato aggiornato eventualemente aggiungendo il SOTTOARTICOLO corrispondente all'area di destinazione.
- *       n.b. "eventualmente" si riferisce al fatto che l'aggiunta del SOTTOARTICOLO Ë subordinato al fatto che l'uo collegata all'area risulti anche presidente dell'area. Per una definizione di SOTTOARTICOLO vedi specifica di "creaConBulk"
+ * Pre: L'area di ricerca non era specificata ed ora lo √®
+ * Post: L'Unit√† Organizzativa √® stata modificata con i dati inseriti dall'utente e il piano dei conti finanziario e' stato aggiornato eventualemente aggiungendo il SOTTOARTICOLO corrispondente all'area di destinazione.
+ *       n.b. "eventualmente" si riferisce al fatto che l'aggiunta del SOTTOARTICOLO √® subordinato al fatto che l'uo collegata all'area risulti anche presidente dell'area. Per una definizione di SOTTOARTICOLO vedi specifica di "creaConBulk"
  *
  * Nome: Errore di esistenza del Presidente dell'area
  * Pre: L'UO in modifica specifica i essere Presidente dell'area ed esiste per l'area di ricerca un presidente dell'area diverso dall'UO stessa
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da visualizzare all'utente
  *
- * Nome: Una UO del SAC non puÚ essere presidente dell'AREA
- * Pre:  L'UO appartiene al SAC ed Ë richiesto che sia Presidente dell'area a cui Ë collegata
+ * Nome: Una UO del SAC non pu√≤ essere presidente dell'AREA
+ * Pre:  L'UO appartiene al SAC ed √® richiesto che sia Presidente dell'area a cui √® collegata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *

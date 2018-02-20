@@ -48,7 +48,7 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws Comp
 				cup.setUser( userContext.getUser());
 				updateBulk( userContext, cup);
 			}else
-				throw new ApplicationException("Codice Cup presente sui documenti. Gi‡ cancellato logicamente.");
+				throw new ApplicationException("Codice Cup presente sui documenti. Gi√† cancellato logicamente.");
 		}
 		catch ( Exception ex )
 		{

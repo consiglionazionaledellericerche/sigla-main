@@ -127,7 +127,7 @@ public void	callRiportoNextEsDocCont(UserContext userContext, Long pg_call) thro
 }
 /*
  * 	Name: riporto es successivo per CDS diverso da Ente
- * 	Pre: in scrivania Ë stato selezinato un Cds diverso dall'Ente
+ * 	Pre: in scrivania √® stato selezinato un Cds diverso dall'Ente
  * 		  l'utente ha specificato se vuole riportare all'es. successivo doc. contabili di entrata o di spesa
  * 		  l'utente ha specificato se vuole riportare all'es. successivo doc. contabili creati dall'uo di scrivania per
  * 		     se stesso o per l'ente
@@ -138,7 +138,7 @@ public void	callRiportoNextEsDocCont(UserContext userContext, Long pg_call) thro
  * 	      elemento voce
 
  * 	Name: riporto es successivo per CDS ugaule a Ente
- * 	Pre: in scrivania Ë stato selezinato il Cds dell'Ente
+ * 	Pre: in scrivania √® stato selezinato il Cds dell'Ente
  * 		  l'utente ha selezionato una nuova voce_f
  * 		  nella VSX_CHIUSURA sono stati inseriti i record con le chiavi dei degli impegni o degli impegni residui
  * 		  da riportare all'esercizio successivo e la nuova voce_f
@@ -181,7 +181,7 @@ public void	callRiportoNextEsDocContVoce(UserContext userContext, Long pg_call) 
 /*
  * 	Name: riporto da esercizio successivo 
  * 	Pre: nella VSX_CHIUSURA sono stati inseriti i record con le chiavi dei doc.contabili selezionati dall'utente
- * 	     che erano gi‡ stati riportati all'esercizio successivo
+ * 	     che erano gi√† stati riportati all'esercizio successivo
  * 	     all'esercizio successivo e il nuovo elemento voce
  * 	Post: viene chiamata la stored procedure di riporto indietro dei doc.contabili inseriti in VSX_CHIUSURA
 
@@ -610,13 +610,13 @@ public V_obb_acc_xxxBulk initializeSelectionPerRiportaIndietro(UserContext userC
 }
 /*
 	Name: esercizio non aperto
-	Pre: l'esercizio di scrivani per il cds di scrivania non Ë in stato aperto
-	Post: il sistema segnala all'utente l'impossibilit‡ di richiamare le funzioni di annullamento, riporto ad esercizio 
+	Pre: l'esercizio di scrivani per il cds di scrivania non √® in stato aperto
+	Post: il sistema segnala all'utente l'impossibilit√† di richiamare le funzioni di annullamento, riporto ad esercizio 
 	      successivo e riporto da esercizio successivo
 
 	Name: esercizio aperto
-	Pre: l'esercizio di scrivani per il cds di scrivania Ë in stato aperto
-	Post: il sistema inizializza il bulk V_obb_acc_xxxBulk con alcuni dati utilizzati successivamente dalle funzionalit‡
+	Pre: l'esercizio di scrivani per il cds di scrivania √® in stato aperto
+	Post: il sistema inizializza il bulk V_obb_acc_xxxBulk con alcuni dati utilizzati successivamente dalle funzionalit√†
 			di chiususra
 */
 
@@ -1070,7 +1070,7 @@ public SQLBuilder selectNuova_voceByClause(UserContext userContext, V_obb_acc_xx
 	Pre: l'utente ha in scrivania un cds diverso dall'Ente
 		  l'utente ha richiesto la visualizzazione dei nuovi capitoli validi
 		  l'utente non ha specificato la gestione (ENTRATA/SPESA)
-	Post: il sistema emette un messahhio di errore per indicare che la gestione Ë un campo mandatorio
+	Post: il sistema emette un messahhio di errore per indicare che la gestione √® un campo mandatorio
 
 	Name: selezione elemento voce  - caso 1
 	Pre: l'utente ha in scrivania un cds diverso dall'Ente
@@ -1174,7 +1174,7 @@ protected SQLBuilder selectPerAnnullamento(UserContext userContext, V_obb_acc_xx
 	sql.addSQLClause( "AND", "im_acc_obb", sql.GREATER, new BigDecimal(0));	
 	sql.addSQLClause( "AND", "im_associato_doc_amm", sql.EQUALS, new BigDecimal(0));
 	sql.addSQLClause( "AND", "riportato", sql.EQUALS, "N");	
-//	sql.addSQLClause( "AND", "dt_cancellazione", sql.ISNULL, null); la vista gi‡ filtra i cancellati
+//	sql.addSQLClause( "AND", "dt_cancellazione", sql.ISNULL, null); la vista gi√† filtra i cancellati
 	if ( docCont.isEnteInScrivania() )
 		//solo gli impegni residui possono essere annullati
 		sql.addSQLClause( "AND", "cd_tipo_documento_cont", sql.EQUALS, Numerazione_doc_contBulk.TIPO_IMP_RES);
@@ -1289,7 +1289,7 @@ protected SQLBuilder selectPerRiportaAvanti(UserContext userContext, V_obb_acc_x
 	sql.addSQLClause( "AND", "im_associato_rev_man = im_riscontrato");
 	//non sia stata completamente riscontrata
 	sql.addSQLClause( "AND", "im_acc_obb > im_riscontrato"); 
-	//	sql.addSQLClause( "AND", "dt_cancellazione", sql.ISNULL, null); la vista gi‡ filtra i cancellati
+	//	sql.addSQLClause( "AND", "dt_cancellazione", sql.ISNULL, null); la vista gi√† filtra i cancellati
 	if ( docCont.isEnteInScrivania() )
 	{
 		//se ho l'ente in scrivania e cerco dei residui solo --> IMP_RES (ACR_RES sono gestiti dai CDS)
@@ -1395,7 +1395,7 @@ protected SQLBuilder selectPerRiportaIndietro(UserContext userContext, V_obb_acc
 	sql.addSQLClause( "AND", "im_associato_rev_man = im_riscontrato");
 	//non sia stata completamente riscontrata
 	sql.addSQLClause( "AND", "im_acc_obb > im_riscontrato"); 
-	//	sql.addSQLClause( "AND", "dt_cancellazione", sql.ISNULL, null); la vista gi‡ filtra i cancellati
+	//	sql.addSQLClause( "AND", "dt_cancellazione", sql.ISNULL, null); la vista gi√† filtra i cancellati
 	if ( docCont.getFl_ente().booleanValue() )
 		sql.addSQLClause( "AND", "cd_cds", sql.EQUALS, docCont.getCd_cds_ente());
 	else
@@ -1582,7 +1582,7 @@ public void	setSelectionPerRiportaIndietro(UserContext userContext, V_obb_acc_xx
  * @param es <code>Integer</code>  l'esercizio da verificare
  * @param cd_cds <code>String</code>  il cds da verificare 
  *
- * @return FALSE se per il cds interessato non Ë stato inserito nessun esercizio o se l'esercizio non Ë in stato di "aperto"
+ * @return FALSE se per il cds interessato non √® stato inserito nessun esercizio o se l'esercizio non √® in stato di "aperto"
  *		     TRUE in tutti gli altri casi
  *
  */
@@ -1655,7 +1655,7 @@ public boolean isRibaltato(it.cnr.jada.UserContext userContext, CdsBulk cds, Int
 	}
 }	
 /**
- * Ritorna true se esistono righe con disponibilit‡ sfondata su V_SITUAZIONE_LINEE_COMP_RES
+ * Ritorna true se esistono righe con disponibilit√† sfondata su V_SITUAZIONE_LINEE_COMP_RES
  * 
  * @param userContext
  * @return
@@ -1695,7 +1695,7 @@ public boolean isSfondataDispCdS(it.cnr.jada.UserContext userContext) throws Com
 	}
 }
 /**
- * Ritorna true se Ë stata chiusa la ricostruzione dei residui per i CdR del CDS di scrivania
+ * Ritorna true se √® stata chiusa la ricostruzione dei residui per i CdR del CDS di scrivania
  * 
  * @param userContext
  * @return
@@ -1706,7 +1706,7 @@ public boolean isRicosResiduiChiusa(it.cnr.jada.UserContext userContext) throws 
 		String cd_cds = CNRUserContext.getCd_cds(userContext);
 		if(cd_cds != null) {
 
-			// uso createSQLBuilderEsteso perchË il metodo createSQLBuilder filtra alcune cose
+			// uso createSQLBuilderEsteso perch√® il metodo createSQLBuilder filtra alcune cose
 			SQLBuilder sql = ((Pdg_residuoHome)getHome(userContext, Pdg_residuoBulk.class)).createSQLBuilder();
 			sql.addTableToHeader("V_CDR_VALIDO_CDS");
 			sql.addSQLJoin("PDG_RESIDUO.ESERCIZIO", "V_CDR_VALIDO_CDS.ESERCIZIO");
@@ -1849,7 +1849,7 @@ public OggettoBulk updateParametriCds (UserContext context) throws EJBException,
 		}
 	}
 	else{
-		throw new ApplicationException("Attenzione! Il ribaltamento per l'esercizio precedente non Ë stato effettuato.");
+		throw new ApplicationException("Attenzione! Il ribaltamento per l'esercizio precedente non √® stato effettuato.");
 	}
 		
 	return parametri_cds;
@@ -1859,7 +1859,7 @@ public void verificaAbilitazioneRibaltamento( UserContext userContext ) throws C
 {
 	Parametri_cdsBulk parametri_cds =(Parametri_cdsBulk)getHome(userContext,Parametri_cdsBulk.class).findByPrimaryKey(new Parametri_cdsBulk(((CNRUserContext)userContext).getCd_cds(),((CNRUserContext)userContext).getEsercizio()));
 	if(parametri_cds==null || !parametri_cds.getFl_riporta_avanti()) 
-		throw new ApplicationException("Il ribaltamento all'esercizio successivo non Ë abilitato per questo cds.");	
+		throw new ApplicationException("Il ribaltamento all'esercizio successivo non √® abilitato per questo cds.");	
 }
 
 public SQLBuilder selectResiduiForRiaccertamento(UserContext userContext) throws it.cnr.jada.comp.ComponentException {

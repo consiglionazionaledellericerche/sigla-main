@@ -291,7 +291,7 @@ public void aggiornaCogeCoanInDifferita(it.cnr.jada.UserContext userContext, it.
 }
 /**
  * Aggiornamento in differita dei saldi dell'obbligazione .
- * Un documento amministrativo di spesa che agisce in modalit‡ transazionale ha creato/modificato gli importi 
+ * Un documento amministrativo di spesa che agisce in modalit√† transazionale ha creato/modificato gli importi 
  * relativi ad un'obbligazione; i saldi di tale obbligazione non possono essere aggiornati subito in quanto
  * tale operazione genererebbe dei lock sulle voci del piano che non ne consentirebbere l'utilizzo ad altri utenti;
  * pertanto l'aggiornamento dei saldi dell'obbligazione viene differito al momento del salvataggio
@@ -314,7 +314,7 @@ public void aggiornaCogeCoanInDifferita(it.cnr.jada.UserContext userContext, it.
  * @param	uc	lo UserContext che ha generato la richiesta
  * @param	obbligazione	l'ObbligazioneBulk per cui aggiornare i saldi
  * @param	values	la Map che contiene il "pg_ver_rec" iniziale dell'obbligazione e il "checkDisponibilitaCassaEseguito" che indica se
- *          l'utente ha richiesto la forzatura della disponibilit‡ di cassa (parametro impostato dalla Gestione Obbligazione)
+ *          l'utente ha richiesto la forzatura della disponibilit√† di cassa (parametro impostato dalla Gestione Obbligazione)
  * @param	param il parametro che indica se il controllo della disp. di cassa e' necessario (parametro impostato dalla Gestione dei doc. amm.)
 */
 public void aggiornaSaldiInDifferita( UserContext userContext, IDocumentoContabileBulk docContabile, Map values, OptionRequestParameter param  ) throws ComponentException
@@ -352,21 +352,21 @@ public void aggiornaSaldiInDifferita( UserContext userContext, IDocumentoContabi
  *
  * Nome: Aggiorna saldi in contesto non transazionale
  * Pre:  Un'obbligazione e' stata creata in un contesto non transazionale
- *			La disponibilit‡ di cassa e' gi‡ stata verificata
+ *			La disponibilit√† di cassa e' gi√† stata verificata
  * Post: Per ogni Voce del piano presente nell'obbligazione viene richiamato il metodo sulla Component di gestione dei Saldi (SaldoComponent) per incrementare
- *       il saldo del capitolo corrispondente senza effettuare la verifica della disponibilit‡ di cassa.
+ *       il saldo del capitolo corrispondente senza effettuare la verifica della disponibilit√† di cassa.
  *
- * Nome: Aggiorna saldi in contesto transazionale senza verifica disponibilit‡ di cassa sul capitolo
+ * Nome: Aggiorna saldi in contesto transazionale senza verifica disponibilit√† di cassa sul capitolo
  * Pre:  Un'obbligazione e' stata creata in un contesto transazionale
- *       L'utente ha gi‡ confermato che intende forzare la verifica della disponibilit‡ di cassa sui capitoli interessati dall'obbligazione.
+ *       L'utente ha gi√† confermato che intende forzare la verifica della disponibilit√† di cassa sui capitoli interessati dall'obbligazione.
  * Post: Per ogni Voce del piano presente nell'obbligazione viene richiamato il metodo sulla Component di gestione dei Saldi (SaldoComponent) per incrementare
- *       il saldo del capitolo corrispondente senza effettuare la verifica della disponibilit‡ di cassa.
+ *       il saldo del capitolo corrispondente senza effettuare la verifica della disponibilit√† di cassa.
  *
- * Nome: Aggiorna saldi in contesto transazionale con verifica disponibilit‡ di cassa sul capitolo
+ * Nome: Aggiorna saldi in contesto transazionale con verifica disponibilit√† di cassa sul capitolo
  * Pre:  Un'obbligazione e' stata creata in un contesto transazionale
- *       L'utente non ha ancora confermato che intende forzare la verifica della disponibilit‡ di cassa sui capitoli interessati dall'obbligazione.
+ *       L'utente non ha ancora confermato che intende forzare la verifica della disponibilit√† di cassa sui capitoli interessati dall'obbligazione.
  * Post: Per ogni Voce del piano presente nell'obbligazione viene richiamato il metodo sulla Component di gestione dei Saldi (SaldoComponent) per incrementare
- *       il saldo del capitolo corrispondente richiedendo di effettuare la verifica della disponibilit‡ di cassa.
+ *       il saldo del capitolo corrispondente richiedendo di effettuare la verifica della disponibilit√† di cassa.
  *
  * @param	uc	lo UserContext che ha generato la richiesta
  * @param	obbligazione	l'ObbligazioneBulk per cui aggiornare i saldi
@@ -386,7 +386,7 @@ private void aggiornaSaldiInInserimento( UserContext userContext, ObbligazioneBu
 	{
 		IVoceBilancioBulk voce = (IVoceBilancioBulk) i.next();
 		BigDecimal im_voce = (BigDecimal) saldiDaAggiornare.get(voce);
-					/* il check della disponabilit‡ di cassa deve essere eseguito solo se 
+					/* il check della disponabilit√† di cassa deve essere eseguito solo se 
 					    l'utente non ha ancora avuto il warning sulla disp.cassa oppure
 					    l'utente ha avuto il warning sulla disp.cassa e ha risposto no */
 		boolean checkDispCassa = forzaDispCassa == null || 
@@ -419,25 +419,25 @@ private void aggiornaSaldiInInserimento( UserContext userContext, ObbligazioneBu
  *
  * Nome: Aggiorna saldi in contesto non transazionale
  * Pre:  Un'obbligazione e' stata modificata/eliminata in un contesto non transazionale
- *			La disponibilit‡ di cassa e' gi‡ stata verificata
+ *			La disponibilit√† di cassa e' gi√† stata verificata
  * Post: Per ogni V_mod_saldi_obbligBulk presente nel database a fronte dell'obbligazione e del suo pg_ver_rec
  *       e' stato richiamato il metodo sulla Component di gestione dei Saldi (SaldoCompoennt) per aggiornare
- *       il saldo del capitolo corrispondente senza effettuare la verifica della disponibilit‡ di cassa; se necessario
+ *       il saldo del capitolo corrispondente senza effettuare la verifica della disponibilit√† di cassa; se necessario
  *       anche i saldi relativi ai mandati e al pagato vengono aggiornati.
  *
- * Nome: Aggiorna saldi in contesto transazionale senza verifica disponibilit‡ di cassa sul capitolo
+ * Nome: Aggiorna saldi in contesto transazionale senza verifica disponibilit√† di cassa sul capitolo
  * Pre:  Un'obbligazione e' stata modificata in un contesto transazionale
- *       L'utente ha gi‡ confermato che intende forzare la verifica della disponibilit‡ di cassa sui capitoli interessati dall'obbligazione.
+ *       L'utente ha gi√† confermato che intende forzare la verifica della disponibilit√† di cassa sui capitoli interessati dall'obbligazione.
  * Post: Per ogni V_mod_saldi_obbligBulk presente nel database a fronte dell'obbligazione e del suo pg_ver_rec
  *       e' stato richiamato il metodo sulla Component di gestione dei Saldi (SaldoCompoennt) per aggiornare
- *       il saldo del capitolo corrispondente senza effettuare la verifica della disponibilit‡ di cassa
+ *       il saldo del capitolo corrispondente senza effettuare la verifica della disponibilit√† di cassa
  *
- * Nome: Aggiorna saldi in contesto transazionale con verifica disponibilit‡ di cassa sul capitolo
+ * Nome: Aggiorna saldi in contesto transazionale con verifica disponibilit√† di cassa sul capitolo
  * Pre:  Un'obbligazione e' stata modificata in un contesto transazionale
- *       L'utente non ha ancora confermato che intende forzare la verifica della disponibilit‡ di cassa sui capitoli interessati dall'obbligazione.
+ *       L'utente non ha ancora confermato che intende forzare la verifica della disponibilit√† di cassa sui capitoli interessati dall'obbligazione.
  * Post: Per ogni V_mod_saldi_obbligBulk presente nel database a fronte dell'obbligazione e del suo pg_ver_rec
  *       e' stato richiamato il metodo sulla Component di gestione dei Saldi (SaldoCompoennt) per aggiornare
- *       il saldo del capitolo corrispondente richiedendo di effettuare la verifica della disponibilit‡ di cassa.
+ *       il saldo del capitolo corrispondente richiedendo di effettuare la verifica della disponibilit√† di cassa.
  *
  * @param	uc	lo UserContext che ha generato la richiesta
  * @param	obbligazione	l'ObbligazioneBulk per cui aggiornare i saldi
@@ -449,7 +449,7 @@ private void aggiornaSaldiInModifica( UserContext userContext, ObbligazioneBulk 
 {
 	SaldoComponentSession session = createSaldoComponentSession();
 	
-	/* in realt‡ siamo sempre a competenza ma Ë meglio verificare */
+	/* in realt√† siamo sempre a competenza ma √® meglio verificare */
 	String ti_competenza_residuo;
 	String tipo_imp;
 	if ( obbligazione.isResiduo() )
@@ -459,7 +459,7 @@ private void aggiornaSaldiInModifica( UserContext userContext, ObbligazioneBulk 
 		
 	List saldiDaAggiornare = ((V_mod_saldi_obbligHome)getHome( userContext, V_mod_saldi_obbligBulk.class )).findModificheSaldiFor( obbligazione, pg_ver_rec );
 	if ( userContext.isTransactional() && saldiDaAggiornare.size() == 0 )
-		throw new ApplicationException( "Attenzione! I saldi relativi all'impegno " + obbligazione.getEsercizio_originale() + "/" + obbligazione.getPg_obbligazione() + " non possono essere aggiornati perchË l'impegno non e' presente nello storico.");
+		throw new ApplicationException( "Attenzione! I saldi relativi all'impegno " + obbligazione.getEsercizio_originale() + "/" + obbligazione.getPg_obbligazione() + " non possono essere aggiornati perch√® l'impegno non e' presente nello storico.");
 	
 	for ( Iterator i = saldiDaAggiornare.iterator(); i.hasNext(); )
 	{
@@ -468,7 +468,7 @@ private void aggiornaSaldiInModifica( UserContext userContext, ObbligazioneBulk 
 		{
 			Voce_fBulk voce = new Voce_fBulk( modSaldo.getCd_voce(), obbligazione.getEsercizio(), modSaldo.getTi_appartenenza(), modSaldo.getTi_gestione() );
 
-			/* il check della disponabilit‡ di cassa deve essere eseguito solo se 
+			/* il check della disponabilit√† di cassa deve essere eseguito solo se 
 			    l'importo delta del saldo e' positivo e
 			    l'utente non ha ancora avuto il warning sulla disp.cassa oppure
 		 	   l'utente ha avuto il warning sulla disp.cassa e ha risposto no */
@@ -490,13 +490,13 @@ private void aggiornaSaldiInModifica( UserContext userContext, ObbligazioneBulk 
 	*/	
 	List saldiDaAggiornareCdrLinea = ((V_mod_saldi_obblig_scad_voceHome)getHome( userContext, V_mod_saldi_obblig_scad_voceBulk.class )).findModificheSaldiFor( obbligazione, pg_ver_rec );
 	if ( userContext.isTransactional() && saldiDaAggiornareCdrLinea.size() == 0 )
-		throw new ApplicationException( "Attenzione! I saldi relativi all'impegno " + obbligazione.getEsercizio_originale() + "/" + obbligazione.getPg_obbligazione() + " non possono essere aggiornati perchË l'impegno non e' presente nello storico.");
+		throw new ApplicationException( "Attenzione! I saldi relativi all'impegno " + obbligazione.getEsercizio_originale() + "/" + obbligazione.getPg_obbligazione() + " non possono essere aggiornati perch√® l'impegno non e' presente nello storico.");
 		
 	for ( Iterator i = saldiDaAggiornareCdrLinea.iterator(); i.hasNext(); )
 	{
 		V_mod_saldi_obblig_scad_voceBulk modSaldo = (V_mod_saldi_obblig_scad_voceBulk) i.next();
 		Voce_fBulk voce = new Voce_fBulk( modSaldo.getCd_voce(), obbligazione.getEsercizio(), modSaldo.getTi_appartenenza(), modSaldo.getTi_gestione() );
-		/* il check della disponabilit‡ di cassa deve essere eseguito solo se 
+		/* il check della disponabilit√† di cassa deve essere eseguito solo se 
 			l'importo delta del saldo e' positivo e
 			l'utente non ha ancora avuto il warning sulla disp.cassa oppure
 		   l'utente ha avuto il warning sulla disp.cassa e ha risposto no */
@@ -616,24 +616,24 @@ private void checkDispObbligazioniAccertamenti(UserContext userContext, Obbligaz
   *      scadenza(n+1).importo > differenza in scadenza(n).importo
   *      scadenza(n+1) non ha documenti amministrativi associati
   *    PostCondition:
-  *      Il sistema eseguir‡ l'aggiornamento dell'importo della scadenza successiva (n+1) dell'obbligazione aggiungendo la differenza fra il nuovo e vecchio importo della scadenza in aggiornamento. 
-  *      La differenza Ë espressa come (scadenzario(n).importo_nuovo - scadenzario(n).importo_vecchio)
+  *      Il sistema eseguir√† l'aggiornamento dell'importo della scadenza successiva (n+1) dell'obbligazione aggiungendo la differenza fra il nuovo e vecchio importo della scadenza in aggiornamento. 
+  *      La differenza √® espressa come (scadenzario(n).importo_nuovo - scadenzario(n).importo_vecchio)
   *  scadenza(n+1).importo <= differenza in scadenza(n).importo
   *    PreCondition:
   *      L'utente richiede l'aggiornamento in automatico dell'importo della scadenza successiva (scadenza(n+1)) alla scadenza in elaborazione (scadenza(n)), ma l'aumento dell'importo della scadenza(n) supera il valore dell'importo dell'ultima scadenza dell'obbligazione. Una formula per questa condizione sarebbe (scadenzario(n+1).importo - (scadenzario(n).importo_nuovo - scadenzario(n).importo_vecchio) > 0)
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non Ë possibile perchÈ l'aumento dell'importo della scadenza(n) Ë maggiore all'importo dell'ultima scadenza (cercarebbe settare l'importo <= 0). L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non √® possibile perch√© l'aumento dell'importo della scadenza(n) √® maggiore all'importo dell'ultima scadenza (cercarebbe settare l'importo <= 0). L'attivit√† non √® consentita.
   *  scadenza(n+1) non esiste
   *    PreCondition:
-  *      L'utente richiede l'aggiornamento in automatico dell'importo della scadenza successiva (scadenza(n+1)) alla scadenza in elaborazione (scadenza(n)), ma la scadenza in aggiornamento Ë l'ultima scadenza dell'obbligazione.
+  *      L'utente richiede l'aggiornamento in automatico dell'importo della scadenza successiva (scadenza(n+1)) alla scadenza in elaborazione (scadenza(n)), ma la scadenza in aggiornamento √® l'ultima scadenza dell'obbligazione.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non Ë possibile perchÈ non esiste una scadenza successiva. L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non √® possibile perch√© non esiste una scadenza successiva. L'attivit√† non √® consentita.
   *  scadenza(n+1) ha doc amministrativi associati
   *    PreCondition:
   *      L'utente richiede l'aggiornamento in automatico dell'importo della scadenza successiva (scadenza(n+1)) 
   *      alla scadenza in elaborazione (scadenza(n)), ma la scadenza (n+1) ha documenti amministrativi associati
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che la modifica della scadenza non Ë valida.
+  *      Il metodo utilizza un Throw Exception per comunicare che la modifica della scadenza non √® valida.
   *
   * @param aUC lo user context 
   * @param os l'istanza di  <code>Obbligazione_scadenzarioBulk</code> della quale deve essere individuata la scadenza successiva per aggiornarne l'importo
@@ -656,7 +656,7 @@ public Obbligazione_scadenzarioBulk aggiornaScadenzaSuccessivaObbligazione (User
 		index++;
 	}
 	//non esiste scadenza successiva
-	//se residuo proprio e il delta Ë positivo (Ë stata diminuito l'importo della scadenza precedente)
+	//se residuo proprio e il delta √® positivo (√® stata diminuito l'importo della scadenza precedente)
 	//inserisco una nuova scadenza		
 	if ( scadSuccessivaIndex == obbligazione.getObbligazione_scadenzarioColl().size() ) {
 		//Lello - Sdoppiamento scadenza anche su obbligazione 
@@ -679,7 +679,7 @@ public Obbligazione_scadenzarioBulk aggiornaScadenzaSuccessivaObbligazione (User
 	if ( delta.doubleValue() < 0 && (scadSuccessiva.getIm_scadenza().add(delta).doubleValue() < 0 ))
 		throw handleException( new ApplicationException( "Modifica impossibile: l'importo della scadenza successiva e' inferiore all'importo da aggiornare" ));
 		
-	//segnalo impossibilit‡ di modificare importo se ci sono doc amministrativi associati
+	//segnalo impossibilit√† di modificare importo se ci sono doc amministrativi associati
 	if ( scadSuccessiva.getPg_doc_passivo() != null )		
 		throw new ApplicationException( "Modifica impossibile: la scadenza successiva e' associata a doc. amministrativi");
 
@@ -748,7 +748,7 @@ public Obbligazione_scadenzarioBulk aggiornaScadenzaSuccessivaObbligazione (User
 		}
 	}
 
-	//Valorizzo il campo Percentuale che utilizzerÚ per individuare gli importi da attribuire ad ogni scadenza
+	//Valorizzo il campo Percentuale che utilizzer√≤ per individuare gli importi da attribuire ad ogni scadenza
 	for ( Enumeration e = hashVociList.keys(); e.hasMoreElements(); ) 
 	{
 		V_assestatoBulk voceSel = (V_assestatoBulk)e.nextElement();
@@ -787,27 +787,27 @@ private void aggiornaStatoCOAN_COGEDocAmm( UserContext userContext, Obbligazione
   *   	 Una nuova obbligazione deve essere creata e l'importo dell'obbligazione supera il controllo della copertura finanziaria
   *      effettuato dalla stored procedure CNRCTB030.checkAssunzObblig 
   *    PostCondition:
-  *      L'utente puÚ proseguire con la definizione dell'imputazione finanziaria dell'obbligazione o con il suo salvataggio
+  *      L'utente pu√≤ proseguire con la definizione dell'imputazione finanziaria dell'obbligazione o con il suo salvataggio
   *  creazione obbligazione - errore
   *    PreCondition:
   *   	 Una nuova obbligazione deve essere creata e l'importo dell'obbligazione non supera il controllo della copertura finanziaria
   *      effettuato dalla stored procedure CNRCTB030.checkAssunzObblig 
   *    PostCondition:
-  *      Una segnalazione di errore comunica all'utente l'impossibilit‡ di proseguire nella definizione dell'obbligazione
+  *      Una segnalazione di errore comunica all'utente l'impossibilit√† di proseguire nella definizione dell'obbligazione
   *  aumento importo obbligazione
   *    PreCondition:
   *   	 Ad una obbligazione esistente e' stato incrementato l'importo e la differenza fra l'importo attuale dell'obbligazione 
   *      e l'importo che aveva in precedenza supera il controllo della copertura finanziaria
   *      effettuato dalla stored procedure CNRCTB030.checkAssunzObblig 
   *    PostCondition:
-  *      L'utente puÚ proseguire con la definizione dell'imputazione finanziaria dell'obbligazione o con il suo salvataggio
+  *      L'utente pu√≤ proseguire con la definizione dell'imputazione finanziaria dell'obbligazione o con il suo salvataggio
   *  aumento importo obbligazione - errore
   *    PreCondition:
   *   	 Ad una obbligazione esistente e' stato incrementato l'importo e la differenza fra l'importo attuale dell'obbligazione 
   *      e l'importo che aveva in precedenza non supera il controllo della copertura finanziaria
   *      effettuato dalla stored procedure CNRCTB030.checkAssunzObblig 
   *    PostCondition:
-  *      Una segnalazione di errore comunica all'utente l'impossibilit‡ di proseguire nella modifica dell'obbligazione
+  *      Una segnalazione di errore comunica all'utente l'impossibilit√† di proseguire nella modifica dell'obbligazione
   *
   * @param aUC lo user context 
   * @param obbligazione l'istanza di  <code>ObbligazioneBulk</code> che il Cds dovrebbe assumere
@@ -817,7 +817,7 @@ private void calcolaLimiteAssunzioneObbligazioni (UserContext aUC,ObbligazioneBu
 		/**
 		 * @author mspasiano
 		 * @since 04.03.2006
-		 * @value Se Ë attiva la gestione di competenza del 2006 non controlla il limite di assunzione obbligazioni
+		 * @value Se √® attiva la gestione di competenza del 2006 non controlla il limite di assunzione obbligazioni
 		 */
 		if (((Parametri_cnrBulk)getHome(aUC,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(aUC)))).getFl_regolamento_2006().booleanValue())
 		   return;
@@ -829,30 +829,30 @@ private void calcolaLimiteAssunzioneObbligazioni (UserContext aUC,ObbligazioneBu
   *      Viene richiesto il calcolo delle percentuali d'imputazione per l'obbligazione e la ripartizione dell'importo
   *      delle sacdenze sui vari dettagli secondo tali percentuali
   *    PostCondition:
-  *      Il sistema calcola la percentuale di ripartizione delle linee di attivit‡ nel modo seguente:
-  *      - Per le linee di attivit‡ non presenti nel Piano di Gestione la percentuale e' inserita dall'utente
-  *      - Per le linee di attivit‡ presenti nel Piano di Gestione e con categoria di dettaglio = SINGOLO viene 
+  *      Il sistema calcola la percentuale di ripartizione delle linee di attivit√† nel modo seguente:
+  *      - Per le linee di attivit√† non presenti nel Piano di Gestione la percentuale e' inserita dall'utente
+  *      - Per le linee di attivit√† presenti nel Piano di Gestione e con categoria di dettaglio = SINGOLO viene 
   *        calcolata la somma delle colonne I,K,Q,S,U e viene calcolata la percentuale di questo importo rispetto alla
-  *        somma di tutti questi importi per tutte le linee attivit‡ selezionate
-  *      - Per le linee di attivit‡ presenti nel Piano di Gestione e con categoria di dettaglio = SCARICO viene 
+  *        somma di tutti questi importi per tutte le linee attivit√† selezionate
+  *      - Per le linee di attivit√† presenti nel Piano di Gestione e con categoria di dettaglio = SCARICO viene 
   *        calcolata la somma delle colonne J,L,R,T e viene calcolata la percentuale di questo importo rispetto alla
-  *        somma di tutti questi importi per tutte le linee attivit‡ selezionate
+  *        somma di tutti questi importi per tutte le linee attivit√† selezionate
   *      Esempio di imputazione finanziaria:
-  *      - Linea attivit‡ L0001 non da PdG con percentuale specificata dall'utente: 10%
-  *      - Linea attivit‡ L0002 da PdG con categoria dettaglio = SINGOLO e somma delle colonne I,K,Q,S,U = 50.000,00
-  *      - Linea attivit‡ L0003 da PdG con categoria dettaglio = SCARICO e somma delle colonne I,K,Q,S,U = 40.000,00
+  *      - Linea attivit√† L0001 non da PdG con percentuale specificata dall'utente: 10%
+  *      - Linea attivit√† L0002 da PdG con categoria dettaglio = SINGOLO e somma delle colonne I,K,Q,S,U = 50.000,00
+  *      - Linea attivit√† L0003 da PdG con categoria dettaglio = SCARICO e somma delle colonne I,K,Q,S,U = 40.000,00
   *      Il sistema calcola le seguenti percentuali di ripartizione:
-  *      - Linea attivit‡ L0001 : 10%
-  *      - Linea attivit‡ L0002 : 50%
-  *      - Linea attivit‡ L0003 : 40%
+  *      - Linea attivit√† L0001 : 10%
+  *      - Linea attivit√† L0002 : 50%
+  *      - Linea attivit√† L0003 : 40%
   *      Determinate tali percentuali il sistema procede a ripartire l'importo di ogni scadenza sui singoli dettagli
   *      secondo tali percentuali. Se, per problemi di arrotondamento, alla fine della ripartizione la somma degli
   *      importi dei dettagli della scadenza non e' uguale all'importo della scadenza, il sistema quadra tale somma
   *      assegnando il delta al primo dettaglio della scadenza
   *
-  *  errore - manca percentuale per nuova linea attivit‡
+  *  errore - manca percentuale per nuova linea attivit√†
   *    PreCondition:
-  *      Nell'imputazione finanziaria dell'obbligazione e' stata specificata una linea di attivit‡ non presente nel 
+  *      Nell'imputazione finanziaria dell'obbligazione e' stata specificata una linea di attivit√† non presente nel 
   *      Piano di Gestione e per tale linea non e' stata specificata la percentuale da usare nella ripartizione 
   *      dell'importo delle scadenze sui dettagli
   *    PostCondition:
@@ -860,19 +860,19 @@ private void calcolaLimiteAssunzioneObbligazioni (UserContext aUC,ObbligazioneBu
   *
   *  errore - non esistono spese e costi nel piano di gestione per linea attivita SINGOLA
   *    PreCondition:
-  *      Nell'imputazione finanziaria dell'obbligazione e' stata specificata una linea di attivit‡ presente nel 
+  *      Nell'imputazione finanziaria dell'obbligazione e' stata specificata una linea di attivit√† presente nel 
   *      Piano di Gestione con categoria di dettaglio SINGOLA e per la quale la somma delle colonne I,K,Q,S,U risulta
   *      essere 0
   *    PostCondition:
-  *      Una segnalazione di errore viene restituita all'utente per comunicare che i costi/spese della linea di attivit‡ sono nulli
+  *      Una segnalazione di errore viene restituita all'utente per comunicare che i costi/spese della linea di attivit√† sono nulli
   *
   *  errore - non esistono spese e costi nel piano di gestione per linea attivita SCARICO
   *    PreCondition:
-  *      Nell'imputazione finanziaria dell'obbligazione e' stata specificata una linea di attivit‡ presente nel 
+  *      Nell'imputazione finanziaria dell'obbligazione e' stata specificata una linea di attivit√† presente nel 
   *      Piano di Gestione con categoria di dettaglio SCARICO e per la quale la somma delle colonne J,L,R,T risulta
   *      essere 0
   *    PostCondition:
-  *      Una segnalazione di errore viene restituita all'utente per comunicare che i costi/spese relativi ad altra UO della linea di attivit‡ sono nulli
+  *      Una segnalazione di errore viene restituita all'utente per comunicare che i costi/spese relativi ad altra UO della linea di attivit√† sono nulli
   *
   * @param aUC lo user context 
   * @param obbligazione l'istanza di  <code>ObbligazioneBulk</code> per la quale devono essere calcolati gli importi e le percentuali dei suoi
@@ -1026,7 +1026,7 @@ public void callDoRiprocObb(
   *    PreCondition:
   *      E' stata inoltrata una richiesta di riportare all'esercizio successivo un documento contabile
   *	 PostCondition:
-  *		Il doc.contabile Ë stato riportato all'esercizio successivo richiamando 
+  *		Il doc.contabile √® stato riportato all'esercizio successivo richiamando 
   *      la stored procedure CNRCTB046.riportoEsNextDocCont
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -1076,7 +1076,7 @@ public void callRiportaAvanti (UserContext userContext,IDocumentoContabileBulk d
   *    PreCondition:
   *      E' stata inoltrata una richiesta di riportare indietro dall'esercizio successivo un documento contabile
   *	 PostCondition:
-  *		Il doc.contabile Ë stato riportato all'esercizio successivo richiamando 
+  *		Il doc.contabile √® stato riportato all'esercizio successivo richiamando 
   *      la stored procedure CNRCTB046.deriportoEsNextDocCont
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -1120,15 +1120,15 @@ public void callRiportaIndietro (UserContext userContext,IDocumentoContabileBulk
 /** 
   *  cancella dettaglio
   *    PreCondition:
-  *      E' stata modificato l'imputazione finanziaria dell'obbligazione e una linea di attivit‡ 
-  *      prima selezionata ora non lo e' pi˘
+  *      E' stata modificato l'imputazione finanziaria dell'obbligazione e una linea di attivit√† 
+  *      prima selezionata ora non lo e' pi√π
   *    PostCondition:
-  *      Il dettaglio della scadenza dell'obbligazione riferito alla linea di attivit‡ non pi˘ selezionata
+  *      Il dettaglio della scadenza dell'obbligazione riferito alla linea di attivit√† non pi√π selezionata
   *      viene cancellato
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione la cui imputazione finanziaria e' stata modificata
-  * @param scadenzario <code>Obbligazione_scadenzarioBulk</code> la scadenza dell'obbligazione per cui eliminare i dettagli non pi˘ validi
+  * @param scadenzario <code>Obbligazione_scadenzarioBulk</code> la scadenza dell'obbligazione per cui eliminare i dettagli non pi√π validi
   *  
  */
 
@@ -1141,7 +1141,7 @@ protected void cancellaDettaglioScadenze (UserContext aUC,ObbligazioneBulk obbli
 	boolean found;
 	int index = 0;
 
-	//cancello i dettagli scadenze per le linee di attivit‡ che non esistono piu'
+	//cancello i dettagli scadenze per le linee di attivit√† che non esistono piu'
 
 	for ( Iterator scadIterator = scadenzario.getObbligazione_scad_voceColl().iterator(); scadIterator.hasNext(); index++)
 	{
@@ -1178,11 +1178,11 @@ protected void cancellaDettaglioScadenze (UserContext aUC,ObbligazioneBulk obbli
 }
 //^^@@
 /** 
-  *  Lo stato dell'obbligazione Ë Provvisoria e non esistono ordini
+  *  Lo stato dell'obbligazione √® Provvisoria e non esistono ordini
   *    PreCondition:
-  *      Lo stato dell'obbligazione Ë Provvisoria e non esiste nessun ordine associato all'obbligazione
+  *      Lo stato dell'obbligazione √® Provvisoria e non esiste nessun ordine associato all'obbligazione
   *    PostCondition:
-  *      Il sistema eseguir‡ le seguente attivit‡:
+  *      Il sistema eseguir√† le seguente attivit√†:
   *      1) L'aggiornamento dei saldi 'obbligazioni' dei capitoli di spesa CdS.
   *         (Questo processo viene eseguito dal metodo 'aggiornaCapitoloSaldoObbligazione').
   *      2) L'eliminazione di ogni scadenza nello scadenzario dell'obbligazione,
@@ -1193,7 +1193,7 @@ protected void cancellaDettaglioScadenze (UserContext aUC,ObbligazioneBulk obbli
   *      Per l'obbligazione provvisoria e' stato definito un ordine
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che per cancellare un'obbligazione provvisoria
-  *      per la quale e' gi‡ stato emesso un ordine e' necessario prima cancellare l'ordine
+  *      per la quale e' gi√† stato emesso un ordine e' necessario prima cancellare l'ordine
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione da cancellare
@@ -1207,7 +1207,7 @@ public void cancellaObbligazioneProvvisoria (UserContext aUC,ObbligazioneBulk ob
 		// In caso affermativo blocco l'operazione di eliminazione
 		it.cnr.contab.doccont00.ordine.bulk.OrdineBulk ordine = findOrdineFor(aUC, obbligazione);
 		if (ordine!=null)
-			throw new ApplicationException("L'impegno selezionato Ë collegato ad un ordine. Cancellare prima l'ordine");
+			throw new ApplicationException("L'impegno selezionato √® collegato ad un ordine. Cancellare prima l'ordine");
 
 		//imposto a TO_BE_DELETED l'obbligazione e tutte le sue scadenze e tutte le sue scad_voce
 		obbligazione.setToBeDeleted();
@@ -1217,7 +1217,7 @@ public void cancellaObbligazioneProvvisoria (UserContext aUC,ObbligazioneBulk ob
 	}
 	catch ( ObjectNotFoundException e )
 	{
-		throw new ApplicationException( "L'impegno Ë gi‡ stato cancellato" );
+		throw new ApplicationException( "L'impegno √® gi√† stato cancellato" );
 	}
 	catch ( Exception e )
 	{
@@ -1250,20 +1250,20 @@ private CdrBulk cdrFromUserContext(UserContext userContext) throws ComponentExce
 	}
 }
 /** 
-  *  Lo stato dell'obbligazione Ë Provvisoria - esercizio ok
+  *  Lo stato dell'obbligazione √® Provvisoria - esercizio ok
   *    PreCondition:
-  *      Lo stato dell'obbligazione Ë Provvisoria.
+  *      Lo stato dell'obbligazione √® Provvisoria.
   *      L'esercizio di competenza dell'obbligazione e' uguale all'esercizio di creazione
   *    PostCondition:
   *      L'obbligazione viene aggiornata allo stato di 'Definitiva'.
   *
-  *  Lo stato dell'obbligazione Ë Provvisoria - esercizio errore
+  *  Lo stato dell'obbligazione √® Provvisoria - esercizio errore
   *    PreCondition:
-  *      Lo stato dell'obbligazione Ë Provvisoria.
+  *      Lo stato dell'obbligazione √® Provvisoria.
   *      L'esercizio di competenza dell'obbligazione e' maggiore all'esercizio di creazione
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che un'obbligazione con esercizio competenza
-  *      maggiore all'esercizio di creazione non puÚ essere resa definitiva
+  *      maggiore all'esercizio di creazione non pu√≤ essere resa definitiva
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione da confermare
@@ -1310,14 +1310,14 @@ public ObbligazioneBulk confermaObbligazioneProvvisoria (UserContext aUC,Obbliga
 /** 
   *  anno di competenza maggiore da anno di creazione obbligazione + 2
   *    PreCondition:
-  *      L'anno di competenza dell'obbligazione Ë maggiore dell'anno di creazione dell'obbligazione + 2
+  *      L'anno di competenza dell'obbligazione √® maggiore dell'anno di creazione dell'obbligazione + 2
   *    PostCondition:
   *      Non viene effetuato il controllo della copertura finanziaria.
   *  anno di competenza inferiore anno di creazione obbligazione + 2
   *    PreCondition:
-  *      L'anno di competenza dell'obbligazione Ë uguale all'anno di creazione dell'obbligazione oppure
-  *      l'anno di competenza dell'obbligazione Ë uguale all'anno di creazione dell'obbligazione + 1 oppure
-  *      L'anno di competenza dell'obbligazione Ë uguale all'anno di creazione dell'obbligazione + 2   
+  *      L'anno di competenza dell'obbligazione √® uguale all'anno di creazione dell'obbligazione oppure
+  *      l'anno di competenza dell'obbligazione √® uguale all'anno di creazione dell'obbligazione + 1 oppure
+  *      L'anno di competenza dell'obbligazione √® uguale all'anno di creazione dell'obbligazione + 2   
   *    PostCondition:
   *      La copertura finanziaria viene controllata per l'obbligazione in elaborazione con il metodo
   *      calcolaLimiteAssunzioneObbligazioni
@@ -1352,17 +1352,17 @@ private void controllaCoperturaFinanziariaObbligazione (UserContext aUC,Obbligaz
   *      l'esercizio dell'obbligazione e' uguale all'esercizio di scrivania.
   *    PostCondition:
   *      Viene richiamato il metodo 'controllaDisponibilitaCassaPerVoceInInserimento' che
-  *      esegue il controllo della disponibilit‡ di cassa per ogni voce presente nell'obbligazione
+  *      esegue il controllo della disponibilit√† di cassa per ogni voce presente nell'obbligazione
   *  modifica obbligazione con esercizio competenza = esercizio scrivania 
   *    PreCondition:
   *      Un'obbligazione e' stata modificata
   *      l'esercizio dell'obbligazione e' uguale all'esercizio di scrivania.
   *    PostCondition:
   *      Viene richiamato il metodo 'controllaDisponibilitaCassaPerVoceInModifica' che
-  *      esegue il controllo della disponibilit‡ di cassa per ogni voce presente nell'obbligazione
+  *      esegue il controllo della disponibilit√† di cassa per ogni voce presente nell'obbligazione
   
   * @param aUC lo user context 
-  * @param obbligazione l'istanza di  <code>ObbligazioneBulk</code> per i cui capitoli deve essere verificata la disponibilit‡ di cassa
+  * @param obbligazione l'istanza di  <code>ObbligazioneBulk</code> per i cui capitoli deve essere verificata la disponibilit√† di cassa
   * @param azione indica l'azione effettuata sull'obbligazione e puo' assumere i valori INSERIMENTO, MODIFICA, CANCELLAZIONE  
   *
  */
@@ -1395,11 +1395,11 @@ private void controllaDisponibilitaCassaPerVoce (UserContext userContext,Obbliga
   *      Un'obbligazione e' stata creata
   *    PostCondition:
   *      Per ogni voce del piano presente nell'obbligazione viene
-  *      eseguito il controllo della disponibilit‡ di cassa
+  *      eseguito il controllo della disponibilit√† di cassa
   
   *
   * @param userContext lo user context 
-  * @param obbligazione l'istanza di  <code>ObbligazioneBulk</code> per la quale deve essere verificata la disponibilit‡ di cassa sui capitoli
+  * @param obbligazione l'istanza di  <code>ObbligazioneBulk</code> per la quale deve essere verificata la disponibilit√† di cassa sui capitoli
   *
  */
 
@@ -1439,7 +1439,7 @@ private void controllaDisponibilitaCassaPerVoceInInserimento (UserContext userCo
   *      L'obbligazione non ha mandati associati
   *    PostCondition:
   *      Per ogni voce del piano presente nell'obbligazione viene calcolato quale e' il valore da considerare
-  *      (V_mod_saldi_obbligBulk) per verificare la disponibilit‡ di cassa relativa sull'assunzione di obbligazioni
+  *      (V_mod_saldi_obbligBulk) per verificare la disponibilit√† di cassa relativa sull'assunzione di obbligazioni
   *
   *  disp. cassa con mandati
   *    PreCondition:
@@ -1447,7 +1447,7 @@ private void controllaDisponibilitaCassaPerVoceInInserimento (UserContext userCo
   *      L'obbligazione ha mandati associati
   *    PostCondition:
   *      Per ogni voce del piano presente nell'obbligazione viene calcolato quale e' il valore da considerare
-  *      (V_mod_saldi_obbligBulk) per verificare la disponibilit‡ di cassa relativa sia all'assunzione di mandati
+  *      (V_mod_saldi_obbligBulk) per verificare la disponibilit√† di cassa relativa sia all'assunzione di mandati
   *      (controllo bloccante) che all'assunzione di obbligazioni (controllo non bloccante)
   *
   *
@@ -1493,12 +1493,12 @@ private void controllaDisponibilitaCassaPerVoceInModifica (UserContext userConte
 }
 /** 
  *  Effettua controlli sulle combinazione Cdr/Voce/Linea selezionate e scelte dall'utente.
- *  Il controllo viene effettuato sull'insieme delle Linee di attivit‡ (da PDG e non) selezionate dall'utente.
+ *  Il controllo viene effettuato sull'insieme delle Linee di attivit√† (da PDG e non) selezionate dall'utente.
  *   
  *    PreCondition:
  *      E' stata confermata l'imputazione finanziaria dell'obbligazione da creare  
  *    PostCondition:
- *      se l'impegno creato Ë di competenza viene verificato che la disponibilit‡ residua ad assumere
+ *      se l'impegno creato √® di competenza viene verificato che la disponibilit√† residua ad assumere
  * 		impegni residui impropri non sia superiore al limite indicato nei Parametri CNR per ogni 
  * 		Cdr/Voce/Linea selezionata
  *
@@ -1532,7 +1532,7 @@ public ObbligazioneBulk validaImputazioneFinanziaria(UserContext userContext, Ob
 					voce = obbligazione.getArticolo( ppsd.getCd_funzione(), ppsd.getCd_centro_responsabilita_clgs());
 				
 				/*
-				 * Nella gestione 2006, il campo voce potrebbe essere null se la ricerca Ë attuata tramite
+				 * Nella gestione 2006, il campo voce potrebbe essere null se la ricerca √® attuata tramite
 				 * getCd_centro_responsabilita_clgs(). In questo caso cerco di trovarla tramite 
 				 * ppsd.getCd_centro_responsabilita()
 				 */ 
@@ -1567,16 +1567,16 @@ public ObbligazioneBulk validaImputazioneFinanziaria(UserContext userContext, Ob
 /** 
  *  Effettua controlli sulle combinazione Cdr/Voce/Linea indicati come parametri
  *    PreCondition:
- *      Una nuova combinazione Cdr/Voce/Linea Ë stata scelta o Ë stato aumentato l'importo 
+ *      Una nuova combinazione Cdr/Voce/Linea √® stata scelta o √® stato aumentato l'importo 
  * 		complessivo assegnato al Cdr/Voce/Linea 
  *    PostCondition:
- *      Se l'impegno creato Ë di competenza viene verificato che la disponibilit‡ residua ad assumere
+ *      Se l'impegno creato √® di competenza viene verificato che la disponibilit√† residua ad assumere
  * 		impegni residui impropri non sia superiore al limite indicato nei Parametri CNR
  *
  * @param userContext lo user context 
  * @param obbligazione l'obbligazione di cui sto aggiornando l'imputazione finanziaria 
  * @param PrimaryKeyHashtable la chiave restituita dalla chiamata alla procedura getOldRipartizioneCdrVoceLinea
- * @param cdr il centro di responsabilit‡
+ * @param cdr il centro di responsabilit√†
  * @param latt il codice della GAE
  * @param voce l'istanza di <code>Voce_fBulk</code> contenente l'elemento voce da verificare
  * @throws ComponentException
@@ -1630,7 +1630,7 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 			
 			/*
 			 * Controllo, in caso di creazione impegni di competenza o aumento dell'importo assegnato, 
-			 * che la disponibilit‡ ad assumere impegni residui impropri non sia superiore al limite 
+			 * che la disponibilit√† ad assumere impegni residui impropri non sia superiore al limite 
 			 * previsto nei parametri CNR
 			 * 
 			 **/
@@ -1638,17 +1638,17 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 				BigDecimal totaleResidui = session.getTotaleSaldoResidui(userContext,cdr,latt,voce);
 				if (totaleResidui.compareTo(param_cds.getIm_soglia_consumo_residuo())==1) 
 					if (!found)
-						throw new ApplicationException("Non Ë possibile assumere impegni di competenza per il CDR/GAE/Voce (" + 
+						throw new ApplicationException("Non √® possibile assumere impegni di competenza per il CDR/GAE/Voce (" + 
 													   cdr + "/" + latt + "/" + voce.getCd_voce() +
-													   "), in quanto esiste una disponibilit‡ ad assumere impegni " +
+													   "), in quanto esiste una disponibilit√† ad assumere impegni " +
 													   "su stanziamenti residui impropri (" + 
 													   new it.cnr.contab.util.EuroFormat().format(totaleResidui) + ").");
 					else
-						throw new ApplicationException("Non Ë possibile aumentare di " + 
+						throw new ApplicationException("Non √® possibile aumentare di " + 
 													   new it.cnr.contab.util.EuroFormat().format(totaleNewScad.subtract(totaleOldScad)) +
-													   " l'importo di competenza gi‡ assegnato per il CDR/GAE/Voce (" + 
+													   " l'importo di competenza gi√† assegnato per il CDR/GAE/Voce (" + 
 													   cdr + "/" + latt + "/" + voce.getCd_voce() +
-													   "), in quanto esiste una disponibilit‡ ad assumere impegni " +
+													   "), in quanto esiste una disponibilit√† ad assumere impegni " +
 													   "su stanziamenti residui impropri (" + 
 													   new it.cnr.contab.util.EuroFormat().format(totaleResidui) + ").");
 			}
@@ -1663,7 +1663,7 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
   *    PreCondition:
   *      Una richiesta di creazione di un'obbligazione e' stata generata
   *      L'obbligazione ha superato i controlli eseguiti dal metodo 'verificaObbligazione' 
-  *      L'obbligazione ha superato i controlli sulla disponibilit‡ di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
+  *      L'obbligazione ha superato i controlli sulla disponibilit√† di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
   *      L'obbligazione non e' stata creata in un contesto transazionale
   *    PostCondition:
   *      L'obbligazione viene creata, i dettagli di tutte le scadenze vengono creati (metodo generaDettagliScadenzaObbligazione) e i saldi 
@@ -1672,7 +1672,7 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
   *    PreCondition:
   *      Una richiesta di creazione di un'obbligazione e' stata generata
   *      L'obbligazione ha superato i controlli eseguiti dal metodo 'verificaObbligazione' 
-  *      L'obbligazione ha superato i controlli sulla disponibilit‡ di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
+  *      L'obbligazione ha superato i controlli sulla disponibilit√† di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
   *      L'obbligazione e' stata creata in un contesto transazionale
   *    PostCondition:
   *      L'obbligazione viene creata e i dettagli di tutte le sue scadenze vengono creati (metodo generaDettagliScadenzaObbligazione) 
@@ -1682,16 +1682,16 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
   *      controlli eseguiti dal metodo 'verificaObbligazione'
   *    PostCondition:
   *      Viene generata un'ApplicationException che descrive all'utente l'errore che si e' verificato
-  *  Errore di disponibilit‡ di cassa
+  *  Errore di disponibilit√† di cassa
   *    PreCondition:
   *      Una richiesta di creazione di un'obbligazione e' stata generata e l'obbligazione non ha superato i
-  *      controlli di disponibilit‡ di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
+  *      controlli di disponibilit√† di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
   *    PostCondition:
   *      Viene generata un'ApplicationException che descrive all'utente l'errore che si e' verificato
-  *  Errore di disponibilit‡ di cassa - forzatura
+  *  Errore di disponibilit√† di cassa - forzatura
   *    PreCondition:
   *      Una richiesta di creazione di un'obbligazione e' stata generata e l'obbligazione non ha superato i
-  *      controlli di disponibilit‡ di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'  
+  *      controlli di disponibilit√† di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'  
   *		 e l'utente ha scelto di forzare l'emissione dell'obbligazione
   *    PostCondition:
   *      L'obbligazione viene creata, i dettagli di tutte le scadenze vengono creati (metodo generaDettagliScadenzaObbligazione) e i saldi 
@@ -1754,30 +1754,30 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 /** 
   *  CDS SAC - non scarico
   *    PreCondition:
-  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attivit‡ da piano di gestione 
-  *      ad una obbligazione di appartenenza del Cds SAC. La linea di attivit‡ non e' di scarico.
+  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attivit√† da piano di gestione 
+  *      ad una obbligazione di appartenenza del Cds SAC. La linea di attivit√† non e' di scarico.
   *    PostCondition:
-  *      Viene creato un nuovo dettaglio di scadenza dell'obbligazione riferito alla nuova linea di attivit‡ e viene
+  *      Viene creato un nuovo dettaglio di scadenza dell'obbligazione riferito alla nuova linea di attivit√† e viene
   *      impostata come voce del piano dei conti del dettaglio della scadenza l'articolo selezionato 
-  *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attivit‡
+  *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attivit√†
   *  CDS SAC - scarico
   *    PreCondition:
-  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attivit‡ da piano di gestione 
-  *      ad una obbligazione di appartenenza del Cds SAC. La linea di attivit‡ e' di scarico.
+  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attivit√† da piano di gestione 
+  *      ad una obbligazione di appartenenza del Cds SAC. La linea di attivit√† e' di scarico.
   *    PostCondition:
-  *      Viene creato un nuovo dettaglio di scadenza dell'obbligazione riferito alla nuova linea di attivit‡ e viene
+  *      Viene creato un nuovo dettaglio di scadenza dell'obbligazione riferito alla nuova linea di attivit√† e viene
   *      impostata come voce del piano dei conti del dettaglio della scadenza l'articolo selezionato 
-  *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attivit‡ collegata nel 
-  *      piano di gestione alla linea di attivit‡ selezionata
+  *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attivit√† collegata nel 
+  *      piano di gestione alla linea di attivit√† selezionata
   *  CDS diverso da SAC 
   *    PreCondition:
-  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attivit‡ da piano di gestione 
+  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attivit√† da piano di gestione 
   *      ad una obbligazione di appartenenza di un Cds con tipologia diversa da SAC. 
-  *      La linea di attivit‡ non e' di scarico.
+  *      La linea di attivit√† non e' di scarico.
   *    PostCondition:
-  *      Viene creato un nuovo dettaglio di scadenza dell'obbligazione riferito alla nuova linea di attivit‡ e viene
+  *      Viene creato un nuovo dettaglio di scadenza dell'obbligazione riferito alla nuova linea di attivit√† e viene
   *      impostata come voce del piano dei conti del dettaglio della scadenza il capitolo selezionato 
-  *      in imputazione finanziaria avente funzione uguale a quello della linea di attivit‡
+  *      in imputazione finanziaria avente funzione uguale a quello della linea di attivit√†
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione per cui creare i dettagli scadenza
@@ -1794,7 +1794,7 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Obbliga
 	Linea_attivitaBulk la;
 	boolean found;
 
-	//creo i dettagli scadenze se non esistono per le linee di attivit‡ da PDG
+	//creo i dettagli scadenze se non esistono per le linee di attivit√† da PDG
 
 	for ( Iterator lattIterator = obbligazione.getLineeAttivitaSelezionateColl().iterator(); lattIterator.hasNext(); )
 	{
@@ -1832,7 +1832,7 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Obbliga
 					else
 						articolo = obbligazione.getArticolo( ppsd.getCd_funzione(), ppsd.getCd_centro_responsabilita_clgs());
 					/*
-					 * Nella gestione 2006, il campo "articolo" potrebbe essere null se la ricerca Ë attuata tramite
+					 * Nella gestione 2006, il campo "articolo" potrebbe essere null se la ricerca √® attuata tramite
 					 * getCd_centro_responsabilita_clgs(). In questo caso cerco di trovarla tramite 
 					 * ppsd.getCd_centro_responsabilita()
 					 */ 
@@ -1880,19 +1880,19 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Obbliga
   *  CDS SAC 
   *    PreCondition:
   *      E' stata modificato l'imputazione finanziaria aggiungendo ad una obbligazione di appartenenza del Cds SAC
-  *      una nuova linea di attivit‡ che non e' presente nel piano di gestione   
+  *      una nuova linea di attivit√† che non e' presente nel piano di gestione   
   *    PostCondition:
-  *      Viene creato un nuovo dettaglio di scadenza dell'obbligazione riferito alla nuova linea di attivit‡ e viene
+  *      Viene creato un nuovo dettaglio di scadenza dell'obbligazione riferito alla nuova linea di attivit√† e viene
   *      impostata come voce del piano dei conti del dettaglio della scadenza l'articolo selezionato 
-  *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attivit‡
+  *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attivit√†
   *  CDS diverso da SAC 
   *    PreCondition:
   *      E' stata modificato l'imputazione finanziaria aggiungendo ad una obbligazione di appartenenza ad un Cds diverso da SAC
-  *      una nuova linea di attivit‡ che non e' presente nel piano di gestione   
+  *      una nuova linea di attivit√† che non e' presente nel piano di gestione   
   *    PostCondition:
-  *      Viene creato un nuovo dettaglio di scadenza dell'obbligazione riferito alla nuova linea di attivit‡ e viene
+  *      Viene creato un nuovo dettaglio di scadenza dell'obbligazione riferito alla nuova linea di attivit√† e viene
   *      impostata come voce del piano dei conti del dettaglio della scadenza il capitolo selezionato 
-  *      in imputazione finanziaria avente funzione uguale a quello della linea di attivit‡
+  *      in imputazione finanziaria avente funzione uguale a quello della linea di attivit√†
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione per cui creare i dettagli scadenza
@@ -1908,7 +1908,7 @@ protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,Obblig
 	Linea_attivitaBulk la;
 	boolean found;
 
-	//creo i dettagli scadenze se non esistono per le nuove linee di attivit‡
+	//creo i dettagli scadenze se non esistono per le nuove linee di attivit√†
 
 	for ( Iterator lattIterator = obbligazione.getNuoveLineeAttivitaColl().iterator(); lattIterator.hasNext(); )
 	{
@@ -2057,92 +2057,92 @@ public it.cnr.contab.doccont00.ordine.bulk.OrdineBulk findOrdineFor(UserContext 
   *      L'utente ha richiesto l'imputazione automatica dell'obbligazione e ha creato una scadenza o ha modificato l'importo
   *      di una scadenza esistente
   *    PostCondition:
-  *      Per ogni linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *      il metodo calcolaPercentualeImputazioneObbligazione viene utilizzato per determinare le percentuali
-  *      assegnate ad ogni linea d'attivit‡/capitolo e per riaprtire l'importo della scadenza sui vari dettagli
+  *      assegnate ad ogni linea d'attivit√†/capitolo e per riaprtire l'importo della scadenza sui vari dettagli
   *      in base a tali percentuali
   *  creazione scadenza/modifica importo - imputazione manuale
   *    PreCondition:
   *      L'utente ha specificato l'imputazione manuale dell'obbligazione e ha creato una scadenza o ha modificato l'importo
   *      di una scadenza esistente
   *    PostCondition:
-  *      Per ogni linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *  conferma imputazione finanziaria - imputazione automatica
   *    PreCondition:
-  *      L' utente ha completato l'imputazione finanziaria, confermando le linee di attivit‡ selezionate, e ha richiesto la ripartizione automatica degli importi
+  *      L' utente ha completato l'imputazione finanziaria, confermando le linee di attivit√† selezionate, e ha richiesto la ripartizione automatica degli importi
   *      delle scadenze
   *    PostCondition:
-  *      Per ogni scadenza dell'obbligazione e per ogni linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'obbligazione e per ogni linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *      il metodo calcolaPercentualeImputazioneObbligazione viene utilizzato per determinare le percentuali
-  *      assegnate ad ogni linea d'attivit‡/capitolo e per ripartire l'importo della scadenza sui vari dettagli
+  *      assegnate ad ogni linea d'attivit√†/capitolo e per ripartire l'importo della scadenza sui vari dettagli
   *      in base a tali percentuali
   *  conferma imputazione finanziaria - imputazione manuale
   *    PreCondition:
-  *      L' utente ha completato l'imputazione finanziaria, confermando le linee di attivit‡ selezionate, e ha selezionato la ripartizione manuale degli importi
+  *      L' utente ha completato l'imputazione finanziaria, confermando le linee di attivit√† selezionate, e ha selezionato la ripartizione manuale degli importi
   *      delle scadenze
   *    PostCondition:
-  *      Per ogni scadenza dell'obbligazione e per ogni linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'obbligazione e per ogni linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *  modifica imputazione finanziaria - imputazione automatica
   *    PreCondition:
   *      L' utente ha modificato l'imputazione finanziaria definita per l'obbligazione e ha richiesto la ripartizione automatica degli importi
   *      delle scadenze
   *    PostCondition:
-  *      Tutti i dettagli delle scadenze dell'obbligazione che facevano riferimento a linee di attivit‡ non pi˘ selezionate
+  *      Tutti i dettagli delle scadenze dell'obbligazione che facevano riferimento a linee di attivit√† non pi√π selezionate
   *      vengono cancellati
-  *      Per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *      il metodo calcolaPercentualeImputazioneObbligazione viene utilizzato per determinare le percentuali
-  *      assegnate ad ogni linea d'attivit‡/capitolo e per ripartire l'importo della scadenza sui vari dettagli
+  *      assegnate ad ogni linea d'attivit√†/capitolo e per ripartire l'importo della scadenza sui vari dettagli
   *      in base a tali percentuali
   *  modifica imputazione finanziaria - imputazione manuale
   *    PreCondition:
   *      L' utente ha modificato l'imputazione finanziaria definita per l'obbligazione e ha selezionato la ripartizione manuale degli importi
   *      delle scadenze
   *    PostCondition:
-  *      Tutti i dettagli delle scadenze dell'obbligazione che facevano riferimento a linee di attivit‡ non pi˘ selezionate
+  *      Tutti i dettagli delle scadenze dell'obbligazione che facevano riferimento a linee di attivit√† non pi√π selezionate
   *      vengono cancellati
-  *      Per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *  Errore - imputazione automatica per linea att SINGOLA
   *    PreCondition:
-  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attivit‡ dal piano di gestione 
+  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attivit√† dal piano di gestione 
   *      con categoria di dettaglio = SINGOLA e per le quali la somma delle colonne I,K,Q,S,U e' nullo
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare all'utente l'impossibilit‡ di effettuare in automatico la
-  *      ripartizione dell'importo della scadenza sulle linee di attivit‡ scelte
+  *      Il metodo utilizza un Throw Exception per comunicare all'utente l'impossibilit√† di effettuare in automatico la
+  *      ripartizione dell'importo della scadenza sulle linee di attivit√† scelte
   *  Errore - imputazione automatica per linea att SCARICO
   *    PreCondition:
-  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attivit‡ dal piano di gestione 
+  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attivit√† dal piano di gestione 
   *      con categoria di dettaglio = SCARICO e per le quali la somma delle colonne J,L,R,T e' nullo
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare all'utente l'impossibilit‡ di effettuare in automatico la
-  *      ripartizione dell'importo della scadenza sulle linee di attivit‡ scelte
+  *      Il metodo utilizza un Throw Exception per comunicare all'utente l'impossibilit√† di effettuare in automatico la
+  *      ripartizione dell'importo della scadenza sulle linee di attivit√† scelte
   *  Errore - percentuali per nuove linee att.
   *    PreCondition:
-  *      L'utente ha specificato solo delle linee di attivit‡ che non sono presenti nel piano di gestione e la somma
+  *      L'utente ha specificato solo delle linee di attivit√† che non sono presenti nel piano di gestione e la somma
   *      delle percentuali inserite dall'utente da utilizzare nella ripartizione dell'importo di ogni scadenza e' diversa
   *      da 100.
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare l'errore all'utente
   *  Errore - percentuali per nuove linee att. > 100
   *    PreCondition:
-  *      L'utente ha specificato per le linee di attivit‡ che non sono presenti nel piano di gestione 
+  *      L'utente ha specificato per le linee di attivit√† che non sono presenti nel piano di gestione 
   *      delle percentuali  da utilizzare nella ripartizione dell'importo di ogni scadenza e la loro somma e'
   *      maggiore di 100
   *    PostCondition:
@@ -2168,7 +2168,7 @@ protected ObbligazioneBulk generaDettagliScadenzaObbligazione (UserContext aUC,O
 		obbligazione.getNuoveLineeAttivitaColl().size() == 0)
 		return obbligazione;
 
-	// la somma delle percentuali delle nuove linee di attivit‡ e' diversa da 100
+	// la somma delle percentuali delle nuove linee di attivit√† e' diversa da 100
 	if (obbligazione.getLineeAttivitaSelezionateColl().size() == 0 &&
 		obbligazione.getNuoveLineeAttivitaColl().size() > 0)
 	{
@@ -2179,7 +2179,7 @@ protected ObbligazioneBulk generaDettagliScadenzaObbligazione (UserContext aUC,O
 			throw new ApplicationException( "La somma delle percentuali dei nuovi GAE e' diversa da 100");			
 			
 	}
-	// la somma delle percentuali delle nuove linee di attivit‡ e' maggiore di 100
+	// la somma delle percentuali delle nuove linee di attivit√† e' maggiore di 100
 	else if ( obbligazione.getNuoveLineeAttivitaColl().size() > 0)
 	{
 		BigDecimal tot = new BigDecimal(0);
@@ -2216,7 +2216,7 @@ protected ObbligazioneBulk generaDettagliScadenzaObbligazione (UserContext aUC,O
 	else
 	{
 			
-		// per ogni scadenza aggiorno i suoi dettagli in base alle linee di attivit‡ specificate dall'utente
+		// per ogni scadenza aggiorno i suoi dettagli in base alle linee di attivit√† specificate dall'utente
 		for ( Iterator scadIterator = obbligazione.getObbligazione_scadenzarioColl().iterator(); scadIterator.hasNext(); )
 		{
 				os = (Obbligazione_scadenzarioBulk) scadIterator.next();		
@@ -2243,29 +2243,29 @@ protected ObbligazioneBulk generaDettagliScadenzaObbligazione (UserContext aUC,O
   *    PostCondition:
   *      L'applicazione crea un report contenente la situazione 'spese' per una obbligazione e per i cdr che
   *      l'utente ha seelzionato.
-  *      Il prospetto avr‡ una riga per ogni linea di attivit‡ relativa ai piani di gestione dei CdR 
-  *      considerati nell'obbligazione. Il formatto sar‡:
+  *      Il prospetto avr√† una riga per ogni linea di attivit√† relativa ai piani di gestione dei CdR 
+  *      considerati nell'obbligazione. Il formatto sar√†:
   *      
-  *      Colonna 1: Linea di attivit‡
-  *      Colonna 2: Spese previste nel pdg, calcolati per il 1∞ esercizio = somma degli importi delle colonne (I), (K), (Q), (S) e (U)
-  *      Colonna 3: Spese previste nel pdg, calcolati per il 2∞ esercizio = somma degli importi delle colonne (AC), (AE) e (AG)
-  *      Colonna 4: Spese previste nel pdg, calcolati per il 3∞ esercizio = somma degli importi delle colonne (AC), (AE) e (AG)  
-  *      Colonna 5: Totale Obbligazioni emesse i cui dettagli corrispondono per CdR e LdA nel 1∞ esercizio
-  *      Colonna 6: Totale Obbligazioni emesse i cui dettagli corrispondono per CdR e LdA nel 2∞ esercizio
-  *      Colonna 7: Totale Obbligazioni emesse i cui dettagli corrispondono per CdR e LdA nel 3∞ esercizio    
+  *      Colonna 1: Linea di attivit√†
+  *      Colonna 2: Spese previste nel pdg, calcolati per il 1¬∞ esercizio = somma degli importi delle colonne (I), (K), (Q), (S) e (U)
+  *      Colonna 3: Spese previste nel pdg, calcolati per il 2¬∞ esercizio = somma degli importi delle colonne (AC), (AE) e (AG)
+  *      Colonna 4: Spese previste nel pdg, calcolati per il 3¬∞ esercizio = somma degli importi delle colonne (AC), (AE) e (AG)  
+  *      Colonna 5: Totale Obbligazioni emesse i cui dettagli corrispondono per CdR e LdA nel 1¬∞ esercizio
+  *      Colonna 6: Totale Obbligazioni emesse i cui dettagli corrispondono per CdR e LdA nel 2¬∞ esercizio
+  *      Colonna 7: Totale Obbligazioni emesse i cui dettagli corrispondono per CdR e LdA nel 3¬∞ esercizio    
   *  valutazione prospetto
   *    PreCondition:
   *      I dati necessari per il prospetto sono stati raccolti.
   *    PostCondition:
   *      Il delta risultante dal prospetto (Colonna 5 - Colonna 2, Colonna 6 - Colonna 3, Colonna 7 - Colonna4 ) viene confrontato 
-  *      con l'importo del totale delle linee di attivit‡ 
+  *      con l'importo del totale delle linee di attivit√† 
   *      appartenenti allo stesso CdR, nel caso che detto importo sia maggiore del delta risultante, 
   *      il sistema restituisce un messaggio di 'segnalazione' (non bloccante) con il quale avverte il responsabile 
-  *      della possibilit‡ di  'sfondamento'. Il controllo sar‡ ripetuto per ogni cdr coinvolto nei dettagli delle obbligazioni.
+  *      della possibilit√† di  'sfondamento'. Il controllo sar√† ripetuto per ogni cdr coinvolto nei dettagli delle obbligazioni.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param cdrList la lista di CdrBulk per cui generare il prospetto spese
-  * @return la lista di <code>V_obblig_pdg_saldo_laBulk</code> coi dati relativi alle linee di attivit‡ dei Cdr selezionati
+  * @return la lista di <code>V_obblig_pdg_saldo_laBulk</code> coi dati relativi alle linee di attivit√† dei Cdr selezionati
   *  
  */
 public List generaProspettoSpeseObbligazione (UserContext userContext,List cdrList) throws ComponentException
@@ -2279,7 +2279,7 @@ public List generaProspettoSpeseObbligazione (UserContext userContext,List cdrLi
 		sql.addClause( "AND", "esercizio", sql.EQUALS, ((CNRUserContext) userContext).getEsercizio());
 		Iterator i = cdrList.iterator();
 		sql.addClause( "AND", "cd_centro_responsabilita", sql.EQUALS, ((CdrBulk)i.next()).getCd_centro_responsabilita());
-//in realt‡ l'utente puÚ entrare sempre con un solo cdr		
+//in realt√† l'utente pu√≤ entrare sempre con un solo cdr		
 		while ( i.hasNext() )
 			sql.addClause( "OR", "cd_centro_responsabilita", sql.EQUALS, ((CdrBulk)i.next()).getCd_centro_responsabilita());
 //		sql.addOrderBy( "cd_centro_responsabilita" );
@@ -2334,9 +2334,9 @@ private int getLivelloResponsabilitaCDR(UserContext userContext, CdrBulk cdr) th
 	try {
 		cdr = (CdrBulk)getHome(userContext, cdr).findByPrimaryKey(cdr);
 
-		// Se il livello del CDR Ë 1
+		// Se il livello del CDR √® 1
 		if(cdr.getLivello().intValue() == 1) {
-			// Se il codice proprio del cdr Ë 0
+			// Se il codice proprio del cdr √® 0
 			if (Integer.parseInt(cdr.getCd_proprio_cdr()) == 0) {
 				Unita_organizzativaBulk uo = new Unita_organizzativaBulk( cdr.getCd_unita_organizzativa() );
 				uo = (Unita_organizzativaBulk)getHome(userContext, uo).findByPrimaryKey(uo);
@@ -2361,7 +2361,7 @@ private int getLivelloResponsabilitaCDR(UserContext userContext, CdrBulk cdr) th
 			return Stampa_obbligazioni_LAVBulk.LV_RUO;
 
 		} else {
-			// Ogni altro livello o combinazione Ë livello 3
+			// Ogni altro livello o combinazione √® livello 3
 
 			return Stampa_obbligazioni_LAVBulk.LV_NRUO;
 
@@ -2372,24 +2372,24 @@ private int getLivelloResponsabilitaCDR(UserContext userContext, CdrBulk cdr) th
 }
 
 /** 
-  *  Calcolo della disponibilit‡ di cassa del Cds per l'esercizio di scrivania o per 
+  *  Calcolo della disponibilit√† di cassa del Cds per l'esercizio di scrivania o per 
   *	 i due esercizi successivi a quello di scrivania.
   *    PreCondition:
-  *      E' stato richiesto di visualizzare la disponibilit‡ di cassa per
+  *      E' stato richiesto di visualizzare la disponibilit√† di cassa per
   *		 l'obbligazione che ha esercizio corrente uguale a quello di scrivania
   *		 (esercizio di competenza = esercizio) o per i suoi due esercizi successivi
   *		 (esercizio di competenza = esercizio + n, con n=1,2). In quest'ultimo caso
   *		 l'utente deve aver selezionato la voce del piano dell'obbligazione.
   *    PostCondition:
   *      Viene richiamata una stored procedure (getMassaSpendibile) che calcola 
-  *		 la disponibilit‡ di cassa del Cds dell'obbligazione.
+  *		 la disponibilit√† di cassa del Cds dell'obbligazione.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param esercizio_competenza <code>String</code> esercizio di competenza dell'obbligazione
   * @param esercizio <code>String</code> esercizio di scrivania
   * @param cd_cds <code>String</code> codice del centro di spesa dell'obbligazione
   * @param cd_elemento_voce <code>String</code> codice dell'elemento voce dell'obbligazione
-  * @return disp_cassa_cds <code>BigDecimal</code> disponibilit‡ di cassa del Cds
+  * @return disp_cassa_cds <code>BigDecimal</code> disponibilit√† di cassa del Cds
   *
 */
 private BigDecimal getMassaSpendibile ( UserContext userContext, Integer esercizio_competenza, Integer esercizio, String cd_cds, String cd_elemento_voce ) throws ComponentException
@@ -2453,7 +2453,7 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 	{
 		Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk)getHome( aUC, Unita_organizzativa_enteBulk.class).findAll().get(0);
 
-		// se l'unit‡ organizzativa Ë uguale a quella dell'Ente, non Ë possibile creare obbligazioni
+		// se l'unit√† organizzativa √® uguale a quella dell'Ente, non √® possibile creare obbligazioni
 		if ( obbligazione.getCd_unita_organizzativa().equals( uoEnte.getCd_unita_organizzativa() ))
 			throw new ApplicationException("Funzione non consentita per utente abilitato a " + uoEnte.getCd_unita_organizzativa() ); 
 
@@ -2485,17 +2485,17 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
   *    PreCondition:
   *      L'obbligazione richiesta non esiste.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che l'obbligazione non Ë stata trovata. L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che l'obbligazione non √® stata trovata. L'attivit√† non √® consentita.
   *  Obbligazione trovata
   *    PreCondition:
-  *      L'obbligazione richiesta Ë stata trovata.
+  *      L'obbligazione richiesta √® stata trovata.
   *    PostCondition:
-  *      L'obbligazione viene caricata normalmente. L'imputazione finanziaria Ë impostata una volta sola al livello di testata, e poi vale per tutte le scadenze nello scadenzario. In questo caso l'applicazione ricava le informazione per l'imputazione finanziaria dalla prima scadenza dello scadenzario.
+  *      L'obbligazione viene caricata normalmente. L'imputazione finanziaria √® impostata una volta sola al livello di testata, e poi vale per tutte le scadenze nello scadenzario. In questo caso l'applicazione ricava le informazione per l'imputazione finanziaria dalla prima scadenza dello scadenzario.
   *  Scadenzario dell'obbligazione non esiste
   *    PreCondition:
   *      L'obbligazione richiesta esiste, ma lo scadenzario per l'obbligazione non esiste.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che lo scadenzario non Ë stato trovato. L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che lo scadenzario non √® stato trovato. L'attivit√† non √® consentita.
   *
   * @param aUC lo user context 
   * @param bulk l'istanza di  <code>ObbligazioneBulk</code> da inizializzare
@@ -2576,7 +2576,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk obbli
 			}	
 
 
-			/*	// per ogni dettaglio carico la linea di attivit‡
+			/*	// per ogni dettaglio carico la linea di attivit√†
 			for ( Iterator j = os.getObbligazione_scad_voceColl().iterator(); j.hasNext(); )
 			{
 				Obbligazione_scad_voceBulk osv = (Obbligazione_scad_voceBulk)j.next();
@@ -2593,11 +2593,11 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk obbli
 		obblig.setCdrColl( listaCdrPerCapitoli( aUC,  obblig));
 		obblig.refreshCdrSelezionatiColl();
 
-		// carica le linee di attivit‡ da PDG
+		// carica le linee di attivit√† da PDG
 		obblig.setLineeAttivitaColl( listaLineeAttivitaPerCapitoliCdr( aUC,  obblig));
 		obblig.refreshLineeAttivitaSelezionateColl();
 
-		// carica le nuove linee di attivit‡
+		// carica le nuove linee di attivit√†
 		obblig = obbligHome.refreshNuoveLineeAttivitaColl( aUC, obblig );
 
 		obblig.setInternalStatus( ObbligazioneBulk.INT_STATO_LATT_CONFERMATE );
@@ -2862,13 +2862,13 @@ try{
 }
 }
 /** 
-  *  Tipologia CdS Ë 'SAC'
+  *  Tipologia CdS √® 'SAC'
   *    PreCondition:
   *      L'utente ha specificato una voce del piano in testata di una obbligazione appartenente al cds SAC
   *    PostCondition:
   *      L'elenco degli articoli di spesa CDS presenti nel piano dei conti Parte 1, aventi come titolo-capitolo la voce del piano selezionata dall'utente,
   *      viene presentato all'utente, evidenziandone la funzione
-  *  Tipologia CdS Ë diverso da 'SAC'
+  *  Tipologia CdS √® diverso da 'SAC'
   *    PreCondition:
   *      L'utente ha specificato una voce del piano in testata di una obbligazione appartenente ad un cds con tipologia diversa da SAC
   *    PostCondition:
@@ -2900,7 +2900,7 @@ public ObbligazioneBulk listaCapitoliPerCdsVoce (UserContext aUC,ObbligazioneBul
   *      L'utente ha selezionato dei capitoli di spesa CDS per un'obbligazione appartenente ad un cds diverso da SAC e per la
   *      quale non e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
-  *      Viene estratto l'elenco dei Cdr appartenenti all'uo di scrivania per i quali sono presenti nel piano di gestione delle linee di attivit‡,
+  *      Viene estratto l'elenco dei Cdr appartenenti all'uo di scrivania per i quali sono presenti nel piano di gestione delle linee di attivit√†,
   *      con categoria dettaglio = SINGOLA e
   *      la cui funzione e' uguale ad una di quelle dei capitoli di spesa selezionati dall'utente
   *  CdS diverso da 'SAC' - obbligazione Spese per Costi Altrui
@@ -2908,11 +2908,11 @@ public ObbligazioneBulk listaCapitoliPerCdsVoce (UserContext aUC,ObbligazioneBul
   *      L'utente ha selezionato dei capitoli di spesa CDS per un'obbligazione appartenente ad un cds diverso da SAC e per la
   *      quale e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
-  *      Viene estratto l'elenco dei Cdr appartenenti all'uo di scrivania per i quali sono presenti nel piano di gestione delle linee di attivit‡,
+  *      Viene estratto l'elenco dei Cdr appartenenti all'uo di scrivania per i quali sono presenti nel piano di gestione delle linee di attivit√†,
   *      con categoria dettaglio = SINGOLA e
   *      la cui funzione e' uguale ad una di quelle dei capitoli di spesa selezionati dall'utente; a tale elenco viene aggiunto
-  *      quello ottenuto estraendo i Cdr per i quali sono presenti nel piano di gestione delle linee di attivit‡,
-  *      con categoria dettaglio = SCARICO e la cui linea di attivit‡ collegata appartiene all'uo di scrivania e
+  *      quello ottenuto estraendo i Cdr per i quali sono presenti nel piano di gestione delle linee di attivit√†,
+  *      con categoria dettaglio = SCARICO e la cui linea di attivit√† collegata appartiene all'uo di scrivania e
   *      la cui funzione e' uguale ad una di quelle dei capitoli di spesa selezionati dall'utente
   *  CdS 'SAC' - obbligazione non Spese per Costi Altrui
   *    PreCondition:
@@ -2920,7 +2920,7 @@ public ObbligazioneBulk listaCapitoliPerCdsVoce (UserContext aUC,ObbligazioneBul
   *      quale non e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
   *      Fra tutti i Cdr selezionati implicitamente dall'utente con la selezione degli articoli viene estratto 
-  *      l'elenco di quelli per i quali sono presenti nel piano di gestione delle linee di attivit‡
+  *      l'elenco di quelli per i quali sono presenti nel piano di gestione delle linee di attivit√†
   *      con categoria dettaglio = SINGOLA e
   *      il cui cdr e funzione sono uguali ad uno di quelli degli articoli selezionati dall'utente
   *  CdS 'SAC' - obbligazione Spese per Costi Altrui
@@ -2929,11 +2929,11 @@ public ObbligazioneBulk listaCapitoliPerCdsVoce (UserContext aUC,ObbligazioneBul
   *      quale e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
   *      Fra tutti i Cdr selezionati implicitamente dall'utente con la selezione degli articoli viene estratto 
-  *      l'elenco di quelli per i quali sono presenti nel piano di gestione delle linee di attivit‡
+  *      l'elenco di quelli per i quali sono presenti nel piano di gestione delle linee di attivit√†
   *      con categoria dettaglio = SINGOLA e
   *      il cui cdr e funzione e' uguale ad una di quelle degli articoli selezionati dall'utente; a tale elenco viene aggiunto
-  *      quello ottenuto estraendo i Cdr per i quali sono presenti nel piano di gestione delle linee di attivit‡,
-  *      con categoria dettaglio = SCARICO e la cui linea di attivit‡ collegata ha cdr e funzione uguali
+  *      quello ottenuto estraendo i Cdr per i quali sono presenti nel piano di gestione delle linee di attivit√†,
+  *      con categoria dettaglio = SCARICO e la cui linea di attivit√† collegata ha cdr e funzione uguali
   *      ad uno di quelli selezionati dall'utente con la selezione degli articoli di spesa
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -2978,7 +2978,7 @@ public Vector listaCdrPerCapitoli (UserContext aUC,ObbligazioneBulk obbligazione
   *      di un'obbligazione appartenente ad un cds diverso da SAC e per la
   *      quale non e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
-  *      Vengono estratte tutte le linee di attivit‡ presenti nel piano di gestione con categoria dettaglio = SINGOLA e
+  *      Vengono estratte tutte le linee di attivit√† presenti nel piano di gestione con categoria dettaglio = SINGOLA e
   *      cdr uguale ad uno di quelli selezionati dall'utente
   *      e funzione uguale ad una di quelle selezionate implicitamente dall'utente con la selezione dei capitoli.
   *  CdS diverso da 'SAC' - obbligazione Spese per Costi Altrui
@@ -2987,11 +2987,11 @@ public Vector listaCdrPerCapitoli (UserContext aUC,ObbligazioneBulk obbligazione
   *      di un'obbligazione appartenente ad un cds diverso da SAC e per la
   *      quale e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
-  *      Vengono estratte tutte le linee di attivit‡ presenti nel piano di gestione con categoria dettaglio = SINGOLA e
+  *      Vengono estratte tutte le linee di attivit√† presenti nel piano di gestione con categoria dettaglio = SINGOLA e
   *      cdr uguale ad uno di quelli selezionati dall'utente
   *      e funzione uguale ad una di quelle selezionate implicitamente dall'utente con la selezione dei capitoli;
-  *      a tale elenco viene aggiunto quello ottenuto estraendo le linee di attivit‡ presenti nel piano di gestione
-  *      con categoria dettaglio = SCARICO e la cui linea di attivit‡ collegata appartiene all'uo di scrivania e
+  *      a tale elenco viene aggiunto quello ottenuto estraendo le linee di attivit√† presenti nel piano di gestione
+  *      con categoria dettaglio = SCARICO e la cui linea di attivit√† collegata appartiene all'uo di scrivania e
   *      la cui funzione e' uguale ad una di quelle dei capitoli di spesa selezionati dall'utente
   *  CdS 'SAC' - obbligazione non Spese per Costi Altrui
   *    PreCondition:
@@ -2999,7 +2999,7 @@ public Vector listaCdrPerCapitoli (UserContext aUC,ObbligazioneBulk obbligazione
   *      di un'obbligazione appartenente al cds SAC e per la
   *      quale non e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
-  *      Vengono estratte tutte le linee di attivit‡ presenti nel piano di gestione con categoria dettaglio = SINGOLA e
+  *      Vengono estratte tutte le linee di attivit√† presenti nel piano di gestione con categoria dettaglio = SINGOLA e
   *      cdr uguale ad uno di quelli selezionati dall'utente
   *      e cdr e funzione uguali ad uno di quelli selezionati implicitamente dall'utente con la selezione degli articoli.
   *  CdS 'SAC' - obbligazione Spese per Costi Altrui
@@ -3008,17 +3008,17 @@ public Vector listaCdrPerCapitoli (UserContext aUC,ObbligazioneBulk obbligazione
   *      di un'obbligazione appartenente al cds SAC e per la
   *      quale e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
-  *      Vengono estratte tutte le linee di attivit‡ presenti nel piano di gestione con categoria dettaglio = SINGOLA e
+  *      Vengono estratte tutte le linee di attivit√† presenti nel piano di gestione con categoria dettaglio = SINGOLA e
   *      cdr uguale ad uno di quelli selezionati dall'utente
   *      e cdr e funzione uguali ad uno di quelli selezionati implicitamente dall'utente con la selezione degli articoli;
-  *      a tale elenco viene aggiunto quello ottenuto estraendo le linee di attivit‡ presenti nel piano di gestione
-  *      con categoria dettaglio = SCARICO il cui cdr e' uno di quelli selezionati dall'utente e la cui linea di attivit‡ 
+  *      a tale elenco viene aggiunto quello ottenuto estraendo le linee di attivit√† presenti nel piano di gestione
+  *      con categoria dettaglio = SCARICO il cui cdr e' uno di quelli selezionati dall'utente e la cui linea di attivit√† 
   *      collegata ha cdr e funzione uguale ad uno di quelli selezionati implicitamente dall'utente 
   *      con la selezione degli articoli
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
-  * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione per cui recuperare le linee di attivit‡
-  * @return ObbligazioneBulk l'obbligazione con le linee di attivit‡ impostate
+  * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione per cui recuperare le linee di attivit√†
+  * @return ObbligazioneBulk l'obbligazione con le linee di attivit√† impostate
   *
   */
 public Vector listaLineeAttivitaPerCapitoliCdr (UserContext aUC,ObbligazioneBulk obbligazione) throws ComponentException
@@ -3092,7 +3092,7 @@ public void lockScadenza( UserContext userContext,IScadenzaDocumentoContabileBul
   *    PreCondition:
   *      Una richiesta di modifica di un'obbligazione e' stata generata
   *      L'obbligazione ha superato i controlli eseguiti dal metodo 'verificaObbligazione' 
-  *      L'obbligazione ha superato i controlli sulla disponibilit‡ di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
+  *      L'obbligazione ha superato i controlli sulla disponibilit√† di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
   *      L'obbligazione non e' stata modificata in un contesto transazionale  
   *    PostCondition:
   *      L'obbligazione viene aggiornata
@@ -3103,7 +3103,7 @@ public void lockScadenza( UserContext userContext,IScadenzaDocumentoContabileBul
   *    PreCondition:
   *      Una richiesta di modifica di un'obbligazione e' stata generata
   *      L'obbligazione ha superato i controlli eseguiti dal metodo 'verificaObbligazione' 
-  *      L'obbligazione ha superato i controlli sulla disponibilit‡ di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
+  *      L'obbligazione ha superato i controlli sulla disponibilit√† di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
   *      L'obbligazione e' stata modificata in un contesto transazionale  
   *    PostCondition:
   *      L'obbligazione viene aggiornata e i dettagli di tutte le scadenze vengono aggiornati (metodo generaDettagliScadenzaObbligazione) 
@@ -3113,16 +3113,16 @@ public void lockScadenza( UserContext userContext,IScadenzaDocumentoContabileBul
   *      controlli eseguiti dal metodo 'verificaObbligazione'
   *    PostCondition:
   *      Viene generata un'ApplicationException che descrive all'utente l'errore che si e' verificato
-  *  Errore di disponibilit‡ di cassa
+  *  Errore di disponibilit√† di cassa
   *    PreCondition:
   *      Una richiesta di modifica di un'obbligazione e' stata generata e l'obbligazione non ha superato i
-  *      controlli di disponibilit‡ di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
+  *      controlli di disponibilit√† di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
   *    PostCondition:
   *      Viene generata un'ApplicationException che descrive all'utente l'errore che si e' verificato
-  *  Errore di disponibilit‡ di cassa - forzatura
+  *  Errore di disponibilit√† di cassa - forzatura
   *    PreCondition:
   *      Una richiesta di modifica di un'obbligazione e' stata generata e l'obbligazione non ha superato i
-  *      controlli di disponibilit‡ di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'  
+  *      controlli di disponibilit√† di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'  
   *		 e l'utente ha scelto di forzare l'emissione dell'obbligazione
   *    PostCondition:
   *      L'obbligazione viene modificata, i dettagli di tutte le scadenze vengono modificati (metodo generaDettagliScadenzaObbligazione) e i saldi 
@@ -3169,11 +3169,11 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 			aggiornaCapitoloSaldoObbligazione( aUC, obbligazione, MODIFICA );
 			aggiornaStatoCOAN_COGEDocAmm( aUC, obbligazione );
 		}	
-		// Se utente non Ë supervisore e la voce va azzerata non Ë possibile aumentare l'importo dell'impegno residuo
+		// Se utente non √® supervisore e la voce va azzerata non √® possibile aumentare l'importo dell'impegno residuo
 		if (obbligazione.isObbligazioneResiduo()) 
 			if(verificaVoceResidua(aUC, obbligazione))		
 				if(obbligazione.getIm_iniziale_obbligazione().compareTo(obbligazione.getIm_obbligazione()) <0)
-					throw  new ApplicationException( "Aggiornamento non consentito! L'impegno residuo non puÚ essere aumentato" );
+					throw  new ApplicationException( "Aggiornamento non consentito! L'impegno residuo non pu√≤ essere aumentato" );
 	     
 		obbligazione.setIm_iniziale_obbligazione( obbligazione.getIm_obbligazione());
 		obbligazione.setCd_iniziale_elemento_voce( obbligazione.getCd_elemento_voce());	
@@ -3224,26 +3224,26 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
  * Nome: Scadenza successiva - Errore ultima scadenza
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e non esiste una scadenza
  *       successiva su cui scaricare la differenza fra l'importo attuale scadenza e il nuovo importo
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  *
  * Nome: Scadenza successiva -  Errore importo scadenza successiva
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e (im_scadenza_successisva -
  *       nuovo_im_scadenza + im_scadenza) e' minore di 0
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  * 
  * Nome: Scadenza successiva -  Errore doc amministrativi associati
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e la scadenza successiva ha 
- *       gi‡ dei documenti amministrativi associati
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ *       gi√† dei documenti amministrativi associati
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  *
  * Nome: Errore imputazione manuale
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e l'imputazione finanziaria
  *       dell'obbligazione non e' automatica
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  *
  * @param userContext lo userContext che ha generato la richiesta
  * @param scad l'istanza di Obbligazione_scadenzarioBulk il cui importo deve essere modificato
- * @param nuovoImporto il valore del nuovo importo che la scadenza di obbligazione dovr‡ assumere
+ * @param nuovoImporto il valore del nuovo importo che la scadenza di obbligazione dovr√† assumere
  * @param modificaScadenzaSuccessiva il flag che indica se modificare la testata dell'obbligazione o modificare la scadenza
  *        successiva dell'obbligazione
  * @return l'istanza di Obbligazione_scadenzarioBulk con l'importo modificato
@@ -3253,7 +3253,7 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
 {
 	Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)scad;
 	if (scadenza.getObbligazione().isObbligazioneResiduo())
-		throw handleException( new ApplicationException( "Aggiornamento in automatico non consentito! L'impegno residuo non Ë modificabile" ));
+		throw handleException( new ApplicationException( "Aggiornamento in automatico non consentito! L'impegno residuo non √® modificabile" ));
 	if ( !scadenza.getObbligazione().getFl_calcolo_automatico().booleanValue() )
 		throw handleException( new ApplicationException( "Aggiornamento in automatico non consentito! L'impegno consente solo l'imputazione manuale" ));
 	if ( scadenza.getIm_scadenza().compareTo( nuovoImporto ) == 0 )
@@ -3332,15 +3332,15 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 	return sql;
 }
 /*
- * Aggiunge alcune clausole a tutte le operazioni di ricerca delle Linee di Attivit‡ non da PDG
+ * Aggiunge alcune clausole a tutte le operazioni di ricerca delle Linee di Attivit√† non da PDG
  *	
  * Pre-post-conditions:
  *
- * Nome: Richiesta di ricerca di una linea di attivit‡
- * Pre:  E' stata generata la richiesta di ricerca di una linea di attivit‡ non presente nel PDG
+ * Nome: Richiesta di ricerca di una linea di attivit√†
+ * Pre:  E' stata generata la richiesta di ricerca di una linea di attivit√† non presente nel PDG
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
- *       clausole che la Linea Attivit‡ sia valida per l'esercizio di scrivania, che il suo CDR appartenga 
- *       all'UO di scrivania, che la Linea di Attivit‡ non sia presente nel PDG e che la sua funzione 
+ *       clausole che la Linea Attivit√† sia valida per l'esercizio di scrivania, che il suo CDR appartenga 
+ *       all'UO di scrivania, che la Linea di Attivit√† non sia presente nel PDG e che la sua funzione 
  *       sia uguale a quella di uno dei capitoli di spesa selezionati dall'utente
  * @param userContext lo userContext che ha generato la richiesta
  * @param uo istanza di Unita_organizzativaBulk
@@ -3375,15 +3375,15 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
  }
 
  /*
-  * Aggiunge alcune clausole a tutte le operazioni di ricerca delle Linee di Attivit‡ non da PDG
+  * Aggiunge alcune clausole a tutte le operazioni di ricerca delle Linee di Attivit√† non da PDG
   *	
   * Pre-post-conditions:
   *
-  * Nome: Richiesta di ricerca di una linea di attivit‡
-  * Pre:  E' stata generata la richiesta di ricerca di una linea di attivit‡ non presente nel PDG
+  * Nome: Richiesta di ricerca di una linea di attivit√†
+  * Pre:  E' stata generata la richiesta di ricerca di una linea di attivit√† non presente nel PDG
   * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
-  *       clausole che la Linea Attivit‡ sia valida per l'esercizio di scrivania, che il suo CDR appartenga 
-  *       all'UO di scrivania, che la Linea di Attivit‡ non sia presente nel PDG e che la sua funzione 
+  *       clausole che la Linea Attivit√† sia valida per l'esercizio di scrivania, che il suo CDR appartenga 
+  *       all'UO di scrivania, che la Linea di Attivit√† non sia presente nel PDG e che la sua funzione 
   *       sia uguale a quella di uno dei capitoli di spesa selezionati dall'utente
   * @param userContext lo userContext che ha generato la richiesta
   * @param uo istanza di Unita_organizzativaBulk
@@ -3397,15 +3397,15 @@ public SQLBuilder selectLinea_attByClause(UserContext userContext, it.cnr.contab
 }
 
 /*
- * Aggiunge alcune clausole a tutte le operazioni di ricerca delle Linee di Attivit‡ non da PDG
+ * Aggiunge alcune clausole a tutte le operazioni di ricerca delle Linee di Attivit√† non da PDG
  *	
  * Pre-post-conditions:
  *
- * Nome: Richiesta di ricerca di una linea di attivit‡
- * Pre:  E' stata generata la richiesta di ricerca di una linea di attivit‡ non presente nel PDG
+ * Nome: Richiesta di ricerca di una linea di attivit√†
+ * Pre:  E' stata generata la richiesta di ricerca di una linea di attivit√† non presente nel PDG
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
- *       clausole che la Linea Attivit‡ sia valida per l'esercizio di scrivania, che il suo CDR appartenga 
- *       all'UO di scrivania, che la Linea di Attivit‡ non sia presente nel PDG e che la sua funzione 
+ *       clausole che la Linea Attivit√† sia valida per l'esercizio di scrivania, che il suo CDR appartenga 
+ *       all'UO di scrivania, che la Linea di Attivit√† non sia presente nel PDG e che la sua funzione 
  *       sia uguale a quella di uno dei capitoli di spesa selezionati dall'utente
  * @param userContext lo userContext che ha generato la richiesta
  * @param uo istanza di Unita_organizzativaBulk
@@ -3483,7 +3483,7 @@ public SQLBuilder selectLinea_attByClause(UserContext userContext, ObbligazioneB
 	sql.closeParenthesis();
 	sql.closeParenthesis();
 	/**
-	 * Escludo la linea di attivit‡ dell'IVA C20
+	 * Escludo la linea di attivit√† dell'IVA C20
 	 */
 	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 	try {
@@ -3497,7 +3497,7 @@ public SQLBuilder selectLinea_attByClause(UserContext userContext, ObbligazioneB
 		sql.addSQLClause( "AND", "CD_LINEA_ATTIVITA",  sql.NOT_EQUALS, config.getVal01());
 	}
 	/**
-	 * Se Ë attivo il nuovo regolamento 2006 e non Ë un residuo proprio
+	 * Se √® attivo il nuovo regolamento 2006 e non √® un residuo proprio
 	 * Vedo solo le Linee sfondabili
 	 */
     try {
@@ -3615,15 +3615,15 @@ public void validaContratto(UserContext userContext, ObbligazioneBulk obbligazio
 	  throw new ApplicationException("Contratto non valido!");
 }
 /*
- * Aggiunge alcune clausole a tutte le operazioni di ricerca delle Linee di Attivit‡ non da PDG
+ * Aggiunge alcune clausole a tutte le operazioni di ricerca delle Linee di Attivit√† non da PDG
  *	
  * Pre-post-conditions:
  *
- * Nome: Richiesta di ricerca di una linea di attivit‡
- * Pre:  E' stata generata la richiesta di ricerca di una linea di attivit‡ non presente nel PDG
+ * Nome: Richiesta di ricerca di una linea di attivit√†
+ * Pre:  E' stata generata la richiesta di ricerca di una linea di attivit√† non presente nel PDG
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
- *       clausole che la Linea Attivit‡ sia valida per l'esercizio di scrivania, che il suo CDR appartenga 
- *       all'UO di scrivania, che la Linea di Attivit‡ non sia presente nel PDG e che la sua funzione 
+ *       clausole che la Linea Attivit√† sia valida per l'esercizio di scrivania, che il suo CDR appartenga 
+ *       all'UO di scrivania, che la Linea di Attivit√† non sia presente nel PDG e che la sua funzione 
  *       sia uguale a quella di uno dei capitoli di spesa selezionati dall'utente
  * @param userContext lo userContext che ha generato la richiesta
  * @param uo istanza di Unita_organizzativaBulk
@@ -3863,9 +3863,9 @@ public OggettoBulk stampaConBulk(UserContext userContext, Stampa_obb_doc_ammBulk
   *    PreCondition:
   *      Non esistono documenti amministrativi per l'obbligazione.
   *      Non esitono ordini associati all'obbligazione
-  *      Lo stato dell'obbligazione Ë 'DEFINITIVA'
+  *      Lo stato dell'obbligazione √® 'DEFINITIVA'
   *    PostCondition:
-  *      Il sistema eseguir‡ le seguente attivit‡:
+  *      Il sistema eseguir√† le seguente attivit√†:
   *      1) L'aggiornamento dei saldi 'obbligazioni' dei capitoli di spesa CdS 
   *         (Questo processo viene eseguito dal metodo 'aggiornaCapitoloSaldoObbligazione').
   *      2) L'azzeramento dell'importo di ogni dettaglio di ogni scadenza dell'obbligazione,  
@@ -3875,18 +3875,18 @@ public OggettoBulk stampaConBulk(UserContext userContext, Stampa_obb_doc_ammBulk
   *      
   *  Esistono documenti amministrativi per l'obbligazione
   *    PreCondition:
-  *      Per l'obbligazione definitiva ci sono documenti amministrativi gi‡ collegati all'obbligazione.
+  *      Per l'obbligazione definitiva ci sono documenti amministrativi gi√† collegati all'obbligazione.
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che per stornare una obbligazione definitiva, 
   *      qualsiasi documento amministrativo collegato all'obbligazione deve essere sganciato prima di eseguire 
-  *      lo storno. L'attivit‡ non Ë consentita.
+  *      lo storno. L'attivit√† non √® consentita.
   *
   *  Esiste un ordine per l'obbligazione
   *    PreCondition:
   *      Per l'obbligazione definitiva e' stato definito un ordine
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che per stornare una obbligazione definitiva 
-  *      per la quale e' gi‡ stato emesso un ordine e' necessario prima cancellare l'ordine
+  *      per la quale e' gi√† stato emesso un ordine e' necessario prima cancellare l'ordine
   *
   * @param aUC lo user context 
   * @param bulk l'istanza di  <code>ObbligazioneBulk</code> da annullare
@@ -3903,7 +3903,7 @@ public ObbligazioneBulk stornaObbligazioneDefinitiva(
         it.cnr.contab.doccont00.ordine.bulk.OrdineBulk ordine =
             findOrdineFor(aUC, obbligazione);
         if (ordine != null)
-            throw new ApplicationException("L'impegno selezionato Ë collegato ad un ordine. Cancellare prima l'ordine");
+            throw new ApplicationException("L'impegno selezionato √® collegato ad un ordine. Cancellare prima l'ordine");
 
         if (obbligazione.isAssociataADocAmm())
             throw new ApplicationException("Impossibile stornare impegni con documenti amministrativi associati");
@@ -3947,20 +3947,20 @@ public ObbligazioneBulk stornaObbligazioneDefinitiva(
 
 
 			if (stampa.getDataInizio()==null)
-				throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+				throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 			if (stampa.getDataFine()==null)
-				throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+				throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 
 			java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
 			if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-				throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+				throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 			if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
 				java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-				throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere inferiore a " + formatter.format(firstDayOfYear));
+				throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere inferiore a " + formatter.format(firstDayOfYear));
 			}
 			if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 				java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-				throw new ValidationException("La DATA di FINE PERIODO non puÚ essere superiore a " + formatter.format(lastDayOfYear));
+				throw new ValidationException("La DATA di FINE PERIODO non pu√≤ essere superiore a " + formatter.format(lastDayOfYear));
 			}
 
 	
@@ -4010,7 +4010,7 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_re
 		//try{
 			//CDRComponentSession sess = (CDRComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_CDRComponentSession", CDRComponentSession.class);
 			//if (sess.isEnte(userContext) && stampa.getCdCdsOrigineForPrint()==null)
-				//throw new ValidationException("Il campo CDS di ORIGINE Ë obbligatorio");
+				//throw new ValidationException("Il campo CDS di ORIGINE √® obbligatorio");
 		//}catch(javax.ejb.EJBException ex){
 			//throw handleException(ex);
 		//}catch(java.rmi.RemoteException ex){
@@ -4018,31 +4018,31 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_re
 		//}
 
 		//if (!stampa.isCdsUOInScrivania() && stampa.getCdUoForPrint() == null)
-			//throw new ValidationException("Il campo UNITA ORGANIZZATIVA Ë obbligatorio");
+			//throw new ValidationException("Il campo UNITA ORGANIZZATIVA √® obbligatorio");
 			
 		if (stampa.getDataInizio()==null)
-			throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 		if (stampa.getDataFine()==null)
-			throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 
 		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere inferiore a " + formatter.format(firstDayOfYear));
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere inferiore a " + formatter.format(firstDayOfYear));
 		}
 		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non puÚ essere superiore a " + formatter.format(lastDayOfYear));
+			throw new ValidationException("La DATA di FINE PERIODO non pu√≤ essere superiore a " + formatter.format(lastDayOfYear));
 		}
 
 		if (stampa.getPgInizio()==null)
-			throw new ValidationException("Il campo NUMERO INIZIO Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO INIZIO √® obbligatorio");
 		if (stampa.getPgFine()==null)
-			throw new ValidationException("Il campo NUMERO FINE Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO FINE √® obbligatorio");
 		if (stampa.getPgInizio().compareTo(stampa.getPgFine())>0)
-			throw new ValidationException("Il NUMERO INIZIO non puÚ essere superiore al NUMERO FINE");
+			throw new ValidationException("Il NUMERO INIZIO non pu√≤ essere superiore al NUMERO FINE");
 
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);
@@ -4063,31 +4063,31 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_re
 			throw new ValidationException("Il campo CDS e' obbligatorio");
 
 		if (!stampa.isCdsUOInScrivania() && stampa.getCdUoForPrint() == null)
-			throw new ValidationException("Il campo UNITA ORGANIZZATIVA Ë obbligatorio");
+			throw new ValidationException("Il campo UNITA ORGANIZZATIVA √® obbligatorio");
 //			if (it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC.equalsIgnoreCase(uo.getCd_tipo_unita())){
 
 		if (stampa.getDataInizio()==null)
-			throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 		if (stampa.getDataFine()==null)
-			throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 
 		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere inferiore a " + formatter.format(firstDayOfYear));
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere inferiore a " + formatter.format(firstDayOfYear));
 		}
 		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non puÚ essere superiore a " + formatter.format(lastDayOfYear));
+			throw new ValidationException("La DATA di FINE PERIODO non pu√≤ essere superiore a " + formatter.format(lastDayOfYear));
 		}
 		if (stampa.getPgInizio()==null)
-			throw new ValidationException("Il campo NUMERO INIZIO Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO INIZIO √® obbligatorio");
 		if (stampa.getPgFine()==null)
-			throw new ValidationException("Il campo NUMERO FINE Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO FINE √® obbligatorio");
 		if (stampa.getPgInizio().compareTo(stampa.getPgFine())>0)
-			throw new ValidationException("Il NUMERO INIZIO non puÚ essere superiore al NUMERO FINE");
+			throw new ValidationException("Il NUMERO INIZIO non pu√≤ essere superiore al NUMERO FINE");
 
 	} catch(ValidationException ex) {
 		throw new ApplicationException(ex);
@@ -4108,14 +4108,14 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_sc
 			throw new ValidationException("Il campo CDS e' obbligatorio");
 
 		if (!stampa.isCdsUOInScrivania() && stampa.getCdUoForPrint() == null)
-			throw new ValidationException("Il campo UNITA ORGANIZZATIVA Ë obbligatorio");
+			throw new ValidationException("Il campo UNITA ORGANIZZATIVA √® obbligatorio");
 
 		if (stampa.getDataInizio()==null)
-			throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 		if (stampa.getDataFine()==null)
-			throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);
@@ -4130,17 +4130,17 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_sc
   *
   *  Obbligazione non spese per costi altrui - ok
   *    PreCondition:
-  *  	 Obbligazione con flag spese per costi altrui non selezionato e con linee di attivit‡, specificate nell'imputazione
-  *      finanziaria, tutte appartenenti a cdr che dipendono dall'unit‡ organizzativa di scrivania
+  *  	 Obbligazione con flag spese per costi altrui non selezionato e con linee di attivit√†, specificate nell'imputazione
+  *      finanziaria, tutte appartenenti a cdr che dipendono dall'unit√† organizzativa di scrivania
   *    PostCondition:
   *      L'obbligazione supera questa validazione
   *
   *  Obbligazione non spese per costi altrui - errore
   *    PreCondition:
-  *  	 Obbligazione con flag spese per costi altrui non selezionato e con almeno una linea di attivit‡, specificata nell'imputazione
-  *      finanziaria, che appartene ad un cdr che non dipende dall'unit‡ organizzativa di scrivania
+  *  	 Obbligazione con flag spese per costi altrui non selezionato e con almeno una linea di attivit√†, specificata nell'imputazione
+  *      finanziaria, che appartene ad un cdr che non dipende dall'unit√† organizzativa di scrivania
   *    PostCondition:
-  *      Una segnalazione di errore viene restituita all'utente per informarlo dell'impossibilit‡ di effettuare la creazione/modifica
+  *      Una segnalazione di errore viene restituita all'utente per informarlo dell'impossibilit√† di effettuare la creazione/modifica
   *      dell'obbligazione.
   *
   * @param aUC lo user context 
@@ -4159,7 +4159,7 @@ private void verificaFl_spese_costi_altrui (UserContext aUC,ObbligazioneBulk obb
 			{
 				latt = (V_pdg_obbligazione_speBulk) i.next();
 				if ( !latt.getCd_centro_responsabilita().startsWith( obbligazione.getCd_unita_organizzativa()))
-					throw new ApplicationException( "Sono state selezionate Workpckages di CdR che non appartengono all'Unit‡ Organizzativa! E' necessario modificare l'imputazione finanziaria");
+					throw new ApplicationException( "Sono state selezionate Workpckages di CdR che non appartengono all'Unit√† Organizzativa! E' necessario modificare l'imputazione finanziaria");
 			}		
 
 		}	
@@ -4172,17 +4172,17 @@ private void verificaFl_spese_costi_altrui (UserContext aUC,ObbligazioneBulk obb
 	
 }
 /** 
-  *  Linea attivit‡ in Pdg
+  *  Linea attivit√† in Pdg
   *    PreCondition:
-  *      L'utente ha selezionato una nuova linea di attivit‡ e la nuova linea di attivit‡ e' nel Piano di Gestione
+  *      L'utente ha selezionato una nuova linea di attivit√† e la nuova linea di attivit√† e' nel Piano di Gestione
   *    PostCondition:
-  *      Una segnalazione di errore comunica all'utente l'impossibilit‡ di assegnare come nuova linea di attivit‡
+  *      Una segnalazione di errore comunica all'utente l'impossibilit√† di assegnare come nuova linea di attivit√†
   *      una presente nel P.d.G.
-  *  Linea attivit‡ in Pdg
+  *  Linea attivit√† in Pdg
   *    PreCondition:
-  *      L'utente ha selezionato una nuova linea di attivit‡ e la nuova linea di attivit‡ non e' presente nel Piano di Gestione
+  *      L'utente ha selezionato una nuova linea di attivit√† e la nuova linea di attivit√† non e' presente nel Piano di Gestione
   *    PostCondition:
-  *      La nuova linea di attivit‡ ha superato la validazione
+  *      La nuova linea di attivit√† ha superato la validazione
   *
   * @param userContext lo user context 
   * @param latt l'istanza di  <code>Linea_attivitaBulk</code> da verificare
@@ -4222,9 +4222,9 @@ public void verificaNuovaLineaAttivita (UserContext userContext, it.cnr.contab.c
   *		 dettagli d'imputazione finanziaria specificati
   *      almeno una scadenza definita
   *      verfiche per spese per costi altrui superate (metodo verificaFl_spese_costi_altrui)
-  *      L'anno di competenza dell'obbligazione Ë superiore all'anno di creazione dell'obbligazione
+  *      L'anno di competenza dell'obbligazione √® superiore all'anno di creazione dell'obbligazione
   *    PostCondition:
-  *      Il sistema puÚ proseguire con la creazione/modifica dell'obbligazione, ma non verranno aggiornati i saldi
+  *      Il sistema pu√≤ proseguire con la creazione/modifica dell'obbligazione, ma non verranno aggiornati i saldi
   *      dei capitoli di spesa CdS.
   *
   *  Tutti controlli superati - anno di creazione obbligazione = anno competenza
@@ -4235,47 +4235,47 @@ public void verificaNuovaLineaAttivita (UserContext userContext, it.cnr.contab.c
   *		 dettagli d'imputazione finanziaria specificati
   *      almeno una scadenza definita
   *      verfiche per spese per costi altrui superate (metodo verificaFl_spese_costi_altrui)  
-  *      L'anno di competenza dell'obbligazione Ë uguale all'anno di creazione dell'obbligazione
+  *      L'anno di competenza dell'obbligazione √® uguale all'anno di creazione dell'obbligazione
   *    PostCondition:
-  *      Il sistema puÚ proseguire con la creazione/modifica dell'obbligazione e dovr‡ effettuare l'aggiornamento
+  *      Il sistema pu√≤ proseguire con la creazione/modifica dell'obbligazione e dovr√† effettuare l'aggiornamento
   *      dei saldi dei capitoli di spesa CdS. (Questo processo viene eseguito dal metodo 'aggiornaCapitoloSaldoObbligazione').
   *
   *  sum(scadenzario.importo) not = obbligazione.importo
   *    PreCondition:
-  *      La somma degli importi delle scadenze dell'obbligazione non Ë uguale all'importo dell'obbligazione in elaborazione.
+  *      La somma degli importi delle scadenze dell'obbligazione non √® uguale all'importo dell'obbligazione in elaborazione.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non Ë consentito 
-  *      se l'importo non Ë uguale alla somma degli importi delle scadenze dell'obbligazione.
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non √® consentito 
+  *      se l'importo non √® uguale alla somma degli importi delle scadenze dell'obbligazione.
   *
   *  sum(scad_voce.importo) not = scadenzario.importo
   *    PreCondition:
   *      L'utente ha selezionato l'imputazione manuale degli importi dei dettagli delle scadenze e la somma degli importi 
-  *      dei dettagli di una scadenza dell'obbligazione non Ë uguale all'importo della scadenza
+  *      dei dettagli di una scadenza dell'obbligazione non √® uguale all'importo della scadenza
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non Ë consentito 
-  *      se l'importo della scadenza non Ë uguale alla somma degli importi dei dettagli della scadenza dell'obbligazione.
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non √® consentito 
+  *      se l'importo della scadenza non √® uguale alla somma degli importi dei dettagli della scadenza dell'obbligazione.
   *
   *  dettagli d'imputazione finanziaria non specificati al livello di obbligazione
   *    PreCondition:
-  *      I dettagli d'imputazione finanziaria (capitolo di spesa, linea d'attivit‡) non sono stati specificati 
+  *      I dettagli d'imputazione finanziaria (capitolo di spesa, linea d'attivit√†) non sono stati specificati 
   *      al livello di obbligazione 
   *    PostCondition:
-  *      Il sistema segnala l'impossibilit‡ di craere/aggiornare l'obbligazione fino a quando l'imputazione finanziaria non viene completata
+  *      Il sistema segnala l'impossibilit√† di craere/aggiornare l'obbligazione fino a quando l'imputazione finanziaria non viene completata
   * 
   *  scadenze non definite
   *    PreCondition:
   *      Non sono state definite scadenze per l'obbligazione
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non Ë consentito 
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non √® consentito 
   *      se non viene definita almento una scadenza
   *
   *  spese per costi altrui
   *    PreCondition:
   *      L'utente ha specificato di voler emettere un'obbligazione non di tipo spese per costi altrui
-  *      ma ha selezionato linee di attivit‡ appartenenti a cdr che non sipendono dall'uo di scrivania
+  *      ma ha selezionato linee di attivit√† appartenenti a cdr che non sipendono dall'uo di scrivania
   *      (questo controllo viene effettuato dal metodo 'verificaFl_spese_costi_altrui')
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non Ë consentito
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non √® consentito
   *
   * @param aUC lo user context 
   * @param obbligazione l'istanza di  <code>ObbligazioneBulk</code> da verificare
@@ -4297,7 +4297,7 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 	// non ci sono scadenze
 	if ( obbligazione.getObbligazione_scadenzarioColl().isEmpty() )
 		throw handleException( new it.cnr.jada.comp.ApplicationException( "E' necessario creare almeno una scadenza"))	;		
-	//  La somma degli importi delle scadenze dell'obbligazione non Ë uguale all'importo dell'obbligazione in elaborazione.
+	//  La somma degli importi delle scadenze dell'obbligazione non √® uguale all'importo dell'obbligazione in elaborazione.
 
 	
 	for ( Iterator i = obbligazione.getObbligazione_scadenzarioColl().iterator(); i.hasNext(); )
@@ -4324,14 +4324,14 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 		throw handleException( new it.cnr.jada.comp.ApplicationException( "La somma degli importi delle singole scadenze e' inferiore all'importo complessivo dell'impegno"))	;
 	if((obbligazione.getContratto() != null && obbligazione.getContratto().getFigura_giuridica_esterna()!= null && 
 	   !(obbligazione.getCreditore().equalsByPrimaryKey(obbligazione.getContratto().getFigura_giuridica_esterna())||verificaAssociato(aUC, obbligazione.getContratto().getFigura_giuridica_esterna(),obbligazione))))
-	     throw new it.cnr.jada.comp.ApplicationException( "Il Creditore (Codice Terzo:"+obbligazione.getCreditore().getCd_terzo()+") \n"+"non Ë congruente con quello del contratto (Codice Terzo:"+obbligazione.getContratto().getFigura_giuridica_esterna().getCd_terzo()+")");
+	     throw new it.cnr.jada.comp.ApplicationException( "Il Creditore (Codice Terzo:"+obbligazione.getCreditore().getCd_terzo()+") \n"+"non √® congruente con quello del contratto (Codice Terzo:"+obbligazione.getContratto().getFigura_giuridica_esterna().getCd_terzo()+")");
 	if ((obbligazione.getIncarico_repertorio() != null && obbligazione.getIncarico_repertorio().getTerzo()!= null &&
 			!(obbligazione.getCreditore().equalsByPrimaryKey(obbligazione.getIncarico_repertorio().getTerzo())||verificaAssociato(aUC, obbligazione.getIncarico_repertorio().getTerzo(),obbligazione))))
-		     throw new it.cnr.jada.comp.ApplicationException( "Il Creditore (Codice Terzo:"+obbligazione.getCreditore().getCd_terzo()+") \n"+"non Ë congruente con quello dell'incarico (Codice Terzo:"+obbligazione.getIncarico_repertorio().getTerzo().getCd_terzo()+")");
+		     throw new it.cnr.jada.comp.ApplicationException( "Il Creditore (Codice Terzo:"+obbligazione.getCreditore().getCd_terzo()+") \n"+"non √® congruente con quello dell'incarico (Codice Terzo:"+obbligazione.getIncarico_repertorio().getTerzo().getCd_terzo()+")");
  
 	verificaFl_spese_costi_altrui( aUC, obbligazione );
 	/*
-	 * Controllo l'eventuale obbligatoriet‡ del Contratto
+	 * Controllo l'eventuale obbligatoriet√† del Contratto
 	 */
 	Elemento_voceHome home = (Elemento_voceHome)getHome(aUC, Elemento_voceBulk.class);
 	Elemento_voceBulk elemento_voce;
@@ -4370,7 +4370,7 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 		
 		if (obbligazione.getFl_gara_in_corso().booleanValue() && 
 			(obbligazione.getPg_contratto() != null || obbligazione.getPg_repertorio() != null))
-		  throw new it.cnr.jada.comp.ApplicationException("La gara di appalto risulta essere in corso di espletamento. Non Ë possibile valorizzare il campo contratto e/o incarico. Disattivare il flag \"Gara in corso di espletamento\" e ripetere l'operazione!");		
+		  throw new it.cnr.jada.comp.ApplicationException("La gara di appalto risulta essere in corso di espletamento. Non √® possibile valorizzare il campo contratto e/o incarico. Disattivare il flag \"Gara in corso di espletamento\" e ripetere l'operazione!");		
 
 		if (obbligazione.getPg_contratto() != null && obbligazione.getPg_repertorio() != null)
 		  throw new it.cnr.jada.comp.ApplicationException("Il campo contratto e incarico non possono essere valorizzati contemporaneamente. Eliminare uno dei due e ripetere l'operazione!");		
@@ -4535,33 +4535,33 @@ public void verificaCoperturaContratto (UserContext aUC,ObbligazioneBulk obbliga
 /** 
   *  Tutti controlli superati - creazione
   *    PreCondition:
-  *      Non esiste gi‡ una scadenza per la data.
-  *      Attivit‡ = creazione
+  *      Non esiste gi√† una scadenza per la data.
+  *      Attivit√† = creazione
   *    PostCondition:
-  *      Alla scrittura dell'obbligazione il sistema aggiunger‡ questo scadenzario e generer‡ tutti i dettagli della
+  *      Alla scrittura dell'obbligazione il sistema aggiunger√† questo scadenzario e generer√† tutti i dettagli della
   *      scadenza (metodo 'generaDettagliScadenzaObbligazione')
   *  Tutti controlli superati - aggiornamento con agg. auto. scad. succ.
   *    PreCondition:
-  *      Attivit‡ = aggiornamento
+  *      Attivit√† = aggiornamento
   *      L'utente ha scelto l'aggiornamento in automatico della scadenza successiva.
   *    PostCondition:
-  *      Alla scrittura dell'obbligazione il sistema aggiorner‡ questo scadenzario. 
-  *      In pi˘, il metodo aggiornaScadenzaSuccessivaObbligazione viene utilizzato per aggiornare la scadenza successiva 
+  *      Alla scrittura dell'obbligazione il sistema aggiorner√† questo scadenzario. 
+  *      In pi√π, il metodo aggiornaScadenzaSuccessivaObbligazione viene utilizzato per aggiornare la scadenza successiva 
   *      a quella in aggiornamento. 
   *  Tutti controlli superati - aggiornamento senza agg. auto. scad. succ.
   *    PreCondition:
-  *      Attivit‡ = aggiornamento
+  *      Attivit√† = aggiornamento
   *      L'utente NON ha scelto l'aggiornamento in automatico della scadenza successiva.
   *    PostCondition:
-  *      Alla scrittura dell'obbligazione il sistema aggiorner‡ questo scadenzario. 
-  *      Sar‡ il compito dell'utente aggiornare una delle scadenze per garantire che la somma degli importi 
+  *      Alla scrittura dell'obbligazione il sistema aggiorner√† questo scadenzario. 
+  *      Sar√† il compito dell'utente aggiornare una delle scadenze per garantire che la somma degli importi 
   *      delle scadenze sia uguale all'importo dell'obbligazione.
-  *  creazione/modifica - esiste gi‡ una scadenza per la data
+  *  creazione/modifica - esiste gi√† una scadenza per la data
   *    PreCondition:
   *      L'utente richiede la creazione di una scadenza o modifica la data di una scadenza. 
-  *      Per la data scadenza specificata esiste gi‡ una scadenza per l'obbligazione.
+  *      Per la data scadenza specificata esiste gi√† una scadenza per l'obbligazione.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che la data della scadenza non Ë valida.
+  *      Il metodo utilizza un Throw Exception per comunicare che la data della scadenza non √® valida.
   *  creazione/modifica - importo negativo
   *    PreCondition:
   *      L'utente richiede la creazione di una scadenza o modifica l'importo di una scadenza
@@ -4571,7 +4571,7 @@ public void verificaCoperturaContratto (UserContext aUC,ObbligazioneBulk obbliga
   *  creazione/modifica - importo nullo 
   *    PreCondition:
   *      L'utente richiede la creazione di una scadenza o modifica l'importo di una scadenza
-  *      Il nuovo importo e' nulla e la scadenza non Ë associata a documenti amministrativi
+  *      Il nuovo importo e' nulla e la scadenza non √® associata a documenti amministrativi
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che l'importo della scadenza deve essere >= 0
   *  modifica - la scadenza ha doc amministrativi associati e non proviene da documenti amministrativi
@@ -4579,7 +4579,7 @@ public void verificaCoperturaContratto (UserContext aUC,ObbligazioneBulk obbliga
   *      L'utente richiede la modifica dell'importo di una scadenza che ha documenti amministrativi associati
   *      e la richiesta non proviene dal BusinessProcess che gestisce i documenti amministrativi  
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che la modifica della scadenza non Ë valida.
+  *      Il metodo utilizza un Throw Exception per comunicare che la modifica della scadenza non √® valida.
   *  modifica - la scadenza ha doc amministrativi associati e proviene da documenti amministrativi
   *    PreCondition:
   *      L'utente richiede la modifica dell'importo di una scadenza che ha documenti amministrativi associati e la
@@ -4604,7 +4604,7 @@ public ObbligazioneBulk verificaScadenzarioObbligazione (UserContext aUC,Obbliga
 	ObbligazioneBulk obbligazione = scadenzario.getObbligazione();
 	Obbligazione_scadenzarioBulk os, osNew;
 
-	//segnalo impossibilit‡ di modificare importo se ci sono doc amministrativi associati
+	//segnalo impossibilit√† di modificare importo se ci sono doc amministrativi associati
 	if ( //!scadenzario.getObbligazione().isFromDocAmm() &&
 		!scadenzario.isFromDocAmm() &&
 		scadenzario.getScadenza_iniziale() != null && 
@@ -4626,7 +4626,7 @@ public ObbligazioneBulk verificaScadenzarioObbligazione (UserContext aUC,Obbliga
 		
 	// riordino lo scadenzario
 	/* simona 13.2.2002 */
-	/* commentato l'ordinamento delle scadenze perche' puÚ generare problemi quando l'accertamento e' richiamato dai documenti
+	/* commentato l'ordinamento delle scadenze perche' pu√≤ generare problemi quando l'accertamento e' richiamato dai documenti
 	   amministrativi con una scadenza selezionata */	
 //	obbligazione.setObbligazione_scadenzarioColl( scadenzario.ordinaPerDataScadenza( obbligazione.getObbligazione_scadenzarioColl()));	
 	
@@ -4643,9 +4643,9 @@ public ObbligazioneBulk verificaScadenzarioObbligazione (UserContext aUC,Obbliga
 			throw handleException( new it.cnr.jada.comp.ApplicationException( "L'importo della scadenza deve essere maggiore di 0 "));
 
 	/* rimosso questo controllo per consentire comunque l'inserimento/modifica dell'importo a 0 -
-	   questo Ë utile quando Ë gi‡ stato creato il mandato e pertanto non Ë possibile effettuare la cancellazione
-	   fisica della scadenza (per i vincoli di integrit‡ referenziale con le righe del mandato, pertanto 
-	   l'unica alternativa Ë quella di impostare a 0 la scadenza */
+	   questo √® utile quando √® gi√† stato creato il mandato e pertanto non √® possibile effettuare la cancellazione
+	   fisica della scadenza (per i vincoli di integrit√† referenziale con le righe del mandato, pertanto 
+	   l'unica alternativa √® quella di impostare a 0 la scadenza */
 	   /*	
 /*			
 	if ( scadenzario.getIm_scadenza().doubleValue() == 0  && scadenzario.getPg_doc_passivo() == null)
@@ -4680,7 +4680,7 @@ public ObbligazioneBulk verificaScadenzarioObbligazione (UserContext aUC,Obbliga
  *
  * @param userContext <code>UserContext</code> 
  *
- * @return FALSE se per il cds interessato non Ë stato inserito nessun esercizio o se l'esercizio non Ë in stato di "aperto"
+ * @return FALSE se per il cds interessato non √® stato inserito nessun esercizio o se l'esercizio non √® in stato di "aperto"
  *		   TRUE in tutti gli altri casi
  *
  */
@@ -4709,11 +4709,11 @@ public EsercizioBulk  verificaStatoEsercizio( UserContext userContext, String cd
 /** 
   *  Tutti controlli superati
   *    PreCondition:
-  *      Copertura finanziaria Ë sufficiente.
-  *      Data obbligazione Ë valida.
+  *      Copertura finanziaria √® sufficiente.
+  *      Data obbligazione √® valida.
   *      Esercizio competenza >= esercizio creazione dell'obbligazione
   *    PostCondition:
-  *      La testata dell'obbligazione Ë valida. E' consentito eseguire l'attivit‡ di salvataggio o di passaggio 
+  *      La testata dell'obbligazione √® valida. E' consentito eseguire l'attivit√† di salvataggio o di passaggio 
   *		alle pagine successive (Configurazione Imputazione Finanziaria o Scadenzario).
   *  Copertura finanziaria insufficiente
   *    PreCondition:
@@ -4725,19 +4725,19 @@ public EsercizioBulk  verificaStatoEsercizio( UserContext userContext, String cd
   *      (Se l'importo rimane uguale, o diminuisce, questo controllo della copertura finanziaria non viene eseguito.)
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che l'importo dell'obbligazione in aggiornamento supera 
-  *      il limite di assunzione di obbligazioni. L'attivit‡ non Ë consentita.
-  *  Data obbligazione non Ë valida
+  *      il limite di assunzione di obbligazioni. L'attivit√† non √® consentita.
+  *  Data obbligazione non √® valida
   *    PreCondition:
   *      La data dell'obbligazione in inserimento antecede la data dell'ultima obbligazione inserita per questo CdS. 
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che la data dell'obbligazione non puÚ essere antecedente
-  *      la data dell'ultima obbligazione inserita per questo CdS. L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che la data dell'obbligazione non pu√≤ essere antecedente
+  *      la data dell'ultima obbligazione inserita per questo CdS. L'attivit√† non √® consentita.
   *  Esercizio competenza non valido
   *    PreCondition:
   *      L'esercizio di competenza dell'obbligazione e' inferiore all'esercizio di scrivania e quindi all'esercizio
   *      di creazione dell'obbligazione
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che l'esercizio di competenza non puÚ essere antecedente
+  *      Il metodo utilizza un Throw Exception per comunicare che l'esercizio di competenza non pu√≤ essere antecedente
   *      all'esercizio di creazione dell'obbligazione
   *
   * @param aUC lo user context 
@@ -4766,11 +4766,11 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			
 			Timestamp dataUltObbligazione = ((ObbligazioneHome) getHome( aUC, ObbligazioneBulk.class )).findDataUltimaObbligazionePerCds( obbligazione );
 			if ( dataUltObbligazione != null && dataUltObbligazione.after( obbligazione.getDt_registrazione() ) )
-				throw  new ApplicationException( "Non Ë possibile inserire un'obbligazione con data anteriore a " +  
+				throw  new ApplicationException( "Non √® possibile inserire un'obbligazione con data anteriore a " +  
    									java.text.DateFormat.getDateInstance().format( dataUltObbligazione ));
 		}
 		if ( (obbligazione.getEsercizio_competenza()).intValue() < (obbligazione.getEsercizio()).intValue() )
-			throw new ApplicationException("Non Ë possibile creare un'obbligazione con esercizio antecedente a quello di scrivania.");
+			throw new ApplicationException("Non √® possibile creare un'obbligazione con esercizio antecedente a quello di scrivania.");
 	}
 	catch ( Exception e )
 	{
@@ -4833,11 +4833,11 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 	}
 	/**
 	 * Aggiorna l'obbligazione in base alla selezione delle voci effettuate dall'utente.
-	 * L'utente, in fase di selezione voci, puÚ o meno indicare l'importo da imputare per ogni Cdr/Gae/Voce.
+	 * L'utente, in fase di selezione voci, pu√≤ o meno indicare l'importo da imputare per ogni Cdr/Gae/Voce.
 	 * Gli importi indicati dall'utente per CDR/GAE/Voce vengono presi in considerazione solo se 
-	 * l'obbligazione Ë formata da un'unica scadenza.
-	 * In caso di pi˘ scadenze vengono assegnate solo le combinazioni scelte CDR/Gae/Voce mentre gli importi vengono 
-	 * ricalcolati con le modalit‡ abituali (es. percentuale GAE all'interno del Bilancio).
+	 * l'obbligazione √® formata da un'unica scadenza.
+	 * In caso di pi√π scadenze vengono assegnate solo le combinazioni scelte CDR/Gae/Voce mentre gli importi vengono 
+	 * ricalcolati con le modalit√† abituali (es. percentuale GAE all'interno del Bilancio).
 	 * 
 	 * @param userContext
 	 * @param obbligazione
@@ -4857,7 +4857,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 		obbligazione.setCdrColl( listaCdrPerCapitoli( userContext,  obbligazione));
 		obbligazione.refreshCdrSelezionatiColl(vociList);
 
-		// carica le linee di attivit‡ da PDG
+		// carica le linee di attivit√† da PDG
 		obbligazione.setLineeAttivitaColl( listaLineeAttivitaPerCapitoliCdr( userContext,  obbligazione));
 		obbligazione.refreshLineeAttivitaSelezionateColl(vociList);
 
@@ -4881,7 +4881,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			}
 		}			
 
-		//Valorizzo il campo Percentuale che utilizzerÚ per individuare gli importi da attribuire ad ogni scadenza
+		//Valorizzo il campo Percentuale che utilizzer√≤ per individuare gli importi da attribuire ad ogni scadenza
 		if (totaleSelVoci.compareTo(Utility.ZERO)>0)
 		{
 			for ( Enumeration e = hashVociList.keys(); e.hasMoreElements(); ) 
@@ -4915,7 +4915,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 				impAssociatoDocAmm = impAssociatoDocAmm.add(((Obbligazione_scadenzarioBulk)iteratorOs.next()).getIm_associato_doc_amm());
 
 			if (impAssociatoDocAmm.compareTo(impDaAssegnareObb)>0)
-				throw new ApplicationException("Non Ë possibile attribuire all'obbligazione un importo " + new it.cnr.contab.util.EuroFormat().format(impDaAssegnareObb) +
+				throw new ApplicationException("Non √® possibile attribuire all'obbligazione un importo " + new it.cnr.contab.util.EuroFormat().format(impDaAssegnareObb) +
 						" inferiore a quanto risulta associato a documenti amministrativi " + new it.cnr.contab.util.EuroFormat().format(impAssociatoDocAmm) + ".");
 
 			//AGGIORNO PRIMA LE SCADENZE ASSOCIATE A DOCUMENTI AMMINISTRATIVI
@@ -4926,12 +4926,12 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 				//SELEZIONO QUELLE ASSOCIATE A DOCUMENTI AMMINISTRATIVI
 				if (os.getIm_associato_doc_amm().compareTo(new BigDecimal(0))>0){
 
-					//SE L'IMPORTO DELLA SCADENZA Ë MAGGIORE DI QUANTO DEVE ESSERE ANCORA RIPARTITO
+					//SE L'IMPORTO DELLA SCADENZA √® MAGGIORE DI QUANTO DEVE ESSERE ANCORA RIPARTITO
 					//NE RIDUCO L'IMPORTO CONTROLLANDO DI NON RENDERLO INFERIORE A QUANTO ASSOCIATO A 
 					//DOCUMENTI AMMINISTRATIVI
 					if (os.getIm_scadenza().compareTo(impDaAssegnareObb)>0){
 						if (os.getIm_associato_doc_amm().compareTo(impDaAssegnareObb)<0){
-							throw new ApplicationException("Non Ë possibile inserire un importo " +	new it.cnr.contab.util.EuroFormat().format(impDaAssegnareObb) +
+							throw new ApplicationException("Non √® possibile inserire un importo " +	new it.cnr.contab.util.EuroFormat().format(impDaAssegnareObb) +
 									"inferiore a quanto risulta associato a documenti amministrativi " + new it.cnr.contab.util.EuroFormat().format(impAssociatoDocAmm) + ".");
 						}
 						os.setIm_scadenza(impDaAssegnareObb);
@@ -4960,7 +4960,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 					}
 					else
 					{
-						//SE L'IMPORTO DELLA SCADENZA Ë MAGGIORE DI QUANTO DEVE ESSERE ANCORA RIPARTITO
+						//SE L'IMPORTO DELLA SCADENZA √® MAGGIORE DI QUANTO DEVE ESSERE ANCORA RIPARTITO
 						//NE RIDUCO L'IMPORTO 
 						if (os.getIm_scadenza().compareTo(impDaAssegnareObb)>0)
 							os.setIm_scadenza(impDaAssegnareObb);
@@ -5054,7 +5054,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			impAssegnatoScadenza = impAssegnatoScadenza.add(osv.getIm_voce());
 		}
 		
-		//Se la scadenza non Ë stata completamente coperta, vado a recuperare sulle combinazioni CDR/VOCE/GAE 
+		//Se la scadenza non √® stata completamente coperta, vado a recuperare sulle combinazioni CDR/VOCE/GAE 
 		//gli importi ancora disponibili 
 		if (os.getIm_scadenza().compareTo(impAssegnatoScadenza)>0) {
 			for ( Iterator iteratorOsv = os.getObbligazione_scad_voceColl().iterator(); iteratorOsv.hasNext(); )
@@ -5097,7 +5097,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 		os.setIm_scadenza(impAssegnatoScadenza.setScale(2,BigDecimal.ROUND_HALF_UP));
 		
 		if (os.getIm_scadenza().compareTo(os.getIm_associato_doc_amm())==-1)
-			throw new ApplicationException("Non Ë possibile attribuire all'obbligazione un importo inferiore a quanto "
+			throw new ApplicationException("Non √® possibile attribuire all'obbligazione un importo inferiore a quanto "
 					+ "risulta associato a documenti amministrativi.");
 
 
@@ -5212,7 +5212,7 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 	 *
 	 * @param userContext lo userContext che ha generato la richiesta
 	 * @param scad l'istanza di Obbligazione_scadenzarioBulk il cui importo deve essere sdoppiato
-	 * @param nuovoImportoScadenzaVecchia il valore del nuovo importo che la scadenza indicata dovr‡ assumere
+	 * @param nuovoImportoScadenzaVecchia il valore del nuovo importo che la scadenza indicata dovr√† assumere
 	 * @return l'istanza di Obbligazione_scadenzarioBulk nuova creata in seguito allo sdoppiamento
 	 */
 	public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext, IScadenzaDocumentoContabileBulk scad, BigDecimal nuovoImportoScadenzaVecchia) throws ComponentException 
@@ -5324,8 +5324,8 @@ public void verificaTestataObbligazione (UserContext aUC,ObbligazioneBulk obblig
 			scadenzaNuova.setToBeCreated();
 			obbligazione.setToBeUpdated();
 			/**
-			 * Viene posto il campo che verifica se il controllo della disponibilit‡
-			 * Ë stato effettuato a TRUE, in quanto, l'obbligazione Ë in modifica
+			 * Viene posto il campo che verifica se il controllo della disponibilit√†
+			 * √® stato effettuato a TRUE, in quanto, l'obbligazione √® in modifica
 			 * e lo sdoppiamento delle righe non cambia il valore complessivo
 			 * dell'obbligazione
 			 */
@@ -5479,10 +5479,10 @@ private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbl
 				BigDecimal oldImpObbl = oldObbl.getIm_obbligazione();
 				if (Utility.nvl(impObbl.subtract(oldImpObbl)).compareTo(Utility.nvl(bulkCNR.getImporto_max_imp()))>=0 &&
 					Utility.nvl(oldImpObbl).compareTo(Utility.nvl(impObbl))!=0)
-					throw new ApplicationException("Attenzione: il campo MOTIVAZIONE Ë obbligatorio.");
+					throw new ApplicationException("Attenzione: il campo MOTIVAZIONE √® obbligatorio.");
 			}
 			else {
-				throw new ApplicationException("Attenzione: il campo MOTIVAZIONE Ë obbligatorio.");
+				throw new ApplicationException("Attenzione: il campo MOTIVAZIONE √® obbligatorio.");
 			}
 		}
 	}
@@ -5645,7 +5645,7 @@ private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbl
 					config = createConfigurazioneCnrComponentSession().getConfigurazione( usercontext, CNRUserContext.getEsercizio(usercontext), null, pk, String.valueOf(annoResiduo));
 				if (config != null){
 					if (!origineFonti.equalsIgnoreCase(config.getVal01()) && !origineFonti.equalsIgnoreCase(config.getVal02())){
-						throw new ApplicationException("Non Ë consentito emettere/modificare Impegni Residui Propri/Impropri\n"+
+						throw new ApplicationException("Non √® consentito emettere/modificare Impegni Residui Propri/Impropri\n"+
 						   "su GAE di "+ NaturaBulk.tipo_naturaKeys.get(origineFonti)+" su fondi dell'esercizio residuo "+annoResiduo);	
 					}
 				}
@@ -5795,7 +5795,7 @@ private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbl
 									"nella gestione dell''inventario. Modificare la voce di ribaltamento!");
 
 					if (obbligazione.getElemento_voce_next().getFl_limite_spesa())
-						throw new ApplicationException("Attenzione! La voce di ribaltamento Ë soggetta ai limiti di spesa. Associazione non consentita!");
+						throw new ApplicationException("Attenzione! La voce di ribaltamento √® soggetta ai limiti di spesa. Associazione non consentita!");
 				}
 			}
 		} catch (PersistencyException e) {

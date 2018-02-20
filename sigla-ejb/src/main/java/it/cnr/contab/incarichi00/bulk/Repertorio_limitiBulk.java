@@ -55,14 +55,14 @@ public class Repertorio_limitiBulk extends Repertorio_limitiBase {
 		return getImporto_utilizzato().compareTo(Utility.ZERO)!=0;
 	}
 	/**
-	 * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+	 * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
 	 * controllo sintattico o contestuale.
 	 */
 	public void validate() throws ValidationException {
 		super.validate();
 
 		if ( getImporto_limite().compareTo(getImporto_utilizzato())==-1 )
-			throw new ValidationException("Non Ë possibile inserire un importo inferiore a quello utilizzato.");		
+			throw new ValidationException("Non √® possibile inserire un importo inferiore a quello utilizzato.");		
 	}
 	public BulkList getIncarichi_x_cdsColl() {
 		return incarichi_x_cdsColl;

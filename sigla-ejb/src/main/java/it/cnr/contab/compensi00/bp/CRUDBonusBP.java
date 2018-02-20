@@ -83,16 +83,16 @@ public class CRUDBonusBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 			for(Integer indice=0;indice.compareTo(detail.getBonus().getBonusNucleoFamColl().size())<0;indice++){
 				Bonus_nucleo_famBulk det=(Bonus_nucleo_famBulk)detail.getBonus().getBonusNucleoFamColl().get(indice);
 				if(indice!=index && detail.getTipo_componente_nucleo().compareTo(det.getTipo_componente_nucleo())==0 && detail.getTipo_componente_nucleo().compareTo(Bonus_nucleo_famBulk.CONIUGE)==0)
-					throw new ValidationException("Il coniuge è già stato inserito");
+					throw new ValidationException("Il coniuge Ã¨ giÃ  stato inserito");
 				if(indice!=index && detail.getCf_componente_nucleo().compareTo(det.getCf_componente_nucleo())==0)
-					throw new ValidationException("Il codice fiscale del componente è già stato inserito");
+					throw new ValidationException("Il codice fiscale del componente Ã¨ giÃ  stato inserito");
 			}			
 		}	 
 		if (detail.getTipo_componente_nucleo().compareTo(Bonus_nucleo_famBulk.CONIUGE)!=0){
 			try{
 				BonusComponentSession sess = (BonusComponentSession)createComponentSession();
 				if(!sess.verificaLimiteFamiliareCarico(context.getUserContext(),detail)) 
-					throw new ValidationException("Il componente non è a carico");
+					throw new ValidationException("Il componente non Ã¨ a carico");
 			} catch (BusinessProcessException e) {
 				handleException(e);
 			}catch (ComponentException e) {
@@ -147,13 +147,13 @@ public class CRUDBonusBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		if (bonus!=null && bonus.getIm_reddito()==null )
 			throw new ApplicationException("Inserire reddito richiedente");
 		if (bonus!=null && bonus.getIm_reddito().compareTo(BigDecimal.ZERO)==0 )
-			throw new ApplicationException("Il reddito del reddito richiedente non può essere 0");
+			throw new ApplicationException("Il reddito del reddito richiedente non puÃ² essere 0");
 		if (bonus!=null && bonus.getEsercizio_imposta()==null )
 			throw new ApplicationException("Inserire esercizio imposta");
 		if(bonus.getDt_richiesta().after(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()))
-				throw new ApplicationException("Attenzione la data richiesta è superiore alla data odierna");
+				throw new ApplicationException("Attenzione la data richiesta Ã¨ superiore alla data odierna");
 		if(bonus.getDt_registrazione().after(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()))
-				throw new ApplicationException("Attenzione la data registrazione è superiore alla data odierna");
+				throw new ApplicationException("Attenzione la data registrazione Ã¨ superiore alla data odierna");
 		try {
 			validaCodiceFiscale(context, bonus);
 		} catch (BusinessProcessException e) {

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -165,7 +165,7 @@
 		enabledOnEdit="true"
 		nullable="false"
 		style="text-align: right"
-		label="Quantità Ordinata" />
+		label="QuantitÃ  Ordinata" />
 	<fieldProperty
 		name="qtConvertita"
 		property="qtConvertita"
@@ -173,7 +173,7 @@
 		inputSize="10"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		style="text-align: right"
-		label="Quantità Ordinata" />
+		label="QuantitÃ  Ordinata" />
  	<fieldProperty
 		name="quantitaEvasa"
 		property="quantitaEvasa"
@@ -184,7 +184,7 @@
 		enabledOnEdit="true"
 		command="doDefault"
 		style="text-align: right"
-		label="Quantità Consegnata" />
+		label="QuantitÃ  Consegnata" />
  	<fieldProperty
 		name="qtEvasaConvertita"
 		property="qtEvasaConvertita"
@@ -192,7 +192,7 @@
 		inputSize="10"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		style="text-align: right"
-		label="Quantità Evasa" />
+		label="QuantitÃ  Evasa" />
 	<fieldProperty
 		name="findUnitaMisuraEvasa"
 		property="unitaMisuraEvasa"
@@ -344,7 +344,7 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="true"
-		label="Unità Operativa" />
+		label="UnitÃ  Operativa" />
 	<fieldProperty
 		name="dsUnitaOperativa"
 		property="unitaOperativaOrd.dsUnitaOperativa"
@@ -447,7 +447,7 @@
 		inputSize="3"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="Unità di Misura" />
+		label="UnitÃ  di Misura" />
 	<fieldProperty
 		name="coefConv"
 		property="ordineAcqRiga.coefConv"
@@ -566,7 +566,7 @@
 		<columnFieldProperty
 			name="quantita"
 			headerLabel="ORDINE"
-			label="Q.tà" />
+			label="Q.tÃ " />
 		<columnFieldProperty
 			headerLabel="ORDINE"
 			name="prezzoUnitario"/>

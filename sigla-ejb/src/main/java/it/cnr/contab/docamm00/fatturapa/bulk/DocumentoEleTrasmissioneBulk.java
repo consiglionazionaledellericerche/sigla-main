@@ -18,13 +18,13 @@ public class DocumentoEleTrasmissioneBulk extends DocumentoEleTrasmissioneBase {
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_01.name(),RegimeFiscaleType.RF_01.value()+" - Regime ordinario");
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_02.name(),RegimeFiscaleType.RF_02.value()+" - Regime dei contribuenti minimi (art. 1,c.96-117, L. 244/2007)");
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_03.name(),RegimeFiscaleType.RF_03.value()+" - Regime delle nuove iniziative produttive (art. 13, L. 388/2000)");
-		regimefiscaleKeys.put(RegimeFiscaleType.RF_04.name(),RegimeFiscaleType.RF_04.value()+" - Agricoltura e attivit� connesse e pesca (artt. 34 e 34-bis, D.P.R. 633/1972)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_04.name(),RegimeFiscaleType.RF_04.value()+" - Agricoltura e attività connesse e pesca (artt. 34 e 34-bis, D.P.R. 633/1972)");
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_05.name(),RegimeFiscaleType.RF_05.value()+" - Vendita sali e tabacchi (art. 74, c.1, D.P.R. 633/1972)");
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_06.name(),RegimeFiscaleType.RF_06.value()+" - Commercio dei fiammiferi (art. 74, c.1, D.P.R. 633/1972)");
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_07.name(),RegimeFiscaleType.RF_07.value()+" - Editoria (art. 74, c.1, D.P.R. 633/1972)");
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_08.name(),RegimeFiscaleType.RF_08.value()+" - Gestione di servizi di telefonia pubblica (art. 74, c.1, D.P.R. 633/1972)");
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_09.name(),RegimeFiscaleType.RF_09.value()+" - Rivendita di documenti di trasporto pubblico e di sosta (art. 74, c.1, D.P.R. 633/1972)");
-		regimefiscaleKeys.put(RegimeFiscaleType.RF_10.name(),RegimeFiscaleType.RF_10.value()+" - Intrattenimenti, giochi e altre attivit� di cui alla tariffa allegata al D.P.R. 640/72 (art. 74, c.6, D.P.R. 633/1972)");
+		regimefiscaleKeys.put(RegimeFiscaleType.RF_10.name(),RegimeFiscaleType.RF_10.value()+" - Intrattenimenti, giochi e altre attività di cui alla tariffa allegata al D.P.R. 640/72 (art. 74, c.6, D.P.R. 633/1972)");
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_11.name(),RegimeFiscaleType.RF_11.value()+" - Agenzie di viaggi e turismo (art. 74-ter, D.P.R. 633/1972)");
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_12.name(),RegimeFiscaleType.RF_12.value()+" - Agriturismo (art. 5, c.2, L. 413/1991)");
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_13.name(),RegimeFiscaleType.RF_13.value()+" - Vendite a domicilio (art. 25-bis, c.6, D.P.R. 600/1973)");
@@ -38,7 +38,7 @@ public class DocumentoEleTrasmissioneBulk extends DocumentoEleTrasmissioneBase {
 	private BulkList<DocumentoEleTestataBulk> docEleTestataColl = new BulkList<DocumentoEleTestataBulk>();
 	
 	/**
-	 * [TERZO Tabella contenente le entità anagrafiche di secondo livello (terzi). Ogni entità anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
+	 * [TERZO Tabella contenente le entitè  anagrafiche di secondo livello (terzi). Ogni entitè  anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
 
 Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
@@ -85,7 +85,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Tabella contenente le entità anagrafiche di secondo livello (terzi). Ogni entità anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
+	 * Restituisce il valore di: [Tabella contenente le entitè  anagrafiche di secondo livello (terzi). Ogni entitè  anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
 
 Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
@@ -112,14 +112,14 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle Unit� Organizzative in una struttura ad albero organizzata su pi� livelli]
+	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
 	 **/
 	public Unita_organizzativaBulk getUnitaOrganizzativa() {
 		return unitaOrganizzativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Tabella contenente le entità anagrafiche di secondo livello (terzi). Ogni entità anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
+	 * Setta il valore di: [Tabella contenente le entitè  anagrafiche di secondo livello (terzi). Ogni entitè  anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
 
 Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
@@ -146,7 +146,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle Unit� Organizzative in una struttura ad albero organizzata su pi� livelli]
+	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
 	 **/
 	public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa)  {
 		this.unitaOrganizzativa=unitaOrganizzativa;
@@ -285,7 +285,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}	
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Unit� organizzativa]
+	 * Restituisce il valore di: [Unità organizzativa]
 	 **/
 	public java.lang.String getCdUnitaOrganizzativa() {
 		Unita_organizzativaBulk unitaOrganizzativa = this.getUnitaOrganizzativa();
@@ -295,7 +295,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Unit� organizzativa]
+	 * Setta il valore di: [Unità organizzativa]
 	 **/
 	public void setCdUnitaOrganizzativa(java.lang.String cdUnitaOrganizzativa)  {
 		this.getUnitaOrganizzativa().setCd_unita_organizzativa(cdUnitaOrganizzativa);

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -98,14 +98,14 @@
 		inputSize="10"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		enabledOnEdit="true"
-		label="Quantità Richiesta" />
+		label="QuantitÃ  Richiesta" />
 	<fieldProperty
 		name="findUnitaMisura"
 		property="unitaMisura"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Unità di Misura" />
+		label="UnitÃ  di Misura" />
 	<fieldProperty
 		name="findBeneServizio"
 		property="beneServizio"
@@ -138,7 +138,7 @@
 		maxLength="30"
 		inputSize="6"
 		inputType="ROTEXT"
-		label="Unità Misura Minima"
+		label="UnitÃ  Misura Minima"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="cdUnitaMisura"
@@ -147,7 +147,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="Unità di Misura" />
+		label="UnitÃ  di Misura" />
 	<fieldProperty
 		name="coefConv"
 		property="coefConv"
@@ -242,14 +242,14 @@
         inputType="SEARCHTOOL"
         formName="searchtool"
         enabledOnSearch="true"
-        label="Centro di Responsabilità" />		
+        label="Centro di ResponsabilitÃ " />		
 	<fieldProperty
 		name="cdCentroResponsabilita"
 		property="centroResponsabilita.cd_centro_responsabilita"
 		inputType="ROTEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Centro di Responsabilità" />
+		label="Centro di ResponsabilitÃ " />
 	<fieldProperty
 		name="dsCentroResponsabilita"
 		property="centroResponsabilita.ds_cdr"

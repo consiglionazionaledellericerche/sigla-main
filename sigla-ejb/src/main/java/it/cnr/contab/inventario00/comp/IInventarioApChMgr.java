@@ -57,9 +57,9 @@ public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext
 public abstract OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk,it.cnr.contab.inventario00.docs.bulk.OptionRequestParameter status) throws ComponentException;
 
 /** 
-  *  Cerca l'Inventario di cui la Uo di scrivania Ë responsabile
+  *  Cerca l'Inventario di cui la Uo di scrivania √® responsabile
   *    PreCondition:
-  *      La Uo di scrivania non Ë responsabile di alcun Inventario, (metodo loadInventario).
+  *      La Uo di scrivania non √® responsabile di alcun Inventario, (metodo loadInventario).
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -82,7 +82,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
   *    PreCondition:
   *      E' stata richiesta l'inizializzazione di una istanza di Inventario_ap_chBulk per modifica
   *    PostCondition:
-  *      Viene caricato il Consegnatario dell'Inventario ed abilita la possibilit‡ di modificare 
+  *      Viene caricato il Consegnatario dell'Inventario ed abilita la possibilit√† di modificare 
   *		il valore di riferimento iniziale per la numerazione dei Beni facenti parte dell'Inventario.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -94,9 +94,9 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
 public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
 
 /** 
-  *  Cerca l'Inventario di cui la Uo di scrivania Ë responsabile
+  *  Cerca l'Inventario di cui la Uo di scrivania √® responsabile
   *    PreCondition:
-  *      La Uo di scrivania non Ë responsabile di alcun Inventario, (metodo loadInventario).
+  *      La Uo di scrivania non √® responsabile di alcun Inventario, (metodo loadInventario).
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -116,15 +116,15 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
 public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerRicerca(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
 
 /** 
-  *  Cerca l'Inventario di cui la Uo di scrivania Ë responsabile
+  *  Cerca l'Inventario di cui la Uo di scrivania √® responsabile
   *    PreCondition:
-  *      La Uo di scrivania non Ë responsabile di alcun Inventario.
+  *      La Uo di scrivania non √® responsabile di alcun Inventario.
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
   *  Carica l'Inventario di competenza
   *    PreCondition:
-  *      E' stato richiesto di caricare l'Inventario di cui la UO di scrivania Ë responsabile.
+  *      E' stato richiesto di caricare l'Inventario di cui la UO di scrivania √® responsabile.
   *    PostCondition:
   *      Viene caricato l'Inventario di competenza impostando come clausole di ricerca che
   *		la data di apertura sia l'ultima registrata sul DB; questo per essere sicuri che lo stato

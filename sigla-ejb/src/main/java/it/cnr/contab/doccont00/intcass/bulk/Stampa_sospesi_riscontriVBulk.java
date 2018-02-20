@@ -1,7 +1,7 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
 /**
- * Classe che sar‡ ereditata dalle classi che si occuperanno della stampa dei Sospesi e dei Riscontri.
+ * Classe che sar√† ereditata dalle classi che si occuperanno della stampa dei Sospesi e dei Riscontri.
  * Creation date: (03/07/2003 16.56.12)
  * @author: Gennaro Borriello
  */
@@ -130,7 +130,7 @@ public void setTi_entrata_spesa(java.lang.String newTi_entrata_spesa) {
 	ti_entrata_spesa = newTi_entrata_spesa;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws it.cnr.jada.bulk.ValidationException {

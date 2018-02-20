@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -105,7 +105,7 @@
 		name="fl_motivazione_su_imp"
 		property="fl_motivazione_su_imp"
 		inputType="CHECKBOX"
-		label="Obbligatorietà campo Motivazione su Impegno" />
+		label="ObbligatorietÃ  campo Motivazione su Impegno" />
 	<fieldProperty
 		name="importo_max_imp"
 		property="importo_max_imp"
@@ -356,10 +356,10 @@
 		name="fl_nuovo_pdg" />						      
 	<formFieldProperty
 		name="ricerca_prof_int_giorni_pubbl"
-	    label="Giorni di pubblicazione per la&lt;BR&gt;Verifica Professionalità Interne" />
+	    label="Giorni di pubblicazione per la&lt;BR&gt;Verifica ProfessionalitÃ  Interne" />
 	<formFieldProperty
 		name="ricerca_prof_int_giorni_scad" 
-		label="Giorni di validita per la&lt;BR&gt;Verifica Professionalità Interne&lt;BR&gt;dopo la pubblicazione" />
+		label="Giorni di validita per la&lt;BR&gt;Verifica ProfessionalitÃ  Interne&lt;BR&gt;dopo la pubblicazione" />
 	<formFieldProperty
 	        name="fl_incarico" />
 	<formFieldProperty

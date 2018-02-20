@@ -32,7 +32,7 @@ public String getJSPTitle(){
 		return "Stampa Elenco Fatture Attive per Cliente";
 }
 /**
- * Inizializza il BP controllando da quale nodo è stata fatta la richiesta ed impostando, quindi,
+ * Inizializza il BP controllando da quale nodo Ã¨ stata fatta la richiesta ed impostando, quindi,
  *	i parametri relativi a titolo, tipo attivo/passivo etc. che serviranno in seguito.
  *
  * @param config <code>it.cnr.jada.action.Config</code>

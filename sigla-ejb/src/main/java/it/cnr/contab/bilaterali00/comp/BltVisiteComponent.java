@@ -181,20 +181,20 @@ public class BltVisiteComponent extends CRUDComponent {
 	private void validaVisita(UserContext usercontext,Blt_visiteBulk visita,Blt_visiteBulk visitaOld) throws ComponentException {
 			if (visita.isVisitaStraniero() || visita.isVisitaUniversitario()){
 				if (visita.getLuogoVisita()==null)
-					throw handleException( new ApplicationException( "Il campo Luogo Visita Ë obbligatorio!") );
+					throw handleException( new ApplicationException( "Il campo Luogo Visita √® obbligatorio!") );
 			}
 	//		if (visita.isVisitaStraniero() && !visita.isVisitaPagataAdEnteStraniero()){
 	//		if (visita.getFlAccettazioneConvenzione()==null)
-		//			throw handleException( new ApplicationException( "Il campo Convenzione Fiscale Ë obbligatorio!") );
+		//			throw handleException( new ApplicationException( "Il campo Convenzione Fiscale √® obbligatorio!") );
 			//	if (visita.getNumProtAccettConvenz()==null||visita.getDtProtAccettConvenz()==null)
 			//		throw handleException( new ApplicationException( "Indicare il protocollo della lettera di "+(!visita.isConvenzioneAccettata()?"non ":" ")+"accettazione della convenzione!") );
 	//		}
 				
 			if (!visita.getFlPagamentoConBonifico()) {
 				if (visita.getFlPagamentoFineVisita())
-					throw handleException( new ApplicationException( "Non Ë possibile effettuare un pagamento a fine visita con modalit‡ di pagamento diverse dal bonifico. Selezionare il flag \"Pagamento tramite Bonifico\"!") );
+					throw handleException( new ApplicationException( "Non √® possibile effettuare un pagamento a fine visita con modalit√† di pagamento diverse dal bonifico. Selezionare il flag \"Pagamento tramite Bonifico\"!") );
 				else if (visita.getImRimbSpeseAnt()!=null && visita.getImRimbSpeseAnt().compareTo(BigDecimal.ZERO)==1 && visita.getImRimbSpese().compareTo(BigDecimal.ZERO)==1)
-					throw handleException( new ApplicationException( "Non Ë possibile effettuare il pagamento del saldo della visita con modalit‡ di pagamento diverse dal bonifico. Selezionare il flag \"Pagamento tramite Bonifico\"!") );
+					throw handleException( new ApplicationException( "Non √® possibile effettuare il pagamento del saldo della visita con modalit√† di pagamento diverse dal bonifico. Selezionare il flag \"Pagamento tramite Bonifico\"!") );
 			}
 				
 			Date lastDataProt=null;
@@ -265,7 +265,7 @@ public class BltVisiteComponent extends CRUDComponent {
 				if (visita.getDtProtAccettConvenz().after(lastDataProt))
 					lastDataProt=visita.getDtProtAccettConvenz();
 				if (visita.getDtProtCandidatura()==null)
-					throw handleException( new ApplicationException( "La data di protocollo di accettazione della convenzione ("+sdf.format(visita.getDtProtAccettConvenz())+") non puÚ essere valorizzata in assenza\ndella data di protocollo della candidatura!") );
+					throw handleException( new ApplicationException( "La data di protocollo di accettazione della convenzione ("+sdf.format(visita.getDtProtAccettConvenz())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo della candidatura!") );
 				if (visita.getDtProtCandidatura().after(visita.getDtProtAccettConvenz()))
 					throw handleException( new ApplicationException( "La data di protocollo di accettazione della convenzione ("+sdf.format(visita.getDtProtAccettConvenz())+") deve essere successiva o uguale\nalla data di protocollo della candidatura ("+sdf.format(visita.getDtProtCandidatura())+")!") );
 				if (visita.getDtProtAccettConvenz().after(currentDay))
@@ -300,7 +300,7 @@ public class BltVisiteComponent extends CRUDComponent {
 //				if (visita.getDtProtAccettDispFin().after(lastDataProt))
 //					lastDataProt=visita.getDtProtAccettDispFin();
 //				if (visita.getDtProtDispFin()==null)
-//					throw handleException( new ApplicationException( "La data di protocollo di accettazione delle disposizioni finanziarie ("+sdf.format(visita.getDtProtAccettDispFin())+") non puÚ essere valorizzata in assenza\ndella data di protocollo della lettera delle disposizioni finanziarie!") );
+//					throw handleException( new ApplicationException( "La data di protocollo di accettazione delle disposizioni finanziarie ("+sdf.format(visita.getDtProtAccettDispFin())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo della lettera delle disposizioni finanziarie!") );
 //				if (visita.getDtProtDispFin().after(visita.getDtProtAccettDispFin()))
 //					throw handleException( new ApplicationException( "La data di protocollo di accettazione delle disposizioni finanziarie ("+sdf.format(visita.getDtProtAccettDispFin())+") deve essere successiva o uguale\nalla data di protocollo della lettera delle disposizioni finanziarie ("+sdf.format(visita.getDtProtDispFin())+")!") );
 //				if (visita.getDtProtAccettDispFin().after(currentDay))
@@ -313,7 +313,7 @@ public class BltVisiteComponent extends CRUDComponent {
 				if (visita.getDtProtAccettEnteStr().after(lastDataProt))
 					lastDataProt=visita.getDtProtAccettEnteStr();
 				if (visita.getDtProtTrasmissCandidatura()==null)
-					throw handleException( new ApplicationException( "La data di protocollo di accettazione della candidatura ("+sdf.format(visita.getDtProtAccettEnteStr())+") non puÚ essere valorizzata in assenza\ndella data di protocollo della lettera di trasmissione della candidatura!") );
+					throw handleException( new ApplicationException( "La data di protocollo di accettazione della candidatura ("+sdf.format(visita.getDtProtAccettEnteStr())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo della lettera di trasmissione della candidatura!") );
 				if (visita.getDtProtTrasmissCandidatura().after(visita.getDtProtAccettEnteStr()))
 					throw handleException( new ApplicationException( "La data di protocollo di accettazione della candidatura ("+sdf.format(visita.getDtProtAccettEnteStr())+") deve essere successiva o uguale\nalla data di protocollo della lettera di trasmissione della candidatura ("+sdf.format(visita.getDtProtTrasmissCandidatura())+")!") );
 				if (visita.getDtProtAccettEnteStr().after(currentDay))
@@ -337,9 +337,9 @@ public class BltVisiteComponent extends CRUDComponent {
 				if (visita.getDataProtContratto().after(lastDataProt))
 					lastDataProt=visita.getDataProtContratto();
 				if (visita.getDtProtAccettEnteStr()==null)
-					throw handleException( new ApplicationException( "La data di protocollo del contratto ("+sdf.format(visita.getDataProtContratto())+") non puÚ essere valorizzata in assenza\ndella data di protocollo di accettazione della candidatura!") );
+					throw handleException( new ApplicationException( "La data di protocollo del contratto ("+sdf.format(visita.getDataProtContratto())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo di accettazione della candidatura!") );
 				if (visita.getDtProtAttribIncarico()==null)
-					throw handleException( new ApplicationException( "La data di protocollo del contratto ("+sdf.format(visita.getDataProtContratto())+") non puÚ essere valorizzata in assenza\ndella data di protocollo di attribuzione incarico!") );
+					throw handleException( new ApplicationException( "La data di protocollo del contratto ("+sdf.format(visita.getDataProtContratto())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo di attribuzione incarico!") );
 				if (visita.getDtProtAccettEnteStr().after(visita.getDataProtContratto()))
 					throw handleException( new ApplicationException( "La data di protocollo del contratto ("+sdf.format(visita.getDataProtContratto())+") deve essere successiva o uguale\nalla data di protocollo di accettazione della candidatura ("+sdf.format(visita.getDtProtAccettEnteStr())+")!") );
 				if (visita.getDtProtAttribIncarico().after(visita.getDataProtContratto()))
@@ -354,9 +354,9 @@ public class BltVisiteComponent extends CRUDComponent {
 				if (visita.getDtProtNotaAddebitoAnt().after(lastDataProt))
 					lastDataProt=visita.getDtProtNotaAddebitoAnt();
 				if (visita.getDtProtAccettEnteStr()==null)
-					throw handleException( new ApplicationException( "La data di protocollo della nota di addebito di anticipo ("+sdf.format(visita.getDtProtNotaAddebitoAnt())+") non puÚ essere valorizzata in assenza\ndella data di protocollo di accettazione della candidatura!") );
+					throw handleException( new ApplicationException( "La data di protocollo della nota di addebito di anticipo ("+sdf.format(visita.getDtProtNotaAddebitoAnt())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo di accettazione della candidatura!") );
 				if (visita.getDtProtAttribIncarico()==null)
-					throw handleException( new ApplicationException( "La data di protocollo della nota di addebito di anticipo ("+sdf.format(visita.getDtProtNotaAddebitoAnt())+") non puÚ essere valorizzata in assenza\ndella data di protocollo di attribuzione incarico!") );
+					throw handleException( new ApplicationException( "La data di protocollo della nota di addebito di anticipo ("+sdf.format(visita.getDtProtNotaAddebitoAnt())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo di attribuzione incarico!") );
 				if (visita.getDtProtAccettEnteStr().after(visita.getDtProtNotaAddebitoAnt()))
 					throw handleException( new ApplicationException( "La data di protocollo della nota di addebito di anticipo ("+sdf.format(visita.getDtProtNotaAddebitoAnt())+") deve essere successiva o uguale\nalla data di protocollo di accettazione della candidatura ("+sdf.format(visita.getDtProtAccettEnteStr())+")!") );
 				if (visita.getDtProtAttribIncarico().after(visita.getDtProtNotaAddebitoAnt()))
@@ -372,9 +372,9 @@ public class BltVisiteComponent extends CRUDComponent {
 					lastDataProt=visita.getDtProtNotaAddebito();
 				if (visita.isNotaAddebitoSaldoConAnticipoRequired()) { 
 					if (visita.getDtProtAccettEnteStr()==null)
-						throw handleException( new ApplicationException( "La data di protocollo della nota di addebito ("+sdf.format(visita.getDtProtNotaAddebito())+") non puÚ essere valorizzata in assenza\ndella data di protocollo di accettazione della candidatura!") );
+						throw handleException( new ApplicationException( "La data di protocollo della nota di addebito ("+sdf.format(visita.getDtProtNotaAddebito())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo di accettazione della candidatura!") );
 					if (visita.getDtProtAttribIncarico()==null)
-						throw handleException( new ApplicationException( "La data di protocollo della nota di addebito ("+sdf.format(visita.getDtProtNotaAddebito())+") non puÚ essere valorizzata in assenza\ndella data di protocollo di attribuzione incarico!") );
+						throw handleException( new ApplicationException( "La data di protocollo della nota di addebito ("+sdf.format(visita.getDtProtNotaAddebito())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo di attribuzione incarico!") );
 					if (visita.getDtProtAccettEnteStr().after(visita.getDtProtNotaAddebito()))
 						throw handleException( new ApplicationException( "La data di protocollo della nota di addebito ("+sdf.format(visita.getDtProtNotaAddebito())+") deve essere successiva o uguale\nalla data di protocollo di accettazione della candidatura ("+sdf.format(visita.getDtProtAccettEnteStr())+")!") );
 					if (visita.getDtProtAttribIncarico().after(visita.getDtProtNotaAddebito()))
@@ -385,7 +385,7 @@ public class BltVisiteComponent extends CRUDComponent {
 						throw handleException( new ApplicationException( "La data di protocollo della nota di addebito ("+sdf.format(visita.getDtProtNotaAddebito())+") deve essere precedente\nalla data di inizio visita ("+sdf.format(visita.getDtIniVisita())+")!") );
 				} else {
 //					if (visita.getDtProtAttestatoSogg()==null)
-//						throw handleException( new ApplicationException( "La data di protocollo della nota di addebito ("+sdf.format(visita.getDtProtNotaAddebito())+") non puÚ essere valorizzata in assenza\ndella data di protocollo dell'attestato di soggiorno!") );
+//						throw handleException( new ApplicationException( "La data di protocollo della nota di addebito ("+sdf.format(visita.getDtProtNotaAddebito())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo dell'attestato di soggiorno!") );
 //					if (visita.getDtProtAttestatoSogg().after(visita.getDtProtNotaAddebito()))
 //						throw handleException( new ApplicationException( "La data di protocollo della nota di addebito ("+sdf.format(visita.getDtProtNotaAddebito())+") deve essere successiva o uguale\nalla data di protocollo dell'attestato di soggiorno ("+sdf.format(visita.getDtProtAttestatoSogg())+")!") );
 //					if (visita.getDtProtNotaAddebito().after(currentDay))
@@ -398,30 +398,30 @@ public class BltVisiteComponent extends CRUDComponent {
 					lastDataProt=visita.getDtProtAutorizPartenza();
 				if (visita.isVisitaDipendente() || (visita.isVisitaStraniero() && visita.isVisitaPagataAdEnteStraniero())) {
 					if (visita.getDtProtAccettEnteStr()==null)
-						throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") non puÚ essere valorizzata in assenza\ndella data di protocollo di accettazione della candidatura!") );
+						throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo di accettazione della candidatura!") );
 					if (visita.getDtProtAccettEnteStr().after(visita.getDtProtAutorizPartenza()))
 						throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") deve essere successiva o uguale\nalla data di protocollo di accettazione della candidatura ("+sdf.format(visita.getDtProtAccettEnteStr())+")!") );
 //					if (visita.isVisitaDipendente()) {
 //						if (visita.getDtProtAccettDispFin()==null)
-//							throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") non puÚ essere valorizzata in assenza\ndella data di protocollo di accettazione delle disposizioni finanziarie!") );
+//							throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo di accettazione delle disposizioni finanziarie!") );
 //						if (visita.getDtProtAccettDispFin().after(visita.getDtProtAutorizPartenza()))
 //							throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") deve essere successiva o uguale\nalla data di protocollo di accettazione delle disposizioni finanziarie ("+sdf.format(visita.getDtProtAccettDispFin())+")!") );
 //					}
 				} else {
 					if (visita.getDataProtContratto()==null)
-						throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") non puÚ essere valorizzata in assenza\ndella data di protocollo del contratto!") );
+						throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo del contratto!") );
 					if (visita.getDataProtContratto().after(visita.getDtProtAutorizPartenza()))
 						throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") deve essere successiva o uguale\nalla data di protocollo del contratto ("+sdf.format(visita.getDataProtContratto())+")!") );
 					if (visita.isVisitaStraniero()) {
 						if (visita.isNotaAddebitoAnticipoRequired()) { 
 							if (visita.getDtProtNotaAddebitoAnt()==null)
-								throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") non puÚ essere valorizzata in assenza\ndella data di protocollo della nota di addebito di anticipo!") );
+								throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo della nota di addebito di anticipo!") );
 							if (visita.getDtProtNotaAddebitoAnt().after(visita.getDtProtAutorizPartenza()))
 								throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") deve essere successiva o uguale\nalla data di protocollo della nota di addebito di anticipo ("+sdf.format(visita.getDtProtNotaAddebitoAnt())+")!") );
 						}
 								if (visita.isNotaAddebitoSaldoConAnticipoRequired()) { 
 								if (visita.getDtProtNotaAddebito()==null)
-								throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") non puÚ essere valorizzata in assenza\ndella data di protocollo della nota di addebito!") );
+								throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo della nota di addebito!") );
 							if (visita.getDtProtNotaAddebito().after(visita.getDtProtAutorizPartenza()))
 								throw handleException( new ApplicationException( "La data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+") deve essere successiva o uguale\nalla data di protocollo della nota di addebito ("+sdf.format(visita.getDtProtNotaAddebito())+")!") );
 							}
@@ -437,7 +437,7 @@ public class BltVisiteComponent extends CRUDComponent {
 				if (visita.getDtProtProvvImpegno().after(lastDataProt))
 					lastDataProt=visita.getDtProtProvvImpegno();
 				if (visita.getDtProtAutorizPartenza()==null)
-					throw handleException( new ApplicationException( "La data di protocollo del provvedimento di impegno ("+sdf.format(visita.getDtProtProvvImpegno())+") non puÚ essere valorizzata in assenza\ndella data di protocollo dell'autorizzazione alla partenza!") );
+					throw handleException( new ApplicationException( "La data di protocollo del provvedimento di impegno ("+sdf.format(visita.getDtProtProvvImpegno())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo dell'autorizzazione alla partenza!") );
 				if (visita.getDtProtAutorizPartenza().after(visita.getDtProtProvvImpegno()))
 					throw handleException( new ApplicationException( "La data di protocollo del provvedimento di impegno ("+sdf.format(visita.getDtProtProvvImpegno())+") deve essere successiva o uguale\nalla data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+")!") );
 				if (visita.getDtProtProvvImpegno().after(currentDay))
@@ -450,7 +450,7 @@ public class BltVisiteComponent extends CRUDComponent {
 				if (visita.getDtProtRimbSpese().after(lastDataProt))
 					lastDataProt=visita.getDtProtRimbSpese();
 				if (visita.getDtProtProvvImpegno()==null)
-					throw handleException( new ApplicationException( "La data di protocollo della richiesta di rimborso spese ("+sdf.format(visita.getDtProtRimbSpese())+") non puÚ essere valorizzata in assenza\ndella data di protocollo del provvedimento di impegno!") );
+					throw handleException( new ApplicationException( "La data di protocollo della richiesta di rimborso spese ("+sdf.format(visita.getDtProtRimbSpese())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo del provvedimento di impegno!") );
 				if (visita.getDtProtProvvImpegno().after(visita.getDtProtRimbSpese()))
 					throw handleException( new ApplicationException( "La data di protocollo della richiesta di rimborso spese ("+sdf.format(visita.getDtProtRimbSpese())+") deve essere successiva o uguale\nalla data di protocollo del provvedimento di impegno ("+sdf.format(visita.getDtProtProvvImpegno())+")!") );
 				if (visita.getDtProtRimbSpese().after(currentDay))
@@ -477,7 +477,7 @@ public class BltVisiteComponent extends CRUDComponent {
 				if (visita.getDtProtProvvPagamAnt().after(lastDataProt))
 					lastDataProt=visita.getDtProtProvvPagamAnt();
 				if (visita.getDtProtAutorizPartenza()==null)
-					throw handleException( new ApplicationException( "La data di protocollo dell'anticipo di pagamento ("+sdf.format(visita.getDtProtProvvPagamAnt())+") non puÚ essere valorizzata in assenza\ndella data di protocollo dell'autorizzazione alla partenza!") );
+					throw handleException( new ApplicationException( "La data di protocollo dell'anticipo di pagamento ("+sdf.format(visita.getDtProtProvvPagamAnt())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo dell'autorizzazione alla partenza!") );
 				if (visita.getDtProtAutorizPartenza().after(visita.getDtProtProvvPagamAnt()))
 					throw handleException( new ApplicationException( "La data di protocollo dell'anticipo di pagamento ("+sdf.format(visita.getDtProtProvvPagamAnt())+") deve essere successiva o uguale\nalla data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+")!") );
 				if (visita.getDtProtProvvPagamAnt().after(currentDay))
@@ -491,31 +491,31 @@ public class BltVisiteComponent extends CRUDComponent {
 					lastDataProt=visita.getDtProtProvvPagam();
 				if (visita.isVisitaDipendente() || visita.isVisitaUniversitario()) {
 					if (visita.getDtProtRimbSpese()==null)
-						throw handleException( new ApplicationException( "La data di protocollo del provvedimento di pagamento rimborso spese ("+sdf.format(visita.getDtProtProvvPagam())+") non puÚ essere valorizzata in assenza\ndella data di protocollo della richiesta di rimborso spese!") );
+						throw handleException( new ApplicationException( "La data di protocollo del provvedimento di pagamento rimborso spese ("+sdf.format(visita.getDtProtProvvPagam())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo della richiesta di rimborso spese!") );
 					if (visita.getDtProtRimbSpese().after(visita.getDtProtProvvPagam()))
 						throw handleException( new ApplicationException( "La data di protocollo del provvedimento di pagamento rimborso spese ("+sdf.format(visita.getDtProtProvvPagam())+") deve essere successiva o uguale\nalla data di protocollo della richiesta di rimborso spese ("+sdf.format(visita.getDtProtRimbSpese())+")!") );
 				} else {
 					if (!visita.isNotaAddebitoSaldoConAnticipoRequired()) {
 						if (visita.isVisitaPagataAdEnteStraniero()){
 							if (visita.getDtProtAutorizPartenza()==null)
-								throw handleException( new ApplicationException( "La data di protocollo del saldo di pagamento ("+sdf.format(visita.getDtProtProvvPagam())+") non puÚ essere valorizzata in assenza\ndella data di protocollo dell'autorizzazione alla partenza!") );
+								throw handleException( new ApplicationException( "La data di protocollo del saldo di pagamento ("+sdf.format(visita.getDtProtProvvPagam())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo dell'autorizzazione alla partenza!") );
 							if (visita.getDtProtAutorizPartenza().after(visita.getDtProtProvvPagam()))
 								throw handleException( new ApplicationException( "La data di protocollo del saldo di pagamento ("+sdf.format(visita.getDtProtProvvPagam())+") deve essere successiva o uguale\nalla data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+")!") );
 						} else {
 							if (visita.getDtProtNotaAddebito()==null)
-								throw handleException( new ApplicationException( "La data di protocollo del saldo di pagamento ("+sdf.format(visita.getDtProtProvvPagam())+") non puÚ essere valorizzata in assenza\ndella data di protocollo della nota di addebito!") );
+								throw handleException( new ApplicationException( "La data di protocollo del saldo di pagamento ("+sdf.format(visita.getDtProtProvvPagam())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo della nota di addebito!") );
 							if (visita.getDtProtNotaAddebito().after(visita.getDtProtProvvPagam()))
 								throw handleException( new ApplicationException( "La data di protocollo del saldo di pagamento ("+sdf.format(visita.getDtProtProvvPagam())+") deve essere successiva o uguale\nalla data di protocollo della nota di addebito ("+sdf.format(visita.getDtProtNotaAddebito())+")!") );
 						}
 					} else {
 						if (visita.isAnticipoPrevisto()) {
 							if (visita.getDtProtProvvPagamAnt()==null)
-								throw handleException( new ApplicationException( "La data di protocollo del saldo di pagamento ("+sdf.format(visita.getDtProtProvvPagam())+") non puÚ essere valorizzata in assenza\ndella data di protocollo dell'anticipo di pagamento!") );
+								throw handleException( new ApplicationException( "La data di protocollo del saldo di pagamento ("+sdf.format(visita.getDtProtProvvPagam())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo dell'anticipo di pagamento!") );
 							if (visita.getDtProtProvvPagamAnt().after(visita.getDtProtProvvPagam()))
 								throw handleException( new ApplicationException( "La data di protocollo del saldo di pagamento ("+sdf.format(visita.getDtProtProvvPagam())+") deve essere successiva o uguale\nalla data di protocollo dell'anticipo di pagamento ("+sdf.format(visita.getDtProtProvvPagamAnt())+")!") );
 						} else {
 							if (visita.getDtProtAutorizPartenza()==null)
-								throw handleException( new ApplicationException( "La data di protocollo del saldo di pagamento ("+sdf.format(visita.getDtProtProvvPagam())+") non puÚ essere valorizzata in assenza\ndella data di protocollo dell'autorizzazione alla partenza!") );
+								throw handleException( new ApplicationException( "La data di protocollo del saldo di pagamento ("+sdf.format(visita.getDtProtProvvPagam())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo dell'autorizzazione alla partenza!") );
 							if (visita.getDtProtAutorizPartenza().after(visita.getDtProtProvvPagam()))
 								throw handleException( new ApplicationException( "La data di protocollo del saldo di pagamento ("+sdf.format(visita.getDtProtProvvPagam())+") deve essere successiva o uguale\nalla data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+")!") );
 						}
@@ -531,32 +531,32 @@ public class BltVisiteComponent extends CRUDComponent {
 				if (!visita.isNotaAddebitoSaldoConAnticipoRequired()) {
 					if (visita.isNotaAddebitoAnticipoRequired()) {
 						if (visita.getDtProtProvvPagamAnt()==null)
-							throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") non puÚ essere valorizzata in assenza\ndella data di protocollo dell'anticipo di pagamento!") );
+							throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo dell'anticipo di pagamento!") );
 						if (visita.getDtProtProvvPagamAnt().after(visita.getDtProtAttestatoSogg()))
 							throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") deve essere successiva o uguale\nalla data di protocollo dell'anticipo di pagamento ("+sdf.format(visita.getDtProtProvvPagamAnt())+")!") );
 					} else {
 						if (visita.isAccordoPagataAdEnteStraniero()){
 							if (visita.getDtProtProvvPagam()==null)
-								throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") non puÚ essere valorizzata in assenza\ndella data di protocollo del saldo di pagamento!") );
+								throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo del saldo di pagamento!") );
 							if (visita.getDtProtProvvPagam().after(visita.getDtProtAttestatoSogg()))
 								throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") deve essere successiva o uguale\nalla data di protocollo del saldo di pagamento ("+sdf.format(visita.getDtProtProvvPagam())+")!") );
 						} else {
 							if (visita.getDtProtAutorizPartenza()==null)
-								throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") non puÚ essere valorizzata in assenza\ndella data di protocollo dell'autorizzazione alla partenza!") );
+								throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo dell'autorizzazione alla partenza!") );
 							if (visita.getDtProtAutorizPartenza().after(visita.getDtProtAttestatoSogg()))
 								throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") deve essere successiva o uguale\nalla data di protocollo dell'autorizzazione alla partenza ("+sdf.format(visita.getDtProtAutorizPartenza())+")!") );
 						}
 					}
 				} else {
 					if (visita.getModalitaPagamento()==null)
-						throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") non puÚ essere valorizzata in assenza\ndella modalit‡ di pagamento del saldo!") );
+						throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") non pu√≤ essere valorizzata in assenza\ndella modalit√† di pagamento del saldo!") );
 					if (visita.getDtProtProvvPagam()==null)
-						throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") non puÚ essere valorizzata in assenza\ndella data di protocollo del saldo di pagamento!") );
+						throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") non pu√≤ essere valorizzata in assenza\ndella data di protocollo del saldo di pagamento!") );
 					if (visita.getDtProtProvvPagam().after(visita.getDtProtAttestatoSogg()))
 						throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") deve essere successiva o uguale\nalla data di protocollo del saldo di pagamento ("+sdf.format(visita.getDtProtProvvPagam())+")!") );
 				}
 				if (visita.getDtFinVisitaEffettiva()==null)
-					throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") non puÚ essere valorizzata in assenza\ndella data di fine visita effettiva!") );
+					throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") non pu√≤ essere valorizzata in assenza\ndella data di fine visita effettiva!") );
 				if (visita.getDtFinVisitaEffettiva().after(visita.getDtProtAttestatoSogg()))
 					throw handleException( new ApplicationException( "La data di protocollo dell'attestato di soggiorno  ("+sdf.format(visita.getDtProtAttestatoSogg())+") deve essere successiva o uguale\nalla data di fine visita effettiva ("+sdf.format(visita.getDtFinVisitaEffettiva())+")!") );
 				if (visita.getDtProtAttestatoSogg().after(currentDay))
@@ -565,7 +565,7 @@ public class BltVisiteComponent extends CRUDComponent {
 
 			if (visita.isVisitaAnnullata()) {
 				if (visita.getNumProtRinunciaVisita()==null || visita.getDtProtRinunciaVisita()==null)
-					throw handleException( new ApplicationException( "Essendo la visita annullata Ë obbligatorio indicare il numero e data di protocollo di rinuncia visita!") );
+					throw handleException( new ApplicationException( "Essendo la visita annullata √® obbligatorio indicare il numero e data di protocollo di rinuncia visita!") );
 				if (lastDataProt.after(visita.getDtProtRinunciaVisita()))
 					throw handleException( new ApplicationException( "La data di protocollo di rinuncia visita ("+sdf.format(visita.getDtProtRinunciaVisita())+") deve essere successiva o uguale\nall'ultima data di protocollo inserita ("+sdf.format(lastDataProt)+")!") );
 				if (visita.getDtProtRinunciaVisita().after(currentDay))
@@ -577,7 +577,7 @@ public class BltVisiteComponent extends CRUDComponent {
 			if (!visita.isVisitaDipendente() && visita.getObbligazioneScadenzario()!=null && visita.getObbligazioneScadenzario().getPg_obbligazione()!=null &&
 				visita.isAnticipoPrevisto() && !visita.getFlStampatoProvvPagamAnt() && 
 				visita.getImRimbSpeseAnt()!=null && visita.getImRimbSpeseAnt().compareTo(visita.getBltAutorizzatiDett().getBltAutorizzati().getBltProgetti().getBltAccordo().getImporto_max_anticipo())==1)
-				throw handleException( new ApplicationException( "L'importo dell'anticipo non puÚ essere superiore all'importo massimo previsto di "+new it.cnr.contab.util.EuroFormat().format(visita.getBltAutorizzatiDett().getBltAutorizzati().getBltProgetti().getBltAccordo().getImporto_max_anticipo())+"!") );
+				throw handleException( new ApplicationException( "L'importo dell'anticipo non pu√≤ essere superiore all'importo massimo previsto di "+new it.cnr.contab.util.EuroFormat().format(visita.getBltAutorizzatiDett().getBltAutorizzati().getBltProgetti().getBltAccordo().getImporto_max_anticipo())+"!") );
 			Blt_visiteHome visiteHome = (Blt_visiteHome) getHome( usercontext, Blt_visiteBulk.class );
 			try {
 				visiteHome.validaCambioDate(usercontext, visita);
@@ -626,7 +626,7 @@ public class BltVisiteComponent extends CRUDComponent {
 			}
 			
 			if (visiteList.size()>0)
-				throw handleException( new ApplicationException( "Operazione non possibile! Non esiste disponibilit‡ sufficiente a coprire tutte le visite autorizzate!") );
+				throw handleException( new ApplicationException( "Operazione non possibile! Non esiste disponibilit√† sufficiente a coprire tutte le visite autorizzate!") );
 
 			for (Iterator iterator = tableAssociazione.keySet().iterator(); iterator.hasNext();) {
 				Blt_programma_visiteBulk programmaVisiteKey = (Blt_programma_visiteBulk) iterator.next();

@@ -2904,7 +2904,7 @@ public abstract class Fattura_passivaBulk
         if (getDt_a_competenza_coge() == null)
             throw new ValidationException("Inserire la data di \"competenza a\" per la testata documento.");
         if (getStato_cofi().compareTo(STATO_INIZIALE) == 0 && getDt_scadenza() == null)
-            throw new ValidationException("La data di scadenza non può essere nulla!");
+            throw new ValidationException("La data di scadenza non puÃ² essere nulla!");
 
         Calendar competenzaDa = getDateCalendar(getDt_da_competenza_coge());
         Calendar competenzaA = getDateCalendar(getDt_a_competenza_coge());
@@ -2953,13 +2953,13 @@ public abstract class Fattura_passivaBulk
                 if (this.getStato_cofi() != null && this.getStato_cofi().equals(STATO_INIZIALE))
                     if (getDt_registrazione().after(getDt_termine_creazione_docamm())) {
                         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                        throw new ValidationException("Non è possibile inserire documenti con competenza nell'anno precedente con data di registrazione successiva al " + sdf.format(getDt_termine_creazione_docamm()) + "!");
+                        throw new ValidationException("Non Ã¨ possibile inserire documenti con competenza nell'anno precedente con data di registrazione successiva al " + sdf.format(getDt_termine_creazione_docamm()) + "!");
                     }
             } else
                 throw e;
             if (!eseguito && (annoCompetenzaA == getEsercizio() - 1)) {
                 eseguito = new Boolean(true);
-                throw new ValidationException("Attenzione: per le date competenza indicate non è possibile inventariare i beni!");
+                throw new ValidationException("Attenzione: per le date competenza indicate non Ã¨ possibile inventariare i beni!");
             }
 
         }
@@ -3026,7 +3026,7 @@ public abstract class Fattura_passivaBulk
         }
 
         if (getFl_split_payment() != null && getFl_split_payment() && !isGestioneSplitPayment())
-            throw new ValidationException("Non è possibile registrare una fattura di tipo Split Payment che abbia data di emissione inferiore al " + sdf.format(this.getDataInizioSplitPayment()) + "!");
+            throw new ValidationException("Non Ã¨ possibile registrare una fattura di tipo Split Payment che abbia data di emissione inferiore al " + sdf.format(this.getDataInizioSplitPayment()) + "!");
 
         if (getDt_fattura_fornitore() != null) {
 
@@ -3034,19 +3034,19 @@ public abstract class Fattura_passivaBulk
 
             if (dataRegistrazione.before(dataEmissioneFattura) &&
                     !dataRegistrazione.equals(dataEmissioneFattura))
-                throw new ValidationException("La data di registrazione  non può essere precedente alla data di emissione del documento del fornitore!");
+                throw new ValidationException("La data di registrazione  non puÃ² essere precedente alla data di emissione del documento del fornitore!");
             if (getDt_scadenza() != null) {
                 java.util.Calendar dataScadenzaFattura = getDateCalendar(getDt_scadenza());
 
                 if (dataEmissioneFattura.after(dataScadenzaFattura) &&
                         !dataEmissioneFattura.equals(dataScadenzaFattura))
-                    throw new ValidationException("La data di scadenza non può essere precedente alla data di emissione del documento del fornitore!");
+                    throw new ValidationException("La data di scadenza non puÃ² essere precedente alla data di emissione del documento del fornitore!");
             }
             if (getData_protocollo() != null && getData_protocollo().before(getDt_fattura_fornitore()))
-                throw new ValidationException("La data di protocollo non può essere precedente alla data di emissione del documento del fornitore!");
+                throw new ValidationException("La data di protocollo non puÃ² essere precedente alla data di emissione del documento del fornitore!");
             if (getData_protocollo() != null && getData_protocollo().after(getDt_registrazione()))
                 throw new ValidationException(
-                        "La data protocollo di entrata non può essere superiore alla data registrazione");
+                        "La data protocollo di entrata non puÃ² essere superiore alla data registrazione");
         }
     }
 

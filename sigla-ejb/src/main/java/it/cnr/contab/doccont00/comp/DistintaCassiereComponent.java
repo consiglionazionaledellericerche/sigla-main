@@ -106,7 +106,7 @@ public class DistintaCassiereComponent extends
 	 * Nome: crea semaforo - errore Pre: E' necessario inserire la prima
 	 * distinta ( per esercizio e uo) e un altro utente sta eseguendo la stessa
 	 * operazione Post: Una segnalazione di errore comunica all'utente
-	 * l'impossibilit‡ a procedere
+	 * l'impossibilit√† a procedere
 	 * 
 	 * @param userContext
 	 *            lo UserContext che ha generato la richiesta
@@ -167,7 +167,7 @@ public class DistintaCassiereComponent extends
 	 *            il documento contabile V_mandato_reversaleBulk per cui
 	 *            aggiornare lo stato
 	 * @param stato_trasmissione
-	 *            il nuovo stato che il doc. contabile dovr‡ assumere
+	 *            il nuovo stato che il doc. contabile dovr√† assumere
 	 */
 
 	protected void aggiornaStatoDocContabile(UserContext userContext,
@@ -202,7 +202,7 @@ public class DistintaCassiereComponent extends
 	 * @param distinta
 	 *            la distinta i cui doc.contabili devono essere aggiornati
 	 * @param stato_trasmissione
-	 *            il nuovo stato che il doc. contabile dovr‡ assumere
+	 *            il nuovo stato che il doc. contabile dovr√† assumere
 	 */
 
 	protected void aggiornaStatoDocContabili(UserContext userContext,
@@ -291,7 +291,7 @@ public class DistintaCassiereComponent extends
 	 * 
 	 * Nome: Ritrasmissione Pre: Una richiesta di aggiornare lo stato
 	 * trasmissione di un mandato non di accreditamento e' stata generata e il
-	 * nuovo stato e' TRASMESSO e il mandato era gi‡ stato trasmesso Post: E'
+	 * nuovo stato e' TRASMESSO e il mandato era gi√† stato trasmesso Post: E'
 	 * stato aggiornato lo stato del mandato e la sua data di ritrasmissione
 	 * 
 	 * @param uc
@@ -299,7 +299,7 @@ public class DistintaCassiereComponent extends
 	 * @param docContabile
 	 *            il mandato non di accredit. per cui aggiornare lo stato
 	 * @param stato_trasmissione
-	 *            il nuovo stato che il mandato dovr‡ assumere
+	 *            il nuovo stato che il mandato dovr√† assumere
 	 */
 
 	protected void aggiornaStatoMandato(UserContext userContext,
@@ -316,7 +316,7 @@ public class DistintaCassiereComponent extends
 		 != 0 )
 		 throw new ApplicationException("Attenzione! Il mandato " +
 		 mandato.getPg_mandato() +
-		 " non e' pi˘ valido perche' stato modificato." );
+		 " non e' pi√π valido perche' stato modificato." );
 		if(mandato.isAnnullato())
 			mandato.setStato_trasmissione_annullo(stato_trasmissione);
 		else
@@ -387,7 +387,7 @@ public class DistintaCassiereComponent extends
 	 * 
 	 * Nome: Ritrasmissione Pre: Una richiesta di aggiornare lo stato
 	 * trasmissione di un mandato di accreditamento e' stata generata e il nuovo
-	 * stato e' TRASMESSO e il mandato era gi‡ stato trasmesso Post: E' stato
+	 * stato e' TRASMESSO e il mandato era gi√† stato trasmesso Post: E' stato
 	 * aggiornato lo stato del mandato e la sua data di ritrasmissione
 	 * 
 	 * @param uc
@@ -395,7 +395,7 @@ public class DistintaCassiereComponent extends
 	 * @param docContabile
 	 *            il mandato di accredit. per cui aggiornare lo stato
 	 * @param stato_trasmissione
-	 *            il nuovo stato che il mandato dovr‡ assumere
+	 *            il nuovo stato che il mandato dovr√† assumere
 	 */
 
 	protected void aggiornaStatoMandatoAccreditamento(UserContext userContext,
@@ -412,7 +412,7 @@ public class DistintaCassiereComponent extends
 		 != 0 )
 		 throw new ApplicationException("Attenzione! Il mandato " +
 		 mandato.getPg_mandato() +
-		 " non e' pi˘ valido perche' stato modificato." );
+		 " non e' pi√π valido perche' stato modificato." );
 
 		mandato.setStato_trasmissione(stato_trasmissione);
 
@@ -484,7 +484,7 @@ public class DistintaCassiereComponent extends
 	 * 
 	 * Nome: Ritrasmissione Pre: Una richiesta di aggiornare lo stato
 	 * trasmissione di una reversale e' stata generata e il nuovo stato e'
-	 * TRASMESSO e la reversale era gi‡ stata trasmessa Post: E' stato
+	 * TRASMESSO e la reversale era gi√† stata trasmessa Post: E' stato
 	 * aggiornato lo stato della reversale e la sua data di ritrasmissione
 	 * 
 	 * @param uc
@@ -492,7 +492,7 @@ public class DistintaCassiereComponent extends
 	 * @param docContabile
 	 *            la reversale per cui aggiornare lo stato
 	 * @param stato_trasmissione
-	 *            il nuovo stato che la reversale dovr‡ assumere
+	 *            il nuovo stato che la reversale dovr√† assumere
 	 */
 
 	protected void aggiornaStatoReversale(UserContext userContext,
@@ -508,7 +508,7 @@ public class DistintaCassiereComponent extends
 		 docContabile.getPg_ver_rec()) != 0 )
 		 throw new ApplicationException("Attenzione! La reversale " +
 		 reversale.getPg_reversale() +
-		 " non e' pi˘ valida perche' stata modificata." );
+		 " non e' pi√π valida perche' stata modificata." );
 		if(reversale.isAnnullato())
 			reversale.setStato_trasmissione_annullo(stato_trasmissione);
 		else
@@ -659,7 +659,7 @@ public class DistintaCassiereComponent extends
 	 *            collegati
 	 * @param docConatbile
 	 *            il V_mandato_reversaleBulk per cui ricercare i doc. contabili
-	 *            diËpendenti
+	 *            di√®pendenti
 	 * @param last_pg_dettaglio
 	 *            , il progressivo dell'ultimo dettaglio inserito in distinta
 	 * @return il progressivo aggiornato dell'ultimo dettaglio inserito in
@@ -671,7 +671,7 @@ public class DistintaCassiereComponent extends
 			V_mandato_reversaleBulk docContabilePadre, Long last_pg_dettaglio)
 			throws PersistencyException, ComponentException {
 		/*
-		 * aggiungo in automatico i mandati gi‡ trasmessi e successivamente
+		 * aggiungo in automatico i mandati gi√† trasmessi e successivamente
 		 * annullati
 		 */
 		Collection docContabili = ((V_mandato_reversaleHome) getHome(
@@ -693,7 +693,7 @@ public class DistintaCassiereComponent extends
 	 * Nome: Aggiungi mandati reversali da ritrasmettere Pre: E' stata generata
 	 * la richiesta di inviare una distinta al cassiere ed e' pertanto
 	 * necessario inserire automaticamente in distinta tutti i mandati/reversali
-	 * che sono stati annullati dopo che erano gi‡ stati inviati a cassiere
+	 * che sono stati annullati dopo che erano gi√† stati inviati a cassiere
 	 * Post: E' stato creato un nuovo dettaglio per ogni doc. contabile con data
 	 * di annullamento successiva alla data di trasmissione e data di
 	 * ritrasmissione non valorizzata.
@@ -1001,7 +1001,7 @@ public class DistintaCassiereComponent extends
 	 * 
 	 * Nome: storico con distinte trasmesse Pre: E' stata generata la richiesta
 	 * di calcolare i totali storici degli importi dei mandati/reversali
-	 * trasmessi al cassiere e esistono distinte gi‡ trasmessa al cassiere Post:
+	 * trasmessi al cassiere e esistono distinte gi√† trasmessa al cassiere Post:
 	 * Tutti i totali di ogni singola tipologia di doc. contabile vengono
 	 * inizializzati col valore impostato nell'ultima distinta trasmessa. I
 	 * totali complessivi dei mandati trasmessi vengono calcolati come somma dei
@@ -1894,7 +1894,7 @@ public class DistintaCassiereComponent extends
 	/**
 	 * Nome: Creazione di una Distinta_cassiereBulk Pre: E' stata richiesta la
 	 * creazione di una istanza di Distinta_cassiereBulk Post: La distinta, che
-	 * era gi‡ stata in precedenza inserita nel database ( metodo
+	 * era gi√† stata in precedenza inserita nel database ( metodo
 	 * 'inizializzaBulkPerInserimento'), viene aggiornata.
 	 * 
 	 * @param aUC
@@ -1984,7 +1984,7 @@ public class DistintaCassiereComponent extends
 	 * quello di scrivania e come data di emissione la data odierna; vengono
 	 * impostati a 0 tutti i totali dei mandati/reversali presenti in distinta;
 	 * viene assegnato il progressivo distinta ( metodo 'assegnaProgressivo');
-	 * vengono calcolati gli storici degli importi di mandati/reversali gi‡
+	 * vengono calcolati gli storici degli importi di mandati/reversali gi√†
 	 * trasmessi al cassiere (metodo 'calcolaTotaliStorici'); viene recuperato
 	 * il codice del Cds Ente (999). La distinta viene inserita nel database.
 	 * 
@@ -2004,7 +2004,7 @@ public class DistintaCassiereComponent extends
 		try {
 			verificaStatoEsercizio(userContext);
 
-			// questa inizializzazione Ë necessaria per motivi prestazionali
+			// questa inizializzazione √® necessaria per motivi prestazionali
 			// serve per preimpostare il terzo per i versamenti CORI accentrati
 			// in base all'anno di esercizio di scrivania
 			callCercaTerzoVersCORI(userContext,
@@ -2062,7 +2062,7 @@ public class DistintaCassiereComponent extends
 	 * Post: Viene inizializzato la distinta, calcolati i totali dei
 	 * mandati/reversali presenti in distinta (suddivivisi per tipologia)
 	 * (metodo 'calcolaTotali'), vengono calcolati gli storici degli importi di
-	 * mandati/reversali gi‡ trasmessi al cassiere (metodo
+	 * mandati/reversali gi√† trasmessi al cassiere (metodo
 	 * 'calcolaTotaliStorici') e viene recuperato il codice del Cds Ente (999)
 	 * 
 	 * @param aUC
@@ -2079,7 +2079,7 @@ public class DistintaCassiereComponent extends
 	public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,
 			OggettoBulk bulk) throws ComponentException {
 		try {
-			// questa inizializzazione Ë necessaria per motivi prestazionali
+			// questa inizializzazione √® necessaria per motivi prestazionali
 			// serve per preimpostare il terzo per i versamenti CORI accentrati
 			// in base all'anno di esercizio di scrivania
 			callCercaTerzoVersCORI(userContext,
@@ -2112,7 +2112,7 @@ public class DistintaCassiereComponent extends
 	 * l'inizializzazione di una istanza di Distinta_cassiereBulk per ricerca
 	 * Post: Viene inizializzato il Cds della distinta, viene recuperato il
 	 * codice del Cds ente (999) e vengono calcolati gli storici degli importi
-	 * di mandati/reversali gi‡ trasmessi al cassiere (metodo
+	 * di mandati/reversali gi√† trasmessi al cassiere (metodo
 	 * 'calcolaTotaliStorici')
 	 * 
 	 * @param aUC
@@ -2128,7 +2128,7 @@ public class DistintaCassiereComponent extends
 	public OggettoBulk inizializzaBulkPerRicerca(UserContext userContext,
 			OggettoBulk bulk) throws ComponentException {
 		try {
-			// questa inizializzazione Ë necessaria per motivi prestazionali
+			// questa inizializzazione √® necessaria per motivi prestazionali
 			// serve per preimpostare il terzo per i versamenti CORI accentrati
 			// in base all'anno di esercizio di scrivania
 			callCercaTerzoVersCORI(userContext,
@@ -2262,7 +2262,7 @@ public class DistintaCassiereComponent extends
 										.getPg_distinta()));
 				if (v_distinta.getPg_ver_rec().compareTo(
 						distinta.getPg_ver_rec()) != 0)
-					throw new ApplicationException("Risorsa non pi˘ valida");
+					throw new ApplicationException("Risorsa non pi√π valida");
 				inviaSingolaDistinta(userContext, distinta);
 			}
 		} catch (Exception e) {
@@ -2274,7 +2274,7 @@ public class DistintaCassiereComponent extends
 	 * 
 	 * Nome: gestione dell'invio di una distinta al cassiere Pre: Una richiesta
 	 * di invio a cassiere di una distinta e' stata generata Post: Tutti i
-	 * mandati/reversali che erano gi‡ stati trasmessi al cassiere e che
+	 * mandati/reversali che erano gi√† stati trasmessi al cassiere e che
 	 * successivamente sono stati annullati vengono aggiunti automaticamente in
 	 * distinta per essere ritrasmessi (metodo
 	 * 'aggiungiMandatiEReversaliDaRitrasmettere'); tutti i doc.contabili
@@ -2315,7 +2315,7 @@ public class DistintaCassiereComponent extends
 				throw new ApplicationException(
 						"Attenzione! La distinta "
 								+ distinta.getPg_distinta()
-								+ " e' stata creata dalla Uo Ente. Non Ë possibile modificare lo stato.");
+								+ " e' stata creata dalla Uo Ente. Non √® possibile modificare lo stato.");
 
 			if (!(isDistintaCollegata && CNRUserContext
 					.getCd_unita_organizzativa(userContext).equals(
@@ -2791,7 +2791,7 @@ public class DistintaCassiereComponent extends
 	/**
 	 * Processa File PreCondition: E' stata generata la richiesta di processare
 	 * un file. Nessun errore rilevato. PostCondition: Viene richiamata la
-	 * procedura che processer‡ il file selezionato dall'utente, (metodo
+	 * procedura che processer√† il file selezionato dall'utente, (metodo
 	 * callProcessaFile). Restituisce l'oggetto V_ext_cassiere00Bulk aggiornato.
 	 * 
 	 * @param userContext
@@ -2816,12 +2816,12 @@ public class DistintaCassiereComponent extends
 	 * 
 	 * Pre-post-conditions:
 	 * 
-	 * Nome: cerca distinte Pre: Una richiesta di ricerca di una o pi˘ distinte
+	 * Nome: cerca distinte Pre: Una richiesta di ricerca di una o pi√π distinte
 	 * e' stata generata Post: Viene creato il SQLBuilder con impostati
 	 * l'esercizio, il cd_cds e il cd-unita_organizzativa di scrivania
 	 * 
 	 * Nome: cerca distinte da inviare Pre: Una richiesta di ricerca di una o
-	 * pi˘ distinte da inviare al cassiere e' stata generata Post: Viene creato
+	 * pi√π distinte da inviare al cassiere e' stata generata Post: Viene creato
 	 * il SQLBuilder con impostati l'esercizio, il cd_cds e il
 	 * cd_unita_organizzativa di scrivania e con la data di invio non
 	 * valorizzata
@@ -3228,8 +3228,8 @@ public class DistintaCassiereComponent extends
 	 * @param userContext
 	 *            <code>UserContext</code>
 	 * 
-	 * @return FALSE se per il cds interessato non Ë stato inserito nessun
-	 *         esercizio o se l'esercizio non Ë in stato di "aperto" TRUE in
+	 * @return FALSE se per il cds interessato non √® stato inserito nessun
+	 *         esercizio o se l'esercizio non √® in stato di "aperto" TRUE in
 	 *         tutti gli altri casi
 	 * 
 	 */
@@ -3244,13 +3244,13 @@ public class DistintaCassiereComponent extends
 			if (esercizio == null)
 				throw new ApplicationException("L'esercizio "
 						+ ((CNRUserContext) userContext).getEsercizio()
-						+ " non Ë ancora stato definito per il Cds "
+						+ " non √® ancora stato definito per il Cds "
 						+ ((CNRUserContext) userContext).getCd_cds());
 			if (!esercizio.STATO_APERTO.equals(esercizio
 					.getSt_apertura_chiusura()))
 				throw new ApplicationException("L'esercizio "
 						+ ((CNRUserContext) userContext).getEsercizio()
-						+ " non Ë ancora stato aperto per il Cds "
+						+ " non √® ancora stato aperto per il Cds "
 						+ ((CNRUserContext) userContext).getCd_cds());
 		} catch (Exception e) {
 			throw handleException(e);
@@ -3288,7 +3288,7 @@ public class DistintaCassiereComponent extends
 	}
 
 	/**
-	 * Ë vero se Ë stato impostato il flag nei parametri generali
+	 * √® vero se √® stato impostato il flag nei parametri generali
 	 * FL_VERSAMENTO_CORI che indica se inserire i mandati di versamento
 	 * CORI/IVA in modo obbligatorio e automatico
 	 */
@@ -3471,7 +3471,7 @@ public class DistintaCassiereComponent extends
 												distinta.getEsercizio())
 										.getFl_blocco_iban().booleanValue()))
 									throw new CheckIbanFailed(
-											"PoichÈ a partire dal 1/7/2008 i pagamenti privi di codice IBAN verranno eseguiti dalla banca in ritardo e con una penale a carico dell'istituto, prima di continuare con il salvataggio della distinta (pulsante OK) si consiglia di verificare le coordinate bancarie del terzo "
+											"Poich√© a partire dal 1/7/2008 i pagamenti privi di codice IBAN verranno eseguiti dalla banca in ritardo e con una penale a carico dell'istituto, prima di continuare con il salvataggio della distinta (pulsante OK) si consiglia di verificare le coordinate bancarie del terzo "
 													+ bulk.getCd_terzo()
 													+ " - "
 													+ mandato_riga
@@ -3481,12 +3481,12 @@ public class DistintaCassiereComponent extends
 															.getDescrizioneAnagrafica()
 													+ "!"
 													+ "<BR><BR>"
-													+ " Selezionando il pulsante 'Annulla' e uscendo dalla funzione di 'Distinta' Ë possibile eseguire l'aggiornamento dei dati IBAN in anagrafica, dalla funzione 'Terzo persona fisica/giuridica', senza dover ricorrere all'annullo del mandato emesso. Al salvataggio dell'aggiornamento del codice terzo, il codice IBAN verr‡ riportato automaticamente sul mandato, il quale dovr‡ essere solo nuovamente stampato ed inserito in distinta per l'invio in banca.<BR><BR>"
-													+ "Si ricorda che dal 1/07/2008 non sar‡ pi˘ possibile emettere distinte contenenti mandati con beneficiari privi di IBAN.");
+													+ " Selezionando il pulsante 'Annulla' e uscendo dalla funzione di 'Distinta' √® possibile eseguire l'aggiornamento dei dati IBAN in anagrafica, dalla funzione 'Terzo persona fisica/giuridica', senza dover ricorrere all'annullo del mandato emesso. Al salvataggio dell'aggiornamento del codice terzo, il codice IBAN verr√† riportato automaticamente sul mandato, il quale dovr√† essere solo nuovamente stampato ed inserito in distinta per l'invio in banca.<BR><BR>"
+													+ "Si ricorda che dal 1/07/2008 non sar√† pi√π possibile emettere distinte contenenti mandati con beneficiari privi di IBAN.");
 
 								else
 									throw new ApplicationException(
-											"Non Ë possibile procedere al salvataggio della distinta emessa in quanto sono presenti pagamenti privi di codice IBAN. E' necessario verificare le coordinate bancarie del terzo "
+											"Non √® possibile procedere al salvataggio della distinta emessa in quanto sono presenti pagamenti privi di codice IBAN. E' necessario verificare le coordinate bancarie del terzo "
 													+ bulk.getCd_terzo()
 													+ " - "
 													+ mandato_riga
@@ -3495,8 +3495,8 @@ public class DistintaCassiereComponent extends
 															.getAnagrafico()
 															.getDescrizioneAnagrafica()
 													+ "!\n\n"
-													+ "Uscendo dalla funzione di 'Distinta' Ë obbligatorio eseguire l'aggionamento dei dati IBAN in anagrafica, dalla funzione 'Terzo persona fisica/giuridica', senza dover ricorrere all'annullo del mandato emesso. Al salvataggio dell'aggiornamento del codice terzo, il codice IBAN verr‡ riportato automaticamente sul mandato,"
-													+ " il quale dovr‡ essere solo nuovamente stampato ed inserito in distinta per l'invio in banca.");
+													+ "Uscendo dalla funzione di 'Distinta' √® obbligatorio eseguire l'aggionamento dei dati IBAN in anagrafica, dalla funzione 'Terzo persona fisica/giuridica', senza dover ricorrere all'annullo del mandato emesso. Al salvataggio dell'aggiornamento del codice terzo, il codice IBAN verr√† riportato automaticamente sul mandato,"
+													+ " il quale dovr√† essere solo nuovamente stampato ed inserito in distinta per l'invio in banca.");
 
 						}
 					}
@@ -3765,7 +3765,7 @@ public class DistintaCassiereComponent extends
 								} catch (ApplicationException e) {
 									if (e.getDetail() instanceof it.cnr.jada.persistency.sql.BusyRecordException)
 										throw new ApplicationException(
-												"Attenzione! L'unit‡ organizzativa "
+												"Attenzione! L'unit√† organizzativa "
 														+ reversale
 																.getUnita_organizzativa()
 																.getCd_unita_organizzativa()

@@ -173,7 +173,7 @@ public it.cnr.jada.action.Forward doCostiScaricatiSpe(it.cnr.jada.action.ActionC
 		return doCostiScaricati(context, "CRUDCostiScaricatiSpeBP");
 	}
 /**
- * Gestione eliminazione dei dettagli di piano di gestione per linea di attivit‡
+ * Gestione eliminazione dei dettagli di piano di gestione per linea di attivit√†
  *
  * @param context	L'ActionContext della richiesta
  * @return Il Forward alla pagina di risposta
@@ -228,7 +228,7 @@ public it.cnr.jada.action.Forward doDettagliPdG(it.cnr.jada.action.ActionContext
 
 			if (!pdgModificabile)
 			  if(pdg.getStato().equals(Pdg_preventivoBulk.ST_F_CHIUSO_DFNT))
-			    nbp.setMessage(nbp.WARNING_MESSAGE,"Lo stato del pdg Ë in chiusura definitiva, utilizzare la funzione di variazioni al PDG per apportare modifiche.");
+			    nbp.setMessage(nbp.WARNING_MESSAGE,"Lo stato del pdg √® in chiusura definitiva, utilizzare la funzione di variazioni al PDG per apportare modifiche.");
 			  else
 				nbp.setMessage(nbp.WARNING_MESSAGE,"Lo stato del pdg o il livello dell'utente non permette la modifica dei dettagli.");
 
@@ -247,7 +247,7 @@ public it.cnr.jada.action.Forward doDettagliSpePdG(it.cnr.jada.action.ActionCont
 		return doDettagliPdG(context, "CRUDSpeDetPdGBP");
 	}
 /**
- * Gestione navigazione a controllo di eliminazione di dettagli del PDG per linee di attivit‡
+ * Gestione navigazione a controllo di eliminazione di dettagli del PDG per linee di attivit√†
  *
  * @param context	L'ActionContext della richiesta
  * @return Il Forward alla pagina di risposta

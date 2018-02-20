@@ -116,7 +116,7 @@ public class CRUDCommessaWorkpackageAction extends it.cnr.jada.util.action.CRUDA
 
 	public Forward doSalva(ActionContext context) throws RemoteException {
 
-		String message = "Il modulo di attivit‡ sui workpackage selezionati verr‡ cambiato.\n"
+		String message = "Il modulo di attivit√† sui workpackage selezionati verr√† cambiato.\n"
 						+ "Vuoi continuare?";
 		try {
 			openConfirm(context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doSalvaConfermato");

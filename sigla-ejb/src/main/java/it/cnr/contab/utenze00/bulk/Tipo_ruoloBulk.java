@@ -111,16 +111,16 @@ public class Tipo_ruoloBulk extends Tipo_ruoloBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'gestore'
+	 * Restituisce il valore della propriet√† 'gestore'
 	 *
-	 * @return Il valore della propriet‡ 'gestore'
+	 * @return Il valore della propriet√† 'gestore'
 	 */
 	public UtenteBulk getGestore() {
 		return gestore;
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'gestore'
+	 * Imposta il valore della propriet√† 'gestore'
 	 *
 	 * @param newGestore	Il valore da assegnare a 'gestore'
 	 */

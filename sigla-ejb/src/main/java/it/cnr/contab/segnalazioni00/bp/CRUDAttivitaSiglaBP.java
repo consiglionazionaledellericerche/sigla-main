@@ -20,8 +20,8 @@ public class CRUDAttivitaSiglaBP extends SimpleCRUDBP{
 	public void validaAttivita(ActionContext context, Attivita_siglaBulk bulk) throws ValidationException
 	{
 		if(bulk.getStato() == null)
-			throw new ValidationException("Il campo Stato non può essere vuoto!");
+			throw new ValidationException("Il campo Stato non puÃ² essere vuoto!");
 		if(bulk.getTipo_attivita() == null)
-			throw new ValidationException("Il campo Tipo non può essere vuoto!");				
+			throw new ValidationException("Il campo Tipo non puÃ² essere vuoto!");				
 	}
 }

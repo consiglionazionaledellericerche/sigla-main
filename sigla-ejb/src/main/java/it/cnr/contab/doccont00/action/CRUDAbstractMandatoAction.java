@@ -133,7 +133,7 @@ public Forward doConfermaElimina(ActionContext context, int choice ) throws java
 			CRUDAbstractMandatoBP bpm = (CRUDAbstractMandatoBP)context.getBusinessProcess();
 			MandatoIBulk mandato = (MandatoIBulk) bp.getModel();
 			if(bpm.isAnnullabileEnte(context, mandato))
-				return openConfirm(context,"All'annullamento del mandato seguirà la riemissione?",OptionBP.CONFIRM_YES_NO,"doConfermaRiemissione");			
+				return openConfirm(context,"All'annullamento del mandato seguirÃ  la riemissione?",OptionBP.CONFIRM_YES_NO,"doConfermaRiemissione");			
 			bp.delete(context);
 			bp.setMessage("Annullamento effettuato");
 		}	
@@ -177,14 +177,14 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 		CRUDAbstractMandatoBP bpm = (CRUDAbstractMandatoBP)context.getBusinessProcess();
 				 
 		if (!bp.isDeleteButtonEnabled()) {
-			bp.setMessage("Non è possibile cancellare in questo momento");
+			bp.setMessage("Non Ã¨ possibile cancellare in questo momento");
 		} else 
 		{
 			MandatoBulk mandato = (MandatoBulk) bp.getModel();
 			if ( mandato.isDipendenteDaAltroDocContabile() )
-				bp.setMessage( "Non è possibile annullare il mandato perchè e' stato originato da un altro doc. contabile" );
+				bp.setMessage( "Non Ã¨ possibile annullare il mandato perchÃ¨ e' stato originato da un altro doc. contabile" );
 			else    if ( bpm.isDipendenteDaConguaglio(context,mandato) )
-				    bp.setMessage( "Non è possibile annullare il mandato poichè e' stato già effettuato il conguaglio del compenso a cui è collegato" );
+				    bp.setMessage( "Non Ã¨ possibile annullare il mandato poichÃ¨ e' stato giÃ  effettuato il conguaglio del compenso a cui Ã¨ collegato" );
 			else	if ( mandato.getDoc_contabili_collColl().size() > 0 )	
 				return openConfirm(context,"All'annullamento del mandato anche i documenti contabili collegati verranno annullati. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfermaElimina");
 			else 

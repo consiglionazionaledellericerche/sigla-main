@@ -49,7 +49,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 
 		CRUDAbiCabBP bp = (CRUDAbiCabBP)getBusinessProcess(context);
 		if (!bp.isEditing()) {
-			bp.setMessage("Non è possibile cancellare in questo momento");
+			bp.setMessage("Non Ã¨ possibile cancellare in questo momento");
 		} else {
 			bp.delete(context);
 			AbicabBulk abicab = (AbicabBulk)bp.getModel();

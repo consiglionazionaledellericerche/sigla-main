@@ -303,7 +303,7 @@ public OggettoBulk[] initializeBulks(ActionContext context,OggettoBulk[] bulks) 
 	*/
 }
 /**
- * @return editable TRUE Se l'obbligazione Ë editabile
+ * @return editable TRUE Se l'obbligazione √® editabile
  *					FALSE in caso contrario
  */
 public boolean isEditable() {
@@ -328,7 +328,7 @@ public boolean isEmettiOrdineButtonEnabled() {
 }
 /**
  * Ritorna TRUE se l'obbligazione e' definitiva
- *		   FALSE se l'obbligazione Ë provvisoria.
+ *		   FALSE se l'obbligazione √® provvisoria.
  */
 public boolean isObbligazioniDefinitive()
 {
@@ -357,7 +357,7 @@ public void refreshList(ActionContext context) throws it.cnr.jada.action.Busines
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'bulkClass'
+ * Imposta il valore della propriet√† 'bulkClass'
  *
  * @param newBulkClass	Il valore da assegnare a 'bulkClass'
  */
@@ -366,7 +366,7 @@ public void setBulkClass(java.lang.Class newBulkClass) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'bulkClassName'
+ * Imposta il valore della propriet√† 'bulkClassName'
  *
  * @param bulkClassName	Il valore da assegnare a 'bulkClassName'
  * @throws ClassNotFoundException	
@@ -381,7 +381,7 @@ public void setBulkInfo(it.cnr.jada.bulk.BulkInfo newBulkInfo) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'componentSessioneName'
+ * Imposta il valore della propriet√† 'componentSessioneName'
  *
  * @param newComponentSessioneName	Il valore da assegnare a 'componentSessioneName'
  */

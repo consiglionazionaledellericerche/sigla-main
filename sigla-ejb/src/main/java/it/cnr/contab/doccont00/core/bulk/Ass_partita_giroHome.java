@@ -47,7 +47,7 @@ public Ass_partita_giroBulk getAssociazionePGiroFor(AccertamentoPGiroBulk accert
 			throw new it.cnr.jada.comp.ApplicationException("Non esiste associazione fra capitoli di entrata e capitoli di spesa su Partite di giro");
 			
 	if (result.size() > 1)
-		throw new it.cnr.jada.comp.ApplicationException("Esiste più di un'associazione fra il capitolo di entrata e i capitoli di spesa su Partite di giro");
+		throw new it.cnr.jada.comp.ApplicationException("Esiste piÃ¹ di un'associazione fra il capitolo di entrata e i capitoli di spesa su Partite di giro");
 	return (Ass_partita_giroBulk)result.get(0);
 }
 public Ass_partita_giroBulk getAssociazionePGiroFor(ImpegnoPGiroBulk imp_pgiro) 
@@ -67,7 +67,7 @@ public Ass_partita_giroBulk getAssociazionePGiroFor(ImpegnoPGiroBulk imp_pgiro)
 		else
 			throw new it.cnr.jada.comp.ApplicationException("Non esiste associazione fra capitoli di entrata e capitoli di spesa su Partite di giro");
 	if ( result.size() > 1 )
-		throw new it.cnr.jada.comp.ApplicationException("Esiste più di un'associazione fra il capitolo di spesa e i capitoli di entrata su Partite di giro");			
+		throw new it.cnr.jada.comp.ApplicationException("Esiste piÃ¹ di un'associazione fra il capitolo di spesa e i capitoli di entrata su Partite di giro");			
 	return (Ass_partita_giroBulk) result.get(0);
 }
 }

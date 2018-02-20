@@ -40,7 +40,7 @@ public DiscrepanzeAggregatoException(java.util.List listaAgr) {
 }
 	/**
 	 * Restituisce l'oggetto anagrafico associato all'eccezione. Se non
-	 * è stato associato nessun oggetto viene restituito un nuovo <code>AnagraficoBulk</code>.
+	 * Ã¨ stato associato nessun oggetto viene restituito un nuovo <code>AnagraficoBulk</code>.
 	 *
 	 * @return it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk
 	 */

@@ -43,11 +43,11 @@ public class CRUDPdgModuloEntrateGestComponent extends it.cnr.jada.comp.CRUDComp
 	 * Nome: Inizializzazione;
 	 * Pre:  Preparare l'oggetto alle modifiche;
 	 * Post: Si procede, oltre che alla normale procedura di inizializzazione di un oggetto bulk,
-	 *       anche al caricamento dei dettagli gestionali e al calcolo delle somme gi‡ ripartite.
+	 *       anche al caricamento dei dettagli gestionali e al calcolo delle somme gi√† ripartite.
 	 *
-	 * @param bulk dovr‡ essere sempre <code>Pdg_Modulo_EntrateBulk</code>.
+	 * @param bulk dovr√† essere sempre <code>Pdg_Modulo_EntrateBulk</code>.
 	 *
-	 * @return un <code>OggettoBulk</code> che sar‡ sempre un <code>Pdg_Modulo_EntrateBulk</code>.
+	 * @return un <code>OggettoBulk</code> che sar√† sempre un <code>Pdg_Modulo_EntrateBulk</code>.
 	 */
 	public OggettoBulk inizializzaBulkPerModifica(UserContext userContext, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 		try {
@@ -70,13 +70,13 @@ public class CRUDPdgModuloEntrateGestComponent extends it.cnr.jada.comp.CRUDComp
 	 * Pre-post-conditions:
 	 *
 	 * Nome: Modifica di un Modulo
-	 * Pre:  La richiesta di modifica di un Modulo Ë stata generata
+	 * Pre:  La richiesta di modifica di un Modulo √® stata generata
 	 * Post: Viene loccato il record PDG_MODULO_SPESE con l'istruzione findAndLock per evitare che salvataggi 
-	 *       simultanei da parte di pi˘ utenti possano alterare i controlli.
+	 *       simultanei da parte di pi√π utenti possano alterare i controlli.
 	 * 		 Vengono verificati i dettagli gestionali associati al modulo per controllare che il totale 
 	 *       dell'importo ripartito non sia superiore all'importo previsto in Bilancio.
 	 * 	     In caso affermativo viene generata una ApplicationException per segnalare all'utente 
-	 *       l'impossibilit‡ di modificare i dettagli gestionali associati al Modulo.
+	 *       l'impossibilit√† di modificare i dettagli gestionali associati al Modulo.
 	 *
 	 * @param	usercontext	lo UserContext che ha generato la richiesta
 	 * @param	oggettobulk il Pdg_Modulo_EntrateBulk che deve essere modificato
@@ -90,7 +90,7 @@ public class CRUDPdgModuloEntrateGestComponent extends it.cnr.jada.comp.CRUDComp
 			Pdg_Modulo_EntrateBulk testata = (Pdg_Modulo_EntrateBulk)super.modificaConBulk(usercontext, oggettobulk);
 			BigDecimal totRipartito = calcolaImporto(usercontext,testataHome.calcolaTotaleDettagliGestionali(usercontext,testata));
 			if (totRipartito.compareTo(testata.getIm_entrata())>0)
-				throw new ApplicationException("Impossibile salvare: il totale della somma ripartita (" + new it.cnr.contab.util.EuroFormat().format(totRipartito) + ") Ë superiore all'importo previsto in Bilancio (" + new it.cnr.contab.util.EuroFormat().format(testata.getIm_entrata()) + ").");					
+				throw new ApplicationException("Impossibile salvare: il totale della somma ripartita (" + new it.cnr.contab.util.EuroFormat().format(totRipartito) + ") √® superiore all'importo previsto in Bilancio (" + new it.cnr.contab.util.EuroFormat().format(testata.getIm_entrata()) + ").");					
 			return testata;
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
@@ -152,10 +152,10 @@ public class CRUDPdgModuloEntrateGestComponent extends it.cnr.jada.comp.CRUDComp
 	 * Pre-post-conditions:
 	 *
 	 * Nome: Default
-	 * Pre:  E' stata generata la richiesta di ricerca di una Linea di Attivit‡
-	 * Post: Vengono restituite tutte le Linee di Attivit‡ che:
+	 * Pre:  E' stata generata la richiesta di ricerca di una Linea di Attivit√†
+	 * Post: Vengono restituite tutte le Linee di Attivit√† che:
 	 * 		 - sono associate al CDR Assegnatario del dettaglio gestionale Pdg_modulo_entrate_gestBulk;
-	 * 		 - sono associate al Modulo di Attivit‡ del dettaglio gestionale Pdg_modulo_entrateBulk;
+	 * 		 - sono associate al Modulo di Attivit√† del dettaglio gestionale Pdg_modulo_entrateBulk;
 	 * 		 - abbiano la stessa NATURA del dettaglio gestionale Pdg_modulo_entrateBulk;
 	 * 		 - siano Linee utilizzabile nella Gestione entrate (TI_GESTIONE='E')
 	 * 		 
@@ -211,8 +211,8 @@ public class CRUDPdgModuloEntrateGestComponent extends it.cnr.jada.comp.CRUDComp
 	 * 		 - sono associate a classificazioni di un livello pari a quello definito in Parametri_Ente;
 	 * 		 - le classificazioni associate sono figlie della classificazione del dettaglio gestionale Pdg_modulo_entrate_gestBulk
 	 * 		 - non sia una partita di giro
-	 * 		 - abbia la natura uguale a quella della Linea di Attivit‡ del dettaglio gestionale Pdg_modulo_entrate_gestBulk
-	 * 		 - non sia una voce di tipo SAC se il CDR non Ë di tipo SAC
+	 * 		 - abbia la natura uguale a quella della Linea di Attivit√† del dettaglio gestionale Pdg_modulo_entrate_gestBulk
+	 * 		 - non sia una voce di tipo SAC se il CDR non √® di tipo SAC
 	 * 		 
 	 * @param userContext lo userContext che ha generato la richiesta
 	 * @param clauses clausole di ricerca gia' specificate dall'utente

@@ -21,7 +21,7 @@ public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,Og
 		messaggio.setPg_messaggio(new Long(this.fetchNextSequenceValue(userContext,"CNRSEQ00_PG_MESSAGGIO").longValue()));
 }
 /**
-  *	Ritorna TRUE se il messaggio <messaggio> è stato visionato dall'utente,
+  *	Ritorna TRUE se il messaggio <messaggio> Ã¨ stato visionato dall'utente,
   * collegato ed individuato tramite lo usercontext <usercontext>, 
   * FALSE altrimenti
   *  

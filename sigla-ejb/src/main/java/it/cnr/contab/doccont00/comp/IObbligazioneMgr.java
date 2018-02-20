@@ -14,7 +14,7 @@ public interface IObbligazioneMgr extends IDocumentoContabileMgr, ICRUDMgr
 
 /**
  * Aggiornamento in differita dei saldi dell'obbligazione .
- * Un documento amministrativo di spesa che agisce in modalit‡ transazionale ha creato/modificato gli importi 
+ * Un documento amministrativo di spesa che agisce in modalit√† transazionale ha creato/modificato gli importi 
  * relativi ad un'obbligazione; i saldi di tale obbligazione non possono essere aggiornati subito in quanto
  * tale operazione genererebbe dei lock sulle voci del piano che non ne consentirebbere l'utilizzo ad altri utenti;
  * pertanto l'aggiornamento dei saldi dell'obbligazione viene differito al momento del salvataggio
@@ -37,7 +37,7 @@ public interface IObbligazioneMgr extends IDocumentoContabileMgr, ICRUDMgr
  * @param	uc	lo UserContext che ha generato la richiesta
  * @param	obbligazione	l'ObbligazioneBulk per cui aggiornare i saldi
  * @param	values	la Map che contiene il "pg_ver_rec" iniziale dell'obbligazione e il "checkDisponibilitaCassaEseguito" che indica se
- *          l'utente ha richiesto la forzatura della disponibilit‡ di cassa (parametro impostato dalla Gestione Obbligazione)
+ *          l'utente ha richiesto la forzatura della disponibilit√† di cassa (parametro impostato dalla Gestione Obbligazione)
  * @param	param il parametro che indica se il controllo della disp. di cassa e' necessario (parametro impostato dalla Gestione dei doc. amm.)
 */
 
@@ -49,24 +49,24 @@ public abstract void aggiornaSaldiInDifferita(it.cnr.jada.UserContext param0,it.
   *      scadenza(n+1).importo > differenza in scadenza(n).importo
   *      scadenza(n+1) non ha documenti amministrativi associati
   *    PostCondition:
-  *      Il sistema eseguir‡ l'aggiornamento dell'importo della scadenza successiva (n+1) dell'obbligazione aggiungendo la differenza fra il nuovo e vecchio importo della scadenza in aggiornamento. 
-  *      La differenza Ë espressa come (scadenzario(n).importo_nuovo - scadenzario(n).importo_vecchio)
+  *      Il sistema eseguir√† l'aggiornamento dell'importo della scadenza successiva (n+1) dell'obbligazione aggiungendo la differenza fra il nuovo e vecchio importo della scadenza in aggiornamento. 
+  *      La differenza √® espressa come (scadenzario(n).importo_nuovo - scadenzario(n).importo_vecchio)
   *  scadenza(n+1).importo <= differenza in scadenza(n).importo
   *    PreCondition:
   *      L'utente richiede l'aggiornamento in automatico dell'importo della scadenza successiva (scadenza(n+1)) alla scadenza in elaborazione (scadenza(n)), ma l'aumento dell'importo della scadenza(n) supera il valore dell'importo dell'ultima scadenza dell'obbligazione. Una formula per questa condizione sarebbe (scadenzario(n+1).importo - (scadenzario(n).importo_nuovo - scadenzario(n).importo_vecchio) > 0)
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non Ë possibile perchÈ l'aumento dell'importo della scadenza(n) Ë maggiore all'importo dell'ultima scadenza (cercarebbe settare l'importo <= 0). L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non √® possibile perch√© l'aumento dell'importo della scadenza(n) √® maggiore all'importo dell'ultima scadenza (cercarebbe settare l'importo <= 0). L'attivit√† non √® consentita.
   *  scadenza(n+1) non esiste
   *    PreCondition:
-  *      L'utente richiede l'aggiornamento in automatico dell'importo della scadenza successiva (scadenza(n+1)) alla scadenza in elaborazione (scadenza(n)), ma la scadenza in aggiornamento Ë l'ultima scadenza dell'obbligazione.
+  *      L'utente richiede l'aggiornamento in automatico dell'importo della scadenza successiva (scadenza(n+1)) alla scadenza in elaborazione (scadenza(n)), ma la scadenza in aggiornamento √® l'ultima scadenza dell'obbligazione.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non Ë possibile perchÈ non esiste una scadenza successiva. L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non √® possibile perch√© non esiste una scadenza successiva. L'attivit√† non √® consentita.
   *  scadenza(n+1) ha doc amministrativi associati
   *    PreCondition:
   *      L'utente richiede l'aggiornamento in automatico dell'importo della scadenza successiva (scadenza(n+1)) 
   *      alla scadenza in elaborazione (scadenza(n)), ma la scadenza (n+1) ha documenti amministrativi associati
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che la modifica della scadenza non Ë valida.
+  *      Il metodo utilizza un Throw Exception per comunicare che la modifica della scadenza non √® valida.
   *
   * @param aUC lo user context 
   * @param os l'istanza di  <code>Obbligazione_scadenzarioBulk</code> della quale deve essere individuata la scadenza successiva per aggiornarne l'importo
@@ -77,11 +77,11 @@ public abstract it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk a
 public void callRiportaAvanti (UserContext userContext,IDocumentoContabileBulk doc) throws ComponentException;
 public void callRiportaIndietro (UserContext userContext,IDocumentoContabileBulk doc) throws ComponentException;
 /** 
-  *  Lo stato dell'obbligazione Ë Provvisoria e non esistono ordini
+  *  Lo stato dell'obbligazione √® Provvisoria e non esistono ordini
   *    PreCondition:
-  *      Lo stato dell'obbligazione Ë Provvisoria e non esiste nessun ordine associato all'obbligazione
+  *      Lo stato dell'obbligazione √® Provvisoria e non esiste nessun ordine associato all'obbligazione
   *    PostCondition:
-  *      Il sistema eseguir‡ le seguente attivit‡:
+  *      Il sistema eseguir√† le seguente attivit√†:
   *      1) L'aggiornamento dei saldi 'obbligazioni' dei capitoli di spesa CdS.
   *         (Questo processo viene eseguito dal metodo 'aggiornaCapitoloSaldoObbligazione').
   *      2) L'eliminazione di ogni scadenza nello scadenzario dell'obbligazione,
@@ -92,7 +92,7 @@ public void callRiportaIndietro (UserContext userContext,IDocumentoContabileBulk
   *      Per l'obbligazione provvisoria e' stato definito un ordine
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che per cancellare un'obbligazione provvisoria
-  *      per la quale e' gi‡ stato emesso un ordine e' necessario prima cancellare l'ordine
+  *      per la quale e' gi√† stato emesso un ordine e' necessario prima cancellare l'ordine
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione da cancellare
@@ -100,20 +100,20 @@ public void callRiportaIndietro (UserContext userContext,IDocumentoContabileBulk
 
 public abstract void cancellaObbligazioneProvvisoria(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk param1) throws it.cnr.jada.comp.ComponentException;
 /** 
-  *  Lo stato dell'obbligazione Ë Provvisoria - esercizio ok
+  *  Lo stato dell'obbligazione √® Provvisoria - esercizio ok
   *    PreCondition:
-  *      Lo stato dell'obbligazione Ë Provvisoria.
+  *      Lo stato dell'obbligazione √® Provvisoria.
   *      L'esercizio di competenza dell'obbligazione e' uguale all'esercizio di creazione
   *    PostCondition:
   *      L'obbligazione viene aggiornata allo stato di 'Definitiva'.
   *
-  *  Lo stato dell'obbligazione Ë Provvisoria - esercizio errore
+  *  Lo stato dell'obbligazione √® Provvisoria - esercizio errore
   *    PreCondition:
-  *      Lo stato dell'obbligazione Ë Provvisoria.
+  *      Lo stato dell'obbligazione √® Provvisoria.
   *      L'esercizio di competenza dell'obbligazione e' maggiore all'esercizio di creazione
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che un'obbligazione con esercizio competenza
-  *      maggiore all'esercizio di creazione non puÚ essere resa definitiva
+  *      maggiore all'esercizio di creazione non pu√≤ essere resa definitiva
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione da confermare
@@ -127,7 +127,7 @@ public abstract it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk confermaObbli
   *    PreCondition:
   *      Una richiesta di creazione di un'obbligazione e' stata generata
   *      L'obbligazione ha superato i controlli eseguiti dal metodo 'verificaObbligazione' 
-  *      L'obbligazione ha superato i controlli sulla disponibilit‡ di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
+  *      L'obbligazione ha superato i controlli sulla disponibilit√† di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
   *      L'obbligazione non e' stata creata in un contesto transazionale
   *    PostCondition:
   *      L'obbligazione viene creata, i dettagli di tutte le scadenze vengono creati (metodo generaDettagliScadenzaObbligazione) e i saldi 
@@ -136,7 +136,7 @@ public abstract it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk confermaObbli
   *    PreCondition:
   *      Una richiesta di creazione di un'obbligazione e' stata generata
   *      L'obbligazione ha superato i controlli eseguiti dal metodo 'verificaObbligazione' 
-  *      L'obbligazione ha superato i controlli sulla disponibilit‡ di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
+  *      L'obbligazione ha superato i controlli sulla disponibilit√† di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
   *      L'obbligazione e' stata creata in un contesto transazionale
   *    PostCondition:
   *      L'obbligazione viene creata e i dettagli di tutte le sue scadenze vengono creati (metodo generaDettagliScadenzaObbligazione) 
@@ -146,16 +146,16 @@ public abstract it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk confermaObbli
   *      controlli eseguiti dal metodo 'verificaObbligazione'
   *    PostCondition:
   *      Viene generata un'ApplicationException che descrive all'utente l'errore che si e' verificato
-  *  Errore di disponibilit‡ di cassa
+  *  Errore di disponibilit√† di cassa
   *    PreCondition:
   *      Una richiesta di creazione di un'obbligazione e' stata generata e l'obbligazione non ha superato i
-  *      controlli di disponibilit‡ di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
+  *      controlli di disponibilit√† di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
   *    PostCondition:
   *      Viene generata un'ApplicationException che descrive all'utente l'errore che si e' verificato
-  *  Errore di disponibilit‡ di cassa - forzatura
+  *  Errore di disponibilit√† di cassa - forzatura
   *    PreCondition:
   *      Una richiesta di creazione di un'obbligazione e' stata generata e l'obbligazione non ha superato i
-  *      controlli di disponibilit‡ di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'  
+  *      controlli di disponibilit√† di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'  
   *		 e l'utente ha scelto di forzare l'emissione dell'obbligazione
   *    PostCondition:
   *      L'obbligazione viene creata, i dettagli di tutte le scadenze vengono creati (metodo generaDettagliScadenzaObbligazione) e i saldi 
@@ -207,92 +207,92 @@ public abstract it.cnr.contab.doccont00.ordine.bulk.OrdineBulk findOrdineFor(it.
   *      L'utente ha richiesto l'imputazione automatica dell'obbligazione e ha creato una scadenza o ha modificato l'importo
   *      di una scadenza esistente
   *    PostCondition:
-  *      Per ogni linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *      il metodo calcolaPercentualeImputazioneObbligazione viene utilizzato per determinare le percentuali
-  *      assegnate ad ogni linea d'attivit‡/capitolo e per riaprtire l'importo della scadenza sui vari dettagli
+  *      assegnate ad ogni linea d'attivit√†/capitolo e per riaprtire l'importo della scadenza sui vari dettagli
   *      in base a tali percentuali
   *  creazione scadenza/modifica importo - imputazione manuale
   *    PreCondition:
   *      L'utente ha specificato l'imputazione manuale dell'obbligazione e ha creato una scadenza o ha modificato l'importo
   *      di una scadenza esistente
   *    PostCondition:
-  *      Per ogni linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *  conferma imputazione finanziaria - imputazione automatica
   *    PreCondition:
-  *      L' utente ha completato l'imputazione finanziaria, confermando le linee di attivit‡ selezionate, e ha richiesto la ripartizione automatica degli importi
+  *      L' utente ha completato l'imputazione finanziaria, confermando le linee di attivit√† selezionate, e ha richiesto la ripartizione automatica degli importi
   *      delle scadenze
   *    PostCondition:
-  *      Per ogni scadenza dell'obbligazione e per ogni linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'obbligazione e per ogni linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *      il metodo calcolaPercentualeImputazioneObbligazione viene utilizzato per determinare le percentuali
-  *      assegnate ad ogni linea d'attivit‡/capitolo e per ripartire l'importo della scadenza sui vari dettagli
+  *      assegnate ad ogni linea d'attivit√†/capitolo e per ripartire l'importo della scadenza sui vari dettagli
   *      in base a tali percentuali
   *  conferma imputazione finanziaria - imputazione manuale
   *    PreCondition:
-  *      L' utente ha completato l'imputazione finanziaria, confermando le linee di attivit‡ selezionate, e ha selezionato la ripartizione manuale degli importi
+  *      L' utente ha completato l'imputazione finanziaria, confermando le linee di attivit√† selezionate, e ha selezionato la ripartizione manuale degli importi
   *      delle scadenze
   *    PostCondition:
-  *      Per ogni scadenza dell'obbligazione e per ogni linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'obbligazione e per ogni linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *  modifica imputazione finanziaria - imputazione automatica
   *    PreCondition:
   *      L' utente ha modificato l'imputazione finanziaria definita per l'obbligazione e ha richiesto la ripartizione automatica degli importi
   *      delle scadenze
   *    PostCondition:
-  *      Tutti i dettagli delle scadenze dell'obbligazione che facevano riferimento a linee di attivit‡ non pi˘ selezionate
+  *      Tutti i dettagli delle scadenze dell'obbligazione che facevano riferimento a linee di attivit√† non pi√π selezionate
   *      vengono cancellati
-  *      Per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *      il metodo calcolaPercentualeImputazioneObbligazione viene utilizzato per determinare le percentuali
-  *      assegnate ad ogni linea d'attivit‡/capitolo e per ripartire l'importo della scadenza sui vari dettagli
+  *      assegnate ad ogni linea d'attivit√†/capitolo e per ripartire l'importo della scadenza sui vari dettagli
   *      in base a tali percentuali
   *  modifica imputazione finanziaria - imputazione manuale
   *    PreCondition:
   *      L' utente ha modificato l'imputazione finanziaria definita per l'obbligazione e ha selezionato la ripartizione manuale degli importi
   *      delle scadenze
   *    PostCondition:
-  *      Tutti i dettagli delle scadenze dell'obbligazione che facevano riferimento a linee di attivit‡ non pi˘ selezionate
+  *      Tutti i dettagli delle scadenze dell'obbligazione che facevano riferimento a linee di attivit√† non pi√π selezionate
   *      vengono cancellati
-  *      Per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'obbligazione e per ogni nuova linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Obbligazione_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *  Errore - imputazione automatica per linea att SINGOLA
   *    PreCondition:
-  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attivit‡ dal piano di gestione 
+  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attivit√† dal piano di gestione 
   *      con categoria di dettaglio = SINGOLA e per le quali la somma delle colonne I,K,Q,S,U e' nullo
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare all'utente l'impossibilit‡ di effettuare in automatico la
-  *      ripartizione dell'importo della scadenza sulle linee di attivit‡ scelte
+  *      Il metodo utilizza un Throw Exception per comunicare all'utente l'impossibilit√† di effettuare in automatico la
+  *      ripartizione dell'importo della scadenza sulle linee di attivit√† scelte
   *  Errore - imputazione automatica per linea att SCARICO
   *    PreCondition:
-  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attivit‡ dal piano di gestione 
+  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attivit√† dal piano di gestione 
   *      con categoria di dettaglio = SCARICO e per le quali la somma delle colonne J,L,R,T e' nullo
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare all'utente l'impossibilit‡ di effettuare in automatico la
-  *      ripartizione dell'importo della scadenza sulle linee di attivit‡ scelte
+  *      Il metodo utilizza un Throw Exception per comunicare all'utente l'impossibilit√† di effettuare in automatico la
+  *      ripartizione dell'importo della scadenza sulle linee di attivit√† scelte
   *  Errore - percentuali per nuove linee att.
   *    PreCondition:
-  *      L'utente ha specificato solo delle linee di attivit‡ che non sono presenti nel piano di gestione e la somma
+  *      L'utente ha specificato solo delle linee di attivit√† che non sono presenti nel piano di gestione e la somma
   *      delle percentuali inserite dall'utente da utilizzare nella ripartizione dell'importo di ogni scadenza e' diversa
   *      da 100.
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare l'errore all'utente
   *  Errore - percentuali per nuove linee att. > 100
   *    PreCondition:
-  *      L'utente ha specificato per le linee di attivit‡ che non sono presenti nel piano di gestione 
+  *      L'utente ha specificato per le linee di attivit√† che non sono presenti nel piano di gestione 
   *      delle percentuali  da utilizzare nella ripartizione dell'importo di ogni scadenza e la loro somma e'
   *      maggiore di 100
   *    PostCondition:
@@ -314,29 +314,29 @@ public abstract it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk generaDettagl
   *    PostCondition:
   *      L'applicazione crea un report contenente la situazione 'spese' per una obbligazione e per i cdr che
   *      l'utente ha seelzionato.
-  *      Il prospetto avr‡ una riga per ogni linea di attivit‡ relativa ai piani di gestione dei CdR 
-  *      considerati nell'obbligazione. Il formatto sar‡:
+  *      Il prospetto avr√† una riga per ogni linea di attivit√† relativa ai piani di gestione dei CdR 
+  *      considerati nell'obbligazione. Il formatto sar√†:
   *      
-  *      Colonna 1: Linea di attivit‡
-  *      Colonna 2: Spese previste nel pdg, calcolati per il 1∞ esercizio = somma degli importi delle colonne (I), (K), (Q), (S) e (U)
-  *      Colonna 3: Spese previste nel pdg, calcolati per il 2∞ esercizio = somma degli importi delle colonne (AC), (AE) e (AG)
-  *      Colonna 4: Spese previste nel pdg, calcolati per il 3∞ esercizio = somma degli importi delle colonne (AC), (AE) e (AG)  
-  *      Colonna 5: Totale Obbligazioni emesse i cui dettagli corrispondono per CdR e LdA nel 1∞ esercizio
-  *      Colonna 6: Totale Obbligazioni emesse i cui dettagli corrispondono per CdR e LdA nel 2∞ esercizio
-  *      Colonna 7: Totale Obbligazioni emesse i cui dettagli corrispondono per CdR e LdA nel 3∞ esercizio    
+  *      Colonna 1: Linea di attivit√†
+  *      Colonna 2: Spese previste nel pdg, calcolati per il 1¬∞ esercizio = somma degli importi delle colonne (I), (K), (Q), (S) e (U)
+  *      Colonna 3: Spese previste nel pdg, calcolati per il 2¬∞ esercizio = somma degli importi delle colonne (AC), (AE) e (AG)
+  *      Colonna 4: Spese previste nel pdg, calcolati per il 3¬∞ esercizio = somma degli importi delle colonne (AC), (AE) e (AG)  
+  *      Colonna 5: Totale Obbligazioni emesse i cui dettagli corrispondono per CdR e LdA nel 1¬∞ esercizio
+  *      Colonna 6: Totale Obbligazioni emesse i cui dettagli corrispondono per CdR e LdA nel 2¬∞ esercizio
+  *      Colonna 7: Totale Obbligazioni emesse i cui dettagli corrispondono per CdR e LdA nel 3¬∞ esercizio    
   *  valutazione prospetto
   *    PreCondition:
   *      I dati necessari per il prospetto sono stati raccolti.
   *    PostCondition:
   *      Il delta risultante dal prospetto (Colonna 5 - Colonna 2, Colonna 6 - Colonna 3, Colonna 7 - Colonna4 ) viene confrontato 
-  *      con l'importo del totale delle linee di attivit‡ 
+  *      con l'importo del totale delle linee di attivit√† 
   *      appartenenti allo stesso CdR, nel caso che detto importo sia maggiore del delta risultante, 
   *      il sistema restituisce un messaggio di 'segnalazione' (non bloccante) con il quale avverte il responsabile 
-  *      della possibilit‡ di  'sfondamento'. Il controllo sar‡ ripetuto per ogni cdr coinvolto nei dettagli delle obbligazioni.
+  *      della possibilit√† di  'sfondamento'. Il controllo sar√† ripetuto per ogni cdr coinvolto nei dettagli delle obbligazioni.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param cdrList la lista di CdrBulk per cui generare il prospetto spese
-  * @return la lista di <code>V_obblig_pdg_saldo_laBulk</code> coi dati relativi alle linee di attivit‡ dei Cdr selezionati
+  * @return la lista di <code>V_obblig_pdg_saldo_laBulk</code> coi dati relativi alle linee di attivit√† dei Cdr selezionati
   *  
  */
 
@@ -366,17 +366,17 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
   *    PreCondition:
   *      L'obbligazione richiesta non esiste.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che l'obbligazione non Ë stata trovata. L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che l'obbligazione non √® stata trovata. L'attivit√† non √® consentita.
   *  Obbligazione trovata
   *    PreCondition:
-  *      L'obbligazione richiesta Ë stata trovata.
+  *      L'obbligazione richiesta √® stata trovata.
   *    PostCondition:
-  *      L'obbligazione viene caricata normalmente. L'imputazione finanziaria Ë impostata una volta sola al livello di testata, e poi vale per tutte le scadenze nello scadenzario. In questo caso l'applicazione ricava le informazione per l'imputazione finanziaria dalla prima scadenza dello scadenzario.
+  *      L'obbligazione viene caricata normalmente. L'imputazione finanziaria √® impostata una volta sola al livello di testata, e poi vale per tutte le scadenze nello scadenzario. In questo caso l'applicazione ricava le informazione per l'imputazione finanziaria dalla prima scadenza dello scadenzario.
   *  Scadenzario dell'obbligazione non esiste
   *    PreCondition:
   *      L'obbligazione richiesta esiste, ma lo scadenzario per l'obbligazione non esiste.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che lo scadenzario non Ë stato trovato. L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che lo scadenzario non √® stato trovato. L'attivit√† non √® consentita.
   *
   * @param aUC lo user context 
   * @param bulk l'istanza di  <code>ObbligazioneBulk</code> da inizializzare
@@ -401,13 +401,13 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
 
 public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerRicerca(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
 /** 
-  *  Tipologia CdS Ë 'SAC'
+  *  Tipologia CdS √® 'SAC'
   *    PreCondition:
   *      L'utente ha specificato una voce del piano in testata di una obbligazione appartenente al cds SAC
   *    PostCondition:
   *      L'elenco degli articoli di spesa CDS presenti nel piano dei conti Parte 1, aventi come titolo-capitolo la voce del piano selezionata dall'utente,
   *      viene presentato all'utente, evidenziandone la funzione
-  *  Tipologia CdS Ë diverso da 'SAC'
+  *  Tipologia CdS √® diverso da 'SAC'
   *    PreCondition:
   *      L'utente ha specificato una voce del piano in testata di una obbligazione appartenente ad un cds con tipologia diversa da SAC
   *    PostCondition:
@@ -427,7 +427,7 @@ public abstract it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk listaCapitoli
   *      L'utente ha selezionato dei capitoli di spesa CDS per un'obbligazione appartenente ad un cds diverso da SAC e per la
   *      quale non e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
-  *      Viene estratto l'elenco dei Cdr appartenenti all'uo di scrivania per i quali sono presenti nel piano di gestione delle linee di attivit‡,
+  *      Viene estratto l'elenco dei Cdr appartenenti all'uo di scrivania per i quali sono presenti nel piano di gestione delle linee di attivit√†,
   *      con categoria dettaglio = SINGOLA e
   *      la cui funzione e' uguale ad una di quelle dei capitoli di spesa selezionati dall'utente
   *  CdS diverso da 'SAC' - obbligazione Spese per Costi Altrui
@@ -435,11 +435,11 @@ public abstract it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk listaCapitoli
   *      L'utente ha selezionato dei capitoli di spesa CDS per un'obbligazione appartenente ad un cds diverso da SAC e per la
   *      quale e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
-  *      Viene estratto l'elenco dei Cdr appartenenti all'uo di scrivania per i quali sono presenti nel piano di gestione delle linee di attivit‡,
+  *      Viene estratto l'elenco dei Cdr appartenenti all'uo di scrivania per i quali sono presenti nel piano di gestione delle linee di attivit√†,
   *      con categoria dettaglio = SINGOLA e
   *      la cui funzione e' uguale ad una di quelle dei capitoli di spesa selezionati dall'utente; a tale elenco viene aggiunto
-  *      quello ottenuto estraendo i Cdr per i quali sono presenti nel piano di gestione delle linee di attivit‡,
-  *      con categoria dettaglio = SCARICO e la cui linea di attivit‡ collegata appartiene all'uo di scrivania e
+  *      quello ottenuto estraendo i Cdr per i quali sono presenti nel piano di gestione delle linee di attivit√†,
+  *      con categoria dettaglio = SCARICO e la cui linea di attivit√† collegata appartiene all'uo di scrivania e
   *      la cui funzione e' uguale ad una di quelle dei capitoli di spesa selezionati dall'utente
   *  CdS 'SAC' - obbligazione non Spese per Costi Altrui
   *    PreCondition:
@@ -447,7 +447,7 @@ public abstract it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk listaCapitoli
   *      quale non e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
   *      Fra tutti i Cdr selezionati implicitamente dall'utente con la selezione degli articoli viene estratto 
-  *      l'elenco di quelli per i quali sono presenti nel piano di gestione delle linee di attivit‡
+  *      l'elenco di quelli per i quali sono presenti nel piano di gestione delle linee di attivit√†
   *      con categoria dettaglio = SINGOLA e
   *      il cui cdr e funzione sono uguali ad uno di quelli degli articoli selezionati dall'utente
   *  CdS 'SAC' - obbligazione Spese per Costi Altrui
@@ -456,11 +456,11 @@ public abstract it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk listaCapitoli
   *      quale e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
   *      Fra tutti i Cdr selezionati implicitamente dall'utente con la selezione degli articoli viene estratto 
-  *      l'elenco di quelli per i quali sono presenti nel piano di gestione delle linee di attivit‡
+  *      l'elenco di quelli per i quali sono presenti nel piano di gestione delle linee di attivit√†
   *      con categoria dettaglio = SINGOLA e
   *      il cui cdr e funzione e' uguale ad una di quelle degli articoli selezionati dall'utente; a tale elenco viene aggiunto
-  *      quello ottenuto estraendo i Cdr per i quali sono presenti nel piano di gestione delle linee di attivit‡,
-  *      con categoria dettaglio = SCARICO e la cui linea di attivit‡ collegata ha cdr e funzione uguali
+  *      quello ottenuto estraendo i Cdr per i quali sono presenti nel piano di gestione delle linee di attivit√†,
+  *      con categoria dettaglio = SCARICO e la cui linea di attivit√† collegata ha cdr e funzione uguali
   *      ad uno di quelli selezionati dall'utente con la selezione degli articoli di spesa
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -477,7 +477,7 @@ public abstract java.util.Vector listaCdrPerCapitoli(it.cnr.jada.UserContext par
   *      di un'obbligazione appartenente ad un cds diverso da SAC e per la
   *      quale non e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
-  *      Vengono estratte tutte le linee di attivit‡ presenti nel piano di gestione con categoria dettaglio = SINGOLA e
+  *      Vengono estratte tutte le linee di attivit√† presenti nel piano di gestione con categoria dettaglio = SINGOLA e
   *      cdr uguale ad uno di quelli selezionati dall'utente
   *      e funzione uguale ad una di quelle selezionate implicitamente dall'utente con la selezione dei capitoli.
   *  CdS diverso da 'SAC' - obbligazione Spese per Costi Altrui
@@ -486,11 +486,11 @@ public abstract java.util.Vector listaCdrPerCapitoli(it.cnr.jada.UserContext par
   *      di un'obbligazione appartenente ad un cds diverso da SAC e per la
   *      quale e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
-  *      Vengono estratte tutte le linee di attivit‡ presenti nel piano di gestione con categoria dettaglio = SINGOLA e
+  *      Vengono estratte tutte le linee di attivit√† presenti nel piano di gestione con categoria dettaglio = SINGOLA e
   *      cdr uguale ad uno di quelli selezionati dall'utente
   *      e funzione uguale ad una di quelle selezionate implicitamente dall'utente con la selezione dei capitoli;
-  *      a tale elenco viene aggiunto quello ottenuto estraendo le linee di attivit‡ presenti nel piano di gestione
-  *      con categoria dettaglio = SCARICO e la cui linea di attivit‡ collegata appartiene all'uo di scrivania e
+  *      a tale elenco viene aggiunto quello ottenuto estraendo le linee di attivit√† presenti nel piano di gestione
+  *      con categoria dettaglio = SCARICO e la cui linea di attivit√† collegata appartiene all'uo di scrivania e
   *      la cui funzione e' uguale ad una di quelle dei capitoli di spesa selezionati dall'utente
   *  CdS 'SAC' - obbligazione non Spese per Costi Altrui
   *    PreCondition:
@@ -498,7 +498,7 @@ public abstract java.util.Vector listaCdrPerCapitoli(it.cnr.jada.UserContext par
   *      di un'obbligazione appartenente al cds SAC e per la
   *      quale non e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
-  *      Vengono estratte tutte le linee di attivit‡ presenti nel piano di gestione con categoria dettaglio = SINGOLA e
+  *      Vengono estratte tutte le linee di attivit√† presenti nel piano di gestione con categoria dettaglio = SINGOLA e
   *      cdr uguale ad uno di quelli selezionati dall'utente
   *      e cdr e funzione uguali ad uno di quelli selezionati implicitamente dall'utente con la selezione degli articoli.
   *  CdS 'SAC' - obbligazione Spese per Costi Altrui
@@ -507,17 +507,17 @@ public abstract java.util.Vector listaCdrPerCapitoli(it.cnr.jada.UserContext par
   *      di un'obbligazione appartenente al cds SAC e per la
   *      quale e' stato selezionato il flag Spese per Costi Altrui
   *    PostCondition:
-  *      Vengono estratte tutte le linee di attivit‡ presenti nel piano di gestione con categoria dettaglio = SINGOLA e
+  *      Vengono estratte tutte le linee di attivit√† presenti nel piano di gestione con categoria dettaglio = SINGOLA e
   *      cdr uguale ad uno di quelli selezionati dall'utente
   *      e cdr e funzione uguali ad uno di quelli selezionati implicitamente dall'utente con la selezione degli articoli;
-  *      a tale elenco viene aggiunto quello ottenuto estraendo le linee di attivit‡ presenti nel piano di gestione
-  *      con categoria dettaglio = SCARICO il cui cdr e' uno di quelli selezionati dall'utente e la cui linea di attivit‡ 
+  *      a tale elenco viene aggiunto quello ottenuto estraendo le linee di attivit√† presenti nel piano di gestione
+  *      con categoria dettaglio = SCARICO il cui cdr e' uno di quelli selezionati dall'utente e la cui linea di attivit√† 
   *      collegata ha cdr e funzione uguale ad uno di quelli selezionati implicitamente dall'utente 
   *      con la selezione degli articoli
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
-  * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione per cui recuperare le linee di attivit‡
-  * @return ObbligazioneBulk l'obbligazione con le linee di attivit‡ impostate
+  * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione per cui recuperare le linee di attivit√†
+  * @return ObbligazioneBulk l'obbligazione con le linee di attivit√† impostate
   *
   */
 
@@ -541,7 +541,7 @@ public abstract void lockScadenza(it.cnr.jada.UserContext param0,it.cnr.contab.d
   *    PreCondition:
   *      Una richiesta di modifica di un'obbligazione e' stata generata
   *      L'obbligazione ha superato i controlli eseguiti dal metodo 'verificaObbligazione' 
-  *      L'obbligazione ha superato i controlli sulla disponibilit‡ di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
+  *      L'obbligazione ha superato i controlli sulla disponibilit√† di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
   *      L'obbligazione non e' stata modificata in un contesto transazionale  
   *    PostCondition:
   *      L'obbligazione viene aggiornata
@@ -552,7 +552,7 @@ public abstract void lockScadenza(it.cnr.jada.UserContext param0,it.cnr.contab.d
   *    PreCondition:
   *      Una richiesta di modifica di un'obbligazione e' stata generata
   *      L'obbligazione ha superato i controlli eseguiti dal metodo 'verificaObbligazione' 
-  *      L'obbligazione ha superato i controlli sulla disponibilit‡ di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
+  *      L'obbligazione ha superato i controlli sulla disponibilit√† di cassa delle voci del piano eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
   *      L'obbligazione e' stata modificata in un contesto transazionale  
   *    PostCondition:
   *      L'obbligazione viene aggiornata e i dettagli di tutte le scadenze vengono aggiornati (metodo generaDettagliScadenzaObbligazione) 
@@ -562,16 +562,16 @@ public abstract void lockScadenza(it.cnr.jada.UserContext param0,it.cnr.contab.d
   *      controlli eseguiti dal metodo 'verificaObbligazione'
   *    PostCondition:
   *      Viene generata un'ApplicationException che descrive all'utente l'errore che si e' verificato
-  *  Errore di disponibilit‡ di cassa
+  *  Errore di disponibilit√† di cassa
   *    PreCondition:
   *      Una richiesta di modifica di un'obbligazione e' stata generata e l'obbligazione non ha superato i
-  *      controlli di disponibilit‡ di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
+  *      controlli di disponibilit√† di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'
   *    PostCondition:
   *      Viene generata un'ApplicationException che descrive all'utente l'errore che si e' verificato
-  *  Errore di disponibilit‡ di cassa - forzatura
+  *  Errore di disponibilit√† di cassa - forzatura
   *    PreCondition:
   *      Una richiesta di modifica di un'obbligazione e' stata generata e l'obbligazione non ha superato i
-  *      controlli di disponibilit‡ di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'  
+  *      controlli di disponibilit√† di cassa eseguiti dal metodo 'aggiornaCapitoloSaldoObbligazione'  
   *		 e l'utente ha scelto di forzare l'emissione dell'obbligazione
   *    PostCondition:
   *      L'obbligazione viene modificata, i dettagli di tutte le scadenze vengono modificati (metodo generaDettagliScadenzaObbligazione) e i saldi 
@@ -602,26 +602,26 @@ public abstract it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserCon
  * Nome: Scadenza successiva - Errore ultima scadenza
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e non esiste una scadenza
  *       successiva su cui scaricare la differenza fra l'importo attuale scadenza e il nuovo importo
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  *
  * Nome: Scadenza successiva -  Errore importo scadenza successiva
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e (im_scadenza_successisva -
  *       nuovo_im_scadenza + im_scadenza) e' minore di 0
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  * 
  * Nome: Scadenza successiva -  Errore doc amministrativi associati
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e la scadenza successiva ha 
- *       gi‡ dei documenti amministrativi associati
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ *       gi√† dei documenti amministrativi associati
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  *
  * Nome: Errore imputazione manuale
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e l'imputazione finanziaria
  *       dell'obbligazione non e' automatica
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  *
  * @param userContext lo userContext che ha generato la richiesta
  * @param scad l'istanza di Obbligazione_scadenzarioBulk il cui importo deve essere modificato
- * @param nuovoImporto il valore del nuovo importo che la scadenza di obbligazione dovr‡ assumere
+ * @param nuovoImporto il valore del nuovo importo che la scadenza di obbligazione dovr√† assumere
  * @param modificaScadenzaSuccessiva il flag che indica se modificare la testata dell'obbligazione o modificare la scadenza
  *        successiva dell'obbligazione
  * @return l'istanza di Obbligazione_scadenzarioBulk con l'importo modificato
@@ -633,9 +633,9 @@ public abstract it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBul
   *    PreCondition:
   *      Non esistono documenti amministrativi per l'obbligazione.
   *      Non esitono ordini associati all'obbligazione
-  *      Lo stato dell'obbligazione Ë 'DEFINITIVA'
+  *      Lo stato dell'obbligazione √® 'DEFINITIVA'
   *    PostCondition:
-  *      Il sistema eseguir‡ le seguente attivit‡:
+  *      Il sistema eseguir√† le seguente attivit√†:
   *      1) L'aggiornamento dei saldi 'obbligazioni' dei capitoli di spesa CdS 
   *         (Questo processo viene eseguito dal metodo 'aggiornaCapitoloSaldoObbligazione').
   *      2) L'azzeramento dell'importo di ogni dettaglio di ogni scadenza dell'obbligazione,  
@@ -645,18 +645,18 @@ public abstract it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBul
   *      
   *  Esistono documenti amministrativi per l'obbligazione
   *    PreCondition:
-  *      Per l'obbligazione definitiva ci sono documenti amministrativi gi‡ collegati all'obbligazione.
+  *      Per l'obbligazione definitiva ci sono documenti amministrativi gi√† collegati all'obbligazione.
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che per stornare una obbligazione definitiva, 
   *      qualsiasi documento amministrativo collegato all'obbligazione deve essere sganciato prima di eseguire 
-  *      lo storno. L'attivit‡ non Ë consentita.
+  *      lo storno. L'attivit√† non √® consentita.
   *
   *  Esiste un ordine per l'obbligazione
   *    PreCondition:
   *      Per l'obbligazione definitiva e' stato definito un ordine
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che per stornare una obbligazione definitiva 
-  *      per la quale e' gi‡ stato emesso un ordine e' necessario prima cancellare l'ordine
+  *      per la quale e' gi√† stato emesso un ordine e' necessario prima cancellare l'ordine
   *
   * @param aUC lo user context 
   * @param bulk l'istanza di  <code>ObbligazioneBulk</code> da annullare
@@ -666,17 +666,17 @@ public abstract it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBul
 
 public abstract it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk stornaObbligazioneDefinitiva(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk param1) throws it.cnr.jada.comp.ComponentException;
 /** 
-  *  Linea attivit‡ in Pdg
+  *  Linea attivit√† in Pdg
   *    PreCondition:
-  *      L'utente ha selezionato una nuova linea di attivit‡ e la nuova linea di attivit‡ e' nel Piano di Gestione
+  *      L'utente ha selezionato una nuova linea di attivit√† e la nuova linea di attivit√† e' nel Piano di Gestione
   *    PostCondition:
-  *      Una segnalazione di errore comunica all'utente l'impossibilit‡ di assegnare come nuova linea di attivit‡
+  *      Una segnalazione di errore comunica all'utente l'impossibilit√† di assegnare come nuova linea di attivit√†
   *      una presente nel P.d.G.
-  *  Linea attivit‡ in Pdg
+  *  Linea attivit√† in Pdg
   *    PreCondition:
-  *      L'utente ha selezionato una nuova linea di attivit‡ e la nuova linea di attivit‡ non e' presente nel Piano di Gestione
+  *      L'utente ha selezionato una nuova linea di attivit√† e la nuova linea di attivit√† non e' presente nel Piano di Gestione
   *    PostCondition:
-  *      La nuova linea di attivit‡ ha superato la validazione
+  *      La nuova linea di attivit√† ha superato la validazione
   *
   * @param userContext lo user context 
   * @param latt l'istanza di  <code>Linea_attivitaBulk</code> da verificare
@@ -693,9 +693,9 @@ public abstract void verificaNuovaLineaAttivita(it.cnr.jada.UserContext param0,i
   *		 dettagli d'imputazione finanziaria specificati
   *      almeno una scadenza definita
   *      verfiche per spese per costi altrui superate (metodo verificaFl_spese_costi_altrui)
-  *      L'anno di competenza dell'obbligazione Ë superiore all'anno di creazione dell'obbligazione
+  *      L'anno di competenza dell'obbligazione √® superiore all'anno di creazione dell'obbligazione
   *    PostCondition:
-  *      Il sistema puÚ proseguire con la creazione/modifica dell'obbligazione, ma non verranno aggiornati i saldi
+  *      Il sistema pu√≤ proseguire con la creazione/modifica dell'obbligazione, ma non verranno aggiornati i saldi
   *      dei capitoli di spesa CdS.
   *
   *  Tutti controlli superati - anno di creazione obbligazione = anno competenza
@@ -706,47 +706,47 @@ public abstract void verificaNuovaLineaAttivita(it.cnr.jada.UserContext param0,i
   *		 dettagli d'imputazione finanziaria specificati
   *      almeno una scadenza definita
   *      verfiche per spese per costi altrui superate (metodo verificaFl_spese_costi_altrui)  
-  *      L'anno di competenza dell'obbligazione Ë uguale all'anno di creazione dell'obbligazione
+  *      L'anno di competenza dell'obbligazione √® uguale all'anno di creazione dell'obbligazione
   *    PostCondition:
-  *      Il sistema puÚ proseguire con la creazione/modifica dell'obbligazione e dovr‡ effettuare l'aggiornamento
+  *      Il sistema pu√≤ proseguire con la creazione/modifica dell'obbligazione e dovr√† effettuare l'aggiornamento
   *      dei saldi dei capitoli di spesa CdS. (Questo processo viene eseguito dal metodo 'aggiornaCapitoloSaldoObbligazione').
   *
   *  sum(scadenzario.importo) not = obbligazione.importo
   *    PreCondition:
-  *      La somma degli importi delle scadenze dell'obbligazione non Ë uguale all'importo dell'obbligazione in elaborazione.
+  *      La somma degli importi delle scadenze dell'obbligazione non √® uguale all'importo dell'obbligazione in elaborazione.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non Ë consentito 
-  *      se l'importo non Ë uguale alla somma degli importi delle scadenze dell'obbligazione.
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non √® consentito 
+  *      se l'importo non √® uguale alla somma degli importi delle scadenze dell'obbligazione.
   *
   *  sum(scad_voce.importo) not = scadenzario.importo
   *    PreCondition:
   *      L'utente ha selezionato l'imputazione manuale degli importi dei dettagli delle scadenze e la somma degli importi 
-  *      dei dettagli di una scadenza dell'obbligazione non Ë uguale all'importo della scadenza
+  *      dei dettagli di una scadenza dell'obbligazione non √® uguale all'importo della scadenza
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non Ë consentito 
-  *      se l'importo della scadenza non Ë uguale alla somma degli importi dei dettagli della scadenza dell'obbligazione.
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non √® consentito 
+  *      se l'importo della scadenza non √® uguale alla somma degli importi dei dettagli della scadenza dell'obbligazione.
   *
   *  dettagli d'imputazione finanziaria non specificati al livello di obbligazione
   *    PreCondition:
-  *      I dettagli d'imputazione finanziaria (capitolo di spesa, linea d'attivit‡) non sono stati specificati 
+  *      I dettagli d'imputazione finanziaria (capitolo di spesa, linea d'attivit√†) non sono stati specificati 
   *      al livello di obbligazione 
   *    PostCondition:
-  *      Il sistema segnala l'impossibilit‡ di craere/aggiornare l'obbligazione fino a quando l'imputazione finanziaria non viene completata
+  *      Il sistema segnala l'impossibilit√† di craere/aggiornare l'obbligazione fino a quando l'imputazione finanziaria non viene completata
   * 
   *  scadenze non definite
   *    PreCondition:
   *      Non sono state definite scadenze per l'obbligazione
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non Ë consentito 
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non √® consentito 
   *      se non viene definita almento una scadenza
   *
   *  spese per costi altrui
   *    PreCondition:
   *      L'utente ha specificato di voler emettere un'obbligazione non di tipo spese per costi altrui
-  *      ma ha selezionato linee di attivit‡ appartenenti a cdr che non sipendono dall'uo di scrivania
+  *      ma ha selezionato linee di attivit√† appartenenti a cdr che non sipendono dall'uo di scrivania
   *      (questo controllo viene effettuato dal metodo 'verificaFl_spese_costi_altrui')
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non Ë consentito
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'obbligazione non √® consentito
   *
   * @param aUC lo user context 
   * @param obbligazione l'istanza di  <code>ObbligazioneBulk</code> da verificare
@@ -758,33 +758,33 @@ public abstract void verificaObbligazione(it.cnr.jada.UserContext param0,it.cnr.
 /** 
   *  Tutti controlli superati - creazione
   *    PreCondition:
-  *      Non esiste gi‡ una scadenza per la data.
-  *      Attivit‡ = creazione
+  *      Non esiste gi√† una scadenza per la data.
+  *      Attivit√† = creazione
   *    PostCondition:
-  *      Alla scrittura dell'obbligazione il sistema aggiunger‡ questo scadenzario e generer‡ tutti i dettagli della
+  *      Alla scrittura dell'obbligazione il sistema aggiunger√† questo scadenzario e generer√† tutti i dettagli della
   *      scadenza (metodo 'generaDettagliScadenzaObbligazione')
   *  Tutti controlli superati - aggiornamento con agg. auto. scad. succ.
   *    PreCondition:
-  *      Attivit‡ = aggiornamento
+  *      Attivit√† = aggiornamento
   *      L'utente ha scelto l'aggiornamento in automatico della scadenza successiva.
   *    PostCondition:
-  *      Alla scrittura dell'obbligazione il sistema aggiorner‡ questo scadenzario. 
-  *      In pi˘, il metodo aggiornaScadenzaSuccessivaObbligazione viene utilizzato per aggiornare la scadenza successiva 
+  *      Alla scrittura dell'obbligazione il sistema aggiorner√† questo scadenzario. 
+  *      In pi√π, il metodo aggiornaScadenzaSuccessivaObbligazione viene utilizzato per aggiornare la scadenza successiva 
   *      a quella in aggiornamento. 
   *  Tutti controlli superati - aggiornamento senza agg. auto. scad. succ.
   *    PreCondition:
-  *      Attivit‡ = aggiornamento
+  *      Attivit√† = aggiornamento
   *      L'utente NON ha scelto l'aggiornamento in automatico della scadenza successiva.
   *    PostCondition:
-  *      Alla scrittura dell'obbligazione il sistema aggiorner‡ questo scadenzario. 
-  *      Sar‡ il compito dell'utente aggiornare una delle scadenze per garantire che la somma degli importi 
+  *      Alla scrittura dell'obbligazione il sistema aggiorner√† questo scadenzario. 
+  *      Sar√† il compito dell'utente aggiornare una delle scadenze per garantire che la somma degli importi 
   *      delle scadenze sia uguale all'importo dell'obbligazione.
-  *  creazione/modifica - esiste gi‡ una scadenza per la data
+  *  creazione/modifica - esiste gi√† una scadenza per la data
   *    PreCondition:
   *      L'utente richiede la creazione di una scadenza o modifica la data di una scadenza. 
-  *      Per la data scadenza specificata esiste gi‡ una scadenza per l'obbligazione.
+  *      Per la data scadenza specificata esiste gi√† una scadenza per l'obbligazione.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che la data della scadenza non Ë valida.
+  *      Il metodo utilizza un Throw Exception per comunicare che la data della scadenza non √® valida.
   *  creazione/modifica - importo negativo
   *    PreCondition:
   *      L'utente richiede la creazione di una scadenza o modifica l'importo di una scadenza
@@ -794,7 +794,7 @@ public abstract void verificaObbligazione(it.cnr.jada.UserContext param0,it.cnr.
   *  creazione/modifica - importo nullo 
   *    PreCondition:
   *      L'utente richiede la creazione di una scadenza o modifica l'importo di una scadenza
-  *      Il nuovo importo e' nulla e la scadenza non Ë associata a documenti amministrativi
+  *      Il nuovo importo e' nulla e la scadenza non √® associata a documenti amministrativi
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che l'importo della scadenza deve essere >= 0
   *  modifica - la scadenza ha doc amministrativi associati e non proviene da documenti amministrativi
@@ -802,7 +802,7 @@ public abstract void verificaObbligazione(it.cnr.jada.UserContext param0,it.cnr.
   *      L'utente richiede la modifica dell'importo di una scadenza che ha documenti amministrativi associati
   *      e la richiesta non proviene dal BusinessProcess che gestisce i documenti amministrativi  
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che la modifica della scadenza non Ë valida.
+  *      Il metodo utilizza un Throw Exception per comunicare che la modifica della scadenza non √® valida.
   *  modifica - la scadenza ha doc amministrativi associati e proviene da documenti amministrativi
   *    PreCondition:
   *      L'utente richiede la modifica dell'importo di una scadenza che ha documenti amministrativi associati e la
@@ -828,11 +828,11 @@ public EsercizioBulk  verificaStatoEsercizio( UserContext userContext, String cd
 /** 
   *  Tutti controlli superati
   *    PreCondition:
-  *      Copertura finanziaria Ë sufficiente.
-  *      Data obbligazione Ë valida.
+  *      Copertura finanziaria √® sufficiente.
+  *      Data obbligazione √® valida.
   *      Esercizio competenza >= esercizio creazione dell'obbligazione
   *    PostCondition:
-  *      La testata dell'obbligazione Ë valida. E' consentito eseguire l'attivit‡ di salvataggio o di passaggio 
+  *      La testata dell'obbligazione √® valida. E' consentito eseguire l'attivit√† di salvataggio o di passaggio 
   *		alle pagine successive (Configurazione Imputazione Finanziaria o Scadenzario).
   *  Copertura finanziaria insufficiente
   *    PreCondition:
@@ -844,19 +844,19 @@ public EsercizioBulk  verificaStatoEsercizio( UserContext userContext, String cd
   *      (Se l'importo rimane uguale, o diminuisce, questo controllo della copertura finanziaria non viene eseguito.)
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che l'importo dell'obbligazione in aggiornamento supera 
-  *      il limite di assunzione di obbligazioni. L'attivit‡ non Ë consentita.
-  *  Data obbligazione non Ë valida
+  *      il limite di assunzione di obbligazioni. L'attivit√† non √® consentita.
+  *  Data obbligazione non √® valida
   *    PreCondition:
   *      La data dell'obbligazione in inserimento antecede la data dell'ultima obbligazione inserita per questo CdS. 
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che la data dell'obbligazione non puÚ essere antecedente
-  *      la data dell'ultima obbligazione inserita per questo CdS. L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che la data dell'obbligazione non pu√≤ essere antecedente
+  *      la data dell'ultima obbligazione inserita per questo CdS. L'attivit√† non √® consentita.
   *  Esercizio competenza non valido
   *    PreCondition:
   *      L'esercizio di competenza dell'obbligazione e' inferiore all'esercizio di scrivania e quindi all'esercizio
   *      di creazione dell'obbligazione
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che l'esercizio di competenza non puÚ essere antecedente
+  *      Il metodo utilizza un Throw Exception per comunicare che l'esercizio di competenza non pu√≤ essere antecedente
   *      all'esercizio di creazione dell'obbligazione
   *
   * @param aUC lo user context 

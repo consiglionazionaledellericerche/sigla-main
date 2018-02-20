@@ -491,7 +491,7 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 				throw new ValidationException( "L'importo della spesa deve essere > 0!" );
 
 			if (getIm_spesa_divisa().compareTo(new java.math.BigDecimal(0)) < 0){
-				throw new ValidationException( "L'importo della spesa non può essere negativo" );
+				throw new ValidationException( "L'importo della spesa non puÃ² essere negativo" );
 			}
 			
 			if(getCd_divisa_spesa() == null)

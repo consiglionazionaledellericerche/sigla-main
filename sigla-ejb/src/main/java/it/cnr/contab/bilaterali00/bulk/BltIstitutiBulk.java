@@ -9,7 +9,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
 public class BltIstitutiBulk extends BltIstitutiBase {
 	/**
-	 * [COMUNE Codifica dei comuni italiani e delle città estere.E' definito un dialogo utente per popolare le città estere; per i comuni italiani si prevede il recupero in sede di migrazione]
+	 * [COMUNE Codifica dei comuni italiani e delle città  estere.E' definito un dialogo utente per popolare le città  estere; per i comuni italiani si prevede il recupero in sede di migrazione]
 	 **/
 	private ComuneBulk comune =  new ComuneBulk();
 	/**
@@ -28,14 +28,14 @@ public class BltIstitutiBulk extends BltIstitutiBase {
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Codifica dei comuni italiani e delle città estere.E' definito un dialogo utente per popolare le città estere; per i comuni italiani si prevede il recupero in sede di migrazione]
+	 * Restituisce il valore di: [Codifica dei comuni italiani e delle città  estere.E' definito un dialogo utente per popolare le città  estere; per i comuni italiani si prevede il recupero in sede di migrazione]
 	 **/
 	public ComuneBulk getComune() {
 		return comune;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Codifica dei comuni italiani e delle città estere.E' definito un dialogo utente per popolare le città estere; per i comuni italiani si prevede il recupero in sede di migrazione]
+	 * Setta il valore di: [Codifica dei comuni italiani e delle città  estere.E' definito un dialogo utente per popolare le città  estere; per i comuni italiani si prevede il recupero in sede di migrazione]
 	 **/
 	public void setComune(ComuneBulk comune)  {
 		this.comune=comune;

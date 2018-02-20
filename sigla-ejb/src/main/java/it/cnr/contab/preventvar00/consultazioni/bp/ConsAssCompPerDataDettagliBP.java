@@ -160,7 +160,7 @@ public class ConsAssCompPerDataDettagliBP extends ConsultazioniBP
 		   String title=null;
 		   		   title = "Consultazione Assestato Competenza alla Data";
 			
-			if (isPresenteVARPIU()) title = title.concat(" - Dettaglio Variazioni in Più");
+			if (isPresenteVARPIU()) title = title.concat(" - Dettaglio Variazioni in PiÃ¹");
 			if (isPresenteVARMENO()) title = title.concat(" - Dettaglio Variazioni in Meno");
 			if (isPresenteSTANZ()) title = title.concat(" - Dettaglio Stanziamento Iniziale");
 		

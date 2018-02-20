@@ -18,7 +18,7 @@
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="javascript" src="scripts/css.js"></script>
 <script language="JavaScript" src="scripts/util.js"></script>
-<title>Moduli di Attivit‡</title>
+<title>Moduli di Attivit√†</title>
 </head>
 
 <body class="Form">

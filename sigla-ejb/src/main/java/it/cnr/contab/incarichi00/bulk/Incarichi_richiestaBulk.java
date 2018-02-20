@@ -207,11 +207,11 @@ public class Incarichi_richiestaBulk extends Incarichi_richiestaBase {
 		if (getNr_risorse_trovate_si() + 
 			getNr_risorse_trovate_no() + 
 			getNr_risorse_trovate_na() > getNr_risorse_da_trovare())
-			throw new ValidationException("L'esito della ricerca non puÚ comportare un numero di risorse superiore a quello cercate.");
+			throw new ValidationException("L'esito della ricerca non pu√≤ comportare un numero di risorse superiore a quello cercate.");
 		
 		if (getNrRisorseNonTrovate()!=null && getNrContrattiAttivati()!=0 &&
 			getNrRisorseNonTrovate().compareTo(getNrContrattiAttivati())==1)
-			throw new ValidationException("Il numero delle risorse non trovate non puÚ essere inferiore ai contratti che risultano gi‡ attivati ("+getNrContrattiAttivati()+").");
+			throw new ValidationException("Il numero delle risorse non trovate non pu√≤ essere inferiore ai contratti che risultano gi√† attivati ("+getNrContrattiAttivati()+").");
 
 		if (getEmail_risposte()!=null)
 		try {

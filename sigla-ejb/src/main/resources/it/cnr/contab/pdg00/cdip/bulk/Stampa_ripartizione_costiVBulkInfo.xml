@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -83,7 +83,7 @@
 		completeOnSave="true"
 		columnSet="filtro_ricerca_moduli"
 		freeSearchSet="filtro_ricerca_moduli"		
-		label="Modulo di attività" />
+		label="Modulo di attivitÃ " />
 	<fieldProperty
 		name="cdModuloForPrint"
 		property="moduloForPrint.cd_progetto"

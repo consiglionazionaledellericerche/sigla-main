@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Mandato
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Mandato
  */
 
 public class CRUDMandatoBP extends CRUDAbstractMandatoBP {
@@ -238,7 +238,7 @@ public boolean isDettaglioFatturaPerMandato_rigaEnabled() {
 	return isEditable() && (isEditing() || isInserting()) && (getDocumentiPassiviSelezionati().getSelection().getFocus() >= 0 );
 }
 /**
- *	Abilito il bottone di disponibilit‡ di cassa per capitolo
+ *	Abilito il bottone di disponibilit√† di cassa per capitolo
  *
  *	isEditable 	= FALSE se il mandato non ha righe
  *				= TRUE se il mandato ha righe
@@ -256,7 +256,7 @@ public boolean isDispCassaCapitoloButtonEnabled() {
 }
 /**
  *	Abilito il tab di ricerca dei documenti solo se il mandato e' in fase di modifica/inserimento
- *  e non Ë stato pagato o annullato.
+ *  e non √® stato pagato o annullato.
  *
  *	isEditable 	= FALSE se il mandato e' in visualizzazione
  *				= TRUE se il mandato e' in modifica/inserimento
@@ -278,7 +278,7 @@ public void resetForSearch(it.cnr.jada.action.ActionContext context) throws it.c
 }
 /**
  * Effettua un salvataggio del modello corrente.
- * Valido solo se il ricevente Ë nello stato di INSERT o EDIT.
+ * Valido solo se il ricevente √® nello stato di INSERT o EDIT.
  *
  * @param context <code>ActionContext</code> in uso.
  */
@@ -411,21 +411,21 @@ private void validateCupCollegati(ActionContext context, OggettoBulk model) thro
    BigDecimal tot_col=BigDecimal.ZERO;
    if (bulk!=null && bulk.getMandato_riga()!=null && bulk.getMandato_riga().getMandatoCupColl()!=null && !bulk.getMandato_riga().getMandatoCupColl().isEmpty()){
 	if(bulk.getCdCup()==null)
-	   throw new ValidationException("Attenzione. Il codice Cup Ë obbligatorio");
+	   throw new ValidationException("Attenzione. Il codice Cup √® obbligatorio");
 	if(bulk.getImporto()==null)
-		   throw new ValidationException("Attenzione. L'importo associato al codice Cup Ë obbligatorio");
+		   throw new ValidationException("Attenzione. L'importo associato al codice Cup √® obbligatorio");
 		
 	BulkList list=bulk.getMandato_riga().getMandatoCupColl();
 	for (Iterator i = list.iterator(); i.hasNext();){
 		MandatoCupBulk l=(MandatoCupBulk)i.next();
 		if(l.getCdCup()!=null){
 			if(bulk!=l && bulk.getCdCup().compareTo(l.getCdCup())==0)
-				throw new ValidationException("Attenzione. Ogni Cup puÚ essere utilizzato una sola volta per ogni riga del mandato. ");
+				throw new ValidationException("Attenzione. Ogni Cup pu√≤ essere utilizzato una sola volta per ogni riga del mandato. ");
 			tot_col=tot_col.add(l.getImporto());
 		}
 	}
 	if(tot_col.compareTo(bulk.getMandato_riga().getIm_mandato_riga())>0)
-		throw new ValidationException("Attenzione. Il totale associato al CUP Ë superiore all'importo della riga del mandato.");
+		throw new ValidationException("Attenzione. Il totale associato al CUP √® superiore all'importo della riga del mandato.");
    }
 	
 }
@@ -443,21 +443,21 @@ private void validateSiopeCupCollegati(ActionContext context, OggettoBulk model)
    BigDecimal tot_col=BigDecimal.ZERO;
    if (bulk!=null && bulk.getMandatoSiope()!=null && bulk.getMandatoSiope().getMandatoSiopeCupColl()!=null && !bulk.getMandatoSiope().getMandatoSiopeCupColl().isEmpty()){
 	if(bulk.getCdCup()==null)
-	   throw new ValidationException("Attenzione. Il codice Cup Ë obbligatorio");
+	   throw new ValidationException("Attenzione. Il codice Cup √® obbligatorio");
 	if(bulk.getImporto()==null)
-		   throw new ValidationException("Attenzione. L'importo associato al codice Cup Ë obbligatorio");
+		   throw new ValidationException("Attenzione. L'importo associato al codice Cup √® obbligatorio");
 		
 	BulkList list=bulk.getMandatoSiope().getMandatoSiopeCupColl();
 	for (Iterator i = list.iterator(); i.hasNext();){
 		MandatoSiopeCupBulk l=(MandatoSiopeCupBulk)i.next();
 		if(l.getCdCup()!=null){
 			if(bulk!=l && bulk.getCdCup().compareTo(l.getCdCup())==0)
-				throw new ValidationException("Attenzione. Ogni Cup puÚ essere utilizzato una sola volta per ogni riga di mandato/siope. ");
+				throw new ValidationException("Attenzione. Ogni Cup pu√≤ essere utilizzato una sola volta per ogni riga di mandato/siope. ");
 			tot_col=tot_col.add(l.getImporto());
 		}
 	}
 	if(tot_col.compareTo(bulk.getMandatoSiope().getImporto())>0)
-		throw new ValidationException("Attenzione. Il totale associato al CUP Ë superiore all'importo della riga del mandato associato al siope.");
+		throw new ValidationException("Attenzione. Il totale associato al CUP √® superiore all'importo della riga del mandato associato al siope.");
    }
 }
 

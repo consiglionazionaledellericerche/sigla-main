@@ -47,7 +47,7 @@ public Ass_cdp_laBulk(java.lang.String cd_centro_responsabilita,java.lang.String
 	setLinea_attivita(new it.cnr.contab.config00.latt.bulk.WorkpackageBulk(cd_centro_responsabilita,cd_linea_attivita));
 }
 /**
- * Calcola i giorni lavorativi in funzione della percentuale di ripartizione su linea di attivit‡
+ * Calcola i giorni lavorativi in funzione della percentuale di ripartizione su linea di attivit√†
  *
  * @param i indice dell'anno (1,2,3)	
  * @param giorni_lavorativi	giorni lavorativi da frazionare
@@ -61,7 +61,7 @@ public void calcolaGiorni_la(int i,java.math.BigDecimal giorni_lavorativi) {
 				java.math.BigDecimal.valueOf(100),2,java.math.BigDecimal.ROUND_HALF_UP));
 }
 /**
- * Calcola i giorni lavorativi in funzione della percentuale di ripartizione su linea di attivit‡
+ * Calcola i giorni lavorativi in funzione della percentuale di ripartizione su linea di attivit√†
  *
  * @param giorni_lavorativi	giorni lavorativi da frazionare
  */
@@ -71,7 +71,7 @@ public void calcolaGiorni_la(java.math.BigDecimal giorni_lavorativi) {
 	calcolaGiorni_la(3,giorni_lavorativi);
 }
 /**
- * Calcola la percentuale su linea di attivit‡ a partire dai giorni per i tre anni (i=1,2,3)
+ * Calcola la percentuale su linea di attivit√† a partire dai giorni per i tre anni (i=1,2,3)
  * 
  * @param i indice dell'anno (1,2,3)	
  * @param giorni_lavorativi	giorni lavorativi
@@ -118,36 +118,36 @@ public java.math.BigDecimal getGiorni_la(int i) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'giorni_la_a1'
+ * Restituisce il valore della propriet√† 'giorni_la_a1'
  *
- * @return Il valore della propriet‡ 'giorni_la_a1'
+ * @return Il valore della propriet√† 'giorni_la_a1'
  */
 public java.math.BigDecimal getGiorni_la_a1() {
 	return giorni_la_a1;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'giorni_la_a2'
+ * Restituisce il valore della propriet√† 'giorni_la_a2'
  *
- * @return Il valore della propriet‡ 'giorni_la_a2'
+ * @return Il valore della propriet√† 'giorni_la_a2'
  */
 public java.math.BigDecimal getGiorni_la_a2() {
 	return giorni_la_a2;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'giorni_la_a3'
+ * Restituisce il valore della propriet√† 'giorni_la_a3'
  *
- * @return Il valore della propriet‡ 'giorni_la_a3'
+ * @return Il valore della propriet√† 'giorni_la_a3'
  */
 public java.math.BigDecimal getGiorni_la_a3() {
 	return giorni_la_a3;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'linea_attivita'
+ * Restituisce il valore della propriet√† 'linea_attivita'
  *
- * @return Il valore della propriet‡ 'linea_attivita'
+ * @return Il valore della propriet√† 'linea_attivita'
  */
 public it.cnr.contab.config00.latt.bulk.WorkpackageBulk getLinea_attivita() {
 	return linea_attivita;
@@ -169,9 +169,9 @@ public java.math.BigDecimal getPrc_la(int i) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'nonCancellabile'
+ * Restituisce il valore della propriet√† 'nonCancellabile'
  *
- * @return Il valore della propriet‡ 'nonCancellabile'
+ * @return Il valore della propriet√† 'nonCancellabile'
  */
 public boolean isNonCancellabile() {
 	return isReadonly() || STATO_SCARICATO.equalsIgnoreCase(getStato()) ||
@@ -179,18 +179,18 @@ public boolean isNonCancellabile() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'readonly'
+ * Restituisce il valore della propriet√† 'readonly'
  *
- * @return Il valore della propriet‡ 'readonly'
+ * @return Il valore della propriet√† 'readonly'
  */
 public boolean isReadonly() {
 	return readonly;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOGiorni'
+ * Restituisce il valore della propriet√† 'rOGiorni'
  *
- * @return Il valore della propriet‡ 'rOGiorni'
+ * @return Il valore della propriet√† 'rOGiorni'
  */
 public boolean isROGiorni() {
 	return isReadonly() || STATO_SCARICATO.equalsIgnoreCase(getStato()) ||
@@ -198,9 +198,9 @@ public boolean isROGiorni() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOPrc'
+ * Restituisce il valore della propriet√† 'rOPrc'
  *
- * @return Il valore della propriet‡ 'rOPrc'
+ * @return Il valore della propriet√† 'rOPrc'
  */
 public boolean isROPrc() {
 	return isReadonly() || STATO_SCARICATO.equalsIgnoreCase(getStato()) ||
@@ -208,9 +208,9 @@ public boolean isROPrc() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'scaricato'
+ * Restituisce il valore della propriet√† 'scaricato'
  *
- * @return Il valore della propriet‡ 'scaricato'
+ * @return Il valore della propriet√† 'scaricato'
  */
 public boolean isScaricato() {
 	return STATO_SCARICATO.equalsIgnoreCase(getStato());
@@ -236,7 +236,7 @@ public void setGiorni_la(int i,java.math.BigDecimal giorni) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'giorni_la_a1'
+ * Imposta il valore della propriet√† 'giorni_la_a1'
  *
  * @param newGiorni_la_a1	Il valore da assegnare a 'giorni_la_a1'
  */
@@ -245,7 +245,7 @@ public void setGiorni_la_a1(java.math.BigDecimal newGiorni_la_a1) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'giorni_la_a2'
+ * Imposta il valore della propriet√† 'giorni_la_a2'
  *
  * @param newGiorni_la_a2	Il valore da assegnare a 'giorni_la_a2'
  */
@@ -254,7 +254,7 @@ public void setGiorni_la_a2(java.math.BigDecimal newGiorni_la_a2) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'giorni_la_a3'
+ * Imposta il valore della propriet√† 'giorni_la_a3'
  *
  * @param newGiorni_la_a3	Il valore da assegnare a 'giorni_la_a3'
  */
@@ -263,7 +263,7 @@ public void setGiorni_la_a3(java.math.BigDecimal newGiorni_la_a3) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'linea_attivita'
+ * Imposta il valore della propriet√† 'linea_attivita'
  *
  * @param newLinea_attivita	Il valore da assegnare a 'linea_attivita'
  */
@@ -271,7 +271,7 @@ public void setLinea_attivita(it.cnr.contab.config00.latt.bulk.WorkpackageBulk n
 	linea_attivita = newLinea_attivita;
 }
 /**
- * Imposta la percentuale relativa alla linea di attivit‡ e all'anno i a partire dai giorni
+ * Imposta la percentuale relativa alla linea di attivit√† e all'anno i a partire dai giorni
  *
  * @param i indice dell'anno (1,2,3)	
  * @param giorni giorni
@@ -285,7 +285,7 @@ public void setPrc_la(int i,java.math.BigDecimal giorni) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'readonly'
+ * Imposta il valore della propriet√† 'readonly'
  *
  * @param newReadonly	Il valore da assegnare a 'readonly'
  */
@@ -294,9 +294,9 @@ public void setReadonly(boolean newReadonly) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'stato_mese_keys'
+ * Restituisce il valore della propriet√† 'stato_mese_keys'
  *
- * @return Il valore della propriet‡ 'stato_mese_keys'
+ * @return Il valore della propriet√† 'stato_mese_keys'
  */
 public final java.util.Dictionary getStato_mese_keys() {
 	return stato_mese_keys;

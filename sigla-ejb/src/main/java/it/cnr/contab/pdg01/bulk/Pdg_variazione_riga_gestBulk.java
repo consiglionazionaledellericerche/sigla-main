@@ -236,7 +236,7 @@ public class Pdg_variazione_riga_gestBulk extends Pdg_variazione_riga_gestBase {
 					getIm_spese_gest_decentrata_est().compareTo(Utility.ZERO)==-1 ||
 					getIm_spese_gest_accentrata_int().compareTo(Utility.ZERO)==-1 ||
 					getIm_spese_gest_decentrata_int().compareTo(Utility.ZERO)==-1) 
-					throw new ValidationException("Non è possibile inserire valori negativi in una variazione a quadratura per maggiori entrate/spese.");
+					throw new ValidationException("Non Ã¨ possibile inserire valori negativi in una variazione a quadratura per maggiori entrate/spese.");
 			}
 			if (getPdg_variazione()!=null &&
 				(getPdg_variazione().getTipologia().equals(Tipo_variazioneBulk.VARIAZIONE_NEGATIVA_ISTITUTI_DIVERSI)||
@@ -247,7 +247,7 @@ public class Pdg_variazione_riga_gestBulk extends Pdg_variazione_riga_gestBase {
 					getIm_spese_gest_decentrata_est().compareTo(Utility.ZERO)==1 ||
 					getIm_spese_gest_accentrata_int().compareTo(Utility.ZERO)==1 ||
 					getIm_spese_gest_decentrata_int().compareTo(Utility.ZERO)==1) 
-					throw new ValidationException("Non è possibile inserire valori positivi in una variazione a quadratura per minori entrate/spese.");
+					throw new ValidationException("Non Ã¨ possibile inserire valori positivi in una variazione a quadratura per minori entrate/spese.");
 			}
 	}
 
@@ -290,7 +290,7 @@ public class Pdg_variazione_riga_gestBulk extends Pdg_variazione_riga_gestBase {
 	}
 
 	/**
-	 * Flag utilizzato per sapere se la riga in oggetto è associata a moduli appartenenti al 
+	 * Flag utilizzato per sapere se la riga in oggetto Ã¨ associata a moduli appartenenti al 
 	 * dipartimento collegato per i quali deve essere apposto il visto.
      *
 	 * @return Boolean
@@ -300,7 +300,7 @@ public class Pdg_variazione_riga_gestBulk extends Pdg_variazione_riga_gestBase {
 	}
 	/**
 	 * Flag da settare a:
-	 * TRUE:  se la riga in oggetto è associata a moduli appartenenti al dipartimento collegato 
+	 * TRUE:  se la riga in oggetto Ã¨ associata a moduli appartenenti al dipartimento collegato 
 	 *        per i quali deve essere apposto il visto.
 	 * FALSE: in tutti gli altri casi.
      *

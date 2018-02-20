@@ -55,7 +55,7 @@ public SQLBuilder selectVoce_fByClause( ImpegnoBulk bulk, Voce_fHome home, Voce_
 
 /**
  *  Recupera l'elemento voce di tipo categoria, da cui discende la voce
- *  passata come parametro, questo elemento voce verr‡ inserito in testata
+ *  passata come parametro, questo elemento voce verr√† inserito in testata
  *  all'impegno per bilancio ente corrispondente alla voce inserita nel
  *  dettaglio della scadenza
  * @param voce

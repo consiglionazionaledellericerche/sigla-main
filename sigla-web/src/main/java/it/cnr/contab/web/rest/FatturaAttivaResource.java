@@ -127,7 +127,7 @@ public class FatturaAttivaResource implements FatturaAttivaLocal{
 			Optional.ofNullable(fattura.getCd_cds_origine()).filter(x -> userContext.getCd_cds().equals(x)).
 			orElseThrow(() -> new RestException(Status.BAD_REQUEST, "CdS del contesto diverso da quello della Fattura!"));
 			Optional.ofNullable(fattura.getCd_uo_origine()).filter(x -> userContext.getCd_unita_organizzativa().equals(x)).
-			orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Unità Organizzativa del contesto diversa da quella della Fattura!"));
+			orElseThrow(() -> new RestException(Status.BAD_REQUEST, "UnitÃ  Organizzativa del contesto diversa da quella della Fattura!"));
 			Optional.ofNullable(fattura.getTi_causale_emissione()).filter(x -> Stream.of("C", "L", "T").anyMatch(y -> y.equals(x)))
 			.orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Causale emissione non valida!"));
 			Optional.ofNullable(fattura.getTi_bene_servizio()).filter(x -> Stream.of("B", "S", "*").anyMatch(y -> y.equals(x)))

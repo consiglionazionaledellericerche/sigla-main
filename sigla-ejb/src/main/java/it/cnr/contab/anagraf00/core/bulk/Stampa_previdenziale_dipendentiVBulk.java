@@ -24,11 +24,11 @@ public class Stampa_previdenziale_dipendentiVBulk extends it.cnr.jada.bulk.Ogget
 	
 	private boolean isUOForPrintEnabled;
 
-	// Indica se il search-tool per la ricerca della matricola è abilitato
+	// Indica se il search-tool per la ricerca della matricola Ã¨ abilitato
 	private boolean matricolaForPrintEnabled;
 
 
-	// Indica se il search-tool per la ricerca del Terzo è abilitato
+	// Indica se il search-tool per la ricerca del Terzo Ã¨ abilitato
 	private boolean terzoForPrintEnabled;
 
 /**

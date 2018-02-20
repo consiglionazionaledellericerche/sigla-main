@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <SQLPersistentInfo persistentClassName="it.cnr.contab.config00.latt.bulk.WorkpackageBase" keyClassName="it.cnr.contab.config00.latt.bulk.WorkpackageKey" homeClassName="it.cnr.contab.config00.latt.bulk.WorkpackageHome">
 	<defaultColumnMap tableName="LINEA_ATTIVITA">
 		<columnMapping columnName="PG_VER_REC" propertyName="pg_ver_rec" sqlTypeName="DECIMAL" columnSize="22" nullable="false"/>

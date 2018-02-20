@@ -10,7 +10,7 @@ public class DocumentoEleIvaBulk extends DocumentoEleIvaBase {
 	 **/
 	private DocumentoEleTestataBulk documentoEleTestata =  new DocumentoEleTestataBulk();
 	/**
-	 * [VOCE_IVA La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entità si riferisce alla normativa vigente sull'iva.]
+	 * [VOCE_IVA La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entitè  si riferisce alla normativa vigente sull'iva.]
 	 **/
 	private Voce_ivaBulk voceIva =  new Voce_ivaBulk();
 	/**
@@ -34,14 +34,14 @@ public class DocumentoEleIvaBulk extends DocumentoEleIvaBase {
 
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entità si riferisce alla normativa vigente sull'iva.]
+	 * Restituisce il valore di: [La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entitè  si riferisce alla normativa vigente sull'iva.]
 	 **/
 	public Voce_ivaBulk getVoceIva() {
 		return voceIva;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entità si riferisce alla normativa vigente sull'iva.]
+	 * Setta il valore di: [La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entitè  si riferisce alla normativa vigente sull'iva.]
 	 **/
 	public void setVoceIva(Voce_ivaBulk voceIva)  {
 		this.voceIva=voceIva;

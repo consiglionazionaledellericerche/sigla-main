@@ -100,9 +100,9 @@ public void makePersistentScaricoDaFattura(Buono_carico_scaricoBulk buonoS, Ogge
 			tipo=((Fattura_passivaBulk) oggetto).getTi_fattura();
 		else if (oggetto instanceof Documento_genericoBulk)
 			tipo="D";
-		/* Richiama la procedura che render‡ persistenti le modifiche fatte sui beni,
-		 *	creer‡ il Buono di Scarico ed i suoi dettagli. Inoltre, la stessa procedura,
-		 *	provveder‡ a scrivere anche le associazioni fatte sull'apposita tabella (ASS_INV_BENE_FATTURA).
+		/* Richiama la procedura che render√† persistenti le modifiche fatte sui beni,
+		 *	creer√† il Buono di Scarico ed i suoi dettagli. Inoltre, la stessa procedura,
+		 *	provveder√† a scrivere anche le associazioni fatte sull'apposita tabella (ASS_INV_BENE_FATTURA).
 		*/
 		cs = new LoggableStatement(getConnection(), 
 				"{call " + schema +"CNRCTB400.updScaricoInventarioBeni(?,?,?,?,?,?,?,?,?,?,?)}",false,this.getClass());

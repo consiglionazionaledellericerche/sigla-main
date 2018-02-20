@@ -5,7 +5,7 @@ import it.cnr.contab.doccont00.intcass.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.jada.util.action.*;
 /**
- * Business Process che gestisce le attivit‡ di CRUD per le entita' Sospeso o Riscontro
+ * Business Process che gestisce le attivit√† di CRUD per le entita' Sospeso o Riscontro
  */
 public class CRUDSospesoBP extends it.cnr.jada.util.action.SimpleCRUDBP 
 {

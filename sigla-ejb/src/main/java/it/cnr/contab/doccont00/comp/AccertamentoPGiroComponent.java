@@ -150,7 +150,7 @@ public void aggiornaCogeCoanInDifferita(it.cnr.jada.UserContext userContext, it.
 }
 /**
  * Aggiornamento in differita dei saldi dell'accertamento su partita di giro.
- * Un documento amministrativo di entrata che agisce in modalit‡ transazionale ha creato/modificato gli importi 
+ * Un documento amministrativo di entrata che agisce in modalit√† transazionale ha creato/modificato gli importi 
  * relativi ad un accertamento pgiro; i saldi di tale accertamento non possono essere aggiornati subito in quanto
  * tale operazione genererebbe dei lock sulle voci del piano che non ne consentirebbero l'utilizzo ad altri utenti;
  * pertanto l'aggiornamento dei saldi dell'accertamento pgiro viene differito al momento del salvataggio
@@ -287,7 +287,7 @@ private void aggiornaSaldiInModifica(
 	SaldoComponentSession session = createSaldoComponentSession();			
 	List saldiDaAggiornare = ((V_mod_saldi_accertHome)getHome( userContext, V_mod_saldi_accertBulk.class )).findModificheSaldiFor( acc_pgiro, pg_ver_rec );
 	if ( userContext.isTransactional() && saldiDaAggiornare.size() == 0 )
-		throw new ApplicationException( "Attenzione! Il saldo relativo all'accertamento " + acc_pgiro.getEsercizio_originale() + "/" + acc_pgiro.getPg_accertamento() + " non puÚ essere aggiornato perchË l'accertamento non e' presente nello storico.");
+		throw new ApplicationException( "Attenzione! Il saldo relativo all'accertamento " + acc_pgiro.getEsercizio_originale() + "/" + acc_pgiro.getPg_accertamento() + " non pu√≤ essere aggiornato perch√® l'accertamento non e' presente nello storico.");
 
 	String ti_competenza_residuo;
 	if ( acc_pgiro.isResiduo() )
@@ -322,7 +322,7 @@ private void aggiornaSaldiInModifica(
 
 	List saldiDaAggiornareCdrLinea = ((V_mod_saldi_accert_scad_voceHome)getHome( userContext, V_mod_saldi_accert_scad_voceBulk.class )).findModificheSaldiFor( acc_pgiro, pg_ver_rec );
 	if ( userContext.isTransactional() && saldiDaAggiornareCdrLinea.size() == 0 )
-		throw new ApplicationException( "Attenzione! Il saldo relativo all'accertamento " + acc_pgiro.getEsercizio_originale() + "/" + acc_pgiro.getPg_accertamento() + " non puÚ essere aggiornato perchË l'accertamento non e' presente nello storico.");
+		throw new ApplicationException( "Attenzione! Il saldo relativo all'accertamento " + acc_pgiro.getEsercizio_originale() + "/" + acc_pgiro.getPg_accertamento() + " non pu√≤ essere aggiornato perch√® l'accertamento non e' presente nello storico.");
 	Parametri_cnrBulk parametriCnr = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(acc_pgiro.getEsercizio()));
 	
 	for ( Iterator i = saldiDaAggiornareCdrLinea.iterator(); i.hasNext(); )
@@ -396,7 +396,7 @@ private void aggiornaStatoCOAN_COGEDocAmm( UserContext userContext, Accertamento
   *      La richiesta di cancellazione di un accertamento su partita di giro e' stata generata ma esistono
   *      documenti amministrativi contabilizzati sulla scadenza dell'accertamento
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di effettuare la cancellazione
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di effettuare la cancellazione
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param accert_pgiro <code>AccertamentoPGiroBulk</code> l'accertamento su partita di giro da cancellare (logicamente)
@@ -409,7 +409,7 @@ public AccertamentoPGiroBulk annullaAccertamento(UserContext userContext, Accert
 	try
 	{
 		verificaStatoEsercizio( userContext, accert_pgiro.getEsercizio(), accert_pgiro.getCd_cds());
-		//	segnalo impossibilit‡ di annullare un residuo se l'esercizio precedente Ë ancora aperto
+		//	segnalo impossibilit√† di annullare un residuo se l'esercizio precedente √® ancora aperto
 		if ( accert_pgiro.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_ACR_RES))
 			verificaStatoEsercizioEsPrecedente( userContext, accert_pgiro.getEsercizio(), accert_pgiro.getCd_cds());
 		
@@ -701,12 +701,12 @@ public AccertamentoPGiroBulk creaAccertamento(UserContext uc,ImpegnoPGiroBulk im
   *      una scadenza di un accertamento pgiro e' stata creata ed e' necessario creare il suo dettaglio
   *    PostCondition:
   *      Il dettaglio di scadenza (Accertamento_scad_voceBulk) viene creato
-  *      con linea attivit‡ uguale alla linea di attivit‡ definita nella Configurazione CNR come Linea attivit‡ Entrata ENTE
+  *      con linea attivit√† uguale alla linea di attivit√† definita nella Configurazione CNR come Linea attivit√† Entrata ENTE
   *      e importo uguale all'importo della scadenza dell'accertamento
   *  errore - Configurazione CNR
   *    PreCondition:
   *      una richiesta di creazione di un dettaglio di scadenza di un accertamento pgiro e' stata generata
-  *      ma non e' stata definita in Configurazione CNR la Linea attivit‡ Entrata ENTE
+  *      ma non e' stata definita in Configurazione CNR la Linea attivit√† Entrata ENTE
   *    PostCondition:
   *      Un messaggio di errore segnala all'utente la mancata definizione in Configurazione CNR della linea di attivita' Entrata ENTE
   *
@@ -786,7 +786,7 @@ private Accertamento_scadenzarioBulk creaAccertamento_scadenzario (UserContext u
 		// altri campi
 		accert_scad.setDt_scadenza_incasso( accert_pgiro.getDt_scadenza() );
 		/*
-		// controllo se l'anno di emissione dell'accertamento per partita di giro Ë uguale all'anno corrente
+		// controllo se l'anno di emissione dell'accertamento per partita di giro √® uguale all'anno corrente
 
 		gc.set(java.util.GregorianCalendar.MONTH,1);
 		gc.set(java.util.GregorianCalendar.DATE,1);
@@ -1031,7 +1031,7 @@ private it.cnr.contab.doccont00.ejb.SaldoComponentSession createSaldoComponentSe
   *      La richiesta di cancellazione di un accertamento su partita di giro e' stata generata ma esistono
   *      documenti amministrativi contabilizzati sulla scadenza dell'accertamento
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di effettuare la cancellazione
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di effettuare la cancellazione
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param accert_pgiro <code>AccertamentoPGiroBulk</code> l'accertamento su partita di giro da cancellare (logicamente)
@@ -1118,9 +1118,9 @@ public CdsBulk findCdsSAC (UserContext userContext) throws it.cnr.jada.persisten
 	return null;
 }
 /** 
-  *  ricerca Unit‡ Organizzative
+  *  ricerca Unit√† Organizzative
   *    PreCondition:
-  *      La richiesta di identificazione delle Unit‡ Organizzative per cui e' possibile creare un accerta-
+  *      La richiesta di identificazione delle Unit√† Organizzative per cui e' possibile creare un accerta-
   *      mento PGIRO e' stata generata
   *    PostCondition:
   *      Una lista contente l'UO Ente + l'UO di scrivania (se diverso da Ente) viene restituita
@@ -1128,7 +1128,7 @@ public CdsBulk findCdsSAC (UserContext userContext) throws it.cnr.jada.persisten
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param accert_pgiro <code>AccertamentoPGiroBulk</code> l'accertamento su partita di giro da creare
   *
-  * @return result la lista delle unit‡ organizzative definite per l'accertamento su partita di giro
+  * @return result la lista delle unit√† organizzative definite per l'accertamento su partita di giro
  */
 
 public List findUnitaOrganizzativaOptions (UserContext userContext,AccertamentoPGiroBulk accert_pgiro) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException, ComponentException
@@ -1187,9 +1187,9 @@ public Voce_fBulk findVoce_f(UserContext userContext,ImpegnoPGiroBulk impegno, A
   *      con il codice Cds di scrivania
   *  inizializzazione per inserimento - errore
   *    PreCondition:
-  *      L'unit‡ organizzativa Ë uguale a quella dell'Ente
+  *      L'unit√† organizzativa √® uguale a quella dell'Ente
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente che l'Ente non Ë abilitato a creare documenti su partita di giro
+  *      Un messaggio di errore segnala all'utente che l'Ente non √® abilitato a creare documenti su partita di giro
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> l'accertamento su partita di giro da inizializzare per l'inserimento
@@ -1213,7 +1213,7 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 		/* if (!((ObbligazioneHome)getHome(aUC, obbligazione.getClass())).verificaStatoEsercizio(obbligazione))
 			throw handleException( new ApplicationException( "Non e' possibile creare obbligazioni: esercizio non ancora aperto!") );*/
 
-		// se l'unit‡ organizzativa Ë uguale a quella dell'Ente, non Ë possibile creare documenti su partita di giro
+		// se l'unit√† organizzativa √® uguale a quella dell'Ente, non √® possibile creare documenti su partita di giro
 		if ( accert_pgiro.getCd_unita_organizzativa().equals( uoEnte.getCd_unita_organizzativa() ))
 			throw new ApplicationException("Funzione non consentita per utente abilitato a " + uoEnte.getCd_unita_organizzativa() ); 		
 		return super.inizializzaBulkPerInserimento( aUC, accert_pgiro );
@@ -1423,14 +1423,14 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
   *  Inizializzazione di un accertamento per ricerca - cds non ente
   *    PreCondition:
   *      La richiesta di inizializzare un accertamento per ricerca e' stata generata
-  *      L'uo di scrivania Ë diversa dall'ente
+  *      L'uo di scrivania √® diversa dall'ente
   *    PostCondition:
   *      L'accertamento e' stato inizializzato con il cds e l'uo di origine uguali a quelli di scrivania
   *
   *  Inizializzazione di un accertamento per ricerca - cds ente
   *    PreCondition:
   *      La richiesta di inizializzare un accertamento per ricerca e' stata generata
-  *      L'uo di scrivania Ë l'ente
+  *      L'uo di scrivania √® l'ente
   *    PostCondition:
   *      L'accertamento e' stato inizializzato e il cds e l'uo di origine non vengono valorizzati
   *
@@ -1477,14 +1477,14 @@ public OggettoBulk inizializzaBulkPerRicerca (UserContext userContext,OggettoBul
   *  Inizializzazione di un accertamento per ricerca - cds non ente
   *    PreCondition:
   *      La richiesta di inizializzare un accertamento per ricerca e' stata generata
-  *      L'uo di scrivania Ë diversa dall'ente
+  *      L'uo di scrivania √® diversa dall'ente
   *    PostCondition:
   *      L'accertamento e' stato inizializzato con il cds e l'uo di origine uguali a quelli di scrivania
   *
   *  Inizializzazione di un accertamento per ricerca - cds ente
   *    PreCondition:
   *      La richiesta di inizializzare un accertamento per ricerca e' stata generata
-  *      L'uo di scrivania Ë l'ente
+  *      L'uo di scrivania √® l'ente
   *    PostCondition:
   *      L'accertamento e' stato inizializzato e il cds e l'uo di origine non vengono valorizzati
   *
@@ -1533,7 +1533,7 @@ public void lockScadenza( UserContext userContext,IScadenzaDocumentoContabileBul
   *      La richiesta di modifica dell'importo di un impegno su partita di giro e' stata generata ma esistono
   *      documenti amministrativi contabilizzati sulla scadenza dell'accertamento associato all'impegno
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di effettuare la modifica
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di effettuare la modifica
   *  modifica capitolo
   *    PreCondition:
   *      L'utente richiede la modifica del capitolo di un impegno su partita di giro
@@ -1545,7 +1545,7 @@ public void lockScadenza( UserContext userContext,IScadenzaDocumentoContabileBul
   *      L'utente richiede la modifica del capitolo di un impegno su partita di giro ma non esiste
   *      l'associazione fra il nuovo capitolo di spesa dell'impegno e un capitolo di entrata
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di effettuare la modifica
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di effettuare la modifica
   *  modifica data di scadenza
   *    PreCondition:
   *      L'utente richiede la modifica della data di scadenza di un'obbligazione su partita di giro
@@ -1553,7 +1553,7 @@ public void lockScadenza( UserContext userContext,IScadenzaDocumentoContabileBul
   *      La data della scadenza dell'accertamento associato all'impegno viene aggiornata.
   *
   * @param uc lo <code>UserContext</code> che ha generato la richiesta
-  * @param imp_pgiro <code>ImpegnoPGiroBulk</code> l'impegno su partita di giro a cui Ë associato l'accertamento pgiro da modificare
+  * @param imp_pgiro <code>ImpegnoPGiroBulk</code> l'impegno su partita di giro a cui √® associato l'accertamento pgiro da modificare
   *
   * @return accert_pgiro l'accertamento su partita di giro modificato
  */
@@ -1568,7 +1568,7 @@ public AccertamentoPGiroBulk modificaAccertamento(UserContext uc,ImpegnoPGiroBul
 		// importo
 		AccertamentoPGiroBulk accert_pgiro = (AccertamentoPGiroBulk)imp_pgiro.getAssociazione().getAccertamento();
 
-		//segnalo impossibilit‡ di modificare importo se ci sono doc amministrativi associati
+		//segnalo impossibilit√† di modificare importo se ci sono doc amministrativi associati
 		if ( 
 			 /*errore !imp_pgiro.isFromDocAmm() && */ 
 			accert_pgiro.isAssociataADocAmm() && imp_pgiro.getIm_iniziale_obbligazione() != null &&
@@ -1691,7 +1691,7 @@ public AccertamentoPGiroBulk modificaAccertamento(UserContext uc,ImpegnoPGiroBul
   *      La richiesta di modifica dell'importo di un accertamento su partita di giro e' stata generata ma esistono
   *      documenti amministrativi contabilizzati sulla scadenza dell'accertamento
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di effettuare la modifica
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di effettuare la modifica
   *  modifica descrizione
   *    PreCondition:
   *      L'utente richiede la modifica della descrizione di un accertamento su partita di giro
@@ -1724,20 +1724,20 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 		
 		verificaStatoEsercizio( aUC, accert_pgiro.getEsercizio(), accert_pgiro.getCd_cds());		
 
-		//segnalo impossibilit‡ di modificare importo se ci sono doc amministrativi associati
+		//segnalo impossibilit√† di modificare importo se ci sono doc amministrativi associati
 		if ( !accert_pgiro.isFromDocAmm() && 
 			accert_pgiro.isAssociataADocAmm() && accert_pgiro.getIm_iniziale_accertamento() != null &&
 			accert_pgiro.getIm_iniziale_accertamento().compareTo( accert_pgiro.getIm_accertamento()) != 0 )
 			throw new ApplicationException( "Impossibile variare importo dell'Annotazione d'Entrata su Partita di Giro perche' e' associata a doc. amministrativi");
 
-		//segnalo impossibilit‡ di modificare importo se ci sono mandati associati
+		//segnalo impossibilit√† di modificare importo se ci sono mandati associati
 		if ( accert_pgiro.isFromDocAmm() && 
 			accert_pgiro.isAssociataADocAmm() && accert_pgiro.getIm_iniziale_accertamento() != null &&
 			accert_pgiro.getIm_iniziale_accertamento().compareTo( accert_pgiro.getIm_accertamento()) != 0 &&
 			accert_pgiro.getPg_reversale() != null )
 			throw new ApplicationException( "Impossibile variare importo dell'Annotazione d'Entrata su Partita di Giro perche' e' associata a reversale");
 
-		//	segnalo impossibilit‡ di modificare un residuo se l'esercizio precedente Ë ancora aperto
+		//	segnalo impossibilit√† di modificare un residuo se l'esercizio precedente √® ancora aperto
 		if ( accert_pgiro.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_ACR_RES))
 			verificaStatoEsercizioEsPrecedente( aUC, accert_pgiro.getEsercizio(), accert_pgiro.getCd_cds());
 
@@ -1826,7 +1826,7 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
 	//aggiorno importo testata
 	AccertamentoPGiroBulk acc_pgiro = (AccertamentoPGiroBulk) scadenza.getAccertamento();
 	if ( acc_pgiro.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_ACR_RES) )
-		throw handleException( new ApplicationException( "Non Ë consentita la modifica dell'importo di testata di un'annotazione residua." ));					
+		throw handleException( new ApplicationException( "Non √® consentita la modifica dell'importo di testata di un'annotazione residua." ));					
 
 	acc_pgiro.setIm_accertamento( nuovoImporto );
 	acc_pgiro.setToBeUpdated();
@@ -1939,16 +1939,16 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 /** 
   *  Tutti controlli superati
   *    PreCondition:
-  *      La data di registrazione dell'accertamento su partita di giro Ë corretta.
+  *      La data di registrazione dell'accertamento su partita di giro √® corretta.
   *    PostCondition:
-  *      L'accertamento su partita di giro Ë valido. E' consentito eseguire l'attivit‡ di salvataggio.
-  *  La data di registrazione dell'accertamento su partita di giro non Ë corretta.
+  *      L'accertamento su partita di giro √® valido. E' consentito eseguire l'attivit√† di salvataggio.
+  *  La data di registrazione dell'accertamento su partita di giro non √® corretta.
   *    PreCondition:
   *     E' stata inserita dall'utente una data di registrazione antecedente a quella dell'ultimo accertamento pgiro
   *		salvato sul database
   *    PostCondition:
-  *      L'utente viene avvisato tramite un messaggio di errore che non Ë possibile inserire un accertamento su partita 
-  *		 di giro con data anteriore a quella dell'ultimo accertamento salvato su database. L'attivit‡ non Ë consentita.
+  *      L'utente viene avvisato tramite un messaggio di errore che non √® possibile inserire un accertamento su partita 
+  *		 di giro con data anteriore a quella dell'ultimo accertamento salvato su database. L'attivit√† non √® consentita.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param acc <code>AccertamentoPGiroBulk</code> l'accertamento su partita di giro da validare
@@ -1971,7 +1971,7 @@ protected void verificaAccertamento(UserContext userContext, AccertamentoPGiroBu
 
 		Timestamp dataUltAcc = ((AccertamentoPGiroHome) getHome( userContext, AccertamentoPGiroBulk.class )).findDataUltimoAccertamentoPerCds( acc );
 		if ( dataUltAcc != null && dataUltAcc.after( acc.getDt_registrazione() ) )
-			throw  new ApplicationException( "Non Ë possibile inserire un'Annotazione d'Entrata su Partita di Giro con data anteriore a " +  
+			throw  new ApplicationException( "Non √® possibile inserire un'Annotazione d'Entrata su Partita di Giro con data anteriore a " +  
    									java.text.DateFormat.getDateTimeInstance().format( dataUltAcc ));
 	}	
 }
@@ -1980,7 +1980,7 @@ protected void verificaAccertamento(UserContext userContext, AccertamentoPGiroBu
  *
  * @param userContext <code>UserContext</code> 
  *
- * @return FALSE se per il cds interessato non Ë stato inserito nessun esercizio o se l'esercizio non Ë in stato di "aperto"
+ * @return FALSE se per il cds interessato non √® stato inserito nessun esercizio o se l'esercizio non √® in stato di "aperto"
  *		   TRUE in tutti gli altri casi
  *
  */
@@ -1999,7 +1999,7 @@ void verificaStatoEsercizio( UserContext userContext, Integer es, String cd_cds 
  *
  * @param userContext <code>UserContext</code> 
  *
- * @return FALSE se per il cds interessato l'esercizio precedente non Ë in stato di "chiuso"
+ * @return FALSE se per il cds interessato l'esercizio precedente non √® in stato di "chiuso"
  *		   TRUE in tutti gli altri casi
  *
  */

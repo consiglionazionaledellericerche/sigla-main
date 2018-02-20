@@ -109,9 +109,9 @@ public class Ass_contratto_ditteBulk extends Ass_contratto_ditteBase {
    				if(getCodice_fiscale() != null  && !getCodice_fiscale().contains(" ") && (getCodice_fiscale().length()==11) )
    					for (int i = 0;i < getCodice_fiscale().length();i++)
    						if (!Character.isDigit(getCodice_fiscale().charAt(i)))
-   							throw new ValidationException( "Il codice fiscale può essere composto solo da cifre in questo caso." );
+   							throw new ValidationException( "Il codice fiscale puÃ² essere composto solo da cifre in questo caso." );
    				if(getCodice_fiscale() != null && getCodice_fiscale().contains(" ")	)
-   					throw new ValidationException( "Il codice fiscale non può contenere spazi." );
+   					throw new ValidationException( "Il codice fiscale non puÃ² contenere spazi." );
    					
    				super.validate();
    	}

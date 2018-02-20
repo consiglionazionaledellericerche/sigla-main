@@ -22,7 +22,7 @@ import it.cnr.jada.util.*;
 import it.cnr.jada.util.action.*;
 
 /**
- * Adatta e implementa la {@link it.cnr.jada.util.action.CRUDAction } per le funzionalit‡ supplementari
+ * Adatta e implementa la {@link it.cnr.jada.util.action.CRUDAction } per le funzionalit√† supplementari
  * necessarie al crud dell'anagrafina.
  */
 public class CRUDAnagraficaAction extends it.cnr.jada.util.action.CRUDAction {
@@ -127,7 +127,7 @@ public Forward doBringBackTerzo(ActionContext context) {
 					anagraficoBulk.setTi_entita_giuridica(anagraficoBulk.ALTRO);
 				if(anagraficoBulk.ENTE_PUBBLICO.equals( anagraficoBulk.getTi_entita_giuridica() )) {
 					/* <B>Rich. 661</B>
-					 *	Il fl_esigibilit‡_differita, per gli enti pubblici DEVE essere di default == FALSE.
+					 *	Il fl_esigibilit√†_differita, per gli enti pubblici DEVE essere di default == FALSE.
 					 *
 					 * Creation date: (29/01/2004)
 				     * Author: Borriello Gennaro
@@ -239,7 +239,7 @@ public Forward doBringBackTerzo(ActionContext context) {
 		}
 	}
 	/**
-	 * Attiva la ricerca per la nazione di una nazionalit‡.
+	 * Attiva la ricerca per la nazione di una nazionalit√†.
 	 *
 	 * @param context {@link ActionContext } in uso.
 	 *
@@ -331,7 +331,7 @@ public Forward doConfermaTerzi(ActionContext context,int option) {
 
 			it.cnr.jada.util.action.CRUDBP bp = getBusinessProcess(context);
 			if (!bp.isEditing()) {
-				bp.setMessage("Non Ë possibile cancellare in questo momento");
+				bp.setMessage("Non √® possibile cancellare in questo momento");
 			} else {
 				bp.delete(context);
 				try {
@@ -481,7 +481,7 @@ public Forward doTerzi(ActionContext context) {
 }
 	/**
 	 * Metodo utilizzato per gestire dell'eccezione generata dall'inserimento di un
-	 * anagrafica gi‡ esistente.
+	 * anagrafica gi√† esistente.
 	 *
 	 * @param context {@link ActionContext } in uso.
 	 * @param ex Eccezione da gestire.
@@ -604,36 +604,36 @@ protected Forward riporta(ActionContext context,OggettoBulk model) {
 			if (docAmm instanceof it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk) {
 				it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk fp = (it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk)docAmm;
 				if (tb.getAnagrafico() == null)
-					throw new MessageToUser("Il terzo selezionato non Ë valido!",bp.ERROR_MESSAGE);
+					throw new MessageToUser("Il terzo selezionato non √® valido!",bp.ERROR_MESSAGE);
 				if (tb.getAnagrafico().getTi_italiano_estero()!=null && tb.getAnagrafico().getTi_italiano_estero().equals(NazioneBulk.ITALIA) && ((tb.getAnagrafico().getPartita_iva()==null  && !tb.getAnagrafico().getFl_non_obblig_p_iva()) ||tb.getAnagrafico().getCodice_fiscale()==null))
-					throw new MessageToUser("Il terzo selezionato non Ë valido!",bp.ERROR_MESSAGE);
+					throw new MessageToUser("Il terzo selezionato non √® valido!",bp.ERROR_MESSAGE);
 			
 				if (tb.getAnagrafico().DIVERSI.equalsIgnoreCase(tb.getAnagrafico().getTi_entita()))
-					throw new MessageToUser("Il terzo selezionato non Ë valido per la " + fp.getDescrizioneEntita() + " perchÈ Ë di tipo \"Diversi\"!", bp.ERROR_MESSAGE);
-				//NB: per le fatture passive il debitore Ë un creditore
+					throw new MessageToUser("Il terzo selezionato non √® valido per la " + fp.getDescrizioneEntita() + " perch√© √® di tipo \"Diversi\"!", bp.ERROR_MESSAGE);
+				//NB: per le fatture passive il debitore √® un creditore
 				if (tb.DEBITORE.equalsIgnoreCase(tb.getTi_terzo()))
-					throw new MessageToUser("Il terzo selezionato non Ë valido per la " + fp.getDescrizioneEntita() + " perchÈ Ë un debitore!", bp.ERROR_MESSAGE);
+					throw new MessageToUser("Il terzo selezionato non √® valido per la " + fp.getDescrizioneEntita() + " perch√© √® un debitore!", bp.ERROR_MESSAGE);
 				if (tb.getDt_fine_rapporto() != null && fp.getDt_fattura_fornitore() != null && 
 					fp.getDt_fattura_fornitore().after(tb.getDt_fine_rapporto()) && 
 					!tb.getDt_fine_rapporto().equals(fp.getDt_fattura_fornitore()))
-					throw new MessageToUser("Il rapporto con il terzo selezionato Ë terminato precedentemente alla data della " + fp.getDescrizioneEntita() + "! Selezione non valida.", bp.ERROR_MESSAGE);
+					throw new MessageToUser("Il rapporto con il terzo selezionato √® terminato precedentemente alla data della " + fp.getDescrizioneEntita() + "! Selezione non valida.", bp.ERROR_MESSAGE);
 				
 				String cond = fp.getSupplierNationType();
 				if (!cond.equalsIgnoreCase(tb.getAnagrafico().getTi_italiano_estero()))
-					throw new MessageToUser("E' necessario selezionare un terzo con nazionalit‡ compatibile con quella del documento amministrativo.", bp.ERROR_MESSAGE);
+					throw new MessageToUser("E' necessario selezionare un terzo con nazionalit√† compatibile con quella del documento amministrativo.", bp.ERROR_MESSAGE);
 			}
 			if (docAmm instanceof it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk) {
-				//NB: per le fatture att il creditore Ë un debitore
+				//NB: per le fatture att il creditore √® un debitore
 				if (tb.getAnagrafico().getTi_italiano_estero()!=null && tb.getAnagrafico().getTi_italiano_estero().equals(NazioneBulk.ITALIA) && ((tb.getAnagrafico().getPartita_iva()==null  && !tb.getAnagrafico().getFl_non_obblig_p_iva()) ||tb.getAnagrafico().getCodice_fiscale()==null))
-					throw new MessageToUser("Il terzo selezionato non Ë valido!",bp.ERROR_MESSAGE);
+					throw new MessageToUser("Il terzo selezionato non √® valido!",bp.ERROR_MESSAGE);
 				
 				it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk fa = (it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk)docAmm;
 				String cond = fa.getSupplierNationType();
 				if (!cond.equalsIgnoreCase(tb.getAnagrafico().getTi_italiano_estero()))
-					throw new MessageToUser("E' necessario selezionare un terzo con nazionalit‡ compatibile con quella del documento amministrativo.", bp.ERROR_MESSAGE);
+					throw new MessageToUser("E' necessario selezionare un terzo con nazionalit√† compatibile con quella del documento amministrativo.", bp.ERROR_MESSAGE);
 				
 				if (tb.CREDITORE.equalsIgnoreCase(tb.getTi_terzo()))
-					throw new MessageToUser("Il terzo selezionato non Ë valido per il documento attivo perchÈ Ë un creditore!", bp.ERROR_MESSAGE);
+					throw new MessageToUser("Il terzo selezionato non √® valido per il documento attivo perch√© √® un creditore!", bp.ERROR_MESSAGE);
 			}
 		}
 		
@@ -643,14 +643,14 @@ protected Forward riporta(ActionContext context,OggettoBulk model) {
 				java.util.Calendar today = it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk.getDateCalendar(null);
 				if (dataFineRapporto.before(today) && 
 					!dataFineRapporto.equals(today))
-					throw new MessageToUser("Il rapporto con il terzo selezionato Ë terminato precedentemente alla data odierna! Selezione non valida.", bp.ERROR_MESSAGE);
+					throw new MessageToUser("Il rapporto con il terzo selezionato √® terminato precedentemente alla data odierna! Selezione non valida.", bp.ERROR_MESSAGE);
 			}
 			if (bp.getParent() != null && bp.getParent() instanceof it.cnr.contab.fondecon00.bp.FondoSpesaBP) {
 				it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk spesa = (it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk)((it.cnr.contab.fondecon00.bp.FondoSpesaBP)bp.getParent()).getModel();
 				java.util.Calendar dataSpesa = spesa.getDateCalendar(spesa.getDt_spesa());
 				if (dataSpesa.after(dataFineRapporto) && 
 					!dataSpesa.equals(dataFineRapporto))
-					throw new MessageToUser("Il rapporto con il terzo selezionato Ë terminato precedentemente alla data della spesa! Selezione non valida.", bp.ERROR_MESSAGE);
+					throw new MessageToUser("Il rapporto con il terzo selezionato √® terminato precedentemente alla data della spesa! Selezione non valida.", bp.ERROR_MESSAGE);
 			}
 		}
 	}	
@@ -699,7 +699,7 @@ public Forward doCambiaDateRes(ActionContext context) {
 			{
 				anagrafico.setDt_inizio_res_italia(oldDtIniResIta);
 				anagrafico.setDt_fine_res_italia(oldDtFinResIta);
-				throw new MessageToUser("La Data di Inizio residenza in Italia non puÚ essere successiva alla data di Fine residenza in Italia.", bp.ERROR_MESSAGE);
+				throw new MessageToUser("La Data di Inizio residenza in Italia non pu√≤ essere successiva alla data di Fine residenza in Italia.", bp.ERROR_MESSAGE);
 			}			
 			if (bp.isSearching())
 				return context.findDefaultForward();
@@ -752,12 +752,12 @@ public Forward doCambiaDateRes(ActionContext context) {
 					//calcolo anno inizio residenza fiscale
 					if (!(numGiorniRes.compareTo(numMinGiorni.longValue() + 1) < 0))
 					{
-						//numGiorniRes>=numMinGiorni e quindi la residenza fiscale Ë nello stesso anno
+						//numGiorniRes>=numMinGiorni e quindi la residenza fiscale √® nello stesso anno
 						anagrafico.setAnno_inizio_res_fis(new Long(data_da.get(java.util.GregorianCalendar.YEAR)));
 					}
 					else
 					{
-						//numGiorniRes<numMinGiorni e devo verificare se l'anno successivo puÚ essere fiscale
+						//numGiorniRes<numMinGiorni e devo verificare se l'anno successivo pu√≤ essere fiscale
 						if( anagrafico.getDt_fine_res_italia() == null)
 						{
 							anagrafico.setAnno_inizio_res_fis(new Long(data_da.get(java.util.GregorianCalendar.YEAR))+1);	
@@ -837,7 +837,7 @@ public Forward doClickFlagFigliosenza(ActionContext context){
 try{	
 	fillModel(context);
 	if(carichi_fam.getDt_ini_validita()==null || carichi_fam.getDt_fin_validita()==null)
-		throw new ApplicationException("Attenzione, valorizzare prima la data di inizio e fine validit‡");
+		throw new ApplicationException("Attenzione, valorizzare prima la data di inizio e fine validit√†");
 	if (carichi_fam.getFl_primo_figlio_manca_con()!=null && carichi_fam.getFl_primo_figlio_manca_con().booleanValue())
 		bp.checkConiugeAlreadyExistFor(context, (AnagraficoBulk)bp.getModel(),carichi_fam);
 	return context.findDefaultForward();
@@ -880,12 +880,12 @@ public Forward doOnDt_fin_validitaChange(ActionContext context)  {
 		try {
 			fillModel(context);
 			if(carico.getDt_fin_validita()==null)
-				throw new ValidationException("E' necessario inserire la data di fine validit‡.");
+				throw new ValidationException("E' necessario inserire la data di fine validit√†.");
 			data_da.setTime(carico.getDt_ini_validita());
 			data_a.setTime(carico.getDt_fin_validita());
 //			if (data_da.get(java.util.GregorianCalendar.YEAR)!=data_a.get(java.util.GregorianCalendar.YEAR)){
 //				carico.setDt_fin_validita(oldData);
-//				throw new ValidationException("La data di inizio e fine validit‡ devono appartenere allo stesso esercizio.");
+//				throw new ValidationException("La data di inizio e fine validit√† devono appartenere allo stesso esercizio.");
 //			}
 				
 			if (!bp.isSearching())
@@ -946,7 +946,7 @@ public Forward doCambiaDateDiariaMissEst(ActionContext context) {
 			{
 				anagrafico.setDt_inizio_diaria_miss_est(oldDtIniDiaria);
 				anagrafico.setDt_fine_diaria_miss_est(oldDtFinDiaria);
-				throw new MessageToUser("La Data di Inizio autorizzazione non puÚ essere successiva alla data di Fine autorizzazione.", bp.ERROR_MESSAGE);
+				throw new MessageToUser("La Data di Inizio autorizzazione non pu√≤ essere successiva alla data di Fine autorizzazione.", bp.ERROR_MESSAGE);
 			}			
 			if (bp.isSearching())
 				return context.findDefaultForward();

@@ -31,7 +31,7 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 //    DS_UNITA_ORGANIZZATIVA VARCHAR(300) NOT NULL
 	private java.lang.String ds_unita_organizzativa;
  
-//  non esiste su DB, verr‡ riempito con la Sede del CDS
+//  non esiste su DB, verr√† riempito con la Sede del CDS
 	private java.lang.String sede;
 
 //    terzo_codice_fiscale VARCHAR(20) NULL
@@ -91,7 +91,7 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 //    non esiste su DB, contiene la procedura di conferimento incarico
 	private Incarichi_repertorioBulk incaricoRepertorio;
 
-//  non esiste su DB, verr‡ riempito con ll URL dove scaricare il pdf del bando
+//  non esiste su DB, verr√† riempito con ll URL dove scaricare il pdf del bando
 	private List<Incarichi_archivioBulk> listDownloadUrl;
 
 //  non esiste su DB, contiene l'ultima variazione valida dell'incarico
