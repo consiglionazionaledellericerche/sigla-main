@@ -116,7 +116,7 @@ public void initialize() {
 	setStato_ass_compenso(STATO_NON_ASS_COMPENSO);
 }
 /**
- * Restituisce un boolean 'true' se la rata è associata a compenso
+ * Restituisce un boolean 'true' se la rata Ã¨ associata a compenso
  */
  
 public boolean isAssociataACompenso() {

@@ -91,7 +91,7 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	return this;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
@@ -99,7 +99,7 @@ public void validate() throws ValidationException {
 
 	// verifico che il campo ENTRATA/SPESA non sia nullo.
 	if ( this.getTi_entrata_spesa() == null )
-		throw new ValidationException( "Il campo ENTRATA/SPESA Ë obbligatorio." );
+		throw new ValidationException( "Il campo ENTRATA/SPESA √® obbligatorio." );
 
 	// verifica sul campo IMPORTO
 	if ( ( this.getIm_tipo_bollo() == null ) || getIm_tipo_bollo().compareTo( new java.math.BigDecimal(0) ) < 0 )
@@ -107,7 +107,7 @@ public void validate() throws ValidationException {
 
 	// verifico che il campo CODICE non sia nullo.
 	if ( this.getCd_tipo_bollo() == null )
-		throw new ValidationException( "Il campo CODICE Ë obbligatorio." );
+		throw new ValidationException( "Il campo CODICE √® obbligatorio." );
 
 }
 }

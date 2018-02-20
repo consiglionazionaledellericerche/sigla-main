@@ -54,7 +54,7 @@ private ILogRegistryBulk getPrototypeFromTableName(String tableLog)
 
 		Class prototypeClass = getClass().getClassLoader().loadClass(sb.toString());
 		if (!ILogRegistryBulk.class.isAssignableFrom(prototypeClass))
-			throw new ClassCastException("La classe per \"" + tableLog + "\" non è di tipo LogRegistry! Operazione interrotta.");
+			throw new ClassCastException("La classe per \"" + tableLog + "\" non Ã¨ di tipo LogRegistry! Operazione interrotta.");
 		return (ILogRegistryBulk)prototypeClass.newInstance();
 	}
 	return null;

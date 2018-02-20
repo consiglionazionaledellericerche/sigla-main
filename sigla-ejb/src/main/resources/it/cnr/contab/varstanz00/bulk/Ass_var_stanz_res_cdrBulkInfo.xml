@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -26,14 +26,14 @@
         enabledOnEdit="true"
         enabledOnSearch="true"
 		nullable="false"
-        label="Centro di Responsabilità" />		                
+        label="Centro di ResponsabilitÃ " />		                
 	<fieldProperty
 		name="cd_centro_responsabilita"
 		property="centro_di_responsabilita.cd_centro_responsabilita"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Centro di Responsabilità" />
+		label="Centro di ResponsabilitÃ " />
 	<fieldProperty
 		name="ds_centro_responsabilita"
 		property="centro_di_responsabilita.ds_cdr"

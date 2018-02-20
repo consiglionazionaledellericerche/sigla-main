@@ -18,8 +18,8 @@ public class Stampa_vpg_stato_patrim_riclassVBulk extends Stampa_vpg_bilancio_ri
 	static 
 	{
 		ti_att_passKeys = new it.cnr.jada.util.OrderedHashtable();
-		ti_att_passKeys.put(TIPO_ATTIVITA,  "Attivit‡");
-		ti_att_passKeys.put(TIPO_PASSIVITA, "Passivit‡");
+		ti_att_passKeys.put(TIPO_ATTIVITA,  "Attivit√†");
+		ti_att_passKeys.put(TIPO_PASSIVITA, "Passivit√†");
 	};	
 /**
  * Stampa_vpg_stato_patrim_riclassVBulk constructor comment.

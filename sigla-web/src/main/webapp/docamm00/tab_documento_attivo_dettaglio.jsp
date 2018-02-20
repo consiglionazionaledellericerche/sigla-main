@@ -140,11 +140,11 @@
 			} else {
 				if ((riga.getModalita()==null || riga.getModalita().isEmpty()) && !bp.isSearching()) { %>
 					<span class="FormLabel" style="color:red">
-						Nessuna modalit‡ di pagamento trovata per la UO
+						Nessuna modalit√† di pagamento trovata per la UO
 					</span>
 				<%} else if (riga.getModalita_pagamento_uo_cds() != null && !bp.isSearching()) {%>
 				<span class="FormLabel" style="color:red">
-					Nessun riferimento trovato per la modalit‡ di pagamento selezionata!
+					Nessun riferimento trovato per la modalit√† di pagamento selezionata!
 				</span>
 								
 		<%	}}} %>

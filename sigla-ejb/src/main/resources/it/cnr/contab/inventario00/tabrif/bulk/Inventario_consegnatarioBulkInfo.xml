@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -9,7 +9,7 @@
 		property="dt_fine_validita"
 		maxLength="10"
 		inputSize="10"
-		label="Data Fine Validità"
+		label="Data Fine ValiditÃ "
 		inputType="TEXT"		
 		enabledOnFreeSearch = "true"
 		enabledOnInsert = "false"
@@ -21,7 +21,7 @@
 		property="dataFineValidita"
 		maxLength="10"
 		inputSize="10"
-		label="Data Fine Validità"
+		label="Data Fine ValiditÃ "
 		inputType="ROTEXT"
 		formatName="date_short"
 		enabledOnInsert="true"
@@ -35,7 +35,7 @@
 		inputType="TEXT"
 		nullable = "false"
 		formatName="date_short"
-		label="Data Inizio Validità"
+		label="Data Inizio ValiditÃ "
 		enabledOnInsert="true"
       	enabledOnEdit="false"
 		enabledOnSearch="false" />

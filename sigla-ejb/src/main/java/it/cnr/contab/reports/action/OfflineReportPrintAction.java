@@ -60,7 +60,7 @@ public Forward doPrint(ActionContext context) {
 		//}
 		
 		if (bp.createComponentSession().controllaStampeInCoda(context.getUserContext(), bp.getModel())){
-			String message = "Attenzione esiste gi‡ la stessa stampa in coda o in esecuzione. Vuoi continuare?";
+			String message = "Attenzione esiste gi√† la stessa stampa in coda o in esecuzione. Vuoi continuare?";
 			return openConfirm(context,message,OptionBP.CONFIRM_YES_NO,"doConfermaStampaInCoda");
 		}
 		
@@ -89,7 +89,7 @@ public Forward doConfermaStampaInCoda(ActionContext context,int option) throws j
 	{
 		if (option == OptionBP.NO_BUTTON) {
 			PrintSpoolerBP printSpoolerBP = (PrintSpoolerBP)context.createBusinessProcess("PrintSpoolerBP");
-			printSpoolerBP.setMessage("La stampa non Ë stata accodata");
+			printSpoolerBP.setMessage("La stampa non √® stata accodata");
 			return context.addBusinessProcess(printSpoolerBP);
 		}
 		else {

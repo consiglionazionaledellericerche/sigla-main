@@ -29,12 +29,12 @@ public Forward doOnImportoLimiteChange( ActionContext context)
 		if (riga!=null) 
 			if ((riga.getImporto_limite().subtract(riga.getImpegni_assunti())).compareTo(BigDecimal.ZERO)<0){
 				 riga.setImporto_limite(oldImp);
-				 throw new ApplicationException("L'importo limite non può essere inferiore agli impegni assunti per il Cds.");
+				 throw new ApplicationException("L'importo limite non puÃ² essere inferiore agli impegni assunti per il Cds.");
 			}
 			else{
 				if(model.getImporto_limite().compareTo(model.getImporto_assegnato().add(riga.getImporto_limite()).subtract(oldImp))<0){
 					riga.setImporto_limite(oldImp);
-					throw new ApplicationException("L'importo limite della voce risulta già completamente assegnato.");
+					throw new ApplicationException("L'importo limite della voce risulta giÃ  completamente assegnato.");
 				}
 		    	else	
 		    		model.setImporto_assegnato(model.getImporto_assegnato().add(riga.getImporto_limite()).subtract(oldImp));

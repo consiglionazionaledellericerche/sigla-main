@@ -19,11 +19,11 @@ public CRUDUbicazioneBP(String function) {
 	super(function);
 }
 /**
- * E' stata generata la richiesta di cercare l'Ubicazione che sar‡ nodo padre dell'Ubicazione
+ * E' stata generata la richiesta di cercare l'Ubicazione che sar√† nodo padre dell'Ubicazione
  *	che si sta creando.
  *  Il metodo restituisce un Iteratore che permette di navigare tra le ubicazioni passando
  *	da un livello ai suoi nodi figli e viceversa. Il metodo isLeaf, permette di definire un 
- *	"livello foglia", il livello, cioË, che non puÚ avere nodi sotto di esso.
+ *	"livello foglia", il livello, cio√®, che non pu√≤ avere nodi sotto di esso.
  *
  * @param context la <code>ActionContext</code> che ha generato la richiesta
  *

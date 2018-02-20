@@ -22,7 +22,7 @@ function doStampaRichiesta() {
 			'Richiesta', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
 }
 </script>
-<title>Richieste da Unit‡ Operativa</title>
+<title>Richieste da Unit√† Operativa</title>
 </head>
 <body class="Form">
 <%  bp.openFormWindow(pageContext); %>

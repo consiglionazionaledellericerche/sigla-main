@@ -78,10 +78,10 @@ public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.
 		if ( "Y".equals(obb.getRiportato()) )
 		{
 	//		setStatus(VIEW);
-			setMessage("Il documento Ë stato riportato all'esercizio successivo. Non consentita la modifica.");
+			setMessage("Il documento √® stato riportato all'esercizio successivo. Non consentita la modifica.");
 		}
 
-		// Se l'impoegno Ë stato stornato, NON Ë possibile apportare alcuna modifica.
+		// Se l'impoegno √® stato stornato, NON √® possibile apportare alcuna modifica.
 		//	27/02/2004 - BORRIELLO - Segnalazione Interna
 		if ( obb.getStato_obbligazione().equals(ObbligazioneBulk.STATO_OBB_STORNATO)) {
 			setStatus(VIEW);
@@ -254,9 +254,9 @@ public boolean isEditable() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'fromDocAmm'
+ * Restituisce il valore della propriet√† 'fromDocAmm'
  *
- * @return Il valore della propriet‡ 'fromDocAmm'
+ * @return Il valore della propriet√† 'fromDocAmm'
  */
 public boolean isFromDocAmm() 
 {

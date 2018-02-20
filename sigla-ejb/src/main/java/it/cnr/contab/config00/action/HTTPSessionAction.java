@@ -16,7 +16,7 @@ public class HTTPSessionAction extends ConsultazioniAction {
 			HTTPSessionBP bp = (HTTPSessionBP)actioncontext.getBusinessProcess();
 			bp.saveSelection(actioncontext);
 			if (bp.getSelectedElements(actioncontext).isEmpty()) {
-				bp.setMessage("Non è stata selezionata nessuna riga.");
+				bp.setMessage("Non Ã¨ stata selezionata nessuna riga.");
 				return actioncontext.findDefaultForward();
 			}							
 			bp.disconnettiSessioni(actioncontext);

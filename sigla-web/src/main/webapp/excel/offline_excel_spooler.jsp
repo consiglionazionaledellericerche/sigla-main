@@ -15,7 +15,7 @@
 <body class="Form">
 <% OfflineExcelSpoolerBP bp = (OfflineExcelSpoolerBP)BusinessProcess.getBusinessProcess(request);
 	bp.openFormWindow(pageContext); %>
-	L'estrazione richiesta verr‡ accodata.
+	L'estrazione richiesta verr√† accodata.
 	<table>
 			<tr>
 				<td><% bp.getController().writeFormLabel(out,"ds_estrazione"); %>

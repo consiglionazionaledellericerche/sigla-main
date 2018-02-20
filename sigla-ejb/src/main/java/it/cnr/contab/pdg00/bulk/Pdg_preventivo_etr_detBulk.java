@@ -124,9 +124,9 @@ public CdrBulk getCentro_responsabilita_clgs() {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'classificazione_entrate'
+	 * Restituisce il valore della propriet√† 'classificazione_entrate'
 	 *
-	 * @return Il valore della propriet‡ 'classificazione_entrate'
+	 * @return Il valore della propriet√† 'classificazione_entrate'
 	 */
 	public Classificazione_entrateBulk getClassificazione_entrate() {
 		return (getElemento_voce() != null && getElemento_voce().getClassificazione_entrate() != null && getElemento_voce().getClassificazione_entrate().getEsercizio() != null && getElemento_voce().getClassificazione_entrate().getCodice_cla_e() != null) ? getElemento_voce().getClassificazione_entrate() : classificazione_entrate;
@@ -148,18 +148,18 @@ public it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk getElemento_voce_clg
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'funzione'
+ * Restituisce il valore della propriet√† 'funzione'
  *
- * @return Il valore della propriet‡ 'funzione'
+ * @return Il valore della propriet√† 'funzione'
  */
 public it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk getFunzione() {
 	return funzione;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'funzioni'
+ * Restituisce il valore della propriet√† 'funzioni'
  *
- * @return Il valore della propriet‡ 'funzioni'
+ * @return Il valore della propriet√† 'funzioni'
  */
 public java.util.Collection getFunzioni() {
 	return funzioni;
@@ -172,18 +172,18 @@ public WorkpackageBulk getLinea_attivita_clgs() {
 	}
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'natura'
+ * Restituisce il valore della propriet√† 'natura'
  *
- * @return Il valore della propriet‡ 'natura'
+ * @return Il valore della propriet√† 'natura'
  */
 public it.cnr.contab.config00.pdcfin.bulk.NaturaBulk getNatura() {
 	return natura;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'nature'
+ * Restituisce il valore della propriet√† 'nature'
  *
- * @return Il valore della propriet‡ 'nature'
+ * @return Il valore della propriet√† 'nature'
  */
 public java.util.Collection getNature() {
 	return nature;
@@ -261,9 +261,9 @@ public boolean isOrigineStipendi() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rODettaglio'
+ * Restituisce il valore della propriet√† 'rODettaglio'
  *
- * @return Il valore della propriet‡ 'rODettaglio'
+ * @return Il valore della propriet√† 'rODettaglio'
  */
 public boolean isRODettaglio() {
 		if(getFl_sola_lettura() == null)
@@ -273,9 +273,9 @@ public boolean isRODettaglio() {
 	}
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOelemento_voce'
+ * Restituisce il valore della propriet√† 'rOelemento_voce'
  *
- * @return Il valore della propriet‡ 'rOelemento_voce'
+ * @return Il valore della propriet√† 'rOelemento_voce'
  */
 public boolean isROelemento_voce() {
 		if(isRODettaglio()) {
@@ -322,7 +322,7 @@ public void setCentro_responsabilita_clgs(CdrBulk newCentro_responsabilita_clgs)
 	}
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'classificazione_entrate'
+ * Imposta il valore della propriet√† 'classificazione_entrate'
  *
  * @param newClassificazione_spese	Il valore da assegnare a 'classificazione_entrate'
  */
@@ -337,7 +337,7 @@ public void setElemento_voce_clgs(it.cnr.contab.config00.pdcfin.bulk.Elemento_vo
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'funzione'
+ * Imposta il valore della propriet√† 'funzione'
  *
  * @param newFunzione	Il valore da assegnare a 'funzione'
  */
@@ -346,7 +346,7 @@ public void setFunzione(it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk newFunzi
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'funzioni'
+ * Imposta il valore della propriet√† 'funzioni'
  *
  * @param newFunzioni	Il valore da assegnare a 'funzioni'
  */
@@ -363,7 +363,7 @@ public void setLinea_attivita_clgs(WorkpackageBulk newLinea_attivita_clgs) {
 	}
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'natura'
+ * Imposta il valore della propriet√† 'natura'
  *
  * @param newNatura	Il valore da assegnare a 'natura'
  */
@@ -372,7 +372,7 @@ public void setNatura(it.cnr.contab.config00.pdcfin.bulk.NaturaBulk newNatura) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'nature'
+ * Imposta il valore della propriet√† 'nature'
  *
  * @param newNature	Il valore da assegnare a 'nature'
  */

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -63,7 +63,7 @@
 		property="cdrForPrint"
 		inputType="SEARCHTOOL"
 		completeOnSave="true"
-		label="Centro di Responsabilità" />
+		label="Centro di ResponsabilitÃ " />
 	<fieldProperty
 		name="cdCdrForPrint"
 		property="cdrForPrint.cd_centro_responsabilita"

@@ -26,9 +26,9 @@ public CRUDCostoDelDipendenteBP(String function) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'costi_per_elemento_voce'
+ * Restituisce il valore della propriet√† 'costi_per_elemento_voce'
  *
- * @return Il valore della propriet‡ 'costi_per_elemento_voce'
+ * @return Il valore della propriet√† 'costi_per_elemento_voce'
  */
 public final it.cnr.jada.util.action.SimpleDetailCRUDController getCosti_per_elemento_voce() {
 	return costi_per_elemento_voce;

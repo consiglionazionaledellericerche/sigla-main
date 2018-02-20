@@ -90,7 +90,7 @@ public TerzoBulk cercaTerzoPerUnitaOrganizzativa(UserContext userContext,Unita_o
 		TerzoBulk terzo = (TerzoBulk)broker.fetch(TerzoBulk.class); 
 		// eliminato controllo terzo unico per UO 
 		//if (broker.next()) 
-			//throw new ApplicationException("Esistono più terzi associati a questa Unità Organizzativa");
+			//throw new ApplicationException("Esistono piÃ¹ terzi associati a questa UnitÃ  Organizzativa");
 		return terzo;
 	} catch(it.cnr.jada.persistency.PersistencyException ex) {
 		throw new ComponentException(ex);
@@ -133,7 +133,7 @@ public TerzoBulk cercaTerzoPerUnitaOrganizzativa(UserContext userContext,Unita_o
 			} catch(Throwable e) {
 				throw handleException(bulk,rie);
 			}*/
-			//throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");
+			//throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");
 		} catch (Throwable e) {
 			throw handleException(bulk,e);
 		}
@@ -342,14 +342,14 @@ private void validaCreaModificaBanche(TerzoBulk terzo) throws ComponentException
 	            
 				if (!deleted){
 					if (banca.getFl_cc_cds() != null && banca.getFl_cc_cds().booleanValue() && isCcd) {
-						throw new ApplicationException("Attenzione: è possibile definire solamente una Banca come CCD.\nControllare le Banche indicate per le Modalità di Pagamento di tipo Bancario, (B).");
+						throw new ApplicationException("Attenzione: Ã¨ possibile definire solamente una Banca come CCD.\nControllare le Banche indicate per le ModalitÃ  di Pagamento di tipo Bancario, (B).");
 					} else if (banca.getFl_cc_cds().booleanValue()){
 						isCcd = true;
 					}
 
 					if (banca.getTi_pagamento() != null && banca.getTi_pagamento().equals(Rif_modalita_pagamentoBulk.BANCA_ITALIA)){
 						if (isBancaItalia){
-							throw new ApplicationException("Attenzione: è possibile definire solamente una Banca come Banca d'Italia.\nControllare le Banche indicate per le Modalità di Pagamento di tipo (I).");
+							throw new ApplicationException("Attenzione: Ã¨ possibile definire solamente una Banca come Banca d'Italia.\nControllare le Banche indicate per le ModalitÃ  di Pagamento di tipo (I).");
 						} else {
 							isBancaItalia = true;
 						}
@@ -358,29 +358,29 @@ private void validaCreaModificaBanche(TerzoBulk terzo) throws ComponentException
 
 					// Rich. 695: Borriello Gennaro - 15.01.2004
 					// Per le banche che NON sono da ORIGINE STIPENDI
-					/* Se TI_PAGAMENTO è di tipo 'B':
+					/* Se TI_PAGAMENTO Ã¨ di tipo 'B':
 					 *	- che il campo CIN sia stato valorizzato;
 					 *	- il numero di conto corrente DEVE essere al massimo di 12 caratteri:
 					 *		se l'utente inserisce un numero di lunghezza maggiore viene visualizzato
-					 *		un messaggio di errore. Se la lunghezza è minore, vengono aggiunti tanti
+					 *		un messaggio di errore. Se la lunghezza Ã¨ minore, vengono aggiunti tanti
 					 *		zeri quanti ne servono per arrivare a 12 carat.
 					*/
 					if (!banca.isOrigineStipendi() && banca.getTi_pagamento() != null && banca.getTi_pagamento().equals(Rif_modalita_pagamentoBulk.BANCARIO) && !banca.getFl_cancellato()){
 					 if (banca.getNazione_iban()!=null && banca.getNazione_iban().getCd_iso().equals("IT") ) {
 						// Controllo su campo CIN
 						if (banca.getCin() == null || banca.getCin().trim().equals("")){
-							throw new ApplicationException("Attenzione: il campo CIN è obbligatorio per i Tipi Pagamento B.");
+							throw new ApplicationException("Attenzione: il campo CIN Ã¨ obbligatorio per i Tipi Pagamento B.");
 						}
 
 
 						if (!Character.isLetterOrDigit(banca.getCin().charAt(0))){
-							throw new ApplicationException("Attenzione: il campo CIN non è valido.");
+							throw new ApplicationException("Attenzione: il campo CIN non Ã¨ valido.");
 						}
 
 						// Controllo su num. C/C
 						String cc = banca.getNumero_conto().trim();
 						if (cc.length()>12){
-							throw new ApplicationException("Attenzione: il numero di conto corrente può essere al massimo di 12 caratteri per i Tipi Pagamento B.");
+							throw new ApplicationException("Attenzione: il numero di conto corrente puÃ² essere al massimo di 12 caratteri per i Tipi Pagamento B.");
 						}
 
 						if (cc.length()<12){
@@ -417,9 +417,9 @@ protected void validaCreaModificaConBulk(UserContext userContext,OggettoBulk bul
 
 		// verifica valorizzazione Comune Sede
 		if(terzo.getComune_sede() == null)
-			throw new it.cnr.jada.comp.ApplicationException("Comune sede è obbligatorio");
+			throw new it.cnr.jada.comp.ApplicationException("Comune sede Ã¨ obbligatorio");
 
-		// verifica che esistano Banche associate al tipo di modalità di pagamento delle modalità di pagamento */		
+		// verifica che esistano Banche associate al tipo di modalitÃ  di pagamento delle modalitÃ  di pagamento */		
 		for (java.util.Iterator i = terzo.getModalita_pagamento().iterator();i.hasNext();) {
 			Modalita_pagamentoBulk modalita_pagamento = (Modalita_pagamentoBulk)i.next();
 			if (terzo.getBanche(modalita_pagamento).isEmpty()) {
@@ -434,18 +434,18 @@ protected void validaCreaModificaConBulk(UserContext userContext,OggettoBulk bul
 		if (terzo_bck != null) {
 			if (terzo.getDt_fine_rapporto() == null) {
 				if (terzo_bck.getDt_fine_rapporto() != null)
-					throw new ApplicationException("Non è possibile togliere la data di fine rapporto di un terzo.");
+					throw new ApplicationException("Non Ã¨ possibile togliere la data di fine rapporto di un terzo.");
 			} else if (!terzo.getDt_fine_rapporto().equals(terzo_bck.getDt_fine_rapporto())) {
 				if (terzo.getDt_fine_rapporto().before(dt_odierna))
-					throw new ApplicationException("La data di fine rapporto del terzo non può essere anteriore alla data odierna");
+					throw new ApplicationException("La data di fine rapporto del terzo non puÃ² essere anteriore alla data odierna");
 				AnagraficoBulk anagrafico_bck = (AnagraficoBulk)getHome(userContext,terzo.getAnagrafico()).findByPrimaryKey(terzo.getAnagrafico());
 				if (anagrafico_bck.getDt_fine_rapporto() != null && anagrafico_bck.getDt_fine_rapporto().before(terzo.getDt_fine_rapporto()))
-					throw new ApplicationException("La data di fine rapporto del terzo non può essere posteriore alla data di fine rapporto dell'anagrafico");
+					throw new ApplicationException("La data di fine rapporto del terzo non puÃ² essere posteriore alla data di fine rapporto dell'anagrafico");
 			}
 		}
 
 		if (terzo.getCrudStatus() == OggettoBulk.TO_BE_CREATED){
-			// Controlla che la UO specificata non sia già utilizzata					
+			// Controlla che la UO specificata non sia giÃ  utilizzata					
 			if(terzo.getAnagrafico() != null && terzo.getAnagrafico().isStrutturaCNR())
 			 validaUnitaOrganizzativa(userContext, terzo);
 		}
@@ -481,11 +481,11 @@ public void validaModificaConBulk(UserContext userContext,OggettoBulk bulk) thro
 					// (19/06/2002 14:49:07) CNRADM
 					//v.add(banca);
 				} else
-				throw new ApplicationException("Attenzione: non è possibile cancellare fisicamente le banche selezionate.\nL'Utente non ha l'autorizzazione per la cancellazione logica.");
+				throw new ApplicationException("Attenzione: non Ã¨ possibile cancellare fisicamente le banche selezionate.\nL'Utente non ha l'autorizzazione per la cancellazione logica.");
 			}
 		}
 
-		// Controlla che la UO specificata non sia già utilizzata
+		// Controlla che la UO specificata non sia giÃ  utilizzata
 		//validaUnitaOrganizzativa(userContext, terzo);
 		super.validaModificaConBulk(userContext,bulk);
 	} catch (java.rmi.RemoteException re){
@@ -497,8 +497,8 @@ public void validaModificaConBulk(UserContext userContext,OggettoBulk bulk) thro
 	}
 }
 /**
- * Controlla che l'Unità Organizzativa indicata per il Terzo non sia già stata utilizzata:
- *	infatti, non è possibile associare una UO a più terzi.
+ * Controlla che l'UnitÃ  Organizzativa indicata per il Terzo non sia giÃ  stata utilizzata:
+ *	infatti, non Ã¨ possibile associare una UO a piÃ¹ terzi.
  *
  * Creation date: (22/08/2002 12.10.44)
  * Author: Gennaro Borriello
@@ -510,11 +510,11 @@ private void validaUnitaOrganizzativa(UserContext userContext,TerzoBulk terzo) t
 	try {
 
 		if(terzo.getCd_unita_organizzativa() == null)
-			throw new ApplicationException("Attenzione: Unità Organizzativa non specificata");		
+			throw new ApplicationException("Attenzione: UnitÃ  Organizzativa non specificata");		
 		SQLBuilder sql = getHome(userContext, TerzoBulk.class).createSQLBuilder();
 		sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, terzo.getCd_unita_organizzativa());
 		//if (sql.executeExistsQuery(getConnection(userContext)))
-			//throw new ApplicationException("Attenzione: l'Unità Organizzativa selezionata è già stata utilizzata.");		
+			//throw new ApplicationException("Attenzione: l'UnitÃ  Organizzativa selezionata Ã¨ giÃ  stata utilizzata.");		
 		
 	} catch(Throwable e) {
 		throw handleException(e);
@@ -526,7 +526,7 @@ public void verificaIntegritaBanche(UserContext userContext,TerzoBulk terzo) thr
 		for (java.util.Iterator it = terzo.getBanche().deleteIterator();it.hasNext();){
 			BancaBulk banca = (BancaBulk)it.next();
 			
-			/* Se la Banca ha ORIGINE = 'S', (è stata creata dalla migrazioen per un dipendente)
+			/* Se la Banca ha ORIGINE = 'S', (Ã¨ stata creata dalla migrazioen per un dipendente)
 				viene lanciata una eccezione di tipo <code>ReferentialIntegrityException</code>.
 			*/
 			//if (banca.getOrigine().equals(BancaBulk.ORIGINE_STIPENDI))
@@ -558,7 +558,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 	TerzoBulk terBulk = (TerzoBulk)bulk;
 	/* ***************************************************** *
 	 * ***************************************************** *
-	 * ** Se la data di fine rapporto è stata valorizzata ** *
+	 * ** Se la data di fine rapporto Ã¨ stata valorizzata ** *
 	 * ** controllo i dettagli del Terzo                  ** *
 	 * ***************************************************** *
 	 * ***************************************************** */
@@ -571,7 +571,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -586,7 +586,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -601,7 +601,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -616,7 +616,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -631,7 +631,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -646,7 +646,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -661,7 +661,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -676,7 +676,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -691,7 +691,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -706,7 +706,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -721,7 +721,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -736,7 +736,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -751,7 +751,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -767,7 +767,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -782,7 +782,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -797,7 +797,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -812,7 +812,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -827,7 +827,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -842,7 +842,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -857,7 +857,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -872,7 +872,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -887,7 +887,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -902,7 +902,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -917,7 +917,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -932,7 +932,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -947,7 +947,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -962,7 +962,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -977,7 +977,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{
@@ -993,7 +993,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		try 
 		{
 		  if (sql.executeCountQuery(getConnection(aUC))>0)							
-			throw new ApplicationException("Impossibile cancellare l'anagrafica perchè risulta utilizzata nei documenti contabili o amministrativi.");						 
+			throw new ApplicationException("Impossibile cancellare l'anagrafica perchÃ¨ risulta utilizzata nei documenti contabili o amministrativi.");						 
 		} 
 		catch (java.sql.SQLException e) 
 		{

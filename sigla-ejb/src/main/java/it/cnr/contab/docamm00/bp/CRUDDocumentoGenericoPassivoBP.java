@@ -267,17 +267,17 @@ public it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk getDeleteMan
 	return deleteManager;
 }
 /**
- * Restituisce il valore della propriet‡ 'dettaglio'
+ * Restituisce il valore della propriet√† 'dettaglio'
  *
- * @return Il valore della propriet‡ 'dettaglio'
+ * @return Il valore della propriet√† 'dettaglio'
  */
 public final SimpleDetailCRUDController getDettaglio() {
 	return dettaglio;
 }
 /**
- * Restituisce il valore della propriet‡ 'dettaglioObbligazioneController'
+ * Restituisce il valore della propriet√† 'dettaglioObbligazioneController'
  *
- * @return Il valore della propriet‡ 'dettaglioObbligazioneController'
+ * @return Il valore della propriet√† 'dettaglioObbligazioneController'
  */
 public final it.cnr.jada.util.action.SimpleDetailCRUDController getDettaglioObbligazioneController() {
 	return dettaglioObbligazioneController;
@@ -292,9 +292,9 @@ public Obbligazione_scadenzarioBulk getObbligazione_scadenziario_corrente() {
 	return (Obbligazione_scadenzarioBulk)getObbligazioniController().getModel();
 }
 /**
- * Restituisce il valore della propriet‡ 'obbligazioniController'
+ * Restituisce il valore della propriet√† 'obbligazioniController'
  *
- * @return Il valore della propriet‡ 'obbligazioniController'
+ * @return Il valore della propriet√† 'obbligazioniController'
  */
 public final ObbligazioniCRUDController getObbligazioniController() {
 	return obbligazioniController;
@@ -304,9 +304,9 @@ public String getPropertyForGenericSearch() {
 	return null;
 }
 /**
- * Restituisce il valore della propriet‡ 'userConfirm'
+ * Restituisce il valore della propriet√† 'userConfirm'
  *
- * @return Il valore della propriet‡ 'userConfirm'
+ * @return Il valore della propriet√† 'userConfirm'
  */
 public it.cnr.contab.doccont00.core.bulk.OptionRequestParameter getUserConfirm() {
 	return userConfirm;
@@ -551,7 +551,7 @@ public void riportaIndietro(ActionContext context)
 	throws it.cnr.jada.action.BusinessProcessException {
 	
 	if (isDirty()) {
-		setMessage("Il documento Ë stato modificato! Operazione annullata.");
+		setMessage("Il documento √® stato modificato! Operazione annullata.");
 		return;
 	}
 	
@@ -612,7 +612,7 @@ public void salvaRiportandoAvanti(ActionContext context)
 		riportaAvanti(context);
 	} catch (BusinessProcessException e) {
 		rollbackToSavePoint(context, IDocumentoAmministrativoBulk.RIPORTA_AVANTI);
-		//Il setModel Ë necessario perchË update setta il modello. se riportaAvanti fallisce il pg_ver_rec
+		//Il setModel √® necessario perch√® update setta il modello. se riportaAvanti fallisce il pg_ver_rec
 		//rimane disallineato.
 		setModel(context, docClone);
 		throw handleException(e);
@@ -701,7 +701,7 @@ public void setSavePoint(ActionContext context, String savePointName) throws Bus
 	}
 }
 /**
- * Imposta il valore della propriet‡ 'userConfirm'
+ * Imposta il valore della propriet√† 'userConfirm'
  *
  * @param newUserConfirm	Il valore da assegnare a 'userConfirm'
  */
@@ -727,7 +727,7 @@ public void update(it.cnr.jada.action.ActionContext context)
 }
 /**
   * Validazione dell'obbligazione in fase di creazione di una nuova obbligazione
-  * o modifica di una gi‡ creata.
+  * o modifica di una gi√† creata.
   * Il metodo viene chiamato sul riporta dell'Obbligazione in modo da validare
   * istantaneamente l'oggetto creato.
   * Chi non ne ha bisogno lo lasci vuoto.
@@ -825,7 +825,7 @@ public boolean isBeni_collButtonHidden() {
 	return isSearching() || isDeleting();
 }
 /**
- * Il metodo Ë stato sovrascritto per consentire all'utente di modificare lo stato della liquidazione
+ * Il metodo √® stato sovrascritto per consentire all'utente di modificare lo stato della liquidazione
  * quando il documento non risulta essere modificabile
  *  
  */

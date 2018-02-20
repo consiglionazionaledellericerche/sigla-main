@@ -18,9 +18,9 @@ import java.text.ParseException;
 
 public class RicercaIncarichiRichiestaAction extends AbstractAction {
 
-	/* per testare si puÚ usare:
+	/* per testare si pu√≤ usare:
 	 * 
-	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=1                                * tutte le richieste di verifica professionalit‡ interna valide (V_incarichi_richiesta)
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=1                                * tutte le richieste di verifica professionalit√† interna valide (V_incarichi_richiesta)
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=1&dominio=data&query=c           * solo le richieste di incarico in corso
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=1&dominio=data&query=s           * solo le richieste di incarico scadute (e quelle non ancora attive)
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=1&dominio=data&query=c&anno=2008 * solo le richieste di incarico in corso pubblicate nel 2008 
@@ -37,11 +37,11 @@ public class RicercaIncarichiRichiestaAction extends AbstractAction {
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&dominio=data&query=s           * solo incarichi di collaborazione scadute (e quelle non ancora attive)
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&dominio=data&query=c&anno=2008 * solo incarichi di collaborazione in corso pubblicate nel 2008
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&dominio=data&query=s&anno=2008 * solo incarichi di collaborazione scadute (e quelle non ancora attive) pubblicate nel 2008
-	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=1                  * Incarichi di collaborazione relativi ad attivit‡ di consulenza con tipo attivit‡ 3 e 7
-	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=2                  * Incarichi di collaborazione relativi ad altre tipologie di attivit‡ con tipo attivit‡ 1,2,4,5,6 e 8
-	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=3                  * Assegni di ricerca con tipo attivit‡ 10
-	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=4                  * Borse di studio con tipo attivit‡ 11
-	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=5                  * Tirocini con tipo attivit‡ 12
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=1                  * Incarichi di collaborazione relativi ad attivit√† di consulenza con tipo attivit√† 3 e 7
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=2                  * Incarichi di collaborazione relativi ad altre tipologie di attivit√† con tipo attivit√† 1,2,4,5,6 e 8
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=3                  * Assegni di ricerca con tipo attivit√† 10
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=4                  * Borse di studio con tipo attivit√† 11
+	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=3&...&tipoInc=5                  * Tirocini con tipo attivit√† 12
 
 	 * http://siglaas4.cedrc.cnr.it:8180/SIGLA/RicercaIncarichiRichiesta.do?tipofile=4                                * elenco contratti conferiti
 

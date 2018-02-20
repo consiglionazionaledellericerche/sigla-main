@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -97,7 +97,7 @@
 		inputSize="17"
 		maxLength="17"
 		enabledOnEdit="false"
-		label="Quantità" />
+		label="QuantitÃ " />
 	<fieldProperty
 		name="lineaUnitamisura"
 		property="lineaUnitamisura"
@@ -105,7 +105,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="Unità  di Misura" />
+		label="UnitÃ Â  di Misura" />
 	<fieldProperty
 		name="inizioDatacompetenza"
 		property="inizioDatacompetenza"

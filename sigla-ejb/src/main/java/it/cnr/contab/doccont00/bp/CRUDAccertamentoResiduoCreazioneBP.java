@@ -6,7 +6,7 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.action.*;
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Accertamento Residuo.
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Accertamento Residuo.
  */
 public class CRUDAccertamentoResiduoCreazioneBP extends CRUDAccertamentoBP {
 
@@ -34,7 +34,7 @@ public class CRUDAccertamentoResiduoCreazioneBP extends CRUDAccertamentoBP {
 		super.initialize(context);
 		try {
             if ((it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context)).getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0)
-				throw new ApplicationException( "Funzione non consentita per Unit‡ Organizzativa " + (it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context)));
+				throw new ApplicationException( "Funzione non consentita per Unit√† Organizzativa " + (it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context)));
 		} catch(Exception e) {
 			throw handleException(e);
 		}
@@ -69,7 +69,7 @@ public class CRUDAccertamentoResiduoCreazioneBP extends CRUDAccertamentoBP {
 	/*		if ( !accertamento.getCd_uo_origine().equals( it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa( context ).getCd_unita_organizzativa()))
 			{
 				setStatus(VIEW);
-				setMessage("Accertamento creato dall'Unit‡ Organizzativa " + accertamento.getCd_uo_origine() + ". Non consentita la modifica.");
+				setMessage("Accertamento creato dall'Unit√† Organizzativa " + accertamento.getCd_uo_origine() + ". Non consentita la modifica.");
 			}
 			if ( accertamento.getDt_cancellazione() != null )
 			{

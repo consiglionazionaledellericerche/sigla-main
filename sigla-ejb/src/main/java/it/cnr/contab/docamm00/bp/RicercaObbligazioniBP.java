@@ -101,9 +101,9 @@ public it.cnr.jada.util.RemoteIterator findObbligazioni(it.cnr.jada.action.Actio
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'componentSessioneName'
+ * Restituisce il valore della propriet√† 'componentSessioneName'
  *
- * @return Il valore della propriet‡ 'componentSessioneName'
+ * @return Il valore della propriet√† 'componentSessioneName'
  */
 public java.lang.String getComponentSessioneName() {
 
@@ -130,9 +130,9 @@ public it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP getDefferedUpdateSaldiP
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'docAmmModel'
+ * Restituisce il valore della propriet√† 'docAmmModel'
  *
- * @return Il valore della propriet‡ 'docAmmModel'
+ * @return Il valore della propriet√† 'docAmmModel'
  */
 public it.cnr.jada.bulk.OggettoBulk getDocAmmModel() {
 

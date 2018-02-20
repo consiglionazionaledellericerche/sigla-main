@@ -142,7 +142,7 @@ private void callCalcolaLiquidazione(it.cnr.jada.UserContext userContext, Liquid
 			cs.setString(1, liquidazione_cori.getCd_cds()); // CD_CDS
 			cs.setInt(2, liquidazione_cori.getEsercizio().intValue()); // ESERCIZIO
 			
-			/*****>>>>>>>>> Questo parametro dovr‡ essere Y o N  >>>>>>******/
+			/*****>>>>>>>>> Questo parametro dovr√† essere Y o N  >>>>>>******/
 			cs.setString(3, da_es_prec); // DA ESERCIZIO PREC.
 			/*****>>>>>>>>> ************************************ >>>>>>******/
 			
@@ -351,9 +351,9 @@ private java.util.List findCapitoliFor(it.cnr.jada.UserContext userContext, Liqu
 /**
   *  Cerca i gruppi CORI - liquidazione non specificata.
   *    PreCondition:
-  *      Non Ë stata specificata alcuna Liquidazione.
+  *      Non √® stata specificata alcuna Liquidazione.
   *    PostCondition:
-  *		 Restituisce un messaggio d'errore che indica che non Ë stata specificata la Liquidazione di riferimento.
+  *		 Restituisce un messaggio d'errore che indica che non √® stata specificata la Liquidazione di riferimento.
   *
   *  Cerca i gruppi CORI.
   *    PreCondition:
@@ -362,7 +362,7 @@ private java.util.List findCapitoliFor(it.cnr.jada.UserContext userContext, Liqu
   *		 Viene costruito il SQLBuilder con l'elenco delle clausole implicite (presenti 
   *		nell'istanza di Liquid_gruppo_coriIBulk), e, in aggiunta, le
   *		clausole che i Gruppi appartengano all'Esercizio corrente e siano relativi alla
-  *		Unit‡ Organizzativa di scrivania.
+  *		Unit√† Organizzativa di scrivania.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
   * @param liquidazione_cori la <code>Liquid_coriBulk</code> liquidazione di riferimento.
@@ -375,7 +375,7 @@ private java.util.List findGruppoCori(it.cnr.jada.UserContext userContext, Liqui
 	it.cnr.jada.persistency.IntrospectionException {	
 
 	if (liquidazione_cori == null)
-		throw new it.cnr.jada.comp.ComponentException("Non Ë stato specificata alcuna Liquidazione");
+		throw new it.cnr.jada.comp.ComponentException("Non √® stato specificata alcuna Liquidazione");
 
 	BulkHome home = getHome(userContext, Liquid_gruppo_coriIBulk.class,"V_LIQUID_GRUPPO_CORI");
 	SQLBuilder sql = home.createSQLBuilder();
@@ -388,7 +388,7 @@ private java.util.List findGruppoCori(it.cnr.jada.UserContext userContext, Liqui
 	return home.fetchAll(sql);
 }
 /**
- * Richiede il Progressivo per i Documenti Contabili. Questo sar‡, in pratica, il N. Liquidazione.
+ * Richiede il Progressivo per i Documenti Contabili. Questo sar√†, in pratica, il N. Liquidazione.
  *
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
  * @param liquidazione_cori l'oggetto <code>Liquid_coriBulk</code> che effettura la liquidazione
@@ -462,7 +462,7 @@ private void impostaDate(Liquid_coriBulk liquidazione_cori) throws ComponentExce
   *    PreCondition:
   *      E' stata generata la richiesta di inizializzare una istanza di Liquid_coriBulk.
   *    PostCondition:
-  *      Vengono impostate le proprit‡ relative al CdS alla UO ed alle date di inizio e fine
+  *      Vengono impostate le proprit√† relative al CdS alla UO ed alle date di inizio e fine
   *		periodo di Liquidazione, (metodo impostaDate).
   *		Viene cercato il progressivo da assegnare alla Liquidazione, (metodo getNumLiquidazione);
   *		viene restituito l'oggetto Liquid_coriBulk inizializzato.

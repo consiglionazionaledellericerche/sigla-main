@@ -112,7 +112,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 //  *      Viene richiesto il salvataggio di un nuovo documento ma le validazioni
 //  *      non vengono superate
 //  *    PostCondition:
-//  *      Informa l'utente della causa per la quale non Ë possibile salvare
+//  *      Informa l'utente della causa per la quale non √® possibile salvare
 // */
 ////^^@@
 	public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext userContext, it.cnr.jada.bulk.OggettoBulk bulk, it.cnr.contab.doccont00.core.bulk.OptionRequestParameter status)
@@ -128,7 +128,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 
 	private void validaRichiesta(it.cnr.jada.UserContext userContext, RichiestaUopBulk richiesta) throws it.cnr.jada.comp.ComponentException{
 		if (richiesta.getRigheRichiestaColl() == null || richiesta.getRigheRichiestaColl().size() == 0){
-			throw new ApplicationException ("Non Ë possibile salvare una richiesta senza dettagli.");
+			throw new ApplicationException ("Non √® possibile salvare una richiesta senza dettagli.");
 		}
     	for (java.util.Iterator i= richiesta.getRigheRichiestaColl().iterator(); i.hasNext();) {
     		RichiestaUopRigaBulk riga = (RichiestaUopRigaBulk) i.next();
@@ -148,7 +148,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 						throw new ComponentException(e);
 					}
     				if (list == null || list.size() == 0){
-        				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" Ë stata indicata una voce di bilancio non utilizzabile per "+riga.getCdBeneServizio());
+        				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" √® stata indicata una voce di bilancio non utilizzabile per "+riga.getCdBeneServizio());
     				}
     			}
     			String value = null;
@@ -161,7 +161,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
         				throw new ComponentException(e);
         			}
         			if (value!= null && value.equals("Y")){
-        				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" Ë necessario indicare la voce di bilancio.");
+        				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" √® necessario indicare la voce di bilancio.");
         			}
     			} 
     			if (richiesta.isDefinitivaOInviata() && riga.getProgetto() == null || riga.getProgetto().getPg_progetto() == null){
@@ -174,7 +174,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
         				throw new ComponentException(e);
         			}
         			if (value!= null && value.equals("Y")){
-        				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" Ë necessario indicare il progetto.");
+        				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" √® necessario indicare il progetto.");
         			}
     			}
     			if (richiesta.isDefinitivaOInviata() && (riga.getCentroResponsabilita() == null || riga.getCentroResponsabilita().getCd_centro_responsabilita() == null || 
@@ -189,10 +189,10 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
         			}
         			if (value!= null && value.equals("Y")){
             			if (riga.getCentroResponsabilita() == null || riga.getCentroResponsabilita().getCd_centro_responsabilita() == null){
-            				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" Ë necessario indicare il CDR.");
+            				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" √® necessario indicare il CDR.");
             			}
             			if (riga.getLineaAttivita() == null || riga.getLineaAttivita().getCd_linea_attivita() == null){
-            				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" Ë necessario indicare la GAE.");
+            				throw new ApplicationException ("Sulla riga numero "+riga.getRiga()+" √® necessario indicare la GAE.");
             			}
         			}
     			}
@@ -381,7 +381,7 @@ public SQLBuilder selectLinea_attivitaByClause (UserContext userContext,
 	if (dett.getCdCentroResponsabilita() != null){
 		sql.addClause(FindClause.AND,"cd_centro_responsabilita",SQLBuilder.EQUALS,dett.getCdCentroResponsabilita());
 	} else {
-		throw new ApplicationException ("GAE non selezionabile senza aver prima indicato il centro di responsabilit‡!");
+		throw new ApplicationException ("GAE non selezionabile senza aver prima indicato il centro di responsabilit√†!");
 	}
 
 	sql.openParenthesis(FindClause.AND);
@@ -409,7 +409,7 @@ public SQLBuilder selectLinea_attivitaByClause (UserContext userContext,
 	sql.addSQLClause(FindClause.AND,"PROGETTO_GEST.FL_UTILIZZABILE",SQLBuilder.EQUALS,"Y");
 
 	/**
-	 * Escludo la linea di attivit‡ dell'IVA C20
+	 * Escludo la linea di attivit√† dell'IVA C20
 	 */
 	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 	try {
@@ -628,11 +628,11 @@ public RichiestaUopRigaBulk selezionaRichiestaPerOrdine (UserContext aUC,VRichie
 
 		lockBulk( aUC, richiestaRiga );
 		if ( richiestaRiga.getStato().equals(RichiestaUopRigaBulk.STATO_ANNULLATO))
-			throw new ApplicationException("La richiesta Ë stata annullata.");
+			throw new ApplicationException("La richiesta √® stata annullata.");
 		if ( richiestaRiga.getStato().equals(RichiestaUopRigaBulk.STATO_TRASFORMATA_ORDINE))
-			throw new ApplicationException("La richiesta Ë gi‡ stata trasformata in ordine.");
+			throw new ApplicationException("La richiesta √® gi√† stata trasformata in ordine.");
 		if ( !richiestaRiga.getRichiestaUop().getStato().equals(RichiestaUopBulk.STATO_INVIATA_ORDINE))
-			throw new ApplicationException("La richiesta non Ë stata inviata in ordine");
+			throw new ApplicationException("La richiesta non √® stata inviata in ordine");
 		richiestaRiga.setStato(RichiestaUopRigaBulk.STATO_TRASFORMATA_ORDINE);
 		richiestaRiga.setUser( aUC.getUser());
 		updateBulk( aUC, richiestaRiga );

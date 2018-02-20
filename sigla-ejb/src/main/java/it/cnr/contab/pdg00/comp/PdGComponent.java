@@ -18,7 +18,7 @@ import java.io.Serializable;
 import java.util.Vector;
 
 /**
-  * Componente contenitore dei metodi comuni di controllo della responsabilit‡ per piani di gestione
+  * Componente contenitore dei metodi comuni di controllo della responsabilit√† per piani di gestione
   */
 
 
@@ -57,14 +57,14 @@ public abstract class PdGComponent extends it.cnr.jada.comp.CRUDComponent implem
 
 //^^@@
 /**
- *  PDG gi‡ chiuso
+ *  PDG gi√† chiuso
  *    PreCondition:
- *      Il pdg a cui appartiene il dettaglio specificato Ë chiuso (stato = A,B,D o E)
+ *      Il pdg a cui appartiene il dettaglio specificato √® chiuso (stato = A,B,D o E)
  *    PostCondition:
- *      Genera una ApplicationException con il messaggio "Il pdg Ë stato chiuso e non puÚ essere modificato"
+ *      Genera una ApplicationException con il messaggio "Il pdg √® stato chiuso e non pu√≤ essere modificato"
  *  Tutti i controlli superati
  *    PreCondition:
- *      Nessun'altra precondizione Ë verificata
+ *      Nessun'altra precondizione √® verificata
  *    PostCondition:
  *      Esce senza nessuna eccezione
  */
@@ -82,14 +82,14 @@ protected Pdg_preventivoBulk checkChiusuraPdg(UserContext userContext,Pdg_preven
 	 }
 }
 /** 
-  *  PDG gi‡ chiuso
+  *  PDG gi√† chiuso
   *    PreCondition:
-  *      Il pdg a cui appartiene il dettaglio specificato Ë chiuso (stato = A,B,Ci,D o E)
+  *      Il pdg a cui appartiene il dettaglio specificato √® chiuso (stato = A,B,Ci,D o E)
   *    PostCondition:
-  *      Genera una ApplicationException con il messaggio "Il pdg Ë stato chiuso e non puÚ essere modificato"
+  *      Genera una ApplicationException con il messaggio "Il pdg √® stato chiuso e non pu√≤ essere modificato"
   *  Tutti i controlli superati
   *    PreCondition:
-  *      Nessun'altra precondizione Ë verificata
+  *      Nessun'altra precondizione √® verificata
   *    PostCondition:
   *      Esce senza nessuna eccezione
  */
@@ -110,7 +110,7 @@ protected Pdg_preventivoBulk checkChiusuraPdg(UserContext userContext,Pdg_preven
 
 			return pdg;
 
-		throw new it.cnr.jada.comp.ApplicationException("Il PdG del CdR \"" + pdg.getCentro_responsabilita().getCd_ds_cdr() + "\" Ë stato chiuso e non puÚ essere modificato");
+		throw new it.cnr.jada.comp.ApplicationException("Il PdG del CdR \"" + pdg.getCentro_responsabilita().getCd_ds_cdr() + "\" √® stato chiuso e non pu√≤ essere modificato");
 	} catch(it.cnr.jada.bulk.BusyResourceException e) {
 		throw new it.cnr.jada.comp.ApplicationException("Risorsa occupata: PdG del CdR " + pdg.getCentro_responsabilita().getCd_ds_cdr());
 	} catch(it.cnr.jada.bulk.OutdatedResourceException e) {
@@ -120,14 +120,14 @@ protected Pdg_preventivoBulk checkChiusuraPdg(UserContext userContext,Pdg_preven
 	}
 }
 /** 
-  *  PDG gi‡ chiuso
+  *  PDG gi√† chiuso
   *    PreCondition:
-  *      Il pdg a cui appartiene il dettaglio specificato Ë chiuso (stato = A,B,Ci,D o E)
+  *      Il pdg a cui appartiene il dettaglio specificato √® chiuso (stato = A,B,Ci,D o E)
   *    PostCondition:
-  *      Genera una ApplicationException con il messaggio "Il pdg Ë stato chiuso e non puÚ essere modificato"
+  *      Genera una ApplicationException con il messaggio "Il pdg √® stato chiuso e non pu√≤ essere modificato"
   *  Tutti i controlli superati
   *    PreCondition:
-  *      Nessun'altra precondizione Ë verificata
+  *      Nessun'altra precondizione √® verificata
   *    PostCondition:
   *      Esce senza nessuna eccezione
  */
@@ -141,7 +141,7 @@ protected Pdg_preventivoBulk checkChiusuraPdgPerVariazioni(UserContext userConte
 
 			return pdg;
 
-		throw new it.cnr.jada.comp.ApplicationException("Il PdG del CdR \"" + pdg.getCentro_responsabilita().getCd_ds_cdr() + "\" Ë stato chiuso e non puÚ essere modificato");
+		throw new it.cnr.jada.comp.ApplicationException("Il PdG del CdR \"" + pdg.getCentro_responsabilita().getCd_ds_cdr() + "\" √® stato chiuso e non pu√≤ essere modificato");
 	} catch(it.cnr.jada.bulk.BusyResourceException e) {
 		throw new it.cnr.jada.comp.ApplicationException("Risorsa occupata: PdG del CdR " + pdg.getCentro_responsabilita().getCd_ds_cdr());
 	} catch(it.cnr.jada.bulk.OutdatedResourceException e) {
@@ -153,22 +153,22 @@ protected Pdg_preventivoBulk checkChiusuraPdgPerVariazioni(UserContext userConte
 /** 
   *  PDG in stato A,B, utente non abilitato
   *    PreCondition:
-  *      Lo stato del pdg Ë A o B e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) != 0
+  *      Lo stato del pdg √® A o B e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) != 0
   *    PostCondition:
   *      Genera un ApplicationException con il messaggio "PDG non modificabile o l'utente non ha diritti per la modifica"
   *  PDG in stato Ci, utente non abilitato
   *    PreCondition:
-  *      Lo stato del pdg Ë Ci e getLivelloResponsabilitaCDR(cdrFromUserContext()) != i
+  *      Lo stato del pdg √® Ci e getLivelloResponsabilitaCDR(cdrFromUserContext()) != i
   *    PostCondition:
   *      Genera un ApplicationException con il messaggio "PDG non modificabile o l'utente non ha diritti per la modifica"
   *  PDG in stato D,E,G,H utente non abilitato
   *    PreCondition:
-  *      Lo stato del pdg Ë D,E,G o H e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) < 0
+  *      Lo stato del pdg √® D,E,G o H e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) < 0
   *    PostCondition:
   *      Genera un ApplicationException con il messaggio "PDG non modificabile o l'utente non ha diritti per la modifica"
   *  Tutti i controlli superati
   *    PreCondition:
-  *      Nessun'altra precondizione Ë verificata
+  *      Nessun'altra precondizione √® verificata
   *    PostCondition:
   *      Esce senza nessuna eccezione
  */
@@ -201,7 +201,7 @@ protected void checkLivelloResponsabilita(UserContext userContext,CdrBulk cdr, P
   *      Se il CDR dell'utente in UserContext coincide (per CD_CENTRO_RESPONSABILITA) al cdr specificato
   *    PostCondition:
   *      Restituisce 0
-  *  cdr1con valore livello responsabilit‡ maggiore uguale
+  *  cdr1con valore livello responsabilit√† maggiore uguale
   *    PreCondition:
   *      Se getLivelloResponsabilita(cdr1) >= getLivelloResponsabilita(cdr2)
   *    PostCondition:
@@ -218,7 +218,7 @@ protected void checkLivelloResponsabilita(UserContext userContext,CdrBulk cdr, P
   *    PreCondition:
   *      Se getLivelloResponsabilita(cdr1) < getLivelloResponsabilita(cdr2) e 
   *      getLivelloResponsabilita(cdr2) = 2 e 
-  *      cdr1 Ë in UO_CDS
+  *      cdr1 √® in UO_CDS
   *      
   *    PostCondition:
   *      Restituisce -1
@@ -251,7 +251,7 @@ protected void checkLivelloResponsabilita(UserContext userContext,CdrBulk cdr, P
   *      Se il CDR dell'utente in UserContext coincide (per CD_CENTRO_RESPONSABILITA) al cdr specificato
   *    PostCondition:
   *      Restituisce 0
-  *  cdr1con valore livello responsabilit‡ maggiore uguale
+  *  cdr1con valore livello responsabilit√† maggiore uguale
   *    PreCondition:
   *      Se getLivelloResponsabilita(cdr1) >= getLivelloResponsabilita(cdr2)
   *    PostCondition:
@@ -268,7 +268,7 @@ protected void checkLivelloResponsabilita(UserContext userContext,CdrBulk cdr, P
   *    PreCondition:
   *      Se getLivelloResponsabilita(cdr1) < getLivelloResponsabilita(cdr2) e 
   *      getLivelloResponsabilita(cdr2) = 2 e 
-  *      cdr1 Ë in UO_CDS
+  *      cdr1 √® in UO_CDS
   *      
   *    PostCondition:
   *      Restituisce -1
@@ -327,9 +327,9 @@ protected int getLivelloResponsabilitaCDR(UserContext userContext, CdrBulk cdr) 
 	try {
 		cdr = (CdrBulk)getHome(userContext, cdr).findByPrimaryKey(cdr);
 
-		// Se il livello del CDR Ë 1
+		// Se il livello del CDR √® 1
 		if(cdr.getLivello().intValue() == 1) {
-			// Se il codice proprio del cdr Ë 0
+			// Se il codice proprio del cdr √® 0
 			if (Integer.parseInt(cdr.getCd_proprio_cdr()) == 0) {
 				Unita_organizzativaBulk uo = new Unita_organizzativaBulk( cdr.getCd_unita_organizzativa() );
 				uo = (Unita_organizzativaBulk)getHome(userContext, uo).findByPrimaryKey(uo);
@@ -354,7 +354,7 @@ protected int getLivelloResponsabilitaCDR(UserContext userContext, CdrBulk cdr) 
 			return LV_RUO;
 
 		} else {
-			// Ogni altro livello o combinazione Ë livello 3
+			// Ogni altro livello o combinazione √® livello 3
 
 			return LV_NRUO;
 
@@ -411,22 +411,22 @@ protected boolean isPdgApertoPerVariazioni(UserContext userContext,Pdg_preventiv
 /**
  *  PDG in stato A,B, utente non abilitato
  *    PreCondition:
- *      Lo stato del pdg Ë A o B e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) != 0
+ *      Lo stato del pdg √® A o B e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) != 0
  *    PostCondition:
  *      Restituisce true
  *  PDG in stato Ci, utente non abilitato
  *    PreCondition:
- *      Lo stato del pdg Ë Ci e getLivelloResponsabilitaCDR(cdrFromUserContext()) != i
+ *      Lo stato del pdg √® Ci e getLivelloResponsabilitaCDR(cdrFromUserContext()) != i
  *    PostCondition:
  *      Restituisce true
  *  PDG in stato D,E,G,H utente non abilitato
  *    PreCondition:
- *      Lo stato del pdg Ë D,E,G o H e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) < 0
+ *      Lo stato del pdg √® D,E,G o H e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) < 0
  *    PostCondition:
  *      Restituisce true
  *  Tutti i controlli superati
  *    PreCondition:
- *      Nessun'altra precondizione Ë verificata
+ *      Nessun'altra precondizione √® verificata
  *    PostCondition:
  *      Restituisce false
  */
@@ -436,20 +436,20 @@ protected boolean isPdgModificabile(UserContext userContext,CdrBulk cdrUtente,Pd
 	int livelloResponsabilitaUtente = getLivelloResponsabilitaCDR(userContext, cdrUtente);
 	int livelloResponsabilitaPdg = getLivelloResponsabilitaCDR(userContext, cdrUtente);
 
-	// In stato A e B solo il cdr responsabile del pdg puÚ modificare il pdg
+	// In stato A e B solo il cdr responsabile del pdg pu√≤ modificare il pdg
 	if (stato.equals(pdg.ST_A_CREAZIONE) || 
 		stato.equals(pdg.ST_B_MODIFICA))
 		return confrontaLivelloResponsabilita(userContext, cdrUtente, pdg.getCentro_responsabilita()) == 0;
 
-	// In stato C0 solo i cdr di livello 0 puÚ modificare il pdg
+	// In stato C0 solo i cdr di livello 0 pu√≤ modificare il pdg
 	if (stato.equals(pdg.ST_C0_MODIFICA_AC))
 		return livelloResponsabilitaUtente == LV_AC;
 
-	// In stato C1 solo il cdr di livello 1 puÚ modificare il pdg
+	// In stato C1 solo il cdr di livello 1 pu√≤ modificare il pdg
 	if (stato.equals(pdg.ST_C1_MODIFC_CDRI))
 		return livelloResponsabilitaUtente == LV_CDRI;
 	
-	// In stato C2 solo il cdr di livello 2 puÚ modificare il pdg
+	// In stato C2 solo il cdr di livello 2 pu√≤ modificare il pdg
 	if (stato.equals(pdg.ST_C2_MODIFIC_RUO))
 		return livelloResponsabilitaUtente == LV_RUO;
 
@@ -465,22 +465,22 @@ protected boolean isPdgModificabile(UserContext userContext,CdrBulk cdrUtente,Pd
 /** 
  *  PDG in stato A,B, utente non abilitato
  *    PreCondition:
- *      Lo stato del pdg Ë A o B e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) != 0
+ *      Lo stato del pdg √® A o B e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) != 0
  *    PostCondition:
  *      Restituisce true
  *  PDG in stato Ci, utente non abilitato
  *    PreCondition:
- *      Lo stato del pdg Ë Ci e getLivelloResponsabilitaCDR(cdrFromUserContext()) != i
+ *      Lo stato del pdg √® Ci e getLivelloResponsabilitaCDR(cdrFromUserContext()) != i
  *    PostCondition:
  *      Restituisce true
  *  PDG in stato D,E,G,H utente non abilitato
  *    PreCondition:
- *      Lo stato del pdg Ë D,E,G o H e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) < 0
+ *      Lo stato del pdg √® D,E,G o H e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) < 0
  *    PostCondition:
  *      Restituisce true
  *  Tutti i controlli superati
  *    PreCondition:
- *      Nessun'altra precondizione Ë verificata
+ *      Nessun'altra precondizione √® verificata
  *    PostCondition:
  *      Restituisce false
  */

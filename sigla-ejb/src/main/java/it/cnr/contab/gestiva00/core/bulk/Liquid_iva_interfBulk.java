@@ -60,7 +60,7 @@ public void validate() throws ValidationException {
 	super.validate();
 	
 	if (getNote() != null && getNote().length() > 1000)
-		throw new ValidationException("Il campo \"note\" è troppo lungo: il massimo consentito è di 1000 caratteri!");
+		throw new ValidationException("Il campo \"note\" Ã¨ troppo lungo: il massimo consentito Ã¨ di 1000 caratteri!");
 }
 
 public java.util.Dictionary getInt_mesi() {

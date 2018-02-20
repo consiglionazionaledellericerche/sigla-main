@@ -27,7 +27,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 
 		CRUDMissioneTipoSpesaBP bp = (CRUDMissioneTipoSpesaBP)getBusinessProcess(context);
 		if (!bp.isEditing()) {
-			bp.setMessage("Non è possibile cancellare in questo momento");
+			bp.setMessage("Non Ã¨ possibile cancellare in questo momento");
 		} else {
 			bp.delete(context);
 			Missione_tipo_spesaBulk tipoSpesa = (Missione_tipo_spesaBulk)bp.getModel();

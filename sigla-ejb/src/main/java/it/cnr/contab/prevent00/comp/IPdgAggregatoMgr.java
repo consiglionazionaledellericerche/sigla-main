@@ -106,12 +106,12 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
 /** 
   *  Utente non AC
   *    PreCondition:
-  *      L'utente non Ë l'Amministrazione Centrale (utente.cdr.livello <> 1 o utente.cdr.unita_organizzativa.cd_tipo_unita <> 'ENTE')
+  *      L'utente non √® l'Amministrazione Centrale (utente.cdr.livello <> 1 o utente.cdr.unita_organizzativa.cd_tipo_unita <> 'ENTE')
   *    PostCondition:
   *      Ritorna false
   *  Tutti i controlli superati
   *    PreCondition:
-  *      Nessun'altra precondizione Ë verificata
+  *      Nessun'altra precondizione √® verificata
   *    PostCondition:
   *      Ritorna true
  */
@@ -120,26 +120,26 @@ public abstract boolean isPdGAggregatoModificabile(it.cnr.jada.UserContext param
 /** 
   *  Tutti i controlli superati
   *    PreCondition:
-  *      Nessun'altra precondition Ë verificata
+  *      Nessun'altra precondition √® verificata
   *    PostCondition:
   *      Dal dettaglio di spesa o entrata specificato viene estratto il dettaglio contenente gli importi modificati e quest'ultimo viene reso persistente.
  */
 
 public abstract it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
 /** 
-  *  Testata gi‡ chiusa
+  *  Testata gi√† chiusa
   *    PreCondition:
-  *      Si Ë richiesto un salvataggio di una riga di un pdg_aggregato e la testata Ë gi‡ in stato "B"
+  *      Si √® richiesto un salvataggio di una riga di un pdg_aggregato e la testata √® gi√† in stato "B"
   *    PostCondition:
-  *      Viene generata una ApplicationException con messaggio "Il piano di gestione aggregato Ë stato gi‡ confermato e non puÚ pi˘ essere modificato"
+  *      Viene generata una ApplicationException con messaggio "Il piano di gestione aggregato √® stato gi√† confermato e non pu√≤ pi√π essere modificato"
   *  Lock testata non riuscito
   *    PreCondition:
-  *      Si Ë richiesto un salvataggio di una riga di un pdg_aggregato e la testata Ë stata gi‡ lockata da qualche altro utente
+  *      Si √® richiesto un salvataggio di una riga di un pdg_aggregato e la testata √® stata gi√† lockata da qualche altro utente
   *    PostCondition:
   *      Viene generata una it.cnr.jada.bulk.BusyResourceException
   *  Tutti i controlli superati
   *    PreCondition:
-  *      Nessun'altra precondition Ë verificata
+  *      Nessun'altra precondition √® verificata
   *    PostCondition:
   *      Viene salvato la riga di dettaglio contenente i dati modificati (etr_modificato per Pdg_aggregato_etr_det_inizialeBulk, spe_modificato per Pdg_aggregato_spe_det_inizialeBulk)
  */

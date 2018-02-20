@@ -52,7 +52,7 @@ public MinicarrieraBulk calcolaAliquotaMedia(
   *		PreCondition:
   *			Viene richiesta la cessazione della minicarriera
   *		PostCondition:
-  *			Viene eseguita la richiesta e restituita la minicarriera aggiornata non pi˘ modificabile
+  *			Viene eseguita la richiesta e restituita la minicarriera aggiornata non pi√π modificabile
  */
 
 public abstract it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk cessa(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk param1) throws it.cnr.jada.comp.ComponentException;
@@ -123,17 +123,17 @@ public abstract java.util.List findListaBanche(it.cnr.jada.UserContext param0,it
 /**
   * Percipiente selezionato
   *    PreCondition:
-  *		 Viene richiesta la lista delle Modalit‡ di pagamento
+  *		 Viene richiesta la lista delle Modalit√† di pagamento
   * 	 associate al percipiente
   *	   PostCondition:
-  *		 Viene restituita la lista dei Modalit‡ di pagamento
+  *		 Viene restituita la lista dei Modalit√† di pagamento
   * 	 associate al percipiente
   *
   * Percipiente NON selezionato
   *    PreCondition:
-  *		 Non Ë stato selezionato il percipiente
+  *		 Non √® stato selezionato il percipiente
   *	   PostCondition:
-  *		 Non vengono caricate le modalit‡ di pagamento
+  *		 Non vengono caricate le modalit√† di pagamento
 **/
 
 public abstract java.util.Collection findModalita(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
@@ -148,7 +148,7 @@ public abstract java.util.Collection findModalita(it.cnr.jada.UserContext param0
   *
   * Percipiente NON selezionato
   *    PreCondition:
-  *		 Non Ë stato selezionato il terzo
+  *		 Non √® stato selezionato il terzo
   *	   PostCondition:
   *		 Non vengono caricati i termini di pagamento
 **/
@@ -165,7 +165,7 @@ public abstract java.util.Collection findTermini(it.cnr.jada.UserContext param0,
   *
   * Percipiente NON selezionato
   *    PreCondition:
-  *		 Non Ë stato selezionato il Percipiente
+  *		 Non √® stato selezionato il Percipiente
   *	   PostCondition:
   *		 Non vengono caricati i tipi di rapporto
 **/
@@ -182,7 +182,7 @@ public abstract java.util.Collection findTipiRapporto(it.cnr.jada.UserContext pa
   *
   * Tipo di rapporto NON selezionato
   *    PreCondition:
-  *		 Non Ë stato selezionato il tipo di rapporto
+  *		 Non √® stato selezionato il tipo di rapporto
   *	   PostCondition:
   *		 Non vengono caricati i tipi trattamento
 **/
@@ -216,7 +216,7 @@ public abstract it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk generaRate(i
  * Pre: L'OggettoBulk specificato esiste.
  * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
  *			per l'operazione di presentazione e modifica nell'interfaccia visuale.
- *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ë
+ *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome √®
  *			ottenuto concatenando il nome della component con la stringa ".edit"
  * 
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -299,7 +299,7 @@ public abstract it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk ripristina(i
   *		PreCondition:
   *			Viene richiesta la sospensione della minicarriera
   *		PostCondition:
-  *			Viene eseguita la richiesta e restituita la minicarriera aggiornata non pi˘ modificabile
+  *			Viene eseguita la richiesta e restituita la minicarriera aggiornata non pi√π modificabile
  */
 
 public abstract it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk sospendi(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.MinicarrieraBulk param1) throws it.cnr.jada.comp.ComponentException;

@@ -64,7 +64,7 @@ public CRUDLiquidazioneCORIBP(String function) {
 }
 /**
   *  Crea una toolbar in aggiunta alla normale toolbar del CRUD.
-  *	La nuova toolbar Ë stata costruita per mostrare il tasto "Visualizza accessori".
+  *	La nuova toolbar √® stata costruita per mostrare il tasto "Visualizza accessori".
   *
   * @return toolbar i <code>Button[]</code> pulsanti creati
 **/ 
@@ -96,7 +96,7 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 	return toolbar;
 }
 /**
- * Restituisce il valore della propriet‡ 'capitoli'
+ * Restituisce il valore della propriet√† 'capitoli'
  *
  * @return capitoli il <code>SimpleDetailCRUDController</code> controller sui capitoli di un Gruppo CORI
  */
@@ -104,7 +104,7 @@ public final it.cnr.jada.util.action.SimpleDetailCRUDController getCapitoli() {
 	return capitoli;
 }
 /**
- * Restituisce il valore della propriet‡ 'gruppi'
+ * Restituisce il valore della propriet√† 'gruppi'
  *
  * @return gruppi il <code>SimpleDetailCRUDController</code> controller sui gruppi CORI
  */
@@ -112,7 +112,7 @@ public final it.cnr.jada.util.action.SimpleDetailCRUDController getGruppi() {
 	return gruppi;
 }
 /**
- * Restituisce il valore della propriet‡ 'gruppiDet'
+ * Restituisce il valore della propriet√† 'gruppiDet'
  *
  * @return gruppiDet il <code>RemoteDetailCRUDController</code> controller sui detagli di un gruppo CORI
  */
@@ -138,11 +138,11 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 }
 /**
  * E' stata generata la richiesta di conoscere lo stato della Liquidazione.
- *	Durante una operazione di Liquida CORI si verificano due momenti chiave: il primo Ë rappresentato d
- *	dal calcolo delle liquidazioni che l'utente puÚ effettuare: l'utente clicca sul tasto 
+ *	Durante una operazione di Liquida CORI si verificano due momenti chiave: il primo √® rappresentato d
+ *	dal calcolo delle liquidazioni che l'utente pu√≤ effettuare: l'utente clicca sul tasto 
  *	"Calcola liquidazione", ed il sistema propone tutti i Gruppi CORI che sono ancora da liquidare.
  *	L'utente, poi, seleziona i gruppi ed effettua la Liquidazione vera e propria.
- *	Il metodo restituisce TRUE se Ë stata effettuata l'operazione di "Calcola Liquidazione".
+ *	Il metodo restituisce TRUE se √® stata effettuata l'operazione di "Calcola Liquidazione".
  *
  * @return isCalcolato <code>boolean</code> lo stato del processo
  */
@@ -160,11 +160,11 @@ public boolean isDeleteButtonHidden() {
 }
 /**
  * E' stata generata la richiesta di conoscere lo stato della Liquidazione.
- *	Durante una operazione di Liquida CORI si verificano due momenti chiave: il primo Ë rappresentato d
- *	dal calcolo delle liquidazioni che l'utente puÚ effettuare: l'utente clicca sul tasto 
+ *	Durante una operazione di Liquida CORI si verificano due momenti chiave: il primo √® rappresentato d
+ *	dal calcolo delle liquidazioni che l'utente pu√≤ effettuare: l'utente clicca sul tasto 
  *	"Calcola liquidazione", ed il sistema propone tutti i Gruppi CORI che sono ancora da liquidare.
  *	L'utente, poi, seleziona i gruppi ed effettua la Liquidazione vera e propria.
- *	Il metodo restituisce TRUE se Ë stata effettuata l'operazione di "Liquida".
+ *	Il metodo restituisce TRUE se √® stata effettuata l'operazione di "Liquida".
  *
  * @return isLiquidato <code>boolean</code> lo stato del processo
  */
@@ -182,11 +182,11 @@ public boolean isSaveButtonHidden() {
 }
 /**
  * E' stata generata la richiesta di conoscere lo stato della Liquidazione.
- *	Durante una operazione di Liquida CORI si verificano due momenti chiave: il primo Ë rappresentato d
- *	dal calcolo delle liquidazioni che l'utente puÚ effettuare: l'utente clicca sul tasto 
+ *	Durante una operazione di Liquida CORI si verificano due momenti chiave: il primo √® rappresentato d
+ *	dal calcolo delle liquidazioni che l'utente pu√≤ effettuare: l'utente clicca sul tasto 
  *	"Calcola liquidazione", ed il sistema propone tutti i Gruppi CORI che sono ancora da liquidare.
  *	L'utente, poi, seleziona i gruppi ed effettua la Liquidazione vera e propria.
- *	Il metodo restituisce TRUE se Ë stata effettuata l'operazione di "Calcola Liquidazione".
+ *	Il metodo restituisce TRUE se √® stata effettuata l'operazione di "Calcola Liquidazione".
  *
  * @return isCalcolato <code>boolean</code> lo stato del processo
  */
@@ -214,7 +214,7 @@ public void resetTabs() {
 	setTab("tab","tabLiquidCoriTestata");
 }
 /**
- * Imposta il valore della propriet‡ 'isCalcolato'
+ * Imposta il valore della propriet√† 'isCalcolato'
  *
  * @param newIsCalcolato il <code>boolean</code> valore da assegnare a 'isCalcolato'
 **/
@@ -222,7 +222,7 @@ public void setIsCalcolato(boolean newIsCalcolato) {
 	isCalcolato = newIsCalcolato;
 }
 /**
- * Imposta il valore della propriet‡ 'isLiquidato'
+ * Imposta il valore della propriet√† 'isLiquidato'
  *
  * @param newIsLiquidato il <code>boolean</code> valore da assegnare a 'isLiquidato'
 **/

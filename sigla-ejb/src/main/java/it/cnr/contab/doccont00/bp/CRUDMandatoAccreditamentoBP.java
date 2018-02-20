@@ -9,7 +9,7 @@ import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.jsp.Button;
 
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Mandato di Accreditamento
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Mandato di Accreditamento
  */
 
 public class CRUDMandatoAccreditamentoBP extends CRUDAbstractMandatoBP {
@@ -128,8 +128,8 @@ public final it.cnr.jada.util.action.SimpleDetailCRUDController getImpegni() {
 	return impegni;
 }
 /**
- * Verifica se il bottone di Aggiunta delle righe di Mandato Ë abilitato.
- * @return 			FALSE 	Il bottone di Aggiunta delle righe di Mandato non Ë abilitato
+ * Verifica se il bottone di Aggiunta delle righe di Mandato √® abilitato.
+ * @return 			FALSE 	Il bottone di Aggiunta delle righe di Mandato non √® abilitato
  */
 public boolean isAddImpegniButtonEnabled() {
 	return isEditable() && isEditing() && !((MandatoBulk)getModel()).isAnnullato() ;

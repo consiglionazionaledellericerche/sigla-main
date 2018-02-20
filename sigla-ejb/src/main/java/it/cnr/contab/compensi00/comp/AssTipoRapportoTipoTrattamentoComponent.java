@@ -52,7 +52,7 @@ private void completaAssociazione(UserContext userContext, Ass_ti_rapp_ti_trattB
  * Pre: L'OggettoBulk specificato esiste.
  * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
  *		 per l'operazione di presentazione e modifica nell'interfaccia visuale.
- *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome è
+ *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ã¨
  *		 ottenuto concatenando il nome della component con la stringa ".edit"
  * 
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -84,7 +84,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext, OggettoBu
  * Pre: Viene richiesto il caricamento del Tipo Trattamento
  * Post: Viene caricato il Tipo Trattamento e inserito nell'Associazione
  *
- * Nome: Tipo Trattamento INESISTENTE (perchè cancellato fisicamente)
+ * Nome: Tipo Trattamento INESISTENTE (perchÃ¨ cancellato fisicamente)
  * Pre: Viene richiesto il caricamento del Tipo Trattamento
  * Post: Viene generata un'eccezione con la descrizione dell'errore
  *			- Il Tipo Trattamento \"" + ass.getCd_trattamento() + "\" non esiste -
@@ -102,7 +102,7 @@ private void loadTipoTrattamento(UserContext userContext, Ass_ti_rapp_ti_trattBu
 		filtro.setDataValidita(trattHome.getServerDate());
 		Tipo_trattamentoBulk tratt = trattHome.findTipoTrattamentoValido(filtro);
 
-		// se il tipo trattamento selezionato non è più valido
+		// se il tipo trattamento selezionato non Ã¨ piÃ¹ valido
 		// carico il tipo trattamento senza clausola di validita
 		if (tratt==null){
 			filtro.setDataValidita(null);

@@ -12,18 +12,18 @@ public V_sit_bil_cds_cnrBulk() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_accertato_accreditato'
+ * Restituisce il valore della propriet√† 'im_accertato_accreditato'
  *
- * @return Il valore della propriet‡ 'im_accertato_accreditato'
+ * @return Il valore della propriet√† 'im_accertato_accreditato'
  */
 public java.math.BigDecimal getIm_accertato_accreditato() {
 	return getIm_accertato_impegnato().subtract( getIm_accreditato() );
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_incassato_accreditato'
+ * Restituisce il valore della propriet√† 'im_incassato_accreditato'
  *
- * @return Il valore della propriet‡ 'im_incassato_accreditato'
+ * @return Il valore della propriet√† 'im_incassato_accreditato'
  */
 public java.math.BigDecimal getIm_incassato_accreditato() {
 	return getIm_pagato_incassato_competenza().subtract( getIm_accreditato() );

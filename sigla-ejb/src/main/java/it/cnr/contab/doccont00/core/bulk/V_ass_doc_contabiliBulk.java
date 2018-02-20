@@ -14,9 +14,9 @@ public V_ass_doc_contabiliBulk() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_cdsPrintable'
+ * Restituisce il valore della propriet√† 'cd_cdsPrintable'
  *
- * @return Il valore della propriet‡ 'cd_cdsPrintable'
+ * @return Il valore della propriet√† 'cd_cdsPrintable'
  */
 public java.lang.String getCd_cdsPrintable() 
 {
@@ -28,9 +28,9 @@ public java.lang.String getCd_cdsPrintable()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_tipo_documento_contPrintable'
+ * Restituisce il valore della propriet√† 'cd_tipo_documento_contPrintable'
  *
- * @return Il valore della propriet‡ 'cd_tipo_documento_contPrintable'
+ * @return Il valore della propriet√† 'cd_tipo_documento_contPrintable'
  */
 public String getCd_tipo_documento_contPrintable() 
 {
@@ -42,9 +42,9 @@ public String getCd_tipo_documento_contPrintable()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'esercizioPrintable'
+ * Restituisce il valore della propriet√† 'esercizioPrintable'
  *
- * @return Il valore della propriet‡ 'esercizioPrintable'
+ * @return Il valore della propriet√† 'esercizioPrintable'
  */
 public Integer getEsercizioPrintable() 
 {
@@ -56,18 +56,18 @@ public Integer getEsercizioPrintable()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'man_rev'
+ * Restituisce il valore della propriet√† 'man_rev'
  *
- * @return Il valore della propriet‡ 'man_rev'
+ * @return Il valore della propriet√† 'man_rev'
  */
 public IManRevBulk getMan_rev() {
 	return man_rev;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'pg_documento_contPrintable'
+ * Restituisce il valore della propriet√† 'pg_documento_contPrintable'
  *
- * @return Il valore della propriet‡ 'pg_documento_contPrintable'
+ * @return Il valore della propriet√† 'pg_documento_contPrintable'
  */
 public Long getPg_documento_contPrintable() 
 {
@@ -79,7 +79,7 @@ public Long getPg_documento_contPrintable()
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'man_rev'
+ * Imposta il valore della propriet√† 'man_rev'
  *
  * @param newMan_rev	Il valore da assegnare a 'man_rev'
  */

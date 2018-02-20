@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -20,7 +20,7 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Unità Operativa" />
+		label="UnitÃ  Operativa" />
 	<fieldProperty
 		name="cdUnitaOperativa"
 		property="unitaOperativaAbilitata.cdUnitaOperativa"
@@ -30,7 +30,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="Unità Operativa" />
+		label="UnitÃ  Operativa" />
 	<fieldProperty
 		name="cdCds"
 		property="numerazioneMag.cdCds"
@@ -152,7 +152,7 @@
 		property="find_cd_uop_ordine"
 		inputType="TEXT"
 		maxLength="30"
-		label="Unità Operativa Ordine" />
+		label="UnitÃ  Operativa Ordine" />
 	<fieldProperty
 		name="find_numero_ordine"
 		property="find_numero_ordine"

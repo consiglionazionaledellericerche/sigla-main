@@ -145,10 +145,10 @@ public class PdgContrSpeseComponent extends CRUDComponent {
 						if (ass_dip_area==null)
 							throw new ApplicationException("Attenzione: non esiste l'associazione Dipartimento/Area "+
 									pdg_dip_area.getCd_dipartimento()+"/"+pdg_dip_area.getCd_cds_area()+
-									". Non è possibile inserire la riga.");
+									". Non Ã¨ possibile inserire la riga.");
 					}
 				}
-				// controlliamo se la "chiave logica" è già presente sul db
+				// controlliamo se la "chiave logica" Ã¨ giÃ  presente sul db
 				if ((pdg_dip_area.isToBeCreated())) {
 					if (pdg_dip_area.getCd_dipartimento()!=null) {
 
@@ -164,10 +164,10 @@ public class PdgContrSpeseComponent extends CRUDComponent {
 
 						if (!lista.isEmpty()) {
 							if (pdg_dip_area.getCd_cds_area()!=null)
-								throw new ApplicationException("Attenzione: è già presente negli archivi una riga con Dipartimento/Area "+
+								throw new ApplicationException("Attenzione: Ã¨ giÃ  presente negli archivi una riga con Dipartimento/Area "+
 										pdg_dip_area.getCd_dipartimento()+"/"+pdg_dip_area.getCd_cds_area()+". Cancellare il dato duplicato prima di effettuare il salvataggio.");
 							else
-								throw new ApplicationException("Attenzione: è già presente negli archivi una riga con Dipartimento "+
+								throw new ApplicationException("Attenzione: Ã¨ giÃ  presente negli archivi una riga con Dipartimento "+
 										pdg_dip_area.getCd_dipartimento()+". Cancellare il dato duplicato prima di effettuare il salvataggio.");
 						}
 					}
@@ -193,7 +193,7 @@ public class PdgContrSpeseComponent extends CRUDComponent {
 					
 			if ((pdg_contr_spese.isToBeCreated()||pdg_contr_spese.isToBeUpdated())) {
 		        if (livelloContr.intValue()>0 && pdg_contr_spese.getId_classificazione() == null)
-		           throw new it.cnr.jada.comp.ApplicationException("Attenzione: Il livello contrattazione è obbligatorio!");
+		           throw new it.cnr.jada.comp.ApplicationException("Attenzione: Il livello contrattazione Ã¨ obbligatorio!");
 			}
 		}
 	}
@@ -392,7 +392,7 @@ public class PdgContrSpeseComponent extends CRUDComponent {
 		try {
 			List listaModuli = findPdgEsercizio(userContext, Pdg_esercizioBulk.STATO_IN_ESAME_CDR );
 			if (!listaModuli.isEmpty())
-				throw new ApplicationException( "Lo stato non può essere aggiornato poichè non tutti i CDS hanno il PDGP in stato " + Pdg_esercizioBulk.STATO_IN_ESAME_CDR);
+				throw new ApplicationException( "Lo stato non puÃ² essere aggiornato poichÃ¨ non tutti i CDS hanno il PDGP in stato " + Pdg_esercizioBulk.STATO_IN_ESAME_CDR);
 
 			controllaImportiFontiInterneApprovate(userContext);
 

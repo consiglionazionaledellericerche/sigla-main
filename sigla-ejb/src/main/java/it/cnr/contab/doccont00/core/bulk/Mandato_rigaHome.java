@@ -63,7 +63,7 @@ public class Mandato_rigaHome extends BulkHome {
      * Metodo per inizializzare il campo ti_fattura di una riga di un mandato legato ad una fattura passiva o attiva
      *
      * @param riga      <code>Mandato_rigaBulk</code> la riga del mandato
-     * @param tableName <code>String</code> il nome della tabella in cui effettuare la ricerca; può assumere i
+     * @param tableName <code>String</code> il nome della tabella in cui effettuare la ricerca; puÃ² assumere i
      *                  valori "FATTURA_PASSIVA" o "FATTTURA_ATTIVA"
      */
     public Mandato_rigaBulk initializeTi_fatturaPerFattura(Mandato_rigaBulk riga, String tableName) throws SQLException {

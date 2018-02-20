@@ -92,7 +92,7 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 		this.accertamento_modifica = accertamento_modifica;
 	}
 	/**
-	 * se sono da aggiornare i saldi in modifica perchè
+	 * se sono da aggiornare i saldi in modifica perchÃ¨
 	 * l'accertamento non proviene da modifiche in documenti
 	 * amministrativi, dato che i saldi verrebbero aggiornati
 	 * attraverso "deferredSaldi"
@@ -103,7 +103,7 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 		return saldiDaAggiornare;
 	}
 	/**
-	 * imposta che sono da aggiornare i saldi in modifica perchè
+	 * imposta che sono da aggiornare i saldi in modifica perchÃ¨
 	 * l'accertamento non proviene da modifiche in documenti
 	 * amministrativi, dato che i saldi verrebbero aggiornati
 	 * attraverso "deferredSaldi"
@@ -115,15 +115,15 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 
 	public void validate() throws ValidationException {
 		if ( getIm_accertamento() == null )
-			throw new ValidationException( "Il campo IMPORTO è obbligatorio." );
+			throw new ValidationException( "Il campo IMPORTO Ã¨ obbligatorio." );
 
 		if (this.isInesigibile() || this.isParzialmenteInesigibile()) {
 			if (this.getIm_quota_inesigibile()==null) 
-				throw new ValidationException( "Il campo QUOTA INESIGIBILE è obbligatorio." );
+				throw new ValidationException( "Il campo QUOTA INESIGIBILE Ã¨ obbligatorio." );
 			if (this.getIm_quota_inesigibile().compareTo(BigDecimal.ZERO)<=0) 
 				throw new ValidationException( "Il campo QUOTA INESIGIBILE deve essere positivo." );
 			if (this.getIm_quota_inesigibile().compareTo(this.getImportoNonIncassato())>0)
-				throw new ValidationException( "Il campo QUOTA INESIGIBILE non può essere superiore all'importo residuo da incassare ("
+				throw new ValidationException( "Il campo QUOTA INESIGIBILE non puÃ² essere superiore all'importo residuo da incassare ("
 						+ new it.cnr.contab.util.EuroFormat().format(this.getImportoNonIncassato()) +")." );
 		}
 		

@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Mandato
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Mandato
  */
 
 public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.SimpleCRUDBP {
@@ -105,7 +105,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 			if ( mandato != null && !mandato.getCd_uo_origine().equals( it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa( context ).getCd_unita_organizzativa()))
 			{
 				setStatus(VIEW);
-				setMessage("Mandato creato dall'Unit‡ Organizzativa " + mandato.getCd_uo_origine() + ". Non consentita la modifica.");
+				setMessage("Mandato creato dall'Unit√† Organizzativa " + mandato.getCd_uo_origine() + ". Non consentita la modifica.");
 			}
 			else if ( mandato != null && mandato.getStato().equals( mandato.STATO_MANDATO_ANNULLATO ) && (mandato.getFl_riemissione()==null || !mandato.getFl_riemissione()))
 			{
@@ -250,7 +250,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 		printbp.addToPrintSpoolerParam(param);
 	}
 	/**
-	 *	Abilito il bottone di caricamento dei sospesi solo se il mandato non Ë stato
+	 *	Abilito il bottone di caricamento dei sospesi solo se il mandato non √® stato
 	 *  pagato o annullato e se e' a regolamento sospeso.
 	 *
 	 *	return boolean	= FALSE se il mandato e' stato pagato o annullato oppure se e' di regolarizzazione 
@@ -264,7 +264,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 				!((MandatoBulk)getModel()).isAnnullato() ;
 	}
 	/**
-	 *	Abilito il bottone di cancellazione documento solo se non Ë stato pagato o
+	 *	Abilito il bottone di cancellazione documento solo se non √® stato pagato o
 	 *  annullato.
 	 */
 	public boolean isDeleteButtonEnabled() {
@@ -294,7 +294,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 	}	
 
 	/**
-	 *	Abilito il bottone di rimozione dei sospesi solo se il mandato non Ë stato
+	 *	Abilito il bottone di rimozione dei sospesi solo se il mandato non √® stato
 	 *  pagato o annullato.
 	 *
 	 *	isEditable 	= FALSE se il mandato e' stato pagato o annullato
@@ -305,7 +305,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 				!((MandatoBulk)getModel()).isAnnullato() ;
 	}
 	/**
-	 *	Abilito il bottone di salvataggio solo se il mandato non Ë stato annullato.
+	 *	Abilito il bottone di salvataggio solo se il mandato non √® stato annullato.
 	 *
 	 *	isEditable 	= FALSE se il mandato e' stato pagato o annullato
 	 *				= TRUE se il mandato non e' stato pagato o annullato

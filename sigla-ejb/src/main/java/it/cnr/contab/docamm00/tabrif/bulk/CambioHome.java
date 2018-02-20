@@ -123,8 +123,8 @@ public boolean checkPeriodi(CambioBulk cambio)  throws PersistencyException
 /**
  * Ricerca il cambio valido in data <dataCambio> per la divisa selezionata
  *
- * E' possibile che possano esistere in data <dataCambio> più intervalli validi
- * In questo caso è necessario ricercare tra tutti i cambi validi, il migliore
+ * E' possibile che possano esistere in data <dataCambio> piÃ¹ intervalli validi
+ * In questo caso Ã¨ necessario ricercare tra tutti i cambi validi, il migliore
  *
  * Metodo usato nella fattura passiva, nel documento generico, nella missione e nell'anticipo
  *
