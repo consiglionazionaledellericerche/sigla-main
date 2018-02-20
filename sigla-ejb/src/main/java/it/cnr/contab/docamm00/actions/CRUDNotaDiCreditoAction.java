@@ -1570,9 +1570,9 @@ public Forward doSelezionaDettaglioPerNdC(ActionContext context) {
 					.flatMap(crudNotaDiCreditoBP -> Optional.ofNullable(crudNotaDiCreditoBP.getModel()))
 					.filter(Nota_di_creditoBulk.class::isInstance)
 					.map(Nota_di_creditoBulk.class::cast)
-					.map(nota_di_creditoBulk -> nota_di_creditoBulk.getFl_split_payment() ||
+					.map(nota_di_creditoBulk -> Optional.ofNullable(nota_di_creditoBulk.getFl_split_payment()).orElse(Boolean.FALSE) ||
 							Optional.ofNullable(nota_di_creditoBulk.getDocumentoEleTestata()).map(DocumentoEleTestataBulk::isAttivoSplitPayment).orElse(false))
-					.orElse(false);
+					.orElse(Boolean.FALSE);
 
 			long contaSplit=allDetail.stream()
 						.filter(e->{
