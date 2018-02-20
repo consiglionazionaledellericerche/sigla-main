@@ -72,7 +72,7 @@ public void setVoce(it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk newVoce) {
 public void validate() throws ValidationException {
 	// controllo su campo ESERCIZIO_ORIGINALE
 	if ( getEsercizio_originale() == null || getEsercizio_originale().equals("") )
-		throw new ValidationException( "Il campo ESERCIZIO IMPEGNO è obbligatorio." );
+		throw new ValidationException( "Il campo ESERCIZIO IMPEGNO Ã¨ obbligatorio." );
 
 	if (getEsercizio_originale().compareTo(getEsercizio())!=-1)
 		throw new ValidationException("L'esercizio dell'impegno residuo deve essere inferiore al " + getEsercizio());

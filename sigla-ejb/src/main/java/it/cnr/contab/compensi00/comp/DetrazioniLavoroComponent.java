@@ -23,7 +23,7 @@ public DetrazioniLavoroComponent() {
   *  superati
   *    PreCondition:
   *      la tabella contiene altri record con stessa chiave di quello che sto inserendo
-  *		 e la data di inizio validit‡ del nuovo record e' successiva a quella 
+  *		 e la data di inizio validit√† del nuovo record e' successiva a quella 
   *		 del record (con stessa chiave) piu' recente in tabella (cioe' che ha data fine 
   *		 validita = infinito)
   *    PostCondition:
@@ -31,9 +31,9 @@ public DetrazioniLavoroComponent() {
   
   *  Riscontrata condizione di errore.
   *    PreCondition:
-  *      Si Ë verificato un errore.
+  *      Si √® verificato un errore.
   *    PostCondition:
-  *      Viene inviato il messaggio "Attenzione, si Ë verificato un errore".
+  *      Viene inviato il messaggio "Attenzione, si √® verificato un errore".
 **/
 public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws ComponentException{
 
@@ -85,7 +85,7 @@ private boolean isCancellabile(UserContext aUC,OggettoBulk bulk) throws Componen
 			cancellabile = false;
 		else{
 			if (!detrazioni_lavoro.getDt_fine_validita().equals(it.cnr.contab.config00.esercizio.bulk.EsercizioHome.DATA_INFINITO) && (detrazioni_lavoro.isToBeUpdated() || detrazioni_lavoro.isToBeDeleted()))
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione, l'unico intervallo che Ë possibile cancellare/modificare Ë l'ultimo");	  
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione, l'unico intervallo che √® possibile cancellare/modificare √® l'ultimo");	  
 			else{
 
 				sql.addSQLClause("AND","DT_FINE_VALIDITA",sql.EQUALS,it.cnr.contab.compensi00.docs.bulk.CompensoBulk.decrementaData(detrazioni_lavoro.getDt_inizio_validita()));
@@ -111,9 +111,9 @@ private boolean isCancellabile(UserContext aUC,OggettoBulk bulk) throws Componen
   *      Viene consentito il salvataggio del nuovo Detrazioni
   *  Periodo di Inizio/Fine validita del nuovo Detrazioni non valido.
   *    PreCondition:
-  *      Si Ë verificato un errore non salvo.
+  *      Si √® verificato un errore non salvo.
   *    PostCondition:
-  *      Viene inviato il messaggio : "Attenzione sovrapposizione con intervalli di validit‡ preesistenti"
+  *      Viene inviato il messaggio : "Attenzione sovrapposizione con intervalli di validit√† preesistenti"
 **/
 private void validaDetrazione(UserContext aUC,Detrazioni_lavoroBulk detraz) throws ComponentException{
 
@@ -123,10 +123,10 @@ private void validaDetrazione(UserContext aUC,Detrazioni_lavoroBulk detraz) thro
 
 		Detrazioni_lavoroHome home = (Detrazioni_lavoroHome)getHome(aUC,Detrazioni_lavoroBulk.class);
 		if (!home.checkValidita(aUC, detraz))
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione sovrapposizione con intervalli di validit‡ preesistenti");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione sovrapposizione con intervalli di validit√† preesistenti");
 
 //		if (!home.checkIntervallo(detraz))
-//			throw new it.cnr.jada.comp.ApplicationException("L'importo inferiore inserito non Ë compatibile con un intervallo precedentemente inserito");
+//			throw new it.cnr.jada.comp.ApplicationException("L'importo inferiore inserito non √® compatibile con un intervallo precedentemente inserito");
 
 	}catch(it.cnr.jada.bulk.ValidationException ex){
 		throw new it.cnr.jada.comp.ApplicationException(ex);

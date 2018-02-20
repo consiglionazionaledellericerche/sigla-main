@@ -370,7 +370,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		return sql;
 	}
 	/**
-	 * Pre:  Ricerca Tipo Attivit‡
+	 * Pre:  Ricerca Tipo Attivit√†
 	 * Post: Limitazione ai tipi non annullati
 	 */
 	public SQLBuilder selectTipo_attivitaByClause (UserContext userContext, OggettoBulk bulk, Tipo_attivitaBulk tipo_attivita, CompoundFindClause clause)	throws ComponentException, PersistencyException
@@ -471,7 +471,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 
 	private void validaProceduraIncarico(UserContext aUC,Incarichi_proceduraBulk procedura) throws ComponentException {
 		if (procedura.getTerzo_resp()==null || procedura.getTerzo_resp().getCd_terzo()==null)
-			throw handleException( new ApplicationException( "Il campo \"Responsabile del procedimento\" non puÚ essere vuoto.") );
+			throw handleException( new ApplicationException( "Il campo \"Responsabile del procedimento\" non pu√≤ essere vuoto.") );
 		/*
 		 *Recupero l'eventuale nuova parametrizzazione 
 		 */
@@ -479,17 +479,17 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		
 		if (procedura.getProcedura_amministrativa().getFl_ricerca_incarico().booleanValue())
 			if (procedura.getIncarichi_richiesta()==null||procedura.getIncarichi_richiesta().getPg_richiesta()==null)
-				throw handleException( new ApplicationException( "La procedura amministrativa inserita richiede l'indicazione della \"Ricerca Professionalit‡ Interna\"!") );
+				throw handleException( new ApplicationException( "La procedura amministrativa inserita richiede l'indicazione della \"Ricerca Professionalit√† Interna\"!") );
 
 		if (parametri!=null && parametri.getRicerca_interna()!=null && parametri.getRicerca_interna().equals("Y"))
 			if (procedura.getIncarichi_richiesta()==null||procedura.getIncarichi_richiesta().getPg_richiesta()==null)
-				throw handleException( new ApplicationException( "Per il tipo di incarico registrato Ë richiesta l'indicazione della \"Ricerca Professionalit‡ Interna\"!") );
+				throw handleException( new ApplicationException( "Per il tipo di incarico registrato √® richiesta l'indicazione della \"Ricerca Professionalit√† Interna\"!") );
 			
 		if (parametri==null || parametri.getAllega_decisione_ctr()==null || !parametri.getAllega_decisione_ctr().equals("N")) {
 			if (procedura.getAtto()==null || procedura.getAtto().getCd_tipo_atto()==null)
-				throw handleException( new ApplicationException( "Il campo \"Decisione a contrattare\" non puÚ essere vuoto.") );
+				throw handleException( new ApplicationException( "Il campo \"Decisione a contrattare\" non pu√≤ essere vuoto.") );
 			if (procedura.getDs_atto()==null)
-				throw handleException( new ApplicationException( "Il campo \"Estremi della decisione a contrattare\" non puÚ essere vuoto.") );
+				throw handleException( new ApplicationException( "Il campo \"Estremi della decisione a contrattare\" non pu√≤ essere vuoto.") );
 		}
 
 		if (procedura.getProcedura_amministrativa().isMeramenteOccasionaleRequired() && !procedura.getFl_meramente_occasionale().booleanValue())
@@ -497,8 +497,8 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 
 		/*
 		 * Il flag ART.51 deve essere valorizzato solo se:
-		 * - la procedura amministrativa non Ë dipo INC3 (SENZA VERIFICA INTERNA E SENZA PROCEDURA COMPARATIVA)
-		 * - il tipo di rapporto Ë COCOCO
+		 * - la procedura amministrativa non √® dipo INC3 (SENZA VERIFICA INTERNA E SENZA PROCEDURA COMPARATIVA)
+		 * - il tipo di rapporto √® COCOCO
 		 */
 		if (procedura.getFl_art51().booleanValue() && 
 			!(procedura.getTipo_incarico()!=null && 
@@ -507,7 +507,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 			 !(procedura.getProcedura_amministrativa()!=null &&
 			   procedura.getProcedura_amministrativa().getFl_ricerca_incarico()!=null &&   	   
 			   procedura.getProcedura_amministrativa().getFl_ricerca_incarico().booleanValue())))
-			throw handleException( new ApplicationException( "Il flag art.51 puÚ essere valorizzato solo per \"Collaboratori coordinati e continuativi\" e per procedure amministrative che non richiedono nÈ la verifica di professionalit‡ interna nÈ la procedura comparativa!"));
+			throw handleException( new ApplicationException( "Il flag art.51 pu√≤ essere valorizzato solo per \"Collaboratori coordinati e continuativi\" e per procedure amministrative che non richiedono n√© la verifica di professionalit√† interna n√© la procedura comparativa!"));
 
 		if (procedura.getFl_meramente_occasionale().booleanValue()) {
 			try {
@@ -527,7 +527,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 					limite = config.getIm01();
 					
 				if (procedura.getImporto_lordo().compareTo(limite)==1)
-					throw new ApplicationException("Non Ë possibile conferire incarichi per \"Collaboratori Meramente Occasionali\" di importo superiore al limite consentito di " + 
+					throw new ApplicationException("Non √® possibile conferire incarichi per \"Collaboratori Meramente Occasionali\" di importo superiore al limite consentito di " + 
 							new it.cnr.contab.util.EuroFormat().format(config.getIm01()) + "!");
 					
 		   }catch (RemoteException e) {
@@ -556,7 +556,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 			}
 			totaleContrattiAttivabili = procedura.getIncarichi_richiesta().getNrRisorseNonTrovate() - totaleContrattiAttivati;
 			if (totaleContrattiAttivabili < procedura.getNr_contratti())
-				throw handleException( new ApplicationException( "Il numero di contratti attivabili non puÚ essere superiore al numero massimo ancora consentito dalla Verifica di professionalit‡ interna associata ("+totaleContrattiAttivabili.toString()+")!") );
+				throw handleException( new ApplicationException( "Il numero di contratti attivabili non pu√≤ essere superiore al numero massimo ancora consentito dalla Verifica di professionalit√† interna associata ("+totaleContrattiAttivabili.toString()+")!") );
 		}					
 			
 		int contaBandi = 0;
@@ -570,10 +570,10 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		}
 		
 		if (contaBandi>1)
-			throw handleException( new ApplicationException( "Alla procedura di conferimento incarico puÚ essere allegato al massimo un \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_BANDO).toString()+"\"!") );
+			throw handleException( new ApplicationException( "Alla procedura di conferimento incarico pu√≤ essere allegato al massimo un \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_BANDO).toString()+"\"!") );
 
 		if (contaDecisioniAContrattare>1)
-			throw handleException( new ApplicationException( "Alla procedura di conferimento incarico puÚ essere allegato al massimo una \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_DECISIONE_A_CONTRATTARE).toString()+"\"'!") );
+			throw handleException( new ApplicationException( "Alla procedura di conferimento incarico pu√≤ essere allegato al massimo una \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_DECISIONE_A_CONTRATTARE).toString()+"\"'!") );
 		
 		for (Iterator<Incarichi_repertorioBulk> i = procedura.getIncarichi_repertorioColl().iterator(); i.hasNext(); ) {
 			Incarichi_repertorioBulk incarico = i.next();
@@ -603,9 +603,9 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 			
 				if (contaContratti>1)
 					if (incarico.getV_terzo()!=null && incarico.getV_terzo().getCognome()!=null && incarico.getV_terzo().getNome()!=null)
-						throw handleException( new ApplicationException( "Al terzo \""+incarico.getV_terzo().getCognome()+" "+incarico.getV_terzo().getNome()+"\" associato alla procedura di conferimento incarico puÚ essere allegato al massimo un \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONTRATTO).toString()+"\"!") );
+						throw handleException( new ApplicationException( "Al terzo \""+incarico.getV_terzo().getCognome()+" "+incarico.getV_terzo().getNome()+"\" associato alla procedura di conferimento incarico pu√≤ essere allegato al massimo un \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONTRATTO).toString()+"\"!") );
 					else
-						throw handleException( new ApplicationException( "Al terzo (cod: "+incarico.getTerzo().getCd_terzo()+") allegato alla procedura di conferimento incarico puÚ essere allegato al massimo un \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONTRATTO).toString()+"\"!") );
+						throw handleException( new ApplicationException( "Al terzo (cod: "+incarico.getTerzo().getCd_terzo()+") allegato alla procedura di conferimento incarico pu√≤ essere allegato al massimo un \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONTRATTO).toString()+"\"!") );
 	
 				if (incarico.getIm_complessivo_ripartito().compareTo(incarico.getImporto_complessivo_incarico())!=0)
 					if (incarico.getV_terzo()!=null && incarico.getV_terzo().getCognome()!=null && incarico.getV_terzo().getNome()!=null)
@@ -669,7 +669,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 					if (parametri==null || parametri.getAllega_decisione_ctr()==null || parametri.getAllega_decisione_ctr().equals("Y")) 
 						throw new it.cnr.jada.comp.ApplicationException("Allegare alla \"Procedura di conferimento incarico\" un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_DECISIONE_A_CONTRATTARE).toString()+"\".");
 			    }
-			    //Controllo che sia stata inserita la dichiarazione del contraente....almeno quella del primo anno di validit‡ dell'incarico 
+			    //Controllo che sia stata inserita la dichiarazione del contraente....almeno quella del primo anno di validit√† dell'incarico 
 			    if (procedura.isDichiarazioneContraenteRequired()) {
 				    boolean existRapportoAnnoStipula = false;
 					GregorianCalendar data_da = (GregorianCalendar) GregorianCalendar.getInstance();
@@ -713,7 +713,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 
 						if (calcolaUtilizzato(userContext, dettDB).compareTo(Utility.ZERO)!=0)
 							throw new ApplicationException("Eliminazione importi per l'anno " + dettDB.getEsercizio_limite() + 
-									" non possibile!\nL'importo risulta gi‡ utilizzato.");
+									" non possibile!\nL'importo risulta gi√† utilizzato.");
 
 						if (dettDB.getImporto_complessivo().compareTo(Utility.ZERO) != 0)
 							comp.aggiornaRepertorioLimiti(userContext, dettDB.getEsercizio_limite(), 
@@ -891,7 +891,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 								updateBulk(userContext, allegato);
 							} catch (StorageException e) {
 							    if (e.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
-                                    throw new ApplicationException("CMIS - File ["+ storageFile.getFileName()+"] gi‡ presente o non completo di tutte le propriet‡ obbligatorie. Inserimento non possibile!");
+                                    throw new ApplicationException("CMIS - File ["+ storageFile.getFileName()+"] gi√† presente o non completo di tutte le propriet√† obbligatorie. Inserimento non possibile!");
                                 throw new ApplicationException("CMIS - Errore nella registrazione degli allegati (" + e.getMessage() + ")");
 							}
 						} 
@@ -1011,11 +1011,11 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 	
 				procedura = (Incarichi_proceduraBulk)inizializzaBulkPerModifica(aUC, procedura);
 		
-				/* Qui bisogna verificare se gli importi associati all'incarico non siano gi‡ stati, anche in parte, associati ad impegni/compensi
+				/* Qui bisogna verificare se gli importi associati all'incarico non siano gi√† stati, anche in parte, associati ad impegni/compensi
 			  	if (esisteimpegno o incarico)
-		          	throw new ApplicationException("L'incarico risulta gi‡ utilizzato su impegni/compensi. Impossibile eliminarlo.");
+		          	throw new ApplicationException("L'incarico risulta gi√† utilizzato su impegni/compensi. Impossibile eliminarlo.");
 				 */
-				/* Qui bisogna ritornare le dipsonibilit‡ sulla tabella degli 
+				/* Qui bisogna ritornare le dipsonibilit√† sulla tabella degli 
 		      	for ( Iterator i = obbligazione.getObbligazione_scadenzarioColl().iterator(); i.hasNext(); )
 			        if ( ((Obbligazione_scadenzarioBulk)i.next()).getIm_associato_doc_amm().compareTo( new BigDecimal(0)) > 0 )
 		            throw new ApplicationException("Impossibile stornare impegni collegati a spese del fondo economale o a documenti amministrativi");
@@ -1117,7 +1117,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 			}
 			updateBulk(usercontext, oggettobulk);
 			if (oggettobulk instanceof Incarichi_proceduraBulk) {
-				//lanciato per aggiornare le propriet‡ sul documentale
+				//lanciato per aggiornare le propriet√† sul documentale
 				archiviaAllegati(usercontext, (Incarichi_proceduraBulk)oggettobulk);
 			}
 			return oggettobulk;
@@ -1238,7 +1238,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		catch(it.cnr.jada.persistency.PersistencyException ex){throw handleException(ex);}
 	}
 
-	/*Metodo che restituisce la disponibilit‡ di importi non utilizzati per l'attivazione di contratti*/
+	/*Metodo che restituisce la disponibilit√† di importi non utilizzati per l'attivazione di contratti*/
 	public OggettoBulk concludiProceduraIncaricoPubblicata(UserContext aUC, OggettoBulk bulk) throws ComponentException {
 		try {
 			if (bulk instanceof Incarichi_proceduraBulk){
@@ -1275,7 +1275,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
  				    	}
  				    	
  				    	if (totImportodaSottrarre.compareTo(Utility.ZERO)==1)
- 	 						throw new ApplicationException( "Operazione non possibile. L'importo da ridurre risulta gi‡ essere stato utilizzato." );
+ 	 						throw new ApplicationException( "Operazione non possibile. L'importo da ridurre risulta gi√† essere stato utilizzato." );
  				    }		
 				}
 					
@@ -1309,7 +1309,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 	        throw handleException(e);
 	    }
 	}
-	/*Metodo che restituisce la disponibilit‡ di importi non utilizzati per l'attivazione di contratti*/
+	/*Metodo che restituisce la disponibilit√† di importi non utilizzati per l'attivazione di contratti*/
 	public OggettoBulk concludiIncaricoPubblicato(UserContext aUC, OggettoBulk bulk, Incarichi_repertorioBulk incarico) throws ComponentException {
 		try {
 			if (bulk instanceof Incarichi_proceduraBulk){

@@ -32,7 +32,7 @@ public CRUDRichiestaUopAction() {
 // * @param doc	L'OggettoBulk padre del searchtool
 // * @param sospesoTrovato	L'OggettoBulk selezionato dall'utente
 // * @return Il Forward alla pagina di risposta
-// * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+// * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
 // */
 public Forward doBringBackSearchFindUnitaMisura(ActionContext context,
 	RichiestaUopRigaBulk riga,

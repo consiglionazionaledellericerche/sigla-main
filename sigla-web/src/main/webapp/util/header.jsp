@@ -2,7 +2,7 @@
 <html>
 <head>
 <title><%=pageContext.getServletContext().getAttribute("APPLICATION_TITLE_VERSION")%></title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <% it.cnr.jada.util.jsp.JSPUtils.printBaseUrl(pageContext); %>
 <link rel="stylesheet" href="style.css">
 <script language="JavaScript" src="scripts/util.js"></script>

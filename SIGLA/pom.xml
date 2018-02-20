@@ -191,7 +191,6 @@
                             <bundleFileName>sigla-sdi.jar</bundleFileName>
                         </ejbModule>
                     </modules>
-                    <charset>${project.build.sourceEncoding}</charset>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>

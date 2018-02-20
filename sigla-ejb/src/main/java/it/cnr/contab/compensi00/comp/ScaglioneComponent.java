@@ -47,7 +47,7 @@ private void completaScaglione(UserContext userContext, ScaglioneBulk testata) t
  * Pre-post-conditions:
  *
  * Nome: Nessuno scaglione aggiunto alla lista
- * Pre:  E' stato richiesto l'inserimento di uno scaglione che NON è stato aggiunto alla lista
+ * Pre:  E' stato richiesto l'inserimento di uno scaglione che NON Ã¨ stato aggiunto alla lista
  * Post: Viene generata una eccezione con la descrizione dell'errore
  *			- "Inserire gli scaglioni" -
  *
@@ -156,7 +156,7 @@ public void eliminaConBulk (UserContext userContext,OggettoBulk bulk) throws Com
  * Pre: L'OggettoBulk specificato esiste.
  * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
  *		 per l'operazione di presentazione e modifica nell'interfaccia visuale.
- *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome è
+ *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ã¨
  *		 ottenuto concatenando il nome della component con la stringa ".edit"
  * 
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -181,12 +181,12 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext, OggettoBu
  *
  * Pre-post-conditions
  *
- * Nome: L'intervallo in processo è l'ultimo intervallo esistente
- * Pre: La data di inizio validità dell'intervallo in processo >= della massima data di inizio di intervalli
+ * Nome: L'intervallo in processo Ã¨ l'ultimo intervallo esistente
+ * Pre: La data di inizio validitÃ  dell'intervallo in processo >= della massima data di inizio di intervalli
  * Post: Viene ritornato TRUE
  *
- * Nome: L'intervallo in processo non è l'ultimo intervallo esistente
- * Pre: La data di inizio validità dell'intervallo in processo < della massima data di inizio di intervalli
+ * Nome: L'intervallo in processo non Ã¨ l'ultimo intervallo esistente
+ * Pre: La data di inizio validitÃ  dell'intervallo in processo < della massima data di inizio di intervalli
  * Post: Viene ritornato FALSE
  *
 */
@@ -254,7 +254,7 @@ private void loadScaglioni(UserContext userContext, ScaglioneBulk testata) throw
  * Pre: Viene richiesto il caricamento del Tipo CO/RI
  * Post: Viene caricato il Tipo CO/RI e aggiornato lo Scaglione
  *
- * Nome: Tipo CO/RI INESISTENTE (perchè cancellato fisicamente)
+ * Nome: Tipo CO/RI INESISTENTE (perchÃ¨ cancellato fisicamente)
  * Pre: Viene richiesto il caricamento del Tipo CO/RI
  * Post: Viene generata un'eccezione con la descrizione dell'errore
  *			Il Tipo Contributo/Ritenuta \"" + testata.getCd_contributo_ritenuta() + 
@@ -271,7 +271,7 @@ private void loadTipoContributoRitenuta(UserContext userContext, ScaglioneBulk t
 		Tipo_contributo_ritenutaHome home = (Tipo_contributo_ritenutaHome)getHome(userContext, Tipo_contributo_ritenutaBulk.class);
 		Tipo_contributo_ritenutaBulk cori = home.findTipoCORIValido(testata.getCd_contributo_ritenuta(), home.getServerDate());
 		
-		// se il tipo contributo ritenuta selezionato non è più valido
+		// se il tipo contributo ritenuta selezionato non Ã¨ piÃ¹ valido
 		// carico il tipo co/ri senza clausola di validita
 		if (cori==null)
 			cori = home.findTipoCORIValido(testata.getCd_contributo_ritenuta(), null);
@@ -302,8 +302,8 @@ private void loadTipoContributoRitenuta(UserContext userContext, ScaglioneBulk t
  *
  * Nome: Modifica di intervallo avente la data INIZIO validita <= alla data odierna
  * Pre: Viene richiesta una modifica di uno scaglione avente la data inizio validita precedente alla data odierna
- * Post: La data di fine validità dello scaglione corrente viene posta = data odierna
- *       Viene creato il nuovo scaglione con data di inizio validità = alla data odierna + 1
+ * Post: La data di fine validitÃ  dello scaglione corrente viene posta = data odierna
+ *       Viene creato il nuovo scaglione con data di inizio validitÃ  = alla data odierna + 1
  *
 **/
 public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException 

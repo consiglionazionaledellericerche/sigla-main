@@ -30,27 +30,27 @@ public java.util.Collection getCentriDiSpesaSelezionatiColl() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'dt_scadenza_obbligazioni'
+ * Restituisce il valore della propriet√† 'dt_scadenza_obbligazioni'
  *
- * @return Il valore della propriet‡ 'dt_scadenza_obbligazioni'
+ * @return Il valore della propriet√† 'dt_scadenza_obbligazioni'
  */
 public java.sql.Timestamp getDt_scadenza_obbligazioni() {
 	return dt_scadenza_obbligazioni;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_disp_cassa_CNR'
+ * Restituisce il valore della propriet√† 'im_disp_cassa_CNR'
  *
- * @return Il valore della propriet‡ 'im_disp_cassa_CNR'
+ * @return Il valore della propriet√† 'im_disp_cassa_CNR'
  */
 public java.math.BigDecimal getIm_disp_cassa_CNR() {
 	return im_disp_cassa_CNR;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'flTuttiCdsCaricati'
+ * Restituisce il valore della propriet√† 'flTuttiCdsCaricati'
  *
- * @return Il valore della propriet‡ 'flTuttiCdsCaricati'
+ * @return Il valore della propriet√† 'flTuttiCdsCaricati'
  */
 public boolean isFlTuttiCdsCaricati() {
 	return flTuttiCdsCaricati;
@@ -82,7 +82,7 @@ public void setCentriDiSpesaSelezionatiColl(java.util.Collection newCentriDiSpes
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'dt_scadenza_obbligazioni'
+ * Imposta il valore della propriet√† 'dt_scadenza_obbligazioni'
  *
  * @param newDt_scadenza_obbligazioni	Il valore da assegnare a 'dt_scadenza_obbligazioni'
  */
@@ -91,7 +91,7 @@ public void setDt_scadenza_obbligazioni(java.sql.Timestamp newDt_scadenza_obblig
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'flTuttiCdsCaricati'
+ * Imposta il valore della propriet√† 'flTuttiCdsCaricati'
  *
  * @param newFlTuttiCdsCaricati	Il valore da assegnare a 'flTuttiCdsCaricati'
  */
@@ -100,7 +100,7 @@ public void setFlTuttiCdsCaricati(boolean newFlTuttiCdsCaricati) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'im_disp_cassa_CNR'
+ * Imposta il valore della propriet√† 'im_disp_cassa_CNR'
  *
  * @param newIm_disp_cassa_CNR	Il valore da assegnare a 'im_disp_cassa_CNR'
  */

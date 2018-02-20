@@ -60,8 +60,8 @@ public MinicarrieraComponent() {
 private void addStaticClause(SQLBuilder sql, MinicarrieraBulk carriera){
 
 	// Nella ricerca del terzo devo inserire come clausole statiche:
-	//	1∞: Tipo Dipendente/Altro
-	//	2∞: Data Registrazione minicarriera compresa fra Data Inizio e Data Fine validit‡
+	//	1¬∞: Tipo Dipendente/Altro
+	//	2¬∞: Data Registrazione minicarriera compresa fra Data Inizio e Data Fine validit√†
 
 	sql.addSQLClause("AND","TI_DIPENDENTE_ALTRO",sql.EQUALS,carriera.getTi_anagrafico());
 	sql.addSQLClause("AND","DT_INI_VALIDITA",sql.LESS_EQUALS,carriera.getDt_inizio_minicarriera());
@@ -249,7 +249,7 @@ private void aggiornaSaldiPer(
 	if (carriera != null && carriera.getMinicarriera_rate() != null) {
 
 		//Costruisco il vettore per prendere una sola volta il compenso (che puo' essere associato
-		//a pi˘ rate) in maniera da aggiornare una volta sola i saldi dell'obbligazione
+		//a pi√π rate) in maniera da aggiornare una volta sola i saldi dell'obbligazione
 		java.util.Vector compensi = new java.util.Vector();
 		for (java.util.Iterator i = carriera.getMinicarriera_rate().iterator(); i.hasNext();) {
 			Minicarriera_rataBulk rata = (Minicarriera_rataBulk)i.next();
@@ -539,7 +539,7 @@ private void callValidaRate(UserContext userContext, MinicarrieraBulk carriera) 
   *		PreCondition:
   *			Viene richiesta la cessazione della minicarriera
   *		PostCondition:
-  *			Viene eseguita la richiesta e restituita la minicarriera aggiornata non pi˘ modificabile
+  *			Viene eseguita la richiesta e restituita la minicarriera aggiornata non pi√π modificabile
  */
 //^^@@
 
@@ -734,7 +734,7 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext userCont
 	
 	eliminaMinicarrieraClone(userContext, carriera, pgTmp);
 
-	// Gli unici casi in cui esistono i cloni con minicarriere temporanee Ë quando
+	// Gli unici casi in cui esistono i cloni con minicarriere temporanee √® quando
 	// sto salvando carriere generate da rinnovi e ripristini --> devo gestire
 	// anche la cancellazione dei cloni dei temporanei!
 	if (carriera.getPgMinicarrieraPerClone() != null)
@@ -815,7 +815,7 @@ private void eliminaMinicarriera(
 	if (carriera.isAssociataACompenso())
 		throw new it.cnr.jada.comp.ApplicationException("Questa minicarriera ha almeno una rata collegata a compenso. Impossibile proseguire con la cancellazione!");
 	if (!carriera.isAttiva())
-		throw new it.cnr.jada.comp.ApplicationException("Questa minicarriera non Ë in stato attivo. Impossibile proseguire con la cancellazione!");
+		throw new it.cnr.jada.comp.ApplicationException("Questa minicarriera non √® in stato attivo. Impossibile proseguire con la cancellazione!");
 }
 /** 
   *  Tutti i controlli superati.
@@ -878,17 +878,17 @@ public java.util.List findListaBanche(
 /**
   * Percipiente selezionato
   *    PreCondition:
-  *		 Viene richiesta la lista delle Modalit‡ di pagamento
+  *		 Viene richiesta la lista delle Modalit√† di pagamento
   * 	 associate al percipiente
   *	   PostCondition:
-  *		 Viene restituita la lista dei Modalit‡ di pagamento
+  *		 Viene restituita la lista dei Modalit√† di pagamento
   * 	 associate al percipiente
   *
   * Percipiente NON selezionato
   *    PreCondition:
-  *		 Non Ë stato selezionato il percipiente
+  *		 Non √® stato selezionato il percipiente
   *	   PostCondition:
-  *		 Non vengono caricate le modalit‡ di pagamento
+  *		 Non vengono caricate le modalit√† di pagamento
 **/
 
 public java.util.Collection findModalita(
@@ -952,7 +952,7 @@ public java.util.List findRate(UserContext aUC,MinicarrieraBulk carriera)
   *
   * Percipiente NON selezionato
   *    PreCondition:
-  *		 Non Ë stato selezionato il terzo
+  *		 Non √® stato selezionato il terzo
   *	   PostCondition:
   *		 Non vengono caricati i termini di pagamento
 **/
@@ -985,7 +985,7 @@ public java.util.Collection findTermini(UserContext userContext, OggettoBulk bul
   *
   * Percipiente NON selezionato
   *    PreCondition:
-  *		 Non Ë stato selezionato il Percipiente
+  *		 Non √® stato selezionato il Percipiente
   *	   PostCondition:
   *		 Non vengono caricati i tipi di rapporto
 **/
@@ -1016,7 +1016,7 @@ public java.util.Collection findTipiRapporto(
   *
   * Tipo di rapporto NON selezionato
   *    PreCondition:
-  *		 Non Ë stato selezionato il tipo di rapporto
+  *		 Non √® stato selezionato il tipo di rapporto
   *	   PostCondition:
   *		 Non vengono caricati i tipi trattamento
 **/
@@ -1052,14 +1052,14 @@ public java.util.Collection findTipiTrattamento(UserContext userContext, Minicar
 					RapportoBulk r = (RapportoBulk)i.next();
 					exit=true;
 					if (r.getCd_ente_prev_sti()==null)
-						//throw new it.cnr.jada.comp.ApplicationException("Non Ë stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
-						//non blocco perchË potrebbero esserci trattamenti che non prevedono contributi previdenziali
+						//throw new it.cnr.jada.comp.ApplicationException("Non √® stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
+						//non blocco perch√® potrebbero esserci trattamenti che non prevedono contributi previdenziali
 						//quindi passo il codice fittizio 'XX'
 						filtro.setEntePrev("XX");
 					else
 						filtro.setEntePrev(r.getCd_ente_prev_sti());
 					if (r.getCd_rapp_impiego_sti()==null)
-						throw new it.cnr.jada.comp.ApplicationException("Per il dipendente in esame non Ë definito un Rapporto di Impiego!");
+						throw new it.cnr.jada.comp.ApplicationException("Per il dipendente in esame non √® definito un Rapporto di Impiego!");
 					else
 					{
 						Ass_rapp_impiegoHome assHome = (Ass_rapp_impiegoHome) getHome(userContext, Ass_rapp_impiegoBulk.class );
@@ -1191,9 +1191,9 @@ private it.cnr.jada.bulk.PrimaryKeyHashMap getCompensiTemporanei(
   *		0			Tutto bene
   *		1			Terzo assente
   *		2			Terzo non valido alla data registrazione
-  *		3			Controllo se ho inserito le modalit‡ di pagamento
+  *		3			Controllo se ho inserito le modalit√† di pagamento
   *		4			Tipo rapporto assente
-  *		5			Tipo di rapporto non valido in data inizio validit‡
+  *		5			Tipo di rapporto non valido in data inizio validit√†
   *		6			Tipo trattamento assente
   *		7			Tipo trattamento non valido alla data registrazione
   *
@@ -1205,17 +1205,17 @@ private void handleExceptionsPercipiente(int error) throws ComponentException{
 		case 1: {
 			throw new it.cnr.jada.comp.ApplicationException("Inserire il percipiente");		
 		}case 2: {
-			throw new it.cnr.jada.comp.ApplicationException("Il percipiente selezionato non Ë valido in Data Registrazione");
+			throw new it.cnr.jada.comp.ApplicationException("Il percipiente selezionato non √® valido in Data Registrazione");
 		}case 3: {
-			throw new it.cnr.jada.comp.ApplicationException("Selezionare la Modalit‡ di pagamento");
+			throw new it.cnr.jada.comp.ApplicationException("Selezionare la Modalit√† di pagamento");
 		}case 4: {
 			throw new it.cnr.jada.comp.ApplicationException("Selezionare il Tipo Rapporto");
 		}case 5: {
-			throw new it.cnr.jada.comp.ApplicationException("Il Tipo Rapporto selezionato non Ë valido alla Data Inizio Validit‡");
+			throw new it.cnr.jada.comp.ApplicationException("Il Tipo Rapporto selezionato non √® valido alla Data Inizio Validit√†");
 		}case 6: {
 			throw new it.cnr.jada.comp.ApplicationException("Selezionare il Tipo Trattamento");
 		}case 7: {
-			throw new it.cnr.jada.comp.ApplicationException("Il Tipo Trattamento selezionato non Ë valido alla Data Registrazione");
+			throw new it.cnr.jada.comp.ApplicationException("Il Tipo Trattamento selezionato non √® valido alla Data Registrazione");
 		} 
 	}
 }
@@ -1234,7 +1234,7 @@ private void handleExceptionsPercipiente(int error) throws ComponentException{
  * Pre: L'OggettoBulk specificato esiste.
  * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
  *			per l'operazione di presentazione e modifica nell'interfaccia visuale.
- *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ë
+ *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome √®
  *			ottenuto concatenando il nome della component con la stringa ".edit"
  * 
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -1276,7 +1276,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
  * Pre: L'OggettoBulk specificato esiste.
  * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
  *			per l'operazione di presentazione e modifica nell'interfaccia visuale.
- *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ë
+ *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome √®
  *			ottenuto concatenando il nome della component con la stringa ".edit"
  * 
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -1382,14 +1382,14 @@ private boolean isTipoTrattamentoValido(UserContext userContext, MinicarrieraBul
 						RapportoBulk r = (RapportoBulk)i.next();
 						exit=true;
 						if (r.getCd_ente_prev_sti()==null)
-							//throw new it.cnr.jada.comp.ApplicationException("Non Ë stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
-							//non blocco perchË potrebbero esserci trattamenti che non prevedono contributi previdenziali
+							//throw new it.cnr.jada.comp.ApplicationException("Non √® stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
+							//non blocco perch√® potrebbero esserci trattamenti che non prevedono contributi previdenziali
 							//quindi passo il codice fittizio 'XX'
 							filtro.setEntePrev("XX");
 						else
 							filtro.setEntePrev(r.getCd_ente_prev_sti());
 						if (r.getCd_rapp_impiego_sti()==null)
-							throw new it.cnr.jada.comp.ApplicationException("Per il dipendente in esame non Ë definito un Rapporto di Impiego!");
+							throw new it.cnr.jada.comp.ApplicationException("Per il dipendente in esame non √® definito un Rapporto di Impiego!");
 						else
 						{
 							Ass_rapp_impiegoHome assHome = (Ass_rapp_impiegoHome) getHome(userContext, Ass_rapp_impiegoBulk.class );
@@ -1505,14 +1505,14 @@ private void loadTipoTrattamento(UserContext userContext, MinicarrieraBulk carri
 						RapportoBulk r = (RapportoBulk)i.next();
 						exit=true;
 						if (r.getCd_ente_prev_sti()==null)
-							//throw new it.cnr.jada.comp.ApplicationException("Non Ë stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
-							//non blocco perchË potrebbero esserci trattamenti che non prevedono contributi previdenziali
+							//throw new it.cnr.jada.comp.ApplicationException("Non √® stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
+							//non blocco perch√® potrebbero esserci trattamenti che non prevedono contributi previdenziali
 							//quindi passo il codice fittizio 'XX'
 							filtro.setEntePrev("XX");
 						else
 							filtro.setEntePrev(r.getCd_ente_prev_sti());
 						if (r.getCd_rapp_impiego_sti()==null)
-							throw new it.cnr.jada.comp.ApplicationException("Per il dipendente in esame non Ë definito un Rapporto di Impiego!");
+							throw new it.cnr.jada.comp.ApplicationException("Per il dipendente in esame non √® definito un Rapporto di Impiego!");
 						else
 						{
 							Ass_rapp_impiegoHome assHome = (Ass_rapp_impiegoHome) getHome(userContext, Ass_rapp_impiegoBulk.class );
@@ -1847,7 +1847,7 @@ public SQLBuilder selectPercipienteByClause(
   *		PreCondition:
   *			Viene richiesta la sospensione della minicarriera
   *		PostCondition:
-  *			Viene eseguita la richiesta e restituita la minicarriera aggiornata non pi˘ modificabile
+  *			Viene eseguita la richiesta e restituita la minicarriera aggiornata non pi√π modificabile
  */
 //^^@@
 
@@ -1891,44 +1891,44 @@ private void synchronizeCarriera(
   *			Viene richiesta la validazione di una minicarriera e la stessa viene superata.
   *		PostCondition:
   *			Viene consentita la continuazione del processo.
-  *   La data di registrazione non Ë stata specificata
+  *   La data di registrazione non √® stata specificata
   *		PreCondition:
-  *			Nella minicarriera non Ë stata specificata la data di registrazione.
+  *			Nella minicarriera non √® stata specificata la data di registrazione.
   *		PostCondition:
   *			Viene restituito messaggio relativo e richiesta l'immissione del valore.
   *   La data di registrazione
   *		PreCondition:
-  *			Nella minicarriera Ë stata specificata la data di registrazione ma Ë antecedente a 'oggi'
+  *			Nella minicarriera √® stata specificata la data di registrazione ma √® antecedente a 'oggi'
   *		PostCondition:
   *			Viene restituito messaggio relativo e richiesto l'immissione del valore corretto.
-  *   La data di inizio e fine validit‡
+  *   La data di inizio e fine validit√†
   *		PreCondition:
-  *			Nella minicarriera non Ë stata specificata la data di inizio o fine validit‡
+  *			Nella minicarriera non √® stata specificata la data di inizio o fine validit√†
   *		PostCondition:
   *			Viene restituito messaggio relativo e richiesta l'immissione del valore.
-  *   Validit‡ delle date di inizio e fine validit‡
+  *   Validit√† delle date di inizio e fine validit√†
   *		PreCondition:
-  *			Nella minicarriera data di fine validit‡ Ë precedente alla data di inizio validit‡
+  *			Nella minicarriera data di fine validit√† √® precedente alla data di inizio validit√†
   *		PostCondition:
   *			Viene restituito messaggio relativo e richiesta l'immissione del valore corretto.
   *   Percipiente
   *		PreCondition:
-  *			Nella minicarriera non Ë stato specificato il percipiente
+  *			Nella minicarriera non √® stato specificato il percipiente
   *		PostCondition:
   *			Viene restituito messaggio relativo e richiesto l'immissione del valore.
-  *   Modalit‡ pagamento
+  *   Modalit√† pagamento
   *		PreCondition:
-  *			Nella minicarriera non Ë stato specificato il valore modalit‡ di pagamento del percipiente
+  *			Nella minicarriera non √® stato specificato il valore modalit√† di pagamento del percipiente
   *		PostCondition:
   *			Viene restituito messaggio relativo e richiesto l'immissione del valore.
   *   Tipo rapporto
   *		PreCondition:
-  *			Nella minicarriera non Ë stato specificato il valore tipo rapporto del percipiente
+  *			Nella minicarriera non √® stato specificato il valore tipo rapporto del percipiente
   *		PostCondition:
   *			Viene restituito messaggio relativo e richiesto l'immissione del valore.
   *   Tipo trattamento
   *		PreCondition:
-  *			Nella minicarriera non Ë stato specificato il valore tipo trattamento del percipiente
+  *			Nella minicarriera non √® stato specificato il valore tipo trattamento del percipiente
   *		PostCondition:
   *			Viene restituito messaggio relativo e richiesto l'immissione del valore.
   *   Rate
@@ -1938,12 +1938,12 @@ private void synchronizeCarriera(
   *			Viene restituito messaggio relativo e richiesto l'immissione di almeno una rata
   *   Importo totale minicarriera
   *		PreCondition:
-  *			Nella minicarriera non Ë stato specificato l'importo totale del documento
+  *			Nella minicarriera non √® stato specificato l'importo totale del documento
   *		PostCondition:
   *			Viene restituito messaggio relativo e richiesto l'immissione del valore.
   *   Importo totale minicarriera non valido
   *		PreCondition:
-  *			Nella minicarriera Ë stato specificato l'importo totale del documento, ma Ë minore o uguale a 0
+  *			Nella minicarriera √® stato specificato l'importo totale del documento, ma √® minore o uguale a 0
   *		PostCondition:
   *			Viene restituito messaggio relativo e richiesto l'immissione del valore corretto.
   *   Importo totale rate non valido
@@ -1953,12 +1953,12 @@ private void synchronizeCarriera(
   *			Viene restituito messaggio relativo e richiesta la correzione delle rate o dell'importo totale di testata.
   *   N. rate minicarriera
   *		PreCondition:
-  *			Nella minicarriera non Ë stato specificato il numero delle rate del documento
+  *			Nella minicarriera non √® stato specificato il numero delle rate del documento
   *		PostCondition:
   *			Viene restituito messaggio relativo e richiesto l'immissione del valore.
   *   N. rate minicarriera non valido
   *		PreCondition:
-  *			Nella minicarriera Ë stato specificato il numero delle rate del documento, ma Ë minore o uguale a 0
+  *			Nella minicarriera √® stato specificato il numero delle rate del documento, ma √® minore o uguale a 0
   *		PostCondition:
   *			Viene restituito messaggio relativo e richiesto l'immissione del valore corretto.
   *   Numero totale rate non valido
@@ -1968,17 +1968,17 @@ private void synchronizeCarriera(
   *			Viene restituito messaggio relativo e richiesta la correzione delle rate o dell'numero totale di testata
   *   N. mesi di anticipo/posticipo
   *		PreCondition:
-  *			Nella minicarriera Ë stato specificato il tipo anticipo/posticipo per le rate, ma non Ë stato specificato
+  *			Nella minicarriera √® stato specificato il tipo anticipo/posticipo per le rate, ma non √® stato specificato
   *			il numero di mesi
   *		PostCondition:
   *			Viene restituito messaggio relativo e richiesto l'immissione del valore.
-  *   Validit‡ n. mesi di anticipo/posticipo
+  *   Validit√† n. mesi di anticipo/posticipo
   *		PreCondition:
-  *			Nella minicarriera Ë stato specificato il tipo anticipo/posticipo per le rate, ma non Ë stato specificato
+  *			Nella minicarriera √® stato specificato il tipo anticipo/posticipo per le rate, ma non √® stato specificato
   *			il numero di mesi valido (minore o uguale a 0)
   *		PostCondition:
   *			Viene restituito messaggio relativo e richiesto l'immissione del valore corretto.
-  *   Validit‡ delle rate immesse
+  *   Validit√† delle rate immesse
   *		PreCondition:
   *			La stored procedure per la validazione degli intervalli di tempo relativa alle rate fallisce
   *		PostCondition:
@@ -2013,7 +2013,7 @@ private void validaMinicarriera(
 		}
 		
 		if (carriera.getMinicarriera_rate().size() <= 0)
-			throw new it.cnr.jada.comp.ApplicationException("Per continuare Ë necessario generare le rate!");
+			throw new it.cnr.jada.comp.ApplicationException("Per continuare √® necessario generare le rate!");
 		
 		if (carriera.getIm_totale_minicarriera().compareTo(carriera.calcolaTotaleRate()) != 0)
 			throw new it.cnr.jada.comp.ApplicationException("L'importo totale delle rate deve essere uguale all'importo specificato nella minicarriera.");
@@ -2036,7 +2036,7 @@ private void validaMinicarriera(
   *		0			Tutto bene
   *		1			Terzo assente
   *		2			Terzo non valido alla data registrazione
-  *		3			Controllo se ho inserito le modalit‡ di pagamento
+  *		3			Controllo se ho inserito le modalit√† di pagamento
   *		4			Tipo rapporto assente
   *		5			Tipo di rapporto non valido in data inizio competenza coge
   *		6			Tipo trattamento assente
@@ -2045,31 +2045,31 @@ private void validaMinicarriera(
   * Pre-post-conditions
   *
   * Nome: Terzo assente
-  *	Pre: Non Ë stato selezionato un terzo
+  *	Pre: Non √® stato selezionato un terzo
   *	Post: Ritorna il valore 1
   *
   * Nome: Terzo non valido alla data registrazione
-  *	Pre: Il terzo selezionato non Ë valido alla data registrazione
+  *	Pre: Il terzo selezionato non √® valido alla data registrazione
   *	Post: Ritorna il valore 2
   *
   * Nome: Modalita di pagamento assente
-  *	Pre: Non Ë stato selezionata una modalita di pagamento
+  *	Pre: Non √® stato selezionata una modalita di pagamento
   *	Post: Ritorna il valore 3
   *
   * Nome: Tipo rapporto assente
-  *	Pre: Non Ë stato selezionato un tipo rapporto
+  *	Pre: Non √® stato selezionato un tipo rapporto
   *	Post: Ritorna il valore 4
   *
-  * Nome: Tipo rapporto non valido alla data inizio validit‡
-  *	Pre: Il tipo rapporto selezionato non Ë valido in data inizio validit‡
+  * Nome: Tipo rapporto non valido alla data inizio validit√†
+  *	Pre: Il tipo rapporto selezionato non √® valido in data inizio validit√†
   *	Post: Ritorna il valore 5
   *
   * Nome: Tipo trattamento assente
-  *	Pre: Non Ë stato selezionato un tipo trattamento
+  *	Pre: Non √® stato selezionato un tipo trattamento
   *	Post: Ritorna il valore 6
   *
   * Nome: Tipo trattamento non valido alla data registrazione
-  *	Pre: Non Ë stato selezionato un tipo trattamento
+  *	Pre: Non √® stato selezionato un tipo trattamento
   *	Post: Ritorna il valore 7
   *
   * Nome: Terzo valido
@@ -2097,7 +2097,7 @@ public int validaPercipiente(
 	if (returnCode != V_terzo_per_compensoBulk.TUTTO_BENE)
 		return returnCode;
 
-	// rapporto non valido in data inizio validit‡
+	// rapporto non valido in data inizio validit√†
 	if (!isTipoRapportoValido(userContext, minicarriera))
 		return V_terzo_per_compensoBulk.TIPO_RAPP_NON_VALIDO;
 

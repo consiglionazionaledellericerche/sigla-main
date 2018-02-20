@@ -225,16 +225,16 @@ public void setTi_gestione(java.lang.String ti_gestione) {
 	}
 
 	/**
-	 * Ritorna il valore della propriet‡ cd_responsabile_terzo
+	 * Ritorna il valore della propriet√† cd_responsabile_terzo
 	 * 
-	 * @return Il valore della propriet‡ cd_responsabile_terzo
+	 * @return Il valore della propriet√† cd_responsabile_terzo
 	 */
 	public java.lang.Integer getCd_responsabile_terzo() {
 		return cd_responsabile_terzo;
 	}
 
 	/**
-	 * Setta il valore della propriet‡ cd_responsabile_terzo
+	 * Setta il valore della propriet√† cd_responsabile_terzo
 	 * 
 	 * @param val
 	 */

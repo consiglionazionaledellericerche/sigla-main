@@ -35,9 +35,9 @@ public class DipartimentoBulk extends DipartimentoBase {
 		return direttore.getCd_terzo();
 	}
 	/**
-	 * Restituisce il valore della propriet‡ 'ds_responsabile'
+	 * Restituisce il valore della propriet√† 'ds_responsabile'
 	 *
-	 * @return Il valore della propriet‡ 'ds_responsabile'
+	 * @return Il valore della propriet√† 'ds_responsabile'
 	 */
 	public java.lang.String getDs_direttore() {
 		if ( direttore != null && direttore.getAnagrafico() != null )

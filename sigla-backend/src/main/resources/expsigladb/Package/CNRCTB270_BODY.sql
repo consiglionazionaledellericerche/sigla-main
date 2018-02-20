@@ -65,7 +65,7 @@
    codLASpecVersIva linea_attivita.cd_linea_attivita%Type;
    aLASpecVersIva v_linea_attivita_valida%Rowtype;
  Begin
-   -- Estrazione della linea di attivit?Â  comune da utilizzare per la creazione della variazione
+   -- Estrazione della linea di attività  comune da utilizzare per la creazione della variazione
    codLASpecVersIva := CNRCTB015.GETVAL01PERCHIAVE(LINEA_ATTIVITA_SPECIALE,LA_VER_IVA);
 
    If codLASpecVersIva Is Null Then
@@ -85,7 +85,7 @@
    Return aLASpecVersIva;
  Exception
    When NO_DATA_FOUND Then
-     IBMERR001.RAISE_ERR_GENERICO('Linea di attivit?Â  comune per '||cnrutil.getLabelObbligazioneMin()||' versamento IVA non trovata ('||
+     IBMERR001.RAISE_ERR_GENERICO('Linea di attività comune per '||cnrutil.getLabelObbligazioneMin()||' versamento IVA non trovata ('||
 aCDRUO.cd_centro_responsabilita||'/'||codLASpecVersIva||') per l''esercizio '||to_char(aEs));
  End getLASPECVERSIVA;
 
@@ -95,7 +95,7 @@ aCDRUO.cd_centro_responsabilita||'/'||codLASpecVersIva||') per l''esercizio '||t
    codLASpecVersIvaSAC linea_attivita.cd_linea_attivita%Type;
    aLASpecVersIvaSac v_linea_attivita_valida%Rowtype;
  Begin
-   -- Estrazione della linea di attivit?Â  comune da utilizzare per la creazione della variazione
+   -- Estrazione della linea di attività  comune da utilizzare per la creazione della variazione
    codLASpecVersIvaSAC := CNRCTB015.GETVAL01PERCHIAVE(aEs,LINEA_ATTIVITA_SPECIALE,LA_VER_IVA_SAC);
 
    If codLASpecVersIvaSAC Is Null Then
@@ -112,7 +112,7 @@ aCDRUO.cd_centro_responsabilita||'/'||codLASpecVersIva||') per l''esercizio '||t
    Return aLASpecVersIvaSac;
  Exception
    When NO_DATA_FOUND Then
-     IBMERR001.RAISE_ERR_GENERICO('Linea di attivit?Â  per '||cnrutil.getLabelObbligazioneMin()||' versamento IVA non trovata ('||
+     IBMERR001.RAISE_ERR_GENERICO('Linea di attività per '||cnrutil.getLabelObbligazioneMin()||' versamento IVA non trovata ('||
 aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''esercizio '||to_char(aEs));
  End getLASPECVERSIVASAC;
 
@@ -336,14 +336,14 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
    -- Estrazione del CDR della UO di versamento iva
    aCDRUO := CNRCTB020.getCDRResponsabileUO(aCdUo);
 
-   -- Estrazione della linea di attivit?Â  comune da utilizzare per la creazione della variazione
+   -- Estrazione della linea di attività  comune da utilizzare per la creazione della variazione
    aLASpecVersIva := getLASPECVERSIVA(aEs, aCDRUO);
 
    -- Estrazione del CDR SAC di versamento iva
 
    aCDRUOVERSIVA := getCDRUOVERSIVA(aEs);
 
-   -- Estrazione della linea di attivit?Â  SAC da utilizzare per la creazione della variazione
+   -- Estrazione della linea di attività  SAC da utilizzare per la creazione della variazione
    aLASpecVersIvaSac := getLASPECVERSIVASAC(aEs, aCDRUOVERSIVA);
 
    aIvaResiduaDaVersare := abs(aLiquidIva.iva_da_versare);
@@ -629,9 +629,9 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
                --Effettuo il lock della tabella saldi
                recSaldiLinea := getOrCreateSaldi(aEs, recEsVariazione.esercizio_variazione, currentCDR, currentGAE, aEV.TI_APPARTENENZA, aEV.TI_GESTIONE, aEV.CD_ELEMENTO_VOCE);
 
-               --Effettuo il controllo disponibilit?Â  per le GAE diverse dalla C0000020
+               --Effettuo il controllo disponibilità per le GAE diverse dalla C0000020
                If currentGAE != aLASpecVersIva.cd_linea_attivita Then
-                 --Leggo la disponibilit?Â  residua
+                 --Leggo la disponibilità  residua
                  pImpDisp := getDisp(aEs, recEsVariazione.esercizio_variazione, currentCDR, currentGAE, aEV.TI_APPARTENENZA, aEV.TI_GESTIONE, aEV.CD_ELEMENTO_VOCE);
 
                  If aIvaDaVersareGAE > pImpDisp Then
@@ -946,10 +946,10 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
   begin
    INS_LIQUIDAZIONE_IVA_CENTRO(aLIC);
   exception when DUP_VAL_ON_INDEX then
-   -- L'inserimento pu?Â² dare un errore di chiave duplicata se due sessioni tentano di inserire
+   -- L'inserimento può dare un errore di chiave duplicata se due sessioni tentano di inserire
    -- il primo record per lo stesso gruppo di versamento: la prima inserisce, la seconda deve essere bloccata
    -- e restituire l'errore di risorsa occupata
-   IBMERR001.RAISE_ERR_GENERICO('Risorsa occupata riprovare pi?Â¹ tardi');
+   IBMERR001.RAISE_ERR_GENERICO('Risorsa occupata riprovare più tardi');
   end;
   return aLIC;
  end;
@@ -977,9 +977,9 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
   Begin
     -- Cerca di recuperare la pratica al centro di accantonamento dei versamenti locali (riferimento in LIQUID_GRUPPO_CENTRO)
     aLIC := getLiqIvaCentro(aliq);
-    -- Se lo stato di liquidazione del centro ?Â¨ gi?Â  chiuso solleva eccezione
+    -- Se lo stato di liquidazione del centro è già chiuso solleva eccezione
     If aLIC.stato = STATO_LIQUID_CENTRO_CHIUSO then
-      IBMERR001.RAISE_ERR_GENERICO('Liquidazione finanziaria al centro gi?Â  effettuata. '||getDescLiquidazione(aliq));
+      IBMERR001.RAISE_ERR_GENERICO('Liquidazione finanziaria al centro già effettuata. '||getDescLiquidazione(aliq));
     End if;
     If aTesoreriaUnica = 'N' Then
        -- Modifica la pratica di accantonamento al centro dell'importo della liquidazione locale
@@ -989,7 +989,7 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
     aObbPG:=null;
     aObbPGScad:=null;
 
-    -- La pratica al centro non esiste ancora, devo definirla solo se non ?Â¨ attiva la tesoreria unica
+    -- La pratica al centro non esiste ancora, devo definirla solo se non è attiva la tesoreria unica
     If aTesoreriaUnica='N' Then
        -- Estraggo il terzo UO relativo all'UO SAC che accentra i versamenti
        CNRCTB080.GETTERZOPERUO(aUOVERSIVA.cd_unita_organizzativa,aCdTerzoAcc, aCdModPagAcc, aPgBancaAcc, aLiq.esercizio);
@@ -1070,7 +1070,7 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
        aGen.CD_UO_ORIGINE:=aAcc.cd_unita_organizzativa;
        aGen.IM_TOTALE:=aAcc.im_accertamento;
        aGen.DATA_REGISTRAZIONE:=TRUNC(aTSNow);
-       -- La competenza economica ?Â¨ il periodo della liquidazione
+       -- La competenza economica è il periodo della liquidazione
        aGen.DT_DA_COMPETENZA_COGE:=TRUNC(aLiq.dt_inizio);
        aGen.DT_A_COMPETENZA_COGE:=TRUNC(aLiq.dt_fine);
        aGen.DS_DOCUMENTO_GENERICO:=getDescPraticaFinCentro(aLiq);
@@ -1480,7 +1480,7 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
       aCdCoriIva:=CNRCTB015.GETVAL02PERCHIAVE(CNRCTB575.TI_CORI_SPECIALE,CNRCTB575.TI_CORI_IVA);
     End If;
 
-    -- Estraggo il CDR da utilizzare per estrarre la linea di attivit?Â  per obbligazione di versamento  (centro e periferia)
+    -- Estraggo il CDR da utilizzare per estrarre la linea di attività  per obbligazione di versamento  (centro e periferia)
     -- PER TUTTE LE UO TRANNE QUELLE LIQUIDATE VIA INTERFCACCIA
     If not isIvaInterfaccia then
       Begin
@@ -1494,7 +1494,7 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
           IBMERR001.RAISE_ERR_GENERICO('CDR di responsabile dell''UO '||aCdUo||' non trovato');
       End;
 
-      -- Estrazione della linea di attivit?Â  comune da utilizzare per la creazione dell'obbligazione di versamento
+      -- Estrazione della linea di attività  comune da utilizzare per la creazione dell'obbligazione di versamento
       Begin
         Select a.* into aLASpecIva
         From v_linea_attivita_valida a
@@ -1507,7 +1507,7 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
                       And   b.ti_tipo_la = CNRCTB010.TI_TIPO_LA_COMUNE);
       Exception
         When NO_DATA_FOUND Then
-          IBMERR001.RAISE_ERR_GENERICO('Linea di attivit?Â  comune per '||cnrutil.getLabelObbligazioneMin()||' versamento IVA non trovata ('||
+          IBMERR001.RAISE_ERR_GENERICO('Linea di attività comune per '||cnrutil.getLabelObbligazioneMin()||' versamento IVA non trovata ('||
 aCDRUO.cd_centro_responsabilita||'/'||CNRCTB015.GETVAL01PERCHIAVE(LINEA_ATTIVITA_SPECIALE,LA_VER_IVA)||') per l''esercizio '||to_char(aEs));
       End;
     End If;
@@ -2081,7 +2081,7 @@ aCDRUO.cd_centro_responsabilita||'/'||CNRCTB015.GETVAL01PERCHIAVE(LINEA_ATTIVITA
           End;
 
           If aGruppoCoriDet.pg_banca Is null Or aGruppoCoriDet.cd_modalita_pagamento Is Null Or aGruppoCoriDet.cd_terzo_versamento Is Null Then
-            IBMERR001.RAISE_ERR_GENERICO('Terzo o sue modalit?Â  di pagamento non specificate per GRUPPO CORI IVA');
+            IBMERR001.RAISE_ERR_GENERICO('Terzo o sue modalità di pagamento non specificate per GRUPPO CORI IVA');
           End If;
 
           -- Recupera l'anagrafica di tale gruppo
@@ -2159,7 +2159,7 @@ aCDRUO.cd_centro_responsabilita||'/'||CNRCTB015.GETVAL01PERCHIAVE(LINEA_ATTIVITA
             Begin
               -- Estrazione del CDR SAC di versamento iva
               aCDRUOVERSIVA := getCDRUOVERSIVA(aEs);
-              -- Estrazione della linea di attivit?Â  SAC da utilizzare per la creazione della variazione
+              -- Estrazione della linea di attività  SAC da utilizzare per la creazione della variazione
               aLASpecVersIvaSac := getLASPECVERSIVASAC(aEs, aCDRUOVERSIVA);
 
               impLiqResiduo := Abs(aLiquidIva.iva_da_versare);
@@ -2205,7 +2205,7 @@ aCDRUO.cd_centro_responsabilita||'/'||CNRCTB015.GETVAL01PERCHIAVE(LINEA_ATTIVITA
               End Loop;
 
               If impLiqResiduo>0 Then
-                IBMERR001.RAISE_ERR_GENERICO('Disponibilit?Â  del CDR '||aCDRUOVERSIVA.CD_CENTRO_RESPONSABILITA||' sulla GAE '||
+                IBMERR001.RAISE_ERR_GENERICO('Disponibilità  del CDR '||aCDRUOVERSIVA.CD_CENTRO_RESPONSABILITA||' sulla GAE '||
                   aLASpecVersIvaSac.CD_LINEA_ATTIVITA||' insufficiente di '||Ltrim(Rtrim(To_Char(Abs(impLiqResiduo),'999g999g999g999g990d00')))||
                   ' per effettuare il versamento Iva di '||Ltrim(Rtrim(To_Char(Abs(aLiquidIva.iva_da_versare),'999g999g999g999g990d00'))));
               End If;
@@ -2524,7 +2524,7 @@ aCDRUO.cd_centro_responsabilita||'/'||CNRCTB015.GETVAL01PERCHIAVE(LINEA_ATTIVITA
           When No_Data_Found Then
             Null;
           When Too_Many_Rows Then
-         IBMERR001.RAISE_ERR_GENERICO('Registrazione non possibile.\nEsistono pi?Â¹ impegni che gravano ancora sulla G.A.E. dell''IVA.');
+         IBMERR001.RAISE_ERR_GENERICO('Registrazione non possibile.\nEsistono più impegni che gravano ancora sulla G.A.E. dell''IVA.');
         End;
        End If;
    End If;
@@ -2588,7 +2588,7 @@ aCDRUO.cd_centro_responsabilita||'/'||CNRCTB015.GETVAL01PERCHIAVE(LINEA_ATTIVITA
           When No_Data_Found Then
             Null;
           When Too_Many_Rows Then
-         IBMERR001.RAISE_ERR_GENERICO('Registrazione non possibile.\nEsistono pi?Â¹ impegni residui che gravano ancora sulla G.A.E. dell''IVA.');
+         IBMERR001.RAISE_ERR_GENERICO('Registrazione non possibile.\nEsistono più impegni residui che gravano ancora sulla G.A.E. dell''IVA.');
         End;
        End If;
    End If;

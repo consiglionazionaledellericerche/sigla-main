@@ -37,7 +37,7 @@ public boolean checkDefaultIstituzionale(OggettoBulk viva)  throws ApplicationEx
 		
 		java.sql.ResultSet rs = ps.executeQuery();
 		if ( rs.next() )
-			 throw new ApplicationException("Esiste gi‡ una voce iva di default istituzionale ( codice iva = "+ rs.getString("CD_VOCE_IVA")+ ") ");
+			 throw new ApplicationException("Esiste gi√† una voce iva di default istituzionale ( codice iva = "+ rs.getString("CD_VOCE_IVA")+ ") ");
 		return true;
 	} catch ( java.sql.SQLException e )
 	{
@@ -64,7 +64,7 @@ public boolean checkPercentuale(OggettoBulk vova) throws ApplicationException, P
         java.sql.ResultSet rs= ps.executeQuery();
         if (rs.next())
         	if(rs.getBigDecimal("PERCENTUALE").compareTo(((Voce_ivaBulk) vova).getPercentuale())!=0)
-	            throw new ApplicationException("Il gruppo iva selezionato Ë associato ad una voce iva con percentuale differente");
+	            throw new ApplicationException("Il gruppo iva selezionato √® associato ad una voce iva con percentuale differente");
         return true;
     } catch (java.sql.SQLException e) {
         throw new PersistencyException(e);

@@ -38,26 +38,26 @@ public class Constants
 	static {
 		erroriSIP = new it.cnr.jada.util.OrderedHashtable();
 		erroriSIP.put(ERRORE_SIP_100, "Errore generico, causa sconosciuta");
-		erroriSIP.put(ERRORE_SIP_101, "Non Ë stata definita la query per la ricerca");
-		erroriSIP.put(ERRORE_SIP_102, "Non Ë stato definito il dominio per la ricerca");
-		erroriSIP.put(ERRORE_SIP_103, "Non Ë stato definito il tipo di servizio");
-		erroriSIP.put(ERRORE_SIP_104, "Non Ë stato definito il tipo di soggetto terzo: persona fisica o persona giuridica");
+		erroriSIP.put(ERRORE_SIP_101, "Non √® stata definita la query per la ricerca");
+		erroriSIP.put(ERRORE_SIP_102, "Non √® stato definito il dominio per la ricerca");
+		erroriSIP.put(ERRORE_SIP_103, "Non √® stato definito il tipo di servizio");
+		erroriSIP.put(ERRORE_SIP_104, "Non √® stato definito il tipo di soggetto terzo: persona fisica o persona giuridica");
 		erroriSIP.put(ERRORE_SIP_105, "I dati per l'inserimento di un nuovo soggetto terzo non consentono la generazione di un nuovo codice terzo");
-		erroriSIP.put(ERRORE_SIP_106, "Il soggetto terzo che si sta cercando di aggiungere risulta gi‡ presente all'interno del database, poichË Codice Fiscale risulta gi‡ inserito");
+		erroriSIP.put(ERRORE_SIP_106, "Il soggetto terzo che si sta cercando di aggiungere risulta gi√† presente all'interno del database, poich√® Codice Fiscale risulta gi√† inserito");
 		erroriSIP.put(ERRORE_SIP_107, "Dati incompleti per l'inserimento di un nuovo soggetto terzo");
 		erroriSIP.put(ERRORE_SIP_108, "Il soggetto terzo che si sta cercando di eliminare non risulta essere attualmente presente nel database");
-		erroriSIP.put(ERRORE_SIP_109, "Non Ë consentita l'eliminazione del soggetto terzo specificato");
+		erroriSIP.put(ERRORE_SIP_109, "Non √® consentita l'eliminazione del soggetto terzo specificato");
 		erroriSIP.put(ERRORE_SIP_110, "Errore di autenticazione");
 		erroriSIP.put(ERRORE_SIP_111, "Errore interno del sistema, il sistema potrebbe avere un problema tecnico in corso");
 		erroriSIP.put(ERRORE_SIP_112, "Servizio non disponibile (il S.I.C. ha reso momentaneamente inattivo il servizio)");
-		erroriSIP.put(ERRORE_SIP_113, "Non Ë stata definita l'Unita Organizzativa per la ricerca");
-		erroriSIP.put(ERRORE_SIP_114, "Non Ë stato definito l'Esercizio per la ricerca");
-		erroriSIP.put(ERRORE_SIP_115, "Non Ë stato definito il periodo della rendicontazione");
+		erroriSIP.put(ERRORE_SIP_113, "Non √® stata definita l'Unita Organizzativa per la ricerca");
+		erroriSIP.put(ERRORE_SIP_114, "Non √® stato definito l'Esercizio per la ricerca");
+		erroriSIP.put(ERRORE_SIP_115, "Non √® stato definito il periodo della rendicontazione");
 		erroriSIP.put(ERRORE_SIP_116, "Formato date errato per il periodo della rendicontazione");
-		erroriSIP.put(ERRORE_SIP_117, "Non Ë stato definito il CDR per la ricerca");
-		erroriSIP.put(ERRORE_SIP_118, "Non Ë stato definito il tipo: 'E' Entrata o 'S' Spesa");
+		erroriSIP.put(ERRORE_SIP_117, "Non √® stato definito il CDR per la ricerca");
+		erroriSIP.put(ERRORE_SIP_118, "Non √® stato definito il tipo: 'E' Entrata o 'S' Spesa");
 		erroriSIP.put(ERRORE_SIP_119, "Formato Matricola errato");
-		erroriSIP.put(ERRORE_SIP_120, "Non Ë stato definito un parametro obbligatorio");
+		erroriSIP.put(ERRORE_SIP_120, "Non √® stato definito un parametro obbligatorio");
 	}	
 	
 	public static final String  RICHIESTE_IN_CORSO = "C";
@@ -75,10 +75,10 @@ public class Constants
 	static {
 		erroriINC = new it.cnr.jada.util.OrderedHashtable();
 		erroriINC.put(ERRORE_INC_100, "Errore generico, causa sconosciuta");
-		erroriINC.put(ERRORE_INC_101, "Non Ë stata definita la query per la ricerca");
-		erroriINC.put(ERRORE_INC_102, "Non Ë stato definito il dominio per la ricerca");
-		erroriINC.put(ERRORE_INC_103, "Non Ë stato definito il tipo di servizio");
-		erroriINC.put(ERRORE_INC_104, "Il parametro per la ricerca non Ë consentito");
+		erroriINC.put(ERRORE_INC_101, "Non √® stata definita la query per la ricerca");
+		erroriINC.put(ERRORE_INC_102, "Non √® stato definito il dominio per la ricerca");
+		erroriINC.put(ERRORE_INC_103, "Non √® stato definito il tipo di servizio");
+		erroriINC.put(ERRORE_INC_104, "Il parametro per la ricerca non √® consentito");
 		erroriINC.put(ERRORE_INC_105, "Errore di autenticazione");
 		erroriINC.put(ERRORE_INC_106, "Errore interno del sistema, il sistema potrebbe avere un problema tecnico in corso");
 	}	
@@ -94,8 +94,8 @@ public class Constants
 	static {
 		erroriCON = new it.cnr.jada.util.OrderedHashtable();
 		erroriCON.put(ERRORE_CON_200, "Errore generico, causa sconosciuta");
-		erroriCON.put(ERRORE_CON_201, "Non Ë stata definito un parametro obbligatorio");
-		erroriCON.put(ERRORE_CON_202, "Uno o pi˘ paramentri sono malformati");
+		erroriCON.put(ERRORE_CON_201, "Non √® stata definito un parametro obbligatorio");
+		erroriCON.put(ERRORE_CON_202, "Uno o pi√π paramentri sono malformati");
 		erroriCON.put(ERRORE_CON_203, "Errore di autenticazione");
 		erroriCON.put(ERRORE_CON_204, "Errore interno del sistema, il sistema potrebbe avere un problema tecnico");
 		erroriCON.put(ERRORE_CON_205, "Servizio attualmente non disponibile");

@@ -33,7 +33,7 @@ public class ScaricoManualeMagazzinoBP extends SimpleCRUDBP {
 		public void add(ActionContext actioncontext) throws BusinessProcessException {
 			ScaricoMagazzinoBulk scarico = (ScaricoMagazzinoBulk)this.getParentModel();
 			if (scarico.getUnitaOperativaAbilitata()==null||scarico.getUnitaOperativaAbilitata().getCdUnitaOperativa()==null)
-				((SimpleCRUDBP)getParentController()).setMessage("Occorre selezionare l'Unit‡ Operativa prima di associare i beni/servizi.");
+				((SimpleCRUDBP)getParentController()).setMessage("Occorre selezionare l'Unit√† Operativa prima di associare i beni/servizi.");
 			else if (scarico.getMagazzinoAbilitato()==null||scarico.getMagazzinoAbilitato().getCdMagazzino()==null)
 				((SimpleCRUDBP)getParentController()).setMessage("Occorre selezionare il Magazzino prima di associare i beni/servizi.");
 			else if (scarico.getTipoMovimentoMag()==null||scarico.getTipoMovimentoMag().getCdTipoMovimento()==null)
@@ -48,14 +48,14 @@ public class ScaricoManualeMagazzinoBP extends SimpleCRUDBP {
 			if (riga.getBeneServizio()==null || riga.getBeneServizio().getCd_bene_servizio()==null)
 				throw new ValidationException("Valorizzare il Bene/Servizio.");
 			if (riga.getUnitaMisura()==null || riga.getUnitaMisura().getCdUnitaMisura()==null)
-				throw new ValidationException("Valorizzare l'Unit‡ di Misura.");
+				throw new ValidationException("Valorizzare l'Unit√† di Misura.");
 			if (Optional.ofNullable(riga.getCoefConv()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)<=0)
 				throw new ValidationException("Il Coefficiente di Conversione deve avere un valore positivo.");
 			if (Optional.ofNullable(riga.getQtScarico()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)<=0 &&
 				Optional.ofNullable(riga.getTotQtScaricoLotti()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)<=0)
-				throw new ValidationException("Valorizzare la quantit‡ da scaricare.");
+				throw new ValidationException("Valorizzare la quantit√† da scaricare.");
 			if (riga.getUnitaOperativaRicevente()==null || riga.getUnitaOperativaRicevente().getCdUnitaOperativa()==null)
-				throw new ValidationException("Valorizzare l'Unit‡ Operativa Ricevente.");
+				throw new ValidationException("Valorizzare l'Unit√† Operativa Ricevente.");
 			super.validate(actioncontext,oggettobulk);
 		}
 	};

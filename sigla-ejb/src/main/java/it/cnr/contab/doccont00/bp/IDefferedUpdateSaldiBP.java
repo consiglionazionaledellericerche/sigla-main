@@ -7,9 +7,9 @@ package it.cnr.contab.doccont00.bp;
 public interface IDefferedUpdateSaldiBP {
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'defferedUpdateSaldiBulk'
+ * Restituisce il valore della propriet√† 'defferedUpdateSaldiBulk'
  *
- * @return Il valore della propriet‡ 'defferedUpdateSaldiBulk'
+ * @return Il valore della propriet√† 'defferedUpdateSaldiBulk'
  */
 public it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi getDefferedUpdateSaldiBulk();
 /**

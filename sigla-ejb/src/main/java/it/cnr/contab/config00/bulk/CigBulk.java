@@ -15,13 +15,13 @@ public class CigBulk extends CigBase implements ICancellatoLogicamente{
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
-	 * [TERZO Tabella contenente le entit‡ anagrafiche di secondo livello (terzi). Ogni entit‡ anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
+	 * [TERZO Tabella contenente le entit√† anagrafiche di secondo livello (terzi). Ogni entit√† anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
 
 Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
 	private TerzoBulk terzo =  new TerzoBulk();
 	/**
-	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	private Unita_organizzativaBulk unitaOrganizzativa =  new Unita_organizzativaBulk();
 	/**
@@ -40,7 +40,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Tabella contenente le entit‡ anagrafiche di secondo livello (terzi). Ogni entit‡ anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
+	 * Restituisce il valore di: [Tabella contenente le entit√† anagrafiche di secondo livello (terzi). Ogni entit√† anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
 
 Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
@@ -49,7 +49,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Tabella contenente le entit‡ anagrafiche di secondo livello (terzi). Ogni entit‡ anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
+	 * Setta il valore di: [Tabella contenente le entit√† anagrafiche di secondo livello (terzi). Ogni entit√† anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
 
 Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
@@ -58,14 +58,14 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	public Unita_organizzativaBulk getUnitaOrganizzativa() {
 		return unitaOrganizzativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa)  {
 		this.unitaOrganizzativa=unitaOrganizzativa;

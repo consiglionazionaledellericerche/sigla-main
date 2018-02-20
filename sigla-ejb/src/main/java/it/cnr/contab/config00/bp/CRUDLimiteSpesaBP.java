@@ -31,7 +31,7 @@ public class CRUDLimiteSpesaBP extends SimpleCRUDBP {
 				OggettoBulk oggettobulk) throws ValidationException {
 			if (oggettobulk instanceof LimiteSpesaDetBulk)
 				if (((LimiteSpesaDetBulk)oggettobulk).isUtilizzato())
-					throw new ValidationException("I cds che hanno gi‡ assunto impegni non possono essere eliminati.");
+					throw new ValidationException("I cds che hanno gi√† assunto impegni non possono essere eliminati.");
 			((LimiteSpesaDetBulk)oggettobulk).getLimiteSpesa().setImporto_assegnato(
 					((LimiteSpesaDetBulk)oggettobulk).getLimiteSpesa().getImporto_assegnato().subtract(((LimiteSpesaDetBulk)oggettobulk).getImporto_limite()));
 		}

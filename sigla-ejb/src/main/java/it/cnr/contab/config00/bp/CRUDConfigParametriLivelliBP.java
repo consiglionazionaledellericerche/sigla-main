@@ -207,7 +207,7 @@ public class CRUDConfigParametriLivelliBP extends it.cnr.jada.util.action.Simple
 				
 				//Prima Colonna: Intestazione
 				out.print("<td><span class=\"FormLabel\">");
-				out.print(liv + "° Livello");
+				out.print(liv + "Â° Livello");
 				out.print("</span></td>");
 			
 				//Seconda Colonna: Lunghezza
@@ -232,7 +232,7 @@ public class CRUDConfigParametriLivelliBP extends it.cnr.jada.util.action.Simple
 				
 				//Prima Colonna: Intestazione
 				out.print("<td><span class=\"FormLabel\">");
-				out.print(liv + "° Livello");
+				out.print(liv + "Â° Livello");
 				out.print("</span></td>");
 			
 				//Seconda Colonna: Lunghezza

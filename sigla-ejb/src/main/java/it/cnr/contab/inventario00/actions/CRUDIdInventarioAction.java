@@ -63,9 +63,9 @@ public Forward doImpostaUoResponsabile(ActionContext context) {
 
 		fillModel(context);
 
-		// Non Ë stata indicata nessuna UO
+		// Non √® stata indicata nessuna UO
 		if (bp.getUo().getSelection().size() != 1) {
-			this.setErrorMessage(context, "Selezionare una unit‡ organizzativa!");
+			this.setErrorMessage(context, "Selezionare una unit√† organizzativa!");
 		}else{
 			Ass_inventario_uoBulk oldResp = inv.getAssInvUoResp();
 			if (oldResp != null){
@@ -95,7 +95,7 @@ public Forward doImpostaUoResponsabile(ActionContext context) {
   *	Il metodo elimina la UO selezionata dall'utente dalla collezione di UO associate e lo 
   *	aggiunge alla collezione delle UO disponibili.
   *	Se la UO era stata indicata come responsabile dell'Inventario, si provvede a cancellarla
-  *	da tale ruolo: in tal modo, all'atto del salvataggio, il sistema non commetter‡ errori
+  *	da tale ruolo: in tal modo, all'atto del salvataggio, il sistema non commetter√† errori
   *	nel controllare che sia stata specificata una UO responsabile.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta

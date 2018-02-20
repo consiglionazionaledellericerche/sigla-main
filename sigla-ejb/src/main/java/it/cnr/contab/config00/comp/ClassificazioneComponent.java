@@ -62,7 +62,7 @@ public class ClassificazioneComponent extends CRUDComponent implements Cloneable
 
 	/**
 	 * Pre:  Controllo Mastrino=true e esistono record figli
-	 * Post: Segnalazione "La Classificazione in esame non puÚ essere un Mastrino poichË Ë gi‡ Classificazione padre di altre."
+	 * Post: Segnalazione "La Classificazione in esame non pu√≤ essere un Mastrino poich√® √® gi√† Classificazione padre di altre."
 	 */  			
 	public OggettoBulk modificaConBulk(UserContext uc, OggettoBulk bulk) throws ComponentException {
 	 
@@ -76,7 +76,7 @@ public class ClassificazioneComponent extends CRUDComponent implements Cloneable
 			sql.addSQLClause("AND", "CODICE_CLA_E_PADRE", sql.EQUALS, ((Classificazione_entrateBulk)bulk).getCodice_cla_e());
 			try {
 				if (sql.executeCountQuery(getConnection(uc))>0)
-				throw new it.cnr.jada.comp.ApplicationException("La Classificazione di entrata in esame non puÚ essere un Mastrino \npoichË Ë gi‡ Classificazione padre di altre.");							 
+				throw new it.cnr.jada.comp.ApplicationException("La Classificazione di entrata in esame non pu√≤ essere un Mastrino \npoich√® √® gi√† Classificazione padre di altre.");							 
 				} catch (java.sql.SQLException e) {
 				   throw handleSQLException(e);				
 			    } 
@@ -97,7 +97,7 @@ public class ClassificazioneComponent extends CRUDComponent implements Cloneable
 			sql.addSQLClause("AND", "CODICE_CLA_S_PADRE", sql.EQUALS, ((Classificazione_speseBulk)bulk).getCodice_cla_s());
 			try {
 				if (sql.executeCountQuery(getConnection(uc))>0)							
-				throw new it.cnr.jada.comp.ApplicationException("La Classificazione di spesa in esame non puÚ essere un Mastrino \npoichË Ë gi‡ Classificazione padre di altre.");						 
+				throw new it.cnr.jada.comp.ApplicationException("La Classificazione di spesa in esame non pu√≤ essere un Mastrino \npoich√® √® gi√† Classificazione padre di altre.");						 
 				} catch (java.sql.SQLException e) {
 				   throw handleSQLException(e);				
 				} 

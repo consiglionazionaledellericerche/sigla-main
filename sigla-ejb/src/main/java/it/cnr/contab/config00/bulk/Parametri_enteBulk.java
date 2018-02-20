@@ -42,7 +42,7 @@ public class Parametri_enteBulk extends Parametri_enteBase
 	static {
 		abilProgettoStrorgKeys = new it.cnr.jada.util.OrderedHashtable();
 		abilProgettoStrorgKeys.put(V_struttura_organizzativaHome.LIVELLO_CDS,"Centro di Spesa");
-		abilProgettoStrorgKeys.put(V_struttura_organizzativaHome.LIVELLO_UO,"Unit‡ Organizzativa");
+		abilProgettoStrorgKeys.put(V_struttura_organizzativaHome.LIVELLO_UO,"Unit√† Organizzativa");
 	};
 
 	/**

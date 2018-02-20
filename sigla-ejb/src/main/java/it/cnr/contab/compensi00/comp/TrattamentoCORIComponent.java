@@ -41,7 +41,7 @@ private void checkTrattamentiPrecedenti(UserContext userContext, Trattamento_cor
 			throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita deve essere superiore alla data odierna");
 			if (trattCORI.getDt_inizio_validita().compareTo(maxData)<=0){
 			java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita non è valida. Deve essere maggiore di " + sdf.format(maxData));
+			throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita non Ã¨ valida. Deve essere maggiore di " + sdf.format(maxData));
 		}
 
 		Trattamento_coriBulk trattPrec = (Trattamento_coriBulk)home.findByPrimaryKey(new Trattamento_coriBulk(trattCORI.getCd_contributo_ritenuta(),trattCORI.getCd_trattamento(),maxData), true);
@@ -148,7 +148,7 @@ public Trattamento_coriBulk fillAllRows(UserContext userContext, Trattamento_cor
  * Pre: L'OggettoBulk specificato esiste.
  * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
  *			per l'operazione di presentazione e modifica nell'interfaccia visuale.
- *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome è
+ *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ã¨
  *			ottenuto concatenando il nome della component con la stringa ".edit"
  *
  * Metodo privato chiamato: completaTrattamentoCori()

@@ -16,7 +16,7 @@
 	
 	/*
 	** Quando navigo la prima volta nella tab e non ci sono 
-	** record selezionati, il valore restituito Ë -1. 
+	** record selezionati, il valore restituito √® -1. 
 	** In questo caso imposto il valore a 0.
 	*/
 	if (sel == -1)
@@ -71,7 +71,7 @@ function doScaricaFile() {
 			    <td valign=top>
 			    	<span class="FormLabel">
 					ai fini della pubblicazione sul sito internet istituzionale del CNR, <i><u>si raccomanda di usare file in formato PDF</u></i><br> 
-					e di <i><u>controllare sempre</u></i>, dopo il salvataggio, la leggibilit‡ dell'allegato utilizzando il bottone "Apri file"<br>
+					e di <i><u>controllare sempre</u></i>, dopo il salvataggio, la leggibilit√† dell'allegato utilizzando il bottone "Apri file"<br>
 					</span>
 				</td></tr>
 				<% } %>

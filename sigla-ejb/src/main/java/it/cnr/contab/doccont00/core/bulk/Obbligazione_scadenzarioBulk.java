@@ -49,7 +49,7 @@ public Obbligazione_scadenzarioBulk() {
 }
 /**
  * Obbligazione_scadenzarioBulk constructor comment.
- * @param obbligazione L'obbligazione a cui è associato il dettaglio
+ * @param obbligazione L'obbligazione a cui Ã¨ associato il dettaglio
  */
 public Obbligazione_scadenzarioBulk(ObbligazioneBulk obbligazione) 
 {
@@ -313,7 +313,7 @@ public void storna()
 
 }
 /**
- * Metodo con cui si verifica la validità di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validitÃ  di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
@@ -323,26 +323,26 @@ public void validate() throws ValidationException {
 	}
 	// controllo su campo DATA SCADENZA
 	if ( getDt_scadenza() == null || getDt_scadenza().equals("") )
-		throw new ValidationException( "Il campo DATA SCADENZA è obbligatorio." );
+		throw new ValidationException( "Il campo DATA SCADENZA Ã¨ obbligatorio." );
 
 	if ( //  data obbligazione != data scadenza && data_obbligazione >= data_scadenza
 		!(obbligazione.getDt_registrazione().after( getDt_scadenza() ) && obbligazione.getDt_registrazione().before( getDt_scadenza() )) &&
 		  obbligazione.getDt_registrazione().after( getDt_scadenza() ))
-		throw new ValidationException( "Non è possibile inserire una scadenza con data antecedente a quella di registrazione dell'impegno." );
+		throw new ValidationException( "Non Ã¨ possibile inserire una scadenza con data antecedente a quella di registrazione dell'impegno." );
 
 	java.util.GregorianCalendar gc = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
 	gc.setTime(getDt_scadenza());
 	if (gc.get(java.util.GregorianCalendar.YEAR) < obbligazione.getEsercizio_competenza().intValue())
-		throw new ValidationException( "Non è possibile inserire una scadenza con data antecedente a quella dell'esercizio di competenza." );
+		throw new ValidationException( "Non Ã¨ possibile inserire una scadenza con data antecedente a quella dell'esercizio di competenza." );
 
 	// controllo su campo IMPORTO SCADENZA
 	if ( getIm_scadenza() == null  )
-		throw new ValidationException( "Il campo IMPORTO SCADENZA è obbligatorio." );
+		throw new ValidationException( "Il campo IMPORTO SCADENZA Ã¨ obbligatorio." );
 
 		
 	// controllo su campo DESCRIZIONE
 	if ( getDs_scadenza() == null || getDs_scadenza().equals("") )
-		throw new ValidationException( "Il campo DESCRIZIONE è obbligatorio." );
+		throw new ValidationException( "Il campo DESCRIZIONE Ã¨ obbligatorio." );
 
 
 	if ( obbligazione.getFl_calcolo_automatico() != null && !obbligazione.getFl_calcolo_automatico().booleanValue())

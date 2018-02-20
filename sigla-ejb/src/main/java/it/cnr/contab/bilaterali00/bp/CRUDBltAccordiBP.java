@@ -51,7 +51,7 @@ public class CRUDBltAccordiBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 				if (autorizzato.getFlAssimilatoDip()==null || !autorizzato.getFlAssimilatoDip())
 					throw new ValidationException( "Il terzo selezionato risulta essere un dipendente. Indicare il terzo come Dipendente/Assimilato !");
 				if (((Blt_autorizzatiBulk)oggettobulk).getCdCdrTerzo()==null)
-				    throw new ValidationException( "E' obbligatorio indicare il centro di responsabilit‡ di appartenenza!");
+				    throw new ValidationException( "E' obbligatorio indicare il centro di responsabilit√† di appartenenza!");
 			}
 			if (!autorizzato.getFlAssimilatoDip() || autorizzato.getFlAssociato()) {
 				if (autorizzato.getComuneEnteDiAppartenenza()==null||autorizzato.getComuneEnteDiAppartenenza().getPg_comune()==null)

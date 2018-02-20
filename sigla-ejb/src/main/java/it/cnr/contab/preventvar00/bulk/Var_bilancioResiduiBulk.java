@@ -35,9 +35,9 @@ public class Var_bilancioResiduiBulk extends Var_bilancioBulk {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'tipiVariazioneKeys'
+	 * Restituisce il valore della propriet√† 'tipiVariazioneKeys'
 	 *
-	 * @return Il valore della propriet‡ 'tipiVariazioneKeys'
+	 * @return Il valore della propriet√† 'tipiVariazioneKeys'
 	 */
 	public java.util.Dictionary getTipiVariazioneKeys(){
 		return TIPI_VARIAZIONE;

@@ -195,7 +195,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	}
 	/**
 	 * L'utente sta tentando di entrare senza autenticazione LDAP
-	 * nonostante per lui sia obbligatorio, verifichiamo che ciò sia ancora possibile
+	 * nonostante per lui sia obbligatorio, verifichiamo che ciè² sia ancora possibile
 	 * 
 	 * @param context
 	 * @return
@@ -301,7 +301,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			setErrorMessage(context,"Password scaduta da più di tre mesi.");
 			return context.findForward("password_scaduta_ldap");
 		} catch(it.cnr.contab.utente00.nav.comp.UtenteNonValidoException e) {
-			setErrorMessage(context,"Utente non più valido o con data di validità scaduta. Contattare l'amministratore utenti di SIGLA");
+			setErrorMessage(context,"Utente non più valido o con data di validità scaduta. Contattare l'amministratore utenti di SIGLA");
 			return context.findDefaultForward();
 		} catch(it.cnr.contab.utente00.nav.comp.UtenteInDisusoException e) {
 			setErrorMessage(context,"Utente non utilizzato da più di sei mesi.");
@@ -361,9 +361,9 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 		}
 	}
 	/**
-	 * Restituisce il valore della proprietà 'componentSession'
+	 * Restituisce il valore della proprietà  'componentSession'
 	 *
-	 * @return Il valore della proprietà 'componentSession'
+	 * @return Il valore della proprietà  'componentSession'
 	 * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non è possibile effettuare l'operazione
 	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
 	 */
@@ -440,7 +440,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                     .map(Boolean.class::cast)
                     .orElse(Boolean.FALSE)
             );
-			// Testo se l'utente può entrare con l'anno in corso.
+			// Testo se l'utente puè² entrare con l'anno in corso.
 			try {
 				getComponentSession().registerUser(userContext,context.getApplicationId());
 				//	Remmato Marco Spasiano 28/02/2006 per problema di sessioni attive

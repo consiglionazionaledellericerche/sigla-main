@@ -101,7 +101,7 @@ public Ass_inventario_uoBulk findAssInvUoFor(it.cnr.jada.UserContext userContext
 	if (broker.next()){
 		assInvUo = (Ass_inventario_uoBulk)fetch(broker);
 		getHomeCache().fetchAll(userContext);
-		// Se la Uo è responsabile dell'inventario, riempio l'attributo corrispondente
+		// Se la Uo Ã¨ responsabile dell'inventario, riempio l'attributo corrispondente
 		if (resp==true)
 			assInvUo.getInventario().setAssInvUoResp(assInvUo);
 	}
@@ -149,7 +149,7 @@ public Ass_inventario_uoBulk findAssInvUoRespFor(it.cnr.jada.UserContext aUC) th
 
 	// Recupera l'Associazione Inventario/UO per l'U.O. di scrivania
 	//   e per cui risulta responsabile
-	// Ritorna null se la U.O. non è responsabile di nessun inventario
+	// Ritorna null se la U.O. non Ã¨ responsabile di nessun inventario
 
 	return findAssInvUoFor(aUC, true);
 }

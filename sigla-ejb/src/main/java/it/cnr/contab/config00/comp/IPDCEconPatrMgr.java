@@ -14,7 +14,7 @@ public interface IPDCEconPatrMgr extends it.cnr.jada.comp.ICRUDMgr
  * Pre-post-conditions:
  *
  * Nome: Ricerca di Capoconto/Conto
- * Pre:  La richiesta di ricerca di un Capoconto/ContoË stata generata
+ * Pre:  La richiesta di ricerca di un Capoconto/Conto√® stata generata
  * Post: La lista di Conti/Capoconti che soddisfano i criteri di ricerca sono stati recuperati
  *
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -31,16 +31,16 @@ public abstract it.cnr.jada.util.RemoteIterator cerca(it.cnr.jada.UserContext pa
  * Pre-post-conditions:
  *
  * Nome: Ricerca di attributo diverso da 'riapre_a_conto'
- * Pre:  La richiesta di ricerca di un attributo ricerca di un Capoconto/Conto Ë stata generata
+ * Pre:  La richiesta di ricerca di un attributo ricerca di un Capoconto/Conto √® stata generata
  * Post: La lista dei valori possibili per quell'attributo e' stata recuperata
  *
  * Nome: Ricerca di attributo uguale a 'riapre_a_conto' con codice = codice conto
- * Pre:  La richiesta di ricerca dell'attributo 'riapre_a_conto' di un Conto Ë stata generata e il codice selezionato
+ * Pre:  La richiesta di ricerca dell'attributo 'riapre_a_conto' di un Conto √® stata generata e il codice selezionato
  *       dall'utente e' il codice del Conto stesso
  * Post: L'istanza di Conto viene ritornata senza effettuare la ricerca
  *
  * Nome: Ricerca di attributo uguale a 'riapre_a_conto' con codice diverso da codice conto
- * Pre:  La richiesta di ricerca dell'attributo 'riapre_a_conto' di un Conto Ë stata generata e il codice selezionato
+ * Pre:  La richiesta di ricerca dell'attributo 'riapre_a_conto' di un Conto √® stata generata e il codice selezionato
  *       dall'utente e' diverso dal codice del Conto stesso
  * Post: La lista di Conti che soddisfano le condizioni imposte dall'utente viene ritornata 
  
@@ -60,38 +60,38 @@ public abstract it.cnr.jada.util.RemoteIterator cerca(it.cnr.jada.UserContext pa
  * Pre-post-conditions:
  *
  * Nome: Creazione di Capoconto senza codice proprio
- * Pre:  La richiesta di creazione di un Capoconto senza aver specificato un codice proprio Ë stata generata
+ * Pre:  La richiesta di creazione di un Capoconto senza aver specificato un codice proprio √® stata generata
  * Post: Un Capoconto e' stato creato con i dati inseriti dall'utente e il suo codice e' stato generato 
  *       automaticamente.
  *
  * Nome: Creazione di Capoconto con codice proprio
  * Pre:  La richiesta di creazione di un Capoconto con un codice proprio specificato dall'utente
- *       Ë stata generata
+ *       √® stata generata
  * Post: Un Capoconto e' stato creato con i dati inseriti dall'utente e il suo codice e' stato formattato
  *
  * Nome: Errore di chiave duplicata per Capoconto
- * Pre:  Esiste gi‡ un Capoconto persistente che possiede la stessa chiave
+ * Pre:  Esiste gi√† un Capoconto persistente che possiede la stessa chiave
  * 		 primaria di quello specificato.
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Creazione di Conto senza codice proprio
- * Pre:  La richiesta di creazione di un Conto senza aver specificato un codice proprio Ë stata generata
+ * Pre:  La richiesta di creazione di un Conto senza aver specificato un codice proprio √® stata generata
  * Post: Un Conto e' stato creato con i dati inseriti dall'utente e il suo codice e' stato generato 
  *       automaticamente.
  *
  * Nome: Creazione di Conto con codice proprio
  * Pre:  La richiesta di creazione di un Conto con un codice proprio specificato dall'utente
- *       Ë stata generata
+ *       √® stata generata
  * Post: Un Conto e' stato creato con i dati inseriti dall'utente e il suo codice e' stato formattato
  *
  * Nome: Creazione di Conto senza codice 'riapre su conto'
  * Pre:  La richiesta di creazione di un Conto senza aver specificato il codice del conto su cui riapre
- *       Ë stata generata. Il conto riepiloga a stato patrimoniale (SPA) (Richiesta CNR n.35)
+ *       √® stata generata. Il conto riepiloga a stato patrimoniale (SPA) (Richiesta CNR n.35)
  * Post: Un Conto e' stato creato e il codice del conto su cui riapre e' il codice del conto creato
  *
  * Nome: Errore di chiave duplicata per Conto
- * Pre:  Esiste gi‡ un Conto persistente che possiede la stessa chiave primaria di quello specificato.
+ * Pre:  Esiste gi√† un Conto persistente che possiede la stessa chiave primaria di quello specificato.
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
@@ -137,15 +137,15 @@ public abstract void eliminaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.b
  * Pre-post-conditions:
  *
  * Nome: Modifica di Capoconto 
- * Pre:  La richiesta di modifica di un Capoconto Ë stata generata
+ * Pre:  La richiesta di modifica di un Capoconto √® stata generata
  * Post: Il Capoconto e' stato modificato
  *
  * Nome: Modifica di Conto 
- * Pre:  La richiesta di modifica di un Conto Ë stata generata
+ * Pre:  La richiesta di modifica di un Conto √® stata generata
  * Post: Il Conto e' stato modificato
  *
  * Nome: Modifica di Conto senza codice 'riapre su conto' 
- * Pre:  La richiesta di modifica di un Conto senza aver specificato il codice del conto su cui riapre Ë stata generata
+ * Pre:  La richiesta di modifica di un Conto senza aver specificato il codice del conto su cui riapre √® stata generata
  * Post: Il Conto e' stato modificato e il codice del conto su cui riapre e' il codice del conto stesso
  *
  * @param	uc	lo UserContext che ha generato la richiesta

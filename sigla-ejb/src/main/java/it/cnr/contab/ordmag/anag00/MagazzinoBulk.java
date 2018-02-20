@@ -10,11 +10,11 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
 public class MagazzinoBulk extends MagazzinoBase {
 	/**
-	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	private Unita_organizzativaBulk unitaOrganizzativa =  new Unita_organizzativaBulk();
 	/**
-	 * [UNITA_OPERATIVA_ORD Rappresenta le unit‡ operative utilizzate in gestione ordine e magazzino.]
+	 * [UNITA_OPERATIVA_ORD Rappresenta le unit√† operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	private UnitaOperativaOrdBulk unitaOperativaOrd =  new UnitaOperativaOrdBulk();
 	/**
@@ -58,28 +58,28 @@ public class MagazzinoBulk extends MagazzinoBase {
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	public Unita_organizzativaBulk getUnitaOrganizzativa() {
 		return unitaOrganizzativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa)  {
 		this.unitaOrganizzativa=unitaOrganizzativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresenta le unit‡ operative utilizzate in gestione ordine e magazzino.]
+	 * Restituisce il valore di: [Rappresenta le unit√† operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	public UnitaOperativaOrdBulk getUnitaOperativaOrd() {
 		return unitaOperativaOrd;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresenta le unit‡ operative utilizzate in gestione ordine e magazzino.]
+	 * Setta il valore di: [Rappresenta le unit√† operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	public void setUnitaOperativaOrd(UnitaOperativaOrdBulk unitaOperativaOrd)  {
 		this.unitaOperativaOrd=unitaOperativaOrd;

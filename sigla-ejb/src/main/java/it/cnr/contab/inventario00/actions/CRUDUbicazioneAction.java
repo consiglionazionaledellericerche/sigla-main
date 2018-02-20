@@ -59,7 +59,7 @@ public Forward doBringBackSearchFind_nodo_padre(ActionContext context, Ubicazion
 	if(ubicazione_padre != null){
 		// L'utente ha selezionato come Ubicazione padre l'ubicazione che sta modificando
 		if (ubicazione_padre.getCd_ubicazione().equals(ubicazione.getCd_ubicazione())){
-			setErrorMessage(context,"Attenzione: non è possibile selezionare come padre l'ubicazione stessa");
+			setErrorMessage(context,"Attenzione: non Ã¨ possibile selezionare come padre l'ubicazione stessa");
 			return context.findDefaultForward();
 		}
 		ubicazione.setDs_ubicazione_bene(ubicazione_padre.getDs_ubicazione_bene()+" - "+ubicazione.getDs_ubicazione_bene());
@@ -94,7 +94,7 @@ public it.cnr.jada.action.Forward doSearchFind_nodo_padre(ActionContext context)
 			
 		if (cd != null){
 			if (cd.equals(ubicazione.getCd_ubicazione())){
-				return handleException(context, new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile indicare come nodo padre l'ubicazione corrente"));
+				return handleException(context, new it.cnr.jada.comp.ApplicationException("Attenzione: non Ã¨ possibile indicare come nodo padre l'ubicazione corrente"));
 			} else{
 				// L'utente ha indicato un codice da cercare: esegue una ricerca mirata.
 				return search(context, getFormField(context, "main.find_nodo_padre"),null);

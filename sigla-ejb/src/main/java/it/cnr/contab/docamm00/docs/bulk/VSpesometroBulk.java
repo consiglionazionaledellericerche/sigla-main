@@ -39,8 +39,8 @@ public class VSpesometroBulk extends VSpesometroBase {
 		meseKeys.put(new Integer(NOVEMBRE),"Novembre");
 		meseKeys.put(new Integer(DICEMBRE),"Dicembre");
 		
-		tipofiscalitaKeys.put("FS","Fiscalit‡ Speciale");
-		tipofiscalitaKeys.put("FO","Fiscalit‡ Ordinaria");
+		tipofiscalitaKeys.put("FS","Fiscalit√† Speciale");
+		tipofiscalitaKeys.put("FO","Fiscalit√† Ordinaria");
 		
 		tipofatturaKeys.put("ATTIVE","Attiva");
 		tipofatturaKeys.put("PASSIVE","Passiva");

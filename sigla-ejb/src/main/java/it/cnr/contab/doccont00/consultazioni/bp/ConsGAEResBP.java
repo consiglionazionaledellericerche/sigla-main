@@ -253,7 +253,7 @@ public class ConsGAEResBP extends ConsultazioniBP {
 		   if (this instanceof ConsGAEResEtrBP)
 			   title = "Riepilogo GAE Residui Entrate";
 		   	if (isPresenteVOC()) title = title.concat("- Voce");
-			if (isPresenteVARP()) title = title.concat("\\Variazione Più");
+			if (isPresenteVARP()) title = title.concat("\\Variazione PiÃ¹");
 			if (isPresenteVARM()) title = title.concat("\\Variazione Meno");
 			if (isPresenteIMP()) title = title.concat("\\Impegno");
 			if (isPresenteMAN()) title = title.concat("\\Mandato");
@@ -262,11 +262,11 @@ public class ConsGAEResBP extends ConsultazioniBP {
 		   else
 			   title = "Riepilogo GAE Residui Spese";
 		    if (isPresenteVOC()) title = title.concat("- Voce");
-			if (isPresenteVARP()) title = title.concat("\\Variazione Più Residui Propri");
+			if (isPresenteVARP()) title = title.concat("\\Variazione PiÃ¹ Residui Propri");
 			if (isPresenteVARM()) title = title.concat("\\Variazione Meno Residui Propri");
 			if (isPresenteIMP()) title = title.concat("\\Impegno Residui Propri");
 			if (isPresenteMAN()) title = title.concat("\\Mandato Residui Propri");
-			if (isPresenteVARP()) title = title.concat("\\Variazione Più Residui Impropri");
+			if (isPresenteVARP()) title = title.concat("\\Variazione PiÃ¹ Residui Impropri");
 			if (isPresenteVARM()) title = title.concat("\\Variazione Meno Residui Impropri");
 			if (isPresenteIMP()) title = title.concat("\\Impegno Residui Impropri");
 			if (isPresenteMAN()) title = title.concat("\\Mandato Residui Impropri");
@@ -284,19 +284,19 @@ public class ConsGAEResBP extends ConsultazioniBP {
 			   title = "Riepilogo GAE Residui Spese";
 		   
 		    if (isPresenteVOC()) title = title.concat("- Voce");
-			if (isPresenteVARP()&& this instanceof ConsGAEResEtrBP) title = title.concat("\\Variazione Più");
+			if (isPresenteVARP()&& this instanceof ConsGAEResEtrBP) title = title.concat("\\Variazione PiÃ¹");
 			if (isPresenteVARM()&& this instanceof ConsGAEResEtrBP) title = title.concat("\\Variazione Meno");
 			if (isPresenteIMP()&& this instanceof ConsGAEResEtrBP) title = title.concat("\\Impegno");
 			if (isPresenteMAN()&& this instanceof ConsGAEResEtrBP) title = title.concat("\\Mandato");
 			
-			if (isPresenteVARP()&& this instanceof ConsGAEResSpeBP) title = title.concat("\\Variazione Più Residui Propri");
+			if (isPresenteVARP()&& this instanceof ConsGAEResSpeBP) title = title.concat("\\Variazione PiÃ¹ Residui Propri");
 			if (isPresenteVARM()&& this instanceof ConsGAEResSpeBP) title = title.concat("\\Variazione Meno Residui Propri");
 			if (isPresenteIMP()&& this instanceof ConsGAEResSpeBP) title = title.concat("\\Impegno Residui Propri");
 			if (isPresenteMAN()&& this instanceof ConsGAEResSpeBP) title = title.concat("\\Mandato Residui Propri");
 			
 			if (isPresenteACC()) title = title.concat("\\Accertamento");
 		   	if (isPresenteREV()) title = title.concat("\\Reversale");
-		   	if (isPresentePIUSTAN()) title = title.concat("\\Variazione Più Residui Impropri");
+		   	if (isPresentePIUSTAN()) title = title.concat("\\Variazione PiÃ¹ Residui Impropri");
 			if (isPresenteMENOSTAN()) title = title.concat("\\Variazione Meno Residui Impropri");
 			if (isPresenteOBB()) title = title.concat("\\Impegno Residui Impropri");
 			if (isPresenteMOB()) title = title.concat("\\Mandato Residui Impropri");

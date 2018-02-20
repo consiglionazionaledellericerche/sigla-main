@@ -22,12 +22,12 @@ public class Pdg_preventivoBulk extends Pdg_preventivoBase {
 
 	public final static String ST_A_CREAZIONE = "A";  //Aperto in creazione
 	public final static String ST_B_MODIFICA = "B";  //Aperto per modifica
-	public final static String ST_C_CHIUSURA_II = "C";  //Chiuso dal CdR 2∞ Livello
+	public final static String ST_C_CHIUSURA_II = "C";  //Chiuso dal CdR 2¬∞ Livello
 	public final static String ST_C0_MODIFICA_AC = "C0"; //Adeguamenti d'ufficio AC
 	public final static String ST_C1_MODIFC_CDRI = "C1"; //Adeguamenti d'ufficio CDR I
 	public final static String ST_C2_MODIFIC_RUO = "C2"; //Adeguamenti d'ufficio RUO
 	public final static String ST_CX_MODIFICA = "CX"; //Adeguamenti d'ufficio
-	public final static String ST_D_CHIUSURA_I = "D";  //Chiuso dal CdR 1∞ Livello
+	public final static String ST_D_CHIUSURA_I = "D";  //Chiuso dal CdR 1¬∞ Livello
 	public final static String ST_E_CHIUSO = "E";  //Chiuso definitivamente
 	public final static String ST_F_CHIUSO_DFNT = "F";  //Chiuso da ribaltare su area
 	public final static String ST_G_APERTURA_PER_VARIAZIONI = "G";  // Riapertura per variazioni
@@ -79,27 +79,27 @@ public Pdg_preventivoBulk(java.lang.Integer esercizio,java.lang.String cd_centro
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'centro_responsabilita'
+ * Restituisce il valore della propriet√† 'centro_responsabilita'
  *
- * @return Il valore della propriet‡ 'centro_responsabilita'
+ * @return Il valore della propriet√† 'centro_responsabilita'
  */
 public it.cnr.contab.config00.sto.bulk.CdrBulk getCentro_responsabilita() {
 		return centro_responsabilita;
 	}
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'elencoCdR'
+ * Restituisce il valore della propriet√† 'elencoCdR'
  *
- * @return Il valore della propriet‡ 'elencoCdR'
+ * @return Il valore della propriet√† 'elencoCdR'
  */
 public java.util.Collection getElencoCdR() {
 		return elencoCdR;
 	}
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'linea_attivita_eliminazione'
+ * Restituisce il valore della propriet√† 'linea_attivita_eliminazione'
  *
- * @return Il valore della propriet‡ 'linea_attivita_eliminazione'
+ * @return Il valore della propriet√† 'linea_attivita_eliminazione'
  */
 public it.cnr.contab.config00.latt.bulk.WorkpackageBulk getLinea_attivita_eliminazione() {
 	return linea_attivita_eliminazione;
@@ -129,7 +129,7 @@ public boolean isStatoVariazionePdG() {
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'centro_responsabilita'
+ * Imposta il valore della propriet√† 'centro_responsabilita'
  *
  * @param newCentro_responsabilita	Il valore da assegnare a 'centro_responsabilita'
  */
@@ -138,7 +138,7 @@ public void setCentro_responsabilita(it.cnr.contab.config00.sto.bulk.CdrBulk new
 	}
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'elencoCdR'
+ * Imposta il valore della propriet√† 'elencoCdR'
  *
  * @param newElencoCdR	Il valore da assegnare a 'elencoCdR'
  */
@@ -147,7 +147,7 @@ public void setElencoCdR(java.util.Collection newElencoCdR) {
 	}
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'linea_attivita_eliminazione'
+ * Imposta il valore della propriet√† 'linea_attivita_eliminazione'
  *
  * @param newLinea_attivita_eliminazione	Il valore da assegnare a 'linea_attivita_eliminazione'
  */

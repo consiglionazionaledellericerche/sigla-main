@@ -31,7 +31,7 @@ public class Incarichi_archivioCRUDController extends it.cnr.jada.util.action.Si
 
 		if (!(file == null || file.getName().equals(""))) { 
 			if (file.length() > LUNGHEZZA_MAX)
-				throw new ValidationException("Attenzione: la dimensione del file è superiore alla massima consentita (10 Mb).");
+				throw new ValidationException("Attenzione: la dimensione del file Ã¨ superiore alla massima consentita (10 Mb).");
 
 			allegato.setFile(file.getFile());
 			allegato.setNome_file(allegato.parseFilename(file.getName()));

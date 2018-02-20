@@ -17,7 +17,7 @@ public class DivisaBulk extends DivisaBase {
 	/*
 	 * Inizializza il ricevente per la visualizzazione in un <code>FormController</code>.
 	 * Questo metodo viene invocato da {@link #initializeForEdit}, {@link #initializeForInsert},
-	 * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e può contenere
+	 * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e puÃ² contenere
 	 * inizializzazioni comuni ai 4 stati del <code>FormController</code>
 	 */
 	protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {

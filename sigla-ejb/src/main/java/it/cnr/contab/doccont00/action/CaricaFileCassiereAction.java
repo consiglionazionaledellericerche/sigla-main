@@ -71,7 +71,7 @@ public Forward doCaricaFile(ActionContext context) {
   * Permette di filtrare i Files da visualizzare.
   *
   Richiama il metodo processaFile(UserContext, V_ext_cassiere00Bulk) della Componente,
-	che invocher‡ la stored procedure <code>CNRCTB750.processaInterfaccia()</code>.
+	che invocher√† la stored procedure <code>CNRCTB750.processaInterfaccia()</code>.
   
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
   *
@@ -95,7 +95,7 @@ public Forward doFiltraFiles(ActionContext context) {
 /**
   * Permette di elaborare il File selezionato dall'utente.
   *	Richiama il metodo processaFile(UserContext, V_ext_cassiere00Bulk) della Componente,
-  *	che invocher‡ la stored procedure <code>CNRCTB750.processaInterfaccia()</code>.
+  *	che invocher√† la stored procedure <code>CNRCTB750.processaInterfaccia()</code>.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
   *
@@ -121,7 +121,7 @@ public Forward doProcessaFile(ActionContext context) {
   * Permette di filtrare i Files da visualizzare.
   *
   Richiama il metodo processaFile(UserContext, V_ext_cassiere00Bulk) della Componente,
-	che invocher‡ la stored procedure <code>CNRCTB750.processaInterfaccia()</code>.
+	che invocher√† la stored procedure <code>CNRCTB750.processaInterfaccia()</code>.
   
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
   *
@@ -241,7 +241,7 @@ protected Forward handleApplicationPersistencyException(ActionContext context, i
 **/ 
 protected Forward handleDuplicateKeyException(ActionContext context, it.cnr.jada.persistency.sql.DuplicateKeyException e) {
 
-	it.cnr.jada.comp.ApplicationException mess = new it.cnr.jada.comp.ApplicationException("Si sta tentando di creare un oggetto gi‡ esistente in archivio.");
+	it.cnr.jada.comp.ApplicationException mess = new it.cnr.jada.comp.ApplicationException("Si sta tentando di creare un oggetto gi√† esistente in archivio.");
 
 	return handleException(context, mess);
 }

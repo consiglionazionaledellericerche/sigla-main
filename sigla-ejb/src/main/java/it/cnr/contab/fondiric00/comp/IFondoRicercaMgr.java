@@ -16,19 +16,19 @@ public interface IFondoRicercaMgr extends ICRUDMgr {
  * Post: Segnalazione "Data di fine deve essere maggiore della data di inizio!"
  *
  * Pre:  Controllo se Dt_fine = null e Dt_proroga != null
- * Post: Segnalazione "Non può esistere una data di proroga se non si indica una data di fine!"
+ * Post: Segnalazione "Non puÃ² esistere una data di proroga se non si indica una data di fine!"
  *
  * Pre:  Controllo Dt_fine > Dt_proroga
  * Post: Segnalazione "Data di proroga deve essere maggiore della data di fine!"
  *
- * Pre:  Controllo se la lista dei dettagli è vuota
+ * Pre:  Controllo se la lista dei dettagli Ã¨ vuota
  * Post: Se vuota viene creato un unico dettaglio che ha:
  *			UO = l'UO coordinatrice del fondo
  *			Responsabile = Responsabile del fondo
  *			Importo = Importo del fondo
  *			
  * Pre:  Controllo somma importo dettagli != da importo del fondo
- * Post: Segnalazione "La somma degli importi degli assegnatari è diversa dall'importo del fondo"
+ * Post: Segnalazione "La somma degli importi degli assegnatari Ã¨ diversa dall'importo del fondo"
  *
  */
 
@@ -44,19 +44,19 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
  * Post: Segnalazione "Data di fine deve essere maggiore della data di inizio!"
  *
  * Pre:  Controllo se Dt_fine = null e Dt_proroga != null
- * Post: Segnalazione "Non può esistere una data di proroga se non si indica una data di fine!"
+ * Post: Segnalazione "Non puÃ² esistere una data di proroga se non si indica una data di fine!"
  *
  * Pre:  Controllo Dt_fine > Dt_proroga
  * Post: Segnalazione "Data di proroga deve essere maggiore della data di fine!"
  *
- * Pre:  Controllo se la lista dei dettagli è vuota
+ * Pre:  Controllo se la lista dei dettagli Ã¨ vuota
  * Post: Se vuota viene creato un unico dettaglio che ha:
  *			UO = l'UO coordinatrice del fondo
  *			Responsabile = Responsabile del fondo
  *			Importo = Importo del fondo
  *			
  * Pre:  Controllo somma importo dettagli != da importo del fondo
- * Post: Segnalazione "La somma degli importi degli assegnatari è diversa dall'importo del fondo"
+ * Post: Segnalazione "La somma degli importi degli assegnatari Ã¨ diversa dall'importo del fondo"
  *
  */
 

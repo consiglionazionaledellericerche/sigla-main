@@ -69,7 +69,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
          if(lim.getDettagli()!=null && lim.getDettagli().size()!=0)
 	        	 throw new ApplicationException("Eliminare prima i dettagli.");
          if (lim.getImporto_assegnato().compareTo(BigDecimal.ZERO)!=0)
-        	 throw new ApplicationException("Non Ë possibile eliminare questo limite, Ë gi‡ stato assegnato ai Cds.");
+        	 throw new ApplicationException("Non √® possibile eliminare questo limite, √® gi√† stato assegnato ai Cds.");
 	 
 		super.eliminaConBulk(usercontext, bulk);
 	 }
@@ -108,7 +108,7 @@ private void validaFonte(UserContext userContext,OggettoBulk bulk) throws Compon
 			sql.addSQLClause("AND", "CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, limite.getCd_elemento_voce());
 			sql.addSQLClause("AND", "FONTE", SQLBuilder.EQUALS, limite.getFonte());
 			if (sql.executeCountQuery(getConnection(userContext))>0)
-				throw new ApplicationException("Esiste gi‡ un limite definito per questa voce."); 
+				throw new ApplicationException("Esiste gi√† un limite definito per questa voce."); 
 		}
 		if(limite.getFonte().compareTo(LimiteSpesaBulk.FONTE_INTERNA_E_ESTERNA)==0){
 				SQLBuilder sql = getHome(userContext, LimiteSpesaBulk.class).createSQLBuilder();
@@ -118,7 +118,7 @@ private void validaFonte(UserContext userContext,OggettoBulk bulk) throws Compon
 				sql.addSQLClause("AND", "CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, limite.getCd_elemento_voce());
 				sql.addSQLClause("AND", "FONTE", SQLBuilder.NOT_EQUALS, limite.getFonte());
 				if (sql.executeCountQuery(getConnection(userContext))>0)
-					throw new ApplicationException("Esiste gi‡ un limite definito per questa voce."); 
+					throw new ApplicationException("Esiste gi√† un limite definito per questa voce."); 
 		}else if(limite.getFonte().compareTo(LimiteSpesaBulk.FONTE_INTERNA)==0||limite.getFonte().compareTo(LimiteSpesaBulk.FONTE_ESTERNA)==0){
 				SQLBuilder sql = getHome(userContext, LimiteSpesaBulk.class).createSQLBuilder();
 				sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS,limite.getEsercizio());
@@ -127,7 +127,7 @@ private void validaFonte(UserContext userContext,OggettoBulk bulk) throws Compon
 				sql.addSQLClause("AND", "CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, limite.getCd_elemento_voce());
 				sql.addSQLClause("AND", "FONTE", SQLBuilder.EQUALS, LimiteSpesaBulk.FONTE_INTERNA_E_ESTERNA);
 				if (sql.executeCountQuery(getConnection(userContext))>0)
-					throw new ApplicationException("Esiste gi‡ un limite definito per questa voce."); 
+					throw new ApplicationException("Esiste gi√† un limite definito per questa voce."); 
 		 }
 		
 	}catch (Throwable e) {
@@ -147,7 +147,7 @@ public void validaCds(UserContext userContext,OggettoBulk bulk) throws Component
 			sql.addSQLClause("AND", "FONTE", SQLBuilder.EQUALS, limite.getFonte());
 			sql.addSQLClause("AND", "CD_CDS", SQLBuilder.EQUALS, limite.getCd_cds());
 			if (sql.executeCountQuery(getConnection(userContext))>0)
-				throw new ApplicationException("Esiste gi‡ un limite definito per questa voce e per il Cds: "+limite.getCd_cds());
+				throw new ApplicationException("Esiste gi√† un limite definito per questa voce e per il Cds: "+limite.getCd_cds());
 		} 
 	}catch (Throwable e) {
 		throw handleException(bulk,e);
