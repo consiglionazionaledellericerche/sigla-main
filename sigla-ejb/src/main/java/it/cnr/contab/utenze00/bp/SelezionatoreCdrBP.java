@@ -24,9 +24,9 @@ public SelezionatoreCdrBP() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'userInfo'
+ * Restituisce il valore della propriet√† 'userInfo'
  *
- * @return Il valore della propriet‡ 'userInfo'
+ * @return Il valore della propriet√† 'userInfo'
  */
 public it.cnr.contab.utenze00.bulk.CNRUserInfo getUserInfo() {
 	return userInfo;
@@ -39,7 +39,7 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'userInfo'
+ * Imposta il valore della propriet√† 'userInfo'
  *
  * @param newUserInfo	Il valore da assegnare a 'userInfo'
  */

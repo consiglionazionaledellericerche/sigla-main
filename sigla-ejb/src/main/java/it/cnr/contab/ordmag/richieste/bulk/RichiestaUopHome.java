@@ -64,7 +64,7 @@ public class RichiestaUopHome extends BulkHome {
 			NumerazioneOrdHome numerazioneHome, NumerazioneOrdBulk numerazioneBulk, 
 			CompoundFindClause compoundfindclause) throws PersistencyException{
 		if (richiestaBulk == null || richiestaBulk.getCdUnitaOperativa() == null){
-			throw new PersistencyException("Selezionare prima l'unit‡ operativa");
+			throw new PersistencyException("Selezionare prima l'unit√† operativa");
 		}
 		SQLBuilder sql = numerazioneHome.selectByClause(userContext, compoundfindclause);
 		sql.addSQLClause("AND", "NUMERAZIONE_ORD.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
@@ -83,7 +83,7 @@ public class RichiestaUopHome extends BulkHome {
 		sql.addSQLJoin("UNITA_OPERATIVA_ORD.CD_UNITA_OPERATIVA", "ASS_UNITA_OPERATIVA_ORD.CD_UNITA_OPERATIVA_RIF");
 		if (richiestaBulk == null || ((richiestaBulk.getNumerazioneOrd() == null|| richiestaBulk.getNumerazioneOrd().getCdUnitaOperativa() == null) && 
 				(richiestaBulk.getUnitaOperativaOrd() == null|| richiestaBulk.getUnitaOperativaOrd().getCdUnitaOperativa() == null))){
-			throw new ApplicationException("Selezionare prima l'unit‡ operativa");
+			throw new ApplicationException("Selezionare prima l'unit√† operativa");
 		}
 		sql.addSQLClause("AND", "ASS_UNITA_OPERATIVA_ORD.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, richiestaBulk.getCdUnitaOperativa());
 

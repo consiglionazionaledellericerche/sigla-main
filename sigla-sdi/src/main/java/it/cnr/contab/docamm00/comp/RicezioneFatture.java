@@ -854,7 +854,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				DocumentoEleLineaBulk documentoEleLinea = docTestata.getDocEleLineaColl().get(i); 
 				if (numeroLinee.contains(documentoEleLinea.getNumeroLinea())) {
 					documentoEleLinea.setNumeroLinea(i + 1);
-					documentoEleLinea.setAnomalie("Documento da rifiutare, il numero delle linee non � progressivo.");					
+					documentoEleLinea.setAnomalie("Documento da rifiutare, il numero delle linee non è progressivo.");
 				}
 				numeroLinee.add(documentoEleLinea.getNumeroLinea());									
 			}
@@ -965,7 +965,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			riceviFatture(parametersIn, replyTo);
 		} catch(SOAPFaultException _ex) {
 			if (_ex.getFault().getAttribute("cause").equalsIgnoreCase(StorageException.class.getName()))
-				throw new ApplicationException("Fattura gi� presente!");
+				throw new ApplicationException("Fattura già presente!");
 			throw new ApplicationException("Error while riceviFatturaSIGLA", _ex);
 		}
 	}
@@ -983,7 +983,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				Boolean docsDaAggiornare = false;
 				for (DocumentoEleTestataBulk doc : docs) {
 					if (!StringUtils.isEmpty(doc.getFlDecorrenzaTermini()) && doc.getFlDecorrenzaTermini().equals("S")){
-						LOGGER.info("Fatture Elettroniche: Passive: Decorrenza termini. Fattura gi� elaborata ");
+						LOGGER.info("Fatture Elettroniche: Passive: Decorrenza termini. Fattura già elaborata ");
 					} else {
 						docsDaAggiornare = true;
 						List<DocumentoEleTrasmissioneBulk> trasms = component.recuperoTrasmissione(userContext, identificativoSdi);
@@ -1037,7 +1037,7 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 			ScartoEsitoCommittenteType scartoEsito = fileScartoEsito.getValue();
 			Long identificativoSdi = scartoEsito.getIdentificativoSdI().longValue();
 			LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito Id SDI: "+identificativoSdi);
-			if (scartoEsito.getNote() != null && scartoEsito.getNote().startsWith("EN02: Notifica di esito gi� pervenuta al Sistema di Interscambio")){
+			if (scartoEsito.getNote() != null && scartoEsito.getNote().startsWith("EN02: Notifica di esito già pervenuta al Sistema di Interscambio")){
 				LOGGER.info("Id SDI: "+identificativoSdi + ".  "+scartoEsito.getNote());
 			} else {
 				List<DocumentoEleTestataBulk> docs = component.recuperoDocumento(userContext, identificativoSdi);
@@ -1045,10 +1045,10 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 					Boolean docsDaAggiornare = false;
 					for (DocumentoEleTestataBulk doc : docs) {
 						if (!StringUtils.isEmpty(doc.getStatoNotificaEsito()) && doc.getStatoNotificaEsito().equals(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI)){
-							LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Fattura gi� elaborata ");
+							LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Fattura già elaborata ");
 						} else {
 							if (doc.getDataRicevimentoMailRifiuto() != null && doc.getDataRicevimentoMailRifiuto().compareTo(dataRicevimentoMail) > 0){
-								LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Messaggio gi� processato");
+								LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Messaggio già processato");
 							} else {
 								docsDaAggiornare = true;
 								List<DocumentoEleTrasmissioneBulk> trasms = component.recuperoTrasmissione(userContext, identificativoSdi);
@@ -1094,10 +1094,10 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				Boolean docsDaAggiornare = false;
 				for (DocumentoEleTestataBulk doc : docs) {
 					if (!StringUtils.isEmpty(doc.getStatoNotificaEsito()) && doc.getStatoNotificaEsito().equals(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_SCARTATO_SDI)){
-						LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Fattura gi� elaborata ");
+						LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Fattura già elaborata ");
 					} else {
 						if (doc.getDataRicevimentoMailRifiuto() != null && doc.getDataRicevimentoMailRifiuto().compareTo(dataRicevimentoMail) > 0){
-							LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Messaggio gi� processato");
+							LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito. Messaggio già processato");
 						} else {
 							docsDaAggiornare = true;
 						}
@@ -1147,10 +1147,10 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
 				Boolean docsDaAggiornare = false;
 				for (DocumentoEleTestataBulk doc : docs) {
 					if (!StringUtils.isEmpty(doc.getStatoNotificaEsito()) && doc.getStatoNotificaEsito().equals(DocumentoEleTestataBulk.STATO_CONSEGNA_ESITO_CONSEGNATO_SDI)){
-						LOGGER.info("Fatture Elettroniche: Passive: Pec: Consegna Esito. Fattura gi� elaborata ");
+						LOGGER.info("Fatture Elettroniche: Passive: Pec: Consegna Esito. Fattura già elaborata ");
 					} else {
 						if (doc.getDataRicevimentoMailRifiuto() != null && doc.getDataRicevimentoMailRifiuto().compareTo(dataRicevimentoMail) > 0){
-							LOGGER.info("Fatture Elettroniche: Passive: Pec: Consegna Esito. Messaggio gi� processato");
+							LOGGER.info("Fatture Elettroniche: Passive: Pec: Consegna Esito. Messaggio già processato");
 						} else {
 							docsDaAggiornare = true;
 						}

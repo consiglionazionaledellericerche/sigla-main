@@ -56,7 +56,7 @@ public void aggiornaCogeCoanInDifferita(
 }
 /**
  * Aggiornamento in differita dei saldi dell'accertamento .
- * Un documento amministrativo di entrata che agisce in modalit‡ transazionale ha creato/modificato gli importi 
+ * Un documento amministrativo di entrata che agisce in modalit√† transazionale ha creato/modificato gli importi 
  * relativi ad un accertamento; i saldi di tale accertamento non possono essere aggiornati subito in quanto
  * tale operazione genererebbe dei lock sulle voci del piano che non ne consentirebbere l'utilizzo ad altri utenti;
  * pertanto l'aggiornamento dei saldi dell'accertamento viene differito al momento del salvataggio
@@ -124,7 +124,7 @@ public void aggiornaSaldiInDifferita( UserContext userContext, IDocumentoContabi
   *    PreCondition:
   *      E' stata inoltrata una richiesta di riportare all'esercizio successivo un documento contabile
   *	 PostCondition:
-  *		Il sistema segnala con un errore che questa funzione non Ë richiamabile in modalit‡ transazionele
+  *		Il sistema segnala con un errore che questa funzione non √® richiamabile in modalit√† transazionele
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param doc <code>IDocumentoContabileBulk</code> doc.contabile da riportare
@@ -133,14 +133,14 @@ public void aggiornaSaldiInDifferita( UserContext userContext, IDocumentoContabi
 
 public void callRiportaAvanti (UserContext userContext,IDocumentoContabileBulk doc) throws it.cnr.jada.comp.ComponentException
 {
-	throw new ApplicationException( "Le funzioni di Riporta Avanti e Indietro non sono supporatate in modalit‡ transazionale");
+	throw new ApplicationException( "Le funzioni di Riporta Avanti e Indietro non sono supporatate in modalit√† transazionale");
 }
 /** 
   *  riporta indietro dall'esercizio successivo di un doc.contabile
   *    PreCondition:
   *      E' stata inoltrata una richiesta di riportare indietro dall'esercizio successivo un documento contabile
   *	 PostCondition:
-  *		Il sistema segnala con un errore che questa funzione non Ë richiamabile in modalit‡ transazionele
+  *		Il sistema segnala con un errore che questa funzione non √® richiamabile in modalit√† transazionele
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param doc <code>IDocumentoContabileBulk</code> doc.contabile da riportare
@@ -149,7 +149,7 @@ public void callRiportaAvanti (UserContext userContext,IDocumentoContabileBulk d
 
 public void callRiportaIndietro (UserContext userContext,IDocumentoContabileBulk doc) throws ComponentException
 {
-	throw new ApplicationException( "Le funzioni di Riporta Avanti e Indietro non sono supporatate in modalit‡ transazionale");
+	throw new ApplicationException( "Le funzioni di Riporta Avanti e Indietro non sono supporatate in modalit√† transazionale");
 }
 private AccertamentoBulk caricaAccertamento(UserContext uc, AccertamentoBulk accertamento)
 	throws it.cnr.jada.persistency.PersistencyException, ComponentException {
@@ -163,14 +163,14 @@ private AccertamentoBulk caricaAccertamento(UserContext uc, AccertamentoBulk acc
   *			Viene richiesta la creazione di un'accertamento generico provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'creaConBulk' su AccertamentoComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *  Creazione di accertamenti per impegno di giro provenendo da documenti amministrativi
   *		PreCondition:
   *			Viene richiesta la creazione di un'accertamento per impegno di giro provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'creaConBulk' su AccertamentoPGiroComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
  */
 //^^@@
@@ -236,14 +236,14 @@ private it.cnr.contab.doccont00.ejb.AccertamentoPGiroComponentSession createAcce
   *			Viene richiesta l'eliminazione di un'accertamento generico provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'eliminaConBulk' su AccertamentoComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *  Eliminazione di accertamenti per impegno di giro provenendo da documenti amministrativi
   *		PreCondition:
   *			Viene richiesta l'eliminazione di un'accertamento per impegno di giro provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'eliminaConBulk' su AccertamentoPGiroComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
  */
 //^^@@
@@ -414,14 +414,14 @@ public void lockScadenza( UserContext userContext,IScadenzaDocumentoContabileBul
   *			Viene richiesta la modifica di un'accertamento generico provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'modificaConBulk' su AccertamentoComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *  Modifica di accertamenti per impegno di giro provenendo da documenti amministrativi
   *		PreCondition:
   *			Viene richiesta la modifica di un'accertamento per impegno di giro provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'modificaConBulk' su AccertamentoPGiroComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
  */
 //^^@@
@@ -459,14 +459,14 @@ public OggettoBulk modificaConBulk (UserContext uc,OggettoBulk bulk) throws Comp
   *			Viene richiesta la modifica in automatico di scadenze di un'accertamento generico provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'modificaScadenzaInAutomatico' su AccertamentoComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *  Modifica in automatico di scadenze di accertamenti per impegno di giro provenendo da documenti amministrativi
   *		PreCondition:
   *			Viene richiesta la modifica in automatico di scadenze di un'accertamento per impegno di giro provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'modificaScadenzaInAutomatico' su AccertamentoPGiroComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
  */
 //^^@@

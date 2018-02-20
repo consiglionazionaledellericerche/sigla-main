@@ -18,7 +18,7 @@ public CRUDTipoRuoloBP( String function ) throws BusinessProcessException {
 }
 
 /**
- * Restituisce il Controller che gestisce il dettaglio dei Privilegi gi‡ assegnati ad un Tipo Ruolo
+ * Restituisce il Controller che gestisce il dettaglio dei Privilegi gi√† assegnati ad un Tipo Ruolo
  * @return it.cnr.jada.util.action.SimpleDetailCRUDController controller
  */
 public final it.cnr.jada.util.action.SimpleDetailCRUDController getCrudPrivilegi() {

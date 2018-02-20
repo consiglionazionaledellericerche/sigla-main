@@ -57,11 +57,11 @@ public class Esenzioni_addcomBulk extends Esenzioni_addcomBase {
 	public void validate() throws ValidationException {
 
 		if ( getPg_comune() == null )
-			throw new ValidationException("Il campo Comune non può essere vuoto");
+			throw new ValidationException("Il campo Comune non puÃ² essere vuoto");
 		if ( getDt_inizio_validita() == null )
-			throw new ValidationException( "Il campo Data Inizio Validita non può essere vuoto" );
+			throw new ValidationException( "Il campo Data Inizio Validita non puÃ² essere vuoto" );
 		if ( getImporto() == null )
-			throw new ValidationException("Il campo Importo Esenzione non può essere vuoto");
+			throw new ValidationException("Il campo Importo Esenzione non puÃ² essere vuoto");
 		
 	}
 }

@@ -46,7 +46,7 @@ public it.cnr.contab.inventario00.docs.bulk.OptionRequestParameter getUserConfir
 }
 /**
  * Nasconde il pulsante di "Elimina".
- *	Il pulsante Ë nascosto poichË non Ë possibile cancellare una riga dalla tabella INVENTARIO_AP_CH,
+ *	Il pulsante √® nascosto poich√® non √® possibile cancellare una riga dalla tabella INVENTARIO_AP_CH,
  *	
  * @return <code>boolean</code> TRUE
  *
@@ -56,10 +56,10 @@ public boolean isDeleteButtonHidden() {
 	return true;
 }
 /**
- * Restituisce il valore della propriet‡ 'inventarioConsegnatarioRO'.
- *	Tale propriet‡ Ë utilizzata nel form di gestione dell'apertura e chiusura dell'Inventario,
- *	per stabilire se il campo relativo alla <code>Data Inizio Validit‡</code> per il Consegnatario 
- *	Ë READONLY.
+ * Restituisce il valore della propriet√† 'inventarioConsegnatarioRO'.
+ *	Tale propriet√† √® utilizzata nel form di gestione dell'apertura e chiusura dell'Inventario,
+ *	per stabilire se il campo relativo alla <code>Data Inizio Validit√†</code> per il Consegnatario 
+ *	√® READONLY.
  *
  * @return <code>boolean</code>
  */
@@ -67,9 +67,9 @@ public boolean isInventarioConsegnatarioRO() {
 	return ((Inventario_ap_chBulk)getModel()).isInventarioConsegnatarioRO();
 }
 /**
- * Restituisce il valore della propriet‡ 'inventarioRO'.
- *	Tale propriet‡ Ë utilizzata nel form di gestione dell'apertura e chiusura dell'Inventario,
- *	per stabilire se il campo relativo al <code>Numero Bene Iniziale</code> Ë READONLY.
+ * Restituisce il valore della propriet√† 'inventarioRO'.
+ *	Tale propriet√† √® utilizzata nel form di gestione dell'apertura e chiusura dell'Inventario,
+ *	per stabilire se il campo relativo al <code>Numero Bene Iniziale</code> √® READONLY.
  *
  * @return <code>boolean</code>
  */
@@ -90,7 +90,7 @@ public boolean isNewButtonHidden() {
 	return false;
 }
 /**
- * Disabilita il pulsante "Salva" se si Ë in EDITING.
+ * Disabilita il pulsante "Salva" se si √® in EDITING.
  *
  * @return <code>boolean</code> 
  *

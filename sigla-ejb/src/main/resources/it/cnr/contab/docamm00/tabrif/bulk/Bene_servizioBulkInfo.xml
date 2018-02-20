@@ -50,7 +50,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="Codice Unità di Misura" />
+		label="Codice Unità  di Misura" />
 	<fieldProperty
 		name="dsUnitaMisura"
 		property="unitaMisura.dsUnitaMisura"
@@ -58,7 +58,7 @@
 		inputSize="30"
 		maxLength="100"
 		enabledOnEdit="false"
-		label="Descrizione Unità di Misura" />
+		label="Descrizione Unità  di Misura" />
 	<fieldProperty
 		name="tipoArticolo"
 		property="tipoArticolo"

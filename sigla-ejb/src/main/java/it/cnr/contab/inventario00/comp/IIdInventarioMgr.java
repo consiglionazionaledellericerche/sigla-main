@@ -78,7 +78,7 @@ public abstract it.cnr.contab.inventario00.tabrif.bulk.Id_inventarioBulk findInv
   *    PreCondition:
   *      E' stata generata la richiesta di inizializzare una istanza di Id_InventarioBulk
   *    PostCondition:
-  *      Vengono cercate e caricate le Unit‡ Organizzative disponibili per essere associate all'Inventario
+  *      Vengono cercate e caricate le Unit√† Organizzative disponibili per essere associate all'Inventario
   *			che si sta creando.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -94,7 +94,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
   *    PreCondition:
   *      E' stata generata la richiesta di inizializzare l'Inventario per la modifica.
   *    PostCondition:
-  *      Vengono caricate tutte le Unit‡ Oganizzative associate con l'Inventario che si vuole modificare
+  *      Vengono caricate tutte le Unit√† Oganizzative associate con l'Inventario che si vuole modificare
   *		Tra le UO caricate, poi, si va ad individuare quella Responsabile dell'Inventario.
   *		Infine si caricano le UO ancora disponibli per essere associate.  
   *
@@ -118,7 +118,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
   * @param esercizio <code>Integer</code> l'Esercizio di in cui vafatto il controllo
   *
   * @return lo stato <code>boolean</code> dell'inventario: 
-  *		 - true ==> l'Inventario Ë in stato 'A', (Aperto);
+  *		 - true ==> l'Inventario √® in stato 'A', (Aperto);
   *		 - false ==> negli altri casi.
  */
 
@@ -136,7 +136,7 @@ public abstract boolean isAperto(it.cnr.jada.UserContext param0,it.cnr.contab.in
   *    PreCondition:
   *      ValidaId_Inventario non superato
   *    PostCondition:
-  *      Viene inviato un messaggio : "Attenzione questa modifica non Ë consentita".
+  *      Viene inviato un messaggio : "Attenzione questa modifica non √® consentita".
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> il Bulk da modificare

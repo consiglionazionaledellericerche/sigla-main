@@ -42,47 +42,47 @@ public Tipo_linea_attivitaBulk(java.lang.String cd_tipo_linea_attivita) {
 	super(cd_tipo_linea_attivita);
 }
 /**
- * Restituisce il valore della propriet‡ 'funzione'
+ * Restituisce il valore della propriet√† 'funzione'
  *
- * @return Il valore della propriet‡ 'funzione'
+ * @return Il valore della propriet√† 'funzione'
  */
 public it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk getFunzione() {
 	return funzione;
 }
 /**
- * Restituisce il valore della propriet‡ 'funzioni'
+ * Restituisce il valore della propriet√† 'funzioni'
  *
- * @return Il valore della propriet‡ 'funzioni'
+ * @return Il valore della propriet√† 'funzioni'
  */
 public java.util.Collection getFunzioni() {
 	return funzioni;
 }
 /**
- * Restituisce il valore della propriet‡ 'natura'
+ * Restituisce il valore della propriet√† 'natura'
  *
- * @return Il valore della propriet‡ 'natura'
+ * @return Il valore della propriet√† 'natura'
  */
 public it.cnr.contab.config00.pdcfin.bulk.NaturaBulk getNatura() {
 	return natura;
 }
 /**
- * Restituisce il valore della propriet‡ 'nature'
+ * Restituisce il valore della propriet√† 'nature'
  *
- * @return Il valore della propriet‡ 'nature'
+ * @return Il valore della propriet√† 'nature'
  */
 public java.util.Collection getNature() {
 	return nature;
 }
 /**
- * Restituisce il valore della propriet‡ 'ti_gestioneKeys'
+ * Restituisce il valore della propriet√† 'ti_gestioneKeys'
  *
- * @return Il valore della propriet‡ 'ti_gestioneKeys'
+ * @return Il valore della propriet√† 'ti_gestioneKeys'
  */
 public java.util.Dictionary getTi_gestioneKeys() {
 	return ti_gestioneKeys;
 }
 	/**
-	 * Restituisce il <code>Dictionary</code> per definire se la linea di attivit‡ e comune o meno.
+	 * Restituisce il <code>Dictionary</code> per definire se la linea di attivit√† e comune o meno.
 	 *
 	 * @return java.util.Dictionary
 	 */
@@ -95,7 +95,7 @@ public OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.acti
 	return this;
 }
 /**
- * Imposta il valore della propriet‡ 'funzione'
+ * Imposta il valore della propriet√† 'funzione'
  *
  * @param newFunzione	Il valore da assegnare a 'funzione'
  */
@@ -103,7 +103,7 @@ public void setFunzione(it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk newFunzi
 	funzione = newFunzione;
 }
 /**
- * Imposta il valore della propriet‡ 'funzioni'
+ * Imposta il valore della propriet√† 'funzioni'
  *
  * @param newFunzioni	Il valore da assegnare a 'funzioni'
  */
@@ -111,7 +111,7 @@ public void setFunzioni(java.util.Collection newFunzioni) {
 	funzioni = newFunzioni;
 }
 /**
- * Imposta il valore della propriet‡ 'natura'
+ * Imposta il valore della propriet√† 'natura'
  *
  * @param newNatura	Il valore da assegnare a 'natura'
  */
@@ -119,7 +119,7 @@ public void setNatura(it.cnr.contab.config00.pdcfin.bulk.NaturaBulk newNatura) {
 	natura = newNatura;
 }
 /**
- * Imposta il valore della propriet‡ 'nature'
+ * Imposta il valore della propriet√† 'nature'
  *
  * @param newNature	Il valore da assegnare a 'nature'
  */
@@ -130,9 +130,9 @@ public void validate() throws ValidationException {
 	
 	if (getTi_tipo_la().equals(COMUNE)) {
 		if (getNatura() == null || getNatura().getCd_natura() == null)
-			throw new ValidationException("Se il tipo di GAE Ë comune la natura deve essere specificata!");
+			throw new ValidationException("Se il tipo di GAE √® comune la natura deve essere specificata!");
 		if (TI_GESTIONE_SPESE.equals(getTi_gestione()) && getFunzione() == null)
-			throw new ValidationException("Se il tipo di GAE Ë comune la funzione deve essere specificata!");
+			throw new ValidationException("Se il tipo di GAE √® comune la funzione deve essere specificata!");
 	}
 }
 }

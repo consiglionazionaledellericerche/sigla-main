@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -10,7 +10,7 @@
 		enabledOnEdit="true"
 		enabledOnFreeSearch="true"
 		enabledOnSearch="true"
-		label="Centro di responsabilità di Primo Livello o Area" />
+		label="Centro di responsabilitÃ  di Primo Livello o Area" />
 	<fieldProperty
 		name="ds_cdr"
 		property="cdr.ds_cdr"
@@ -18,7 +18,7 @@
 		enabledOnEdit="true"
 		enabledOnFreeSearch="true"
 		enabledOnSearch="true"
-		label="Descrizione Centro di responsabilità di Primo Livello o Area" />
+		label="Descrizione Centro di responsabilitÃ  di Primo Livello o Area" />
 	<fieldProperty
 		name="cdr"
 		property="cdr"
@@ -27,7 +27,7 @@
 		enabledOnSearch="true"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
-		label="Centro di responsabilità di Primo Livello o Area" />
+		label="Centro di responsabilitÃ  di Primo Livello o Area" />
 		
 	<fieldProperty
 		name="stato"

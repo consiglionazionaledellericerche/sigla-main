@@ -106,17 +106,17 @@ private void aggiornaBeniAccessoriFor(UserContext userContext,Inventario_beniBul
 /** 
   *  L'inventario non esiste
   *    PreCondition:
-  *      Non Ë stato trovato un Inventario associato alla UO di scrivania.
+  *      Non √® stato trovato un Inventario associato alla UO di scrivania.
   *    PostCondition:
   *     Un messaggio di errore viene visualizzato all'utente per segnalare che la UO non ha un
   *		Inventario
   *
-  *  L'inventario non Ë aperto.
+  *  L'inventario non √® aperto.
   *    PreCondition:
-  *      L'Inventario non Ë in stato "A", ossia aperto.
+  *      L'Inventario non √® in stato "A", ossia aperto.
   *    PostCondition:
   *     Un messaggio di errore viene visualizzato all'utente per segnalare che l'Inventario 
-  *		associato alla UO non Ë in stato "Aperto"
+  *		associato alla UO non √® in stato "Aperto"
   *
   *  Carica l'Inventario associato alla UO di scrivania
   *    PreCondition:
@@ -146,13 +146,13 @@ public Id_inventarioBulk caricaInventario(UserContext aUC)
 	return inventario;
 }
 /** 
-  *   Carico i CdR Utilizzatori, (e le relative Linee di Attivit‡), di un dato Bene
+  *   Carico i CdR Utilizzatori, (e le relative Linee di Attivit√†), di un dato Bene
   *    PreCondition:
   *      In seguito ad una richiesta di modifica di un Bene, (metodo modificaConBulk),
   *		il sistema cerca gli eventuali CdR Utilizzatori del Bene
   *    PostCondition:
   *      Se ci sono CdR Utilizzatori, questi vengono caricati e, per ognuno di essi, vengono
-  *		caricate le relative Linee di Attivit‡ di utilizzo
+  *		caricate le relative Linee di Attivit√† di utilizzo
   *  
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -204,7 +204,7 @@ private void caricaUtilizzatoriFor(UserContext userContext,Inventario_beniBulk b
 		getHomeCache(userContext).fetchAll(userContext);
 }
 /** 
-  *  Cancella i CdR Utilizzatori, (e le relative Linee di Attivit‡), di un dato Bene
+  *  Cancella i CdR Utilizzatori, (e le relative Linee di Attivit√†), di un dato Bene
   *    PreCondition:
   *      In seguito ad una richiesta di modifica di un Bene, (metodo modificaConBulk),
   *		il sistema elimina dalla tabella INVENTARIO_UTILIZZATORI tutti i record relativi al bene
@@ -242,7 +242,7 @@ private void deleteUtilizzatori(UserContext aUC,Inventario_beniBulk bene)
   * Data una collezione di Utilizzatore_CdrVBulk, (ossia gli utilizztori specificati 
   *	in un bene), ne estrae tutti gli utilizzatori,
   *	(Inventario_utilizzatori_laBulk), e li inserisce in una collezione,
-  *	(SimpleBulkList), che verr‡ restituita.
+  *	(SimpleBulkList), che verr√† restituita.
 **/
 private SimpleBulkList estraiUtilizzatoriFor (Inventario_beniBulk bene) 
 	throws ComponentException
@@ -432,7 +432,7 @@ private Timestamp getDataOdierna(it.cnr.jada.UserContext userContext) throws Com
   *    PreCondition:
   *      E' stato richiesto di recuperare/generare l'identificativo di transazione.
   *    PostCondition:
-  *      Viene richiesto l'ID e, se questo non esiste, verr‡ generato, se richiesto
+  *      Viene richiesto l'ID e, se questo non esiste, verr√† generato, se richiesto
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param force <code>boolean</code> il flag che indica se forzare la generazione dell'ID
@@ -468,7 +468,7 @@ public String getLocalTransactionID(UserContext aUC, boolean force)
 /** 
   *  Cerca l'Inventario associato alla Uo di scrivania
   *    PreCondition:
-  *      Non c'Ë un Inventario associato alla Uo di scrivania, oppure l'Inventario non Ë in stato "Aperto"
+  *      Non c'√® un Inventario associato alla Uo di scrivania, oppure l'Inventario non √® in stato "Aperto"
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -524,7 +524,7 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC, OggettoBulk b
   *      E' stata richiesta l'inizializzazione di una istanza di Inventario_beniBulk per modifica
   *    PostCondition:
   *      Vengono caricati gli eventuali Utilizzatori del Bene, gli accessori o il bene padre,
-  *		a seconda se il Bene di riferimento Ë rispettivamente un bene accessorio oppure no;
+  *		a seconda se il Bene di riferimento √® rispettivamente un bene accessorio oppure no;
   *		carica, inoltre, i Tipi Ammortamento legati alla Categoria Gruppo Inventario a cui appartiene il Bene
   *		ed il Tipo Ammortamento associato al Bene stesso.
   *
@@ -547,7 +547,7 @@ public OggettoBulk inizializzaBulkPerModifica(
     try {
         caricaUtilizzatoriFor(aUC, bene);
 
-        // Carica il Bene Principale se il bene selezionato Ë un Bene Accessorio
+        // Carica il Bene Principale se il bene selezionato √® un Bene Accessorio
         if (bene.isBeneAccessorio()) {
             bene.setBene_principale(findBenePrincipale(aUC, bene));
         } else {
@@ -571,7 +571,7 @@ public OggettoBulk inizializzaBulkPerModifica(
 		}
         /* Setta il flag Ammortamento, in base al flag Soggetto 
         *	ad Ammortamento della Categoria Gruppo*/
-		//r.p. 23/11/2007 commentato perchË alterava l'eventuale scelta del non ammortamento 
+		//r.p. 23/11/2007 commentato perch√® alterava l'eventuale scelta del non ammortamento 
         //bene.setFl_ammortamento(bene.getCategoria_Bene().getFl_ammortamento());
 		bene.setDa_fattura(da_fattura(aUC,bene));
 		bene.setHa_dettagli(ha_dettagli(aUC,bene));
@@ -583,7 +583,7 @@ public OggettoBulk inizializzaBulkPerModifica(
     }
 
     if (bene.isTotalmenteScaricato())
-    	return asRO(bene, "ATTENZIONE: questo bene Ë stato totalmente scaricato.\nNon sar‡ possibile fare alcuna operazione su di esso.");
+    	return asRO(bene, "ATTENZIONE: questo bene √® stato totalmente scaricato.\nNon sar√† possibile fare alcuna operazione su di esso.");
 
     if (isEsercizioCOEPChiuso(aUC))
     	return asRO(bene, null);
@@ -599,7 +599,7 @@ public OggettoBulk inizializzaBulkPerModifica(
   * 
   *  Cerca l'Inventario associato alla Uo di scrivania - Inventario non disponibile.
   *    PreCondition:
-  *      Non c'Ë un Inventario associato alla Uo di scrivania, oppure l'Inventario non Ë in stato "Aperto"
+  *      Non c'√® un Inventario associato alla Uo di scrivania, oppure l'Inventario non √® in stato "Aperto"
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -649,8 +649,8 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_registro_i
 	     * 
 	     * 27/12/2004
 	     * Ripristinata situazione precedente. Sulla mappa in
-	     * questo modo verr‡ visualizzato il CDS di appartnnenza.
-	     * Nel Bulk Ë stato effettuato il test se CDS = 999
+	     * questo modo verr√† visualizzato il CDS di appartnnenza.
+	     * Nel Bulk √® stato effettuato il test se CDS = 999
 	     * 
 	     * */
 		//if (!cd_cds_scrivania.equals("999"))	
@@ -809,7 +809,7 @@ protected boolean isEsercizioCOEPChiuso(UserContext userContext) throws Componen
 	    if(status.compareTo("Y")==0){
 	    	return true;
 	    }
-		//controlla anche se Ë chiuso l'inventario
+		//controlla anche se √® chiuso l'inventario
 		Id_inventarioHome inventarioHome = (Id_inventarioHome) getHome(userContext, Id_inventarioBulk.class);
 		Id_inventarioBulk inventario = inventarioHome.findInventarioFor(userContext,false);
 		if (!inventarioHome.isAperto(inventario,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext)))
@@ -887,7 +887,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 		
 		
 		validaUtilizzatori(aUC, bene);
-		/* Cancella le relazioni esistenti tra il bene e gli utilizzatori ˘
+		/* Cancella le relazioni esistenti tra il bene e gli utilizzatori √π
 		 *	per poi ricrearle con quelle attuali
 		*/
 		bene.setUtilizzatori(estraiUtilizzatoriFor(bene));
@@ -908,7 +908,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 /**
   *  Cerca l'Inventario associato alla Uo di scrivania
   *    PreCondition:
-  *      Non c'Ë un Inventario associato alla Uo di scrivania, oppure l'Inventario non Ë in stato "Aperto"
+  *      Non c'√® un Inventario associato alla Uo di scrivania, oppure l'Inventario non √® in stato "Aperto"
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -917,7 +917,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
   *      E' stato richiesto di cercare un Bene
   *    PostCondition:
   *		E' stato creato il SQLBuilder con le clausole implicite (presenti nell'istanza di Inventario_beniBulk):
-  *		i beni devono altresÏ appartenere all'Inventario associato alla Uo di scrivania e
+  *		i beni devono altres√¨ appartenere all'Inventario associato alla Uo di scrivania e
   *		non devono essere totalmente scaricati.
   *		I beni utilizzabili, inoltre, devono avere ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.  
   *
@@ -1008,7 +1008,7 @@ public RemoteIterator selectBeniAccessoriFor(
   *    PostCondition:
   *		Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
   *		clausole che la Categoria abbia una data di cancellazione valida, (ossia NULL); 
-  *		che sia di livello maggiore di 0, (cioË che sia un Gruppo); 
+  *		che sia di livello maggiore di 0, (cio√® che sia un Gruppo); 
   *		che sia valida per la gestione dell'Inventario.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -1151,17 +1151,17 @@ public SQLBuilder selectGruppoForPrintByClause(UserContext userContext, Stampa_r
 	return sql;
 }
 /**
-  *  Ricerca di una Linea di Attivit‡ per il CdR Utilizzatore
+  *  Ricerca di una Linea di Attivit√† per il CdR Utilizzatore
   *    PreCondition:
-  *      E' stata generata la richiesta di ricerca di una Linea di Attivit‡ per il
+  *      E' stata generata la richiesta di ricerca di una Linea di Attivit√† per il
   *		CdR Utilizzatore
   *    PostCondition:
   *		Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
-  *		clausole che la Linea di Attivit‡ appartenga al CdR indicato.
+  *		clausole che la Linea di Attivit√† appartenga al CdR indicato.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param utilizzatori_la il <code>Inventario_utilizzatori_laBulk</code> CdR di riferimento
-  * @param l_att la <code>Linea_attivitaBulk</code> Linea di Attivit‡ modello  
+  * @param l_att la <code>Linea_attivitaBulk</code> Linea di Attivit√† modello  
   * @param clauses <code>CompoundFindClause</code> le clausole della selezione
   *
   * @return sql <code>SQLBuilder</code> Risultato della selezione.
@@ -1211,7 +1211,7 @@ public SQLBuilder selectLinea_attivitaByClause(UserContext userContext, Inventar
   *      E' stata generata la richiesta di ricercare una Ubicazione.
   *    PostCondition:
   *		E' stato creato il SQLBuilder con le clausole implicite (presenti nell'istanza di Ubicazione_beneBulk),
-  *		ed Ë stata aggiunta la clausola che l'Ubicazione sia associata alla UO di scrivania.
+  *		ed √® stata aggiunta la clausola che l'Ubicazione sia associata alla UO di scrivania.
   *  
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param bene il <code>Inventario_beniBulk</code> bene di riferimento
@@ -1285,7 +1285,7 @@ public SQLBuilder selectUoForPrintByClause(UserContext userContext, Stampa_beni_
 	}
 	Unita_organizzativaHome home = (Unita_organizzativaHome)getHome(userContext, Unita_organizzativaBulk.class);
 	SQLBuilder sql;
-	// Verifica se il Cds di scrivania Ë di tipo ENTE
+	// Verifica se il Cds di scrivania √® di tipo ENTE
 	if (cds_scrivania.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_ENTE)){
 		sql = home.createSQLBuilderEsteso();
 	} else{
@@ -1327,7 +1327,7 @@ public SQLBuilder selectUoForPrintByClause(UserContext userContext, Stampa_regis
 	}
 	Unita_organizzativaHome home = (Unita_organizzativaHome)getHome(userContext, Unita_organizzativaBulk.class);
 	SQLBuilder sql;
-	// Verifica se il Cds di scrivania Ë di tipo ENTE
+	// Verifica se il Cds di scrivania √® di tipo ENTE
 	if (cds_scrivania.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_ENTE)){
 		sql = home.createSQLBuilderEsteso();
 	} else{
@@ -1351,43 +1351,43 @@ public it.cnr.jada.bulk.OggettoBulk stampaConBulk(it.cnr.jada.UserContext aUC, i
 /** 
   *  validaBene - Categoria Gruppo Inventario non specificata
   *    PreCondition:
-  *      Si sta tentando di salvare un bene di cui non Ë stata indicata nessuna Categoria 
+  *      Si sta tentando di salvare un bene di cui non √® stata indicata nessuna Categoria 
   *		Gruppo Inventario per il bene
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare il Bene
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare il Bene
   *
   *  validaBene - Descrizione del Bene non specificata
   *    PreCondition:
-  *      Si sta tentando di salvare un bene di cui non Ë stata indicata una descrizione
+  *      Si sta tentando di salvare un bene di cui non √® stata indicata una descrizione
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare il Bene
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare il Bene
   *
   *  validaBene - Condizione del Bene non specificata
   *    PreCondition:
-  *      Si sta tentando di salvare un bene di cui non Ë stata indicata una condizione
+  *      Si sta tentando di salvare un bene di cui non √® stata indicata una condizione
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare il Bene  
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare il Bene  
   *
   *  validaBene - Ubicazione del Bene non specificata
   *    PreCondition:
-  *      Si sta tentando di salvare un bene di cui non Ë stata indicata una ubicazione
+  *      Si sta tentando di salvare un bene di cui non √® stata indicata una ubicazione
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare il Bene
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare il Bene
   *
   *  validaBene - Prezzo unitario del Bene non valido
   *    PreCondition:
-  *      Si sta tentando di salvare un bene di cui non Ë stato indicato il Valore Iniziale,
-  *		oppure il valore indicato Ë inferiore al Valore del Bene
+  *      Si sta tentando di salvare un bene di cui non √® stato indicato il Valore Iniziale,
+  *		oppure il valore indicato √® inferiore al Valore del Bene
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare il Bene
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare il Bene
   *
   *  validaBene - Valore da ammortizzare del Bene non valido
   *    PreCondition:
-  *      Si sta tentando di salvare un bene di cui non Ë stato indicato un valore da ammortizzare,
-  *		oppure il valore indicato Ë inferiore al valore del bene, 
-  *		oppure Ë inferiore al valore gi‡ ammortizzato.
+  *      Si sta tentando di salvare un bene di cui non √® stato indicato un valore da ammortizzare,
+  *		oppure il valore indicato √® inferiore al valore del bene, 
+  *		oppure √® inferiore al valore gi√† ammortizzato.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare il Bene
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare il Bene
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param bene il <code>Inventario_beniBulk</code> bene da controllare
@@ -1403,10 +1403,10 @@ private void validaBene (UserContext aUC, Inventario_beniBulk bene)
 		// CONTROLLA CHE SIA STATA SPECIFICATA UNA targa PER IL BENE
 		if (!bene.isBeneAccessorio() && bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
 				bene.getCategoria_Bene().getFl_gestione_targa() && bene.getTarga()==null)
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: Ë obbligatorio indicare la targa per questa Categoria");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: √® obbligatorio indicare la targa per questa Categoria");
 //		if (!bene.isBeneAccessorio() && bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
 //				bene.getCategoria_Bene().getFl_gestione_seriale() && bene.getSeriale()==null)
-//			throw new it.cnr.jada.comp.ApplicationException("Attenzione: Ë obbligatorio indicare il seriale per questa Categoria");
+//			throw new it.cnr.jada.comp.ApplicationException("Attenzione: √® obbligatorio indicare il seriale per questa Categoria");
 		// CONTROLLA CHE SIA STATA SPECIFICATA UNA DESCRIZIONE PER IL BENE
 		if (bene.getDs_bene()==null)
 			throw new it.cnr.jada.comp.ApplicationException("Attenzione: indicare la Descrizione del Bene ");					
@@ -1433,20 +1433,20 @@ private void validaBene (UserContext aUC, Inventario_beniBulk bene)
 		}
 		// CONTROLLA CHE IL VALORE DA AMMORTIZZARE SIA INFERIORE AL VALORE UNITARIO
 		/*if (bene.getImponibile_ammortamento() != null && bene.getImponibile_ammortamento().compareTo(bene.getValore_unitario())>0){
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: il valore da ammortizzare non Ë valido\n Il valore da ammortizzare del bene deve essere inferiore  o uguale al valore iniziale del bene.");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: il valore da ammortizzare non √® valido\n Il valore da ammortizzare del bene deve essere inferiore  o uguale al valore iniziale del bene.");
 		}*/
 
 		// CONTROLLA CHE IL VALORE DA AMMORTIZZARE SIA INFERIORE AL VALORE DEL BENE
 		if (bene.getImponibile_ammortamento() != null && bene.getImponibile_ammortamento().compareTo(bene.getValoreBene())>0){
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: il valore da ammortizzare non Ë valido\n Il valore da ammortizzare del bene non puÚ essere superiore al valore del bene.");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: il valore da ammortizzare non √® valido\n Il valore da ammortizzare del bene non pu√≤ essere superiore al valore del bene.");
 		}
 		
 		// CONTROLLA CHE IL VALORE DA AMMORTIZZARE NON SIA INFERIORE AL VALORE AMMORTIZZATO
 		if (bene.getImponibile_ammortamento() == null && bene.getValore_ammortizzato()!=null){
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: il bene Ë gi‡ stato ammortizzato.\n Il valore da ammortizzare non puÚ essere 0");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: il bene √® gi√† stato ammortizzato.\n Il valore da ammortizzare non pu√≤ essere 0");
 		}
 		if (bene.getImponibile_ammortamento() != null  && bene.getValore_ammortizzato()!=null && bene.getImponibile_ammortamento().compareTo(bene.getValore_ammortizzato())<0){
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: il valore da ammortizzare non Ë valido\n Il valore da ammortizzare di un bene non puÚ essere inferiore al valore gi‡ ammortizzato.");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: il valore da ammortizzare non √® valido\n Il valore da ammortizzare di un bene non pu√≤ essere inferiore al valore gi√† ammortizzato.");
 		}
 	
 	}catch(Throwable t){
@@ -1462,19 +1462,19 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_be
 		Timestamp dataOdierna = getDataOdierna(userContext);
 		java.sql.Timestamp lastDayOfYear = DateServices.getLastDayOfYear(stampa.getEsercizio().intValue());
 		if (stampa.getDataInizio()==null)
-			throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 		if (stampa.getDataFine()==null)
-			throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 		java.sql.Timestamp firstDayOfYear = it.cnr.contab.doccont00.comp.DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere inferiore a " + formatter.format(firstDayOfYear));
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere inferiore a " + formatter.format(firstDayOfYear));
 		}
 		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non puÚ essere superiore a " + formatter.format(lastDayOfYear));
+			throw new ValidationException("La DATA di FINE PERIODO non pu√≤ essere superiore a " + formatter.format(lastDayOfYear));
 		}
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);
@@ -1489,17 +1489,17 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_re
 		Timestamp dataOdierna = getDataOdierna(userContext);
 		// Controlli sui campi Data		
 		if (stampa.getDataInizio()==null)
-			throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 		if (stampa.getDataFine()==null)
-			throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 		// Controlli sui Campi nr_Inventario_da	nr_Inventario_a
 		if (stampa.getNrInventarioFrom()== null){
-			throw new ValidationException("Il campo DA CODICE BENE Ë obbligatorio");
+			throw new ValidationException("Il campo DA CODICE BENE √® obbligatorio");
 		}
 		if (stampa.getNrInventarioTo()== null){
-			throw new ValidationException("Il campo A CODICE BENE Ë obbligatorio");
+			throw new ValidationException("Il campo A CODICE BENE √® obbligatorio");
 		}			
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);
@@ -1508,35 +1508,35 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_re
 /** 
   *  validaUtilizzatori - CdR Utilizzatore non valido
   *    PreCondition:
-  *      Si sta tentando di salvare un CdR Utilizzatore di cui non si Ë specificato il codice.
+  *      Si sta tentando di salvare un CdR Utilizzatore di cui non si √® specificato il codice.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit‡ di 
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit√† di 
   *		specificare il codice del CdR.
   *
   *  validaUtilizzatori - CdR Utilizzatore non valido
   *    PreCondition:
-  *      Il CdR Utilizzatore Ë stato indicato gi‡ in precedenza.
+  *      Il CdR Utilizzatore √® stato indicato gi√† in precedenza.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ 
-  *		utilizzare pi˘ volte lo stesso CdR
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† 
+  *		utilizzare pi√π volte lo stesso CdR
   *
   *  validaUtilizzatori - CdR Utilizzatore non valido
   *    PreCondition:
-  *      Si sta tentando di salvare un CdR Utilizzatore di cui non si Ë specificata la percentuale di utilizzo.
+  *      Si sta tentando di salvare un CdR Utilizzatore di cui non si √® specificata la percentuale di utilizzo.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit‡ di 
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit√† di 
   *		specificare la percentuale di utilizzo.
   *
   *  validaUtilizzatori - CdR Utilizzatore non valido
   *    PreCondition:
-  *      Si sta tentando di salvare un CdR Utilizzatore di cui non si Ë specificata alcuna Linea di Attivit‡
+  *      Si sta tentando di salvare un CdR Utilizzatore di cui non si √® specificata alcuna Linea di Attivit√†
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit‡ di 
-  *		specificare per ogni CdR almeno una Linea di Attivit‡.
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit√† di 
+  *		specificare per ogni CdR almeno una Linea di Attivit√†.
   *  
   *  validaUtilizzatori - Percentuale utilizzo dei CdR non valida
   *    PreCondition:
-  *      Il totale delle percentuali di utilizzo indicate per ogni CdR, non Ë 100.
+  *      Il totale delle percentuali di utilizzo indicate per ogni CdR, non √® 100.
   *    PostCondition:
   *      Un messaggio di errore viene visualizzato all'utente per segnalare che il totale deve essere 100.
   *    
@@ -1560,13 +1560,13 @@ private void validaUtilizzatori (UserContext aUC,Inventario_beniBulk bene)
 			Utilizzatore_CdrVBulk utilizzatore = (Utilizzatore_CdrVBulk)i.next();
 			// Controlla che sia stato specificato il CdR
 			if (utilizzatore.getCdr()==null || utilizzatore.getCdCdr()==null){
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: Ë necessario indicare il codice del CdR Utilizzatore.\n " +
-					"Il CdR alla riga " + riga + " non Ë valido");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: √® necessario indicare il codice del CdR Utilizzatore.\n " +
+					"Il CdR alla riga " + riga + " non √® valido");
 			}
 			// Controlla che non vi siano CdR DUPLICATI
 			if (it.cnr.jada.bulk.BulkCollections.containsByPrimaryKey(cdr,utilizzatore.getCdr())){
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non Ë possibile indicare pi˘ volte uno stesso CdR come Utilizzatore\n " +
-					"Il CdR " + utilizzatore.getCdCdr() +" Ë duplicato.");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non √® possibile indicare pi√π volte uno stesso CdR come Utilizzatore\n " +
+					"Il CdR " + utilizzatore.getCdCdr() +" √® duplicato.");
 			}
 			else {
 				cdr.add(utilizzatore.getCdr());
@@ -1576,13 +1576,13 @@ private void validaUtilizzatori (UserContext aUC,Inventario_beniBulk bene)
 				percentuale_utilizzo_CdR = percentuale_utilizzo_CdR.add(utilizzatore.getPercentuale_utilizzo_cdr());				 
 			}
 			else if (utilizzatore.getPercentuale_utilizzo_cdr()==null){
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: la percentuale di utilizzo per i CdR Utilizzatori non puÚ essere nulla\n " +
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: la percentuale di utilizzo per i CdR Utilizzatori non pu√≤ essere nulla\n " +
 					"Specificare la perc. di utilizzo per il CdR " + utilizzatore.getCdCdr());
 			}
-			// Controlla che per ogni CdR specificato siano state indicate anche delle Linee di Attivit‡
+			// Controlla che per ogni CdR specificato siano state indicate anche delle Linee di Attivit√†
 			if (utilizzatore.getBuono_cs_utilizzatoriColl()==null || (utilizzatore.getBuono_cs_utilizzatoriColl().size()==0)){
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: Ë necessario specificare i GAE per ogni Utilizzatore\n "+
-					"Indicare le Linee di Attivit‡ per il CdR " + utilizzatore.getCdCdr());
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: √® necessario specificare i GAE per ogni Utilizzatore\n "+
+					"Indicare le Linee di Attivit√† per il CdR " + utilizzatore.getCdCdr());
 			}
 		}
 		// Controlla che il totale delle percentuali di utilizzo dei CdR sia 100

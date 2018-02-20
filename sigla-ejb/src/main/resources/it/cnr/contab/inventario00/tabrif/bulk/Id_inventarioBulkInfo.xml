@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -37,14 +37,14 @@
 		maxLength="30"
 		inputSize="20"
 		inputType="ROTEXT"
-		label="Unità Reponsabile" />
+		label="UnitÃ  Reponsabile" />
 	<fieldProperty
 		name="ds_uo_resp"
 		property="uoResp.ds_unita_organizzativa"
 		maxLength="300"
 		inputSize="80"
 		inputType="ROTEXT"
-		label="Ds Unità Reponsabile" />
+		label="Ds UnitÃ  Reponsabile" />
 
 	<formFieldProperty
 		name="pg_inventario" />

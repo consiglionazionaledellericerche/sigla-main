@@ -73,7 +73,7 @@ public class GenerazioneOrdiniDaRichiesteComponent
     	it.cnr.jada.persistency.sql.SQLBuilder sql = home.createSQLBuilder();
 
     	if (filtro.getUnitaOperativaOrd() == null || filtro.getUnitaOperativaOrd().getCdUnitaOperativa() == null){
-    		throw new it.cnr.jada.comp.ApplicationException("E' necessario valorizzare l'unit‡ operativa.");    	
+    		throw new it.cnr.jada.comp.ApplicationException("E' necessario valorizzare l'unit√† operativa.");    	
     	} else {
             sql.addSQLClause(FindClause.AND, "V_RICHIESTA_PER_ORDINI.CD_UNITA_OPERATIVA_DEST", SQLBuilder.EQUALS, filtro.getUnitaOperativaOrd().getCdUnitaOperativa());
     	}
@@ -93,11 +93,11 @@ public RichiestaUopRigaBulk selezionaRichiestaPerOrdine (UserContext aUC,VRichie
 
 		lockBulk( aUC, richiestaRiga );
 		if ( richiestaRiga.getStato().equals(RichiestaUopRigaBulk.STATO_ANNULLATO))
-			throw new ApplicationException("La richiesta Ë stata annullata.");
+			throw new ApplicationException("La richiesta √® stata annullata.");
 		if ( richiestaRiga.getStato().equals(RichiestaUopRigaBulk.STATO_TRASFORMATA_ORDINE))
-			throw new ApplicationException("La richiesta Ë gi‡ stata trasformata in ordine.");
+			throw new ApplicationException("La richiesta √® gi√† stata trasformata in ordine.");
 		if ( !richiestaRiga.getRichiestaUop().getStato().equals(RichiestaUopBulk.STATO_INVIATA_ORDINE))
-			throw new ApplicationException("La richiesta non Ë stata inviata in ordine");
+			throw new ApplicationException("La richiesta non √® stata inviata in ordine");
 		richiestaRiga.setStato(RichiestaUopRigaBulk.STATO_TRASFORMATA_ORDINE);
 		richiestaRiga.setUser( aUC.getUser());
 		updateBulk( aUC, richiestaRiga );

@@ -139,7 +139,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 			if (!b.equals(bulk) &&
 					((b.getCodice_fiscale() != null && bulk.getCodice_fiscale()!=null && b.getCodice_fiscale().compareTo(bulk.getCodice_fiscale())==0) || 
 					(b.getId_fiscale()!=null && bulk.getId_fiscale()!=null && b.getId_fiscale().compareTo(bulk.getId_fiscale())==0)))			    		
-	 			throw new ValidationException ("Attenzione: esistono più ditte con lo stesso codice fiscale/Id Fiscale!"); 	
+	 			throw new ValidationException ("Attenzione: esistono piÃ¹ ditte con lo stesso codice fiscale/Id Fiscale!"); 	
 			 	
 		}
 		if( bulk.getDenominazione_rti()!=null){
@@ -152,7 +152,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 					trovato=true;
 			}
 			if(!trovato)
-				throw new ValidationException ("Attenzione: devono esistere più ditte con la stessa denominazione rti!");
+				throw new ValidationException ("Attenzione: devono esistere piÃ¹ ditte con la stessa denominazione rti!");
 		}
 		if( bulk.getRuolo()!=null){
 			boolean trovato=false;
@@ -382,9 +382,9 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		return toolbar;
 	}
 	/**
-	 * Restituisce il valore della proprietà 'salvaDefinitivoButtonEnabled'
+	 * Restituisce il valore della proprietÃ  'salvaDefinitivoButtonEnabled'
 	 *
-	 * @return Il valore della proprietà 'salvaDefinitivoButtonEnabled'
+	 * @return Il valore della proprietÃ  'salvaDefinitivoButtonEnabled'
 	 */
 	public boolean isSalvaDefinitivoButtonEnabled() {
 

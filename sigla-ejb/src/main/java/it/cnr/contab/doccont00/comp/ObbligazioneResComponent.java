@@ -97,7 +97,7 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 		else
 		{
 			
-			// per ogni scadenza aggiorno i suoi dettagli in base alle linee di attivit‡ specificate dall'utente
+			// per ogni scadenza aggiorno i suoi dettagli in base alle linee di attivit√† specificate dall'utente
 			for ( Iterator scadIterator = obbligazione.getObbligazione_scadenzarioColl().iterator(); scadIterator.hasNext(); )
 			{
 					os = (Obbligazione_scadenzarioBulk) scadIterator.next();		
@@ -189,7 +189,7 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 
 		if ( obbligazione.getFl_calcolo_automatico().booleanValue() ) {
 			if (obbligazione.getIm_obbligazione()==null||obbligazione.getIm_obbligazione().compareTo(Utility.ZERO)<=0)
-				throw new ApplicationException( "Non Ë possibile effettuare il calcolo automatico su una obbligazione con importo nullo.");
+				throw new ApplicationException( "Non √® possibile effettuare il calcolo automatico su una obbligazione con importo nullo.");
 
 			for ( Enumeration e = prcImputazioneFinanziariaTable.keys(); e.hasMoreElements(); ) 
 			{
@@ -218,7 +218,7 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 
 		boolean trovato = false;
 
-		//devo controllare che tutto Ë quadrato vecchio e nuovo
+		//devo controllare che tutto √® quadrato vecchio e nuovo
 		//verifico che nella nuova Obbligazione non ci siano linee o voci nuove rispetto alla precedente
 		for ( Iterator s = obbligazione.getObbligazione_scadenzarioColl().iterator(); s.hasNext(); )
 		{
@@ -238,7 +238,7 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 					}
 				}
 				if (!trovato)
-					throw new ApplicationException( "Non Ë possibile aggiungere nuove linee di attivit‡/voci (" + osv.getCd_linea_attivita() + "/" + osv.getCd_voce() + ") ai residui propri.");
+					throw new ApplicationException( "Non √® possibile aggiungere nuove linee di attivit√†/voci (" + osv.getCd_linea_attivita() + "/" + osv.getCd_voce() + ") ai residui propri.");
 			}
 		}
 		//verifico che nella nuova Obbligazione alle linee/voci siano stati assegnati gli stessi importi
@@ -267,15 +267,15 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 					String errore = "L'importo (" +
 					new it.cnr.contab.util.EuroFormat().format(totaleScad) + 
 					") assegnato alla GAE " + key.getCd_linea_attivita() + 
-					" e alla voce " + obbligazione.getElemento_voce().getCd_elemento_voce() + " Ë " + 
+					" e alla voce " + obbligazione.getElemento_voce().getCd_elemento_voce() + " √® " + 
 					new String(totaleScad.compareTo((BigDecimal) prcImputazioneFinanziariaTable.get( key ))==1?"maggiore":"minore") + 
 					" di " + 
 					new it.cnr.contab.util.EuroFormat().format(totaleScad.subtract((BigDecimal) prcImputazioneFinanziariaTable.get( key )).abs()) + 
 					" rispetto al valore originario dell'impegno residuo proprio (" +
 					new it.cnr.contab.util.EuroFormat().format((BigDecimal) prcImputazioneFinanziariaTable.get( key )) + ")";
 
-					// in questa condizione non Ë errore ma solo avvertimento con possibilit‡ di creare
-					// un movimento di modifica altrimenti Ë errore bloccante
+					// in questa condizione non √® errore ma solo avvertimento con possibilit√† di creare
+					// un movimento di modifica altrimenti √® errore bloccante
 					if (totaleScad.subtract((BigDecimal) prcImputazioneFinanziariaTable.get( key )).compareTo(Utility.ZERO)<0) {
 						// in questo condizione dobbiamo dare risposta di avvertimento
 						// oppure nessun errore
@@ -332,7 +332,7 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 						}
 					}
 					if (diffScad.compareTo(Utility.ZERO)!=0)
-						throw new ApplicationException( "Si Ë verificato un errore durante la ripartizione dell'importo assegnato alla GAE " + key.getCd_linea_attivita() + 
+						throw new ApplicationException( "Si √® verificato un errore durante la ripartizione dell'importo assegnato alla GAE " + key.getCd_linea_attivita() + 
 														" e alla voce " + obbligazione.getElemento_voce().getCd_elemento_voce()  + ". Procedere con l'imputazione manuale."); 
 				}
 			}

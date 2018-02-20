@@ -118,7 +118,7 @@ public Forward doCambiaTipoBollo(ActionContext context)
 	catch(Throwable e) {return handleException(context,e);}
 }
 /**
- * Gestisce la selezione dell'unit‡ organizzativa
+ * Gestisce la selezione dell'unit√† organizzativa
  *
  */
 public Forward doCambiaTipoMandato(ActionContext context) 
@@ -131,7 +131,7 @@ public Forward doCambiaTipoMandato(ActionContext context)
 	catch(Throwable e) {return handleException(context,e);}
 }
 /**
- * Gestisce la selezione dell'unit‡ organizzativa
+ * Gestisce la selezione dell'unit√† organizzativa
  *
  */
 public Forward doCambiaUnitaOrganizzativa(ActionContext context) 
@@ -226,7 +226,7 @@ public Forward doSearchFind_doc_passiviInAutomatico(ActionContext context)
 		
 }
 /**
- * Metodo utilizzato per visualizzare la disponibilit‡ di cassa sul capitolo
+ * Metodo utilizzato per visualizzare la disponibilit√† di cassa sul capitolo
  */
 
 public Forward doVisualizzaDispCassaCapitolo(ActionContext context)

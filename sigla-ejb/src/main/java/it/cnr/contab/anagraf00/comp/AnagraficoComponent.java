@@ -188,7 +188,7 @@ private void controllaCodiceFiscale(AnagraficoBulk anagrafico) throws it.cnr.con
  * <B>A correzione dell'errore No. 02237A</B>
  *
  * Metodo creato per il controllo del Nome e del Cognome di una Persona Fisica.
- *	Il metodo Ë invocato durante la validazione di un Anagrafica per Creazione, 
+ *	Il metodo √® invocato durante la validazione di un Anagrafica per Creazione, 
  *	(metodo validaCreaModificaConBulk), e controlla, nel caso di una Persona Fisica,
  *	che il Cognome ed il nome non contengano caratteri numerici.
  *	Questo metodo potrebbe anche essere spostato nella Component <code>UtilitaAnagraficaComponent</code>.
@@ -199,8 +199,8 @@ private void controllaCodiceFiscale(AnagraficoBulk anagrafico) throws it.cnr.con
  */
 private void controllaNomeCognome(AnagraficoBulk anagrafico) throws ApplicationException{
 	
-	/* Si potrebbe anche controllare se cognome e nome sono null, spostando, cosÏ, 
-		il controllo dal valida a quÏ! */
+	/* Si potrebbe anche controllare se cognome e nome sono null, spostando, cos√¨, 
+		il controllo dal valida a qu√¨! */
 
 	char trattino = '-';
 	char apostrofo = '\'';
@@ -215,7 +215,7 @@ private void controllaNomeCognome(AnagraficoBulk anagrafico) throws ApplicationE
 					!Character.isSpaceChar(cognome[i]) && 
 					cognome[i] != apostrofo &&
 					cognome[i] != trattino){
-				throw new ApplicationException("Attenzione: Cognome non valido. Il Cognome puÚ contenere solo caratteri alfabetici.");
+				throw new ApplicationException("Attenzione: Cognome non valido. Il Cognome pu√≤ contenere solo caratteri alfabetici.");
 			}
 		}
 
@@ -225,7 +225,7 @@ private void controllaNomeCognome(AnagraficoBulk anagrafico) throws ApplicationE
 					!Character.isSpaceChar(nome[i]) && 
 					nome[i] != apostrofo &&
 					nome[i] != trattino){
-				throw new ApplicationException("Attenzione: Nome non valido. Il Nome puÚ contenere solo caratteri alfabetici.");
+				throw new ApplicationException("Attenzione: Nome non valido. Il Nome pu√≤ contenere solo caratteri alfabetici.");
 			}
 		}
 	}
@@ -453,7 +453,7 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws it.c
 		} catch(Throwable e) {
 			throw handleException(bulk,rie);
 		}*/
-		throw new ApplicationException("Impossibile cancellare l'anagrafica perchË risulta utilizzata nei documenti contabili o amministrativi.");
+		throw new ApplicationException("Impossibile cancellare l'anagrafica perch√® risulta utilizzata nei documenti contabili o amministrativi.");
 	} catch (Throwable e) {
 		throw handleException(bulk,e);
 	}
@@ -504,12 +504,12 @@ public TerzoBulk getDefaultTerzo(UserContext userContext,AnagraficoBulk anagrafi
 	 *
 	 * Nome: Flag IVA;
 	 * Pre:  Flag Soggetto IVA selezionato di default;
-	 * Post: Il Flag Soggetto IVA viene selezionato di default. Se li flag Ë selezionato rende obbligatorio
+	 * Post: Il Flag Soggetto IVA viene selezionato di default. Se li flag √® selezionato rende obbligatorio
 	 *       l'inserimento della Partita I.V.A.
 	 *
-	 * @param bulk dovr‡ essere sempore <code>AnagraficoBulk</code>.
+	 * @param bulk dovr√† essere sempore <code>AnagraficoBulk</code>.
 	 *
-	 * @return un <code>OggettoBulk</code> che sar‡ sempre un <code>AnagraficoBulk</code>.
+	 * @return un <code>OggettoBulk</code> che sar√† sempre un <code>AnagraficoBulk</code>.
 	 */
 
 	public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
@@ -559,9 +559,9 @@ public TerzoBulk getDefaultTerzo(UserContext userContext,AnagraficoBulk anagrafi
 	 * Post: Si procede, oltre che alla normare procedura di inizializzazione di un oggetto bulk,
 	 *       anche al caricamento di tutti gli elementi associati all'anagrafica in modifica.
 	 *
-	 * @param bulk dovr‡ essere sempore <code>AnagraficoBulk</code>.
+	 * @param bulk dovr√† essere sempore <code>AnagraficoBulk</code>.
 	 *
-	 * @return un <code>OggettoBulk</code> che sar‡ sempre un <code>AnagraficoBulk</code>.
+	 * @return un <code>OggettoBulk</code> che sar√† sempre un <code>AnagraficoBulk</code>.
 	 */
 
 	public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
@@ -764,7 +764,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 				TerzoBulk terzo = (TerzoBulk)broker.fetch(TerzoBulk.class);
 
 				if (terzo.getCodiceUnivocoUfficioIpa() != null)
-					throw new ApplicationException("Il codice Amministrazione dell'IPA deve essere valorizzato perchË esiste il terzo "+terzo.getCd_terzo() +" con il codice Ufficio IPA valorizzato.");
+					throw new ApplicationException("Il codice Amministrazione dell'IPA deve essere valorizzato perch√® esiste il terzo "+terzo.getCd_terzo() +" con il codice Ufficio IPA valorizzato.");
 			}
 		} catch (PersistencyException e) {
 			// TODO Auto-generated catch block
@@ -781,7 +781,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 				!(anagrafico.getComune_fiscale().getTi_italiano_estero().compareTo(ComuneBulk.COMUNE_ESTERO)==0 &&
 				(anagrafico.getTi_italiano_estero().compareTo(NazioneBulk.CEE)==0)||
 				anagrafico.getTi_italiano_estero().compareTo(NazioneBulk.SAN_MARINO)==0)) 
-				throw new ApplicationException("Attenzione: il comune fiscale non Ë compatibile con il tipo Italiano/Estero.");
+				throw new ApplicationException("Attenzione: il comune fiscale non √® compatibile con il tipo Italiano/Estero.");
 	//}
 	anagrafico = (AnagraficoBulk) super.modificaConBulk(aUC,anagrafico);
 	
@@ -902,7 +902,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 **/
 public SQLBuilder selectMatricolaForPrintByClause(UserContext userContext, Stampa_previdenziale_dipendentiVBulk stampa, V_prev_dipBulk matricola, CompoundFindClause clauses) throws PersistencyException, ComponentException {
 
-	// Recupera la sede dalla Uo di scrivania. La sede Ë data dal codice della Uo eliminando il punto separatore.
+	// Recupera la sede dalla Uo di scrivania. La sede √® data dal codice della Uo eliminando il punto separatore.
 	//String uo = stampa.getUo_scrivania().getCd_unita_organizzativa();
 	
 	
@@ -916,7 +916,7 @@ public SQLBuilder selectMatricolaForPrintByClause(UserContext userContext, Stamp
 	SQLBuilder sql = home.createSQLBuilder();	
 	sql.addClause(clauses);
 	
-	//Se la UO Ë 999.000 allora viene vista la lista di tutte le matricole altrimenti solo della Uo selezionata
+	//Se la UO √® 999.000 allora viene vista la lista di tutte le matricole altrimenti solo della Uo selezionata
 	Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class ).findAll().get(0);
 			//if ( ((CNRUserContext)userContext).getCd_unita_organizzativa().equals ( uoEnte.getCd_unita_organizzativa() ))
 	if ( stampa.getCdUOCRForPrint().equals ( uoEnte.getCd_unita_organizzativa() )){
@@ -990,7 +990,7 @@ public SQLBuilder selectRif_inquadramentoByClause(UserContext userContext,Inquad
 	
 public SQLBuilder selectTerzoForPrintByClause(UserContext userContext, Stampa_previdenziale_dipendentiVBulk stampa, TerzoBulk terzo, CompoundFindClause clauses) throws PersistencyException, ComponentException {
 
-	// Recupera la sede dalla Uo di scrivania. La sede Ë data dal codice della Uo eliminando il punto separatore.
+	// Recupera la sede dalla Uo di scrivania. La sede √® data dal codice della Uo eliminando il punto separatore.
 	//String uo = stampa.getUo_scrivania().getCd_unita_organizzativa();
 	
 	
@@ -1005,7 +1005,7 @@ public SQLBuilder selectTerzoForPrintByClause(UserContext userContext, Stampa_pr
 	sql.addSQLJoin("TERZO.CD_TERZO", "V_PREV_DIP.CD_TERZO");	
 	sql.addClause(clauses);
 	
-//	Se la UO Ë 999.000 allora viene vista la lista di tutti i terzi altrimenti solo della Uo selezionata
+//	Se la UO √® 999.000 allora viene vista la lista di tutti i terzi altrimenti solo della Uo selezionata
 	Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class ).findAll().get(0);
 		if ( stampa.getCdUOCRForPrint().equals ( uoEnte.getCd_unita_organizzativa() )){
 				
@@ -1024,7 +1024,7 @@ public SQLBuilder selectTerzoForPrintByClause(UserContext userContext, Stampa_pr
  *    PreCondition:
  *      L'utente ha richiesto la lista dei tipi rapporto da usabili nell'inserimento di un nuovo rapporto di un anagrafico
  *    PostCondition:
- *      Viene restituita una query sulla tabella TIPO_RAPPORTO con le clausole specificate pi˘ la clausola "TI_DIPENDENTE_ALTRO <> 'D'"
+ *      Viene restituita una query sulla tabella TIPO_RAPPORTO con le clausole specificate pi√π la clausola "TI_DIPENDENTE_ALTRO <> 'D'"
  */
 
 public SQLBuilder selectTipo_rapportoByClause(UserContext userContext,RapportoBulk rapporto,Tipo_rapportoBulk tipo_rapporto,CompoundFindClause clause) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
@@ -1164,7 +1164,7 @@ protected void validaCarichiFamiliari(UserContext userContext,AnagraficoBulk ana
 	for (java.util.Iterator i = anagrafico.getCarichi_familiari_anag().iterator();i.hasNext();) {
 		Carico_familiare_anagBulk carico_familiare = (Carico_familiare_anagBulk)i.next();
 
-		/* Carichi Familiari se di tipo "Figlio" aggiorno la data "Fine figlio ha treanni" uguale a "Data inizio validit‡" + 3 */
+		/* Carichi Familiari se di tipo "Figlio" aggiorno la data "Fine figlio ha treanni" uguale a "Data inizio validit√†" + 3 */
 		if (carico_familiare.FIGLIO.equals(carico_familiare.getTi_persona()) &&
 			carico_familiare.getDt_ini_validita() != null) {
 			GregorianCalendar dffht = new GregorianCalendar();
@@ -1236,7 +1236,7 @@ private void calcolaMontantePerPagamentoEsterno(UserContext userContext, Anagraf
 					  Pagamento_esternoBulk pagamento_esternoDB = (Pagamento_esternoBulk)(pagamento_esternoHome.findAndLock(pagamento_esterno));
 					  //Ora verifico se aggiornare il Montante o meno
 					  
-					  //Controllo se puÚ aggiornare il record sui compensi attraverso la data
+					  //Controllo se pu√≤ aggiornare il record sui compensi attraverso la data
 					  //in caso di risposta affermativa aggiorno il Montante					  	
 					  if((pagamento_esterno.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto())&&
 						 !pagamento_esternoDB.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto()))||
@@ -1272,29 +1272,29 @@ private void calcolaMontantePerPagamentoEsterno(UserContext userContext, Anagraf
 								 throw new ApplicationException("Esiste almeno un compenso con data di registrazione inferiore alla data indicata.");
 						}					  						  						  
 					  }
-					  //In questo caso il tipo di rapporto non era Occasionale e poi Ë stato aggiornato
+					  //In questo caso il tipo di rapporto non era Occasionale e poi √® stato aggiornato
 					  if(pagamento_esterno.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto())&&
 						 !pagamento_esternoDB.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto())
 						){
 						imp_pag_esterno = pagamento_esterno.getIm_pagamento();
 						aggiornaMontantiPagEst(userContext,anagrafico.getCd_anag(),imp_pag_esterno);
 					  }
-					  //In questo caso il tipo di rapporto era Occasionale e poi Ë stato aggiornato
+					  //In questo caso il tipo di rapporto era Occasionale e poi √® stato aggiornato
 					  if(!pagamento_esterno.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto())&&
 						 pagamento_esternoDB.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto())
 						){
-						//Controllo se puÚ aggiornare il record sui compensi attraverso la data
+						//Controllo se pu√≤ aggiornare il record sui compensi attraverso la data
 						//in caso di risposta affermativa aggiorno il Montante
 						imp_pag_esterno = pagamento_esternoDB.getIm_pagamento().negate();
 						aggiornaMontantiPagEst(userContext,anagrafico.getCd_anag(),imp_pag_esterno);
 					  }
-					  //In questo caso il tipo di rapporto non Ë stato modificato Occasionale e invece 
-					  //Ë stato aggiornato l'importo
+					  //In questo caso il tipo di rapporto non √® stato modificato Occasionale e invece 
+					  //√® stato aggiornato l'importo
 					  if(pagamento_esterno.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto())&&
 						 pagamento_esternoDB.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto())&&
 						 pagamento_esternoDB.getIm_pagamento().compareTo(pagamento_esterno.getIm_pagamento()) != 0
 						){
-						//Controllo se puÚ aggiornare il record sui compensi attraverso la data
+						//Controllo se pu√≤ aggiornare il record sui compensi attraverso la data
 						//in caso di risposta affermativa aggiorno il Montante
 						if(pagamento_esternoDB.getIm_pagamento().compareTo(pagamento_esterno.getIm_pagamento()) == -1)
 						  imp_pag_esterno = pagamento_esterno.getIm_pagamento().add(pagamento_esternoDB.getIm_pagamento().negate());
@@ -1314,7 +1314,7 @@ private void calcolaMontantePerPagamentoEsterno(UserContext userContext, Anagraf
 				   (pagamento_esterno.getCrudStatus() == OggettoBulk.TO_BE_CREATED || creazione)&& 
 				   pagamento_esterno.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto())
 				   && pagamento_esterno.getIm_pagamento() != null){
-					//Controllo se puÚ aggiornare il record sui compensi attraverso la data
+					//Controllo se pu√≤ aggiornare il record sui compensi attraverso la data
 					//in caso di risposta affermativa aggiorno il Montante
 					try {
 					  if(compensoHome.findCompensoConDataSuperiore(((CNRUserContext)userContext).getEsercizio(),anagrafico.getCd_anag(),pagamento_esterno.getDt_pagamento()).booleanValue())
@@ -1343,7 +1343,7 @@ private void calcolaMontantePerPagamentoEsterno(UserContext userContext, Anagraf
 		if(pagamento_esterno != null && pagamento_esterno.getCd_tipo_rapporto() != null){
 			if(pagamento_esterno.getCd_tipo_rapporto().equals(tipo_rapporto_occa.getCd_tipo_rapporto())
 				&& pagamento_esterno.getIm_pagamento() != null){
-				//Controllo se puÚ cancellare il record sui compensi attraverso la data
+				//Controllo se pu√≤ cancellare il record sui compensi attraverso la data
 				//in caso di risposta affermativa aggiorno il Montante
 				try {
 				  if(compensoHome.findCompensoConDataSuperiore(((CNRUserContext)userContext).getEsercizio(),anagrafico.getCd_anag(),pagamento_esterno.getDt_pagamento()).booleanValue())
@@ -1372,8 +1372,8 @@ private void calcolaMontantePerPagamentoEsterno(UserContext userContext, Anagraf
 
 /**
  * Metodo creato per il controllo dei relativi all'oggetto ANAGRAFICO_ESERCIZIO.
- *	Il metodo Ë invocato durante la Creazione o la Modifica di un Anagrafico, 
- *	(metodo modificaConBulk), e, per ora, controlla, solo la validit‡ del campo
+ *	Il metodo √® invocato durante la Creazione o la Modifica di un Anagrafico, 
+ *	(metodo modificaConBulk), e, per ora, controlla, solo la validit√† del campo
  *	<code>FL_NOTAXAREA</code>.
  *
  * Creation date: (15/01/2003 15.55)
@@ -1390,8 +1390,8 @@ private void validaCreaModificaAnagrafico_esercizio(UserContext userContext, Ana
 		try{
 			// L'ANAGRAFICO_ESERCIZIO non esiste 
 			if (anag_eserc.isToBeCreated()){
-				/* Il FL_NOTAXAREA Ë stato impostato come TRUE oppure 
-				 *	Ë stato impostato un valore per il campo <code>Im_detrazione_personale_anag</code>
+				/* Il FL_NOTAXAREA √® stato impostato come TRUE oppure 
+				 *	√® stato impostato un valore per il campo <code>Im_detrazione_personale_anag</code>
 				 */
 				if ( (anag_eserc.getFl_notaxarea() != null && anag_eserc.getFl_notaxarea().booleanValue()) 
 					||(anag_eserc.getFl_nofamilyarea() != null && anag_eserc.getFl_nofamilyarea().booleanValue())
@@ -1531,29 +1531,29 @@ public void validaCreaModificaConBulk(
 		// verifica dell'esistenza dei campi per la ferifica del codice fiscale
 		if (anagrafico.getDt_nascita() == null)
 			throw new it.cnr.jada.comp.ApplicationException(
-				"La data di nascita Ë obbligatoria.");
+				"La data di nascita √® obbligatoria.");
 
 		if (anagrafico.getCognome() == null)
-			throw new it.cnr.jada.comp.ApplicationException("Il cognome Ë obbligatorio.");
+			throw new it.cnr.jada.comp.ApplicationException("Il cognome √® obbligatorio.");
 
 		if (anagrafico.getNome() == null)
-			throw new it.cnr.jada.comp.ApplicationException("Il nome Ë obbligatorio.");
+			throw new it.cnr.jada.comp.ApplicationException("Il nome √® obbligatorio.");
 
-		// Controlla la validit‡ di Cognome e Nome
+		// Controlla la validit√† di Cognome e Nome
 		controllaNomeCognome(anagrafico);
 
 		if (anagrafico.getTi_sesso() == null)
-			throw new it.cnr.jada.comp.ApplicationException("Il sesso Ë obbligatorio.");
+			throw new it.cnr.jada.comp.ApplicationException("Il sesso √® obbligatorio.");
 
 		if (anagrafico.getComune_nascita() == null
 			|| anagrafico.getPg_comune_nascita() == null)
 			throw new it.cnr.jada.comp.ApplicationException(
-				"Il comune di nascita Ë obbligatorio.");
+				"Il comune di nascita √® obbligatorio.");
 
 		if (anagrafico.getComune_fiscale() == null
 			|| anagrafico.getPg_comune_fiscale() == null)
 			throw new it.cnr.jada.comp.ApplicationException(
-				"Il comune Fiscale Ë obbligatorio.");
+				"Il comune Fiscale √® obbligatorio.");
 
 		// Viene verificata l'esattezza del codice fiscale
 		if (anagrafico.getFl_codice_fiscale_forzato() == null
@@ -1565,12 +1565,12 @@ public void validaCreaModificaConBulk(
 			anagrafico.setCodice_fiscale(anagrafico.getCodice_fiscale().toUpperCase());
 
 		if (anagrafico.getCodice_fiscale() == null)
-			throw new ApplicationException("Il codice fiscale Ë obbligatorio");
+			throw new ApplicationException("Il codice fiscale √® obbligatorio");
 		// Verifica lunghezza codice fiscale Italiani - persone fisiche
 		if(NazioneBulk.ITALIA.equals(anagrafico.getTi_italiano_estero()))
 			if(anagrafico.getCodice_fiscale().replace(" ","").length()!=16)
 				throw  new it.cnr.jada.comp.ApplicationException(
-					"La lunghezza del codice fiscale non Ë valida!"); 
+					"La lunghezza del codice fiscale non √® valida!"); 
 		// Carichi Familiari verifica
 		validaCarichiFamiliari(userContext, anagrafico);
 	}
@@ -1579,7 +1579,7 @@ public void validaCreaModificaConBulk(
 	if (anagrafico.getComune_fiscale() == null
 		|| anagrafico.getComune_fiscale().getPg_comune() == null)
 		throw new it.cnr.jada.comp.ApplicationException(
-			"Il comune fiscale Ë obbligatorio.");
+			"Il comune fiscale √® obbligatorio.");
 
 	// PARTITA IVA e C.F. di persona guiridica
 	// se richiesta verifica che non sia nulla
@@ -1587,7 +1587,7 @@ public void validaCreaModificaConBulk(
 		&& (anagrafico.getPartita_iva() == null
 			|| anagrafico.getPartita_iva().length() == 0))
 		throw new it.cnr.jada.comp.ApplicationException(
-			"La partita IVA Ë obbligatoria per le anagrafiche soggette ad IVA.");
+			"La partita IVA √® obbligatoria per le anagrafiche soggette ad IVA.");
 
 	// verifica dell'esattezza della partita iva
 	try {
@@ -1596,23 +1596,23 @@ public void validaCreaModificaConBulk(
 			&& NazioneBulk.ITALIA.equals(anagrafico.getTi_italiano_estero()))
 			PartitaIVAControllo.parsePartitaIVA(anagrafico.getPartita_iva());
 	} catch (ExPartitaIVA ecf) {
-		throw new it.cnr.jada.comp.ApplicationException("La partita IVA Ë errata.");
+		throw new it.cnr.jada.comp.ApplicationException("La partita IVA √® errata.");
 	}
 
 	// verifica dell'esattezza del codice fiscale per anagrafiche non Persona Fisica 
 	if (!anagrafico.isPersonaFisica()) {
 		if (anagrafico.isPersonaGiuridica() && anagrafico.getRagione_sociale() == null)
-			throw new ApplicationException("La ragione sociale Ë obbligatoria per una persona giuridica.");
+			throw new ApplicationException("La ragione sociale √® obbligatoria per una persona giuridica.");
 
 		if (anagrafico.getCodice_fiscale() != null) {
 			if (NazioneBulk.ITALIA.equals(anagrafico.getTi_italiano_estero())) {
 				try {
-					// Per testare se il codice fiscale Ë una partita iva
+					// Per testare se il codice fiscale √® una partita iva
 					// controllo se sono tutti numeri...
 					new Long(anagrafico.getCodice_fiscale());
 					PartitaIVAControllo.parsePartitaIVA(anagrafico.getCodice_fiscale());
 				} catch (NumberFormatException nfe) {
-					// se non sono tutti numeri Ë un codice fiscale!
+					// se non sono tutti numeri √® un codice fiscale!
 //					if (anagrafico.getCodice_fiscale().length() != 16
 //						|| !CodiceFiscaleControllo.checkCC(anagrafico.getCodice_fiscale()))
 					if (anagrafico.getCodice_fiscale().length() == 16)
@@ -1627,7 +1627,7 @@ public void validaCreaModificaConBulk(
 				}
 			}
 		} else
-			//Se persona giuridica il codice fiscale Ë obbligatorio se italiano o non soggetto ad iva 
+			//Se persona giuridica il codice fiscale √® obbligatorio se italiano o non soggetto ad iva 
 			if (anagrafico.isPersonaGiuridica()
 				&& (!anagrafico.getFl_soggetto_iva().booleanValue() ||
 					NazioneBulk.ITALIA.equals(anagrafico.getTi_italiano_estero()))) {
@@ -1639,12 +1639,12 @@ public void validaCreaModificaConBulk(
 					&& anagrafico.getCognome() == null
 					&& anagrafico.getNome() == null) {
 					throw new it.cnr.jada.comp.ApplicationException(
-						"Attenzione: per i soggetti di tipo <Diversi>, Ë obbligatorio specificare almeno il Cognome o il Nome.");
+						"Attenzione: per i soggetti di tipo <Diversi>, √® obbligatorio specificare almeno il Cognome o il Nome.");
 				}
 	}
 
 	/* <B>Rich. 661</B>
-	 *	Il fl_esigibilit‡_differita, <U>per gli enti pubblici stranieri</U>,
+	 *	Il fl_esigibilit√†_differita, <U>per gli enti pubblici stranieri</U>,
 	 *	NON PUO' essere TRUE
 	 *
 	 * Creation date: (29/01/2004)
@@ -1662,10 +1662,10 @@ public void validaCreaModificaConBulk(
 
 	/*  <B>A correzione dell'errore No. 02240A</B>
     
-		Aggiunto controllo: la verifica viene fatta solo se AnagraficoBulk Ë in 
-		Creazione OR Ë stata inserita la P.I. OR il C.F. Questo evita nel caso, ad es. di un 
-		AnagraficoBulk di tipo "DIVERSI", (in cui l'utente ha la facolt‡ di NON inserire nË
-		la P.I., nË il C.F.), di trovare risultati fuorvianti. */
+		Aggiunto controllo: la verifica viene fatta solo se AnagraficoBulk √® in 
+		Creazione OR √® stata inserita la P.I. OR il C.F. Questo evita nel caso, ad es. di un 
+		AnagraficoBulk di tipo "DIVERSI", (in cui l'utente ha la facolt√† di NON inserire n√®
+		la P.I., n√® il C.F.), di trovare risultati fuorvianti. */
 
 	if (/*(!anagrafico.isToBeCreated()) || */
 		anagrafico.getPartita_iva() != null
@@ -1684,7 +1684,7 @@ public void validaCreaModificaConBulk(
 			if (!anagrafico.isToBeCreated())
 				sql.addClause("AND", "cd_anag", SQLBuilder.NOT_EQUALS, anagrafico.getCd_anag());
 			if (sql.executeExistsQuery(getConnection(userContext)))
-				throw new ApplicationException("Esiste gi‡ un'altra anagrafica con questo codice fiscale o partita iva");
+				throw new ApplicationException("Esiste gi√† un'altra anagrafica con questo codice fiscale o partita iva");
 		} catch (java.sql.SQLException e) {
 			throw handleException(e);
 		}
@@ -1719,7 +1719,7 @@ public void validaCreaModificaConBulk(
 		// Per testare la partita iva
 		try {
 			if (anagrafico.getPartita_iva()!=null &&!verificaStrutturaPiva(userContext, anagrafico))
-				throw new it.cnr.jada.comp.ApplicationException("Verificare la partita Iva non corrisponde al modello della sua nazionalit‡.");
+				throw new it.cnr.jada.comp.ApplicationException("Verificare la partita Iva non corrisponde al modello della sua nazionalit√†.");
 		} catch (ValidationException e) {
 			throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
 		}
@@ -1740,8 +1740,8 @@ public void validaCreaModificaConBulk(
  * <B>A correzione dell'errore No. 02234A</B>
  *
  * Metodo creato per il controllo dei dati inseriti nel Tab Dettagli.
- *	Il metodo Ë invocato durante la validazione di un Anagrafica per Creazione, 
- *	(metodo validaCreaModificaConBulk), e, per ora, controlla, solo la validit‡ del campo
+ *	Il metodo √® invocato durante la validazione di un Anagrafica per Creazione, 
+ *	(metodo validaCreaModificaConBulk), e, per ora, controlla, solo la validit√† del campo
  *	<code>Aliquota Fiscale</code>
  *
  * Creation date: (23/08/2002 11.10.44)
@@ -1778,7 +1778,7 @@ protected void validaDettagli(AnagraficoBulk anagrafico) throws ApplicationExcep
  *      Viene impostata la data di fine rapporto dell'anagrafico e di ogni terzo con data di fine rapporto nulla o superiore alla data odierna con la data odierna.
  *  Anagrafico con data di fine rapporto, richiesta modifica data fine rapporto
  *    PreCondition:
- *      L'utente ha richiesto la modifica della data di fine rapporto di un anagrafico che ha gi‡ impostata la data di fine rapporto
+ *      L'utente ha richiesto la modifica della data di fine rapporto di un anagrafico che ha gi√† impostata la data di fine rapporto
  *    PostCondition:
  *      Viene salvata la data di fine rapporto dell'anagrafico e impostata la data di fine rapporto di ogni terzo con data di fine uguale alla precedente data di fine rapporto dell'anagrafico
  */
@@ -1788,14 +1788,14 @@ public void verificaDataFineRapporto(UserContext userContext, AnagraficoBulk ana
 /*
 		AnagraficoBulk anagrafico_bck = (AnagraficoBulk)getHome(userContext,anagrafico).findByPrimaryKey(anagrafico);
 
-		// Se la data di fine rapporto Ë stata modificata
+		// Se la data di fine rapporto √® stata modificata
 		if (anagrafico_bck != null) {
 			if (anagrafico.getDt_fine_rapporto() == null) {
 				if (anagrafico_bck.getDt_fine_rapporto() != null)
-					throw new ApplicationException("Non Ë possibile togliere la data di fine rapporto di un anagrafico.");
+					throw new ApplicationException("Non √® possibile togliere la data di fine rapporto di un anagrafico.");
 			} else if (!anagrafico.getDt_fine_rapporto().equals(anagrafico_bck.getDt_fine_rapporto())) {
 				if (anagrafico.getDt_fine_rapporto().before(dt_odierna))
-					throw new ApplicationException("La data di fine rapporto di un anagrafico non puÚ essere anteriore alla data odierna");
+					throw new ApplicationException("La data di fine rapporto di un anagrafico non pu√≤ essere anteriore alla data odierna");
 				adeguaDt_fine_rapportoTerzi(userContext,anagrafico);
 			}
 		}
@@ -1807,9 +1807,9 @@ public void verificaDataFineRapporto(UserContext userContext, AnagraficoBulk ana
 }
 
 /**
- *  Controlla i periodi di validit‡ dei rapporti di tipo NON DIPENDENTE.
- *	  Per ogni Rapporto di tipo NON DIPENDENTE, si controlla che la Data di Inizio Validit‡
- *	  e quella di Fine Validit‡ non siano all'interno di un periodo di validit‡ di un Rapporto DIPENDENTE.
+ *  Controlla i periodi di validit√† dei rapporti di tipo NON DIPENDENTE.
+ *	  Per ogni Rapporto di tipo NON DIPENDENTE, si controlla che la Data di Inizio Validit√†
+ *	  e quella di Fine Validit√† non siano all'interno di un periodo di validit√† di un Rapporto DIPENDENTE.
  *	  In tal caso viene lanciato un messaggio all'utente.
  */
 private void verificaNuovoRapporto(AnagraficoBulk anagrafico) throws it.cnr.jada.comp.ComponentException{
@@ -1842,22 +1842,22 @@ private void verificaNuovoRapporto(AnagraficoBulk anagrafico) throws it.cnr.jada
 					for (Iterator i_dip= rapporti_dip.iterator(); i_dip.hasNext();){
 						RapportoBulk rapporto_dip = (RapportoBulk)i_dip.next();
 
-						// Controlla la data di INIZIO validit‡ del rapporto NON dipendente
+						// Controlla la data di INIZIO validit√† del rapporto NON dipendente
 						if (rapporto.getDt_ini_validita().after(rapporto_dip.getDt_ini_validita()) && 
 							rapporto.getDt_ini_validita().before(rapporto_dip.getDt_fin_validita())) {
 									
-								throw new ApplicationException("Attenzione: la data di INIZIO validit‡ del rapporto " 
+								throw new ApplicationException("Attenzione: la data di INIZIO validit√† del rapporto " 
 									+ rapporto.getTipo_rapporto().getDs_tipo_rapporto() 
-									+ " Ë incompatibile col periodo di validit‡ del rapporto " 
+									+ " √® incompatibile col periodo di validit√† del rapporto " 
 									+ rapporto_dip.getTipo_rapporto().getDs_tipo_rapporto());								
 						} 
-						// Controlla la data di FINE validit‡ del rapporto NON dipendente
+						// Controlla la data di FINE validit√† del rapporto NON dipendente
 						else if (rapporto.getDt_fin_validita().after(rapporto_dip.getDt_ini_validita()) &&
 								rapporto.getDt_fin_validita().before(rapporto_dip.getDt_fin_validita())){
 									
-								throw new ApplicationException("Attenzione: la data di FINE validit‡ del rapporto " 
+								throw new ApplicationException("Attenzione: la data di FINE validit√† del rapporto " 
 									+ rapporto.getTipo_rapporto().getDs_tipo_rapporto() 
-									+ " Ë incompatibile col periodo di validit‡ del rapporto " 
+									+ " √® incompatibile col periodo di validit√† del rapporto " 
 									+ rapporto_dip.getTipo_rapporto().getDs_tipo_rapporto());		
 						}
 						
@@ -1878,7 +1878,7 @@ public boolean isItalianoEsteroModificabile(UserContext userContext,AnagraficoBu
 		{
 			if (isAnagraficaModificabile(userContext,anagrafico))
 			{
-				/**Ë modificabile solo se Ë Estero, se Ë Persona Fisica e se 
+				/**√® modificabile solo se √® Estero, se √® Persona Fisica e se 
 				   non ha fatture passive nell'anno */
 				
 				/**serve per prendere il valore di ti_italiano_estero dal db*/
@@ -1934,21 +1934,21 @@ public void checkConiugeAlreadyExistFor(UserContext userContext,AnagraficoBulk a
 		     carico.getDt_fin_validita().after(carico_familiare.getDt_ini_validita()) &&
 		     carico.getDt_fin_validita().after(carico_familiare.getDt_fin_validita())))){
 			if (carico.isConiuge() && carico_familiare.isConiuge())
-	 			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non Ë possibile indicare un Coniuge per questo periodo, esiste un Coniuge valido nello stesso periodo!");
+	 			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non √® possibile indicare un Coniuge per questo periodo, esiste un Coniuge valido nello stesso periodo!");
 			else if (carico.isConiuge() && carico_familiare.isFiglio() && carico_familiare.getFl_primo_figlio_manca_con().booleanValue())
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non Ë possibile indicare un Coniuge per questo periodo, esiste gi‡ un primo figlio in assenza di Coniuge nello stesso periodo!");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non √® possibile indicare un Coniuge per questo periodo, esiste gi√† un primo figlio in assenza di Coniuge nello stesso periodo!");
 			else if (carico.isFiglio() && carico.getFl_primo_figlio_manca_con().booleanValue() && carico_familiare.isConiuge())	
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non Ë possibile indicare primo figlio in assenza di Coniuge, esiste un Coniuge valido nello stesso periodo!");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non √® possibile indicare primo figlio in assenza di Coniuge, esiste un Coniuge valido nello stesso periodo!");
 			else if (carico.isFiglio()&& carico.getFl_primo_figlio_manca_con().booleanValue()  && carico_familiare.isFiglio() && carico_familiare.getFl_primo_figlio_manca_con().booleanValue())	
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non Ë possibile indicare primo figlio in assenza di Coniuge, esiste gi‡ un primo figlio in assenza di Coniuge nello stesso periodo!");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non √® possibile indicare primo figlio in assenza di Coniuge, esiste gi√† un primo figlio in assenza di Coniuge nello stesso periodo!");
 			else if (carico.getCodice_fiscale().equals(carico_familiare.getCodice_fiscale()))
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: Ë stato gi‡ inserito un carico con lo stesso Codice Fiscale!");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: √® stato gi√† inserito un carico con lo stesso Codice Fiscale!");
 			else if (!carico.isConiuge()&& carico.getCodice_fiscale().equals(carico_familiare.getCodice_fiscale_altro_gen()))
 				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: il carico ha lo stesso codice fiscale dell'altro genitore!");			
 			else if (carico.isFiglio() && 
 					 carico.getCodice_fiscale_altro_gen()!= null && 
 					 carico.getCodice_fiscale_altro_gen().equals(carico_familiare.getCodice_fiscale()) && !carico_familiare.isConiuge())
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: Il Codice Fiscale dell'altro genitore Ë uguale a quello di un altro carico!");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: Il Codice Fiscale dell'altro genitore √® uguale a quello di un altro carico!");
 			}
 	}
 }
@@ -2087,7 +2087,7 @@ public void validaTi_persona(UserContext userContext, AnagraficoBulk carico) {
 			//!esisteConiugeValido(userContext,carico_familiare.getAnagrafico(),carico_familiare) 
 			&&
 			carico_familiare.getCodice_fiscale_altro_gen() == null)
-			throw new ApplicationException("Carichi Familiari: per il Figlio Ë necessario specificare il Codice fiscale dell'altro genitore oppure Ë necessario inserire il Coniuge");
+			throw new ApplicationException("Carichi Familiari: per il Figlio √® necessario specificare il Codice fiscale dell'altro genitore oppure √® necessario inserire il Coniuge");
 		}
 	} catch(javax.ejb.EJBException e) {
 		throw new it.cnr.jada.DetailedRuntimeException(e);
@@ -2330,7 +2330,7 @@ public boolean verificaStrutturaPiva(UserContext userContext, AnagraficoBulk ana
 	}
 	//RP intrastat per il momento sospeso controllo per altre nazione CEE 
 	if (anagrafico.getNazionalita()!=null && anagrafico.getNazionalita().getStruttura_piva()==null)
-		throw new ApplicationException("Non Ë definito nessun modello di partita Iva per la nazione.");
+		throw new ApplicationException("Non √® definito nessun modello di partita Iva per la nazione.");
 		//return true;
 	if (anagrafico.getNazionalita()!=null && anagrafico.getNazionalita().getStruttura_piva()!=null){	
 		for (int i=0;i<anagrafico.getNazionalita().getStrutturaPivaModelliPossibili();i++){
@@ -2341,12 +2341,12 @@ public boolean verificaStrutturaPiva(UserContext userContext, AnagraficoBulk ana
 							char data[] = {anagrafico.getPartita_iva().charAt(y)};
 							int appo = Integer.parseInt(new String(data));
 							if (anagrafico.getNazionalita().getStrutturaPivaModello(i+1).charAt(y)==NazioneBulk.IBAN_TIPO_CARATTERE.charAt(0))
-								throw new ValidationException("Il "+(y+1)+"∞ carattere della partita Iva non deve essere un numero.");					
+								throw new ValidationException("Il "+(y+1)+"¬∞ carattere della partita Iva non deve essere un numero.");					
 						} catch (ValidationException e) {
 							throw e;
 						} catch (Exception e) {
 							if (anagrafico.getNazionalita().getStrutturaPivaModello(i+1).charAt(y)==NazioneBulk.IBAN_TIPO_NUMERICO.charAt(0))
-								throw new ValidationException("Il "+(y+1)+"∞ carattere della partita Iva deve essere un numero.");
+								throw new ValidationException("Il "+(y+1)+"¬∞ carattere della partita Iva deve essere un numero.");
 						}
 					}
 				}
@@ -2371,7 +2371,7 @@ public void checkCaricoAlreadyExistFor(UserContext userContext,
 			     carico.getDt_fin_validita().after(carico_familiare.getDt_ini_validita()) &&
 			     carico.getDt_fin_validita().after(carico_familiare.getDt_fin_validita())))){
 			if (carico.getCodice_fiscale().compareTo(carico_familiare.getCodice_fiscale())==0){
-	 			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non Ë possibile indicare un carico in questo periodo con questo codice fiscale, esiste gi‡ un carico valido nello stesso periodo!");
+	 			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non √® possibile indicare un carico in questo periodo con questo codice fiscale, esiste gi√† un carico valido nello stesso periodo!");
 			}
 	}
 	}
@@ -2398,7 +2398,7 @@ public void controllaUnicitaCaricoInAnnoImposta(UserContext userContext,Anagrafi
 				dataFinCarico.get(GregorianCalendar.YEAR) == (dataInCaricoFamiliare.get(GregorianCalendar.YEAR))||
 				dataFinCarico.get(GregorianCalendar.YEAR) == (dataFinCaricoFamiliare.get(GregorianCalendar.YEAR)))
 			   )	
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: Non Ë possibile inserire per lo stesso carico familiare pi˘ dettagli relativi ad uno stesso anno d'imposta!");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: Non √® possibile inserire per lo stesso carico familiare pi√π dettagli relativi ad uno stesso anno d'imposta!");
 			}
 	}	
 public boolean isGestitoCreditoIrpef(UserContext userContext) throws ComponentException {

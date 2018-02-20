@@ -112,7 +112,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, ricevuta.getIdentificativoSdI().toString());
 			if (fattura != null && (fattura.getStatoInvioSdi() == null || !fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_MANCATA_CONSEGNA))){
-				logger.info("Fatture Elettroniche: Attive: Fattura gi‡ elaborata "+ricevuta.getIdentificativoSdI().toString());
+				logger.info("Fatture Elettroniche: Attive: Fattura gi√† elaborata "+ricevuta.getIdentificativoSdI().toString());
 			} else {
 				if (fattura == null){
 					String nomeFileP7m = ricevuta.getNomeFile();
@@ -160,7 +160,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 				logger.info("Salvato file sul Documentale");
 			} catch (StorageException e) {
 				if (e.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
-					throw new ApplicationException("CMIS - File Ricevuta Consegna ["+ storageFile.getFileName()+"] gi‡ presente o non completo di tutte le propriet‡ obbligatorie. Inserimento non possibile!");
+					throw new ApplicationException("CMIS - File Ricevuta Consegna ["+ storageFile.getFileName()+"] gi√† presente o non completo di tutte le propriet√† obbligatorie. Inserimento non possibile!");
 				throw new ApplicationException("CMIS - Errore nella registrazione del file Ricevuta Consegna  sul Documentale (" + e.getMessage() + ")");
 			}
 		}
@@ -175,7 +175,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 			String codiceSDI = String.valueOf(mancataConsegna.getIdentificativoSdI());
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
 			if (fattura != null){
-				logger.info("Fatture Elettroniche: Attive: Fattura gi‡ elaborata "+codiceSDI);
+				logger.info("Fatture Elettroniche: Attive: Fattura gi√† elaborata "+codiceSDI);
 			} else {
 				String nomeFileP7m = mancataConsegna.getNomeFile();
 				fattura = recuperoFatturaDaNomeFile(userContext, nomeFileP7m);
@@ -210,7 +210,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 			String codiceSDI = String.valueOf(notifica.getIdentificativoSdI());
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
 			if (fattura != null && fattura.getStatoInvioSdi() != null && fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_NON_RECAPITABILE)){
-				logger.info("Fatture Elettroniche: Attive: Fattura gi‡ elaborata "+codiceSDI);
+				logger.info("Fatture Elettroniche: Attive: Fattura gi√† elaborata "+codiceSDI);
 			} else {
 				String nomeFileP7m = notifica.getNomeFile();
 				fattura = recuperoFatturaDaNomeFile(userContext, nomeFileP7m);
@@ -259,7 +259,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 			if (fattura != null){
 				if (fattura.getStatoInvioSdi() != null && 
 						(fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI))){
-					logger.info("Fatture Elettroniche: Attive: PEC. Fattura gi‡ elaborata. "+nomeFile);
+					logger.info("Fatture Elettroniche: Attive: PEC. Fattura gi√† elaborata. "+nomeFile);
 				} else if (fattura.getStatoInvioSdi() != null && 
 						(fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI))){
 					try{
@@ -294,7 +294,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		    			DocumentiCollegatiDocAmmService docCollService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
 		    			InputStream streamSigned = docCollService.getStreamXmlFirmatoFatturaAttiva(fattura.getEsercizio(), fattura.getCd_cds(), fattura.getCd_uo(), fattura.getPg_fattura_attiva());
 		    			if (streamSigned != null){
-							SendMail.sendErrorMail("Fatture Elettroniche: Attive: PEC. Mancata Consegna Fattura: "+fattura.getCd_uo()+"-"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva(), "Verr‡ riprovato l'invio.");
+							SendMail.sendErrorMail("Fatture Elettroniche: Attive: PEC. Mancata Consegna Fattura: "+fattura.getCd_uo()+"-"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva(), "Verr√† riprovato l'invio.");
 			    			return streamSigned;
 		    			}
 						SendMail.sendErrorMail("Fatture Elettroniche: Attive: PEC. Stream file firmato non trovato.", "Mancata Consegna Fattura: "+fattura.getCd_uo()+"-"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva());
@@ -327,7 +327,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 			String codiceSDI = String.valueOf(notifica.getIdentificativoSdI());
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
 			if (fattura != null){
-				logger.info("Fatture Elettroniche: Attive: Fattura gi‡ elaborata "+codiceSDI);
+				logger.info("Fatture Elettroniche: Attive: Fattura gi√† elaborata "+codiceSDI);
 			} else {
 				String nomeFileP7m = recuperoNomeFileP7m(notifica);
 				fattura = recuperoFatturaDaNomeFile(userContext, nomeFileP7m);
@@ -379,7 +379,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 			if (fattura != null){
 				if (!StringUtils.isEmpty(fattura.getStatoInvioSdi())){
 					if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_DECORRENZA_TERMINI)){
-						logger.info("Fatture Elettroniche: Attive: Fattura gi‡ elaborata ");
+						logger.info("Fatture Elettroniche: Attive: Fattura gi√† elaborata ");
 					} else if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI) ||
 							fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO)){
 						salvaFileSuDocumentale(data, nomeFile, fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_DECORRENZA_TERMINI);
@@ -416,7 +416,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 			if (fattura != null){
 				if (!StringUtils.isEmpty(fattura.getStatoInvioSdi())){
 					if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_ACCETTATA_DESTINATARIO) || fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_RIFIUTATA_DESTINATARIO)){
-						logger.info("Fatture Elettroniche: Attive: Fattura gi‡ elaborata ");
+						logger.info("Fatture Elettroniche: Attive: Fattura gi√† elaborata ");
 					} else if (fattura.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO)){
 						if (esitoAccettato(notifica)){
 							salvaFileSuDocumentale(data, nomeFile, fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_ACCETTATO);

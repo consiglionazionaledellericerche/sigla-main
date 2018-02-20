@@ -74,7 +74,7 @@ public final class Utility {
 	private transient static final Logger logger = LoggerFactory.getLogger(Utility.class);
 
 	public static final String MANIFEST_PATH = "/META-INF/MANIFEST.MF";
-	public static final String APPLICATION_TITLE = "SIGLA - Sistema Informativo per la Gestione delle Linee di Attivit‡";
+	public static final String APPLICATION_TITLE = "SIGLA - Sistema Informativo per la Gestione delle Linee di Attivit√†";
 	public static final java.math.BigDecimal ZERO = new java.math.BigDecimal(0);
 	public static String TIPO_GESTIONE_SPESA = "S";
 	public static String TIPO_GESTIONE_ENTRATA = "E";
@@ -137,7 +137,7 @@ public final class Utility {
 	/**
 	 * Restituisce una Stringa ottenuta sostituendo
 	 * nella stringa sorgente alla stringa pattern la stringa replace,
-	 * se la stringa pattern non Ë presente restituisce la stringa sorgente
+	 * se la stringa pattern non √® presente restituisce la stringa sorgente
 	 */
 	public static String replace(String source, String pattern, String replace)
 	{
@@ -303,8 +303,8 @@ public final class Utility {
 				{ "venti", "trenta", "quaranta", "cinquanta", "sessanta", 
 					"settanta", "ottanta", "novanta" };
 			String letter = vettore[n / 10 - 2];
-			int t = n % 10; // t Ë la prima cifra di n
-			// se Ë 1 o 8 va tolta la vocale finale di letter
+			int t = n % 10; // t √® la prima cifra di n
+			// se √® 1 o 8 va tolta la vocale finale di letter
 			if (t == 1 || t == 8 ) {
 				letter = letter.substring(0, letter.length() - 1);
 			}

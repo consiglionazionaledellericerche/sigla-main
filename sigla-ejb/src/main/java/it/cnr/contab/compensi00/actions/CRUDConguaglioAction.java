@@ -315,7 +315,7 @@ public Forward doOnDtDaCompetenzaCogeChange(ActionContext context) {
 			String msg = null;
 			switch (errorCodeTerzo) {
 				case 6: {
-					msg = "Il tipo rapporto selezionato non è più valido! I dati verranno persi. Vuoi continuare?";
+					msg = "Il tipo rapporto selezionato non Ã¨ piÃ¹ valido! I dati verranno persi. Vuoi continuare?";
 					break;
 				}
 			}
@@ -358,10 +358,10 @@ public Forward doOnDtRegistrazioneChange(ActionContext context) {
 			String msg = null;
 			switch (errorCodeTerzo) {
 				case 2: {
-					msg = "Il terzo selezionato non è più valido! I dati verranno persi. Vuoi continuare?";
+					msg = "Il terzo selezionato non Ã¨ piÃ¹ valido! I dati verranno persi. Vuoi continuare?";
 					break;
 				}case 8: {
-					msg = "Il tipo trattamento selezionato non è più valido! I dati verranno persi. Vuoi continuare?";
+					msg = "Il tipo trattamento selezionato non Ã¨ piÃ¹ valido! I dati verranno persi. Vuoi continuare?";
 					break;
 				}
 			}

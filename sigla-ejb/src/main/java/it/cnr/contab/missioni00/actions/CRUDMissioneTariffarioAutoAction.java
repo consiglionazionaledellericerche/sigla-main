@@ -26,7 +26,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 
 		CRUDMissioneTariffarioAutoBP bp = (CRUDMissioneTariffarioAutoBP )getBusinessProcess(context);
 		if (!bp.isEditing()) {
-			bp.setMessage("Non è possibile cancellare in questo momento");
+			bp.setMessage("Non Ã¨ possibile cancellare in questo momento");
 		} else {
 			bp.delete(context);
 			Missione_tariffario_autoBulk tariffario = (Missione_tariffario_autoBulk)bp.getModel();

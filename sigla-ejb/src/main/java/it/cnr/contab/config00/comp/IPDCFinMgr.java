@@ -14,7 +14,7 @@ public interface IPDCFinMgr extends it.cnr.jada.comp.ICRUDMgr
  * Pre-post-conditions:
  *
  * Nome: Ricerca di Elemento voce
- * Pre:  La richiesta di ricerca di un Elemento voce Ë stata generata
+ * Pre:  La richiesta di ricerca di un Elemento voce √® stata generata
  * Post: La lista di Elemento_vocebulk che soddisfano i criteri di ricerca sono stati recuperati
  *
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -31,21 +31,21 @@ public abstract it.cnr.jada.util.RemoteIterator cerca(it.cnr.jada.UserContext pa
  * Pre-post-conditions:
  *
  * Nome: Creazione di Elemento_voce senza codice proprio
- * Pre:  La richiesta di creazione di un Elemento_voce senza aver specificato un codice proprio Ë stata generata
+ * Pre:  La richiesta di creazione di un Elemento_voce senza aver specificato un codice proprio √® stata generata
  * Post: Un Elemento_voceBulk stato creato con i dati inseriti dall'utente e il suo codice e' stato generato 
  *       automaticamente 
  *
  * Nome: Creazione di Elemento_voce con codice proprio
- * Pre:  La richiesta di creazione di un Elemento_voce con codice proprio specificato Ë stata generata
+ * Pre:  La richiesta di creazione di un Elemento_voce con codice proprio specificato √® stata generata
  * Post: Un Elemento_voceBulk stato creato con i dati inseriti dall'utente e il suo codice e' stato formattato
  *
  * Nome: Creazione di Elemento_voce di tipo CNR Spese Capitolo
- * Pre:  La richiesta di creazione di un Elemento_voce di tipo Capitolo di Spesa CNR Ë stata generata
+ * Pre:  La richiesta di creazione di un Elemento_voce di tipo Capitolo di Spesa CNR √® stata generata
  * Post: Un Capitolo di Spesa del CNR viene creato con i dati inseriti dall'utente; come elemento padre di tale capitolo
- *       viene ricercata la categoria con Codice = 2 (gi‡ creata in automatico) sotto al Titolo specificato dall'utente; .
+ *       viene ricercata la categoria con Codice = 2 (gi√† creata in automatico) sotto al Titolo specificato dall'utente; .
  *
  * Nome: Creazione di Elemento_voce di tipo CDS Spese Capitolo
- * Pre:  La richiesta di creazione di un Elemento_voce di tipo CDS Spese Capitolo Ë stata generata
+ * Pre:  La richiesta di creazione di un Elemento_voce di tipo CDS Spese Capitolo √® stata generata
  * Post: Un capitolo di spesa del CDS  e' stato creato e tutte le associazioni Ass_ev_funz_tipoCdsBulk 
  *       selezionate dall'utente sono state create
  * 
@@ -55,7 +55,7 @@ public abstract it.cnr.jada.util.RemoteIterator cerca(it.cnr.jada.UserContext pa
  *       visualizzare all'utente
  *
  * Nome: Errore di chiave duplicata
- * Pre:  Esiste gi‡ un Elemento_voceBulk persistente che possiede la stessa chiave
+ * Pre:  Esiste gi√† un Elemento_voceBulk persistente che possiede la stessa chiave
  * 		 primaria di quello specificato.
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente

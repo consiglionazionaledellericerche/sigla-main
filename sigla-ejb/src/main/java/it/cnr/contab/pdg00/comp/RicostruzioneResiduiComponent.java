@@ -67,7 +67,7 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 	  try{	
 		Pdg_residuoBulk testata = (Pdg_residuoBulk)bulk;
 		if (testata.getStato().equals(testata.STATO_CHIUSO)&&testata.getImTotaleDifferenza().compareTo(new BigDecimal("0"))!=0)
-		   throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare la ricostruzione residui Ë necessario che la differenza sia nulla!");
+		   throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare la ricostruzione residui √® necessario che la differenza sia nulla!");
 
 		Timestamp data, datain;
 		try {
@@ -99,7 +99,7 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 			}
 		}
 		// alla fine di tutto si lanciano i messaggi
-		// se lo stato Ë portato in aperto per modifica
+		// se lo stato √® portato in aperto per modifica
 		if (testata.getEsercizio()!=null&&testata.getCd_centro_responsabilita()!=null) {
 			try {	
 				Pdg_residuoHome oldResHome = (Pdg_residuoHome) getHomeCache(userContext).getHome( Pdg_residuoBulk.class );
@@ -122,7 +122,7 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 			}	
 		}
 	  }catch(NullPointerException e){
-		throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare la ricostruzione residui Ë necessario valorizzare i campi obbligatori!");
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare la ricostruzione residui √® necessario valorizzare i campi obbligatori!");
 	  }
 	  return bulk;
 	}
@@ -199,7 +199,7 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 	public CdrBulk findCdrUo(UserContext userContext) throws ComponentException {
 		try
 		{
-			// uso createSQLBuilderEsteso perchË il metodo createSQLBuilder filtra alcune cose
+			// uso createSQLBuilderEsteso perch√® il metodo createSQLBuilder filtra alcune cose
 			SQLBuilder sql = ((CdrHome)getHome(userContext, CdrBulk.class)).createSQLBuilderEsteso();
 			sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, CNRUserContext.getCd_unita_organizzativa(userContext));
 			sql.addClause("AND", "cd_proprio_cdr", sql.EQUALS, "000");
@@ -218,7 +218,7 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 
 	/**
 	 * Utile a ricercare sia i CDR utilizzabili dall'utente che usa la mappa
-	 * sia per la selezione dei record in ricerca dei residui gi‡ inseriti 
+	 * sia per la selezione dei record in ricerca dei residui gi√† inseriti 
 	 * 
 	 * @param userContext
 	 * @param sql
@@ -230,7 +230,7 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 	{
 		UtenteBulk utente = (UtenteBulk)getHome(userContext,UtenteBulk.class).findByPrimaryKey(new UtenteKey(CNRUserContext.getUser(userContext)));
 		if (utente == null || it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cdr(userContext) == null)
-			throw new ComponentException("L'utente non Ë stato assegnato a nessun CDR quindi non Ë possibile impostare questo livello di visibilit‡.");
+			throw new ComponentException("L'utente non √® stato assegnato a nessun CDR quindi non √® possibile impostare questo livello di visibilit√†.");
 
 		// cerchiamo il cdr per l'uo
 		//CdrBulk cdrUtente = (CdrBulk)getHome(userContext,CdrBulk.class).findByPrimaryKey(new CdrBulk(utente.getCd_cdr()));
@@ -239,9 +239,9 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 		// cerchiamo l'uo legata al cdr utente per capirne il tipo
 		Unita_organizzativaBulk aUO = (Unita_organizzativaBulk)getHome(userContext,Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdrUoCds.getCd_unita_organizzativa()));
 
-		// se la UO in scrivania Ë di tipo Ente l'utente deve vedere tutti i record
+		// se la UO in scrivania √® di tipo Ente l'utente deve vedere tutti i record
 		if (!isUOScrivaniaEnte(userContext)) {
-			// se il cdr Ë di livello 1 oppure il cdr Ë di tipo SAC o AREA l'utente vede se quel cdr altrimenti vede il suo afferente
+			// se il cdr √® di livello 1 oppure il cdr √® di tipo SAC o AREA l'utente vede se quel cdr altrimenti vede il suo afferente
 			if (cdrUoCds.getLivello().equals(new Integer("1"))
 				|| aUO.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_SAC) 
 				|| aUO.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA)) {
@@ -266,8 +266,8 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 	}
 	
 	/**
-	 * verifica se il cdr Ë di tipo SAC,
-	 * puÚ essere utilizzato anche in altri contesti
+	 * verifica se il cdr √® di tipo SAC,
+	 * pu√≤ essere utilizzato anche in altri contesti
 	 * 
 	 * @param userContext
 	 * @return
@@ -287,8 +287,8 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 
 	/**
 	 * Ricerca il CdR a cui deve afferire il residuo
-	 * cioË il CdR di primo livello legato alla UO in scrivania
-	 * oppure il CdR di secondo livello se la UO Ë della SAC
+	 * cio√® il CdR di primo livello legato alla UO in scrivania
+	 * oppure il CdR di secondo livello se la UO √® della SAC
 	 *
 	 * @param userContext	lo UserContext che ha generato la richiesta
 	 * @return Il CdR del residuo per l'utente operatore
@@ -296,7 +296,7 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 	public CdrBulk findCdr(UserContext userContext) throws ComponentException {
 		try
 		{
-			// uso createSQLBuilderEsteso perchË il metodo createSQLBuilder filtra alcune cose
+			// uso createSQLBuilderEsteso perch√® il metodo createSQLBuilder filtra alcune cose
 			SQLBuilder sql = ((CdrHome)getHome(userContext, CdrBulk.class)).createSQLBuilderEsteso();
 			sql = selectCdr(userContext,sql);
 
@@ -372,8 +372,8 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 
 	}
 	/**
-	 * verifica se l'uo in scrivania selezionata Ë di tipo ente,
-	 * puÚ essere utilizzato anche in altri contesti
+	 * verifica se l'uo in scrivania selezionata √® di tipo ente,
+	 * pu√≤ essere utilizzato anche in altri contesti
 	 * 
 	 * @param userContext
 	 * @return
@@ -401,12 +401,12 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 		}		
 	}
 	/**
-	  *  calcolo disponibilit‡ di cassa del Cdr per l'esercizio precedente al residuo
+	  *  calcolo disponibilit√† di cassa del Cdr per l'esercizio precedente al residuo
 	  *    PreCondition:
-	  *   	 Viene richiesta la visualizzazione della disponibilit‡ di cassa del Cds per 
+	  *   	 Viene richiesta la visualizzazione della disponibilit√† di cassa del Cds per 
 	  *		 l'esercizio precedente a quello di scrivania
 	  *    PostCondition:
-	  *      L'utente puÚ visualizzare la disponibilit‡ di cassa del Cds, effettuata dalla 
+	  *      L'utente pu√≤ visualizzare la disponibilit√† di cassa del Cds, effettuata dalla 
 	  *		 stored procedure CNRCTB030.getMassaSpendibile 
 	  *		 (esercizio di competenza = esercizio di scrivania)
 	  *
@@ -431,24 +431,24 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 
 
 	/** 
-	  *  Calcolo della disponibilit‡ di cassa del Cds per l'esercizio di scrivania o per 
+	  *  Calcolo della disponibilit√† di cassa del Cds per l'esercizio di scrivania o per 
 	  *	 i due esercizi successivi a quello di scrivania.
 	  *    PreCondition:
-	  *      E' stato richiesto di visualizzare la disponibilit‡ di cassa per
+	  *      E' stato richiesto di visualizzare la disponibilit√† di cassa per
 	  *		 il residuo che ha esercizio corrente uguale a quello di scrivania
 	  *		 (esercizio di competenza = esercizio) o per i suoi due esercizi successivi
 	  *		 (esercizio di competenza = esercizio + n, con n=1,2). In quest'ultimo caso
 	  *		 l'utente deve aver selezionato la voce del piano.
 	  *    PostCondition:
 	  *      Viene richiamata una stored procedure (getMassaSpendibile) che calcola 
-	  *		 la disponibilit‡ di cassa del Cds dell'obbligazione.
+	  *		 la disponibilit√† di cassa del Cds dell'obbligazione.
 	  *
 	  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
 	  * @param esercizio_competenza <code>String</code> esercizio di competenza
 	  * @param esercizio <code>String</code> esercizio di scrivania
 	  * @param cd_cds <code>String</code> codice del centro di spesa
 	  * @param cd_elemento_voce <code>String</code> codice dell'elemento voce
-	  * @return disp_cassa_cds <code>BigDecimal</code> disponibilit‡ di cassa del Cds
+	  * @return disp_cassa_cds <code>BigDecimal</code> disponibilit√† di cassa del Cds
 	  *
 	*/
 	private BigDecimal getMassaSpendibile ( UserContext userContext, Integer esercizio_competenza, Integer esercizio, String cd_cds, String cd_elemento_voce ) throws ComponentException
@@ -494,7 +494,7 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 		messaggio.setCd_utente(utente.getCd_utente());
 		messaggio.setPriorita(new Integer(1));
 		if (tipo == null){
-			messaggio.setDs_messaggio("» stato aperto in modifica la ricostruzione del residuo relativo al CdR "+residuo.getCd_centro_responsabilita());
+			messaggio.setDs_messaggio("√à stato aperto in modifica la ricostruzione del residuo relativo al CdR "+residuo.getCd_centro_responsabilita());
 		}
 		messaggio.setCorpo("Residuo per il CdR "+residuo.getCd_centro_responsabilita());
 		messaggio.setSoggetto(messaggio.getDs_messaggio());
@@ -524,7 +524,7 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 		/*try{
 			
 		if (stampa.getCdrForPrint()==null)
-				throw new ValidationException("Attenzione: il campo CDR Ë obbligatorio");
+				throw new ValidationException("Attenzione: il campo CDR √® obbligatorio");
 		}catch(ValidationException ex){
 			throw new ApplicationException(ex);
 		}*/	
@@ -701,9 +701,9 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 		try {
 			cdr = (CdrBulk)getHome(userContext, cdr).findByPrimaryKey(cdr);
 
-			// Se il livello del CDR Ë 1
+			// Se il livello del CDR √® 1
 			if(cdr.getLivello().intValue() == 1) {
-				// Se il codice proprio del cdr Ë 0
+				// Se il codice proprio del cdr √® 0
 				if (Integer.parseInt(cdr.getCd_proprio_cdr()) == 0) {
 					Unita_organizzativaBulk uo = new Unita_organizzativaBulk( cdr.getCd_unita_organizzativa() );
 					uo = (Unita_organizzativaBulk)getHome(userContext, uo).findByPrimaryKey(uo);
@@ -722,7 +722,7 @@ public class RicostruzioneResiduiComponent extends CRUDComponent implements Clon
 				// Sel cdr.livello == 2 e codice proprio = 0
 				return PdGComponent.LV_RUO;
 			} else {
-				// Ogni altro livello o combinazione Ë livello 3
+				// Ogni altro livello o combinazione √® livello 3
 				return PdGComponent.LV_NRUO;
 			}
 		} catch (it.cnr.jada.persistency.PersistencyException e) {

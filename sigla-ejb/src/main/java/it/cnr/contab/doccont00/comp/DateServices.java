@@ -99,7 +99,7 @@ public static  java.sql.Timestamp getNextMinTs( UserContext userContext, Timesta
 	calendar.add(java.util.Calendar.MINUTE,+1);
 	return new Timestamp(calendar.getTime().getTime());
 }
-/* se la data odierna è maggiore dell'esercizio di scrivania ritorna il timestamp così fatto:
+/* se la data odierna Ã¨ maggiore dell'esercizio di scrivania ritorna il timestamp cosÃ¬ fatto:
      31/12/esercizio di scrivania + ora,minuto, secondo del timestamp corrente
    altrimenti ritorna il timestamp corrente */  
 public static  java.sql.Timestamp getTs_valido( UserContext userContext) throws javax.ejb.EJBException
@@ -114,7 +114,7 @@ public static  java.sql.Timestamp getTs_valido( UserContext userContext) throws 
 	else
 		return it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp();	
 }
-/* se la data odierna è maggiore dell'esercizio di scrivania ritorna true altrimenti false */  
+/* se la data odierna Ã¨ maggiore dell'esercizio di scrivania ritorna true altrimenti false */  
 public static boolean isAnnoMaggEsScriv( UserContext userContext) throws javax.ejb.EJBException
 {
 	Timestamp today = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();

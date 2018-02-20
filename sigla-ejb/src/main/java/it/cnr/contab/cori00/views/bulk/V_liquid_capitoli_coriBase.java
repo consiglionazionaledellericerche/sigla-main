@@ -115,7 +115,7 @@ public void setTi_appartenenza(java.lang.String newTi_appartenenza) {
 	ti_appartenenza = newTi_appartenenza;
 }
 /**
- * Setter della propriet‡ ti_ente_percepiente
+ * Setter della propriet√† ti_ente_percepiente
  *
  * @param newTi_ente_percepiente <code>String</code> il nuovo valore
  */
@@ -123,7 +123,7 @@ public void setTi_ente_percepiente(java.lang.String newTi_ente_percepiente) {
 	ti_ente_percepiente = newTi_ente_percepiente;
 }
 /**
- * Setter della propriet‡ ti_gestione
+ * Setter della propriet√† ti_gestione
  *
  * @param newTi_gestione <code>String</code> il nuovo valore
  */

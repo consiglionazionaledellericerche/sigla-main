@@ -143,9 +143,9 @@ public void completaImportiNulli() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'altro_cdr'
+ * Restituisce il valore della propriet√† 'altro_cdr'
  *
- * @return Il valore della propriet‡ 'altro_cdr'
+ * @return Il valore della propriet√† 'altro_cdr'
  */
 public CdrBulk getAltro_cdr() {
 		if(getCentro_responsabilita_clge() != null)
@@ -157,18 +157,18 @@ public CdrBulk getAltro_cdr() {
 	}
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'categoria_economica_finanziaria'
+ * Restituisce il valore della propriet√† 'categoria_economica_finanziaria'
  *
- * @return Il valore della propriet‡ 'categoria_economica_finanziaria'
+ * @return Il valore della propriet√† 'categoria_economica_finanziaria'
  */
 public it.cnr.contab.config00.pdcfin.bulk.Capoconto_finBulk getCategoria_economica_finanziaria() {
 	return (getElemento_voce() != null && getElemento_voce().getCapoconto_fin() != null && getElemento_voce().getCapoconto_fin().getCd_capoconto_fin() != null) ? getElemento_voce().getCapoconto_fin() : categoria_economica_finanziaria;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'classificazione_spese'
+ * Restituisce il valore della propriet√† 'classificazione_spese'
  *
- * @return Il valore della propriet‡ 'classificazione_spese'
+ * @return Il valore della propriet√† 'classificazione_spese'
  */
 public Classificazione_speseBulk getClassificazione_spese() {
 	return (getElemento_voce() != null && getElemento_voce().getClassificazione_spese() != null && getElemento_voce().getClassificazione_spese().getEsercizio() != null && getElemento_voce().getClassificazione_spese().getCodice_cla_s() != null) ? getElemento_voce().getClassificazione_spese() : classificazione_spese;
@@ -245,9 +245,9 @@ public java.lang.String getCd_natura() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'centro_responsabilita_clge'
+ * Restituisce il valore della propriet√† 'centro_responsabilita_clge'
  *
- * @return Il valore della propriet‡ 'centro_responsabilita_clge'
+ * @return Il valore della propriet√† 'centro_responsabilita_clge'
  */
 public it.cnr.contab.config00.sto.bulk.CdrBulk getCentro_responsabilita_clge() {
 		return centro_responsabilita_clge;
@@ -282,9 +282,9 @@ public it.cnr.contab.config00.sto.bulk.CdrBulk getCentro_responsabilita_clge() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'elemento_voce_clge'
+ * Restituisce il valore della propriet√† 'elemento_voce_clge'
  *
- * @return Il valore della propriet‡ 'elemento_voce_clge'
+ * @return Il valore della propriet√† 'elemento_voce_clge'
  */
 public Elemento_voceBulk getElemento_voce_clge() {
 		return elemento_voce_clge;
@@ -300,18 +300,18 @@ public Elemento_voceBulk getElemento_voce_clge() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'funzione'
+ * Restituisce il valore della propriet√† 'funzione'
  *
- * @return Il valore della propriet‡ 'funzione'
+ * @return Il valore della propriet√† 'funzione'
  */
 public it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk getFunzione() {
 	return funzione;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'funzioni'
+ * Restituisce il valore della propriet√† 'funzioni'
  *
- * @return Il valore della propriet‡ 'funzioni'
+ * @return Il valore della propriet√† 'funzioni'
  */
 public java.util.Collection getFunzioni() {
 	return funzioni;
@@ -432,9 +432,9 @@ public java.util.Collection getFunzioni() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'linea_attivita_clge'
+ * Restituisce il valore della propriet√† 'linea_attivita_clge'
  *
- * @return Il valore della propriet‡ 'linea_attivita_clge'
+ * @return Il valore della propriet√† 'linea_attivita_clge'
  */
 public WorkpackageBulk getLinea_attivita_clge() {
 		return linea_attivita_clge;
@@ -445,18 +445,18 @@ public WorkpackageBulk getLinea_attivita_clge() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'natura'
+ * Restituisce il valore della propriet√† 'natura'
  *
- * @return Il valore della propriet‡ 'natura'
+ * @return Il valore della propriet√† 'natura'
  */
 public it.cnr.contab.config00.pdcfin.bulk.NaturaBulk getNatura() {
 	return natura;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'nature'
+ * Restituisce il valore della propriet√† 'nature'
  *
- * @return Il valore della propriet‡ 'nature'
+ * @return Il valore della propriet√† 'nature'
  */
 public java.util.Collection getNature() {
 	return nature;
@@ -546,9 +546,9 @@ public boolean isOrigineStipendi() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOaltra_uo'
+ * Restituisce il valore della propriet√† 'rOaltra_uo'
  *
- * @return Il valore della propriet‡ 'rOaltra_uo'
+ * @return Il valore della propriet√† 'rOaltra_uo'
  */
 public boolean isROaltra_uo() {
 		if(isRODettaglio()) {
@@ -560,9 +560,9 @@ public boolean isROaltra_uo() {
 	}
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOcategoria_economica_finanziaria'
+ * Restituisce il valore della propriet√† 'rOcategoria_economica_finanziaria'
  *
- * @return Il valore della propriet‡ 'rOcategoria_economica_finanziaria'
+ * @return Il valore della propriet√† 'rOcategoria_economica_finanziaria'
  */
 public boolean isROcategoria_economica_finanziaria() {
 		if(isRODettaglio()) {
@@ -573,9 +573,9 @@ public boolean isROcategoria_economica_finanziaria() {
 	}
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rODettaglio'
+ * Restituisce il valore della propriet√† 'rODettaglio'
  *
- * @return Il valore della propriet‡ 'rODettaglio'
+ * @return Il valore della propriet√† 'rODettaglio'
  */
 public boolean isRODettaglio() {
 		if(getFl_sola_lettura() == null)
@@ -585,9 +585,9 @@ public boolean isRODettaglio() {
 	}
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOelemento_voce'
+ * Restituisce il valore della propriet√† 'rOelemento_voce'
  *
- * @return Il valore della propriet‡ 'rOelemento_voce'
+ * @return Il valore della propriet√† 'rOelemento_voce'
  */
 public boolean isROelemento_voce() {
 		if(isRODettaglio()) {
@@ -601,18 +601,18 @@ public boolean isROelemento_voce() {
 	}
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOStato'
+ * Restituisce il valore della propriet√† 'rOStato'
  *
- * @return Il valore della propriet‡ 'rOStato'
+ * @return Il valore della propriet√† 'rOStato'
  */
 public boolean isROStato() {
 		return CAT_SCARICO.equals( getCategoria_dettaglio() );
 	}
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOim_rv_pagamenti'
+ * Restituisce il valore della propriet√† 'rOim_rv_pagamenti'
  *
- * @return Il valore della propriet‡ 'rOim_rv_pagamenti'
+ * @return Il valore della propriet√† 'rOim_rv_pagamenti'
  */
 public boolean isROim_rv_pagamenti() {
 		if(isSCRCLGE()) {
@@ -623,9 +623,9 @@ public boolean isROim_rv_pagamenti() {
 	}
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'sCRCLGE'
+ * Restituisce il valore della propriet√† 'sCRCLGE'
  *
- * @return Il valore della propriet‡ 'sCRCLGE'
+ * @return Il valore della propriet√† 'sCRCLGE'
  */
 public boolean isSCRCLGE() {
 		if(isRODettaglio()) {
@@ -636,9 +636,9 @@ public boolean isSCRCLGE() {
 	}
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'sCRCLGS'
+ * Restituisce il valore della propriet√† 'sCRCLGS'
  *
- * @return Il valore della propriet‡ 'sCRCLGS'
+ * @return Il valore della propriet√† 'sCRCLGS'
  */
 public boolean isSCRCLGS() {
 	if(isRODettaglio()) {
@@ -657,7 +657,7 @@ public boolean isDaVariazioneSCRCLGS(){
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'altro_cdr'
+ * Imposta il valore della propriet√† 'altro_cdr'
  *
  * @param newAltra_uo	Il valore da assegnare a 'altro_cdr'
  */
@@ -666,7 +666,7 @@ public void setAltro_cdr(CdrBulk newAltra_uo) {
 	}
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'categoria_economica_finanziaria'
+ * Imposta il valore della propriet√† 'categoria_economica_finanziaria'
  *
  * @param newCategoria_economica_finanziaria	Il valore da assegnare a 'categoria_economica_finanziaria'
  */
@@ -675,7 +675,7 @@ public void setCategoria_economica_finanziaria(it.cnr.contab.config00.pdcfin.bul
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'classificazione_spese'
+ * Imposta il valore della propriet√† 'classificazione_spese'
  *
  * @param newClassificazione_spese	Il valore da assegnare a 'classificazione_spese'
  */
@@ -720,7 +720,7 @@ public void setCentro_responsabilita(it.cnr.contab.config00.sto.bulk.CdrBulk new
 	}
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'centro_responsabilita_clge'
+ * Imposta il valore della propriet√† 'centro_responsabilita_clge'
  *
  * @param newCentro_responsabilita_clge	Il valore da assegnare a 'centro_responsabilita_clge'
  */
@@ -737,7 +737,7 @@ public void setCentro_responsabilita_clge(it.cnr.contab.config00.sto.bulk.CdrBul
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'elemento_voce_clge'
+ * Imposta il valore della propriet√† 'elemento_voce_clge'
  *
  * @param newElemento_voce_clge	Il valore da assegnare a 'elemento_voce_clge'
  */
@@ -750,7 +750,7 @@ public void setElemento_voce_clge(it.cnr.contab.config00.pdcfin.bulk.Elemento_vo
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'funzione'
+ * Imposta il valore della propriet√† 'funzione'
  *
  * @param newFunzione	Il valore da assegnare a 'funzione'
  */
@@ -759,7 +759,7 @@ public void setFunzione(it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk newFunzi
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'funzioni'
+ * Imposta il valore della propriet√† 'funzioni'
  *
  * @param newFunzioni	Il valore da assegnare a 'funzioni'
  */
@@ -774,7 +774,7 @@ public void setFunzioni(java.util.Collection newFunzioni) {
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'linea_attivita_clge'
+ * Imposta il valore della propriet√† 'linea_attivita_clge'
  *
  * @param newLinea_attivita_clge	Il valore da assegnare a 'linea_attivita_clge'
  */
@@ -787,7 +787,7 @@ public void setLinea_attivita_clge(it.cnr.contab.config00.latt.bulk.WorkpackageB
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'natura'
+ * Imposta il valore della propriet√† 'natura'
  *
  * @param newNatura	Il valore da assegnare a 'natura'
  */
@@ -796,7 +796,7 @@ public void setNatura(it.cnr.contab.config00.pdcfin.bulk.NaturaBulk newNatura) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'nature'
+ * Imposta il valore della propriet√† 'nature'
  *
  * @param newNature	Il valore da assegnare a 'nature'
  */

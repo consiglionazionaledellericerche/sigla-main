@@ -60,7 +60,7 @@ public class AssTipoCORIEvComponent extends it.cnr.jada.comp.CRUDComponent{
 		{
 			Tipo_contributo_ritenutaHome home = (Tipo_contributo_ritenutaHome)getHome(userContext, Tipo_contributo_ritenutaBulk.class);
 			Tipo_contributo_ritenutaBulk cori = home.findTipoCORIValido(ass.getCd_contributo_ritenuta(), home.getServerDate());		
-			// se il tipo contributo ritenuta selezionato non è più valido
+			// se il tipo contributo ritenuta selezionato non Ã¨ piÃ¹ valido
 			// carico il tipo co/ri senza clausola di validita
 			if (cori==null)
 				cori = home.findTipoCORIValido(ass.getCd_contributo_ritenuta(), null);

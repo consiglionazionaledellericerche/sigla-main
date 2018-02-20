@@ -348,12 +348,12 @@ public void ripristinaSelezioneTipoTrattamento(){
 /**
   * Significato codici di errore:
   *	-> 0 nessun errore
-  * -> 1 non è selezionato il TERZO
-  * -> 2 il TERZO non è valido
-  * -> 3 non è stato selezionato il TIPO RAPPORTO 
-  * -> 4 il TIPO RAPPORTO non è valido
-  * -> 5 non è stato selezionato il TIPO TRATTAMENTO
-  * -> 6 il TIPO TRATTAMENTO non è valido
+  * -> 1 non Ã¨ selezionato il TERZO
+  * -> 2 il TERZO non Ã¨ valido
+  * -> 3 non Ã¨ stato selezionato il TIPO RAPPORTO 
+  * -> 4 il TIPO RAPPORTO non Ã¨ valido
+  * -> 5 non Ã¨ stato selezionato il TIPO TRATTAMENTO
+  * -> 6 il TIPO TRATTAMENTO non Ã¨ valido
   *
 **/
 public int validaTerzo(ActionContext context, boolean aBool) throws BusinessProcessException {
@@ -451,13 +451,13 @@ public void doValidaDatiEsterni(ActionContext context) throws ApplicationExcepti
 		    	conguaglio.getDetrazioni_pe_esterno().compareTo(new BigDecimal(0))>0 &&	
 		    	conguaglio.getNumero_giorni_esterno()== null)
 		    {
-		    	throw new it.cnr.jada.comp.ApplicationException("Dati Esterni: Poichè sono valorizzate le detrazioni personali, il numero dei giorni di spettanza è obbligatorio.");
+		    	throw new it.cnr.jada.comp.ApplicationException("Dati Esterni: PoichÃ¨ sono valorizzate le detrazioni personali, il numero dei giorni di spettanza Ã¨ obbligatorio.");
 		    }
 		    */
 		    if (conguaglio.getNumero_giorni_esterno()!= null &&
 		    	conguaglio.getNumero_giorni_esterno().compareTo(new Long(365))>0)
 		    {
-		    	throw new it.cnr.jada.comp.ApplicationException("Dati Esterni: Il numero dei giorni di spettanza non può essere superiore a 365.");
+		    	throw new it.cnr.jada.comp.ApplicationException("Dati Esterni: Il numero dei giorni di spettanza non puÃ² essere superiore a 365.");
 		    }
 			try {
 				ConguaglioComponentSession sess = (ConguaglioComponentSession)createComponentSession();
@@ -477,7 +477,7 @@ public void doValidaDatiEsterni(ActionContext context) throws ApplicationExcepti
 	    	 (conguaglio.getIm_addreg_esterno().compareTo(new BigDecimal(0))!=0 ||
 	    	  conguaglio.getIm_addcom_esterno().compareTo(new BigDecimal(0))!=0) )
 	    {
-	    	throw new it.cnr.jada.comp.ApplicationException("Dati Esterni: Non è possibile valorizzare le Addizionali se non è presente la Ritenuta irpef netta.");	    	
+	    	throw new it.cnr.jada.comp.ApplicationException("Dati Esterni: Non Ã¨ possibile valorizzare le Addizionali se non Ã¨ presente la Ritenuta irpef netta.");	    	
 	    }	
 	    if (conguaglio.getIm_addcom_esterno().compareTo(new BigDecimal(0))!=0 &&
 	    	conguaglio.getComune_esterno()==null)
@@ -486,7 +486,7 @@ public void doValidaDatiEsterni(ActionContext context) throws ApplicationExcepti
 	    }
 	    if ((conguaglio.getDetrazioni_fi_esterno().add(conguaglio.getDetrazioni_co_esterno()).add(conguaglio.getDetrazioni_al_esterno()).add(conguaglio.getIm_irpef_esterno())).compareTo(conguaglio.getImponibile_fiscale_esterno())>0)
 		{
-		    	throw new it.cnr.jada.comp.ApplicationException("Dati Esterni: La somma delle detrazioni e della Ritenuta irpef non può essere superiore all'Imponibile fiscale.");
+		    	throw new it.cnr.jada.comp.ApplicationException("Dati Esterni: La somma delle detrazioni e della Ritenuta irpef non puÃ² essere superiore all'Imponibile fiscale.");
 		}
 }
 public String doVerificaIncoerenzaCarichiFam(ActionContext context) throws BusinessProcessException

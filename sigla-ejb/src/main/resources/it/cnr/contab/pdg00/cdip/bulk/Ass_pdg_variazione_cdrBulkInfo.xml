@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -23,7 +23,7 @@
         inputType="SEARCHTOOL"
         formName="searchtool"
         enabledOnSearch="true"
-        label="Centro di Responsabilità" />		
+        label="Centro di ResponsabilitÃ " />		
 	<fieldProperty
 		name="cd_centro_responsabilita"
 		property="centro_responsabilita.cd_centro_responsabilita"
@@ -31,7 +31,7 @@
 		inputSize="30"
 		maxLength="30"
 		nullable="false"
-		label="Centro di Responsabilità" />
+		label="Centro di ResponsabilitÃ " />
 	<fieldProperty
 		name="ds_centro_responsabilita"
 		property="centro_responsabilita.ds_cdr"

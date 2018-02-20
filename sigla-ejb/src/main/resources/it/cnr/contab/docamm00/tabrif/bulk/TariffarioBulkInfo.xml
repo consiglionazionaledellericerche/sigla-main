@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -15,7 +15,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="false"
 		enabledOnInsert="true"
-		label="Inizio validità" />
+		label="Inizio validitÃ " />
 	<fieldProperty
 		name="dt_fine_validita"
 		property="dt_fine_validita"
@@ -23,7 +23,7 @@
 		inputType="ROTEXT"
 		maxLength="10"
 		inputSize="10"
-		label="Fine validità" />
+		label="Fine validitÃ " />
 	<fieldProperty
 		name="dataFineValidita"
 		property="dataFineValidita"
@@ -31,7 +31,7 @@
 		inputType="ROTEXT"
 		maxLength="10"
 		inputSize="10"
-		label="Fine validità" />
+		label="Fine validitÃ " />
 	<fieldProperty
 		name="im_tariffario"
 		property="im_tariffario"
@@ -79,7 +79,7 @@
 		maxLength="30"
 		inputSize="30"
 		inputType="TEXT"
-		label="Unità organizzativa"
+		label="UnitÃ  organizzativa"
 		nullable="false"
 		enabledOnSearch="false"
 		enabledOnEdit="false"
@@ -102,7 +102,7 @@
 		maxLength="10"
 		inputSize="10"
 		inputType="TEXT"
-		label="Unità di misura"
+		label="UnitÃ  di misura"
 		nullable="false"		
 		enabledOnSearch="true"
 		enabledOnEdit="true"

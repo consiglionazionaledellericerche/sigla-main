@@ -68,8 +68,8 @@ protected it.cnr.jada.persistency.sql.CompoundFindClause getCompoundClauses(
 
 	CompoundFindClause clauses = new CompoundFindClause();
 	try {
-	//E' ovvio che il codice seguente Ë ripetitivo, ma data la complessit‡ delle
-	//possiblit‡ risulta piu' ordinato alla lettura. Pertanto ho separato per
+	//E' ovvio che il codice seguente √® ripetitivo, ma data la complessit√† delle
+	//possiblit√† risulta piu' ordinato alla lettura. Pertanto ho separato per
 	//casistica le varie clausole.
 	if (!filtro.isEnteInScrivania()) {
 		if (filtro.getFl_ente() != null && filtro.getFl_ente().booleanValue()) {

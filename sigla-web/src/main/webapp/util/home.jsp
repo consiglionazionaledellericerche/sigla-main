@@ -33,7 +33,7 @@
     //     document.write("<body>Browser non supportato</body>");
     if (is_ff0 || is_ff1 || is_ff2) {
         document.write("<body>");
-        document.write("<h2>Il Browser Mozilla Firefox in versione precetente alla 3.0 non è supportato.</h2>");
+        document.write("<h2>Il Browser Mozilla Firefox in versione precetente alla 3.0 non Ã¨ supportato.</h2>");
         document.write("<h3>E' necessario aggiornare Mozilla Firefox all'ultima versione al seguente link:</h3>");
         document.write("<h3><a href=\"http://www.mozilla-europe.org/it/firefox/\">Mozilla Firefox 3.0</a></h3>");
         document.write("</body>");

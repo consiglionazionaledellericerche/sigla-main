@@ -26,7 +26,7 @@ public Forward doAnnullaScrittura(ActionContext context) throws BusinessProcessE
 		bp.saveSelection(context);
 
 		if (bp.getSelection().isEmpty() && bp.getFocusedElement() == null)
-			setErrorMessage(context,"Per poter annullare la contabilizzazione è necessario selezionare almeno un mese.");
+			setErrorMessage(context,"Per poter annullare la contabilizzazione Ã¨ necessario selezionare almeno un mese.");
 		for (java.util.Iterator i = bp.iterator();i.hasNext();) {
 			V_cdp_stato_mensilitaBulk stato_mese = (V_cdp_stato_mensilitaBulk)i.next();
 			bp.createComponentSession().annullaScritturaAnalitica(context.getUserContext(),stato_mese.getMese().intValue());
@@ -65,7 +65,7 @@ public Forward doConfiguraRipartizione(ActionContext context) throws BusinessPro
 			return handleException(context,e);
 		}
 	else 
-		setErrorMessage(context,"Per poter effettuare la ripartizione è necessario selezionare un mese.");
+		setErrorMessage(context,"Per poter effettuare la ripartizione Ã¨ necessario selezionare un mese.");
 	return context.findDefaultForward();
 }
 /**
@@ -83,7 +83,7 @@ public Forward doGeneraScrittura(ActionContext context) throws BusinessProcessEx
 		bp.saveSelection(context);
 
 		if (bp.getSelection().isEmpty() && bp.getFocusedElement() == null)
-			setErrorMessage(context,"Per poter effettuare la contabilizzazione è necessario selezionare almeno un mese.");
+			setErrorMessage(context,"Per poter effettuare la contabilizzazione Ã¨ necessario selezionare almeno un mese.");
 		for (java.util.Iterator i = bp.iterator();i.hasNext();) {
 			V_cdp_stato_mensilitaBulk stato_mese = (V_cdp_stato_mensilitaBulk)i.next();
 			bp.createComponentSession().generaScritturaAnalitica(context.getUserContext(),stato_mese.getMese().intValue());

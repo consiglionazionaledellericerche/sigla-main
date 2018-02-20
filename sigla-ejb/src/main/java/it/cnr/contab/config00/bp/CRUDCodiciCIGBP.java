@@ -47,9 +47,9 @@ public class CRUDCodiciCIGBP extends SimpleCRUDBP {
 		if ( bulk.getCdCig()==null) 
 			throw new ValidationException("E' necessario inserire il Codice");
 		if ( bulk.getCdCig().length()!=10) 
-			throw new ValidationException("La lunghezza del Codice non è valida");
+			throw new ValidationException("La lunghezza del Codice non Ã¨ valida");
 		for (int i = 0;i < bulk.getCdCig().length();i++)
 			if (!Character.isLetterOrDigit(bulk.getCdCig().charAt(i)))
-				throw new ValidationException( "Il codice cig può essere composto solo da cifre o lettere e non può contenere spazi o caratteri speciali." );
+				throw new ValidationException( "Il codice cig puÃ² essere composto solo da cifre o lettere e non puÃ² contenere spazi o caratteri speciali." );
 	}
 }

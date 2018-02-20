@@ -26,9 +26,9 @@ public class RigheInvDaFatturaCRUDController
     }
 
     /**
-     * Restituisce il valore della propriet‡ 'dettagliPagina'
+     * Restituisce il valore della propriet√† 'dettagliPagina'
      *
-     * @return Il valore della propriet‡ 'dettagliPagina'
+     * @return Il valore della propriet√† 'dettagliPagina'
      */
     public java.util.List getDettagliPagina() {
         return super.getDetailsPage();
@@ -50,8 +50,8 @@ public class RigheInvDaFatturaCRUDController
     }
 
     /**
-     * Abilita la riga di dettaglio se il bene Ë impostato come visibile, (FL_VISIBILE = 'Y').
-     *	Il flag visibile Ë impostato come FALSE se il bene Ë un bene accessorio scaricato in
+     * Abilita la riga di dettaglio se il bene √® impostato come visibile, (FL_VISIBILE = 'Y').
+     *	Il flag visibile √® impostato come FALSE se il bene √® un bene accessorio scaricato in
      *	seguito allo scarico del suo bene padre.
      *
      * @param row il <code>Object</code> bene sulla riga

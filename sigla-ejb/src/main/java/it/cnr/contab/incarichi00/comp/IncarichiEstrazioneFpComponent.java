@@ -110,7 +110,7 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 				if (!incaricoPrincFpDB.getId_incarico().equals(bulk.getId_incarico()))
 					return;
 
-				//è stato già comunicato un nuovo incarico......devo aggiornarlo
+				//Ã¨ stato giÃ  comunicato un nuovo incarico......devo aggiornarlo
 				incaricoPrincFpDB.updateFrom(userContext, bulk);
 				incaricoPrincFpDB.setToBeUpdated();
 				updateBulk(userContext,incaricoPrincFpDB);
@@ -438,7 +438,7 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
             	//read comma separated file line by line
 				for (String[] csvLine : csvAllLine) {
             		lineNumber++;
-            		//salto la prima riga che è l'intestazione
+            		//salto la prima riga che Ã¨ l'intestazione
             		if (lineNumber>1 && !csvLine[1].replace(" ","").equals("") && (csvLine.length==20 || csvLine.length==21)){
 	            		incaricoComunicato = new Incarichi_comunicati_fpBulk();
 	            		incaricoComunicato.setTipo_record(Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
