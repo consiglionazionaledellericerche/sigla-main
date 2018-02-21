@@ -12,12 +12,14 @@ import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.OggettoBulk;
 
 /**
  * BP che gestisce gli atti da assoggettare a bollo virtuale
  */
 public class CRUDAttoBolloBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Atto_bolloBulk> {
 	private static final long serialVersionUID = 1L;
+    private boolean allegatiCollapse = true;
 
 	public CRUDAttoBolloBP() {
 		super();
@@ -57,5 +59,24 @@ public class CRUDAttoBolloBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Atto_b
 	@Override
 	protected Class<AllegatoGenericoBulk> getAllegatoClass() {
 		return AllegatoGenericoBulk.class;
+	}
+	
+	public boolean isAllegatiCollapse() {
+		return allegatiCollapse;
+	}
+	
+	public void setAllegatiCollapse(boolean allegatiCollapse) {
+		this.allegatiCollapse = allegatiCollapse;
+	}
+	
+	@Override
+	public OggettoBulk initializeModelForEdit(ActionContext actioncontext, OggettoBulk oggettobulk)	throws BusinessProcessException {
+		oggettobulk = super.initializeModelForEdit(actioncontext, oggettobulk);
+		Optional.ofNullable(oggettobulk)
+			.filter(Atto_bolloBulk.class::isInstance)
+			.map(Atto_bolloBulk.class::cast)
+			.filter(el->el.getEsercizio_contratto()!=null&&el.getPg_contratto()!=null&&el.getStato_contratto()!=null)
+			.ifPresent(el->el.setFlContrattoRegistrato(Boolean.TRUE));
+		return oggettobulk;
 	}
 }
