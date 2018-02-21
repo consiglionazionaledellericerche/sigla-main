@@ -35,7 +35,7 @@ public MinicarrieraRataCRUDController(String name, Class modelClass, String list
 	super(name, modelClass, listPropertyName, parent, multiSelection);
 }
 /**
- * Restituisce true se Ë possibile aggiungere nuovi elementi
+ * Restituisce true se √® possibile aggiungere nuovi elementi
  */
 public boolean isGrowable() {
 	
@@ -52,7 +52,7 @@ public boolean isInputReadonly() {
 			(rata != null && rata.isAssociataACompenso());
 }
 /**
- * Restituisce true se Ë possibile aggiungere nuovi elementi
+ * Restituisce true se √® possibile aggiungere nuovi elementi
  */
 public boolean isShrinkable() {
 
@@ -66,27 +66,27 @@ public void validate(ActionContext context,OggettoBulk model) throws ValidationE
 
 	//Non dovrebbe + servire: se non attiva si disabilita il controller.
 	//if (!((MinicarrieraBulk)getParentModel()).isAttiva())
-		//throw new ValidationException("La minicarriera non Ë attiva! Impossibile effettuare modifiche.");
+		//throw new ValidationException("La minicarriera non √® attiva! Impossibile effettuare modifiche.");
 
 	Minicarriera_rataBulk rata = (Minicarriera_rataBulk)model;
 	if (rata.getIm_rata() == null)
 		throw new ValidationException("Specificare l'importo della rata \"" + rata.getPg_rata().longValue() + "\".");
 	if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(rata.getIm_rata()) == 0)
-		throw new ValidationException("L'importo della rata \"" + rata.getPg_rata().longValue() + "\" non Ë valido.");
+		throw new ValidationException("L'importo della rata \"" + rata.getPg_rata().longValue() + "\" non √® valido.");
 
 	if (rata.getDt_inizio_rata() == null || rata.getDt_fine_rata() == null)
-		throw new ValidationException("Inserire le date di validit‡ della rata \"" + rata.getPg_rata().longValue() + "\".");
+		throw new ValidationException("Inserire le date di validit√† della rata \"" + rata.getPg_rata().longValue() + "\".");
 	if (rata.getDt_scadenza() == null)
 		throw new ValidationException("Inserire la data di scadenza della rata \"" + rata.getPg_rata().longValue() + "\".");
 	
 	if (rata.getDt_fine_rata().before(rata.getDt_inizio_rata()))
-		throw new ValidationException("Date di validit‡ della rata \"" + rata.getPg_rata().longValue() + "\" non corrette. Verificare i periodi.");
+		throw new ValidationException("Date di validit√† della rata \"" + rata.getPg_rata().longValue() + "\" non corrette. Verificare i periodi.");
 
 	//E' stata data una notizia falsa e tendenziosa su questo controllo. Lo commento per il momento.	
 	//if (rata.getDt_scadenza().before(rata.getDt_inizio_rata()))
-		//throw new ValidationException("La data di scadenza non puo' essere precedente alla data inizio validit‡ della rata \"" + rata.getPg_rata().longValue() + "\".");
+		//throw new ValidationException("La data di scadenza non puo' essere precedente alla data inizio validit√† della rata \"" + rata.getPg_rata().longValue() + "\".");
 	if (((MinicarrieraBulk)getParentModel()).getDt_fine_minicarriera().before(rata.getDt_fine_rata()))
-		throw new ValidationException("La rata \"" + rata.getPg_rata().longValue() + "\" ha una data fine validit‡ posteriore alla data fine validit‡ della minicarriera.");	
+		throw new ValidationException("La rata \"" + rata.getPg_rata().longValue() + "\" ha una data fine validit√† posteriore alla data fine validit√† della minicarriera.");	
 
 	//try {
 		//((FatturaPassivaComponentSession)(((SimpleCRUDBP)getParentController()).createComponentSession())).validaRiga(context.getUserContext(), (Fattura_passiva_rigaBulk)model);
@@ -101,10 +101,10 @@ public void validateForDelete(ActionContext context, OggettoBulk detail) throws 
 	Minicarriera_rataBulk rata = (Minicarriera_rataBulk)detail;
 
 	if (!((MinicarrieraBulk)getParentModel()).isAttiva())
-		throw new ValidationException("La minicarriera non Ë attiva! Impossibile effettuare modifiche.");
+		throw new ValidationException("La minicarriera non √® attiva! Impossibile effettuare modifiche.");
 		
 	if (rata.isAssociataACompenso())
-		throw new ValidationException("La rata \"" + rata.getPg_rata().longValue() + "\" Ë associata a compenso. Impossibile eliminarla.");
+		throw new ValidationException("La rata \"" + rata.getPg_rata().longValue() + "\" √® associata a compenso. Impossibile eliminarla.");
 
 }
 public void writeHTMLToolbar(

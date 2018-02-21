@@ -89,7 +89,7 @@ public String formatCapocontoKey( UserContext userContext,String key, Integer es
 		return key;
 	java.math.BigDecimal len = getLunghezza( userContext, esercizio, VOCE_EP_TABELLA, LIVELLO_CAPOCONTO, VOCE_EP_CD_COLONNA );
 	if ( key.length() > len.intValue() )
-		throw handleException( new ApplicationException( "Il codice non può essere più lungo di " + len.toString() + " caratteri oppure numerazione automatica esaurita" ));	
+		throw handleException( new ApplicationException( "Il codice non puÃ² essere piÃ¹ lungo di " + len.toString() + " caratteri oppure numerazione automatica esaurita" ));	
 	return leftPadding(key, len.intValue());
 }
 /**
@@ -106,7 +106,7 @@ public String formatCdrKey( UserContext userContext,String key, Integer livello 
 		return key;
 	java.math.BigDecimal len = getLunghezza( userContext, CDR_TABELLA, livello, CDR_CD_COLONNA );
 	if ( key.length() > len.intValue() )
-		throw handleException( new ApplicationException( "Il codice non può essere più lungo di " + len.toString() + " caratteri oppure numerazione automatica esaurita" ));	
+		throw handleException( new ApplicationException( "Il codice non puÃ² essere piÃ¹ lungo di " + len.toString() + " caratteri oppure numerazione automatica esaurita" ));	
 	return leftPadding(key, len.intValue());
 }
 /**
@@ -123,7 +123,7 @@ public String formatCdsKey( UserContext userContext,String key) throws  it.cnr.j
 		return key;
 	java.math.BigDecimal len = getLunghezza( userContext, CDS_TABELLA, Constants.LIVELLO_CDS, CDS_CD_COLONNA );
 	if ( key.length() > len.intValue() )
-		throw new ApplicationException( "Il codice non può essere più lungo di " + len.toString() + " caratteri oppure numerazione automatica esaurita" );
+		throw new ApplicationException( "Il codice non puÃ² essere piÃ¹ lungo di " + len.toString() + " caratteri oppure numerazione automatica esaurita" );
 	return leftPadding(key, len.intValue());
 }
 /**
@@ -140,7 +140,7 @@ public String formatContoKey( UserContext userContext,String key, Integer eserci
 		return key;
 	java.math.BigDecimal len = getLunghezza( userContext, esercizio, VOCE_EP_TABELLA, LIVELLO_CONTO, VOCE_EP_CD_COLONNA );
 	if ( key.length() > len.intValue() )
-		throw handleException( new ApplicationException( "Il codice non può essere più lungo di " + len.toString() + " caratteri oppure numerazione automatica esaurita" ));	
+		throw handleException( new ApplicationException( "Il codice non puÃ² essere piÃ¹ lungo di " + len.toString() + " caratteri oppure numerazione automatica esaurita" ));	
 	return leftPadding(key, len.intValue());
 }
 /**
@@ -171,7 +171,7 @@ public String formatLinea_attivitaKey(UserContext userContext,String key) throws
 		return key;
 	java.math.BigDecimal len = getLunghezza( userContext,LATT_TABELLA,new Integer(1),LATT_CD_COLONNA);
 	if (key.length() > len.intValue())
-		throw handleException(new ApplicationException("Il codice non può essere più lungo di " + len.toString() + " caratteri oppure numerazione automatica esaurita"));	
+		throw handleException(new ApplicationException("Il codice non puÃ² essere piÃ¹ lungo di " + len.toString() + " caratteri oppure numerazione automatica esaurita"));	
 	return leftPadding(key,len.intValue());
 }
 /**
@@ -187,7 +187,7 @@ public String formatUoKey( UserContext userContext,String key ) throws  it.cnr.j
 		return key;
 	java.math.BigDecimal len = getLunghezza( userContext, UO_TABELLA, Constants.LIVELLO_UO, UO_CD_COLONNA );
 	if ( key.length() > len.intValue() )
-		throw handleException( new ApplicationException( "Il codice non può essere più lungo di " + len.toString() + " caratteri oppure numerazione automatica esaurita" ));	
+		throw handleException( new ApplicationException( "Il codice non puÃ² essere piÃ¹ lungo di " + len.toString() + " caratteri oppure numerazione automatica esaurita" ));	
 	return leftPadding(key, len.intValue());
 }
 /**

@@ -217,7 +217,7 @@ public class ConsGAECompBP extends ConsultazioniBP {
 		   else
 			   title = "Riepilogo GAE Competenza Spese";
 		    if (isPresenteVOC()) title = title.concat("- Voce");
-			if (isPresenteVARP()) title = title.concat("\\Variazione Più");
+			if (isPresenteVARP()) title = title.concat("\\Variazione PiÃ¹");
 			if (isPresenteVARM()) title = title.concat("\\Variazione Meno");
 			if (isPresenteIMP()) title = title.concat("\\Impegno");
 			if (isPresenteMAN()) title = title.concat("\\Mandato");

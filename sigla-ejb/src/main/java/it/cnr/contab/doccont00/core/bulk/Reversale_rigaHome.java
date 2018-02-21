@@ -48,7 +48,7 @@ public Reversale_rigaHome(java.sql.Connection conn,PersistentCache persistentCac
  * Metodo per inizializzare il campo ti_fattura di una riga di una reversale legata ad una fattura passiva o attiva
  *
  * @param riga <code>Reversale_rigaBulk</code> la riga della reversale
- * @param tableName <code>String</code> il nome della tabella in cui effettuare la ricerca; può assumere i
+ * @param tableName <code>String</code> il nome della tabella in cui effettuare la ricerca; puÃ² assumere i
  *				valori "FATTURA_PASSIVA" o "FATTTURA_ATTIVA"
  *
  *

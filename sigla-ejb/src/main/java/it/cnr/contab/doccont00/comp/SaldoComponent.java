@@ -60,7 +60,7 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
   *      E' stata cancellato un mandato o creata/cancellata una reversale 
   *    PostCondition:
   *      Viene aggiornato l'importo associato a mandati e reversali della voce del piano (di competenza o residuo) interessata dal mandato o
-  *      dalla reversale senza eseguire il controllo di disponibilit‡ di cassa
+  *      dalla reversale senza eseguire il controllo di disponibilit√† di cassa
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui aggiornare i saldi
@@ -77,16 +77,16 @@ public Voce_f_saldi_cmpBulk aggiornaMandatiReversali(UserContext userContext, Vo
   *  creazione mandato
   *    PreCondition:
   *      E' stata creato un nuovo mandato e viene superato il controllo di
-  *      di disponibilit‡ di cassa (metodo checkDisponabilitaCassaMandati)
+  *      di disponibilit√† di cassa (metodo checkDisponabilitaCassaMandati)
   *    PostCondition:
   *      Viene aggiornato per il cds di appartenenza del mandato l'importo associato a mandati e reversali 
   *      della voce del piano (di competenza o residuo) interessata dal mandato 
   *  creazione mandato - errore
   *    PreCondition:
   *      E' stata creato un nuovo mandato e non viene superato il controllo di
-  *      di disponibilit‡ di cassa (metodo checkDisponabilitaCassaMandati)
+  *      di disponibilit√† di cassa (metodo checkDisponabilitaCassaMandati)
   *    PostCondition:
-  *      Viene segnalato con un errore l'impossibilit‡ di emettere il mandato
+  *      Viene segnalato con un errore l'impossibilit√† di emettere il mandato
   *  annullamento mandato
   *    PreCondition:
   *      E' stata annullato un mandato 
@@ -95,7 +95,7 @@ public Voce_f_saldi_cmpBulk aggiornaMandatiReversali(UserContext userContext, Vo
   *      della voce del piano (di competenza o residuo) interessata dal mandato
   *  creazione/annullamento reversale
   *    PreCondition:
-  *      E' stata creata una nuova reversale o e' stata annullata una reversale gi‡ emessa 
+  *      E' stata creata una nuova reversale o e' stata annullata una reversale gi√† emessa 
   *    PostCondition:
   *      Viene aggiornato per il cds di appartenenza del mandato l'importo associato a mandati e reversali 
   *      della voce del piano (di competenza o residuo) interessata dalla reversale
@@ -105,7 +105,7 @@ public Voce_f_saldi_cmpBulk aggiornaMandatiReversali(UserContext userContext, Vo
   * @param cd_cds il codice del Cds per cui aggiornare i saldi  
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
   * @param ti_competenza_residuo identifica il tipo di voce (di competenza o residuo) da aggiornare
-  * @param checkDisponibilitaCassa  valore booleano che indica se eseguire la verifica della disponibilit‡ di cassa sulla
+  * @param checkDisponibilitaCassa  valore booleano che indica se eseguire la verifica della disponibilit√† di cassa sulla
   *        voce del piano
 */
 
@@ -138,7 +138,7 @@ public Voce_f_saldi_cmpBulk aggiornaMandatiReversali(UserContext userContext, Vo
   *    PostCondition:
   *      Viene aggiornato l'importo associato a obbligazioni/accertamenti della voce del piano (di competenza o residuo) 
   *      interessata dall'accertamento o dai dettagli delle scadenze dell'obbligazione
-  *      senza eseguire il controllo di disponibilit‡ di cassa
+  *      senza eseguire il controllo di disponibilit√† di cassa
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui aggiornare i saldi
@@ -156,7 +156,7 @@ public Voce_f_saldi_cmpBulk aggiornaObbligazioniAccertamenti(UserContext userCon
   *    PreCondition:
   *      E' stato creato un nuovo dettaglio di scadenza di obbligazione o ne e' stato incrementato l'importo
   *      e viene superato il controllo di
-  *      di disponibilit‡ di cassa (metodo checkDisponabilitaCassaObbligazione)
+  *      di disponibilit√† di cassa (metodo checkDisponabilitaCassaObbligazione)
   *    PostCondition:
   *      Viene aggiornato per il cds di appartenenza dell'obbligazione l'importo associato a obbligazione e accertamenti 
   *      della voce del piano (di competenza o residuo) interessata dal dettaglio della scadenza di obbligazione
@@ -164,9 +164,9 @@ public Voce_f_saldi_cmpBulk aggiornaObbligazioniAccertamenti(UserContext userCon
   *    PreCondition:
   *      E' stato creato un nuovo dettaglio di scadenza di obbligazione o ne e' stato incrementato l'importo
   *      e non viene superato il controllo di
-  *      di disponibilit‡ di cassa (metodo checkDisponabilitaCassaObbligazione)
+  *      di disponibilit√† di cassa (metodo checkDisponabilitaCassaObbligazione)
   *    PostCondition:
-  *      Viene segnalato con un errore l'impossibilit‡ di creare/aggiornare l'obbligazione
+  *      Viene segnalato con un errore l'impossibilit√† di creare/aggiornare l'obbligazione
   *  eliminazione obbligazione
   *    PreCondition:
   *      E' stata eliminato un dettaglio di scadenza di obbligazione
@@ -186,7 +186,7 @@ public Voce_f_saldi_cmpBulk aggiornaObbligazioniAccertamenti(UserContext userCon
   * @param cd_cds il codice del Cds per cui aggiornare i saldi  
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
   * @param ti_competenza_residuo identifica il tipo di voce (di competenza o residuo) da aggiornare
-  * @param checkDisponibilitaCassa  valore booleano che indica se eseguire la verifica della disponibilit‡ di cassa sulla
+  * @param checkDisponibilitaCassa  valore booleano che indica se eseguire la verifica della disponibilit√† di cassa sulla
   *        voce del piano
   * 
 */
@@ -205,7 +205,7 @@ public Voce_f_saldi_cmpBulk aggiornaObbligazioniAccertamenti(UserContext userCon
 			saldo.setIm_obblig_imp_acr( saldo.getIm_obblig_imp_acr().add( importo) );
 			saldo.setUser( ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getUser());
 	
-			//se si tratta di un residuo devo aggiornare anche le variazioni pi˘ o meno
+			//se si tratta di un residuo devo aggiornare anche le variazioni pi√π o meno
 			if ( ti_competenza_residuo.equals( saldo.TIPO_RESIDUO ))
 				if ( importo.compareTo( new BigDecimal(0)) > 0 )
 					saldo.setVariazioni_piu( saldo.getVariazioni_piu().add( importo));
@@ -275,26 +275,26 @@ public Voce_f_saldi_cmpBulk aggiornaPagamentiIncassi(UserContext userContext, Vo
 
 }	
 /** 
-  *  verifica disponibilit‡ di cassa - errore
+  *  verifica disponibilit√† di cassa - errore
   *    PreCondition:
   *      La somma dello stanziamento iniziale della voce del piano di competenza o residuo + variazioni in positivo 
   *      - variazione in negativo - importo 
-  *      dei mandati gi‡ emessi e' inferiore all'importo del mandato che l'utente vuole emettere
+  *      dei mandati gi√† emessi e' inferiore all'importo del mandato che l'utente vuole emettere
   *    PostCondition:
   *      Una segnalazione di errore comunica il problema all'utente e non consente il salvataggio del mandato
-  *  verifica disponibilit‡ di cassa - ok
+  *  verifica disponibilit√† di cassa - ok
   *    PreCondition:
   *      La somma dello stanziamento iniziale della voce del piano di competenza o residuo + variazioni in positivo 
   *      - variazione in negativo - importo 
-  *      dei mandati gi‡ emessi e' superiore o uguale all'importo del mandato che l'utente vuole emettere  
+  *      dei mandati gi√† emessi e' superiore o uguale all'importo del mandato che l'utente vuole emettere  
   *    PostCondition:
   *      Il mandato supera la validazione di Cassa ed e' pertanto possibile proseguire con il suo salvataggio
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-  * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la verifica di disponibilit‡ di cassa
-  * @param cd_cds il codice del Cds per cui effettuare la verifica di disponibilit‡ di cassa
-  * @param importo l'importo (positivo o negativo) per cui effettuare la verifica di disponibilit‡ di cassa
-  * @param ti_competenza_residuo identifica il tipo di voce (di competenza o residuo) per cui effettuare la verifica di disponibilit‡ di cassa
+  * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la verifica di disponibilit√† di cassa
+  * @param cd_cds il codice del Cds per cui effettuare la verifica di disponibilit√† di cassa
+  * @param importo l'importo (positivo o negativo) per cui effettuare la verifica di disponibilit√† di cassa
+  * @param ti_competenza_residuo identifica il tipo di voce (di competenza o residuo) per cui effettuare la verifica di disponibilit√† di cassa
 */
 public Voce_f_saldi_cmpBulk checkDisponabilitaCassaMandati(UserContext userContext, Voce_fBulk voce, String cd_cds, BigDecimal importo, String ti_competenza_residuo ) throws ComponentException
 {
@@ -309,14 +309,14 @@ public Voce_f_saldi_cmpBulk checkDisponabilitaCassaMandati(UserContext userConte
 						saldo.getVariazioni_piu()).subtract(
 							saldo.getVariazioni_meno()).subtract(
 								saldo.getIm_mandati_reversali()).subtract( importo ).compareTo( new BigDecimal(0)) < 0 )
-					throw handleException( new ApplicationException("La disponibilit‡ di cassa relativa all'assunzione di mandati Ë stata superata per CDS: " + cd_cds + " voce: " + voce.getCd_voce() + " - Competenza"));
+					throw handleException( new ApplicationException("La disponibilit√† di cassa relativa all'assunzione di mandati √® stata superata per CDS: " + cd_cds + " voce: " + voce.getCd_voce() + " - Competenza"));
 			}	
 			else
 			// check per capitoli a residuo
 			{
 				if ( saldo.getIm_obblig_imp_acr().subtract(
 	 				  	saldo.getIm_mandati_reversali()).subtract( importo ).compareTo( new BigDecimal(0)) < 0 )
-					throw handleException( new ApplicationException("La disponibilit‡ di cassa relativa all'assunzione di mandati Ë stata superata per CDS: " + cd_cds + " voce: " + voce.getCd_voce() + " - Residuo" ));
+					throw handleException( new ApplicationException("La disponibilit√† di cassa relativa all'assunzione di mandati √® stata superata per CDS: " + cd_cds + " voce: " + voce.getCd_voce() + " - Residuo" ));
 				
 			}
 		}*/
@@ -328,26 +328,26 @@ public Voce_f_saldi_cmpBulk checkDisponabilitaCassaMandati(UserContext userConte
 	}
 }	
 /** 
-  *  verifica disponibilit‡ di cassa - errore
+  *  verifica disponibilit√† di cassa - errore
   *    PreCondition:
   *      La somma dello stanziamento iniziale della voce del piano di competenza + variazioni in positivo 
   *      - variazione in negativo - importo 
-  *      delle obbligazioni gi‡ emesse e' inferiore all'importo dell'obbligazione che l'utente vuole emettere
+  *      delle obbligazioni gi√† emesse e' inferiore all'importo dell'obbligazione che l'utente vuole emettere
   *    PostCondition:
-  *      Una segnalazione di errore comunica il problema all'utente, lasciondogli comunque la possibilit‡ di forzare questo
+  *      Una segnalazione di errore comunica il problema all'utente, lasciondogli comunque la possibilit√† di forzare questo
   *      controllo e di salvare l'obbligazione
-  *  verifica disponibilit‡ di cassa - ok
+  *  verifica disponibilit√† di cassa - ok
   *    PreCondition:
   *      La somma dello stanziamento iniziale della voce del piano di competenza + variazioni in positivo 
   *      - variazione in negativo - importo 
-  *      delle obbligazioni gi‡ emesse e' superiore o uguale all'importo dell'obbligazione che l'utente vuole emettere
+  *      delle obbligazioni gi√† emesse e' superiore o uguale all'importo dell'obbligazione che l'utente vuole emettere
   *    PostCondition:
   *      L'obbligazione supera la validazione di Cassa ed e' pertanto possibile proseguire con il suo salvataggio
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-  * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la verifica di disponibilit‡ di cassa
-  * @param cd_cds il codice del Cds per cui effettuare la verifica di disponibilit‡ di cassa
-  * @param importo l'importo (positivo o negativo) per cui effettuare la verifica di disponibilit‡ di cassa
+  * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la verifica di disponibilit√† di cassa
+  * @param cd_cds il codice del Cds per cui effettuare la verifica di disponibilit√† di cassa
+  * @param importo l'importo (positivo o negativo) per cui effettuare la verifica di disponibilit√† di cassa
   *  
 */
 
@@ -365,7 +365,7 @@ public Voce_f_saldi_cmpBulk checkDisponabilitaCassaObbligazioni(UserContext user
 				saldo.getVariazioni_piu()).subtract(
 					saldo.getVariazioni_meno()).subtract(
 						saldo.getIm_obblig_imp_acr()).subtract( importo ).compareTo( new BigDecimal(0)) < 0 )
-			throw handleException( new CheckDisponibilitaCassaFailed("L'importo dei dettagli inseriti supera la disponiblit‡ di cassa relativa al capitolo e al CdS."));
+			throw handleException( new CheckDisponibilitaCassaFailed("L'importo dei dettagli inseriti supera la disponiblit√† di cassa relativa al capitolo e al CdS."));
 		*/	 
 		return saldo;
 	}
@@ -541,7 +541,7 @@ private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk findAndLock(User
   *      E' stata cancellato un mandato o creata/cancellata una reversale 
   *    PostCondition:
   *      Viene aggiornato l'importo associato a mandati e reversali della voce del piano di competenza o residuo interessata dal mandato o
-  *      dalla reversale senza eseguire il controllo di disponibilit‡ di cassa
+  *      dalla reversale senza eseguire il controllo di disponibilit√† di cassa
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param cd_cdr il codice del CDR per cui effettuare la ricerca del saldo
@@ -559,16 +559,16 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userConte
   *  creazione mandato
   *    PreCondition:
   *      E' stata creato un nuovo mandato e viene superato il controllo di
-  *      di disponibilit‡ di cassa (metodo checkDisponabilitaCassaMandati)
+  *      di disponibilit√† di cassa (metodo checkDisponabilitaCassaMandati)
   *    PostCondition:
   *      Viene aggiornato per cdr/linea di appartenenza del mandato l'importo associato a mandati e reversali 
   *      della voce del piano (di competenza o residuo) interessata dal mandato 
   *  creazione mandato - errore
   *    PreCondition:
   *      E' stata creato un nuovo mandato e non viene superato il controllo di
-  *      di disponibilit‡ di cassa (metodo checkDisponabilitaCassaMandati)
+  *      di disponibilit√† di cassa (metodo checkDisponabilitaCassaMandati)
   *    PostCondition:
-  *      Viene segnalato con un errore l'impossibilit‡ di emettere il mandato
+  *      Viene segnalato con un errore l'impossibilit√† di emettere il mandato
   *  annullamento mandato
   *    PreCondition:
   *      E' stata annullato un mandato 
@@ -578,7 +578,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userConte
   *
   *  creazione/annullamento reversale
   *    PreCondition:
-  *      E' stata creata una nuova reversale o e' stata annullata una reversale gi‡ emessa 
+  *      E' stata creata una nuova reversale o e' stata annullata una reversale gi√† emessa 
   *    PostCondition:
   *      Viene aggiornato per la coppia cdr/linea di appartenenza delle righe della reversale l'importo associato a mandati e reversali 
   *      della voce del piano (di competenza o residuo) interessata dalla reversale
@@ -589,7 +589,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userConte
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui aggiornare i saldi
   * @param esercizio_res l'anno del residuo
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
-  * @param checkDisponibilitaCassa  valore booleano che indica se eseguire la verifica della disponibilit‡ di cassa sulla
+  * @param checkDisponibilitaCassa  valore booleano che indica se eseguire la verifica della disponibilit√† di cassa sulla
   *        voce del piano
 */
 
@@ -628,26 +628,26 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userConte
 	}	
 }
 /** 
-  *  verifica disponibilit‡ di cassa - errore
+  *  verifica disponibilit√† di cassa - errore
   *    PreCondition:
   *      La somma dello stanziamento iniziale della voce del piano di competenza o residuo + variazioni in positivo 
   *      - variazione in negativo - importo 
-  *      dei mandati gi‡ emessi e' inferiore all'importo del mandato che l'utente vuole emettere
+  *      dei mandati gi√† emessi e' inferiore all'importo del mandato che l'utente vuole emettere
   *    PostCondition:
   *      Una segnalazione di errore comunica il problema all'utente e non consente il salvataggio del mandato
-  *  verifica disponibilit‡ di cassa - ok
+  *  verifica disponibilit√† di cassa - ok
   *    PreCondition:
   *      La somma dello stanziamento iniziale della voce del piano di competenza o residuo + variazioni in positivo 
   *      - variazione in negativo - importo 
-  *      dei mandati gi‡ emessi e' superiore o uguale all'importo del mandato che l'utente vuole emettere  
+  *      dei mandati gi√† emessi e' superiore o uguale all'importo del mandato che l'utente vuole emettere  
   *    PostCondition:
   *      Il mandato supera la validazione di Cassa ed e' pertanto possibile proseguire con il suo salvataggio
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-  * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la verifica di disponibilit‡ di cassa
-  * @param cd_cds il codice del Cds per cui effettuare la verifica di disponibilit‡ di cassa
-  * @param importo l'importo (positivo o negativo) per cui effettuare la verifica di disponibilit‡ di cassa
-  * @param ti_competenza_residuo identifica il tipo di voce (di competenza o residuo) per cui effettuare la verifica di disponibilit‡ di cassa
+  * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la verifica di disponibilit√† di cassa
+  * @param cd_cds il codice del Cds per cui effettuare la verifica di disponibilit√† di cassa
+  * @param importo l'importo (positivo o negativo) per cui effettuare la verifica di disponibilit√† di cassa
+  * @param ti_competenza_residuo identifica il tipo di voce (di competenza o residuo) per cui effettuare la verifica di disponibilit√† di cassa
 */
 public Voce_f_saldi_cdr_lineaBulk checkDisponabilitaCassaMandati(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, BigDecimal importo ) throws ComponentException
 {
@@ -660,7 +660,7 @@ public Voce_f_saldi_cdr_lineaBulk checkDisponabilitaCassaMandati(UserContext use
 				 saldo.getVariazioni_piu_cassa()).subtract(
 				 saldo.getVariazioni_meno_cassa()).subtract(
 				 saldo.getIm_mandati_reversali_pro()).subtract( importo ).compareTo( new BigDecimal(0)) < 0 )				 
-				throw handleException( new ApplicationException("La disponibilit‡ di cassa relativa all'assunzione di mandati Ë stata superata per CDR: " + cd_cdr +  " GAE: " + cd_linea_attivita +" voce: " + voce.getCd_voce() + " - Competenza"));
+				throw handleException( new ApplicationException("La disponibilit√† di cassa relativa all'assunzione di mandati √® stata superata per CDR: " + cd_cdr +  " GAE: " + cd_linea_attivita +" voce: " + voce.getCd_voce() + " - Competenza"));
 		}*/		
 		return saldo;
 	}
@@ -686,7 +686,7 @@ public String checkDispObbligazioniAccertamenti(UserContext userContext, String 
 		   }   	 
 		   if(diff != null && diff.compareTo(Utility.ZERO) == -1){
 			 messaggio = "L'importo relativo al CDR "+cd_cdr+" G.A.E. "+cd_linea_attivita+" Voce "+voce.getCd_voce()+ aCapo +
-                         "supera la disponibilit‡ di " + new it.cnr.contab.util.EuroFormat().format(diff.abs());
+                         "supera la disponibilit√† di " + new it.cnr.contab.util.EuroFormat().format(diff.abs());
 		   }
 		   //aggiungo i vincoli
 		   Pdg_vincoloHome home = (Pdg_vincoloHome)getHome(userContext, Pdg_vincoloBulk.class);
@@ -694,7 +694,7 @@ public String checkDispObbligazioniAccertamenti(UserContext userContext, String 
 		   BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 		   if (diff.subtract(impVincolo).compareTo(BigDecimal.ZERO)==-1)
 			   messaggio = "L'importo relativo al CDR "+cd_cdr+" G.A.E. "+cd_linea_attivita+" Voce "+voce.getCd_voce()+ aCapo +
-			   "supera la disponibilit‡ di " + new it.cnr.contab.util.EuroFormat().format(diff.subtract(impVincolo).abs())+" in conseguenza della presenza "
+			   "supera la disponibilit√† di " + new it.cnr.contab.util.EuroFormat().format(diff.subtract(impVincolo).abs())+" in conseguenza della presenza "
 			   		+ "di vincoli di spesa per un importo di " + new it.cnr.contab.util.EuroFormat().format(impVincolo.abs());
 		}
 		return messaggio;
@@ -755,7 +755,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(UserContext u
 			    insertBulk(userContext, saldo);	
 			}
 			if (saldo == null) {
-				throw handleException( new ApplicationException("Disponibilit‡ inesistente per Esercizio: " + voce.getEsercizio() +
+				throw handleException( new ApplicationException("Disponibilit√† inesistente per Esercizio: " + voce.getEsercizio() +
 														   " CDR: " + cd_cdr + " G.A.E.: " + cd_linea_attivita + " Voce: " + voce.getCd_voce() ));
 			}
 		}
@@ -888,7 +888,7 @@ public String getMessaggioSfondamentoDisponibilita(UserContext userContext, Voce
 		}
 		return "";
 	} catch ( it.cnr.jada.persistency.ObjectNotFoundException e ) {
-		return "Impossibile effettuare l'operazione! Non Ë stata trovata la riga di saldo da aggiornare!";
+		return "Impossibile effettuare l'operazione! Non √® stata trovata la riga di saldo da aggiornare!";
 	} catch (PersistencyException e) {
 		throw new ComponentException(e);
 	} catch ( Exception e ) {
@@ -920,7 +920,7 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
 							getHomeCache(userContext).fetchAll(userContext);
 
 							if (voce == null)
-								throw new ApplicationException("La voce: "+ codiceVoce +" non Ë presente nell'esercizio: "+esercizio.getEsercizio());
+								throw new ApplicationException("La voce: "+ codiceVoce +" non √® presente nell'esercizio: "+esercizio.getEsercizio());
 							
 							saldoNew = findAndLock( userContext,esercizio.getEsercizio(), esercizio_res, cd_cdr,cd_linea_attivita, voce);
 							codiceVoceForSaldoNew = voce.getCd_voce();
@@ -937,7 +937,7 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
 //							getHomeCache(userContext).fetchAll(userContext);
 //
 //							if (voceOld == null)
-//								throw new ApplicationException("La voce: "+ voce.getCd_voce() +" non Ë presente nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+//								throw new ApplicationException("La voce: "+ voce.getCd_voce() +" non √® presente nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
 							
 							Elemento_voceBulk elementoVoceOld = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
 									  new Elemento_voceBulk(saldoOld.getCd_voce(),CNRUserContext.getEsercizio(userContext),saldoOld.getTi_appartenenza(),saldoOld.getTi_gestione())
@@ -950,7 +950,7 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
 							List listVociNew = ass_evold_evnewHome.findAssElementoVoceNewList(elementoVoceOld);
 							if (!listVociNew.isEmpty()) {
 								if (listVociNew.size()>1)
-									throw new ApplicationException("Trovate nella tabella di associazione Vecchie/Nuove Voci pi˘ elementi voce nel nuovo anno per la Voce: "+ elementoVoceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+									throw new ApplicationException("Trovate nella tabella di associazione Vecchie/Nuove Voci pi√π elementi voce nel nuovo anno per la Voce: "+ elementoVoceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
 								elemento_voce = (Elemento_voceBulk)listVociNew.get(0);
 							} else {
 								elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
@@ -979,7 +979,7 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
 						List listVociNew = ass_evold_evnewHome.findAssElementoVoceNewList(elementoVoceOld);
 						if (!listVociNew.isEmpty()) {
 							if (listVociNew.size()>1)
-								throw new ApplicationException("Trovate nella tabella di associazione Vecchie/Nuove Voci pi˘ elementi voce nel nuovo anno per la Voce: "+ elementoVoceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
+								throw new ApplicationException("Trovate nella tabella di associazione Vecchie/Nuove Voci pi√π elementi voce nel nuovo anno per la Voce: "+ elementoVoceOld.getCd_voce() +" nell'esercizio: "+CNRUserContext.getEsercizio(userContext));
 							elemento_voce = (Elemento_voceBulk)listVociNew.get(0);
 						} else {
 							elemento_voce = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
@@ -1002,7 +1002,7 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
 					Parametri_cnrBulk par = (Parametri_cnrBulk)getHome(userContext,Parametri_cnrBulk.class).findByPrimaryKey( new Parametri_cnrBulk(esercizio.getEsercizio()));
 					if (par != null && par.getLivello_pdg_cofog()!=0)
 						if( (workpackage.getTi_gestione().compareTo(CostantiTi_gestione.TI_GESTIONE_SPESE)==0) && workpackage.getCd_cofog()==null)
-							throw new ApplicationException("Non Ë possibile utilizzare GAE di spesa in cui non Ë indicata la classificazione Cofog.");
+							throw new ApplicationException("Non √® possibile utilizzare GAE di spesa in cui non √® indicata la classificazione Cofog.");
 																		  
 					getHomeCache(userContext).fetchAll(userContext);																		  
 
@@ -1114,7 +1114,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaPagamentiIncassi(UserContext userConte
 
 }
 /** 
- *  calcola il saldo (disponibilit‡ ad impegnare) per creare residui propri o impropri
+ *  calcola il saldo (disponibilit√† ad impegnare) per creare residui propri o impropri
  *  come sommatoria dei saldi di tutti gli anni residui presenti 
  *
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -1332,10 +1332,10 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                                 if (messaggio!=null && messaggio.length()>0)
                                     messaggio = messaggio+ "\n";
                                 messaggio = messaggio +
-                                        "La disponibilit‡ del piano economico "+e.getCd_voce_piano()+
+                                        "La disponibilit√† del piano economico "+e.getCd_voce_piano()+
                                         " associato al progetto"+(e.getEsercizio_piano().equals(0)?"":" per l'esercizio "+e.getEsercizio_piano())+
                                         " per la Voce " + rigaVar.getCd_elemento_voce() + " e GAE " + rigaVar.getCd_linea_attivita() +
-                                        " non Ë sufficiente a coprire la variazione che risulta di " +
+                                        " non √® sufficiente a coprire la variazione che risulta di " +
                                         new it.cnr.contab.util.EuroFormat().format(rigaVar.getIm_variazione()) + ".\n";
                             }
                         }

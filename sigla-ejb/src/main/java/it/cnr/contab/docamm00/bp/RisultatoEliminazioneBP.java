@@ -303,7 +303,7 @@ public Risultato_eliminazioneVBulk manageDelete(ActionContext context, IDocument
 							}
 
 							//E' NECESSARIO per gli aggiornamenti in automatico impostare i docCont SUL delete
-							//manager ottenuto perchè NON è ancora il modello corrente del bp
+							//manager ottenuto perchÃ¨ NON Ã¨ ancora il modello corrente del bp
 							deleteManager.addToDefferredSaldi(
 														scadenzaCollegata.getFather(), 
 														scadenzaCollegata.getFather().getSaldiInfo());
@@ -315,7 +315,7 @@ public Risultato_eliminazioneVBulk manageDelete(ActionContext context, IDocument
 					} catch (ClassCastException exc) {
 						//Questo errore viene lanciato nel caso in cui le ComponentSession dei doc cont vengano rigenerate
 						//e lo sviluppatore si dimentichi di far implementare l'interfaccia DocumentoContabileComponentSession
-						throw new it.cnr.jada.comp.ApplicationException("ATTENZIONE! Si è cercato di eseguire, durante l'operazione di cancellazione, un aggiornamento in automatico di una scadenza NON riconosciuta come Documento Contabile!");
+						throw new it.cnr.jada.comp.ApplicationException("ATTENZIONE! Si Ã¨ cercato di eseguire, durante l'operazione di cancellazione, un aggiornamento in automatico di una scadenza NON riconosciuta come Documento Contabile!");
 					} catch (it.cnr.jada.action.MessageToUser t) {
 						throw t;
 					} catch (Throwable t) {

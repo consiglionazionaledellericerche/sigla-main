@@ -65,7 +65,7 @@ public class Costanti
 		erroriFA.put(ERRORE_FA_999, "Errore generico");
 		erroriFA.put(ERRORE_FA_100, "Errore generico applicativo ");
 		erroriFA.put(ERRORE_FA_101, "Parametro necessario alla generazione della Fattura non inserito o non valido.");
-		erroriFA.put(ERRORE_FA_102, "Fattura o Nota Credito gi‡ inserita");
+		erroriFA.put(ERRORE_FA_102, "Fattura o Nota Credito gi√† inserita");
 		erroriFA.put(ERRORE_FA_103, "Fattura di tipo tariffario con codice tariffario non valorizzato");
 		erroriFA.put(ERRORE_FA_104, "Estremi del contratto non presenti");
 		erroriFA.put(ERRORE_FA_105, "Estremi del cliente non presenti");
@@ -106,8 +106,8 @@ public class Costanti
 		erroriFA.put(ERRORE_FA_140, "Cliente selezionato NON coerente con i campi intra_ue e/o extra_ue e/o san_marino");
 		erroriFA.put(ERRORE_FA_141, "Tipologia bene/servizio non coerente con il bene/servizio");
 		erroriFA.put(ERRORE_FA_142, "Tipologia bene/servizio non coerente con i campi intra_ue e/o extra_ue");
-		erroriFA.put(ERRORE_FA_143, "Estremi Modalit‡ erogazione non presenti");
-		erroriFA.put(ERRORE_FA_144, "Estremi Modalit‡ incasso non presenti");
+		erroriFA.put(ERRORE_FA_143, "Estremi Modalit√† erogazione non presenti");
+		erroriFA.put(ERRORE_FA_144, "Estremi Modalit√† incasso non presenti");
 		erroriFA.put(ERRORE_FA_145, "Estremi Codici Cpa non presenti");
 		erroriFA.put(ERRORE_FA_146, "Estremi Nazione non presenti");
 		erroriFA.put(ERRORE_FA_147, "Estremi Nomenclatura Combinata non presenti");
@@ -137,17 +137,17 @@ public class Costanti
 	static {
 		erroriWS = new it.cnr.jada.util.OrderedHashtable();
 		erroriWS.put(ERRORE_WS_100, "Errore generico, causa sconosciuta");
-		erroriWS.put(ERRORE_WS_101, "Non Ë stata definita la query per la ricerca");
-		erroriWS.put(ERRORE_WS_102, "Non Ë stato definito il dominio per la ricerca");
+		erroriWS.put(ERRORE_WS_101, "Non √® stata definita la query per la ricerca");
+		erroriWS.put(ERRORE_WS_102, "Non √® stato definito il dominio per la ricerca");
 		erroriWS.put(ERRORE_WS_103, "Codice terzo per la ricerca non presente o non valido");
-		erroriWS.put(ERRORE_WS_104, "Codice della modalit‡ di pagamento per la ricerca non presente o non valido");
+		erroriWS.put(ERRORE_WS_104, "Codice della modalit√† di pagamento per la ricerca non presente o non valido");
 		erroriWS.put(ERRORE_WS_105, "Codice UO per la ricerca non presente o non valido");
-		erroriWS.put(ERRORE_WS_106, "Non Ë stato definito il tipo del contratto per la ricerca");
-		erroriWS.put(ERRORE_WS_107, "Non Ë stato definito l'esercizio per la ricerca");
+		erroriWS.put(ERRORE_WS_106, "Non √® stato definito il tipo del contratto per la ricerca");
+		erroriWS.put(ERRORE_WS_107, "Non √® stato definito l'esercizio per la ricerca");
 		erroriWS.put(ERRORE_WS_108, "Codice CDR per la ricerca non presente o non valido");
-		erroriWS.put(ERRORE_WS_109, "Non Ë stato definito il tipo gestione della G.a.e. per la ricerca");
-		erroriWS.put(ERRORE_WS_110, "Non Ë stato definito la tipologia del sezionale per la ricerca");
-		erroriWS.put(ERRORE_WS_111, "Non Ë stato definito il tipo documento per la ricerca");
+		erroriWS.put(ERRORE_WS_109, "Non √® stato definito il tipo gestione della G.a.e. per la ricerca");
+		erroriWS.put(ERRORE_WS_110, "Non √® stato definito la tipologia del sezionale per la ricerca");
+		erroriWS.put(ERRORE_WS_111, "Non √® stato definito il tipo documento per la ricerca");
 		erroriWS.put(ERRORE_WS_112, "Formato numerico errato codice terzo");
 		erroriWS.put(ERRORE_WS_113, "Formato numerico errato esercizio");
 		erroriWS.put(ERRORE_WS_114, "Tipologia bene/servizio non valida");

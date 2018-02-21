@@ -122,9 +122,9 @@ private void callRiepilogoLiquidazioneIVA(
   *      liquidazione provvisoria o definitiva
   *    PostCondition:
   *      crea la liquidazione
-  *  Si Ë verificato un errore.
+  *  Si √® verificato un errore.
   *    PreCondition:
-  *      Si Ë verificato un errore.
+  *      Si √® verificato un errore.
   *    PostCondition:
   *      Viene inviato un messaggio e non permette l'operazione
  */
@@ -229,7 +229,7 @@ public MTUWrapper callStampeIva(it.cnr.jada.UserContext userContext, Stampa_regi
 	                								stampaBulk.RISTAMPA :
 	                								stampaBulk.NON_RISTAMPA)); // Ristampa = 'N' [no ristampa] / 'Y' [ristampa]
                 cs.setBigDecimal(11, pg_Stampa); // repId [dalla sequence]
-                cs.setInt(12, 1); // logId [?] (al momento non Ë gestito...)
+                cs.setInt(12, 1); // logId [?] (al momento non √® gestito...)
                 
 
                 cs.registerOutParameter(13, java.sql.Types.VARCHAR);
@@ -354,7 +354,7 @@ private void callTabCodIvaVendite(
   *    PostCondition:
   *      Viene inviato un messaggio e non permette l'operazione
   *    PreCondition:
-  *      Si Ë verificato un errore.
+  *      Si √® verificato un errore.
   *    PostCondition:
   *      Viene inviato un messaggio e non permette l'operazione
  */
@@ -402,7 +402,7 @@ private void controllaSezionali(it.cnr.jada.UserContext userContext, Stampa_regi
             rc= sql.executeCountQuery(getHomeCache(userContext).getConnection());
 
             if (rc != 0)
-                throw new it.cnr.jada.comp.ApplicationException("Attenzione, non Ë possibile annullare poichË esiste una liquidazione.");
+                throw new it.cnr.jada.comp.ApplicationException("Attenzione, non √® possibile annullare poich√® esiste una liquidazione.");
         } catch (SQLException ex) {
             throw handleException(ex);
         }
@@ -439,7 +439,7 @@ public BulkList findRegistriStampati(
   *    PostCondition:
   *      ritorna un valore 
   *    PreCondition:
-  *      Si Ë verificato un errore.
+  *      Si √® verificato un errore.
   *    PostCondition:
   *      Viene inviato un messaggio con il relativo errore ritornato dal DB
  */
@@ -515,12 +515,12 @@ public it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_annualeVBulk
   *  Prospetto delle liquidazioni definitive
   *  richiesta la lista delle liquidazioni
   *    PreCondition:
-  *      Viene richiesta la lista delle liquidazioni gi‡ stampate 
+  *      Viene richiesta la lista delle liquidazioni gi√† stampate 
   *    PostCondition:
   *      visualizza la lista delle liquidazioni stampate
   *  si verifica un errore
   *    PreCondition:
-  *      Si Ë verificato un errore.
+  *      Si √® verificato un errore.
   *    PostCondition:
   *      Viene inviato un messaggio con il relativo errore ritornato dal DB
  */
@@ -558,9 +558,9 @@ public java.util.Collection selectProspetti_stampatiByClause(
   *      Viene richiesta la lista dei sezionali relativi alla UO di appartenenza
   *    PostCondition:
   *      visualizza la lista dei sezionali
-  *  Si Ë verificato un errore
+  *  Si √® verificato un errore
   *    PreCondition:
-  *      Si Ë verificato un errore.
+  *      Si √® verificato un errore.
   *    PostCondition:
   *      Viene inviato un messaggio con il relativo errore ritornato dal DB
  */
@@ -643,9 +643,9 @@ public java.util.Collection selectTipi_sezionaliByClause(
   *      Viene richiesta la lista delle UO
   *    PostCondition:
   *      ritorna la lista delle UO
-  *   Si Ë verificato un errore
+  *   Si √® verificato un errore
   *    PreCondition:
-  *      Si Ë verificato un errore.
+  *      Si √® verificato un errore.
   *    PostCondition:
   *      Viene inviato un messaggio con il relativo errore ritornato dal DB
  */

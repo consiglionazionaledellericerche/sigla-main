@@ -24,7 +24,7 @@ public class Tipo_ammortamentoBulk extends Tipo_ammortamentoBase {
 	// FL_ALTRO
 	private Boolean fl_altro;
 
-	/* ID di transazione: è univoco e permette di identificare la fattura sulla
+	/* ID di transazione: Ã¨ univoco e permette di identificare la fattura sulla
 	 *	tabella ASS_TIPO_AMM_CAT_GRUP_INV_APG (tabella di appoggio).
 	*/ 
 	private String local_transactionID;
@@ -48,7 +48,7 @@ public class Tipo_ammortamentoBulk extends Tipo_ammortamentoBase {
 	// ESERCIZIO DI COMPETENZA
 	private java.lang.Integer esercizio_competenza;
 
-	// Flag che permette di sapere se è stata richietsa una operazione di RIASSOCIA
+	// Flag che permette di sapere se Ã¨ stata richietsa una operazione di RIASSOCIA
 	private Boolean isPerRiassocia;
  	
 	public final static java.lang.String TIPO_ORDINARIO = "O";

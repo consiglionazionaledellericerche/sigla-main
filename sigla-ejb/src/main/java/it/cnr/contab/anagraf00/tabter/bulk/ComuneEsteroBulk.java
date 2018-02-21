@@ -26,7 +26,7 @@ public boolean isEstero(){
 	return true;
 }
 /**
- * Oltre alla normale validate da un avviso di errore se la nazione è nulla.
+ * Oltre alla normale validate da un avviso di errore se la nazione Ã¨ nulla.
  *
  * @exeption it.cnr.jada.bulk.ValidationException
 */
@@ -34,8 +34,8 @@ public void validate() throws ValidationException {
 
 	super.validate();
 	if (getDs_comune()==null)
-		throw new ValidationException("Il campo DESCRIZIONE non può essere vuoto");
+		throw new ValidationException("Il campo DESCRIZIONE non puÃ² essere vuoto");
 	if(getPg_nazione() == null)
-		throw new ValidationException("Il campo NAZIONE non può essere vuoto");
+		throw new ValidationException("Il campo NAZIONE non puÃ² essere vuoto");
 }
 }

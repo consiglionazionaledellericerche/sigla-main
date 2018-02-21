@@ -81,9 +81,9 @@ public class Parametri_enteComponent extends CRUDComponent {
 		if (parametri_ente.isToBeUpdated()) {
 			Parametri_enteBulk parametriEnteDB = (Parametri_enteBulk)testataHome.findByPrimaryKey(parametri_ente);
 			if (!parametriEnteDB.getFl_informix().equals(parametri_ente.getFl_informix()))
-				throw new ApplicationException("Attenzione! Non è possibile modificare il flag \"Collegamento a Informix\".");
+				throw new ApplicationException("Attenzione! Non Ã¨ possibile modificare il flag \"Collegamento a Informix\".");
 			if (parametriEnteDB.getFl_gae_es() && !parametri_ente.getFl_gae_es())
-				throw new ApplicationException("Attenzione! Non è possibile modificare il flag \"Gestione GAE E/S\".");
+				throw new ApplicationException("Attenzione! Non Ã¨ possibile modificare il flag \"Gestione GAE E/S\".");
 		}				
 
 		int totAttive = 0;

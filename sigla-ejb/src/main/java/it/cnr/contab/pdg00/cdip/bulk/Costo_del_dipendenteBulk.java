@@ -42,9 +42,9 @@ public java.lang.String getCd_elemento_voce() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'elemento_voce'
+ * Restituisce il valore della propriet√† 'elemento_voce'
  *
- * @return Il valore della propriet‡ 'elemento_voce'
+ * @return Il valore della propriet√† 'elemento_voce'
  */
 public it.cnr.contab.config00.pdcfin.bulk.EV_cds_spese_capitoloBulk getElemento_voce() {
 	return elemento_voce;
@@ -66,9 +66,9 @@ public java.lang.String getTi_gestione() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'ti_rapportoKeys'
+ * Restituisce il valore della propriet√† 'ti_rapportoKeys'
  *
- * @return Il valore della propriet‡ 'ti_rapportoKeys'
+ * @return Il valore della propriet√† 'ti_rapportoKeys'
  */
 public java.util.Dictionary getTi_rapportoKeys() {
 	return ti_rapportoKeys;
@@ -80,7 +80,7 @@ public void setCd_elemento_voce(java.lang.String cd_elemento_voce) {
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'elemento_voce'
+ * Imposta il valore della propriet√† 'elemento_voce'
  *
  * @param newElemento_voce	Il valore da assegnare a 'elemento_voce'
  */

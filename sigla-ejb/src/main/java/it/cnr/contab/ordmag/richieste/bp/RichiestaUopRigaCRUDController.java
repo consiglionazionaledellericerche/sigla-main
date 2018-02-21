@@ -69,7 +69,7 @@ public void validateForDelete(ActionContext context, OggettoBulk detail) throws 
 //											((riga.getDs_riga() != null) ?
 //												riga.getDs_riga() :
 //												String.valueOf(riga.getProgressivo_riga().longValue())) + 
-//											"\" perchè associato a mandato.");
+//											"\" perchÃ¨ associato a mandato.");
 //		((DocumentoGenericoComponentSession)(((SimpleCRUDBP)getParentController()).createComponentSession())).eliminaRiga(context.getUserContext(), (Documento_generico_rigaBulk)detail);
 //	} catch (it.cnr.jada.comp.ApplicationException e) {
 //		throw new ValidationException(e.getMessage());

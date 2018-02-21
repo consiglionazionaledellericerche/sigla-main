@@ -4,1429 +4,1429 @@
         xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-  <changeSet author="sigla" id="create-package-ACCONTO">
+  <changeSet author="sigla" runOnChange="true" id="create-package-ACCONTO">
     <sqlFile dbms="oracle" path="../expsigladb/Package/ACCONTO.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-ACCONTO_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-ACCONTO_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/ACCONTO_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CAL_ASSESTATO">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CAL_ASSESTATO">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CAL_ASSESTATO.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CAL_ASSESTATO_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CAL_ASSESTATO_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CAL_ASSESTATO_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CAR_SALDI">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CAR_SALDI">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CAR_SALDI.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CAR_SALDI_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CAR_SALDI_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CAR_SALDI_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CIR_FUNZGEST">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CIR_FUNZGEST">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CIR_FUNZGEST.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CIR_FUNZGEST_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CIR_FUNZGEST_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CIR_FUNZGEST_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CLASS_COMP_DOC_CONT_NMP">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CLASS_COMP_DOC_CONT_NMP">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CLASS_COMP_DOC_CONT_NMP.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CLASS_COMP_DOC_CONT_NMP_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CLASS_COMP_DOC_CONT_NMP_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CLASS_COMP_DOC_CONT_NMP_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CLBANCA">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CLBANCA">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CLBANCA.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CLBANCA_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CLBANCA_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CLBANCA_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CLCONFIGURAZIONE_CNR">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CLCONFIGURAZIONE_CNR">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CLCONFIGURAZIONE_CNR.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CLCONFIGURAZIONE_CNR_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CLCONFIGURAZIONE_CNR_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CLCONFIGURAZIONE_CNR_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CLESERCIZIO">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CLESERCIZIO">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CLESERCIZIO.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CLESERCIZIO_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CLESERCIZIO_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CLESERCIZIO_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB000">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB000">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB000.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB000_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB000_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB000_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB001">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB001">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB001.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB001_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB001_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB001_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB002">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB002">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB002.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB002_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB002_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB002_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB005">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB005">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB005.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB005_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB005_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB005_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB008">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB008">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB008.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB008_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB008_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB008_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB009">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB009">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB009.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB009_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB009_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB009_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB010">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB010">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB010.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB010_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB010_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB010_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB012">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB012">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB012.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB012_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB012_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB012_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB015">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB015">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB015.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB015_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB015_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB015_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB016">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB016">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB016.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB018">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB018">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB018.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB018_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB018_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB018_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB020">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB020">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB020.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB020_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB020_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB020_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB030">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB030">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB030.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB030_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB030_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB030_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB035">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB035">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB035.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB035_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB035_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB035_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB037">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB037">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB037.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB037_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB037_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB037_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB038">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB038">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB038.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB038_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB038_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB038_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB039">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB039">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB039.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB039_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB039_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB039_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB040">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB040">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB040.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB040_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB040_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB040_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB043">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB043">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB043.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB043_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB043_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB043_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB046">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB046">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB046.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB046_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB046_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB046_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB047">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB047">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB047.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB047_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB047_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB047_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB048">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB048">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB048.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB048_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB048_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB048_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB050">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB050">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB050.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB050_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB050_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB050_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB051">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB051">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB051.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB051_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB051_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB051_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB053">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB053">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB053.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB053_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB053_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB053_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB054">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB054">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB054.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB054_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB054_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB054_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB055">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB055">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB055.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB055_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB055_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB055_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB056">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB056">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB056.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB056_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB056_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB056_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB060">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB060">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB060.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB060_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB060_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB060_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB061">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB061">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB061.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB061_APPOGGIO">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB061_APPOGGIO">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB061_APPOGGIO.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB061_APPOGGIO_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB061_APPOGGIO_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB061_APPOGGIO_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB061_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB061_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB061_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB061_LELLO">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB061_LELLO">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB061_LELLO.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB061_LELLO_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB061_LELLO_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB061_LELLO_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB062">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB062">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB062.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB062_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB062_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB062_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB070">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB070">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB070.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB070_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB070_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB070_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB075">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB075">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB075.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB075_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB075_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB075_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB080">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB080">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB080.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB080_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB080_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB080_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB100">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB100">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB100.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB100_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB100_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB100_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB105">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB105">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB105.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB105_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB105_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB105_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB107">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB107">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB107.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB107_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB107_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB107_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB110">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB110">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB110.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB110_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB110_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB110_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB120">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB120">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB120.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB120_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB120_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB120_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB130">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB130">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB130.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB130_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB130_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB130_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB150">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB150">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB150.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB150_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB150_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB150_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB200">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB200">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB200.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB200_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB200_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB200_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB204">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB204">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB204.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB204_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB204_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB204_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB205">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB205">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB205.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB205_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB205_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB205_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB206">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB206">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB206.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB206_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB206_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB206_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB207">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB207">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB207.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB207_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB207_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB207_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB210">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB210">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB210.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB210_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB210_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB210_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB215">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB215">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB215.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB215_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB215_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB215_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB220">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB220">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB220.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB220_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB220_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB220_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB240">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB240">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB240.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB240_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB240_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB240_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB250">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB250">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB250.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB250_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB250_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB250_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB253">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB253">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB253.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB253_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB253_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB253_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB255">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB255">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB255.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB255_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB255_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB255_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB260">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB260">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB260.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB260_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB260_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB260_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB265">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB265">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB265.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB265_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB265_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB265_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB270">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB270">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB270.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB270_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB270_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB270_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB300">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB300">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB300.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB300_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB300_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB300_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB400">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB400">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB400.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB400_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB400_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB400_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB500">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB500">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB500.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB500_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB500_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB500_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB505">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB505">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB505.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB505_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB505_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB505_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB545">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB545">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB545.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB545_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB545_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB545_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB550">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB550">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB550.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB550_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB550_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB550_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB551">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB551">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB551.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB551_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB551_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB551_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB552">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB552">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB552.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB552_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB552_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB552_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB553">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB553">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB553.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB553_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB553_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB553_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB560">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB560">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB560.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB560_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB560_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB560_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB570">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB570">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB570.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB570_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB570_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB570_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB573">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB573">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB573.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB573_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB573_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB573_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB575">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB575">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB575.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB575_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB575_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB575_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB576">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB576">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB576.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB576_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB576_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB576_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB577">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB577">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB577.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB577_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB577_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB577_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB580">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB580">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB580.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB580_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB580_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB580_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB585">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB585">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB585.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB585_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB585_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB585_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB600">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB600">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB600.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB600_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB600_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB600_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB605">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB605">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB605.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB605_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB605_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB605_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB610">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB610">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB610.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB610_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB610_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB610_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB650">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB650">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB650.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB650_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB650_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB650_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB680">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB680">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB680.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB680_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB680_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB680_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB750">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB750">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB750.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB750_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB750_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB750_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB755">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB755">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB755.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB755_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB755_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB755_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB800">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB800">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB800.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB800_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB800_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB800_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB850">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB850">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB850.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB850_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB850_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB850_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB890">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB890">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB890.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB890_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB890_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB890_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB900">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB900">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB900.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB900_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB900_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB900_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB920">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB920">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB920.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB920_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB920_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB920_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB925">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB925">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB925.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB925_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB925_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB925_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB930">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB930">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB930.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB930_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB930_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB930_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB940">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB940">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB940.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRCTB940_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRCTB940_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB940_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMAR010">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMAR010">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMAR010.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMAR010_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMAR010_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMAR010_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMAR030">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMAR030">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMAR030.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMAR030_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMAR030_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMAR030_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMAR037">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMAR037">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMAR037.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMAR037_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMAR037_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMAR037_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMAR050">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMAR050">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMAR050.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMAR050_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMAR050_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMAR050_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMAT001">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMAT001">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMAT001.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMAT001_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMAT001_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMAT001_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMIG030">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMIG030">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMIG030.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMIG030_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMIG030_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMIG030_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMIG080">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMIG080">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMIG080.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMIG080_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMIG080_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMIG080_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMIG090">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMIG090">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMIG090.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMIG090_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMIG090_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMIG090_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMIG100">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMIG100">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMIG100.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMIG100_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMIG100_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMIG100_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMIG400">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMIG400">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMIG400.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRMIG400_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRMIG400_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRMIG400_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO010">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO010">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO010.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO010_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO010_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO010_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO035">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO035">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO035.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO035_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO035_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO035_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO040">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO040">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO040.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO040_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO040_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO040_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO050">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO050">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO050.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO050_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO050_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO050_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO060">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO060">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO060.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO060_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO060_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO060_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO070">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO070">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO070.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO070_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO070_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO070_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO080">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO080">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO080.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO080_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO080_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO080_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO090">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO090">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO090.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRSTO090_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRSTO090_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRSTO090_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRTST060">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRTST060">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRTST060.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRTST070">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRTST070">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRTST070.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRTST070_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRTST070_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRTST070_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRUTIL">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRUTIL">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRUTIL.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRUTIL_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRUTIL_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRUTIL_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRUTL001">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRUTL001">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRUTL001.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRUTL001_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRUTL001_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRUTL001_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRUTL002">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRUTL002">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRUTL002.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRUTL002_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRUTL002_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRUTL002_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRUTL003">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRUTL003">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRUTL003.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CNRUTL003_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CNRUTL003_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CNRUTL003_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CONTROLLO_IMPORTI">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CONTROLLO_IMPORTI">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CONTROLLO_IMPORTI.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-CONTROLLO_IMPORTI_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-CONTROLLO_IMPORTI_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/CONTROLLO_IMPORTI_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMCLS001">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMCLS001">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMCLS001.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMCLS001_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMCLS001_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMCLS001_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMCST001">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMCST001">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMCST001.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMERR001">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMERR001">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMERR001.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMERR001_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMERR001_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMERR001_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMPRT000">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMPRT000">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMPRT000.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMRES001">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMRES001">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMRES001.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMRES001_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMRES001_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMRES001_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL001">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL001">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL001.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL001_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL001_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL001_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL005">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL005">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL005.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL005_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL005_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL005_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL010">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL010">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL010.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL010_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL010_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL010_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL011">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL011">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL011.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL011_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL011_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL011_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL015">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL015">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL015.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL015_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL015_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL015_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL020">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL020">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL020.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL020_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL020_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL020_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL050">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL050">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL050.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL050_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL050_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL050_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL100">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL100">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL100.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL100_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL100_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL100_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL200">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL200">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL200.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL200_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL200_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL200_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL205">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL205">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL205.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL205_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL205_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL205_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL210">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL210">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL210.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL210_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL210_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL210_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL800">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL800">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL800.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL800_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL800_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL800_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL900">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL900">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL900.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-IBMUTL900_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-IBMUTL900_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/IBMUTL900_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-PIPE">
+  <changeSet author="sigla" runOnChange="true" id="create-package-PIPE">
     <sqlFile dbms="oracle" path="../expsigladb/Package/PIPE.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-PIPE_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-PIPE_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/PIPE_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-PRT_CIR_SITCAS">
+  <changeSet author="sigla" runOnChange="true" id="create-package-PRT_CIR_SITCAS">
     <sqlFile dbms="oracle" path="../expsigladb/Package/PRT_CIR_SITCAS.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-PRT_CIR_SITCAS_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-PRT_CIR_SITCAS_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/PRT_CIR_SITCAS_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-UTIL_BILANCIO">
+  <changeSet author="sigla" runOnChange="true" id="create-package-UTIL_BILANCIO">
     <sqlFile dbms="oracle" path="../expsigladb/Package/UTIL_BILANCIO.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-UTIL_BILANCIO_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-UTIL_BILANCIO_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/UTIL_BILANCIO_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-UTIL_VARIAZIONI">
+  <changeSet author="sigla" runOnChange="true" id="create-package-UTIL_VARIAZIONI">
     <sqlFile dbms="oracle" path="../expsigladb/Package/UTIL_VARIAZIONI.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="create-package-UTIL_VARIAZIONI_BODY">
+  <changeSet author="sigla" runOnChange="true" id="create-package-UTIL_VARIAZIONI_BODY">
     <sqlFile dbms="oracle" path="../expsigladb/Package/UTIL_VARIAZIONI_BODY.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-438">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-438">
     <sqlFile dbms="oracle" path="../expsigladb/Function/calcolaaltreborse.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-441">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-441">
     <sqlFile dbms="oracle" path="../expsigladb/Function/decode_zero_null.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-444">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-444">
     <sqlFile dbms="oracle" path="../expsigladb/Function/getcurrentcdelementovoce.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-447">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-447">
     <sqlFile dbms="oracle" path="../expsigladb/Function/somma_doc_pass_per_scadenza.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-450">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-450">
     <sqlFile dbms="oracle" path="../expsigladb/Function/fnc_ccnconcat.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-453">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-453">
     <sqlFile dbms="oracle" path="../expsigladb/Function/iseligibileannull.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-456">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-456">
     <sqlFile dbms="oracle" path="../expsigladb/Function/func_prt_s_sp_riclassificato.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-459">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-459">
     <sqlFile dbms="oracle" path="../expsigladb/Function/iseligibileribalt_elenco_lello.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-462">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-462">
     <sqlFile dbms="oracle" path="../expsigladb/Function/getim_riscontrato.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-465">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-465">
     <sqlFile dbms="oracle" path="../expsigladb/Function/get_dip_from_modulo.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-468">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-468">
     <sqlFile dbms="oracle" path="../expsigladb/Function/getmodpagcessionario.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-471">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-471">
     <sqlFile dbms="oracle" path="../expsigladb/Function/get_coge_ult_terzo.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-474">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-474">
     <sqlFile dbms="oracle" path="../expsigladb/Function/iseligibileribalt_elenco.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-477">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-477">
     <sqlFile dbms="oracle" path="../expsigladb/Function/func_prt_s_ce_riclassificato_j.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-480">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-480">
     <sqlFile dbms="oracle" path="../expsigladb/Function/prt_getdes_vocecap.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-483">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-483">
     <sqlFile dbms="oracle" path="../expsigladb/Function/getflselezione.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-486">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-486">
     <sqlFile dbms="oracle" path="../expsigladb/Function/get_coge_ult_fondo.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-489">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-489">
     <sqlFile dbms="oracle" path="../expsigladb/Function/isscrinterno.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-492">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-492">
     <sqlFile dbms="oracle" path="../expsigladb/Function/get_coge_ult_voce.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-495">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-495">
     <sqlFile dbms="oracle" path="../expsigladb/Function/somma_fatt_pass_per_scadenza.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-498">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-498">
     <sqlFile dbms="oracle" path="../expsigladb/Function/dwh_getpgmodulofromgae.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-501">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-501">
     <sqlFile dbms="oracle" path="../expsigladb/Function/iseligibilederibalt.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-504">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-504">
     <sqlFile dbms="oracle" path="../expsigladb/Function/iseligibileribalt.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-507">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-507">
     <sqlFile dbms="oracle" path="../expsigladb/Function/getpgcomuneliquidcori.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-510">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-510">
     <sqlFile dbms="oracle" path="../expsigladb/Function/prt_getdati_confcnr.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-513">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-513">
     <sqlFile dbms="oracle" path="../expsigladb/Function/creacodiceprogetto.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-516">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-516">
     <sqlFile dbms="oracle" path="../expsigladb/Function/somma_fatt_att_per_scadenza.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-519">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-519">
     <sqlFile dbms="oracle" path="../expsigladb/Function/somma_doc_att_per_scadenza.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-522">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-522">
     <sqlFile dbms="oracle" path="../expsigladb/Function/getcdregioneliquidcori.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-525">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-525">
     <sqlFile dbms="oracle" path="../expsigladb/Function/is_docamm_rip_una_volta.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-528">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-528">
     <sqlFile dbms="oracle" path="../expsigladb/Function/squirrel_get_error_offset.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-531">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-531">
     <sqlFile dbms="oracle" path="../expsigladb/Function/getstatodoccont.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-534">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-534">
     <sqlFile dbms="oracle" path="../expsigladb/Function/dwh_getuofromcdr.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-537">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-537">
     <sqlFile dbms="oracle" path="../expsigladb/Function/dwh_getcdsfromcdr.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-540">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-540">
     <sqlFile dbms="oracle" path="../expsigladb/Function/dwh_getcdraccentrfromidclass.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-543">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-543">
     <sqlFile dbms="oracle" path="../expsigladb/Function/getcdrprimo.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-546">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-546">
     <sqlFile dbms="oracle" path="../expsigladb/Function/getpgdistintaprec.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-549">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-549">
     <sqlFile dbms="oracle" path="../expsigladb/Function/dwh_getla_personale.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-552">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-552">
     <sqlFile dbms="oracle" path="../expsigladb/Function/get_coge_ult_stato_doccont.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-555">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-555">
     <sqlFile dbms="oracle" path="../expsigladb/Function/disp_cassa_mandati.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-558">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-558">
     <sqlFile dbms="oracle" path="../expsigladb/Function/getflfaireversale.fnc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-561">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-561">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_partitario_compensi.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-564">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-564">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/pulisci_voci_per_funzione.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-567">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-567">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/migrazione_sospesi.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-570">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-570">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/s_ana_progetti.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-573">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-573">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/prt_s_sit_cassa_parifica.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-576">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-576">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/ins_progetto_sic_fase.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-579">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-579">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/update_utuv_utcr.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-585">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-585">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/insert_vpg_reversale.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-591">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-591">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/regliqivacoge.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-594">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-594">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/migrazione_residui_pass_pgiro.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-603">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-603">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/prt_s_sp_riclassificato.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-606">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-606">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/prt_rend_fin_ent_spe_dec.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-609">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-609">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/rettifiche_crediti_accorpati.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-612">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-612">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/prt_s_sit_cassa_all_j.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-615">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-615">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/prt_s_ce_riclassificato_j.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-618">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-618">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_certificazione.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-621">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-621">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/estrai_flusso_per_iban.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-627">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-627">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/popolamento_costo_dip.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-630">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-630">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/prt_s_sit_cassa_j.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-633">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-633">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/controlla_squadra_cdr_cmp_rev.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-636">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-636">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/prc_load_table_stampa_rendic.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-639">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-639">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_missione.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-642">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-642">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/apri_fondo.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-645">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-645">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/annulla_contabilizzazione.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-648">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-648">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_mandato.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-651">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-651">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_singolo_conto.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-654">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-654">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_dpdg_cdr_primo.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-657">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-657">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_reversale.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-660">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-660">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/verifica_cassa.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-663">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-663">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/popola_pcc_modello2_semp.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-669">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-669">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_certificazione_770.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-672">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-672">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/prt_prev_fin_ent_spe_dec.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-675">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-675">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/analyze_all_table.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-678">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-678">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/popolamento_costo_dip_prev.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-681">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-681">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/dropnegativeobblig.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-684">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-684">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_fondo_economale.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-687">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-687">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/popola_pcc_modello3.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-696">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-696">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/ins_tmp_registro_inv_quote.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-699">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-699">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_conguaglio.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-702">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-702">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/s_pdg_variazione_det.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-708">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-708">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/ins_progetto_sic.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-711">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-711">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/prc_load_situazione_prog2.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-714">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-714">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/aggiungi_moduli_da_saldi.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-717">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-717">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_man_rev_ass.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-720">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-720">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/pop_storico_indicatore.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-723">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-723">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/popola_art_22_bis.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-726">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-726">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/martello_residui.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-729">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-729">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/spg_doc_generico.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-732">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-732">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/prc_load_table_stampa_bilancio.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-735">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-735">
     <sqlFile dbms="oracle" path="../expsigladb/Procedure/prc_load_situazione_progetti.prc" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-741">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-741">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_pdg_variazione.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-744">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-744">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_limite_spesa_det.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-747">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-747">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bi_liquidazione_iva.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-750">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-750">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bi_obbligazione.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-753">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-753">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_ass_ev_funz_tipocds.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-756">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-756">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_incarichi_procedura.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-759">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-759">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_incarichi_procedura_arch.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-762">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-762">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/biprint_spooler_param.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-765">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-765">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_l_esercizio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-768">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-768">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_linea_attivita_su_pdg.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-771">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-771">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_incarichi_repertorio_arch.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-774">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-774">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_accertamento.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-777">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-777">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_obbligazione_scad_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-780">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-780">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bi_documento_generico_riga.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-783">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-783">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_bframe_blob.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-786">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-786">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_obbligazione_scad_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-789">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-789">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_documento_generico.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-792">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-792">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_incarichi_procedura.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-795">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-795">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_minicarriera.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-798">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-798">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_variazione_formale_acc.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-801">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-801">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_ass_linea_attivita_eser.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-804">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-804">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_var_stanz_res_riga.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-807">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-807">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_obbligazione.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-810">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-810">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_obbligazione_mod_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-813">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-813">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_incarichi_repertorio_anno.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-816">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-816">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_semaforo_base.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-819">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-819">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_l_ass_comp_doc_cont_nmp.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-822">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-822">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_l_configurazione_cnr.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-825">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-825">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_incarichi_repertorio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-828">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-828">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_obbligazione_scadenzario.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-831">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-831">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_elemento_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-834">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-834">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bcrud_saldi.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-837">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-837">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_movimento_coge.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-840">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-840">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_print_spooler.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-843">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-843">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_movimento_coge.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-846">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-846">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_parametri_ente_tipo_db.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-849">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-849">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_incarichi_repertorio_anno.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-852">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-852">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_l_banca.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-855">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-855">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_saldi_imp_acc.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-858">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-858">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_voce_f.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-861">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-861">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bi_fattura_attiva.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-864">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-864">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_incarichi_richiesta.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-867">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-867">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_semaforo_statico.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-870">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-870">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_l_esercizio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-873">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-873">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_esercizio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-876">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-876">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_minicarriera_rata.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-879">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-879">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_pdg_esercizio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-882">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-882">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_incarichi_procedura_arch.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-885">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-885">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_accertamento.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-888">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-888">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_l_banca.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-891">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-891">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_minicarriera_rata.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-894">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-894">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_cdr.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-897">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-897">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_saldi_pag_inc.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-900">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-900">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_incarichi_richiesta.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-903">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-903">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_incarichi_repertorio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-906">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-906">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_voce_f.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-909">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-909">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_unita_organizzativa.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-912">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-912">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_ass_ev_funz_tipocds.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-915">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-915">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_print_spooler.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-918">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-918">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_l_ass_comp_doc_cont_nmp.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-921">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-921">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_l_esercizio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-924">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-924">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_incarichi_procedura_anno.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-927">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-927">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_l_banca.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-930">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-930">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_liquidazione_iva.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-933">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-933">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_accertamento_mod_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-936">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-936">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_elemento_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-939">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-939">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_bframe_blob.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-942">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-942">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_pdg_esercizio_blocco_temp.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-945">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-945">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_saldi_stanziamenti.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-948">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-948">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_esercizio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-951">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-951">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_incarichi_repertorio_arch.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-954">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-954">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_pdg_preventivo_chiuso.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-957">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-957">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_obbligazione_scad_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-960">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-960">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_cdr.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-963">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-963">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_incarichi_procedura_anno.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-966">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-966">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_obbligazione_scad_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-969">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-969">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_fattura_attiva_intra.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-972">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-972">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bi_pdg_modulo.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-975">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-975">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/aiu_ass_partita_giro.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-978">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-978">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_scrittura_partita_doppia.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-981">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-981">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_l_configurazione_cnr.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-984">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-984">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_l_ass_comp_doc_cont_nmp.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-987">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-987">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_l_configurazione_cnr.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-990">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-990">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_movimento_coge.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-993">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-993">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_pdg_preventivo.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-996">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-996">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_contratto.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-999">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-999">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_elemento_voce.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-1002">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-1002">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_minicarriera.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-1005">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-1005">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_pdg_aggregato.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-1008">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-1008">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_ass_ev_ev.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-1011">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-1011">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/au_liquidazione_iva.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-1014">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-1014">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ai_esercizio.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-1017">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-1017">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_fattura_passiva_intra.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-1020">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-1020">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/biu_fattura_passiva.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-1023">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-1023">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bd_accertamento.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-1026">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-1026">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/ad_ass_ev_funz_tipocds.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-1029">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-1029">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_pdg_residuo.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
-  <changeSet author="sigla" id="sigla-sql-1032">
+  <changeSet author="sigla" runOnChange="true" id="sigla-sql-1032">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_obbligazione.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
   </changeSet>
 </databaseChangeLog>

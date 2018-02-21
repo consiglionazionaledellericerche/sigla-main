@@ -73,7 +73,7 @@ public Forward doBringBackSearchFind_voce(ActionContext context, Var_bilancio_de
 			if(varBilancio.hasVoceDuplicata(varDett, voce)){
 				varDett.setVoceFSaldi(new V_assestato_voceBulk());
 				varDett.setTipoGestione(varBilancio.getTipoGestione());
-				setErrorMessage(context,"Esiste gi‡ un dettaglio con la voce selezionata!");
+				setErrorMessage(context,"Esiste gi√† un dettaglio con la voce selezionata!");
 			}else{
 				varDett.setVoceFSaldi(voce);
 			}
@@ -105,7 +105,7 @@ public Forward doOnTiVariazioneChange(ActionContext context) {
 		
 		if (!varBil.verificaTipoVariazione()) {
 			varBil.setTi_variazione(oldTipoVar);
-			setMessage(context, FormBP.WARNING_MESSAGE,"Non Ë possibile modificare il tipo variazione!\nIncompatibilit‡ con i dettagli.");
+			setMessage(context, FormBP.WARNING_MESSAGE,"Non √® possibile modificare il tipo variazione!\nIncompatibilit√† con i dettagli.");
 		}else{
 			Var_bilancio_detBulk varBilDett = (Var_bilancio_detBulk)bp.getDettagliCRUDController().getModel();
 			if (varBilDett!=null && varBilDett.getCd_voce()==null)

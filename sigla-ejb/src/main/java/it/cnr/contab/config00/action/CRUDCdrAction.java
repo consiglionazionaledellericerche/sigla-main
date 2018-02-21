@@ -17,7 +17,7 @@ public CRUDCdrAction() {
  * Gestisce una richiesta di azzeramento del searchtool "find_responsabile"
  *
  * @param context	L'ActionContext della richiesta
- * @param cdr Centro di responsabilit‡
+ * @param cdr Centro di responsabilit√†
  * @return Il Forward alla pagina di risposta
  */
 public it.cnr.jada.action.Forward doBlankSearchFind_responsabile(it.cnr.jada.action.ActionContext context, it.cnr.contab.config00.sto.bulk.CdrBulk cdr) {
@@ -29,7 +29,7 @@ public it.cnr.jada.action.Forward doBlankSearchFind_responsabile(it.cnr.jada.act
  * Verifica che si tratti di persona fisica
  *
  * @param context	L'ActionContext della richiesta
- * @param cdr	Centro di responsabilit‡
+ * @param cdr	Centro di responsabilit√†
  * @param terzo	Terzo
  * @return Il Forward alla pagina di risposta
  */

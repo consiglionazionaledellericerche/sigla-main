@@ -55,7 +55,7 @@ public it.cnr.jada.util.OrderedHashtable loadTipiCds( EV_cds_spese_capitoloBulk 
  * Restituisce il SQLBuilder per selezionare i Titoli di Spesa del Cds Parte 1 per l'esercizio di scrivania
  * @param bulk bulk ricevente
  * @param home home del bulk su cui si cerca
- * @param bulkClause è l'istanza di bulk che ha indotto le clauses 
+ * @param bulkClause Ã¨ l'istanza di bulk che ha indotto le clauses 
  * @param clause clause che arrivano dalle properties (form collegata al search tool) 
  * @return it.cnr.jada.persistency.sql.SQLBuilder
  */

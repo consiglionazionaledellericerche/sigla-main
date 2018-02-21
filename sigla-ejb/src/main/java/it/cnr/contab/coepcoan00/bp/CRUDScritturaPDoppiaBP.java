@@ -4,7 +4,7 @@ import it.cnr.contab.coepcoan00.core.bulk.*;
 import it.cnr.jada.action.*;
 import it.cnr.jada.util.action.*;
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'oggetto Scrittura_partitadoppiaBulk
+ * Business Process che gestisce le attivit√† di CRUD per l'oggetto Scrittura_partitadoppiaBulk
  */
 
 public class CRUDScritturaPDoppiaBP extends it.cnr.jada.util.action.SimpleCRUDBP {

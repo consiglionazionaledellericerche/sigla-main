@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -17,7 +17,7 @@
         inputType="ROTEXT"
 		inputSize="70"
 		maxLength="30"        
-        label="Centro di Responsabilità" />		
+        label="Centro di ResponsabilitÃ " />		
 	<fieldProperty
 		name="cd_centro_di_responsabilita"
 		property="pdg_modulo.cdr.cd_centro_responsabilita"
@@ -25,7 +25,7 @@
 		inputSize="10"
 		maxLength="30"
 		nullable="false"
-		label="Centro di Responsabilità" />
+		label="Centro di ResponsabilitÃ " />
 	<fieldProperty
 		name="pg_progetto"
 		property="pdg_modulo.pg_progetto"
@@ -188,7 +188,7 @@
 		nullable="false"
 		labelStyle="font-style:italic"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
-		label="Quote di ammortamento immobili in proprietà&lt;BR&gt;all'Istituto" />
+		label="Quote di ammortamento immobili in proprietÃ &lt;BR&gt;all'Istituto" />
 	<fieldProperty
 		name="im_cf_amm_attrezz"
 		property="im_cf_amm_attrezz"
@@ -198,7 +198,7 @@
 		nullable="false"
 		labelStyle="font-style:italic"		
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
-		label="Quote di ammortamento apparecchiature&lt;BR&gt;tecnico-scientifiche di proprietà acquisite negli&lt;BR&gt;anni precedenti" />
+		label="Quote di ammortamento apparecchiature&lt;BR&gt;tecnico-scientifiche di proprietÃ  acquisite negli&lt;BR&gt;anni precedenti" />
 	<fieldProperty
 		name="im_cf_amm_altro"
 		property="im_cf_amm_altro"
@@ -208,7 +208,7 @@
 		nullable="false"
 		labelStyle="font-style:italic"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
-		label="Quota di ammortamento di altri beni durevoli di&lt;BR&gt;proprietà acquisite negli esercizi precedenti" />
+		label="Quota di ammortamento di altri beni durevoli di&lt;BR&gt;proprietÃ  acquisite negli esercizi precedenti" />
 	<fieldProperty
 		name="tot_massa_spendibile_anno_prec"
 		property="tot_massa_spendibile_anno_prec"
@@ -238,7 +238,7 @@
 		nullable="false"
 		style="border-style: outset;border-width : 1px;"
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
-		label="Valore presunto delle attività anno corrente" />
+		label="Valore presunto delle attivitÃ  anno corrente" />
 	<fieldProperty
 		name="tot_entr_fonti_est_anno_in_corso"
 		property="tot_entr_fonti_est_anno_in_corso"
@@ -405,12 +405,12 @@
 	<fieldProperty
 		name="label_titolo"
 		labelStyle="color:blue;font : bold 14px;"
-		label="Previsione e destinazione della massa Spendibile&lt;BR&gt;valore totale presunto delle attività per Modulo di Commessa" />
+		label="Previsione e destinazione della massa Spendibile&lt;BR&gt;valore totale presunto delle attivitÃ  per Modulo di Commessa" />
 				
 	<fieldProperty
 		name="label_titolo_nuovo_pdg"
 		labelStyle="color:blue;font : bold 14px;"
-		label="Previsione e destinazione della massa Spendibile&lt;BR&gt;valore totale presunto delle attività per Progetto" />
+		label="Previsione e destinazione della massa Spendibile&lt;BR&gt;valore totale presunto delle attivitÃ  per Progetto" />
 
 	<fieldProperty
 		name="label_costi_figurativi"

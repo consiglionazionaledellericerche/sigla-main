@@ -237,7 +237,7 @@ public class ObbligazioneModificaComponent extends it.cnr.jada.comp.CRUDComponen
 				ObbligazioneBulk oldObbl = (ObbligazioneBulk)getHome(uc, ObbligazioneBulk.class).findByPrimaryKey(obbligazione);
 				BigDecimal oldImpObbl = oldObbl.getIm_obbligazione();
 				if (Utility.nvl(impObbl.subtract(oldImpObbl)).compareTo(Utility.nvl(bulkCNR.getImporto_max_imp()))>=0)
-					throw new ApplicationException("Attenzione: il campo MOTIVAZIONE è obbligatorio.");
+					throw new ApplicationException("Attenzione: il campo MOTIVAZIONE Ã¨ obbligatorio.");
 			}
 		}
 		catch ( Exception e )

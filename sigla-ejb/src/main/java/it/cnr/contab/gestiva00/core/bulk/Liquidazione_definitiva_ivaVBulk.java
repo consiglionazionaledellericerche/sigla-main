@@ -128,7 +128,7 @@ public java.util.Vector getReportParameters() {
 	java.util.Vector params = new java.util.Vector();
 	if (getId_report() != null) {
 //		params.add(getId_report().toString());
-		params.add("0"); // Nella liquidazione definitiva il pg di liq. è 0
+		params.add("0"); // Nella liquidazione definitiva il pg di liq. Ã¨ 0
 		params.add(getPageNumber().toString());
 		params.add(getCd_cds());
 		params.add(getCd_unita_organizzativa());

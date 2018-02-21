@@ -197,7 +197,7 @@ public void setRifInquadramento(Rif_inquadramentoBulk newRifInquadramento) {
 public void validate() throws ValidationException {
 	// controllo su campo CODICE
 	if ( getCd_ti_pasto() == null )
-		throw new ValidationException( "Il campo CODICE non può essere vuoto!" );
+		throw new ValidationException( "Il campo CODICE non puÃ² essere vuoto!" );
 
 	// controllo su campo INQUADRAMENTO
 	if (getPg_rif_inquadramento() == null ) 
@@ -209,29 +209,29 @@ public void validate() throws ValidationException {
 
 	// controllo su campo NAZIONE
 	if (getPg_nazione() == null ) 
-		throw new ValidationException("Il campo NAZIONE non può essere vuoto");
+		throw new ValidationException("Il campo NAZIONE non puÃ² essere vuoto");
 
 	// controllo su campo DIVISA
 	if (getCd_divisa() == null)
-		throw new ValidationException( "Il campo VALUTA non può essere vuoto!" );
+		throw new ValidationException( "Il campo VALUTA non puÃ² essere vuoto!" );
 
 	// controllo su campo DATA INIZIO VALIDITA
 	if (getDt_inizio_validita() == null )
-		throw new ValidationException( "Il campo DATA INIZIO VALIDITA non può essere vuoto!" );
+		throw new ValidationException( "Il campo DATA INIZIO VALIDITA non puÃ² essere vuoto!" );
 		
 	// controllo su campo LIMITE PASTO
 	if ( getLimite_max_pasto() == null )
-		throw new ValidationException( "Il campo LIMITE PASTO non può essere vuoto!" );
+		throw new ValidationException( "Il campo LIMITE PASTO non puÃ² essere vuoto!" );
 	if (getLimite_max_pasto().compareTo( new java.math.BigDecimal(0)) <= 0)
 		throw new ValidationException( "Il campo LIMITE PASTO deve essere maggiore di 0!" );
 
 	// controllo su campo DATA CANCELLAZIONE
 	if(getDt_cancellazione()!=null && getDt_cancellazione().compareTo(getDt_inizio_validita())<0)
-		throw new ValidationException("Il campo DATA CANCELLAZIONE deve essere superiore alla Data Inizio Validità");
+		throw new ValidationException("Il campo DATA CANCELLAZIONE deve essere superiore alla Data Inizio ValiditÃ ");
 	
 	// controllo su campo Area Estera
 	if ( getCd_area_estera() == null )
-		throw new ValidationException( "Il campo Area Estera non può essere vuoto!" );
+		throw new ValidationException( "Il campo Area Estera non puÃ² essere vuoto!" );
 }		
 
 	public it.cnr.contab.anagraf00.tabter.bulk.RifAreePaesiEsteriBulk getRifAreePaesiEsteri() {

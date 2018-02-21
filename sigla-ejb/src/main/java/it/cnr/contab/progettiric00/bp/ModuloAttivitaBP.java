@@ -29,13 +29,13 @@ public class ModuloAttivitaBP extends TestataProgettiRicercaBP {
 	public BulkInfo getBulkInfo()
 	{
 		BulkInfo infoBulk = super.getBulkInfo();
-		infoBulk.setShortDescription("Moduli di Attivit‡");
+		infoBulk.setShortDescription("Moduli di Attivit√†");
 		return infoBulk;
 	}
 
 	public String getFormTitle()
 	{
-		StringBuffer stringbuffer = new StringBuffer("Moduli di Attivit‡");
+		StringBuffer stringbuffer = new StringBuffer("Moduli di Attivit√†");
 		stringbuffer.append(" - ");
 		switch(getStatus())
 		{

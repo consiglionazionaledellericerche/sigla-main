@@ -34,7 +34,7 @@ public abstract Pdg_preventivoBulk annullaCDPSuPdg (UserContext userContext,Pdg_
   *    PreCondition:
   *      Nessun'altra precondizione verificata
   *    PostCondition:
-  *      Viene restituito un'istanza di Pdg_preventivoBulk che per il CDR specificato pi˘ l'elenco dei CDR con livello di responsabili‡ inferiore al CDR specificato (listaCdrPdGPerUtente)
+  *      Viene restituito un'istanza di Pdg_preventivoBulk che per il CDR specificato pi√π l'elenco dei CDR con livello di responsabili√† inferiore al CDR specificato (listaCdrPdGPerUtente)
   *  Utente associato a CDR senza PDG
   *    PreCondition:
   *      Il cdr dell'utente non possiede un PDG
@@ -43,7 +43,7 @@ public abstract Pdg_preventivoBulk annullaCDPSuPdg (UserContext userContext,Pdg_
  */
 public abstract Pdg_preventivoBulk caricaPdg (UserContext userContext,CdrBulk cdr) throws ComponentException;
 /** 
-  *  eliminazione dettagli a partire dalla linea di attivi‡
+  *  eliminazione dettagli a partire dalla linea di attivi√†
   *    PreCondition:
   *      Viene richiesta l'eliminazione dei dettagli di spesa ed entrata che corrispondono ad esercizio, CdR e LA indicati.
   *    PostCondition:
@@ -83,7 +83,7 @@ public abstract Pdg_preventivoBulk delDetByLA (UserContext userContext,Pdg_preve
   *      
   *  Tutti i controlli superati
   *    PreCondition:
-  *      Non Ë verificata nessun'altra precondizione
+  *      Non √® verificata nessun'altra precondizione
   *    PostCondition:
   *      ritorna false
  */
@@ -132,7 +132,7 @@ public abstract boolean isDettagliPdGModificabili (UserContext userContext,Pdg_p
   *      genera una ApplicationException con messaggio "I PDG dei CDR di livello inferiore non sono stati ancora chiusi"
   *  Tutti i controlli superati
   *    PreCondition:
-  *      Tutte i controlli di validit‡ sullo stato e sul livello di abilitazione dell'utente sono stati superati
+  *      Tutte i controlli di validit√† sullo stato e sul livello di abilitazione dell'utente sono stati superati
   *    PostCondition:
   *      Modifica lo stato del PDG con nuovoStato
   *  Stato non compatibile
@@ -140,12 +140,12 @@ public abstract boolean isDettagliPdGModificabili (UserContext userContext,Pdg_p
   *      isStatoCompatibile(stato attuale pdg,getLivelloResponsabilitaCDR(pdg.cdr),pdg.STATO)  = true
   *    PostCondition:
   *      genera una ApplicationException con messaggio "Stato non compatibile con l'attuale stato del PDG"
-  *  Utente con livello di responsabilit‡ non sufficiente
+  *  Utente con livello di responsabilit√† non sufficiente
   *    PreCondition:
   *      confrontaLivelloResponsabilita(user.cdr,pdg.cdr) < 0
   *    PostCondition:
   *      genera una ApplicationException con messaggio "Utente non abilitato ad operare sul PDG richiesto"
-  *  Richiesto stato C da stato Ci, utente con livello di responsabilit‡ non sufficiente
+  *  Richiesto stato C da stato Ci, utente con livello di responsabilit√† non sufficiente
   *    PreCondition:
   *      confrontaLivelloResponsabilita(user.cdr,pdg.cdr) <= 0
   *    PostCondition:
@@ -176,21 +176,21 @@ public abstract boolean isDettagliPdGModificabili (UserContext userContext,Pdg_p
   *      stato = F e
   *      aggregatoPdg.stato = A
   *    PostCondition:
-  *      genera una ApplicationException con messaggio "Il pdg aggregato del CDR di I livello non Ë stato ancora confermato"
+  *      genera una ApplicationException con messaggio "Il pdg aggregato del CDR di I livello non √® stato ancora confermato"
   *  Richiesto stato F, quadratura pdg aggregato fallita
   *    PreCondition:
   *      stato = F e
   *      aggregatoPdg.stato = B e
   *      le viste V_DPDG_AGGREGATO_ETR_DET_D e V_DPDG_AGGREGATO_SPE_DET_D non sono vuote con le clausole su ESERCIZIO e CD_CENTRO_RESPONSABILITA
   *    PostCondition:
-  *      genera una DiscrepanzeAggregatoException passando l'elenco di Pdg_aggregato_etr_detBulk o Pdg_aggregato_spe_detBulk istanziati dalle 2 viste e che rappresentano l'entit‡ della discrepanza tra PDG aggregato e PDG Preventivo
+  *      genera una DiscrepanzeAggregatoException passando l'elenco di Pdg_aggregato_etr_detBulk o Pdg_aggregato_spe_detBulk istanziati dalle 2 viste e che rappresentano l'entit√† della discrepanza tra PDG aggregato e PDG Preventivo
   *  Richiesto stato E
   *    PreCondition:
   *      pdg.STATO = C
   *      nuovoStato = E e
   *      qualche pdg di listaPdGDipendenti(pdg) ha STATO diverso da E o F
   *    PostCondition:
-  *      genera una ApplicationException con messaggio "I PdG dei livelli di responsabilit‡ superiori devono essere in stato E"
+  *      genera una ApplicationException con messaggio "I PdG dei livelli di responsabilit√† superiori devono essere in stato E"
   *  Richiesto stato C da stato A o B, costi dei dipendenti non scaricati
   *    PreCondition:
   *      stato = C e
@@ -210,9 +210,9 @@ public abstract boolean isDettagliPdGModificabili (UserContext userContext,Pdg_p
   *      Richiesto stato F, Pdg aggregato non chiuso
   *    PostCondition:
   *      Viene richiamata la stored procedure CNRCTB050.checkAggregatoChiuso
-  *  Richiesto stato F, Pdg di Cdr responsabile di unit‡ organizzativa. Il bilancio preventivo dell'ente Ë approvato
+  *  Richiesto stato F, Pdg di Cdr responsabile di unit√† organizzativa. Il bilancio preventivo dell'ente √® approvato
   *    PreCondition:
-  *      Richiesto stato F, Pdg di Cdr responsabile di unit‡ organizzativa. Il bilancio preventivo dell'ente Ë approvato
+  *      Richiesto stato F, Pdg di Cdr responsabile di unit√† organizzativa. Il bilancio preventivo dell'ente √® approvato
   *    PostCondition:
   *      Viene richiamata la stored procedure CNRCTB055.creaRipartEntrateCnr
  */
@@ -220,7 +220,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk modificaStatoPdG (UserContext userC
 /** 
   *  Tutti controlli superati
   *    PreCondition:
-  *      Viene richiesto il ribaltamento dei costi del Piano di Gestione del CdR specificato all'area di ricerca a cui afferisce. Il bilancio del CNR Ë gi‡ stato approvato
+  *      Viene richiesto il ribaltamento dei costi del Piano di Gestione del CdR specificato all'area di ricerca a cui afferisce. Il bilancio del CNR √® gi√† stato approvato
   *    PostCondition:
   *      La procedura Oracle CNRCTB053.ribaltaSuAreaPDG viene eseguita per l'anno di esercizio ed il CdR specificati.
  */

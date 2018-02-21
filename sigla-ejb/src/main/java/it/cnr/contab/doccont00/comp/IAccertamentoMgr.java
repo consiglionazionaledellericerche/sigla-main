@@ -15,7 +15,7 @@ public interface IAccertamentoMgr extends IDocumentoContabileMgr, ICRUDMgr
 
 /**
  * Aggiornamento in differita dei saldi dell'accertamento
- * Un documento amministrativo di entrata che agisce in modalit‡ transazionale ha creato/modificato gli importi 
+ * Un documento amministrativo di entrata che agisce in modalit√† transazionale ha creato/modificato gli importi 
  * relativi ad un accertamento; i saldi di tale accertamento non possono essere aggiornati subito in quanto
  * tale operazione genererebbe dei lock sulle voci del piano che non ne consentirebbero l'utilizzo ad altri utenti;
  * pertanto l'aggiornamento dei saldi dell'accertamento viene differito al momento del salvataggio
@@ -49,18 +49,18 @@ public abstract void aggiornaSaldiInDifferita(it.cnr.jada.UserContext param0,it.
   *      scadenza(n+1) esiste
   *      scadenza(n+1).importo > differenza in scadenza(n).importo
   *    PostCondition:
-  *      Il sistema eseguir‡ l'aggiornamento dell'importo della scadenza successiva (n+1) dell'accertamento aggiungendo la differenza fra il nuovo e vecchio importo della scadenza in aggiornamento. 
-  *      La differenza Ë espressa come (scadenzario(n).importo_nuovo - scadenzario(n).importo_vecchio)
+  *      Il sistema eseguir√† l'aggiornamento dell'importo della scadenza successiva (n+1) dell'accertamento aggiungendo la differenza fra il nuovo e vecchio importo della scadenza in aggiornamento. 
+  *      La differenza √® espressa come (scadenzario(n).importo_nuovo - scadenzario(n).importo_vecchio)
   *  scadenza(n+1).importo <= differenza in scadenza(n).importo
   *    PreCondition:
   *      L'utente richiede l'aggiornamento in automatico dell'importo della scadenza successiva (scadenza(n+1)) alla scadenza in elaborazione (scadenza(n)), ma l'aumento dell'importo della scadenza(n) supera il valore dell'importo dell'ultima scadenza dell'accertamento. Una formula per questa condizione sarebbe (scadenzario(n+1).importo - (scadenzario(n).importo_nuovo - scadenzario(n).importo_vecchio) > 0)
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non Ë possibile perchÈ l'aumento dell'importo della scadenza(n) Ë maggiore all'importo dell'ultima scadenza (cercarebbe settare l'importo <= 0). L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non √® possibile perch√© l'aumento dell'importo della scadenza(n) √® maggiore all'importo dell'ultima scadenza (cercarebbe settare l'importo <= 0). L'attivit√† non √® consentita.
   *  scadenza(n+1) non esiste
   *    PreCondition:
-  *      L'utente richiede l'aggiornamento in automatico dell'importo della scadenza successiva (scadenza(n+1)) alla scadenza in elaborazione (scadenza(n)), ma la scadenza in aggiornamento Ë l'ultima scadenza dell'accertamento.
+  *      L'utente richiede l'aggiornamento in automatico dell'importo della scadenza successiva (scadenza(n+1)) alla scadenza in elaborazione (scadenza(n)), ma la scadenza in aggiornamento √® l'ultima scadenza dell'accertamento.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non Ë possibile perchÈ non esiste una scadenza successiva. L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non √® possibile perch√© non esiste una scadenza successiva. L'attivit√† non √® consentita.
   *
   * @param	aUC	lo UserContext che ha generato la richiesta
   * @param	scadenza	l'Accertamento_scadenzarioBulk per cui aggiornare la scadenza successiva
@@ -83,7 +83,7 @@ public abstract it.cnr.contab.doccont00.core.bulk.AccertamentoBulk aggiornaScade
  * Nome: Errore doc. amm.
  * Pre:  Una richiesta di annullamento di un accertamento e' stata generata
  *       L'accertamento ha documenti amministartivi associati
- * Post: Una segnalazione di errore viene restituita per comunicare all'utente l'impossibilit‡ di eseguire l'operazione 
+ * Post: Una segnalazione di errore viene restituita per comunicare all'utente l'impossibilit√† di eseguire l'operazione 
  *       di annullamento
  *
  * @param	aUC	lo UserContext che ha generato la richiesta
@@ -99,11 +99,11 @@ public void callRiportaIndietro (UserContext userContext,it.cnr.contab.doccont00
  * Pre-post-conditions:
  *
  * Nome: Cancella i dettagli della scadenza
- * Pre:  L'utente ha modificato la selezione della linea di attivit‡ dell'accertamento 
- * Post: Sono stati eliminati i dettagli della scadenza in quanto si riferivano alla precedente linea di attivit‡
+ * Pre:  L'utente ha modificato la selezione della linea di attivit√† dell'accertamento 
+ * Post: Sono stati eliminati i dettagli della scadenza in quanto si riferivano alla precedente linea di attivit√†
  *
  * @param	aUC	lo UserContext che ha generato la richiesta
- * @param	accertamento l' AccertamentoBulk la cui linea di attivit‡ e' stata modificata
+ * @param	accertamento l' AccertamentoBulk la cui linea di attivit√† e' stata modificata
  * @param	scadenza l'Accertamento_scadenzarioBulk per cui eliminare i dettagli
  * @return	l'Accertamento_scadenzarioBulk senza dettagli
 */
@@ -124,7 +124,7 @@ public abstract it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk c
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param mandatoRiga <code>MandatoAccreditamento_rigaBulk</code> la riga del mandato di accreditamento per la quale e' 
   *        necessario creare una riga della reversale di trasferimento associata all'accertamento di sistema da creare
-  * @param uo <code>Unita_organizzativaBulk</code> l'unit‡ organizzativa beneficiaria del mandato di accreditamento
+  * @param uo <code>Unita_organizzativaBulk</code> l'unit√† organizzativa beneficiaria del mandato di accreditamento
   * @return <code>AccertamentoBulk</code> L'accertamento di sistema creato
  */
 
@@ -174,9 +174,9 @@ public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext
  * Post: Vengono modificati i dettagli (metodo 'modificaDettagliScadenza') per la scadenza modificata
  *
  * Nome: modifica linea att.
- * Pre:  Una richiesta di modifica della linea di attivit‡ di un accertamento e' stata generata
+ * Pre:  Una richiesta di modifica della linea di attivit√† di un accertamento e' stata generata
  * Post: Vengono eliminati tutti i dettagli di tutte le scadenze dell'accertamento (metodo 'cancellaDettagliScadenze') e vengono creati dei nuovi dettagli
- *       relativi alla nuova linea di attivit‡ (metodo 'creaDettagliScadenza')
+ *       relativi alla nuova linea di attivit√† (metodo 'creaDettagliScadenza')
  *
  * @param	aUC	lo UserContext che ha generato la richiesta
  * @param	accertamento l' AccertamentoBulk per cui rivedere i dettagli della scadenza
@@ -211,7 +211,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
   *      La richiesta di inizializzare un accertamento e' stata generata
   *    PostCondition:
   *      L'accertamento e' stato inizializzato, tutte le sue scadenze ed i loro dettagli sono stati inizializzati; le
-  *      linee di attivit‡ eleggibili sono state caricate
+  *      linee di attivit√† eleggibili sono state caricate
   *
   *  Inizializzazione di un accertamento di sistema
   *    PreCondition:
@@ -229,7 +229,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
 /* normale
  *		PreCondition :
  *			L'utente ha creato una nuova Linea di attivita' da "Gestione Accertamento"
- *          La nuova linea di attivit‡ deve essere validata per l'accertamento in base alla sua natura
+ *          La nuova linea di attivit√† deve essere validata per l'accertamento in base alla sua natura
  *		PostCondition :
  *			L'applicazione ritorna l'elenco dei codici natura compatibili con il capitolo dell'accertamento
  *
@@ -242,13 +242,13 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
 public abstract java.util.Vector listaCodiciNaturaPerCapitolo(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.AccertamentoBulk param1) throws it.cnr.jada.comp.ComponentException;
 /* normale
  *		PreCondition :
- *			Una richiesta di estrazione delle linee di attivit‡ valide per un accertamento e' stata generata
+ *			Una richiesta di estrazione delle linee di attivit√† valide per un accertamento e' stata generata
  *		PostCondition :
- *			L'applicazione ritorna l'elenco delle linee di attivit‡ di entrata con cdr appartenente all'unit‡ organizzativa di
+ *			L'applicazione ritorna l'elenco delle linee di attivit√† di entrata con cdr appartenente all'unit√† organizzativa di
  *          scrivania e con natura compatibile con il capitolo selezionato per l'accertamento
  *
  * @param aUC lo <code>UserContext</code> che ha generato la richiesta
- * @param accertamento l'istanza di AccertamentoBulk per cui elencare le linee di attivit‡ valida
+ * @param accertamento l'istanza di AccertamentoBulk per cui elencare le linee di attivit√† valida
  * @return <code>Vector</code> con le istanze di Linea_attivitaBulk
  *
 */
@@ -315,28 +315,28 @@ public abstract it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserCon
  *       e l'importo precedente deve essere riportato sulla scadenza successiva
  * Post: L'importo della scadenza e della scadenza successiva sono stati modificati
  *
- * Nome: Scadenza con pi˘ di 1 dettaglio - Errore
- * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e la scadenza ha pi˘ di un dettaglio
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ * Nome: Scadenza con pi√π di 1 dettaglio - Errore
+ * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e la scadenza ha pi√π di un dettaglio
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  *
  * Nome: Scadenza successiva - Errore ultima scadenza
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e non esiste una scadenza
  *       successiva su cui scaricare la differenza fra l'importo attuale scadenza e il nuovo importo
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  *
  * Nome: Scadenza successiva -  Errore importo scadenza successiva
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e (im_scadenza_successisva -
  *       nuovo_im_scadenza + im_scadenza) e' minore di 0
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  * 
  * Nome: Scadenza successiva -  Errore doc amministrativi associati
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e la scadenza successiva ha 
- *       gi‡ dei documenti amministrativi associati
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ *       gi√† dei documenti amministrativi associati
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  *
  * @param userContext lo userContext che ha generato la richiesta
  * @param scad l'istanza di Accertamento_scadenzarioBulk il cui importo deve essere modificato
- * @param nuovoImporto il valore del nuovo importo che la scadenza di accertamento dovr‡ assumere
+ * @param nuovoImporto il valore del nuovo importo che la scadenza di accertamento dovr√† assumere
  * @param modificaScadenzaSuccessiva il flag che indica se modificare la testata dell'accertamento o modificare la scadenza
  *        successiva dell'accertamento
  * @return l'istanza di Accertamento_scadenzarioBulk con l'importo modificato
@@ -350,28 +350,28 @@ public abstract it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBul
   *      La somma degli importi delle scadenze e' uguale all'importo dell'accertamento
   *      La somma degli importi dei dettagli di ogni scadenza e' uguale all'importo della scadenza
   *    PostCondition:
-  *      L'accertamento supera la validazione ed il sistema puÚ pertanto proseguire con il suo salvataggio
+  *      L'accertamento supera la validazione ed il sistema pu√≤ pertanto proseguire con il suo salvataggio
   *  
   *  sum(scadenzario.importo) not = accertamento.importo
   *    PreCondition:
-  *      La somma degli importi delle scadenze dell'accertamento non Ë uguale all'importo dell'accertamento in elaborazione.
+  *      La somma degli importi delle scadenze dell'accertamento non √® uguale all'importo dell'accertamento in elaborazione.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non Ë consentito 
-  *      se l'importo non Ë uguale alla somma degli importi delle scadenze dell'accertamento.
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non √® consentito 
+  *      se l'importo non √® uguale alla somma degli importi delle scadenze dell'accertamento.
   *
   *  sum(scad_voce.importo) not = scadenzario.importo
   *    PreCondition:
   *      La somma degli importi 
-  *      dei dettagli di una scadenza dell' accertamento non Ë uguale all'importo della scadenza
+  *      dei dettagli di una scadenza dell' accertamento non √® uguale all'importo della scadenza
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non Ë consentito 
-  *      se l'importo della scadenza non Ë uguale alla somma degli importi dei dettagli della scadenza dell'accertamento.
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non √® consentito 
+  *      se l'importo della scadenza non √® uguale alla somma degli importi dei dettagli della scadenza dell'accertamento.
   *
   *  scadenze non definite
   *    PreCondition:
   *      Non sono state definite scadenze per l'accertamento 
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non Ë consentito 
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non √® consentito 
   *      se non viene definita almento una scadenza
   *
   * @param aUC lo user context 
@@ -384,39 +384,39 @@ public abstract void verificaAccertamento(it.cnr.jada.UserContext param0,it.cnr.
 /** 
   *  Tutti controlli superati - creazione
   *    PreCondition:
-  *      Non esiste gi‡ una scadenza per la data.
-  *      Attivit‡ = creazione
+  *      Non esiste gi√† una scadenza per la data.
+  *      Attivit√† = creazione
   *    PostCondition:
-  *      Alla scrittura dell'accertamento il sistema aggiunger‡ questo scadenzario e generer‡ tutti i dettagli della
+  *      Alla scrittura dell'accertamento il sistema aggiunger√† questo scadenzario e generer√† tutti i dettagli della
   *      scadenza (metodo 'generaDettagliScadenzaAccertamento')
   *  Tutti controlli superati - aggiornamento con agg. auto. scad. succ.
   *    PreCondition:
-  *      Attivit‡ = aggiornamento
+  *      Attivit√† = aggiornamento
   *      L'utente ha scelto l'aggiornamento in automatico della scadenza successiva.
   *    PostCondition:
-  *      Alla scrittura dell'accertamento il sistema aggiorner‡ questo scadenzario. 
-  *      In pi˘, il metodo aggiornaScadenzaSuccessivaAccertamento viene utilizzato per aggiornare la scadenza successiva 
+  *      Alla scrittura dell'accertamento il sistema aggiorner√† questo scadenzario. 
+  *      In pi√π, il metodo aggiornaScadenzaSuccessivaAccertamento viene utilizzato per aggiornare la scadenza successiva 
   *      a quella in aggiornamento. 
   *  Tutti controlli superati - aggiornamento senza agg. auto. scad. succ.
   *    PreCondition:
-  *      Attivit‡ = aggiornamento
+  *      Attivit√† = aggiornamento
   *      L'utente NON ha scelto l'aggiornamento in automatico della scadenza successiva.
   *    PostCondition:
-  *      Alla scrittura dell'accertamento il sistema aggiorner‡ questo scadenzario. 
-  *      Sar‡ il compito dell'utente aggiornare una delle scadenze per garantire che la somma degli importi 
+  *      Alla scrittura dell'accertamento il sistema aggiorner√† questo scadenzario. 
+  *      Sar√† il compito dell'utente aggiornare una delle scadenze per garantire che la somma degli importi 
   *      delle scadenze sia uguale all'importo dell'accertamento.
-  *  creazione/modifica - esiste gi‡ una scadenza per la data
+  *  creazione/modifica - esiste gi√† una scadenza per la data
   *    PreCondition:
   *      L'utente richiede la creazione di una scadenza o modifica la data di una scadenza. 
-  *      Per la data scadenza specificata esiste gi‡ una scadenza per l'accertamento.
+  *      Per la data scadenza specificata esiste gi√† una scadenza per l'accertamento.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che la data della scadenza non Ë valida.
+  *      Il metodo utilizza un Throw Exception per comunicare che la data della scadenza non √® valida.
   *  modifica - la scadenza ha doc amministrativi associati e non proviene da documenti amministrativi
   *    PreCondition:
   *      L'utente richiede la modifica dell'importo di una scadenza che ha documenti amministrativi associati
   *      e la richiesta non proviene dal BusinessProcess che gestisce i documenti amministrativi  
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che la modifica della scadenza non Ë valida.
+  *      Il metodo utilizza un Throw Exception per comunicare che la modifica della scadenza non √® valida.
   *  modifica - la scadenza ha doc amministrativi associati e proviene da documenti amministrativi
   *    PreCondition:
   *      L'utente richiede la modifica dell'importo di una scadenza che ha documenti amministrativi associati e la

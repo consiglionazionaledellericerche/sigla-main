@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -68,7 +68,7 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Modalità Aggiornamento Progressivo a Valore Carichi" />
+		label="ModalitÃ  Aggiornamento Progressivo a Valore Carichi" />
 	<fieldProperty
 		name="aggDataUltimoCaricoVal"
 		property="aggDataUltimoCaricoVal"
@@ -82,42 +82,42 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Modalità Aggiornamento Quantità a Valore Magazzino" />
+		label="ModalitÃ  Aggiornamento QuantitÃ  a Valore Magazzino" />
 	<fieldProperty
 		name="modAggProgrQtaCarichi"
 		property="modAggProgrQtaCarichi"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Modalità Aggiornamento Progressivo Carichi a Quantita" />
+		label="ModalitÃ  Aggiornamento Progressivo Carichi a Quantita" />
 	<fieldProperty
 		name="aggDataUltimoCaricoQta"
 		property="aggDataUltimoCaricoQta"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Aggiorna Data Ultimo Carico a Quantità" />
+		label="Aggiorna Data Ultimo Carico a QuantitÃ " />
 	<fieldProperty
 		name="modAggProgrValScarichi"
 		property="modAggProgrValScarichi"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Modalità Aggiornamento Progressivo Scarichi a Valore" />
+		label="ModalitÃ  Aggiornamento Progressivo Scarichi a Valore" />
 	<fieldProperty
 		name="modAggProgrQtaScarichi"
 		property="modAggProgrQtaScarichi"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Modalità Aggiornamento Progressivo Scarichi a quantità" />
+		label="ModalitÃ  Aggiornamento Progressivo Scarichi a quantitÃ " />
 	<fieldProperty
 		name="modAggProgrConsumi"
 		property="modAggProgrConsumi"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Modalità Aggiornamento Progressivo Consumi" />
+		label="ModalitÃ  Aggiornamento Progressivo Consumi" />
 	<fieldProperty
 		name="aggDataUltimoScaricoVal"
 		property="aggDataUltimoScaricoVal"
@@ -131,49 +131,49 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Aggiorna Data Ultimo Scarico a Quantità" />
+		label="Aggiorna Data Ultimo Scarico a QuantitÃ " />
 	<fieldProperty
 		name="modAggQtaInizioAnno"
 		property="modAggQtaInizioAnno"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Modalità Aggiornamento Quantità di Inizio Anno" />
+		label="ModalitÃ  Aggiornamento QuantitÃ  di Inizio Anno" />
 	<fieldProperty
 		name="modAggValoreInizioAnno"
 		property="modAggValoreInizioAnno"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Modalità Aggiornamento Valore di Inizio Anno" />
+		label="ModalitÃ  Aggiornamento Valore di Inizio Anno" />
 	<fieldProperty
 		name="modAggTempoMedioApprov"
 		property="modAggTempoMedioApprov"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Modalità Aggiornamento Tempo Medio di Approvvigiornamento" />
+		label="ModalitÃ  Aggiornamento Tempo Medio di Approvvigiornamento" />
 	<fieldProperty
 		name="modAggScortaMin"
 		property="modAggScortaMin"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Modalità Aggiornamento Scorta Minima" />
+		label="ModalitÃ  Aggiornamento Scorta Minima" />
 	<fieldProperty
 		name="modAggQtaOrdine"
 		property="modAggQtaOrdine"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Modalità Aggiornamento Quantità in Ordine" />
+		label="ModalitÃ  Aggiornamento QuantitÃ  in Ordine" />
 	<fieldProperty
 		name="modAggQtaMagazzino"
 		property="modAggQtaMagazzino"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Modalità Aggiornamento Quantità a Magazzino" />
+		label="ModalitÃ  Aggiornamento QuantitÃ  a Magazzino" />
 	<fieldProperty
 		name="riportaLottoFornitore"
 		property="riportaLottoFornitore"
@@ -187,7 +187,7 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Quantità Iniziale Lotto" />
+		label="QuantitÃ  Iniziale Lotto" />
 	<fieldProperty
 		name="valoreInizialeLotto"
 		property="valoreInizialeLotto"
@@ -236,14 +236,14 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Quantità di Carico Lotto" />
+		label="QuantitÃ  di Carico Lotto" />
 	<fieldProperty
 		name="modAggValoreLotto"
 		property="modAggValoreLotto"
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Modalità Aggiornamento Valore Lotto" />
+		label="ModalitÃ  Aggiornamento Valore Lotto" />
 	<fieldProperty
 		name="flMovimentaLottiBloccati"
 		property="flMovimentaLottiBloccati"
@@ -255,7 +255,7 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="Modalità Aggiornamento Quantità in Proposta di Scarico" />
+		label="ModalitÃ  Aggiornamento QuantitÃ  in Proposta di Scarico" />
 	<fieldProperty
 		name="generaBollaScarico"
 		property="generaBollaScarico"

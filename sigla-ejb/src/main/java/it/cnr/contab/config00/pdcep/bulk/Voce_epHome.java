@@ -208,7 +208,7 @@ public String creaNuovoCodiceConto( Integer esercizio, String codiceCapoconto) t
 
 }
 /**
- * Carica in un dictionary l'elenco dei possibili valori che può
+ * Carica in un dictionary l'elenco dei possibili valori che puÃ²
  * assumere un gruppo.
  * @param bulk L'OggettoBulk in uso.
  * @return gruppiKeys I valori del gruppo.
@@ -264,7 +264,7 @@ public Dictionary loadGruppiKeys(OggettoBulk bulk) throws ApplicationException
 		catch ( Exception e )
 		{
 			gruppiKeys = null ;
-			throw new ApplicationException( "Non è possibile recuperare i gruppi. " );			
+			throw new ApplicationException( "Non Ã¨ possibile recuperare i gruppi. " );			
 		}
 	} 
 	return gruppiKeys;

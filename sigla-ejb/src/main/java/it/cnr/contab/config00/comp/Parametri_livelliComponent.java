@@ -32,7 +32,7 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
  */
 public class Parametri_livelliComponent extends CRUDComponent {
 	/*
-	 * Metodo che verifica se è possibile modificare la struttura dei parametri livelli relativamente
+	 * Metodo che verifica se Ã¨ possibile modificare la struttura dei parametri livelli relativamente
 	 * alla parte ENTRATE.
 	 * Ritorna FALSE se esistono classificazioni di Entrata
 	 * Ritorna TRUE  se non esistono classificazioni di Entrata 
@@ -52,7 +52,7 @@ public class Parametri_livelliComponent extends CRUDComponent {
 		}
 	}
 	/*
-	 * Metodo che verifica se è possibile modificare la struttura dei parametri livelli relativamente
+	 * Metodo che verifica se Ã¨ possibile modificare la struttura dei parametri livelli relativamente
 	 * alla parte SPESE.
 	 * Ritorna FALSE se esistono classificazioni di Spesa
 	 * Ritorna TRUE  se non esistono classificazioni di Spesa 

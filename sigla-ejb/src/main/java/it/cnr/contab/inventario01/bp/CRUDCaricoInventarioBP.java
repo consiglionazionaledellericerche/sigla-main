@@ -44,7 +44,7 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	private Long progressivo_beni = new Long("0");
 	/* Flag che viene impostato a true nel caso che l'utente immetta un valore non valido 
-	 * nel campo Num. Gruppi. Se settato a true, nella Jsp, il campo verr” visualizzato in 
+	 * nel campo Num. Gruppi. Se settato a true, nella Jsp, il campo verr√ì visualizzato in 
 	 * arancio, seguendo lo standard.
 	*/ 
 	private boolean isNumGruppiErrato = false; 
@@ -180,38 +180,38 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 			while (i.hasNext()){
 				Inventario_utilizzatori_laBulk utilizzatore_LA = (Inventario_utilizzatori_laBulk)i.next();
 			
-				// Controlla che sia stata specificata la line di Attivit”
+				// Controlla che sia stata specificata la line di Attivit√ì
 				if (utilizzatore_LA.getLinea_attivita()==null || utilizzatore_LA.getLinea_attivita().getCd_linea_attivita() == null){
 					throw new ValidationException ("GAE non valido. Indicare sia il codice del GAE, sia la sua percentuale di utilizzo");
 				}
 			
-				// Controlla che non vi siano Linee di Attivit” DUPLICATE
+				// Controlla che non vi siano Linee di Attivit√ì DUPLICATE
 				if (BulkCollections.containsByPrimaryKey(cdr,utilizzatore_LA.getLinea_attivita())){
-					throw new ValidationException ("GAE duplicato. Non Ë possibile indicare pi˘ volte uno stesso GAE");
+					throw new ValidationException ("GAE duplicato. Non √® possibile indicare pi√π volte uno stesso GAE");
 				}
 				else {
 					cdr.add(utilizzatore_LA.getLinea_attivita());
 				}
 			
-				// Controlla che sia stata indicata una PERCENTUALE DI UTILIZZO VALIDA per Linea di Attivit”
+				// Controlla che sia stata indicata una PERCENTUALE DI UTILIZZO VALIDA per Linea di Attivit√ì
 				if (utilizzatore_LA.getPercentuale_utilizzo_la()!=null){
 					percentuale_utilizzo_LA = percentuale_utilizzo_LA.add(utilizzatore_LA.getPercentuale_utilizzo_la());
 				}
 				else{
-					throw new ValidationException ("La percentuale di utilizzo per i GAE non puÚ essere nulla");
+					throw new ValidationException ("La percentuale di utilizzo per i GAE non pu√≤ essere nulla");
 				}
 			}
 
-			// Controlla che il totale delle percentuali di utilizzo delle Linee di Attivit” sia 100
+			// Controlla che il totale delle percentuali di utilizzo delle Linee di Attivit√ì sia 100
 			if (percentuale_utilizzo_LA.compareTo(cento)!=0)
-				throw new ValidationException ("La percentuale di utilizzo per i GAE non Ë valida");
+				throw new ValidationException ("La percentuale di utilizzo per i GAE non √® valida");
 		}
 	}
 	/**
 	 * Metodo richiamato dal SimpleDetailCRUDController vUtilizzatori quando si passa
 	 * da un CdR utilizzatore all'altro.
-	 * Controlla se la percentuale di utilizzo delle linee di attivit”, per 
-	 * CdR, ﬁ valida.
+	 * Controlla se la percentuale di utilizzo delle linee di attivit√ì, per 
+	 * CdR, √û valida.
 	 * Controlla, inoltre, se sono state fatte modifiche non valide su beni associati
 	 * ad altri bene contestualmente al buono di Carico.
 	 * 
@@ -263,14 +263,14 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 		
 		if (dett.getBene().getImponibile_ammortamento() != null && dett.getBene().getImponibile_ammortamento().compareTo(valore_bene)>0){
 			throw new ValidationException("Attenzione: il valore da ammortizzare di un bene deve essere inferiore  o uguale al valore del bene.\n" + 
-					"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non Ë valido");
+					"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non √® valido");
 			}
 		} else {
 		// Buono di Carico normale
 		// CONTROLLA CHE IL VALORE DA AMMORTIZZARE SIA INFERIORE AL VALORE UNITARIO
 			if (dett.getBene().getImponibile_ammortamento() != null && dett.getBene().getImponibile_ammortamento().compareTo(dett.getValore_unitario())>0){
 			throw new ValidationException("Attenzione: il valore da ammortizzare di un bene deve essere inferiore  o uguale al valore del bene.\n" + 
-					"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non Ë valido");
+					"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non √® valido");
 			}
 		}
 	}
@@ -287,15 +287,15 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 			// Controlla che l'Utente abbia inserito tutti i campi Obbligatori
 			validate_property_details(dettaglio);
 		
-			/*  Se il Dettaglio appena lasciato ﬁ un dettaglio a cui sono associati dei beni
+			/*  Se il Dettaglio appena lasciato √û un dettaglio a cui sono associati dei beni
 			*  dichiarati contestaulmente, va a modificare le descrizioni dei beni associati.
-			* Altres˝, sostituisce la coppia Dettaglio Principale -  dettagli Associati 
+			* Altres√Ω, sostituisce la coppia Dettaglio Principale -  dettagli Associati 
 			* attualmente presente nella HashTable.
 			*/
 			if (dettaglio.isAssociatoConAccessorioContestuale()){
 				if ( dettaglio.getQuantita()!=null && dettaglio.getQuantita().compareTo(new Long("1"))!=0){
 					dettaglio.setQuantita(new Long("1"));
-					throw new ValidationException("Attenzione: la quantit‡ di questa riga deve essere 1, poichË alcuni beni sono suoi accessori");
+					throw new ValidationException("Attenzione: la quantit√† di questa riga deve essere 1, poich√® alcuni beni sono suoi accessori");
 				}
 				accessori_contestuali = buono_carico.getAccessoriContestualiHash();
 				BulkList beni_associati = (BulkList)accessori_contestuali.get(dettaglio.getChiaveHash());
@@ -333,8 +333,8 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	/**
 	 * Metodo richiamato dal SimpleDetailCRUDController vUtilizzatori quando si passa
 	 * da un CdR utilizzatore all'altro.
-	 * Controlla se la percentuale di utilizzo delle linee di attivit”, per 
-	 * CdR, ﬁ valida.
+	 * Controlla se la percentuale di utilizzo delle linee di attivit√ì, per 
+	 * CdR, √û valida.
 	 **/
  
 	public void validate_Percentuali_CdR(ActionContext context,OggettoBulk model) throws ValidationException {
@@ -350,7 +350,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 			while (i.hasNext()){
 				Utilizzatore_CdrVBulk utilizzatore = (Utilizzatore_CdrVBulk)i.next();
 
-				// Richiama la procedura di validazione delle singole Linee di Attivit”
+				// Richiama la procedura di validazione delle singole Linee di Attivit√ì
 				validate_Percentuali_LA(context,utilizzatore);
 			
 				// Controlla che sia stata specificata il CdR
@@ -358,9 +358,9 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 					throw new ValidationException ("Utilizzatore non valido. Indicare sia il codice del CdR Utilizzatore, sia la sua percentuale di utilizzo");
 				}
 			
-				// Controlla che non vi siano Linee di Attivit” DUPLICATE
+				// Controlla che non vi siano Linee di Attivit√ì DUPLICATE
 				if (BulkCollections.containsByPrimaryKey(cdr,utilizzatore.getCdr())){
-					throw new ValidationException ("CdR Utilizzatore duplicato. Non Ë possibile indicare pi˘ volte uno stesso CdR come Utilizzatore");
+					throw new ValidationException ("CdR Utilizzatore duplicato. Non √® possibile indicare pi√π volte uno stesso CdR come Utilizzatore");
 				}
 				else {
 					cdr.add(utilizzatore.getCdr());
@@ -371,18 +371,18 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 					percentuale_utilizzo_CdR = percentuale_utilizzo_CdR.add(utilizzatore.getPercentuale_utilizzo_cdr());				 
 				}
 				else{
-					throw new ValidationException ("La percentuale di utilizzo per gli Utilizzatori non puÚ essere nulla");
+					throw new ValidationException ("La percentuale di utilizzo per gli Utilizzatori non pu√≤ essere nulla");
 				}
 			
-				// Controlla che per ogni CdR specificato siano state indicate anche delle Linee di Attivit”
+				// Controlla che per ogni CdR specificato siano state indicate anche delle Linee di Attivit√ì
 				if (utilizzatore.getBuono_cs_utilizzatoriColl()==null || (utilizzatore.getBuono_cs_utilizzatoriColl().size()==0)){
 					throw new ValidationException ("Attenzione! Specificare per ogni Utilizzatore i GAE corrispondenti");
 				}
 			}
 
-			// Controlla che il totale delle percentuali di utilizzo delle Linee di Attivit” sia 100
+			// Controlla che il totale delle percentuali di utilizzo delle Linee di Attivit√ì sia 100
 			if ((percentuale_utilizzo_CdR.compareTo(new java.math.BigDecimal("100")))!=0)
-				throw new ValidationException ("La percentuale di utilizzo per gli Utilizzatori non Ë valida");
+				throw new ValidationException ("La percentuale di utilizzo per gli Utilizzatori non √® valida");
 		}
 	
 	}
@@ -403,7 +403,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 
 	/**
 	  * Abilita il pulsante di "Nuovo", nella finestra dei dettagli del Buono di Carico.
-	  *	Se il Buono ﬁ stato creato da una Fattura Passiva, o ﬁ in stato di EDIT, disabilita 
+	  *	Se il Buono √û stato creato da una Fattura Passiva, o √û in stato di EDIT, disabilita 
 	  *	il tasto di aggiunta di nuovi dettagli al Buono.
 	  *
 	  * @return <code>boolean</code>
@@ -414,7 +414,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	}
 	/**
 	  * Abilita il pulsante di "Elimina", nella finestra dei dettagli del Buono di Carico.
-	  *	Se il Buono ﬁ stato creato da una Fattura Passiva, o ﬁ in stato di EDIT, disabilita 
+	  *	Se il Buono √û stato creato da una Fattura Passiva, o √û in stato di EDIT, disabilita 
 	  *	il tasto di cancellazione dei dettagli dal Buono.
 	  *
 	  * @return <code>boolean</code>
@@ -425,7 +425,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	}
 	/**
 	  * Disabilita il pulsante di "Elimina", nel form del Buono di Carico.
-	  *	Non ﬁ possibile cancellare un Buono presente sul DB.
+	  *	Non √û possibile cancellare un Buono presente sul DB.
 	  *
 	  * @return <code>boolean</code> FALSE
 	**/ 
@@ -435,7 +435,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	}
 	/**
 	  * Nascondo il pulsante di "Elimina", nel form del Buono di Carico.
-	  *	Non ﬁ possibile cancellare un Buono presente sul DB.
+	  *	Non √û possibile cancellare un Buono presente sul DB.
 	  *
 	  * @return <code>boolean</code> TRUE
 	**/ 
@@ -475,7 +475,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	}
 
 	/**
-	 * Restituisce true se la Categoria Gruppo alla quale appartiene il Bene, NON ﬁ soggetta
+	 * Restituisce true se la Categoria Gruppo alla quale appartiene il Bene, NON √û soggetta
 	 *	ad ammortamento (CATEGORIA_GRUPPPO_INVENT.FL_AMMORTAMENTO==FALSE)
 	 *
 	 * @return <code>boolean</code> 
@@ -504,7 +504,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 			bene = (Inventario_beniBulk)i.next();
 			if(bene.getCategoria_Bene()!=null && buonoC.getData_registrazione()!=null && bene.getCategoria_Bene().getData_cancellazione()!=null &&
 					bene.getCategoria_Bene().getData_cancellazione().before(buonoC.getData_registrazione()))
-				throw new ApplicationException("Il Bene "+bene.getNr_inventario()+" ha un categoria non pi˘ valida");
+				throw new ApplicationException("Il Bene "+bene.getNr_inventario()+" ha un categoria non pi√π valida");
 			dettCarico.setBuono_cs(buonoC);
 			dettCarico.setBene(bene);
 			dettCarico.setQuantita(new Long(1));
@@ -524,8 +524,8 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	/**
 	 * Metodo richiamato dal SimpleDetailCRUDController dettagliFattura quando si passa
 	 * da un dettaglio dell'inventario all'altro.
-	 * Controlla, tra le altre cose, che la somma delle quantit” specificate per ogni 
-	 * singolo dettaglio di Inventario, sia uguale alla quantit” indicata per la riga
+	 * Controlla, tra le altre cose, che la somma delle quantit√ì specificate per ogni 
+	 * singolo dettaglio di Inventario, sia uguale alla quantit√ì indicata per la riga
 	 * di Fattura.
 	 * 
 	 **/
@@ -548,7 +548,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 						BulkList newBeni_associati = new BulkList();
 						if ( dettaglio.getQuantita()!=null && dettaglio.getQuantita().compareTo(new Long("1"))!=0){
 						dettaglio.setQuantita(new Long("1"));
-						throw new ValidationException("Attenzione. La Quantit‡ di questa riga deve essere 1, poichË alcuni beni sono suoi accessori");
+						throw new ValidationException("Attenzione. La Quantit√† di questa riga deve essere 1, poich√® alcuni beni sono suoi accessori");
 					}
 					PrimaryKeyHashtable accessori_contestuali = buonoCS.getAccessoriContestualiHash();
 					BulkList beni_associati = (BulkList)accessori_contestuali.get(dettaglio.getChiaveHash());
@@ -564,7 +564,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 
 				if (!(totale.compareTo(riga_fattura.getQuantita())==0)){
 					throw new ValidationException("Attenzione: " +
-							"il totale delle quantit‡ indicate per la riga di Fattura '" + 
+							"il totale delle quantit√† indicate per la riga di Fattura '" + 
 							riga_fattura.getDs_riga_fattura() + 
 							"' non corrisponde al totale della riga stessa");
 				}
@@ -612,7 +612,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	  *
 	  * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
 	  * @param no_accessori <code>boolean</code> indica se escludere i beni accessori.
-	  * @param beni_da_escludere la <code>SimpleBulkList</code> lista di beni da escludere, perchﬁ gi” utilizzati.
+	  * @param beni_da_escludere la <code>SimpleBulkList</code> lista di beni da escludere, perch√û gi√ì utilizzati.
 	  * @param clauses le <code>CompoundFindClause</code> clausole della ricerca.
 	  *
 	  * @return iterator <code>RemoteIterator</code> l'iterator sui beni trovati
@@ -686,8 +686,8 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 	/**
 	 * Metodo richiamato dal SimpleDetailCRUDController dettagliFattura quando si passa
 	 * da un dettaglio dell'inventario all'altro.
-	 * Controlla, tra le altre cose, che la somma delle quantit” specificate per ogni 
-	 * singolo dettaglio di Inventario, sia uguale alla quantit” indicata per la riga
+	 * Controlla, tra le altre cose, che la somma delle quantit√ì specificate per ogni 
+	 * singolo dettaglio di Inventario, sia uguale alla quantit√ì indicata per la riga
 	 * di Fattura.
 	 * 
 	 **/
@@ -710,7 +710,7 @@ public class CRUDCaricoInventarioBP extends CRUDCaricoScaricoInventarioBP{
 						BulkList newBeni_associati = new BulkList();
 						if ( dettaglio.getQuantita()!=null && dettaglio.getQuantita().compareTo(new Long("1"))!=0){
 						dettaglio.setQuantita(new Long("1"));
-						throw new ValidationException("Attenzione. La Quantit‡ di questa riga deve essere 1, poichË alcuni beni sono suoi accessori");
+						throw new ValidationException("Attenzione. La Quantit√† di questa riga deve essere 1, poich√® alcuni beni sono suoi accessori");
 					}
 					PrimaryKeyHashtable accessori_contestuali = buonoCS.getAccessoriContestualiHash();
 					BulkList beni_associati = (BulkList)accessori_contestuali.get(dettaglio.getChiaveHash());

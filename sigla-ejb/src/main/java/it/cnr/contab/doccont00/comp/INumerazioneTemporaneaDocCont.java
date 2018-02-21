@@ -10,7 +10,7 @@ public interface INumerazioneTemporaneaDocCont {
 /** 
   *  tutti i controlli superati.
   *    PreCondition:
-  *      Il progressivo temporaneo è stato generato senza errori.
+  *      Il progressivo temporaneo Ã¨ stato generato senza errori.
   *    PostCondition:
   *      Viene consentita la registrazione del progressivo temporaneo.
   *  validazione
@@ -39,7 +39,7 @@ public Long getNextTempPg(
 /** 
   *  tutti i controlli superati.
   *    PreCondition:
-  *      Il progressivo temporaneo è stato generato senza errori.
+  *      Il progressivo temporaneo Ã¨ stato generato senza errori.
   *    PostCondition:
   *      Viene consentita la registrazione del progressivo temporaneo.
   *  validazione

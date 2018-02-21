@@ -62,7 +62,7 @@ public CRUDOrdineAcqAction() {
 // * @param doc	L'OggettoBulk padre del searchtool
 // * @param sospesoTrovato	L'OggettoBulk selezionato dall'utente
 // * @return Il Forward alla pagina di risposta
-// * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+// * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
 // */
 public Forward doBringBackSearchFindUnitaMisura(ActionContext context,
 	OrdineAcqRigaBulk riga,
@@ -662,7 +662,7 @@ public Forward doRicercaObbligazione(ActionContext context) {
 		else {
 			OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 			if (ordine.getFornitore() == null || ordine.getFornitore().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.UNDEFINED)
-				throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione Ë necessario impostare un fornitore!");
+				throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione √® necessario impostare un fornitore!");
 
 			controllaSelezionePerContabilizzazione(context, models.iterator());
 			try{
@@ -684,13 +684,13 @@ protected void controllaSelezionePerContabilizzazione(ActionContext context, jav
 			while(selectedModels.hasNext()) {
 				OrdineAcqRigaBulk rigaSelected = (OrdineAcqRigaBulk)selectedModels.next();
 				if (rigaSelected.getDspObbligazioneScadenzario() != null && rigaSelected.getDspObbligazioneScadenzario().getEsercizio_originale() != null){
-					throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getRiga() + "\" Ë gi‡ stato associato ad impegno! Modificare la selezione.");
+					throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getRiga() + "\" √® gi√† stato associato ad impegno! Modificare la selezione.");
 				}
 				if (rigaSelected.getRigheConsegnaColl() != null && !rigaSelected.getRigheConsegnaColl().isEmpty()){
 					for (Object bulk : rigaSelected.getRigheConsegnaColl()){
 						OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)bulk;
 						if (cons.getObbligazioneScadenzario() != null && cons.getObbligazioneScadenzario().getEsercizio_originale() != null){
-							throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getRiga() + "\" Ë gi‡ stato associato ad impegno! Modificare la selezione.");
+							throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getRiga() + "\" √® gi√† stato associato ad impegno! Modificare la selezione.");
 						}
 					}
 					
@@ -733,7 +733,7 @@ protected java.util.List recuperoListaCapitoli(ActionContext context, java.util.
 				Categoria_gruppo_inventBulk cat = (Categoria_gruppo_inventBulk)i.next();
 				java.util.List titoliCapitoliCatGrp = h.findAssVoceFList(context.getUserContext(), cat);
 				if (titoliCapitoliCatGrp == null)
-					throw new it.cnr.jada.comp.ApplicationException("Alla categoria " + cat.getCd_categoria_gruppo() + "\" non Ë stato attribuita l'associazione al capitolo di spesa");
+					throw new it.cnr.jada.comp.ApplicationException("Alla categoria " + cat.getCd_categoria_gruppo() + "\" non √® stato attribuita l'associazione al capitolo di spesa");
 				if (titoliCapitoli.isEmpty()){
 					for (java.util.Iterator k = titoliCapitoliCatGrp.iterator(); k.hasNext();) {
 						Categoria_gruppo_voceBulk assVoce = (Categoria_gruppo_voceBulk)k.next();
@@ -819,11 +819,11 @@ private Forward basicDoRicercaObbligazione(
 						if (uoImpegno == null){
 							uoImpegno = uo;
 						} else if (!uoImpegno.equalsByPrimaryKey(uo)){
-							throw new it.cnr.jada.comp.ApplicationException("Selezione non valida. Esistono diverse unit‡ organizzative collegate alle righe selezionate, correggere la selezione.");
+							throw new it.cnr.jada.comp.ApplicationException("Selezione non valida. Esistono diverse unit√† organizzative collegate alle righe selezionate, correggere la selezione.");
 						}
 					}
 					if (uoImpegno == null){
-						throw new it.cnr.jada.comp.ApplicationException("Selezionare righe con un'unit‡ organizzativa.");
+						throw new it.cnr.jada.comp.ApplicationException("Selezionare righe con un'unit√† organizzativa.");
 					}
 				}
 			}
@@ -862,7 +862,7 @@ protected Forward basicDoBringBackOpenObbligazioniWindow(
 		if (!ordine.getFornitore().equalsByPrimaryKey(creditore) &&
 			!AnagraficoBulk.DIVERSI.equalsIgnoreCase(creditore.getAnagrafico().getTi_entita()))
 			throw new it.cnr.jada.comp.ApplicationException("La scadenza selezionata deve appartenere ad un'obbligazione che ha come creditore il fornitore dell'ordine!");
-/* 	Rospuc 15/01/2015 Controllo SOSPESO  compatibilit‡ dell'obbligazione con il titolo capitolo selezionato 
+/* 	Rospuc 15/01/2015 Controllo SOSPESO  compatibilit√† dell'obbligazione con il titolo capitolo selezionato 
    	SOSPESO PER ESERCIZIO 2015	*/
 			java.util.List dettagliDaContabilizzare = (java.util.List)ordine.getObbligazioniHash().get(newObblig);
 			if (dettagliDaContabilizzare != null && !dettagliDaContabilizzare.isEmpty()) {
@@ -874,7 +874,7 @@ protected Forward basicDoBringBackOpenObbligazioniWindow(
 
 				List titoloCapitoloValidolist = recuperoListaCapitoli(context, righeModel.iterator());
 				Elemento_voceBulk titoloCapitoloObbligazione = newObblig.getObbligazione().getElemento_voce();
-				//Controllo la compatibilit‡ dell'obbligazione con il titolo capitolo selezionato
+				//Controllo la compatibilit√† dell'obbligazione con il titolo capitolo selezionato
 				Boolean compatibile=null;
 				if (titoloCapitoloValidolist != null && titoloCapitoloValidolist.size()!=0)
 					for(Iterator i=titoloCapitoloValidolist.iterator();(i.hasNext()&&(compatibile==null||!compatibile));){ 
@@ -885,7 +885,7 @@ protected Forward basicDoBringBackOpenObbligazioniWindow(
 							compatibile=new Boolean(false);
 					}
 				   if (compatibile!= null && !compatibile)
-					throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non Ë compatibile con il titolo capitolo della categoria" );//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
+					throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non √® compatibile con il titolo capitolo della categoria" );//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
 			}
 	
 		Obbligazione_scadenzarioBulk obbligazione = (Obbligazione_scadenzarioBulk)bp.getObbligazioniController().getModel();
@@ -945,9 +945,9 @@ private void basicDoContabilizzaRiga(
 					OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk)rigaObj;
 					if (!titoloCapitoloObbligazione.getFl_inv_beni_patr().equals(riga.getBeneServizio().getFl_gestione_inventario())) {
 						if (riga.getBeneServizio().getFl_gestione_inventario().booleanValue())
-							throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non Ë utilizzabile per beni patrimoniali da inventariare!");
+							throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non √® utilizzabile per beni patrimoniali da inventariare!");
 						else
-							throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non Ë utilizzabile per beni/servizi da non inventariare!");
+							throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non √® utilizzabile per beni/servizi da non inventariare!");
 					}
 				}
 			}
@@ -956,7 +956,7 @@ private void basicDoContabilizzaRiga(
 			if(dettagliDaContabilizzare!=null && !dettagliDaContabilizzare.isEmpty()){
 				titoloCapitoloValidolist = recuperoListaCapitoli(context, selectedModels.iterator());
 				
-			//Controllo la compatibilit‡ dell'obbligazione con il titolo capitolo selezionato
+			//Controllo la compatibilit√† dell'obbligazione con il titolo capitolo selezionato
 			Boolean compatibile=null;
 			if (titoloCapitoloValidolist != null && titoloCapitoloValidolist.size()!=0)
 				for(Iterator i=titoloCapitoloValidolist.iterator();(i.hasNext()&&(compatibile==null||!compatibile));){ 
@@ -967,7 +967,7 @@ private void basicDoContabilizzaRiga(
 						compatibile=new Boolean(false);
 				}
 			   if (compatibile!=null && !compatibile)
-				throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non Ë compatibile con il titolo capitolo della categoria" );//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
+				throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non √® compatibile con il titolo capitolo della categoria" );//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
 			}
 			} catch (PersistencyException e1) {
 				bp.handleException(e1);
@@ -978,11 +978,11 @@ private void basicDoContabilizzaRiga(
 			} catch (BusinessProcessException e1) {
 				bp.handleException(e1);
 			}
-			//Controllo la compatibilit‡ dell'obbligazione con il titolo capitolo selezionato
+			//Controllo la compatibilit√† dell'obbligazione con il titolo capitolo selezionato
 //			if (titoloCapitoloValido != null &&
 //				!(titoloCapitoloObbligazione.getCd_elemento_voce().startsWith(titoloCapitoloValido.getCd_elemento_voce()) ||
 //				titoloCapitoloValido.getCd_elemento_voce().startsWith(titoloCapitoloObbligazione.getCd_elemento_voce())))
-//				throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non Ë compatibile con il titolo capitolo \"" + titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
+//				throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non √® compatibile con il titolo capitolo \"" + titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
 			try {
 				OrdineAcqComponentSession h = (OrdineAcqComponentSession)bp.createComponentSession();
 				OrdineAcqBulk ordine = h.contabilizzaDettagliSelezionati(
@@ -1034,9 +1034,9 @@ private void basicDoContabilizzaConsegne(
 					righeModel.add(cons.getOrdineAcqRiga());
 					if (!titoloCapitoloObbligazione.getFl_inv_beni_patr().equals(cons.getOrdineAcqRiga().getBeneServizio().getFl_gestione_inventario())) {
 						if (cons.getOrdineAcqRiga().getBeneServizio().getFl_gestione_inventario().booleanValue())
-							throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non Ë utilizzabile per beni patrimoniali da inventariare!");
+							throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non √® utilizzabile per beni patrimoniali da inventariare!");
 						else
-							throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non Ë utilizzabile per beni/servizi da non inventariare!");
+							throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non √® utilizzabile per beni/servizi da non inventariare!");
 					}
 				}
 			}
@@ -1045,7 +1045,7 @@ private void basicDoContabilizzaConsegne(
 			if(dettagliDaContabilizzare!=null && !dettagliDaContabilizzare.isEmpty()){
 				titoloCapitoloValidolist = recuperoListaCapitoli(context, righeModel.iterator());
 				
-			//Controllo la compatibilit‡ dell'obbligazione con il titolo capitolo selezionato
+			//Controllo la compatibilit√† dell'obbligazione con il titolo capitolo selezionato
 			Boolean compatibile=null;
 			if (titoloCapitoloValidolist != null && titoloCapitoloValidolist.size()!=0)
 				for(Iterator i=titoloCapitoloValidolist.iterator();(i.hasNext()&&(compatibile==null||!compatibile));){ 
@@ -1056,7 +1056,7 @@ private void basicDoContabilizzaConsegne(
 						compatibile=new Boolean(false);
 				}
 			   if (compatibile!=null && !compatibile)
-				throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non Ë compatibile con il titolo capitolo della categoria" );//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
+				throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non √® compatibile con il titolo capitolo della categoria" );//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
 			}
 			} catch (PersistencyException e1) {
 				bp.handleException(e1);
@@ -1067,11 +1067,11 @@ private void basicDoContabilizzaConsegne(
 			} catch (BusinessProcessException e1) {
 				bp.handleException(e1);
 			}
-			//Controllo la compatibilit‡ dell'obbligazione con il titolo capitolo selezionato
+			//Controllo la compatibilit√† dell'obbligazione con il titolo capitolo selezionato
 //			if (titoloCapitoloValido != null &&
 //				!(titoloCapitoloObbligazione.getCd_elemento_voce().startsWith(titoloCapitoloValido.getCd_elemento_voce()) ||
 //				titoloCapitoloValido.getCd_elemento_voce().startsWith(titoloCapitoloObbligazione.getCd_elemento_voce())))
-//				throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non Ë compatibile con il titolo capitolo \"" + titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
+//				throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non √® compatibile con il titolo capitolo \"" + titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
 			try {
 				OrdineAcqComponentSession h = (OrdineAcqComponentSession)bp.createComponentSession();
 				OrdineAcqBulk ordine = h.contabilizzaConsegneSelezionate(
@@ -1102,7 +1102,7 @@ public Forward doAddToCRUDMain_Obbligazioni(ActionContext context) {
 		OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 
 		if (ordine.getFornitore() == null || ordine.getFornitore().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.UNDEFINED)
-			throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione Ë necessario selezionare un fornitore!");
+			throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione √® necessario selezionare un fornitore!");
 		recuperoListaCapitoli(context, ordine.getRigheOrdineColl().iterator());
 		return basicDoRicercaObbligazione(context, ordine, null, null);
 	} catch(Throwable e) {
@@ -1130,7 +1130,7 @@ public Forward doAddToCRUDMain_Obbligazioni_DettaglioObbligazioni(ActionContext 
 				selectedModels.add(riga);
 		}
 		if (selectedModels.isEmpty())
-			throw new it.cnr.jada.comp.ApplicationException("Tutti i dettagli sono gi‡ stati contabilizzati!");
+			throw new it.cnr.jada.comp.ApplicationException("Tutti i dettagli sono gi√† stati contabilizzati!");
 		it.cnr.jada.util.action.SelezionatoreListaBP slbp = (it.cnr.jada.util.action.SelezionatoreListaBP) select(
 					context,
 					new it.cnr.jada.util.ListRemoteIterator(selectedModels),
@@ -1363,12 +1363,12 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
 //        	fp.setCambio(cambioAttuale);
 //	        if (cambioAttuale.compareTo(new java.math.BigDecimal(0))==0){
 //	        	fp.setCambio(vecchioCambio);
-//	        	throw new it.cnr.jada.comp.ApplicationException("Non Ë stato inserito un cambio valido (>0)");
+//	        	throw new it.cnr.jada.comp.ApplicationException("Non √® stato inserito un cambio valido (>0)");
 //	        }
 //			if (fp.getObbligazioniHash() != null && !fp.getObbligazioniHash().isEmpty())
-//				bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio Ë necessario riportare in quadratura le scadenze delle obbligazioni!");
+//				bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio √® necessario riportare in quadratura le scadenze delle obbligazioni!");
 //			if (fp.getAccertamentiHash() != null && !fp.getAccertamentiHash().isEmpty())
-//				bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio Ë necessario riportare in quadratura le scadenze degli accertamenti!");
+//				bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio √® necessario riportare in quadratura le scadenze degli accertamenti!");
 //			fp.aggiornaImportiTotali();
 //			basicDoCalcolaTotaleFatturaFornitoreInEur(fp);
 //			for (java.util.Iterator i = fp.getFattura_passiva_dettColl().iterator(); i.hasNext();) {
@@ -1388,7 +1388,7 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
 //}
 /**
  * Metodo utilizzato per gestire la conferma dell'inserimento/modifica di una obbligazione che ha sfondato
- * la disponibilit‡ per il contratto
+ * la disponibilit√† per il contratto
  * @param context <code>ActionContext</code> in uso.
  * @param option Esito della risposta alla richiesta di sfondamento
  *
@@ -1491,9 +1491,9 @@ public Forward doRemoveFromCRUDMain_Obbligazioni(ActionContext context) {
 						throw new it.cnr.jada.comp.ApplicationException("Impossibile scollegare l'impegno \"" + 
 								+ obbligazione.getEsercizio_originale().intValue()
 								+ "/" + obbligazione.getPg_obbligazione().longValue() + 
-								"\" perchË il dettaglio collegato \"" + 
+								"\" perch√® il dettaglio collegato \"" + 
 								cons.getRiga() + "/" + cons.getConsegna() +
-								"\" Ë gi‡ stato evaso.");
+								"\" √® gi√† stato evaso.");
 					}
 				}
 				scollegaDettagliDaObbligazione(context, (java.util.List)models.clone());
@@ -1531,7 +1531,7 @@ public Forward doRemoveFromCRUDMain_Obbligazioni_DettaglioObbligazioni(ActionCon
 			if (cons.getStato() != null && cons.getStato().equals(OrdineAcqConsegnaBulk.STATO_EVASA)){
 				throw new it.cnr.jada.comp.ApplicationException("Impossibile scollegare il dettaglio \"" + 
 						cons.getRiga() + "/" + cons.getConsegna() +
-							"\" perchË esiste una consegna evasa.");
+							"\" perch√® esiste una consegna evasa.");
 			}
 		}
 		scollegaDettagliDaObbligazione(context, models);
@@ -1600,9 +1600,9 @@ public Forward doRemoveFromCRUDMain_Obbligazioni_DettaglioObbligazioni(ActionCon
 //
 //				bp.setModel(context,fattura);
 //				if (fattura.getObbligazioniHash() != null && !fattura.getObbligazioniHash().isEmpty())
-//					bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio Ë necessario riportare in quadratura le scadenze delle obbligazioni!");
+//					bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio √® necessario riportare in quadratura le scadenze delle obbligazioni!");
 //				if (fattura.getAccertamentiHash() != null && !fattura.getAccertamentiHash().isEmpty())
-//					bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio Ë necessario riportare in quadratura le scadenze degli accertamenti!");
+//					bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio √® necessario riportare in quadratura le scadenze degli accertamenti!");
 //			}
 //			return context.findDefaultForward();
 //		} catch(it.cnr.jada.comp.ComponentException e) {
@@ -1622,9 +1622,9 @@ public Forward doRemoveFromCRUDMain_Obbligazioni_DettaglioObbligazioni(ActionCon
 //			fattura = h.selezionaValutaDiDefault(context.getUserContext(),fattura);
 //			basicDoCalcolaTotaleFatturaFornitoreInEur(fattura);
 //			if (fattura.getObbligazioniHash() != null && !fattura.getObbligazioniHash().isEmpty())
-//				bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio Ë necessario riportare in quadratura le scadenze delle obbligazioni!");
+//				bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio √® necessario riportare in quadratura le scadenze delle obbligazioni!");
 //			if (fattura.getAccertamentiHash() != null && !fattura.getAccertamentiHash().isEmpty())
-//				bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio Ë necessario riportare in quadratura le scadenze degli accertamenti!");
+//				bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio √® necessario riportare in quadratura le scadenze degli accertamenti!");
 //			return fattura;
 //		} catch (BusinessProcessException e) {
 //			throw new ComponentException(e);
@@ -1678,7 +1678,7 @@ private void scollegaDettagliDaObbligazione(ActionContext context, java.util.Lis
 			for (java.util.Iterator i = models.iterator(); i.hasNext();) {
 				OrdineAcqConsegnaBulk cons = (OrdineAcqConsegnaBulk)i.next();
 //				if (riga.isConsegnaEvasa())
-//					throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile scollegare il dettaglio \"" + dettaglio.getDs_riga_fattura() + "\". Questa operazione Ë permessa solo per dettagli in stato \"" + dettaglio.STATO.get(dettaglio.STATO_CONTABILIZZATO) + "\".");
+//					throw new it.cnr.jada.comp.ApplicationException("Non √® possibile scollegare il dettaglio \"" + dettaglio.getDs_riga_fattura() + "\". Questa operazione √® permessa solo per dettagli in stato \"" + dettaglio.STATO.get(dettaglio.STATO_CONTABILIZZATO) + "\".");
 				CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)getBusinessProcess(context);
 				OrdineAcqBulk ordine = (OrdineAcqBulk)bp.getModel();
 				ordine.removeFromOrdineObbligazioniHash(cons);

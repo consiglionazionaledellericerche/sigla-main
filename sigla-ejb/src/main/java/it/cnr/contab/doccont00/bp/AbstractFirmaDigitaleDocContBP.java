@@ -3,6 +3,7 @@ package it.cnr.contab.doccont00.bp;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
+import it.cnr.contab.docamm00.docs.bulk.Tipo_documento_ammBulk;
 import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.intcass.bulk.Apparence;
@@ -315,6 +316,26 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
                             try {
                                 MandatoBulk mandatoBulk = (MandatoBulk) createComponentSession().findByPrimaryKey(actioncontext.getUserContext(),
                                         new MandatoIBulk(statoTrasmissione.getCd_cds(), statoTrasmissione.getEsercizio(), statoTrasmissione.getPg_documento_cont()));
+                                Tipo_documento_ammBulk tipo_documento_ammBulk = new Tipo_documento_ammBulk();
+                                tipo_documento_ammBulk.setTi_entrata_spesa("S");
+                                final List<Tipo_documento_ammBulk> tipoDocAmms = Optional.ofNullable(getComponentSession().find(
+                                        actioncontext.getUserContext(), tipo_documento_ammBulk.getClass(),
+                                        "find", tipo_documento_ammBulk))
+                                        .filter(List.class::isInstance)
+                                        .map(List.class::cast)
+                                        .orElse(null);
+                                mandatoBulk.setTipoDocumentoKeys(
+                                        Optional.ofNullable(tipoDocAmms.stream()
+                                                .collect(Collectors.toMap(
+                                                        Tipo_documento_ammBulk::getCd_tipo_documento_amm,
+                                                        Tipo_documento_ammBulk::getDs_tipo_documento_amm,
+                                                        (u, v) -> {
+                                                            throw new IllegalStateException(
+                                                                    String.format("Cannot have 2 values (%s, %s) for the same key", u, v)
+                                                            );
+                                                        }, Hashtable::new)))
+                                                .orElse(null)
+                                );
                                 contabiliService.getNodeRefContabile(mandatoBulk)
                                         .stream()
                                         .forEach(key ->  {
@@ -363,6 +384,12 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
                                                         try {
                                                             ZipEntry zipEntryChild = new ZipEntry(statoTrasmissione.getCMISFolderName()
                                                                 .concat(SiglaStorageService.SUFFIX)
+																.concat(mandato_rigaBulk.getDs_tipo_documento_amm())
+																	.concat(" ")
+																	.concat(String.valueOf(mandato_rigaBulk.getEsercizio_doc_amm()))
+																	.concat("-")
+																	.concat(String.valueOf(mandato_rigaBulk.getPg_doc_amm()))
+																.concat(SiglaStorageService.SUFFIX)
                                                                 .concat(allegatoGenericoBulk.getNome()));
                                                             zos.putNextEntry(zipEntryChild);
                                                             IOUtils.copyLarge(documentiContabiliService.getResource(allegatoGenericoBulk.getStorageKey()), zos);

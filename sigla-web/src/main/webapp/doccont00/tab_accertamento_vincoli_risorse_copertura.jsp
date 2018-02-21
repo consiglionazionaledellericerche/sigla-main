@@ -13,7 +13,7 @@
   	  	<TD><% controller.writeFormLabel(out,"esercizio_res");%></TD>
   	  	<TD colspan="2"><% controller.writeFormInput(out,"default","esercizio_res",false,null,null); %></TD>
 	  	<TD style="float:right; text-align: -webkit-center">
-			<div class="GroupLabel">Disponibilit‡ Spesa</div>  
+			<div class="GroupLabel">Disponibilit√† Spesa</div>  
 			<div class="Group">
 				<% controller.writeFormInput(out,"findAssestato");%>
 			</div>

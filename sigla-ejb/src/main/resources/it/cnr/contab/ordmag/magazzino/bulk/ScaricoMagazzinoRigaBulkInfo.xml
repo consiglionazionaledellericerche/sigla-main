@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -76,7 +76,7 @@
 		enabledOnEdit="true"
 		command="doDefault"
 		style="text-align: right"
-		label="Quantità" />
+		label="QuantitÃ " />
  	<fieldProperty
 		name="qtScaricoConvertita"
 		property="qtScaricoConvertita"
@@ -122,7 +122,7 @@
 		inputSize="10"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		style="text-align: right"
-		label="Quantità" />
+		label="QuantitÃ " />
  	<fieldProperty
 		name="totQtScaricoLottiConvertita"
 		property="totQtScaricoLottiConvertita"
@@ -185,7 +185,7 @@
 	<columnFieldProperty
 		name="qtScarico" 
 		inputType="ROTEXT"
-		label="Q.tà" />
+		label="Q.tÃ " />
 
 	<columnFieldProperty
 		name="cdUnitaMisuraMinima"

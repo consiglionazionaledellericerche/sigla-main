@@ -121,18 +121,18 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'esercizio_doc_attivo'
+	 * Restituisce il valore della propriet√† 'esercizio_doc_attivo'
 	 *
-	 * @return Il valore della propriet‡ 'esercizio_doc_attivo'
+	 * @return Il valore della propriet√† 'esercizio_doc_attivo'
 	 */
 	public java.lang.Integer getEsercizio_doc_attivo() {
 		return esercizio_doc_attivo;
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'esercizio_reversale'
+	 * Restituisce il valore della propriet√† 'esercizio_reversale'
 	 *
-	 * @return Il valore della propriet‡ 'esercizio_reversale'
+	 * @return Il valore della propriet√† 'esercizio_reversale'
 	 */
 	public java.lang.Integer getEsercizio_reversale() {
 		return esercizio_reversale;
@@ -143,9 +143,9 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'fl_aggiorna_scad_successiva'
+	 * Restituisce il valore della propriet√† 'fl_aggiorna_scad_successiva'
 	 *
-	 * @return Il valore della propriet‡ 'fl_aggiorna_scad_successiva'
+	 * @return Il valore della propriet√† 'fl_aggiorna_scad_successiva'
 	 */
 	public java.lang.Boolean getFl_aggiorna_scad_successiva() {
 		return fl_aggiorna_scad_successiva;
@@ -164,18 +164,18 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'pg_doc_attivo'
+	 * Restituisce il valore della propriet√† 'pg_doc_attivo'
 	 *
-	 * @return Il valore della propriet‡ 'pg_doc_attivo'
+	 * @return Il valore della propriet√† 'pg_doc_attivo'
 	 */
 	public java.lang.Long getPg_doc_attivo() {
 		return pg_doc_attivo;
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'pg_reversale'
+	 * Restituisce il valore della propriet√† 'pg_reversale'
 	 *
-	 * @return Il valore della propriet‡ 'pg_reversale'
+	 * @return Il valore della propriet√† 'pg_reversale'
 	 */
 	public java.lang.Long getPg_reversale() {
 		return pg_reversale;
@@ -185,9 +185,9 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'status'
+	 * Restituisce il valore della propriet√† 'status'
 	 *
-	 * @return Il valore della propriet‡ 'status'
+	 * @return Il valore della propriet√† 'status'
 	 */
 	public int getStatus() {
 		return status;
@@ -206,9 +206,9 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'fromDocAmm'
+	 * Restituisce il valore della propriet√† 'fromDocAmm'
 	 *
-	 * @return Il valore della propriet‡ 'fromDocAmm'
+	 * @return Il valore della propriet√† 'fromDocAmm'
 	 */
 	public boolean isFromDocAmm() {
 		return fromDocAmm;
@@ -239,7 +239,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'accertamento'
+	 * Imposta il valore della propriet√† 'accertamento'
 	 *
 	 * @param newAccertamento	Il valore da assegnare a 'accertamento'
 	 */
@@ -248,7 +248,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'accertamento_scad_voceColl'
+	 * Imposta il valore della propriet√† 'accertamento_scad_voceColl'
 	 *
 	 * @param newAccertamento_scad_voceColl	Il valore da assegnare a 'accertamento_scad_voceColl'
 	 */
@@ -270,7 +270,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'esercizio_doc_attivo'
+	 * Imposta il valore della propriet√† 'esercizio_doc_attivo'
 	 *
 	 * @param newEsercizio_doc_attivo	Il valore da assegnare a 'esercizio_doc_attivo'
 	 */
@@ -279,7 +279,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'esercizio_reversale'
+	 * Imposta il valore della propriet√† 'esercizio_reversale'
 	 *
 	 * @param newEsercizio_reversale	Il valore da assegnare a 'esercizio_reversale'
 	 */
@@ -288,7 +288,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'fl_aggiorna_scad_successiva'
+	 * Imposta il valore della propriet√† 'fl_aggiorna_scad_successiva'
 	 *
 	 * @param newFl_aggiorna_scad_successiva	Il valore da assegnare a 'fl_aggiorna_scad_successiva'
 	 */
@@ -297,7 +297,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'fromDocAmm'
+	 * Imposta il valore della propriet√† 'fromDocAmm'
 	 *
 	 * @param newFromDocAmm	Il valore da assegnare a 'fromDocAmm'
 	 */
@@ -312,7 +312,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'pg_doc_attivo'
+	 * Imposta il valore della propriet√† 'pg_doc_attivo'
 	 *
 	 * @param newPg_doc_attivo	Il valore da assegnare a 'pg_doc_attivo'
 	 */
@@ -321,7 +321,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'pg_reversale'
+	 * Imposta il valore della propriet√† 'pg_reversale'
 	 *
 	 * @param newPg_reversale	Il valore da assegnare a 'pg_reversale'
 	 */
@@ -330,7 +330,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'scadenza_iniziale'
+	 * Imposta il valore della propriet√† 'scadenza_iniziale'
 	 *
 	 * @param newScadenza_iniziale	Il valore da assegnare a 'scadenza_iniziale'
 	 */
@@ -339,7 +339,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'status'
+	 * Imposta il valore della propriet√† 'status'
 	 *
 	 * @param newStatus	Il valore da assegnare a 'status'
 	 */
@@ -389,9 +389,9 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 			throw new ValidationException( "Valorizzare l' IMPORTO della scadenza." );
 
 		/* rimosso questo controllo per consentire comunque l'inserimento/modifica dell'importo a 0 -
-	   questo Ë utile quando Ë gi‡ stato creato il mandato e pertanto non Ë possibile effettuare la cancellazione
-	   fisica della scadenza (per i vincoli di integrit‡ referenziale con le righe del mandato, pertanto 
-	   l'unica alternativa Ë quella di impostare a 0 la scadenza */
+	   questo √® utile quando √® gi√† stato creato il mandato e pertanto non √® possibile effettuare la cancellazione
+	   fisica della scadenza (per i vincoli di integrit√† referenziale con le righe del mandato, pertanto 
+	   l'unica alternativa √® quella di impostare a 0 la scadenza */
 		/*	
 	// L'importo della scadenza puo' essere minore o uguale a zero se vengo da NOTA di CREDITO
 	// STM 1063
@@ -403,7 +403,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 			throw new ValidationException( "L' IMPORTO della scadenza non puo' essere negativo." );	
 	}
 	/**
-	 * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+	 * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
 	 * controllo sintattico o contestuale.
 	 */
 	public void validate() throws ValidationException 
@@ -412,9 +412,9 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 
 		// Controllo su campo DATA SCADENZA
 		if ( getDt_scadenza_incasso() == null  )
-			throw new ValidationException( "Il campo DATA SCADENZA Ë obbligatorio." );
+			throw new ValidationException( "Il campo DATA SCADENZA √® obbligatorio." );
 		if ( getDt_scadenza_incasso().before(accertamento.getDt_registrazione()) )
-			throw new ValidationException( "Non Ë possibile inserire una scadenza con data antecedente a quella dell'accertamento." );
+			throw new ValidationException( "Non √® possibile inserire una scadenza con data antecedente a quella dell'accertamento." );
 
 		if (accertamento.getEsercizio_competenza() == null )
 			throw new ValidationException( "E' necessario specificare un esercizio competenza per l'accertamento prima di inserire le scadenze");
@@ -422,7 +422,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 		gc.setTime(getDt_scadenza_incasso());
 		if ( (getAccertamento().getCd_tipo_documento_cont() == null || !getAccertamento().getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_ACR_RES)) &&
 				gc.get(java.util.GregorianCalendar.YEAR) < accertamento.getEsercizio_competenza().intValue())
-			throw new ValidationException( "Non Ë possibile inserire una scadenza con data antecedente a quella dell'esercizio di competenza." );
+			throw new ValidationException( "Non √® possibile inserire una scadenza con data antecedente a quella dell'esercizio di competenza." );
 
 		// Controllo su campo IMPORTO SCADENZA
 		if(getIm_scadenza() == null)
@@ -430,7 +430,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 
 		// Controllo su campo DESCRIZIONE
 		if ( getDs_scadenza() == null || getDs_scadenza().equals("") )
-			throw new ValidationException( "Il campo DESCRIZIONE Ë obbligatorio." );
+			throw new ValidationException( "Il campo DESCRIZIONE √® obbligatorio." );
 	}
 	
 	public java.math.BigDecimal getImportoDisponibile() {

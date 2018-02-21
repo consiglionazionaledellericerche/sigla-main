@@ -7,10 +7,10 @@ CREATE OR REPLACE FUNCTION ibmutl001_unlock_transaction()
 $BODY$
 DECLARE
 
-  aSID integer;
+  aSID text;
 
 BEGIN
-  select pg_backend_pid() into aSID;
+  select to_char(pg_backend_pid(), '999999999') into aSID;
   delete from TRANSLOCK where
      sid = aSID;
 END;

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	shortDescription="Coda di stampa">
 	<fieldProperty
@@ -14,12 +14,12 @@
 		inputType="RADIOGROUP"
 		layout="HORIZONTAL"
 		keysProperty="ti_visibilitaKeys"
-		label="Visibilità" />
+		label="VisibilitÃ " />
 	<fieldProperty
 		name="priorita"
 		property="priorita"
 		inputType="TEXT"
-		label="Priorità" />
+		label="PrioritÃ " />
 	<fieldProperty
 		name="ds_utente"
 		property="dsUtente"
@@ -161,7 +161,7 @@
 		property="tiIntervallo"
 		keysProperty="tipo_intervalloKeys"
 		inputType="SELECT"
-		label="Unità intervallo" />
+		label="UnitÃ  intervallo" />
 	<fieldProperty
 		name="dt_prossima_esecuzione"
 		property="dtProssimaEsecuzione"

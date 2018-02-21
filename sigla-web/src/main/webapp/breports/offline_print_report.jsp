@@ -12,7 +12,7 @@
 <body class="Form">
 <% OfflineReportPrintBP bp = (OfflineReportPrintBP)BusinessProcess.getBusinessProcess(request);
 	bp.openFormWindow(pageContext); %>
-	<span class="h3 text-primary">La stampa richiesta verr‡ accodata.</span>
+	<span class="h3 text-primary">La stampa richiesta verr√† accodata.</span>
 	<table class="Panel card p-3 mb-2">
 		<tr>
 			<td>

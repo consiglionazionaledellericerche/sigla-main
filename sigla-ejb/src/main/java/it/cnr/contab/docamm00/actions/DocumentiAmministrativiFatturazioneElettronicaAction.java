@@ -40,7 +40,7 @@ public DocumentiAmministrativiFatturazioneElettronicaAction() {
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -123,7 +123,7 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -165,7 +165,7 @@ public Forward doRiportaSelezione(ActionContext context) {
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -189,7 +189,7 @@ public Forward doSearchSoggetto(ActionContext context) {
 		
 		if (!(docAmmBP instanceof IGenericSearchDocAmmBP) || ((IGenericSearchDocAmmBP)docAmmBP).getPropertyForGenericSearch() == null) {
 			filtro.setSoggetto(null);
-			throw new it.cnr.jada.comp.ApplicationException("Il soggetto non è una clausola valida per il gruppo selezionato!");
+			throw new it.cnr.jada.comp.ApplicationException("Il soggetto non Ã¨ una clausola valida per il gruppo selezionato!");
 		}
 
 		IGenericSearchDocAmmBP docAmmGenericSearchBP = (IGenericSearchDocAmmBP)docAmmBP;
@@ -242,7 +242,7 @@ public Forward doBringBackSearchSoggetto(ActionContext context,
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -272,7 +272,7 @@ private Forward doStampaProtocollati(
 	context.addHookForward("close", this, "doStampaAnnullata");
 	printbp.setMessage(
 		it.cnr.jada.util.action.OptionBP.MESSAGE,
-		"Il protocollo IVA è stato assegnato correttamente. Per confermare eseguire la stampa.");
+		"Il protocollo IVA Ã¨ stato assegnato correttamente. Per confermare eseguire la stampa.");
 
 	return context.addBusinessProcess(printbp);
 }
@@ -281,7 +281,7 @@ private Forward doStampaProtocollati(
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.

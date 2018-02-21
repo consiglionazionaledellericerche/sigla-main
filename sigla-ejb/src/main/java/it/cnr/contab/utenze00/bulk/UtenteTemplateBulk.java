@@ -180,7 +180,7 @@ public class UtenteTemplateBulk extends UtenteBulk
 	 */
 
 	public boolean isROFind_unita_org_per_accesso() {
-		return  ( getCrudStatus() == UNDEFINED ); // l'utente non Ë ancora stato ricercato
+		return  ( getCrudStatus() == UNDEFINED ); // l'utente non √® ancora stato ricercato
 	}
 	/**
 	 * Determina quando abilitare o meno nell'interfaccia utente il campo unita_org_per_ruolo
@@ -188,7 +188,7 @@ public class UtenteTemplateBulk extends UtenteBulk
 	 */
 
 	public boolean isROFind_unita_org_per_ruolo() {
-		return  ( getCrudStatus() == UNDEFINED ); // l'utente non Ë ancora stato ricercato
+		return  ( getCrudStatus() == UNDEFINED ); // l'utente non √® ancora stato ricercato
 	}
 	/**
 	 * Determina quando abilitare o meno nell'interfaccia utente il campo unita_org_per_accesso
@@ -254,7 +254,7 @@ public class UtenteTemplateBulk extends UtenteBulk
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'accessi_disponibili'
+	 * Imposta il valore della propriet√† 'accessi_disponibili'
 	 *
 	 * @param newAccessi_disponibili	Il valore da assegnare a 'accessi_disponibili'
 	 */

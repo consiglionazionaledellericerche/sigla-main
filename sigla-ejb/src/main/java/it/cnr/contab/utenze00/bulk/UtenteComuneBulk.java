@@ -41,18 +41,18 @@ public java.lang.String getCd_utente_templ() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cdr'
+ * Restituisce il valore della propriet√† 'cdr'
  *
- * @return Il valore della propriet‡ 'cdr'
+ * @return Il valore della propriet√† 'cdr'
  */
 public it.cnr.contab.config00.sto.bulk.CdrBulk getCdr() {
 	return cdr;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'template'
+ * Restituisce il valore della propriet√† 'template'
  *
- * @return Il valore della propriet‡ 'template'
+ * @return Il valore della propriet√† 'template'
  */
 public UtenteTemplateBulk getTemplate() {
 	return template;
@@ -90,7 +90,7 @@ public void setCd_utente_templ(java.lang.String cd_utente_templ) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'cdr'
+ * Imposta il valore della propriet√† 'cdr'
  *
  * @param newCdr	Il valore da assegnare a 'cdr'
  */
@@ -99,7 +99,7 @@ public void setCdr(it.cnr.contab.config00.sto.bulk.CdrBulk newCdr) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'template'
+ * Imposta il valore della propriet√† 'template'
  *
  * @param newTemplate	Il valore da assegnare a 'template'
  */
@@ -115,7 +115,7 @@ public void validate() throws ValidationException
 	super.validate();
 
 	if ( cdr.getCd_centro_responsabilita() == null  )
-		throw new ValidationException( "Il campo CODICE CDR Ë obbligatorio." );
+		throw new ValidationException( "Il campo CODICE CDR √® obbligatorio." );
 
 }
 }

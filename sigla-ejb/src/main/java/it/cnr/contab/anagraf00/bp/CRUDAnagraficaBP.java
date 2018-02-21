@@ -193,7 +193,7 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 	return toolbar;
 }
 	/**
-	 * Restituisce lanagrafico su cui si st‡ lavorando.
+	 * Restituisce lanagrafico su cui si st√† lavorando.
 	 *
 	 * @return AnagraficoBulk l'anagrafico.
 	 */
@@ -319,18 +319,18 @@ protected void validaInquadramento(ActionContext context,InquadramentoBulk inqua
 			throw new ValidationException("Data inizio validita obbligatoria");
 
 		if (inquadramento.getDt_ini_validita().before(inquadramento.getRapporto().getDt_ini_validita()))
-			throw new ValidationException("La data di inizio validita dell'inquadramento deve essere maggiore della data di inizio validit‡ del rapporto.");
+			throw new ValidationException("La data di inizio validita dell'inquadramento deve essere maggiore della data di inizio validit√† del rapporto.");
 
 		if (inquadramento.getDt_ini_validita().after(inquadramento.getRapporto().getDt_fin_validita()))
-			throw new ValidationException("La data di inizio validita dell'inquadramento deve essere minore o uguale della data di inizio validit‡ del rapporto.");
+			throw new ValidationException("La data di inizio validita dell'inquadramento deve essere minore o uguale della data di inizio validit√† del rapporto.");
 
 		if (inquadramento.getDt_fin_validita() != null && inquadramento.getDt_fin_validita().after(inquadramento.getRapporto().getDt_fin_validita()))
-			throw new ValidationException("La data di fine validita dell'inquadramento deve essere minore o uguale della data di inizio validit‡ del rapporto.");
+			throw new ValidationException("La data di fine validita dell'inquadramento deve essere minore o uguale della data di inizio validit√† del rapporto.");
 
 		boolean fine_validita_infinito = inquadramento.getDt_fin_validita() == null;
 
 		if (!fine_validita_infinito	&& inquadramento.getDt_ini_validita().after(inquadramento.getDt_fin_validita()))
-			throw new ValidationException("La data inizio validit‡ deve essere minore della data di fine validit‡");
+			throw new ValidationException("La data inizio validit√† deve essere minore della data di fine validit√†");
 		java.util.Calendar cal = java.util.Calendar.getInstance();
 		
 		for (java.util.Iterator i = inquadramento.getRapporto().getInquadramenti().iterator();i.hasNext();) {
@@ -344,7 +344,7 @@ protected void validaInquadramento(ActionContext context,InquadramentoBulk inqua
 						inquadramento.setDt_fin_validita(new java.sql.Timestamp(cal.getTime().getTime()));
 					}
 				} else if (inquadramento.getDt_fin_validita().equals(inquadramento2.getDt_ini_validita()) || inquadramento.getDt_fin_validita().after(inquadramento2.getDt_fin_validita()))
-					throw new ValidationException("Data fine validit‡ non valida perchË interseca un altro periodo");
+					throw new ValidationException("Data fine validit√† non valida perch√® interseca un altro periodo");
 			} else if (!inquadramento.getDt_ini_validita().after(inquadramento2.getDt_fin_validita())) {
 				if (inquadramento2.getDt_fin_validita().equals(it.cnr.contab.docamm00.tabrif.bulk.CambioHome.getFineinfinito())) {
 					cal.setTime(inquadramento.getDt_ini_validita());
@@ -352,13 +352,13 @@ protected void validaInquadramento(ActionContext context,InquadramentoBulk inqua
 					inquadramento2.setDt_fin_validita(new java.sql.Timestamp(cal.getTime().getTime()));
 					inquadramento2.setToBeUpdated();
 				} else
-					throw new ValidationException("Data inizio validit‡ non valida perchË interseca un altro periodo");
+					throw new ValidationException("Data inizio validit√† non valida perch√® interseca un altro periodo");
 			}
 		}
 		if (fine_validita_infinito && inquadramento.getDt_fin_validita() == null)
 			inquadramento.setDt_fin_validita(inquadramento.getRapporto().getDt_fin_validita());
 
-		// Non Ë possibile impostare una data di fine validit‡ inferiore alla data
+		// Non √® possibile impostare una data di fine validit√† inferiore alla data
 		// di fine validita originale, a meno che sia superiore alla data odierna.
 		if (inquadramento.getDt_fin_validita_originale() != null) {
 			java.sql.Timestamp dt_fin_validita_minima = DateUtils.min(
@@ -367,7 +367,7 @@ protected void validaInquadramento(ActionContext context,InquadramentoBulk inqua
 				inquadramento.getDt_fin_validita_originale());
 			if (inquadramento.getDt_fin_validita().before(dt_fin_validita_minima)) {
 				inquadramento.setDt_fin_validita(dt_fin_validita_minima);
-				throw new ValidationException("La data di fine validit‡ non puÚ essere anteriore al "+FieldProperty.getFormat("date_short").format(dt_fin_validita_minima));
+				throw new ValidationException("La data di fine validit√† non pu√≤ essere anteriore al "+FieldProperty.getFormat("date_short").format(dt_fin_validita_minima));
 			}
 		}
 	} catch(javax.ejb.EJBException e) {
@@ -380,8 +380,8 @@ protected void validaInquadramentoPerCancellazione(ActionContext context,Inquadr
 			inquadramento.getDt_ini_validita() != null &&
 			//inquadramento.getDt_ini_validita().before(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()))
 			inquadramento.getMax_dt_fin_validita_missione()!=null && inquadramento.getDt_ini_validita().before(inquadramento.getMax_dt_fin_validita_missione()))
-			//throw new ValidationException("Gli inquadramenti con data di inizio validit‡ antecedente alla data odierna non sono eliminabili");
-			throw new ValidationException("Gli inquadramenti con data di inizio validit‡ antecedente al "+FieldProperty.getFormat("date_short").format(inquadramento.getMax_dt_fin_validita_missione())+" non sono eliminabili");
+			//throw new ValidationException("Gli inquadramenti con data di inizio validit√† antecedente alla data odierna non sono eliminabili");
+			throw new ValidationException("Gli inquadramenti con data di inizio validit√† antecedente al "+FieldProperty.getFormat("date_short").format(inquadramento.getMax_dt_fin_validita_missione())+" non sono eliminabili");
 	} catch(javax.ejb.EJBException e) {
 		throw new it.cnr.jada.DetailedRuntimeException(e);
 	}
@@ -399,15 +399,15 @@ protected void validaRapporto(ActionContext context,RapportoBulk rapporto) throw
 		boolean fine_validita_infinito = rapporto.getDt_fin_validita() == null;
 
 		if (!fine_validita_infinito) {
-			// Se dt_fin_validita Ë non nulla deve essere superiore a dt_ini_validita
+			// Se dt_fin_validita √® non nulla deve essere superiore a dt_ini_validita
 			if (rapporto.getDt_ini_validita().after(rapporto.getDt_fin_validita()))
-				throw new ValidationException("La data di inizio validit‡ deve essere minore della data di fine validit‡");
+				throw new ValidationException("La data di inizio validit√† deve essere minore della data di fine validit√†");
 			if(rapporto.isAbilitato_inquadramento()){
 				// e maggiore delle dt_fin_validita di tutti gli inquadrament
 				for (java.util.Iterator i = rapporto.getInquadramenti().iterator();i.hasNext();) {
 					InquadramentoBulk inquadramento = (InquadramentoBulk)i.next();
 					if (inquadramento.getDt_fin_validita() != null && inquadramento.getDt_fin_validita().after(rapporto.getDt_fin_validita()))
-						throw new ValidationException("La data di fine validit‡ del rapporto deve essere maggiore delle date di fine validit‡ degli inquadramenti.");
+						throw new ValidationException("La data di fine validit√† del rapporto deve essere maggiore delle date di fine validit√† degli inquadramenti.");
 				}
 			}
 			else if (rapporto.getInquadramenti()!=null && !rapporto.getInquadramenti().isEmpty()){
@@ -430,7 +430,7 @@ protected void validaRapporto(ActionContext context,RapportoBulk rapporto) throw
 		
 			if (rapporto.getDt_ini_validita().before(rapporto2.getDt_ini_validita())) {
 				if (fine_validita_infinito) {
-					// Se la dt_fin_validita non Ë stata specificata calcolo la minima dt_ini_validita-1
+					// Se la dt_fin_validita non √® stata specificata calcolo la minima dt_ini_validita-1
 					// dei rapporti con dt_ini_validita superiore
 					if (rapporto.getDt_fin_validita() == null || rapporto.getDt_fin_validita().after(rapporto2.getDt_fin_validita())) {
 						cal.setTime(rapporto2.getDt_ini_validita());
@@ -438,7 +438,7 @@ protected void validaRapporto(ActionContext context,RapportoBulk rapporto) throw
 						rapporto.setDt_fin_validita(new java.sql.Timestamp(cal.getTime().getTime()));
 					}
 				} else if (!rapporto.getDt_fin_validita().before(rapporto2.getDt_ini_validita()))
-					throw new ValidationException("Data fine validit‡ non valida perchË interseca un altro periodo");
+					throw new ValidationException("Data fine validit√† non valida perch√® interseca un altro periodo");
 			} else if (!rapporto.getDt_ini_validita().after(rapporto2.getDt_fin_validita())) {
 				if (rapporto2.getDt_fin_validita().equals(it.cnr.contab.docamm00.tabrif.bulk.CambioHome.getFineinfinito())) {
 					cal.setTime(rapporto.getDt_ini_validita());
@@ -446,16 +446,16 @@ protected void validaRapporto(ActionContext context,RapportoBulk rapporto) throw
 					rapporto2.setDt_fin_validita(new java.sql.Timestamp(cal.getTime().getTime()));
 					rapporto2.setToBeUpdated();
 				} else
-					throw new ValidationException("Data inizio validit‡ non valida perchË interseca un altro periodo");
+					throw new ValidationException("Data inizio validit√† non valida perch√® interseca un altro periodo");
 			}
 		}
 
-		// Se dt_fin_validita Ë ancora nulla (non ho trovato un altro rapporto
+		// Se dt_fin_validita √® ancora nulla (non ho trovato un altro rapporto
 		// dopo) la imposto a infito
 		if (fine_validita_infinito && rapporto.getDt_fin_validita() == null)
 			rapporto.setDt_fin_validita(it.cnr.contab.docamm00.tabrif.bulk.CambioHome.getFineinfinito());
 
-		// Non Ë possibile impostare una data di fine validit‡ inferiore alla data
+		// Non √® possibile impostare una data di fine validit√† inferiore alla data
 		// di fine validita originale, a meno che sia superiore alla data odierna.
 		if (rapporto.getDt_fin_validita_originale() != null) {
 			java.sql.Timestamp dt_fin_validita_minima = DateUtils.min(
@@ -463,7 +463,7 @@ protected void validaRapporto(ActionContext context,RapportoBulk rapporto) throw
 				rapporto.getDt_fin_validita_originale());
 			if (rapporto.getDt_fin_validita().before(dt_fin_validita_minima)) {
 				rapporto.setDt_fin_validita(dt_fin_validita_minima);
-				throw new ValidationException("La data di fine validit‡ non puÚ essere anteriore al "+FieldProperty.getFormat("date_short").format(dt_fin_validita_minima));
+				throw new ValidationException("La data di fine validit√† non pu√≤ essere anteriore al "+FieldProperty.getFormat("date_short").format(dt_fin_validita_minima));
 			}
 		}
 	} catch(javax.ejb.EJBException e) {
@@ -478,7 +478,7 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 		if (rapporto.isNotNew() &&
 			rapporto.getDt_ini_validita() != null &&
 			rapporto.getDt_ini_validita().before(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()))
-			throw new ValidationException("I rapporti con data di inizio validit‡ antecedente alla data odierna non sono eliminabili");
+			throw new ValidationException("I rapporti con data di inizio validit√† antecedente alla data odierna non sono eliminabili");
 	} catch(javax.ejb.EJBException e) {
 		throw new it.cnr.jada.DetailedRuntimeException(e);
 	}
@@ -528,13 +528,13 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 //				carico.getPrc_carico().compareTo(new java.math.BigDecimal(100))==0 &&
 //				//!sess.esisteConiugeValido(context.getUserContext(),carico.getAnagrafico(),carico) &&
 //				carico.getCodice_fiscale_altro_gen() == null)
-//				throw new ValidationException("Attenzione: Ë necessario specificare il Codice fiscale dell'altro genitore");
+//				throw new ValidationException("Attenzione: √® necessario specificare il Codice fiscale dell'altro genitore");
 			java.util.GregorianCalendar data_da = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
 			java.util.GregorianCalendar data_a = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
 			data_da.setTime(carico.getDt_ini_validita());
 			data_a.setTime(carico.getDt_fin_validita());
 //			if (data_da.get(java.util.GregorianCalendar.YEAR)!=data_a.get(java.util.GregorianCalendar.YEAR)){
-//				throw new ValidationException("La data di inizio e fine validit‡ devono appartenere allo stesso esercizio.");
+//				throw new ValidationException("La data di inizio e fine validit√† devono appartenere allo stesso esercizio.");
 //			}
 			sess.checkCaricoAlreadyExistFor(context.getUserContext(),carico.getAnagrafico(),carico);
 		} catch(javax.ejb.EJBException e) {
@@ -574,7 +574,7 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 			carico_familiare.getPrc_carico().compareTo(new java.math.BigDecimal(100))==0 &&
 			carico_familiare.getCodice_fiscale_altro_gen() == null)
 		{
-			 new ApplicationException("Attenzione: non Ë possibile cancellare il Coniuge poichË esiste un figlio per il quale non Ë stato indicato il Codice fiscale dell'altro genitore");
+			 new ApplicationException("Attenzione: non √® possibile cancellare il Coniuge poich√® esiste un figlio per il quale non √® stato indicato il Codice fiscale dell'altro genitore");
 		}	
 	}
 	public boolean isGestiteDeduzioniIrpef(UserContext userContext) throws BusinessProcessException {
@@ -706,7 +706,7 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 		    	  bw.append(ente.getDt_nascita()==null?Formatta(null,"S",8,"0"):Formatta((new SimpleDateFormat("ddmmyyyy")).format(ente.getDt_nascita()),"S",8,"0"));
 		    	  bw.append(ente.getComune_nascita()==null?Formatta(null,"S",40," "):Formatta(ente.getComune_nascita().getDs_comune(),"S",40," "));
 		    	  bw.append(ente.getComune_nascita()==null?Formatta(null,"S",2," "):Formatta(ente.getComune_nascita().getCd_provincia(),"S",2," "));
-		    	  // Obbligatori se non Ë Persona Fisica  
+		    	  // Obbligatori se non √® Persona Fisica  
 		    	  bw.append(Formatta(ente.getRagione_sociale(),"S",70," "));
 		    	  bw.append(ente.getComune_fiscale()==null?Formatta(null,"S",40," "):Formatta(ente.getComune_fiscale().getDs_comune(),"S",40," "));
 		    	  bw.append(ente.getComune_fiscale()==null?Formatta(null,"S",2," "):Formatta(ente.getComune_fiscale().getCd_provincia(),"S",2," "));
@@ -717,7 +717,7 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 		    	  bw.append(Formatta(null,"S",4,"0")); //Prog totale invio
 		    	  // intermediario
 		    	  bw.append(Formatta(null,"S",16," ")); //Codice Fiscale intermediario
-		    	  bw.append(Formatta(null,"S",5,"0")); //n∞ iscrizione CAF
+		    	  bw.append(Formatta(null,"S",5,"0")); //n¬∞ iscrizione CAF
 		    	  bw.append(Formatta(null,"S",1,"0")); //"1" se comunicazione predisposta dal contribuente "2" se perdisposta da chi effettua l'invio "0" altrimenti
 		    	  bw.append(Formatta(null,"S",8,"0"));// Data dell'impegno
 		    	  // Fine intermediario 
@@ -762,7 +762,7 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 				    	 // dal 2008 if(ecf.getCl002001()!=null||ecf.getCl003001()!=null){
 				    	 if((it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext())<2008 && ecf.getCl003001()!=null )||
 				    	   it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext())>=2008 && ecf.getCl002001()!=null ){
-				    		 // carattere iniziale riga cliente solo per il 1∞
+				    		 // carattere iniziale riga cliente solo per il 1¬∞
 				    		 if (Num_cliente==0)
 				    			 bw.append("1");  
 				    		 // essendo un record non posizionale ogni volta prima di scrivere una coppia intestazione-valore 
@@ -781,7 +781,7 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 					    		 if(ecf.getCl002001()!=null){
 					    			 // dopo aver verificato che ho un'altra coppia da inserire
 					    			 // e che ho appena azzerato il numero delle colonne inserisco 
-					    			 // "1" che indica che la nuova riga Ë di tipo cliente
+					    			 // "1" che indica che la nuova riga √® di tipo cliente
 					    			 if(num_col_cl==0)
 					    				 bw.append("1");
 					    			 bw.append("CL002001");
@@ -922,7 +922,7 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 									    	  bw.append("\r\n");
 							    	 }
 					    		 
-						    		 // carattere iniziale riga fornitore solo per il 1∞
+						    		 // carattere iniziale riga fornitore solo per il 1¬∞
 						    		 if (Num_forn==0||num_col_fr==0)
 						    			 bw.append("2"); 
 						    		 // essendo un record non posizionale ogni volta prima di scrivere una coppia intestazione-valore 
@@ -938,7 +938,7 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 						    		 if(ecf.getFr002001()!=null){
 						    			 // dopo aver verificato che ho un'altra coppia da inserire
 						    			 // e che ho appena azzerato il numero delle colonne inserisco 
-						    			 // "2" che indica che la nuova riga Ë di tipo fornitore
+						    			 // "2" che indica che la nuova riga √® di tipo fornitore
 						    			 if(num_col_fr==0)
 							    		 		bw.append("2");
 						    			 bw.append("FR002001");
@@ -1166,7 +1166,7 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 			    	  bw.append(Formatta(null,"S",4,"0")); //Prog totale invio
 			    	  // intermediario
 			    	  bw.append(Formatta(null,"S",16," ")); //Codice Fiscale intermediario
-			    	  bw.append(Formatta(null,"S",5,"0")); //n∞ iscrizione CAF
+			    	  bw.append(Formatta(null,"S",5,"0")); //n¬∞ iscrizione CAF
 			    	  bw.append(Formatta(null,"S",1,"0")); //"1" se comunicazione predisposta dal contribuente "2" se perdisposta da chi effettua l'invio "0" altrimenti
 			    	  bw.append(Formatta(null,"S",8,"0"));// Data dell'impegno
 			    	  // Fine intermediario
@@ -1230,7 +1230,7 @@ protected void validaRapportoPerCancellazione(ActionContext context,RapportoBulk
 	}
 	/**
 	 * @param bw BufferedWriter a cui aggiungere la parte di chiusura della riga di Clienti e/o Fornitori
-	 * @return 0 il numero di colonne utilizzate per la nuova riga, il massimo Ë 70
+	 * @return 0 il numero di colonne utilizzate per la nuova riga, il massimo √® 70
 	 * @throws ApplicationException
 	 */
 	public Integer chiudi_riga(BufferedWriter bw) throws ApplicationException{
@@ -1416,7 +1416,7 @@ protected void validaDichiarazione(ActionContext context,Dichiarazione_intentoBu
 		    		dic.getDt_ini_validita().after(dic_int.getDt_fin_validita()) &&
 		    		dic.getDt_fin_validita().after(dic_int.getDt_ini_validita()) &&
 		    		dic.getDt_fin_validita().after(dic_int.getDt_fin_validita())))){
- 			throw new ValidationException ("Attenzione: non Ë possibile indicare una dichiarazione in questo periodo, esiste gi‡ una dichiarazione valida nello stesso periodo!");
+ 			throw new ValidationException ("Attenzione: non √® possibile indicare una dichiarazione in questo periodo, esiste gi√† una dichiarazione valida nello stesso periodo!");
  			
 }
 		if (!dic.equals(dic_int) &&
@@ -1430,7 +1430,7 @@ protected void validaDichiarazione(ActionContext context,Dichiarazione_intentoBu
 			    		dic.getDt_inizio_val_dich().after(dic_int.getDt_fine_val_dich()) &&
 			    		dic.getDt_fine_val_dich().after(dic_int.getDt_inizio_val_dich()) &&
 			    		dic.getDt_fine_val_dich().after(dic_int.getDt_fine_val_dich())))){
-	 			throw new ValidationException ("Attenzione: non Ë possibile indicare una dichiarazione in questo periodo di riferimento, esiste gi‡ una dichiarazione valida nello stesso periodo!");
+	 			throw new ValidationException ("Attenzione: non √® possibile indicare una dichiarazione in questo periodo di riferimento, esiste gi√† una dichiarazione valida nello stesso periodo!");
 		}
 	}
 }

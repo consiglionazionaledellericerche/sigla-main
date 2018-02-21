@@ -36,8 +36,8 @@ public class CRUDFatturaPassivaIBP extends CRUDFatturaPassivaBP implements IDocu
 			"Dettaglio",Fattura_passiva_rigaIBulk.class,"fattura_passiva_dettColl", this){
 
 		/**
-		 * Il metodo � stato sovrascritto per consentire all'utente di modificare la descrizione di una riga
-		 * che � stata sdoppiata quando il documento non risulta essere modificabile
+		 * Il metodo è stato sovrascritto per consentire all'utente di modificare la descrizione di una riga
+		 * che è stata sdoppiata quando il documento non risulta essere modificabile
 		 *  
 		 */
 		public void writeFormInput(javax.servlet.jsp.JspWriter jspwriter,String s,String s1,boolean flag,String s2,String s3) throws java.io.IOException {

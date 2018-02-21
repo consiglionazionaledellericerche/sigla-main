@@ -127,7 +127,7 @@ public class Parametri_livelli_epBulk extends Parametri_livelli_epBase {
 
 	/*
 	 * Ritorna ValidationException se:
-	 * - Il numero dei livelli economica/patrimoniale inseriti è maggiore di 8
+	 * - Il numero dei livelli economica/patrimoniale inseriti Ã¨ maggiore di 8
 	 * - Non risultano valorizzati campi di un livello da gestire
 	 * - Risultano valorizzati campi di un livello da non gestire
 	 */
@@ -136,10 +136,10 @@ public class Parametri_livelli_epBulk extends Parametri_livelli_epBase {
 
 		/*Controllo Livelli Patrimoniale*/
 		if (this.getLivelli_pat() != null && this.getLivelli_pat().intValue()>8)
-			throw new ValidationException("Attenzione! Il livello massimo consentito è 8.");
+			throw new ValidationException("Attenzione! Il livello massimo consentito Ã¨ 8.");
 
 		if (this.getLivelli_eco() != null && this.getLivelli_eco().intValue()>8)
-			throw new ValidationException("Attenzione! Il livello massimo consentito è 8.");
+			throw new ValidationException("Attenzione! Il livello massimo consentito Ã¨ 8.");
 
 		validaLivelliValorizzati();
 		validaLivelliNonValorizzati();

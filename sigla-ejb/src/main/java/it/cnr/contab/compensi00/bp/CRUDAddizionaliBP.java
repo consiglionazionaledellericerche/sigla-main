@@ -137,7 +137,7 @@ public class CRUDAddizionaliBP extends SimpleCRUDBP{
 				  
 			  if(ali!= null && ali.compareTo("0*")==0)
 				  //  ali= null;
-				  // 04/02/2016 dal 2016 lo 0* significa che non esiste delebera e quindi l'aliquota è 0
+				  // 04/02/2016 dal 2016 lo 0* significa che non esiste delebera e quindi l'aliquota Ã¨ 0
 				  ali= "0";
 			  if(ali==null && ali_num!=null)
 				  ali=ali_num.toString();

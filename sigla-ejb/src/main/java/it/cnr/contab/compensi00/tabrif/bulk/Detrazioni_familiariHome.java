@@ -17,7 +17,7 @@ public Detrazioni_familiariHome(java.sql.Connection conn,PersistentCache persist
 	super(Detrazioni_familiariBulk.class,conn,persistentCache);
 }
 /**
- * Metodo che verifica la validit‡ delle detrazioni
+ * Metodo che verifica la validit√† delle detrazioni
  * Creation date: (27/11/2001 13.12.51)
  *
  * @param detraz	Detrazioni_familiariBulk
@@ -35,7 +35,7 @@ public boolean checkValidita(UserContext userContext, Detrazioni_familiariBulk d
 	
 		Timestamp dataMax = (Timestamp)findMax(detraz, "dt_inizio_validita", null);
 			
-		if (dataMax == null) // non ci sono records in tabella: l'inserzione puÚ avvenire   
+		if (dataMax == null) // non ci sono records in tabella: l'inserzione pu√≤ avvenire   
 			  accepted = true;
 		else{
 			if(detraz.getDt_inizio_validita().after(dataMax)){

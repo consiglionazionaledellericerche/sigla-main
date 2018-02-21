@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -53,21 +53,21 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Unità Operativa" />
+		label="UnitÃ  Operativa" />
 	<fieldProperty
 		name="cdUnitaOperativa"
 		property="unitaOperativaOrd.cdUnitaOperativa"
 		inputType="TEXT"
 		inputSize="12"
 		maxLength="12"
-		label="Codice Unità Operativa" />
+		label="Codice UnitÃ  Operativa" />
 	<fieldProperty
 		name="dsUnitaOperativa"
 		property="unitaOperativaOrd.dsUnitaOperativa"
 		inputType="TEXT"
 		inputSize="12"
 		maxLength="12"
-		label="Descrizione Unità Operativa" />
+		label="Descrizione UnitÃ  Operativa" />
 	<fieldProperty
 		name="findLuogoConsegnaMag"
 		property="luogoConsegnaMag"

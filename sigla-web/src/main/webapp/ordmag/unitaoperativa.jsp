@@ -12,7 +12,7 @@
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<title>Unit‡ Operativa </title>
+<title>Unit√† Operativa </title>
 </head>
 <body class="Form">
 
