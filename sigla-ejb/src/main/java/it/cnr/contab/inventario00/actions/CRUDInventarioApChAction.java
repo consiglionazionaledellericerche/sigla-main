@@ -20,9 +20,9 @@ public CRUDInventarioApChAction() {
 	super();
 }
 /**
- * Richiamato nel caso che la data di inizio validit‡ del Consegnatario non sia valida.
+ * Richiamato nel caso che la data di inizio validit√† del Consegnatario non sia valida.
  *	Il controllo viene effettuato al momento del salvataggio e verifica che la data di apertura 
- *	dell'Inventario NON sia antecedente alla data dui inizio validit‡ del primo Consegnatario
+ *	dell'Inventario NON sia antecedente alla data dui inizio validit√† del primo Consegnatario
  *	specificato per l'Inventario.
  */
 

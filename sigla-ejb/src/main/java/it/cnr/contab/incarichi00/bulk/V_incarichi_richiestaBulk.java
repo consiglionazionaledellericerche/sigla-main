@@ -65,7 +65,7 @@ public class V_incarichi_richiestaBulk extends OggettoBulk implements Persistent
 //    NR_RISORSE_DA_TROVARE DECIMAL(4,0)
 	private java.lang.Integer nr_risorse_da_trovare;
 
-//    non esiste su DB, verr‡ riempito con la Sede del CDS
+//    non esiste su DB, verr√† riempito con la Sede del CDS
 	private java.lang.String sede;
 
 

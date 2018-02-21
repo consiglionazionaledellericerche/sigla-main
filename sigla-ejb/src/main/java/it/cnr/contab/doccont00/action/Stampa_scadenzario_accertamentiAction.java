@@ -17,7 +17,7 @@ public Stampa_scadenzario_accertamentiAction() {
 	super();
 }
 /**
- * Richiamato quando si cerca un nuovo CDS Origine: resetta anche il SearchTool dell'Unit‡ Organizzativa
+ * Richiamato quando si cerca un nuovo CDS Origine: resetta anche il SearchTool dell'Unit√† Organizzativa
  */
 
 public Forward doBlankSearchFindCdsForPrint (ActionContext context, Stampa_scadenzario_accertamentiBulk stampa) {

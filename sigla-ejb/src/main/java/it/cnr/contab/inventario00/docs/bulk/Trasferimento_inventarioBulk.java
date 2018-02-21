@@ -14,7 +14,7 @@ public class Trasferimento_inventarioBulk extends it.cnr.contab.inventario01.bul
 	private Tipo_carico_scaricoBulk tipoMovimentoScarico;
 	private java.util.Collection tipoMovimentiScarico;
 
-	// Unit‡ Organizzativa Destinazione
+	// Unit√† Organizzativa Destinazione
 	private it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo_destinazione;
 
 	// Inventario Destinazione

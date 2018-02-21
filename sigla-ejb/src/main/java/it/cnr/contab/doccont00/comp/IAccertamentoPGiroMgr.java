@@ -13,7 +13,7 @@ public interface IAccertamentoPGiroMgr extends IDocumentoContabileMgr, ICRUDMgr
 
 /**
  * Aggiornamento in differita dei saldi dell'accertamento su partita di giro.
- * Un documento amministrativo di entrata che agisce in modalit‡ transazionale ha creato/modificato gli importi 
+ * Un documento amministrativo di entrata che agisce in modalit√† transazionale ha creato/modificato gli importi 
  * relativi ad un accertamento pgiro; i saldi di tale accertamento non possono essere aggiornati subito in quanto
  * tale operazione genererebbe dei lock sulle voci del piano che non ne consentirebbero l'utilizzo ad altri utenti;
  * pertanto l'aggiornamento dei saldi dell'accertamento pgiro viene differito al momento del salvataggio
@@ -54,7 +54,7 @@ public abstract void aggiornaSaldiInDifferita(it.cnr.jada.UserContext param0,it.
   *      La richiesta di cancellazione di un accertamento su partita di giro e' stata generata ma esistono
   *      documenti amministrativi contabilizzati sulla scadenza dell'accertamento
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di effettuare la cancellazione
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di effettuare la cancellazione
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param accert_pgiro <code>AccertamentoPGiroBulk</code> l'accertamento su partita di giro da cancellare (logicamente)
@@ -135,7 +135,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext
   *      La richiesta di cancellazione di un accertamento su partita di giro e' stata generata ma esistono
   *      documenti amministrativi contabilizzati sulla scadenza dell'accertamento
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di effettuare la cancellazione
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di effettuare la cancellazione
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param accert_pgiro <code>AccertamentoPGiroBulk</code> l'accertamento su partita di giro da cancellare
@@ -166,9 +166,9 @@ public abstract void eliminaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.b
   *      con il codice Cds di scrivania
   *  inizializzazione per inserimento - errore
   *    PreCondition:
-  *      L'unit‡ organizzativa Ë uguale a quella dell'Ente
+  *      L'unit√† organizzativa √® uguale a quella dell'Ente
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente che l'Ente non Ë abilitato a creare documenti su partita di giro
+  *      Un messaggio di errore segnala all'utente che l'Ente non √® abilitato a creare documenti su partita di giro
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> l'accertamento su partita di giro da inizializzare per l'inserimento
@@ -219,7 +219,7 @@ public abstract void lockScadenza(it.cnr.jada.UserContext param0,it.cnr.contab.d
   *      La richiesta di modifica dell'importo di un impegno su partita di giro e' stata generata ma esistono
   *      documenti amministrativi contabilizzati sulla scadenza dell'accertamento associato all'impegno
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di effettuare la modifica
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di effettuare la modifica
   *  modifica capitolo
   *    PreCondition:
   *      L'utente richiede la modifica del capitolo di un impegno su partita di giro
@@ -231,7 +231,7 @@ public abstract void lockScadenza(it.cnr.jada.UserContext param0,it.cnr.contab.d
   *      L'utente richiede la modifica del capitolo di un impegno su partita di giro ma non esiste
   *      l'associazione fra il nuovo capitolo di spesa dell'impegno e un capitolo di entrata
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di effettuare la modifica
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di effettuare la modifica
   *  modifica data di scadenza
   *    PreCondition:
   *      L'utente richiede la modifica della data di scadenza di un'obbligazione su partita di giro
@@ -239,7 +239,7 @@ public abstract void lockScadenza(it.cnr.jada.UserContext param0,it.cnr.contab.d
   *      La data della scadenza dell'accertamento associato all'impegno viene aggiornata.
   *
   * @param uc lo <code>UserContext</code> che ha generato la richiesta
-  * @param imp_pgiro <code>ImpegnoPGiroBulk</code> l'impegno su partita di giro a cui Ë associato l'accertamento pgiro da modificare
+  * @param imp_pgiro <code>ImpegnoPGiroBulk</code> l'impegno su partita di giro a cui √® associato l'accertamento pgiro da modificare
   *
   * @return accert_pgiro l'accertamento su partita di giro modificato
  */
@@ -262,7 +262,7 @@ public abstract it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk modifica
   *      La richiesta di modifica dell'importo di un accertamento su partita di giro e' stata generata ma esistono
   *      documenti amministrativi contabilizzati sulla scadenza dell'accertamento
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di effettuare la modifica
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di effettuare la modifica
   *  modifica descrizione
   *    PreCondition:
   *      L'utente richiede la modifica della descrizione di un accertamento su partita di giro

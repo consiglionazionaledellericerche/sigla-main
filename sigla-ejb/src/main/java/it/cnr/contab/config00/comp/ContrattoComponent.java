@@ -105,7 +105,7 @@ public class ContrattoComponent extends it.cnr.jada.comp.CRUDDetailComponent imp
 		if(((ContrattoBulk)bulk).getPg_contratto() != null && ((ContrattoBulk)bulk).getNatura_contabile() != null && 
 		   (((ContrattoBulk)bulk).getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_SENZA_FLUSSI_FINANZIARI) /*||
 		   ((ContrattoBulk)bulk).getStato().equals(ContrattoBulk.STATO_PROVVISORIO)*/))
-		   throw new ApplicationException("Non Ë possibile associare un contratto di riferimento!");		
+		   throw new ApplicationException("Non √® possibile associare un contratto di riferimento!");		
 		if (clause == null) 
 		  clause = contratto_padre.buildFindClauses(null);
 		SQLBuilder sql = getHome(userContext, contratto_padre).createSQLBuilder();
@@ -140,8 +140,8 @@ public class ContrattoComponent extends it.cnr.jada.comp.CRUDDetailComponent imp
 
 	/**
 	 * Pre:  Ricerca CIG
-	 * Post: Il CIG puÚ essere collegato ad un contratto solo se vengono rispettate le seguenti regole:				
-			CD_TERZO_RUP del CIG Ë il medesimo del contratto che si sta inserendo quindi : 
+	 * Post: Il CIG pu√≤ essere collegato ad un contratto solo se vengono rispettate le seguenti regole:				
+			CD_TERZO_RUP del CIG √® il medesimo del contratto che si sta inserendo quindi : 
 			CIG. CD_TERZO_RUP = CONTRATTO. CD_TERZO_RESP
 			Il CIG non deve risultare associato ad altri contratti.
 	 */
@@ -240,7 +240,7 @@ public class ContrattoComponent extends it.cnr.jada.comp.CRUDDetailComponent imp
 	}
 	/**
 	 * Pre:  Ricerca Figura giuridica interna
-	 * Post: Limitazione ai terzi di tipo Unit‡ Organizzativa
+	 * Post: Limitazione ai terzi di tipo Unit√† Organizzativa
 	 */
 	public SQLBuilder selectFigura_giuridica_internaByClause (UserContext userContext, OggettoBulk bulk, TerzoBulk terzo,CompoundFindClause clause)	throws ComponentException, PersistencyException
 	{
@@ -292,7 +292,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	private void validaCampiObbligatori(UserContext uc, ContrattoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
 		if(bulk.getDt_fine_validita() != null && bulk.getDt_inizio_validita() != null && 
 		   bulk.getDt_fine_validita().before(bulk.getDt_inizio_validita()))
-		   throw new ApplicationException("La data di inizio non puÚ essere superiore alla data di fine.");
+		   throw new ApplicationException("La data di inizio non pu√≤ essere superiore alla data di fine.");
 		if(bulk.getCd_terzo_resp() == null)
 		  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("cd_terzo_resp").getLabel()); 
 		if(bulk.getDt_stipula() == null)
@@ -323,13 +323,13 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			if(bulk.getOrgano() != null)
 			if(bulk.getOrgano().getDt_inizio_validita()!= null)
 				if(bulk.getOrgano().getDt_inizio_validita().after(bulk.getDt_stipula()) || bulk.getOrgano().getDt_fine_validita().before(bulk.getDt_stipula()))
-				  throw new ApplicationException("Il Soggetto deve avere un periodo di validit‡ che include la data di stipula del contratto.");
+				  throw new ApplicationException("Il Soggetto deve avere un periodo di validit√† che include la data di stipula del contratto.");
 			if(bulk.getOrgano_annullamento() != null)
 			  if(bulk.getOrgano_annullamento().getDt_inizio_validita()!= null)
 				if(bulk.getOrgano_annullamento().getDt_inizio_validita().after(bulk.getDt_stipula()) || bulk.getOrgano_annullamento().getDt_fine_validita().before(bulk.getDt_stipula()))
-				  throw new ApplicationException("Il Soggetto di annullamento deve avere un periodo di validit‡ che include la data di stipula del contratto.");			 
+				  throw new ApplicationException("Il Soggetto di annullamento deve avere un periodo di validit√† che include la data di stipula del contratto.");			 
 		}
-		/*Controllo obbligatoriet‡ del protocollo informatico */
+		/*Controllo obbligatoriet√† del protocollo informatico */
 		Parametri_cdsHome cdsHome = (Parametri_cdsHome)getHome(uc, Parametri_cdsBulk.class);
 		Parametri_cdsBulk param_cds = (Parametri_cdsBulk)cdsHome.findByPrimaryKey(new Parametri_cdsBulk(CNRUserContext.getCd_cds(uc),CNRUserContext.getEsercizio(uc)));
 		if(param_cds.getFl_obbligo_protocollo_inf().booleanValue()){
@@ -343,15 +343,15 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		}
 		if(bulk.getDt_stipula() != null ) {
 			if(bulk.getDt_stipula().after(getHome(uc, ContrattoBulk.class).getServerDate())) 
-				throw new ApplicationException("La data di stipula non puÚ essere superiore alla data odierna!");
+				throw new ApplicationException("La data di stipula non pu√≤ essere superiore alla data odierna!");
 		}
 		if(bulk.getDt_stipula() != null && bulk.getDt_fine_validita()!=null) {
 			if(bulk.getDt_stipula().after(bulk.getDt_fine_validita()))
-				throw new ApplicationException("La data di stipula non puÚ essere superiore alla data fine validita!");
+				throw new ApplicationException("La data di stipula non pu√≤ essere superiore alla data fine validita!");
 		}
 		if(bulk.getDt_inizio_validita() != null && bulk.getDt_fine_validita()!=null) {
 			if(bulk.getDt_inizio_validita().after(bulk.getDt_fine_validita()))
-				throw new ApplicationException("La data di inizio non puÚ essere superiore alla data fine validita!");
+				throw new ApplicationException("La data di inizio non pu√≤ essere superiore alla data fine validita!");
 		}
 		if(bulk.getIm_contratto_passivo() != null && bulk.getIm_contratto_passivo_netto()!=null) {
 			if(bulk.getIm_contratto_passivo_netto().compareTo(bulk.getIm_contratto_passivo())>0)
@@ -387,8 +387,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		Ass_contratto_uoHome home = (Ass_contratto_uoHome)getHome(userContext, Ass_contratto_uoBulk.class);
 		try {
 			if(home.existsDocContForAssContrattoUo(ass_contratto_uo)){
-					throw new ApplicationException("Impossibile eliminare l'Unit‡ organizzativa " + ass_contratto_uo.getCd_unita_organizzativa()+
-												   " poichË esistono documenti contabili associati.");				
+					throw new ApplicationException("Impossibile eliminare l'Unit√† organizzativa " + ass_contratto_uo.getCd_unita_organizzativa()+
+												   " poich√® esistono documenti contabili associati.");				
 			}
 		}catch (IntrospectionException e) {
 			throw new ComponentException(e);
@@ -507,7 +507,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 						compenso.setContratto(contrattoClone);
 						compenso.setCrudStatus(OggettoBulk.TO_BE_UPDATED);
 						updateBulk(userContext, compenso);
-						// non puÚ essere utilizzato
+						// non pu√≤ essere utilizzato
 						//super.modificaConBulk(userContext,obbligazione);			
 					}					
 					
@@ -643,7 +643,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	  *   	 Viene richiesta la visualizzazione del totale dei documenti contabili associati 
 	  *		 al contratto in oggetto di tipo E o S
 	  *    PostCondition:
-	  *      L'utente puÚ visualizzare il totale dei documenti 
+	  *      L'utente pu√≤ visualizzare il totale dei documenti 
 	  *
 	  * @param userContext lo user context
 	  * @param contratto l'istanza di  <code>ContrattoBulk</code>
@@ -874,7 +874,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	  *   	 Viene richiesta la visualizzazione del totale dei documenti contabili associati 
 	  *		 ai Contratti legati al contratto padre
 	  *    PostCondition:
-	  *      L'utente puÚ visualizzare il totale dei documenti 
+	  *      L'utente pu√≤ visualizzare il totale dei documenti 
 	  *
 	  * @param userContext lo user context
 	  * @param contratto l'istanza di  <code>ContrattoBulk</code>
@@ -1144,7 +1144,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	  *   	 Viene richiesta la visualizzazione del totale dei documenti contabili associati 
 	  *		 al contratto
 	  *    PostCondition:
-	  *      L'utente puÚ visualizzare il totale dei documenti 
+	  *      L'utente pu√≤ visualizzare il totale dei documenti 
 	  *
 	  * @param userContext lo user context
 	  * @param contratto l'istanza di  <code>ContrattoBulk</code>
@@ -1593,13 +1593,13 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		if ( stampa.getDataStipula_a()==null )
 				throw new ApplicationException( "E'necessario inserire la Data di Stipula");
 		if ( stampa.getDataInizioValidita_da()==null )
-				throw new ApplicationException( "E'necessario inserire la Data di Inizio Validit‡");
+				throw new ApplicationException( "E'necessario inserire la Data di Inizio Validit√†");
 		if ( stampa.getDataInizioValidita_a()==null )
-				throw new ApplicationException( "E'necessario inserire la Data di Inizio Validit‡");
+				throw new ApplicationException( "E'necessario inserire la Data di Inizio Validit√†");
 		if ( stampa.getDataFineValidita_da()==null )
-				throw new ApplicationException( "E'necessario inserire la Data di Fine Validit‡");
+				throw new ApplicationException( "E'necessario inserire la Data di Fine Validit√†");
 		if ( stampa.getDataFineValidita_a()==null )
-				throw new ApplicationException( "E'necessario inserire la Data di Fine Validit‡");
+				throw new ApplicationException( "E'necessario inserire la Data di Fine Validit√†");
 		return stampa;
 	}	
 	

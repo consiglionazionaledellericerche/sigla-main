@@ -179,7 +179,7 @@ public class StorageFolderContrattiModel extends OggettoBulk {
 				  Integer.toString(gcCMIS.get(GregorianCalendar.MONTH)) + "/" + 
 				  Integer.toString(gcCMIS.get(GregorianCalendar.YEAR));
 		if (!valueCMIS.equals(valueDB)) {
-			listError.add(initTesto+" - Data Inizio Validit‡ - DB:"+valueDB+" - CMIS:"+valueCMIS);
+			listError.add(initTesto+" - Data Inizio Validit√† - DB:"+valueDB+" - CMIS:"+valueCMIS);
 			isEquals = false;
 		}
 		

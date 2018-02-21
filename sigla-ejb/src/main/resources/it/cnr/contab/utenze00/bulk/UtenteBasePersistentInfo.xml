@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <SQLPersistentInfo
 	persistentClassName="it.cnr.contab.utenze00.bulk.UtenteBase"
 	keyClassName="it.cnr.contab.utenze00.bulk.UtenteKey"

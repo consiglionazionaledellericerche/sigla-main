@@ -25,7 +25,7 @@ public NumerazioneTempDocAmmComponent() {
 /** 
   *  tutti i controlli superati.
   *    PreCondition:
-  *      Il progressivo è stato generato senza errori.
+  *      Il progressivo Ã¨ stato generato senza errori.
   *    PostCondition:
   *      Viene consentita la registrazione del progressivo.
   *  validazione generazione consuntivo.

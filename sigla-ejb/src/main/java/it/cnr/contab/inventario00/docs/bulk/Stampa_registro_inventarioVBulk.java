@@ -94,7 +94,7 @@ public java.lang.String getCd_cds() {
  * 27/12/2004
  * Aggiunto qui il controllo precedentemente
  * effettuato in Inventario_beniComponent.
- * In questo modo a video il CDS di appartentenza Ë 
+ * In questo modo a video il CDS di appartentenza √® 
  * comunque visualizzato
  * */
 public java.lang.String getCdCdsForPrint() {
@@ -298,7 +298,7 @@ public void setUOForPrintEnabled(boolean newUOForPrintEnabled) {
 	uOForPrintEnabled = newUOForPrintEnabled;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws it.cnr.jada.bulk.ValidationException {

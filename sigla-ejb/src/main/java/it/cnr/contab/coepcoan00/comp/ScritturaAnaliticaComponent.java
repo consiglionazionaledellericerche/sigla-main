@@ -100,7 +100,7 @@ public OggettoBulk creaConBulk(UserContext userContext, OggettoBulk bulk) throws
 /**
  *
  * Nome: Inserimento di una scrittura
- * Pre:  E' stato richiesto l'inserimento di una scrittura analitica gi‡ validata
+ * Pre:  E' stato richiesto l'inserimento di una scrittura analitica gi√† validata
  * Post: L'importo della scrittura viene impostato come la somma degli importi dei movimenti
  *       e il saldo coan relativo ai conti econ-patr. dei movimenti viene aggiornato
  *       (metodo aggiornaSaldiCoan)
@@ -386,7 +386,7 @@ public OggettoBulk inizializzaBulkPerRicercaLibera (UserContext userContext,Ogge
  * Nome: Esercizio in altro stato
  * Pre:  E' stata richiesta l'inizializzazione della data di contabilizzazione di una scrittura
  *       e l'esercizio contabile ha stato diverso da APERTO o  CHIUSO PROVVISORIO
- * Post: Una segnalazione di errore comunica all'utente l'impossibilit‡ di creare una scrittura analitica
+ * Post: Una segnalazione di errore comunica all'utente l'impossibilit√† di creare una scrittura analitica
  
  * @param userContext <code>UserContext</code> 
  * @param scrittura <code>Scrittura_analiticaBulk</code>  la cui data deve essere inizializzata
@@ -402,7 +402,7 @@ private Scrittura_analiticaBulk inizializzaDataContabilizzazione (UserContext us
 
 	/* Gennaro Borriello - (23/09/2004 10.33.19)
 	 *	Err. 838 - Deve essere possibile poter registrare delle scritture coep/coan
-	 *	anche se l'esercizio finanziario Ë chiuso.
+	 *	anche se l'esercizio finanziario √® chiuso.
 	*/ 
 	if ( !esercizio.getSt_apertura_chiusura().equals( esercizio.STATO_APERTO) && 
 		!esercizio.getSt_apertura_chiusura().equals( esercizio.STATO_CHIUSO_DEF))
@@ -540,12 +540,12 @@ public SQLBuilder selectContoByClause (UserContext userContext, Movimento_coanBu
 	return sql;
 }
 /**
- * Esegue la selezione di una linea di attivit‡ per un movimento coan
+ * Esegue la selezione di una linea di attivit√† per un movimento coan
  *
  * Nome: Seleziona linea att. per movimento coan
- * Pre:  E' stata richiesta la ricerca di una linea di attivit‡ per un movimento coan
+ * Pre:  E' stata richiesta la ricerca di una linea di attivit√† per un movimento coan
  * Post: Viene restituito il SQLBuilder con le clausole specificate dall'utente ed inoltre le clausole che il cdr della 
- *       linea di attivit‡ afferisca all'unit‡ organizzativa di scrivania
+ *       linea di attivit√† afferisca all'unit√† organizzativa di scrivania
  *
  * @param userContext <code>UserContext</code> 
  * @param movimento <code>Movimento_coanBulk</code> per cui ricercare il conto
@@ -593,7 +593,7 @@ public SQLBuilder selectTerzoByClause (UserContext userContext, Scrittura_analit
  *
  * Nome: validazione superata
  * Pre:  La scrittura supera la validazione ( metodo validaScrittura)
- * Post: La scrittura puÚ essere inserita nel database
+ * Post: La scrittura pu√≤ essere inserita nel database
  *
  * Nome: validazione non superata
  * Pre:  La scrittura non supera la validazione ( metodo validaScrittura)

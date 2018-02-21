@@ -125,7 +125,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 	public Forward doBringBackCRUDModalitaPagamento(ActionContext context, DocumentoEleTestataBulk bulk, TerzoBulk terzo) {
 		if (terzo != null) {			
 			if (!terzo.equalsByPrimaryKey(bulk.getDocumentoEleTrasmissione().getPrestatore()))
-				throw new MessageToUser("Il Terzo selezionato non Ë valido!");
+				throw new MessageToUser("Il Terzo selezionato non √® valido!");
 			Modalita_pagamentoBulk modalitaPagamento = null;
 			for (Iterator<Modalita_pagamentoBulk> iterator = terzo.getModalita_pagamento().iterator(); iterator.hasNext();) {
 				Modalita_pagamentoBulk modPag = iterator.next();
@@ -134,7 +134,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 					modalitaPagamento = modPag;
 			}
 			if (modalitaPagamento == null )
-				throw new MessageToUser("La Modalit‡ di pagamento non Ë valida!");
+				throw new MessageToUser("La Modalit√† di pagamento non √® valida!");
 			bulk.setModalitaPagamento(modalitaPagamento);		
 		}
 		return context.findDefaultForward();
@@ -201,7 +201,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 					bulk.setMotivoRifiuto(String.valueOf(motivoRifiuto));
 					fatturaPassivaElettronicaBP.rifiutaFattura(context, bulk);					
 				} else {
-					fatturaPassivaElettronicaBP.setMessage("Il Motivo del rifiuto Ë obbligatorio!");
+					fatturaPassivaElettronicaBP.setMessage("Il Motivo del rifiuto √® obbligatorio!");
 				}				
 			}			
 		} catch (Exception e) {
@@ -215,7 +215,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
 			DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
 			if (bulk.getFlDecorrenzaTermini().equalsIgnoreCase("S")) {
-				fatturaPassivaElettronicaBP.setMessage("Ricevuta decorrenza termini - non Ë possibile effettuare il Rifiuto. Registrare il documento e richiedere nota credito, oppure rifiutare il documento secondo le modalit‡ di invio PEC (Vedere Manuale)!");
+				fatturaPassivaElettronicaBP.setMessage("Ricevuta decorrenza termini - non √® possibile effettuare il Rifiuto. Registrare il documento e richiedere nota credito, oppure rifiutare il documento secondo le modalit√† di invio PEC (Vedere Manuale)!");
 			} else {
 				String message = "Inserire il motivo di rifiuto della fattura:";
 				message += "<textarea maxLength=\"255\" name=\"main.motivoRifiuto\" class=\"FormInput w-100\" "+
@@ -241,7 +241,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			      DocumentoEleIvaBulk rigaEle=(DocumentoEleIvaBulk)i.next();
 			      if (!bulk.isAttivoSplitPayment() && rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0) {
 			    	  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			    	  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilit‡ IVA non deve essere di tipo 'Differita' "
+			    	  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilit√† IVA non deve essere di tipo 'Differita' "
 			    	  		+ "o 'Split Payment'"
 			    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
 			    	  			" per documenti con data emissione antecedente al "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"")
@@ -263,7 +263,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 				if (!bulk.isDocumentoSplitPayment() && !Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO.equals(bulk.getTipoDocumentoSIGLA()) &&
 					!bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_04.name())) {
 					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-					fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilit‡ IVA deve essere di tipo 'Split Payment'"
+					fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilit√† IVA deve essere di tipo 'Split Payment'"
 			    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
 			    	  			" per documenti con data emissione dal "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"")
 							+ ". Il documento deve essere rifiutato!");	
@@ -274,7 +274,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 //						(bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_02.name()) ||
 //								bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_19.name()))))
 //						{
-//						fatturaPassivaElettronicaBP.setMessage("La registrazione di documenti Split Payment legati a compensi Ë al momento sospesa "
+//						fatturaPassivaElettronicaBP.setMessage("La registrazione di documenti Split Payment legati a compensi √® al momento sospesa "
 //								+ "in attesa di adeguamento alla relativa normativa!");	
 //						return context.findDefaultForward(); 
 //				}
@@ -334,7 +334,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di creazione delle fatture. Impossibile continuare.");
 				if (bulk.getTipoDocumentoSIGLA().equalsIgnoreCase(Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO)) {
 					if(bulk.getModalitaPagamento()==null)
-						throw new it.cnr.jada.action.MessageToUser("Prima di procedere indicare la modalit‡ di pagamento!");
+						throw new it.cnr.jada.action.MessageToUser("Prima di procedere indicare la modalit√† di pagamento!");
 				}
 				context.addHookForward("default",this,"doBringBackCompilaFattura");
 				nbp = (CRUDFatturaPassivaBP) context.addBusinessProcess(nbp);
@@ -374,7 +374,7 @@ public Forward doOnCambiaImportoDocumento(ActionContext context) throws Componen
 			fillModel(context);	
 			if(DocumentoEleTestataBulkDB.getImportoDocumento()!=null && DocumentoEleTestataBulkDB.getImportoDocumento().compareTo(BigDecimal.ZERO)!=0 && bulk.getImportoDocumento()!=null &&
 					DocumentoEleTestataBulkDB.getImportoDocumento().compareTo(bulk.getImportoDocumento())!=0){
-					throw new it.cnr.jada.comp.ApplicationException("Importo documento non modificabile se gi‡ indicato!");
+					throw new it.cnr.jada.comp.ApplicationException("Importo documento non modificabile se gi√† indicato!");
 			}
 		}catch (Throwable e){
 				bulk.setImportoDocumento(DocumentoEleTestataBulkDB.getImportoDocumento());

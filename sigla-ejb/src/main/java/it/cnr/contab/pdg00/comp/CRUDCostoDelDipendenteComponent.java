@@ -33,11 +33,11 @@ public CRUDCostoDelDipendenteComponent() {
  *
  * Nome: Dipendente non modificabile
  * Pre: Viene richiesta l'inizializzazione per modifica dei costi del dipendente.
- *		Per la matricola specificata esiste gi‡ una ripartizione dei costi.
+ *		Per la matricola specificata esiste gi√† una ripartizione dei costi.
  * Post: Viene impostato a false il flag "modificabile" del V_dipendenteBulk restituito
  * Nome: Tutti i controlli superati
  * Pre:	Viene richiesta l'inizializzazione per modifica dei costi del dipendente.
- *		Nessuna delle altre pre-condizioni Ë verificata.
+ *		Nessuna delle altre pre-condizioni √® verificata.
  * Post: Viene caricato un oggetto V_dipendenteBulk per la matricola specificata e l'elenco
  *		dei costi per voce del pdc (Costo_del_dipendenteBulk)
  */
@@ -193,16 +193,16 @@ private void lockMatricola(UserContext userContext,String id_matricola,Integer m
  *
  * Nome: Dipendente non modificabile
  * Pre: Viene richiesta la modifica dei costi del dipendente ma per la matricola specificata
- *		esiste gi‡ una ripartizione dei costi.
- * Post: Viene generata una ApplicationException con il messaggio: "Dipendente non modificabile perchË Ë gi‡ stata fatta una ripartizione dei costi."
- * Nome: Unit‡ organizzativa del dipendente modificata
- * Pre: Viene richiesta la modifica dei costi del dipendente ed Ë stata modificata
- *		l'unit‡ organizzativa di appartenenza.
+ *		esiste gi√† una ripartizione dei costi.
+ * Post: Viene generata una ApplicationException con il messaggio: "Dipendente non modificabile perch√® √® gi√† stata fatta una ripartizione dei costi."
+ * Nome: Unit√† organizzativa del dipendente modificata
+ * Pre: Viene richiesta la modifica dei costi del dipendente ed √® stata modificata
+ *		l'unit√† organizzativa di appartenenza.
  * Post: Viene eliminata la matricola specificata dalla tabella COSTO_DEL_DIPENDENTE e
  *		vengono inseriti nuovi record nella stessa tabella con la nuova u.o
  * Nome: Tutti i controlli superati
  * Pre:	Viene richiesta la modifica dei costi del dipendente.
- *		Nessuna delle altre pre-condizioni Ë verificata.
+ *		Nessuna delle altre pre-condizioni √® verificata.
  * Post: Vengono salvati i costi del dipendente.
  */
 public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
@@ -213,10 +213,10 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 		V_dipendenteBulk dipendente = (V_dipendenteBulk)bulk;
 
 		if (!isDipendenteModificabile(userContext,dipendente.getId_matricola(),dipendente.getMese()))
-			throw new ApplicationException("Dipendente non modificabile perchË Ë gi‡ stata fatta una ripartizione dei costi.");
+			throw new ApplicationException("Dipendente non modificabile perch√® √® gi√† stata fatta una ripartizione dei costi.");
 		if (dipendente.getUnita_organizzativa() == null ||
 			dipendente.getUnita_organizzativa().getCrudStatus() != dipendente.NORMAL)
-			throw new ApplicationException("E' necessario specificare una unit‡ organizzativa.");
+			throw new ApplicationException("E' necessario specificare una unit√† organizzativa.");
 
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
@@ -234,7 +234,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 			makeBulkListPersistent(userContext,dipendente.getCosti_per_elemento_voce());
 		} else {
 			if (isEsercizioChiuso(userContext,dipendente_orig.getUnita_organizzativa()))
-				throw new ApplicationException("Non Ë possibile modificare l'unit‡ organizzativa della matricola perchË l'esercizio Ë chiuso.");
+				throw new ApplicationException("Non √® possibile modificare l'unit√† organizzativa della matricola perch√® l'esercizio √® chiuso.");
 
 			for (java.util.Iterator i = dipendente.getCosti_per_elemento_voce().iterator();i.hasNext();) {
 				Costo_del_dipendenteBulk cdd = (Costo_del_dipendenteBulk)i.next();

@@ -397,12 +397,12 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 			for (Iterator i=bulk.getDettagliSpese().iterator();i.hasNext();){
 				 Pdg_modulo_speseBulk pdg_modulo_spese = (Pdg_modulo_speseBulk)i.next();
 				 if (pdg_modulo_spese!=null && parCnr.isCofogObbligatorio() && (pdg_modulo_spese.getCofog()==null||pdg_modulo_spese.getCd_cofog()==null)) 
-					 throw new ApplicationException("Non è possibile inserire la spesa senza indicare la classificazione Cofog.");
+					 throw new ApplicationException("Non Ã¨ possibile inserire la spesa senza indicare la classificazione Cofog.");
 				 if (pdg_modulo_spese!=null && parCnr.getFl_nuovo_pdg() && (pdg_modulo_spese.getPdgMissione()==null||pdg_modulo_spese.getCd_missione()==null)) 
-					 throw new ApplicationException("Non è possibile inserire la spesa senza indicare la missione.");
+					 throw new ApplicationException("Non Ã¨ possibile inserire la spesa senza indicare la missione.");
 				 if (pdg_modulo_spese.getClassificazione()!=null){
 					 if(pdg_modulo_spese.isPrevAnnoSucObb() && pdg_modulo_spese.getIm_spese_a2()==null)
-						 throw new ApplicationException("Non è possibile inserire la spesa senza indicare la previsione dell'anno successivo.");
+						 throw new ApplicationException("Non Ã¨ possibile inserire la spesa senza indicare la previsione dell'anno successivo.");
 					 else
 						 if(!pdg_modulo_spese.isPrevAnnoSucObb() && pdg_modulo_spese.getIm_spese_a2()==null)
 							 pdg_modulo_spese.setIm_spese_a2(BigDecimal.ZERO);

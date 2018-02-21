@@ -299,14 +299,14 @@ public class DocumentoEleTrasmissioneBase extends DocumentoEleTrasmissioneKey im
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Unit‡ organizzativa]
+	 * Restituisce il valore di: [Unit√† organizzativa]
 	 **/
 	public java.lang.String getCdUnitaOrganizzativa() {
 		return cdUnitaOrganizzativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Unit‡ organizzativa]
+	 * Setta il valore di: [Unit√† organizzativa]
 	 **/
 	public void setCdUnitaOrganizzativa(java.lang.String cdUnitaOrganizzativa)  {
 		this.cdUnitaOrganizzativa=cdUnitaOrganizzativa;

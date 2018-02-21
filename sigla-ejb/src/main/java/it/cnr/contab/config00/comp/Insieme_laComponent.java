@@ -22,10 +22,10 @@ public Insieme_laComponent() {
 /**
   *  Default
   *	   PreCondition:
-  *		 Viene richiesta una ricerca sugli insiemi linea attivit‡.
+  *		 Viene richiesta una ricerca sugli insiemi linea attivit√†.
   *    PostCondition:
   *		 Viene creata una query sulla tabella dei INSIEME_LA con le clausole 
-  * 	 specificate dall'utente pi˘ la clausola che il CDR sia uguale a quello
+  * 	 specificate dall'utente pi√π la clausola che il CDR sia uguale a quello
   *		 dell'utente.
  */
 protected Query select(UserContext userContext,it.cnr.jada.persistency.sql.CompoundFindClause clauses,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException, it.cnr.jada.persistency.PersistencyException {
@@ -40,10 +40,10 @@ protected Query select(UserContext userContext,it.cnr.jada.persistency.sql.Compo
 /**
   *  Default
   *	   PreCondition:
-  *		 Viene richiesto l'elenco dei cdr assegnabili ad un insieme linea attivit‡
+  *		 Viene richiesto l'elenco dei cdr assegnabili ad un insieme linea attivit√†
   *    PostCondition:
   *		 Viene creata una query sulla tabella dei CDR con le seguenti clausole
-  *		 - Il cdr della linea di attivit‡ Ë gestibile dal cdr dell'utente (secondo
+  *		 - Il cdr della linea di attivit√† √® gestibile dal cdr dell'utente (secondo
   *			le regole definite dalla query V_PDG_CDR_GESTIBILI)
  */
 public SQLBuilder selectCentro_responsabilitaByClause(UserContext userContext, Insieme_laBulk insieme_la, CdrBulk cdr, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="https://contab.cnr.it/schema/SIGLA"
@@ -37,7 +37,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="Data inizio validità" />
+		label="Data inizio validitÃ " />
 	<fieldProperty
 		name="dt_fine_validita"
 		property="dt_fine_validita"
@@ -45,7 +45,7 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		nullable="false"
-		label="Data fine validità" />
+		label="Data fine validitÃ " />
 	<fieldProperty
 		name="dtFineValidita"
 		property="dataFineValidita"

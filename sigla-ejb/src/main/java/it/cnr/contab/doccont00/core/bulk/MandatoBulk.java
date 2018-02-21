@@ -137,7 +137,7 @@ public MandatoBulk(java.lang.String cd_cds,java.lang.Integer esercizio,java.lang
 public  Sospeso_det_uscBulk addToSospeso_det_uscColl( SospesoBulk sospeso ) 
 {
 	Sospeso_det_uscBulk sdu = null, tmp ;
-	//verifico che il sospeso esiste gi� con stato annullato
+	//verifico che il sospeso esiste già con stato annullato
 	for ( Iterator i = getSospeso_det_uscColl().deleteIterator(); i.hasNext(); )
 	{
 		tmp = (Sospeso_det_uscBulk)i.next() ;
@@ -150,7 +150,7 @@ public  Sospeso_det_uscBulk addToSospeso_det_uscColl( SospesoBulk sospeso )
 	if ( sdu == null ) //il sospeso non esiste
 		sdu = new Sospeso_det_uscBulk();
 	else
-		sdu.setToBeUpdated();	// il sospeso esiste gi�
+		sdu.setToBeUpdated();	// il sospeso esiste già
 	sdu.setMandato( this );
 	sdu.setSospeso( sospeso );
 	BigDecimal im_mandato =BigDecimal.ZERO;
@@ -240,18 +240,18 @@ public java.lang.String getCd_unita_organizzativa() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet� 'cd_uo_ente'
+ * Restituisce il valore della proprietà 'cd_uo_ente'
  *
- * @return Il valore della propriet� 'cd_uo_ente'
+ * @return Il valore della proprietà 'cd_uo_ente'
  */
 public java.lang.String getCd_uo_ente() {
 	return cd_uo_ente;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet� 'cds'
+ * Restituisce il valore della proprietà 'cds'
  *
- * @return Il valore della propriet� 'cds'
+ * @return Il valore della proprietà 'cds'
  */
 public it.cnr.contab.config00.sto.bulk.CdsBulk getCds() {
 	return cds;
@@ -260,7 +260,7 @@ public it.cnr.contab.config00.sto.bulk.CdsBulk getCds() {
  * Metodo con cui si ottiene il valore della variabile <code>classeDiPagamentoKeys</code>
  * di tipo <code>Hashtable</code>.
  * In particolare, questo metodo carica in una Hashtable l'elenco dei possibili valori 
- * che pu� assumere il campo <code>ti_pagamento</code>.
+ * che puè assumere il campo <code>ti_pagamento</code>.
  * @return java.util.Hashtable classeDiPagamentoKeys I valori del campo <code>ti_pagamento</code>.
  */
 public java.util.Dictionary getClasseDiPagamentoKeys() {
@@ -268,18 +268,18 @@ public java.util.Dictionary getClasseDiPagamentoKeys() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet� 'competenzaResiduoKeys'
+ * Restituisce il valore della proprietà 'competenzaResiduoKeys'
  *
- * @return Il valore della propriet� 'competenzaResiduoKeys'
+ * @return Il valore della proprietà 'competenzaResiduoKeys'
  */
 public java.util.Dictionary getCompetenzaResiduoKeys() {
 	return competenzaResiduoKeys;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet� 'doc_contabili_collColl'
+ * Restituisce il valore della proprietà 'doc_contabili_collColl'
  *
- * @return Il valore della propriet� 'doc_contabili_collColl'
+ * @return Il valore della proprietà 'doc_contabili_collColl'
  */
 public java.util.Collection getDoc_contabili_collColl() {
 	return doc_contabili_collColl;
@@ -316,9 +316,9 @@ public java.math.BigDecimal getIm_disp_cassa_CNR() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet� 'im_netto'
+ * Restituisce il valore della proprietà 'im_netto'
  *
- * @return Il valore della propriet� 'im_netto'
+ * @return Il valore della proprietà 'im_netto'
  */
 public java.math.BigDecimal getIm_netto() {
 	if (getIm_mandato() == null)
@@ -405,7 +405,7 @@ public TerzoBulk getTerzo_cedente()
  * Metodo con cui si ottiene il valore della variabile <code>tipoDocumentoKeys</code>
  * di tipo <code>Hashtable</code>.
  * In particolare, questo metodo carica in una Hashtable l'elenco dei possibili valori 
- * che pu� assumere il campo <code>cd_tipo_documento_amm</code>.
+ * che puè assumere il campo <code>cd_tipo_documento_amm</code>.
  * @return java.util.Hashtable tipoDocumentoKeys I valori del campo <code>cd_tipo_documento_amm</code>.
  */
 public java.util.Dictionary getTipoDocumentoKeys() {
@@ -422,7 +422,7 @@ public java.util.Dictionary getTipoDocumentoPerRicercaKeys() {
  * Metodo con cui si ottiene il valore della variabile <code>tipoMandatoKeys</code>
  * di tipo <code>Hashtable</code>.
  * In particolare, questo metodo carica in una Hashtable l'elenco dei possibili valori 
- * che pu� assumere il campo <code>ti_mandato</code>.
+ * che puè assumere il campo <code>ti_mandato</code>.
  * @return java.util.Dictionary tipoMandatoKeys I valori del campo <code>ti_mandato</code>.
  */
 public java.util.Dictionary getTipoMandatoKeys() 
@@ -515,8 +515,8 @@ public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 /**
  * Verifica se il mandato ha lo stato "annullato".
  * @return Lo stato del mandato 
- *						TRUE 	Il mandato � annullato
- *						FALSE 	Il mandato non � annullato
+ *						TRUE 	Il mandato è annullato
+ *						FALSE 	Il mandato non è annullato
  */
 public boolean isAnnullato() 
 {
@@ -543,8 +543,8 @@ public boolean isDipendenteDaAltroDocContabile()
 	return false;
 }
 /**
- * Verifica se il mandato � di tipo accreditamento.
- * @return 			FALSE 	Il mandato non � di tipo accreditamento
+ * Verifica se il mandato è di tipo accreditamento.
+ * @return 			FALSE 	Il mandato non è di tipo accreditamento
  */
 public boolean isMandatoAccreditamentoBulk() 
 {
@@ -553,8 +553,8 @@ public boolean isMandatoAccreditamentoBulk()
 /**
  * Verifica se il mandato ha lo stato "pagato".
  * @return Lo stato del mandato 
- *						TRUE 	Il mandato � pagato
- *						FALSE 	Il mandato non � pagato
+ *						TRUE 	Il mandato è pagato
+ *						FALSE 	Il mandato non è pagato
  */
 public boolean isPagato() 
 {
@@ -562,18 +562,18 @@ public boolean isPagato()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet� 'rOTi_mandato'
+ * Restituisce il valore della proprietà 'rOTi_mandato'
  *
- * @return Il valore della propriet� 'rOTi_mandato'
+ * @return Il valore della proprietà 'rOTi_mandato'
  */
 public boolean isROTi_mandato() {
 	return !this.mandato_rigaColl.isEmpty();
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet� 'rOUnitaOrganizzativa'
+ * Restituisce il valore della proprietà 'rOUnitaOrganizzativa'
  *
- * @return Il valore della propriet� 'rOUnitaOrganizzativa'
+ * @return Il valore della proprietà 'rOUnitaOrganizzativa'
  */
 public boolean isROUnitaOrganizzativa() {
 	if ( TIPO_REGOLARIZZAZIONE.equals( getTi_mandato()))
@@ -659,7 +659,7 @@ public void setCd_unita_organizzativa(java.lang.String cd_unita_organizzativa) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet� 'cd_uo_ente'
+ * Imposta il valore della proprietà 'cd_uo_ente'
  *
  * @param newCd_uo_ente	Il valore da assegnare a 'cd_uo_ente'
  */
@@ -674,7 +674,7 @@ public void setCds(it.cnr.contab.config00.sto.bulk.CdsBulk newCds) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet� 'doc_contabili_collColl'
+ * Imposta il valore della proprietà 'doc_contabili_collColl'
  *
  * @param newDoc_contabili_collColl	Il valore da assegnare a 'doc_contabili_collColl'
  */
@@ -784,7 +784,7 @@ public void validaSospesi( List sospesi ) throws ValidationException
 	
 }
 /**
- * Metodo con cui si verifica la validit� di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validità di alcuni campi, mediante un
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
@@ -809,48 +809,48 @@ public void validate() throws ValidationException {
 	
 }
 /**
- * Verifica se il mandato � di tipo "accreditamento".
+ * Verifica se il mandato è di tipo "accreditamento".
  * @return Il tipo di mandato 
- *						TRUE 	Il mandato � di tipo "accreditamento".
- *						FALSE 	Il mandato � di tipo "accreditamento".
+ *						TRUE 	Il mandato è di tipo "accreditamento".
+ *						FALSE 	Il mandato è di tipo "accreditamento".
  */
 public boolean isMandatoAccreditamento(){
 	return getTi_mandato()!=null && getTi_mandato().equals(MandatoBulk.TIPO_ACCREDITAMENTO);
 }
 /**
- * Verifica se il mandato � di tipo "regolarizzazione".
+ * Verifica se il mandato è di tipo "regolarizzazione".
  * @return Il tipo di mandato 
- *						TRUE 	Il mandato � di tipo "regolarizzazione"
- *						FALSE 	Il mandato non � di tipo "regolarizzazione"
+ *						TRUE 	Il mandato è di tipo "regolarizzazione"
+ *						FALSE 	Il mandato non è di tipo "regolarizzazione"
  */
 public boolean isMandatoRegolarizzazione(){
 	return getTi_mandato()!=null && getTi_mandato().equals(MandatoBulk.TIPO_REGOLARIZZAZIONE);
 }
 /**
- * Verifica se il mandato � di tipo "regolamento sospeso".
+ * Verifica se il mandato è di tipo "regolamento sospeso".
  * @return Il tipo di mandato 
- *						TRUE 	Il mandato � di tipo "regolamento sospeso"
- *						FALSE 	Il mandato non � di tipo "regolamento sospeso"
+ *						TRUE 	Il mandato è di tipo "regolamento sospeso"
+ *						FALSE 	Il mandato non è di tipo "regolamento sospeso"
  */
 public boolean isRegolamentoSospeso(){
 	return getTi_mandato()!=null && getTi_mandato().equals(MandatoBulk.TIPO_REGOLAM_SOSPESO);
 }
 /**
- * Verifica se il mandato � di tipo "pagamento".
+ * Verifica se il mandato è di tipo "pagamento".
  * @return Il tipo di mandato 
- *						TRUE 	Il mandato � di tipo "pagamento"
- *						FALSE 	Il mandato non � di tipo "pagamento"
+ *						TRUE 	Il mandato è di tipo "pagamento"
+ *						FALSE 	Il mandato non è di tipo "pagamento"
  */
 public boolean isPagamento(){
 	return getTi_mandato()!=null && getTi_mandato().equals(MandatoBulk.TIPO_PAGAMENTO);
 }
 /**
  * Verifica se il mandato richiede la gestione SIOPE
- * @return l'obbligatoriet� della gestione SIOPE 
- *						TRUE 	Sulle righe di mandato � richiesta la gestione SIOPE
- *						FALSE 	Sulle righe di mandato non � richiesta la gestione SIOPE
+ * @return l'obbligatorietè della gestione SIOPE
+ *						TRUE 	Sulle righe di mandato è richiesta la gestione SIOPE
+ *						FALSE 	Sulle righe di mandato non è richiesta la gestione SIOPE
  *
- * Sui mandati non � obbligatorio caricare i codici SIOPE solo se trattasi di mandati di tipo interno
+ * Sui mandati non è obbligatorio caricare i codici SIOPE solo se trattasi di mandati di tipo interno
  * e quindi di Accreditamento emessi dalla UO Ente e di Regolarizzazione
  */
 public boolean isRequiredSiope(){
@@ -871,9 +871,9 @@ public boolean isSiopeTotalmenteAssociato(){
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet� 'im_associato_siope'
+ * Restituisce il valore della proprietà 'im_associato_siope'
  *
- * @return Il valore della propriet� 'im_associato_siope'
+ * @return Il valore della proprietà 'im_associato_siope'
  */
 public java.math.BigDecimal getIm_associato_siope() {
 	BigDecimal totale = Utility.ZERO;

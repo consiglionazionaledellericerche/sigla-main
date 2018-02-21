@@ -172,7 +172,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 	  * Pre-post-conditions:
 	  *
 	  * Nome: Terzo NON selezionato
-	  * Pre: Non Ë stato selezionato un Terzo per l'incarico
+	  * Pre: Non √® stato selezionato un Terzo per l'incarico
 	  * Post: Non vengono caricati i Tipi di rapporto
 	  *
 	  * Nome: Terzo selezionato
@@ -354,7 +354,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 		}
 		
 		if (contaContratti>1)
-			throw handleException( new ApplicationException( "All'incarico puÚ essere allegato al massimo un \""+Incarichi_repertorio_archivioBulk.tipo_archivioKeys.get(Incarichi_repertorio_archivioBulk.TIPO_CONTRATTO).toString()+"\"!") );
+			throw handleException( new ApplicationException( "All'incarico pu√≤ essere allegato al massimo un \""+Incarichi_repertorio_archivioBulk.tipo_archivioKeys.get(Incarichi_repertorio_archivioBulk.TIPO_CONTRATTO).toString()+"\"!") );
 
 		if (incarico.getIm_complessivo_ripartito().compareTo(incarico.getImporto_complessivo())!=0)
 			throw handleException( new ApplicationException( "Il totale ripartito per anno non coincide con la spesa complessiva indicata in testata!") );
@@ -533,11 +533,11 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 	
 				incarico = (Incarichi_repertorioBulk)inizializzaBulkPerModifica(aUC, incarico);
 		
-				/* Qui bisogna verificare se gli importi associati all'incarico non siano gi‡ stati, anche in parte, associati ad impegni/compensi
+				/* Qui bisogna verificare se gli importi associati all'incarico non siano gi√† stati, anche in parte, associati ad impegni/compensi
 			  	if (esisteimpegno o incarico)
-		          	throw new ApplicationException("L'incarico risulta gi‡ utilizzato su impegni/compensi. Impossibile eliminarlo.");
+		          	throw new ApplicationException("L'incarico risulta gi√† utilizzato su impegni/compensi. Impossibile eliminarlo.");
 				 */
-				/* Qui bisogna ritornare le dipsonibilit‡ sulla tabella degli 
+				/* Qui bisogna ritornare le dipsonibilit√† sulla tabella degli 
 		      	for ( Iterator i = obbligazione.getObbligazione_scadenzarioColl().iterator(); i.hasNext(); )
 			        if ( ((Obbligazione_scadenzarioBulk)i.next()).getIm_associato_doc_amm().compareTo( new BigDecimal(0)) > 0 )
 		            throw new ApplicationException("Impossibile stornare impegni collegati a spese del fondo economale o a documenti amministrativi");
@@ -637,7 +637,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 				Incarichi_parametriBulk parametri = Utility.createIncarichiProceduraComponentSession().getIncarichiParametri(usercontext, procedura);
 
 			    if (incarico.getDt_stipula()==null)
-					throw handleException( new ApplicationException( "Non \350 possibile effettuare l'operazione perchË non risulta inserita la data di stipula del contratto.") );
+					throw handleException( new ApplicationException( "Non \350 possibile effettuare l'operazione perch√® non risulta inserita la data di stipula del contratto.") );
 
 			    if (!UtenteBulk.isSuperUtenteFunzioniIncarichi(usercontext)) {
 				    if (parametri==null || parametri.getLimite_dt_stipula()==null) {
@@ -723,7 +723,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 			    }
 
 			    if (procedura.isDichiarazioneContraenteRequired()) {
-				    //Controllo che sia stata inserita la dichiarazione del contraente....almeno quella del primo anno di validit‡ dell'incarico 
+				    //Controllo che sia stata inserita la dichiarazione del contraente....almeno quella del primo anno di validit√† dell'incarico 
 				    boolean existRapportoAnnoStipula = false;
 					GregorianCalendar data_da = (GregorianCalendar) GregorianCalendar.getInstance();
 					data_da.setTime(incarico.getDt_stipula());
@@ -743,21 +743,21 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 				}
 
 				if (procedura.getTipo_attivita_fp()==null && procedura.isProceduraForIncarichi())
-					throw new it.cnr.jada.comp.ApplicationException("Indicare, nella sezione 'Dati Perla', l'attivit‡ economica dell'incarico necessaria per la comunicazione dei dati al sistema informativo PERLA del Ministero della Funzione Pubblica.");
+					throw new it.cnr.jada.comp.ApplicationException("Indicare, nella sezione 'Dati Perla', l'attivit√† economica dell'incarico necessaria per la comunicazione dei dati al sistema informativo PERLA del Ministero della Funzione Pubblica.");
 				if (procedura.getFl_applicazione_norma()==null)
 					throw new it.cnr.jada.comp.ApplicationException("Indicare, nella sezione '"+
-							(procedura.isProceduraForIncarichi()?"Dati Perla":"Altri Dati")+"', se l'incarico Ë stato conferito in applicazione di una specifica norma.");
+							(procedura.isProceduraForIncarichi()?"Dati Perla":"Altri Dati")+"', se l'incarico √® stato conferito in applicazione di una specifica norma.");
 				if (procedura.isApplicazioneNormaAttiva()){
 					if (procedura.getCd_tipo_norma_perla()==null)
 						throw new it.cnr.jada.comp.ApplicationException("Indicare, nella sezione '"+
-							(procedura.isProceduraForIncarichi()?"Dati Perla":"Altri Dati")+"', il tipo di norma in base al quale Ë stato conferito l'incarico.");
+							(procedura.isProceduraForIncarichi()?"Dati Perla":"Altri Dati")+"', il tipo di norma in base al quale √® stato conferito l'incarico.");
 					else if (procedura.getCd_tipo_norma_perla().equals("999") && procedura.getDs_libera_norma_perla()==null)
 						throw new it.cnr.jada.comp.ApplicationException("Indicare, nella sezione '"+
-							(procedura.isProceduraForIncarichi()?"Dati Perla":"Altri Dati")+"', una breve descrizione della norma in base al quale Ë stato conferito l'incarico.");
+							(procedura.isProceduraForIncarichi()?"Dati Perla":"Altri Dati")+"', una breve descrizione della norma in base al quale √® stato conferito l'incarico.");
 				}
 				if (procedura.getProcedura_amministrativa_beneficiario()==null || procedura.getProcedura_amministrativa_beneficiario().getCd_proc_amm()==null)
 					throw new it.cnr.jada.comp.ApplicationException("Indicare, nella sezione '"+
-							(procedura.isProceduraForIncarichi()?"Dati Perla":"Altri Dati")+"', la modalit‡ di individuazione del beneficiario.");
+							(procedura.isProceduraForIncarichi()?"Dati Perla":"Altri Dati")+"', la modalit√† di individuazione del beneficiario.");
 					
 				incarico.setStato(isDaInviareCorteConti?Incarichi_repertorioBulk.STATO_INVIATO:Incarichi_repertorioBulk.STATO_DEFINITIVO);
 			    incarico.setToBeUpdated();
@@ -836,11 +836,11 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 				
 				CompensoHome compensoHome = (CompensoHome)getHome(usercontext, CompensoBulk.class);
 				if (!compensoHome.findCompensoIncaricoList(usercontext, incarico).isEmpty())
-					throw handleException( new ApplicationException( "Operazione non possibile. L'incarico risulta essere gi‡ collegato a compensi!"));
+					throw handleException( new ApplicationException( "Operazione non possibile. L'incarico risulta essere gi√† collegato a compensi!"));
 					
 				MinicarrieraHome minicarrieraHome = (MinicarrieraHome)getHome(usercontext, MinicarrieraBulk.class);
 				if (!minicarrieraHome.findMinicarrieraIncaricoList(usercontext, incarico).isEmpty())
-					throw handleException( new ApplicationException( "Operazione non possibile. L'incarico risulta essere gi‡ collegato a minicarriere!"));
+					throw handleException( new ApplicationException( "Operazione non possibile. L'incarico risulta essere gi√† collegato a minicarriere!"));
 
 				if (incarico.getIncarichi_procedura().getDt_scadenza()!=null && 
 					incarico.getIncarichi_procedura().getDt_scadenza().before(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()))
@@ -959,8 +959,8 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 		Ass_incarico_uoHome home = (Ass_incarico_uoHome)getHome(userContext,Ass_incarico_uoBulk.class);
 		try {
 			if (home.existsDocContForAssIncaricoUo(ass_incarico_uo)){
-				throw new ApplicationException("Impossibile eliminare l'Unit‡ organizzativa " + ass_incarico_uo.getCd_unita_organizzativa()+
-											   " poichË esistono documenti contabili associati.");				
+				throw new ApplicationException("Impossibile eliminare l'Unit√† organizzativa " + ass_incarico_uo.getCd_unita_organizzativa()+
+											   " poich√® esistono documenti contabili associati.");				
 			}
 		}catch (IntrospectionException e) {
 			throw new ComponentException(e);

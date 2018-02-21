@@ -80,7 +80,7 @@ protected Forward handleApplicationPersistencyException(ActionContext context, i
 **/ 
 protected Forward handleDuplicateKeyException(ActionContext context, it.cnr.jada.persistency.sql.DuplicateKeyException e) {
 
-	it.cnr.jada.comp.ApplicationException mess = new it.cnr.jada.comp.ApplicationException("Si sta tentando di creare un oggetto gi‡ esistente in archivio.");
+	it.cnr.jada.comp.ApplicationException mess = new it.cnr.jada.comp.ApplicationException("Si sta tentando di creare un oggetto gi√† esistente in archivio.");
 
 	return handleException(context, mess);
 }
@@ -104,7 +104,7 @@ public Forward doElaboraStralcioMensile(ActionContext context) throws Applicatio
 			return handleException(context, new it.cnr.jada.bulk.ValidationException("Attenzione: specificare il Mese"));
 		try {
 			if (!dati.getV_cnr_estrazione_cori().isEmpty() && !bp.isMeseValido(context,dati))
-				return handleException(context, new it.cnr.jada.bulk.ValidationException("Attenzione: il Mese da elaborare deve essere successivo a quelli gi‡ elaborati"));
+				return handleException(context, new it.cnr.jada.bulk.ValidationException("Attenzione: il Mese da elaborare deve essere successivo a quelli gi√† elaborati"));
 
 				bp.doElaboraStralcioMensile(context,dati);
 				bp.refresh(context);
@@ -132,9 +132,9 @@ public Forward doReset(ActionContext context) {
 		if (dett.getMese() == null )
 			return handleException(context, new it.cnr.jada.bulk.ValidationException("Attenzione: specificare il Mese"));
 		if (dett.getV_stipendi_cofi_dett().isEmpty())
-			return handleException(context, new it.cnr.jada.bulk.ValidationException("Operazione non consentita: il mese selezionato non Ë stato ancora caricato"));
+			return handleException(context, new it.cnr.jada.bulk.ValidationException("Operazione non consentita: il mese selezionato non √® stato ancora caricato"));
 		if (dett.getBatch_log_riga().isEmpty())
-			return handleException(context, new it.cnr.jada.bulk.ValidationException("Operazione non consentita: il mese selezionato non Ë stato ancora elaborato"));
+			return handleException(context, new it.cnr.jada.bulk.ValidationException("Operazione non consentita: il mese selezionato non √® stato ancora elaborato"));
 		try {
 				bp.doReset(context,dett);
 				bp.refresh(context);

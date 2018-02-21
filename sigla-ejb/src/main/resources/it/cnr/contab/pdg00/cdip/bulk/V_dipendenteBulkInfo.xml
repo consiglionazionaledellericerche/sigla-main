@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -9,14 +9,14 @@
 		maxLength="7"
 		inputSize="7"
 		inputType="TEXT"
-		label="Unità org."
+		label="UnitÃ  org."
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="unita_organizzativa"
 		property="unita_organizzativa"
 		formName="searchtool"
 		inputType="SEARCHTOOL"
-		label="Unità org."
+		label="UnitÃ  org."
 		enabledOnInsert="false"
 		enabledOnEdit="true"
 		enabledOnSearch="true" />
@@ -98,7 +98,7 @@
 		inputType="TEXT"
 		enabledOnEdit="false"
 		enabledOnSearch="true"
-		label="Mensilità" />
+		label="MensilitÃ " />
 	<fieldProperty
 		name="ds_profilo"
 		property="ds_profilo"

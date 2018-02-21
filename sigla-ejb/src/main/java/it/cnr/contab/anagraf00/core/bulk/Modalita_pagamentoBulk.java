@@ -47,7 +47,7 @@ public java.lang.Integer getCd_terzo_delegato() {
 	return terzo_delegato.getCd_terzo();
 }
 /**
-  * Costruisce la chiave utilizzata per le associazioni tra modalit‡ di pagamento e banche.
+  * Costruisce la chiave utilizzata per le associazioni tra modalit√† di pagamento e banche.
  */  
 public java.lang.String getChiavePerBanca() {
 
@@ -82,7 +82,7 @@ public String getLabelFrame() {
 	return null;
 }
 	/**
-	 * Restituisce la <code>Rif_modalita_pagamentoBulk</code> a cui Ë associato l'oggetto.
+	 * Restituisce la <code>Rif_modalita_pagamentoBulk</code> a cui √® associato l'oggetto.
 	 *
 	 * @return it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk
 	 *
@@ -93,7 +93,7 @@ public String getLabelFrame() {
 		return rif_modalita_pagamento;
 	}
 	/**
-	 * Restituisce il <code>TerzoBulk</code> a cui Ë associato l'oggetto.
+	 * Restituisce il <code>TerzoBulk</code> a cui √® associato l'oggetto.
 	 *
 	 * @return it.cnr.contab.anagraf00.core.bulk.TerzoBulk
 	 *
@@ -115,7 +115,7 @@ public String getLabelFrame() {
 		return terzo_delegato;
 	}
 /**
- * Restituisce TRUE se la rif_modalita_di_pagamento Ë di tipo <codea>per cessione</codea>
+ * Restituisce TRUE se la rif_modalita_di_pagamento √® di tipo <codea>per cessione</codea>
  *
  * @return boolean
  */
@@ -153,7 +153,7 @@ public void setCd_terzo_delegato(java.lang.Integer cd_terzo_delegato) {
 	this.getTerzo_delegato().setCd_terzo(cd_terzo_delegato);
 }
 	/**
-	 * Imposta la <code>Rif_modalita_pagamentoBulk</code> a cui Ë associato l'oggetto.
+	 * Imposta la <code>Rif_modalita_pagamentoBulk</code> a cui √® associato l'oggetto.
 	 *
 	 * @param newRif_modalita_pagamento Il tipo modalita pagamento da associare.
 	 *
@@ -164,7 +164,7 @@ public void setCd_terzo_delegato(java.lang.Integer cd_terzo_delegato) {
 		rif_modalita_pagamento = newRif_modalita_pagamento;
 	}
 	/**
-	 * Imposta il <code>TerzoBulk</code> a cui Ë associato l'oggetto.
+	 * Imposta il <code>TerzoBulk</code> a cui √® associato l'oggetto.
 	 *
 	 * @param newTerzo Il terzo da associare.
 	 *

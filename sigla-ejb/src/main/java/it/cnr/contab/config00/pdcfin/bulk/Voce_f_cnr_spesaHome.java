@@ -45,7 +45,7 @@ public SQLBuilder createSQLBuilder()
  * Elimina dalla struttura del PDCF parte spese del CNR il sottoarticolo corrispondente all'area di ricerca
  * collegata all'uo specificata nel caso l'uo specificata sia l'ultima uo collegata.
  * @parameter cap istanza di Voce_f valorizzata per l'estrazione dei capitoli interessati (categoria 1 parte spese cnr)
- * @parameter uo unit‡ organizzativa in processo
+ * @parameter uo unit√† organizzativa in processo
  */
 
 public void eliminaSottoArticoliCategoria1(Voce_f_cnr_spesaBulk cap, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo)
@@ -97,7 +97,7 @@ public void eliminaSottoArticoliCategoria1(Voce_f_cnr_spesaBulk cap, it.cnr.cont
  * Aggiunge nella struttura del PDCF parte spese del CNR il sottoarticolo corrispondente all'area di ricerca
  * collegata all'uo specificata.
  * @parameter cap istanza di Voce_f valorizzata per l'estrazione dei capitoli interessati (categoria 1 parte spese cnr)
- * @parameter uo unit‡ organizzativa in processo
+ * @parameter uo unit√† organizzativa in processo
  */
 
 public void inserisciSottoArticoliCategoria1(UserContext userContext, Voce_f_cnr_spesaBulk cap, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk uo)

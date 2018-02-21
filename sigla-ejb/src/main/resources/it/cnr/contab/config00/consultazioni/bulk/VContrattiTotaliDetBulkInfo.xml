@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="https://contab.cnr.it/schema/SIGLA"
@@ -51,7 +51,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="nr°Contratto" />
+		label="nrÂ°Contratto" />
 	<fieldProperty
 		name="statoContratto"
 		property="statoContratto"
@@ -114,7 +114,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="nr°Obbligazione/Accertamento" />
+		label="nrÂ°Obbligazione/Accertamento" />
 	<fieldProperty
 		name="esercizioManRev"
 		property="esercizioManRev"
@@ -130,7 +130,7 @@
 		inputSize="22"
 		maxLength="22"
 		enabledOnEdit="false"
-		label="nr° Man/Rev" />
+		label="nrÂ° Man/Rev" />
 	<fieldProperty
 		name="esDocAmm"
 		property="esDocAmm"
@@ -146,7 +146,7 @@
 		inputSize="22"
 		maxLength="22"
 		enabledOnEdit="false"
-		label="nr° Doc.Amm" />
+		label="nrÂ° Doc.Amm" />
 	<fieldProperty
 		name="tipoDoc"
 		property="tipoDoc"
@@ -269,7 +269,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="nr°Contratto Padre" />
+		label="nrÂ°Contratto Padre" />
 	<fieldProperty
 		name="statoContrattoPadre"
 		property="statoContrattoPadre"

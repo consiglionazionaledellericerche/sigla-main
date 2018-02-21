@@ -18,9 +18,9 @@ public V_pdg_obbligazione_speBulk(java.lang.String categoria_dettaglio,java.lang
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'importo'
+ * Restituisce il valore della propriet√† 'importo'
  *
- * @return Il valore della propriet‡ 'importo'
+ * @return Il valore della propriet√† 'importo'
  */
 public BigDecimal getImporto() 
 {
@@ -33,9 +33,9 @@ public BigDecimal getImporto()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'importoPrimoAnno'
+ * Restituisce il valore della propriet√† 'importoPrimoAnno'
  *
- * @return Il valore della propriet‡ 'importoPrimoAnno'
+ * @return Il valore della propriet√† 'importoPrimoAnno'
  */
 public BigDecimal getImportoPrimoAnno() 
 {
@@ -48,9 +48,9 @@ public BigDecimal getImportoPrimoAnno()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'importoSecondoAnno'
+ * Restituisce il valore della propriet√† 'importoSecondoAnno'
  *
- * @return Il valore della propriet‡ 'importoSecondoAnno'
+ * @return Il valore della propriet√† 'importoSecondoAnno'
  */
 public BigDecimal getImportoSecondoAnno() 
 {
@@ -63,16 +63,16 @@ public BigDecimal getImportoSecondoAnno()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'prcImputazioneFin'
+ * Restituisce il valore della propriet√† 'prcImputazioneFin'
  *
- * @return Il valore della propriet‡ 'prcImputazioneFin'
+ * @return Il valore della propriet√† 'prcImputazioneFin'
  */
 public BigDecimal getPrcImputazioneFin() {
 	return prcImputazioneFin;
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'prcImputazioneFin'
+ * Imposta il valore della propriet√† 'prcImputazioneFin'
  *
  * @param newPrcImputazioneFin	Il valore da assegnare a 'prcImputazioneFin'
  */

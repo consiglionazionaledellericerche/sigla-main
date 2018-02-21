@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -91,7 +91,7 @@
         enabledOnInsert="false"
         enabledOnEdit="false"
         enabledOnSearch="false"
-        label="Modulo di Attività" />
+        label="Modulo di AttivitÃ " />
     <fieldProperty
         name="progetto_liv2"
         property="linea_di_attivita.progetto"
@@ -177,7 +177,7 @@
 		property="disponibilita_stanz_res"
 		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Disponibilità stanziamento residuo" />
+		label="DisponibilitÃ  stanziamento residuo" />
 		
 	<formFieldProperty
 		name="var_stanz_res" />

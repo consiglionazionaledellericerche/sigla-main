@@ -86,9 +86,9 @@ public class Nota_di_debito_attiva_rigaBulk extends Fattura_attiva_rigaBulk {
 		java.math.BigDecimal nuovoImportoDisponibile = dettaglio.getIm_diponibile_nc().add(totaleDiRiga.subtract(vecchioTotale));
 		if (nuovoImportoDisponibile.signum() < 0 || (nuovoImportoDisponibile.signum() == 0 && zeroNotValid)) {
 			if (dettaglio.getDs_riga_fattura() == null)
-				throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo di storno massimo ancora disponibile è di " + dettaglio.getIm_diponibile_nc() + " EUR!");
+				throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo di storno massimo ancora disponibile Ã¨ di " + dettaglio.getIm_diponibile_nc() + " EUR!");
 			else 
-				throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo di storno massimo ancora disponibile per \"" + dettaglio.getDs_riga_fattura() + "\" è di " + dettaglio.getIm_diponibile_nc() + " EUR!");
+				throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo di storno massimo ancora disponibile per \"" + dettaglio.getDs_riga_fattura() + "\" Ã¨ di " + dettaglio.getIm_diponibile_nc() + " EUR!");
 		}
 		dettaglio.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	}

@@ -308,7 +308,7 @@ public class BltVisiteAction extends it.cnr.jada.util.action.CRUDAction{
     }
     /**
      * Ricerca un'obbligazione valida da associare al doc amm
-     * richeide la validit‡ delle selezioni effettuate
+     * richeide la validit√† delle selezioni effettuate
      */
     public Forward doCreaObbligazione(ActionContext context) {
     	try {
@@ -912,9 +912,9 @@ public class BltVisiteAction extends it.cnr.jada.util.action.CRUDAction{
 			if (visita.getImRimbSpeseAnt().compareTo(BigDecimal.ZERO)==0)
 				throw new ValidationException( "Inserire un importo positivo.");
 			else if (visita.getImRimbSpeseAnt().compareTo(visita.getImRimbPrevisto())==1)
-				throw new ValidationException( "Non Ë possibile inserire un importo superiore al rimborso totale previsto di "+new EuroFormat().format(visita.getImRimbPrevisto()));
+				throw new ValidationException( "Non √® possibile inserire un importo superiore al rimborso totale previsto di "+new EuroFormat().format(visita.getImRimbPrevisto()));
 			else if (visita.getImRimbSpeseAnt().compareTo(visita.getBltAutorizzatiDett().getBltAutorizzati().getBltProgetti().getBltAccordo().getImporto_max_anticipo())==1)
-				throw new ValidationException( "Non Ë possibile inserire un importo superiore all'importo massimo previsto per un anticipo ("+new EuroFormat().format(visita.getBltAutorizzatiDett().getBltAutorizzati().getBltProgetti().getBltAccordo().getImporto_max_anticipo())+")");
+				throw new ValidationException( "Non √® possibile inserire un importo superiore all'importo massimo previsto per un anticipo ("+new EuroFormat().format(visita.getBltAutorizzatiDett().getBltAutorizzati().getBltProgetti().getBltAccordo().getImporto_max_anticipo())+")");
 
 			visita.setImRimbSpese(visita.getImRimbPrevisto().subtract(visita.getImRimbSpeseAnt()));
 

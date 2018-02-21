@@ -8,7 +8,7 @@ import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.*;
 
 /**
- * Business Process che gestisce le attivit‡ di Ricerca per l'oggetto Saldo_cogeBulk
+ * Business Process che gestisce le attivit√† di Ricerca per l'oggetto Saldo_cogeBulk
  */
 
 public class RicercaMastriCogeBP extends it.cnr.jada.util.action.SimpleCRUDBP {

@@ -149,7 +149,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 				mandato = (MandatoIBulk) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(), mandato);
 				if(mandato.getStato().compareTo(MandatoBulk.STATO_MANDATO_ANNULLATO)==0){
 					if (!v_mandato_reversaleBulk.getStato_trasmissione().equals(mandato.getStato_trasmissione_annullo()))
-						throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");
+						throw new ApplicationException("Risorsa non piÃ¹ valida, eseguire nuovamente la ricerca!");
 					mandato.setStato_trasmissione_annullo(stato);
 					if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
 						mandato.setDt_firma_annullo(EJBCommonServices.getServerTimestamp());
@@ -157,7 +157,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						mandato.setDt_firma_annullo(null);
 				}else{
 					if (!v_mandato_reversaleBulk.getStato_trasmissione().equals(mandato.getStato_trasmissione()))
-						throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");
+						throw new ApplicationException("Risorsa non piÃ¹ valida, eseguire nuovamente la ricerca!");
 					mandato.setStato_trasmissione(stato);
 					if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
 						mandato.setDt_firma(EJBCommonServices.getServerTimestamp());
@@ -191,7 +191,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 		reversale = (ReversaleIBulk) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(), reversale);
 		if(reversale.getStato().compareTo(MandatoBulk.STATO_MANDATO_ANNULLATO)==0){
 			if (!v_mandato_reversaleBulk.getStato_trasmissione().equals(reversale.getStato_trasmissione_annullo()))
-				throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");
+				throw new ApplicationException("Risorsa non piÃ¹ valida, eseguire nuovamente la ricerca!");
 			reversale.setStato_trasmissione_annullo(stato);
 			if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
 				reversale.setDt_firma_annullo(EJBCommonServices.getServerTimestamp());
@@ -199,7 +199,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 				reversale.setDt_firma_annullo(null);
 		}else{
 			if (!v_mandato_reversaleBulk.getStato_trasmissione().equals(reversale.getStato_trasmissione()))
-				throw new ApplicationException("Risorsa non più valida, eseguire nuovamente la ricerca!");
+				throw new ApplicationException("Risorsa non piÃ¹ valida, eseguire nuovamente la ricerca!");
 			reversale.setStato_trasmissione(stato);
 			if (stato.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
 				reversale.setDt_firma(EJBCommonServices.getServerTimestamp());
@@ -231,26 +231,35 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						break;
 					}
 					boolean isReversaleCollegataSiope = true;
+					try {
+						Utility.createMandatoComponentSession().esistonoPiuModalitaPagamento(actioncontext.getUserContext(),
+								new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()));
+					} catch (ApplicationException _ex) {
+						message += "\nSul mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont() + " , le modalitÃ  di pagamento dei dettagli del mandato sono diverse, " +
+								"pertanto Ã¨ stato escluso dalla selezione.";
+						continue;
+					}
+
 					if (!Utility.createMandatoComponentSession().isCollegamentoSiopeCompleto(
 							actioncontext.getUserContext(),new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()))) {
-						message += "\nIl mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associato completamente a codici Siope, pertanto è stato escluso dalla selezione.";
+						message += "\nIl mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associato completamente a codici Siope, pertanto Ã¨ stato escluso dalla selezione.";
 						continue;
 					}
 					if (v_mandato_reversaleBulk.getStato().compareTo( MandatoBulk.STATO_MANDATO_ANNULLATO)!=0 &&!Utility.createMandatoComponentSession().isCollegamentoSospesoCompleto(
 							actioncontext.getUserContext(),new MandatoIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()))) {
-						message += "\nIl mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associato completamente a sospeso, pertanto è stato escluso dalla selezione.";
+						message += "\nIl mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associato completamente a sospeso, pertanto Ã¨ stato escluso dalla selezione.";
 						continue;
 					}
 					if(v_mandato_reversaleBulk.getStato().compareTo( MandatoBulk.STATO_MANDATO_ANNULLATO)!=0 &&!Utility.createMandatoComponentSession().isVerificataModPagMandato(actioncontext.getUserContext(),
 							(V_mandato_reversaleBulk) statoTrasmissione)){
-						message += "\nModalità di pagamento non valida presente sul mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+", pertanto è stato escluso dalla selezione.";
+						message += "\nModalitÃ  di pagamento non valida presente sul mandato n."+ v_mandato_reversaleBulk.getPg_documento_cont()+", pertanto Ã¨ stato escluso dalla selezione.";
 						continue;
 					}
 					for (StatoTrasmissione reversaleCollegata : distintaCassiereComponentSession.findReversaliCollegate(actioncontext.getUserContext(), v_mandato_reversaleBulk)) {
 						if (!Utility.createReversaleComponentSession().isCollegamentoSiopeCompleto(
 								actioncontext.getUserContext(),new ReversaleIBulk(reversaleCollegata.getCd_cds(),reversaleCollegata.getEsercizio(),reversaleCollegata.getPg_documento_cont()))) {
 							message += "\nLa reversale n."+ reversaleCollegata.getPg_documento_cont()+ " collegata al mandato  n. "+ v_mandato_reversaleBulk.getPg_documento_cont() +
-									", non risulta associata completamente a codici Siope, pertanto è stata esclusa dalla selezione.";
+									", non risulta associata completamente a codici Siope, pertanto Ã¨ stata esclusa dalla selezione.";
 							isReversaleCollegataSiope = false;
 							break;
 						}
@@ -266,7 +275,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 					}
 					if (!Utility.createReversaleComponentSession().isCollegamentoSiopeCompleto(
 							actioncontext.getUserContext(),new ReversaleIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()))) {
-						message += "\nLa reversale n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associata completamente a codici Siope, pertanto è stata esclusa dalla selezione.";
+						message += "\nLa reversale n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associata completamente a codici Siope, pertanto Ã¨ stata esclusa dalla selezione.";
 						continue;
 					}
 				}
@@ -357,7 +366,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						if (allegati.isEmpty())
 							throw new ApplicationException("\nAl mandato n."+ statoTrasmissione.getPg_documento_cont()+ " non risulta allegato il documento con tipologia [" +
 									rif_modalita_pagamentoBulk.getDs_modalita_pag() + "]" +
-									", pertanto è stato escluso dalla selezione.");
+									", pertanto Ã¨ stato escluso dalla selezione.");
 						childs.addAll(allegati);
 					}
 					//Eseguo il merge dei documenti
@@ -376,7 +385,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 							ut.mergeDocuments();
 						} catch (IOException _ex) {
 							throw new ApplicationException("\nAl mandato n."+ statoTrasmissione.getPg_documento_cont()+ " risulta allegato un documento non in formato PDF" +
-									", pertanto è stato escluso dalla selezione.");
+									", pertanto Ã¨ stato escluso dalla selezione.");
 						}
 						SpringUtil.getBean("storeService", StoreService.class).restoreSimpleDocument(
 								(V_mandato_reversaleBulk)statoTrasmissione,

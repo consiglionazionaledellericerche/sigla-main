@@ -108,7 +108,7 @@ public void setUoForPrint(it.cnr.contab.config00.sto.bulk.Unita_organizzativaBul
 	uoForPrint = newUoForPrint;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws it.cnr.jada.bulk.ValidationException {

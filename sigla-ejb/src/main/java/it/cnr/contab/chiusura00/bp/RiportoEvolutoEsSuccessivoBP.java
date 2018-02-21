@@ -29,7 +29,7 @@ public RiportoEvolutoEsSuccessivoBP(String function) {
 protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
 	super.init(config,context);
 	if (!isRibaltato()) {
-		throw handleException( new ApplicationException("Non è possibile utilizzare questa funzione perchè non è stato effettuato il ribaltamento complessivo dei documenti contabili per il CDS "+CNRUserContext.getCd_cds(context.getUserContext())));
+		throw handleException( new ApplicationException("Non Ã¨ possibile utilizzare questa funzione perchÃ¨ non Ã¨ stato effettuato il ribaltamento complessivo dei documenti contabili per il CDS "+CNRUserContext.getCd_cds(context.getUserContext())));
 	}
 }
 

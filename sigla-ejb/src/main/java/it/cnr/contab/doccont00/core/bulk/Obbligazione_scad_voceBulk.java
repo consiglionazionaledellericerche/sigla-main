@@ -60,9 +60,9 @@ public java.lang.String getCd_centro_responsabilita() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_funzione'
+ * Restituisce il valore della propriet√† 'cd_funzione'
  *
- * @return Il valore della propriet‡ 'cd_funzione'
+ * @return Il valore della propriet√† 'cd_funzione'
  */
 public String getCd_funzione() {
 	if ( linea_attivita != null )
@@ -84,9 +84,9 @@ public java.lang.String getCd_linea_attivita() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_natura'
+ * Restituisce il valore della propriet√† 'cd_natura'
  *
- * @return Il valore della propriet‡ 'cd_natura'
+ * @return Il valore della propriet√† 'cd_natura'
  */
 public String getCd_natura() {
 	if ( linea_attivita != null )
@@ -141,9 +141,9 @@ public java.lang.Long getPg_obbligazione_scadenzario() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'prc'
+ * Restituisce il valore della propriet√† 'prc'
  *
- * @return Il valore della propriet‡ 'prc'
+ * @return Il valore della propriet√† 'prc'
  */
 public BigDecimal getPrc() 
 {
@@ -191,7 +191,7 @@ public void setPg_obbligazione_scadenzario(java.lang.Long pg_obbligazione_scaden
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'prc'
+ * Imposta il valore della propriet√† 'prc'
  *
  * @param newPrc	Il valore da assegnare a 'prc'
  */
@@ -207,7 +207,7 @@ public void storna()
 	setToBeUpdated();
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException 

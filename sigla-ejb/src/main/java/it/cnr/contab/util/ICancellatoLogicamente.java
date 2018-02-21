@@ -14,7 +14,7 @@ package it.cnr.contab.util;
  */
 public interface ICancellatoLogicamente {
 	/**
-	 * il metodo ritorna TRUE se l'oggetto che lo implementa è stato cancellato logicamente
+	 * il metodo ritorna TRUE se l'oggetto che lo implementa Ã¨ stato cancellato logicamente
 	 */
 	public boolean isCancellatoLogicamente();
 	/**

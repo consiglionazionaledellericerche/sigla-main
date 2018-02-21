@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -21,19 +21,19 @@
 		property="im_spese_a3"
 		inputType="TEXT"
 		formatName = "it.cnr.contab.util.EuroFormat"		
-		label="Spese 3°esercizio" />
+		label="Spese 3Â°esercizio" />
 	<fieldProperty
 		name="im_spese_a2"
 		property="im_spese_a2"
 		inputType="TEXT"
 		formatName = "it.cnr.contab.util.EuroFormat"		
-		label="Spese 2°esercizio" />
+		label="Spese 2Â°esercizio" />
 	<fieldProperty
 		name="im_spese_a1"
 		property="im_spese_a1"
 		inputType="TEXT"
 		formatName = "it.cnr.contab.util.EuroFormat"		
-		label="Spese 1°esercizio" />
+		label="Spese 1Â°esercizio" />
 	<fieldProperty
 		name="cd_centro_responsabilita"
 		property="cd_centro_responsabilita"
@@ -47,19 +47,19 @@
 		property="im_obb_a3"
 		inputType="TEXT"
 		formatName = "it.cnr.contab.util.EuroFormat"		
-		label="Impegno 3°esercizio" />
+		label="Impegno 3Â°esercizio" />
 	<fieldProperty
 		name="im_obb_a2"
 		property="im_obb_a2"
 		inputType="TEXT"
 		formatName = "it.cnr.contab.util.EuroFormat"		
-		label="Impegno 2°esercizio" />
+		label="Impegno 2Â°esercizio" />
 	<fieldProperty
 		name="im_obb_a1"
 		property="im_obb_a1"
 		inputType="TEXT"
 		formatName = "it.cnr.contab.util.EuroFormat"		
-		label="Impegno 1°esercizio" />
+		label="Impegno 1Â°esercizio" />
 
 	<formFieldProperty
 		name="esercizio" />

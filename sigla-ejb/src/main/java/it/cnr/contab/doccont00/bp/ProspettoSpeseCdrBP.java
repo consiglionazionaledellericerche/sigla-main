@@ -8,7 +8,7 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import java.util.LinkedList;
 import java.util.List;
 /**
- * Business process che gestisce attivit‡ relative al prospetto delle spese del Cdr.
+ * Business process che gestisce attivit√† relative al prospetto delle spese del Cdr.
  */
 public class ProspettoSpeseCdrBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	private final SimpleDetailCRUDController speseCdr = new SimpleDetailCRUDController("speseCdr", V_obblig_pdg_saldo_laBulk.class,"speseCdrColl",this);
@@ -22,7 +22,7 @@ public class ProspettoSpeseCdrBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	}
 	/**
 	 * Metodo utilizzato per creare una toolbar applicativa personalizzata.
-	 * @return null In questo caso la toolbar Ë vuota
+	 * @return null In questo caso la toolbar √® vuota
 	 */
 	protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 		return super.createToolbar();
@@ -53,18 +53,18 @@ public class ProspettoSpeseCdrBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'codiceCdr'
+	 * Restituisce il valore della propriet√† 'codiceCdr'
 	 *
-	 * @return Il valore della propriet‡ 'codiceCdr'
+	 * @return Il valore della propriet√† 'codiceCdr'
 	 */
 	public java.lang.String getCodiceCdr() {
 		return codiceCdr;
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'descrizioneCdr'
+	 * Restituisce il valore della propriet√† 'descrizioneCdr'
 	 *
-	 * @return Il valore della propriet‡ 'descrizioneCdr'
+	 * @return Il valore della propriet√† 'descrizioneCdr'
 	 */
 	public java.lang.String getDescrizioneCdr() {
 		return descrizioneCdr;
@@ -98,7 +98,7 @@ public class ProspettoSpeseCdrBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'codiceCdr'
+	 * Imposta il valore della propriet√† 'codiceCdr'
 	 *
 	 * @param newCodiceCdr	Il valore da assegnare a 'codiceCdr'
 	 */
@@ -107,7 +107,7 @@ public class ProspettoSpeseCdrBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'descrizioneCdr'
+	 * Imposta il valore della propriet√† 'descrizioneCdr'
 	 *
 	 * @param newDescrizioneCdr	Il valore da assegnare a 'descrizioneCdr'
 	 */

@@ -52,8 +52,8 @@ public class MissioneQuotaRimborsoBulk extends MissioneQuotaRimborsoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [Definisce i gruppi di inquadramento ministeriali per le diarie estere; gruppi da 1 a 6.
 Ogni profilo di inquadramento del CNR, sia quelli dipendente che quelli riferiti a soggetti esterni, deve essere qualificato con il gruppo ministeriale di inquadramento corrispondente per il recupero della diaria.
-Era definito anche un valore convenzionale (*)  per gestire il caso in cui tale valorizzazione sia indifferente alla gestione. Tale gestione è ora inutile per le modifiche fatte alla gestione missioni.
-L'associazione per il recupero di spese ed abbattimenti è ora fatta in base al profilo di inquadramento e non al gruppo ministeriale.]
+Era definito anche un valore convenzionale (*)  per gestire il caso in cui tale valorizzazione sia indifferente alla gestione. Tale gestione Ã¨ ora inutile per le modifiche fatte alla gestione missioni.
+L'associazione per il recupero di spese ed abbattimenti Ã¨ ora fatta in base al profilo di inquadramento e non al gruppo ministeriale.]
 	 **/
 	public Gruppo_inquadramentoBulk getGruppoInquadramento() {
 		return gruppoInquadramento;
@@ -62,8 +62,8 @@ L'associazione per il recupero di spese ed abbattimenti è ora fatta in base al p
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [Definisce i gruppi di inquadramento ministeriali per le diarie estere; gruppi da 1 a 6.
 Ogni profilo di inquadramento del CNR, sia quelli dipendente che quelli riferiti a soggetti esterni, deve essere qualificato con il gruppo ministeriale di inquadramento corrispondente per il recupero della diaria.
-Era definito anche un valore convenzionale (*)  per gestire il caso in cui tale valorizzazione sia indifferente alla gestione. Tale gestione è ora inutile per le modifiche fatte alla gestione missioni.
-L'associazione per il recupero di spese ed abbattimenti è ora fatta in base al profilo di inquadramento e non al gruppo ministeriale.]
+Era definito anche un valore convenzionale (*)  per gestire il caso in cui tale valorizzazione sia indifferente alla gestione. Tale gestione Ã¨ ora inutile per le modifiche fatte alla gestione missioni.
+L'associazione per il recupero di spese ed abbattimenti Ã¨ ora fatta in base al profilo di inquadramento e non al gruppo ministeriale.]
 	 **/
 	public void setGruppoInquadramento(Gruppo_inquadramentoBulk gruppoInquadramento)  {
 		this.gruppoInquadramento=gruppoInquadramento;
@@ -140,19 +140,19 @@ L'associazione per il recupero di spese ed abbattimenti è ora fatta in base al p
 
 		// controllo su campo INQUADRAMENTO
 		if (getCd_gruppo_inquadramento()==null)
-			throw new ValidationException( "Il campo INQUADRAMENTO non può essere vuoto" );
+			throw new ValidationException( "Il campo INQUADRAMENTO non puÃ² essere vuoto" );
 
 		// controllo su campo DIVISA
 		if (getCd_area_estera()==null)
-			throw new ValidationException( "Il campo AREA ESTERA non può essere vuoto" );
+			throw new ValidationException( "Il campo AREA ESTERA non puÃ² essere vuoto" );
 
 		// controllo su campo INIZIO VALIDITA
 		if (getDt_inizio_validita()==null)
-			throw new ValidationException( "Il campo DATA INIZIO VALIDITA non può essere vuoto" );
+			throw new ValidationException( "Il campo DATA INIZIO VALIDITA non puÃ² essere vuoto" );
 
 		// controllo su campo IMPORTO DIARIA
 		if (getIm_rimborso()==null)
-			throw new ValidationException( "Il campo IMPORTO RIMBORSO non può essere vuoto" );
+			throw new ValidationException( "Il campo IMPORTO RIMBORSO non puÃ² essere vuoto" );
 		if ( getIm_rimborso().compareTo(new java.math.BigDecimal(0))<=0 )
 			throw new ValidationException( "Il campo IMPORTO RIMBORSO deve essere maggiore di 0 !" );
 	}

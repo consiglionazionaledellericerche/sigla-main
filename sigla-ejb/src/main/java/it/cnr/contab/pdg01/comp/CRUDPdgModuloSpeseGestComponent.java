@@ -46,11 +46,11 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 	 * Nome: Inizializzazione;
 	 * Pre:  Preparare l'oggetto alle modifiche;
 	 * Post: Si procede, oltre che alla normale procedura di inizializzazione di un oggetto bulk,
-	 *       anche al caricamento dei dettagli gestionali e al calcolo delle somme gi‡ ripartite.
+	 *       anche al caricamento dei dettagli gestionali e al calcolo delle somme gi√† ripartite.
 	 *
-	 * @param bulk dovr‡ essere sempre <code>Pdg_modulo_speseBulk</code>.
+	 * @param bulk dovr√† essere sempre <code>Pdg_modulo_speseBulk</code>.
 	 *
-	 * @return un <code>OggettoBulk</code> che sar‡ sempre un <code>Pdg_modulo_speseBulk</code>.
+	 * @return un <code>OggettoBulk</code> che sar√† sempre un <code>Pdg_modulo_speseBulk</code>.
 	 */
 	public OggettoBulk inizializzaBulkPerModifica(UserContext userContext, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 		try {
@@ -73,13 +73,13 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 	 * Pre-post-conditions:
 	 *
 	 * Nome: Modifica di un Modulo
-	 * Pre:  La richiesta di modifica di un Modulo Ë stata generata
+	 * Pre:  La richiesta di modifica di un Modulo √® stata generata
 	 * Post: Viene loccato il record PDG_MODULO_SPESE con l'istruzione findAndLock per evitare che salvataggi 
-	 *       simultanei da parte di pi˘ utenti possano alterare i controlli.
+	 *       simultanei da parte di pi√π utenti possano alterare i controlli.
 	 * 		 Vengono verificati i dettagli gestionali associati al modulo per controllare che il totale 
 	 *       degli importi ripartiti non sia superiore agli importi previsti in Bilancio.
 	 * 	     In caso affermativo viene generata una ApplicationException per segnalare all'utente 
-	 *       l'impossibilit‡ di modificare i dettagli gestionali associati al Modulo.
+	 *       l'impossibilit√† di modificare i dettagli gestionali associati al Modulo.
 	 *
 	 * @param	usercontext	lo UserContext che ha generato la richiesta
 	 * @param	oggettobulk il Pdg_Modulo_SpeseBulk che deve essere modificato
@@ -93,13 +93,13 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 			Pdg_modulo_speseBulk testata = (Pdg_modulo_speseBulk)super.modificaConBulk(userContext, oggettobulk);
 			valorizzaImportoTotali(userContext,testata);
 			if (testata.getTotale_spese_accentrate_interne_gest().compareTo(testata.getIm_spese_gest_accentrata_int())>0)
-				throw new ApplicationException("Impossibile salvare: il totale della spese accentrate interne ripartite (" + new it.cnr.contab.util.EuroFormat().format(testata.getTotale_spese_accentrate_interne_gest()) + ") Ë superiore all'importo previsto in Bilancio (" + new it.cnr.contab.util.EuroFormat().format(testata.getIm_spese_gest_accentrata_int()) + ").");					
+				throw new ApplicationException("Impossibile salvare: il totale della spese accentrate interne ripartite (" + new it.cnr.contab.util.EuroFormat().format(testata.getTotale_spese_accentrate_interne_gest()) + ") √® superiore all'importo previsto in Bilancio (" + new it.cnr.contab.util.EuroFormat().format(testata.getIm_spese_gest_accentrata_int()) + ").");					
 			if (testata.getTotale_spese_accentrate_esterne_gest().compareTo(testata.getIm_spese_gest_accentrata_est())>0)
-				throw new ApplicationException("Impossibile salvare: il totale della spese accentrate esterne ripartite (" + new it.cnr.contab.util.EuroFormat().format(testata.getTotale_spese_accentrate_esterne_gest()) + ") Ë superiore all'importo previsto in Bilancio (" + new it.cnr.contab.util.EuroFormat().format(testata.getIm_spese_gest_accentrata_est()) + ").");					
+				throw new ApplicationException("Impossibile salvare: il totale della spese accentrate esterne ripartite (" + new it.cnr.contab.util.EuroFormat().format(testata.getTotale_spese_accentrate_esterne_gest()) + ") √® superiore all'importo previsto in Bilancio (" + new it.cnr.contab.util.EuroFormat().format(testata.getIm_spese_gest_accentrata_est()) + ").");					
 			if (testata.getTotale_spese_decentrate_interne_gest().compareTo(testata.getIm_spese_gest_decentrata_int())>0)
-				throw new ApplicationException("Impossibile salvare: il totale della spese decentrate interne ripartite (" + new it.cnr.contab.util.EuroFormat().format(testata.getTotale_spese_decentrate_interne_gest()) + ") Ë superiore all'importo previsto in Bilancio (" + new it.cnr.contab.util.EuroFormat().format(testata.getIm_spese_gest_decentrata_int()) + ").");					
+				throw new ApplicationException("Impossibile salvare: il totale della spese decentrate interne ripartite (" + new it.cnr.contab.util.EuroFormat().format(testata.getTotale_spese_decentrate_interne_gest()) + ") √® superiore all'importo previsto in Bilancio (" + new it.cnr.contab.util.EuroFormat().format(testata.getIm_spese_gest_decentrata_int()) + ").");					
 			if (testata.getTotale_spese_decentrate_esterne_gest().compareTo(testata.getIm_spese_gest_decentrata_est())>0)
-				throw new ApplicationException("Impossibile salvare: il totale della spese decentrate esterne ripartite (" + new it.cnr.contab.util.EuroFormat().format(testata.getTotale_spese_decentrate_esterne_gest()) + ") Ë superiore all'importo previsto in Bilancio (" + new it.cnr.contab.util.EuroFormat().format(testata.getIm_spese_gest_decentrata_est()) + ").");					
+				throw new ApplicationException("Impossibile salvare: il totale della spese decentrate esterne ripartite (" + new it.cnr.contab.util.EuroFormat().format(testata.getTotale_spese_decentrate_esterne_gest()) + ") √® superiore all'importo previsto in Bilancio (" + new it.cnr.contab.util.EuroFormat().format(testata.getIm_spese_gest_decentrata_est()) + ").");					
 			return testata;	
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
@@ -161,10 +161,10 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 	 * Pre-post-conditions:
 	 *
 	 * Nome: Default
-	 * Pre:  E' stata generata la richiesta di ricerca di una Linea di Attivit‡
-	 * Post: Vengono restituite tutte le Linee di Attivit‡ che:
+	 * Pre:  E' stata generata la richiesta di ricerca di una Linea di Attivit√†
+	 * Post: Vengono restituite tutte le Linee di Attivit√† che:
 	 * 		 - sono associate al CDR Assegnatario del dettaglio gestionale Pdg_modulo_spese_gestBulk;
-	 * 		 - sono associate al Modulo di Attivit‡ del dettaglio gestionale Pdg_modulo_speseBulk;
+	 * 		 - sono associate al Modulo di Attivit√† del dettaglio gestionale Pdg_modulo_speseBulk;
 	 * 		 - siano Linee utilizzabile nella Gestione spese (TI_GESTIONE='S')
 	 * 		 
 	 * @param userContext lo userContext che ha generato la richiesta
@@ -212,7 +212,7 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 		sql.addSQLClause(FindClause.AND, "FUNZIONE.FL_UTILIZZABILE",SQLBuilder.EQUALS,"Y");
 
 		/**
-		 * Escludo la linea di attivit‡ dell'IVA C20
+		 * Escludo la linea di attivit√† dell'IVA C20
 		 */
 		it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 		try {
@@ -242,8 +242,8 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 	 * 		 - sono associate a classificazioni di un livello pari a quello definito in Parametri_Ente;
 	 * 		 - le classificazioni associate sono figlie della classificazione del dettaglio gestionale Pdg_modulo_spese_gestBulk
 	 * 		 - non sia una partita di giro
-	 * 		 - abbia la FUNZIONE uguale a quella della Linea di Attivit‡ del dettaglio gestionale Pdg_modulo_spese_gestBulk
-	 * 		 - il CD_TIPO_UNITA Ë uguale a quello della UO associata al CDR
+	 * 		 - abbia la FUNZIONE uguale a quella della Linea di Attivit√† del dettaglio gestionale Pdg_modulo_spese_gestBulk
+	 * 		 - il CD_TIPO_UNITA √® uguale a quello della UO associata al CDR
 	 * 
 	 * @param userContext lo userContext che ha generato la richiesta
 	 * @param clauses clausole di ricerca gia' specificate dall'utente

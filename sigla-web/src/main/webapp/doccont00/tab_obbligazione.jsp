@@ -196,7 +196,7 @@
 			<%JSPUtils.button(out, 
 					bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/find16.gif",
 					bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/find16.gif",
-					bp.getParentRoot().isBootstrap() ? "Disponibilit‡ Voce":"Disponibilit‡<BR>Voce", 
+					bp.getParentRoot().isBootstrap() ? "Disponibilit√† Voce":"Disponibilit√†<BR>Voce", 
 					"if (disableDblClick()) submitForm('doConsultaInserisciVoce')",
 					"btn-secondary btn-outline-primary btn-title faa-parent animated-hover",
 					true, 

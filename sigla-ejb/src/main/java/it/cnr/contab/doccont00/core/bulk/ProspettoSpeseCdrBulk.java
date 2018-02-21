@@ -29,99 +29,99 @@ public ProspettoSpeseCdrBulk( CdrBulk cdr ) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cdr'
+ * Restituisce il valore della propriet√† 'cdr'
  *
- * @return Il valore della propriet‡ 'cdr'
+ * @return Il valore della propriet√† 'cdr'
  */
 public it.cnr.contab.config00.sto.bulk.CdrBulk getCdr() {
 	return cdr;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'message1'
+ * Restituisce il valore della propriet√† 'message1'
  *
- * @return Il valore della propriet‡ 'message1'
+ * @return Il valore della propriet√† 'message1'
  */
 public java.lang.String getMessage1() {
 	return message1;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'message2'
+ * Restituisce il valore della propriet√† 'message2'
  *
- * @return Il valore della propriet‡ 'message2'
+ * @return Il valore della propriet√† 'message2'
  */
 public java.lang.String getMessage2() {
 	return message2;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'message3'
+ * Restituisce il valore della propriet√† 'message3'
  *
- * @return Il valore della propriet‡ 'message3'
+ * @return Il valore della propriet√† 'message3'
  */
 public java.lang.String getMessage3() {
 	return message3;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'speseCdrColl'
+ * Restituisce il valore della propriet√† 'speseCdrColl'
  *
- * @return Il valore della propriet‡ 'speseCdrColl'
+ * @return Il valore della propriet√† 'speseCdrColl'
  */
 public java.util.List getSpeseCdrColl() {
 	return speseCdrColl;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'totObbligazioni1'
+ * Restituisce il valore della propriet√† 'totObbligazioni1'
  *
- * @return Il valore della propriet‡ 'totObbligazioni1'
+ * @return Il valore della propriet√† 'totObbligazioni1'
  */
 public java.math.BigDecimal getTotObbligazioni1() {
 	return totObbligazioni1;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'totObbligazioni2'
+ * Restituisce il valore della propriet√† 'totObbligazioni2'
  *
- * @return Il valore della propriet‡ 'totObbligazioni2'
+ * @return Il valore della propriet√† 'totObbligazioni2'
  */
 public java.math.BigDecimal getTotObbligazioni2() {
 	return totObbligazioni2;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'totObbligazioni3'
+ * Restituisce il valore della propriet√† 'totObbligazioni3'
  *
- * @return Il valore della propriet‡ 'totObbligazioni3'
+ * @return Il valore della propriet√† 'totObbligazioni3'
  */
 public java.math.BigDecimal getTotObbligazioni3() {
 	return totObbligazioni3;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'totSpeseDaPdg1'
+ * Restituisce il valore della propriet√† 'totSpeseDaPdg1'
  *
- * @return Il valore della propriet‡ 'totSpeseDaPdg1'
+ * @return Il valore della propriet√† 'totSpeseDaPdg1'
  */
 public java.math.BigDecimal getTotSpeseDaPdg1() {
 	return totSpeseDaPdg1;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'totSpeseDaPdg2'
+ * Restituisce il valore della propriet√† 'totSpeseDaPdg2'
  *
- * @return Il valore della propriet‡ 'totSpeseDaPdg2'
+ * @return Il valore della propriet√† 'totSpeseDaPdg2'
  */
 public java.math.BigDecimal getTotSpeseDaPdg2() {
 	return totSpeseDaPdg2;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'totSpeseDaPdg3'
+ * Restituisce il valore della propriet√† 'totSpeseDaPdg3'
  *
- * @return Il valore della propriet‡ 'totSpeseDaPdg3'
+ * @return Il valore della propriet√† 'totSpeseDaPdg3'
  */
 public java.math.BigDecimal getTotSpeseDaPdg3() {
 	return totSpeseDaPdg3;
@@ -150,17 +150,17 @@ public void refreshTotali()
 		setTotSpeseDaPdg3( getTotSpeseDaPdg3().add( saldoLatt.getIm_spese_a3()));						
 	}
 	if ( getTotObbligazioni1().compareTo( getTotSpeseDaPdg1()) > 0 )
-		setMessage1( "Attenzione! Possibilit‡ di sfondamento per il 1∞ esercizio");
+		setMessage1( "Attenzione! Possibilit√† di sfondamento per il 1¬∞ esercizio");
 	if ( getTotObbligazioni2().compareTo( getTotSpeseDaPdg2()) > 0 )
-		setMessage2( "Attenzione! Possibilit‡ di sfondamento per il 2∞ esercizio");
+		setMessage2( "Attenzione! Possibilit√† di sfondamento per il 2¬∞ esercizio");
 	if ( getTotObbligazioni3().compareTo( getTotSpeseDaPdg3()) > 0 )
-		setMessage3( "Attenzione! Possibilit‡ di sfondamento per il 3∞ esercizio"); 
+		setMessage3( "Attenzione! Possibilit√† di sfondamento per il 3¬∞ esercizio"); 
 		
 		
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'cdr'
+ * Imposta il valore della propriet√† 'cdr'
  *
  * @param newCdr	Il valore da assegnare a 'cdr'
  */
@@ -169,7 +169,7 @@ public void setCdr(it.cnr.contab.config00.sto.bulk.CdrBulk newCdr) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'message1'
+ * Imposta il valore della propriet√† 'message1'
  *
  * @param newMessage1	Il valore da assegnare a 'message1'
  */
@@ -178,7 +178,7 @@ public void setMessage1(java.lang.String newMessage1) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'message2'
+ * Imposta il valore della propriet√† 'message2'
  *
  * @param newMessage2	Il valore da assegnare a 'message2'
  */
@@ -187,7 +187,7 @@ public void setMessage2(java.lang.String newMessage2) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'message3'
+ * Imposta il valore della propriet√† 'message3'
  *
  * @param newMessage3	Il valore da assegnare a 'message3'
  */
@@ -196,7 +196,7 @@ public void setMessage3(java.lang.String newMessage3) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'speseCdrColl'
+ * Imposta il valore della propriet√† 'speseCdrColl'
  *
  * @param newSpeseCdrColl	Il valore da assegnare a 'speseCdrColl'
  */
@@ -205,7 +205,7 @@ public void setSpeseCdrColl(java.util.List newSpeseCdrColl) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'totObbligazioni1'
+ * Imposta il valore della propriet√† 'totObbligazioni1'
  *
  * @param newTotObbligazioni1	Il valore da assegnare a 'totObbligazioni1'
  */
@@ -214,7 +214,7 @@ public void setTotObbligazioni1(java.math.BigDecimal newTotObbligazioni1) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'totObbligazioni2'
+ * Imposta il valore della propriet√† 'totObbligazioni2'
  *
  * @param newTotObbligazioni2	Il valore da assegnare a 'totObbligazioni2'
  */
@@ -223,7 +223,7 @@ public void setTotObbligazioni2(java.math.BigDecimal newTotObbligazioni2) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'totObbligazioni3'
+ * Imposta il valore della propriet√† 'totObbligazioni3'
  *
  * @param newTotObbligazioni3	Il valore da assegnare a 'totObbligazioni3'
  */
@@ -232,7 +232,7 @@ public void setTotObbligazioni3(java.math.BigDecimal newTotObbligazioni3) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'totSpeseDaPdg1'
+ * Imposta il valore della propriet√† 'totSpeseDaPdg1'
  *
  * @param newTotSpeseDaPdg1	Il valore da assegnare a 'totSpeseDaPdg1'
  */
@@ -241,7 +241,7 @@ public void setTotSpeseDaPdg1(java.math.BigDecimal newTotSpeseDaPdg1) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'totSpeseDaPdg2'
+ * Imposta il valore della propriet√† 'totSpeseDaPdg2'
  *
  * @param newTotSpeseDaPdg2	Il valore da assegnare a 'totSpeseDaPdg2'
  */
@@ -250,7 +250,7 @@ public void setTotSpeseDaPdg2(java.math.BigDecimal newTotSpeseDaPdg2) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'totSpeseDaPdg3'
+ * Imposta il valore della propriet√† 'totSpeseDaPdg3'
  *
  * @param newTotSpeseDaPdg3	Il valore da assegnare a 'totSpeseDaPdg3'
  */

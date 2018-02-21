@@ -53,12 +53,12 @@ public abstract it.cnr.jada.util.RemoteIterator cercaFondi(it.cnr.jada.UserConte
   *  		Restituisce l'elenco delle corrispondenze valide
   *	Mandati di integrazione.
   *		PreCondition:
-  * 		Una delle corrispondenze Ë gi‡ collegata ad un fondo
+  * 		Una delle corrispondenze √® gi√† collegata ad un fondo
   *   	PostCondition:
   *  		La corrispondenza non viene aggiunta all'elenco
   *	Mandati di apertura.
   *		PreCondition:
-  * 		Una delle corrispondenze Ë mandato di apertura fondo economale
+  * 		Una delle corrispondenze √® mandato di apertura fondo economale
   *   	PostCondition:
   *  		La corrispondenza non viene aggiunta all'elenco
  */
@@ -72,7 +72,7 @@ public abstract it.cnr.jada.util.RemoteIterator cercaMandatiPerIntegrazioni(it.c
   *  		Le scadenze vengono aggiunte alla lista delle scadenze congruenti.
   *	Validazione lista delle obbligazioni per le fatture passive
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle scadenze delle obbligazioni.
+  *			Si √® verificato un errore nel caricamento delle scadenze delle obbligazioni.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	Obbligazione definitiva
@@ -138,17 +138,17 @@ public abstract it.cnr.jada.util.RemoteIterator cercaSpese(it.cnr.jada.UserConte
   *  		Le spese vengono aggiunte alla lista delle spese congruenti.
   *	Validazione lista delle obbligazioni per le fatture passive
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle scadenze delle spese.
+  *			Si √® verificato un errore nel caricamento delle scadenze delle spese.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	Spesa reintegrata
   *		PreCondition:
-  *			La spesa Ë reintegrata
+  *			La spesa √® reintegrata
   * 	PostCondition:
   *  		La spesa non viene aggiunta alla lista delle spese congruenti.
   *	Spesa documentata
   *		PreCondition:
-  *			La spesa Ë documentata
+  *			La spesa √® documentata
   * 	PostCondition:
   *  		La spesa non viene aggiunta alla lista delle spese congruenti.
   *	Spesa di altro fondo
@@ -156,9 +156,9 @@ public abstract it.cnr.jada.util.RemoteIterator cercaSpese(it.cnr.jada.UserConte
   *			La spesa appartiene ad un altro fondo economale
   * 	PostCondition:
   *  		La spesa non viene aggiunta alla lista delle spese congruenti.
-  *	Spesa gi‡ associata
+  *	Spesa gi√† associata
   *		PreCondition:
-  *			La spesa Ë gi‡ associata alla scadenza obbligazione passata
+  *			La spesa √® gi√† associata alla scadenza obbligazione passata
   * 	PostCondition:
   *  		La spesa viene aggiunta alla lista delle spese congruenti per permetterne la disassociazione.
  */
@@ -172,7 +172,7 @@ public abstract it.cnr.jada.util.RemoteIterator cercaSpeseAssociabili(it.cnr.jad
   *  		Le spese vengono aggiunte alla lista delle spese congruenti.
   *	Validazione lista delle spese
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle spese.
+  *			Si √® verificato un errore nel caricamento delle spese.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	Spesa di altro fondo
@@ -180,15 +180,15 @@ public abstract it.cnr.jada.util.RemoteIterator cercaSpeseAssociabili(it.cnr.jad
   *			La spesa appartiene ad un altro fondo economale
   * 	PostCondition:
   *  		La spesa non viene aggiunta alla lista delle spese congruenti.
-  *	Spesa gi‡ reintegrata
+  *	Spesa gi√† reintegrata
   *		PreCondition:
-  *			La spesa Ë gi‡ reintegrata
+  *			La spesa √® gi√† reintegrata
   * 	PostCondition:
   *  		La spesa viene aggiunta alla lista delle spese congruenti se il  filtro di 
   *			ricerca per le spese reintegrate era abilitato
   *	Spesa documentata
   *		PreCondition:
-  *			La spesa Ë documentata
+  *			La spesa √® documentata
   * 	PostCondition:
   *  		La spesa viene aggiunta alla lista delle spese congruenti se il  filtro di 
   *			ricerca per le spese docuemtnate era abilitato
@@ -203,7 +203,7 @@ public abstract it.cnr.jada.util.RemoteIterator cercaSpeseDelFondo(it.cnr.jada.U
   *  		Le spese vengono aggiunte alla lista delle spese congruenti.
   *	Validazione lista delle spese
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle spese.
+  *			Si √® verificato un errore nel caricamento delle spese.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	Spesa di altro fondo
@@ -211,9 +211,9 @@ public abstract it.cnr.jada.util.RemoteIterator cercaSpeseDelFondo(it.cnr.jada.U
   *			La spesa appartiene ad un altro fondo economale
   * 	PostCondition:
   *  		La spesa non viene aggiunta alla lista delle spese congruenti.
-  *	Spesa gi‡ reintegrata
+  *	Spesa gi√† reintegrata
   *		PreCondition:
-  *			La spesa Ë gi‡ reintegrata
+  *			La spesa √® gi√† reintegrata
   * 	PostCondition:
   *  		La spesa non viene aggiunta alla lista delle spese congruenti
  */
@@ -227,12 +227,12 @@ public abstract it.cnr.jada.util.RemoteIterator cercaSpeseReintegrabili(it.cnr.j
   *  		Il fondo economale viene chiuso
   *	Validazione lista del fondo
   *		PreCondition:
-  *			Si Ë verificato un errore
+  *			Si √® verificato un errore
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
-  *	Fondo gi‡ chiuso
+  *	Fondo gi√† chiuso
   *		PreCondition:
-  *			Il fondo economale Ë gi‡ stato chiuso
+  *			Il fondo economale √® gi√† stato chiuso
   * 	PostCondition:
   *  		L'operazione viene annullata
   *	Le spese del fondo economale non sono ancora state reintegrate
@@ -253,7 +253,7 @@ public it.cnr.contab.fondecon00.core.bulk.Fondo_economaleBulk chiudeSpese(
  * Creazione Fondo_economaleBulk:
  * importo totale spese = 0,
  * importo residuo fondo = importo ammontare fondo,
- * se importo ammontare iniziale Ë nullo importo ammontare iniziale = importo ammontare fondo.
+ * se importo ammontare iniziale √® nullo importo ammontare iniziale = importo ammontare fondo.
  *
  * Creazione Fondo_spesaBulk:
  * inizializzazione della spesa; vedi initSpesa.
@@ -279,7 +279,7 @@ public abstract void dissociaTutteSpese(it.cnr.jada.UserContext param0,it.cnr.co
   *    PreCondition:
   *      E' stata eliminata una fattura in stato B or C
   *    PostCondition:
-  *      Viene inviato un messaggio:"Attenzione non si puÚ eliminare una fattura in stato IVA B o C"
+  *      Viene inviato un messaggio:"Attenzione non si pu√≤ eliminare una fattura in stato IVA B o C"
  */
 
 public abstract void eliminaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
@@ -295,12 +295,12 @@ public abstract java.util.Collection findListabanche(it.cnr.jada.UserContext par
 /** 
   *	Tutti i controlli  superati.
   *		PreCondition:
-  * 		Richiesta ricerca delle modalit‡ di pagamento dell'economo
+  * 		Richiesta ricerca delle modalit√† di pagamento dell'economo
   *   	PostCondition:
-  *  		Restituisce la collezione di modalit‡ di pagamento dell'economo
+  *  		Restituisce la collezione di modalit√† di pagamento dell'economo
   *	Validazione dell'economo
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle modalit‡ di pagamento dell'economo.
+  *			Si √® verificato un errore nel caricamento delle modalit√† di pagamento dell'economo.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
  */
@@ -365,18 +365,18 @@ public abstract it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk[] modificaSpe
   *  		Le spese selezionate dall'utente vengono reintegrate
   *	Spesa reintegrata
   *		PreCondition:
-  *			La spesa Ë reintegrata
+  *			La spesa √® reintegrata
   * 	PostCondition:
   *  		La spesa non viene modificata.
   *	Spesa non documentata
   *		PreCondition:
-  *			La spesa non Ë stata associata a scadenza obbligazione
+  *			La spesa non √® stata associata a scadenza obbligazione
   * 	PostCondition:
   *  		La spesa non viene modificata.
   *	Quadratura
   *		PreCondition:
   *			La somma delle spese non documentate associate alla stessa scadenza 
-  *			obbligazione non Ë in quadratura con l'importo scadenza stesso
+  *			obbligazione non √® in quadratura con l'importo scadenza stesso
   * 	PostCondition:
   *  		L'operazione viene interrotta con relativo messaggio
  */

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -50,7 +50,7 @@
 		name="fl_ctrl_disp"
 		property="fl_ctrl_disp"
 		inputType="CHECKBOX"
-		label="Controlla Disponibilità" />
+		label="Controlla DisponibilitÃ " />
 
 	<fieldProperty
 		name="im_assestato_entrata"
@@ -67,7 +67,7 @@
 		maxLength="18"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Disponibilità Residua Entrata" />
+		label="DisponibilitÃ  Residua Entrata" />
 	<fieldProperty
 		name="im_impacc_entrata"
 		property="saldoEntrata.impacc"
@@ -100,7 +100,7 @@
 		maxLength="18"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Disponibilità Residua Spesa" />
+		label="DisponibilitÃ  Residua Spesa" />
 	<fieldProperty
 		name="im_impacc_spesa"
 		property="saldoSpesa.impacc"

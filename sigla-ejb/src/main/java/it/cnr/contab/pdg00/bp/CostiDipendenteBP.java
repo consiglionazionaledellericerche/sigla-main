@@ -35,7 +35,7 @@ public class CostiDipendenteBP extends BulkBP {
 	private boolean costiDefinitivi;
 	private boolean pdgPrevisionaleEnabled;
 
-	// Controller che gestisce la lista dei costi scaricati su linea di attivit‡
+	// Controller che gestisce la lista dei costi scaricati su linea di attivit√†
 	private final SimpleDetailCRUDController costiScaricati = new SimpleDetailCRUDController("costiScaricati",Ass_cdp_laBulk.class,"costiScaricati",costiDipendenti) {
 		public boolean isGrowable() {
 			if (isInputReadonly()) return false;
@@ -55,7 +55,7 @@ public class CostiDipendenteBP extends BulkBP {
 		}
 		public void validateForDelete(ActionContext context,OggettoBulk detail) throws ValidationException {
 			if (((Ass_cdp_laBulk)detail).isNonCancellabile())
-				throw new ValidationException("Non Ë possibile cancellare una ripartizione scaricata.");
+				throw new ValidationException("Non √® possibile cancellare una ripartizione scaricata.");
 		}
 		public void writeHTMLToolbar(
 				javax.servlet.jsp.PageContext context,
@@ -137,7 +137,7 @@ public class CostiDipendenteBP extends BulkBP {
 	 * <!-- @TODO: da completare -->
 	 * 
 	 *
-	 * @param function	La funzione con cui Ë stato creato il BusinessProcess
+	 * @param function	La funzione con cui √® stato creato il BusinessProcess
 	 * @param mese	
 	 */
 	public CostiDipendenteBP(String function,Integer mese) {
@@ -148,8 +148,8 @@ public class CostiDipendenteBP extends BulkBP {
 	 * Crea il riferimento alla componente CNRPDG00_EJB_CostiDipendenteComponentSession
 	 *
 	 * @return Remote interface della componente
-	 * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non Ë possibile effettuare l'operazione
-	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+	 * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non √® possibile effettuare l'operazione
+	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
 	 */
 	public CostiDipendenteComponentSession createComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
 		return (CostiDipendenteComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPDG00_EJB_CostiDipendenteComponentSession",CostiDipendenteComponentSession.class);
@@ -174,54 +174,54 @@ public class CostiDipendenteBP extends BulkBP {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'costi_dipendente'
+	 * Restituisce il valore della propriet√† 'costi_dipendente'
 	 *
-	 * @return Il valore della propriet‡ 'costi_dipendente'
+	 * @return Il valore della propriet√† 'costi_dipendente'
 	 */
 	public Costi_dipendenteVBulk getCosti_dipendente() {
 		return (Costi_dipendenteVBulk)getModel();
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'costiDipendenti'
+	 * Restituisce il valore della propriet√† 'costiDipendenti'
 	 *
-	 * @return Il valore della propriet‡ 'costiDipendenti'
+	 * @return Il valore della propriet√† 'costiDipendenti'
 	 */
 	public final it.cnr.jada.util.action.SimpleDetailCRUDController getCostiDipendenti() {
 		return costiDipendenti;
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'costiScaricati'
+	 * Restituisce il valore della propriet√† 'costiScaricati'
 	 *
-	 * @return Il valore della propriet‡ 'costiScaricati'
+	 * @return Il valore della propriet√† 'costiScaricati'
 	 */
 	public final it.cnr.jada.util.action.SimpleDetailCRUDController getCostiScaricati() {
 		return costiScaricati;
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'costiScaricatiAltraUO'
+	 * Restituisce il valore della propriet√† 'costiScaricatiAltraUO'
 	 *
-	 * @return Il valore della propriet‡ 'costiScaricatiAltraUO'
+	 * @return Il valore della propriet√† 'costiScaricatiAltraUO'
 	 */
 	public final it.cnr.jada.util.action.SimpleDetailCRUDController getCostiScaricatiAltraUO() {
 		return costiScaricatiAltraUO;
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'mese'
+	 * Restituisce il valore della propriet√† 'mese'
 	 *
-	 * @return Il valore della propriet‡ 'mese'
+	 * @return Il valore della propriet√† 'mese'
 	 */
 	public int getMese() {
 		return mese;
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'ubicazioniTree'
+	 * Restituisce il valore della propriet√† 'ubicazioniTree'
 	 *
-	 * @return Il valore della propriet‡ 'ubicazioniTree'
+	 * @return Il valore della propriet√† 'ubicazioniTree'
 	 */
 	public it.cnr.jada.util.RemoteBulkTree getUbicazioniTree() {
 		return new it.cnr.jada.util.RemoteBulkTree() {
@@ -265,9 +265,9 @@ public class CostiDipendenteBP extends BulkBP {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'saveButtonEnabled'
+	 * Restituisce il valore della propriet√† 'saveButtonEnabled'
 	 *
-	 * @return Il valore della propriet‡ 'saveButtonEnabled'
+	 * @return Il valore della propriet√† 'saveButtonEnabled'
 	 */
 	public boolean isResiduiButtonEnabled() {
 		return !isInputReadonly() && 
@@ -275,9 +275,9 @@ public class CostiDipendenteBP extends BulkBP {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'saveButtonEnabled'
+	 * Restituisce il valore della propriet√† 'saveButtonEnabled'
 	 *
-	 * @return Il valore della propriet‡ 'saveButtonEnabled'
+	 * @return Il valore della propriet√† 'saveButtonEnabled'
 	 */
 	public boolean isSaveButtonEnabled() {
 		return !isInputReadonly() &&
@@ -286,7 +286,7 @@ public class CostiDipendenteBP extends BulkBP {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'mese'
+	 * Imposta il valore della propriet√† 'mese'
 	 *
 	 * @param newMese	Il valore da assegnare a 'mese'
 	 */
@@ -318,9 +318,9 @@ public class CostiDipendenteBP extends BulkBP {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'saveButtonEnabled'
+	 * Restituisce il valore della propriet√† 'saveButtonEnabled'
 	 *
-	 * @return Il valore della propriet‡ 'saveButtonEnabled'
+	 * @return Il valore della propriet√† 'saveButtonEnabled'
 	 */
 	public boolean isSalvaDefinitivoButtonEnabled() {
 		return true;
@@ -345,7 +345,7 @@ public class CostiDipendenteBP extends BulkBP {
 						this.getCosti_dipendente().getCosti_dipendenti().remove(cdp);
 						this.getCosti_dipendente().getCosti_dipendenti().add(oldIndex, cdpNew);
 		
-						// Se siamo nei costi stipendiali mensili Ë possibile che la componente
+						// Se siamo nei costi stipendiali mensili √® possibile che la componente
 						// generi in automatico una ripartizione sulla base di quelle dei mesi
 						// precedenti. L'utente deve necessariamente salvarla e viene mostato
 						// un messaggio esplicativo
@@ -358,7 +358,7 @@ public class CostiDipendenteBP extends BulkBP {
 				if (contaRipartizioni>0)
 					setMessage("Operazione effettuata. Sono state aggiornate "+contaRipartizioni+" matricole.");
 				else
-					setMessage("Operazione effettuata. Non Ë stata aggiornata nessuna matricola.");
+					setMessage("Operazione effettuata. Non √® stata aggiornata nessuna matricola.");
 			}
 		} catch(javax.ejb.EJBException e) {
 			throw new it.cnr.jada.action.ActionPerformingError(e);
@@ -464,9 +464,9 @@ if (matricola_src.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_
 			StringBuffer message = new StringBuffer();
 			if (matricola_rip!=null) {
 				if (matricola_rip.contains(","))
-					message.append("Le matricole "+matricola_rip+" non sono state aggiornate in quanto gi‡ ripartite in precedenza.");
+					message.append("Le matricole "+matricola_rip+" non sono state aggiornate in quanto gi√† ripartite in precedenza.");
 				else
-					message.append("La matricola "+matricola_rip+" non Ë stata aggiornata in quanto gi‡ ripartita in precedenza.");
+					message.append("La matricola "+matricola_rip+" non √® stata aggiornata in quanto gi√† ripartita in precedenza.");
 			} 
 			if (matricola_nac!=null) {
 				if (message.length()!=0) 
@@ -474,23 +474,23 @@ if (matricola_src.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_
 				if (matricola_nac.contains(","))
 					message.append("Le matricole "+matricola_nac+" non sono state aggiornate in quanto scaricate da altra UO e non ancora accettate.");
 				else
-					message.append("La matricola "+matricola_nac+" non Ë stata aggiornata in quanto scaricata da altra UO e non ancora accettata.");
+					message.append("La matricola "+matricola_nac+" non √® stata aggiornata in quanto scaricata da altra UO e non ancora accettata.");
 			} 
 			if (matricola_ind!=null) {
 				if (message.length()!=0) 
 					message.append("\n");
 				if (matricola_ind.contains(","))
-					message.append("Le matricole "+matricola_ind+" non sono state aggiornate in quanto a tempo indeterminato. Non Ë possibile copiare da una matricola a tempo determinato.");
+					message.append("Le matricole "+matricola_ind+" non sono state aggiornate in quanto a tempo indeterminato. Non √® possibile copiare da una matricola a tempo determinato.");
 				else
-					message.append("La matricola "+matricola_ind+" non Ë stata aggiornata in quanto a tempo indeterminato. Non Ë possibile copiare da una matricola a tempo determinato.");
+					message.append("La matricola "+matricola_ind+" non √® stata aggiornata in quanto a tempo indeterminato. Non √® possibile copiare da una matricola a tempo determinato.");
 			} 
 			if (matricola_rap13!=null) {
 				if (message.length()!=0) 
 					message.append("\n");
 				if (matricola_rap13.contains(","))
-					message.append("Le matricole "+matricola_rap13+" non sono state aggiornate. Non Ë possibile copiare da una matricola a tempo determinato.");
+					message.append("Le matricole "+matricola_rap13+" non sono state aggiornate. Non √® possibile copiare da una matricola a tempo determinato.");
 				else
-					message.append("La matricola "+matricola_rap13+" non Ë stata aggiornata. Non Ë possibile copiare da una matricola a tempo determinato.");
+					message.append("La matricola "+matricola_rap13+" non √® stata aggiornata. Non √® possibile copiare da una matricola a tempo determinato.");
 			} 
 			if (message.length()==0)
 				message.append("Sono state aggiornate "+matricoleRipartite+" matricole in modo corretto.");
@@ -562,9 +562,9 @@ if (matricola_src.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_
 						}
 					}
 					if (exceptionCount == 1)
-						setMessage("Non Ë stato possibile ripartire i residui per la matricola selezionata.\n"+lastException.getMessage());
+						setMessage("Non √® stato possibile ripartire i residui per la matricola selezionata.\n"+lastException.getMessage());
 					else if (exceptionCount > 1)
-						setMessage("Non Ë stato possibile ripartire i residui "+exceptionCount+" matricole; le matricole correttamente ripartite sono state deselezionate.");
+						setMessage("Non √® stato possibile ripartire i residui "+exceptionCount+" matricole; le matricole correttamente ripartite sono state deselezionate.");
 					else
 						setMessage(WARNING_MESSAGE,"Ripartizione dei residui effettuata correttamente per "+size+" matricole.");
 				}
@@ -582,7 +582,7 @@ if (matricola_src.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_
 			// Se non esiste vuol dire che la matricola appartiene alla UO dell'utente
 			if (!matricola.isProvenienzaInterna() && 
 				(matricola.getStato_carico()==null || !matricola.getStato_carico().equals(Ass_cdp_uoBulk.STATO_ACCETTATO)))
-				throw new ApplicationException("Per poter effettuare lo scarico di una matricola proveniente da un'altra unit‡ organizzativa Ë necessario prima accettare la contrattazione.");
+				throw new ApplicationException("Per poter effettuare lo scarico di una matricola proveniente da un'altra unit√† organizzativa √® necessario prima accettare la contrattazione.");
 
 			// Costanti
 			final java.math.BigDecimal BD_100 = java.math.BigDecimal.valueOf(100);
@@ -616,7 +616,7 @@ if (matricola_src.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_
 					if (matricola.getCostiScaricati().containsByPrimaryKey(newAssCdpLa)) {
 						newAssCdpLa = (Ass_cdp_laBulk)matricola.getCostiScaricati().get(matricola.getCostiScaricati().indexOfByPrimaryKey(newAssCdpLa));
 	
-						// Se esiste aggiungo alla percentuale gi‡ scaricata la percentuale residua ripartita
+						// Se esiste aggiungo alla percentuale gi√† scaricata la percentuale residua ripartita
 						if (i.hasNext()) {
 							newAssCdpLa.setPrc_la_a1(Utility.nvl(newAssCdpLa.getPrc_la_a1()).add(prc_a1));
 							if (matricola.getMese()==0) {

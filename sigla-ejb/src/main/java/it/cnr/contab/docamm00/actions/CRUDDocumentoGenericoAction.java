@@ -133,7 +133,7 @@ protected Forward basicDoBringBackOpenObbligazioniWindow(ActionContext context, 
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce pi˘ di un risultato viene creato un
+ * Se la ricerca fornisce pi√π di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -173,7 +173,7 @@ protected Forward basicDoCerca(ActionContext context) throws java.rmi.RemoteExce
             //if (obbligazione.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0))!=0 || 
             //obbligazione.getIm_associato_doc_contabile().compareTo(new java.math.BigDecimal(0))!=0 ||
             //obbligazione.getIm_scadenza().compareTo(new java.math.BigDecimal(0))==0)
-            //throw new it.cnr.jada.comp.ApplicationException("L'obbligazione selezionata non Ë valida");
+            //throw new it.cnr.jada.comp.ApplicationException("L'obbligazione selezionata non √® valida");
             CRUDDocumentoGenericoPassivoBP bp= (CRUDDocumentoGenericoPassivoBP) context.getBusinessProcess();
 
             try {
@@ -201,7 +201,7 @@ protected Forward basicDoCerca(ActionContext context) throws java.rmi.RemoteExce
             //if (accertamento.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0))!=0 || 
             //accertamento.getIm_associato_doc_contabile().compareTo(new java.math.BigDecimal(0))!=0 ||
             //accertamento.getIm_scadenza().compareTo(new java.math.BigDecimal(0))==0)
-            //throw new it.cnr.jada.comp.ApplicationException("L'accertamento selezionato non Ë valida");
+            //throw new it.cnr.jada.comp.ApplicationException("L'accertamento selezionato non √® valida");
 
             CRUDDocumentoGenericoAttivoBP bp= (CRUDDocumentoGenericoAttivoBP) context.getBusinessProcess();
 
@@ -269,9 +269,9 @@ private Forward basicDoRicercaAccertamento(ActionContext context, Documento_gene
                 if (cd_terzo == null)
                     cd_terzo= riga.getTerzo().getCd_terzo();
                 if (riga.getTerzo().getCd_terzo() == null)
-                    throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile contabilizzare poichÈ su un dettaglio\n non Ë stato selezionato alcun terzo.");
+                    throw new it.cnr.jada.comp.ApplicationException("Non √® possibile contabilizzare poich√© su un dettaglio\n non √® stato selezionato alcun terzo.");
                 if (riga.getIm_imponibile() == null || riga.getIm_imponibile().compareTo(new java.math.BigDecimal(0)) == 0)
-                    throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile contabilizzare poichÈ un dettaglio\nselezionato ha un importo pari a 0.");
+                    throw new it.cnr.jada.comp.ApplicationException("Non √® possibile contabilizzare poich√© un dettaglio\nselezionato ha un importo pari a 0.");
                 if (!diversi && ((!riga.getTerzo().getCd_terzo().equals(cd_terzo))))
                     diversi= true;
             }
@@ -298,9 +298,9 @@ private Forward basicDoRicercaAccertamento(ActionContext context, Documento_gene
             filtro.setIm_importo(calcolaTotaleSelezionati(models));
         }
 
-        //unit‡ organizzativa
+        //unit√† organizzativa
         filtro.setCd_unita_organizzativa(doc.getCd_unita_organizzativa());
-        //unit‡ organizzativa di origine
+        //unit√† organizzativa di origine
         filtro.setCd_uo_origine(doc.getCd_uo_origine());
 
         //competenza coge
@@ -313,7 +313,7 @@ private Forward basicDoRicercaAccertamento(ActionContext context, Documento_gene
 		if (!doc.isFlagEnte() && doc.isGenericoAttivo() &&
 			(filtro.hasDocumentoCompetenzaCOGEInAnnoPrecedente() ||
 				!filtro.hasDocumentoCompetenzaCOGESoloInAnnoCorrente()))
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile contabilizzare alcun dettaglio\nper un CdS con competenza NON appartenente all'esercizio corrente");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile contabilizzare alcun dettaglio\nper un CdS con competenza NON appartenente all'esercizio corrente");
 
 		//imposta i flag per l'importo e la scadenza
         if (models == null || models.isEmpty())
@@ -352,11 +352,11 @@ private Forward basicDoRicercaObbligazione(ActionContext context, Documento_gene
             for (java.util.Iterator i= models.iterator(); i.hasNext();) {
                 riga= (Documento_generico_rigaBulk) i.next();
                 if (riga.getTerzo().getCd_terzo() == null)
-                    throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile contabilizzare poichÈ su un dettaglio\ns non Ë stato selezionato alcun terzo");
+                    throw new it.cnr.jada.comp.ApplicationException("Non √® possibile contabilizzare poich√© su un dettaglio\ns non √® stato selezionato alcun terzo");
                 if (cd_terzo == null)
                     cd_terzo= riga.getTerzo().getCd_terzo();
                 if (riga.getIm_imponibile() == null || riga.getIm_imponibile().compareTo(new java.math.BigDecimal(0)) == 0)
-                    throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile contabilizzare poichÈ un dettaglio\nselezionato ha un importo pari a 0");
+                    throw new it.cnr.jada.comp.ApplicationException("Non √® possibile contabilizzare poich√© un dettaglio\nselezionato ha un importo pari a 0");
                 if (!diversi && ((!riga.getTerzo().getCd_terzo().equals(cd_terzo))))
                     diversi= true;
             }
@@ -391,7 +391,7 @@ private Forward basicDoRicercaObbligazione(ActionContext context, Documento_gene
             }
             filtro.setIm_importo(calcolaTotaleSelezionati(models));
         }
-        //unit‡ organizzativa e unit‡ organizzativa di origine
+        //unit√† organizzativa e unit√† organizzativa di origine
         filtro.setCd_unita_organizzativa(doc.getCd_unita_organizzativa());
         filtro.setCd_uo_origine(doc.getCd_uo_origine());
 
@@ -406,7 +406,7 @@ private Forward basicDoRicercaObbligazione(ActionContext context, Documento_gene
 			//filtro.hasDocumentoCompetenzaCOGEInAnnoPrecedente() &&
 			//((doc.getUo_CNR() != null && !doc.getUo_CNR().equalsIgnoreCase(doc.getCd_uo_origine())) &&
 			 //(doc.getCds_CNR() != null && !doc.getCds_CNR().equalsIgnoreCase(doc.getCd_cds_origine()))))
-			//throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile contabilizzare alcun dettaglio\nper un documento passivo dell'Ente con competenza appartenente all'anno precedente.");
+			//throw new it.cnr.jada.comp.ApplicationException("Non √® possibile contabilizzare alcun dettaglio\nper un documento passivo dell'Ente con competenza appartenente all'anno precedente.");
 		
         //imposta i flag per l'importo e la scadenza
         if (models == null || models.isEmpty())
@@ -531,11 +531,11 @@ private void controllaQuadraturaObbligazioni(ActionContext context, Documento_ge
                         "Impossibile scollegare l'accertamento \""
 							+ scadenza.getEsercizio_originale().intValue()
                         	+ "/" + scadenza.getPg_accertamento().longValue()
-                            + "\" perchË il dettaglio collegato \""
+                            + "\" perch√® il dettaglio collegato \""
                             + ((riga.getDs_riga() != null) ? riga.getDs_riga() : String.valueOf(riga.getProgressivo_riga().longValue()))
-                            + "\" Ë associato a mandato.";
+                            + "\" √® associato a mandato.";
                 else
-                    emsg= "Impossibile scollegare il dettaglio \"" + ((riga.getDs_riga() != null) ? riga.getDs_riga() : String.valueOf(riga.getProgressivo_riga().longValue())) + "\" perchË associato a mandato.";
+                    emsg= "Impossibile scollegare il dettaglio \"" + ((riga.getDs_riga() != null) ? riga.getDs_riga() : String.valueOf(riga.getProgressivo_riga().longValue())) + "\" perch√® associato a mandato.";
                 throw new it.cnr.jada.comp.ApplicationException(emsg);
             }
             if (riga.isAnnullato()) {
@@ -544,16 +544,16 @@ private void controllaQuadraturaObbligazioni(ActionContext context, Documento_ge
                         "Impossibile scollegare l'accertamento \""
                             + scadenza.getEsercizio_originale().intValue()
                         	+ "/" + scadenza.getPg_accertamento().longValue()
-                            + "\" perchË il dettaglio collegato \""
+                            + "\" perch√® il dettaglio collegato \""
                             + ((riga.getDs_riga() != null) ? riga.getDs_riga() : String.valueOf(riga.getProgressivo_riga().longValue()))
-                            + "\" Ë in stato "
+                            + "\" √® in stato "
                             + riga.STATO_ANNULLATO
                             + ".";
                 else
                     emsg=
                         "Impossibile scollegare il dettaglio \""
                             + ((riga.getDs_riga() != null) ? riga.getDs_riga() : String.valueOf(riga.getProgressivo_riga().longValue()))
-                            + "\" perchË Ë in stato "
+                            + "\" perch√® √® in stato "
                             + riga.STATO_ANNULLATO
                             + ".";
                 throw new it.cnr.jada.comp.ApplicationException(emsg);
@@ -572,16 +572,16 @@ private void controllaQuadraturaObbligazioni(ActionContext context, Documento_ge
                     "Impossibile scollegare l'impegno \""
 						+ scadenza.getEsercizio_originale().intValue()
 						+ "/" + scadenza.getPg_obbligazione().longValue()
-                        + "\" perchË il dettaglio collegato \""
+                        + "\" perch√® il dettaglio collegato \""
                         + ((riga.getDs_riga() != null) ? riga.getDs_riga() : String.valueOf(riga.getProgressivo_riga().longValue()))
-                        + "\" Ë associato a mandato.";
+                        + "\" √® associato a mandato.";
                 throw new it.cnr.jada.comp.ApplicationException(emsg);
             }
             if (riga.isAnnullato()) {
                 emsg=
                     "Impossibile scollegare il dettaglio \""
                         + ((riga.getDs_riga() != null) ? riga.getDs_riga() : String.valueOf(riga.getProgressivo_riga().longValue()))
-                        + "\" perchË Ë in stato "
+                        + "\" perch√® √® in stato "
                         + riga.STATO_ANNULLATO
                         + ".";
             }
@@ -600,9 +600,9 @@ protected void controllaSelezione(java.util.Iterator selectedModels) throws it.c
         while (selectedModels.hasNext()) {
             Documento_generico_rigaBulk rigaSelected= (Documento_generico_rigaBulk) selectedModels.next();
             if (!Documento_generico_rigaBulk.STATO_INIZIALE.equals(rigaSelected.getStato_cofi()))
-                throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getDs_riga() + "\" non puÚ essere contabilizzato poichÈ Ë in stato " + rigaSelected.getStato_cofi() + ".");
+                throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getDs_riga() + "\" non pu√≤ essere contabilizzato poich√© √® in stato " + rigaSelected.getStato_cofi() + ".");
             if (rigaSelected.getTerzo()==null || rigaSelected.getTerzo().getAnagrafico()==null)
-                throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getDs_riga() + "\" non puÚ essere contabilizzato poichÈ il suo terzo non e' valido");
+                throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getDs_riga() + "\" non pu√≤ essere contabilizzato poich√© il suo terzo non e' valido");
 			try {
 				rigaSelected.validaDateCompetenza();
 			} catch (ValidationException e) {
@@ -685,7 +685,7 @@ public Forward doAddToCRUDMain_Accertamenti_DettaglioAccertamenti(ActionContext 
         //controlla che ci sia almeno una riga non contabilizzata
         if (selectedModels.isEmpty())
             throw new it.cnr.jada.comp.ApplicationException(
-                "Tutti i dettagli sono gi‡ stati contabilizzati oppure non sono compatibili i terzi.");
+                "Tutti i dettagli sono gi√† stati contabilizzati oppure non sono compatibili i terzi.");
         //richiama il selezionatore con selezione multipla
         it.cnr.jada.util.action.SelezionatoreListaBP slbp =
             (it.cnr.jada.util.action.SelezionatoreListaBP) select(context,
@@ -711,16 +711,16 @@ public Forward doAddToCRUDMain_Dettaglio(ActionContext context) {
         Documento_genericoBulk documentoGenerico= (Documento_genericoBulk) bp.getModel();
         DocumentoGenericoComponentSession component= null;
         //controlla che il documento non sia pagato
-        //forse Ë un controllo superfluo...
+        //forse √® un controllo superfluo...
         if (documentoGenerico.getStato_cofi() != null && documentoGenerico.getStato_cofi().equals(documentoGenerico.STATO_PAGATO))
-            throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile inserire righe in un documento pagato");
+            throw new it.cnr.jada.comp.ApplicationException("Non √® possibile inserire righe in un documento pagato");
 
         //per gli attivi... 
         if (documentoGenerico.isGenericoAttivo()) {
             //aggiunge la riga di dettaglio
              ((CRUDDocumentoGenericoAttivoBP) bp).getDettaglio().add(context);
             component= (DocumentoGenericoComponentSession) ((CRUDDocumentoGenericoAttivoBP) bp).createComponentSession();
-            //aggiorna le modalit‡ di pagamento
+            //aggiorna le modalit√† di pagamento
             documentoGenerico=
                 (Documento_genericoBulk) component.aggiornaModalita(
                     context.getUserContext(),
@@ -794,7 +794,7 @@ public Forward doAddToCRUDMain_Obbligazioni_DettaglioObbligazioni(ActionContext 
         }
         //controlla che ci sia almeno una riga non contabilizzata
         if (selectedModels.isEmpty())
-            throw new it.cnr.jada.comp.ApplicationException("Tutti i dettagli sono gi‡ stati contabilizzati oppure non sono compatibili i terzi.");
+            throw new it.cnr.jada.comp.ApplicationException("Tutti i dettagli sono gi√† stati contabilizzati oppure non sono compatibili i terzi.");
 
         //richiama il selezionatore con selezione multipla
         it.cnr.jada.util.action.SelezionatoreListaBP slbp=
@@ -922,7 +922,7 @@ public Forward doBringBackAddToCRUDMain_Obbligazioni_DettaglioObbligazioni(Actio
  * @param documentoGenericoRiga	
  * @param terzo	
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
  */
 public Forward doBringBackCRUDCrea_terzo(ActionContext context, Documento_generico_rigaBulk documentoGenericoRiga, TerzoBulk terzo) throws java.rmi.RemoteException {
 //controlla il terzo dopo averlo riportato dall'anagrafica
@@ -1024,7 +1024,7 @@ public Forward doBringBackRemoveToCRUDMain_Dettaglio(ActionContext context) {
  * @param documentoGenericoRiga	L'OggettoBulk padre del searchtool
  * @param banca	L'OggettoBulk selezionato dall'utente
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
  */
 public Forward doBringBackSearchListabanche(ActionContext context, Documento_generico_rigaBulk documentoGenericoRiga, BancaBulk banca) throws java.rmi.RemoteException {
 //imposta la banca selezionata
@@ -1040,11 +1040,11 @@ public Forward doBringBackSearchListabanche(ActionContext context, Documento_gen
 			component= (DocumentoGenericoComponentSession) ((CRUDDocumentoGenericoAttivoBP) bp).createComponentSession();
 		}
 
-	    if (banca != null) {//per attivi la banca Ë quella sulla uo
+	    if (banca != null) {//per attivi la banca √® quella sulla uo
 	        if (documentoGenericoRiga.getDocumento_generico().isGenericoAttivo()) {
 	            documentoGenericoRiga.setBanca_uo_cds(banca);
 	        } else
-	        //per passivi Ë quella del terzo
+	        //per passivi √® quella del terzo
 	            documentoGenericoRiga.setBanca(banca);
 	        	documentoGenericoRiga.setCessionario(component.findCessionario(context.getUserContext(), documentoGenericoRiga));
 	    }
@@ -1061,7 +1061,7 @@ public Forward doBringBackSearchListabanche(ActionContext context, Documento_gen
  * @param doc	L'OggettoBulk padre del searchtool
  * @param sospesoTrovato	L'OggettoBulk selezionato dall'utente
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
  */
 public Forward doBringBackSearchSospeso(ActionContext context,
 	Documento_genericoBulk doc,
@@ -1090,31 +1090,31 @@ public Forward doBringBackSearchSospeso(ActionContext context,
  * @param documentoGenericoRiga	L'OggettoBulk padre del searchtool
  * @param terzo	L'OggettoBulk selezionato dall'utente
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
  */
 public Forward doBringBackSearchTerzo(ActionContext context, Documento_generico_rigaBulk documentoGenericoRiga, TerzoBulk terzo) throws java.rmi.RemoteException {
 //effettua una serie di controlli di validazione del terzo selezionato
-//che puÚ essere o da ricerca o da riporta dell'anagrafica
+//che pu√≤ essere o da ricerca o da riporta dell'anagrafica
     try {
         if (terzo != null) {
             //inizializza il terzo
             basicDoResetTerzo(context, documentoGenericoRiga);
             //if (!documentoGenericoRiga.getDocumento_generico().isGenericoAttivo()) {
             //if (terzo.getAnagrafico().getTi_entita().equals(AnagraficoBulk.DIVERSI) || terzo.getTi_terzo().equals(TerzoBulk.CREDITORE)) {
-            //throw new it.cnr.jada.comp.ApplicationException("Il terzo selezionato non Ë un debitore");
+            //throw new it.cnr.jada.comp.ApplicationException("Il terzo selezionato non √® un debitore");
             //}
             //} else if (terzo.getAnagrafico().getTi_entita().equals(AnagraficoBulk.DIVERSI) || terzo.getTi_terzo().equals(TerzoBulk.DEBITORE)) {
-            //throw new it.cnr.jada.comp.ApplicationException("Il terzo selezionato non Ë un creditore");
+            //throw new it.cnr.jada.comp.ApplicationException("Il terzo selezionato non √® un creditore");
             //}
             
             //per passivi controlla che non siano 'creditori'
             if (!documentoGenericoRiga.getDocumento_generico().isGenericoAttivo()) {
                 if (terzo.getTi_terzo().equals(TerzoBulk.DEBITORE)) {
-                    throw new it.cnr.jada.comp.ApplicationException("Il terzo selezionato non puÚ essere un debitore");
+                    throw new it.cnr.jada.comp.ApplicationException("Il terzo selezionato non pu√≤ essere un debitore");
                 }            
             //per attivi controlla che non siano 'debitori'
             } else if (terzo.getTi_terzo().equals(TerzoBulk.CREDITORE)) {
-                throw new it.cnr.jada.comp.ApplicationException("Il terzo selezionato non puÚ essere un creditore");
+                throw new it.cnr.jada.comp.ApplicationException("Il terzo selezionato non pu√≤ essere un creditore");
             }
 
             //il terzo selezionato ha la data di fine rapporto antecedente alla data di registrazione
@@ -1145,7 +1145,7 @@ public Forward doBringBackSearchTerzo(ActionContext context, Documento_generico_
 }
 /**
  *calcola il totale dei dettagli per la scadenza selezionata
- *il valore Ë visualizzato del tab accertamento/obbligazioni
+ *il valore √® visualizzato del tab accertamento/obbligazioni
  *e viene preso come riferimento per l'aggiornamento in automatico
  *
  * @param context	L'ActionContext della richiesta
@@ -1154,7 +1154,7 @@ public Forward doBringBackSearchTerzo(ActionContext context, Documento_generico_
  */
 public Forward doCalcolaTotalePerAccertamento(ActionContext context, it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk accertamento) {
 //calcola il totale dei dettagli per la scadenza selezionata
-//il valore Ë visualizzato del tab accertamento/obbligazioni
+//il valore √® visualizzato del tab accertamento/obbligazioni
 //e viene preso come riferimento per l'aggiornamento in automatico
 
     it.cnr.jada.util.action.CRUDBP bp= (it.cnr.jada.util.action.CRUDBP) getBusinessProcess(context);
@@ -1171,7 +1171,7 @@ public Forward doCalcolaTotalePerAccertamento(ActionContext context, it.cnr.cont
 }
 /**
  *Calcola il totale dei dettagli per la scadenza selezionata
- *il valore Ë visualizzato del tab accertamento/obbligazioni
+ *il valore √® visualizzato del tab accertamento/obbligazioni
  *e viene preso come riferimento per l'aggiornamento in automatico
  *
  * @param context	L'ActionContext della richiesta
@@ -1180,7 +1180,7 @@ public Forward doCalcolaTotalePerAccertamento(ActionContext context, it.cnr.cont
  */
 public Forward doCalcolaTotalePerObbligazione(ActionContext context, it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazione) {
 //calcola il totale dei dettagli per la scadenza selezionata
-//il valore Ë visualizzato del tab accertamento/obbligazioni
+//il valore √® visualizzato del tab accertamento/obbligazioni
 //e viene preso come riferimento per l'aggiornamento in automatico
 
     it.cnr.jada.util.action.CRUDBP bp= (it.cnr.jada.util.action.CRUDBP) getBusinessProcess(context);
@@ -1291,7 +1291,7 @@ public Forward doCambiaDataPagamento(ActionContext context) {
                 if (riga.getTerzo().getDt_fine_rapporto() != null && riga.getTerzo().getDt_fine_rapporto().before(documentoGenerico.getData_registrazione())) {
                     documentoGenerico.setData_registrazione(dataPagamentoOld);
                     throw new it.cnr.jada.comp.ApplicationException(
-                        "La data di registrazione non Ë valida poiche' il terzo impostato per " + ((riga.getDs_riga() == null) ? "una riga" : "la riga '" + riga.getDs_riga() + "'") + " ha una data fine rapporto precedente");
+                        "La data di registrazione non √® valida poiche' il terzo impostato per " + ((riga.getDs_riga() == null) ? "una riga" : "la riga '" + riga.getDs_riga() + "'") + " ha una data fine rapporto precedente");
                 }
             }
         }
@@ -1338,7 +1338,7 @@ public Forward doCancellaLettera(ActionContext context) {
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce pi˘ di un risultato viene creato un
+ * Se la ricerca fornisce pi√π di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -1440,7 +1440,7 @@ public Forward doContabilizzaObbligazioni(ActionContext context) {
 						return handleException(
 							context,
 							new it.cnr.jada.bulk.ValidationException(
-								"Attenzione: Operazione non consentita.\nLa scadenza selezionata Ë stata precedentemente scollegata da questo documento."));
+								"Attenzione: Operazione non consentita.\nLa scadenza selezionata √® stata precedentemente scollegata da questo documento."));
 					}
 				}
 			}
@@ -1505,7 +1505,7 @@ public Forward doCreaLettera(ActionContext context) {
 			} else {
 				return handleException(
 							context,
-							new it.cnr.jada.comp.ApplicationException("La lettera per il pagamento estero Ë gi‡ stata creata!"));
+							new it.cnr.jada.comp.ApplicationException("La lettera per il pagamento estero √® gi√† stata creata!"));
 			}
 		}
 		return context.findDefaultForward();
@@ -1545,7 +1545,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
             fillModel(context);
 
             if (!bp.isEditing()) {
-                bp.setMessage("Non Ë possibile cancellare in questo momento");
+                bp.setMessage("Non √® possibile cancellare in questo momento");
             } else {
                 bp.delete(context);
                 bp.commitUserTransaction();
@@ -1572,7 +1572,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
             fillModel(context);
 
             if (!bp.isEditing()) {
-                bp.setMessage("Non Ë possibile cancellare in questo momento");
+                bp.setMessage("Non √® possibile cancellare in questo momento");
             } else {
                 bp.delete(context);
                 bp.commitUserTransaction();
@@ -1714,7 +1714,7 @@ public Forward doOnChangeModified(ActionContext context) {
         documentoGenerico.setCambio(cambioAttuale);
         if (cambioAttuale.compareTo(new java.math.BigDecimal(0))==0){
         	documentoGenerico.setCambio(vecchioCambio);
-        	throw new it.cnr.jada.comp.ApplicationException("Non Ë stato inserito un cambio valido (>0)");
+        	throw new it.cnr.jada.comp.ApplicationException("Non √® stato inserito un cambio valido (>0)");
         }
         documentoGenerico= basicCalcolaTotale(context);
         bp.setModel(context, documentoGenerico);
@@ -1752,7 +1752,7 @@ public Forward doOnCheckDisponibilitaCassaFailed(
 }
 /**
  * Metodo utilizzato per gestire la conferma dell'inserimento/modifica di una obbligazione che ha sfondato
- * la disponibilit‡ per il contratto
+ * la disponibilit√† per il contratto
  * @param context <code>ActionContext</code> in uso.
  * @param option Esito della risposta alla richiesta di sfondamento
  *
@@ -1817,7 +1817,7 @@ public Forward doOnFlagEnteChange(ActionContext context) {
 	    if (documentoGenerico.getTipo_documento()!=null &&
 		    documentoGenerico.getTipo_documento().getFl_solo_partita_giro().booleanValue()){
 			documentoGenerico.setFlagEnte(false);
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile generare dei documenti generici su ente per il tipo selezionato");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile generare dei documenti generici su ente per il tipo selezionato");
 	    	//return context.findDefaultForward();
 		}
         if (documentoGenerico.isFlagEnte()
@@ -1974,7 +1974,7 @@ public Forward doOnTipoDocumentoChange(ActionContext context) {
 
 	        if (!documentoGenerico.isDefaultValuta()) {
 		        documentoGenerico.setTipo_documento(null);
-	        	throw new it.cnr.jada.comp.ApplicationException("Attenzione, non Ë possibile selezionare questo tipo di documento per la valuta selezionata.");
+	        	throw new it.cnr.jada.comp.ApplicationException("Attenzione, non √® possibile selezionare questo tipo di documento per la valuta selezionata.");
 	        }
 
 	        if (documentoGenerico.isFlagEnte() || documentoGenerico.isPassivo_ente()) {
@@ -2594,7 +2594,7 @@ public Forward doSelezionaValuta(ActionContext context) throws it.cnr.jada.comp.
     try {
         DocumentoGenericoComponentSession component= null;
         if (documentoGenerico.getStato_cofi() != null && !documentoGenerico.getStato_cofi().equals(documentoGenerico.STATO_INIZIALE))
-            throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile modificare la valuta in un documento in stato non iniziale");
+            throw new it.cnr.jada.comp.ApplicationException("Non √® possibile modificare la valuta in un documento in stato non iniziale");
         if (!documentoGenerico.isGenericoAttivo())
             component= (DocumentoGenericoComponentSession) ((CRUDDocumentoGenericoPassivoBP) bp).createComponentSession();
         else
@@ -2792,7 +2792,7 @@ protected Forward handleException(ActionContext context, Throwable ex) {
 		if (bp instanceof CRUDDocumentoGenericoPassivoBP) {
 			Documento_genericoBulk doc = (Documento_genericoBulk)bp.getModel();
 			if (!doc.isGenericoAttivo() && doc.isDoc1210Associato()) {
-				String msg = "L'importo della lettera di pagamento 1210 supera la disponiblit‡ di cassa relativa al capitolo! Operazione interrotta.";
+				String msg = "L'importo della lettera di pagamento 1210 supera la disponiblit√† di cassa relativa al capitolo! Operazione interrotta.";
 				return super.handleException(context, new it.cnr.jada.comp.ApplicationException(msg));
 			}
 		}
@@ -2849,7 +2849,7 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
                     Documento_generico_rigaBulk dettaglio= (Documento_generico_rigaBulk) i.next();
                     if (!dettaglio.STATO_CONTABILIZZATO.equals(dettaglio.getStato_cofi()))
                         throw new it.cnr.jada.comp.ApplicationException(
-                            "Non Ë possibile scollegare il dettaglio \"" + dettaglio.getDs_riga() + "\". Questa operazione Ë permessa solo per dettagli in stato contabilizzato ");
+                            "Non √® possibile scollegare il dettaglio \"" + dettaglio.getDs_riga() + "\". Questa operazione √® permessa solo per dettagli in stato contabilizzato ");
                     dettaglio.getDocumento_generico().removeFromDocumento_generico_accertamentiHash(dettaglio);
                     dettaglio.setStato_cofi(dettaglio.STATO_INIZIALE);
                     dettaglio.setAccertamento_scadenziario(null);
@@ -2887,7 +2887,7 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
                     Documento_generico_rigaBulk dettaglio= (Documento_generico_rigaBulk) i.next();
                     if (!dettaglio.STATO_CONTABILIZZATO.equals(dettaglio.getStato_cofi()))
                         throw new it.cnr.jada.comp.ApplicationException(
-                            "Non Ë possibile scollegare il dettaglio \"" + dettaglio.getDs_riga() + "\". Questa operazione Ë permessa solo per dettagli in stato contabilizzato ");
+                            "Non √® possibile scollegare il dettaglio \"" + dettaglio.getDs_riga() + "\". Questa operazione √® permessa solo per dettagli in stato contabilizzato ");
                     dettaglio.getDocumento_generico().removeFromDocumento_generico_obbligazioniHash(dettaglio);
                     dettaglio.setStato_cofi(dettaglio.STATO_INIZIALE);
                     dettaglio.setObbligazione_scadenziario(null);
@@ -2997,7 +2997,7 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
     			if (dettagliDaInventariare != null && !dettagliDaInventariare.isEmpty()  ) 
     				return basicDoInventariaDettagli(context,doc.getTi_entrate_spese());
     			else
-    				bp.setMessage("Nessun dettaglio Ë inventariabile o tutti i dettagli inventariabili sono gi‡ stati caricati!");
+    				bp.setMessage("Nessun dettaglio √® inventariabile o tutti i dettagli inventariabili sono gi√† stati caricati!");
     				return context.findDefaultForward();
     			
     		} catch(Exception e) {
@@ -3022,7 +3022,7 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
 			if (dettagliDaInventariare != null && !dettagliDaInventariare.isEmpty()  ) 
 				return basicDoInventariaDettagli(context,doc.getTi_entrate_spese());
 			else
-				bp.setMessage("Nessun dettaglio Ë inventariabile o tutti i dettagli inventariabili sono gi‡ stati caricati!");
+				bp.setMessage("Nessun dettaglio √® inventariabile o tutti i dettagli inventariabili sono gi√† stati caricati!");
 				return context.findDefaultForward();
     		} catch(Exception e) {
     			return handleException(context,e);
@@ -3073,14 +3073,14 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
     				hook.addParameter("dettagliDaInventariare", dettagliDaInventariare);
     				return context.addBusinessProcess(ibp);
     			}
-    			bp.setMessage("Nessun dettaglio Ë inventariabile o tutti i dettagli inventariabili sono gi‡ stati caricati!");
+    			bp.setMessage("Nessun dettaglio √® inventariabile o tutti i dettagli inventariabili sono gi√† stati caricati!");
     			return context.findDefaultForward();
     		} catch(Exception e) {
     			return handleException(context,e);
     		}
     	}
     	/**
-    	 * Associa ad un buono di carico gi‡ creato i dettagli selezionati in fattura
+    	 * Associa ad un buono di carico gi√† creato i dettagli selezionati in fattura
     	 * 
     	 *
     	 * @param context	L'ActionContext della richiesta
@@ -3095,7 +3095,7 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
     			Documento_genericoBulk documento = (Documento_genericoBulk)bp.getModel();
     			
     			if ((documento.getAssociazioniInventarioHash() != null && !documento.getAssociazioniInventarioHash().isEmpty())||(documento.getHa_beniColl()))
-    				return openConfirm(context,"Alcuni dettagli sono gi‡ stati associati. Si vuole continuare?",it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,"doConfermaAssocia");
+    				return openConfirm(context,"Alcuni dettagli sono gi√† stati associati. Si vuole continuare?",it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,"doConfermaAssocia");
     					
     			return basicDoAssociaDettagli(context);
     							
@@ -3104,7 +3104,7 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
     			}
     	}
     	/**
-    	 * Associa ad un buono di carico gi‡ creato i dettagli selezionati in fattura
+    	 * Associa ad un buono di carico gi√† creato i dettagli selezionati in fattura
     	 * 
     	 *
     	 * @param context	L'ActionContext della richiesta
@@ -3119,7 +3119,7 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
     			Documento_genericoBulk documento = (Documento_genericoBulk)bp.getModel();
     			
     			if ((documento.getAssociazioniInventarioHash() != null && !documento.getAssociazioniInventarioHash().isEmpty())||(documento.getHa_beniColl()))
-    				return openConfirm(context,"Alcuni dettagli sono gi‡ stati associati. Si vuole continuare?",it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,"doConfermaAssocia");
+    				return openConfirm(context,"Alcuni dettagli sono gi√† stati associati. Si vuole continuare?",it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,"doConfermaAssocia");
     					
     			return basicDoAssociaDettagli(context);
     							
@@ -3392,7 +3392,7 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
     			hook.addParameter("dettagliDaInventariare", dettagliDaInventariare);
     			return context.addBusinessProcess(ibp);
     		}else
-    		{  //R.P. MODIFICA BENI gi‡ ASSOCIATI(IN SOSPESO)
+    		{  //R.P. MODIFICA BENI gi√† ASSOCIATI(IN SOSPESO)
     			if (documento.getCrudStatus()!=OggettoBulk.TO_BE_CREATED){
     				java.util.List dettagli=null;
     				if(bp!=null)
@@ -3420,11 +3420,11 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
     					 }
     				   }
     				if (dettagliDaInventariare.size()==0 && bp!=null){
-    					bp.setMessage("Nessun dettaglio Ë inventariabile o tutti i dettagli inventariabili sono gi‡ stati caricati!");
+    					bp.setMessage("Nessun dettaglio √® inventariabile o tutti i dettagli inventariabili sono gi√† stati caricati!");
     					return context.findDefaultForward();
     				}
     				else if (dettagliDaInventariare.size()==0 && bp_att!=null){
-    					bp_att.setMessage("Nessun dettaglio Ë inventariabile o tutti i dettagli inventariabili sono gi‡ stati caricati!");
+    					bp_att.setMessage("Nessun dettaglio √® inventariabile o tutti i dettagli inventariabili sono gi√† stati caricati!");
     					return context.findDefaultForward();
     				}
     					
@@ -3446,11 +3446,11 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
     			}
     			else{
     				if (bp!=null){
-    					bp.setMessage("Nessun dettaglio Ë inventariabile o tutti i dettagli inventariabili sono gi‡ stati caricati!");
+    					bp.setMessage("Nessun dettaglio √® inventariabile o tutti i dettagli inventariabili sono gi√† stati caricati!");
     					return context.findDefaultForward();
     				}
     				else if( bp_att!=null){
-    					bp_att.setMessage("Nessun dettaglio Ë inventariabile o tutti i dettagli inventariabili sono gi‡ stati caricati!");
+    					bp_att.setMessage("Nessun dettaglio √® inventariabile o tutti i dettagli inventariabili sono gi√† stati caricati!");
     					return context.findDefaultForward();
     				}else
        					return context.findDefaultForward();        				
@@ -3459,14 +3459,14 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
     	}
     	/**
     	 * creo una nuova istanza di buono di carico; lo inizializzo, aggiungo i dettagli
-    	 * selezionati e ne richiedo l'apertura. Se esistevano gi‡ dei buoni di carico, li
+    	 * selezionati e ne richiedo l'apertura. Se esistevano gi√† dei buoni di carico, li
     	 * elimino
     	 *
     	 * @param context	L'ActionContext della richiesta
     	 * @return Il Forward alla pagina di risposta
     	 * @throws BusinessProcessException	
     	 * @throws ComponentException	
-    	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+    	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
     	 * @throws SQLException 
     	 * @throws PersistencyException 
     	 */
@@ -3525,7 +3525,7 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
     			hook.addParameter("dettagliDaInventariare", dettagliDaInventariare);
     			return context.addBusinessProcess(ibp);
     		}
-    		bp.setMessage("Nessun dettaglio Ë inventariabile o tutti i dettagli inventariabili sono gi‡ stati caricati!");
+    		bp.setMessage("Nessun dettaglio √® inventariabile o tutti i dettagli inventariabili sono gi√† stati caricati!");
     		return context.findDefaultForward();
     	}else{
     		CRUDDocumentoGenericoAttivoBP bp = (CRUDDocumentoGenericoAttivoBP)context.getBusinessProcess();
@@ -3580,7 +3580,7 @@ private void resyncAccertamento(ActionContext context, Accertamento_scadenzarioB
     			hook.addParameter("dettagliDaInventariare", dettagliDaInventariare);
     			return context.addBusinessProcess(ibp);
     		}
-    		bp.setMessage("Nessun dettaglio Ë inventariabile o tutti i dettagli inventariabili sono gi‡ stati caricati!");
+    		bp.setMessage("Nessun dettaglio √® inventariabile o tutti i dettagli inventariabili sono gi√† stati caricati!");
     		return context.findDefaultForward();
     	}
     }

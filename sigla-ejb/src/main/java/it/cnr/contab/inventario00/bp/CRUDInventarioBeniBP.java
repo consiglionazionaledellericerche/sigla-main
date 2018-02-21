@@ -3,8 +3,8 @@ package it.cnr.contab.inventario00.bp;
 /**
  * Un BusinessProcess controller che permette di effettuare operazioni di EDIT su istanze di 
  *	Inventario_beniBulk per la modifica dei Beni presenti in Inventario.
- *	Non Ë possibile Creare o Cancellare Beni con questo controller, che ha l'unico scopo di
- *	permettere la modifica delle propriet‡ dei Beni, come ad es. la <I>Categoria</I> di appartenenza
+ *	Non √® possibile Creare o Cancellare Beni con questo controller, che ha l'unico scopo di
+ *	permettere la modifica delle propriet√† dei Beni, come ad es. la <I>Categoria</I> di appartenenza
  *	l'<I>Ubicazione</I>, la <I>Descrizione</I>, il <I>Valore Iniziale</I>, gli <I>Utilizzatori</I>, ecc.
  *	Le operazioni di Creazione, (Carico) e Cancellazione, (Scarico), sono competenza di
  *	CRUDCaricoInventarioBP, per il Carico e CRUDScaricoInventarioBP, per lo Scarico.
@@ -61,7 +61,7 @@ public CRUDInventarioBeniBP(String function) {
 }
 /**
   *  Crea una toolbar in aggiunta alla normale toolbar del CRUD.
-  *	La nuova toolbar Ë stata costruita per mostrare il tasto "Visualizza accessori".
+  *	La nuova toolbar √® stata costruita per mostrare il tasto "Visualizza accessori".
   *
   * @return toolbar i <code>Button[]</code> pulsanti creati
 **/ 
@@ -73,7 +73,7 @@ protected it.cnr.jada.util.jsp.Button[] createViewAccessoriToolbar() {
 	return toolbar;
 }
 /**
- * Restituisce il valore della propriet‡ 'utilizzatori'
+ * Restituisce il valore della propriet√† 'utilizzatori'
  *
  * @return utilizzatori <code>SimpleDetailCRUDController</code> il valore
  */
@@ -81,9 +81,9 @@ public final SimpleDetailCRUDController getUtilizzatori() {
 	return utilizzatori;
 }
 /**
- * Restituisce il valore della propriet‡ 'vutilizzatori'
+ * Restituisce il valore della propriet√† 'vutilizzatori'
  *
- * @return Il valore della propriet‡ 'vutilizzatori'
+ * @return Il valore della propriet√† 'vutilizzatori'
  */
 public final SimpleDetailCRUDController getVutilizzatori() {
 	return vUtilizzatori;
@@ -145,7 +145,7 @@ public OggettoBulk initializeModelForEdit(ActionContext context,OggettoBulk bulk
 }
 /**
   * Nascondo il pulsante di "Elimina", nel form di Gestione del Bene
-  *	Non Ë possibile cancellare un Bene presente sul DB, se non <I>scaricandolo totalmente</I>,
+  *	Non √® possibile cancellare un Bene presente sul DB, se non <I>scaricandolo totalmente</I>,
   *	con un Buono di Scarico.
   *
   * @return <code>boolean</code> TRUE
@@ -156,7 +156,7 @@ public boolean isDeleteButtonHidden() {
 }
 /**
   * Nascondo il pulsante di "Nuovo", nel form di Gestione del Bene
-  *	Non Ë possibile creare un Bene, se non con un Buono di Carico
+  *	Non √® possibile creare un Bene, se non con un Buono di Carico
   *
   * @return <code>boolean</code> TRUE
 **/
@@ -165,8 +165,8 @@ public boolean isNewButtonHidden() {
 	return true;
 }
 /**
- * Restituisce TRUE se il bene NON Ë soggetto ad Ammortamento. E' l'utente a decidere, nel
- *	tab "Ammortamento", se un bene Ë soggetto ad ammortamento oppure no, selezionando
+ * Restituisce TRUE se il bene NON √® soggetto ad Ammortamento. E' l'utente a decidere, nel
+ *	tab "Ammortamento", se un bene √® soggetto ad ammortamento oppure no, selezionando
  *	il flag <I>Soggetto ad Ammortamento</I>.
  *
  * @return <code>boolean</code>
@@ -181,7 +181,7 @@ public boolean isNonAmmortizzato() {
 	return false;
 }
 /**
- * Restituisce true se la Categoria Gruppo alla quale appartiene il Bene, NON Ë soggetta
+ * Restituisce true se la Categoria Gruppo alla quale appartiene il Bene, NON √® soggetta
  *	ad ammortamento (CATEGORIA_GRUPPPO_INVENT.FL_AMMORTAMENTO==FALSE)
  *
  * @return <code>boolean</code>
@@ -196,7 +196,7 @@ public boolean isNotAmmortizzabile() {
 	return true;
 }
 /**
- * Restituisce TRUE se la Categoria Gruppo Inventario alla quale appartiene il bene Ë una
+ * Restituisce TRUE se la Categoria Gruppo Inventario alla quale appartiene il bene √® una
  *	Pubblicazione.
  *
  * @return <code>boolean</code>
@@ -206,7 +206,7 @@ public boolean isPubblicazione() {
 	return isPubblicazione;
 }
 /**
- * Determina se il campo relativo al <code>Valore Iniziale</code> Ë READONLY.
+ * Determina se il campo relativo al <code>Valore Iniziale</code> √® READONLY.
  * Oltre alle normali condizioni, restituisce <code>true</code>, se il bene proviene da migrazione, (FL_MIGRATO='Y').
  *
  * @return boolean
@@ -247,7 +247,7 @@ public boolean isSaveButtonEnabled() {
 }
 /**
   * Abilito il pulsante di "Visualizza accessori", nel form di Gestione del Bene.
-  *	Restituisce TRUE se il bene NON Ë a sua volta un bene accessorio.
+  *	Restituisce TRUE se il bene NON √® a sua volta un bene accessorio.
   *
   * @return <code>boolean</code> TRUE
 **/
@@ -289,7 +289,7 @@ public void resetTabs() {
 	setTab("tab","tabInventarioBeniTestata");
 }
 /**
- * Imposta il valore della propriet‡ 'isPubblicazione'
+ * Imposta il valore della propriet√† 'isPubblicazione'
  *
  * @param newIsPubblicazione <code>boolean</code> il nuovo valore
  */
@@ -300,8 +300,8 @@ public void setIsPubblicazione(boolean newIsPubblicazione) {
 /**
  * Metodo invocato dal SimpleDetailCRUDController vUtilizzatori quando si passa
  * da un CdR utilizzatore all'altro.
- * Controlla se la percentuale di utilizzo delle linee di attivit‡, per 
- * CdR, Ë valida.
+ * Controlla se la percentuale di utilizzo delle linee di attivit√†, per 
+ * CdR, √® valida.
  *
  * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
  * @param bulk il <code>OggettoBulk</code> Bene che si sta modificando
@@ -319,31 +319,31 @@ public void validate_Percentuali_LA(ActionContext context,OggettoBulk model) thr
 		while (i.hasNext()){
 			Inventario_utilizzatori_laBulk utilizzatore_LA = (Inventario_utilizzatori_laBulk)i.next();
 			
-			// Controlla che sia stata specificata la line di Attivit‡
+			// Controlla che sia stata specificata la line di Attivit√†
 			if (utilizzatore_LA.getLinea_attivita()==null || utilizzatore_LA.getLinea_attivita().getCd_linea_attivita() == null){
 				throw new ValidationException ("GAE non valido. Indicare sia il codice del GAE, sia la sua percentuale di utilizzo");
 			}
 			
-			// Controlla che non vi siano Linee di Attivit‡ DUPLICATE
+			// Controlla che non vi siano Linee di Attivit√† DUPLICATE
 			if (BulkCollections.containsByPrimaryKey(cdr,utilizzatore_LA.getLinea_attivita())){
-				throw new ValidationException ("GAE duplicato. Non Ë possibile indicare pi˘ volte uno stesso GAE");
+				throw new ValidationException ("GAE duplicato. Non √® possibile indicare pi√π volte uno stesso GAE");
 			}
 			else {
 				cdr.add(utilizzatore_LA.getLinea_attivita());
 			}
 			
-			// Controlla che sia stata indicata una PERCENTUALE DI UTILIZZO VALIDA per Linea di Attivit‡
+			// Controlla che sia stata indicata una PERCENTUALE DI UTILIZZO VALIDA per Linea di Attivit√†
 			if (utilizzatore_LA.getPercentuale_utilizzo_la()!=null){
 				percentuale_utilizzo_LA = percentuale_utilizzo_LA.add(utilizzatore_LA.getPercentuale_utilizzo_la());
 			}
 			else{
-				throw new ValidationException ("La percentuale di utilizzo per i GAE non puÚ essere nulla");
+				throw new ValidationException ("La percentuale di utilizzo per i GAE non pu√≤ essere nulla");
 			}
 		}
 
-		// Controlla che il totale delle percentuali di utilizzo delle Linee di Attivit‡ sia 100
+		// Controlla che il totale delle percentuali di utilizzo delle Linee di Attivit√† sia 100
 		if (percentuale_utilizzo_LA.compareTo(cento)!=0)
-			throw new ValidationException ("La percentuale di utilizzo per i GAE non Ë valida");
+			throw new ValidationException ("La percentuale di utilizzo per i GAE non √® valida");
 	}
 }
 /**

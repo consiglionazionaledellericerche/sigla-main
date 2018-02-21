@@ -18,8 +18,8 @@ public Tipo_rapportoHome(java.sql.Connection conn,PersistentCache persistentCach
  *  
  *  Parametri:
  *	 - vTerzo
- *	 - data inizio validit‡ rapporto
- *	 - data fine validit‡ rapporto
+ *	 - data inizio validit√† rapporto
+ *	 - data fine validit√† rapporto
  *
 **/
 public java.util.List findTipiRapporto(it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk vTerzo, java.sql.Timestamp dataIni, java.sql.Timestamp dataFin) throws PersistencyException{
@@ -56,8 +56,8 @@ public java.util.List findTipiRapporto(it.cnr.contab.compensi00.docs.bulk.V_terz
  *  Parametri:
  *	 - vTerzo
  *   - cdTipoRapporto
- *	 - data inizio validit‡ rapporto
- *	 - data fine validit‡ rapporto
+ *	 - data inizio validit√† rapporto
+ *	 - data fine validit√† rapporto
 **/
 public Tipo_rapportoBulk findTipoRapporto(it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk vTerzo, String cdTipoRapporto, java.sql.Timestamp dataIni, java.sql.Timestamp dataFin) throws PersistencyException{
 
