@@ -44,7 +44,7 @@ public class ConsImpegniAssociazioniAction extends ConsultazioniAction {
 					claOR.addClause("AND","cd_cds",SQLBuilder.EQUALS,wpb.getCd_cds());
 					//claOR.addClause("AND","esercizio",SQLBuilder.EQUALS,wpb.getEsercizio());
 					claOR.addClause("AND","esercizio_obbligazione",SQLBuilder.EQUALS,wpb.getEsercizio());
-					claOR.addClause("AND","esercizio_originale",SQLBuilder.EQUALS,wpb.getEsercizio_originale());
+					claOR.addClause("AND","esercizio_ori_obbligazione",SQLBuilder.EQUALS,wpb.getEsercizio_originale());
 					claOR.addClause("AND","pg_obbligazione",SQLBuilder.EQUALS,wpb.getPg_obbligazione());
 					claOR.addClause("AND","pg_obbligazione_scadenzario",SQLBuilder.EQUALS,wpb.getPg_obbligazione_scadenzario());
 					clauses = clauses.or(clauses,claOR);
