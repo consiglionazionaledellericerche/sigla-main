@@ -50,7 +50,7 @@ public class EsercizioComponent extends it.cnr.jada.comp.CRUDComponent implement
  *
  * Nome: aggiorna cassa iniziale
  * Pre: l'utente ha richiesto la chiusura di un esercizio contabile per un cds
- *      il sistema ha verificato che l'esercizio Ë chiudibile (metodo 'verificaChiudibilitaEsercizio')
+ *      il sistema ha verificato che l'esercizio √® chiudibile (metodo 'verificaChiudibilitaEsercizio')
  * Post: il sistema imposta l'importo della cassa iniziale dell'esercizio successivo a quello che viene chiuso
  *
  * 09/02/2004 - NON PIU' UTILIZZATO
@@ -88,18 +88,18 @@ protected void aggiornaIm_cassa_iniziale( UserContext userContext, EsercizioBulk
  * Pre-post-conditions:
  *
  * Nome: Apertura PdG da parte dell'ENTE
- * Pre:  La richiesta di aprire i piani di gestione Ë stata fatta dal CDS ENTE e l'esercizio Ë in stato STATO_INIZIALE = 'I'
+ * Pre:  La richiesta di aprire i piani di gestione √® stata fatta dal CDS ENTE e l'esercizio √® in stato STATO_INIZIALE = 'I'
  * Post: Viene richiamata la stored procedure che aggiorna a STATO_PDG_APERTO = 'G' lo stato del PDG ENTE 
  * 
  * Nome: Apertura PDG da parte di CDS non ENTE da stato = a STATO_INIZIALE
- * Pre:	 La richiesta di aprire i propri piani di gestione Ë stata fatta da un CDS non ENTE per un esercizio in STATO_INIZIALE = 'I'
- * Pre:  Lo stato dell'esercizio per l'ENTE Ë in STATO_PDG_APERTO = 'G'
+ * Pre:	 La richiesta di aprire i propri piani di gestione √® stata fatta da un CDS non ENTE per un esercizio in STATO_INIZIALE = 'I'
+ * Pre:  Lo stato dell'esercizio per l'ENTE √® in STATO_PDG_APERTO = 'G'
  * Post: Viene richiamata la stored procedure che apre tutti i piani di gestione dei cdr appartenenti al CDS e viene aggiornato
  *       lo stato dell'esercizio selezionato dal valore STATO_INIZIALE al valore STATO_PDG_APERTO per il CDS in processo 
  *
  * Nome: Apertura PDG da parte di CDS non ENTE da stato DIVERSO da STATO_INIZIALE
- * Pre:	 La richiesta di aprire i propri piani di gestione Ë stata fatta da un CDS non ENTE per un esercizio in stato DIVERSO da STATO_INIZIALE
- * Pre:  Lo stato dell'esercizio per l'ENTE Ë in STATO_PDG_APERTO = 'G'
+ * Pre:	 La richiesta di aprire i propri piani di gestione √® stata fatta da un CDS non ENTE per un esercizio in stato DIVERSO da STATO_INIZIALE
+ * Pre:  Lo stato dell'esercizio per l'ENTE √® in STATO_PDG_APERTO = 'G'
  * Post: Viene richiamata la stored procedure che apre tutti i piani di gestione dei cdr appartenenti al CDS
  *
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -114,7 +114,7 @@ public EsercizioBulk apriPianoDiGestione( UserContext userContext,EsercizioBulk 
 		EsercizioBulk esercizioEnte = getEsercizioEnte(userContext,esercizio);
 
         if(!esercizio.getCd_cds().equals(esercizioEnte.getCd_cds()) && esercizioEnte.getSt_apertura_chiusura().equals(esercizio.STATO_INIZIALE))
-         throw handleException(new ApplicationException("Il piano di gestione non Ë stato ancora aperto dall'Ente"));
+         throw handleException(new ApplicationException("Il piano di gestione non √® stato ancora aperto dall'Ente"));
 
         EsercizioHome home = (EsercizioHome)getHome(userContext, EsercizioBulk.class);
         home.callApriPdGProcedure(esercizio);
@@ -135,24 +135,24 @@ public EsercizioBulk apriPianoDiGestione( UserContext userContext,EsercizioBulk 
  * Pre-post-conditions:
  *
  * Nome: Modifica stato Esercizio iniziale
- * Pre:  La richiesta di modifica dello stato di un Esercizio con stato 'iniziale' Ë stata generata
+ * Pre:  La richiesta di modifica dello stato di un Esercizio con stato 'iniziale' √® stata generata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente ("Non e' possibile cambiare lo stato iniziale");
  *
  * Nome: Modifica stato Esercizio a aperto - OK
- * Pre:  La richiesta di modifica dello stato di un Esercizio da 'Piano di gestione aperto' a 'aperto' Ë stata generata 
+ * Pre:  La richiesta di modifica dello stato di un Esercizio da 'Piano di gestione aperto' a 'aperto' √® stata generata 
  *       e lo stato dell'esercizio precedente per il cds corrente e' chiuso ( provvisoriamente o definitivamente) e 
  *       non esistono cds con (esercizio - 2) in stato diverso da chiuso (provvisoriamente o definitivamente)
  * Post: Lo stato dell'Esercizio viene aggiornato ad 'aperto'
  *
  * Nome: Modifica stato Esercizio a aperto - Errore 1
- * Pre:  La richiesta di modifica dello stato di un Esercizio da 'iniziale' a 'aperto' Ë stata generata e lo stato
+ * Pre:  La richiesta di modifica dello stato di un Esercizio da 'iniziale' a 'aperto' √® stata generata e lo stato
  *       dell'esercizio precedente per il cds corrente non e' chiuso ( provvisoriamente o definitivamente)
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
- *       visualizzare all'utente ("L'esercizio precedente non Ë stato chiuso");
+ *       visualizzare all'utente ("L'esercizio precedente non √® stato chiuso");
  *
  * Nome: Modifica stato Esercizio a aperto - Errore 2
- * Pre:  La richiesta di modifica dello stato di un Esercizio da 'iniziale' a 'aperto' Ë stata generata e esiste almeno
+ * Pre:  La richiesta di modifica dello stato di un Esercizio da 'iniziale' a 'aperto' √® stata generata e esiste almeno
  *       un cds per il quale l'esercizio del secondo anno precedente (esercizio -2) e' in stato non chiuso
  *       provvisoriamente o definitivamente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
@@ -172,17 +172,17 @@ public EsercizioBulk apriPianoDiGestione( UserContext userContext,EsercizioBulk 
  *       visualizzare all'utente ("L'esercizio dell'Ente risulta in stato chiuso.");
  * 
  * Nome: Modifica stato Esercizio chiuso
- * Pre:  La richiesta di modifica dello stato di un Esercizio con stato 'chiuso' Ë stata generata
- *       la procedura che verifica la chiudibilit‡ dell'esercizio ritorna che l'esercizio non Ë chiudibile
+ * Pre:  La richiesta di modifica dello stato di un Esercizio con stato 'chiuso' √® stata generata
+ *       la procedura che verifica la chiudibilit√† dell'esercizio ritorna che l'esercizio non √® chiudibile
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente ("Non e' possibile cambiare lo stato");
  *
  * Nome: Modifica stato Esercizio a chiuso 
  * Pre:  La richiesta di modifica dello stato di un Esercizio a 'chiuso'
- *       Ë stata generata
- *       la procedura che verifica la chiudibilit‡ dell'esercizio ritorna che l'esercizio Ë chiudibile 
+ *       √® stata generata
+ *       la procedura che verifica la chiudibilit√† dell'esercizio ritorna che l'esercizio √® chiudibile 
  * Post: Lo stato dell'Esercizio e' stato aggiornato e l'importo della cassa iniziale dell'esercizio successivo
- *       Ë stato impostato dalla stessa procedura che verifica lachiudibilit‡ dell'esercizio
+ *       √® stato impostato dalla stessa procedura che verifica lachiudibilit√† dell'esercizio
  *
  * @param	uc	lo UserContext che ha generato la richiesta
  * @param	bulk l' EsercizioBulk il cui stato deve essere modificato
@@ -197,10 +197,10 @@ public EsercizioBulk cambiaStatoConBulk( UserContext userContext,EsercizioBulk e
 /*
 		if ( esercizio.getSt_apertura_chiusura().equals(esercizio.STATO_CHIUSO_DEF) ||
 			 esercizio.getSt_apertura_chiusura().equals(esercizio.STATO_INIZIALE))
-			throw new it.cnr.jada.comp.ApplicationException( "Non Ë possibile cambiare lo stato");
+			throw new it.cnr.jada.comp.ApplicationException( "Non √® possibile cambiare lo stato");
 */
 		if (  esercizio.getSt_apertura_chiusura().equals(esercizio.STATO_INIZIALE))
-			throw new it.cnr.jada.comp.ApplicationException( "Non Ë possibile cambiare lo stato");
+			throw new it.cnr.jada.comp.ApplicationException( "Non √® possibile cambiare lo stato");
 
 		String next =(String)EsercizioBulk.getProssimoStato().get( esercizio.getSt_apertura_chiusura());
 
@@ -210,7 +210,7 @@ public EsercizioBulk cambiaStatoConBulk( UserContext userContext,EsercizioBulk e
 		{
 //			EsercizioBulk esercizioPrecedente = esercizioHome.findEsercizioPrecedente( esercizio );
 //			if ( esercizioPrecedente != null && !esercizioPrecedente.isChiuso() )
-//				throw new it.cnr.jada.comp.ApplicationException( "L'esercizio precedente non Ë stato chiuso." );
+//				throw new it.cnr.jada.comp.ApplicationException( "L'esercizio precedente non √® stato chiuso." );
 			if ( !esercizioHome.verificaEsercizi2AnniPrecedenti( esercizio ) )
 				throw new it.cnr.jada.comp.ApplicationException( "Esistono esercizi non chiusi per l'anno " + new Integer(esercizio.getEsercizio().intValue() - 2) );
 		}
@@ -244,7 +244,7 @@ public EsercizioBulk cambiaStatoConBulk( UserContext userContext,EsercizioBulk e
 		{
 			EsercizioBulk esercizioPrecedente = esercizioHome.findEsercizioPrecedente( esercizio );
 			if ( esercizioPrecedente != null && !esercizioPrecedente.isChiuso() )
-				throw new it.cnr.jada.comp.ApplicationException( "E' impossibile mettere in stato chiuso perchË l'esercizio precedente non Ë ancora chiuso." );
+				throw new it.cnr.jada.comp.ApplicationException( "E' impossibile mettere in stato chiuso perch√® l'esercizio precedente non √® ancora chiuso." );
 			verificaChiudibilitaEsercizio( userContext, esercizio );
 //			aggiornaIm_cassa_iniziale( userContext, esercizio );
 		}
@@ -265,28 +265,28 @@ public EsercizioBulk cambiaStatoConBulk( UserContext userContext,EsercizioBulk e
  * Pre-post-conditions:
  *
  * Nome: Creazione dell'esercizio per l'ente
- * Pre:  La richiesta di creazione dell'esercizio per l'ente Ë stata generata
+ * Pre:  La richiesta di creazione dell'esercizio per l'ente √® stata generata
  * Post: L'esercizio dell'ente e' stato creato con stato 'iniziale'
  *
- * Nome: Creazione di un esercizio consecutivo ad un esercizio gi‡ creato per cds ente
- * Pre:  La richiesta di creazione di un esercizio consecutivo ad un esercizio gi‡ creato in precedenza
- *       Ë stata generata
+ * Nome: Creazione di un esercizio consecutivo ad un esercizio gi√† creato per cds ente
+ * Pre:  La richiesta di creazione di un esercizio consecutivo ad un esercizio gi√† creato in precedenza
+ *       √® stata generata
  * Post: Il nuovo Esercizio e' stato creato con stato 'iniziale'
  *
- * Nome: Creazione di un esercizio consecutivo ad un esercizio gi‡ creato per cds diverso da ente e lo stesso esercizio esiste per l'ente
- * Pre:  La richiesta di creazione di un esercizio consecutivo ad un esercizio gi‡ creato per cds diverso da ente e lo stesso esercizio esiste per l'ente
- *       Ë stata generata
+ * Nome: Creazione di un esercizio consecutivo ad un esercizio gi√† creato per cds diverso da ente e lo stesso esercizio esiste per l'ente
+ * Pre:  La richiesta di creazione di un esercizio consecutivo ad un esercizio gi√† creato per cds diverso da ente e lo stesso esercizio esiste per l'ente
+ *       √® stata generata
  * Post: Il nuovo Esercizio e' stato creato con stato 'iniziale'
  *
- * Nome: Creazione di un esercizio consecutivo ad un esercizio gi‡ creato per cds diverso da ente e lo stesso esercizio non esiste per l'ente
- * Pre:  La richiesta di creazione di un esercizio consecutivo ad un esercizio gi‡ creato per cds diverso da ente e lo stesso esercizio non esiste per l'ente
- *       Ë stata generata
+ * Nome: Creazione di un esercizio consecutivo ad un esercizio gi√† creato per cds diverso da ente e lo stesso esercizio non esiste per l'ente
+ * Pre:  La richiesta di creazione di un esercizio consecutivo ad un esercizio gi√† creato per cds diverso da ente e lo stesso esercizio non esiste per l'ente
+ *       √® stata generata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
- * Nome: Creazione di un esercizio non consecutivo agli esercizi gi‡ creati
- * Pre:  La richiesta di creazione di un esercizio non consecutivo agli esercizi gi‡ creat in precedenza
- *       Ë stata generata
+ * Nome: Creazione di un esercizio non consecutivo agli esercizi gi√† creati
+ * Pre:  La richiesta di creazione di un esercizio non consecutivo agli esercizi gi√† creat in precedenza
+ *       √® stata generata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
@@ -306,7 +306,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 		getEsercizioEnte(userContext, esercizio);
 		
 		it.cnr.jada.persistency.sql.SQLBuilder sql = esercizioHome.createSQLBuilder();
-		//cerco se la chiave e' gi‡ presente nel db
+		//cerco se la chiave e' gi√† presente nel db
 		sql.addClause( "AND", "cd_cds", sql.EQUALS, esercizio.getCd_cds());
 		sql.addClause( "AND", "esercizio", sql.EQUALS, esercizio.getEsercizio());
 		// se non e' presente la chiave nel db
@@ -339,7 +339,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
  *
  *-- Esplosione della struttura organizzativa nel nuovo anno
  *-- (Funzione di aggiornamento di VOCE_F per la parte strutturale legata a CDS/UO e CDR validi nell'esercizio in definizione)
- *-- Funzione NON invocabile da trigger AI su ESERCIZIO perchË utilizza le viste V_XXXX_VALIDX sulla struttura organizzativa
+ *-- Funzione NON invocabile da trigger AI su ESERCIZIO perch√® utilizza le viste V_XXXX_VALIDX sulla struttura organizzativa
  *--
  *--  aEs -> codice esercizio
  *-- aCdCDS -> codice CDS
@@ -391,7 +391,7 @@ private void creaEsplVociEsercizio(UserContext aUC, EsercizioBulk aEsBulk)  thro
  * Pre-post-conditions:
  *
  * Nome: Cancellazione Esercizio
- * Pre:  La richiesta di cancellazione di un Esercizio Ë stata generata
+ * Pre:  La richiesta di cancellazione di un Esercizio √® stata generata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente ("Non e' possibile cancellare un Esercizio");
  *
@@ -412,14 +412,14 @@ protected BigDecimal findIm_disp_cassa(UserContext userContext,EsercizioBulk ese
       EnteBulk aEnte = (EnteBulk)getHome(userContext,EnteBulk.class).findAll().get(0);
       BigDecimal imDispCassa;
 
-		// Se l'esercizio in processo Ë per l'ENTE ritorno con successo
+		// Se l'esercizio in processo √® per l'ENTE ritorno con successo
       if( esercizio.getCd_cds().equals(aEnte.getCd_unita_organizzativa()))
       {
 	      SQLBuilder sql = getHome( userContext, V_disp_cassa_cnrBulk.class ).createSQLBuilder();
 	      sql.addSQLClause( "AND", "ESERCIZIO", sql.EQUALS, esercizio.getEsercizio() );
 	      List result = getHome( userContext, V_disp_cassa_cnrBulk.class ).fetchAll(sql);
 	      if ( result == null || result.size() == 0 )
-	      	throw new ApplicationException(" Disponibilit‡ di cassa dell'Ente per esercizio " + esercizio.getEsercizio() + " non Ë stata trovata" );
+	      	throw new ApplicationException(" Disponibilit√† di cassa dell'Ente per esercizio " + esercizio.getEsercizio() + " non √® stata trovata" );
 	      imDispCassa = ((V_disp_cassa_cnrBulk) result.get(0)).getIm_disponibilta_cassa();
       }
       else //per cds
@@ -429,7 +429,7 @@ protected BigDecimal findIm_disp_cassa(UserContext userContext,EsercizioBulk ese
 	      sql.addSQLClause( "AND", "cd_cdS", sql.EQUALS, esercizio.getCd_cds() );	      
 	      List result = getHome( userContext, V_disp_cassa_cdsBulk.class ).fetchAll(sql);
 	      if ( result == null || result.size() == 0 )
-	      	throw new ApplicationException(" Disponibilit‡ di cassa del Cds " + esercizio.getCd_cds() + " per esercizio " + esercizio.getEsercizio() + " non Ë stata trovata" );
+	      	throw new ApplicationException(" Disponibilit√† di cassa del Cds " + esercizio.getCd_cds() + " per esercizio " + esercizio.getEsercizio() + " non √® stata trovata" );
 	      imDispCassa = ((V_disp_cassa_cdsBulk) result.get(0)).getIm_disponibilita_cassa();
       }
 		return imDispCassa;
@@ -464,7 +464,7 @@ protected EsercizioBulk getEsercizioEnte( UserContext userContext, EsercizioBulk
 		 
 		aEnte=(EnteBulk)aL.get(0);
 
-		// Se l'esercizio in processo Ë per l'ENTE ritorno con successo
+		// Se l'esercizio in processo √® per l'ENTE ritorno con successo
         if(esercizio.getCd_cds().equals(aEnte.getCd_unita_organizzativa()))
          return esercizio;
 			

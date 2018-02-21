@@ -78,11 +78,11 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			if (proceduraAnno !=  null)
 				if (proceduraAnno.getImporto_utilizzato() != null &&
 						proceduraAnno.getImporto_utilizzato().compareTo(Utility.ZERO)!=0)
-					throw new ValidationException("Eliminazione non possibile!\nL'importo relativo all'anno selezionato risulta gi‡ utilizzato.");
+					throw new ValidationException("Eliminazione non possibile!\nL'importo relativo all'anno selezionato risulta gi√† utilizzato.");
 			if (proceduraAnno.getIncarichi_procedura() != null &&
 					(proceduraAnno.getIncarichi_procedura().getFaseProcesso().compareTo(Incarichi_proceduraBulk.FASE_INSERIMENTO_INCARICO)==1))
 				if (proceduraAnno.getImporto_iniziale()!=null && proceduraAnno.getImporto_iniziale().compareTo(Utility.ZERO)!=0)
-					throw new ValidationException("Eliminazione non possibile!\nLa procedura di conferimento incarico Ë gi‡ stata pubblicata.\nE' possibile solo modificare l'importo complessivo.");
+					throw new ValidationException("Eliminazione non possibile!\nLa procedura di conferimento incarico √® gi√† stata pubblicata.\nE' possibile solo modificare l'importo complessivo.");
 			super.validateForDelete(actioncontext, oggettobulk);
 		}
 	};
@@ -535,11 +535,11 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			if (incaricoAnno !=  null)
 				if (incaricoAnno.getImporto_utilizzato() != null &&
 						incaricoAnno.getImporto_utilizzato().compareTo(Utility.ZERO)!=0)
-					throw new ValidationException("Eliminazione non possibile!\nL'importo relativo all'anno selezionato risulta gi‡ utilizzato.");
+					throw new ValidationException("Eliminazione non possibile!\nL'importo relativo all'anno selezionato risulta gi√† utilizzato.");
 			if (incaricoAnno.getIncarichi_repertorio().getIncarichi_procedura() != null &&
 					(incaricoAnno.getIncarichi_repertorio().getIncarichi_procedura().getFaseProcesso().compareTo(Incarichi_proceduraBulk.FASE_INSERIMENTO_INCARICO)==1))
 				if (incaricoAnno.getImporto_iniziale()!=null && incaricoAnno.getImporto_iniziale().compareTo(Utility.ZERO)!=0)
-					throw new ValidationException("Eliminazione non possibile!\nLa procedura di conferimento incarico Ë gi‡ stata pubblicata.\nE' possibile solo modificare l'importo complessivo.");
+					throw new ValidationException("Eliminazione non possibile!\nLa procedura di conferimento incarico √® gi√† stata pubblicata.\nE' possibile solo modificare l'importo complessivo.");
 			super.validateForDelete(actioncontext, oggettobulk);
 		}
 	};
@@ -680,20 +680,20 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 					if (!varia.equalsByPrimaryKey(variazione))
 						if (varia.getStato().equals(Incarichi_archivioBulk.STATO_VALIDO) &&
 								varia.getTipo_variazione().equals(variazione.getTipo_variazione()))
-							throw new ValidationException("Attenzione: non Ë possibile inserire pi˘ di una variazione di tipo \""+Incarichi_repertorio_varBulk.tipo_variazioneForEnteKeys.get(varia.getTipo_variazione())+"\"");
+							throw new ValidationException("Attenzione: non √® possibile inserire pi√π di una variazione di tipo \""+Incarichi_repertorio_varBulk.tipo_variazioneForEnteKeys.get(varia.getTipo_variazione())+"\"");
 				}
 			}
 			if (variazione.isVariazioneIntegrazioneIncarico()){
 				if (variazione.isVariazioneIntegrazioneIncaricoTransitorio()){
 					if (variazione.isDefinitivo()) {
 						if (variazione.getDt_variazione()==null)
-							throw new ValidationException("Attenzione: Ë obbligatorio indicare la data di stipula della variazione.");
+							throw new ValidationException("Attenzione: √® obbligatorio indicare la data di stipula della variazione.");
 						if (variazione.getDt_fine_validita()==null)
-							throw new ValidationException("Attenzione: Ë obbligatorio indicare la nuova data di fine incarico.");
+							throw new ValidationException("Attenzione: √® obbligatorio indicare la nuova data di fine incarico.");
 					}
 					if (variazione.getImporto_lordo()==null||
 							variazione.getImporto_lordo().compareTo(BigDecimal.ZERO)==0)
-						throw new ValidationException("Attenzione: Ë obbligatorio indicare l'importo dell'integrazione del lordo percipiente.");
+						throw new ValidationException("Attenzione: √® obbligatorio indicare l'importo dell'integrazione del lordo percipiente.");
 				} else {
 					if (variazione.getDt_fine_validita()==null &&
 							(variazione.getImporto_lordo()==null||variazione.getImporto_lordo().compareTo(BigDecimal.ZERO)==0))
@@ -701,12 +701,12 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				}
 			}
 			else if (variazione.getImporto_complessivo()==null || variazione.getImporto_complessivo().compareTo(BigDecimal.ZERO)==0)
-				throw new ValidationException("Attenzione: Ë obbligatorio indicare l'importo dell'integrazione della \"Spesa complessiva presunta calcolata\".");
+				throw new ValidationException("Attenzione: √® obbligatorio indicare l'importo dell'integrazione della \"Spesa complessiva presunta calcolata\".");
 			else if (!variazione.isAnnullato() && variazione.isVariazioneIntegrazioneContributi()){
 				java.math.BigDecimal prcIncrementoVar = Utility.nvl(variazione.getIncarichi_repertorio().getIncarichi_procedura().getTipo_incarico().getPrc_incremento_var());
 				BigDecimal importoMaxVar = variazione.getIncarichi_repertorio().getIncarichi_procedura().getImporto_complessivo().multiply(prcIncrementoVar.divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_EVEN));
 				if (variazione.getImporto_complessivo().compareTo(importoMaxVar)==1)
-					throw new ValidationException("Attenzione: la variazione massima consentita per \"Adeguamento Incremento Aliquote\" Ë " + new it.cnr.contab.util.EuroFormat().format(importoMaxVar)+".");
+					throw new ValidationException("Attenzione: la variazione massima consentita per \"Adeguamento Incremento Aliquote\" √® " + new it.cnr.contab.util.EuroFormat().format(importoMaxVar)+".");
 			}
 		};
 		/*
@@ -1367,7 +1367,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			}
 		}
 
-		/*serve per impostare la mappa con il contratto creato gi‡ evidenziato*/
+		/*serve per impostare la mappa con il contratto creato gi√† evidenziato*/
 		if (((Incarichi_proceduraBulk)getModel()).getNr_contratti().compareTo(1)==0 &&
 				!((Incarichi_proceduraBulk)getModel()).getIncarichi_repertorioColl().isEmpty()){
 			getIncarichiColl().setModelIndex(actioncontext, 0);
@@ -1422,7 +1422,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 		try {
 			Incarichi_proceduraBulk  procedura = (Incarichi_proceduraBulk)getModel();
 			if (procedura.getIncarichi_repertorioValidiColl().size()==0)
-				throw new it.cnr.jada.comp.ApplicationException("Completare le informazioni relative al terzo al quale Ë stato conferito l'incarico.");
+				throw new it.cnr.jada.comp.ApplicationException("Completare le informazioni relative al terzo al quale √® stato conferito l'incarico.");
 
 			if (procedura.getNr_contratti().compareTo(procedura.getIncarichi_repertorioValidiColl().size())==-1)
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione! Risultano collegati alla procedura un numero di contratti definitivi " + procedura.getIncarichi_repertorioValidiColl().size() + " superiore a quello consentito.");
@@ -1723,7 +1723,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 
 		if (procedura.getNr_contratti().compareTo(1)==0){
 			if (procedura.getIncarichi_repertorioColl().size()>1)
-				throw new BusinessProcessException( "Attenzione! Risultano collegati pi˘ contratti alla procedura che ne prevede uno solo.");
+				throw new BusinessProcessException( "Attenzione! Risultano collegati pi√π contratti alla procedura che ne prevede uno solo.");
 
 			Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)procedura.getIncarichi_repertorioColl().get(0);
 
@@ -1952,14 +1952,14 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk) getModel();
 
 			if (procedura.getNr_contratti().compareTo(1)!=0)
-				throw new it.cnr.jada.comp.ApplicationException( "Funzionalit‡ consentita solo per procedure di conferimento mono-incarico.");
+				throw new it.cnr.jada.comp.ApplicationException( "Funzionalit√† consentita solo per procedure di conferimento mono-incarico.");
 			else if (procedura.getIncarichi_repertorioValidiColl().size()!=1)
-				throw new it.cnr.jada.comp.ApplicationException( "Funzionalit‡ consentita solo per procedure di conferimento a cui risulta associato un solo incarico.");
+				throw new it.cnr.jada.comp.ApplicationException( "Funzionalit√† consentita solo per procedure di conferimento a cui risulta associato un solo incarico.");
 
 			Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)procedura.getIncarichi_repertorioValidiColl().get(0);
 			if (!incarico.isIncaricoDefinitivo() && !incarico.isIncaricoInviatoCorteConti() &&
 					!(incarico.isIncaricoProvvisorio() && incarico.getFl_inviato_corte_conti() && incarico.getEsito_corte_conti()!=null))
-				throw new it.cnr.jada.comp.ApplicationException( "Funzionalit‡ consentita solo per procedura di conferimento a cui risulta associato un solo incarico con stato \"Definitivo\" o \"Inviato alla Corte dei Conti\".");
+				throw new it.cnr.jada.comp.ApplicationException( "Funzionalit√† consentita solo per procedura di conferimento a cui risulta associato un solo incarico con stato \"Definitivo\" o \"Inviato alla Corte dei Conti\".");
 
 			Utility.createIncarichiRepertorioComponentSession().chiudiIncaricoPubblicato(actioncontext.getUserContext(), incarico);
 			procedura = (Incarichi_proceduraBulk)((IncarichiProceduraComponentSession)createComponentSession()).chiudiProceduraIncaricoPubblicata(actioncontext.getUserContext(), procedura);
@@ -1992,9 +1992,9 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)getIncarichiColl().getModel();
 
 			if (procedura.getNr_contratti().compareTo(1)!=1)
-				throw new it.cnr.jada.comp.ApplicationException( "Funzionalit‡ consentita solo per procedure di conferimento multi-incarico.");
+				throw new it.cnr.jada.comp.ApplicationException( "Funzionalit√† consentita solo per procedure di conferimento multi-incarico.");
 			else if (procedura.getIncarichi_repertorioValidiColl().size()<=1)
-				throw new it.cnr.jada.comp.ApplicationException( "Funzionalit‡ consentita solo per procedure di conferimento a cui risultano associati pi˘ incarichi.");
+				throw new it.cnr.jada.comp.ApplicationException( "Funzionalit√† consentita solo per procedure di conferimento a cui risultano associati pi√π incarichi.");
 
 			procedura = (Incarichi_proceduraBulk)((IncarichiProceduraComponentSession)createComponentSession()).concludiIncaricoPubblicato(actioncontext.getUserContext(), procedura, incarico);
 			procedura = (Incarichi_proceduraBulk)createComponentSession().inizializzaBulkPerModifica(actioncontext.getUserContext(), procedura);
@@ -2055,18 +2055,18 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			if (incaricoVar.isProvvisorio()) {
 				if (incaricoVar.isVariazioneIntegrazioneIncarico()) {
 					if (incaricoVar.getDt_variazione()==null)
-						throw new it.cnr.jada.comp.ApplicationException("Non \350 possibile effettuare l'operazione perchË non risulta inserita la data di stipula della variazione del contratto.");
+						throw new it.cnr.jada.comp.ApplicationException("Non \350 possibile effettuare l'operazione perch√® non risulta inserita la data di stipula della variazione del contratto.");
 					else if (!incaricoVar.getIncarichi_repertorio().getIncarichi_procedura().isUtenteCollegatoSuperUtente()){
 						Incarichi_parametriBulk parametri = ((IncarichiProceduraComponentSession)createComponentSession()).getIncarichiParametri(context.getUserContext(), incaricoVar.getIncarichi_repertorio().getIncarichi_procedura());
 
 						if ((parametri==null || parametri.getLimite_dt_stipula()==null) && DateUtils.daysBetweenDates(incaricoVar.getDt_variazione(), EJBCommonServices.getServerDate())>5)
-							throw new it.cnr.jada.comp.ApplicationException("Non \350 possibile effettuare l'operazione perchË dalla data di stipula della variazione del contratto risultano trascorsi piu' di 5 giorni.");
+							throw new it.cnr.jada.comp.ApplicationException("Non \350 possibile effettuare l'operazione perch√® dalla data di stipula della variazione del contratto risultano trascorsi piu' di 5 giorni.");
 						else if (parametri!=null && parametri.getLimite_dt_stipula()!=null && parametri.getLimite_dt_stipula().equals("Y")) {
 							Integer limite = new Integer(0);
 							if (parametri.getGiorni_limite_dt_stipula()!=null)
 								limite = parametri.getGiorni_limite_dt_stipula();
 							if (DateUtils.daysBetweenDates(incaricoVar.getDt_variazione(), EJBCommonServices.getServerDate())>limite.intValue())
-								throw new it.cnr.jada.comp.ApplicationException("Non \350 possibile effettuare l'operazione perchË dalla data di stipula della variazione del contratto risultano trascorsi piu' di "+limite.toString()+" giorni.");
+								throw new it.cnr.jada.comp.ApplicationException("Non \350 possibile effettuare l'operazione perch√® dalla data di stipula della variazione del contratto risultano trascorsi piu' di "+limite.toString()+" giorni.");
 						}
 					}
 				}
@@ -2199,7 +2199,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			if (procamm != null &&
 					procamm.getIncarico_ric_giorni_pubbl() != null &&
 					procamm.getIncarico_ric_giorni_pubbl().compareTo(new Integer(0))==0)
-				throw new ValidationException( "Procedura Ammininistrativa non selezionabile per un processo che prevede l'attivazione di pi˘ contratti.");
+				throw new ValidationException( "Procedura Ammininistrativa non selezionabile per un processo che prevede l'attivazione di pi√π contratti.");
 		}
 
 		if (procamm != null && procamm.isMeramenteOccasionaleRequired()) {
@@ -2339,7 +2339,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 					try{
 						List<String> listError = proceduraComponent.mergeAllegatiWithCMIS(context.getUserContext(), (Incarichi_proceduraBulk)object);
 						if (listError.isEmpty()) {
-							this.setMessage("Operazione Effettuata. Non Ë stata riscontrato alcun disallineamento dei dati nella gestione documentale.");
+							this.setMessage("Operazione Effettuata. Non √® stata riscontrato alcun disallineamento dei dati nella gestione documentale.");
 							logger.debug("MergeWithCMIS OK - Esercizio: "+procedura.getEsercizio()+" - Rec "+i+" di "+l.size()+" - Procedura: "+procedura.getEsercizio()+"/"+procedura.getPg_procedura());
 						} else {
 							for (String error : listError)

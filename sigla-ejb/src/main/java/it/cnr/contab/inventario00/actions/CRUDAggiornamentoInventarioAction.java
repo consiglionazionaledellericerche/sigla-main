@@ -50,8 +50,8 @@ public Forward doBringBackSearchFindUbicazioneDestinazione(
 }
 /**
   * Gestisce l'aggiunta di un nuovo CDR Utilizzatore. Prima di permettere l'aggiunta
-  *	di un Utilizzatore, va a fare il controllo di validit‡ su quello attuale,
-  *	e sulle linee di attivit‡ ad esso associate.
+  *	di un Utilizzatore, va a fare il controllo di validit√† su quello attuale,
+  *	e sulle linee di attivit√† ad esso associate.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
   *

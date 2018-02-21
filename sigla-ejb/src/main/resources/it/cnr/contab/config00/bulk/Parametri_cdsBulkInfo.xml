@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -74,7 +74,7 @@
 	<fieldProperty
 		name="fl_commessa_obbligatoria"
 		property="fl_commessa_obbligatoria"
-		label="Modulo di Attività obbligatorio" 
+		label="Modulo di AttivitÃ  obbligatorio" 
 		inputType="CHECKBOX" 
 		/>
 		
@@ -109,7 +109,7 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnSearch="true"
-		label="Importo dell'accertamento oltre il quale è obbligatorio, per le voci per le quali è previsto, indicare il contratto di riferimento"
+		label="Importo dell'accertamento oltre il quale Ã¨ obbligatorio, per le voci per le quali Ã¨ previsto, indicare il contratto di riferimento"
 		nullable="true" />
 	<fieldProperty
 		name="im_soglia_contratto_s"
@@ -117,7 +117,7 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnSearch="true"
-		label="Importo dell'impegno oltre il quale è obbligatorio, per le voci per le quali è previsto, indicare il contratto di riferimento"
+		label="Importo dell'impegno oltre il quale Ã¨ obbligatorio, per le voci per le quali Ã¨ previsto, indicare il contratto di riferimento"
 		nullable="true" />
 	<fieldProperty
 		name="im_soglia_consumo_residuo"
@@ -125,7 +125,7 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnSearch="true"
-		label="Importo Limite della disponibilità a creare residui, oltre il quale non è possibile assumere impegni a competenza"
+		label="Importo Limite della disponibilitÃ  a creare residui, oltre il quale non Ã¨ possibile assumere impegni a competenza"
 		nullable="true" />
 	<fieldProperty
 		name="blocco_impegni_cdr_gae"
@@ -282,7 +282,7 @@
 	<columnFieldProperty name="im_soglia_contratto_s"
                          label="Soglia impegno per contratto obbligatorio"/>
 	<columnFieldProperty name="im_soglia_consumo_residuo" 
-                         label="Soglia disponibilità residua per utilizzazione disponibilità competenza"/>
+                         label="Soglia disponibilitÃ  residua per utilizzazione disponibilitÃ  competenza"/>
 	<columnFieldProperty name="blocco_impegni_cdr_gae" />
 	<columnFieldProperty name="fl_mod_obbl_res" />
 	<columnFieldProperty name="fl_ribaltato" />
@@ -314,7 +314,7 @@
 	<findFieldProperty name="im_soglia_contratto_s"
                        label="Soglia impegno per contratto obbligatorio"/>
 	<findFieldProperty name="im_soglia_consumo_residuo" 
-                         label="Soglia disponibilità residua per utilizzazione disponibilità competenza"/>
+                         label="Soglia disponibilitÃ  residua per utilizzazione disponibilitÃ  competenza"/>
 	<findFieldProperty name="blocco_impegni_cdr_gae" />
 	<findFieldProperty name="fl_mod_obbl_res" />
 	<findFieldProperty name="fl_ribaltato" />

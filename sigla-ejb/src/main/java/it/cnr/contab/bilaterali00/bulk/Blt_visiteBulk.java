@@ -1,5 +1,5 @@
 /*
-ù * Created by BulkGenerator 2.0 [07/12/2009]
+Ã¹ * Created by BulkGenerator 2.0 [07/12/2009]
  * Date 02/02/2012
  */
 package it.cnr.contab.bilaterali00.bulk;
@@ -1337,7 +1337,7 @@ public class Blt_visiteBulk extends Blt_visiteBase implements IDefferUpdateSaldi
 				} else if (this.isSettimaFase()) {
 					this.setFlStampatoProvvImpegno(Boolean.FALSE);
 				} else if (this.isSestaFase()) {
-					//non fa nulla in quanyto non può scollegare l'impegno
+					//non fa nulla in quanyto non puÃ² scollegare l'impegno
 				} else if (this.isQuintaFase()) {
 					this.setNumProtAutorizPartenza(null);
 					this.setDtProtAutorizPartenza(null);
@@ -1365,11 +1365,11 @@ public class Blt_visiteBulk extends Blt_visiteBase implements IDefferUpdateSaldi
 				} else if (this.isUndicesimaFase()) {
 					this.setFlStampatoProvvImpegno(Boolean.FALSE);
 				} else if (this.isDecimaFase()) {
-					//non fa nulla in quanto non può scollegare l'impegno
+					//non fa nulla in quanto non puÃ² scollegare l'impegno
 				} else if (this.isNonaFase()) {
-					//non fa nulla in quanto non può scollegare l'incarico
+					//non fa nulla in quanto non puÃ² scollegare l'incarico
 				} else if (this.isOttavaFase()) {
-					//non fa nulla in quanto non può scollegare l'incarico
+					//non fa nulla in quanto non puÃ² scollegare l'incarico
 				} else if (this.isSettimaFase()) {
 					this.setNumProtAutorizPartenza(null);
 					this.setDtProtAutorizPartenza(null);
@@ -1405,7 +1405,7 @@ public class Blt_visiteBulk extends Blt_visiteBase implements IDefferUpdateSaldi
 					} else if (this.isSettimaFase()) {
 						this.setFlStampatoProvvPagamento(Boolean.FALSE);
 					} else if (this.isSestaFase()) {
-						//non fa nulla in quanto non può scollegare l'impegno
+						//non fa nulla in quanto non puÃ² scollegare l'impegno
 					} else if (this.isQuintaFase()) {
 						this.setNumProtAutorizPartenza(null);
 						this.setDtProtAutorizPartenza(null);
@@ -1436,7 +1436,7 @@ public class Blt_visiteBulk extends Blt_visiteBase implements IDefferUpdateSaldi
 					} else if (this.isSettimaFase()) {
 						this.setFlStampatoProvvImpegno(Boolean.FALSE);
 					} else if (this.isSestaFase()) {
-						//non fa nulla in quanto non può scollegare l'impegno
+						//non fa nulla in quanto non puÃ² scollegare l'impegno
 					} else if (this.isQuintaFase()) {
 						this.setNumProtAutorizPartenza(null);
 						this.setDtProtAutorizPartenza(null);
@@ -1512,11 +1512,11 @@ public class Blt_visiteBulk extends Blt_visiteBase implements IDefferUpdateSaldi
 					} else if (this.isUndicesimaFase()) {
 						this.setFlStampatoProvvImpegno(Boolean.FALSE);
 					} else if (this.isDecimaFase()) {
-						//non fa nulla in quanto non può scollegare l'impegno
+						//non fa nulla in quanto non puÃ² scollegare l'impegno
 					} else if (this.isNonaFase()) {
-						//non fa nulla in quanto non può scollegare l'incarico
+						//non fa nulla in quanto non puÃ² scollegare l'incarico
 					} else if (this.isOttavaFase()) {
-						//non fa nulla in quanto non può scollegare l'incarico
+						//non fa nulla in quanto non puÃ² scollegare l'incarico
 					} else if (this.isSettimaFase()) {
 						this.setNumProtAutorizPartenza(null);
 						this.setDtProtAutorizPartenza(null);
@@ -1556,7 +1556,7 @@ public class Blt_visiteBulk extends Blt_visiteBase implements IDefferUpdateSaldi
 						this.setNumProtProvvPagamAnt(null);
 						this.setDtProtProvvPagamAnt(null);
 					} else {
-						//non fa nulla in quanto non può scollegare l'impegno
+						//non fa nulla in quanto non puÃ² scollegare l'impegno
 					}
 				} else if (this.isDiciottesimaFase()) {
 					this.setFlStampatoProvvPagamento(Boolean.FALSE);
@@ -1569,7 +1569,7 @@ public class Blt_visiteBulk extends Blt_visiteBase implements IDefferUpdateSaldi
 						this.setNumProtProvvPagamAnt(null);
 						this.setDtProtProvvPagamAnt(null);
 					} else {
-						//non fa nulla in quanto non può scollegare l'impegno
+						//non fa nulla in quanto non puÃ² scollegare l'impegno
 					}
 				} else if (this.isSedicesimaFase()) {
 					this.setNumProtNotaAddebito(null);
@@ -1580,7 +1580,7 @@ public class Blt_visiteBulk extends Blt_visiteBase implements IDefferUpdateSaldi
 						this.setNumProtProvvPagamAnt(null);
 						this.setDtProtProvvPagamAnt(null);
 					} else {
-						//non fa nulla in quanto non può scollegare l'impegno
+						//non fa nulla in quanto non puÃ² scollegare l'impegno
 					}
 				} else if (this.isQuindicesimaFase()) {
 					this.setNumProtAttestatoSogg(null);
@@ -1592,16 +1592,16 @@ public class Blt_visiteBulk extends Blt_visiteBase implements IDefferUpdateSaldi
 						this.setNumProtProvvPagamAnt(null);
 						this.setDtProtProvvPagamAnt(null);
 					} else {
-						//non fa nulla in quanto non può scollegare l'impegno
+						//non fa nulla in quanto non puÃ² scollegare l'impegno
 					}
 				} else if (this.isTredicesimaFase()) {
 					this.setFlStampatoProvvPagamento(Boolean.FALSE);
 				} else if (this.isDodicesimaFase()) {
-					//non fa nulla in quanto non può scollegare l'impegno
+					//non fa nulla in quanto non puÃ² scollegare l'impegno
 				} else if (this.isNonaFase()) {
-					//non fa nulla in quanto non può scollegare l'incarico
+					//non fa nulla in quanto non puÃ² scollegare l'incarico
 				} else if (this.isOttavaFase()) {
-					//non fa nulla in quanto non può scollegare l'incarico
+					//non fa nulla in quanto non puÃ² scollegare l'incarico
 				} else if (this.isSettimaFase()) {
 					this.setNumProtAutorizPartenza(null);
 					this.setDtProtAutorizPartenza(null);

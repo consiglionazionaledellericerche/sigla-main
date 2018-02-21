@@ -144,17 +144,17 @@ public void validate() throws ValidationException {
 	gc.set(java.util.Calendar.AM_PM, java.util.Calendar.AM);
 	
 	if (getDt_fine_validita()!=null && getDt_inizio_validita()!=null && getDt_fine_validita().before(getDt_inizio_validita()))
-			throw new ValidationException("Attenzione! Inserire correttamente le date di inizio e fine validit‡");
+			throw new ValidationException("Attenzione! Inserire correttamente le date di inizio e fine validit√†");
 
 	if (getDt_inizio_validita()==null )
-			throw new ValidationException("Attenzione! Inserire correttamente la data di inizio validit‡");
+			throw new ValidationException("Attenzione! Inserire correttamente la data di inizio validit√†");
 	
 	if (getDt_inizio_validita().after(new java.sql.Timestamp(gc.getTime().getTime())))
-			throw new ValidationException("La data di inizio validit‡ non puÚ essere successiva alla data di sistema");
+			throw new ValidationException("La data di inizio validit√† non pu√≤ essere successiva alla data di sistema");
 	if (getDt_inizio_validita().equals(new java.sql.Timestamp(gc.getTime().getTime())) && getDt_fine_validita()==null)
 		setDt_fine_validita(it.cnr.contab.config00.esercizio.bulk.EsercizioHome.DATA_INFINITO);
 	if (getDt_inizio_validita().before(new java.sql.Timestamp(gc.getTime().getTime())) && getDt_fine_validita()==null)
-			throw new ValidationException("Attenzione! Inserire la data di fine validit‡");
+			throw new ValidationException("Attenzione! Inserire la data di fine validit√†");
 
 	if (getCambio()!=null && getCambio().signum() <= 0)
 			throw new ValidationException("Sono ammessi solo valori positivi!");

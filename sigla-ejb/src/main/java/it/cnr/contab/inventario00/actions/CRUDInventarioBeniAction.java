@@ -28,8 +28,8 @@ public CRUDInventarioBeniAction() {
 }
 /**
   * Gestisce l'aggiunta di un nuovo CDR Utilizzatore. Prima di permettere l'aggiunta
-  *	di un Utilizzatore, va a fare il controllo di validit‡ su quello attuale,
-  *	e sulle linee di attivit‡ ad esso associate.
+  *	di un Utilizzatore, va a fare il controllo di validit√† su quello attuale,
+  *	e sulle linee di attivit√† ad esso associate.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
   *
@@ -146,7 +146,7 @@ public Forward doBlankSearchFind_cdr(ActionContext context,
 }
 /**
   * Gestisce il risultato di una ricerca sulla Categoria Gruppo Inventario del Bene:
-  *	controlla se la categoria Ë una Pubblicazione e setta la propriet‡ del BP di conseguenza.
+  *	controlla se la categoria √® una Pubblicazione e setta la propriet√† del BP di conseguenza.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
   * @param bene il <code>Inventario_beniBulk</code> bene
@@ -197,12 +197,12 @@ public Forward doBringBackSearchFind_categoria_bene(ActionContext context, Inven
 /**
   *  E' stata generata la richiesta di cercare un CdR Utilizzatore.
   *	Questo metodo, gestisce il risultato della ricerca:
-  *	controlla se il CdR selezionato Ë gi‡ stato indicato come utilizzatore del bene: in caso 
+  *	controlla se il CdR selezionato √® gi√† stato indicato come utilizzatore del bene: in caso 
   *	affermativo, lancia un messaggio d'errore all'utente.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
   * @param v_Utilizzatore <code>Utilizzatore_CdrVBulk</code> l'oggetto che contiene le informazioni 
-  *		relative al CdR, alle Linee di Attivit‡ ed alle percentuali di utilizzo
+  *		relative al CdR, alle Linee di Attivit√† ed alle percentuali di utilizzo
   * @param cdrSelezionato il <code>CdrBulk</code> CdR selezionato
   *
   * @return forward <code>Forward</code>
@@ -225,7 +225,7 @@ public Forward doBringBackSearchFind_cdr(
 				if(cdrSelezionato!= null)
 				if ( v_cdr.getCdr() != null && v_cdr.getCdr().equalsByPrimaryKey(cdrSelezionato)  && i.hasNext()){
 					((Utilizzatore_CdrVBulk)bene.getV_utilizzatoriColl().get(bene.getV_utilizzatoriColl().size()-1)).setCdr(new it.cnr.contab.config00.sto.bulk.CdrBulk());
-					return handleException(context, new it.cnr.jada.bulk.ValidationException ("CdR Utilizzatore duplicato. Non Ë possibile indicare pi˘ volte uno stesso CdR come Utilizzatore"));
+					return handleException(context, new it.cnr.jada.bulk.ValidationException ("CdR Utilizzatore duplicato. Non √® possibile indicare pi√π volte uno stesso CdR come Utilizzatore"));
 				}
 			}
 		}
@@ -267,7 +267,7 @@ public Forward doNonAmmortizzato(ActionContext context) {
 }
 /**
   * Richiamato nel caso in cui l'utente selezioni un Tipo di Ammortamento dalla select
-  *	presente nel tab "Ammortamento". Il metodo setta la proprit‡
+  *	presente nel tab "Ammortamento". Il metodo setta la proprit√†
   *	ti_ammortamento del bene.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
@@ -294,7 +294,7 @@ public Forward doSelezionaTiAmmortamento(ActionContext context) {
 /**
   * Permette di visualizzare i beni accessori del bene su cui si sta lavorando. 
   *	Apre un'altra finestra, (SelezionatoreBP), che ha come Iterator un Iteratore sui beni 
-  *	accessori del bene che Ë Oggetto Model del BP.
+  *	accessori del bene che √® Oggetto Model del BP.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
   *

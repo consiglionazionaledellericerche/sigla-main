@@ -65,7 +65,7 @@ public SQLBuilder selectVTerzo(String tipoDipendenteAltro, Integer codiceTerzo, 
 }
 
 /**
-  * Inserisce le clausole statiche di validit‡
+  * Inserisce le clausole statiche di validit√†
   * Prendo tutti i terzi validi alla data <data>
   *
   * @param sql SQL statement a cui vengono aggiunte le clausole di validita

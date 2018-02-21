@@ -304,7 +304,7 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 	}
 	/**
 	 * Ritorna la quota di previsione delle spese accentrate esterne 
-	 * gi‡ assegnata
+	 * gi√† assegnata
 	 */
 	public java.math.BigDecimal getTotale_spese_accentrate_esterne_gest() {
 		return totale_spese_accentrate_esterne_gest;
@@ -312,7 +312,7 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 
 	/**
 	 * Ritorna la quota di previsione delle spese accentrate interne 
-	 * gi‡ assegnata
+	 * gi√† assegnata
 	 */
 	public java.math.BigDecimal getTotale_spese_accentrate_interne_gest() {
 		return totale_spese_accentrate_interne_gest;
@@ -320,7 +320,7 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 
 	/**
 	 * Ritorna la quota di previsione delle spese decentrate esterne 
-	 * gi‡ assegnata
+	 * gi√† assegnata
 	 */
 	public java.math.BigDecimal getTotale_spese_decentrate_esterne_gest() {
 		return totale_spese_decentrate_esterne_gest;
@@ -328,7 +328,7 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 
 	/**
 	 * Ritorna la quota di previsione delle spese decentrate interne 
-	 * gi‡ assegnata
+	 * gi√† assegnata
 	 */
 	public java.math.BigDecimal getTotale_spese_decentrate_interne_gest() {
 		return totale_spese_decentrate_interne_gest;
@@ -336,7 +336,7 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 
 	/**
 	 * Imposta la quota di previsione delle spese accentrate esterne 
-	 * gi‡ assegnata
+	 * gi√† assegnata
 	 */
 	public void setTotale_spese_accentrate_esterne_gest(java.math.BigDecimal decimal) {
 		totale_spese_accentrate_esterne_gest = decimal;
@@ -344,7 +344,7 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 
 	/**
 	 * Imposta la quota di previsione delle spese accentrate interne 
-	 * gi‡ assegnata
+	 * gi√† assegnata
 	 */
 	public void setTotale_spese_accentrate_interne_gest(java.math.BigDecimal decimal) {
 		totale_spese_accentrate_interne_gest = decimal;
@@ -352,7 +352,7 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 
 	/**
 	 * Imposta la quota di previsione delle spese decentrate esterne 
-	 * gi‡ assegnata
+	 * gi√† assegnata
 	 */
 	public void setTotale_spese_decentrate_esterne_gest(java.math.BigDecimal decimal) {
 		totale_spese_decentrate_esterne_gest = decimal;
@@ -360,7 +360,7 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 
 	/**
 	 * Imposta la quota di previsione delle spese decentrate interne
-	 * gi‡ assegnata
+	 * gi√† assegnata
 	 */
 	public void setTotale_spese_decentrate_interne_gest(java.math.BigDecimal decimal) {
 		totale_spese_decentrate_interne_gest = decimal;

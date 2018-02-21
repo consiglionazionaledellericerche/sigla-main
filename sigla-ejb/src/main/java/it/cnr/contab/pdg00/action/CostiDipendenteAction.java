@@ -166,10 +166,10 @@ public it.cnr.jada.action.Forward doCambiaStatoCostoCaricato(it.cnr.jada.action.
 		if (cdp!=null) {
 			if (bp.createComponentSession().isCostiDipendenteDefinitivi(context.getUserContext(), cdp.getMese(), cdp.getCd_unita_organizzativa())) {
 				cdp.getCostoCaricato().setStato(statoOld);
-				bp.setMessage("Non Ë possibile modificare lo stato in quanto la U.O. " + cdp.getCd_unita_organizzativa() + " di appartenenza della matricola ha gi‡ reso definitiva la sua ripartizione dei costi.");
+				bp.setMessage("Non √® possibile modificare lo stato in quanto la U.O. " + cdp.getCd_unita_organizzativa() + " di appartenenza della matricola ha gi√† reso definitiva la sua ripartizione dei costi.");
 			} else if (bp.getMese()==0 && bp.createComponentSession().isCostiDipendenteRipartiti(context.getUserContext(), cdp.getCd_unita_organizzativa())) {
 				cdp.getCostoCaricato().setStato(statoOld);
-				bp.setMessage("Non Ë possibile modificare lo stato in quanto la U.O. " + cdp.getCd_unita_organizzativa() + " di appartenenza della matricola ha gi‡ scaricato i costi del personale sul piano di gestione.");
+				bp.setMessage("Non √® possibile modificare lo stato in quanto la U.O. " + cdp.getCd_unita_organizzativa() + " di appartenenza della matricola ha gi√† scaricato i costi del personale sul piano di gestione.");
 			} else {
 				cdp.setStato_carico(cdp.getCostoCaricato().getStato());
 				cdp.getCostoCaricato().setToBeUpdated();
@@ -204,9 +204,9 @@ public it.cnr.jada.action.Forward doConfermaCopiaRipartizione(it.cnr.jada.action
 }
 
 /**
- * Gestisce la richiesta di ripartizione dei residui su una o pi˘ matricole.
- * Mostra un elenco delle linee di attivit‡ su cui effettuare la ripartizione.
- * La gestione della selezione delle linee di attivit‡ viene effettuata da
+ * Gestisce la richiesta di ripartizione dei residui su una o pi√π matricole.
+ * Mostra un elenco delle linee di attivit√† su cui effettuare la ripartizione.
+ * La gestione della selezione delle linee di attivit√† viene effettuata da
  * doConfermaSelezioneRipartizioneResidui
  */
 public it.cnr.jada.action.Forward doConfermaRipartizioneResidui(it.cnr.jada.action.ActionContext context,int option) {
@@ -250,7 +250,7 @@ public it.cnr.jada.action.Forward doConfermaRipartizioneResidui(it.cnr.jada.acti
 				bp.getMese(),
 				cdp == null ? null : cdp.getTi_rapporto(),
 				cdp == null ? null : cdp.getFl_rapporto13());
-			if (linee != null && linee.size()!=0)  { // Fix del 05/03/2002 Se la lista Ë vuota non effettua operazioni
+			if (linee != null && linee.size()!=0)  { // Fix del 05/03/2002 Se la lista √® vuota non effettua operazioni
 				it.cnr.jada.util.action.SelezionatoreListaBP slbp = select(context,new it.cnr.jada.util.ListRemoteIterator(linee),it.cnr.jada.bulk.BulkInfo.getBulkInfo(it.cnr.contab.config00.latt.bulk.WorkpackageBulk.class),null,"doConfermaSelezioneRipartizioneResidui");
 				slbp.setMultiSelection(true);
 				return slbp;
@@ -263,8 +263,8 @@ public it.cnr.jada.action.Forward doConfermaRipartizioneResidui(it.cnr.jada.acti
 }
 
 /**
- * Gestisce la richiesta di ripartizione dei residui su una o pi˘ matricole
- * in seguito alla selezione di una o pi˘ linee di attivit‡.
+ * Gestisce la richiesta di ripartizione dei residui su una o pi√π matricole
+ * in seguito alla selezione di una o pi√π linee di attivit√†.
  * Per ogni matricola selezionata invoca <code>ripartizioneResidui</code> 
  * sulla componente. Al primo errore interrompe il processo.
  */
@@ -283,7 +283,7 @@ public it.cnr.jada.action.Forward doConfermaSelezioneRipartizioneResidui(it.cnr.
 
 /**
  * Gestisce la pressione del botton "Ripartizione residui". Se il
- * bp Ë "dirty" chiede conferma, quindi passa la gestione a
+ * bp √® "dirty" chiede conferma, quindi passa la gestione a
  * <code>doConfermaRipartizioneResidui</code>
  */
 public it.cnr.jada.action.Forward doRipartizioneResidui(it.cnr.jada.action.ActionContext context) {
@@ -292,9 +292,9 @@ public it.cnr.jada.action.Forward doRipartizioneResidui(it.cnr.jada.action.Actio
 
 		if (!bp.isRipartizioneCostiModificabile()) {
 			if (!bp.isPdgPrevisionaleEnabled()) 
-				bp.setMessage("Non Ë possibile modificare i dati in quanto il PdGP risulta confermato anche solo parzialmente.");
+				bp.setMessage("Non √® possibile modificare i dati in quanto il PdGP risulta confermato anche solo parzialmente.");
 			if (bp.isCostiRipartiti()) 
-				bp.setMessage("Non Ë possibile modificare i dati in quanto risulta essere stato effettuato uno scarico dei Costi Dipendenti.");
+				bp.setMessage("Non √® possibile modificare i dati in quanto risulta essere stato effettuato uno scarico dei Costi Dipendenti.");
 			return context.findDefaultForward();
 		}
 
@@ -337,7 +337,7 @@ public it.cnr.jada.action.Forward doSalva(it.cnr.jada.action.ActionContext conte
 /**
  * Gestisce la selezione di un CDR in seguito alla creazione di un nuovo
  * dettaglio di scarico verso un CDR. Fa partire la selezione di una linea
- * attivit‡, che viene gestita da doBringBackSearchLinea_attivita
+ * attivit√†, che viene gestita da doBringBackSearchLinea_attivita
  */
 public it.cnr.jada.action.Forward doSelezionaCdrPerScarico(it.cnr.jada.action.ActionContext context) {
 	it.cnr.jada.action.HookForward caller = (it.cnr.jada.action.HookForward)context.getCaller();
@@ -347,7 +347,7 @@ public it.cnr.jada.action.Forward doSelezionaCdrPerScarico(it.cnr.jada.action.Ac
 /**
  * Gestisce la selezione di un CDR in seguito alla creazione di un nuovo
  * dettaglio di scarico verso un CDR. Fa partire la selezione di una linea
- * attivit‡, che viene gestita da doBringBackSearchLinea_attivita
+ * attivit√†, che viene gestita da doBringBackSearchLinea_attivita
  */
 private it.cnr.jada.action.Forward doSelezionaCdrPerScarico(it.cnr.jada.action.ActionContext context,CdrBulk cdr) {
 	try {
@@ -356,7 +356,7 @@ private it.cnr.jada.action.Forward doSelezionaCdrPerScarico(it.cnr.jada.action.A
 		V_cdp_matricolaBulk cdp = (V_cdp_matricolaBulk)bp.getCostiDipendenti().getModel();
 		it.cnr.jada.util.RemoteIterator i = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,bp.createComponentSession().listaLinea_attivitaPerCdr(context.getUserContext(),cdr,bp.getMese(),cdp.getTi_rapporto(),cdp.getFl_rapporto13()));
 		if (i.countElements() == 0) {
-			bp.setErrorMessage("Nessuna linea di attivit‡ disponibile per il cdr selezionato.");
+			bp.setErrorMessage("Nessuna linea di attivit√† disponibile per il cdr selezionato.");
 			return context.findDefaultForward();
 		}
 		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())); 
@@ -367,7 +367,7 @@ private it.cnr.jada.action.Forward doSelezionaCdrPerScarico(it.cnr.jada.action.A
 }
 
 /**
- * Gestione selezione di una linea di attivit‡ per scarico CDP
+ * Gestione selezione di una linea di attivit√† per scarico CDP
  *
  * @param context	L'ActionContext della richiesta
  * @return Il Forward alla pagina di risposta
@@ -378,9 +378,9 @@ public it.cnr.jada.action.Forward doSelezionaLinea_attivitaPerScarico(it.cnr.jad
 }
 
 /**
- * Gestisce la selezione di una linea di attivit‡ in seguito alla 
+ * Gestisce la selezione di una linea di attivit√† in seguito alla 
  * creazione di un nuovo dettaglio di scarico verso un CDR. 
- * Imposta la linea di attivit‡ scelta nel nuovo dettaglio
+ * Imposta la linea di attivit√† scelta nel nuovo dettaglio
  * e i valori di default.
  */
 private it.cnr.jada.action.Forward doSelezionaLinea_attivitaPerScarico(it.cnr.jada.action.ActionContext context,WorkpackageBulk linea_attivita) {
@@ -395,7 +395,7 @@ private it.cnr.jada.action.Forward doSelezionaLinea_attivitaPerScarico(it.cnr.ja
 			Ass_cdp_laBulk ass_cdp_la = (Ass_cdp_laBulk)i.next();
 			if (linea_attivita.getCd_centro_responsabilita().equals(ass_cdp_la.getCd_centro_responsabilita()) && 
 				linea_attivita.getCd_linea_attivita().equals(ass_cdp_la.getCd_linea_attivita()))
-				throw new it.cnr.jada.action.MessageToUser("CDR e linea di attivit‡ gi‡ scelti");
+				throw new it.cnr.jada.action.MessageToUser("CDR e linea di attivit√† gi√† scelti");
 		}
 
 		Ass_cdp_laBulk ass_cdp_la = new Ass_cdp_laBulk();
@@ -419,9 +419,9 @@ private it.cnr.jada.action.Forward doSelezionaLinea_attivitaPerScarico(it.cnr.ja
 }
 
 /**
- * Gestisce la selezione di una linea di attivit‡ in seguito alla 
+ * Gestisce la selezione di una linea di attivit√† in seguito alla 
  * creazione di un nuovo dettaglio di scarico verso un CDR. 
- * Imposta la linea di attivit‡ scelta nel nuovo dettaglio
+ * Imposta la linea di attivit√† scelta nel nuovo dettaglio
  * e i valori di default.
  */
 public it.cnr.jada.action.Forward doBringBackSearchUnita_organizzativa_scarico(it.cnr.jada.action.ActionContext context, Costi_dipendenteVBulk cdp, Unita_organizzativaBulk uo) {
@@ -435,7 +435,7 @@ public it.cnr.jada.action.Forward doBringBackSearchUnita_organizzativa_scarico(i
 		for (java.util.Iterator i = bp.getCostiScaricatiAltraUO().getDetails().iterator();i.hasNext();) {
 			Ass_cdp_uoBulk ass_cdp_uo = (Ass_cdp_uoBulk)i.next();
 			if (uo.getCd_unita_organizzativa().equals(ass_cdp_uo.getCd_unita_organizzativa()))
-				throw new it.cnr.jada.action.MessageToUser("Unit‡ organizzativa gi‡ scelta");
+				throw new it.cnr.jada.action.MessageToUser("Unit√† organizzativa gi√† scelta");
 		}
 
 		Ass_cdp_uoBulk ass_cdp_uo = new Ass_cdp_uoBulk();
@@ -503,7 +503,7 @@ private void validaSommaPrc(it.cnr.jada.action.ActionContext context) throws it.
 		sep = ",";
 	}
 	if (sep.length() > 0) {
-		msg.append(" Ë superiore a 100");
+		msg.append(" √® superiore a 100");
 		throw new it.cnr.jada.bulk.ValidationException(msg.toString());
 	}
 }
@@ -565,7 +565,7 @@ public Forward doSalvaDefinitivo(ActionContext context){
 			return context.findDefaultForward();
 		}
 		else
-			return openConfirm(context, "Attenzione! Dopo il salvataggio definitivo non sar‡ pi˘ possibile modificare i dati inseriti. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmSalvaDefinitivo");
+			return openConfirm(context, "Attenzione! Dopo il salvataggio definitivo non sar√† pi√π possibile modificare i dati inseriti. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmSalvaDefinitivo");
 		
 	}		
 	catch(Throwable e) 
@@ -601,7 +601,7 @@ public Forward doAnnullaDefinitivo(ActionContext context){
 		CostiDipendenteBP bp = (CostiDipendenteBP)context.getBusinessProcess();
 		bp.completeSearchTools(context, bp);
         bp.validate(context);
-		return openConfirm(context, "Attenzione! Sar‡ annullato il salvataggio definitivo. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmAnnullaDefinitivo");
+		return openConfirm(context, "Attenzione! Sar√† annullato il salvataggio definitivo. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmAnnullaDefinitivo");
 	}		
 	catch(Throwable e) 
 	{

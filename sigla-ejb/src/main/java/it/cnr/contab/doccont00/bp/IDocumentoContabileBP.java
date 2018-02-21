@@ -13,14 +13,14 @@ public interface IDocumentoContabileBP {
 public abstract it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession getVirtualSession (	it.cnr.jada.action.ActionContext context,	boolean setSavePoint) throws it.cnr.jada.action.BusinessProcessException;
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'deleting'
+ * Restituisce il valore della propriet√† 'deleting'
  *
- * @return Il valore della propriet‡ 'deleting'
+ * @return Il valore della propriet√† 'deleting'
  */
 public boolean isDeleting();
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'deleting'
+ * Imposta il valore della propriet√† 'deleting'
  *
  * @param newDeleting	Il valore da assegnare a 'deleting'
  */

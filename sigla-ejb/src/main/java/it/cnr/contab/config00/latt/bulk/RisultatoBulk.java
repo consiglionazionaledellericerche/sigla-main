@@ -79,6 +79,6 @@ public void validate(OggettoBulk parent) throws ValidationException {
 	if (getDs_risultato() == null)
 		throw new ValidationException("E' necessario assegnare una descrizione del risultato.");
 	if (getQuantita() == null)
-		throw new ValidationException("E' necessario assegnare una quantit‡ del risultato.");
+		throw new ValidationException("E' necessario assegnare una quantit√† del risultato.");
 }
 }

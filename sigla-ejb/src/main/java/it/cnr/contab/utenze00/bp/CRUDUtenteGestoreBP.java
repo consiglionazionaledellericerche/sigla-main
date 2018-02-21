@@ -1,7 +1,7 @@
 package it.cnr.contab.utenze00.bp;
 
 /**
- * Business Process che gestisce l'attivit‡ di Gestione Utente Comune e Gestione Template di Utente: in particolare 
+ * Business Process che gestisce l'attivit√† di Gestione Utente Comune e Gestione Template di Utente: in particolare 
  * gestisce i quattro dettagli relativi agli Accessi/Ruoli gia' assegnati all'Utente e agli Accessi/Ruoli ancora disponibili
  *	
  */

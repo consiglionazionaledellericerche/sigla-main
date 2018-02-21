@@ -77,7 +77,7 @@ public class CRUDRuoloAction extends CRUDAction {
         try {
             fillModel(context);
             if (bp.isDirty()) {
-                setErrorMessage(context, "Attenzione: è necessario salvare le modifiche effettuate!");
+                setErrorMessage(context, "Attenzione: Ã¨ necessario salvare le modifiche effettuate!");
                 return context.findDefaultForward();
             }
             CRUDTipoRuoloBP nbp = (CRUDTipoRuoloBP) context.createBusinessProcess("CRUDTipoRuoloBP",

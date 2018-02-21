@@ -72,7 +72,7 @@ public class Gruppo_cr_uoBulk extends Gruppo_cr_uoBase {
 			throw new ValidationException( "Il campo Gruppo deve essere valorizzato!" );
 
 		if ((getCd_unita_organizzativa() == null ) || (getCd_unita_organizzativa().trim().length() == 0))
-			throw new ValidationException( "Il campo Unit‡ Organizzativa deve essere valorizzato" );
+			throw new ValidationException( "Il campo Unit√† Organizzativa deve essere valorizzato" );
 
 	}
 

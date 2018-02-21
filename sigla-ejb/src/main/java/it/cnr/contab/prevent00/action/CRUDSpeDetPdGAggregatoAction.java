@@ -3,7 +3,7 @@ import it.cnr.contab.reports.bp.*;
 
 /**
  * Adatta e implementa la {@link it.cnr.jada.util.action.CRUDAction } per le
- * 		funzionalit‡ offerte dal Dettaglio Spese
+ * 		funzionalit√† offerte dal Dettaglio Spese
  * 
  * @author: Bisquadro Vincenzo
  */

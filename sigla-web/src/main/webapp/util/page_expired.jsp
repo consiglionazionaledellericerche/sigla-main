@@ -7,7 +7,7 @@
 <script language="javascript" src="scripts/css.js"></script>
 <script language="JavaScript" archive="scripts.jar" src="scripts/util.js"></script>
 <title>Logo</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body class="Workspace">
 <script>
@@ -37,7 +37,7 @@ restoreWorkspace();
 						</td>
 					  	<td valign="center h5" width="100%">
 					  		Pagina scaduta.
-					  		<br>E' stata richiesta una operazione da una pagina non più valida.
+					  		<br>E' stata richiesta una operazione da una pagina non piÃ¹ valida.
 							<% if (bp != null) { %>
 							<br>Per ritornare alla pagina corrente premere il bottone 'chiudi'.
 							<% } %>
@@ -68,7 +68,7 @@ restoreWorkspace();
 		  <h3 class="card-header h2 text-danger"><i class="fa fa-exclamation-circle fa-fw fa-2x text-danger" aria-hidden="true"></i> Errore</h3>
 		  <div class="card-block p-3">
 		    <p class="card-title">Pagina scaduta.
-					  		<br>E' stata richiesta una operazione da una pagina non più valida.
+					  		<br>E' stata richiesta una operazione da una pagina non piÃ¹ valida.
 							<% if (bp != null) { %>
 							<br>Per ritornare alla pagina corrente premere il bottone 'chiudi'.
 							<% } %></p>

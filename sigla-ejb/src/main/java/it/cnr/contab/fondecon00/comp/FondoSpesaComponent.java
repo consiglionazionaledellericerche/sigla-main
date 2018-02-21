@@ -40,7 +40,7 @@ public class FondoSpesaComponent extends it.cnr.jada.comp.CRUDComponent implemen
 
 /**
  * Verifica della quadratura delle spese:
- * - quadratura e aggiornamento disponibilit‡ del fondo;
+ * - quadratura e aggiornamento disponibilit√† del fondo;
  * - quadratura coi massimali mensili;
  * - quadratura coi massimali di spesa.
  */
@@ -62,16 +62,16 @@ public void controlloQuadrature(
 						((fondo.getDs_fondo() == null) ? 
 									fondo.getCd_codice_fondo().toString() : 
 									fondo.getDs_fondo()) + 
-						"\" Ë stato eliminato! Impossibile salvare.");
+						"\" √® stato eliminato! Impossibile salvare.");
 	} catch (it.cnr.jada.persistency.PersistencyException e) {
 		throw handleException(spesa, e);
 	}
 
-	//QUADRADURA E AGGIORNAMENTO CON LA DISPONIBILIT‡ DEL FONDO
+	//QUADRADURA E AGGIORNAMENTO CON LA DISPONIBILIT√† DEL FONDO
 	if(spesa.getIm_ammontare_spesa() == null)
-		throw new it.cnr.jada.comp.ApplicationException("Ammontare Spesa non puÚ essere nullo");
+		throw new it.cnr.jada.comp.ApplicationException("Ammontare Spesa non pu√≤ essere nullo");
 	if(fondo.getIm_residuo_fondo().compareTo( spesa.getIm_ammontare_spesa() ) < 0)
-		throw new it.cnr.jada.comp.ApplicationException("Disponibilit‡ non sufficente a sostenere la spesa.");
+		throw new it.cnr.jada.comp.ApplicationException("Disponibilit√† non sufficente a sostenere la spesa.");
 
 	//QUADRATURA MASSIMALI DI SPESA
 	if(spesa.getFl_documentata().booleanValue()) {
@@ -86,7 +86,7 @@ public void controlloQuadrature(
 
 	//QUADRATURA MASSIMALI MENSILI
 	if( spesa.getDt_spesa() == null)
-		throw new it.cnr.jada.comp.ApplicationException("Data Spesa non puÚ essere nulla.");
+		throw new it.cnr.jada.comp.ApplicationException("Data Spesa non pu√≤ essere nulla.");
 
 	LoggableStatement ps = null;
 	try {
@@ -113,11 +113,11 @@ public void controlloQuadrature(
 			if(spesa.getFl_documentata().booleanValue()) {
 				if( fondo.getIm_max_mm_spesa_doc() != null
 					&& fondo.getIm_max_mm_spesa_doc().compareTo( im_max ) < 0)
-					throw new ErroreSquadraturaFondo("L'importo delle spese mensili documentate superer‡ il limite mensile.\nSi vuole continuare comunque?", spesa);
+					throw new ErroreSquadraturaFondo("L'importo delle spese mensili documentate superer√† il limite mensile.\nSi vuole continuare comunque?", spesa);
 			} else {
 				if( fondo.getIm_max_mm_spesa_non_doc() != null
 					&& fondo.getIm_max_mm_spesa_non_doc().compareTo( im_max ) < 0)
-					throw new ErroreSquadraturaFondo("L'importo delle spese mensili non documentate superer‡ il limite mensile.\nSi vuole continuare comunque?", spesa);
+					throw new ErroreSquadraturaFondo("L'importo delle spese mensili non documentate superer√† il limite mensile.\nSi vuole continuare comunque?", spesa);
 			}
 		}
 
@@ -143,7 +143,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk)
 
 		Fondo_economaleBulk fondoRicaricato = (Fondo_economaleBulk)getHome(userContext, spesa.getFondo_economale()).findAndLock(spesa.getFondo_economale());
 		if (fondoRicaricato.isChiuso())
-			throw new it.cnr.jada.comp.ApplicationException("Impossibile salvare. Il fondo economale Ë stato chiuso!");
+			throw new it.cnr.jada.comp.ApplicationException("Impossibile salvare. Il fondo economale √® stato chiuso!");
 
 		// Richiesta Iaccarino - 21/10/2003 ***********************
 		// Questa op viene effettuata qui per evitare l'implementazione
@@ -163,7 +163,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk)
 											((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio())))
 			throw new it.cnr.jada.comp.ApplicationException("Impossibile salvare una spesa per un esercizio non aperto!");
 
-		//Verifica della tracciabilit‡ dei pagamenti
+		//Verifica della tracciabilit√† dei pagamenti
 		try {
 			verificaTracciabilitaPagamenti(userContext, spesa);
 		} catch (RemoteException e) {
@@ -233,7 +233,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext userContext,OggettoBu
 	Fondo_spesaBulk spesa = (Fondo_spesaBulk)bulk;
 
 	if (spesa.getEsercizio() == null)
-		throw new it.cnr.jada.comp.ApplicationException("L'esercizio della spesa non Ë valorizzato! Impossibile proseguire.");
+		throw new it.cnr.jada.comp.ApplicationException("L'esercizio della spesa non √® valorizzato! Impossibile proseguire.");
 			
 	if (it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext).intValue() !=
 		spesa.getEsercizio().intValue())
@@ -323,7 +323,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 
 		//Fondo_economaleBulk fondoRicaricato = (Fondo_economaleBulk)getHome(userContext, spesa.getFondo_economale()).findAndLock(spesa.getFondo_economale());
 		//if (fondoRicaricato.isChiuso())
-			//throw new it.cnr.jada.comp.ApplicationException("Impossibile salvare. Il fondo economale Ë stato chiuso!");
+			//throw new it.cnr.jada.comp.ApplicationException("Impossibile salvare. Il fondo economale √® stato chiuso!");
 			
 		//updateFondoEconomale(userContext, spesa);
 		//updateDocumentoAmministrativoCollegato(userContext, spesa);
@@ -509,15 +509,15 @@ private void updateFondoEconomale (
 /**
  * Verifiche e inizializazioni relative a una spesa (Fondo_spesaBulk)
  *
- * Se il fornitore Ë saltuario viene verificata la presenza dei relativi dati minimi:
+ * Se il fornitore √® saltuario viene verificata la presenza dei relativi dati minimi:
  * - Denominazione
  * - Codice fiscale
- * - Citt‡
- * Se il fornitore non Ë saltuario viene verificata la selezione di un terzo
+ * - Citt√†
+ * Se il fornitore non √® saltuario viene verificata la selezione di un terzo
  *
- * Se c'Ë partita iva ne controllo l'esattezza
+ * Se c'√® partita iva ne controllo l'esattezza
  *
- * Se c'Ë codice fiscale ne controllo l'esattezza
+ * Se c'√® codice fiscale ne controllo l'esattezza
  *
  * Si effettuano i controlli di quadratura
  */
@@ -536,13 +536,13 @@ private void validaEliminazioneSpesa(it.cnr.jada.UserContext userContext, Fondo_
 	Fondo_economaleBulk fondoRicaricato = (Fondo_economaleBulk)getHome(userContext, spesa.getFondo_economale()).
 													findAndLock(spesa.getFondo_economale());
 	if (fondoRicaricato.isChiuso())
-		throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile eliminare spese appartenenti ad un fondo chiuso!");
+		throw new it.cnr.jada.comp.ApplicationException("Non √® possibile eliminare spese appartenenti ad un fondo chiuso!");
 
 	//if (spesa.getFondo_economale().isOnlyForClose())
-		//throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile eliminare spese appartenenti ad un fondo di un altro esercizio!");
+		//throw new it.cnr.jada.comp.ApplicationException("Non √® possibile eliminare spese appartenenti ad un fondo di un altro esercizio!");
 
 	if (spesa.isSpesa_reintegrata())
-		throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile eliminare spes gi‡ reintegrate!");
+		throw new it.cnr.jada.comp.ApplicationException("Non √® possibile eliminare spes gi√† reintegrate!");
 
 	if (!spesa.isSpesa_documentata() && spesa.getObb_scad() != null)
 		throw new it.cnr.jada.comp.ApplicationException("Disassociare questa spesa dal fondo economale prima di cancellarla!");
@@ -551,22 +551,22 @@ private void validaEliminazioneSpesa(it.cnr.jada.UserContext userContext, Fondo_
 		spesa.TIPO_DOC_ANT.equalsIgnoreCase(spesa.getTipoDocumento())) {
 		Boolean associatoAMissione = ((it.cnr.contab.missioni00.docs.bulk.AnticipoBulk)spesa.getDocumento()).getFl_associato_missione();		
 		if (associatoAMissione != null && associatoAMissione.booleanValue())
-			throw new it.cnr.jada.comp.ApplicationException("Impossibile eliminare la spesa perchË l'anticipo Ë associato ad una missione!");
+			throw new it.cnr.jada.comp.ApplicationException("Impossibile eliminare la spesa perch√® l'anticipo √® associato ad una missione!");
 	}
 }
 
 /**
  * Verifiche e inizializazioni relative a una spesa (Fondo_spesaBulk)
  *
- * Se il fornitore Ë saltuario viene verificata la presenza dei relativi dati minimi:
+ * Se il fornitore √® saltuario viene verificata la presenza dei relativi dati minimi:
  * - Denominazione
  * - Codice fiscale
- * - Citt‡
- * Se il fornitore non Ë saltuario viene verificata la selezione di un terzo
+ * - Citt√†
+ * Se il fornitore non √® saltuario viene verificata la selezione di un terzo
  *
- * Se c'Ë partita iva ne controllo l'esattezza
+ * Se c'√® partita iva ne controllo l'esattezza
  *
- * Se c'Ë codice fiscale ne controllo l'esattezza
+ * Se c'√® codice fiscale ne controllo l'esattezza
  *
  * Si effettuano i controlli di quadratura
  */
@@ -576,10 +576,10 @@ private void validaSpesa(it.cnr.jada.UserContext userContext, Fondo_spesaBulk sp
 		//throw new it.cnr.jada.comp.ApplicationException("Impossibile inserire o salvare una spesa per un esercizio non aperto!");
 
 	if (spesa.getFondo_economale().isChiuso())
-		throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile creare o apportare modifiche a spese appartenenti ad un fondo chiuso!");
+		throw new it.cnr.jada.comp.ApplicationException("Non √® possibile creare o apportare modifiche a spese appartenenti ad un fondo chiuso!");
 
 	//if (spesa.getFondo_economale().isOnlyForClose())
-		//throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile creare o apportare modifiche a spese appartenenti ad un fondo di un altro esercizio!");
+		//throw new it.cnr.jada.comp.ApplicationException("Non √® possibile creare o apportare modifiche a spese appartenenti ad un fondo di un altro esercizio!");
 
 	if(spesa.getIm_ammontare_spesa() == null)
 		throw new it.cnr.jada.comp.ApplicationException("Specificare l'importo della spesa!");
@@ -626,14 +626,14 @@ private void validaSpesa(it.cnr.jada.UserContext userContext, Fondo_spesaBulk sp
 			spesa.getCodice_fiscale().trim().length() <= 0 ||
 			spesa.getCitta() == null || 
 			spesa.getCitta().getCrudStatus() != OggettoBulk.NORMAL) {
-			throw new it.cnr.jada.comp.ApplicationException("Dati fornitore non sufficienti (min: Denominazione, Codice Fiscale, Citt‡).");
+			throw new it.cnr.jada.comp.ApplicationException("Dati fornitore non sufficienti (min: Denominazione, Codice Fiscale, Citt√†).");
 		}
 		try {
 			if(spesa.getPartita_iva() != null && spesa.getPartita_iva().length() != 0) {
 				PartitaIVAControllo.parsePartitaIVA(spesa.getPartita_iva());
 			}
 		} catch(it.cnr.contab.anagraf00.util.ExPartitaIVA ecf) {
-			throw new it.cnr.jada.comp.ApplicationException("La partita I.V.A. Ë errata.");
+			throw new it.cnr.jada.comp.ApplicationException("La partita I.V.A. √® errata.");
 		}
 
 		if(spesa.getCodice_fiscale() != null) {
@@ -666,10 +666,10 @@ private void validaSpesa(it.cnr.jada.UserContext userContext, Fondo_spesaBulk sp
   *    PreCondition:
   *      Nessuna condizione di errore rilevata.
   *    PostCondition:
-  *      Viene consentita l'attivit‡ richiesta
-  *  L'esercizio non Ë aperto
+  *      Viene consentita l'attivit√† richiesta
+  *  L'esercizio non √® aperto
   *    PreCondition:
-  *      L'esercizio su cui insiste il controllo non Ë aperto
+  *      L'esercizio su cui insiste il controllo non √® aperto
   *    PostCondition:
   *      Viene notificato l'errore
  */
@@ -706,7 +706,7 @@ public void verificaTracciabilitaPagamenti(UserContext context,
 	if (spesa.getDt_spesa().compareTo(data_da) > -1 && 
 		spesa.getDt_spesa().compareTo(data_a) < 1 &&
 		spesa.getIm_netto_spesa().compareTo(limite)>0)
-		throw new ApplicationException("Non Ë possibile procedere. Nel rispetto della tracciabilit‡ dei pagamenti, non sono ammissibili spese con importo superiore a " + limite);
+		throw new ApplicationException("Non √® possibile procedere. Nel rispetto della tracciabilit√† dei pagamenti, non sono ammissibili spese con importo superiore a " + limite);
 }
 
 }

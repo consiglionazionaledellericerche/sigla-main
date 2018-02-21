@@ -19,7 +19,7 @@
 		<tr>
 			<% controller.writeFormField(out,"default","unita_organizzativa"); %>
 		</tr>
-		<!-- Per ora l'importo non è gestito 
+		<!-- Per ora l'importo non Ã¨ gestito 
 		<tr>
 			<% controller.writeFormField(out,"default","importo"); %>
 		</tr> -->

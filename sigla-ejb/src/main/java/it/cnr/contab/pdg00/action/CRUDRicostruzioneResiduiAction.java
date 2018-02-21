@@ -46,7 +46,7 @@ public class CRUDRicostruzioneResiduiAction extends CRUDAction {
 			residuo.setCentro_responsabilita(cdr);
 			Pdg_residuoBulk residuo2 = bp.calcolaMassaSpendibile(context, residuo, cdr);
 
-			// inseriamo solo se la il cdr non è di tipo sac
+			// inseriamo solo se la il cdr non Ã¨ di tipo sac
 			if (!bp.isCdrSAC(context, cdr)&&residuo.getIm_massa_spendibile()==null)
 				residuo.setIm_massa_spendibile(residuo2.getIm_massa_spendibile());
 			return context.findDefaultForward();
@@ -216,7 +216,7 @@ public class CRUDRicostruzioneResiduiAction extends CRUDAction {
 			if (bulk != null) {
 				CdrBulk cdr = new CdrBulk(((Pdg_residuoBulk)bulk).getCd_centro_responsabilita());
 				if (bp.isRibaltato(context,cdr))
-					throw new ApplicationException("Non è possibile utilizzare questa funzione perchè è stato effettuato il ribaltamento complessivo dei documenti contabili per il CDS a cui afferisce il CdR selezionato");
+					throw new ApplicationException("Non Ã¨ possibile utilizzare questa funzione perchÃ¨ Ã¨ stato effettuato il ribaltamento complessivo dei documenti contabili per il CDS a cui afferisce il CdR selezionato");
 			}
 				
 		}

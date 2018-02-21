@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
 		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription = "Associazione U.O./Aree di Ricerca"
-		  longDescription = "Associazione Missione Pdg-Tipo Unità Organizzative">
+		  longDescription = "Associazione Missione Pdg-Tipo UnitÃ  Organizzative">
 	<fieldProperty
 		name="cd_missione"
 		property="pdgMissione.cd_missione"
@@ -17,7 +17,7 @@
 	<fieldProperty
 		name="cd_tipo_unita"
 		property="tipoUnitaOrganizzativa.cd_tipo_unita"
-		label="Tipo Unità Organizzativa"
+		label="Tipo UnitÃ  Organizzativa"
 		inputType="TEXT"
 		maxLength="20"
 		inputSize="6"
@@ -26,7 +26,7 @@
 	<fieldProperty
 		name="ds_tipo_unita"
 		property="tipoUnitaOrganizzativa.ds_tipo_unita"
-		label="Descrizione Tipo Unità Organizzativa"
+		label="Descrizione Tipo UnitÃ  Organizzativa"
 		inputType="TEXT"
 		maxLength="20"
 		inputSize="6"

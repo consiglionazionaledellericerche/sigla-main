@@ -32,9 +32,9 @@ public void setBlob(String string) {
 }
 
 /**
- * Restituisce il valore della propriet‡ 'rOprogetto'
+ * Restituisce il valore della propriet√† 'rOprogetto'
  *
- * @return Il valore della propriet‡ 'rOprogetto'
+ * @return Il valore della propriet√† 'rOprogetto'
  */
 public boolean isROpostit() {
 	

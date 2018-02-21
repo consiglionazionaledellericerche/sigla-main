@@ -40,45 +40,45 @@ public ImpegnoBulk(String cd_cds, Integer esercizio, Integer esercizio_originale
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_tipo_documento_amm'
+ * Restituisce il valore della propriet√† 'cd_tipo_documento_amm'
  *
- * @return Il valore della propriet‡ 'cd_tipo_documento_amm'
+ * @return Il valore della propriet√† 'cd_tipo_documento_amm'
  */
 public java.lang.String getCd_tipo_documento_amm() {
 	return cd_tipo_documento_amm;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_uo_ente'
+ * Restituisce il valore della propriet√† 'cd_uo_ente'
  *
- * @return Il valore della propriet‡ 'cd_uo_ente'
+ * @return Il valore della propriet√† 'cd_uo_ente'
  */
 public java.lang.String getCd_uo_ente() {
 	return cd_uo_ente;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'dt_scadenza'
+ * Restituisce il valore della propriet√† 'dt_scadenza'
  *
- * @return Il valore della propriet‡ 'dt_scadenza'
+ * @return Il valore della propriet√† 'dt_scadenza'
  */
 public java.sql.Timestamp getDt_scadenza() {
 	return dt_scadenza;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'esercizio_doc_passivo'
+ * Restituisce il valore della propriet√† 'esercizio_doc_passivo'
  *
- * @return Il valore della propriet‡ 'esercizio_doc_passivo'
+ * @return Il valore della propriet√† 'esercizio_doc_passivo'
  */
 public java.lang.Integer getEsercizio_doc_passivo() {
 	return esercizio_doc_passivo;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'esercizio_mandato'
+ * Restituisce il valore della propriet√† 'esercizio_mandato'
  *
- * @return Il valore della propriet‡ 'esercizio_mandato'
+ * @return Il valore della propriet√† 'esercizio_mandato'
  */
 public java.lang.Integer getEsercizio_mandato() {
 	return esercizio_mandato;
@@ -95,9 +95,9 @@ public java.lang.Long getPg_doc_passivo() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'pg_mandato'
+ * Restituisce il valore della propriet√† 'pg_mandato'
  *
- * @return Il valore della propriet‡ 'pg_mandato'
+ * @return Il valore della propriet√† 'pg_mandato'
  */
 public java.lang.Long getPg_mandato() {
 	return pg_mandato;
@@ -110,9 +110,9 @@ public final static java.util.Hashtable getTipoDocumentoKeys() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'unitaOrganizzativaOptions'
+ * Restituisce il valore della propriet√† 'unitaOrganizzativaOptions'
  *
- * @return Il valore della propriet‡ 'unitaOrganizzativaOptions'
+ * @return Il valore della propriet√† 'unitaOrganizzativaOptions'
  */
 public java.util.List getUnitaOrganizzativaOptions() {
 	return unitaOrganizzativaOptions;
@@ -165,7 +165,7 @@ public boolean isFl_isTronco() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'cd_tipo_documento_amm'
+ * Imposta il valore della propriet√† 'cd_tipo_documento_amm'
  *
  * @param newCd_tipo_documento_amm	Il valore da assegnare a 'cd_tipo_documento_amm'
  */
@@ -174,7 +174,7 @@ public void setCd_tipo_documento_amm(java.lang.String newCd_tipo_documento_amm) 
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'cd_uo_ente'
+ * Imposta il valore della propriet√† 'cd_uo_ente'
  *
  * @param newCd_uo_ente	Il valore da assegnare a 'cd_uo_ente'
  */
@@ -183,7 +183,7 @@ public void setCd_uo_ente(java.lang.String newCd_uo_ente) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'dt_scadenza'
+ * Imposta il valore della propriet√† 'dt_scadenza'
  *
  * @param newDt_scadenza	Il valore da assegnare a 'dt_scadenza'
  */
@@ -192,7 +192,7 @@ public void setDt_scadenza(java.sql.Timestamp newDt_scadenza) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'esercizio_doc_passivo'
+ * Imposta il valore della propriet√† 'esercizio_doc_passivo'
  *
  * @param newEsercizio_doc_passivo	Il valore da assegnare a 'esercizio_doc_passivo'
  */
@@ -201,7 +201,7 @@ public void setEsercizio_doc_passivo(java.lang.Integer newEsercizio_doc_passivo)
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'esercizio_mandato'
+ * Imposta il valore della propriet√† 'esercizio_mandato'
  *
  * @param newEsercizio_mandato	Il valore da assegnare a 'esercizio_mandato'
  */
@@ -216,7 +216,7 @@ public void setFl_isTronco(boolean newFl_isTronco) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'pg_doc_passivo'
+ * Imposta il valore della propriet√† 'pg_doc_passivo'
  *
  * @param newPg_doc_passivo	Il valore da assegnare a 'pg_doc_passivo'
  */
@@ -225,7 +225,7 @@ public void setPg_doc_passivo(java.lang.Long newPg_doc_passivo) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'pg_mandato'
+ * Imposta il valore della propriet√† 'pg_mandato'
  *
  * @param newPg_mandato	Il valore da assegnare a 'pg_mandato'
  */
@@ -239,7 +239,7 @@ public void setUnitaOrganizzativaOptions(java.util.List newUnitaOrganizzativaOpt
 	unitaOrganizzativaOptions = newUnitaOrganizzativaOptions;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException
@@ -247,7 +247,7 @@ public void validate() throws ValidationException
 	super.validate();
 	// controllo su campo DATA SCADENZA
 	if ( getDt_scadenza() == null )
-		throw new ValidationException( "Il campo DATA SCADENZA Ë obbligatorio." );
+		throw new ValidationException( "Il campo DATA SCADENZA √® obbligatorio." );
 
 /*	if ( !Numerazione_doc_contBulk.TIPO_IMP_RES.equals( getCd_tipo_documento_cont()))
 	{
@@ -255,17 +255,17 @@ public void validate() throws ValidationException
 		if ( //  data obbligazione != data scadenza && data_obbligazione >= data_scadenza
 			!(getDt_registrazione().after( getDt_scadenza() ) && getDt_registrazione().before( getDt_scadenza() )) &&
 			  getDt_registrazione().after( getDt_scadenza() ))
-			throw new ValidationException( "Non Ë possibile inserire una data scadenza antecedente a quella di registrazione dell'Impegno su bilancio Ente." );
+			throw new ValidationException( "Non √® possibile inserire una data scadenza antecedente a quella di registrazione dell'Impegno su bilancio Ente." );
 		
 		java.util.GregorianCalendar gc = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
 		gc.setTime(getDt_scadenza());
 		if (gc.get(java.util.GregorianCalendar.YEAR) < getEsercizio().intValue())
-			throw new ValidationException( "Non Ë possibile inserire una data scadenza antecedente all'esercizio di creazione dell'Impegno su bilancio Ente." );
+			throw new ValidationException( "Non √® possibile inserire una data scadenza antecedente all'esercizio di creazione dell'Impegno su bilancio Ente." );
 /*	}	*/
 
 	// controlli su campo IMPORTO	
 	if (  getIm_obbligazione() == null ) 
-		throw new ValidationException( "L' IMPORTO dell'Impegno su bilancio Ente non puÚ essere nullo." );
+		throw new ValidationException( "L' IMPORTO dell'Impegno su bilancio Ente non pu√≤ essere nullo." );
 	
 	if ( this.isAssociataADocAmm() == false && ( ( getIm_obbligazione() == null ) || 
 		 (getIm_obbligazione().compareTo(new java.math.BigDecimal(0)) <= 0) ))

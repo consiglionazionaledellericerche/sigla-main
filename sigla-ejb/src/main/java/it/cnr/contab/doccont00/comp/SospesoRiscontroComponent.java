@@ -197,7 +197,7 @@ private void aggiornaImMandato (UserContext userContext,V_mandato_reversaleBulk 
 										 docContabile.getPg_documento_cont()));
 		// verifico che il mandato da associare al riscontro nel frattempo non sia stato modificato
 		if( !docContabile.getPg_ver_rec().equals( mandato.getPg_ver_rec() ) )
-			throw new ApplicationException( "Risorsa non pi˘ valida." );
+			throw new ApplicationException( "Risorsa non pi√π valida." );
 
 		mandato.setIm_pagato( mandato.getIm_pagato().add(im_riscontro) );
 		
@@ -236,7 +236,7 @@ private void aggiornaImMandatoAccreditamento (UserContext userContext,V_mandato_
 										 docContabile.getPg_documento_cont()));
 		// verifico che il mandato di accreditamento da associare al riscontro nel frattempo non sia stato modificato
 		if( !docContabile.getPg_ver_rec().equals( mandato.getPg_ver_rec() ) )
-			throw new ApplicationException( "Risorsa non pi˘ valida." );
+			throw new ApplicationException( "Risorsa non pi√π valida." );
 			
 		mandato.setIm_pagato( mandato.getIm_pagato().add(im_riscontro) );
 		
@@ -274,7 +274,7 @@ private void aggiornaImReversale (UserContext userContext,V_mandato_reversaleBul
 										 docContabile.getPg_documento_cont()));
 		// verifico che la reversale da associare al riscontro nel frattempo non sia stata modificata
 		if( !docContabile.getPg_ver_rec().equals( reversale.getPg_ver_rec() ) )
-			throw new ApplicationException( "Risorsa non pi˘ valida." );
+			throw new ApplicationException( "Risorsa non pi√π valida." );
 			
 		reversale.setIm_incassato( reversale.getIm_incassato().add(im_riscontro) );
 		
@@ -479,23 +479,23 @@ public void cambiaStato( it.cnr.jada.UserContext userContext, Collection sospesi
  * Pre-post-conditions:
  *
  * Nome: Clausole non specificate
- * Pre: L'albero delle clausole non Ë specficato (nullo)
+ * Pre: L'albero delle clausole non √® specficato (nullo)
  * Post: Viene generato un albero di clausole usando tutti i valori non nulli degli 
  *			attributi dell'OggettoBulk specificato come prototipo. L'elenco degli
- * 			attributi da utilizzare per ottenere le clausole Ë estratto dal
+ * 			attributi da utilizzare per ottenere le clausole √® estratto dal
  * 			BulkInfo dell'OggettoBulk
  *
  * Nome: Tutti i controlli superati
  * Pre: Albero delle clausole di ricerca specificato (non nullo)
  * Post: Viene effettuata una ricerca di OggettoBulk compatibili con il bulk specificato. 
  * 			La ricerca deve essere effettuata utilizzando le clausole specificate da "clausole".
- *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ë
+ *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome √®
  *			ottenuto concatenando il nome della component con la stringa ".find"
  *
  * @param	uc	lo UserContext che ha generato la richiesta
  * @param	clausole	Una CompoundFindClause che descrive l'albero di clausole
  * 			da applicare nella ricerca
- * @param	bulk	l'OggettoBulk che Ë stato usato come prototipo per la generazione
+ * @param	bulk	l'OggettoBulk che √® stato usato come prototipo per la generazione
  * 			delle clausole di ricerca.
  * @return	Un RemoteIterator sul risultato della ricerca
  */	
@@ -523,15 +523,15 @@ public it.cnr.jada.util.RemoteIterator cerca(UserContext userContext,it.cnr.jada
   *      E' stata generata la richiesta di creazione di un Sospeso e il sospeso supera la validazione
   *      (metodo verificaSospesoRiscontro)
   *    PostCondition:
-  *      Per i Sospesi del CNR vengono resettati il cds di origine e l'unit‡ organizzativa di 
+  *      Per i Sospesi del CNR vengono resettati il cds di origine e l'unit√† organizzativa di 
   *		 origine e viene impostato lo stato del sospeso a INIZIALE. 
-  *		 In tutti gli altri casi viene resettata l'unit‡ organizzativa di origine, viene impostato il cds
+  *		 In tutti gli altri casi viene resettata l'unit√† organizzativa di origine, viene impostato il cds
   *		 di origine con quello di scrivania e lo stato del sospeso a ASSOCIATO A CDS.
   *  Creazione di un Sospeso - errore
   *    PreCondition:
   *      la richiesta di creazione di un sospeso e' stata generata ed esiste un altro sospeso con la stessa chiave
   *    PostCondition:
-  *      una ComponentException viene generata per segnalare all'utente l'impossibilit‡ ad effettuare l'inserimento
+  *      una ComponentException viene generata per segnalare all'utente l'impossibilit√† ad effettuare l'inserimento
   *  creazione Riscontro
   *    PreCondition:
   *      E' stata generata la richiesta di creazione di un Riscontro e il riscontro supera la validazione
@@ -539,12 +539,12 @@ public it.cnr.jada.util.RemoteIterator cerca(UserContext userContext,it.cnr.jada
   *    PostCondition:
   *      Viene aggiornato l'importo del riscontro associato al documento contabile (mandato o reversale).
   *		 Viene poi creato un dettaglio di riscontro (metodo creaDettaglioSospeso), di tipo spesa o entrata, a seconda se
-  *		 il riscontro Ë stato associato rispettivamente a un mandato o a una reversale
+  *		 il riscontro √® stato associato rispettivamente a un mandato o a una reversale
   *  Creazione di un Riscontro - errore
   *    PreCondition:
   *      la richiesta di creazione di un riscontro e' stata generata ed esiste un altro riscontro con la stessa chiave
   *    PostCondition:
-  *      una ComponentException viene generata per segnalare all'utente l'impossibilit‡ ad effettuare l'inserimento
+  *      una ComponentException viene generata per segnalare all'utente l'impossibilit√† ad effettuare l'inserimento
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> il sospeso o riscontro da creare
@@ -882,7 +882,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
   *    PreCondition:
   *     E' stata richiesta l'inizializzazione di un riscontro d'entrata
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare che non Ë stata
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare che non √® stata
   *		associata nessuna reversale al riscontro
   *  inizializzazione di una istanza di SospesoBulk per modifica - errore associazione mandato-reversale
   *    PreCondition:
@@ -894,7 +894,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
   *    PreCondition:
   *     E' stata richiesta l'inizializzazione di un riscontro di spesa
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare che non Ë stato
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare che non √® stato
   *		associato nessun mandato al riscontro
   *  inizializzazione di una istanza di SospesoBulk per modifica - errore associazione mandato-reversale
   *    PreCondition:
@@ -907,7 +907,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
   *     E' stata richiesta l'inizializzazione di una istanza di Sospeso d'Entrata CNR
   *    PostCondition:
   *     Viene caricato il sospeso CNR con i relativi accertamenti e 
-  *		reversali ad esso associati. Sono inoltre visualizzate le unit‡ organizzative 
+  *		reversali ad esso associati. Sono inoltre visualizzate le unit√† organizzative 
   *		che hanno utilizzato il sospeso e la voce di bilancio CNR degli accertamenti
   *		imputati.
   *
@@ -930,12 +930,12 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 				//carico i sospesi associati alla reversale selezionata
 				List result = (List) sospesoHome.findSospeso_det_etrColl( sospeso );
 				if ( result.size() != 1 )
-					throw new ApplicationException( "Non Ë stata associata nessuna reversale al riscontro." );
+					throw new ApplicationException( "Non √® stata associata nessuna reversale al riscontro." );
 
 				sospeso.setDettaglio_etr((Sospeso_det_etrBulk) result.get(0));
 				V_mandato_reversaleBulk man_rev = (V_mandato_reversaleBulk) getHome( aUC, V_mandato_reversaleBulk.class ).findByPrimaryKey( new V_mandato_reversaleBulk(sospeso.getEsercizio(), Numerazione_doc_contBulk.TIPO_REV, sospeso.getCd_cds(), sospeso.getDettaglio_etr().getPg_reversale()));
 				if ( man_rev == null )
-					throw new ApplicationException( "Non Ë stata associata nessuna reversale al riscontro." );	
+					throw new ApplicationException( "Non √® stata associata nessuna reversale al riscontro." );	
 				sospeso.setV_man_rev( man_rev );
 
 				sospeso.setManRevRiportato(isAssocRiscontroEntrataDocContAnnullabile(aUC, sospeso));
@@ -946,12 +946,12 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 				//carico i sospesi associati al mandato selezionato
 				List result = (List) sospesoHome.findSospeso_det_uscColl( sospeso );
 				if ( result.size() != 1 )
-					throw new ApplicationException( "Non Ë stato associato nessun mandato al riscontro." );
+					throw new ApplicationException( "Non √® stato associato nessun mandato al riscontro." );
 
 				sospeso.setDettaglio_usc( (Sospeso_det_uscBulk) result.get(0));
 				V_mandato_reversaleBulk man_rev = (V_mandato_reversaleBulk) getHome( aUC, V_mandato_reversaleBulk.class ).findByPrimaryKey( new V_mandato_reversaleBulk(sospeso.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, sospeso.getCd_cds(), sospeso.getDettaglio_usc().getPg_mandato()));
 				if ( man_rev == null )
-					throw new ApplicationException( "Non Ë stato associato nessun mandato al riscontro." );
+					throw new ApplicationException( "Non √® stato associato nessun mandato al riscontro." );
 				
 				sospeso.setV_man_rev( man_rev );
 
@@ -1400,7 +1400,7 @@ public OggettoBulk modificaConBulk( UserContext userContext,OggettoBulk bulk) th
 
 		if ( sospeso.isToBeUpdated() )
 		{
-			//se il sospeso Ë stato modificato, aggiorno anche i figli
+			//se il sospeso √® stato modificato, aggiorno anche i figli
 			SospesoBulk figlio;
 			for (Iterator i =  sospeso.getSospesiFigliColl().iterator(); i.hasNext(); )
 			{
@@ -1457,8 +1457,8 @@ public OggettoBulk modificaConBulk( UserContext userContext,OggettoBulk bulk) th
  *
  * Nome: Richiesta di ricerca di un riscontro - errore
  * Pre:  E' stata generata la richiesta di ricerca di un riscontro e l'utente ha inserito un codice di documento
- *		 contabile corrispondente a pi˘ documenti contabili
- * Post: Un messaggio di errore viene visualizzato all'utente per segnalare che esistono pi˘ documenti
+ *		 contabile corrispondente a pi√π documenti contabili
+ * Post: Un messaggio di errore viene visualizzato all'utente per segnalare che esistono pi√π documenti
  *		 contabili con tale codice
  * 
  * @param userContext lo userContext che ha generato la richiesta
@@ -1496,7 +1496,7 @@ public Query select(UserContext userContext, CompoundFindClause clauses, Oggetto
 						throw new ApplicationException(" Non esiste nessuna mandato/reversale con progressivo " + sospeso.getV_man_rev().getPg_documento_cont() );												
 				}	
 				else if ( result.size() > 1  )
-					throw new ApplicationException(" Esistono pi˘ documenti contabili con progressivo " + sospeso.getV_man_rev().getPg_documento_cont() );
+					throw new ApplicationException(" Esistono pi√π documenti contabili con progressivo " + sospeso.getV_man_rev().getPg_documento_cont() );
 				sospeso.setV_man_rev( (V_mandato_reversaleBulk) result.get(0));
 			}
 					
@@ -1528,7 +1528,7 @@ public Query select(UserContext userContext, CompoundFindClause clauses, Oggetto
 		SelezionaSospesiCNRBulk seleziona = (SelezionaSospesiCNRBulk) bulk;
 		EnteBulk ente = (EnteBulk)getHome(userContext, EnteBulk.class).findAll().get(0);
 		if ( ((CNRUserContext)userContext).getCd_cds().equals( ente.getCd_unita_organizzativa()) )
-			throw new ApplicationException( "La ricerca Ë abilitata solo per i CDS");
+			throw new ApplicationException( "La ricerca √® abilitata solo per i CDS");
 		SQLBuilder sql = (SQLBuilder) getHome( userContext, SospesoBulk.class ).createSQLBuilder();
 		sql.addSQLClause( "AND", "esercizio", sql.EQUALS, ((CNRUserContext)userContext).getEsercizio() );
 		sql.addSQLClause( "AND", "cd_cds", sql.EQUALS, ente.getCd_unita_organizzativa() );
@@ -1642,7 +1642,7 @@ public SQLBuilder selectCdsByClause( UserContext userContext, ListaSospesiBulk b
   * Aggiunge una clausola a tutte le operazioni di ricerca eseguite sul Cds
   *
   * Nome: Richiesta di ricerca di un Cds
-  * Pre: E' stata generata la richiesta di ricerca di un Cds. Il Cds di scrivania Ë di tipo ENTE
+  * Pre: E' stata generata la richiesta di ricerca di un Cds. Il Cds di scrivania √® di tipo ENTE
   * Post: Viene restituito l'SQLBuilder 
   *
   * @param userContext	lo userContext che ha generato la richiesta
@@ -1666,7 +1666,7 @@ public SQLBuilder selectCdsForPrintByClause(UserContext userContext, Stampa_sosp
   * Aggiunge una clausola a tutte le operazioni di ricerca eseguite sul Cds
   *
   * Nome: Richiesta di ricerca di un Cds
-  * Pre: E' stata generata la richiesta di ricerca di un Cds. Il Cds di scrivania Ë di tipo ENTE
+  * Pre: E' stata generata la richiesta di ricerca di un Cds. Il Cds di scrivania √® di tipo ENTE
   * Post: Viene restituito l'SQLBuilder 
   *
   * @param userContext	lo userContext che ha generato la richiesta
@@ -1722,7 +1722,7 @@ public SQLBuilder selectUoForPrintByClause(UserContext userContext, Stampa_sospe
 	Unita_organizzativaHome home = (Unita_organizzativaHome)getHome(userContext, Unita_organizzativaBulk.class);
 	SQLBuilder sql;
 
-	// Verifica se il Cds di scrivania Ë di tipo ENTE
+	// Verifica se il Cds di scrivania √® di tipo ENTE
 	if (cds_scrivania.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_ENTE)){
 		sql = home.createSQLBuilderEsteso();
 	} else{
@@ -1742,24 +1742,24 @@ public SQLBuilder selectUoForPrintByClause(UserContext userContext, Stampa_sospe
  * Nome: Richiesta di ricerca di un Documento Contabile
  * Pre:  E' stata generata la richiesta di ricerca di un documento contabile (reversale o mandato)
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
- *       clausole che il doc. contabile, sia esso una reversale o un mandato, abbia l'esercizio, il cds e l'unit‡ 
- *		 organizzativa rispettivamente come l'esercizio, il cds e l'unit‡ organizzativa di scrivania, 
+ *       clausole che il doc. contabile, sia esso una reversale o un mandato, abbia l'esercizio, il cds e l'unit√† 
+ *		 organizzativa rispettivamente come l'esercizio, il cds e l'unit√† organizzativa di scrivania, 
  *		 che NON sia di tipo a regolamento sospeso o di regolarizzazione, che abbia lo stato a EMESSO e che 
  *		 rispetti la condizione che la differenza tra il suo importo e l'importo incassato o pagato sia maggiore di 0.
  *
  * Nome: Richiesta di ricerca di una Reversale
  * Pre:  E' stata generata la richiesta di ricerca di una reversale
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
- *       clausole che la reversale abbia l'esercizio, il cds e l'unit‡ organizzativa rispettivamente come
- *		 l'esercizio, il cds e l'unit‡ organizzativa di scrivania, che NON sia di tipo a regolamento sospeso 
+ *       clausole che la reversale abbia l'esercizio, il cds e l'unit√† organizzativa rispettivamente come
+ *		 l'esercizio, il cds e l'unit√† organizzativa di scrivania, che NON sia di tipo a regolamento sospeso 
  *		 o di regolarizzazione, che abbia lo stato a EMESSO e che rispetti la condizione che la differenza tra 
  *		 il suo importo e l'importo incassato sia maggiore di 0.
  *
  * Nome: Richiesta di ricerca di un Mandato
  * Pre:  E' stata generata la richiesta di ricerca di un mandato
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
- *       clausole che il mandato abbia l'esercizio, il cds e l'unit‡ organizzativa rispettivamente come
- *		 l'esercizio, il cds e l'unit‡ organizzativa di scrivania, che NON sia di tipo a regolamento sospeso 
+ *       clausole che il mandato abbia l'esercizio, il cds e l'unit√† organizzativa rispettivamente come
+ *		 l'esercizio, il cds e l'unit√† organizzativa di scrivania, che NON sia di tipo a regolamento sospeso 
  *		 o di regolarizzazione, che abbia lo stato a EMESSO e che rispetti la condizione che la differenza tra 
  *		 il suo importo e l'importo pagato sia maggiore di 0.
  *
@@ -1773,8 +1773,8 @@ public SQLBuilder selectV_man_rev_for_searchByClause( UserContext userContext, S
 {
 	SQLBuilder sql = getHome( userContext, V_mandato_reversaleBulk.class ).createSQLBuilder();
 	/*
-		* Se il sospeso Ë di tipo entrata, eseguo il caricamento delle reversali
-		* Se il sospeso Ë di tipo spesa, eseguo il caricamento dei mandati
+		* Se il sospeso √® di tipo entrata, eseguo il caricamento delle reversali
+		* Se il sospeso √® di tipo spesa, eseguo il caricamento dei mandati
 		* Se non definisco il tipo di sospeso, eseguo indistintamente il caricamento
 		*	di reversali e di mandati
 	*/
@@ -1808,24 +1808,24 @@ public SQLBuilder selectV_man_rev_for_searchByClause( UserContext userContext, S
  * Nome: Richiesta di ricerca di un Documento Contabile
  * Pre:  E' stata generata la richiesta di ricerca di un documento contabile (reversale o mandato)
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
- *       clausole che il doc. contabile, sia esso una reversale o un mandato, abbia l'esercizio, il cds e l'unit‡ 
- *		 organizzativa rispettivamente come l'esercizio, il cds e l'unit‡ organizzativa di scrivania, 
+ *       clausole che il doc. contabile, sia esso una reversale o un mandato, abbia l'esercizio, il cds e l'unit√† 
+ *		 organizzativa rispettivamente come l'esercizio, il cds e l'unit√† organizzativa di scrivania, 
  *		 che NON sia di tipo a regolamento sospeso o di regolarizzazione, che abbia lo stato a EMESSO e che 
  *		 rispetti la condizione che la differenza tra il suo importo e l'importo incassato o pagato sia maggiore di 0.
  *
  * Nome: Richiesta di ricerca di una Reversale
  * Pre:  E' stata generata la richiesta di ricerca di una reversale
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
- *       clausole che la reversale abbia l'esercizio, il cds e l'unit‡ organizzativa rispettivamente come
- *		 l'esercizio, il cds e l'unit‡ organizzativa di scrivania, che NON sia di tipo a regolamento sospeso 
+ *       clausole che la reversale abbia l'esercizio, il cds e l'unit√† organizzativa rispettivamente come
+ *		 l'esercizio, il cds e l'unit√† organizzativa di scrivania, che NON sia di tipo a regolamento sospeso 
  *		 o di regolarizzazione, che abbia lo stato a EMESSO e che rispetti la condizione che la differenza tra 
  *		 il suo importo e l'importo incassato sia maggiore di 0.
  *
  * Nome: Richiesta di ricerca di un Mandato
  * Pre:  E' stata generata la richiesta di ricerca di un mandato
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
- *       clausole che il mandato abbia l'esercizio, il cds e l'unit‡ organizzativa rispettivamente come
- *		 l'esercizio, il cds e l'unit‡ organizzativa di scrivania, che NON sia di tipo a regolamento sospeso 
+ *       clausole che il mandato abbia l'esercizio, il cds e l'unit√† organizzativa rispettivamente come
+ *		 l'esercizio, il cds e l'unit√† organizzativa di scrivania, che NON sia di tipo a regolamento sospeso 
  *		 o di regolarizzazione, che abbia lo stato a EMESSO e che rispetti la condizione che la differenza tra 
  *		 il suo importo e l'importo pagato sia maggiore di 0.
  *
@@ -1839,8 +1839,8 @@ public SQLBuilder selectV_man_revByClause( UserContext userContext, SospesoBulk 
 {
 	SQLBuilder sql = getHome( userContext, V_mandato_reversaleBulk.class ).createSQLBuilder();
 	/*
-		* Se il sospeso Ë di tipo entrata, eseguo il caricamento delle reversali
-		* Se il sospeso Ë di tipo spesa, eseguo il caricamento dei mandati
+		* Se il sospeso √® di tipo entrata, eseguo il caricamento delle reversali
+		* Se il sospeso √® di tipo spesa, eseguo il caricamento dei mandati
 		* Se non definisco il tipo di sospeso, eseguo indistintamente il caricamento
 		*	di reversali e di mandati
 	*/
@@ -1890,27 +1890,27 @@ public it.cnr.jada.bulk.OggettoBulk stampaConBulk(it.cnr.jada.UserContext userCo
 /** 
   *  Tutti controlli superati
   *    PreCondition:
-  *		 Il sospeso non Ë associato a nessun documento contabile
+  *		 Il sospeso non √® associato a nessun documento contabile
   *    PostCondition:
-  *      Il sospeso Ë valido. E' consentito eseguire l'attivit‡ di eliminazione.
-  *  Documento contabile associato Ë una Reversale
+  *      Il sospeso √® valido. E' consentito eseguire l'attivit√† di eliminazione.
+  *  Documento contabile associato √® una Reversale
   *    PreCondition:
-  *      Il sospeso Ë stata associato a una reversale e si vuole procedere alla sua cancellazione
+  *      Il sospeso √® stata associato a una reversale e si vuole procedere alla sua cancellazione
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il sospeso Ë associato ad una reversale.
-  *		 L'attivit‡ di eliminazione del sospeso non Ë consentita.
-  *  Documento contabile associato Ë un Mandato
+  *      Il metodo utilizza un Throw Exception per comunicare che il sospeso √® associato ad una reversale.
+  *		 L'attivit√† di eliminazione del sospeso non √® consentita.
+  *  Documento contabile associato √® un Mandato
   *    PreCondition:
-  *      Il sospeso Ë stato associato a un mandato e si vuole procedere alla sua cancellazione
+  *      Il sospeso √® stato associato a un mandato e si vuole procedere alla sua cancellazione
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il sospeso Ë associato ad un mandato.
-  *		 L'attivit‡ di eliminazione del sospeso non Ë consentita.
-  *  Documento contabile associato Ë una Lettera 1210
+  *      Il metodo utilizza un Throw Exception per comunicare che il sospeso √® associato ad un mandato.
+  *		 L'attivit√† di eliminazione del sospeso non √® consentita.
+  *  Documento contabile associato √® una Lettera 1210
   *    PreCondition:
-  *      Il sospeso Ë stato associato a una Lettera 1210 e si vuole procedere alla sua cancellazione
+  *      Il sospeso √® stato associato a una Lettera 1210 e si vuole procedere alla sua cancellazione
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il sospeso Ë associato ad una Lettera 1210,
-  *		 poichË l'importo associato del sospeso Ë maggiore di 0. L'attivit‡ di eliminazione del sospeso non Ë 
+  *      Il metodo utilizza un Throw Exception per comunicare che il sospeso √® associato ad una Lettera 1210,
+  *		 poich√® l'importo associato del sospeso √® maggiore di 0. L'attivit√† di eliminazione del sospeso non √® 
   *		 consentita.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -1941,7 +1941,7 @@ protected void validaEliminaConBulk(UserContext userContext,OggettoBulk bulk) th
 			if( sospeso.getIm_ass_mod_1210().compareTo(new BigDecimal(0)) != 0 )
 					throw new ApplicationException(" Annullamento impossibile! Il sospeso e' associato ad una Lettera di Pagamento Estero.");
 */
-			/*se il sospeso o uno dei suoi figli Ë stato associato a mandati/reversali/lettere 1210 */
+			/*se il sospeso o uno dei suoi figli √® stato associato a mandati/reversali/lettere 1210 */
 			if( sospeso.isAssociato() )
 					throw new ApplicationException(" Annullamento impossibile! Il sospeso e' associato ad un documento contabile o ad una Lettera di Pagamento Estero.");
 					
@@ -1970,39 +1970,39 @@ private void validateBulkForPrintSospesi_Riscontri(it.cnr.jada.UserContext userC
 
 		/**** Controlli sulle Date DA A	*****/
 		if (stampa.getDataInizio()==null)
-			throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 		if (stampa.getDataFine()==null)
-			throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 
   		
 		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(CNRUserContext.getEsercizio(userContext).intValue());
 		
-		// La Data di Inizio Periodo Ë superiore alla data di Fine Periodo
+		// La Data di Inizio Periodo √® superiore alla data di Fine Periodo
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 			
-		// La Data di Inizio Periodo Ë ANTECEDENTE al 1 Gennaio dell'Esercizio di scrivania
+		// La Data di Inizio Periodo √® ANTECEDENTE al 1 Gennaio dell'Esercizio di scrivania
 		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere inferiore a " + formatter.format(firstDayOfYear));
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere inferiore a " + formatter.format(firstDayOfYear));
 		}
 
 		try{
 			if (DateServices.isAnnoMaggEsScriv(userContext)){
 				Timestamp lastDayOfYear = DateServices.getLastDayOfYear(CNRUserContext.getEsercizio(userContext).intValue());
 
-				// L'esercizio di scrivania Ë minore dell'esercizio attuale: 
+				// L'esercizio di scrivania √® minore dell'esercizio attuale: 
 				//	la Data di Fine periodo deve essere inferiore o uguale al 31/12 dell'esercizio
 				//	di scrivania.
 				if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 					java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-					throw new ValidationException("La DATA di FINE PERIODO non puÚ essere superiore a " + formatter.format(lastDayOfYear));
+					throw new ValidationException("La DATA di FINE PERIODO non pu√≤ essere superiore a " + formatter.format(lastDayOfYear));
 				}
 			} else {
-				// La Data di Fine periodo Ë SUPERIORE alla data odierna
+				// La Data di Fine periodo √® SUPERIORE alla data odierna
 				if (stampa.getDataFine().compareTo(dataOdierna)>0){
 					java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-					throw new ValidationException("La DATA di FINE PERIODO non puÚ essere superiore a " + formatter.format(dataOdierna));
+					throw new ValidationException("La DATA di FINE PERIODO non pu√≤ essere superiore a " + formatter.format(dataOdierna));
 				}
 			}
 			
@@ -2027,26 +2027,26 @@ private void validateBulkForPrintSospesi_Riscontri(it.cnr.jada.UserContext userC
 
 		/**** Controlli sulle Date DA A	*****/
 		if (stampa.getDataInizio()==null)
-			throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 		if (stampa.getDataFine()==null)
-			throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 
   		
 		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(CNRUserContext.getEsercizio(userContext).intValue());
 		
-		// La Data di Inizio Periodo Ë superiore alla data di Fine Periodo
+		// La Data di Inizio Periodo √® superiore alla data di Fine Periodo
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 			
-		// La Data di Inizio Periodo Ë ANTECEDENTE al 1 Gennaio dell'Esercizio di scrivania
+		// La Data di Inizio Periodo √® ANTECEDENTE al 1 Gennaio dell'Esercizio di scrivania
 		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere inferiore a " + formatter.format(firstDayOfYear));
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere inferiore a " + formatter.format(firstDayOfYear));
 		}
-		// La Data di Fine periodo Ë SUPERIORE alla data odierna
+		// La Data di Fine periodo √® SUPERIORE alla data odierna
 		if (stampa.getDataFine().compareTo(dataOdierna)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non puÚ essere superiore a " + formatter.format(dataOdierna));
+			throw new ValidationException("La DATA di FINE PERIODO non pu√≤ essere superiore a " + formatter.format(dataOdierna));
 		}
 
 
@@ -2056,22 +2056,22 @@ private void validateBulkForPrintSospesi_Riscontri(it.cnr.jada.UserContext userC
 }
 /** 
   * name: riscontro di entrata annullabile 1
-  * pre: il riscontro di entrata Ë associato ad una reversale che paga accertamenti (non su pgiro) non riportati all'esercizio successivo
-  * post: il riscontro supera la validazione e puÚ essere annullato
+  * pre: il riscontro di entrata √® associato ad una reversale che paga accertamenti (non su pgiro) non riportati all'esercizio successivo
+  * post: il riscontro supera la validazione e pu√≤ essere annullato
   *
   * name: riscontro di entrata annullabile 2
-  * pre: il riscontro di entrata Ë associato ad una reversale che paga accertamenti su pgiro non riportati all'esercizio successivo
-  *      anche la controparte in parte spese delle partite di giro non Ë stata riportata all'esercizio successsivo (metodo 'verificaAnnulabilitaRiscontroEntrataPGiro')
-  * post: il riscontro supera la validazione e puÚ essere annullato
+  * pre: il riscontro di entrata √® associato ad una reversale che paga accertamenti su pgiro non riportati all'esercizio successivo
+  *      anche la controparte in parte spese delle partite di giro non √® stata riportata all'esercizio successsivo (metodo 'verificaAnnulabilitaRiscontroEntrataPGiro')
+  * post: il riscontro supera la validazione e pu√≤ essere annullato
   *
   * name: riscontro di entrata - errore 1
-  * pre: il riscontro di entrata Ë associato ad una reversale che paga accertamenti (su pgiro o non) riportati all'esercizio successivo
-  * post: una segnalazione di errore viene sollevata per indicare all'utente l'impossibilit‡ di procedere con l'annullamento
+  * pre: il riscontro di entrata √® associato ad una reversale che paga accertamenti (su pgiro o non) riportati all'esercizio successivo
+  * post: una segnalazione di errore viene sollevata per indicare all'utente l'impossibilit√† di procedere con l'annullamento
   *
   * name: riscontro di entrata - errore 2
-  * pre: il riscontro di entrata Ë associato ad una reversale che paga accertamenti su pgiro non riportati all'esercizio successivo
-  *      perÚ la controparte in parte spese delle partite di giro Ë stata riportata all'esercizio successsivo  (metodo 'verificaAnnulabilitaRiscontroEntrataPGiro')
-  * post: una segnalazione di errore viene sollevata per indicare all'utente l'impossibilit‡ di procedere con l'annullamento
+  * pre: il riscontro di entrata √® associato ad una reversale che paga accertamenti su pgiro non riportati all'esercizio successivo
+  *      per√≤ la controparte in parte spese delle partite di giro √® stata riportata all'esercizio successsivo  (metodo 'verificaAnnulabilitaRiscontroEntrataPGiro')
+  * post: una segnalazione di errore viene sollevata per indicare all'utente l'impossibilit√† di procedere con l'annullamento
   *  
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param riscontro <code>SospesoBulk</code> di tipo riscontro da validare, prima di procedere alla cancellazione
@@ -2115,9 +2115,9 @@ protected void verificaAnnullabilitaRiscontroEntrata(UserContext userContext,Sos
 					String fl_pgiro = rs.getString(5);
 					String riportato = rs.getString(6);
 					if ( "Y".equals( riportato) )
-						throw new ApplicationException( "Annullamento impossibile perchË l'accertamento " + esercizio_ori_accertamento + "/" + pg_accertamento +
+						throw new ApplicationException( "Annullamento impossibile perch√® l'accertamento " + esercizio_ori_accertamento + "/" + pg_accertamento +
 							                             " del Cds " + cd_cds + " con esercizio " + esercizio +
-							                             " Ë gi‡ stato riportato all'esercizio successivo" );
+							                             " √® gi√† stato riportato all'esercizio successivo" );
 					else if ( "Y".equals( fl_pgiro ) )
 							verificaAnnullabilitaRiscontroEntrataPGiro( userContext, esercizio, cd_cds, esercizio_ori_accertamento, pg_accertamento );						
 						
@@ -2186,9 +2186,9 @@ protected void verificaAnnullabilitaRiscontroEntrataPGiro(UserContext userContex
 					long pg_obbligazione = rs.getLong(4);
 					String riportato = rs.getString(5);
 					if ( "Y".equals( riportato) )
-							throw new ApplicationException( "Annullamento impossibile perchË l'impegno " + esOri + "/" + pg_obbligazione +
+							throw new ApplicationException( "Annullamento impossibile perch√® l'impegno " + esOri + "/" + pg_obbligazione +
 								                             " del Cds " + cds + " con esercizio " + es +
-								                             " Ë gi‡ stata riportata all'esercizio successivo" );
+								                             " √® gi√† stata riportata all'esercizio successivo" );
 				
 				}		
 			}
@@ -2210,22 +2210,22 @@ protected void verificaAnnullabilitaRiscontroEntrataPGiro(UserContext userContex
 }
 /** 
   * name: riscontro di spesa annullabile 1
-  * pre: il riscontro di spesa Ë associato ad un mandato che paga obbligazioni (non su pgiro) non riportate all'esercizio successivo
-  * post: il riscontro supera la validazione e puÚ essere annullato
+  * pre: il riscontro di spesa √® associato ad un mandato che paga obbligazioni (non su pgiro) non riportate all'esercizio successivo
+  * post: il riscontro supera la validazione e pu√≤ essere annullato
   *
   * name: riscontro di spesa annullabile 2
-  * pre: il riscontro di spesa Ë associato ad un mandato che paga obbligazioni su pgiro non riportate all'esercizio successivo
-  *      anche la controparte in parte entrate delle partite di giro non Ë stata riportata all'esercizio successsivo (metodo 'verificaAnnulabilitaRiscontroSpesaPGiro')
-  * post: il riscontro supera la validazione e puÚ essere annullato
+  * pre: il riscontro di spesa √® associato ad un mandato che paga obbligazioni su pgiro non riportate all'esercizio successivo
+  *      anche la controparte in parte entrate delle partite di giro non √® stata riportata all'esercizio successsivo (metodo 'verificaAnnulabilitaRiscontroSpesaPGiro')
+  * post: il riscontro supera la validazione e pu√≤ essere annullato
   *
   * name: riscontro di spesa - errore 1
-  * pre: il riscontro di spesa Ë associato ad un mandato che paga obbligazioni (su pgiro o non) riportate all'esercizio successivo
-  * post: una segnalazione di errore viene sollevata per indicare all'utente l'impossibilit‡ di procedere con l'annullamento
+  * pre: il riscontro di spesa √® associato ad un mandato che paga obbligazioni (su pgiro o non) riportate all'esercizio successivo
+  * post: una segnalazione di errore viene sollevata per indicare all'utente l'impossibilit√† di procedere con l'annullamento
   *
   * name: riscontro di spesa - errore 2
-  * pre: il riscontro di spesa Ë associato ad un mandato che paga obbligazioni su pgiro non riportate all'esercizio successivo
-  *      perÚ la controparte in parte entrate delle partite di giro Ë stata riportata all'esercizio successsivo  (metodo 'verificaAnnulabilitaRiscontroSpesaPGiro')
-  * post: una segnalazione di errore viene sollevata per indicare all'utente l'impossibilit‡ di procedere con l'annullamento
+  * pre: il riscontro di spesa √® associato ad un mandato che paga obbligazioni su pgiro non riportate all'esercizio successivo
+  *      per√≤ la controparte in parte entrate delle partite di giro √® stata riportata all'esercizio successsivo  (metodo 'verificaAnnulabilitaRiscontroSpesaPGiro')
+  * post: una segnalazione di errore viene sollevata per indicare all'utente l'impossibilit√† di procedere con l'annullamento
   *  
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param riscontro <code>SospesoBulk</code> di tipo riscontro da validare, prima di procedere alla cancellazione
@@ -2267,9 +2267,9 @@ protected void verificaAnnullabilitaRiscontroSpesa(UserContext userContext,Sospe
 					String fl_pgiro = rs.getString(5);
 					String riportato = rs.getString(6);
 					if ( "Y".equals( riportato) )
-							throw new ApplicationException( "Annullamento impossibile perchË l'impegno " + esercizio_originale + "/" + pg_obbligazione +
+							throw new ApplicationException( "Annullamento impossibile perch√® l'impegno " + esercizio_originale + "/" + pg_obbligazione +
 								                             " del Cds " + cd_cds + " con esercizio " + esercizio +
-								                             " Ë gi‡ stata riportata all'esercizio successivo" );
+								                             " √® gi√† stata riportata all'esercizio successivo" );
 					else if ( "Y".equals( fl_pgiro ) )
 							verificaAnnullabilitaRiscontroSpesaPGiro( userContext, esercizio, cd_cds, esercizio_originale, pg_obbligazione );						
 				}		
@@ -2337,9 +2337,9 @@ protected void verificaAnnullabilitaRiscontroSpesaPGiro(UserContext userContext,
 					long pg_accertamento = rs.getLong(3);
 					String riportato = rs.getString(4);
 					if ( "Y".equals( riportato) )
-							throw new ApplicationException( "Annullamento impossibile perchË l'accertamento " + esOri + "/" + pg_accertamento +
+							throw new ApplicationException( "Annullamento impossibile perch√® l'accertamento " + esOri + "/" + pg_accertamento +
 								                             " del Cds " + cd_cds + " con esercizio " + esercizio +
-								                             " Ë gi‡ stato riportato all'esercizio successivo" );
+								                             " √® gi√† stato riportato all'esercizio successivo" );
 				
 				}		
 			}
@@ -2379,10 +2379,10 @@ private void verificaRiscontroEntrataCNR (UserContext userContext,SospesoBulk so
 		BancaBulk banca = (BancaBulk) result.get(0);
 		if ( banca.getTi_pagamento().equals( Rif_modalita_pagamentoBulk.BANCA_ITALIA ) &&
 			  sospeso.getTi_cc_bi().equals( sospeso.TIPO_CC) )
-			throw new ApplicationException( "Attenzione! Il riscontro non proviene da Banca d'Italia mentre le modalit‡ di pagamento della reversale sono di Banca d'Italia");		
+			throw new ApplicationException( "Attenzione! Il riscontro non proviene da Banca d'Italia mentre le modalit√† di pagamento della reversale sono di Banca d'Italia");		
 		else	if ( !banca.getTi_pagamento().equals( Rif_modalita_pagamentoBulk.BANCA_ITALIA ) &&
 			  			sospeso.getTi_cc_bi().equals( sospeso.TIPO_BANCA_ITALIA) )
-			throw new ApplicationException( "Attenzione! Il riscontro proviene da Banca d'Italia mentre le modalit‡ di pagamento della reversale sono diverse da Banca d'Italia");		
+			throw new ApplicationException( "Attenzione! Il riscontro proviene da Banca d'Italia mentre le modalit√† di pagamento della reversale sono diverse da Banca d'Italia");		
 
 		
 	}
@@ -2416,38 +2416,38 @@ private void verificaSospesiFigliPerEsercizio (UserContext aUC,SospesoBulk sospe
 /** 
   *  Tutti controlli superati
   *    PreCondition:
-  *      L'importo del riscontro Ë uguale a quello del documento contabile associato
-  *		 Il tipo C/C-Banca d'Italia del sospeso Ë uguale a quello del documento contabile associato
+  *      L'importo del riscontro √® uguale a quello del documento contabile associato
+  *		 Il tipo C/C-Banca d'Italia del sospeso √® uguale a quello del documento contabile associato
   *    PostCondition:
-  *      Il sospeso o riscontro sono validi. E' consentito eseguire l'attivit‡ di salvataggio.
+  *      Il sospeso o riscontro sono validi. E' consentito eseguire l'attivit√† di salvataggio.
   *  Importi dei riscontri associati allo stesso doc. contabile (Entrata)
   *    PreCondition:
-  *     Alla stessa reversale sono stati associati uno o pi˘ riscontri la cui somma degli importi
+  *     Alla stessa reversale sono stati associati uno o pi√π riscontri la cui somma degli importi
   *		supera l'importo della reversale stessa
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che la somma degli importi dei singoli riscontri 
-  *		 associati alla reversale selezionata Ë maggiore dell'importo della reversale stessa. L'attivit‡ non Ë consentita.
+  *		 associati alla reversale selezionata √® maggiore dell'importo della reversale stessa. L'attivit√† non √® consentita.
   *  Importi dei riscontri associati allo stesso doc. contabile (Spesa)
   *    PreCondition:
-  *     Allo stesso mandato sono stati associati uno o pi˘ riscontri la cui somma degli importi
+  *     Allo stesso mandato sono stati associati uno o pi√π riscontri la cui somma degli importi
   *		supera l'importo del mandato stesso
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che la somma degli importi dei singoli riscontri
-  *		 associati al mandato selezionato Ë maggiore dell'importo del mandato stesso. L'attivit‡ non Ë consentita.
+  *		 associati al mandato selezionato √® maggiore dell'importo del mandato stesso. L'attivit√† non √® consentita.
   *  Tipo C/C-Banca d'Italia di un riscontro d'entrata
   *    PreCondition:
-  *	 	 Il tipo C/C-Banca d'Italia del riscontro Ë diverso da quello della reversale associata
+  *	 	 Il tipo C/C-Banca d'Italia del riscontro √® diverso da quello della reversale associata
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che non Ë possibile creare un riscontro per la
-  *		 Reversale associata. L'attivit‡ non Ë consentita. Viene inoltre chiamato il metodo verificaRiscontroEntrataCNR()
-  *		 per fare un'ulteriore verifica sulle modalit‡ di pagamento delle righe della reversale rispetto a quelle del
+  *      Il metodo utilizza un Throw Exception per comunicare che non √® possibile creare un riscontro per la
+  *		 Reversale associata. L'attivit√† non √® consentita. Viene inoltre chiamato il metodo verificaRiscontroEntrataCNR()
+  *		 per fare un'ulteriore verifica sulle modalit√† di pagamento delle righe della reversale rispetto a quelle del
   *		 riscontro.
   *  Tipo C/C-Banca d'Italia di un riscontro di spesa
   *    PreCondition:
-  *	 	 Il tipo C/C-Banca d'Italia del riscontro Ë diverso da quello del mandato associato
+  *	 	 Il tipo C/C-Banca d'Italia del riscontro √® diverso da quello del mandato associato
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che non Ë possibile creare un riscontro per il
-  *		 Mandato associato. L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che non √® possibile creare un riscontro per il
+  *		 Mandato associato. L'attivit√† non √® consentita.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param sospeso <code>SospesoBulk</code> il sospeso o riscontro da validare
@@ -2472,7 +2472,7 @@ private void verificaSospesoRiscontro (UserContext aUC,SospesoBulk sospeso) thro
 			if( sospeso.TI_RISCONTRO.equals( sospeso.getTi_sospeso_riscontro()) ){
 				// Prefisso di numerazione automatica dei riscontri effettuati via interfaccia cassiere
 				if(sospeso.getCd_sospeso()!=null && sospeso.getCd_sospeso().toUpperCase().startsWith("XSRC")) 
-					throw  new ApplicationException( "Il campo codice puÚ iniziare con XSRC solo per gli inserimenti automatici.");
+					throw  new ApplicationException( "Il campo codice pu√≤ iniziare con XSRC solo per gli inserimenti automatici.");
 			}
 		}
 
@@ -2489,22 +2489,22 @@ private void verificaSospesoRiscontro (UserContext aUC,SospesoBulk sospeso) thro
 				      sospeso.getDettaglio_etr().getPg_reversale().compareTo( sospeso.getV_man_rev().getPg_documento_cont()) != 0 ))
 				{
 					if ( sospeso.getV_man_rev().getIm_documento_cont().subtract( sospeso.getV_man_rev().getIm_pagato_incassato() ).compareTo( sospeso.getIm_sospeso() ) < 0 )
-						throw handleException( new ApplicationException( "Attenzione! L'importo residuo da incassare della reversale Ë inferiore all'importo del riscontro."));
+						throw handleException( new ApplicationException( "Attenzione! L'importo residuo da incassare della reversale √® inferiore all'importo del riscontro."));
 					
 					Sospeso_det_etrHome sospeso_det_etrHome = (Sospeso_det_etrHome) getHome( aUC, Sospeso_det_etrBulk.class );
 					totDettagli = sospeso_det_etrHome.calcolaTotDettagli( sospeso.getV_man_rev() );
 					totDettagli = totDettagli.add( sospeso.getIm_sospeso());
 					if(  totDettagli.compareTo( sospeso.getV_man_rev().getIm_documento_cont() ) > 0 )
-						throw handleException( new ApplicationException( "Attenzione! La somma degli importi dei riscontri associati alla reversale selezionata Ë maggiore dell'importo della reversale."));
+						throw handleException( new ApplicationException( "Attenzione! La somma degli importi dei riscontri associati alla reversale selezionata √® maggiore dell'importo della reversale."));
 
 					result = (List) v_man_revHome.findRiscontriDiEntrata( sospeso.getV_man_rev() );
 					if ( result.size() != 0 )
 					{
 						if (!((SospesoBulk) result.get(0)).getTi_cc_bi().equals( sospeso.getTi_cc_bi() ))
-							throw handleException( new ApplicationException( "Attenzione! Non Ë possibile creare un riscontro su " + sospeso.getTi_cc_biKeys().get(sospeso.getTi_cc_bi()) + " per la Reversale " + sospeso.getV_man_rev().getPg_documento_cont()));
+							throw handleException( new ApplicationException( "Attenzione! Non √® possibile creare un riscontro su " + sospeso.getTi_cc_biKeys().get(sospeso.getTi_cc_bi()) + " per la Reversale " + sospeso.getV_man_rev().getPg_documento_cont()));
 					}
 				}
-				//poichË in V_MANDATO_REVERSALE il TI_CC_BI = 'C' sempre (non si sa il motivo!!!!!!!)
+				//poich√® in V_MANDATO_REVERSALE il TI_CC_BI = 'C' sempre (non si sa il motivo!!!!!!!)
 				//per le reversali di liquidazione tramite F24EP non deve essere effettuato il controllo successivo
 				if (!(sospeso.getV_man_rev().getCd_cds().equals( ente.getCd_unita_organizzativa()) &&
 					  sospeso.getV_man_rev().getCd_cds().equals( sospeso.getV_man_rev().getCd_cds_origine())))
@@ -2512,7 +2512,7 @@ private void verificaSospesoRiscontro (UserContext aUC,SospesoBulk sospeso) thro
 					if ( sospeso.getV_man_rev().getTi_cc_bi() != null &&
 							  !sospeso.getV_man_rev().getTi_cc_bi().equals( sospeso.getTi_cc_bi()) )
 							throw new ApplicationException( "Una reversale con sospesi di tipo " + sospeso.getTi_cc_biKeys().get( sospeso.getV_man_rev().getTi_cc_bi()) +
-								   " non puÚ essere associata ad un riscontro di tipo " + sospeso.getTi_cc_biKeys().get( sospeso.getTi_cc_bi()));
+								   " non pu√≤ essere associata ad un riscontro di tipo " + sospeso.getTi_cc_biKeys().get( sospeso.getTi_cc_bi()));
 				}
 				verificaRiscontroEntrataCNR( aUC, sospeso );	
 			}
@@ -2523,25 +2523,25 @@ private void verificaSospesoRiscontro (UserContext aUC,SospesoBulk sospeso) thro
 				      sospeso.getDettaglio_usc().getPg_mandato().compareTo( sospeso.getV_man_rev().getPg_documento_cont()) != 0 ))
 				{	 
 					if ( sospeso.getV_man_rev().getIm_documento_cont().subtract( sospeso.getV_man_rev().getIm_pagato_incassato() ).compareTo( sospeso.getIm_sospeso() ) < 0 )
-						throw handleException( new ApplicationException( "Attenzione! L'importo residuo da pagare del mandato Ë inferiore all'importo del riscontro."));
+						throw handleException( new ApplicationException( "Attenzione! L'importo residuo da pagare del mandato √® inferiore all'importo del riscontro."));
 					
 					Sospeso_det_uscHome sospeso_det_uscHome = (Sospeso_det_uscHome) getHome( aUC, Sospeso_det_uscBulk.class );
 					totDettagli = sospeso_det_uscHome.calcolaTotDettagli( sospeso.getV_man_rev() );
 					totDettagli = totDettagli.add( sospeso.getIm_sospeso());
 					if(  totDettagli.compareTo( sospeso.getV_man_rev().getIm_documento_cont() ) > 0 )
-						throw handleException( new ApplicationException( "Attenzione! La somma degli importi dei riscontri associati al mandato selezionato Ë maggiore dell'importo del mandato."));
+						throw handleException( new ApplicationException( "Attenzione! La somma degli importi dei riscontri associati al mandato selezionato √® maggiore dell'importo del mandato."));
 
 					result = (List) v_man_revHome.findRiscontriDiSpesa( sospeso.getV_man_rev() );
 					if ( result.size() != 0 )
 					{
 						if (!((SospesoBulk) result.get(0)).getTi_cc_bi().equals( sospeso.getTi_cc_bi() ))
-							throw handleException( new ApplicationException( "Attenzione! Non Ë possibile creare un riscontro su " + sospeso.getTi_cc_biKeys().get(sospeso.getTi_cc_bi()) + " per il Mandato " + sospeso.getV_man_rev().getPg_documento_cont()));
+							throw handleException( new ApplicationException( "Attenzione! Non √® possibile creare un riscontro su " + sospeso.getTi_cc_biKeys().get(sospeso.getTi_cc_bi()) + " per il Mandato " + sospeso.getV_man_rev().getPg_documento_cont()));
 					}
 				}		
 				if ( sospeso.getV_man_rev().getTi_cc_bi() != null &&
 					  !sospeso.getV_man_rev().getTi_cc_bi().equals( sospeso.getTi_cc_bi()) )
 					throw new ApplicationException( "Un mandato con sospesi di tipo " + sospeso.getTi_cc_biKeys().get( sospeso.getV_man_rev().getTi_cc_bi()) +
-						   " non puÚ essere associato ad un riscontro di tipo " + sospeso.getTi_cc_biKeys().get( sospeso.getTi_cc_bi()));
+						   " non pu√≤ essere associato ad un riscontro di tipo " + sospeso.getTi_cc_biKeys().get( sospeso.getTi_cc_bi()));
 			}					
 		}
 
@@ -2560,7 +2560,7 @@ private void verificaSospesoRiscontro (UserContext aUC,SospesoBulk sospeso) thro
  *
  * @param userContext <code>UserContext</code> 
  *
- * @return FALSE se per il cds interessato non Ë stato inserito nessun esercizio o se l'esercizio non Ë in stato di "aperto"
+ * @return FALSE se per il cds interessato non √® stato inserito nessun esercizio o se l'esercizio non √® in stato di "aperto"
  *		   TRUE in tutti gli altri casi
  *
  */

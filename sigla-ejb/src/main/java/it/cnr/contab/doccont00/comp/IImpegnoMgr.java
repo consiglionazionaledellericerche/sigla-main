@@ -13,7 +13,7 @@ public interface IImpegnoMgr extends IDocumentoContabileMgr, ICRUDMgr
 
 /**
  * Aggiornamento in differita dei saldi degli impegni residui
- * Un documento amministrativo di spesa che agisce in modalità transazionale ha creato/modificato gli importi 
+ * Un documento amministrativo di spesa che agisce in modalitÃ  transazionale ha creato/modificato gli importi 
  * relativi ad un impegno pgiro; i saldi di tale impegno non possono essere aggiornati subito in quanto
  * tale operazione genererebbe dei lock sulle voci del piano che non ne consentirebbere l'utilizzo ad altri utenti;
  * pertanto l'aggiornamento dei saldi dell'obbligazione pgiro viene differito al momento del salvataggio
@@ -22,7 +22,7 @@ public interface IImpegnoMgr extends IDocumentoContabileMgr, ICRUDMgr
  * Pre-post-conditions:
  *
  * Nome: Aggiorna saldi per impegno residuo creato
- * Pre:  MAI VERIFICABILE - mantenuto x omogeneità con tutti i doc. contabili
+ * Pre:  MAI VERIFICABILE - mantenuto x omogeneitÃ  con tutti i doc. contabili
  *
  * Nome: Aggiorna saldi per impegno residuo esistente
  * Pre:  Una richiesta di aggiornamento dei saldi in differita e' stata generata per un impegno residuo
@@ -85,7 +85,7 @@ public abstract void lockScadenza(it.cnr.jada.UserContext param0,it.cnr.contab.d
   *      La richiesta di modifica dell'importo di un impegno su partita di giro e' stata generata ma l'importo totale
   *      dei documenti amministrativi contabilizzati sulla scadenza supera il nuovo importo dell'impegno residuo
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilità di effettuare la modifica in quanto l'importo dell'impegno
+  *      Un messaggio di errore segnala all'utente l'impossibilitÃ  di effettuare la modifica in quanto l'importo dell'impegno
   *      deve sempre essere >= importo associato a doc.amm.
   *  modifica importo
   *    PreCondition:

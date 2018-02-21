@@ -343,7 +343,7 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 		return "Massa Spendibile presunta "+ anno_corrente;
 	}
 	public String getLabelValore_presunto_anno_in_corso(){
-		return "Valore presunto delle attivit‡ "+ anno_corrente;
+		return "Valore presunto delle attivit√† "+ anno_corrente;
 	}
 	public String getLabelTot_entr_fonti_est_anno_in_corso(){
 		return "Entrate da fonti esterne<BR>previste per il "+ anno_corrente;

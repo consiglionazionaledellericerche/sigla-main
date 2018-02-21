@@ -72,7 +72,7 @@ public abstract it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk caricaVoceIvaDef
   *    PreCondition:
   *      validaVoceIva = False.
   *    PostCondition:
-  *      Viene inviato il messaggio "Attenzione, una voce iva di default è gia presente".
+  *      Viene inviato il messaggio "Attenzione, una voce iva di default Ã¨ gia presente".
  */
 
 public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
@@ -87,7 +87,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext
   *    PreCondition:
   *      validaVoceIva = False.
   *    PostCondition:
-  *      Viene inviato il messaggio "Attenzione, una voce iva di default è gia presente".
+  *      Viene inviato il messaggio "Attenzione, una voce iva di default Ã¨ gia presente".
  */
 
 public abstract it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;

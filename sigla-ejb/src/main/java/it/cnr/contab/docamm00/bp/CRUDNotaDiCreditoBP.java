@@ -242,7 +242,7 @@ public void salvaRiportandoAvanti(ActionContext context)
 }
 /**
  * Effettua un salvataggio del modello corrente.
- * Valido solo se il ricevente è nello stato di INSERT o EDIT.
+ * Valido solo se il ricevente Ã¨ nello stato di INSERT o EDIT.
  */
 public void save(it.cnr.jada.action.ActionContext context)
 	throws it.cnr.jada.bulk.ValidationException,it.cnr.jada.action.BusinessProcessException {

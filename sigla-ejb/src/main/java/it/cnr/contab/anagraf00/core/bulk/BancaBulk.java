@@ -159,7 +159,7 @@ public String getDs_estesa() {
 		return it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk.DS_LISTA_PAGAMENTI_KEYS;
 	}
 	/**
-	 * Restituisce l'<code>TerzoBulk</code> a cui Ë associato l'oggetto banca.
+	 * Restituisce l'<code>TerzoBulk</code> a cui √® associato l'oggetto banca.
 	 *
 	 * @return it.cnr.contab.anagraf00.core.bulk.TerzoBulk
 	 *
@@ -170,7 +170,7 @@ public String getDs_estesa() {
 		return terzo;
 	}
 	/**
-	 * Restituisce il <code>Dictionary</code> per la gestione delle modalit‡ di pagamento.
+	 * Restituisce il <code>Dictionary</code> per la gestione delle modalit√† di pagamento.
 	 *
 	 * @return java.util.Dictionary
 	 *
@@ -306,7 +306,7 @@ public void setFlagsToFalse() {
 	this.setFl_cancellato(new Boolean(false));
 }
 	/**
-	 * Imposta l'<code>TerzoBulk</code> a cui Ë associato l'oggetto banca.
+	 * Imposta l'<code>TerzoBulk</code> a cui √® associato l'oggetto banca.
 	 *
 	 * @param newTerzo Terzo da associare.
 	 *
@@ -318,31 +318,31 @@ public void setFlagsToFalse() {
 	}
 public void validate(OggettoBulk parent) throws ValidationException {
 	if (Rif_modalita_pagamentoBulk.BANCARIO.equals(getTi_pagamento())) {
-		// SE Ë BANCARIO
+		// SE √® BANCARIO
 		if (!isROBanca()) validaIban();
 		if (this.getNazione_iban()!=null && this.getNazione_iban().getCd_iso().equals("IT") ) {
 			if (getAbi_cab() == null ||
 				getAbi_cab().getAbi() == null ||
 				getAbi_cab().getCab() == null ||
 				getNumero_conto() == null)
-				throw new ValidationException("Modalit‡ di pagamento: ABI, CAB, e Numero Conto sono obbligatori.");
+				throw new ValidationException("Modalit√† di pagamento: ABI, CAB, e Numero Conto sono obbligatori.");
 		 }
 	} else if(Rif_modalita_pagamentoBulk.POSTALE.equals(getTi_pagamento())) {
-		// SE Ë POSTALE
+		// SE √® POSTALE
 		if (getNumero_conto() == null)
-			throw new ValidationException("Modalit‡ di pagamento: Numero Conto Ë obbligatorio.");
+			throw new ValidationException("Modalit√† di pagamento: Numero Conto √® obbligatorio.");
 	} else if(Rif_modalita_pagamentoBulk.ALTRO.equals(getTi_pagamento())) {
-		// SE Ë ALTRO
+		// SE √® ALTRO
 		if (getIntestazione() == null)
-			throw new ValidationException("Modalit‡ di pagamento: Intestazione Ë obbligatoria.");
+			throw new ValidationException("Modalit√† di pagamento: Intestazione √® obbligatoria.");
 	} else if(Rif_modalita_pagamentoBulk.QUIETANZA.equals(getTi_pagamento())) {
-		// SE Ë QUIETANZA
+		// SE √® QUIETANZA
 		if (getQuietanza() == null)
-			throw new ValidationException("Modalit‡ di pagamento: Quietanza Ë obbligatoria.");
+			throw new ValidationException("Modalit√† di pagamento: Quietanza √® obbligatoria.");
 	} else if(Rif_modalita_pagamentoBulk.IBAN.equals(getTi_pagamento())) {
-		// SE Ë ALTRO CON IBAN OBBLIGATORIO
+		// SE √® ALTRO CON IBAN OBBLIGATORIO
 		if (getIntestazione() == null)
-			throw new ValidationException("Modalit‡ di pagamento: Intestazione Ë obbligatoria.");
+			throw new ValidationException("Modalit√† di pagamento: Intestazione √® obbligatoria.");
 		if (this.getNazione_iban()!=null) 
 			validaIban();
 		else
@@ -353,14 +353,14 @@ public void validate(OggettoBulk parent) throws ValidationException {
 		if(this.getNazione_iban()!=null && this.getNazione_iban().getFl_iban()){
 			if ((this.getNazione_iban()==null)||(this.getNazione_iban()!=null && this.getNazione_iban().getCd_iso().compareTo(new String("IT"))!=0 )){
 				if(this.getCodice_swift()==null) {
-					throw new ValidationException("Il codice swift Ë obbligatorio.");
+					throw new ValidationException("Il codice swift √® obbligatorio.");
 				}		
 				else{
 					if (!(this.getCodice_swift().length()==8 || this.getCodice_swift().length()==11) ||this.getCodice_swift().contains(" ")) 
-					throw new ValidationException("Formato del codice swift/bic non valido, non puÚ contenere spazi e deve essere di 8 o 11 caratteri.");
+					throw new ValidationException("Formato del codice swift/bic non valido, non pu√≤ contenere spazi e deve essere di 8 o 11 caratteri.");
 				for (int i = 0;i < getCodice_swift().length();i++)
 						if (!Character.isLetterOrDigit(getCodice_swift().charAt(i)))
-							throw new ValidationException( "Formato del codice swift/bic non valido puÚ essere composto solo da lettere e cifre." );
+							throw new ValidationException( "Formato del codice swift/bic non valido pu√≤ essere composto solo da lettere e cifre." );
 				
 			}	
 		}
@@ -504,12 +504,12 @@ public void validaIban() throws ValidationException {
 						char data[] = {codiceParteIban.charAt(y)};
 						int appo = Integer.parseInt(new String(data));
 						if (strutturaParteIban.charAt(y)==NazioneBulk.IBAN_TIPO_CARATTERE.charAt(0))
-							throw new ValidationException("Il "+(y+1)+"∞ carattere della "+(i+2)+"^ parte del codice Iban non deve essere un numero.");					
+							throw new ValidationException("Il "+(y+1)+"¬∞ carattere della "+(i+2)+"^ parte del codice Iban non deve essere un numero.");					
 					} catch (ValidationException e) {
 						throw e;
 					} catch (Exception e) {
 						if (strutturaParteIban.charAt(y)==NazioneBulk.IBAN_TIPO_NUMERICO.charAt(0))
-							throw new ValidationException("Il "+(y+1)+"∞ carattere della "+(i+2)+"^ parte del codice Iban deve essere un numero.");
+							throw new ValidationException("Il "+(y+1)+"¬∞ carattere della "+(i+2)+"^ parte del codice Iban deve essere un numero.");
 					}
 				}
 			}
@@ -524,25 +524,25 @@ public void allineaIbanDaContoIT() throws ValidationException {
 		if (getCodice_iban_parte2()==null && getCin()!=null)
 			setCodice_iban_parte2(getCin());
 		else if (getCodice_iban_parte2()!=null && getCin()!=null && !getCodice_iban_parte2().equals(getCin()))
-			throw new ValidationException("Attenzione! La 3^ parte del codice Iban Ë diversa dal codice CIN indicato.");
+			throw new ValidationException("Attenzione! La 3^ parte del codice Iban √® diversa dal codice CIN indicato.");
 				
         // Cod. ABI
 		if (getCodice_iban_parte3()==null && getAbi()!=null)
 			setCodice_iban_parte3(StrServ.lpad(getAbi().toString(),this.getNazione_iban().getStrutturaIbanLivello(3).length(),"0"));
 		else if (getCodice_iban_parte3()!=null && getAbi()!=null && !getCodice_iban_parte3().equals(getAbi()))
-			throw new ValidationException("Attenzione! La 4^ parte del codice Iban Ë diversa dal codice ABI indicato.");
+			throw new ValidationException("Attenzione! La 4^ parte del codice Iban √® diversa dal codice ABI indicato.");
 
         // Cod. CAB
 		if (getCodice_iban_parte4()==null && getCab()!=null)
 			setCodice_iban_parte4(StrServ.lpad(getCab().toString(),this.getNazione_iban().getStrutturaIbanLivello(4).length(),"0"));
 		else if (getCodice_iban_parte4()!=null && getCab()!=null && !getCodice_iban_parte4().equals(getCab()))
-			throw new ValidationException("Attenzione! La 5^ parte del codice Iban Ë diversa dal codice CAB indicato.");
+			throw new ValidationException("Attenzione! La 5^ parte del codice Iban √® diversa dal codice CAB indicato.");
 
         // Cod. C/C
 		if (getCodice_iban_parte5()==null && getNumero_conto()!=null)
 			setCodice_iban_parte5(StrServ.lpad(getNumero_conto().toString(),this.getNazione_iban().getStrutturaIbanLivello(5).length(),"0"));
 		else if (getCodice_iban_parte5()!=null && getNumero_conto()!=null && !getNumero_conto().equals(getCodice_iban_parte5()))
-			throw new ValidationException("Attenzione! La 6^ parte del codice Iban Ë diversa dal Numero Conto indicato.");
+			throw new ValidationException("Attenzione! La 6^ parte del codice Iban √® diversa dal Numero Conto indicato.");
 	}
 }
 public void allineaContoDaIbanIT() throws ValidationException {
@@ -550,7 +550,7 @@ public void allineaContoDaIbanIT() throws ValidationException {
 		if (getCodice_iban_parte2()!=null && getCin()==null)
 			setCin(getCodice_iban_parte2());
 		else if (getCodice_iban_parte2()!=null && getCin()!=null && !getCodice_iban_parte2().equals(getCin()))
-			throw new ValidationException("Attenzione! La 3^ parte del codice Iban Ë diversa dal codice CIN indicato.");
+			throw new ValidationException("Attenzione! La 3^ parte del codice Iban √® diversa dal codice CIN indicato.");
 				
         // Cod. ABI
 		if (getCodice_iban_parte3()!=null && getAbi()==null) {
@@ -558,7 +558,7 @@ public void allineaContoDaIbanIT() throws ValidationException {
 			setAbi(getCodice_iban_parte3());
 		}
 		else if (getCodice_iban_parte3()!=null && getAbi()!=null && !getCodice_iban_parte3().equals(getAbi()))
-			throw new ValidationException("Attenzione! La 4^ parte del codice Iban Ë diversa dal codice ABI indicato.");
+			throw new ValidationException("Attenzione! La 4^ parte del codice Iban √® diversa dal codice ABI indicato.");
 
         // Cod. CAB
 		if (getCodice_iban_parte4()!=null && getCab()==null) {
@@ -566,13 +566,13 @@ public void allineaContoDaIbanIT() throws ValidationException {
 			setCab(getCodice_iban_parte4());
 		}
 		else if (getCodice_iban_parte4()!=null && getCab()!=null && !getCodice_iban_parte4().equals(getCab()))
-			throw new ValidationException("Attenzione! La 5^ parte del codice Iban Ë diversa dal codice CAB indicato.");
+			throw new ValidationException("Attenzione! La 5^ parte del codice Iban √® diversa dal codice CAB indicato.");
 
         // Cod. C/C
 		if (getCodice_iban_parte5()!=null && getNumero_conto()==null)
 			setNumero_conto(getCodice_iban_parte5());
 		else if (getCodice_iban_parte5()!=null && getNumero_conto()!=null && !getNumero_conto().equals(getCodice_iban_parte5()))
-			throw new ValidationException("Attenzione! La 6^ parte del codice Iban Ë diversa dal Numero Conto indicato.");
+			throw new ValidationException("Attenzione! La 6^ parte del codice Iban √® diversa dal Numero Conto indicato.");
 	}
 }
 public TerzoBulk getTerzo_delegato() {

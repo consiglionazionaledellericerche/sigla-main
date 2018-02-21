@@ -63,7 +63,7 @@ public java.lang.String getCd_cds() {
  */
 public String getCdCdrNullableForPrint() {
 
-	// Se non Ë stata specificato un  CdR
+	// Se non √® stata specificato un  CdR
 	if ( (getCdrForPrint()==null) ||
 			(getCdrForPrint().getCd_centro_responsabilita()==null) ){
 
@@ -134,7 +134,7 @@ public String getCdUoForPrint() {
  */
 public String getCdUoNullableForPrint() {
 
-	// Se non Ë stata specificato un  CdR
+	// Se non √® stata specificato un  CdR
 	if ( (getCdrForPrint()==null) ||
 			(getCdrForPrint().getCd_centro_responsabilita()==null) ){
 
@@ -272,7 +272,7 @@ public void setUoForPrint(it.cnr.contab.config00.sto.bulk.Unita_organizzativaBul
 	this.uoForPrint = unitaOrganizzativa;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws it.cnr.jada.bulk.ValidationException {

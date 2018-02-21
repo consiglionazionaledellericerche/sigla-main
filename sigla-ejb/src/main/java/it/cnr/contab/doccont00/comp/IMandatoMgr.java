@@ -29,20 +29,20 @@ public interface IMandatoMgr extends ICRUDMgr
   *      Il codice terzo dei documenti amministrativi passivi da aggiungere al mandato non e'
   *      lo stesso per tutti i documenti
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di aggiungere i documenti al mandato
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di aggiungere i documenti al mandato
   *  errore - classe di pagamento
   *    PreCondition:
   *      La classe di pagamento (Bancario,Postale,etc.) dei documenti amministrativi passivi da aggiungere al mandato 
   *      non e' lo stesso per tutti i documenti.
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di aggiungere i documenti al mandato  
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di aggiungere i documenti al mandato  
   *  errore - mandato di regolarizzazione 
   *    PreCondition:
   *      I documenti amministrativi passivi selezionati per essere aggiunti ad un mandato di regolarizzazione sono stati 
   *      contabilizzati in parte su obbligazioni relative a capitoli di bilancio e in parte su obbligazioni 
   *      relative a partite di giro.
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di aggiungere i documenti al mandato
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di aggiungere i documenti al mandato
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param mandato <code>MandatoBulk</code> il mandato da aggiornare
@@ -137,14 +137,14 @@ public abstract it.cnr.contab.doccont00.core.bulk.MandatoBulk annullaMandato(it.
   *    PreCondition:
   *      E' stata generata la richiesta di annullare un Mandato che ha riscontri associati
   *    PostCondition:
-  *      Una segnalazione di errore comunica all'utente l'impossibilit‡ di eseguire l'annullamento
+  *      Una segnalazione di errore comunica all'utente l'impossibilit√† di eseguire l'annullamento
   *  annullamento mandato su anticipo associato a missione
   *    PreCondition:
   *      E' stata generata la richiesta di annullare un Mandato
   *      Il mandato non supera la validazione effettuata dal metodo 'verificaMandatoSuAnticipo' in quanto include un anticipo
   *      associato a missione
   *    PostCondition:
-  *      Una segnalazione di errore comunica all'utente l'impossibilit‡ di eseguire l'annullamento
+  *      Una segnalazione di errore comunica all'utente l'impossibilit√† di eseguire l'annullamento
   *  annullamento mandato di compenso su riscontro
   *    PreCondition:
   *      E' stata generata la richiesta di annullare un Mandato
@@ -173,7 +173,7 @@ public it.cnr.jada.util.RemoteIterator cercaImpegni(UserContext userContext,it.c
   *     Vengono ricercati tutti i sospesi di spesa non annullati che non sono ancora stati associati al mandato 
   *     con cds appartenza uguale al cds appartenenza del mandato,
   *     esercizio uguale all'esercizio di scrivania, importo disponibile (importo disponibile = importo iniziale del sospeso -
-  *     importo gi‡ associato a mandati) maggiore di zero, stato uguale a ASSOCIATO A CDS
+  *     importo gi√† associato a mandati) maggiore di zero, stato uguale a ASSOCIATO A CDS
   *
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -260,21 +260,21 @@ public abstract void eliminaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.b
   * @param mandato <code>MandatoAccreditamentoBulk</code> il mandato di trasferimento
   *
   * @return result la lista delle banche definite per il terzo beneficiario del mandato
-  *			null non Ë stata definita nessuna banca per il terzo beneficiario del mandato
+  *			null non √® stata definita nessuna banca per il terzo beneficiario del mandato
 */
 
 public abstract List findBancaOptions (UserContext userContext,MandatoAccreditamentoBulk mandato) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException, ComponentException;
 /** 
-  *  find disponibilit‡ di cassa capitolo
+  *  find disponibilit√† di cassa capitolo
   *    PreCondition:
   *     E' stata richiesta la disponibilita di cassa per ogni capitolo di ogni obbligazione pagata dal mandato
   *    PostCondition:
-  *     Viene restituita la disponibilit‡ di cassa di ogni capitolo presente nel dettaglio delle scadenze delle obbligazioni
+  *     Viene restituita la disponibilit√† di cassa di ogni capitolo presente nel dettaglio delle scadenze delle obbligazioni
   *     pagate dal mandato
   *
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-  * @param mandato <code>MandatoIBulk</code> il mandato di cui si verifica disponibilit‡ di cassa sui capitoli
+  * @param mandato <code>MandatoIBulk</code> il mandato di cui si verifica disponibilit√† di cassa sui capitoli
   *
 */
 
@@ -299,8 +299,8 @@ public List findDisponibilitaDiCassaPerCapitolo (UserContext userContext,Mandato
   *     E' stata richiesta l'inizializzazione di una istanza di RicercaMandatoAccreditamentoBulk, l'oggetto bulk
   *     utilizzato per visualizzare i dati di tutti i Cds verso cui emettere i mandati di accreditamento
   *    PostCondition:
-  *     Viene impostata la disponibilit‡ di cassa del CNR e viene inizializzata la lista dei Cds con la loro
-  *     disponibilit‡ di cassa
+  *     Viene impostata la disponibilit√† di cassa del CNR e viene inizializzata la lista dei Cds con la loro
+  *     disponibilit√† di cassa
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> il mandato da inizializzare per l'inserimento
@@ -397,7 +397,7 @@ public abstract MandatoIBulk listaDocAttiviPerRegolarizzazione(UserContext aUC, 
   *     - cds di appartenenza uguale al cds per cui si vuole emettere il mandato
   *     - (im_scadenza-im_associato_doc_contabile) della scadenza di obbligazione su cui il documento amm.
   *       e' stato contabilizzato maggiore di zero
-  *     Fra tutti i documenti individuati vengono esclusi quelli che eventualmente sono gi‡ stati selezionati
+  *     Fra tutti i documenti individuati vengono esclusi quelli che eventualmente sono gi√† stati selezionati
   *     per questo mandato
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -416,7 +416,7 @@ public abstract it.cnr.contab.doccont00.core.bulk.MandatoBulk listaDocPassivi(it
   *     verso un Cds
   *    PostCondition:
   *     Vengono ricercati tutti gli impegni che hanno un importo disponibile ( importo disponibile = importo iniziale
-  *     dell'impegno - importo gi‡ associato ai documenti contabili) e la cui voce del piano abbia come
+  *     dell'impegno - importo gi√† associato ai documenti contabili) e la cui voce del piano abbia come
   *     cd_proprio il codice del cds beneficiario del mandato di accreditamento e appartenga alla parte 1 del
   *     piano dei conti CNR parte spese
   *
@@ -431,9 +431,9 @@ public abstract it.cnr.contab.doccont00.core.bulk.MandatoAccreditamentoBulk list
 /**
   *   lista CdS - disp. cassa
   *    PreCondition:
-  *     E' stata richiesta la disponibilit‡ di cassa di tutti i Cds
+  *     E' stata richiesta la disponibilit√† di cassa di tutti i Cds
   *    PostCondition:
-  *     Vengono estratte le disponibilit‡ di cassa di tutti i Cds per l'esercizio di scrivania
+  *     Vengono estratte le disponibilit√† di cassa di tutti i Cds per l'esercizio di scrivania
   *     calcolate nella vista V_DISP_CASSA_CDS
   *
   *  lista CdS - obbligazione
@@ -458,7 +458,7 @@ public abstract it.cnr.contab.doccont00.core.bulk.RicercaMandatoAccreditamentoBu
   *      (metodo verificaMandato)
   *    PostCondition:
   *      Vengono aggiornati gli importi dei sospesi eventualmente associati al mandato (metodo aggiornaImportoSospesi),
-  *      e vengono aggiornate le eventuali modifiche alle modalit‡ di pagamento e al tipo bollo del mandato
+  *      e vengono aggiornate le eventuali modifiche alle modalit√† di pagamento e al tipo bollo del mandato
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> il mandato da modificare

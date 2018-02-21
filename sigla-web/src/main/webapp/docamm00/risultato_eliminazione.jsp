@@ -41,7 +41,7 @@
 			<tr>
 			  	<td>
 					<span class="FormLabel" style="color:black">
-						Non è stato possibile aggiornare in automatico i documenti contabili dei documenti amministrativi sopra elencati.
+						Non Ã¨ stato possibile aggiornare in automatico i documenti contabili dei documenti amministrativi sopra elencati.
 						Modificarli manualmente premendo il bottone "Gestisci".
 					</span>
 			  	</td>

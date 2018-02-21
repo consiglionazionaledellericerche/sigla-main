@@ -83,9 +83,9 @@ public boolean isDipendenteDaAltroDocContabile()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOFind_terzoAnag'
+ * Restituisce il valore della propriet√† 'rOFind_terzoAnag'
  *
- * @return Il valore della propriet‡ 'rOFind_terzoAnag'
+ * @return Il valore della propriet√† 'rOFind_terzoAnag'
  */
 public boolean isROFind_terzoAnag() {
 	return getFind_doc_attivi().getTerzoAnag().getCrudStatus() == this.NORMAL;

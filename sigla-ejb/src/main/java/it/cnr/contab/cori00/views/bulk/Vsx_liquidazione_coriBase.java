@@ -66,9 +66,9 @@ public java.lang.String getCd_gruppo_cr() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_regione'
+ * Restituisce il valore della propriet√† 'cd_regione'
  *
- * @return Il valore della propriet‡ 'cd_regione'
+ * @return Il valore della propriet√† 'cd_regione'
  */
 public java.lang.String getCd_regione() {
 	return cd_regione;
@@ -99,9 +99,9 @@ public java.lang.String getMessagetouser() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'pg_comune'
+ * Restituisce il valore della propriet√† 'pg_comune'
  *
- * @return Il valore della propriet‡ 'pg_comune'
+ * @return Il valore della propriet√† 'pg_comune'
  */
 public java.lang.Long getPg_comune() {
 	return pg_comune;
@@ -144,7 +144,7 @@ public void setCd_gruppo_cr(java.lang.String cd_gruppo_cr) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'cd_regione'
+ * Imposta il valore della propriet√† 'cd_regione'
  *
  * @param newCd_regione	Il valore da assegnare a 'cd_regione'
  */
@@ -177,7 +177,7 @@ public void setMessagetouser(java.lang.String messagetouser) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'pg_comune'
+ * Imposta il valore della propriet√† 'pg_comune'
  *
  * @param newPg_comune	Il valore da assegnare a 'pg_comune'
  */

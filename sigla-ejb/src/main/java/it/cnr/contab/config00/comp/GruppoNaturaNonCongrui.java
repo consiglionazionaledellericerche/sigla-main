@@ -1,6 +1,6 @@
 package it.cnr.contab.config00.comp;
 /**
- * Eccezione speciale per non congruit‡ tra Natura e Gruppo conto economico
+ * Eccezione speciale per non congruit√† tra Natura e Gruppo conto economico
  */
 public class GruppoNaturaNonCongrui extends Exception {
 /**

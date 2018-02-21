@@ -24,32 +24,32 @@ public void addToNodi_figli(Albero_mainBulk figlio) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'nodi_figli'
+ * Restituisce il valore della propriet√† 'nodi_figli'
  *
- * @return Il valore della propriet‡ 'nodi_figli'
+ * @return Il valore della propriet√† 'nodi_figli'
  */
 public java.util.Collection getNodi_figli() {
 	return nodi_figli;
 }
 /**
- * Restituisce il valore della propriet‡ 'nodo_padre'
+ * Restituisce il valore della propriet√† 'nodo_padre'
  *
- * @return Il valore della propriet‡ 'nodo_padre'
+ * @return Il valore della propriet√† 'nodo_padre'
  */
 public Albero_mainBulk getNodo_padre() {
 	return nodo_padre;
 }
 /**
- * Restituisce il valore della propriet‡ 'ti_funzione'
+ * Restituisce il valore della propriet√† 'ti_funzione'
  *
- * @return Il valore della propriet‡ 'ti_funzione'
+ * @return Il valore della propriet√† 'ti_funzione'
  */
 public java.lang.String getTi_funzione() {
 	return ti_funzione;
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'nodi_figli'
+ * Imposta il valore della propriet√† 'nodi_figli'
  *
  * @param newNodi_figli	Il valore da assegnare a 'nodi_figli'
  */
@@ -58,7 +58,7 @@ public void setNodi_figli(java.util.Collection newNodi_figli) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'nodo_padre'
+ * Imposta il valore della propriet√† 'nodo_padre'
  *
  * @param newNodo_padre	Il valore da assegnare a 'nodo_padre'
  */
@@ -66,7 +66,7 @@ public void setNodo_padre(Albero_mainBulk newNodo_padre) {
 	nodo_padre = newNodo_padre;
 }
 /**
- * Imposta il valore della propriet‡ 'ti_funzione'
+ * Imposta il valore della propriet√† 'ti_funzione'
  *
  * @param newTi_funzione Il valore da assegnare a 'ti_funzione'
  */

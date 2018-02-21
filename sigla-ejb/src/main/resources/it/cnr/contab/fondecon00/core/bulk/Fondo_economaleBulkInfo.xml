@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -68,21 +68,21 @@
 		inputSize="10"
 		inputType="ROTEXT"
 		enabledOnFreeSearch="false"
-		label="Unità Organizzativa" />
+		label="UnitÃ  Organizzativa" />
 	<fieldProperty
 		name="cd_uoForPrint"
 		property="unita_organizzativa.cd_unita_organizzativa"
 		maxLength="10"
 		inputSize="10"
 		inputType="TEXT"
-		label="Unità Organizzativa" />
+		label="UnitÃ  Organizzativa" />
 	<fieldProperty
 		name="ds_unita_organizzativa"
 		property="unita_organizzativa.ds_unita_organizzativa"
 		maxLength="300"
 		inputSize="30"
 		inputType="ROTEXT"
-		label="Unità Organizzativa" />
+		label="UnitÃ  Organizzativa" />
 	<fieldProperty
 		name="im_ammontare_fondo"
 		property="im_ammontare_fondo"
@@ -187,7 +187,7 @@
 		property="unita_organizzativa"
 		inputType="ROTEXT"
 		formName="searchtool"
-		label="Unità Organizzativa" />
+		label="UnitÃ  Organizzativa" />
 
 
 	<!-- Economo -->

@@ -170,9 +170,9 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 
     /**
      * Il metodo gestisce la creazione di una nuova tappa.
-     * Il metodo verifica se la configurazione delle tappe può essere modificata.
-     * Se i dettagli di diaria sono già stati creati li cancello
-     * Se i dettagli del rimborso sono già stati creati li cancello
+     * Il metodo verifica se la configurazione delle tappe puÃ² essere modificata.
+     * Se i dettagli di diaria sono giÃ  stati creati li cancello
+     * Se i dettagli del rimborso sono giÃ  stati creati li cancello
      */
 
 
@@ -223,10 +223,10 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
      * Il metodo gestisce l'abilitazione dei campi relatici all'anticipo
      * I campi dell'anticipo sono disabilitati se :
      * - se la missione e' pagata (isEditable)
-     * - se l'esercizio di scrivania e' diverso da quello solare e l' obbligazione è stata riportata
+     * - se l'esercizio di scrivania e' diverso da quello solare e l' obbligazione Ã¨ stata riportata
      * (isEditable)
      * - se la missione e' associata ad un compenso pagato
-     * - se la missione è associata ad un anticipo pagato
+     * - se la missione Ã¨ associata ad un anticipo pagato
      */
 
     public boolean areCampiAnticipoReadonly() {
@@ -263,10 +263,10 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
      * Essi sono visibili se :
      * - l'anno di scrivania e' uguale  aquello solare (isAnnoSolareInScrivania)
      * - l'esercizio di scrivania e/o quello successivo non sono aperti (isRiportaAvantiIndietro)
-     * - la missione non è definitiva
+     * - la missione non Ã¨ definitiva
      * - la missione non ha obbligazione
-     * - la missione è pagata
-     * - la missione è cancellata logicamente
+     * - la missione Ã¨ pagata
+     * - la missione Ã¨ cancellata logicamente
      */
 
     protected boolean basicRiportaButtonHidden() {
@@ -429,7 +429,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     }
 
     /**
-     * Il metodo verifica la validità delle data/ora inizio/fine missione ogni volta che esse vengono
+     * Il metodo verifica la validitÃ  delle data/ora inizio/fine missione ogni volta che esse vengono
      * modificate.
      * Se i controlli non vengono superati ripristino la missione prima della modifica
      */
@@ -694,7 +694,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     }
 
     /**
-     * Tale metodo e' stato reimplementato per poter reinizializzare la proprietà usata per gestire il
+     * Tale metodo e' stato reimplementato per poter reinizializzare la proprietÃ  usata per gestire il
      * "riporta indietro" del documento contabile
      */
     public void edit(ActionContext context, it.cnr.jada.bulk.OggettoBulk bulk, boolean doInitializeForEdit) throws it.cnr.jada.action.BusinessProcessException {
@@ -817,11 +817,11 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
                     Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
                     if (sess.getDt01(context, new Integer(0), "*", "RIMBORSO_MISS_ESTERO", "PERIODO_VALIDITA") == null ||
                             sess.getDt02(context, new Integer(0), "*", "RIMBORSO_MISS_ESTERO", "PERIODO_VALIDITA") == null)
-                        throw new ApplicationException("Configurazione CNR: non è stato impostato il periodo di validità per i rimborsi esteri (RIMBORSO_MISS_ESTERO - PERIODO_VALIDITA)");
+                        throw new ApplicationException("Configurazione CNR: non Ã¨ stato impostato il periodo di validitÃ  per i rimborsi esteri (RIMBORSO_MISS_ESTERO - PERIODO_VALIDITA)");
                     data_inizio_rimborso_miss_estero = sess.getDt01(context, new Integer(0), "*", "RIMBORSO_MISS_ESTERO", "PERIODO_VALIDITA");
                     data_fine_rimborso_miss_estero = sess.getDt02(context, new Integer(0), "*", "RIMBORSO_MISS_ESTERO", "PERIODO_VALIDITA");
 
-                    //solo se è estera, non c'è diaria, la missione dura più di 24 ore e la tappa è compresa nel periodo di validità
+                    //solo se Ã¨ estera, non c'Ã¨ diaria, la missione dura piÃ¹ di 24 ore e la tappa Ã¨ compresa nel periodo di validitÃ 
                     if (tappa.getFl_comune_estero().booleanValue() &&
                             tappa.getFl_no_diaria().booleanValue() &&
                             gcf.compareTo(gci) >= 0 &&
@@ -843,7 +843,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     public boolean isRimborsoVisible(UserContext context) throws BusinessProcessException, RemoteException {
         Missione_tappaBulk tappa = (Missione_tappaBulk) getTappaController().getModel();
         if (tappa != null && tappa.getFl_comune_estero() != null) {
-            //solo se è estera è visibile
+            //solo se Ã¨ estera Ã¨ visibile
             if (tappa.getFl_comune_estero().booleanValue() && tappa.getFl_no_diaria().booleanValue())
                 return true;
             return false;
@@ -1332,7 +1332,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     }
 
     /**
-     * Il metodo ritorna il valore della proprietà 'annoSolareInScrivania'
+     * Il metodo ritorna il valore della proprietÃ  'annoSolareInScrivania'
      */
 
     public boolean isAnnoSolareInScrivania() {
@@ -1354,7 +1354,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     }
 
     /**
-     * Il metodo determina se il bottone di aggiornamento manuale della obbligazione è abilitato o meno.
+     * Il metodo determina se il bottone di aggiornamento manuale della obbligazione Ã¨ abilitato o meno.
      * Il metodo disabilita i bottoni della scadenza della missione se l'associazione con la scadenza non
      * e' obbligaztoria, cioe' se :
      * - se la missione + compenso
@@ -1396,7 +1396,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     }
 
     /**
-     * Il metodo ritorna il valore della proprietà 'carryingThrough'
+     * Il metodo ritorna il valore della proprietÃ  'carryingThrough'
      */
     public boolean isCarryingThrough() {
         return carryingThrough;
@@ -1461,9 +1461,9 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
      * Le condizioni generali per l'abilitazione sono che :
      * - la missione non sia pagata
      * - non ho alcuna tappa ne dettaglio di spesa in fase di modifica/inserimento
-     * Inoltre se l'esercizio della missione è diverso dal quello solare :
-     * - se l'esercizio di scrivania è uguale da quello solare il bottone è abilitato se la scadenza è riportata
-     * - se l'esercizio di scrivania è diverso da quello solare il bottone è abilitato se la scadenza non è riportata
+     * Inoltre se l'esercizio della missione Ã¨ diverso dal quello solare :
+     * - se l'esercizio di scrivania Ã¨ uguale da quello solare il bottone Ã¨ abilitato se la scadenza Ã¨ riportata
+     * - se l'esercizio di scrivania Ã¨ diverso da quello solare il bottone Ã¨ abilitato se la scadenza non Ã¨ riportata
      */
 
     public boolean isDeleteButtonEnabled() {
@@ -1560,9 +1560,9 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     }
 
     /**
-     * Il metodo è stato reimplementato perche' la missione risulta readonly anche :
+     * Il metodo Ã¨ stato reimplementato perche' la missione risulta readonly anche :
      * - se la missione e' pagata (isEditable)
-     * - se l'esercizio di scrivania e' diverso da quello solare e l' obbligazione è stata riportata
+     * - se l'esercizio di scrivania e' diverso da quello solare e l' obbligazione Ã¨ stata riportata
      * (isEditable)
      */
     public boolean isInputReadonly() {
@@ -1573,7 +1573,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     }
 
     /**
-     * Il metodo è stato sovrascritto per consentire all'utente di modificare lo stato della liquidazione
+     * Il metodo Ã¨ stato sovrascritto per consentire all'utente di modificare lo stato della liquidazione
      * quando il documento non risulta essere modificabile
      */
     public void writeFormInput(javax.servlet.jsp.JspWriter jspwriter, String s, String s1, boolean flag, String s2, String s3) throws java.io.IOException {
@@ -1645,7 +1645,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     /**
      * Il metodo stabilisce se il bottone di salva provvisorio debba essere
      * abilitato o meno.
-     * Il bottone è abilitato se ho appena riportato indietro il documento o se la scadenza non risulta riportata.
+     * Il bottone Ã¨ abilitato se ho appena riportato indietro il documento o se la scadenza non risulta riportata.
      */
     public boolean isSalvaProvvisorioButtonEnabled() {
         MissioneBulk missione = (MissioneBulk) getModel();
@@ -1663,7 +1663,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     /**
      * Il metodo stabilisce se il bottone di riporto avanti del documento contabile debba essere
      * abilitato o meno.
-     * Il bottone è abilitato se ho appena riportato indietro il documento o se la scadenza non risulta riportata.
+     * Il bottone Ã¨ abilitato se ho appena riportato indietro il documento o se la scadenza non risulta riportata.
      */
     public boolean isRiportaAvantiButtonEnabled() {
         MissioneBulk missione = (MissioneBulk) getModel();
@@ -1695,7 +1695,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     /**
      * Il metodo stabilisce se il bottone di riporto indietro del documento contabile debba essere
      * abilitato o meno.
-     * Il bottone è abilitato se non ho modificato la missione e se non l'ho appena riportato indietro
+     * Il bottone Ã¨ abilitato se non ho modificato la missione e se non l'ho appena riportato indietro
      */
 
     public boolean isRiportaIndietroButtonEnabled() {
@@ -1719,7 +1719,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
      * - se la missione non e' pagata (isEditable)
      * - se l'esercizio di scrivania e' diverso da quello solare, l' obbligazione non deve essere stata riportata
      * (isEditable)
-     * - non devo essere in modalità modifica/inserimento di una spesa/tappa
+     * - non devo essere in modalitÃ  modifica/inserimento di una spesa/tappa
      */
     public boolean isSaveButtonEnabled() {
         MissioneBulk missione = (MissioneBulk) getModel();
@@ -1858,7 +1858,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
      */
     public void riportaIndietro(ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
         if (isDirty()) {
-            setMessage("Il documento è stato modificato! Operazione annullata.");
+            setMessage("Il documento Ã¨ stato modificato! Operazione annullata.");
             return;
         }
 
@@ -2008,7 +2008,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
      * Il metodo inizializza :
      * - la divisa con quella letta da tabella MISSIONE_DIARIA per la stessa nazione, per l'inquadramento
      * della missione e valida alla data di inizio missione. Tale divisa non sara' modificabile.
-     * - il cambio della divisa trovata valido alla data inizio missione. Tale cambio può essere modificato.
+     * - il cambio della divisa trovata valido alla data inizio missione. Tale cambio puÃ² essere modificato.
      */
 
     public void setDivisaCambioTappaEstera(ActionContext context, Missione_tappaBulk tappa) throws it.cnr.jada.action.BusinessProcessException, it.cnr.jada.comp.ComponentException, java.rmi.RemoteException {
@@ -2184,7 +2184,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
                     } catch (FileNotFoundException e) {
                         throw handleException(e);
                     } catch (StorageException _ex) {
-                        throw new ApplicationException("Il file " + allegato.getNome() + " già esiste!");
+                        throw new ApplicationException("Il file " + allegato.getNome() + " giÃ  esiste!");
                     }
                 } else if (allegato.isToBeUpdated()) {
                     try {
@@ -2207,8 +2207,12 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
             for (Iterator<AllegatoMissioneDettaglioSpesaBulk> iterator = dettaglio.getDettaglioSpesaAllegati().deleteIterator(); iterator.hasNext(); ) {
                 AllegatoMissioneDettaglioSpesaBulk allegato = iterator.next();
                 if (allegato.isToBeDeleted()) {
-                    missioniCMISService.delete(allegato.getStorageKey());
-                    allegato.setCrudStatus(OggettoBulk.NORMAL);
+                    if (!isDocumentoDettaglioProvenienteDaGemis(allegato)) {
+                        missioniCMISService.delete(allegato.getStorageKey());
+                        allegato.setCrudStatus(OggettoBulk.NORMAL);
+                    } else {
+                        throw new ApplicationException("Cancellazione non possibile! Documento proveniente dalla procedura Missioni");
+                    }
                 }
             }
         }
@@ -2360,7 +2364,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
                 if (scad.getObbligazione() instanceof ObbligazioneResBulk) {
                     if (scad.getObbligazione().equalsByPrimaryKey(newScad.getObbligazione()) && ((ObbligazioneResBulk) scad.getObbligazione()).getObbligazione_modifica() != null
                             && ((ObbligazioneResBulk) scad.getObbligazione()).getObbligazione_modifica().getPg_modifica() != null) {
-                        throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'impegno residuo " + scad.getPg_obbligazione() + " poichè è stata effettuata una modifica in questo documento amministrativo!");
+                        throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'impegno residuo " + scad.getPg_obbligazione() + " poichÃ¨ Ã¨ stata effettuata una modifica in questo documento amministrativo!");
                     }
                 }
             }
@@ -2778,7 +2782,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     private Boolean isDocumentoDettaglioProvenienteDaGemis(AllegatoGenericoBulk allegato) {
         return Optional.ofNullable(allegato.getStorageKey())
                 .map(key -> missioniCMISService.getStorageObjectBykey(key))
-                .map(storageObject -> missioniCMISService.hasAspect(storageObject, MissioniCMISService.ASPECT_MISSIONE_SIGLA_DETTAGLIO))
+                .map(storageObject -> missioniCMISService.hasAspect(storageObject, MissioniCMISService.ASPECT_MISSIONE_RIMOBORSO_DETTAGLIO_SCONTRINI))
                 .orElse(false);
     }
 

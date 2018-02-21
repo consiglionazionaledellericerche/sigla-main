@@ -78,19 +78,19 @@ public it.cnr.jada.action.Forward doBringBackCercaDocumento(it.cnr.jada.action.A
 	try {
 		if (docAmmSelected != null) {
 			if (docAmmSelected instanceof Voidable && ((Voidable)docAmmSelected).isAnnullato())
-				throw new it.cnr.jada.comp.ApplicationException("Il documento amministrativo selezionato Ë stato annullato! Operazione non consentita.");
+				throw new it.cnr.jada.comp.ApplicationException("Il documento amministrativo selezionato √® stato annullato! Operazione non consentita.");
 
 			    // Gennaro Borriello - (02/11/2004 16.48.21)
 				// 	Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato riportato 
 				//	DA UN ES. PRECEDENTE a quello di scrivania.
 			if (docAmmSelected.getEsercizio().intValue() != it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()).intValue()) {
 				if (!docAmmSelected.isRiportataInScrivania())
-					throw new it.cnr.jada.comp.ApplicationException("Per poter selezionare un documento amministrativo con esercizio diverso da quello corrente, Ë necessario che questo sia stato riportato nell'esercizio corrente.");
+					throw new it.cnr.jada.comp.ApplicationException("Per poter selezionare un documento amministrativo con esercizio diverso da quello corrente, √® necessario che questo sia stato riportato nell'esercizio corrente.");
 				if (!IDocumentoAmministrativoSpesaBulk.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(docAmmSelected.getRiportataInScrivania()))
-					throw new it.cnr.jada.comp.ApplicationException("Il documento amministrativo selezionato NON Ë stato riportato completamente! Operazione non consentita.");
+					throw new it.cnr.jada.comp.ApplicationException("Il documento amministrativo selezionato NON √® stato riportato completamente! Operazione non consentita.");
 			} else {			
 				if (docAmmSelected.isRiportata())
-					throw new it.cnr.jada.comp.ApplicationException("Il documento amministrativo selezionato Ë stato riportato in esercizi futuri! Operazione non consentita.");
+					throw new it.cnr.jada.comp.ApplicationException("Il documento amministrativo selezionato √® stato riportato in esercizi futuri! Operazione non consentita.");
 			}
 				
 			FondoSpesaBP bp = (FondoSpesaBP)context.getBusinessProcess();
@@ -120,7 +120,7 @@ public it.cnr.jada.action.Forward doBringBackCercaDocumento(it.cnr.jada.action.A
  * @param spesa	L'OggettoBulk padre del searchtool
  * @param comune	L'OggettoBulk selezionato dall'utente
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
  */
 public it.cnr.jada.action.Forward doBringBackSearchCitta(it.cnr.jada.action.ActionContext context, 
 										Fondo_spesaBulk spesa,
@@ -158,7 +158,7 @@ public it.cnr.jada.action.Forward doBringBackSearchCitta(it.cnr.jada.action.Acti
  * @param spesa	L'OggettoBulk padre del searchtool
  * @param comune	L'OggettoBulk selezionato dall'utente
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
  */
 public it.cnr.jada.action.Forward doBringBackSearchFornitore(
 	it.cnr.jada.action.ActionContext context, 
@@ -221,7 +221,7 @@ public it.cnr.jada.action.Forward doCercaDocumento(it.cnr.jada.action.ActionCont
  * @param context	L'ActionContext della richiesta
  * @param option	
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
  */
 public Forward doConfermaSfondamentoMassimale(ActionContext context,int option)  throws java.rmi.RemoteException 
 {
@@ -344,12 +344,12 @@ public it.cnr.jada.action.Forward doOnFlSpesaDocumentataForSearchChange(
 	return context.findDefaultForward();
 }
 /**
- * Riporta la citt‡ selezionata nel modello correte
+ * Riporta la citt√† selezionata nel modello correte
  * 
  *
  * @param context	L'ActionContext della richiesta
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
  */
 public it.cnr.jada.action.Forward doRiportaSelezioneCitta(it.cnr.jada.action.ActionContext context)  throws java.rmi.RemoteException {
 
@@ -383,7 +383,7 @@ public it.cnr.jada.action.Forward doRiportaSelezioneCitta(it.cnr.jada.action.Act
 /**
  * Metodo utilizzato per gestire dell'eccezione generata dalla squadratura
  * del fondo economale. Pone quesito all'utente per la continuazione e se la
- * risposta Ë affermativa salva il fondo
+ * risposta √® affermativa salva il fondo
  *
  * @param context {@link ActionContext } in uso.
  * @param ex Eccezione da gestire.

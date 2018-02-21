@@ -58,7 +58,7 @@ public class V_mandato_reversaleHome extends BulkHome implements ConsultazioniRe
 		if ( result.size() == 0 )
 			throw new ApplicationException("Attenzione! Mandato/Reversale non trovato per il dettaglio distinta");
 		if ( result.size() > 1 )
-			throw new ApplicationException("Attenzione! Esiste più di un Mandato/Reversale  per il dettaglio distinta");
+			throw new ApplicationException("Attenzione! Esiste piÃ¹ di un Mandato/Reversale  per il dettaglio distinta");
 		return (V_mandato_reversaleBulk) result.get(0);	
 				
 	}

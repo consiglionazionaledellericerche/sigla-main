@@ -37,7 +37,7 @@ public void basicEdit(ActionContext context,OggettoBulk bulk,boolean doInitializ
 			java.sql.Timestamp dataOdierna = it.cnr.contab.compensi00.docs.bulk.CompensoBulk.getDataOdierna();
 
 			if (aScaglione.getContributo_ritenuta().getDt_fin_validita().compareTo(dataOdierna)<0){
-				setMessage("Il Tipo Contributa Ritenuta \"" + aScaglione.getCd_contributo_ritenuta() + "\" non è più valido");
+				setMessage("Il Tipo Contributa Ritenuta \"" + aScaglione.getCd_contributo_ritenuta() + "\" non Ã¨ piÃ¹ valido");
 				setStatus(VIEW);
 			}else if (aScaglione.getDt_fine_validita().compareTo(dataOdierna)<=0){
 				setStatus(VIEW);
@@ -172,7 +172,7 @@ private void validaScaglione(ActionContext context) throws ValidationException{
 					throw new ValidationException("Scaglione non valido. Sovrapposizione con scaglioni precedentemente definiti");
 			}
 
-		// non posso inserire uno scaglione in un intervallo già creato
+		// non posso inserire uno scaglione in un intervallo giÃ  creato
 		ScaglioneComponentSession session = (ScaglioneComponentSession)createComponentSession();
 		session.validaScaglione(context.getUserContext(), testata);
 

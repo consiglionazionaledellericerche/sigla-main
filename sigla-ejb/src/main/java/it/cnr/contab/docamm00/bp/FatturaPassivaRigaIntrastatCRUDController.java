@@ -26,7 +26,7 @@ public FatturaPassivaRigaIntrastatCRUDController(String name, Class modelClass, 
 	super(name, modelClass, listPropertyName, parent);
 }
 /**
- * Restituisce true se Ë possibile aggiungere nuovi elementi
+ * Restituisce true se √® possibile aggiungere nuovi elementi
  */
 public boolean isGrowable() {
 	
@@ -57,7 +57,7 @@ public boolean isParentControllerReadonly() {
 			parentC.isModelVoided();
 }
 /**
- * Restituisce true se Ë possibile eliminare elementi
+ * Restituisce true se √® possibile eliminare elementi
  */
 public boolean isShrinkable() {
 	Fattura_passivaBulk fatturaP = (Fattura_passivaBulk)getParentModel();
@@ -99,11 +99,11 @@ public void validate(ActionContext context,OggettoBulk model) throws ValidationE
 		if (fpi.getValore_statistico() == null || (fpi.getValore_statistico().compareTo(java.math.BigDecimal.ZERO)==0 && fpi.getAmmontare_euro().compareTo(java.math.BigDecimal.ZERO)!=0))
 			throw new ValidationException("Specificare un valore statistico per il dettaglio " + descr + "!");
 		if (fpi.getValore_statistico().compareTo(fpi.getAmmontare_euro())> 0)
-		   throw new ValidationException("L'importo del valore statistico non puÚ essere superiore all'ammontare in euro per il dettaglio " + descr + "!");
+		   throw new ValidationException("L'importo del valore statistico non pu√≤ essere superiore all'ammontare in euro per il dettaglio " + descr + "!");
 		if (fpi.getNatura_transazione() == null || fpi.getNatura_transazione().getCrudStatus() != OggettoBulk.NORMAL )
 			throw new ValidationException("Specificare una natura transazione per il dettaglio " + descr + "!");
 		if (fpi.getModalita_trasporto() == null || fpi.getModalita_trasporto().getCrudStatus() != OggettoBulk.NORMAL )
-			throw new ValidationException("Specificare una modalit‡ di trasporto per il dettaglio " +descr + "!");
+			throw new ValidationException("Specificare una modalit√† di trasporto per il dettaglio " +descr + "!");
 		if (fpi.getNazione_origine() == null || fpi.getNazione_origine().getCrudStatus() != OggettoBulk.NORMAL )
 			throw new ValidationException("Specificare una nazione di origine per il dettaglio " + descr + "!");
 		if (fpi.getCondizione_consegna() == null || fpi.getCondizione_consegna().getCrudStatus() != OggettoBulk.NORMAL )
@@ -115,7 +115,7 @@ public void validate(ActionContext context,OggettoBulk model) throws ValidationE
 		if (fpi.getNomenclatura_combinata() == null || fpi.getNomenclatura_combinata().getCrudStatus() != OggettoBulk.NORMAL )
 			throw new ValidationException("Specificare una nomenclatura combinata per il dettaglio " + descr + "!");
 		if (fpi.getNomenclatura_combinata()!=null && fpi.getNomenclatura_combinata().getUnita_supplementari()!=null && (fpi.getUnita_supplementari() == null || new BigDecimal(fpi.getUnita_supplementari()).compareTo(BigDecimal.ZERO)==0))
-			throw new ValidationException("Specificare le unit‡ supplementari per il dettaglio " + descr + "!");
+			throw new ValidationException("Specificare le unit√† supplementari per il dettaglio " + descr + "!");
 		if (fpi.getNomenclatura_combinata()!=null && fpi.getNomenclatura_combinata().getUnita_supplementari()==null &&(fpi.getMassa_netta() == null || fpi.getMassa_netta().compareTo(BigDecimal.ZERO)==0))
 			throw new ValidationException("Specificare una massa netta per il dettaglio " + descr + "!");
 	}else{

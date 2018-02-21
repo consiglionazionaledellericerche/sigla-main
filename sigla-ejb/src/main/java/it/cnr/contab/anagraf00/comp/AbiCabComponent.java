@@ -97,7 +97,7 @@ public AbicabBulk findCaps(UserContext userContext, AbicabBulk abiCab) throws Co
   * Pre: L'OggettoBulk specificato esiste.
   * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
   *		 per l'operazione di presentazione e modifica nell'interfaccia visuale.
-  *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome è
+  *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ã¨
   *		 ottenuto concatenando il nome della component con la stringa ".edit"
   * 
   * @param	uc	lo UserContext che ha generato la richiesta
@@ -116,11 +116,11 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 	return abicab;
 }
 /**
- * Ricerca TRUE se l'oggetto bulk è cancellato logicamento
+ * Ricerca TRUE se l'oggetto bulk Ã¨ cancellato logicamento
  *
  * @param userContext	lo UserContext che ha generato la richiesta
  * @param abiCab		L'abiCab in uso
- * @return TRUE se l'oggetto byulk è cancellato logicamento, FALSE altrimenti
+ * @return TRUE se l'oggetto byulk Ã¨ cancellato logicamento, FALSE altrimenti
  */
 public boolean isCancellatoLogicamente(UserContext userContext, AbicabBulk abiCab) throws ComponentException{
 
@@ -168,7 +168,7 @@ public BancaBulk caricaStrutturaIban(UserContext userContext, BancaBulk banca) t
 		if (contaNazioni==0)
 			throw new ApplicationException("Caricamento Struttura IBAN non possibile. Non esistono nazioni con codice ISO uguale a "+banca.getCodice_iban().substring(0,2)+".");						 
 		if (contaNazioni>1)
-			throw new ApplicationException("Caricamento Struttura IBAN non possibile. Esistono più nazioni con codice ISO uguale a "+banca.getCodice_iban().substring(0,2)+".");						 
+			throw new ApplicationException("Caricamento Struttura IBAN non possibile. Esistono piÃ¹ nazioni con codice ISO uguale a "+banca.getCodice_iban().substring(0,2)+".");						 
 
 		int lunghIban = 0;
 		

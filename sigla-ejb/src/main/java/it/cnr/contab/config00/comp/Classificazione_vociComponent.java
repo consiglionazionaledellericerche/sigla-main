@@ -205,9 +205,9 @@ public class Classificazione_vociComponent extends CRUDComponent implements Clon
 	  *
 	  *  Numero Livelli della Classificazione superiore a quelli indicati in Parametri Livelli
 	  *	   PreCondition:
-	  *		 L'ultimo livello caricato è superiore al numero dei livelli indicati in parametri_livelli
+	  *		 L'ultimo livello caricato Ã¨ superiore al numero dei livelli indicati in parametri_livelli
 	  *    PostCondition:
-	  *		 Viene generata una ApplicationException con il messaggio "Non è possibile inserire classificazioni di <entrata/spesa> con più di <parametri_livelli.livelli_entrata><<parametri_livelli.livelli_spesa> livelli."
+	  *		 Viene generata una ApplicationException con il messaggio "Non Ã¨ possibile inserire classificazioni di <entrata/spesa> con piÃ¹ di <parametri_livelli.livelli_entrata><<parametri_livelli.livelli_spesa> livelli."
 	  *  Lunghezza del livello non corrispondente con quella indicata nei parametri_livelli
 	  *	   PreCondition:
 	  *		 Il numero dei caratteri di un livello non corrispondente con quello indicato nei parametri
@@ -215,12 +215,12 @@ public class Classificazione_vociComponent extends CRUDComponent implements Clon
 	  *		 Viene generata una ApplicationException con il messaggio "Il codice del <NUMERO_LIVELLO> livello di <entrata/spesa> deve avere una lunghezza di <parametri_livelli.Lung_livello_etr> caratteri."
 	  *  Codice della classificazione cambiato
 	  *	   PreCondition:
-	  *		 Il codice della classificazione è cambiato
+	  *		 Il codice della classificazione Ã¨ cambiato
 	  *    PostCondition:
 	  *		 Viene aggiornato il codice su tutti i livelli sottostanti
 	  *  Default
 	  *    PreCondition:
-	  *      Nessun'altra precondizione è verificata
+	  *      Nessun'altra precondizione Ã¨ verificata
 	  *    PostCondition:
 	  *		 Esce senza alcuna eccezione
 	 */	
@@ -230,7 +230,7 @@ public class Classificazione_vociComponent extends CRUDComponent implements Clon
 			for (int i=1; i<=Classificazione_vociHome.LIVELLO_MAX; i++){ 
 				if (claNew.getCd_livello(i) != null) {
 					if (parametri.getLivelli_entrata().compareTo(new Integer(i))==-1)
-						throw new ApplicationException("Non è possibile inserire classificazioni di entrata con più di " + i + " livelli.");
+						throw new ApplicationException("Non Ã¨ possibile inserire classificazioni di entrata con piÃ¹ di " + i + " livelli.");
 					if (parametri.getLung_livello_etr(i).compareTo(new Integer(claNew.getCd_livello(i).length()))!=0)
 						throw new ApplicationException("Il codice " + parametri.getDs_livello_etr(i) + " deve avere una lunghezza di " + parametri.getLung_livello_etr(i).toString() + " caratteri.");
 				}
@@ -240,7 +240,7 @@ public class Classificazione_vociComponent extends CRUDComponent implements Clon
 			for (int i=1; i <= Classificazione_vociHome.LIVELLO_MAX; i++){ 
 				if (claNew.getCd_livello(i) != null) {
 					if (parametri.getLivelli_spesa().compareTo(new Integer(i))==-1)
-						throw new ApplicationException("Non è possibile inserire classificazioni di spesa con più di " + i + " livelli.");
+						throw new ApplicationException("Non Ã¨ possibile inserire classificazioni di spesa con piÃ¹ di " + i + " livelli.");
 					if (parametri.getLung_livello_spe(i).compareTo(new Integer(claNew.getCd_livello(i).length()))!=0)
 						throw new ApplicationException("Il codice " + parametri.getDs_livello_spe(i) + " deve avere una lunghezza di " + parametri.getLung_livello_spe(i).toString() + " caratteri.");
 				}
@@ -248,7 +248,7 @@ public class Classificazione_vociComponent extends CRUDComponent implements Clon
 		}		
 
 		/*
-		 * 	Se è cambiato il codice di uno dei livelli della classificazione, procedo ad aggiornare
+		 * 	Se Ã¨ cambiato il codice di uno dei livelli della classificazione, procedo ad aggiornare
 		 * 	il valore anche sugli eventuali figli collegati alla classificazione in oggetto 
 		 */
 		if (claNew.isToBeUpdated()) {
@@ -276,7 +276,7 @@ public class Classificazione_vociComponent extends CRUDComponent implements Clon
 
 	/** 
 	  *    PreCondition:
-	  *      E' stato richiesto di verificare se la Classificazione è un mastrino e, in caso affermativo,
+	  *      E' stato richiesto di verificare se la Classificazione Ã¨ un mastrino e, in caso affermativo,
 	  *      effettuare i controlli appositi 
 	  *    PostCondition:
 	  *		 Viene aggiornato il campo <FL_MASTRINO> e restituito il bulk aggiornato
@@ -356,7 +356,7 @@ public class Classificazione_vociComponent extends CRUDComponent implements Clon
 	  *    PreCondition:
 	  *      E' stata generata la richiesta di ricerca del Progetto padre del Progetto specificato negli argomenti.
 	  *    PostCondition:
-	  *		 Viene restituito l'oggetto ProgettoBulk che è il Progetto padre cercato.
+	  *		 Viene restituito l'oggetto ProgettoBulk che Ã¨ il Progetto padre cercato.
 	  *      
 	  *
 	  * @param userContext lo <code>UserContext</code> che ha generato la richiesta

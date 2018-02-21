@@ -12,7 +12,7 @@ public class AbilitBeneServMagBulk extends AbilitBeneServMagBase {
 	/**
 	 * [CATEGORIA_GRUPPO_INVENT Definisce le categorie ed i relativi gruppi di beni associabili ad un record della tabella BENE_SERVIZIO. Tale gestione si applica
 
-L'entit‡ Ë definita su due livelli obbligatori:
+L'entit√† √® definita su due livelli obbligatori:
 1 livello = Categoria inventariale
 2 livello = Gruppo di appartenenza del bene nell'ambito di una data categoria inventariale
 
@@ -54,7 +54,7 @@ Ogni categoria deve essere associata ad un capitolo del piano dei conti  economi
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [Definisce le categorie ed i relativi gruppi di beni associabili ad un record della tabella BENE_SERVIZIO. Tale gestione si applica
 
-L'entit‡ Ë definita su due livelli obbligatori:
+L'entit√† √® definita su due livelli obbligatori:
 1 livello = Categoria inventariale
 2 livello = Gruppo di appartenenza del bene nell'ambito di una data categoria inventariale
 
@@ -68,7 +68,7 @@ Ogni categoria deve essere associata ad un capitolo del piano dei conti  economi
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [Definisce le categorie ed i relativi gruppi di beni associabili ad un record della tabella BENE_SERVIZIO. Tale gestione si applica
 
-L'entit‡ Ë definita su due livelli obbligatori:
+L'entit√† √® definita su due livelli obbligatori:
 1 livello = Categoria inventariale
 2 livello = Gruppo di appartenenza del bene nell'ambito di una data categoria inventariale
 

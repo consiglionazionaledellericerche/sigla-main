@@ -139,7 +139,7 @@ public OggettoBulk creaConBulk(UserContext userContext, OggettoBulk bulk) throws
 /**
  *
  * Nome: Inserimento di una scrittura
- * Pre:  E' stata richiesta l'inserimento di una scrittura in partita doppia gi‡ validata
+ * Pre:  E' stata richiesta l'inserimento di una scrittura in partita doppia gi√† validata
  * Post: L'importo della scrittura viene impostato come la somma degli importi dei movimenti avere (che coincide con la
  *       somma degli importi dei movimenti dare) e il saldo coge relativo ai conti econ-patr. dei movimenti viene aggiornato
  *       (metodo aggiornaSaldiCoge)
@@ -432,7 +432,7 @@ public OggettoBulk inizializzaBulkPerRicercaLibera (UserContext userContext,Ogge
  * Nome: Esercizio in altro stato
  * Pre:  E' stata richiesta l'inizializzazione della data di contabilizzazione di una scrittura
  *       e l'esercizio contabile ha stato diverso da APERTO o  CHIUSO PROVVISORIO
- * Post: Una segnalazione di errore comunica all'utente l'impossibilit‡ di creare una scrittura in partita doppia
+ * Post: Una segnalazione di errore comunica all'utente l'impossibilit√† di creare una scrittura in partita doppia
  
  * @param userContext <code>UserContext</code> 
  * @param scrittura <code>Scrittura_partita_doppiaBulk</code>  la cui data deve essere inizializzata
@@ -447,7 +447,7 @@ private Scrittura_partita_doppiaBulk inizializzaDataContabilizzazione (UserConte
 		throw new ApplicationException( "Attenzione esercizio non definito per il cds di scrivania!");
 	/* Gennaro Borriello - (23/09/2004 10.33.19)
 	 *	Err. 838 - Deve essere possibile poter registrare delle scritture coep/coan
-	 *	anche se l'esercizio finanziario Ë chiuso.
+	 *	anche se l'esercizio finanziario √® chiuso.
 	*/ 
 	if ( !esercizio.getSt_apertura_chiusura().equals( esercizio.STATO_APERTO) && 
 		!esercizio.getSt_apertura_chiusura().equals( esercizio.STATO_CHIUSO_DEF))
@@ -681,7 +681,7 @@ private void validaAssociazioneAnagConto (UserContext userContext, Scrittura_par
  *
  * Nome: validazione superata
  * Pre:  La scrittura supera la validazione ( metodo validaScrittura)
- * Post: La scrittura puÚ essere inserita nel database
+ * Post: La scrittura pu√≤ essere inserita nel database
  *
  * Nome: validazione non superata
  * Pre:  La scrittura non supera la validazione ( metodo validaScrittura)
@@ -730,7 +730,7 @@ protected void validaCreaModificaConBulk(UserContext userContext,OggettoBulk bul
  * Pre:  La scrittura ha almeno un movimento avere, ha almeno un movimento dare e la somma degli importi dei
  *       movimenti avere e dare coincide. Inoltre non e' stato specificato un terzo oppure e' stato specificato un
  *       terzo e tale terzo ha superato la validazione coi conti.
- * Post: La scrittura supera la validazione e puÚ pertanto essere salvata
+ * Post: La scrittura supera la validazione e pu√≤ pertanto essere salvata
  *
  * @param userContext <code>UserContext</code> 
  * @param scrittura <code>Scrittura_partita_doppiaBulk</code> da validare

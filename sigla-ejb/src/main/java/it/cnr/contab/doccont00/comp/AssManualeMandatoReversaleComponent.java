@@ -26,10 +26,10 @@ public AssManualeMandatoReversaleComponent() {
  * che sono state scollegate e inserendo le reversali associate
  *
  * Nel caso in cui la procedura CNRCTB037.checkReversaliAssociate fornisca
- * un errore di validazione, verr‡ eseguito un rollback
+ * un errore di validazione, verr√† eseguito un rollback
  * 
  * Nel caso in cui la procedura CNRCTB037.checkRevDisassocMan fornisca
- * un errore di validazione, verr‡ eseguito un rollback
+ * un errore di validazione, verr√† eseguito un rollback
 **/
 private void aggiornaReversaliAssociate(UserContext userContext, MandatoBulk mandato) throws ComponentException {
 
@@ -51,7 +51,7 @@ private void aggiornaReversaliAssociate(UserContext userContext, MandatoBulk man
 }
 /**
   *	Richiama la procedura Oracle CNRCTB037.checkRevDisassocMan
-  *	che controlla l'eventuale disassociabilit‡ di una reversale da un mandato
+  *	che controlla l'eventuale disassociabilit√† di una reversale da un mandato
   *
 **/
 private void checkRevDisassocMan(UserContext userContext, Ass_mandato_reversaleBulk assManRev) throws ComponentException {
@@ -130,7 +130,7 @@ private MandatoBulk checkReversaliAssociate(UserContext userContext, MandatoBulk
   * Pre: L'OggettoBulk specificato esiste.
   * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
   *		 per l'operazione di presentazione e modifica nell'interfaccia visuale.
-  *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ë
+  *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome √®
   *		 ottenuto concatenando il nome della component con la stringa ".edit"
   * 
   * @param	uc	lo UserContext che ha generato la richiesta
@@ -218,7 +218,7 @@ public java.util.List loadReversaliDisponibili(UserContext userContext, MandatoB
   *
   * Pre-post-conditions:
   *
-  * Nome: Non Ë stato selezionato il mandato
+  * Nome: Non √® stato selezionato il mandato
   * Pre: Viene richiesto un salvataggio senza aver selezionato il mandato
   * Post: Viene generata una eccezione con la descrizione dell'errore
   *
@@ -335,7 +335,7 @@ public Query select(UserContext userContext, CompoundFindClause clauses, Oggetto
  *
  * Pre-post-conditions:
  *
- * Nome: Non Ë stato selezionato il mandato
+ * Nome: Non √® stato selezionato il mandato
  * Pre: Viene richiesto un salvataggio senza aver selezionato il mandato
  * Post: Viene generata una eccezione con la descrizione dell'errore
  *
