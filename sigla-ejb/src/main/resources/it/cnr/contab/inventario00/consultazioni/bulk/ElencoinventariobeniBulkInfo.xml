@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -9,7 +9,7 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Unità organizzativa" />
+		label="UnitÃ  organizzativa" />
 	<fieldProperty
 		name="cd_categoria_gruppo"
 		property="cd_categoria_gruppo"
@@ -81,7 +81,7 @@
 		inputType="TEXT"
 		inputSize="20"
 		maxLength="20"
-		label="Variazione più" />
+		label="Variazione piÃ¹" />
 	<fieldProperty
 		name="valore_finale"
 		property="valore_finale"

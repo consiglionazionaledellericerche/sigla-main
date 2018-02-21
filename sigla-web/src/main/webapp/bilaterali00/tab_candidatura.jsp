@@ -106,7 +106,7 @@
 
 	<% if (!bp.isSearching() && model!=null && isVisitaStraniero && !model.isAccordoPagataAdEnteStraniero()) {%>
 				<fieldset class="fieldset">
-					<legend class="GroupLabel">Modalit‡ di pagamento</legend>
+					<legend class="GroupLabel">Modalit√† di pagamento</legend>
 						<table>
 							<tr>
 								<td>

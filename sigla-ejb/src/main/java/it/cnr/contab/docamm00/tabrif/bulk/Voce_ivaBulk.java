@@ -50,7 +50,7 @@ public class Voce_ivaBulk extends Voce_ivaBase {
 	static {
 		BOLLO = new it.cnr.jada.util.OrderedHashtable();
 		BOLLO.put(NON_SOGGETTO_BOLLO,"No");
-		BOLLO.put(SOGGETTO_BOLLO,"SÏ");
+		BOLLO.put(SOGGETTO_BOLLO,"S√¨");
 		BOLLO.put(SPECIFICA_DICITURA_BOLLO,"Specifica Dicitura");
 	}
 	
@@ -112,7 +112,7 @@ public Gruppo_ivaBulk getGruppo_iva() {
 /**
  * Inizializza il ricevente per la visualizzazione in un <code>FormController</code>.
  * Questo metodo viene invocato da {@link #initializeForEdit}, {@link #initializeForInsert},
- * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e puÚ contenere
+ * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e pu√≤ contenere
  * inizializzazioni comuni ai 4 stati del <code>FormController</code>
  */
 protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
@@ -216,7 +216,7 @@ public void validate() throws ValidationException {
 	try {
 	    if (getDt_inizio_validita() != null
 	        && getDt_inizio_validita().after(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()))
-	        throw new ValidationException("La data di inizio validit‡ deve essere non successiva a quella attuale");
+	        throw new ValidationException("La data di inizio validit√† deve essere non successiva a quella attuale");
 	} catch (javax.ejb.EJBException e) {
 		throw new it.cnr.jada.DetailedRuntimeException(e);
 	}	
@@ -259,13 +259,13 @@ public void validate() throws ValidationException {
         && getFl_non_soggetto().equals(FALSE)
         && getFl_escluso().equals(FALSE)
         && getFl_default_istituzionale().equals(FALSE))
-        throw new ValidationException("Non Ë possibile immettere una percentuale pari a 0\nsenza specificare un motivo di esenzione");
+        throw new ValidationException("Non √® possibile immettere una percentuale pari a 0\nsenza specificare un motivo di esenzione");
     if ((getFl_esente().equals(TRUE)
         || getFl_non_soggetto().equals(TRUE)
         || getFl_non_imponibile().equals(TRUE))
         && getPercentuale() != null
         && getPercentuale().compareTo(java.math.BigDecimal.valueOf(0)) != 0)
-        throw new ValidationException("Non Ë possibile immettere una percentuale diversa da 0\nse si Ë specificato un motivo di esenzione");
+        throw new ValidationException("Non √® possibile immettere una percentuale diversa da 0\nse si √® specificato un motivo di esenzione");
     if (getFl_detraibile().equals(TRUE)
         && ((getPercentuale() != null
             && getPercentuale().compareTo(java.math.BigDecimal.valueOf(0)) == 0)

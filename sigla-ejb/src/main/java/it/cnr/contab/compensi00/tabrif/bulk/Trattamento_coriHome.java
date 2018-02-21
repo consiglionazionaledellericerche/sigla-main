@@ -67,6 +67,6 @@ public void validaTrattamento(Trattamento_coriBulk trattCori) throws it.cnr.jada
 
 	trattCori.validaTrattamento();
 	if (trattCori.getDt_fine_validita().compareTo(getServerDate())<0)
-		throw new it.cnr.jada.comp.ApplicationException("La Data Fine Validita non può essere inferiore alla Data Odierna");
+		throw new it.cnr.jada.comp.ApplicationException("La Data Fine Validita non puÃ² essere inferiore alla Data Odierna");
 }
 }

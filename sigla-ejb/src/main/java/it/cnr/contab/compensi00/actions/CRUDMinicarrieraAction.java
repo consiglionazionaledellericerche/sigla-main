@@ -30,7 +30,7 @@ public CRUDMinicarrieraAction() {
 	super();
 }
 /**
- * Creo un nuovo compenso da associare alle rate selezionate e lo apro in modalit‡ 
+ * Creo un nuovo compenso da associare alle rate selezionate e lo apro in modalit√† 
  * inserimento. Viene validata la selezione con il metodo 'validaSelezionePerAssociazioneCompenso'
  */
 
@@ -188,7 +188,7 @@ public Forward doBringBackSearchFind_percipiente(ActionContext context, Minicarr
 	}
 }
 /**
- * Creo un nuovo compenso da associare alle rate selezionate e lo apro in modalit‡ 
+ * Creo un nuovo compenso da associare alle rate selezionate e lo apro in modalit√† 
  * inserimento. Viene validata la selezione con il metodo 'validaSelezionePerAssociazioneCompenso'
  */
 
@@ -217,9 +217,9 @@ public Forward doCalcolaAliquotaMedia(ActionContext context) {
 		//carriera.validate();
 
 		if (carriera.getFl_tassazione_separata() == null || !carriera.getFl_tassazione_separata().booleanValue())
-			throw new it.cnr.jada.comp.ApplicationException("Per calcolare l'aliquota media Ë necessario selezionare \"tassazione separata\"!");
+			throw new it.cnr.jada.comp.ApplicationException("Per calcolare l'aliquota media √® necessario selezionare \"tassazione separata\"!");
 		if (carriera.isAssociataACompensoConTassazioneSeparata())
-			throw new it.cnr.jada.comp.ApplicationException("Impossibile calcolare l'aliquota media perchË almeno una rata Ë collegata a compenso!");
+			throw new it.cnr.jada.comp.ApplicationException("Impossibile calcolare l'aliquota media perch√® almeno una rata √® collegata a compenso!");
 
 		carriera.validaDate();
 		carriera.validaPercipiente(true);
@@ -237,7 +237,7 @@ public Forward doCalcolaAliquotaMedia(ActionContext context) {
 }
 /**
  * Gestisce la richiesta di cambiamento della data di registrazione della 
- * minicarriera. Viene verificata la validit‡ del percipiente e suoi attributi
+ * minicarriera. Viene verificata la validit√† del percipiente e suoi attributi
  */
 
 public Forward doConfermaAzzeramentoTipoTrattamentoData(
@@ -329,7 +329,7 @@ public Forward doConfermaModificaDataRegistrazione(ActionContext context, Option
 	}
 }
 /**
- * Creo un nuovo compenso da associare alle rate selezionate e lo apro in modalit‡ 
+ * Creo un nuovo compenso da associare alle rate selezionate e lo apro in modalit√† 
  * inserimento. Viene validata la selezione con il metodo 'validaSelezionePerAssociazioneCompenso'
  */
 
@@ -341,7 +341,7 @@ public Forward doCreaCompenso(ActionContext context) {
 		MinicarrieraBulk carriera = (MinicarrieraBulk)bp.getModel();
 
 		if (carriera.getModalita_pagamento() == null)
-			throw new it.cnr.jada.comp.ApplicationException("Specificare la modalit‡ di pagamento prima di creare il compenso!");
+			throw new it.cnr.jada.comp.ApplicationException("Specificare la modalit√† di pagamento prima di creare il compenso!");
 		if (carriera.getTipo_rapporto() == null)
 			throw new it.cnr.jada.comp.ApplicationException("Specificare il tipo di rapporto prima di creare il compenso!");
 		if (carriera.getTipo_trattamento() == null)
@@ -428,7 +428,7 @@ public Forward doGeneraRate(ActionContext context) {
 		MinicarrieraBulk carriera = (MinicarrieraBulk)bp.getModel();
 		carriera.validate();
 		if (!carriera.isNonAssociataACompenso())
-			throw new it.cnr.jada.comp.ApplicationException("Almeno una rata ha gi‡ generato un compenso. Impossibile rigenerare le rate.");
+			throw new it.cnr.jada.comp.ApplicationException("Almeno una rata ha gi√† generato un compenso. Impossibile rigenerare le rate.");
 		
 		bp.generaRate(context);
 		bp.setDirty(true);
@@ -442,7 +442,7 @@ public Forward doGeneraRate(ActionContext context) {
 }
 /**
  * Gestisco il cambiamento dell'aspetto anticipio/posticipo.
- * Se il valore nuovo impostato Ë TIPO_NESSUNO pongo i mesi al valore di default
+ * Se il valore nuovo impostato √® TIPO_NESSUNO pongo i mesi al valore di default
  */
 
 public Forward doOnAnticipoPosticipoChange(ActionContext context) {
@@ -491,7 +491,7 @@ public Forward doOnCheckDisponibilitaCassaFailed(
 }
 /**
  * Metodo utilizzato per gestire la conferma dell'inserimento/modifica di una obbligazione che ha sfondato
- * la disponibilit‡ per il contratto
+ * la disponibilit√† per il contratto
  * @param context <code>ActionContext</code> in uso.
  * @param option Esito della risposta alla richiesta di sfondamento
  *
@@ -537,10 +537,10 @@ public Forward doOnDtCessataChange(ActionContext context) {
 
 			if (carriera.isAttiva()) {
 				if (carriera.getDt_inizio_minicarriera() == null)
-				  throw new it.cnr.jada.comp.ApplicationException("Inserire la data inizio validit‡!");
+				  throw new it.cnr.jada.comp.ApplicationException("Inserire la data inizio validit√†!");
 				if ((carriera.getDt_cessazione().before(carriera.getDt_inizio_minicarriera()) &&
 					!(carriera.getDt_cessazione().equals(carriera.getDt_inizio_minicarriera()))))
-					throw new it.cnr.jada.comp.ApplicationException("La data di cessazione deve essere maggiore della data inizio validit‡!");
+					throw new it.cnr.jada.comp.ApplicationException("La data di cessazione deve essere maggiore della data inizio validit√†!");
 			} else if(carriera.isSospesa()) {
 				if (carriera.getDt_sospensione() == null)
 				  throw new it.cnr.jada.comp.ApplicationException("Inserire la data di sospensione!");				
@@ -569,8 +569,8 @@ public Forward doOnDtCessataChange(ActionContext context) {
 	}
 }
 /**
- * Gestisce la richiesta di cambiamento delle date di fine validit‡ della 
- * minicarriera. Viene verificata la validit‡ del percipiente e suoi attributi
+ * Gestisce la richiesta di cambiamento delle date di fine validit√† della 
+ * minicarriera. Viene verificata la validit√† del percipiente e suoi attributi
  */
  
 public Forward doOnDtFineValiditaChange(ActionContext context) {
@@ -596,7 +596,7 @@ public Forward doOnDtFineValiditaChange(ActionContext context) {
 				annoCompetenzaA != annoOldCompetenzaA)
 		{
 			((MinicarrieraBulk)bp.getModel()).setDt_fine_minicarriera(oldDataFine);
-			throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Non Ë possibile cambiare l'anno poichË il Terzo scelto potrebbe essere soggetto ad Agevolazioni per 'Rientro dei Cervelli'.");
+			throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Non √® possibile cambiare l'anno poich√® il Terzo scelto potrebbe essere soggetto ad Agevolazioni per 'Rientro dei Cervelli'.");
 		}
 		if (!((MinicarrieraBulk)bp.getModel()).getFl_tassazione_separata().booleanValue())
 		((MinicarrieraBulk)bp.getModel()).setNumero_rate(new Integer(it.cnr.jada.util.DateUtils.monthsBetweenDates(new Date(((MinicarrieraBulk)bp.getModel()).getDt_inizio_minicarriera().getTime()),new Date(((MinicarrieraBulk)bp.getModel()).getDt_fine_minicarriera().getTime()))));
@@ -622,8 +622,8 @@ public Forward doOnDtFineValiditaChange(ActionContext context) {
 	}
 }
 /**
- * Gestisce la richiesta di cambiamento delle date di inizio validit‡ della 
- * minicarriera. Viene verificata la validit‡ del percipiente e suoi attributi
+ * Gestisce la richiesta di cambiamento delle date di inizio validit√† della 
+ * minicarriera. Viene verificata la validit√† del percipiente e suoi attributi
  */
 
 public Forward doOnDtInizioValiditaChange(ActionContext context) {
@@ -649,7 +649,7 @@ public Forward doOnDtInizioValiditaChange(ActionContext context) {
 				annoCompetenzaDa != annoOldCompetenzaDa)
 		{
 			((MinicarrieraBulk)bp.getModel()).setDt_inizio_minicarriera(oldDataInizio);
-			throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Non Ë possibile cambiare l'anno poichË il Terzo scelto potrebbe essere soggetto ad Agevolazioni per 'Rientro dei Cervelli'.");
+			throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Non √® possibile cambiare l'anno poich√® il Terzo scelto potrebbe essere soggetto ad Agevolazioni per 'Rientro dei Cervelli'.");
 		}
         
 		int errorCodeTerzo = bp.validaPercipiente(context, true);
@@ -657,7 +657,7 @@ public Forward doOnDtInizioValiditaChange(ActionContext context) {
 			String msg = null;
 			switch (errorCodeTerzo) {
 				case 5: {
-					msg = "Il tipo rapporto selezionato non Ë pi˘ valido! I dati verranno persi. Vuoi continuare?";
+					msg = "Il tipo rapporto selezionato non √® pi√π valido! I dati verranno persi. Vuoi continuare?";
 					break;
 				}
 			}
@@ -685,7 +685,7 @@ public Forward doOnDtInizioValiditaChange(ActionContext context) {
 }
 /**
  * Gestisce la richiesta di cambiamento della data di registrazione della 
- * minicarriera. Viene verificata la validit‡ del percipiente e suoi attributi
+ * minicarriera. Viene verificata la validit√† del percipiente e suoi attributi
  */
 
 public Forward doOnDtRegistrazioneChange(ActionContext context) {
@@ -716,10 +716,10 @@ public Forward doOnDtRegistrazioneChange(ActionContext context) {
 				String msg = null;
 				switch (errorCodeTerzo) {
 					case 2: {
-						msg = "Il percipiente selezionato non Ë pi˘ valido! I dati verranno persi. Vuoi continuare?";
+						msg = "Il percipiente selezionato non √® pi√π valido! I dati verranno persi. Vuoi continuare?";
 						break;
 					}case 7: {
-						msg = "Il tipo trattamento selezionato non Ë pi˘ valido! I dati verranno persi. Vuoi continuare?";
+						msg = "Il tipo trattamento selezionato non √® pi√π valido! I dati verranno persi. Vuoi continuare?";
 						break;
 					}
 				}
@@ -762,7 +762,7 @@ public Forward doOnDtRinnovataChange(ActionContext context) {
 			if (carriera.isAttiva() && carriera.getDt_rinnovo() != null && carriera.getDt_inizio_minicarriera() != null && carriera.getDt_inizio_minicarriera() != null && 
 			    carriera.getDt_rinnovo().before(carriera.getDt_inizio_minicarriera()) &&
 				!carriera.getDt_rinnovo().equals(carriera.getDt_inizio_minicarriera()))
-					throw new it.cnr.jada.comp.ApplicationException("La data di rinnovo deve essere maggiore della data di inizio validit‡!");
+					throw new it.cnr.jada.comp.ApplicationException("La data di rinnovo deve essere maggiore della data di inizio validit√†!");
 
 			MinicarrieraBulk carrRinnovata = ((MinicarrieraComponentSession)bp.createComponentSession()).rinnova(
 																context.getUserContext(), 
@@ -812,7 +812,7 @@ public Forward doOnDtRipristinataChange(ActionContext context) {
 			if (carriera.isAttiva()) {
 				if ((carriera.getDt_ripristino().before(carriera.getDt_inizio_minicarriera()) &&
 					!(carriera.getDt_ripristino().equals(carriera.getDt_inizio_minicarriera()))))
-					throw new it.cnr.jada.comp.ApplicationException("La data di ripristino deve essere maggiore della data inizio validit‡!");
+					throw new it.cnr.jada.comp.ApplicationException("La data di ripristino deve essere maggiore della data inizio validit√†!");
 			} else if(carriera.isSospesa()) {
 				if ((carriera.getDt_ripristino().before(carriera.getDt_sospensione()) &&
 					!(carriera.getDt_ripristino().equals(carriera.getDt_sospensione()))))
@@ -864,10 +864,10 @@ public Forward doOnDtSospesaChange(ActionContext context) {
 		fillModel(context);
 		if (!bp.isSearching() && carriera.getDt_sospensione() != null) {
 			if (carriera.getDt_inizio_minicarriera() == null)
-			  throw new it.cnr.jada.comp.ApplicationException("Inserire la data di inizio validit‡!");				
+			  throw new it.cnr.jada.comp.ApplicationException("Inserire la data di inizio validit√†!");				
 			if (carriera.isAttiva() && carriera.getDt_sospensione().before(carriera.getDt_inizio_minicarriera()) &&
 				!carriera.getDt_sospensione().equals(carriera.getDt_inizio_minicarriera()))
-					throw new it.cnr.jada.comp.ApplicationException("La data di sospensione deve essere maggiore della data di inizio validit‡!");
+					throw new it.cnr.jada.comp.ApplicationException("La data di sospensione deve essere maggiore della data di inizio validit√†!");
 			
 			MinicarrieraBulk carrSospesa = ((MinicarrieraComponentSession)bp.createComponentSession()).sospendi(
 																context.getUserContext(), 
@@ -922,7 +922,7 @@ public Forward doOnIstituzionaleCommercialeChange(ActionContext context) {
 	return doOnTipoRapportoChange(context);
 }
 /**
- * Gestisce la richiesta di cambiamento della modalit‡ di pagamento e ricerca le
+ * Gestisce la richiesta di cambiamento della modalit√† di pagamento e ricerca le
  * banche valide
  */
 
@@ -1053,7 +1053,7 @@ public Forward doRemoveFromCRUDMain_rateCRUDController(ActionContext context) {
 	return context.findDefaultForward();
 }
 /**
- * Gestisce la ricerca delle banche valide per la modalit‡ di pagamento selezionata
+ * Gestisce la ricerca delle banche valide per la modalit√† di pagamento selezionata
  */
 
 public Forward doSearchListaBanche(ActionContext context) {
@@ -1099,7 +1099,7 @@ public Forward doTab(ActionContext context,String tabName,String pageName) {
 	}
 }
 /**
- * Creo un nuovo compenso da associare alle rate selezionate e lo apro in modalit‡ 
+ * Creo un nuovo compenso da associare alle rate selezionate e lo apro in modalit√† 
  * inserimento. Viene validata la selezione con il metodo 'validaSelezionePerAssociazioneCompenso'
  */
 
@@ -1156,10 +1156,10 @@ private void validaSelezionePerAssociazioneCompenso(
 			Minicarriera_rataBulk rata = (Minicarriera_rataBulk)i.next();
 			bp.getRateCRUDController().validate(context, rata);
 			if (rata.isAssociataACompenso())
-				throw new it.cnr.jada.comp.ApplicationException("La rata \"" + rata.getPg_rata().longValue() + "\" Ë gi‡ stata associata a compenso! Operazione annullata.");
+				throw new it.cnr.jada.comp.ApplicationException("La rata \"" + rata.getPg_rata().longValue() + "\" √® gi√† stata associata a compenso! Operazione annullata.");
 			if (rataPrec != null) {
 				if (!carriera.incrementaData(rataPrec.getDt_fine_rata()).equals(carriera.getDataOdierna(rata.getDt_inizio_rata())))
-					throw new it.cnr.jada.comp.ApplicationException("La data di fine validit‡ della rata \"" + rataPrec.getPg_rata().longValue() + "\" deve essere contigua\nalla data inizio validit‡ della rata \"" + rata.getPg_rata().longValue() + "\"\nper essere associata allo stesso compenso!");
+					throw new it.cnr.jada.comp.ApplicationException("La data di fine validit√† della rata \"" + rataPrec.getPg_rata().longValue() + "\" deve essere contigua\nalla data inizio validit√† della rata \"" + rata.getPg_rata().longValue() + "\"\nper essere associata allo stesso compenso!");
 				if (carriera.getFl_tassazione_separata() != null && carriera.getFl_tassazione_separata().booleanValue()) {
 					//Controllo che, nel caso di tassazione separata, tutte
 					//le rate da associare a compenso selezionate siano tutte
@@ -1171,7 +1171,7 @@ private void validaSelezionePerAssociazioneCompenso(
 			}
 			if (BulkCollections.indexOfByPrimaryKey(bp.getRateCRUDController().getDetails(),rata) == bp.getRateCRUDController().countDetails()-1 &&
 				!rata.getDt_fine_rata().equals(carriera.getDt_fine_minicarriera()))
-				throw new it.cnr.jada.comp.ApplicationException("La data \"fine validit‡\" dell'ultima rata NON corrisponde alla data fine validit‡ della minicarriera! Operazione annullata.");
+				throw new it.cnr.jada.comp.ApplicationException("La data \"fine validit√†\" dell'ultima rata NON corrisponde alla data fine validit√† della minicarriera! Operazione annullata.");
 			rataPrec = rata;
 		}
 	} catch (it.cnr.jada.bulk.ValidationException e) {

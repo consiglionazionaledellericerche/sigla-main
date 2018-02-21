@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -359,10 +359,10 @@
 		name="codice_descrizione">
 		<columnFieldProperty
 			name="cd_unita_organizzativa"
-			label="Codice Unità organizzativa" />
+			label="Codice UnitÃ  organizzativa" />
 		<columnFieldProperty
 			name="ds_unita_organizzativa"
-			label="Descrizione Unità organizzativa" />
+			label="Descrizione UnitÃ  organizzativa" />
 	</columnSet>
 		
 	<formFieldProperty

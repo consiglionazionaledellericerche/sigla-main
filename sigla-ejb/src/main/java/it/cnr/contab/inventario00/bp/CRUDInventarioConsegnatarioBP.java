@@ -25,7 +25,7 @@ public CRUDInventarioConsegnatarioBP(String function) {
 }
 /**
  * Nasconde il pulsante di "Elimina".
- *	Il pulsante è nascosto poichè non è possibile cancellare una riga dalla tabella dei Consegnatari.
+ *	Il pulsante Ã¨ nascosto poichÃ¨ non Ã¨ possibile cancellare una riga dalla tabella dei Consegnatari.
  *
  * @return <code>boolean</code>
 **/ 
@@ -37,8 +37,8 @@ public boolean isDeleteButtonHidden() {
 }
 /**
  * Abilita il pulsante di "Salva".
- *	Il pulsante è abilitato solo se si sta creando una nuova riga nella tabella dei Consegnatari.
- *	Restituisce TRUE se il BusinessProcess è <code>isInserting</code>
+ *	Il pulsante Ã¨ abilitato solo se si sta creando una nuova riga nella tabella dei Consegnatari.
+ *	Restituisce TRUE se il BusinessProcess Ã¨ <code>isInserting</code>
  *
  * @return <code>boolean</code>
 **/ 

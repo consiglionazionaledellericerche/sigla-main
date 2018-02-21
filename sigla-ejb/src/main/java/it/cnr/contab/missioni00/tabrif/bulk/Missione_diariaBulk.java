@@ -156,23 +156,23 @@ public void validate() throws ValidationException {
 
 	// controllo su campo INQUADRAMENTO
 	if (getCd_gruppo_inquadramento()==null)
-		throw new ValidationException( "Il campo INQUADRAMENTO non può essere vuoto" );
+		throw new ValidationException( "Il campo INQUADRAMENTO non puÃ² essere vuoto" );
 
 	// controllo su campo NAZIONE
 	if (getPg_nazione()==null)
-		throw new ValidationException( "Il campo NAZIONE non può essere vuoto" );
+		throw new ValidationException( "Il campo NAZIONE non puÃ² essere vuoto" );
 
 	// controllo su campo DIVISA
 	if (getCd_divisa()==null)
-		throw new ValidationException( "Il campo DIVISA non può essere vuoto" );
+		throw new ValidationException( "Il campo DIVISA non puÃ² essere vuoto" );
 
 	// controllo su campo INIZIO VALIDITA
 	if (getDt_inizio_validita()==null)
-		throw new ValidationException( "Il campo DATA INIZIO VALIDITA non può essere vuoto" );
+		throw new ValidationException( "Il campo DATA INIZIO VALIDITA non puÃ² essere vuoto" );
 
 	// controllo su campo IMPORTO DIARIA
 	if (getIm_diaria()==null)
-		throw new ValidationException( "Il campo IMPORTO DIARIA non può essere vuoto" );
+		throw new ValidationException( "Il campo IMPORTO DIARIA non puÃ² essere vuoto" );
 	if ( getIm_diaria().compareTo(new java.math.BigDecimal(0))<=0 )
 		throw new ValidationException( "Il campo IMPORTO DIARIA deve essere maggiore di 0 !" );
 }

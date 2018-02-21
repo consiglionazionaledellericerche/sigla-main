@@ -148,50 +148,50 @@ public RemoteIterator find(ActionContext actionContext,it.cnr.jada.persistency.s
 	}
 }
 /**
- * Restituisce il valore della propriet‡ 'bulkClass'
+ * Restituisce il valore della propriet√† 'bulkClass'
  *
- * @return Il valore della propriet‡ 'bulkClass'
+ * @return Il valore della propriet√† 'bulkClass'
  */
 public java.lang.Class getBulkClass() {
 	return bulkClass;
 }
 /**
- * Restituisce il valore della propriet‡ 'bulkInfo'
+ * Restituisce il valore della propriet√† 'bulkInfo'
  *
- * @return Il valore della propriet‡ 'bulkInfo'
+ * @return Il valore della propriet√† 'bulkInfo'
  */
 
 public it.cnr.jada.bulk.BulkInfo getBulkInfo() {
 	return bulkInfo;
 }
 /**
- * Restituisce il valore della propriet‡ 'componentSessioneName'
+ * Restituisce il valore della propriet√† 'componentSessioneName'
  *
- * @return Il valore della propriet‡ 'componentSessioneName'
+ * @return Il valore della propriet√† 'componentSessioneName'
  */
 public java.lang.String getComponentSessioneName() {
 	return componentSessioneName;
 }
 /**
- * Restituisce il valore della propriet‡ 'searchBulkClass'
+ * Restituisce il valore della propriet√† 'searchBulkClass'
  *
- * @return Il valore della propriet‡ 'searchBulkClass'
+ * @return Il valore della propriet√† 'searchBulkClass'
  */
 public java.lang.Class getSearchBulkClass() {
 	return searchBulkClass;
 }
 /**
- * Restituisce il valore della propriet‡ 'searchBulkInfo'
+ * Restituisce il valore della propriet√† 'searchBulkInfo'
  *
- * @return Il valore della propriet‡ 'searchBulkInfo'
+ * @return Il valore della propriet√† 'searchBulkInfo'
  */
 public it.cnr.jada.bulk.BulkInfo getSearchBulkInfo() {
 	return searchBulkInfo;
 }
 /**
- * Restituisce il valore della propriet‡ 'searchResultColumns'
+ * Restituisce il valore della propriet√† 'searchResultColumns'
  *
- * @return Il valore della propriet‡ 'searchResultColumns'
+ * @return Il valore della propriet√† 'searchResultColumns'
  */
 public java.util.Dictionary getSearchResultColumns() {
 	if (getSearchResultColumnSet() == null)
@@ -199,9 +199,9 @@ public java.util.Dictionary getSearchResultColumns() {
 	return getModel().getBulkInfo().getColumnFieldPropertyDictionary(getSearchResultColumnSet());
 }
 /**
- * Restituisce il valore della propriet‡ 'searchResultColumnSet'
+ * Restituisce il valore della propriet√† 'searchResultColumnSet'
  *
- * @return Il valore della propriet‡ 'searchResultColumnSet'
+ * @return Il valore della propriet√† 'searchResultColumnSet'
  */
 public java.lang.String getSearchResultColumnSet() {
 	return searchResultColumnSet;
@@ -270,7 +270,7 @@ public void selectAll(it.cnr.jada.action.ActionContext context) throws it.cnr.ja
 	
 }
 /**
- * Imposta il valore della propriet‡ 'bulkClass'
+ * Imposta il valore della propriet√† 'bulkClass'
  *
  * @param newClass	Il valore da assegnare a 'bulkClass'
  */
@@ -278,7 +278,7 @@ public void setBulkClass(java.lang.Class newClass) {
 	bulkInfo = BulkInfo.getBulkInfo(this.bulkClass = newClass);
 }
 /**
- * Imposta il valore della propriet‡ 'bulkClassName'
+ * Imposta il valore della propriet√† 'bulkClassName'
  *
  * @param bulkClassName	Il valore da assegnare a 'bulkClassName'
  * @throws ClassNotFoundException	
@@ -287,7 +287,7 @@ public void setBulkClassName(java.lang.String bulkClassName) throws ClassNotFoun
 	setBulkClass(getClass().getClassLoader().loadClass(bulkClassName));
 }
 /**
- * Imposta il valore della propriet‡ 'bulkInfo'
+ * Imposta il valore della propriet√† 'bulkInfo'
  *
  * @param newInfo	Il valore da assegnare a 'bulkInfo'
  */
@@ -295,7 +295,7 @@ public void setBulkInfo(it.cnr.jada.bulk.BulkInfo newInfo) {
 	bulkInfo = newInfo;
 }
 /**
- * Imposta il valore della propriet‡ 'componentSessioneName'
+ * Imposta il valore della propriet√† 'componentSessioneName'
  *
  * @param newSessioneName	Il valore da assegnare a 'componentSessioneName'
  */
@@ -303,7 +303,7 @@ public void setComponentSessioneName(java.lang.String newSessioneName) {
 	componentSessioneName = newSessioneName;
 }
 /**
- * Imposta il valore delle propriet‡ 'searchBulkClass' e 'searchBulkInfo'
+ * Imposta il valore delle propriet√† 'searchBulkClass' e 'searchBulkInfo'
  *
  * @param searchBulkClass	Il valore da assegnare a 'searchBulkClass'
  */
@@ -312,7 +312,7 @@ private void setSearchBulkClass(java.lang.Class searchBulkClass) {
 	searchBulkInfo = BulkInfo.getBulkInfo(this.searchBulkClass = searchBulkClass);
 }
 /**
- * Imposta il valore della propriet‡ 'searchBulkClassName'
+ * Imposta il valore della propriet√† 'searchBulkClassName'
  *
  * @param searchBulkClassName	Il valore da assegnare a 'searchBulkClassName'
  * @throws ClassNotFoundException	
@@ -322,7 +322,7 @@ public void setSearchBulkClassName(String searchBulkClassName) throws ClassNotFo
 		setSearchBulkClass(getClass().getClassLoader().loadClass(searchBulkClassName));
 }
 /**
- * Imposta il valore della propriet‡ 'searchBulkInfo'
+ * Imposta il valore della propriet√† 'searchBulkInfo'
  *
  * @param newSearchBulkInfo	Il valore da assegnare a 'searchBulkInfo'
  */
@@ -330,7 +330,7 @@ public void setSearchBulkInfo(it.cnr.jada.bulk.BulkInfo newSearchBulkInfo) {
 	searchBulkInfo = newSearchBulkInfo;
 }
 /**
- * Imposta il valore della propriet‡ 'searchResultColumnSet'
+ * Imposta il valore della propriet√† 'searchResultColumnSet'
  *
  * @param newSearchResultColumnSet	Il valore da assegnare a 'searchResultColumnSet'
  */
@@ -357,7 +357,7 @@ public java.util.BitSet setSelection(it.cnr.jada.action.ActionContext context, i
 	} 
 }
 /**
- * Imposta il valore della propriet‡ 'sessioneName'
+ * Imposta il valore della propriet√† 'sessioneName'
  *
  * @param newSessioneName	Il valore da assegnare a 'sessioneName'
  */
@@ -440,10 +440,10 @@ public boolean initRibaltato(it.cnr.jada.action.ActionContext context)  throws i
 		{
 			RicercaDocContComponentSession sessione = (RicercaDocContComponentSession) createComponentSession();
 			if (!sessione.isRicosResiduiChiusa(context.getUserContext())) {
-				throw new ApplicationException("Impossibile procedere al ribaltamento. Non Ë stata chiusa l'attivit‡ di ricostruzione dei residui per tutti i CdR del CdS "+CNRUserContext.getCd_cds((CNRUserContext)context.getUserContext())+".");
+				throw new ApplicationException("Impossibile procedere al ribaltamento. Non √® stata chiusa l'attivit√† di ricostruzione dei residui per tutti i CdR del CdS "+CNRUserContext.getCd_cds((CNRUserContext)context.getUserContext())+".");
 			}
 			if (sessione.isSfondataDispCdS(context.getUserContext())) {
-				throw new ApplicationException("Impossibile procedere al ribaltamento. La somma degli impegni, per alcuni GAE/Voce, Ë superiore alla disponibilit‡ ad impegnare.");
+				throw new ApplicationException("Impossibile procedere al ribaltamento. La somma degli impegni, per alcuni GAE/Voce, √® superiore alla disponibilit√† ad impegnare.");
 			}
 			setRiaccertamentoChiuso(sessione.isRiaccertamentoChiuso(context.getUserContext()));
 			setRiobbligazioneChiusa(sessione.isRiobbligazioneChiusa(context.getUserContext()));

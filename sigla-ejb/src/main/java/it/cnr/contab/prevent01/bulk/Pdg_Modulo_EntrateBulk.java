@@ -167,7 +167,7 @@ public class Pdg_Modulo_EntrateBulk extends Pdg_Modulo_EntrateBase {
 			
 		if (dett.getEsercizio_inizio()!=null && dett.getEsercizio_fine()!=null){
 			if ( dett.getEsercizio_fine().compareTo( dett.getEsercizio_inizio()) < 0 )
-				throw new ValidationException( "L' Anno di fine non può essere minore dell'anno di Inizio. " );
+				throw new ValidationException( "L' Anno di fine non puÃ² essere minore dell'anno di Inizio. " );
 	
 			if ( dett.getEsercizio_fine().toString().length() != 4 )
 				throw new ValidationException( "Il campo Anno di Fine deve essere di quattro cifre. " );
@@ -266,7 +266,7 @@ public class Pdg_Modulo_EntrateBulk extends Pdg_Modulo_EntrateBase {
 		return getDettagli_gestionali().size()-1;
 	}
 	/**
-	 * individua la quota di previsione già assegnata
+	 * individua la quota di previsione giÃ  assegnata
 	 */
 	public java.math.BigDecimal getDettagli_gestionali_tot() {
 		return dettagli_gestionali_tot;

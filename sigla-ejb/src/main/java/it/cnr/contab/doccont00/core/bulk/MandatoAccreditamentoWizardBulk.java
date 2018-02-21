@@ -47,9 +47,9 @@ public void assegnaImportiInBaseAPriorita() throws ValidationException
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_totale_impegni_selezionati'
+ * Restituisce il valore della propriet√† 'im_totale_impegni_selezionati'
  *
- * @return Il valore della propriet‡ 'im_totale_impegni_selezionati'
+ * @return Il valore della propriet√† 'im_totale_impegni_selezionati'
  */
 public BigDecimal getIm_totale_impegni_selezionati() {
 	java.math.BigDecimal totImpegni = new BigDecimal(0);
@@ -143,7 +143,7 @@ public void setMandatiColl(java.util.Collection newMandatiColl) {
 	mandatiColl = newMandatiColl;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
@@ -152,11 +152,11 @@ public void validate() throws ValidationException {
 		((V_impegnoBulk)i.next()).validate();
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
  
-/* gli impegni sono gi‡ stati ordinati*/
+/* gli impegni sono gi√† stati ordinati*/
 public void validatePriorita() throws ValidationException 
 {
 	V_impegnoBulk impegno;

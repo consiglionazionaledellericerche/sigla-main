@@ -22,7 +22,7 @@ public Forward doApriCompenso(ActionContext context) throws BusinessProcessExcep
 
 	Stipendi_cofiBulk stipendi_cofi = (Stipendi_cofiBulk)bp.getFocusedElement();
 	if (stipendi_cofi == null) {
-		bp.setMessage("E' necessario selezionare una mensilit‡.");
+		bp.setMessage("E' necessario selezionare una mensilit√†.");
 		return context.findDefaultForward();
 	}
 
@@ -30,7 +30,7 @@ public Forward doApriCompenso(ActionContext context) throws BusinessProcessExcep
 		stipendi_cofi.getCd_uo_comp() == null ||
 		stipendi_cofi.getEsercizio_comp() == null ||
 		stipendi_cofi.getPg_comp() == null) {
-		bp.setMessage("E' necessario selezionare una mensilit‡ gi‡ liquidata.");
+		bp.setMessage("E' necessario selezionare una mensilit√† gi√† liquidata.");
 		return context.findDefaultForward();
 	}
 		
@@ -51,7 +51,7 @@ public Forward doApriDocumentoGenerico(ActionContext context) throws BusinessPro
 
 	Stipendi_cofiBulk stipendi_cofi = (Stipendi_cofiBulk)bp.getFocusedElement();
 	if (stipendi_cofi == null) {
-		bp.setMessage("E' necessario selezionare una mensilit‡.");
+		bp.setMessage("E' necessario selezionare una mensilit√†.");
 		return context.findDefaultForward();
 	}
 
@@ -60,7 +60,7 @@ public Forward doApriDocumentoGenerico(ActionContext context) throws BusinessPro
 		stipendi_cofi.getEsercizio_doc_gen() == null ||
 		stipendi_cofi.getCd_tipo_doc_gen() == null ||
 		stipendi_cofi.getPg_doc_gen() == null) {
-		bp.setMessage("E' necessario selezionare una mensilit‡ gi‡ liquidata.");
+		bp.setMessage("E' necessario selezionare una mensilit√† gi√† liquidata.");
 		return context.findDefaultForward();
 	}
 		
@@ -80,7 +80,7 @@ public Forward doApriMandato(ActionContext context) throws BusinessProcessExcept
 
 	Stipendi_cofiBulk stipendi_cofi = (Stipendi_cofiBulk)bp.getFocusedElement();
 	if (stipendi_cofi == null) {
-		bp.setMessage("E' necessario selezionare una mensilit‡.");
+		bp.setMessage("E' necessario selezionare una mensilit√†.");
 		return context.findDefaultForward();
 	}
 
@@ -88,7 +88,7 @@ public Forward doApriMandato(ActionContext context) throws BusinessProcessExcept
 		stipendi_cofi.getCd_uo_doc_gen() == null ||
 		stipendi_cofi.getEsercizio_mandato() == null ||
 		stipendi_cofi.getPg_mandato() == null) {
-		bp.setMessage("E' necessario selezionare una mensilit‡ gi‡ liquidata.");
+		bp.setMessage("E' necessario selezionare una mensilit√† gi√† liquidata.");
 		return context.findDefaultForward();
 	}
 		
@@ -126,7 +126,7 @@ public Forward doContabilizzaFlussoStipendialeMensile(ActionContext context) thr
 			return handleException(context,e);
 		}
 	else 
-		setErrorMessage(context,"Per poter effettuare la contabilizzazione Ë necessario selezionare un mese.");
+		setErrorMessage(context,"Per poter effettuare la contabilizzazione √® necessario selezionare un mese.");
 	return context.findDefaultForward();
 }
 }

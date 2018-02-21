@@ -34,7 +34,7 @@ public class TariffarioComponent
 /** 
   *  Tutti i controlli superati.
   *    PreCondition:
-  *      La tariffa inserita ha data inizio validit‡ interna all'ultimo periodo preesistente (con data fine = infinito) OR Ë il primo record della validit‡ della tariffa e ha fine = infinito.
+  *      La tariffa inserita ha data inizio validit√† interna all'ultimo periodo preesistente (con data fine = infinito) OR √® il primo record della validit√† della tariffa e ha fine = infinito.
   *    PostCondition:
   *      Consente l'inserimento della tariffa.
   *  Riscontrata condizione di errore.
@@ -42,14 +42,14 @@ public class TariffarioComponent
   *      Si e verificato un errore.
   *      
   *    PostCondition:
-  *      Viene inviato il messaggio "Attenzione,  si Ë verificato un errore".
+  *      Viene inviato il messaggio "Attenzione,  si √® verificato un errore".
  */
 //^^@@
 public OggettoBulk creaConBulk (UserContext aUC,OggettoBulk tariffario) throws ComponentException{
 
 	try {
 		if (tariffario == null || !validaTariffa(aUC, (it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk)tariffario))        	
-	      throw new it.cnr.jada.comp.ApplicationException("Attenzione,  si Ë verificato un errore");
+	      throw new it.cnr.jada.comp.ApplicationException("Attenzione,  si √® verificato un errore");
 	   return super.creaConBulk(aUC, tariffario);
 	} catch (it.cnr.jada.comp.ApplicationException e) {
 		throw handleException(e);
@@ -89,11 +89,11 @@ public void eliminaConBulk(UserContext aUC, OggettoBulk tariffario) throws Compo
         if (rc == 1)
             throw new it.cnr.jada.comp.ApplicationException("Attenzione, deve esistere almeno un periodo");
         else {
-            /* L'unico record eliminabile Ë l'ultimo, che presenta la data di fine validit‡ infinita */
+            /* L'unico record eliminabile √® l'ultimo, che presenta la data di fine validit√† infinita */
             it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk tariffarioBulk =
                 (it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk) tariffario;
             //if (!tariffarioBulk.getDt_fine_validita().equals(it.cnr.contab.config00.esercizio.bulk.EsercizioHome.DATA_INFINITO))
-            //throw new it.cnr.jada.comp.ApplicationException("Attenzione, l'unico intervallo che Ë possibile cancellare Ë l'ultimo");	  
+            //throw new it.cnr.jada.comp.ApplicationException("Attenzione, l'unico intervallo che √® possibile cancellare √® l'ultimo");	  
             //else{ 
             // il record precedente all'ultimo deve presentare data_fine_validita infinita
             sql.addSQLClause(
@@ -134,7 +134,7 @@ public void eliminaConBulk(UserContext aUC, OggettoBulk tariffario) throws Compo
   *      Sono state modificate le date di validita di un periodo esistente.
   *      
   *    PostCondition:
-  *      Viene inviato il messaggio "Attenzione, la modifica di questi dati non Ë consentita".
+  *      Viene inviato il messaggio "Attenzione, la modifica di questi dati non √® consentita".
  */
 //^^@@
 public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk tariffario) throws ComponentException{
@@ -169,7 +169,7 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectVoce_ivaByClause(UserContext
   *      Viene consentito il salvataggio della nuova tariffa
   *  Tariffa non valida.
   *    PreCondition:
-  *      Si Ë verificato un errore.
+  *      Si √® verificato un errore.
   *    PostCondition:
   *      Viene inviato il messaggio : "Attenzione tariffa non valida"
  */

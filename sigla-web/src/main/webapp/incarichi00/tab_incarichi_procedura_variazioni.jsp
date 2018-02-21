@@ -18,7 +18,7 @@
 	
 	/*
 	** Quando navigo la prima volta nella tab e non ci sono 
-	** record selezionati, il valore restituito Ë -1. 
+	** record selezionati, il valore restituito √® -1. 
 	** In questo caso imposto il valore a 0.
 	*/
 	if (sel == -1)
@@ -88,10 +88,10 @@ function doScaricaFile() {
 		    </td>
 		    <td valign=top>
 		    	<span class="FormLabel">
-				È obbligatorio allegare un unico file in formato PDF che contenga il contratto sottoscritto dalle parti e <br>
+				√© obbligatorio allegare un unico file in formato PDF che contenga il contratto sottoscritto dalle parti e <br>
 				la successiva modifica del contratto stesso. <br>
-				<i><u>Tale file sar‡ l'unico ad essere pubblicato sul sito istituzionale dell'Ente.</u></i> <br>
-				Si rammenta che a seguito del salvataggio non sar‡ pi˘ possibile apportare alcuna modifica ai documenti allegati.<br> 
+				<i><u>Tale file sar√† l'unico ad essere pubblicato sul sito istituzionale dell'Ente.</u></i> <br>
+				Si rammenta che a seguito del salvataggio non sar√† pi√π possibile apportare alcuna modifica ai documenti allegati.<br> 
 				Si prega pertanto di porre la massima attenzione.<br><br>
 				</span>
 			</td></tr>
@@ -104,7 +104,7 @@ function doScaricaFile() {
 					prima di allegare il file del contratto da pubblicare sul sito internet istituzionale del CNR <br>
 					e' necessario verificare che lo stesso esponga <b><i><u>esclusivamente</u></i></b> i seguenti dati personali: <br>
 					<b><i>Nome, Cognome, Luogo e Data di nascita, Codice Fiscale</i></b> <br>
-					Ogni altro dato personale dovr‡ essere <b><i>"<u>oscurato</u>"</i></b><br><br>
+					Ogni altro dato personale dovr√† essere <b><i>"<u>oscurato</u>"</i></b><br><br>
 				</span>
 			</td></tr>
 			<tr><td valign=top>
@@ -113,7 +113,7 @@ function doScaricaFile() {
 		    <td valign=top>
 		    	<span class="FormLabel">
 				ai fini della pubblicazione sul sito internet istituzionale del CNR, <i><u>si raccomanda di usare file in formato PDF</u></i><br> 
-				e di <i><u>controllare sempre</u></i>, dopo il salvataggio, la leggibilit‡ dell'allegato utilizzando il bottone "Apri file"<br>
+				e di <i><u>controllare sempre</u></i>, dopo il salvataggio, la leggibilit√† dell'allegato utilizzando il bottone "Apri file"<br>
 				</span>
 			</td></tr>
 		</table></div>

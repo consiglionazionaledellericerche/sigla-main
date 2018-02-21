@@ -67,7 +67,7 @@ public class ObbligazioniCRUDController extends it.cnr.jada.util.action.SimpleDe
     }
 
     /**
-     * Restituisce true se è possibile aggiungere nuovi elementi
+     * Restituisce true se Ã¨ possibile aggiungere nuovi elementi
      */
     public boolean isGrowable() {
 
@@ -75,7 +75,7 @@ public class ObbligazioniCRUDController extends it.cnr.jada.util.action.SimpleDe
     }
 
     /**
-     * Restituisce true se è possibile aggiungere nuovi elementi
+     * Restituisce true se Ã¨ possibile aggiungere nuovi elementi
      */
     public boolean isShrinkable() {
 

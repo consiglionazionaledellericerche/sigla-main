@@ -833,7 +833,7 @@ public Distinta_cassiereBulk calcolaTotReversaliRegSospeso( Distinta_cassiereBul
 		ps.setString( 3, distinta.getCd_unita_organizzativa());
 		ps.setObject( 4, distinta.getPg_distinta());
 		ResultSet rs = ps.executeQuery();
-		// il result set può conetenere al massimo 2 record 1 per ti_cc_bi = 'C' e uno per ti_cc_bi = 'B'
+		// il result set puÃ² conetenere al massimo 2 record 1 per ti_cc_bi = 'C' e uno per ti_cc_bi = 'B'
 		try
 		{
 			while ( rs.next() )
@@ -867,7 +867,7 @@ public Distinta_cassiereBulk calcolaTotReversaliRegSospeso( Distinta_cassiereBul
 		try{ps.close();}catch( java.sql.SQLException e ){};
 	}	
 }
-/* !!!!!!!!!!!!!!!!non più usato !!!!!!!!!!!!!!!!!!!!!*/
+/* !!!!!!!!!!!!!!!!non piÃ¹ usato !!!!!!!!!!!!!!!!!!!!!*/
 /* sostituito da 'calcolaTotReversaliRegSospeso'      */
 /*
 public BigDecimal calcolaTotReversaliRegSospesoBI( Distinta_cassiereBulk distinta) throws SQLException
@@ -931,7 +931,7 @@ public BigDecimal calcolaTotReversaliRegSospesoBI( Distinta_cassiereBulk distint
 	}	
 }
 */
-/* !!!!!!!!!!!!!!!!non più usato !!!!!!!!!!!!!!!!!!!!!*/
+/* !!!!!!!!!!!!!!!!non piÃ¹ usato !!!!!!!!!!!!!!!!!!!!!*/
 /* sostituito da 'calcolaTotReversaliRegSospeso'      */
 /*
 public BigDecimal calcolaTotReversaliRegSospesoBIAnnullate( Distinta_cassiereBulk distinta) throws SQLException
@@ -999,7 +999,7 @@ public BigDecimal calcolaTotReversaliRegSospesoBIAnnullate( Distinta_cassiereBul
 	}	
 }
 */
-/* !!!!!!!!!!!!!!!!non più usato !!!!!!!!!!!!!!!!!!!!!*/
+/* !!!!!!!!!!!!!!!!non piÃ¹ usato !!!!!!!!!!!!!!!!!!!!!*/
 /* sostituito da 'calcolaTotReversaliRegSospeso'      */
 /*
 public BigDecimal calcolaTotReversaliRegSospesoBIAnnullateRitrasmesse( Distinta_cassiereBulk distinta) throws SQLException
@@ -1065,7 +1065,7 @@ public BigDecimal calcolaTotReversaliRegSospesoBIAnnullateRitrasmesse( Distinta_
 	}	
 }
 */
-/* !!!!!!!!!!!!!!!!non più usato !!!!!!!!!!!!!!!!!!!!!*/
+/* !!!!!!!!!!!!!!!!non piÃ¹ usato !!!!!!!!!!!!!!!!!!!!!*/
 /* sostituito da 'calcolaTotReversaliRegSospeso'      */
 /*
 public BigDecimal calcolaTotReversaliRegSospesoCC(Distinta_cassiereBulk distinta)
@@ -1123,7 +1123,7 @@ public BigDecimal calcolaTotReversaliRegSospesoCC(Distinta_cassiereBulk distinta
     }
 }
 */
-/* !!!!!!!!!!!!!!!!non più usato !!!!!!!!!!!!!!!!!!!!!*/
+/* !!!!!!!!!!!!!!!!non piÃ¹ usato !!!!!!!!!!!!!!!!!!!!!*/
 /* sostituito da 'calcolaTotReversaliRegSospeso'      */
 /*
 public BigDecimal calcolaTotReversaliRegSospesoCCAnnullate( Distinta_cassiereBulk distinta) throws SQLException
@@ -1189,7 +1189,7 @@ public BigDecimal calcolaTotReversaliRegSospesoCCAnnullate( Distinta_cassiereBul
 	}	
 }
 */
-/* !!!!!!!!!!!!!!!!non più usato !!!!!!!!!!!!!!!!!!!!!*/
+/* !!!!!!!!!!!!!!!!non piÃ¹ usato !!!!!!!!!!!!!!!!!!!!!*/
 /* sostituito da 'calcolaTotReversaliRegSospeso'      */
 /*
 public BigDecimal calcolaTotReversaliRegSospesoCCAnnullateRitrasmesse( Distinta_cassiereBulk distinta) throws SQLException
@@ -1759,7 +1759,7 @@ public void inizializzaProgressivoCassiere(it.cnr.jada.UserContext userContext,D
 	//reversali di trasferimento con + distinte collegate assegnavano + volte il prog def
 	if(distinta.getPg_distinta_def()==null){
 		Distinta_cassiereBulk tmp = new Distinta_cassiereBulk();
-		/* attenzione e' necessario creare un'istanza fittizia di distinta (tmp) perchè altrimenti verrebbero aggiunta
+		/* attenzione e' necessario creare un'istanza fittizia di distinta (tmp) perchÃ¨ altrimenti verrebbero aggiunta
 		   la clausole sul pg_distinta in qunato attributo chiave */
 		tmp.setEsercizio( distinta.getEsercizio());
 		tmp.setCd_cds( distinta.getCd_cds());

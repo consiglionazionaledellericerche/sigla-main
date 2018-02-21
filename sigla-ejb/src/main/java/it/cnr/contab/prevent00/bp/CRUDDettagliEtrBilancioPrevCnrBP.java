@@ -25,8 +25,8 @@ public CRUDDettagliEtrBilancioPrevCnrBP(String function)
  * Crea il riferimento alla remote interface del session bean CNRPREVENT00_EJB_BilancioPreventivoComponentSession
  * 
  * @return La remote interface
- * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non è possibile effettuare l'operazione
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non Ã¨ possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public it.cnr.contab.prevent00.ejb.BilancioPreventivoComponentSession createBilancioPreventivoComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException 
 {

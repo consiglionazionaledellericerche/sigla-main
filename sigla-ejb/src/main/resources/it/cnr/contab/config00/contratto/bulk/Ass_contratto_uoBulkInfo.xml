@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -22,21 +22,21 @@
 		property="unita_organizzativa"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
-		label="Unità organizzativa" />		
+		label="UnitÃ  organizzativa" />		
 	<fieldProperty
 		name="cd_unita_organizzativa"
 		property="unita_organizzativa.cd_unita_organizzativa"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Codice Unità organizzativa" />
+		label="Codice UnitÃ  organizzativa" />
 	<fieldProperty
 		name="ds_unita_organizzativa"
 		property="unita_organizzativa.ds_unita_organizzativa"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Descrizione Unità organizzativa" />		
+		label="Descrizione UnitÃ  organizzativa" />		
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -61,6 +61,6 @@
 		<columnFieldProperty
 			name="ds_unita_organizzativa"
 			property="unita_organizzativa.ds_unita_organizzativa"
-			label="Descrizione Unità Organizzativa"/>
+			label="Descrizione UnitÃ  Organizzativa"/>
 	</columnSet>				
 </bulkInfo>

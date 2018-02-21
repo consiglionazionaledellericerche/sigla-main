@@ -26,7 +26,7 @@ public Ass_cdp_uoBulk(java.lang.String cd_unita_organizzativa,java.lang.Integer 
 	setUnita_organizzativa(new it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk(cd_unita_organizzativa));
 }
 /**
- * Calcola i giorni relativi ad una UO per l'anno i frazionati per percentuale della linea di attivit‡
+ * Calcola i giorni relativi ad una UO per l'anno i frazionati per percentuale della linea di attivit√†
  *
  * @param i	indice dell'anno (1,2,3)
  * @param giorni_lavorativi	giorni da frazionare
@@ -51,7 +51,7 @@ public void calcolaGiorni_uo(java.math.BigDecimal giorni_lavorativi) {
 }
 /**
 /**
- * Imposta la percentuale della linea di attivit‡ relativa ad una UO per l'anno i a partire dai giorni
+ * Imposta la percentuale della linea di attivit√† relativa ad una UO per l'anno i a partire dai giorni
  *
  * @param i	indice dell'anno (1,2,3)
  * @param giorni_lavorativi	giorni lavorativi
@@ -86,27 +86,27 @@ public java.math.BigDecimal getGiorni_uo(int i) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'giorni_uo_a1'
+ * Restituisce il valore della propriet√† 'giorni_uo_a1'
  *
- * @return Il valore della propriet‡ 'giorni_uo_a1'
+ * @return Il valore della propriet√† 'giorni_uo_a1'
  */
 public java.math.BigDecimal getGiorni_uo_a1() {
 	return giorni_uo_a1;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'giorni_uo_a2'
+ * Restituisce il valore della propriet√† 'giorni_uo_a2'
  *
- * @return Il valore della propriet‡ 'giorni_uo_a2'
+ * @return Il valore della propriet√† 'giorni_uo_a2'
  */
 public java.math.BigDecimal getGiorni_uo_a2() {
 	return giorni_uo_a2;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'giorni_uo_a3'
+ * Restituisce il valore della propriet√† 'giorni_uo_a3'
  *
- * @return Il valore della propriet‡ 'giorni_uo_a3'
+ * @return Il valore della propriet√† 'giorni_uo_a3'
  */
 public java.math.BigDecimal getGiorni_uo_a3() {
 	return giorni_uo_a3;
@@ -128,72 +128,72 @@ public java.math.BigDecimal getPrc_uo(int i) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'stato_keys'
+ * Restituisce il valore della propriet√† 'stato_keys'
  *
- * @return Il valore della propriet‡ 'stato_keys'
+ * @return Il valore della propriet√† 'stato_keys'
  */
 public final java.util.Dictionary getStato_keys() {
 	return stato_keys;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'unita_organizzativa'
+ * Restituisce il valore della propriet√† 'unita_organizzativa'
  *
- * @return Il valore della propriet‡ 'unita_organizzativa'
+ * @return Il valore della propriet√† 'unita_organizzativa'
  */
 public it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk getUnita_organizzativa() {
 	return unita_organizzativa;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'accettato'
+ * Restituisce il valore della propriet√† 'accettato'
  *
- * @return Il valore della propriet‡ 'accettato'
+ * @return Il valore della propriet√† 'accettato'
  */
 public boolean isAccettato() {
 	return STATO_ACCETTATO.equalsIgnoreCase(getStato());
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'non_accettato'
+ * Restituisce il valore della propriet√† 'non_accettato'
  *
- * @return Il valore della propriet‡ 'non_accettato'
+ * @return Il valore della propriet√† 'non_accettato'
  */
 public boolean isNon_accettato() {
 	return STATO_NON_ACCETTATO.equalsIgnoreCase(getStato());
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOGiorni'
+ * Restituisce il valore della propriet√† 'rOGiorni'
  *
- * @return Il valore della propriet‡ 'rOGiorni'
+ * @return Il valore della propriet√† 'rOGiorni'
  */
 public boolean isROGiorni() {
     return !STATO_INIZIALE.equalsIgnoreCase(getStato());
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOPrc'
+ * Restituisce il valore della propriet√† 'rOPrc'
  *
- * @return Il valore della propriet‡ 'rOPrc'
+ * @return Il valore della propriet√† 'rOPrc'
  */
 public boolean isROPrc() {
 	return !STATO_INIZIALE.equalsIgnoreCase(getStato());
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOStato'
+ * Restituisce il valore della propriet√† 'rOStato'
  *
- * @return Il valore della propriet‡ 'rOStato'
+ * @return Il valore della propriet√† 'rOStato'
  */
 public boolean isROStato() {
 	return false;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'stato_iniziale'
+ * Restituisce il valore della propriet√† 'stato_iniziale'
  *
- * @return Il valore della propriet‡ 'stato_iniziale'
+ * @return Il valore della propriet√† 'stato_iniziale'
  */
 public boolean isStato_iniziale() {
 	return STATO_INIZIALE.equalsIgnoreCase(getStato());
@@ -216,7 +216,7 @@ public void setGiorni_uo(int i,java.math.BigDecimal giorni) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'giorni_uo_a1'
+ * Imposta il valore della propriet√† 'giorni_uo_a1'
  *
  * @param newGiorni_uo_a1	Il valore da assegnare a 'giorni_uo_a1'
  */
@@ -225,7 +225,7 @@ public void setGiorni_uo_a1(java.math.BigDecimal newGiorni_uo_a1) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'giorni_uo_a2'
+ * Imposta il valore della propriet√† 'giorni_uo_a2'
  *
  * @param newGiorni_uo_a2	Il valore da assegnare a 'giorni_uo_a2'
  */
@@ -234,7 +234,7 @@ public void setGiorni_uo_a2(java.math.BigDecimal newGiorni_uo_a2) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'giorni_uo_a3'
+ * Imposta il valore della propriet√† 'giorni_uo_a3'
  *
  * @param newGiorni_uo_a3	Il valore da assegnare a 'giorni_uo_a3'
  */
@@ -242,7 +242,7 @@ public void setGiorni_uo_a3(java.math.BigDecimal newGiorni_uo_a3) {
 	giorni_uo_a3 = newGiorni_uo_a3;
 }
 /**
- * Imposta la percentuale per linea di attivit‡ per UO relativi all'anno i in base ai giorni
+ * Imposta la percentuale per linea di attivit√† per UO relativi all'anno i in base ai giorni
  *
  * @param i	indice dell'anno (1,2,3)
  * @param giorni	
@@ -257,7 +257,7 @@ public void setPrc_uo(int i,java.math.BigDecimal giorni) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'unita_organizzativa'
+ * Imposta il valore della propriet√† 'unita_organizzativa'
  *
  * @param newUnita_organizzativa	Il valore da assegnare a 'unita_organizzativa'
  */

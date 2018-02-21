@@ -102,7 +102,7 @@ public Id_inventarioBulk findInventarioFor(UserContext aUC, String cdCds, String
   *    PreCondition:
   *      E' stata generata la richiesta di inizializzare una istanza di Id_InventarioBulk
   *    PostCondition:
-  *      Vengono cercate e caricate le Unit‡ Organizzative disponibili per essere associate all'Inventario
+  *      Vengono cercate e caricate le Unit√† Organizzative disponibili per essere associate all'Inventario
   *			che si sta creando.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -133,7 +133,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext, Oggett
   *    PreCondition:
   *      E' stata generata la richiesta di inizializzare l'Inventario per la modifica.
   *    PostCondition:
-  *      Vengono caricate tutte le Unit‡ Oganizzative associate con l'Inventario che si vuole modificare
+  *      Vengono caricate tutte le Unit√† Oganizzative associate con l'Inventario che si vuole modificare
   *		Tra le UO caricate, poi, si va ad individuare quella Responsabile dell'Inventario.
   *		Infine si caricano le UO ancora disponibli per essere associate.  
   *
@@ -173,13 +173,13 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 /** 
   *  Inventario aperto
   *    PreCondition:
-  *      L'Inventario Ë in stato 'A', (Aperto)
+  *      L'Inventario √® in stato 'A', (Aperto)
   *    PostCondition:
   *      Ritorna True
   *
   *  Inventario non e' aperto
   *    PreCondition:
-  *      L'Inventario NON Ë in stato 'A', (Aperto)
+  *      L'Inventario NON √® in stato 'A', (Aperto)
   *    PostCondition:
   *      Ritorna False
   *
@@ -204,7 +204,7 @@ public boolean isAperto(UserContext aUC, Id_inventarioBulk inv, Integer esercizi
   *   Carico le UO disponibili per essere associate ad un Inventario
   *    PreCondition:
   *      In seguito ad una richiesta di inizializzazione per la creazione di un nuovo Inventario, 
-  *		o per la modifica di uno gi‡ esistente, si vanno a cercacre quelle UO che non sono 
+  *		o per la modifica di uno gi√† esistente, si vanno a cercacre quelle UO che non sono 
   *		ancora associate ad alcun Inventario.
   *    PostCondition:
   *      Carico le UO disponibili.
@@ -221,9 +221,9 @@ private void loadAvailableUo(UserContext userContext, Id_inventarioBulk inv) thr
 	Unita_organizzativaHome uoHome = (Unita_organizzativaHome)getHome(userContext, Unita_organizzativaBulk.class);
 	it.cnr.jada.persistency.sql.SQLBuilder sqlUo = uoHome.createSQLBuilder();
 
-	// 1∞ Static Clause: Le Uo devono appartenere al CDS di scrivania
+	// 1¬∞ Static Clause: Le Uo devono appartenere al CDS di scrivania
 	sqlUo.addSQLClause("AND","CD_UNITA_PADRE",sqlUo.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext));
-	// 2∞ Static Clause: Posso selezionare Uo non precedentemente associate
+	// 2¬∞ Static Clause: Posso selezionare Uo non precedentemente associate
 	sqlUo.addSQLClause("AND","NOT EXISTS (SELECT * FROM ASS_INVENTARIO_UO WHERE UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA = ASS_INVENTARIO_UO.CD_UNITA_ORGANIZZATIVA)");
 	sqlUo.addOrderBy("CD_UNITA_ORGANIZZATIVA");
 
@@ -250,7 +250,7 @@ private void loadAvailableUo(UserContext userContext, Id_inventarioBulk inv) thr
   *    PreCondition:
   *      ValidaId_Inventario non superato
   *    PostCondition:
-  *      Viene inviato un messaggio : "Attenzione questa modifica non Ë consentita".
+  *      Viene inviato un messaggio : "Attenzione questa modifica non √® consentita".
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> il Bulk da modificare
@@ -277,7 +277,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
   *      E' stata generata la richiesta di ricercare gli Inventari relativi al CdS di scrivania
   *    PostCondition:
   *		E' stato creato il SQLBuilder con le clausole implicite (presenti nell'istanza di Id_inventarioBulk),
-  *		ed Ë stata aggiunta la clausola che gli Inventari devono essere associati al CdS
+  *		ed √® stata aggiunta la clausola che gli Inventari devono essere associati al CdS
   *		di scrivania.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -304,13 +304,13 @@ public Query select(UserContext userContext, CompoundFindClause clauses,OggettoB
   *    PreCondition:
   *      Si sta tentando di salvare un Inventario a cui non sono state associate UO
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare l'Inventario
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare l'Inventario
   *
   *  validaId_Inventario - UO Responsabile non specificata
   *    PreCondition:
-  *      Si sta tentando di salvare un Inventario di cui non Ë stato specificato il Responsabile tra le UO associate
+  *      Si sta tentando di salvare un Inventario di cui non √® stato specificato il Responsabile tra le UO associate
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare l'Inventario
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare l'Inventario
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>Id_inventarioBulk</code> l'Inventario modello
@@ -319,8 +319,8 @@ private void validaId_Inventario (UserContext aUC,Id_inventarioBulk bulk) throws
 
 	if (bulk.getClass() == Id_inventarioBulk.class)
 		if (((Id_inventarioBulk)bulk).getUo().size() == 0)
-			throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: Ë necessario associare almeno una Unita Organizzativa");
+			throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: √® necessario associare almeno una Unita Organizzativa");
 		if (((Id_inventarioBulk)bulk).getUoResp() == null)
-			throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: Ë necessario definire un responsabile tra le Unita Organizzativa selezionate");
+			throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: √® necessario definire un responsabile tra le Unita Organizzativa selezionate");
 }
 }

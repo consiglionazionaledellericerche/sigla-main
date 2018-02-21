@@ -80,18 +80,18 @@ public BulkCollection[] getBulkLists() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cds'
+ * Restituisce il valore della propriet√† 'cds'
  *
- * @return Il valore della propriet‡ 'cds'
+ * @return Il valore della propriet√† 'cds'
  */
 public it.cnr.contab.config00.sto.bulk.CdsBulk getCds() {
 	return cds;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'gestore'
+ * Restituisce il valore della propriet√† 'gestore'
  *
- * @return Il valore della propriet‡ 'gestore'
+ * @return Il valore della propriet√† 'gestore'
  */
 public UtenteBulk getGestore() {
 	return gestore;
@@ -134,7 +134,7 @@ public void setAccessi_disponibili(java.util.List newAccessi_disponibili)
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'cds'
+ * Imposta il valore della propriet√† 'cds'
  *
  * @param newCds	Il valore da assegnare a 'cds'
  */
@@ -143,7 +143,7 @@ public void setCds(it.cnr.contab.config00.sto.bulk.CdsBulk newCds) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'gestore'
+ * Imposta il valore della propriet√† 'gestore'
  *
  * @param newGestore	Il valore da assegnare a 'gestore'
  */

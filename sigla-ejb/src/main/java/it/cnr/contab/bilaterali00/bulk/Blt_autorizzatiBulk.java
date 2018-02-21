@@ -19,12 +19,12 @@ public class Blt_autorizzatiBulk extends Blt_autorizzatiBase {
 	 **/
 	private Blt_progettiBulk bltProgetti =  new Blt_progettiBulk();
 	/**
-	 * [TERZO Tabella contenente le entit‡ anagrafiche di secondo livello (terzi). Ogni entit‡ anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
+	 * [TERZO Tabella contenente le entit√† anagrafiche di secondo livello (terzi). Ogni entit√† anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
 	 * Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
 	private TerzoBulk terzo =  new TerzoBulk();
 	/**
-	 * [CDR Rappresentazione dei Centri di Responsabilit‡ di primo e secondo livello in una struttura ad albero organizzata su pi˘ livelli]
+	 * [CDR Rappresentazione dei Centri di Responsabilit√† di primo e secondo livello in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	private CdrBulk cdrTerzo =  new CdrBulk();
 
@@ -66,7 +66,7 @@ public class Blt_autorizzatiBulk extends Blt_autorizzatiBase {
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Tabella contenente le entit‡ anagrafiche di secondo livello (terzi). Ogni entit‡ anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
+	 * Restituisce il valore di: [Tabella contenente le entit√† anagrafiche di secondo livello (terzi). Ogni entit√† anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
 	 * Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
 	public TerzoBulk getTerzo() {
@@ -74,7 +74,7 @@ public class Blt_autorizzatiBulk extends Blt_autorizzatiBase {
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Tabella contenente le entit‡ anagrafiche di secondo livello (terzi). Ogni entit‡ anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
+	 * Setta il valore di: [Tabella contenente le entit√† anagrafiche di secondo livello (terzi). Ogni entit√† anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
 	 * Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
 	public void setTerzo(TerzoBulk terzo)  {
@@ -82,14 +82,14 @@ public class Blt_autorizzatiBulk extends Blt_autorizzatiBase {
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresentazione dei Centri di Responsabilit‡ di primo e secondo livello in una struttura ad albero organizzata su pi˘ livelli]
+	 * Restituisce il valore di: [Rappresentazione dei Centri di Responsabilit√† di primo e secondo livello in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	public CdrBulk getCdrTerzo() {
 		return cdrTerzo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresentazione dei Centri di Responsabilit‡ di primo e secondo livello in una struttura ad albero organizzata su pi˘ livelli]
+	 * Setta il valore di: [Rappresentazione dei Centri di Responsabilit√† di primo e secondo livello in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	public void setCdrTerzo(CdrBulk cdrTerzo)  {
 		this.cdrTerzo=cdrTerzo;

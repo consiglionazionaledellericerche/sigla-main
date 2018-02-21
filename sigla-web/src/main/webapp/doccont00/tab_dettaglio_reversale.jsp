@@ -108,7 +108,7 @@
 			</table>
 		</div>
 	<% } %>	
-	<%if (bp.isCup_attivo() && reversale.isRequiredSiope()) {%> <!--se non è di regolarizzazione !-->
+	<%if (bp.isCup_attivo() && reversale.isRequiredSiope()) {%> <!--se non Ã¨ di regolarizzazione !-->
 		<br><b><font size=3>CUP</font></b>
 		<div class="Group">
 			<table border="0" cellspacing="0" cellpadding="2">
@@ -127,7 +127,7 @@
 			</table>
 		</div>
 	<% } %>	 
-	<%if (bp.isSiope_cup_attivo() && reversale.isRequiredSiope()) {%> <!--se non è di regolarizzazione !-->
+	<%if (bp.isSiope_cup_attivo() && reversale.isRequiredSiope()) {%> <!--se non Ã¨ di regolarizzazione !-->
 		<br><b><font size=3>CUP</font></b>
 		<div class="Group">
 			<table border="0" cellspacing="0" cellpadding="2">

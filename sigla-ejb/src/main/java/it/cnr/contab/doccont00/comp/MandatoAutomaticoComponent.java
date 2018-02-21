@@ -528,7 +528,7 @@ public class MandatoAutomaticoComponent extends MandatoComponent {
 	 *      E' stata generata la richiesta di creazione di una riga di documento generico di spesa di tipo TRASF_S 
 	 *      a partire da un impegno selezionato dall'utente nel mandato di accreditamento
 	 *    PostCondition:
-	 *      Un riga di documento viene creata con i dati relativi al terzo (codice terzo, coordinate bancarie, modalit‡ di 
+	 *      Un riga di documento viene creata con i dati relativi al terzo (codice terzo, coordinate bancarie, modalit√† di 
 	 *      pagamento) derivati da quelli che l'utente ha specificato nel mandato e i dati relativi all'importo derivati dall'impegno selezionato
 	 *      dall'utente nel mandato; viene inoltre aggiornato l'importo associato ai documenti amministrativi della scadenza di obbligazione
 	 *      che rappresenta l'impegno( scadenza.im_associato_doc_amm = scadenza.im_associato_doc_amm + documento_riga.im_riga)
@@ -597,7 +597,7 @@ public class MandatoAutomaticoComponent extends MandatoComponent {
 	 * @param mandato <code>MandatoAutomaticoWizardBulk</code> il mandato da creare
 	 *
 	 * @return result la lista delle banche definite per il terzo beneficiario del mandato
-	 *			null non Ë stata definita nessuna banca per il terzo beneficiario del mandato
+	 *			null non √® stata definita nessuna banca per il terzo beneficiario del mandato
 	*/
 
 	public List findBancaOptions (UserContext userContext,MandatoAutomaticoWizardBulk mandato) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException, ComponentException
@@ -633,18 +633,18 @@ public class MandatoAutomaticoComponent extends MandatoComponent {
 			return null;	
 	}
 	/** 
-	 *  lista le modalit‡ di pagamento
+	 *  lista le modalit√† di pagamento
 	 *    PreCondition:
 	 *      E' stato creata una riga di mandato  di trasferimento
 	 *    PostCondition:
-	 *     La lista delle modalit‡ di pagamento del terzo beneficiario, tutte appartenenti alla stessa classe (Bancario/Postale/..) per cui si sta emettendo il mandato,
-	 *     viene estratta.Vengono escluse le modalit‡ di pagamento riferite a terzi cessionari
+	 *     La lista delle modalit√† di pagamento del terzo beneficiario, tutte appartenenti alla stessa classe (Bancario/Postale/..) per cui si sta emettendo il mandato,
+	 *     viene estratta.Vengono escluse le modalit√† di pagamento riferite a terzi cessionari
 	 *
 	 * @param userContext lo <code>UserContext</code> che ha generato la richiesta
 	 * @param mandato <code>MandatoAccreditamentoBulk</code> il mandato di trasferimento
 	 *
-	 * @return result la lista delle modalit‡ di pagamento definite per il terzo beneficiario del mandato
-	 *			null non Ë stata definita nessuna modalit‡ di pagamento per il terzo beneficiario del mandato
+	 * @return result la lista delle modalit√† di pagamento definite per il terzo beneficiario del mandato
+	 *			null non √® stata definita nessuna modalit√† di pagamento per il terzo beneficiario del mandato
 	*/
 
 	public List findModalita_pagamentoOptions (UserContext userContext, MandatoAutomaticoWizardBulk mandato) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException, ComponentException
@@ -658,7 +658,7 @@ public class MandatoAutomaticoComponent extends MandatoComponent {
 			sql.addClause( "AND", "cd_terzo_delegato", sql.ISNULL, null );			
 			List result =  getHome( userContext, Modalita_pagamentoBulk.class ).fetchAll( sql );
 			if ( result.size() == 0 )
-				throw new ApplicationException("Non esistono modalit‡ di pagamento per il terzo " + mandato.getMandato_terzo().getCd_terzo());
+				throw new ApplicationException("Non esistono modalit√† di pagamento per il terzo " + mandato.getMandato_terzo().getCd_terzo());
 			return result;	
 
 		}
@@ -758,7 +758,7 @@ public class MandatoAutomaticoComponent extends MandatoComponent {
 	 *     E' stata richiesta la ricerca degli impegni del Terzo per emettere un mandato di pagamento
 	 *    PostCondition:
 	 *     Vengono ricercati tutti gli impegni che hanno un importo disponibile ( importo disponibile = importo iniziale
-	 *     dell'impegno - importo gi‡ associato ai documenti contabili) e il cui Terzo sia quello indicato
+	 *     dell'impegno - importo gi√† associato ai documenti contabili) e il cui Terzo sia quello indicato
 	 *
 	 * @param aUC lo <code>UserContext</code> che ha generato la richiesta
 	 * @param mandato <code>MandatoBulk</code> il mandato di pagamento

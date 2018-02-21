@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -50,7 +50,7 @@
 		inputType="TEXT"
 		inputSize="6"
 		maxLength="30"
-		label="Codice Unità organizzativa" />
+		label="Codice UnitÃ  organizzativa" />
 	<fieldProperty
 		name="indirizzo_unita_organizzativa"
 		property="indirizzo_unita_organizzativa"
@@ -66,7 +66,7 @@
 		formName="searchtoolUO"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Unità organizzativa" />
+		label="UnitÃ  organizzativa" />
 	<fieldProperty
 		name="pg_comune"
 		property="citta.pg_comune"
@@ -146,14 +146,14 @@
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
-		label="Esercizio Verifica professionalità interna" />
+		label="Esercizio Verifica professionalitÃ  interna" />
 	<fieldProperty
 		name="pg_richiesta"
 		property="incarichi_richiesta.pg_richiesta"
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
-		label="Progressivo Verifica professionalità interna" />
+		label="Progressivo Verifica professionalitÃ  interna" />
 	<fieldProperty
 		name="incarichi_richiesta"
 		property="incarichi_richiesta"
@@ -162,7 +162,7 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Verifica professionalità interna" />
+		label="Verifica professionalitÃ  interna" />
 	<fieldProperty
 		name="terzo_resp"
 		property="terzo_resp"
@@ -245,7 +245,7 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Modalità di Individuazione del Beneficiario " />
+		label="ModalitÃ  di Individuazione del Beneficiario " />
 	<fieldProperty
 		name="cd_proc_amm_benef"
 		property="procedura_amministrativa_beneficiario.cd_proc_amm"
@@ -254,13 +254,13 @@
 		maxLength="5"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Modalità di Individuazione del Beneficiario " />
+		label="ModalitÃ  di Individuazione del Beneficiario " />
 	<fieldProperty
 		name="ds_proc_amm_benef"
 		property="procedura_amministrativa_beneficiario.ds_proc_amm"
 		inputType="TEXT"
 		inputSize="70"
-		label="Modalità di Individuazione del Beneficiario " />
+		label="ModalitÃ  di Individuazione del Beneficiario " />
 	<fieldProperty
 		name="crea_procedura_amministrativa_beneficiario"
 		property="procedura_amministrativa_beneficiario"
@@ -346,7 +346,7 @@
 		enabledOnSearch="true"
 		inputCssClass="w-100 "
 		nullable="false"
-		label="Oggetto dell'attività" />
+		label="Oggetto dell'attivitÃ " />
 	<fieldProperty
 		name="find_tipo_incarico"
 		property="tipo_incarico"
@@ -377,7 +377,7 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Tipo Attività" />
+		label="Tipo AttivitÃ " />
 	<fieldProperty
 		name="cd_tipo_attivita"
 		property="tipo_attivita.cd_tipo_attivita"
@@ -386,11 +386,11 @@
 		maxLength="5"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Tipo Attività" />
+		label="Tipo AttivitÃ " />
 	<fieldProperty
 		name="ds_tipo_attivita"
 		property="tipo_attivita.ds_tipo_attivita"
-		label="Tipo Attività" />
+		label="Tipo AttivitÃ " />
 	<fieldProperty
 		name="tipo_natura"
 		property="tipo_natura"
@@ -678,7 +678,7 @@
 		enabledOnSearch="true"
 		nullable="true"
 		readonlyProperty="ROTipoAttivitaFp"
-		label="Attività Economica" />
+		label="AttivitÃ  Economica" />
 	<fieldProperty
 		name="find_tipo_attivita_fp1"
 		property="tipo_attivita_fp1"
@@ -687,7 +687,7 @@
 		enabledOnSearch="true"
 		nullable="true"
 		readonlyProperty="ROTipoAttivitaFp"
-		label="Attività Economica 1" />
+		label="AttivitÃ  Economica 1" />
 	<fieldProperty
 		name="find_tipo_attivita_fp"
 		property="tipo_attivita_fp"
@@ -696,7 +696,7 @@
 		enabledOnSearch="true"
 		nullable="true"
 		readonlyProperty="ROTipoAttivitaFp"
-		label="Attività Economica 2" />
+		label="AttivitÃ  Economica 2" />
 	<fieldProperty
 		name="applicazioneNormaRadioGroup"
 		property="fl_applicazione_norma"

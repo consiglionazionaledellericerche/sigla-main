@@ -242,9 +242,9 @@ public class Parametri_enteBase extends Parametri_enteKey implements Keyed{
 	/*
 	 * Indica il livello di abilitazione per l'utilizzazione dei progetti
 	 * UO:  Il progetto deve essere abilitato a livello UO. L'abilitazione del progetto ad una UO 
-	 * 	    lo render‡ disponibile solo per la UO indicata.
+	 * 	    lo render√† disponibile solo per la UO indicata.
 	 * CDS: Il progetto deve essere abilitato a livello CDS. L'abilitazione del progetto ad una sola UO del CDS
-	 * 		lo render‡ disponibile per tutte le UO del CDS stesso. 
+	 * 		lo render√† disponibile per tutte le UO del CDS stesso. 
 	 */
 	public java.lang.String getAbil_progetto_strorg() {
 		return abil_progetto_strorg;

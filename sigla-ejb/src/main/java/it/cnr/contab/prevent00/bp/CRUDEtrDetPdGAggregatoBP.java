@@ -72,7 +72,7 @@ protected void resetTabs(it.cnr.jada.action.ActionContext context) {
 	setTab("tabCostiSpese3","tabCosti3");
 }
 /**
- * Setta il centro di responsabilit‡.
+ * Setta il centro di responsabilit√†.
  * 
  * @param newCdr it.cnr.contab.config00.sto.bulk.CdrBulk
  *

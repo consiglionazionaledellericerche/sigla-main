@@ -96,7 +96,7 @@ public Forward basicDoBringBackOpenObbligazioniWindow(ActionContext context, Obb
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -477,7 +477,7 @@ public Forward doBringBackSearchFind_voce_iva(ActionContext context, CompensoBul
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -615,7 +615,7 @@ public Forward doContabilizzaCompensoCOFI(ActionContext context){
 		{
 			if (!compenso.getMinicarriera().getEsercizio().equals(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext())))
 			{
-				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Poichè la Minicarriera è a tassazione separata, l'esercizio della Minicarriera deve essere uguale a quello del pagamento.");
+				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "PoichÃ¨ la Minicarriera Ã¨ a tassazione separata, l'esercizio della Minicarriera deve essere uguale a quello del pagamento.");
 			    return context.findDefaultForward();	
 			}
 		}
@@ -632,17 +632,17 @@ public Forward doContabilizzaCompensoCOFI(ActionContext context){
 		{
 			if (compenso.getPartita_iva() == null)
 			{
-				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Per la tipologia di trattamento utilizzata è necessario che il Terzo abbia la Partita Iva (Art.35 DL n.223/2006).");
+				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Per la tipologia di trattamento utilizzata Ã¨ necessario che il Terzo abbia la Partita Iva (Art.35 DL n.223/2006).");
 				return context.findDefaultForward();			
 			}
 			if (compenso.getCodice_fiscale() == null)
 			{
-				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Per la tipologia di trattamento utilizzata è necessario che il Terzo abbia il Codice Fiscale valorizzato.");
+				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Per la tipologia di trattamento utilizzata Ã¨ necessario che il Terzo abbia il Codice Fiscale valorizzato.");
 				return context.findDefaultForward();			
 			}			
 			if (!compenso.getFl_generata_fattura())
 			{
-				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Per la tipologia di trattamento utilizzata è necessaria la generazione della fattura (Art.35 DL n.223/2006).");
+				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Per la tipologia di trattamento utilizzata Ã¨ necessaria la generazione della fattura (Art.35 DL n.223/2006).");
 				return context.findDefaultForward();			
 			}
 			if (!bp.isCompensoValidoXContabil(context,compenso))
@@ -893,7 +893,7 @@ public Forward doOnCheckDisponibilitaCassaFailed(ActionContext context, int opti
 }
 /**
  * Metodo utilizzato per gestire la conferma dell'inserimento/modifica di una obbligazione che ha sfondato
- * la disponibilità per il contratto
+ * la disponibilitÃ  per il contratto
  * @param context <code>ActionContext</code> in uso.
  * @param option Esito della risposta alla richiesta di sfondamento
  *
@@ -938,7 +938,7 @@ public Forward doOnDtACompetenzaCogeChange(ActionContext context) {
 				return context.findDefaultForward();
 			
 			if (compenso.getDt_a_competenza_coge() == null)
-				throw new it.cnr.jada.comp.ApplicationException("Non è possibile annullare la data di competenza");
+				throw new it.cnr.jada.comp.ApplicationException("Non Ã¨ possibile annullare la data di competenza");
 			
 			GregorianCalendar data_a = (GregorianCalendar) GregorianCalendar.getInstance();
 			GregorianCalendar old_data_a = (GregorianCalendar) GregorianCalendar.getInstance();
@@ -953,9 +953,9 @@ public Forward doOnDtACompetenzaCogeChange(ActionContext context) {
 					annoCompetenzaA != annoOldCompetenzaA)
 			{
 				((CompensoBulk)bp.getModel()).setDt_a_competenza_coge(oldDataCompCoge);
-				throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Non è possibile cambiare l'anno di competenza poichè il Terzo scelto potrebbe essere soggetto ad Agevolazioni per 'Rientro dei Cervelli'.");
+				throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Non Ã¨ possibile cambiare l'anno di competenza poichÃ¨ il Terzo scelto potrebbe essere soggetto ad Agevolazioni per 'Rientro dei Cervelli'.");
 			}
-			//r.p. 20/10/2008 commentato perchè non vengono valorizzate in automatico data inizio e fine competenze
+			//r.p. 20/10/2008 commentato perchÃ¨ non vengono valorizzate in automatico data inizio e fine competenze
 			//compenso.validaDate();
 		} catch(it.cnr.jada.bulk.FillException e) {
 			compenso.setDt_a_competenza_coge(oldDataCompCoge);
@@ -970,7 +970,7 @@ public Forward doOnDtACompetenzaCogeChange(ActionContext context) {
 			String msg = null;
 			switch (errorCodeTerzo) {
 				case 6: {
-					msg = "Il tipo rapporto selezionato non è più valido! I dati verranno persi. Vuoi continuare?";
+					msg = "Il tipo rapporto selezionato non Ã¨ piÃ¹ valido! I dati verranno persi. Vuoi continuare?";
 					break;
 				}
 			}
@@ -1013,7 +1013,7 @@ public Forward doOnDtDaCompetenzaCogeChange(ActionContext context) {
 		if (bp.isSearching())
 			return context.findDefaultForward();
 		if (compenso.getDt_da_competenza_coge() == null)
-			throw new it.cnr.jada.comp.ApplicationException("Non è possibile annullare la data di competenza");
+			throw new it.cnr.jada.comp.ApplicationException("Non Ã¨ possibile annullare la data di competenza");
 		
 		GregorianCalendar data_da = (GregorianCalendar) GregorianCalendar.getInstance();
 		GregorianCalendar old_data_da = (GregorianCalendar) GregorianCalendar.getInstance();
@@ -1028,9 +1028,9 @@ public Forward doOnDtDaCompetenzaCogeChange(ActionContext context) {
 				annoCompetenzaDa != annoOldCompetenzaDa)
 		{
 			((CompensoBulk)bp.getModel()).setDt_da_competenza_coge(oldDataCompCoge);
-			throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Non è possibile cambiare l'anno di competenza poichè il Terzo scelto potrebbe essere soggetto ad Agevolazioni per 'Rientro dei Cervelli'.");
+			throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Non Ã¨ possibile cambiare l'anno di competenza poichÃ¨ il Terzo scelto potrebbe essere soggetto ad Agevolazioni per 'Rientro dei Cervelli'.");
 		}
-		//r.p. 20/10/2008 commentato perchè non vengono valorizzate in automatico data inizio e fine competenze
+		//r.p. 20/10/2008 commentato perchÃ¨ non vengono valorizzate in automatico data inizio e fine competenze
 		/*try{
 			((CompensoBulk)bp.getModel()).validaDate();
 		} catch(it.cnr.jada.comp.ApplicationException e) {
@@ -1043,7 +1043,7 @@ public Forward doOnDtDaCompetenzaCogeChange(ActionContext context) {
 			String msg = null;
 			switch (errorCodeTerzo) {
 				case 6: {
-					msg = "Il tipo rapporto selezionato non è più valido! I dati verranno persi. Vuoi continuare?";
+					msg = "Il tipo rapporto selezionato non Ã¨ piÃ¹ valido! I dati verranno persi. Vuoi continuare?";
 					break;
 				}
 			}
@@ -1101,10 +1101,10 @@ public Forward doOnDtRegistrazioneChange(ActionContext context) {
 			String msg = null;
 			switch (errorCodeTerzo) {
 				case 2: {
-					msg = "Il terzo selezionato non è più valido! I dati verranno persi. Vuoi continuare?";
+					msg = "Il terzo selezionato non Ã¨ piÃ¹ valido! I dati verranno persi. Vuoi continuare?";
 					break;
 				}case 8: {
-					msg = "Il tipo trattamento selezionato non è più valido! I dati verranno persi. Vuoi continuare?";
+					msg = "Il tipo trattamento selezionato non Ã¨ piÃ¹ valido! I dati verranno persi. Vuoi continuare?";
 					break;
 				}
 			}
@@ -1147,7 +1147,7 @@ public Forward doOnFlSenzaCalcoliChange(ActionContext context) {
 		if(!compenso.getFl_generata_fattura())
 			compenso.resetDatiFattura();
 
-		// Puo' valere TRUE solo se il compenso è senza calcoli
+		// Puo' valere TRUE solo se il compenso Ã¨ senza calcoli
 		if(!compenso.isSenzaCalcoli() && compenso.getFl_recupero_rate().booleanValue())		
 			compenso.setFl_recupero_rate(Boolean.FALSE);
 		
@@ -1181,7 +1181,7 @@ public Forward doOnFlLiquidazioneDifferitaChange(ActionContext context){
 			java.sql.Timestamp data_limite_sup = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getDt02(context.getUserContext(), new Integer(0), "*", "COSTANTI", "LIMITE_CREAZIONE_FATT_PASS_ES_DIF");
 			if(compenso.getDt_fattura_fornitore().compareTo(data_limite)<0||compenso.getDt_fattura_fornitore().compareTo(data_limite_sup)>0){
 				compenso.setFl_liquidazione_differita(false);
-				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Non è possibile indicare la liquidazione differita con la data fattura fornitore indicata.");
+				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Non Ã¨ possibile indicare la liquidazione differita con la data fattura fornitore indicata.");
 			}
 		}
 		return context.findDefaultForward();
@@ -1202,7 +1202,7 @@ public Forward doOnImLordoPercipienteChange(ActionContext context) {
 			fillModel(context);
 			if (Utility.nvl(compenso.getQuota_esente_inps()).compareTo(Utility.nvl(compenso.getIm_lordo_percipiente())) == 1){
 				compenso.setIm_lordo_percipiente(oldImp);
-				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "L'importo Lordo non può superare la Quota esente INPS.");
+				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "L'importo Lordo non puÃ² superare la Quota esente INPS.");
 				return context.findDefaultForward();	
 			}			
 			compenso.setStatoCompensoToEseguiCalcolo();
@@ -1227,7 +1227,7 @@ public Forward doOnQuotaEsenteINPSChange(ActionContext context) {
 			fillModel(context);
 			if (Utility.nvl(compenso.getQuota_esente_inps()).compareTo(Utility.nvl(compenso.getIm_lordo_percipiente())) == 1){
 				compenso.setQuota_esente_inps(oldImp);
-				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "La Quota esente INPS non può superare l'importo lordo.");
+				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "La Quota esente INPS non puÃ² superare l'importo lordo.");
 				return context.findDefaultForward();	
 			}
 			compenso.setStatoCompensoToEseguiCalcolo();
@@ -1524,7 +1524,7 @@ public Forward doRicercaObbligazione(ActionContext context) {
 		CompensoBulk compenso = (CompensoBulk)bp.getModel();
 
 		if (compenso.getTerzo() == null)
-			throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione è necessario impostare un fornitore!");
+			throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione Ã¨ necessario impostare un fornitore!");
 
 		Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
 		filtro.setFornitore(compenso.getTerzo());
@@ -1547,7 +1547,7 @@ public Forward doRicercaObbligazione(ActionContext context) {
 	}
 }
 /**
-  * Il metodo gestisce la selezione del bottone "Riporta avanti". Ciò implica salvare il compenso,
+  * Il metodo gestisce la selezione del bottone "Riporta avanti". CiÃ² implica salvare il compenso,
   * riportare avanti l'obbligazione e committare
   */
 public Forward doRiportaAvanti(ActionContext context) throws java.rmi.RemoteException 
@@ -1573,7 +1573,7 @@ public Forward doRiportaAvanti(ActionContext context) throws java.rmi.RemoteExce
 	}
 }
 /**
-  * Il metodo gestisce la selezione del bottone "Riporta indietro". Ciò implica riportare 
+  * Il metodo gestisce la selezione del bottone "Riporta indietro". CiÃ² implica riportare 
   * indietro l'obbligazione senza committare
   */
   
@@ -1690,7 +1690,7 @@ public Forward doVisualizzaDocContPrincipale(ActionContext context){
 		CompensoBulk compenso = (CompensoBulk)bp.getModel();
 
 		if (compenso==null)
-			throw new MessageToUser("Non è stato creato il compenso");
+			throw new MessageToUser("Non Ã¨ stato creato il compenso");
 
 		V_doc_cont_compBulk docContPrincipale = compenso.getDocContPrincipale();
 		if (docContPrincipale == null)
@@ -1787,7 +1787,7 @@ public Forward doBringBackSearchIncarichi_repertorio_anno(ActionContext context,
 				{
 					compenso.impostaTipoRapporto(incarico_anno.getIncarichi_repertorio().getTipo_rapporto());
 					PostTipoRapportoChange(context);
-					//P.R. Reinizializzo l'oggetto perchè il metodo precedente ha risettato
+					//P.R. Reinizializzo l'oggetto perchÃ¨ il metodo precedente ha risettato
 					//     il model
 					compenso = (CompensoBulk)bp.getModel();
 				}
@@ -1798,7 +1798,7 @@ public Forward doBringBackSearchIncarichi_repertorio_anno(ActionContext context,
 				//compenso.setIncarichi_oggetto(incarico_anno.getIncarichi_repertorio().getOggetto());
 				compenso.setImporto_utilizzato(bp.prendiUtilizzato(context, compenso, incarico_anno));
 				if (compenso.getImporto_utilizzato().compareTo(compenso.getImporto_complessivo())>=0)
-					setMessage(context, FormBP.ERROR_MESSAGE, "Contratto già completamente utilizzato. Non sarà possibile completare la registrazione del compenso.");
+					setMessage(context, FormBP.ERROR_MESSAGE, "Contratto giÃ  completamente utilizzato. Non sarÃ  possibile completare la registrazione del compenso.");
 
 				//bp.completaIncarico(context, compenso,incarico_anno);
 				bp.setDirty(true);
@@ -1829,7 +1829,7 @@ public void PostTipoRapportoChange(ActionContext context) {
 		compenso.setIncarichi_repertorio_anno(null);
 		compenso.setContratto(null);
 		compenso.setOggetto_contratto(null);
-		//P.R. Reinizializzo l'oggetto perchè il metodo precedente ha risettato
+		//P.R. Reinizializzo l'oggetto perchÃ¨ il metodo precedente ha risettato
 		//     il model
 		compenso = (CompensoBulk)bp.getModel();
 
@@ -1867,12 +1867,12 @@ public Forward doOnImNettoDaTrattenereChange(ActionContext context) {
 			}
 			if (Utility.nvl(compenso.getIm_netto_da_trattenere()).compareTo(new BigDecimal(0)) < 0){
 				compenso.setIm_netto_da_trattenere(new BigDecimal(0));
-				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "L'importo Netto da sospendere non può essere negativo.");
+				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "L'importo Netto da sospendere non puÃ² essere negativo.");
 				return context.findDefaultForward();	
 			}	
 			if (Utility.nvl(compenso.getIm_netto_percipiente()).compareTo(Utility.nvl(compenso.getIm_netto_da_trattenere())) < 0){
 				compenso.setIm_netto_da_trattenere(oldImp);
-				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "L'importo Netto da sospendere non può superare l'importo netto da pagare.");
+				setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "L'importo Netto da sospendere non puÃ² superare l'importo netto da pagare.");
 				return context.findDefaultForward();	
 			}
 			return context.findDefaultForward();

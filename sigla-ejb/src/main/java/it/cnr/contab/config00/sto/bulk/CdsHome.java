@@ -281,7 +281,7 @@ public SQLBuilder createSQLBuilder()
 	return sql;
 }
 /**
- * Restituisce il SQLBuilder per selezionare fra tutte le Unita Organizzative quelle che sono CDS ed in più il CDS ENTE
+ * Restituisce il SQLBuilder per selezionare fra tutte le Unita Organizzative quelle che sono CDS ed in piÃ¹ il CDS ENTE
  * @return SQLBuilder
  */
 
@@ -318,7 +318,7 @@ public Dictionary loadTipologiaKeys( CdsBulk bulk )  throws ApplicationException
  
 }
 /**
- * Ritorna false se l'esercizio di fine impostato sul cds è minore del massimo esercizio 
+ * Ritorna false se l'esercizio di fine impostato sul cds Ã¨ minore del massimo esercizio 
  * esistente per pdg del cds in processo
  *
  * @param cds cds in processo

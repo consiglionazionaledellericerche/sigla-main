@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Definition of new Model -->
 <model name="sigla_fatture:sigla_fattureModel" 
 	xmlns="http://www.alfresco.org/model/dictionary/1.0"
@@ -177,8 +177,8 @@
 					<type>d:datetime</type>
 				</property>
 				<property name="sigla_fatture:modalita_incasso">
-					<title>Modalità Incasso</title>
-					<description>Modalità Incasso</description>
+					<title>Modalità  Incasso</title>
+					<description>Modalità  Incasso</description>
 					<type>d:text</type>
 				</property>
 			</properties>

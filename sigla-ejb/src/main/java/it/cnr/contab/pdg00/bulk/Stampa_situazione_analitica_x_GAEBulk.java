@@ -96,7 +96,7 @@ public class Stampa_situazione_analitica_x_GAEBulk extends OggettoBulk {
 	
 	public String getCdCdrForPrint() {
 
-		// Se non è stata specificato un  CdR
+		// Se non Ã¨ stata specificato un  CdR
 		if ( (getCdrForPrint()==null) ||
 				(getCdrForPrint().getCd_centro_responsabilita()==null) ){
 

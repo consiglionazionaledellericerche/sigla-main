@@ -17,7 +17,7 @@ public interface IDetrazioniFamiliariMgr extends ICRUDMgr {
 /** 
   *  Tutti i controlli superati.
   *    PreCondition:
-  *      La tariffa inserita ha data inizio validit‡ interna all'ultimo periodo preesistente (con data fine = infinito) OR Ë il primo record della validit‡ della tariffa e ha fine = infinito.
+  *      La tariffa inserita ha data inizio validit√† interna all'ultimo periodo preesistente (con data fine = infinito) OR √® il primo record della validit√† della tariffa e ha fine = infinito.
   *    PostCondition:
   *      Consente l'inserimento della tariffa.
   *  Riscontrata condizione di errore.
@@ -25,7 +25,7 @@ public interface IDetrazioniFamiliariMgr extends ICRUDMgr {
   *      Si e verificato un errore.
   *      
   *    PostCondition:
-  *      Viene inviato il messaggio "Attenzione,  si Ë verificato un errore".
+  *      Viene inviato il messaggio "Attenzione,  si √® verificato un errore".
  */
 //^^@@
 public abstract OggettoBulk creaConBulk (UserContext userContext,OggettoBulk bulk) throws ComponentException;

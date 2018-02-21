@@ -29,26 +29,26 @@ public interface IReversaleMgr extends ICRUDMgr
   *      Il codice terzo dei documenti amministrativi attivi da aggiungere alla reversale non e'
   *      lo stesso per tutti i documenti
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di aggiungere i documenti alla reversale
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di aggiungere i documenti alla reversale
   *  errore - classe di pagamento
   *    PreCondition:
   *      La classe di pagamento (Bancario,Postale,etc.) dei documenti amministrativi attivi da aggiungere alla reversale 
   *      non e' lo stesso per tutti i documenti.
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di aggiungere i documenti alla reversale
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di aggiungere i documenti alla reversale
   *  errore - reversale di regolarizzazione 
   *    PreCondition:
   *      I documenti amministrativi attivi selezionati per essere aggiunti ad una reversale di regolarizzazione sono stati 
   *      contabilizzati in parte su accertamenti relativi a capitoli di bilancio e in parte su accertamenti 
   *      relativi a partite di giro.
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di aggiungere i documenti alla reversale
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di aggiungere i documenti alla reversale
   *  errore - Tipo competenza/residuo
   *    PreCondition:
   *      Il tipo (Competenza,Residuo) dei documenti amministrativi attivi da aggiungere alla reversale 
   *      non e' lo stesso per tutti i documenti.
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di aggiungere i documenti alla reversale
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di aggiungere i documenti alla reversale
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param reversale <code>ReversaleBulk</code> la reversale da aggiornare
@@ -88,7 +88,7 @@ public abstract it.cnr.contab.doccont00.core.bulk.ReversaleBulk annullaReversale
   *      saldi dei capitoli (metodo aggiornaCapitoloSaldoRiga). Per ogni associazione sospeso-reversale, viene
   *      aggiornato l'importo associato del sospeso (metodo annullaImportoSospesi). Se la reversale ha associati mandati
   *      o altre reversali viene eseguito il loro annullamento (metodo 'annullaDocContabiliCollegati').
-  *      Se il valore dello stato della reversale Ë INCASSATO, vengono aggiornati i saldi pagati ( metodo aggiornaSaldoPagato)
+  *      Se il valore dello stato della reversale √® INCASSATO, vengono aggiornati i saldi pagati ( metodo aggiornaSaldoPagato)
   *
   *  annullamento reversale
   *    PreCondition:
@@ -104,13 +104,13 @@ public abstract it.cnr.contab.doccont00.core.bulk.ReversaleBulk annullaReversale
   *      saldi dei capitoli (metodo aggiornaCapitoloSaldoRiga). Per ogni associazione sospeso-reversale, viene
   *      aggiornato l'importo associato del sospeso (metodo annullaImportoSospesi). Se la reversale ha associati mandati
   *      o altre reversali NON viene eseguito il loro annullamento (metodo 'annullaDocContabiliCollegati').
-  *      Se il valore dello stato della reversale Ë INCASSATO, vengono aggiornati i saldi pagati ( metodo aggiornaSaldoPagato)
+  *      Se il valore dello stato della reversale √® INCASSATO, vengono aggiornati i saldi pagati ( metodo aggiornaSaldoPagato)
   *
   *  errore riscontri associati
   *    PreCondition:
   *      E' stata generata la richiesta di annullare una Reversale che ha riscontri associati
   *    PostCondition:
-  *      Una segnalazione di errore comunica all'utente l'impossibilit‡ di eseguire l'annullamento
+  *      Una segnalazione di errore comunica all'utente l'impossibilit√† di eseguire l'annullamento
   *  
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param reversale <code>ReversaleBulk</code> la reversale da annullare
@@ -159,7 +159,7 @@ public abstract void annullaReversaleDiTrasferimento(it.cnr.jada.UserContext par
   *     Vengono ricercati tutti i sospesi di entrata che non sono ancora stati associati alla reversale 
   *     con cds appartenza uguale al cds appartenenza della reversale,
   *     uo origine uguale all'uo di scrivania, importo disponibile (importo disponibile = importo iniziale del sospeso -
-  *     importo gi‡ associato a reversali) maggiore di zero (metodo findSospesiDiEntrata)
+  *     importo gi√† associato a reversali) maggiore di zero (metodo findSospesiDiEntrata)
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param clausole le clausole specificate dall'utente
@@ -181,7 +181,7 @@ public abstract it.cnr.jada.util.RemoteIterator cercaSospesi(it.cnr.jada.UserCon
   *      vengono aggiornati gli importi associati a documenti contabili di tutte le scadenze di accertamenti specificate 
   *      nelle righe della reversale (metodo aggiornaImportoAccertamenti), vengono aggiornati i saldi relativi ai capitoli di entrata
   *      (metodo aggiornaCapitoloSaldoRiga), vengono aggiornati gli stati delle fatture specificate nelle righe delle reversali
-  *      (metodo aggiornaStatoFattura). Se l'importo incassato della reversale Ë pari all'importo della reversale stessa,
+  *      (metodo aggiornaStatoFattura). Se l'importo incassato della reversale √® pari all'importo della reversale stessa,
   *		 vengono aggiornati i saldi pagati (metodo aggiornaSaldoPagato)
   *
   *
@@ -319,7 +319,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerRicerca(it.cnr.ja
   *     - cds di appartenenza uguale al cds per cui si vuole emettere la reversale
   *     - (im_scadenza-im_associato_doc_contabile) della scadenza di accertamento su cui il documento amm.
   *       e' stato contabilizzato maggiore di zero
-  *     Fra tutti i documenti individuati vengono esclusi quelli che eventualmente sono gi‡ stati selezionati
+  *     Fra tutti i documenti individuati vengono esclusi quelli che eventualmente sono gi√† stati selezionati
   *     per questa reversale
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -337,7 +337,7 @@ public abstract it.cnr.contab.doccont00.core.bulk.ReversaleBulk listaDocAttivi(i
   *      (metodo verificaReversale)
   *    PostCondition:
   *      Vengono aggiornati gli importi dei sospesi eventualmente associati alla reversale (metodo aggiornaImportoSospesi) 
-  *      e vengono aggiornate le eventuali modifiche alle modalit‡ di pagamento e al tipo bollo della reversale
+  *      e vengono aggiornate le eventuali modifiche alle modalit√† di pagamento e al tipo bollo della reversale
   *  modifica reversale provvisoria
   *    PreCondition:
   *      E' stata generata la richiesta di modifica di una Reversale provvisoria (TIPO_REV_PROVV) e la reversale supera la 

@@ -198,7 +198,7 @@ public class Param_cons_costi_personaleBulk extends OggettoBulk implements Persi
 	
 	public void validaUo() throws ValidationException{
 		if (getCd_uo()== null)
-			throw new ValidationException("Selezionare l'Unit‡ Organizzativa");
+			throw new ValidationException("Selezionare l'Unit√† Organizzativa");
 	}
 	
 	public boolean isROFindV_uo() {
