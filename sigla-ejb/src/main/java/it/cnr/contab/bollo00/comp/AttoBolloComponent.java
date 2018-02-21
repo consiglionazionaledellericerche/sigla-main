@@ -7,7 +7,12 @@ import it.cnr.contab.bollo00.bulk.Atto_bolloBulk;
 import it.cnr.contab.bollo00.bulk.Atto_bolloHome;
 import it.cnr.contab.bollo00.bulk.V_cons_atto_bolloBulk;
 import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsHome;
+import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -282,4 +287,48 @@ public class AttoBolloComponent extends CRUDComponent {
 		return sql; 
 	}
 	
+	public SQLBuilder selectContrattoByClause(UserContext userContext, Atto_bolloBulk attoBollo, ContrattoBulk contratto, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+	{
+		Parametri_cdsHome paramHome = (Parametri_cdsHome)getHome(userContext, Parametri_cdsBulk.class);
+		Parametri_cdsBulk paramCds;
+		try {
+			paramCds = (Parametri_cdsBulk) paramHome.findByPrimaryKey(new Parametri_cdsBulk(CNRUserContext.getCd_cds(userContext),
+					CNRUserContext.getEsercizio(userContext)));
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+		
+		SQLBuilder sql = getHome(userContext,ContrattoBulk.class).createSQLBuilder();
+		
+		if (clauses != null) 
+		  sql.addClause(clauses);
+
+		sql.openParenthesis(FindClause.AND);  
+		  sql.addSQLClause(FindClause.AND,"NATURA_CONTABILE",SQLBuilder.EQUALS, ContrattoBulk.NATURA_CONTABILE_PASSIVO);
+		  sql.addSQLClause(FindClause.OR,"NATURA_CONTABILE",SQLBuilder.EQUALS, ContrattoBulk.NATURA_CONTABILE_ATTIVO_E_PASSIVO);
+		sql.closeParenthesis();  
+		
+		if(paramCds != null && paramCds.getFl_contratto_cessato().booleanValue()){
+			sql.openParenthesis(FindClause.AND);  
+			  sql.addSQLClause(FindClause.AND,"STATO",SQLBuilder.EQUALS, ContrattoBulk.STATO_DEFINITIVO);
+			  sql.addSQLClause(FindClause.OR,"STATO",SQLBuilder.EQUALS, ContrattoBulk.STATO_CESSSATO);
+			sql.closeParenthesis();		
+		}	
+		else  
+		  sql.addSQLClause("AND", "STATO", SQLBuilder.EQUALS, ContrattoBulk.STATO_DEFINITIVO);
+
+		// Se uo 999.000 in scrivania: visualizza tutti i contratti
+		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
+		if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
+		  sql.openParenthesis(FindClause.AND);
+			sql.addSQLClause(FindClause.AND,"CONTRATTO.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(userContext));
+			SQLBuilder sqlAssUo = getHome(userContext,Ass_contratto_uoBulk.class).createSQLBuilder();		   
+			sqlAssUo.addSQLJoin("CONTRATTO.ESERCIZIO","ASS_CONTRATTO_UO.ESERCIZIO");
+			sqlAssUo.addSQLJoin("CONTRATTO.PG_CONTRATTO","ASS_CONTRATTO_UO.PG_CONTRATTO");
+			sqlAssUo.addSQLClause(FindClause.AND,"ASS_CONTRATTO_UO.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(userContext));
+			sql.addSQLExistsClause(FindClause.OR,sqlAssUo);
+		  sql.closeParenthesis();  		 
+		}
+		return sql;
+	}
 }
