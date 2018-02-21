@@ -38,6 +38,9 @@ public class Parametri_enteBase extends Parametri_enteKey implements Keyed{
 	// FL_PRG_PIANOECO CHAR(1)
 	private java.lang.Boolean fl_prg_pianoeco;
 
+	// FL_VARIAZIONI_TRASFERIMENTO CHAR(1)
+	private java.lang.Boolean fl_variazioni_trasferimento;
+	
 	// ABIL_PROGETTO_STRORG VARCHAR2(3)
 	private java.lang.String abil_progetto_strorg;
 
@@ -237,6 +240,14 @@ public class Parametri_enteBase extends Parametri_enteKey implements Keyed{
 	
 	public void setFl_prg_pianoeco(java.lang.Boolean fl_prg_pianoeco) {
 		this.fl_prg_pianoeco = fl_prg_pianoeco;
+	}
+	
+	public java.lang.Boolean getFl_variazioni_trasferimento() {
+		return fl_variazioni_trasferimento;
+	}
+	
+	public void setFl_variazioni_trasferimento(java.lang.Boolean fl_variazioni_trasferimento) {
+		this.fl_variazioni_trasferimento = fl_variazioni_trasferimento;
 	}
 	
 	/*
