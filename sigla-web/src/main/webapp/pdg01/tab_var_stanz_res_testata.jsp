@@ -18,49 +18,82 @@
 <div class="Group card">
 <table class="Panel w-100">	
   <TR>
-   <% bp.getController().writeFormField(out,"esercizio");%>
-   <% bp.getController().writeFormField(out,"pg_variazione");%>
+   	<% bp.getController().writeFormField(out,"esercizio");%>
+    <TD colspan="4">
+    	<% bp.getController().writeFormLabel(out,"pg_variazione");%>
+    	<% bp.getController().writeFormInput(out,"pg_variazione");%>
+    </TD>
   </TR>
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"centroDiSpesa");%></TD>
-   <TD colspan=3><% bp.getController().writeFormInput(out,"centroDiSpesa");%></TD>
+   <TD colspan="5"><% bp.getController().writeFormInput(out,"centroDiSpesa");%></TD>
   </TR>  
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"centroDiResponsabilita");%></TD>
-   <TD colspan=3><% bp.getController().writeFormInput(out,"centroDiResponsabilita");%></TD>
+   <TD colspan="5"><% bp.getController().writeFormInput(out,"centroDiResponsabilita");%></TD>
   </TR>  
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"stato");%></TD>
-   <TD colspan=3><% bp.getController().writeFormInput(out,"stato");%></TD>
+   <TD colspan="5"><% bp.getController().writeFormInput(out,"stato");%></TD>
   </TR>
 	<tr>
 		<td><% bp.getController().writeFormLabel(out,"esercizio_res"); %></td>
-		<td colspan=3><% bp.getController().writeFormInput(out,"default","esercizio_res",isFieldEnabled,null,null);%></TD>
+		<td colspan="5"><% bp.getController().writeFormInput(out,"default","esercizio_res",isFieldEnabled,null,null);%></TD>
 	</tr>
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"tipologia");%></TD>
-   <TD colspan=3><% bp.getController().writeFormInput(out,"default","tipologia",bp.isROTipologia(),null,null);%></TD>
+   <TD colspan="5"><% bp.getController().writeFormInput(out,"default","tipologia",bp.isROTipologia(),null,null);%></TD>
   </TR>
+<% if (bp.isAttivaGestioneVariazioniTrasferimento() && 
+		var_stanz_res!=null && Var_stanz_resBulk.TIPOLOGIA_STO.equals(var_stanz_res.getTipologia())) { %>
+    <TR>
+	  <TD><% bp.getController().writeFormLabel( out, "mapMotivazioneVariazione"); %></TD>
+	  <TD colspan="2"><% bp.getController().writeFormInput(out,"default","mapMotivazioneVariazione",isAbilitato||!var_stanz_res.isPropostaProvvisoria(),null,null);%></TD>
+	  <% if (var_stanz_res.isMotivazioneVariazioneBando()) {%>
+		 <TD><% bp.getController().writeFormLabel( out, "idBando"); %></TD>
+		 <TD><% bp.getController().writeFormInput( out, "default","idBando",isAbilitato||!var_stanz_res.isPropostaProvvisoria(),null,null); %></TD>
+	 	 <%	if (var_stanz_res.isApprovata()||var_stanz_res.isApprovazioneControllata()) { %>
+		 <TD>
+		 	<%
+		 		bp.getController().writeFormLabel( out, "idMatricola");
+		 	    bp.getController().writeFormInput( out, "default","idMatricola",!(bp.isCdrScrivania()||bp.isUoEnte())||var_stanz_res.getIdMatricola()!=null,null,null);
+		 	%>
+		 </TD>
+		 <% } %>
+  	 <% } else if (var_stanz_res.isMotivazioneVariazioneProroga() || var_stanz_res.isMotivazioneVariazioneAltreSpese()) { %>
+		 <TD colspan="3">
+		 	<%	
+		 		bp.getController().writeFormLabel( out, "idMatricola");
+	 	    	bp.getController().writeFormInput( out, "default","idMatricola",isAbilitato||!var_stanz_res.isPropostaProvvisoria(),null,null);
+		 	%>
+		 </TD>
+	  <% }%>
+    </TR>
+    <% } %>
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"tipologia_fin");%></TD>
-   <TD colspan=3><% bp.getController().writeFormInput(out,"tipologia_fin");%></TD>
+   <TD colspan="5"><% bp.getController().writeFormInput(out,"tipologia_fin");%></TD>
   </TR>
   
   <TR>
-   <% bp.getController().writeFormField(out,"dt_apertura");%>
-   <% bp.getController().writeFormField(out,"dt_approvazione");%>
+   <TD><% bp.getController().writeFormLabel(out,"dt_apertura");%></TD>
+   <TD colspan="2"><% bp.getController().writeFormInput(out,"dt_apertura");%></TD>
+   <TD><% bp.getController().writeFormLabel(out,"dt_approvazione");%></TD>
+   <TD colspan="2"><% bp.getController().writeFormInput(out,"dt_approvazione");%></TD>   
   </TR>
   <TR>  
-   <% bp.getController().writeFormField(out,"dt_chiusura");%>
-   <% bp.getController().writeFormField(out,"dt_annullamento");%>
+   <TD><% bp.getController().writeFormLabel(out,"dt_chiusura");%></TD>
+   <TD colspan="2"><% bp.getController().writeFormInput(out,"dt_chiusura");%></TD>
+   <TD><% bp.getController().writeFormLabel(out,"dt_annullamento");%></TD>
+   <TD colspan="2"><% bp.getController().writeFormInput(out,"dt_annullamento");%></TD>   
   </TR>
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"ds_delibera");%></TD>
-   <TD colspan=3><% bp.getController().writeFormInput(out,"default","ds_delibera",isAbilitato,null,null);%></TD>
+   <TD colspan="5"><% bp.getController().writeFormInput(out,"default","ds_delibera",isAbilitato,null,null);%></TD>
   </TR>
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"ds_variazione");%></TD>
-   <TD colspan=3><% bp.getController().writeFormInput(out,"default","ds_variazione",isAbilitato,null,null);%></TD>
+   <TD colspan="5"><% bp.getController().writeFormInput(out,"default","ds_variazione",isAbilitato,null,null);%></TD>
   </TR>
 </table>
 </div>

@@ -97,6 +97,12 @@
 			columnSize="1"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_VARIAZIONI_TRASFERIMENTO"
+			propertyName="fl_variazioni_trasferimento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="ABIL_PROGETTO_STRORG"
 			propertyName="abil_progetto_strorg"
 			sqlTypeName="VARCHAR"
@@ -181,6 +187,8 @@
 		name="fl_gae_es" />
 	<persistentProperty
 		name="fl_prg_pianoeco" />
+	<persistentProperty
+		name="fl_variazioni_trasferimento" />
 	<persistentProperty
 		name="abil_progetto_strorg" />
 	<persistentProperty

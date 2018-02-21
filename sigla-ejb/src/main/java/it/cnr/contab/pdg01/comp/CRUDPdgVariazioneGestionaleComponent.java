@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
@@ -25,11 +26,14 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
@@ -39,6 +43,7 @@ import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
 import it.cnr.contab.pdg00.comp.PdGVariazioniComponent;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneHome;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
@@ -52,7 +57,9 @@ import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -528,8 +535,18 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 			int contaRigheEntrata = Utility.ZERO.intValue();
 			int contaRigheSpesa = Utility.ZERO.intValue();
 
-			for (java.util.Iterator j=pdg.getAssociazioneCDR().iterator();j.hasNext();){			
+			boolean existDettPersonale = true;
+			String cdrPersonale = null;
+			if (Optional.ofNullable(pdg.getTiMotivazioneVariazione()).isPresent()) { 
+				cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(usercontext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
+						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
+				existDettPersonale = false;
+			} 
+				
+			for (java.util.Iterator j=pdg.getAssociazioneCDR().iterator();j.hasNext();){
 				Ass_pdg_variazione_cdrBulk ass_pdg = (Ass_pdg_variazione_cdrBulk)j.next();
+
+				existDettPersonale = existDettPersonale||cdrPersonale.equals(ass_pdg.getCd_centro_responsabilita());
 
 				if (pdg.getTipologia().equals(Tipo_variazioneBulk.STORNO_SPESA_STESSO_ISTITUTO) ||
 					pdg.getTipologia().equals(Tipo_variazioneBulk.STORNO_ENTRATA_STESSO_ISTITUTO) ||
@@ -575,6 +592,12 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 						totImportoSpesaPositivo = totImportoSpesaPositivo.add(spesa_det.getIm_variazione());
 					else
 						totImportoSpesaNegativo = totImportoSpesaNegativo.add(spesa_det.getIm_variazione());
+					
+					if (!existDettPersonale) {
+						Elemento_voceBulk voce = (Elemento_voceBulk)getHome(usercontext, Elemento_voceBulk.class).findByPrimaryKey(spesa_det.getElemento_voce());
+						Classificazione_vociBulk classif = (Classificazione_vociBulk)getHome(usercontext, Classificazione_vociBulk.class).findByPrimaryKey(new Classificazione_vociBulk(voce.getId_classificazione()));
+						existDettPersonale = classif.getFl_accentrato()&&cdrPersonale.equals(classif.getCdr_accentratore());
+					}
 				}
 				//Aggiorno il totalizzatore complessivo
 				totSommaSpesa = totSommaSpesa.add(sommaSpesa);
@@ -586,11 +609,13 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 												   new it.cnr.contab.util.EuroFormat().format(sommaSpesa.subtract(ass_pdg.getIm_spesa())));
 				}
 			}
-			if (totSommaEntrata.compareTo(totSommaSpesa)!=0 && !isUoPdgUoEnte(usercontext, pdg)) {
+			if (totSommaEntrata.compareTo(totSommaSpesa)!=0 && !isUoPdgUoEnte(usercontext, pdg))
 				throw new ApplicationException("Il totale delle variazioni di spesa ("+new it.cnr.contab.util.EuroFormat().format(totSommaSpesa)+")"+
 										   "\n" + "non è uguale al totale delle variazioni di entrata ("+
 										   new it.cnr.contab.util.EuroFormat().format(totSommaEntrata)+")");
-			}
+			if (!existDettPersonale)
+				throw new ApplicationException("In un variazione di tipo 'Personale' occorre selezionare almeno una voce accentrata "
+						+ "verso il CDR del personale o scegliere tra i CDR partecipanti anche quello del personale ("+cdrPersonale+").");
 			if (pdg.getTipologia().equals(Tipo_variazioneBulk.STORNO_SPESA_STESSO_ISTITUTO) ||
 				pdg.getTipologia().equals(Tipo_variazioneBulk.STORNO_SPESA_ISTITUTI_DIVERSI)) {
 				if (contaRigheEntrata>Utility.ZERO.intValue())
@@ -675,7 +700,6 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 		}					
 	}
 
-	
 	public void inizializzaSommeCdR(UserContext userContext, Pdg_variazioneBulk pdg) throws ComponentException{
 		try {		
 			Ass_pdg_variazione_cdrHome testataHome = (Ass_pdg_variazione_cdrHome)getHome(userContext, Ass_pdg_variazione_cdrBulk.class);
