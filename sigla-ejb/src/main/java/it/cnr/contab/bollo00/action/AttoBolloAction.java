@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import it.cnr.contab.bollo00.bp.CRUDAttoBolloBP;
 import it.cnr.contab.bollo00.bulk.Atto_bolloBulk;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 
@@ -43,4 +44,25 @@ public class AttoBolloAction extends it.cnr.jada.util.action.CRUDAction{
 		}
 		return context.findDefaultForward();
 	}
+
+	public Forward doOnFlContrattoRegistratoChange(ActionContext context) {
+		try{
+			fillModel(context);
+			Atto_bolloBulk model = (Atto_bolloBulk)getBusinessProcess(context).getModel();
+			if (!model.isFlContrattoRegistrato())
+				model.setContratto(null);
+		} catch (it.cnr.jada.bulk.FillException e){
+			return handleException(context,e);
+		}
+		return context.findDefaultForward();
+	}
+
+	public Forward doToggleAllegati(ActionContext context) {
+    	CRUDAttoBolloBP bp = Optional.ofNullable(getBusinessProcess(context))
+                .filter(CRUDAttoBolloBP.class::isInstance)
+                .map(CRUDAttoBolloBP.class::cast)
+                .orElseThrow(() -> new DetailedRuntimeException("Business Process non valido"));
+        bp.setAllegatiCollapse(!bp.isAllegatiCollapse());
+        return context.findDefaultForward();
+    }
 }

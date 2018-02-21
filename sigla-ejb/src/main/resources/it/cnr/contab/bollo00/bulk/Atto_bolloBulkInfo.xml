@@ -63,6 +63,7 @@
 		rows="4"
 		inputType="TEXTAREA"
 		label="Descrizione"
+		inputCssClass=" w-100"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false" />
@@ -90,6 +91,38 @@
 		formatName="date_short"
 		enabledOnSearch="true"
 		label="Data Protocollo" />
+	<fieldProperty
+		name="find_contratto"
+		property="contratto"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Contratto"
+		CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="esercizio_contratto"	
+		property="contratto.esercizio"
+		label="Esercizio contratto"
+		inputType="TEXT"
+		maxLength="4"
+		inputSize="4"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="pg_contratto"
+		property="contratto.pg_contratto"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Progressivo contratto"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="oggetto_contratto"
+		property="contratto.oggetto"
+		maxLength="500"
+		inputSize="60"
+		inputType="ROTEXT"
+		label="Oggetto contratto"
+		enabledOnSearch="true" />		
 	<fieldProperty
 		name="numFogli"
 		property="numDettagli"
@@ -126,6 +159,15 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false" />
+	<fieldProperty
+		name="flContrattoRegistrato"
+		property="flContrattoRegistrato"
+		label="Contratto Registrato"
+		inputType="CHECKBOX"
+		command="doOnFlContrattoRegistratoChange"
+		maxLength="1"
+		inputSize="1"
+		enabledOnSearch="false"	/>
 
 	<formFieldProperty
 		name="id" />
@@ -146,6 +188,17 @@
 	<formFieldProperty
 		name="dt_provv" 
 		label="Data&lt;BR&gt;Protocollo" />
+	<formFieldProperty
+		name="find_contratto" />	
+	<formFieldProperty
+		name="esercizio_contratto" />		
+	<formFieldProperty
+		name="pg_contratto" />
+	<formFieldProperty
+		name="oggetto_contratto" />		
+	<formFieldProperty
+		name="flContrattoRegistrato" />
+
 	<formFieldProperty
 		name="numFogli"
 		label="Numero Fogli" />
