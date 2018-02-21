@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -233,7 +233,7 @@
 		property="iva_vend_diff_esig"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Iva sulle fatture di vendita con esigibilità differita divenute esigibili nel periodo" />
+		label="Iva sulle fatture di vendita con esigibilitÃ  differita divenute esigibili nel periodo" />
 	<fieldProperty
 		name="iva_deb_cred_per_prec"
 		property="iva_deb_cred_per_prec"
@@ -271,7 +271,7 @@
 		property="iva_vendite_diff"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Iva sulle fatture di vendita con esigibilità differita" />
+		label="Iva sulle fatture di vendita con esigibilitÃ  differita" />
 	<fieldProperty
 		name="report_id"
 		property="report_id"
@@ -282,7 +282,7 @@
 		property="iva_acquisti_diff"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Iva sulle fattire di acquisto con esigibilità differita" />
+		label="Iva sulle fattire di acquisto con esigibilitÃ  differita" />
 	<fieldProperty
 		name="dt_inizio"
 		property="dt_inizio"

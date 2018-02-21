@@ -137,27 +137,27 @@ public void doElaboraFile(ActionContext context,VFatcomBlacklistBulk dett) throw
 //				bw.append(trim_i.toString());//trimestre
 //			else
 //				bw.append(trim_i.add(new BigInteger("1")).toString());//trimestre 
-	    	bw.append("0");//Varizione periodicità    	
+	    	bw.append("0");//Varizione periodicitÃ     	
 	    	bw.append(Formatta(ente.getPartita_iva(),"D",11,"0"));
 	    	bw.append(Formatta(null,"S",100," "));//email
 	    	bw.append(Formatta(null,"S",12," "));//tel
 	    	bw.append(Formatta(null,"S",12," "));//fax
-	    	// Obbligatori se non è Persona Fisica	
+	    	// Obbligatori se non Ã¨ Persona Fisica	
     	    bw.append(Formatta(null,"S",24," "));//  Cognome
     	    bw.append(Formatta(null,"S",20," "));//  Nome
     	    bw.append(Formatta(null,"D",1," "));// sesso
     	    bw.append(Formatta(null,"S",79," "));//  Comune nascita
     	    bw.append(Formatta(null,"S",2," "));// prov. nascita
     	    bw.append(Formatta(null,"D",8,"0"));// dt. nascita
-    	   // Obbligatori se non è Persona Fisica  
+    	   // Obbligatori se non Ã¨ Persona Fisica  
     	    bw.append(Formatta(ente.getRagione_sociale(),"S",60," "));
-	    	bw.append(Formatta(config.getIm01().toString(),"D",2,"0"));// NATURA GIURIDICA ????????? messo 1 PERCHè OBBLIGATORIO
+	    	bw.append(Formatta(config.getIm01().toString(),"D",2,"0"));// NATURA GIURIDICA ????????? messo 1 PERCHÃ¨ OBBLIGATORIO
 	    	bw.append(Formatta(null,"S",24," "));// Stato estero di residenza
 	 	    bw.append(Formatta(null,"D",3,"0"));// Codice paese estero
 	 	    bw.append(Formatta(null,"S",24," "));// Numero di identificazione IVA estero
 	 	   
 	 	   bw.append(Formatta(resp.getCodice_fiscale(),"S",16," "));//codice fiscale rappresentante
-		   bw.append(Formatta(config.getIm02().toString(),"D",2,"0"));//carica rappresentante  ??????? messo 2 PERCHè OBBLIGATORIO
+		   bw.append(Formatta(config.getIm02().toString(),"D",2,"0"));//carica rappresentante  ??????? messo 2 PERCHÃ¨ OBBLIGATORIO
 		   bw.append(Formatta(ente.getCodice_fiscale(),"S",11," "));//codice fiscale societa dichiarante
 		   
 		   bw.append(Formatta(resp.getCognome(),"S",24," "));//cognome rappresentante     ???????????????
@@ -420,8 +420,8 @@ public void doElaboraFile(ActionContext context,VFatcomBlacklistBulk dett) throw
 	 	  // Tipo Record Z Coda
 		   bw.append("Z"); // tipo record
 		   bw.append(Formatta(null,"S",14," "));// Filler
-		   bw.append(Formatta("1","D",9,"0"));// N° record tipo B
-		   bw.append(Formatta(new Integer(lista.size()).toString(),"D",9,"0"));// N° record tipo C
+		   bw.append(Formatta("1","D",9,"0"));// NÂ° record tipo B
+		   bw.append(Formatta(new Integer(lista.size()).toString(),"D",9,"0"));// NÂ° record tipo C
 		   
 	 	   bw.append(Formatta(null,"S",1864," "));// Filler 
 	 	   bw.append("A"); //
@@ -486,8 +486,8 @@ public String Formatta(String s, String allineamento,Integer dimensione,String r
  * @param riempimento carattere di riempimento per raggiungere la dimensione richiesta
  * @param w buffer di scrittura
  * @param codice parte fissa della colonna del record di tipo C
- * @param colonna n°colonna iniziale  
- * @return n° colonna finale 
+ * @param colonna nÂ°colonna iniziale  
+ * @return nÂ° colonna finale 
   */
 public Integer Formatta(String s, String allineamento,Integer dimensione,String riempimento,BufferedWriter w,String codice,Integer colonna) throws IOException{
 	

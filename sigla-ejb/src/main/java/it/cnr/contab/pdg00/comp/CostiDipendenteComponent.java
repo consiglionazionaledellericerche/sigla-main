@@ -74,7 +74,7 @@ public CostiDipendenteComponent() {
  *      L'utente richiede l'annullamento della scrittura analitica per i costi stipendiali mensili
  *    PostCondition:
  *      Viene invocata la procedura CNRCTB207.annullaScaricaCDPSuPdgGestione per
- *		l'unit‡ organizzativa e il mese selezionato dall'utente
+ *		l'unit√† organizzativa e il mese selezionato dall'utente
  */
 public void annullaScritturaAnalitica(UserContext userContext,int mese) throws ComponentException {
 	// 05/09/2003
@@ -102,40 +102,40 @@ public void annullaScritturaAnalitica(UserContext userContext,int mese) throws C
   *  Default
   *    PreCondition:
   *      Viene richiesto la visualizzazione dello stato di scarico dei costi dei dipendenti del CDS a cui l'utente appartiene.
-  *		 Non Ë specificata alcuna matricola
+  *		 Non √® specificata alcuna matricola
   *    PostCondition:
   *      Restituisce un Costi_dipendenteVBulk che contiene un'elenco di V_cdp_matricolaBulk costituito da:
-  *      - l'elenco di tutti i dipendenti relativi all'unit‡ organizzativa a cui l'utente appartiene (provenienza interna).
-  *      - l'elenco dei dipendenti di altre unit‡ organizzative che hanno richiesto di scaricare parte dei costi sull'unit‡ organizzativa dell'utente (provenienza esterna).
+  *      - l'elenco di tutti i dipendenti relativi all'unit√† organizzativa a cui l'utente appartiene (provenienza interna).
+  *      - l'elenco dei dipendenti di altre unit√† organizzative che hanno richiesto di scaricare parte dei costi sull'unit√† organizzativa dell'utente (provenienza esterna).
   *
   *    PreCondition:
   *      Viene richiesto la visualizzazione dello stato di scarico dei costi dei dipendenti del CDS a cui l'utente appartiene per un mese > 0
   *		 E' stata specificata una matricola di provenienza interna.
-  *		 Il mese specificato Ë 0 o esiste almeno una riga di dettaglio ass_cdp_la o ass_cdp_uo.
+  *		 Il mese specificato √® 0 o esiste almeno una riga di dettaglio ass_cdp_la o ass_cdp_uo.
   *    PostCondition:
   *      Per la matricola selezionata vengono caricati:
-  *      - l'elenco degli Ass_cdp_la (percentuali di scarico per CDR e linea di attivit‡) relativi all'unit‡ organizzativa a cui l'utente appartiene;
+  *      - l'elenco degli Ass_cdp_la (percentuali di scarico per CDR e linea di attivit√†) relativi all'unit√† organizzativa a cui l'utente appartiene;
   *      - l'elenco degli Ass_cdp_uo (percentuali di scarico su altre UO diverse da quella del dipendente);
   *      Per ognuno degli ass_cdp_la/ass_cdp_uo caricati viene calcolato il corrispondente in giorni lavorativi annui alla percentuale scaricata; se un ass_cdp_la proviene da una UO diversa da quella dell'utente (costo caricato da altra UO) il totale dei giorni lavorativi viene calcolato in proporzione alla percentuale caricata dall'UO a cui appartiene la matricola
   *
   *    PreCondition:
   *      Viene richiesto la visualizzazione dello stato di scarico dei costi dei dipendenti del CDS a cui l'utente appartiene per un mese > 0
   *		 E' stata specificata una matricola di provenienza esterna.
-  *		 Il mese specificato Ë 0 o esiste almeno una riga di dettaglio ass_cdp_la o ass_cdp_uo.
+  *		 Il mese specificato √® 0 o esiste almeno una riga di dettaglio ass_cdp_la o ass_cdp_uo.
   *    PostCondition:
   *      Per la matricola selezionata vengono caricati:
-  *      - l'elenco degli Ass_cdp_la (percentuali di scarico per CDR e linea di attivit‡) relativi all'unit‡ organizzativa a cui l'utente appartiene;
+  *      - l'elenco degli Ass_cdp_la (percentuali di scarico per CDR e linea di attivit√†) relativi all'unit√† organizzativa a cui l'utente appartiene;
   *      Per ognuno degli ass_cdp_la caricati viene calcolato il corrispondente in giorni lavorativi annui alla percentuale scaricata; se un ass_cdp_la proviene da una UO diversa da quella dell'utente (costo caricato da altra UO) il totale dei giorni lavorativi viene calcolato in proporzione alla percentuale caricata dall'UO a cui appartiene la matricola,
   *		  pesata sulla percentuale dell'ass_cdp_uo da cui proviene.
   *
   *    PreCondition:
   *      Viene richiesto la visualizzazione dello stato di scarico dei costi dei dipendenti del CDS a cui l'utente appartiene per un mese > 0
   *		 E' stata specificata una matricola di provenienza interna.
-  *		 Il mese specificato Ë > 0 e non esiste nessuna riga di dettaglio ass_cdp_la o ass_cdp_uo.
+  *		 Il mese specificato √® > 0 e non esiste nessuna riga di dettaglio ass_cdp_la o ass_cdp_uo.
   *    PostCondition:
   *		 Viene generato un'elenco di dettagli ass_cdp_la copiandoli dalla ripartizione del mese precedente.
   *		 Viene generato un'elenco di dettagli ass_cdp_uo copiandoli dalla ripartizione del mese precedente filtrando solo quelli
-  *		  in stato 'accettato' o 'iniziale' e relativi ad una UO per cui non Ë stata ancora generata la
+  *		  in stato 'accettato' o 'iniziale' e relativi ad una UO per cui non √® stata ancora generata la
   *		  scrittura analitica per il mese selezionato.
   *		 Viene impostato il flag RipartizioneGenerata a true.
  */
@@ -177,7 +177,7 @@ public OggettoBulk caricaCosto_dipendente(UserContext userContext,Costi_dipenden
 			java.util.List ass_cdp_uo_list = home.fetchAll(sql);
 
 			if (cdp.isProvenienzaInterna()) {
-				// Se la provenienza Ë interna (i.e. matricola appartenente al CDS
+				// Se la provenienza √® interna (i.e. matricola appartenente al CDS
 				// dell'utente) imposto l'elenco dei costi scaricati su altra UO
 				cdp.setCostiScaricatiAltraUO(new BulkList(ass_cdp_uo_list));
 			} else {
@@ -194,7 +194,7 @@ public OggettoBulk caricaCosto_dipendente(UserContext userContext,Costi_dipenden
 
 			// Calcolo i giorni lavorativi per i costi scaricati verso altra UO corrispondenti
 			// alle percentuali
-			// Se la provenienza NON Ë interna la lista Ë vuota
+			// Se la provenienza NON √® interna la lista √® vuota
 			if (cdp.getCostiScaricatiAltraUO() != null)
 				for (java.util.Iterator<Ass_cdp_uoBulk> i = cdp.getCostiScaricatiAltraUO().iterator();i.hasNext();)
 					(i.next()).calcolaGiorni_uo(costi_dipendente.getGiorni_lavorativi());
@@ -261,11 +261,11 @@ public void contabilizzaFlussoStipendialeMensile(UserContext userContext,int mes
  *
  * Nome: Dipendente non modificabile
  * Pre: Viene la copia della ripartizione dei costi da una matricola in un'altra matricola.
- *		Per la matricola specificata come destinazione esiste gi‡ una ripartizione dei costi.
- * Post: Viene generata una ApplicationException con il messaggio: "La matricola xyz possiede gi‡ una ripartizione"
+ *		Per la matricola specificata come destinazione esiste gi√† una ripartizione dei costi.
+ * Post: Viene generata una ApplicationException con il messaggio: "La matricola xyz possiede gi√† una ripartizione"
  * Nome: Tutti i controlli superati
  * Pre:	Viene la copia della ripartizione dei costi da una matricola in un'altra matricola.
- *		Nessuna delle altre pre-condizioni Ë verificata.
+ *		Nessuna delle altre pre-condizioni √® verificata.
  * Post: Viene copiata la configurazione della ripartizione dei costi del dipendente sulla
  *		matricola di destinazione (nella tabella ASS_CDP_LA)
  */
@@ -296,9 +296,9 @@ public OggettoBulk copiaRipartizione(it.cnr.jada.UserContext userContext,Costi_d
 			return cdp;
 
 		if (!matricola_dest.getCostiScaricati().isEmpty())
-			throw new ApplicationException("La matricola "+matricola_dest.getId_matricola()+" possiede gi‡ una ripartizione");
+			throw new ApplicationException("La matricola "+matricola_dest.getId_matricola()+" possiede gi√† una ripartizione");
 		if (!matricola_dest.getCostiScaricatiAltraUO().isEmpty())
-			throw new ApplicationException("La matricola "+matricola_dest.getId_matricola()+" possiede gi‡ una ripartizione");
+			throw new ApplicationException("La matricola "+matricola_dest.getId_matricola()+" possiede gi√† una ripartizione");
 
 		for (java.util.Iterator<Ass_cdp_laBulk> i = matricola_src.getCostiScaricati().iterator();i.hasNext();) {
 			Ass_cdp_laBulk ass_cdp_la = i.next();
@@ -407,7 +407,7 @@ public V_cdp_matricolaBulk generaDaUltimaRipartizione(UserContext userContext,V_
  *      L'utente richiede la generazione della scrittura analitica per i costi stipendiali mensili
  *    PostCondition:
  *      Viene invocata la procedura CNRCTB207.scaricaCDPSuPdgGestione per
- *		l'unit‡ organizzativa e il mese selezionato dall'utente
+ *		l'unit√† organizzativa e il mese selezionato dall'utente
  */
 public void generaScritturaAnalitica(UserContext userContext,int mese) throws ComponentException {
 	// 05/09/2003
@@ -564,12 +564,12 @@ private boolean isStatoPdgPValidoPerModificaCDP(Pdg_esercizioBulk pdgP) {
 /**
  *  Default
  *    PreCondition:
- *      Viene richiesto l'elenco delle mensilit‡ relative alla ripartizione
+ *      Viene richiesto l'elenco delle mensilit√† relative alla ripartizione
  *		 dei costi stipendiali mensili.
  *    PostCondition:
  *      Viene effettuata una query sulla vista V_CDP_STATO_MENSILITA 
  *		 per l'UO a cui appartiene l'utente e con la condizione 'stato_scarico = 'P'
- *		 (mensilit‡ gi‡ contabilizzate)
+ *		 (mensilit√† gi√† contabilizzate)
  */
 public it.cnr.jada.util.RemoteIterator listaCdp_analitica(UserContext userContext) throws ComponentException {
 	SQLBuilder sql = getHome(userContext,V_cdp_stato_mensilitaBulk.class).createSQLBuilder();
@@ -582,19 +582,19 @@ public it.cnr.jada.util.RemoteIterator listaCdp_analitica(UserContext userContex
   *  Costi del dipendente
   *    PreCondition:
   *      Viene richiesto l'elenco dei CDR utilizzabili per effettuare uno scarico dei costi di un dipendente su CDR
-  *		 Il mese Ë 0
+  *		 Il mese √® 0
   *    PostCondition:
-  *      Viene restituita una query sulla tabella dei cdr con le clausole specificate pi˘
+  *      Viene restituita una query sulla tabella dei cdr con le clausole specificate pi√π
   *      - il pdg associato al cdr deve essere in stato A,B,D o E    
-  *      - il cdr deve appartenere alla unit‡ organizzativa dell'utente per l'esercizio di scrivania
+  *      - il cdr deve appartenere alla unit√† organizzativa dell'utente per l'esercizio di scrivania
   *
   *  Costi stipendiali mensili
   *    PreCondition:
   *      Viene richiesto l'elenco dei CDR utilizzabili per effettuare uno scarico dei costi di un dipendente su CDR
-  *		 Il mese Ë > 0
+  *		 Il mese √® > 0
   *    PostCondition:
-  *      Viene restituita una query sulla tabella dei cdr con le clausole specificate pi˘
-  *      - il cdr deve appartenere alla unit‡ organizzativa dell'utente per l'esercizio di scrivania
+  *      Viene restituita una query sulla tabella dei cdr con le clausole specificate pi√π
+  *      - il cdr deve appartenere alla unit√† organizzativa dell'utente per l'esercizio di scrivania
  */
 public it.cnr.jada.util.RemoteIterator listaCdr(UserContext userContext,String cd_unita_organizzativa,int mese) throws ComponentException {
 	SQLBuilder sql = getHome(userContext,CdrBulk.class).createSQLBuilder();
@@ -615,24 +615,24 @@ public it.cnr.jada.util.RemoteIterator listaCdr(UserContext userContext,String c
 /** 
   *  Costi del dipendente
   *    PreCondition:
-  *      Viene richiesto l'elenco delle linee di attivit‡ utilizzabili per effettuare uno scarico dei costi di un dipendente su CDR
-  *		 Il mese Ë 0
+  *      Viene richiesto l'elenco delle linee di attivit√† utilizzabili per effettuare uno scarico dei costi di un dipendente su CDR
+  *		 Il mese √® 0
   *    PostCondition:
-  *      Viene restituita una query sulla tabella delle linee di attivit‡ con le clausole specificate pi˘
-  *      - il pdgp associato al cdr della linea di attivit‡ deve essere in stato AC, o AP    
-  *      - la linea di attivit‡ deve appartenere al cdr specificato
-  *		 - la linea di attivit‡ deve essere di spesa
-  *		 - la linea di attivit‡ deve essere valida nell'esercizio di scrivania
+  *      Viene restituita una query sulla tabella delle linee di attivit√† con le clausole specificate pi√π
+  *      - il pdgp associato al cdr della linea di attivit√† deve essere in stato AC, o AP    
+  *      - la linea di attivit√† deve appartenere al cdr specificato
+  *		 - la linea di attivit√† deve essere di spesa
+  *		 - la linea di attivit√† deve essere valida nell'esercizio di scrivania
   *
   *  Costi stipendiali mensili
   *    PreCondition:
-  *      Viene richiesto l'elenco delle linee di attivit‡ utilizzabili per effettuare uno scarico dei costi di un dipendente su CDR
-  *		 Il mese Ë > 0
+  *      Viene richiesto l'elenco delle linee di attivit√† utilizzabili per effettuare uno scarico dei costi di un dipendente su CDR
+  *		 Il mese √® > 0
   *    PostCondition:
-  *      Viene restituita una query sulla tabella delle linee di attivit‡ con le clausole specificate pi˘
-  *      - la linea di attivit‡ deve appartenere al cdr specificato
-  *		 - la linea di attivit‡ deve essere di spesa
-  *		 - la linea di attivit‡ deve essere valida nell'esercizio di scrivania
+  *      Viene restituita una query sulla tabella delle linee di attivit√† con le clausole specificate pi√π
+  *      - la linea di attivit√† deve appartenere al cdr specificato
+  *		 - la linea di attivit√† deve essere di spesa
+  *		 - la linea di attivit√† deve essere valida nell'esercizio di scrivania
   */
 public it.cnr.jada.util.RemoteIterator listaLinea_attivitaPerCdr(UserContext userContext,CdrBulk cdr,int mese, String tipo_rapporto, boolean isRapporto13) throws ComponentException {
 	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
@@ -656,7 +656,7 @@ try {
 		sql.addSQLClause(FindClause.AND,"CD_PROGRAMMA",SQLBuilder.ISNOTNULL,null);
 		sql.addSQLClause(FindClause.AND,"CD_MISSIONE",SQLBuilder.ISNOTNULL,null);
 	}
-//Filtro che estrae solo le linee di attivit‡ di spesa: 25/02/2002
+//Filtro che estrae solo le linee di attivit√† di spesa: 25/02/2002
 	sql.openParenthesis(FindClause.AND);
 	sql.addSQLClause(FindClause.OR, "V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE", SQLBuilder.EQUALS, WorkpackageBulk.TI_GESTIONE_SPESE);
 	sql.addSQLClause(FindClause.OR, "V_LINEA_ATTIVITA_VALIDA.TI_GESTIONE", SQLBuilder.EQUALS, WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
@@ -681,7 +681,7 @@ try {
 	sql.addSQLClause(FindClause.AND, "FUNZIONE.FL_UTILIZZABILE",SQLBuilder.EQUALS,"Y");
 
 	/**
-	 * Escludo la linea di attivit‡ dell'IVA C20
+	 * Escludo la linea di attivit√† dell'IVA C20
 	 */
 			config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_COMUNE_VERSAMENTO_IVA);
 	} catch (RemoteException e) {
@@ -699,21 +699,21 @@ try {
 /** 
   *  Costi del dipendente
   *    PreCondition:
-  *      Viene richiesto l'elenco delle linee di attivit‡ utilizzabili per effettuare la ripartizione dei residui delle percentuali di scarico di un dipendente
-  *		 Il mese Ë 0
+  *      Viene richiesto l'elenco delle linee di attivit√† utilizzabili per effettuare la ripartizione dei residui delle percentuali di scarico di un dipendente
+  *		 Il mese √® 0
   *    PostCondition:
-  *      Viene restituita una query sulla tabella delle linee di attivit‡ tali che
-  *      - il pdgp associato al cdr della linea di attivit‡ deve essere in stato AC, o AP    
-  *      - la linea di attivit‡ deve appartenere ad un cdr dell'unit‡ organizzativa dell'utente per l'esercizio di scrivania
+  *      Viene restituita una query sulla tabella delle linee di attivit√† tali che
+  *      - il pdgp associato al cdr della linea di attivit√† deve essere in stato AC, o AP    
+  *      - la linea di attivit√† deve appartenere ad un cdr dell'unit√† organizzativa dell'utente per l'esercizio di scrivania
   *
   *  Costi stipendiali mensili
   *    PreCondition:
-  *      Viene richiesto l'elenco delle linee di attivit‡ utilizzabili per effettuare la ripartizione dei residui delle percentuali di scarico di un dipendente
-  *		 Il mese Ë 0
+  *      Viene richiesto l'elenco delle linee di attivit√† utilizzabili per effettuare la ripartizione dei residui delle percentuali di scarico di un dipendente
+  *		 Il mese √® 0
   *    PostCondition:
-  *      Viene restituita una query sulla tabella delle linee di attivit‡ tali che
-  *      - il pdg associato al cdr della linea di attivit‡ deve essere in stato A,B,D o E    
-  *      - la linea di attivit‡ deve appartenere ad un cdr dell'unit‡ organizzativa dell'utente per l'esercizio di scrivania
+  *      Viene restituita una query sulla tabella delle linee di attivit√† tali che
+  *      - il pdg associato al cdr della linea di attivit√† deve essere in stato A,B,D o E    
+  *      - la linea di attivit√† deve appartenere ad un cdr dell'unit√† organizzativa dell'utente per l'esercizio di scrivania
   */
 public java.util.List listaLinea_attivitaPerRipartizioneResidui(UserContext userContext,String id_matricola,String cd_unita_organizzativa,int mese, String tipo_rapporto, boolean isRapporto13) throws ComponentException {
 	try {
@@ -733,7 +733,7 @@ public java.util.List listaLinea_attivitaPerRipartizioneResidui(UserContext user
 			sql.addSQLClause(FindClause.AND,"CD_PROGRAMMA",SQLBuilder.ISNOTNULL,null);
 			sql.addSQLClause(FindClause.AND,"CD_MISSIONE",SQLBuilder.ISNOTNULL,null);
 		}
-// Tolta perchË voglio vedere tutte le linee di attivit‡ anche se sono gi‡
+// Tolta perch√® voglio vedere tutte le linee di attivit√† anche se sono gi√†
 // state scaricate
 //		sql.addSQLClause("AND","NOT EXISTS ( SELECT 1 FROM ASS_CDP_LA WHERE ASS_CDP_LA.ESERCIZIO = LINEA_ATTIVITA.ESERCIZIO AND ASS_CDP_LA.CD_CENTRO_RESPONSABILITA = LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA AND ASS_CDP_LA.CD_LINEA_ATTIVITA = LINEA_ATTIVITA.CD_LINEA_ATTIVITA )");
 
@@ -763,7 +763,7 @@ public java.util.List listaLinea_attivitaPerRipartizioneResidui(UserContext user
 		sql.addSQLClause(FindClause.AND, "FUNZIONE.FL_UTILIZZABILE",SQLBuilder.EQUALS,"Y");
 
 		/**
-		 * Escludo la linea di attivit‡ dell'IVA C20
+		 * Escludo la linea di attivit√† dell'IVA C20
 		 */
 		it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 		try {
@@ -792,20 +792,20 @@ public it.cnr.jada.util.RemoteIterator listaStipendi_cofi(UserContext userContex
 /** 
   *  Costi del dipendente
   *    PreCondition:
-  *      Viene richiesto l'elenco delle Unit‡ organizzative utilizzabili per effettuare uno scarico dei costi di un dipendente su altra UO
-  *		 Il mese Ë 0
+  *      Viene richiesto l'elenco delle Unit√† organizzative utilizzabili per effettuare uno scarico dei costi di un dipendente su altra UO
+  *		 Il mese √® 0
   *    PostCondition:
-  *      Viene restituita una query sulla tabella delle UO con le clausole specificate pi˘
+  *      Viene restituita una query sulla tabella delle UO con le clausole specificate pi√π
   *      - il pdgP associato al cds responsabile dell'UO deve essere in stato AC, o EC    
   *      - l'uo deve essere diversa da quella a cui appartiene la matricola
-  *      - l'uo cui imputare i costi di un dipendente non deve aver gi‡ effettuato lo scarico dei costi 
+  *      - l'uo cui imputare i costi di un dipendente non deve aver gi√† effettuato lo scarico dei costi 
   *
   *  Costi stipendiali mensili
   *    PreCondition:
-  *      Viene richiesto l'elenco delle Unit‡ organizzative utilizzabili per effettuare uno scarico dei costi di un dipendente su altra UO
-  *		 Il mese Ë > 0
+  *      Viene richiesto l'elenco delle Unit√† organizzative utilizzabili per effettuare uno scarico dei costi di un dipendente su altra UO
+  *		 Il mese √® > 0
   *    PostCondition:
-  *      Viene restituita una query sulla tabella delle UO con le clausole specificate pi˘
+  *      Viene restituita una query sulla tabella delle UO con le clausole specificate pi√π
   *      - l'uo deve essere diversa da quella a cui appartiene la matricola
   *		 - non deve essere ancora stata generata una ripartizione analitica per l'uo nel mese selezionato
   */
@@ -911,18 +911,18 @@ public void lockMatricola(UserContext userContext,String id_matricola,int mese) 
 /** 
   *  default
   *    PreCondition:
-  *      Viene richiesta la ripartizione dei residui delle percentuali di scarico di un dipendente su un elenco di linee di attivit‡.
+  *      Viene richiesta la ripartizione dei residui delle percentuali di scarico di un dipendente su un elenco di linee di attivit√†.
   *    PostCondition:
-  *      Detto R il residuo del totale dei costi gi‡ scaricati per calcolato sottraendo a 100%:
-  *      - la somma degli ass_cdp_la gi‡ scaricati sui cdr dell'uo dell'utente 
-  *      - se l'uo dell'utente Ë quella della matricola la somma degli ass_cdp_uo accettati o in stato iniziale;
+  *      Detto R il residuo del totale dei costi gi√† scaricati per calcolato sottraendo a 100%:
+  *      - la somma degli ass_cdp_la gi√† scaricati sui cdr dell'uo dell'utente 
+  *      - se l'uo dell'utente √® quella della matricola la somma degli ass_cdp_uo accettati o in stato iniziale;
   *      
-  *      Vengono create nuove righe ass_cdp_la, una per ognli linea di attivit‡ specificata, con le seguenti condizioni:
-  *      - le percentuali per ogni anno sono calcolate dividendo R per il numero di linee di attivit‡ scelte; sull'ultima linea di attivit‡ viene aggiunta l'eventuale resto della divisione (per arrivare a 100 con 2 cifre decimali)
-  *      - se una linea di attivit‡ Ë gi‡ stata scaricata per quella matricola le percentuali cacolate al precedente punto vengono sommate a quelle gi‡ esistenti.
+  *      Vengono create nuove righe ass_cdp_la, una per ognli linea di attivit√† specificata, con le seguenti condizioni:
+  *      - le percentuali per ogni anno sono calcolate dividendo R per il numero di linee di attivit√† scelte; sull'ultima linea di attivit√† viene aggiunta l'eventuale resto della divisione (per arrivare a 100 con 2 cifre decimali)
+  *      - se una linea di attivit√† √® gi√† stata scaricata per quella matricola le percentuali cacolate al precedente punto vengono sommate a quelle gi√† esistenti.
   *  Costi scaricati per linea di attivita non validi
   *    PreCondition:
-  *      Viene richiesta la ripartizione dei residui delle percentuali di scarico di un dipendente su un elenco di linee di attivit‡ e qualcuno degli ass_cdp_la generati non Ë valido (validaAss_cdp_la genera un'eccezione)
+  *      Viene richiesta la ripartizione dei residui delle percentuali di scarico di un dipendente su un elenco di linee di attivit√† e qualcuno degli ass_cdp_la generati non √® valido (validaAss_cdp_la genera un'eccezione)
   *    PostCondition:
   *      Viene lasciata uscire l'eccezione di validazione
  */
@@ -945,9 +945,9 @@ public void ripartizioneResidui(it.cnr.jada.UserContext userContext, java.lang.S
 			new Integer(mese)));
 
 		if (ass_cdp_uo != null && ass_cdp_uo.isStato_iniziale())
-			throw new ApplicationException("Per poter effettuare lo scarico di una matricola proveniente da un altra unit‡ organizzativa Ë necessario prima accettare la contrattazione.");
+			throw new ApplicationException("Per poter effettuare lo scarico di una matricola proveniente da un altra unit√† organizzativa √® necessario prima accettare la contrattazione.");
 
-		// Eseguo query per il calcolo dei totali gi‡ scaricati
+		// Eseguo query per il calcolo dei totali gi√† scaricati
 		LoggableStatement stm = new LoggableStatement(getHomeCache(userContext).getConnection(),
 				"SELECT PRC_A1,PRC_A2,PRC_A3 FROM "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
 				+"V_CDP_TOTALI WHERE ESERCIZIO = ? AND ID_MATRICOLA = ? AND MESE = ? AND "
@@ -993,7 +993,7 @@ public void ripartizioneResidui(it.cnr.jada.UserContext userContext, java.lang.S
 			ass_cdp_la = (Ass_cdp_laBulk)getHome(userContext,ass_cdp_la_pk).findByPrimaryKey(ass_cdp_la_pk);
 			
 			if (ass_cdp_la != null) {
-				// Se esiste aggiungo alla percentuale gi‡ scaricata la
+				// Se esiste aggiungo alla percentuale gi√† scaricata la
 				// percentuale residua ripartita
 				ass_cdp_la.setPrc_la_a1(ass_cdp_la.getPrc_la_a1().add(prc_a1));
 				ass_cdp_la.setPrc_la_a2(ass_cdp_la.getPrc_la_a2().add(prc_a2));
@@ -1012,7 +1012,7 @@ public void ripartizioneResidui(it.cnr.jada.UserContext userContext, java.lang.S
 			}
 			ass_cdp_la.setUser(userContext.getUser());
 
-			// Controllo di validit‡ della ass_cdp_la creata/modificata
+			// Controllo di validit√† della ass_cdp_la creata/modificata
 			validaAss_cdp_la(userContext,ass_cdp_la);
 
 			// Salvo la ass_cpd_la
@@ -1020,7 +1020,7 @@ public void ripartizioneResidui(it.cnr.jada.UserContext userContext, java.lang.S
 		}
 
 		if (ass_cdp_la != null) {
-			// Se Ë l'ultima linea di attivit‡ aggiungo il resto della divisione
+			// Se √® l'ultima linea di attivit√† aggiungo il resto della divisione
 			rs = stm.executeQuery();
 			rs.next();
 			ass_cdp_la.setPrc_la_a1(ass_cdp_la.getPrc_la_a1().add(BD_100.subtract(rs.getBigDecimal(1))));
@@ -1053,19 +1053,19 @@ public void ripartizioneResidui(it.cnr.jada.UserContext userContext, java.lang.S
   *      Viene generata una BusyResourceException
   *  Costi scaricati per linea di attivita non validi
   *    PreCondition:
-  *      Viene richiesto il salvatggio dello stato di scarico dei costi di un dipendente e qualcuno degli ass_cdp_la modificati non Ë valido (validaAss_cdp_la genera un'eccezione)
+  *      Viene richiesto il salvatggio dello stato di scarico dei costi di un dipendente e qualcuno degli ass_cdp_la modificati non √® valido (validaAss_cdp_la genera un'eccezione)
   *    PostCondition:
   *      Viene lasciata uscire l'eccezione di validazione
-  *  Costi scaricati su altra unit‡ organizzativa non validi
+  *  Costi scaricati su altra unit√† organizzativa non validi
   *    PreCondition:
-  *      Viene richiesto il salvatggio dello stato di scarico dei costi di un dipendente e qualcuno degli ass_cdp_uo modificati non Ë valido (validaAss_cdp_uo genera un'eccezione)
+  *      Viene richiesto il salvatggio dello stato di scarico dei costi di un dipendente e qualcuno degli ass_cdp_uo modificati non √® valido (validaAss_cdp_uo genera un'eccezione)
   *    PostCondition:
   *      Viene lasciata uscire l'eccezione di validazione
   *  Somma delle percentuali scaricate superiore a 100%
   *    PreCondition:
-  *      Viene richiesto il salvataggio dello stato di scarico dei costi di un dipendente e la somma delle percentuali scaricate sui cdr dell'unit‡ organizzativa dell'utente pi˘ la somma delle percentuali scaricate su altre UO Ë superiore a 100 in qualche anno
+  *      Viene richiesto il salvataggio dello stato di scarico dei costi di un dipendente e la somma delle percentuali scaricate sui cdr dell'unit√† organizzativa dell'utente pi√π la somma delle percentuali scaricate su altre UO √® superiore a 100 in qualche anno
   *    PostCondition:
-  *      Viene generata una eccezione con il messaggio "La somma delle percentuali scaricate Ë superiore a 100%"
+  *      Viene generata una eccezione con il messaggio "La somma delle percentuali scaricate √® superiore a 100%"
  */
 public OggettoBulk salvaCosti_dipendente(UserContext userContext,Costi_dipendenteVBulk costi_dipendente) throws ComponentException {
 	// 05/09/2003
@@ -1093,7 +1093,7 @@ public V_cdp_matricolaBulk salvaCosti_dipendente(UserContext userContext,V_cdp_m
 		for (java.util.Iterator j = cdp.getCostiScaricati().iterator();j.hasNext();)
 			checkSQLConstraints(userContext,(OggettoBulk)j.next());
 
-		// Controllo di validit‡ degli ass_cdp_la modificati o cancellati
+		// Controllo di validit√† degli ass_cdp_la modificati o cancellati
 		for (java.util.Iterator i = cdp.getCostiScaricati().iterator();i.hasNext();) {
 			Ass_cdp_laBulk assCdpLa = (Ass_cdp_laBulk)i.next();
 			validaAss_cdp_la(userContext,assCdpLa);
@@ -1103,7 +1103,7 @@ public V_cdp_matricolaBulk salvaCosti_dipendente(UserContext userContext,V_cdp_m
 		for (java.util.Iterator i = cdp.getCostiScaricati().deleteIterator();i.hasNext();)
 			validaAss_cdp_la(userContext,(Ass_cdp_laBulk)i.next());
 
-		// Controllo di validit‡ degli ass_cdp_uo modificati o cancellati
+		// Controllo di validit√† degli ass_cdp_uo modificati o cancellati
 		if (cdp.getCostiScaricatiAltraUO() != null) {
 			for (java.util.Iterator i = cdp.getCostiScaricatiAltraUO().iterator();i.hasNext();) {
 				Ass_cdp_uoBulk assCdpUo = (Ass_cdp_uoBulk)i.next();
@@ -1133,7 +1133,7 @@ public V_cdp_matricolaBulk salvaCosti_dipendente(UserContext userContext,V_cdp_m
 		stm.setString(4,cdp.getCd_unita_organizzativa());
 		java.sql.ResultSet rs = stm.executeQuery();
 		if (rs.next())
-			throw new ApplicationException("La somma delle percentuali scaricate Ë superiore a 100%");
+			throw new ApplicationException("La somma delle percentuali scaricate √® superiore a 100%");
 		try{rs.close();}catch( java.sql.SQLException e ){};
 		try{stm.close();}catch( java.sql.SQLException e ){};
 
@@ -1271,14 +1271,14 @@ public it.cnr.jada.bulk.OggettoBulk stampaConBulk(it.cnr.jada.UserContext aUC, i
   *  Costi del dipendente, PDG chiuso
   *    PreCondition:
   *		 L'Ass_cdp_la ha mese = 0
-  *      Viene richiesta una operazione di persistenza su un Ass_cdp_la e il PDG del cdr associato Ë in stato diverso da A, B, D o E
+  *      Viene richiesta una operazione di persistenza su un Ass_cdp_la e il PDG del cdr associato √® in stato diverso da A, B, D o E
   *    PostCondition:
-  *      Viene generata una ApplicationException con il messaggio "Il pdg relativo del cdr xxx.yy.zzz Ë gi‡ chiuso. Non Ë possibile scaricarvi costi."
+  *      Viene generata una ApplicationException con il messaggio "Il pdg relativo del cdr xxx.yy.zzz √® gi√† chiuso. Non √® possibile scaricarvi costi."
   */
 private void validaAss_cdp_la(UserContext userContext,Ass_cdp_laBulk ass_cdp_la) throws ComponentException {
 	try {
 		// Controllo che tutti i cdr su cui scarico i costi dei dipendenti
-		// non siano gi‡ chiusi.
+		// non siano gi√† chiusi.
 		if (ass_cdp_la.getCrudStatus() != ass_cdp_la.NORMAL) {
 			if (ass_cdp_la.getMese().intValue() == 0) {
 				CdrBulk cdrPdgP = getCdrPdgP(userContext);
@@ -1290,7 +1290,7 @@ private void validaAss_cdp_la(UserContext userContext,Ass_cdp_laBulk ass_cdp_la)
 								)
 					);
 				if (!isStatoPdgPValidoPerModificaCDP(pdgp))
-					throw new ApplicationException("Il pdgP relativo del cdr "+getCdrPdgP(userContext).getCd_centro_responsabilita()+" Ë gi‡ chiuso. Non Ë possibile scaricarvi costi.");
+					throw new ApplicationException("Il pdgP relativo del cdr "+getCdrPdgP(userContext).getCd_centro_responsabilita()+" √® gi√† chiuso. Non √® possibile scaricarvi costi.");
 			}
 		}
 	} catch(it.cnr.jada.persistency.PersistencyException e) {
@@ -1305,16 +1305,16 @@ private void validaAss_cdp_la(UserContext userContext,Ass_cdp_laBulk ass_cdp_la)
   *  Costi del dipendente, PDG chiuso
   *    PreCondition:
   *		 L'Ass_cdp_uo ha mese = 0
-  *      Viene richiesta una operazione di persistenza su un Ass_cdp_uo e il PDG del cdr responsabile dell'UO associata Ë in stato diverso da A, B, D o E
+  *      Viene richiesta una operazione di persistenza su un Ass_cdp_uo e il PDG del cdr responsabile dell'UO associata √® in stato diverso da A, B, D o E
   *    PostCondition:
-  *      Viene generata una ApplicationException con il messaggio "Il pdg relativo del cdr responsabile dell'uo xxx.yy Ë gi‡ chiuso. Non Ë possibile scaricarvi costi."
+  *      Viene generata una ApplicationException con il messaggio "Il pdg relativo del cdr responsabile dell'uo xxx.yy √® gi√† chiuso. Non √® possibile scaricarvi costi."
   *
-  *  Costi stipendiali mensili, ripartizione analitica gi‡ generata
+  *  Costi stipendiali mensili, ripartizione analitica gi√† generata
   *    PreCondition:
   *		 L'Ass_cdp_uo ha mese > 0
-  *      Viene richiesta una operazione di persistenza su un Ass_cdp_uo ed Ë gi‡ stata generata la scrittura analitica per il mese selezionato
+  *      Viene richiesta una operazione di persistenza su un Ass_cdp_uo ed √® gi√† stata generata la scrittura analitica per il mese selezionato
   *    PostCondition:
-  *      Viene generata una ApplicationException con il messaggio "Non Ë possibile modificare la ripartizione perchË Ë gi‡ stato effettuato lo scarico in analitica per l'unit‡ organizzativa xyz.abc"
+  *      Viene generata una ApplicationException con il messaggio "Non √® possibile modificare la ripartizione perch√® √® gi√† stato effettuato lo scarico in analitica per l'unit√† organizzativa xyz.abc"
   */
 private void validaAss_cdp_uo(UserContext userContext,Ass_cdp_uoBulk ass_cdp_uo) throws ComponentException {
 	try {
@@ -1322,11 +1322,11 @@ private void validaAss_cdp_uo(UserContext userContext,Ass_cdp_uoBulk ass_cdp_uo)
 			// 05/09/2003
 			// Aggiunto controllo sulla chiusura dell'esercizio
 			if (isEsercizioChiuso(userContext,ass_cdp_uo.getUnita_organizzativa()))
-				throw new ApplicationException("Non Ë possibile modificare la ripartizione verso l'uo "+ass_cdp_uo.getCd_unita_organizzativa()+" ad esercizio chiuso.");
+				throw new ApplicationException("Non √® possibile modificare la ripartizione verso l'uo "+ass_cdp_uo.getCd_unita_organizzativa()+" ad esercizio chiuso.");
 
 			if (ass_cdp_uo.getMese().intValue() == 0) {
 				// Controllo che il cdr responsabilie dell'uo su cui scarico i costi dei dipendenti
-				// non abbia gi‡ il pdg chiuso
+				// non abbia gi√† il pdg chiuso
 				BulkHome home = getHome(userContext,Pdg_esercizioBulk.class);
 				SQLBuilder sql = home.createSQLBuilder();
 				sql.addSQLClause("AND","PDG_ESERCIZIO.ESERCIZIO",sql.EQUALS,ass_cdp_uo.getEsercizio());
@@ -1339,10 +1339,10 @@ private void validaAss_cdp_uo(UserContext userContext,Ass_cdp_uoBulk ass_cdp_uo)
 				sql.setForUpdate(true);
 				Pdg_esercizioBulk pdgp = (Pdg_esercizioBulk)home.fetchAndLock(sql);
 				if (!isStatoPdgPValidoPerModificaCDP(pdgp))
-					throw new ApplicationException("Il pdgP relativo del cdr responsabile dell'uo"+ass_cdp_uo.getCd_unita_organizzativa()+" Ë gi‡ chiuso. Non Ë possibile scaricarvi costi.");
+					throw new ApplicationException("Il pdgP relativo del cdr responsabile dell'uo"+ass_cdp_uo.getCd_unita_organizzativa()+" √® gi√† chiuso. Non √® possibile scaricarvi costi.");
 			} else {
 				if (!isStatoAnaliticaValidoPerModificaCDP(userContext,ass_cdp_uo.getCd_unita_organizzativa(),ass_cdp_uo.getEsercizio(),ass_cdp_uo.getMese().intValue()))
-					throw new ApplicationException("Non Ë possibile modificare la ripartizione perchË Ë gi‡ stato effettuato lo scarico in analitica per l'unit‡ organizzativa "+ass_cdp_uo.getCd_unita_organizzativa()+".");
+					throw new ApplicationException("Non √® possibile modificare la ripartizione perch√® √® gi√† stato effettuato lo scarico in analitica per l'unit√† organizzativa "+ass_cdp_uo.getCd_unita_organizzativa()+".");
 			}
 		}
 	} catch(it.cnr.jada.persistency.PersistencyException e) {
@@ -1354,7 +1354,7 @@ private void validaAss_cdp_uo(UserContext userContext,Ass_cdp_uoBulk ass_cdp_uo)
 	}
 }
 /** 
- *  Centro di responsabilit‡ del Piano di Gestione Preventivo
+ *  Centro di responsabilit√† del Piano di Gestione Preventivo
  *    PreCondition:
  *      Viene richiesto il CDR utilizzabile per il caricamento del Piano di Gestione Preventivo
  *    PostCondition:
@@ -1376,7 +1376,7 @@ private CdrBulk getCdrPdgP (UserContext userContext)  throws ComponentException 
 	}
 }
 /** 
-  *  Centro di responsabilit‡ del Piano di Gestione Preventivo
+  *  Centro di responsabilit√† del Piano di Gestione Preventivo
   *    PreCondition:
   *      Viene richiesto il CDR utilizzabile per il caricamento del Piano di Gestione Preventivo
   *    PostCondition:
@@ -1390,7 +1390,7 @@ private CdrBulk getCdrPdgP (UserContext userContext, CdrBulk cdrUtente)  throws 
 		sql.addSQLClause("AND", "esercizio", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 		
 		if (cdrUtente == null) 
-			throw new ApplicationException("L'utente non Ë configurato correttamente per l'utilizzo del pdg preliminare");
+			throw new ApplicationException("L'utente non √® configurato correttamente per l'utilizzo del pdg preliminare");
 		
 		// riempiamo i dati di cdrUtente.getUnita_padre() dato che ci servono
 		cdrUtente.setUnita_padre((Unita_organizzativaBulk)getHome(userContext,cdrUtente.getUnita_padre()).findByPrimaryKey(cdrUtente.getUnita_padre()));
@@ -1415,9 +1415,9 @@ private CdrBulk getCdrPdgP (UserContext userContext, CdrBulk cdrUtente)  throws 
 	}
 }
 /** 
-  *  Metodo che ritorna se Ë possibile o meno effettuare altre ripartizioni dei costi
+  *  Metodo che ritorna se √® possibile o meno effettuare altre ripartizioni dei costi
   *    PreCondition:
-  *      Viene richiesto se Ë possibile effettuare altre ripartizioni di costi
+  *      Viene richiesto se √® possibile effettuare altre ripartizioni di costi
   *    PostCondition:
   *      Viene restituita un boolean
  */
@@ -1441,10 +1441,10 @@ public boolean isPdgPrevisionaleEnabled (UserContext userContext)  throws Compon
 	}
 }
 /** 
-  *  Metodo che ritorna se Ë possibile o meno effettuare altre ripartizioni dei costi per il 
+  *  Metodo che ritorna se √® possibile o meno effettuare altre ripartizioni dei costi per il 
   *  CDR di scrivania
   *    PreCondition:
-  *      Viene richiesto se Ë possibile effettuare altre ripartizioni di costi
+  *      Viene richiesto se √® possibile effettuare altre ripartizioni di costi
   *    PostCondition:
   *      Viene restituita un boolean
  */
@@ -1452,10 +1452,10 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext)  throws Comp
 	return isCostiDipendenteRipartiti(userContext, getCdrPdgP(userContext)); 		
 }
 /** 
-  *  Metodo che ritorna se Ë possibile o meno effettuare altre ripartizioni dei costi per il 
+  *  Metodo che ritorna se √® possibile o meno effettuare altre ripartizioni dei costi per il 
   *  CDR indicato
   *    PreCondition:
-  *      Viene richiesto se Ë possibile effettuare altre ripartizioni di costi per il CDR <CdrBulk>
+  *      Viene richiesto se √® possibile effettuare altre ripartizioni di costi per il CDR <CdrBulk>
   *    PostCondition:
   *      Viene restituita un boolean
  */
@@ -1463,7 +1463,7 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, CdrBulk cdr)
 	try {
 		SQLBuilder sql = getHome(userContext, Ass_cdp_laBulk.class).createSQLBuilder();
 			
-		// se il CdR Ë della SAC deve esser controllato direttamente
+		// se il CdR √® della SAC deve esser controllato direttamente
 		// altrimenti si vede l'afferenza
 		sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 		sql.addSQLClause("AND","ASS_CDP_LA.MESE",sql.EQUALS,BigDecimal.ZERO);
@@ -1499,10 +1499,10 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, CdrBulk cdr)
 	}
 }
 /** 
-  *  Metodo che ritorna se Ë possibile o meno effettuare altre ripartizioni dei costi per il 
+  *  Metodo che ritorna se √® possibile o meno effettuare altre ripartizioni dei costi per il 
   *  CDR e il Modulo indicati
   *    PreCondition:
-  *      Viene richiesto se Ë possibile effettuare altre ripartizioni di costi per il CDR <CdrBulk>, Modulo <ProgettoBulk>
+  *      Viene richiesto se √® possibile effettuare altre ripartizioni di costi per il CDR <CdrBulk>, Modulo <ProgettoBulk>
   *    PostCondition:
   *      Viene restituita un boolean
  */
@@ -1510,7 +1510,7 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, CdrBulk cdr,
 	try {
 		SQLBuilder sql = getHome(userContext, Ass_cdp_laBulk.class).createSQLBuilder();
 			
-		// se il CdR Ë della SAC deve esser controllato direttamente
+		// se il CdR √® della SAC deve esser controllato direttamente
 		// altrimenti si vede l'afferenza
 		sql.addSQLClause("AND","ASS_CDP_LA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 		sql.addSQLClause("AND","ASS_CDP_LA.MESE",sql.EQUALS,BigDecimal.ZERO);
@@ -1554,10 +1554,10 @@ public boolean isCostiDipendenteRipartiti (UserContext userContext, CdrBulk cdr,
 	}
 }
 /** 
-  *  Metodo che ritorna se Ë possibile o meno effettuare altre ripartizioni dei costi per il 
+  *  Metodo che ritorna se √® possibile o meno effettuare altre ripartizioni dei costi per il 
   *  CDR e il Modulo indicati
   *    PreCondition:
-  *      Viene richiesto se Ë possibile effettuare altre ripartizioni di costi per il CDR <CdrBulk>, Modulo <ProgettoBulk>
+  *      Viene richiesto se √® possibile effettuare altre ripartizioni di costi per il CDR <CdrBulk>, Modulo <ProgettoBulk>
   *    PostCondition:
   *      Viene restituita un boolean
  */
@@ -1826,8 +1826,8 @@ public SQLBuilder selectUnita_organizzativa_scaricoByClause(UserContext userCont
 	return sql;
 }
 /**
- * verifica se il cdr Ë di tipo SAC,
- * puÚ essere utilizzato anche in altri contesti
+ * verifica se il cdr √® di tipo SAC,
+ * pu√≤ essere utilizzato anche in altri contesti
  * 
  * @param userContext
  * @return
@@ -1856,10 +1856,10 @@ public SQLBuilder selectStipendiObbByClause(UserContext userContext, Stipendi_co
 	 return sql;
 }
 /** 
- *  Metodo che ritorna se Ë possibile o meno effettuare, per il mese in oggetto, altre ripartizioni dei costi per il 
+ *  Metodo che ritorna se √® possibile o meno effettuare, per il mese in oggetto, altre ripartizioni dei costi per il 
  *  CDR di scrivania
  *    PreCondition:
- *      Viene richiesto se Ë possibile effettuare altre ripartizioni di costi
+ *      Viene richiesto se √® possibile effettuare altre ripartizioni di costi
  *    PostCondition:
  *      Viene restituita un boolean
 */
@@ -1867,10 +1867,10 @@ public boolean isCostiDipendenteDefinitivi (UserContext userContext, int mese)  
 	return isCostiDipendenteDefinitivi(userContext, mese, getCdrPdgP(userContext)); 		
 }
 /** 
- *  Metodo che ritorna se Ë possibile o meno effettuare, per il mese in oggetto, altre ripartizioni dei costi per il 
+ *  Metodo che ritorna se √® possibile o meno effettuare, per il mese in oggetto, altre ripartizioni dei costi per il 
  *  CDR indicato
  *    PreCondition:
- *      Viene richiesto se Ë possibile effettuare altre ripartizioni di costi per il CDR <CdrBulk>
+ *      Viene richiesto se √® possibile effettuare altre ripartizioni di costi per il CDR <CdrBulk>
  *    PostCondition:
  *      Viene restituita un boolean
 */
@@ -1878,7 +1878,7 @@ public boolean isCostiDipendenteDefinitivi (UserContext userContext, int mese, C
 	try {
 		SQLBuilder sql = getHome(userContext, Ass_cdp_laBulk.class).createSQLBuilder();
 			
-		// se il CdR Ë della SAC deve esser controllato direttamente
+		// se il CdR √® della SAC deve esser controllato direttamente
 		// altrimenti si vede l'afferenza
 //		if (isCdrSAC(userContext, cdr)) {
 			sql.addSQLClause(FindClause.AND,"ASS_CDP_LA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
@@ -1945,10 +1945,10 @@ public boolean isCostiDipendenteDefinitivi (UserContext userContext, int mese, S
 }
 
 /** 
- *  Metodo che ritorna se Ë possibile o meno effettuare altre ripartizioni dei costi per il 
+ *  Metodo che ritorna se √® possibile o meno effettuare altre ripartizioni dei costi per il 
  *  CDR e il Modulo indicati
  *    PreCondition:
- *      Viene richiesto se Ë possibile effettuare altre ripartizioni di costi per il CDR <CdrBulk>, Modulo <ProgettoBulk>
+ *      Viene richiesto se √® possibile effettuare altre ripartizioni di costi per il CDR <CdrBulk>, Modulo <ProgettoBulk>
  *    PostCondition:
  *      Viene restituita un boolean
 */
@@ -1956,7 +1956,7 @@ public boolean isCostiDipendenteDefinitivi (UserContext userContext, int mese, C
 	try {
 		SQLBuilder sql = getHome(userContext, Ass_cdp_laBulk.class).createSQLBuilder();
 			
-		// se il CdR Ë della SAC deve esser controllato direttamente
+		// se il CdR √® della SAC deve esser controllato direttamente
 		// altrimenti si vede l'afferenza
 //		if (isCdrSAC(userContext, cdr)) {
 			sql.addToHeader("LINEA_ATTIVITA");
@@ -2029,12 +2029,12 @@ public OggettoBulk salvaDefinitivoCosti_dipendente(UserContext userContext,Costi
 					}
 				}
 				if (totPerc.compareTo(BigDecimal.TEN.multiply(BigDecimal.TEN))!=0)
-					throw new ApplicationException("Operazione non consentita! La ripartizione della matricola " + cdp.getId_matricola() + " non Ë completa.");
+					throw new ApplicationException("Operazione non consentita! La ripartizione della matricola " + cdp.getId_matricola() + " non √® completa.");
 				if (totStatoIniziale.compareTo(BigDecimal.ZERO)!=0)
-					throw new ApplicationException("Operazione non consentita! La matricola " + cdp.getId_matricola() + " non Ë stata ancora accettata dalla UO alla quale Ë stata assegnata.");
+					throw new ApplicationException("Operazione non consentita! La matricola " + cdp.getId_matricola() + " non √® stata ancora accettata dalla UO alla quale √® stata assegnata.");
 			} else {
 				if (!cdp.getCostiScaricati().isEmpty() || !cdp.getCostiScaricatiAltraUO().isEmpty())
-					throw new ApplicationException("Operazione non consentita! Esiste una ripartizione per la matricola " + cdp.getId_matricola() + " anche se il suo costo Ë nullo.");
+					throw new ApplicationException("Operazione non consentita! Esiste una ripartizione per la matricola " + cdp.getId_matricola() + " anche se il suo costo √® nullo.");
 			}
 
 		}

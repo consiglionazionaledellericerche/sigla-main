@@ -34,7 +34,7 @@ public class CancellaSchedulazioneAction extends FormAction{
 		try {
 			Print_spoolerBulk printSpooler = geComponent(actioncontext).findPrintSpooler(userContext, pgStampa);
 			if (printSpooler == null){
-				openMessage(actioncontext, "La lista di distribuzione della stampa, è stata eliminata!");
+				openMessage(actioncontext, "La lista di distribuzione della stampa, Ã¨ stata eliminata!");
 				return super.doDefault(actioncontext);
 			}
 			String msg = "Si conferma la cancellazione dell'indirizzo "+indirizzoEMail+"<BR>dalla lista di distribuzione della stampa \""+printSpooler.getDsStampa()+"\"?";
@@ -53,7 +53,7 @@ public class CancellaSchedulazioneAction extends FormAction{
 		if (option.getOption() == it.cnr.jada.util.action.OptionBP.YES_BUTTON) {
 			try {
 				geComponent(actioncontext).cancellaSchedulazione(userContext, new Long(bp.getResource("pgStampa")), bp.getResource("indirizzoEMail"));
-				openMessage(actioncontext, "La cancellazione è stata effettuata.");
+				openMessage(actioncontext, "La cancellazione Ã¨ stata effettuata.");
 			} catch (Exception e) {
 				handleException(actioncontext, e);
 			}

@@ -45,7 +45,7 @@ public GruppoCRComponent() {
   * Pre-post-conditions:
   *
   * Nome: Terzo NON selezionato
-  * Pre: Non è stato selezionato un Terzo per il gruppo_det
+  * Pre: Non Ã¨ stato selezionato un Terzo per il gruppo_det
   * Post: Non vengono caricate le modalita di pagamento
   *
   * Nome: Terzo selezionato
@@ -213,7 +213,7 @@ public List findBancaOptions (UserContext userContext,Gruppo_cr_detBulk det) thr
 }
 public void validaCancellazioneDettaglio(UserContext userContext, Gruppo_cr_detBulk det) throws it.cnr.jada.comp.ComponentException {
 	if (isDettaglioInLiquidazioneGruppoCORI(userContext, det))
-		throw new ComponentException("La riga non può essere eliminata perchè utilizzata nella liquidazione CORI.");
+		throw new ComponentException("La riga non puÃ² essere eliminata perchÃ¨ utilizzata nella liquidazione CORI.");
 			
 }
 private boolean isDettaglioInLiquidazioneGruppoCORI(UserContext userContext, Gruppo_cr_detBulk det)  throws it.cnr.jada.comp.ComponentException {

@@ -43,9 +43,9 @@ public java.lang.String getCd_cds() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'ds_responsabile'
+ * Restituisce il valore della propriet√† 'ds_responsabile'
  *
- * @return Il valore della propriet‡ 'ds_responsabile'
+ * @return Il valore della propriet√† 'ds_responsabile'
  */
 public java.lang.String getDs_responsabile() {
 	if ( responsabile != null && responsabile.getAnagrafico() != null )
@@ -83,8 +83,8 @@ public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	return this;
 }
 /**
- * Verifica se il ricevente Ë il CDR dell'Amministrazione Centrale 
- * (se livello = 1 e l'unit‡ organizzativa Ë di tipo ENTE)
+ * Verifica se il ricevente √® il CDR dell'Amministrazione Centrale 
+ * (se livello = 1 e l'unit√† organizzativa √® di tipo ENTE)
  */
 public boolean isCdrAC() {
 	return
@@ -94,8 +94,8 @@ public boolean isCdrAC() {
 		Tipo_unita_organizzativaHome.TIPO_UO_ENTE.equalsIgnoreCase(getUnita_padre().getCd_tipo_unita());
 }
 /**
- * Verifica se il ricevente Ë un CDR SAC (cdr di primo livello 
- * appartenente ad un'unit‡ organizzativa di tipo SAC)
+ * Verifica se il ricevente √® un CDR SAC (cdr di primo livello 
+ * appartenente ad un'unit√† organizzativa di tipo SAC)
  */
 public boolean isCdrSAC() {
 	return
@@ -149,16 +149,16 @@ public void validate() throws ValidationException
 	}
 
 	if ( getEsercizio_fine().compareTo( getEsercizio_inizio()) < 0 )
-		throw new ValidationException( "L' esercizio di terminazione non puÚ essere minore dell'esercizio di creazione. " );
+		throw new ValidationException( "L' esercizio di terminazione non pu√≤ essere minore dell'esercizio di creazione. " );
 		
 	if ( getEsercizio_fine().toString().length() != 4 )
 		throw new ValidationException( "Il campo Esercizio di terminazione deve essere di quattro cifre. " );
 
 
 	if ( getUnita_padre() == null || getUnita_padre().getCd_unita_organizzativa() == null || getUnita_padre().getCd_unita_organizzativa().equals(""))
-		throw new ValidationException( "Il campo CODICE UO Ë obbligatorio. " );
+		throw new ValidationException( "Il campo CODICE UO √® obbligatorio. " );
 	if ( responsabile.getCd_terzo() == null )
-		throw new ValidationException( "Il campo RESPONSABILE Ë obbligatorio. " );			
+		throw new ValidationException( "Il campo RESPONSABILE √® obbligatorio. " );			
 	if ( !isNullOrEmpty( getCd_proprio_cdr() ) )
 	{
 		long cdLong;
@@ -197,8 +197,8 @@ public void validate() throws ValidationException
 	}
 	
 	/**
-	 * Verifica se il ricevente Ë il CDR dell'Amministrazione Centrale 
-	 * (se livello = 1 e l'unit‡ organizzativa Ë di tipo ENTE)
+	 * Verifica se il ricevente √® il CDR dell'Amministrazione Centrale 
+	 * (se livello = 1 e l'unit√† organizzativa √® di tipo ENTE)
 	 */
 	public boolean isCdrILiv() {
 		return

@@ -164,7 +164,7 @@ public void setConto(it.cnr.contab.config00.pdcep.bulk.ContoBulk newConto) {
 	conto = newConto;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
@@ -172,27 +172,27 @@ public void validate() throws ValidationException {
 
 	// controllo che, in fase di inserimento, tutti i campi necessari siano validati
 	if ( getTi_terzo() == null || getItaliano_estero() == null || getTi_entita() == null)
-		throw new ValidationException ("Attenzione! Il campo TIPO TERZO o ITALIANO/ESTERO o TIPO ENTITA' non puÚ essere nullo.");
+		throw new ValidationException ("Attenzione! Il campo TIPO TERZO o ITALIANO/ESTERO o TIPO ENTITA' non pu√≤ essere nullo.");
 		
 	if ( !getTi_entita().equals( it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk.GIURIDICA ) && this.getEnte_altro() == null)
 		this.setEnte_altro("*");
 
 	// controllo contestuale su campo TIPO ENTITA' in relazione al campo ENTE/ALTRO
 	if ( !getTi_entita().equals( it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk.GIURIDICA ) && !this.getEnte_altro().equals("*"))
-		throw new ValidationException ("Attenzione! Il campo ENTE/ALTRO non Ë valido perchË non conforme al valore del campo TIPO ENTITA' indicato.");
+		throw new ValidationException ("Attenzione! Il campo ENTE/ALTRO non √® valido perch√® non conforme al valore del campo TIPO ENTITA' indicato.");
 		// this.setEnte_altro("*");
 		
 	// controllo su campo ENTE/ALTRO in relazione al campo TIPO ENTITA'
 	if ( getTi_entita().equals( it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk.GIURIDICA ) && getEnte_altro() == null )
-		throw new ValidationException ("Il campo ENTE/ALTRO non puÚ essere nullo.");
+		throw new ValidationException ("Il campo ENTE/ALTRO non pu√≤ essere nullo.");
 	
 	// controllo su campo CODICE CLASSIFICAZIONE ANAGRAFICA
 	if ( getCd_classific_anag() == null )
-		throw new ValidationException ("Il campo CODICE CLASSIFICAZIONE ANAGRAFICA non puÚ essere nullo.");
+		throw new ValidationException ("Il campo CODICE CLASSIFICAZIONE ANAGRAFICA non pu√≤ essere nullo.");
 
 	// controllo su campo CODICE CONTO
 	if ( getCd_voce_ep() == null )
-		throw new ValidationException ("Il campo CONTO non puÚ essere nullo.");		
+		throw new ValidationException ("Il campo CONTO non pu√≤ essere nullo.");		
 		
 }
 }

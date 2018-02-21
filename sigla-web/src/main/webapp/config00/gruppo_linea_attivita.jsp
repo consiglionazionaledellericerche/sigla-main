@@ -16,7 +16,7 @@
 <script language="javascript" src="scripts/css.js"></script>
 <% JSPUtils.printBaseUrl(pageContext); %>
 </head>
-<title>Macrolinea di attivit‡</title>
+<title>Macrolinea di attivit√†</title>
 <body class="Form">
 
 <% CRUDBP bp = (CRUDBP)BusinessProcess.getBusinessProcess(request);

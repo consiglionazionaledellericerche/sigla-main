@@ -248,7 +248,7 @@ public it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk getVoceF() {
 /**
  * Inizializza il ricevente per la visualizzazione in un <code>FormController</code>.
  * Questo metodo viene invocato da {@link #initializeForEdit}, {@link #initializeForInsert},
- * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e può contenere
+ * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e puÃ² contenere
  * inizializzazioni comuni ai 4 stati del <code>FormController</code>
  */
 public OggettoBulk initialize(CRUDBP bp, ActionContext context) 
@@ -258,7 +258,7 @@ public OggettoBulk initialize(CRUDBP bp, ActionContext context)
 	setTerzo(new TerzoBulk());
 	resetElementoVoce();
 
-	// Inizializzazioni necessarie per verificare se l'esercizio è aperto
+	// Inizializzazioni necessarie per verificare se l'esercizio Ã¨ aperto
 	setMinicarriera(new MinicarrieraBulk());
 	it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk unita_organizzativa = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
 	setCd_cds(unita_organizzativa.getCd_unita_padre());

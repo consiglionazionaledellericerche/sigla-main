@@ -72,7 +72,7 @@ public class ProgettoGestBulk extends ProgettoGestBase {
 		livello_progettoKeys = new it.cnr.jada.util.OrderedHashtable();
 		livello_progettoKeys.put(LIVELLO_PROGETTO_PRIMO,"Progetto");
 		livello_progettoKeys.put(LIVELLO_PROGETTO_SECONDO,"Commessa");
-		livello_progettoKeys.put(LIVELLO_PROGETTO_TERZO,"Modulo di Attivit�");
+		livello_progettoKeys.put(LIVELLO_PROGETTO_TERZO,"Modulo di Attività");
 		livello_progettoKeys.put(LIVELLO_PROGETTO_ALL,"Sottogruppo");
 		for(int i=4;i<100;i++)
 		  livello_progettoKeys.put(new Integer(i),"Sottogruppo");
@@ -176,12 +176,12 @@ public it.cnr.jada.bulk.BulkList getDettagliPostIt() {
 	return dettagliPostIt;
 }
 /**
- * Restituisce il valore della propriet� 'rOprogetto'
+ * Restituisce il valore della proprietà 'rOprogetto'
  *
- * @return Il valore della propriet� 'rOprogetto'
+ * @return Il valore della proprietà 'rOprogetto'
  */
 public boolean isROprogetto() {
-	/* la prima condizione perch� il campo appariva 
+	/* la prima condizione perchè il campo appariva
 	 * non utilizzabile nelle ricerchi guidate */ 
 	if (getCrudStatus() == UNDEFINED)
 		return false;
@@ -201,9 +201,9 @@ public boolean isROfind_nodo_padre() {
 }
 
 /**
- * Restituisce il valore della propriet� 'rOprogetto'
+ * Restituisce il valore della proprietà 'rOprogetto'
  *
- * @return Il valore della propriet� 'rOprogetto'
+ * @return Il valore della proprietà 'rOprogetto'
  */
 public boolean isROprogettopadre() {
 
@@ -747,7 +747,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	 */
 
 	public boolean isRODipartimento() {
-		/* la prima condizione perch� il campo appariva 
+		/* la prima condizione perchè il campo appariva
 		 * non utilizzabile nelle ricerchi guidate */ 
 		if (getCrudStatus() == UNDEFINED)
 			return false;

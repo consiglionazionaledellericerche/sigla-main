@@ -83,7 +83,7 @@
 			}
   		} else if (conguaglio.getModalitaPagamento() != null && (conguaglio.getV_terzo() != null && conguaglio.getV_terzo().getCrudStatus() != conguaglio.getV_terzo().UNDEFINED)) { %>
 			<span class="FormLabel" style="color:red">
-				Nessun riferimento trovato per la modalit‡ di pagamento selezionata!
+				Nessun riferimento trovato per la modalit√† di pagamento selezionata!
 			</span>
 	  <% } %>
 	</td>

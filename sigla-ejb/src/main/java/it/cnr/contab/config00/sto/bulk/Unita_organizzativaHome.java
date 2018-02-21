@@ -12,7 +12,7 @@ import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
 /**
- * Home dell'unit‡ organizzativa bulk
+ * Home dell'unit√† organizzativa bulk
  * Creation date: (12/04/2001 08:32:22)
  */
 
@@ -42,7 +42,7 @@ public Unita_organizzativaHome(java.sql.Connection conn,PersistentCache persiste
  * Aggiorna l'esercizio fine dei CDR figli per aggiornamento dell'esercizio fine dell'UO in processo
  * 
  * @param esercizio	Esercizio
- * @param codiceUO Codice unit‡ organizzativa in processo
+ * @param codiceUO Codice unit√† organizzativa in processo
  * @throws ApplicationException	
  * @throws PersistencyException	
  */
@@ -291,8 +291,8 @@ public String creaNuovoCodice(String codiceCDS)  throws ApplicationException, Pe
 }
 /**
  * Aggiunge condizioni cablate per le ricerche sul bulk collegato a questa home.
- * In particolare imposta fl_cds a true per filtrare le sole unit‡ organizzative
- * Scarta le UO di tipo ENTE perchË non gestite on-line
+ * In particolare imposta fl_cds a true per filtrare le sole unit√† organizzative
+ * Scarta le UO di tipo ENTE perch√® non gestite on-line
  * @return SQLBuilder
  */
 
@@ -306,7 +306,7 @@ public SQLBuilder createSQLBuilder()
 }
 /**
  * Aggiunge condizioni cablate per le ricerche sul bulk collegato a questa home.
- * In particolare imposta fl_cds a true per filtrare le sole unit‡ organizzative
+ * In particolare imposta fl_cds a true per filtrare le sole unit√† organizzative
  * e NON scarta le UO di tipo ENTE 
  * @return SQLBuilder
  */
@@ -320,7 +320,7 @@ public SQLBuilder createSQLBuilderEsteso()
 }
 /**
  * Aggiunge condizioni cablate per le ricerche sul bulk collegato a questa home.
- * In particolare imposta fl_cds a true per filtrare le sole unit‡ organizzative
+ * In particolare imposta fl_cds a true per filtrare le sole unit√† organizzative
  * e NON scarta le UO di tipo ENTE 
  * @return SQLBuilder
  */
@@ -368,7 +368,7 @@ public Unita_organizzativaBulk findUo_cds(Integer esercizio,String cd_cds) throw
 	if (!broker.next()) return null;
 	Unita_organizzativaBulk uo = (Unita_organizzativaBulk)broker.fetch(getPersistentClass());
 	if (broker.next())
-		throw new FetchException("Individuata pi˘ di una uocds per un cds");
+		throw new FetchException("Individuata pi√π di una uocds per un cds");
 	return uo;
 }
 /**
@@ -390,7 +390,7 @@ public Unita_organizzativaBulk findUo_cdsByUo(Integer esercizio,String cd_unita_
 	if (!broker.next()) return null;
 	Unita_organizzativaBulk uo = (Unita_organizzativaBulk)broker.fetch(getPersistentClass());
 	if (broker.next())
-		throw new FetchException("Individuata pi˘ di una uocds per un cds");
+		throw new FetchException("Individuata pi√π di una uocds per un cds");
 	return uo;
 }
 /**
@@ -431,12 +431,12 @@ public java.util.Collection findAssociazioneUoArea(UserContext usercontext, Unit
 }	
 
 /**
- * Calcola il numero di unit‡ organizzative appartenenti allo stesso CDS del bulk passato
+ * Calcola il numero di unit√† organizzative appartenenti allo stesso CDS del bulk passato
  * collegate all'area di ricerca.
- * L'uo passata deve aver valorizzati l'unit‡ padre e il cds area
+ * L'uo passata deve aver valorizzati l'unit√† padre e il cds area
  * Creation date: (12/04/2001 08:32:22)
- * @param uo unit‡ organizzativa collegata ad area
- * @return il numero di uo appartenenti allo stesso cds di uo e collegate all'area a cui Ë collegato uo
+ * @param uo unit√† organizzativa collegata ad area
+ * @return il numero di uo appartenenti allo stesso cds di uo e collegate all'area a cui √® collegato uo
  */
 
 public int getNumeroUoCollegateAdAreaInCds(Unita_organizzativaBulk uo)  throws ApplicationException, PersistencyException
@@ -498,7 +498,7 @@ public int getNumeroUoCollegateAdAreaInCds(Unita_organizzativaBulk uo)  throws A
 	
 }
 /**
- * Ritorna false se l'esercizio di fine impostato sull'UO Ë minore del massimo esercizio 
+ * Ritorna false se l'esercizio di fine impostato sull'UO √® minore del massimo esercizio 
  * esistente per pdg dell'UO in processo
  *
  * @param uo	

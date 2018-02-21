@@ -29,61 +29,61 @@ public V_cdp_matricolaBulk() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'stato_keys'
+ * Restituisce il valore della propriet√† 'stato_keys'
  *
- * @return Il valore della propriet‡ 'stato_keys'
+ * @return Il valore della propriet√† 'stato_keys'
  */
 public final java.util.Dictionary getStato_keys() {
 	return Ass_cdp_uoBulk.stato_keys;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'ti_rapportoKeys'
+ * Restituisce il valore della propriet√† 'ti_rapportoKeys'
  *
- * @return Il valore della propriet‡ 'ti_rapportoKeys'
+ * @return Il valore della propriet√† 'ti_rapportoKeys'
  */
 public java.util.Dictionary getTi_rapportoKeys() {
 	return Costo_del_dipendenteBulk.ti_rapportoKeys;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'provenienzaCaricato'
+ * Restituisce il valore della propriet√† 'provenienzaCaricato'
  *
- * @return Il valore della propriet‡ 'provenienzaCaricato'
+ * @return Il valore della propriet√† 'provenienzaCaricato'
  */
 public boolean isProvenienzaCaricato() {
 	return PROVENIENZA_CARICATO.equalsIgnoreCase(getTi_provenienza());
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'provenienzaInterna'
+ * Restituisce il valore della propriet√† 'provenienzaInterna'
  *
- * @return Il valore della propriet‡ 'provenienzaInterna'
+ * @return Il valore della propriet√† 'provenienzaInterna'
  */
 public boolean isProvenienzaInterna() {
 	return PROVENIENZA_INTERNA.equalsIgnoreCase(getTi_provenienza());
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'costiScaricati'
+ * Restituisce il valore della propriet√† 'costiScaricati'
  *
- * @return Il valore della propriet‡ 'costiScaricati'
+ * @return Il valore della propriet√† 'costiScaricati'
  */
 public BulkList getCostiScaricati() {
 	return costiScaricati;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'costiScaricatiAltraUO'
+ * Restituisce il valore della propriet√† 'costiScaricatiAltraUO'
  *
- * @return Il valore della propriet‡ 'costiScaricatiAltraUO'
+ * @return Il valore della propriet√† 'costiScaricatiAltraUO'
  */
 public BulkList getCostiScaricatiAltraUO() {
 	return costiScaricatiAltraUO;
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'costiScaricati'
+ * Imposta il valore della propriet√† 'costiScaricati'
  *
  * @param newCostiScaricati	Il valore da assegnare a 'costiScaricati'
  */
@@ -92,7 +92,7 @@ public void setCostiScaricati(BulkList newCostiScaricati) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'costiScaricatiAltraUO'
+ * Imposta il valore della propriet√† 'costiScaricatiAltraUO'
  *
  * @param newCostiScaricatiAltraUO	Il valore da assegnare a 'costiScaricatiAltraUO'
  */
@@ -100,7 +100,7 @@ public void setCostiScaricatiAltraUO(BulkList newCostiScaricatiAltraUO) {
 	costiScaricatiAltraUO = newCostiScaricatiAltraUO;
 }
 /**
- * Rimuove una specifica di ripartizione CDP per linea di attivit‡ dalla lista dei costi scaricati
+ * Rimuove una specifica di ripartizione CDP per linea di attivit√† dalla lista dei costi scaricati
  * 
  * @param index indice dell'elemento da eliminare	
  * @return elemento eliminato
@@ -124,9 +124,9 @@ public Ass_cdp_uoBulk removeFromCostiScaricatiAltraUO(int index) {
 	return ass_cdp_uo;
 }
 /**
- * Aggiunge una specifica di ripartizione CDP per linea di attivit‡ alla lista dei costi scaricati
+ * Aggiunge una specifica di ripartizione CDP per linea di attivit√† alla lista dei costi scaricati
  *
- * @param ass_cdp_la specifica di ripartizione per data linea di attivit‡
+ * @param ass_cdp_la specifica di ripartizione per data linea di attivit√†
  * @return ritorna l'indice dell'elemento aggiunto nella lista dei costi scaricati
  */
 public int addToCostiScaricati(Ass_cdp_laBulk ass_cdp_la) {
@@ -147,16 +147,16 @@ public int addToCostiScaricatiAltraUO(Ass_cdp_uoBulk ass_cdp_uo) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'costoCaricato'
+ * Restituisce il valore della propriet√† 'costoCaricato'
  *
- * @return Il valore della propriet‡ 'costoCaricato'
+ * @return Il valore della propriet√† 'costoCaricato'
  */
 public Ass_cdp_uoBulk getCostoCaricato() {
 	return costoCaricato;
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'costoCaricato'
+ * Imposta il valore della propriet√† 'costoCaricato'
  *
  * @param newCostoCaricato	Il valore da assegnare a 'costoCaricato'
  */

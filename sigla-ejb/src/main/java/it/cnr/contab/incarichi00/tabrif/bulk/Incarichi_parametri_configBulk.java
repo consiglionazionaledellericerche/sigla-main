@@ -56,7 +56,7 @@ public class Incarichi_parametri_configBulk extends Incarichi_parametri_configBa
 			this.getProcedura_amministrativa().setCd_proc_amm(cd_proc_amm);
 	}
 	
-// Tipo Attivit‡ Richiesta
+// Tipo Attivit√† Richiesta
 	@FieldPropertyAnnotation(name="find_tipo_attivita",
 			inputType=InputType.SEARCHTOOL,
 			formName="searchtool",

@@ -31,7 +31,7 @@ protected void aggiornaRegistriStampati(ActionContext context)
 protected Forward basicDoCerca(
 		ActionContext context)
 		throws Throwable {
-		String message="Si è scelto di effettuare la Liquidazione Massiva per tutte le UO."
+		String message="Si Ã¨ scelto di effettuare la Liquidazione Massiva per tutte le UO."
 					+ "Si desidera continuare?";
 	    return openConfirm(context,message,it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,"doConfermaCerca");
 }
@@ -83,7 +83,7 @@ protected Forward basicDoRistampa(ActionContext context)
 	LiquidazioneMassaIvaBP bp= (LiquidazioneMassaIvaBP) context.getBusinessProcess();
 	bp.setMessage(
 				it.cnr.jada.util.action.OptionBP.ERROR_MESSAGE, 
-				"Questo tipo di liquidazione non è ristampabile");
+				"Questo tipo di liquidazione non Ã¨ ristampabile");
 	return context.findDefaultForward();
 }
 public Forward doOnTipoChange(ActionContext context) {

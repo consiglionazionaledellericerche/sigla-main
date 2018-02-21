@@ -171,7 +171,7 @@ public class Esenzioni_addcomHome extends BulkHome {
 	 *			==> la data di fine validita' del record piu' recente viene aggiornata con la data di inizio validita' del nuovo record meno un giorno
 	 *			==> la data di fine validita' del nuovo record viene posta uguale alla data infinto (31/12/2200)
 	 * 		Altrimenti viene emesso il messaggio:
-	 * 			"La Data Inizio Validita non è valida. Deve essere maggiore di xxx"
+	 * 			"La Data Inizio Validita non Ã¨ valida. Deve essere maggiore di xxx"
 	*/
 	public void validaPeriodoInCreazione(UserContext userContext, Esenzioni_addcomBulk corrente) throws PersistencyException, IntrospectionException, OutdatedResourceException, BusyResourceException, it.cnr.jada.comp.ApplicationException{
 
@@ -180,20 +180,20 @@ public class Esenzioni_addcomHome extends BulkHome {
 		if(precedente!=null){
 			if (precedente.getDataFineValidita()!=null && corrente.getDt_inizio_validita().compareTo(precedente.getDataFineValidita())<=0){
 				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-				throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita non è valida. Deve essere maggiore di " + sdf.format(precedente.getDataFineValidita()));
+				throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita non Ã¨ valida. Deve essere maggiore di " + sdf.format(precedente.getDataFineValidita()));
 			}else if(corrente.getDt_inizio_validita().compareTo(precedente.getDt_inizio_validita())<=0){
 				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-				throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita non è valida. Deve essere maggiore di " + sdf.format(precedente.getDt_inizio_validita()));
+				throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita non Ã¨ valida. Deve essere maggiore di " + sdf.format(precedente.getDt_inizio_validita()));
 			}
 			
 		}
 		if (successivo!=null){
 			if (successivo.getDataFineValidita()!=null && corrente.getDt_inizio_validita().compareTo(successivo.getDataFineValidita())<=0){
 				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-				throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita non è valida. Deve essere maggiore di " + sdf.format(successivo.getDataFineValidita()));
+				throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita non Ã¨ valida. Deve essere maggiore di " + sdf.format(successivo.getDataFineValidita()));
 			}else if(corrente.getDt_inizio_validita().compareTo(successivo.getDt_inizio_validita())<=0){
 				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-				throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita non è valida. Deve essere maggiore di " + sdf.format(successivo.getDt_inizio_validita()));
+				throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita non Ã¨ valida. Deve essere maggiore di " + sdf.format(successivo.getDt_inizio_validita()));
 			}
 		    successivo.setDt_fine_validita(CompensoBulk.decrementaData(corrente.getDt_inizio_validita()));
 		    update(successivo, userContext);	

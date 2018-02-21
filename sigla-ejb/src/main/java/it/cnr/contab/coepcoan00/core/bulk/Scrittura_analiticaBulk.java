@@ -210,7 +210,7 @@ public void validate() throws ValidationException
 	if ( getDs_scrittura() == null )
 		throw new ValidationException( "E' necessario inserire la descrizione della scrittura analitica");
 		
-	// Controllo sulla validit‡ dei singoli movimenti		
+	// Controllo sulla validit√† dei singoli movimenti		
 	for ( java.util.Iterator i = getMovimentiColl().iterator(); i.hasNext(); )
 		((Movimento_coanBulk)i.next()).validate();
 }

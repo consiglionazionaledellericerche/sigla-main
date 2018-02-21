@@ -164,11 +164,11 @@
 				}
 			} else if (fatturaPassiva.getModalita_pagamento() != null && (fornitore != null && fornitore.getCrudStatus() != fornitore.UNDEFINED)) { %>
 				<span class="FormLabel" style="color:red">
-					Nessun riferimento trovato per la modalit‡ di pagamento selezionata!
+					Nessun riferimento trovato per la modalit√† di pagamento selezionata!
 				</span>
 		<%	} else if(fatturaPassiva.getModalita_pagamento() == null && fatturaPassiva.getModalita()!= null && fatturaPassiva.getModalita().size() == 0 && (fornitore != null && fornitore.getCrudStatus() != fornitore.UNDEFINED)){ %>
 				<span class="FormLabel" style="color:red">
-				Attenzione! Nessuna modalit‡ di pagamento trovata!
+				Attenzione! Nessuna modalit√† di pagamento trovata!
 			</span>
 		 <% } %>
 			<td>

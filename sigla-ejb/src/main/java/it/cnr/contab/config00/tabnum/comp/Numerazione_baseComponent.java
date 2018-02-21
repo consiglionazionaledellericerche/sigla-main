@@ -39,20 +39,20 @@ public Numerazione_baseComponent() {
  * 
  * Nome: Progressivo massimo superato
  * Pre: Nella tabella NUMERAZIONE_BASE esiste una riga per la chiave 
- * 			(esercizio,tabella,colonna) e il valore di CD_CORRENTE Ë uguale o
+ * 			(esercizio,tabella,colonna) e il valore di CD_CORRENTE √® uguale o
  *			maggiore di CD_MASSIMO
  * Post: Viene generata una NumerazioneEsauritaException
  * 
  * Nome: Risorsa occupata
  * Pre: Nella tabella NUMERAZIONE_BASE esiste una riga per la chiave 
- * 			(esercizio,tabella,colonna) e il valore di CD_CORRENTE Ë minore 
- * 			di CD_MASSIMO ma il record Ë gi‡ stato lockato da un altro utente
+ * 			(esercizio,tabella,colonna) e il valore di CD_CORRENTE √® minore 
+ * 			di CD_MASSIMO ma il record √® gi√† stato lockato da un altro utente
  * Post: Viene generata una ComponentException con deatil la BusyResourceException
  * 			che ha provocato il tentativo di lock fallito
  *
  * Nome: Tutti i controlli superati
  * Pre: Nella tabella NUMERAZIONE_BASE esiste una riga per la chiave 
- * 			(esercizio,tabella,colonna) e il valore di CD_CORRENTE Ë minore 
+ * 			(esercizio,tabella,colonna) e il valore di CD_CORRENTE √® minore 
  * 			di CD_MASSIMO
  * Post: Viene incrementato di uno il valore di CD_MASSIMO e restituito
  * 			il nuovo progressivo
@@ -61,7 +61,7 @@ public Numerazione_baseComponent() {
  * @param	esercizio l'esercizio cui fa riferimento il progressivo
  * @param 	tabella Il nome della tabella per cui creare il progressivo
  * @param	colonna Il nome della colonna per cui creare il progressivo
- * @param 	user Lo userid dell'utente per cui Ë stato richiesto il progressivo
+ * @param 	user Lo userid dell'utente per cui √® stato richiesto il progressivo
  * @return	Il nuovo progressivo.
  */
 public Long creaNuovoProgressivo(UserContext userContext,Integer esercizio,String tabella,String colonna,String user) throws it.cnr.jada.comp.ComponentException,it.cnr.jada.bulk.BusyResourceException {

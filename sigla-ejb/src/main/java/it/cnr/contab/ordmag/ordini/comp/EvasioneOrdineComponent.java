@@ -166,9 +166,9 @@ public class EvasioneOrdineComponent extends it.cnr.jada.comp.CRUDComponent impl
 			
 			selectedElements.get().forEach(obj->{
 	        	if (obj.getQuantitaEvasa() == null)
-					throw new DetailedRuntimeException("Indicare la quantit‡ da evadere per la consegna "+obj.getConsegnaOrdineString());
+					throw new DetailedRuntimeException("Indicare la quantit√† da evadere per la consegna "+obj.getConsegnaOrdineString());
 				if (obj.isQuantitaEvasaMinoreOrdine() && obj.getOperazioneQuantitaEvasaMinore() == null)
-					throw new DetailedRuntimeException("Per la consegna "+obj.getConsegnaOrdineString()+" Ë necessario indicare se sdoppiare la riga o evaderla forzatamente");
+					throw new DetailedRuntimeException("Per la consegna "+obj.getConsegnaOrdineString()+" √® necessario indicare se sdoppiare la riga o evaderla forzatamente");
 			});
 	
 	        final Map<OrdineAcqBulk, Map<OrdineAcqRigaBulk, List<OrdineAcqConsegnaBulk>>> mapOrdine =
@@ -197,7 +197,7 @@ public class EvasioneOrdineComponent extends it.cnr.jada.comp.CRUDComponent impl
 										.orElseThrow(()->new DetailedRuntimeException("Errore nell'individuazione della consegna "+ordineConsegna.getConsegnaOrdineString()+"."));
 	
 							if (ordineConsegnaComp.getStato().equals(OrdineAcqConsegnaBulk.STATO_EVASA))
-			    				throw new DetailedRuntimeException("La consegna "+ordineConsegnaComp.getConsegnaOrdineString()+" Ë stata gi‡ evasa");
+			    				throw new DetailedRuntimeException("La consegna "+ordineConsegnaComp.getConsegnaOrdineString()+" √® stata gi√† evasa");
 	
 							//Creo una nuova consegna se richiesto 
 							if (ordineConsegna.isQuantitaEvasaMinoreOrdine() && ordineConsegna.isOperazioneCreaNuovaConsegna()){

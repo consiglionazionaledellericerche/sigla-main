@@ -27,7 +27,7 @@ public Ass_cap_entrata_Cnr_conto_econom_ricavoBulk(java.lang.String cd_elemento_
 	super(cd_elemento_voce,cd_voce_ep,esercizio,ti_appartenenza,ti_gestione);
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException 
@@ -35,8 +35,8 @@ public void validate() throws ValidationException
 	super.validate();
 	
 	if ( elemento_voce == null || elemento_voce.getCd_elemento_voce() == null ||  elemento_voce.getCd_elemento_voce().equals("") )
-		throw new ValidationException( "Il codice del CAPITOLO ENTRATA CNR Ë obbligatorio." );
+		throw new ValidationException( "Il codice del CAPITOLO ENTRATA CNR √® obbligatorio." );
 	if ( voce_ep == null || voce_ep.getCd_voce_ep() == null || voce_ep.getCd_voce_ep().equals(""))
-		throw new ValidationException( "Il codice del CONTO EP RICAVO Ë obbligatorio." );		
+		throw new ValidationException( "Il codice del CONTO EP RICAVO √® obbligatorio." );		
 }
 }

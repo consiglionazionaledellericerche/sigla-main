@@ -55,7 +55,7 @@ public SQLBuilder selectBancaFor(
 
 		sql.addTableToHeader("MODALITA_PAGAMENTO");
 		sql.addSQLJoin("BANCA.CD_TERZO","MODALITA_PAGAMENTO.CD_TERZO");
-		// RP. 17/04/2013 commentato perchè possono essere + delegati attivi contemporaneamente
+		// RP. 17/04/2013 commentato perchÃ¨ possono essere + delegati attivi contemporaneamente
 		//sql.addSQLJoin("BANCA.CD_TERZO_DELEGATO","MODALITA_PAGAMENTO.CD_TERZO_DELEGATO");
 		sql.addSQLClause("AND", "BANCA.CD_TERZO_DELEGATO", sql.ISNOTNULL, null);
 		sql.addSQLClause("AND", "MODALITA_PAGAMENTO.CD_MODALITA_PAG", sql.EQUALS, rifModPag.getCd_modalita_pag());

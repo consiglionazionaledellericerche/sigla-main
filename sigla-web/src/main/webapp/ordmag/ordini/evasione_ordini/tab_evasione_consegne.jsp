@@ -113,7 +113,7 @@ it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk"%>
 							<tr>
 								<td></td>
 						        <td width="50%">
-									<div class="GroupLabel font-weight-bold text-primary ml-2">Quantit‡ in UM Minima</div>  
+									<div class="GroupLabel font-weight-bold text-primary ml-2">Quantit√† in UM Minima</div>  
 									<div class="Group card p-3" width="100%">
 									<table width="100%">
 									    <tr>

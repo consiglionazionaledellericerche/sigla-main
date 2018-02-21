@@ -69,7 +69,7 @@
 			}
   		} else if (ordine.getModalitaPagamento() != null && (ordine.getTerzo() != null && ordine.getTerzo().getCrudStatus() != ordine.getTerzo().UNDEFINED)) { %>
 			<span class="FormLabel" style="color:red">
-				Nessun riferimento trovato per la modalit‡ di pagamento selezionata!
+				Nessun riferimento trovato per la modalit√† di pagamento selezionata!
 			</span>
 	<%	} %>
   	</td>

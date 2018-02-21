@@ -211,7 +211,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 							logger.info("Salvato file XML sul Documentale");
 						} catch (StorageException _ex) {
 							if (_ex.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
-								throw new ApplicationException("CMIS - File ["+ storageFile.getFileName()+"] gi‡ presente o non completo di tutte le propriet‡ obbligatorie. Inserimento non possibile!");
+								throw new ApplicationException("CMIS - File ["+ storageFile.getFileName()+"] gi√† presente o non completo di tutte le propriet√† obbligatorie. Inserimento non possibile!");
 							throw new ApplicationException("CMIS - Errore nella registrazione del file XML sul Documentale (" + _ex.getMessage() + ")");
 						}
 						if (storageFile.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0){

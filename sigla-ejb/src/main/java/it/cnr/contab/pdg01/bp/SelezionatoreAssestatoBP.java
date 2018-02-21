@@ -290,7 +290,7 @@ public class SelezionatoreAssestatoBP extends ConsultazioniBP{
 	}
 
 	/**
-	 * Imposta il valore della proprietà 'bulkClass'
+	 * Imposta il valore della proprietÃ  'bulkClass'
 	 *
 	 * @param newBulkClass	Il valore da assegnare a 'bulkClass'
 	 */
@@ -299,7 +299,7 @@ public class SelezionatoreAssestatoBP extends ConsultazioniBP{
 	}
 
 	/**
-	 * Imposta il valore della proprietà 'bulkClassName'
+	 * Imposta il valore della proprietÃ  'bulkClassName'
 	 *
 	 * @param bulkClassName	Il valore da assegnare a 'bulkClassName'
 	 * @throws ClassNotFoundException	
@@ -314,7 +314,7 @@ public class SelezionatoreAssestatoBP extends ConsultazioniBP{
 		bulkInfo = newBulkInfo;
 	}
 	/**
-	 * Imposta il valore della proprietà 'componentSessioneName'
+	 * Imposta il valore della proprietÃ  'componentSessioneName'
 	 *
 	 * @param newComponentSessioneName	Il valore da assegnare a 'componentSessioneName'
 	 */
@@ -390,7 +390,7 @@ public class SelezionatoreAssestatoBP extends ConsultazioniBP{
 				if (Utility.nvl(voceSel.getImp_da_assegnare()).compareTo(new BigDecimal(0))>0)
 					totaleSelVoci = totaleSelVoci.add( Utility.nvl(voceSel.getImp_da_assegnare()) );
 			}
-			//Valorizzo il campo Percentuale che utilizzerò per individuare gli importi da attribuire ad ogni scadenza
+			//Valorizzo il campo Percentuale che utilizzerÃ² per individuare gli importi da attribuire ad ogni scadenza
 			//facendo in modo che il totale percentuale sia sempre uguale a 1 (equivalente al 100%)
 			if (totaleSelVoci.compareTo(Utility.ZERO)>0) {
 				for (Iterator s = getSelectedElements(actioncontext).iterator();s.hasNext();) 
@@ -434,11 +434,11 @@ public class SelezionatoreAssestatoBP extends ConsultazioniBP{
 				voceSel.setImp_da_assegnare(importoDaRipartire.multiply(voceSel.getPrc_da_assegnare().divide(new BigDecimal(100))).setScale(2,BigDecimal.ROUND_HALF_UP));
 		}
 
-		//Siccome potrei aver inserito, a causa della mancanza di disponibilità, un importo non coerente con
+		//Siccome potrei aver inserito, a causa della mancanza di disponibilitÃ , un importo non coerente con
 		//la percentuale, riallineo le percentuali rispetto agli importi
 		if (allineaPercentuali) allineaPercentualiSuImporti(actioncontext);
 
-		//Valorizzo il campo Percentuale che utilizzerò per individuare gli importi da attribuire ad ogni scadenza
+		//Valorizzo il campo Percentuale che utilizzerÃ² per individuare gli importi da attribuire ad ogni scadenza
 		if (totalePrcVoci.compareTo(new BigDecimal(100))>0)
 			throw new BusinessProcessException("Il totale percentuale non deve essere superiore a 100.");
 	}

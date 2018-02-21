@@ -199,9 +199,9 @@ public class Buono_carico_scaricoBulk extends Buono_carico_scaricoBase {
 	
 		if (beni_associati == null){
 			/* Se beni_associati == null, significa che non ci sono beni associati a 
-			* questo bene, quindi crea una nuova BulkList che verr‡ associata al bene 
+			* questo bene, quindi crea una nuova BulkList che verr√† associata al bene 
 			* principale. In seguito vengono settati la proprieta Nr_Inventario e Progressivo
-			* in modo da creare una chiave primaria per il bene principale, cosÏ da essere
+			* in modo da creare una chiave primaria per il bene principale, cos√¨ da essere
 			* univocamente rintracciato nella HashTable.
 			*/
 			beni_associati = new BulkList();
@@ -341,7 +341,7 @@ public class Buono_carico_scaricoBulk extends Buono_carico_scaricoBase {
 						bene.setDs_bene(rigoFattura.getDs_riga_fattura());
 						rigoInventario.setQuantita(new Long(rigoFattura.getQuantita().longValue()));			
 						rigoInventario.setBene(bene);
-						// Assegna il Prezzo unitario: il prezzo ﬁ diverso a seconda che il dettaglio della Fattura sia ISTITUZIONALE o COMMERCIALE
+						// Assegna il Prezzo unitario: il prezzo √û diverso a seconda che il dettaglio della Fattura sia ISTITUZIONALE o COMMERCIALE
 						if (rigoFattura.getTi_istituz_commerc().equals(rigoFattura.ISTITUZIONALE)){
 							valore_unitario = rigoFattura.getIm_imponibile().add(rigoFattura.getIm_iva());
 							valore_unitario = valore_unitario.divide(rigoFattura.getQuantita(), 2 ,java.math.BigDecimal.ROUND_HALF_UP);

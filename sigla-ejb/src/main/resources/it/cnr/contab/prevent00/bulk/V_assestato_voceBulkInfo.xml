@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -28,7 +28,7 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Centro di responsabilità" />
+		label="Centro di responsabilitÃ " />
 	<fieldProperty
 		name="ti_appartenenza"
 		property="ti_appartenenza"
@@ -94,7 +94,7 @@
 		enabledOnEdit="false"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Disponibilità" />
+		label="DisponibilitÃ " />
 	<fieldProperty
 		name="im_mandati_reversali_pro"
 		property="im_mandati_reversali_pro"

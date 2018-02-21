@@ -70,7 +70,7 @@ implements	IDocumentoAmministrativoBulk,
 	 **/
 	private NotaPrecodificataBulk notaPrecodificata =  new NotaPrecodificataBulk();
 	/**
-	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	private Unita_organizzativaBulk unitaOrganizzativa =  new Unita_organizzativaBulk();
 	/**
@@ -78,20 +78,20 @@ implements	IDocumentoAmministrativoBulk,
 	 **/
 	private NumerazioneOrdBulk numerazioneOrd =  new NumerazioneOrdBulk();
 	/**
-	 * [UNITA_OPERATIVA_ORD Rappresenta le unit‡ operative utilizzate in gestione ordine e magazzino.]
+	 * [UNITA_OPERATIVA_ORD Rappresenta le unit√† operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	private UnitaOperativaOrdBulk unitaOperativaOrd =  new UnitaOperativaOrdBulk();
 	/**
-	 * [DIVISA La divisa Ë la moneta utilizzata nella transazione amministrativa, essa si individua attraverso il codice internazionale.
+	 * [DIVISA La divisa √® la moneta utilizzata nella transazione amministrativa, essa si individua attraverso il codice internazionale.
 Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, deve potere essere variato periodicamente.]
 	 **/
 	private DivisaBulk divisa =  new DivisaBulk();
 	/**
-	 * [BANCA Descrive i riferimenti bancari, postali ed altro previsti per ogni terzo. Non Ë definita alcuna associazione tra tali riferimenti e le modalit‡ di pagamento.]
+	 * [BANCA Descrive i riferimenti bancari, postali ed altro previsti per ogni terzo. Non √® definita alcuna associazione tra tali riferimenti e le modalit√† di pagamento.]
 	 **/
 	private BancaBulk banca =  new BancaBulk();
 	/**
-	 * [MODALITA_PAGAMENTO Descrive le modalit‡ di pagamento previste per un dato terzo.]
+	 * [MODALITA_PAGAMENTO Descrive le modalit√† di pagamento previste per un dato terzo.]
 	 **/
 	private Modalita_pagamentoBulk modalitaPagamento =  new Modalita_pagamentoBulk();
 	/**
@@ -99,7 +99,7 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 	 **/
 	private Rif_termini_pagamentoBulk terminiPagamento =  new Rif_termini_pagamentoBulk();
 	/**
-	 * [TERZO Tabella contenente le entit‡ anagrafiche di secondo livello (terzi). Ogni entit‡ anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
+	 * [TERZO Tabella contenente le entit√† anagrafiche di secondo livello (terzi). Ogni entit√† anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
 
 Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
@@ -181,14 +181,14 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	public Unita_organizzativaBulk getUnitaOrganizzativa() {
 		return unitaOrganizzativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa)  {
 		this.unitaOrganizzativa=unitaOrganizzativa;
@@ -209,21 +209,21 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresenta le unit‡ operative utilizzate in gestione ordine e magazzino.]
+	 * Restituisce il valore di: [Rappresenta le unit√† operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	public UnitaOperativaOrdBulk getUnitaOperativaOrd() {
 		return unitaOperativaOrd;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresenta le unit‡ operative utilizzate in gestione ordine e magazzino.]
+	 * Setta il valore di: [Rappresenta le unit√† operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	public void setUnitaOperativaOrd(UnitaOperativaOrdBulk unitaOperativaOrd)  {
 		this.unitaOperativaOrd=unitaOperativaOrd;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [La divisa Ë la moneta utilizzata nella transazione amministrativa, essa si individua attraverso il codice internazionale.
+	 * Restituisce il valore di: [La divisa √® la moneta utilizzata nella transazione amministrativa, essa si individua attraverso il codice internazionale.
 Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, deve potere essere variato periodicamente.]
 	 **/
 	public DivisaBulk getDivisa() {
@@ -231,7 +231,7 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [La divisa Ë la moneta utilizzata nella transazione amministrativa, essa si individua attraverso il codice internazionale.
+	 * Setta il valore di: [La divisa √® la moneta utilizzata nella transazione amministrativa, essa si individua attraverso il codice internazionale.
 Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, deve potere essere variato periodicamente.]
 	 **/
 	public void setDivisa(DivisaBulk divisa)  {
@@ -239,28 +239,28 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Descrive i riferimenti bancari, postali ed altro previsti per ogni terzo. Non Ë definita alcuna associazione tra tali riferimenti e le modalit‡ di pagamento.]
+	 * Restituisce il valore di: [Descrive i riferimenti bancari, postali ed altro previsti per ogni terzo. Non √® definita alcuna associazione tra tali riferimenti e le modalit√† di pagamento.]
 	 **/
 	public BancaBulk getBanca() {
 		return banca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Descrive i riferimenti bancari, postali ed altro previsti per ogni terzo. Non Ë definita alcuna associazione tra tali riferimenti e le modalit‡ di pagamento.]
+	 * Setta il valore di: [Descrive i riferimenti bancari, postali ed altro previsti per ogni terzo. Non √® definita alcuna associazione tra tali riferimenti e le modalit√† di pagamento.]
 	 **/
 	public void setBanca(BancaBulk banca)  {
 		this.banca=banca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Descrive le modalit‡ di pagamento previste per un dato terzo.]
+	 * Restituisce il valore di: [Descrive le modalit√† di pagamento previste per un dato terzo.]
 	 **/
 	public Modalita_pagamentoBulk getModalitaPagamento() {
 		return modalitaPagamento;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Descrive le modalit‡ di pagamento previste per un dato terzo.]
+	 * Setta il valore di: [Descrive le modalit√† di pagamento previste per un dato terzo.]
 	 **/
 	public void setModalitaPagamento(Modalita_pagamentoBulk modalitaPagamento)  {
 		this.modalitaPagamento=modalitaPagamento;
@@ -281,7 +281,7 @@ Associati ad ogni divisa sono i cambi che, nel caso di valute fuori dall'Euro, d
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Tabella contenente le entit‡ anagrafiche di secondo livello (terzi). Ogni entit‡ anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
+	 * Restituisce il valore di: [Tabella contenente le entit√† anagrafiche di secondo livello (terzi). Ogni entit√† anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
 
 Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
@@ -290,7 +290,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Tabella contenente le entit‡ anagrafiche di secondo livello (terzi). Ogni entit‡ anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
+	 * Setta il valore di: [Tabella contenente le entit√† anagrafiche di secondo livello (terzi). Ogni entit√† anagrafica di secondo livello afferisce ad una di primo (ANAGRAFICO).
 
 Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagrafico]
 	 **/
@@ -925,7 +925,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 				} else 
 					addToDocumentiContabiliCancellati(riga.getDspObbligazioneScadenzario());
 			} else {
-				throw new it.cnr.jada.DetailedRuntimeException("L'impegno sulla riga di consegna Ë diverso dall'impegno sulla riga d'ordine.");
+				throw new it.cnr.jada.DetailedRuntimeException("L'impegno sulla riga di consegna √® diverso dall'impegno sulla riga d'ordine.");
 			}
 		}
 	}
@@ -997,9 +997,9 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 
 	}
 	/**
-	 * Restituisce il valore della propriet‡ 'ds_firmatario'
+	 * Restituisce il valore della propriet√† 'ds_firmatario'
 	 *
-	 * @return Il valore della propriet‡ 'ds_responsabile'
+	 * @return Il valore della propriet√† 'ds_responsabile'
 	 */
 	public java.lang.String getDs_firmatario() {
 		if ( getFirmatarioPers() != null && getFirmatarioPers().getAnagrafico() != null &&

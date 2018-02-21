@@ -89,7 +89,7 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 			try {
 					serverPriority = Integer.parseInt(config.getInitParameter("serverPriority"));
 			} catch(Throwable e) {
-				throw new BusinessProcessException("Errore: priorit‡ del server di stampa non valida. "+s);
+				throw new BusinessProcessException("Errore: priorit√† del server di stampa non valida. "+s);
 			}
 	} catch(ClassNotFoundException e) {
 		throw new RuntimeException("Non trovata la classe bulk");
@@ -126,7 +126,7 @@ private void setBulkClass(Class bulkClass) throws ClassNotFoundException {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'bulkClassName'
+ * Imposta il valore della propriet√† 'bulkClassName'
  *
  * @param bulkClassName	Il valore da assegnare a 'bulkClassName'
  * @throws ClassNotFoundException	
@@ -137,7 +137,7 @@ public void setBulkClassName(java.lang.String bulkClassName) throws ClassNotFoun
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'componentSessioneName'
+ * Imposta il valore della propriet√† 'componentSessioneName'
  *
  * @param newComponentSessioneName	Il valore da assegnare a 'componentSessioneName'
  */

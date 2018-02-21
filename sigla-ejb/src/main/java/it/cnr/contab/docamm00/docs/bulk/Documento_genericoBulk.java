@@ -98,8 +98,8 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	 * procedura provvede a non rieffettuare la ricontabilizzazione in COAN e COGE.
 	 *    
 	 */
-	private boolean isDetailDoubled = false; //serve per sapere se Ë stata sdoppiata una riga di dettaglio 
-	private boolean isDocumentoModificabile = true; //serve per sapere se il documento Ë modificabile o meno
+	private boolean isDetailDoubled = false; //serve per sapere se √® stata sdoppiata una riga di dettaglio 
+	private boolean isDocumentoModificabile = true; //serve per sapere se il documento √® modificabile o meno
 
 	private Lettera_pagam_esteroBulk lettera_pagamento_estero = null;
 	public final static Dictionary STATO_LIQUIDAZIONE;
@@ -295,7 +295,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	 */
 	public boolean controllaCompatibilitaPer1210() {
 
-		//controlla compatibilit‡ dei clienti/fornitori x accertamenti/obbligazioni
+		//controlla compatibilit√† dei clienti/fornitori x accertamenti/obbligazioni
 		if (getDocumento_generico_dettColl() == null ||
 				getDocumento_generico_dettColl().isEmpty() )
 			return false;
@@ -842,7 +842,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 		return valute;
 	}
 	/**
-	 * Indica se la competenza COGE Ë stata indicata nell'anno precedente. Regola valida SOLO nel caso di 
+	 * Indica se la competenza COGE √® stata indicata nell'anno precedente. Regola valida SOLO nel caso di 
 	 * ESERCIZIO == ESERCIZIO_INIZIO
 	 */
 	public boolean hasCompetenzaCOGEInAnnoPrecedente() {
@@ -874,7 +874,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	}
 	public OggettoBulk initializeForFreeSearch(CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 
-		//initializeForInsert NON Ë errore --> la chiamata Ë voluta
+		//initializeForInsert NON √® errore --> la chiamata √® voluta
 		super.initializeForInsert(bp,context);
 
 		setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
@@ -921,7 +921,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	}
 	public OggettoBulk initializeForSearch(CRUDBP bp,it.cnr.jada.action.ActionContext context) {
 
-		//initializeForInsert NON Ë errore --> la chiamata Ë voluta
+		//initializeForInsert NON √® errore --> la chiamata √® voluta
 		super.initializeForInsert(bp,context);
 
 		setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context));
@@ -1110,7 +1110,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	 */
 	public boolean isROFlagEnte() {
 
-		return	//Questo controllo evita problemi del tipo "cambiamenti di chiave" quando il doc Ë gi‡ salvato
+		return	//Questo controllo evita problemi del tipo "cambiamenti di chiave" quando il doc √® gi√† salvato
 				isToBeUpdated() || 
 				getCrudStatus() == OggettoBulk.NORMAL ||
 				//*****************************************************************************************
@@ -1671,7 +1671,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 					throw new ValidationException("La data di \"competenza a\" deve appartenere all'esercizio dell'anno " + annoPrecedente + ".");
 				if (isGenericoAttivo() && getData_registrazione().after(getDt_termine_creazione_docamm())) {
 					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-					throw new ValidationException("Non Ë possibile inserire documenti con competenza nell'anno precedente con data di registrazione successiva al " + sdf.format(getDt_termine_creazione_docamm()) + "!");
+					throw new ValidationException("Non √® possibile inserire documenti con competenza nell'anno precedente con data di registrazione successiva al " + sdf.format(getDt_termine_creazione_docamm()) + "!");
 				}
 			} else
 				throw e;
@@ -1706,7 +1706,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 					throw new ValidationException("La data di \"competenza a\" deve appartenere all'esercizio dell'anno " + annoPrecedente + ".");
 				if (isGenericoAttivo() && getData_registrazione().after(getDt_termine_creazione_docamm())) {
 					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-					throw new ValidationException("Non Ë possibile inserire documenti con competenza nell'anno precedente con data di registrazione successiva al " + sdf.format(getDt_termine_creazione_docamm()) + "!");
+					throw new ValidationException("Non √® possibile inserire documenti con competenza nell'anno precedente con data di registrazione successiva al " + sdf.format(getDt_termine_creazione_docamm()) + "!");
 				}
 			} else
 				throw e;

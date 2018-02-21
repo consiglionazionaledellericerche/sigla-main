@@ -23,7 +23,7 @@ public class TipoAttoBolloComponent extends CRUDComponent {
 		if (oggettobulk instanceof Tipo_atto_bolloBulk) {
 			try {
 				Tipo_atto_bolloBulk bulk = (Tipo_atto_bolloBulk)oggettobulk;
-				//verifico che per per le date di validit‡ del bollo da salvare non esistano altri bolli validi 
+				//verifico che per per le date di validit√† del bollo da salvare non esistano altri bolli validi 
 				Tipo_atto_bolloHome home = (Tipo_atto_bolloHome)getHome(usercontext, Tipo_atto_bolloBulk.class);
 				SQLBuilder sql = home.createSQLBuilder();
 				sql.addClause(FindClause.AND,"codice",SQLBuilder.EQUALS, bulk.getCodice());
@@ -38,7 +38,7 @@ public class TipoAttoBolloComponent extends CRUDComponent {
 				});
 				
 				if (sql.executeExistsQuery(getConnection(usercontext)))
-					throw new ApplicationException("Record non aggiornabile in quanto esiste per lo stesso codice atto un record con date di validit‡ che si sovrappongono.");
+					throw new ApplicationException("Record non aggiornabile in quanto esiste per lo stesso codice atto un record con date di validit√† che si sovrappongono.");
 			} catch (java.sql.SQLException e) {
 				throw handleException(e);
 			}

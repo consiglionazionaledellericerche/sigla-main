@@ -26,7 +26,7 @@ public  MissioneTipoPastoComponent()
   * Pre: Viene richeisto l'inserimento di un oggetto con data Inizio/Fine validita non compatibile
   * 	 con intervalli precedenti
   * Post: L'oggetto non viene inserito
-  *		  Viene inviato il messaggio: "Attenzione sovrapposizione con intervalli di validit‡ preesistenti"
+  *		  Viene inviato il messaggio: "Attenzione sovrapposizione con intervalli di validit√† preesistenti"
   *
   * Nome: Validazione NON superata: oggetto bulk ANNULLATO
   * Pre:  E' stata richiesta la creazione di oggetto con versioni precedenti aventi data cancellazione NON nulla
@@ -117,7 +117,7 @@ public void eliminaConBulk (UserContext aUC, OggettoBulk bulk) throws ComponentE
  * Post: Viene restituita una divisa vuota
  *
  * @param userContext lo UserContext che genera la richesta
- * @param tipoNazione indica il tipo di nazione di cui Ë richiesta la divisa
+ * @param tipoNazione indica il tipo di nazione di cui √® richiesta la divisa
  * @return la nazione trovata
  *
 **/
@@ -228,7 +228,7 @@ public Missione_tipo_pastoBulk gestioneNazione(UserContext userContext, Missione
   * Pre: L'OggettoBulk specificato esiste.
   * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
   *		 per l'operazione di presentazione e modifica nell'interfaccia visuale.
-  *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ë
+  *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome √®
   *		 ottenuto concatenando il nome della component con la stringa ".edit"
   * 
   * @param	uc	lo UserContext che ha generato la richiesta
@@ -303,7 +303,7 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectRifAreePaesiEsteriByClause(U
  * Pre: Viene richeisto l'inserimento di un oggetto con data Inizio/Fine validita non compatibile
  * 		con intervalli precedenti
  * Post: L'oggetto non viene inserito
- *		 Viene inviato il messaggio: "Attenzione sovrapposizione con intervalli di validit‡ preesistenti"
+ *		 Viene inviato il messaggio: "Attenzione sovrapposizione con intervalli di validit√† preesistenti"
  *
  * Nome: Validazioni precedenti superate
  * Pre: Validazioni precedenti superate

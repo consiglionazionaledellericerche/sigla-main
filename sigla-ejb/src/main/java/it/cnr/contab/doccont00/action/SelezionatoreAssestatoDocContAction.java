@@ -27,7 +27,7 @@ public class SelezionatoreAssestatoDocContAction extends SelezionatoreAssestatoA
 					return actioncontext.findDefaultForward();
 				}
 				if (Utility.nvl(saldo.getImporto_disponibile_netto()).compareTo(Utility.ZERO) < 0) {
-					bp.setMessage("Disponibilità insufficiente. L'importo utilizzabile non può essere superiore a "+ new it.cnr.contab.util.EuroFormat().format(Utility.nvl(saldo.getImporto_disponibile()).add(Utility.nvl(saldo.getDb_imp_utilizzato()))) + ".");
+					bp.setMessage("DisponibilitÃ  insufficiente. L'importo utilizzabile non puÃ² essere superiore a "+ new it.cnr.contab.util.EuroFormat().format(Utility.nvl(saldo.getImporto_disponibile()).add(Utility.nvl(saldo.getDb_imp_utilizzato()))) + ".");
 					saldo.setImp_da_assegnare(impOld);
 					return actioncontext.findDefaultForward();
 			    }

@@ -198,12 +198,12 @@
 				}
 			} else if (riga != null && riga.getModalita_pagamento() != null && (riga.getFornitore() != null && riga.getFornitore().getCrudStatus() != riga.getFornitore().UNDEFINED)) { %>
 				<span class="FormLabel" style="color:red">
-					Nessun riferimento trovato per la modalit‡ di pagamento selezionata!
+					Nessun riferimento trovato per la modalit√† di pagamento selezionata!
 				</span>
 		 <%	} else if(riga!=null && riga.getModalita_pagamento() == null  
 				 && riga.getModalita()!= null && riga.getModalita().size() == 0 && (riga.getFornitore() != null && riga.getFornitore().getCrudStatus() != riga.getFornitore().UNDEFINED)) { %>
 		    <span class="FormLabel" style="color:red">
-				Attenzione! Nessuna modalit‡ di pagamento trovata!
+				Attenzione! Nessuna modalit√† di pagamento trovata!
 			</span>
 		 <% } %>
 		<td>

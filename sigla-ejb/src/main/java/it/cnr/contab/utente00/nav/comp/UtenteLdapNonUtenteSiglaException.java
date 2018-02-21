@@ -2,7 +2,7 @@ package it.cnr.contab.utente00.nav.comp;
 
 /**
  * Eccezione applicativa generata da GestioneLoginComponent per notificare
- * che la richiesta di Login di un utente è fallita perchè l'utente non ha 
+ * che la richiesta di Login di un utente Ã¨ fallita perchÃ¨ l'utente non ha 
  * nessuna utenza/profilo in SIGLA.
  */
 public class UtenteLdapNonUtenteSiglaException extends it.cnr.jada.comp.ApplicationException {

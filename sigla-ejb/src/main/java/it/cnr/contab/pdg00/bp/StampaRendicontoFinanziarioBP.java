@@ -40,7 +40,7 @@ public void init(it.cnr.jada.action.Config config, it.cnr.jada.action.ActionCont
 	// Controllo il tipo di report
 	String type = config.getInitParameter("reportType");
 
-	// Imposta il nome del report così come è impostato nel file RES
+	// Imposta il nome del report cosÃ¬ come Ã¨ impostato nel file RES
 	setReportName(config.getInitParameter("reportName"));
 		it.cnr.contab.reports.bp.ReportPrintBP printbp = (it.cnr.contab.reports.bp.ReportPrintBP)this;
 	if (TYPE_CDS_E.equals(type) || TYPE_CDS_S.equals(type)){

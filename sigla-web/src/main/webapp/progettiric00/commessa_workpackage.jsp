@@ -20,7 +20,7 @@
 <% JSPUtils.printBaseUrl(pageContext); %>
 </head>
 <script language="javascript" src="scripts/css.js"></script>
-<title>Associazione Modulo di Attivit‡/GAE</title>
+<title>Associazione Modulo di Attivit√†/GAE</title>
 <body class="Form">
 <%  CRUDBP bpt = (CRUDBP)BusinessProcess.getBusinessProcess(request);
     bpt.openFormWindow(pageContext);

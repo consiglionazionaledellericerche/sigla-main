@@ -119,7 +119,7 @@ public class Obbligazione_modificaBulk extends Obbligazione_modificaBase {
 		super.validate();
 
 		if ( getDs_modifica() == null || getDs_modifica().equals("") )
-			throw new ValidationException( "Il campo DESCRIZIONE è obbligatorio." );
+			throw new ValidationException( "Il campo DESCRIZIONE Ã¨ obbligatorio." );
 	}
 	public boolean isTemporaneo() {
 

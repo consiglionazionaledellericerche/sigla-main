@@ -23,7 +23,7 @@ public FatturaAttivaRigaCRUDController(String name, Class modelClass, String lis
 }
 
 /**
- * Restituisce true se Ë possibile aggiungere nuovi elementi
+ * Restituisce true se √® possibile aggiungere nuovi elementi
  */
 public boolean isGrowable() {
 	
@@ -38,16 +38,16 @@ public boolean isGrowable() {
 }
 
 /**
- * Restituisce il valore della propriet‡ 'inventoriedChildDeleted'
+ * Restituisce il valore della propriet√† 'inventoriedChildDeleted'
  *
- * @return Il valore della propriet‡ 'inventoriedChildDeleted'
+ * @return Il valore della propriet√† 'inventoriedChildDeleted'
  */
 public boolean isInventoriedChildDeleted() {
 	return inventoriedChildDeleted;
 }
 
 /**
- * Restituisce true se Ë possibile aggiungere nuovi elementi
+ * Restituisce true se √® possibile aggiungere nuovi elementi
  */
 public boolean isShrinkable() {
 	Fattura_attivaBulk fatturaA = (Fattura_attivaBulk)getParentModel();
@@ -60,7 +60,7 @@ public boolean isShrinkable() {
 }
 
 /**
- * Imposta il valore della propriet‡ 'inventoriedChildDeleted'
+ * Imposta il valore della propriet√† 'inventoriedChildDeleted'
  *
  * @param newInventoriedChildDeleted	Il valore da assegnare a 'inventoriedChildDeleted'
  */
@@ -88,7 +88,7 @@ public void validateForDelete(ActionContext context,OggettoBulk model) throws Va
 											((riga.getDs_riga_fattura() != null) ?
 												riga.getDs_riga_fattura() :
 												String.valueOf(riga.getProgressivo_riga().longValue())) + 
-											"\" perchË associato a mandato.");
+											"\" perch√® associato a mandato.");
 
 		FatturaAttivaSingolaComponentSession comp = ((FatturaAttivaSingolaComponentSession)(((SimpleCRUDBP)getParentController()).createComponentSession()));
 		comp.eliminaRiga(context.getUserContext(), riga);
@@ -101,7 +101,7 @@ public void validateForDelete(ActionContext context,OggettoBulk model) throws Va
 							((riga.getDs_riga_fattura() != null) ?
 								riga.getDs_riga_fattura() :
 								String.valueOf(riga.getProgressivo_riga().longValue())) + 
-							"\" perchË associato a mandati annullati.");
+							"\" perch√® associato a mandati annullati.");
 			} catch (PersistencyException e) {
 				throw new ComponentException(e);
 			} catch (IntrospectionException e) {

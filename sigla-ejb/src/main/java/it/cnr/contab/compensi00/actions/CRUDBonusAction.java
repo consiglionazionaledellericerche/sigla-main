@@ -58,7 +58,7 @@ public class CRUDBonusAction extends it.cnr.jada.util.action.CRUDAction {
 	        	det.setFl_handicap(false);
 	        	if(det.getTipo_componente_nucleo()!=null && det.getTipo_componente_nucleo().compareTo(det.CONIUGE)!=0){
 	        		det.setIm_reddito_componente(red_comp);
-	        		bp.setMessage("Il componente non Ë a carico");
+	        		bp.setMessage("Il componente non √® a carico");
 	        	}
 	       }
 	        bp.eseguiCalcoloTot(context,(BonusBulk)bp.getModel());
@@ -234,7 +234,7 @@ public class CRUDBonusAction extends it.cnr.jada.util.action.CRUDAction {
 		
 	}
 	/**
-	 * Creo un nuovo compenso da associare alle rate selezionate e lo apro in modalit‡ 
+	 * Creo un nuovo compenso da associare alle rate selezionate e lo apro in modalit√† 
 	 * inserimento. Viene validata la selezione con il metodo 'validaSelezionePerAssociazioneCompenso'
 	 */
 
@@ -287,7 +287,7 @@ public class CRUDBonusAction extends it.cnr.jada.util.action.CRUDAction {
 			if (!bp.createComponentSession().verificaLimiteFamiliareCarico(context.getUserContext(), det) && 
 					det.getTipo_componente_nucleo()!=null && det.getTipo_componente_nucleo().compareTo(Bonus_nucleo_famBulk.CONIUGE)!=0){
 				det.setTipo_componente_nucleo(tipoComp);
-				bp.setMessage("Il componente non Ë a carico");
+				bp.setMessage("Il componente non √® a carico");
 			}
 			bp.setDirty(true);
 		}catch (Throwable ex) {
