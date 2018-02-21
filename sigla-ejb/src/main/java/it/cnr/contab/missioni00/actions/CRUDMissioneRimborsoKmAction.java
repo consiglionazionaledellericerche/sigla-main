@@ -26,7 +26,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 
 		CRUDMissioneRimborsoKmBP bp = (CRUDMissioneRimborsoKmBP)getBusinessProcess(context);
 		if (!bp.isEditing()) {
-			bp.setMessage("Non è possibile cancellare in questo momento");
+			bp.setMessage("Non Ã¨ possibile cancellare in questo momento");
 		} else {
 			bp.delete(context);
 			Missione_rimborso_kmBulk rimborsoKm = (Missione_rimborso_kmBulk )bp.getModel();

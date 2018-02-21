@@ -60,7 +60,7 @@ public Voce_ivaBulk caricaVoceIvaDefault(UserContext aUC) throws ComponentExcept
   *    PreCondition:
   *      validaVoceIva = False.
   *    PostCondition:
-  *      Viene inviato il messaggio "Attenzione, una voce iva di default è gia presente".
+  *      Viene inviato il messaggio "Attenzione, una voce iva di default Ã¨ gia presente".
  */
 //^^@@
 public OggettoBulk creaConBulk(UserContext aUC, OggettoBulk voceIva)
@@ -89,7 +89,7 @@ public OggettoBulk creaConBulk(UserContext aUC, OggettoBulk voceIva)
   *    PreCondition:
   *      validaVoceIva = False.
   *    PostCondition:
-  *      Viene inviato il messaggio "Attenzione, una voce iva di default è gia presente".
+  *      Viene inviato il messaggio "Attenzione, una voce iva di default Ã¨ gia presente".
  */
 //^^@@
 public OggettoBulk modificaConBulk(UserContext aUC, OggettoBulk voceIva)

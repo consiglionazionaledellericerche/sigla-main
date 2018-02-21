@@ -119,7 +119,7 @@
 			}
   		} else if (riga != null && riga.getModalitaPagamento() != null && (riga.getTerzo() != null && riga.getTerzo().getCrudStatus() != riga.getTerzo().UNDEFINED)) {%>
 			<span class="FormLabel" style="color:red">
-				Nessun riferimento trovato per la modalit‡ di pagamento selezionata!
+				Nessun riferimento trovato per la modalit√† di pagamento selezionata!
 			</span>
 	<%}%>
   	</td>

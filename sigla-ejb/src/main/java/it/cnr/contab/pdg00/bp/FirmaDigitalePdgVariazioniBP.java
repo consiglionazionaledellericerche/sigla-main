@@ -608,7 +608,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 		}
 		if (servizioPecProtocollo == null)
 			throw new ValidationException(
-					"Non è presente l'email per l'invio della posta certificata per l'ufficio del Protocollo. Impossibile procedere!");
+					"Non Ã¨ presente l'email per l'invio della posta certificata per l'ufficio del Protocollo. Impossibile procedere!");
 		// PEC derivata dalla stampa specifica
 		ServizioPecBulk servizioPec = null;
 		try {

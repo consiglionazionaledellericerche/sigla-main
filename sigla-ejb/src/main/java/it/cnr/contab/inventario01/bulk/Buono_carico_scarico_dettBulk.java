@@ -103,7 +103,7 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 			return this;
 		}
 	/**
-	 * Restituisce <code>true</code> se il bene Ë un Bene accessorio di un Bene non
+	 * Restituisce <code>true</code> se il bene √® un Bene accessorio di un Bene non
 	 * ancora registrato su DB, ma inserito nello stesso buono di carico
 	 *
 	 * @return boolean
@@ -141,7 +141,7 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 		return false;
 	}
 	public boolean isROcollocazione() {
-		// Questo metodo servir‡ per gestire se rendere editabile la collocazione e dovr‡ 
+		// Questo metodo servir√† per gestire se rendere editabile la collocazione e dovr√† 
 		//	tenere conto della categoria Gruppo del bene	
 		if (getBene().getCategoria_Bene()!=null)
 			return true;
@@ -180,7 +180,7 @@ public class Buono_carico_scarico_dettBulk extends Buono_carico_scarico_dettBase
 		v_utilizzatoriColl = newV_utilizzatoriColl;
 	}
 	/**
-	 * Restituisce <code>true</code> se il bene Ë un Bene Accessorio
+	 * Restituisce <code>true</code> se il bene √® un Bene Accessorio
 	 *
 	 * @return boolean
 	 */

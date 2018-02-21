@@ -26,7 +26,7 @@ public class AssIncaricoAttivitaComponent extends CRUDComponent {
 				Ass_incarico_attivitaHome incAttHome = (Ass_incarico_attivitaHome)getHome( usercontext, Ass_incarico_attivitaBulk.class);
 
 				if (!incAttHome.findProceduraIncarichi(incAttBulk).isEmpty())
-					throw new ComponentException("Eliminazione non possibile! Risulta essere gi‡ stata effettuata almeno una procedura per il conferimento di incarichi per il tipo incarico/attivit‡ che si desidera eliminare.");
+					throw new ComponentException("Eliminazione non possibile! Risulta essere gi√† stata effettuata almeno una procedura per il conferimento di incarichi per il tipo incarico/attivit√† che si desidera eliminare.");
 			}
 			super.eliminaConBulk(usercontext, oggettobulk);
 		}

@@ -8,7 +8,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
 public class UnitaOrganizzativaPecBulk extends UnitaOrganizzativaPecBase {
 	/**
-	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
+	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle UnitÃ  Organizzative in una struttura ad albero organizzata su piÃ¹ livelli]
 	 **/
 	private Unita_organizzativaBulk unitaOrganizzativa =  new Unita_organizzativaBulk();
 	/**
@@ -28,14 +28,14 @@ public class UnitaOrganizzativaPecBulk extends UnitaOrganizzativaPecBase {
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
+	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle UnitÃ  Organizzative in una struttura ad albero organizzata su piÃ¹ livelli]
 	 **/
 	public Unita_organizzativaBulk getUnitaOrganizzativa() {
 		return unitaOrganizzativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
+	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle UnitÃ  Organizzative in una struttura ad albero organizzata su piÃ¹ livelli]
 	 **/
 	public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa)  {
 		this.unitaOrganizzativa=unitaOrganizzativa;

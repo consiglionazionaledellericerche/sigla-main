@@ -55,7 +55,7 @@
 	</table>
 	</div> 
 <%
-   // Il BENE selezionato è un bene accessorio: NON viene visualizzato il tab UTILIZZATORI
+   // Il BENE selezionato Ã¨ un bene accessorio: NON viene visualizzato il tab UTILIZZATORI
    if (bene != null && bene.isBeneAccessorio()){
 	   JSPUtils.tabbed(
 			pageContext,
@@ -69,7 +69,7 @@
 			"100%",
 			null );
    }
-   // Il BENE selezionato NON è un bene accessorio: viene visualizzato il tab UTILIZZATORI
+   // Il BENE selezionato NON Ã¨ un bene accessorio: viene visualizzato il tab UTILIZZATORI
    else {
 	    JSPUtils.tabbed(
 			pageContext,

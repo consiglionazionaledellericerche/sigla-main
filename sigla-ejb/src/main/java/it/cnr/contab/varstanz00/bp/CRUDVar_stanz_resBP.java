@@ -289,12 +289,12 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 		return super.isDeleteButtonEnabled() && (isCdrScrivania() || isUoEnte()) && !((Var_stanz_resBulk)getModel()).isApprovata();
 	}
 	/**
-	 * Restituisce il valore della propriet� 'salvaDefinitivoButtonEnabled'
-	 * Il bottone di SalvaDefinitivo � disponibile solo se:
-	 * - la proposta � provvisoria
-	 * - il CDR � di 1� Livello
+	 * Restituisce il valore della proprietà 'salvaDefinitivoButtonEnabled'
+	 * Il bottone di SalvaDefinitivo è disponibile solo se:
+	 * - la proposta è provvisoria
+	 * - il CDR è di 1è Livello
 	 *
-	 * @return Il valore della propriet� 'salvaDefinitivoButtonEnabled'
+	 * @return Il valore della proprietà 'salvaDefinitivoButtonEnabled'
 	 */
 	public boolean isSalvaDefinitivoButtonEnabled() {
 		try{
@@ -326,13 +326,13 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	}
 	
 	/**
-	 * Restituisce il valore della propriet� 'approvaButtonEnabled'
-	 * Il bottone di Approva � disponibile solo se:
-	 * - � attivo il bottone di salvataggio
-	 * - la proposta di variazione PDG � definitiva
-	 * - la UO che sta effettuando l'operazione � di tipo ENTE
+	 * Restituisce il valore della proprietà 'approvaButtonEnabled'
+	 * Il bottone di Approva è disponibile solo se:
+	 * - è attivo il bottone di salvataggio
+	 * - la proposta di variazione PDG è definitiva
+	 * - la UO che sta effettuando l'operazione è di tipo ENTE
 	 *
-	 * @return Il valore della propriet� 'approvaButtonEnabled'
+	 * @return Il valore della proprietà 'approvaButtonEnabled'
 	 */
 	public boolean isApprovaButtonEnabled() {
 		try{
@@ -348,8 +348,8 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	}
 	/**
 	 * ritorna true se proviene dalla mappa degli accertamenti modifica, nel senso
-	 * che la variazione � legata ad una modifica ad accertamento residuo, in
-	 * tal caso non � necessario che il cdr sia di primo livello
+	 * che la variazione è legata ad una modifica ad accertamento residuo, in
+	 * tal caso non è necessario che il cdr sia di primo livello
 	 * @return
 	 */
 	public boolean controllaCdrDaAccMod() {
@@ -397,13 +397,13 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	
 	/**
 	 * 
-	 * Restituisce il valore della propriet� 'nonApprovaButtonEnabled'
-	 * Il bottone di NonApprova � disponibile solo se:
-	 * - � attivo il bottone di salvataggio
-	 * - la proposta di variazione PDG � definitiva
-	 * - la UO che sta effettuando l'operazione � di tipo ENTE
+	 * Restituisce il valore della proprietà 'nonApprovaButtonEnabled'
+	 * Il bottone di NonApprova è disponibile solo se:
+	 * - è attivo il bottone di salvataggio
+	 * - la proposta di variazione PDG è definitiva
+	 * - la UO che sta effettuando l'operazione è di tipo ENTE
 	 *
-	 * @return Il valore della propriet� 'nonApprovaButtonEnabled'
+	 * @return Il valore della proprietà 'nonApprovaButtonEnabled'
 	 */
 	public boolean isNonApprovaButtonEnabled() {
 		return isApprovaButtonEnabled();
@@ -483,7 +483,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	}
 
 	/**
-	 * se true la variazione � stata richiamata da una modifica
+	 * se true la variazione è stata richiamata da una modifica
 	 * all'accertamento residuo, in tal caso il processo deve essere
 	 * transazionale in modo da creare una modifica e una variazione
 	 * in contemporanea

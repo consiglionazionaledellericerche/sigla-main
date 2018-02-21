@@ -27,7 +27,7 @@ public java.util.Collection findTipoMovimenti(it.cnr.contab.inventario01.bulk.Bu
 		  sql.addClause("AND","fl_vendita",sql.EQUALS, Boolean.FALSE);
 	if (buonoCS.isByFattura()||buonoCS.isByDocumento()){
 		sql.addClause("AND","fl_fatturabile",sql.EQUALS, Boolean.TRUE);
-		// Se è un Buono di Carico proveniente da una fattura x aumento di valore
+		// Se Ã¨ un Buono di Carico proveniente da una fattura x aumento di valore
 		if (buonoCS instanceof Buono_carico_scaricoBulk && ((Buono_carico_scaricoBulk)buonoCS).isByFatturaPerAumentoValore() ||
 			(buonoCS instanceof Buono_carico_scaricoBulk && ((Buono_carico_scaricoBulk)buonoCS).isByDocumentoPerAumentoValore())){
 			sql.addClause("AND","fl_aumento_valore",sql.EQUALS, Boolean.TRUE);

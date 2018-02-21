@@ -7,7 +7,7 @@
 <script language="javascript" src="scripts/css.js"></script>
 <script language="JavaScript" archive="scripts.jar" src="scripts/util.js"></script>
 <title>Logo</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body class="Workspace">
 <script>
@@ -28,10 +28,10 @@ restoreWorkspace();
 					<td valign="center"><img src="img/error.gif"></td>
 				  	<td valign="center" width="100%">
 				  		Operazione in corso.
-				  		<br>L'ultima operazione richiesta è ancora in corso.
-						<br>Per controllare se l'operazione è terminata premere il bottone 'riprova'.
+				  		<br>L'ultima operazione richiesta Ã¨ ancora in corso.
+						<br>Per controllare se l'operazione Ã¨ terminata premere il bottone 'riprova'.
 <% if (bp != null) { %>
-						<br>Per chiudere la pagina premere il bottone 'chiudi' (l'operazione NON verrà interrotta).
+						<br>Per chiudere la pagina premere il bottone 'chiudi' (l'operazione NON verrÃ  interrotta).
 <% } %>
 					</td>
 			  </tr>
@@ -51,10 +51,10 @@ restoreWorkspace();
 		  <div class="card-block p-3">
 		    <p class="card-title">
 						Operazione in corso.
-				  		<br>L'ultima operazione richiesta è ancora in corso.
-						<br>Per controllare se l'operazione è terminata premere il bottone 'riprova'.
+				  		<br>L'ultima operazione richiesta Ã¨ ancora in corso.
+						<br>Per controllare se l'operazione Ã¨ terminata premere il bottone 'riprova'.
 						<% if (bp != null) { %>
-							<br>Per chiudere la pagina premere il bottone 'chiudi' (l'operazione NON verrà interrotta).
+							<br>Per chiudere la pagina premere il bottone 'chiudi' (l'operazione NON verrÃ  interrotta).
 						<% } %>
 		    <div class="col-sm-offset-5 text-center">
 				<button class="btn btn-primary col-md-5" onclick="if (disableDblClick()) submitForm('doDefault')">Riprova</button>

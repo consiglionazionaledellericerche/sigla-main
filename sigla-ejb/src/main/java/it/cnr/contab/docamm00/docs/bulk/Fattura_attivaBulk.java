@@ -279,8 +279,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * procedura provvede a non rieffettuare la ricontabilizzazione in COAN e COGE.
 	 *    
 	 */
-	private boolean isDetailDoubled = false; //serve per sapere se è stata sdoppiata una riga di dettaglio 
-	private boolean isDocumentoModificabile = true; //serve per sapere se il documento è modificabile o meno
+	private boolean isDetailDoubled = false; //serve per sapere se Ã¨ stata sdoppiata una riga di dettaglio 
+	private boolean isDocumentoModificabile = true; //serve per sapere se il documento Ã¨ modificabile o meno
 
 	private java.sql.Timestamp dt_termine_creazione_docamm = null;
 	private boolean isGestoreBancaFatturaAttiva;
@@ -1021,7 +1021,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		return valute;
 	}
 	/**
-	 * Indica se la competenza COGE è stata indicata nell'anno precedente. Regola valida SOLO nel caso di 
+	 * Indica se la competenza COGE Ã¨ stata indicata nell'anno precedente. Regola valida SOLO nel caso di 
 	 * ESERCIZIO == ESERCIZIO_INIZIO
 	 */
 	public boolean hasCompetenzaCOGEInAnnoPrecedente() {
@@ -1150,7 +1150,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		return STATO_CONTABILIZZATO.equalsIgnoreCase(getStato_cofi());
 	}
 	/**
-	 * Restituisce <code>true</code> se il sezionale è di tipo Istituzionale
+	 * Restituisce <code>true</code> se il sezionale Ã¨ di tipo Istituzionale
 	 *
 	 * @return boolean
 	 */
@@ -1604,7 +1604,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		inizio_validita_valuta = newInizio_validita_valuta;
 	}
 	/**
-	 * Restituisce <code>true</code> se il sezionale è di tipo Istituzionale
+	 * Restituisce <code>true</code> se il sezionale Ã¨ di tipo Istituzionale
 	 *
 	 * @return boolean
 	 */
@@ -1811,7 +1811,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 				if (this.getStato_cofi()!=null && this.getStato_cofi().equals(STATO_INIZIALE))
 					if (getDt_registrazione().after(getDt_termine_creazione_docamm())) {
 						java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-						throw new ValidationException("Non è possibile inserire documenti con competenza nell'anno precedente con data di registrazione successiva al " + sdf.format(getDt_termine_creazione_docamm()) + "!");
+						throw new ValidationException("Non Ã¨ possibile inserire documenti con competenza nell'anno precedente con data di registrazione successiva al " + sdf.format(getDt_termine_creazione_docamm()) + "!");
 					}
 			} else
 				throw e;

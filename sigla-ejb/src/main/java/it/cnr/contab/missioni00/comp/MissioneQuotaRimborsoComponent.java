@@ -32,7 +32,7 @@ public MissioneQuotaRimborsoComponent() {
   * Pre: Viene richeisto l'inserimento di un oggetto con data Inizio/Fine validita non compatibile
   * 	 con intervalli precedenti
   * Post: L'oggetto non viene inserito
-  *		  Viene inviato il messaggio: "Attenzione sovrapposizione con intervalli di validit‡ preesistenti"
+  *		  Viene inviato il messaggio: "Attenzione sovrapposizione con intervalli di validit√† preesistenti"
   *
   * Nome: Tutte le validazioni precedenti superate
   * Pre:  E' stata richiesta la creazione di oggetto che supera tutte le validazioni
@@ -113,7 +113,7 @@ public void eliminaConBulk (UserContext userContext,OggettoBulk bulk) throws Com
  * Pre: Viene richeisto l'inserimento di un oggetto con data Inizio/Fine validita non compatibile
  * 		con intervalli precedenti
  * Post: L'oggetto non viene inserito
- *		 Viene inviato il messaggio: "Attenzione sovrapposizione con intervalli di validit‡ preesistenti"
+ *		 Viene inviato il messaggio: "Attenzione sovrapposizione con intervalli di validit√† preesistenti"
  *
  * Nome: Validazioni precedenti superate
  * Pre: Validazioni precedenti superate

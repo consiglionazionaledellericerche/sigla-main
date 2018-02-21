@@ -33,7 +33,7 @@ public SQLBuilder createSQLBuilder()
  * ( data corrente > data inizio validita del template e data corrente < data fine validita' del template )
  * @param utente UtenteComuneBulk ricevente
  * @param home home del bulk su cui si cerca
- * @param template è l'istanza di bulk che ha indotto le clauses 
+ * @param template Ã¨ l'istanza di bulk che ha indotto le clauses 
  * @param clause clause che arrivano dalle properties (form collegata al search tool) 
  * @return it.cnr.jada.persistency.sql.SQLBuilder
  */

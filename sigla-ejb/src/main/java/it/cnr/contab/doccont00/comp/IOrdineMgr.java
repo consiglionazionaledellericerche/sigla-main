@@ -18,8 +18,8 @@ public interface IOrdineMgr extends ICRUDMgr {
  * Pre-post-conditions
  *
  * Nome: Completamento ordine da terzo
- * Pre: Vengono richiesti i Termini e le Modalit‡ di Pagamento del Terzo selezionato
- * Post: Viene restituito l'ordine con i Termini e le Modalit‡ di Pagamento associati
+ * Pre: Vengono richiesti i Termini e le Modalit√† di Pagamento del Terzo selezionato
+ * Post: Viene restituito l'ordine con i Termini e le Modalit√† di Pagamento associati
  *
  * @param	userContext	lo UserContext che ha generato la richiesta
  * @param	ordine l'OggettoBulk da completare
@@ -35,13 +35,13 @@ public abstract it.cnr.contab.doccont00.ordine.bulk.OrdineBulk completaTerzo(it.
  * Pre-post-conditions:
  *
  * Nome: Validazione superata
- * Pre: L'ordine NON Ë stato stampato in modo definitivo
+ * Pre: L'ordine NON √® stato stampato in modo definitivo
  * Post: Viene consentita l'eliminazione dell'ordine
  *
  * Nome: Validazione NON superata
- * Pre: L'ordine Ë stato stampato in modo definitivo
+ * Pre: L'ordine √® stato stampato in modo definitivo
  * Post: Viene generata una ApplicationException con il messaggio:
- *		 "L'Ordine Ë gi‡ stato stampato. Non Ë possibile eliminarlo!"
+ *		 "L'Ordine √® gi√† stato stampato. Non √® possibile eliminarlo!"
  *
  * @param	userContext	lo UserContext che ha generato la richiesta
  * @param	bulk l'OggettoBulk da eliminare
@@ -60,7 +60,7 @@ public abstract void eliminaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.b
  * Pre-post-conditions:
  *
  * Nome: Terzo NON selezionato
- * Pre: Non Ë stato selezionato un Terzo per l'ordine
+ * Pre: Non √® stato selezionato un Terzo per l'ordine
  * Post: Non vengono caricate le banche.
  *
  * Nome: Terzo selezionato
@@ -110,7 +110,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
  * Pre:	L'OggettoBulk specificato esiste.
  * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
  *			per l'operazione di presentazione e modifica nell'interfaccia visuale.
- *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ë
+ *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome √®
  *			ottenuto concatenando il nome della component con la stringa ".edit"
  *
  *			In particolare vengono caricate tutte le Righe associate all'Ordine selezionato

@@ -72,7 +72,7 @@ public class CigHome extends BulkHome {
 		SQLBuilder sql = getHomeCache().getHome(ContrattoBulk.class).createSQLBuilder();
 		sql.addSQLClause("AND", "CD_CIG", SQLBuilder.EQUALS, cig.getCdCig());
 		if (!cig.getCdTerzoRup().equals(cigDB.getCdTerzoRup()) && !getHomeCache().getHome(ContrattoBulk.class).fetchAll(sql).isEmpty())
-			throw new ApplicationPersistencyException("Non è possibile cambiare il Terzo in quanto legato ad un Contratto!");  
+			throw new ApplicationPersistencyException("Non Ã¨ possibile cambiare il Terzo in quanto legato ad un Contratto!");  
 		super.update(persistent, userContext);
 	}
 }

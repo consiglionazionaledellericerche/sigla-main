@@ -32,7 +32,7 @@ public Carico_familiare_anagBulk(java.lang.Integer cd_anag,java.sql.Timestamp dt
 	super(cd_anag,dt_ini_validita,pg_carico_anag);
 }
 	/**
-	 * Restituisce l'<code>AnagraficoBulk</code> a cui l'oggetto Ë correlato.
+	 * Restituisce l'<code>AnagraficoBulk</code> a cui l'oggetto √® correlato.
 	 *
 	 * @return it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk
 	 *
@@ -70,7 +70,7 @@ public boolean isNotFiglio() {
 	return !isFiglio();
 }
 	/**
-	 * Imposta l'<code>AnagraficoBulk</code> a cui l'oggetto Ë correlato.
+	 * Imposta l'<code>AnagraficoBulk</code> a cui l'oggetto √® correlato.
 	 *
 	 * @param newAnagrafico Anagrafica di riferimento.
 	 *
@@ -85,26 +85,26 @@ public void setCd_anag(java.lang.Integer cd_anag) {
 }
 public void validate(OggettoBulk parent) throws ValidationException {
 	if (getTi_persona() == null)
-		throw new ValidationException("Attenzione: Ë necessario specificare il tipo di persona");
+		throw new ValidationException("Attenzione: √® necessario specificare il tipo di persona");
 
 	if (getCodice_fiscale() == null)
-		throw new ValidationException("Attenzione: Ë necessario specificare il Codice Fiscale");
+		throw new ValidationException("Attenzione: √® necessario specificare il Codice Fiscale");
 		
 	if (getDt_ini_validita() == null || getDt_fin_validita() == null )
-		throw new ValidationException("Attenzione: Ë necessario specificare sia la data inizio che la data fine validit‡.");		
+		throw new ValidationException("Attenzione: √® necessario specificare sia la data inizio che la data fine validit√†.");		
 		
 	if (isFiglio() && getDt_nascita_figlio() == null)
-		throw new ValidationException("Attenzione: Ë necessario specificare la data di nascita del figlio");
+		throw new ValidationException("Attenzione: √® necessario specificare la data di nascita del figlio");
 	if (isFiglio() && getDt_nascita_figlio()!=null && 
 		getDt_ini_validita() != null && 
 		getDt_ini_validita().before(getDt_nascita_figlio())){
-			throw new ValidationException("Carichi familiari: data inizio validit‡ minore della data di nascita del figlio.");
+			throw new ValidationException("Carichi familiari: data inizio validit√† minore della data di nascita del figlio.");
 	}
-	/* Carichi Familiari verifica data inizio validit‡ corretta */
+	/* Carichi Familiari verifica data inizio validit√† corretta */
 	if (getDt_ini_validita() != null && 
 		getDt_fin_validita() != null &&
 		getDt_ini_validita().after(getDt_fin_validita()))
-		throw new ValidationException("Carichi familiari: data inizio validit‡ maggiore della data di fine validit‡.");
+		throw new ValidationException("Carichi familiari: data inizio validit√† maggiore della data di fine validit√†.");
 
 	/* Carichi Familiari verifica esattezza carattere di controllo del codice fiscale */
 	if (getCodice_fiscale() != null &&
@@ -135,13 +135,13 @@ public void validate(OggettoBulk parent) throws ValidationException {
 		throw new ValidationException("Carichi familiari: codice fiscale altro genitore inserito errato.");
 	
 	if (getCodice_fiscale().equals(anagrafico.getCodice_fiscale()))
-		throw new ValidationException("Attenzione: non Ë possibile inserire un carico con lo stesso Codice Fiscale dell'anagrafico!");
+		throw new ValidationException("Attenzione: non √® possibile inserire un carico con lo stesso Codice Fiscale dell'anagrafico!");
 	
 	if (isFiglio() && getCodice_fiscale_altro_gen() != null && getCodice_fiscale_altro_gen().equals(anagrafico.getCodice_fiscale()))
-		throw new ValidationException("Attenzione: non Ë possibile inserire il Codice fiscale dell'altro genitore uguale a quello dell'anagrafico stesso!");
+		throw new ValidationException("Attenzione: non √® possibile inserire il Codice fiscale dell'altro genitore uguale a quello dell'anagrafico stesso!");
 	
 	if (isFiglio() && getCodice_fiscale_altro_gen() != null && getCodice_fiscale_altro_gen().equals(getCodice_fiscale()))
-		throw new ValidationException("Attenzione: non Ë possibile inserire il Codice fiscale dell'altro genitore uguale a quello del figlio!");
+		throw new ValidationException("Attenzione: non √® possibile inserire il Codice fiscale dell'altro genitore uguale a quello del figlio!");
 	
 }
 }

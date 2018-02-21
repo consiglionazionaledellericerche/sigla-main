@@ -12,9 +12,9 @@ import it.cnr.jada.comp.ICRUDMgr;
  */
 public interface ITipoTrattamentoMgr extends ICRUDMgr {
 /**
- * Ricerca lista intervalli di validità Tipi Trattamento
+ * Ricerca lista intervalli di validitÃ  Tipi Trattamento
  * PreCondition:
- *   Viene richiesta la lista degli intervalli di validità del tipo trattamento
+ *   Viene richiesta la lista degli intervalli di validitÃ  del tipo trattamento
  *        definiti con data inizio = a quella del tipo trattamento in processo
  * PostCondition:
  *   Viene restituita la lista dei Tipi trattamento o null nel caso il codice tipo trattamento
@@ -24,31 +24,31 @@ public interface ITipoTrattamentoMgr extends ICRUDMgr {
 
 public abstract java.util.List caricaIntervalli(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk param1) throws it.cnr.jada.comp.ComponentException;
 /**
- * Cancellazione di un intervallo di validità con data anteriore alla data odierna
+ * Cancellazione di un intervallo di validitÃ  con data anteriore alla data odierna
  * PreCondition:
- *   La data di inizio dell'intervallo è anteriore alla data odierna
+ *   La data di inizio dell'intervallo Ã¨ anteriore alla data odierna
  * PostCondition:
- *   La data di fine validità dell'intervallo viene posta uguale alla data corrente + 1
+ *   La data di fine validitÃ  dell'intervallo viene posta uguale alla data corrente + 1
  *        Tutti gli intervalli successivi a quello in processo vengono eliminati fisicamente
  *
- * Cancellazione di un intervallo di validità con data uguale alla data odierna
+ * Cancellazione di un intervallo di validitÃ  con data uguale alla data odierna
  * PreCondition:
- *   La data di inizio dell'intervallo è anteriore alla data odierna
+ *   La data di inizio dell'intervallo Ã¨ anteriore alla data odierna
  * PostCondition:
  *        Tutti gli intervalli successivi a quello in processo vengono eliminati fisicamente
  */
 
 public abstract void eliminaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
 /**
-  *    L'intervallo in processo è l'ultimo intervallo esistente
+  *    L'intervallo in processo Ã¨ l'ultimo intervallo esistente
   *    PreCondition:
-  *       La data di inizio validità dell'intervallo in processo >= della massima data di inizio di intervalli
+  *       La data di inizio validitÃ  dell'intervallo in processo >= della massima data di inizio di intervalli
   *    PostCondition:
   *       Viene ritornato TRUE
   *
-  *    L'intervallo in processo non è l'ultimo intervallo esistente
+  *    L'intervallo in processo non Ã¨ l'ultimo intervallo esistente
   *    PreCondition:
-  *       La data di inizio validità dell'intervallo in processo < della massima data di inizio di intervalli
+  *       La data di inizio validitÃ  dell'intervallo in processo < della massima data di inizio di intervalli
   *    PostCondition:
   *       Viene ritornato FALSE
  */
@@ -57,7 +57,7 @@ public abstract boolean isUltimoIntervallo(it.cnr.jada.UserContext param0,it.cnr
 /**
  * Modifica di intervallo ponendo la data fine nel futuro
  * PreCondition:
- *   Il controllo di validità date è superato
+ *   Il controllo di validitÃ  date Ã¨ superato
  * PostCondition:
  *   Viene aggiornato l'intervallo in processo
  *
@@ -69,8 +69,8 @@ public abstract boolean isUltimoIntervallo(it.cnr.jada.UserContext param0,it.cnr
  *      Modifica di intervallo ponendo la data fine nel passato
  * PreCondition: La data di fine intervallo = alla data odierna
  * PostCondition:
- *        La data di fine validità dell'intervallo corrente viene posta = data odierna
- *        Viene creato il nuovo intervallo con data di inizio validità = alla data odierna + 1
+ *        La data di fine validitÃ  dell'intervallo corrente viene posta = data odierna
+ *        Viene creato il nuovo intervallo con data di inizio validitÃ  = alla data odierna + 1
  *
  */
 

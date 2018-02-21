@@ -51,7 +51,7 @@ public Forward doOnModalitaPagamentoChange(ActionContext context) {
 			//	Assegno di default la prima banca tra quelle selezionate
 			if(coll == null || coll.isEmpty()){
 				ordine.setBanca(null);
-				throw new MessageToUser("La modalit‡ di pagamento selezionata non ha banche associate.\nNon sar‡ possibile salvare l'ordine.");
+				throw new MessageToUser("La modalit√† di pagamento selezionata non ha banche associate.\nNon sar√† possibile salvare l'ordine.");
 			}
 			else
 				ordine.setBanca((it.cnr.contab.anagraf00.core.bulk.BancaBulk)new java.util.Vector(coll).firstElement());

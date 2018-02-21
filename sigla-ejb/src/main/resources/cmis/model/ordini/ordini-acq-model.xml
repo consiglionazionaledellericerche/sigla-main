@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Definition of new Model -->
 <model name="ordini_acq:ordini_acq_model" 
 	xmlns="http://www.alfresco.org/model/dictionary/1.0"
@@ -43,7 +43,7 @@
 					<type>d:long</type>
 				</property>
 				<property name="ordini_acq:cd_unita_operativa">
-					<title>Unità Operativa</title>
+					<title>Unità  Operativa</title>
 					<type>d:text</type>
 				</property>
 				<property name="ordini_acq:cd_numeratore">

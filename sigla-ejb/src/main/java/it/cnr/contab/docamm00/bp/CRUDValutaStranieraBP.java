@@ -49,7 +49,7 @@ public void edit(
             }
             if (((DivisaBulk)bulk).getCd_divisa().equals(cd_euro)){
            	    setStatus(it.cnr.jada.util.action.FormController.VIEW);
-           	    setMessage("Attenzione. Non è possibile modificare la valuta di default!");
+           	    setMessage("Attenzione. Non Ã¨ possibile modificare la valuta di default!");
             }
          }
 

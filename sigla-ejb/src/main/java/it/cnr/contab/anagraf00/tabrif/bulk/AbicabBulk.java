@@ -111,10 +111,10 @@ public void validate() throws ValidationException {
 
 	super.validate();
 	if (getAbi()==null)
-		throw new ValidationException("Il campo ABI non può essere vuoto");
+		throw new ValidationException("Il campo ABI non puÃ² essere vuoto");
 	if (getCab()==null)
-		throw new ValidationException("Il campo CAB non può essere vuoto");
+		throw new ValidationException("Il campo CAB non puÃ² essere vuoto");
 	if(getDs_abicab()==null)
-		throw new ValidationException("Il campo DESCRIZIONE non può essere vuoto");
+		throw new ValidationException("Il campo DESCRIZIONE non puÃ² essere vuoto");
 }
 }

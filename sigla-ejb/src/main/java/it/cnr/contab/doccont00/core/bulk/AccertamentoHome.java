@@ -767,10 +767,10 @@ public java.util.List findLineeAttivita(AccertamentoBulk accertamento) throws In
     /*
     - accertamento non associato a documenti amministrativi: viene selezionato un qualsiasi terzo di tipo DEBITORE
       o ENTRAMBI
-    - se l'accertamento Ë associato a documenti amministrativi e era gia' stato impostato un terzo: la selezione prevede
-      tutti i terzi con tipo entit‡ = DIVERSI di tipo DEBITORE/ENTRAMBI pi˘ il terzo gi‡ selezionato
-    - se l'accertamento Ë associato a documenti amministrativi e non era gia' stato impostato un terzo: la selezione prevede
-      tutti i terzi con tipo entit‡ = DIVERSI di tipo DEBITORE/ENTRAMBI
+    - se l'accertamento √® associato a documenti amministrativi e era gia' stato impostato un terzo: la selezione prevede
+      tutti i terzi con tipo entit√† = DIVERSI di tipo DEBITORE/ENTRAMBI pi√π il terzo gi√† selezionato
+    - se l'accertamento √® associato a documenti amministrativi e non era gia' stato impostato un terzo: la selezione prevede
+      tutti i terzi con tipo entit√† = DIVERSI di tipo DEBITORE/ENTRAMBI
     */
     public SQLBuilder selectDebitoreByClause(AccertamentoBulk bulk, TerzoHome home, TerzoBulk terzo, CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException, IllegalAccessException, it.cnr.jada.persistency.PersistencyException {
 
@@ -828,7 +828,7 @@ public java.util.List findLineeAttivita(AccertamentoBulk accertamento) throws In
 		bulk.getCrudStatus() != bulk.TO_BE_CREATED && 
 		bulk.getCrudStatus() != bulk.UNDEFINED ) //obbligazione non associata a documenti amministrativi e in fase di modifica
 	{
-		if ( bulk.getCd_terzo() != null ) //terzo gi‡ selezionato
+		if ( bulk.getCd_terzo() != null ) //terzo gi√† selezionato
 		{
 			sql.setStatement(
 						"select distinct A.* from " + 
@@ -896,7 +896,7 @@ public java.util.List findLineeAttivita(AccertamentoBulk accertamento) throws In
 		sql.addSQLClause("OR","TI_TERZO",sql.EQUALS, terzo.ENTRAMBI );
 		sql.closeParenthesis();
   	    sql.addSQLClause( "AND", "(DT_FINE_RAPPORTO >= SYSDATE OR DT_FINE_RAPPORTO IS NULL)");		
-		if ( bulk.getCd_terzo() != null ) //terzo gi‡ selezionato
+		if ( bulk.getCd_terzo() != null ) //terzo gi√† selezionato
 		{
 			sql.addSQLClause("AND","CD_TERZO",sql.EQUALS, bulk.getCd_terzo());						
 		}
@@ -910,7 +910,7 @@ public java.util.List findLineeAttivita(AccertamentoBulk accertamento) throws In
      * Metodo per verificare lo stato dell'esercizio dell'accertamento.
      *
      * @param bulk <code>AccertamentoBulk</code> l'accertamento
-     * @return FALSE se non Ë stato inserito nessun esercizio o se l'esercizio non Ë in stato di "aperto"
+     * @return FALSE se non √® stato inserito nessun esercizio o se l'esercizio non √® in stato di "aperto"
      * TRUE in tutti gli altri casi
      */
     public boolean verificaStatoEsercizio(AccertamentoBulk bulk) throws PersistencyException, IntrospectionException {
@@ -934,7 +934,7 @@ public java.util.List findLineeAttivita(AccertamentoBulk accertamento) throws In
  */
 /*
  * Metodo sostituito integralmente da quello immediatamente successivo che consente di visualizzare la 
- * lista completa dei CDR anche se non Ë stato caricato alcun dettaglio di entrata nel piano di gestione
+ * lista completa dei CDR anche se non √® stato caricato alcun dettaglio di entrata nel piano di gestione
  */
 /*
 public java.util.List findCdr( List capitoliList, AccertamentoBulk accertamento ) throws IntrospectionException,PersistencyException 
@@ -991,8 +991,8 @@ public java.util.List findCdr( List capitoliList, AccertamentoBulk accertamento 
 			ps.setString( 7, capitolo.getCd_unita_organizzativa() );
 
 			-- per ora escludo questa parte
-			-- anche perchË non funziona dato che
-			-- getCd_funzione() Ë sempre null perchË
+			-- anche perch√® non funziona dato che
+			-- getCd_funzione() √® sempre null perch√®
 			-- capitoliList non contiene le righe di voce_f
 			-- completamente valorizzate
 
@@ -1272,7 +1272,7 @@ public java.util.List findCdr( List capitoliList, AccertamentoBulk accertamento 
                     found = true;
             }
             if (!found) {
-                // escludiamo le linee di attivit‡ comuni su altri cdr
+                // escludiamo le linee di attivit√† comuni su altri cdr
                 // questi vengono visualizzati solo nelle scad per voce
                 boolean found2 = true;
                 if (osv.getCd_linea_attivita().startsWith("C")) {

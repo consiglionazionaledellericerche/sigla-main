@@ -22,7 +22,7 @@
 	
 	/*
 	** Quando navigo la prima volta nella tab e non ci sono 
-	** record selezionati, il valore restituito Ë -1. 
+	** record selezionati, il valore restituito √® -1. 
 	** In questo caso imposto il valore a 0.
 	*/
 	if (sel == -1)
@@ -84,7 +84,7 @@ function doScaricaFile() {
 					prima di allegare il file del contratto da pubblicare sul sito internet istituzionale del CNR <%if (!bp.getParentRoot().isBootstrap()) { %><br><% } %>
 					e' necessario verificare che lo stesso esponga <b><i><u>esclusivamente</u></i></b> i seguenti dati personali: <br>
 					<b><i>Nome, Cognome, Luogo e Data di nascita, Codice Fiscale</i></b> <br>
-					Ogni altro dato personale dovr‡ essere <b><i>"<u>oscurato</u>"</i></b><br><br>
+					Ogni altro dato personale dovr√† essere <b><i>"<u>oscurato</u>"</i></b><br><br>
 					</span>
 				</td></tr>
 				<% } %>
@@ -95,7 +95,7 @@ function doScaricaFile() {
 			    <td valign=top>
 			    	<span class="FormLabel">
 					ai fini della pubblicazione sul sito internet istituzionale del CNR, <i><u>si raccomanda di usare file in formato PDF</u></i><%if (!bp.getParentRoot().isBootstrap()) { %><br><% } %> 
-					e di <i><u>controllare sempre</u></i>, dopo il salvataggio, la leggibilit‡ dell'allegato utilizzando il bottone "Apri file"<%if (!bp.getParentRoot().isBootstrap()) { %><br><% } %>
+					e di <i><u>controllare sempre</u></i>, dopo il salvataggio, la leggibilit√† dell'allegato utilizzando il bottone "Apri file"<%if (!bp.getParentRoot().isBootstrap()) { %><br><% } %>
 					</span>
 				</td></tr>
 				<% } %>

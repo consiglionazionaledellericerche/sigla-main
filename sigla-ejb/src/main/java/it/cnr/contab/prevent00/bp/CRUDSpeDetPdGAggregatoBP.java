@@ -73,7 +73,7 @@ protected void resetTabs(it.cnr.jada.action.ActionContext context) {
 }
 
 /**
- * Setta il centro di responsabilit‡ cui afferiscono i PdG in questione.
+ * Setta il centro di responsabilit√† cui afferiscono i PdG in questione.
  * 
  * @param newCdr it.cnr.contab.config00.sto.bulk.CdrBulk
  *

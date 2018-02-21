@@ -28,7 +28,7 @@ public Forward doOnFlAumentoValoreChange(ActionContext context) {
 
 	/** 21.06.2004: Borriello
 	  *	 In seguito all'implementazione del Buono di Carico per aumento di valore, 
-	  *	 proveniente da Fattura Passiva, è stato necessario inibire il codice che segue, poichè
+	  *	 proveniente da Fattura Passiva, Ã¨ stato necessario inibire il codice che segue, poichÃ¨
 	  *	 deve essere possibile creare un Tipo di Movimento (Carico), che sia allo stesso
 	  *	 tempo Visibile da Fattura, (FL_FATTURABILE = 'Y'), e per aumento di valore,
 	  *	 (FL_AUMENTO_VALORE = 'Y').

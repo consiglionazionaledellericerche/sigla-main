@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -90,7 +90,7 @@
 		inputSize="22"
 		maxLength="22"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Variazioni spese già approvate" />
+		label="Variazioni spese giÃ  approvate" />
 	<fieldProperty
 		name="pre_costi_var_app"
 		property="pre_costi_var_app"
@@ -98,7 +98,7 @@
 		inputSize="22"
 		maxLength="22"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Variazioni costi già approvati" />
+		label="Variazioni costi giÃ  approvati" />
 	<fieldProperty
 		name="pre_spese_var_prd"
 		property="pre_spese_var_prd"
@@ -106,7 +106,7 @@
 		inputSize="22"
 		maxLength="22"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Variazioni spese già da approvare" />
+		label="Variazioni spese giÃ  da approvare" />
 	<fieldProperty
 		name="pre_costi_var_prd"
 		property="pre_costi_var_prd"
@@ -114,7 +114,7 @@
 		inputSize="22"
 		maxLength="22"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Variazioni costi già da approvare" />
+		label="Variazioni costi giÃ  da approvare" />
 	<fieldProperty
 		name="spese_var_app"
 		property="spese_var_app"
@@ -218,7 +218,7 @@
 		inputSize="22"
 		maxLength="22"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Variazioni entrate già approvate" />
+		label="Variazioni entrate giÃ  approvate" />
 	<fieldProperty
 		name="pre_ricavi_var_app"
 		property="pre_ricavi_var_app"
@@ -226,7 +226,7 @@
 		inputSize="22"
 		maxLength="22"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Variazioni ricavi già approvati" />
+		label="Variazioni ricavi giÃ  approvati" />
 	<fieldProperty
 		name="pre_entrate_var_prd"
 		property="pre_entrate_var_prd"
@@ -234,7 +234,7 @@
 		inputSize="22"
 		maxLength="22"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Variazioni entrate già da approvare" />
+		label="Variazioni entrate giÃ  da approvare" />
 	<fieldProperty
 		name="pre_ricavi_var_prd"
 		property="pre_ricavi_var_prd"
@@ -242,7 +242,7 @@
 		inputSize="22"
 		maxLength="22"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Variazioni ricavi già da approvare" />
+		label="Variazioni ricavi giÃ  da approvare" />
 	<fieldProperty
 		name="entrate_var_app"
 		property="entrate_var_app"

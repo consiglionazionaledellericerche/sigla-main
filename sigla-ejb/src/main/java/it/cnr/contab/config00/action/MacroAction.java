@@ -130,7 +130,7 @@ public class MacroAction extends FormAction{
 			        ui.getCdr().getCd_centro_responsabilita());			
 			actioncontext.setUserContext(userContext);
 			actioncontext.setUserInfo(ui);
-			//Se il mode è H allora va in sola visualizzazione altrimenti in modifica			
+			//Se il mode Ã¨ H allora va in sola visualizzazione altrimenti in modifica			
 			mode = mode.equals("H")?"V":"M";
             if (costi_personale.equals("N")){
 				Object[] parametri;
@@ -173,13 +173,13 @@ public class MacroAction extends FormAction{
 			}
 			return actioncontext.findDefaultForward();
 		} catch(it.cnr.contab.utente00.nav.comp.PasswordScadutaException e) {
-			setErrorMessage(actioncontext,"Password scaduta da più di sei mesi.");
+			setErrorMessage(actioncontext,"Password scaduta da piÃ¹ di sei mesi.");
 			return actioncontext.findForward("password_scaduta");
 		} catch(it.cnr.contab.utente00.nav.comp.UtenteNonValidoException e) {
-			setErrorMessage(actioncontext,"Utente non più valido");
+			setErrorMessage(actioncontext,"Utente non piÃ¹ valido");
 			return actioncontext.findDefaultForward();
 		} catch(it.cnr.contab.utente00.nav.comp.UtenteInDisusoException e) {
-			setErrorMessage(actioncontext,"Utente non utilizzato da più di sei mesi.");
+			setErrorMessage(actioncontext,"Utente non utilizzato da piÃ¹ di sei mesi.");
 			return actioncontext.findDefaultForward();
 		} catch(Throwable e) {
 			return handleException(actioncontext,e);

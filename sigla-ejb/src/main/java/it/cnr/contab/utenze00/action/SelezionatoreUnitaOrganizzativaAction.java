@@ -13,7 +13,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import javax.servlet.http.HttpSessionBindingEvent;
 
 /**
- * Action di gestione della selezione di unit‡ organizzative di scrivania
+ * Action di gestione della selezione di unit√† organizzative di scrivania
  */
 
 public class SelezionatoreUnitaOrganizzativaAction extends it.cnr.jada.util.action.SelezionatoreListaAction {
@@ -68,11 +68,11 @@ public Forward doSelezionaEsercizio(ActionContext context) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'componentSession'
+ * Restituisce il valore della propriet√† 'componentSession'
  *
- * @return Il valore della propriet‡ 'componentSession'
- * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non Ë possibile effettuare l'operazione
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+ * @return Il valore della propriet√† 'componentSession'
+ * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non √® possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
  */
 public static GestioneLoginComponentSession getComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException {
 	return (GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession",GestioneLoginComponentSession.class);

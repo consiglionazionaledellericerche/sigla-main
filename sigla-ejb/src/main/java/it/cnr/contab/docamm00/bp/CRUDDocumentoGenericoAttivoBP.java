@@ -232,9 +232,9 @@ public it.cnr.jada.util.RemoteIterator findObbligazioniAttributes(ActionContext 
 	}
 }
 /**
- * Restituisce il valore della propriet‡ 'accertamentiController'
+ * Restituisce il valore della propriet√† 'accertamentiController'
  *
- * @return Il valore della propriet‡ 'accertamentiController'
+ * @return Il valore della propriet√† 'accertamentiController'
  */
 public final AccertamentiCRUDController getAccertamentiController() {
 	return accertamentiController;
@@ -274,17 +274,17 @@ public it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk getDeleteMan
 	return deleteManager;
 }
 /**
- * Restituisce il valore della propriet‡ 'dettaglio'
+ * Restituisce il valore della propriet√† 'dettaglio'
  *
- * @return Il valore della propriet‡ 'dettaglio'
+ * @return Il valore della propriet√† 'dettaglio'
  */
 public final SimpleDetailCRUDController getDettaglio() {
 	return dettaglio;
 }
 /**
- * Restituisce il valore della propriet‡ 'dettaglioAccertamentoController'
+ * Restituisce il valore della propriet√† 'dettaglioAccertamentoController'
  *
- * @return Il valore della propriet‡ 'dettaglioAccertamentoController'
+ * @return Il valore della propriet√† 'dettaglioAccertamentoController'
  */
 public final it.cnr.jada.util.action.SimpleDetailCRUDController getDettaglioAccertamentoController() {
 	return dettaglioAccertamentoController;
@@ -301,9 +301,9 @@ public String getPropertyForGenericSearch() {
 	return null;
 }
 /**
- * Restituisce il valore della propriet‡ 'userConfirm'
+ * Restituisce il valore della propriet√† 'userConfirm'
  *
- * @return Il valore della propriet‡ 'userConfirm'
+ * @return Il valore della propriet√† 'userConfirm'
  */
 public it.cnr.contab.doccont00.core.bulk.OptionRequestParameter getUserConfirm() {
 	return userConfirm;
@@ -476,7 +476,7 @@ public boolean isSaveButtonEnabled() {
 					 * tutti i dati risultano comunque non aggiornabili
 					 !doc.isPagata() && */
  				            // Gennaro Borriello - (02/11/2004 16.48.21)
-				            //	Allineato controllo su "Stato Riportato-Anno di Competenza" cosÏ come in
+				            //	Allineato controllo su "Stato Riportato-Anno di Competenza" cos√¨ come in
 				            //	<code>CRUDDocumentoGenericoPassivoBP.isSaveButtonEnabled()</code>			
 			        ((!doc.isRiportata() && isAnnoDiCompetenza()) || carryingThrough || isDetailDoubleable());
 }
@@ -541,7 +541,7 @@ public void riportaIndietro(ActionContext context)
 	throws it.cnr.jada.action.BusinessProcessException {
 	
 	if (isDirty()) {
-		setMessage("Il documento Ë stato modificato! Operazione annullata.");
+		setMessage("Il documento √® stato modificato! Operazione annullata.");
 		return;
 	}
 	
@@ -602,7 +602,7 @@ public void salvaRiportandoAvanti(ActionContext context)
 		riportaAvanti(context);
 	} catch (BusinessProcessException e) {
 		rollbackToSavePoint(context, IDocumentoAmministrativoBulk.RIPORTA_AVANTI);
-		//Il setModel Ë necessario perchË update setta il modello. se riportaAvanti fallisce il pg_ver_rec
+		//Il setModel √® necessario perch√® update setta il modello. se riportaAvanti fallisce il pg_ver_rec
 		//rimane disallineato.
 		setModel(context, docClone);
 		throw handleException(e);
@@ -692,7 +692,7 @@ public void setSavePoint(ActionContext context, String savePointName) throws Bus
 	}
 }
 /**
- * Imposta il valore della propriet‡ 'userConfirm'
+ * Imposta il valore della propriet√† 'userConfirm'
  *
  * @param newUserConfirm	Il valore da assegnare a 'userConfirm'
  */
@@ -718,7 +718,7 @@ public void update(it.cnr.jada.action.ActionContext context)
 }
 /**
   * Validazione dell'obbligazione in fase di creazione di una nuova obbligazione
-  * o modifica di una gi‡ creata.
+  * o modifica di una gi√† creata.
   * Il metodo viene chiamato sul riporta dell'Obbligazione in modo da validare
   * istantaneamente l'oggetto creato.
   * Chi non ne ha bisogno lo lasci vuoto.
@@ -761,9 +761,9 @@ public void sdoppiaDettaglioInAutomatico(ActionContext context) throws Validatio
 		
         if (dettaglioSelezionato==null) return;
         if (documento.getStato_cofi() != null && documento.getStato_cofi().equals(documento.STATO_PAGATO))
-       		setMessage("Non Ë possibile sdoppiare righe in un documento pagato");
+       		setMessage("Non √® possibile sdoppiare righe in un documento pagato");
          if (dettaglioSelezionato.getIm_riga()==null){
-        	setMessage("Non Ë possibile sdoppiare righe in cui l'importo di origine non Ë valorizzato");
+        	setMessage("Non √® possibile sdoppiare righe in cui l'importo di origine non √® valorizzato");
         	return;
          }
         if (dettaglioSelezionato.getIm_riga_sdoppia()==null ||
@@ -781,9 +781,9 @@ public void sdoppiaDettaglioInAutomatico(ActionContext context) throws Validatio
 
 		if (dettaglioSelezionato.getAccertamento_scadenziario()!=null) {
 			/*
-			 * L'importo della scadenza vecchia sar‡ pari al valore iniziale diminuito del valore originario del 
+			 * L'importo della scadenza vecchia sar√† pari al valore iniziale diminuito del valore originario del 
 			 * dettaglio e aumentato del valore nuovo.
-			 * CiÚ al fine di gestire il caso di utenti che collegano pi˘ dettagli di documento alla stessa scadenza 
+			 * Ci√≤ al fine di gestire il caso di utenti che collegano pi√π dettagli di documento alla stessa scadenza 
 			 */ 
         	scadenzaNuova=(Accertamento_scadenzarioBulk) h.sdoppiaScadenzaInAutomatico(context.getUserContext(),
 								                                                       scadenzaVecchia,
@@ -888,13 +888,13 @@ private Documento_generico_rigaBulk copyByRigaDocumento(ActionContext context, D
 }
 /**
  * Boolean
- *   individua le condizioni per cui Ë possibile sdoppiare i dettagli del 
+ *   individua le condizioni per cui √® possibile sdoppiare i dettagli del 
  *   documento
  *   
  *   false: - se annullato
  * 		    - se eliminato
  * 		    - se interamente incassato
- * 		    - se, indipendentemente dall'anno, Ë stata riportata all'esercizio successivo 
+ * 		    - se, indipendentemente dall'anno, √® stata riportata all'esercizio successivo 
  * 		    - se non di anno corrente e non riportata all'esercizio successivo 
  *
  * @return Returns the isDetailDoubleable.
@@ -911,7 +911,7 @@ public boolean isDetailDoubleable() {
 }
 /**
  * Boolean 
- *   true: Ë in corso lo sdoppiamento di una riga di dettaglio
+ *   true: √® in corso lo sdoppiamento di una riga di dettaglio
  *
  * @return Returns the isDetailDoubling.
  */

@@ -31,7 +31,7 @@ public PdGCostiScaricatiEtrComponent() {
  */
 //^^@@
 	public void eliminaConBulk (it.cnr.jada.UserContext userContext,it.cnr.jada.bulk.OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
-		throw new it.cnr.jada.comp.ApplicationException("Non è possibile eliminare il dettaglio caricato!");
+		throw new it.cnr.jada.comp.ApplicationException("Non Ã¨ possibile eliminare il dettaglio caricato!");
 	}
 
     //^^@@
@@ -45,7 +45,7 @@ public PdGCostiScaricatiEtrComponent() {
 //^^@@
 	public it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext userContext,it.cnr.jada.bulk.OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 //		return bulk;
-			throw new it.cnr.jada.comp.ApplicationException("Non è possibile modificare il dettaglio caricato!");
+			throw new it.cnr.jada.comp.ApplicationException("Non Ã¨ possibile modificare il dettaglio caricato!");
 	}
 
 /**	

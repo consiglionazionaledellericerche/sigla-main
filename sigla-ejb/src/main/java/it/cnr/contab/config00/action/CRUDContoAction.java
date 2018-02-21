@@ -43,7 +43,7 @@ public Forward doConfermaGruppoNaturaNonCongrui(ActionContext context,int option
 		return context.findDefaultForward();
 }
 	/**
-	 * Metodo utilizzato per gestire l'eccezione generata dalla non associabilit‡ fra il gruppo del 
+	 * Metodo utilizzato per gestire l'eccezione generata dalla non associabilit√† fra il gruppo del 
 	 * conto e la sua natura
 	 *
 	 * @param context <code>ActionContext</code> in uso.

@@ -52,7 +52,7 @@ public it.cnr.jada.action.BusinessProcess createBusinessProcess(it.cnr.jada.acti
 		if (params.length > 0 &&
 			params[0] instanceof String) {
             if(getUtente().isUtenteComune() && getUnita_organizzativa() == null)
-				throw new it.cnr.jada.action.MessageToUser("Unit‡ organizzativa su cui l'utente ha l'accesso richiesto non specificata!");
+				throw new it.cnr.jada.action.MessageToUser("Unit√† organizzativa su cui l'utente ha l'accesso richiesto non specificata!");
 			String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),getUtente(),getUtente().isUtenteComune() ? getUnita_organizzativa().getCd_unita_organizzativa() : "*",name);
 			if (mode == null) 
 				throw new it.cnr.jada.action.MessageToUser("Accesso non consentito");
@@ -76,9 +76,9 @@ public boolean fillFromActionContext(it.cnr.jada.action.ActionContext context,St
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'alberoRoot'
+ * Restituisce il valore della propriet√† 'alberoRoot'
  *
- * @return Il valore della propriet‡ 'alberoRoot'
+ * @return Il valore della propriet√† 'alberoRoot'
  */
 public Albero_mainBulk getAlberoRoot() {
 	return alberoRoot;
@@ -86,9 +86,9 @@ public Albero_mainBulk getAlberoRoot() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cdr'
+ * Restituisce il valore della propriet√† 'cdr'
  *
- * @return Il valore della propriet‡ 'cdr'
+ * @return Il valore della propriet√† 'cdr'
  */
 public it.cnr.contab.config00.sto.bulk.CdrBulk getCdr() {
 	if(utente==null || !(utente instanceof UtenteComuneBulk)) {
@@ -102,9 +102,9 @@ public it.cnr.contab.config00.sto.bulk.CdrBulk getCdr() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'confermaPassword'
+ * Restituisce il valore della propriet√† 'confermaPassword'
  *
- * @return Il valore della propriet‡ 'confermaPassword'
+ * @return Il valore della propriet√† 'confermaPassword'
  */
 public java.lang.String getConfermaPassword() {
 	return confermaPassword;
@@ -112,9 +112,9 @@ public java.lang.String getConfermaPassword() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'descrizioneSessione'
+ * Restituisce il valore della propriet√† 'descrizioneSessione'
  *
- * @return Il valore della propriet‡ 'descrizioneSessione'
+ * @return Il valore della propriet√† 'descrizioneSessione'
  */
 public java.lang.String getDescrizioneSessione() {
 	return descrizioneSessione;
@@ -122,9 +122,9 @@ public java.lang.String getDescrizioneSessione() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'esercizi'
+ * Restituisce il valore della propriet√† 'esercizi'
  *
- * @return Il valore della propriet‡ 'esercizi'
+ * @return Il valore della propriet√† 'esercizi'
  */
 public java.lang.Integer[] getEsercizi() {
 	return esercizi;
@@ -132,9 +132,9 @@ public java.lang.Integer[] getEsercizi() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'esercizio'
+ * Restituisce il valore della propriet√† 'esercizio'
  *
- * @return Il valore della propriet‡ 'esercizio'
+ * @return Il valore della propriet√† 'esercizio'
  */
 public Integer getEsercizio() {
 	return esercizio;
@@ -179,9 +179,9 @@ public static String getCd_tipo_rapporto(it.cnr.jada.action.ActionContext contex
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'nuovaPassword'
+ * Restituisce il valore della propriet√† 'nuovaPassword'
  *
- * @return Il valore della propriet‡ 'nuovaPassword'
+ * @return Il valore della propriet√† 'nuovaPassword'
  */
 public java.lang.String getNuovaPassword() {
 	return nuovaPassword;
@@ -189,9 +189,9 @@ public java.lang.String getNuovaPassword() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'password'
+ * Restituisce il valore della propriet√† 'password'
  *
- * @return Il valore della propriet‡ 'password'
+ * @return Il valore della propriet√† 'password'
  */
 public java.lang.String getPassword() {
 	return password;
@@ -199,9 +199,9 @@ public java.lang.String getPassword() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'unita_organizzativa'
+ * Restituisce il valore della propriet√† 'unita_organizzativa'
  *
- * @return Il valore della propriet‡ 'unita_organizzativa'
+ * @return Il valore della propriet√† 'unita_organizzativa'
  */
 public it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk getUnita_organizzativa() {
 	return unita_organizzativa;
@@ -219,9 +219,9 @@ public static it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk getUnita_o
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'utente'
+ * Restituisce il valore della propriet√† 'utente'
  *
- * @return Il valore della propriet‡ 'utente'
+ * @return Il valore della propriet√† 'utente'
  */
 public UtenteBulk getUtente() {
 	return utente;
@@ -229,7 +229,7 @@ public UtenteBulk getUtente() {
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'alberoRoot'
+ * Imposta il valore della propriet√† 'alberoRoot'
  *
  * @param newAlberoRoot	Il valore da assegnare a 'alberoRoot'
  */
@@ -239,7 +239,7 @@ public void setAlberoRoot(Albero_mainBulk newAlberoRoot) {
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'confermaPassword'
+ * Imposta il valore della propriet√† 'confermaPassword'
  *
  * @param newConfermaPassword	Il valore da assegnare a 'confermaPassword'
  */
@@ -249,7 +249,7 @@ public void setConfermaPassword(java.lang.String newConfermaPassword) {
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'descrizioneSessione'
+ * Imposta il valore della propriet√† 'descrizioneSessione'
  *
  * @param newDescrizioneSessione	Il valore da assegnare a 'descrizioneSessione'
  */
@@ -259,7 +259,7 @@ public void setDescrizioneSessione(java.lang.String newDescrizioneSessione) {
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'esercizi'
+ * Imposta il valore della propriet√† 'esercizi'
  *
  * @param newEsercizi	Il valore da assegnare a 'esercizi'
  */
@@ -269,7 +269,7 @@ public void setEsercizi(java.lang.Integer[] newEsercizi) {
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'esercizio'
+ * Imposta il valore della propriet√† 'esercizio'
  *
  * @param newEsercizio	Il valore da assegnare a 'esercizio'
  */
@@ -279,7 +279,7 @@ public void setEsercizio(Integer newEsercizio) {
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'nuovaPassword'
+ * Imposta il valore della propriet√† 'nuovaPassword'
  *
  * @param newNuovaPassword	Il valore da assegnare a 'nuovaPassword'
  */
@@ -289,7 +289,7 @@ public void setNuovaPassword(java.lang.String newNuovaPassword) {
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'password'
+ * Imposta il valore della propriet√† 'password'
  *
  * @param newPassword	Il valore da assegnare a 'password'
  */
@@ -299,7 +299,7 @@ public void setPassword(java.lang.String newPassword) {
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'unita_organizzativa'
+ * Imposta il valore della propriet√† 'unita_organizzativa'
  *
  * @param newUnita_organizzativa	Il valore da assegnare a 'unita_organizzativa'
  */
@@ -309,7 +309,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'utente'
+ * Imposta il valore della propriet√† 'utente'
  *
  * @param newUtente	Il valore da assegnare a 'utente'
  */
