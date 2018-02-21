@@ -1,12 +1,12 @@
 package it.cnr.contab.pdg00.bp;
 
 import java.rmi.RemoteException;
+import java.util.Optional;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazione_archivioBulk;
@@ -17,8 +17,7 @@ import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneGestionaleBP;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
-import it.cnr.jada.UserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
@@ -27,7 +26,9 @@ import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.util.action.SimpleCRUDBP;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 /**
@@ -93,7 +94,9 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	private Unita_organizzativaBulk uoSrivania;
 	private DipartimentoBulk dipartimentoSrivania;	
 	private Parametri_cnrBulk parametriCnr;
-		
+	
+	private boolean attivaGestioneVariazioniTrasferimento;
+	
 	public PdGVariazioneBP() {
 		super();
 	}
@@ -123,23 +126,18 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	public it.cnr.contab.config00.ejb.CDRComponentSession createCdrComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
 		return (it.cnr.contab.config00.ejb.CDRComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_CDRComponentSession", it.cnr.contab.config00.ejb.CDRComponentSession.class);
 	}
-	/**
-	 * Crea la ParametriCnrComponentSession da usare per effettuare operazioni
-	 */
-	public Parametri_cnrComponentSession createParametriCnrComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
-		return (Parametri_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Parametri_cnrComponentSession", Parametri_cnrComponentSession.class);
-	}
 
 	protected void initialize(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
 		super.initialize(context);
 		try {
-			setParametriCnr(createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())));
+			setParametriCnr(Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())));
 			setCentro_responsabilita_scrivania(createCdrComponentSession().cdrFromUserContext(context.getUserContext()));
 			setAbilitatoModificaDescVariazioni(UtenteBulk.isAbilitatoModificaDescVariazioni(context.getUserContext()));
 			((Pdg_variazioneBulk)getModel()).setCentro_responsabilita(getCentro_responsabilita_scrivania());
 			setUoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context));
 			if (it.cnr.contab.utenze00.bulk.CNRUserInfo.getDipartimento(context)!=null)
 				setDipartimentoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getDipartimento(context));
+			setAttivaGestioneVariazioniTrasferimento(Utility.createParametriEnteComponentSession().getParametriEnte(context.getUserContext()).getFl_variazioni_trasferimento());
 			validaAccessoBP(context);
 		} catch (ComponentException e) {
 			throw handleException(e);
@@ -248,13 +246,19 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	}
 	public boolean isSaveButtonEnabled()
 	{
-		if (!isAbilitatoModificaDescVariazioni() && ((Pdg_variazioneBulk)getModel()).isApprovata())
+		Pdg_variazioneBulk pdgVariazione = (Pdg_variazioneBulk)getModel();
+		if (!isAbilitatoModificaDescVariazioni() && pdgVariazione.isApprovata())
 			return false;
-		else if (isUoEnte() && this.abilitatoModificaDescVariazioni &&((Pdg_variazioneBulk)getModel()).isPropostaDefinitiva()) 
+		else if (isUoEnte() && this.abilitatoModificaDescVariazioni && pdgVariazione.isPropostaDefinitiva()) 
+			return true;
+		else if ((isUoEnte() || isCdrScrivania()) && 
+				(pdgVariazione.isApprovata() || pdgVariazione.isApprovazioneFormale()) &&
+				 pdgVariazione.isMotivazioneVariazioneBando() && pdgVariazione.getStorageMatricola()==null)
 			return true;
 		else
-			return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte()) &&!(((Pdg_variazioneBulk)getModel()).getStatoDocumentale()!=null);
+			return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte()) && !(pdgVariazione.getStatoDocumentale()!=null);
 	}	
+
 	public boolean isDeleteButtonEnabled()
 	{
 		return super.isDeleteButtonEnabled() && (isCdrScrivania() || isUoEnte()) && 
@@ -404,9 +408,9 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
  
 		if (getStatus()!=VIEW){
 			Pdg_variazioneBulk pdg = (Pdg_variazioneBulk)getModel();
-			if (pdg!=null && pdg.isCancellatoLogicamente() 
-//					|| pdg.isApprovata() 
-					|| pdg.isRespinta()|| pdg.isApprovazioneFormale()) {
+			if (pdg!=null && 
+				(pdg.isCancellatoLogicamente() || pdg.isRespinta() || 
+				 (pdg.isApprovazioneFormale() && (!pdg.isMotivazioneVariazioneBando()||pdg.getStorageMatricola()!=null)))) {
 				setStatus(VIEW);
 			}			
 		}
@@ -640,5 +644,43 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		} catch (Throwable e) {
 			throw new BusinessProcessException(e.getMessage());
 		}
+	}
+	
+	public void aggiornaMotivazioneVariazione(ActionContext context) throws BusinessProcessException{
+		Pdg_variazioneBulk pdgVar = (Pdg_variazioneBulk)this.getModel();
+		pdgVar.setTiMotivazioneVariazione(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO.equals(pdgVar.getMapMotivazioneVariazione())
+											?null
+											:pdgVar.getMapMotivazioneVariazione());
+
+		if (pdgVar.isMotivazioneVariazioneBando())
+			pdgVar.setIdMatricola(null);
+		else if (pdgVar.isMotivazioneVariazioneProroga() || pdgVar.isMotivazioneVariazioneAltreSpese())
+			pdgVar.setIdBando(null);
+		else {
+			pdgVar.setIdMatricola(null);
+			pdgVar.setIdBando(null);
+		}
+	}
+	
+	@Override
+	public OggettoBulk initializeModelForEdit(ActionContext actioncontext, OggettoBulk oggettobulk)
+			throws BusinessProcessException {
+		OggettoBulk bulk = super.initializeModelForEdit(actioncontext, oggettobulk); 
+		Optional.ofNullable(bulk)
+				.filter(Pdg_variazioneBulk.class::isInstance)
+				.map(Pdg_variazioneBulk.class::cast)
+				.ifPresent(el->{
+					el.setMapMotivazioneVariazione(Optional.ofNullable(el.getTiMotivazioneVariazione()).orElse(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO));	
+					el.setStorageMatricola(el.getIdMatricola());
+				});
+		return bulk;
+	}
+	
+	public boolean isAttivaGestioneVariazioniTrasferimento() {
+		return attivaGestioneVariazioniTrasferimento;
+	}
+
+	private void setAttivaGestioneVariazioniTrasferimento(boolean attivaGestioneVariazioniTrasferimento) {
+		this.attivaGestioneVariazioniTrasferimento = attivaGestioneVariazioniTrasferimento;
 	}
 }

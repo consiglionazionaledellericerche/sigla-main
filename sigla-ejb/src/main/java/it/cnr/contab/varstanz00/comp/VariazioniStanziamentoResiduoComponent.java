@@ -21,6 +21,7 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.CdrKey;
@@ -31,6 +32,8 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_mod_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
@@ -89,6 +92,7 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
@@ -453,17 +457,42 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				throw new ApplicationException("Il Totale da ripartire per uno storno deve essere zero.");
 		    }
 		try{
+			boolean existDettPersonale = true;
+			String cdrPersonale = null;
+			if (Optional.ofNullable(var_stanz_res.getTiMotivazioneVariazione()).isPresent()) { 
+				cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(userContext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
+						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
+				existDettPersonale = false;
+			} 
+
 			for (java.util.Iterator j=var_stanz_res.getAssociazioneCDR().iterator();j.hasNext();){			
 				Ass_var_stanz_res_cdrBulk ass_cdr = (Ass_var_stanz_res_cdrBulk)j.next();
 				Ass_var_stanz_res_cdrHome ass_cdrHome = (Ass_var_stanz_res_cdrHome)getHome(userContext,Ass_var_stanz_res_cdrBulk.class);
 	
-				if (ass_cdrHome.findDettagliSpesa(ass_cdr).isEmpty()) { 
+				existDettPersonale = existDettPersonale||cdrPersonale.equals(ass_cdr.getCd_centro_responsabilita());
+
+				java.util.Collection<Var_stanz_res_rigaBulk> dettagliSpesa = ass_cdrHome.findDettagliSpesa(ass_cdr);
+				if (dettagliSpesa.isEmpty()) 
 						throw new ApplicationException("Associare almeno un dettaglio di variazione al Centro di Responsabilitïà " + ass_cdr.getCd_centro_responsabilita());
-				}
 				if (ass_cdr.getSpesa_diff().compareTo(Utility.ZERO) != 0)
 					throw new ApplicationException("La Differenza di spesa ("+new it.cnr.contab.util.EuroFormat().format(ass_cdr.getSpesa_diff())+")"+
 												   "\n" + "per il Cdr "+ ass_cdr.getCd_centro_responsabilita()+ " è diversa da zero. ");
+
+				if (!existDettPersonale) {
+					for (Var_stanz_res_rigaBulk varStanzResRiga : dettagliSpesa) {
+						if (!existDettPersonale) {
+							Elemento_voceBulk voce = (Elemento_voceBulk)getHome(userContext, Elemento_voceBulk.class).findByPrimaryKey(varStanzResRiga.getElemento_voce());
+							Classificazione_vociBulk classif = (Classificazione_vociBulk)getHome(userContext, Classificazione_vociBulk.class).findByPrimaryKey(new Classificazione_vociBulk(voce.getId_classificazione()));
+							existDettPersonale = classif.getFl_accentrato()&&cdrPersonale.equals(classif.getCdr_accentratore());
+						}
+					}
+				}
 			}
+
+			if (!existDettPersonale)
+				throw new ApplicationException("In un variazione di tipo 'Personale' occorre selezionare almeno una voce accentrata "
+						+ "verso il CDR del personale o scegliere tra i CDR partecipanti anche quello del personale ("+cdrPersonale+").");
+
 			aggiornaLimiteSpesa(userContext, var_stanz_res);
 		} catch (IntrospectionException e) {
 			throw new ComponentException(e);

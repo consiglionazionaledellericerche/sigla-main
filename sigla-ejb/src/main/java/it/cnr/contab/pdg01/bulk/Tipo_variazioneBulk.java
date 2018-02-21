@@ -70,6 +70,7 @@ public class Tipo_variazioneBulk extends Tipo_variazioneBase {
 		setFl_utilizzabile_cds( new Boolean( false ) );
 		setFl_utilizzabile_ente(new Boolean( false ) );
 		setTi_approvazione(this.APPROVAZIONE_CDS);
+		setFl_variazione_trasferimento(Boolean.FALSE);
 		return this;
 	}
 	/**
