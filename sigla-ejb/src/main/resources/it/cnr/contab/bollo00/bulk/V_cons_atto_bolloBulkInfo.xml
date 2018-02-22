@@ -71,9 +71,34 @@
 		layout="HORIZONTAL"
 		keysProperty="tiTipoConsultazioneKeys"
 		label="Visualizza Consultazione in modalità" />		
+	<fieldProperty
+		name="numGeneraleFogli"
+		property="numGeneraleFogli"
+		label="Num. Fogli"
+		inputType="TEXT"
+		style="text-align: right" />
+	<fieldProperty
+		name="numGeneraleEsemplari"
+		property="numGeneraleEsemplari"
+		label="Num. Esemplari"
+		inputType="TEXT"
+		style="text-align: right" />
+	<fieldProperty
+		name="imGeneraleBollo"
+		property="imGeneraleBollo"
+		label="Totale Bollo"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		style="text-align: right" />
 
 	<formFieldProperty 
 		name="tipoConsultazione"/>
+	<formFieldProperty 
+		name="numGeneraleFogli"/>
+	<formFieldProperty 
+		name="numGeneraleEsemplari"/>
+	<formFieldProperty 
+		name="imGeneraleBollo"/>
 
 	<columnSet name="TIP">
 		<columnFieldProperty name="esercizio" />

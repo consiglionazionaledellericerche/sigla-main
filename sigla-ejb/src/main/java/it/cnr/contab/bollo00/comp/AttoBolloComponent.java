@@ -107,11 +107,14 @@ public class AttoBolloComponent extends CRUDComponent {
 		return sqlBuilder;
 	}
 
-	public RemoteIterator findConsultazioneDettaglio(UserContext userContext, String pathDestinazione, String livelloDestinazione, CompoundFindClause baseClause, CompoundFindClause findClause) throws it.cnr.jada.comp.ComponentException {
+	public RemoteIterator findConsultazioneDettaglio(UserContext userContext, String pathDestinazione, String livelloDestinazione, CompoundFindClause baseClause, CompoundFindClause findClause, boolean totGenerale) throws it.cnr.jada.comp.ComponentException {
 		try{
 			Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk) getHome(userContext,Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
 			
-			BulkHome home = getHome(userContext, V_cons_atto_bolloBulk.class, pathDestinazione);
+			String innerPathDestinazione = totGenerale?ConsAttoBolloBP.LIVELLO_TIP:pathDestinazione;
+			String innerLivelloDestinazione = totGenerale?ConsAttoBolloBP.LIVELLO_TIP:livelloDestinazione;
+
+			BulkHome home = getHome(userContext, V_cons_atto_bolloBulk.class, innerPathDestinazione);
 			SQLBuilder sql = home.createSQLBuilder();
 			SQLBuilder sqlEsterna = home.createSQLBuilder();
 
@@ -120,7 +123,7 @@ public class AttoBolloComponent extends CRUDComponent {
 				sql.addSQLClause(FindClause.AND, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());
 				sqlEsterna.addSQLClause(FindClause.AND, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());
 			}
-			if (pathDestinazione.indexOf(ConsAttoBolloBP.LIVELLO_DET)>=0) {
+			if (innerPathDestinazione.indexOf(ConsAttoBolloBP.LIVELLO_DET)>=0) {
 				sql.addClause(baseClause);
 				return iterator(userContext,sql,V_cons_atto_bolloBulk.class,null);
 			} else {
@@ -130,13 +133,13 @@ public class AttoBolloComponent extends CRUDComponent {
 				addColumnBase(sql,tabAlias,true);
 				addColumnBase(sqlEsterna,tabAlias,false);
 
-				if (pathDestinazione.indexOf(ConsAttoBolloBP.LIVELLO_TIP)>=0) {
-					addColumnTIP(sql,tabAlias,livelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_TIP),true);
-					addColumnTIP(sqlEsterna,tabAlias,livelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_TIP),false);
+				if (totGenerale || innerPathDestinazione.indexOf(ConsAttoBolloBP.LIVELLO_TIP)>=0) {
+					addColumnTIP(sql,tabAlias,innerLivelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_TIP),true);
+					addColumnTIP(sqlEsterna,tabAlias,innerLivelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_TIP),false);
 				}
-				if (pathDestinazione.indexOf(ConsAttoBolloBP.LIVELLO_UO)>=0){
-					addColumnUO(sql,tabAlias,livelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_UO),true);
-					addColumnUO(sqlEsterna,tabAlias,livelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_UO),false);
+				if (!totGenerale && innerPathDestinazione.indexOf(ConsAttoBolloBP.LIVELLO_UO)>=0){
+					addColumnUO(sql,tabAlias,innerLivelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_UO),true);
+					addColumnUO(sqlEsterna,tabAlias,innerLivelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_UO),false);
 				}
 
 				return iterator(userContext,completaSQL(sql,sqlEsterna,tabAlias,baseClause,findClause),V_cons_atto_bolloBulk.class,null);
