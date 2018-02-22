@@ -14,9 +14,11 @@ import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -146,10 +148,10 @@ public class AttoBolloComponent extends CRUDComponent {
 
 	/**
 	 * Individua e completa l'SQLBuilder da utilizzare:
-	 * 1) è stata effettuata una ricerca mirata (<findClause> != null)
-	 * 	  la select finale è costruita come interrogazione di una view costruita sulla select principale <baseClause>
-	 * 2) non è stata fatta una ricerca mirata
-	 * 	  la select finale è uguale alla select principale
+	 * 1) Ã¨ stata effettuata una ricerca mirata (<findClause> != null)
+	 * 	  la select finale Ã¨ costruita come interrogazione di una view costruita sulla select principale <baseClause>
+	 * 2) non Ã¨ stata fatta una ricerca mirata
+	 * 	  la select finale Ã¨ uguale alla select principale
 	 *
 	 * @param sql la select principale contenente le Sum e i GroupBy
 	 * @param sqlEsterna la select esterna necessaria per interrogare la select principale come view
@@ -206,8 +208,8 @@ public class AttoBolloComponent extends CRUDComponent {
 	 * @param sql l'SQLBuilder da aggiornare
 	 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 	 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-	 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-	 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+	 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+	 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 	 */
 	private void addColumnTIP(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
 		tabAlias = getAlias(tabAlias);
@@ -227,8 +229,8 @@ public class AttoBolloComponent extends CRUDComponent {
 	 * @param sql l'SQLBuilder da aggiornare
 	 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 	 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-	 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-	 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+	 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+	 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 	 */
 	private void addColumnUO(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
 		tabAlias = getAlias(tabAlias);
@@ -330,5 +332,24 @@ public class AttoBolloComponent extends CRUDComponent {
 		  sql.closeParenthesis();  		 
 		}
 		return sql;
+	}
+	
+	@Override
+	protected void validaCreaModificaConBulk(UserContext userContext, OggettoBulk oggettoBulk) throws ComponentException {
+		try {
+			if (Optional.ofNullable(oggettoBulk)
+					.filter(Atto_bolloBulk.class::isInstance)
+					.map(Atto_bolloBulk.class::cast)
+					.filter(el->Optional.ofNullable(el.getDt_provv()).isPresent()&&Optional.ofNullable(el.getCdTipoAttoBollo()).isPresent())
+					.isPresent()) {
+				Atto_bolloBulk atto = (Atto_bolloBulk)oggettoBulk;
+				Tipo_atto_bolloBulk tipoAtto = Utility.createTipoAttoBolloComponentSession().getTipoAttoBollo(userContext, atto.getDt_provv(), atto.getCdTipoAttoBollo());
+				Optional.ofNullable(tipoAtto)
+					.orElseThrow(() -> new ApplicationException("Il Tipo Atto "+atto.getCdTipoAttoBollo()+" non risulta attivo per la data di protocollo indicata."));
+			}
+			super.validaCreaModificaConBulk(userContext, oggettoBulk);
+		} catch (Exception e) {
+			throw handleException(e);
+		}
 	}
 }

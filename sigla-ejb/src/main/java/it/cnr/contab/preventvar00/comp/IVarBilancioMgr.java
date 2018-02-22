@@ -60,7 +60,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
   * Pre:	L'OggettoBulk specificato esiste.
   * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
   *			per l'operazione di presentazione e modifica nell'interfaccia visuale.
-  *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome è
+  *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ã¨
   *			ottenuto concatenando il nome della component con la stringa ".edit"
   *
   *			In particolare vengono caricate tutti i dettagli associati alla Variazione di Bilancio selezionata

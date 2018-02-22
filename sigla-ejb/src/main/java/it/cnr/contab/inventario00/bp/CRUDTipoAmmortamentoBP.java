@@ -69,7 +69,7 @@ public void clearSelection(it.cnr.jada.action.ActionContext context) throws it.c
 }
 /**
   *  Crea una toolbar in aggiunta alla normale toolbar del CRUD.
-  *	La nuova toolbar Ë stata costruita per mostrare il tasto "Riassocia".
+  *	La nuova toolbar √® stata costruita per mostrare il tasto "Riassocia".
   *
   * @return toolbar i <code>Button[]</code> pulsanti creati
 **/
@@ -131,7 +131,7 @@ private void eliminaGruppiConBulk(ActionContext context,it.cnr.jada.bulk.Oggetto
 }
 	
 /**
- * Restituisce un oggetto SearchProvider, che sar‡ utilizzato nella ricerca dei 
+ * Restituisce un oggetto SearchProvider, che sar√† utilizzato nella ricerca dei 
  * 	Tipi Ammortamento disponibili per l'operazione di RIASSOCIA.
  *
  * @param context il <code>ActionContext</code> che ha generato la richiesta
@@ -156,25 +156,25 @@ public SearchProvider getAmmortamentoSearchProvider(ActionContext context){
 		};
 }
 /**
- * Restituisce il valore della propriet‡ 'catBeni'
+ * Restituisce il valore della propriet√† 'catBeni'
  *
- * @return Il valore della propriet‡ 'catBeni'
+ * @return Il valore della propriet√† 'catBeni'
  */
 public final SimpleDetailCRUDController getCatBeni() {
 	return catBeni;
 }
 /**
- * Restituisce il valore della propriet‡ 'catBeniDisponibili'
+ * Restituisce il valore della propriet√† 'catBeniDisponibili'
  *
- * @return Il valore della propriet‡ 'catBeniDisponibili'
+ * @return Il valore della propriet√† 'catBeniDisponibili'
  */
 public final it.cnr.jada.util.action.SimpleDetailCRUDController getCatBeniDisponibili() {
 	return catBeniDisponibili;
 }
 /**
- * Restituisce il valore della propriet‡ 'gruppiController'
+ * Restituisce il valore della propriet√† 'gruppiController'
  *
- * @return Il valore della propriet‡ 'gruppiController'
+ * @return Il valore della propriet√† 'gruppiController'
  */
 public final RemoteDetailCRUDController getGruppiController() {
 	return gruppiController;
@@ -200,8 +200,8 @@ public void initializeSelection(it.cnr.jada.action.ActionContext context) throws
 	} 
 }
 /**
- * Abilita il pulsante di "Associa", solo se si Ë in modifica di un Tipo Ammortamento gi‡ creato.
- *	Restituisce TRUE se il BusinessProcess Ë <code>isEditable</code>
+ * Abilita il pulsante di "Associa", solo se si √® in modifica di un Tipo Ammortamento gi√† creato.
+ *	Restituisce TRUE se il BusinessProcess √® <code>isEditable</code>
  *
  * @return <code>boolean</code>
  */
@@ -224,8 +224,8 @@ public boolean isBottoneImpostaCatBeniEnabled() {
 }
 /**
  * Abilita il pulsante di "Elimina".
- *	Il pulsante Ë abilitato solo se si Ë in modifica di un Tipo Ammortamento gi‡ creato.
- *	Restituisce TRUE se il BusinessProcess Ë <code>isEditable</code>
+ *	Il pulsante √® abilitato solo se si √® in modifica di un Tipo Ammortamento gi√† creato.
+ *	Restituisce TRUE se il BusinessProcess √® <code>isEditable</code>
  *
  * @return <code>boolean</code>
  *
@@ -240,8 +240,8 @@ public boolean isBottoneRimuoviEnabled() {
 	return (false);	// disabilito
 }
 /**
- * Abilita il pulsante di "Riassocia", solo se si Ë in modifica di un Tipo Ammortamento gi‡ creato.
- *	Restituisce TRUE se il BusinessProcess Ë <code>isEditable</code>
+ * Abilita il pulsante di "Riassocia", solo se si √® in modifica di un Tipo Ammortamento gi√† creato.
+ *	Restituisce TRUE se il BusinessProcess √® <code>isEditable</code>
  *
  * @return <code>boolean</code>
  *
@@ -252,8 +252,8 @@ public boolean isRiassociaButtonEnabled() {
 }
 /**
  * Nasconde il pulsante di "Riassocia".
- *	Il pulsante viene nascosto quando si Ë in ricerca di un Tipo Ammortamento.
- *	Restituisce TRUE se il BusinessProcess Ë <code>isSearching</code>
+ *	Il pulsante viene nascosto quando si √® in ricerca di un Tipo Ammortamento.
+ *	Restituisce TRUE se il BusinessProcess √® <code>isSearching</code>
  *
  * @return <code>boolean</code>
 **/ 

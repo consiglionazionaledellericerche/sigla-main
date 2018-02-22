@@ -195,7 +195,7 @@ public void gestisciCambioSelezioneScadenza(Obbligazione_scadenzarioBulk newScad
 		return;
 		
 	// 	Se scopro, che la scadenza da sostituire appartiene alla stessa obbligazione
-	//	della nuova scadenza, devo sincronizzarla perchË l'utente prima di riportare
+	//	della nuova scadenza, devo sincronizzarla perch√® l'utente prima di riportare
 	//	quella nuova potrebbe avermi modificato quella da sostituire (cioe' quella attulamente 
 	//	associata).
 	if(newScadenza.getObbligazione().equalsByPrimaryKey(getScadenza_obbligazione().getObbligazione()))
@@ -300,7 +300,7 @@ public java.lang.String getCd_divisa() {
 }
 
 /**
- * Il metodo ritorna il valore dell'attributo 'cd_linea_attivit‡' 
+ * Il metodo ritorna il valore dell'attributo 'cd_linea_attivit√†' 
  */
 public java.lang.String getCd_linea_attivita() {
 	it.cnr.contab.config00.latt.bulk.WorkpackageBulk lattPerRimborso = this.getLattPerRimborso();
@@ -538,14 +538,14 @@ public MissioneBulk getMissione() {
 }
 
 /**
- * Il metodo ritorna le modalit‡ di pagamento dell'anticipo
+ * Il metodo ritorna le modalit√† di pagamento dell'anticipo
  */
 public java.util.Collection getModalita() {
 	return modalita;
 }
 
 /**
- * Il  metodo ritorna la modalit‡ di pagamento selezionata per l'anticipo
+ * Il  metodo ritorna la modalit√† di pagamento selezionata per l'anticipo
  */
 public it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk getModalita_pagamento() {
 	return modalita_pagamento;
@@ -846,7 +846,7 @@ public void inizializzaTerzo()
 /**
  * Il metodo stabilisce se i dati relativi alla banca sono abilitati.
  * Abilitati :
- * - se la modalit‡ di pagamento e' stata selezionata
+ * - se la modalit√† di pagamento e' stata selezionata
  * - se l'anticipo non e' stato pagato
  * - se l'esercizio di scrivania e quello del documento sono diversi da quello solare 
  *   l' obbligazione non deve essere stata riportata (isROPerChiusura) 
@@ -937,7 +937,7 @@ public boolean isRiportataInScrivania() {
 /**
  * Il metodo stabilisce se il campo cd_centro_responsabilita e' abilitato.
  * Disabilitato :
- * - se l'anticipo Ë rimborsato
+ * - se l'anticipo √® rimborsato
  * - se l'esercizio di scrivania e' diverso da quello solare e l' obbligazione e' stata riportata
  *   (isROPerChiusura)
  */
@@ -949,7 +949,7 @@ public boolean isROCd_centro_responsabilita()
 /**
  * Il metodo stabilisce se il campo del codice della linea di attivita' e' abilitato.
  * Disabilitato :
- * - se l'anticipo Ë rimborsato
+ * - se l'anticipo √® rimborsato
  * - se l'esercizio di scrivania e quello del documento sono diversi da quello solare 
  *   e l' obbligazione e' stata riportata (isROPerChiusura)
  */
@@ -1139,7 +1139,7 @@ public void resetDefferredSaldi()
 }
 
 /**
- * il  metodo imposta il valore della propriet‡ 'annoSolare'
+ * il  metodo imposta il valore della propriet√† 'annoSolare'
  */ 
 public void setAnnoSolare(int newAnnoSolare) {
 	annoSolare = newAnnoSolare;
@@ -1160,7 +1160,7 @@ public void setCd_cds_obbligazione(java.lang.String cd_cds_obbligazione) {
 }
 
 /**
- * il metodo imposta il valore dell'attributo 'cd_centro_responsabilita' della linea di attivit‡
+ * il metodo imposta il valore dell'attributo 'cd_centro_responsabilita' della linea di attivit√†
  */ 
 public void setCd_centro_responsabilita(java.lang.String cd_centro_responsabilita) {
 	this.getLattPerRimborso().getCentro_responsabilita().setCd_centro_responsabilita(cd_centro_responsabilita);
@@ -1174,7 +1174,7 @@ public void setCd_divisa(java.lang.String cd_divisa) {
 }
 
 /**
- * il  metodo imposta il valore dell'attributo 'cd_linea_attivit‡'
+ * il  metodo imposta il valore dell'attributo 'cd_linea_attivit√†'
  */ 
 public void setCd_linea_attivita(java.lang.String cd_linea_attivita) {
 	this.getLattPerRimborso().setCd_linea_attivita(cd_linea_attivita);
@@ -1417,7 +1417,7 @@ public void sincronizzaScadenzeCancellate(Obbligazione_scadenzarioBulk newScaden
 }
 	
 /**
- * Il metodo valida la data di registrazione. Essa deve essere nell'esercizio corrente e non puÚ essere futura
+ * Il metodo valida la data di registrazione. Essa deve essere nell'esercizio corrente e non pu√≤ essere futura
  */ 
 
 public void validaDataRegistrazione(ActionContext context) throws it.cnr.jada.comp.ApplicationException, javax.ejb.EJBException

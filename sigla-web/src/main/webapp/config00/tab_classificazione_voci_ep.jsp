@@ -12,7 +12,7 @@
 
 	SimpleDetailCRUDController controller =  bp.getCrudAssLivelli();
 
-    // Se c'è un record in insert valorizzo con false il flag di gestione dell'inserimento multiplo senza salvare
+    // Se c'Ã¨ un record in insert valorizzo con false il flag di gestione dell'inserimento multiplo senza salvare
   	boolean isTableEnabled = true;
 	boolean isFirstTab = bp.getTabCorrente().intValue()==1; 
 	boolean isFieldReadOnly = !isFirstTab;

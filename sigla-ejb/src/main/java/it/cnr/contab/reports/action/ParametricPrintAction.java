@@ -22,7 +22,7 @@ import java.util.*;
  * <il> doRiportaSelezione
  * </ul>
  * <code>CRUDAction</code> funziona solo se il business process corrente 
- * è un <code>CRUDBusinessProcess</code>.
+ * Ã¨ un <code>CRUDBusinessProcess</code>.
  */
 public class ParametricPrintAction extends BulkAction  implements java.io.Serializable {
 public ParametricPrintAction() {

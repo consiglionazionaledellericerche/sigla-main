@@ -173,9 +173,9 @@ public class Ass_pdg_variazione_cdrBulk extends Ass_pdg_variazione_cdrBase {
 		return !(isNotNew() && !isROIm_spesa());
 	}
 	/*
-	 * Serve per sapere se Ë il campo IM_ENTRATA Ë in sola modalit‡ lettura 
+	 * Serve per sapere se √® il campo IM_ENTRATA √® in sola modalit√† lettura 
 	 *
-	 * Ritorna un boolean con valore true se la variazione Ë:
+	 * Ritorna un boolean con valore true se la variazione √®:
 	 * 1) uno storno di spesa
 	 * 2) un prelievo su fondi 
 	 * 3) una restituzione ai fondi
@@ -190,9 +190,9 @@ public class Ass_pdg_variazione_cdrBulk extends Ass_pdg_variazione_cdrBase {
 
 	}
 	/*
-	 * Serve per sapere se Ë il campo IM_SPESA Ë in sola modalit‡ lettura 
+	 * Serve per sapere se √® il campo IM_SPESA √® in sola modalit√† lettura 
 	 *
-	 * Ritorna un boolean con valore true se la variazione Ë:
+	 * Ritorna un boolean con valore true se la variazione √®:
 	 * 1) uno storno di entrata 
 	 * 2) una variazione sui fondi
 	 */

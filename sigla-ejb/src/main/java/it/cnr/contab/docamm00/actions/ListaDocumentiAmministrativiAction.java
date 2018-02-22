@@ -29,7 +29,7 @@ public ListaDocumentiAmministrativiAction() {
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -45,7 +45,7 @@ public TerzoBulk basicDoBlankSearchSoggetto(ActionContext context) {
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -66,7 +66,7 @@ protected void completaSoggetto(ActionContext context)
 		IDocumentoAmministrativoBP docAmmBP = (IDocumentoAmministrativoBP)getBusinessProcessForDocAmm(context, filtro.getInstance());
 		if (!(docAmmBP instanceof IGenericSearchDocAmmBP) || ((IGenericSearchDocAmmBP)docAmmBP).getPropertyForGenericSearch() == null) {
 			filtro.setSoggetto(null);
-			throw new it.cnr.jada.comp.ApplicationException("Il soggetto non è una clausola valida per il gruppo selezionato!");
+			throw new it.cnr.jada.comp.ApplicationException("Il soggetto non Ã¨ una clausola valida per il gruppo selezionato!");
 		}
 		
 		it.cnr.jada.bulk.FieldProperty p = BulkInfo.getBulkInfo(filtro.getInstance().getClass()).getFieldProperty(((IGenericSearchDocAmmBP)docAmmBP).getPropertyForGenericSearch());
@@ -78,7 +78,7 @@ protected void completaSoggetto(ActionContext context)
 			else if (count == 1)
 				doBringBackSearchSoggetto(context, filtro,(TerzoBulk)i.nextElement());
 			else
-				throw new ValidationException("La ricerca ha fornito più di un risultato per il terzo!");
+				throw new ValidationException("La ricerca ha fornito piÃ¹ di un risultato per il terzo!");
 		} finally {
 			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,i);
 		}
@@ -89,7 +89,7 @@ protected void completaSoggetto(ActionContext context)
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -141,7 +141,7 @@ public Forward doBringBackSearchSoggetto(ActionContext context,
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -223,7 +223,7 @@ public Forward doConfermaNuovaRicerca(ActionContext context,int option) {
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -237,7 +237,7 @@ public Forward doFreeSearchSoggetto(ActionContext context) {
 		
 		if (!(docAmmBP instanceof IGenericSearchDocAmmBP) || ((IGenericSearchDocAmmBP)docAmmBP).getPropertyForGenericSearch() == null) {
 			filtro.setSoggetto(null);
-			throw new it.cnr.jada.comp.ApplicationException("Il soggetto non è una clausola valida per il gruppo selezionato!");
+			throw new it.cnr.jada.comp.ApplicationException("Il soggetto non Ã¨ una clausola valida per il gruppo selezionato!");
 		}
 
 		IGenericSearchDocAmmBP docAmmGenericSearchBP = (IGenericSearchDocAmmBP)docAmmBP;
@@ -310,7 +310,7 @@ public Forward doOnOptionChange(ActionContext context) {
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -340,7 +340,7 @@ public Forward doRiportaSelezione(ActionContext context) {
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -354,7 +354,7 @@ public Forward doSearchSoggetto(ActionContext context) {
 		
 		if (!(docAmmBP instanceof IGenericSearchDocAmmBP) || ((IGenericSearchDocAmmBP)docAmmBP).getPropertyForGenericSearch() == null) {
 			filtro.setSoggetto(null);
-			throw new it.cnr.jada.comp.ApplicationException("Il soggetto non è una clausola valida per il gruppo selezionato!");
+			throw new it.cnr.jada.comp.ApplicationException("Il soggetto non Ã¨ una clausola valida per il gruppo selezionato!");
 		}
 
 		IGenericSearchDocAmmBP docAmmGenericSearchBP = (IGenericSearchDocAmmBP)docAmmBP;
@@ -426,7 +426,7 @@ protected IDocumentoAmministrativoBP getBusinessProcessForDocAmm(
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.

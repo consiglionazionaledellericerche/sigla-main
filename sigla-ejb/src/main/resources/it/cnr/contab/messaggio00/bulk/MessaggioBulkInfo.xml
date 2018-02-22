@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -27,14 +27,14 @@
 		inputType="TEXT"
 		maxLength="1"
 		inputSize="2"
-		label="Priorità"
+		label="PrioritÃ "
 		nullable="false"
 		enabledOnSearch="true" />
 	<fieldProperty
 		name="dt_fine_validita"
 		property="dt_fine_validita"
 		inputType="TEXT"
-		label="Data fine validità"
+		label="Data fine validitÃ "
 		formatName="date_short"
 		enabledOnSearch="true" />
 	<fieldProperty
@@ -78,7 +78,7 @@
 		name="dt_inizio_validita"
 		property="dt_inizio_validita"
 		inputType="TEXT"
-		label="Data inizio validità"
+		label="Data inizio validitÃ "
 		formatName="date_short"
 		enabledOnSearch="true" />
 	<fieldProperty

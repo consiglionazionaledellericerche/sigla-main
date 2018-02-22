@@ -132,7 +132,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 			if (!isCdrPdGPUtilizzabile()) {
 				setStatus(VIEW);
 				setEditable(false);
-				setErrorMessage("Lo stato del PdGP - CDR per il CdR "+((CdrBulk)getModel()).getCd_centro_responsabilita()+" risulta non impostato oppure\nè chiusa la fase previsionale per l'esercizio "+CNRUserContext.getEsercizio(context.getUserContext())+". Non consentita la modifica.");
+				setErrorMessage("Lo stato del PdGP - CDR per il CdR "+((CdrBulk)getModel()).getCd_centro_responsabilita()+" risulta non impostato oppure\nÃ¨ chiusa la fase previsionale per l'esercizio "+CNRUserContext.getEsercizio(context.getUserContext())+". Non consentita la modifica.");
 			}
 		}
 	}
@@ -225,7 +225,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 
 	/**
-	 * Stabilisce se l'utente è abilitato ad effettuare inserimenti 
+	 * Stabilisce se l'utente Ã¨ abilitato ad effettuare inserimenti 
 	 * e cancellazioni delle testate dei moduli, in base al fatto 
 	 * che il CdR in scrivania sia di primo livello per l'utente
 	 *  
@@ -241,7 +241,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 
 	/**
-	 * Stabilisce se è utilizzabile il CdR preimpostato in mappa
+	 * Stabilisce se Ã¨ utilizzabile il CdR preimpostato in mappa
 	 * dato che deve essere precaricata la tabella pdg_esercizio
 	 * con l'anno di esercizio del PdG e con tale CdR 
 	 *  
@@ -279,7 +279,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 	
 	public boolean isROModuloEntrate() {
-		// se lo stato del CdR è in esame dal centro il 999.000 può entrare in
+		// se lo stato del CdR Ã¨ in esame dal centro il 999.000 puÃ² entrare in
 		// modifica sulla mappa delle entrate dato che ci sono dei campi editabili
 		if (getCdrPdGP().getStato().equals(Pdg_esercizioBulk.STATO_IN_ESAME_CDR) && isUoEnte())
 			return false;
@@ -458,7 +458,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 
 	/**
-	 * Stabilisce se si può operare (modificare) il gestionale
+	 * Stabilisce se si puÃ² operare (modificare) il gestionale
 	 *  
 	 * @return 	true - gestionale operabile
 	 * 			false - gestionale non operabile

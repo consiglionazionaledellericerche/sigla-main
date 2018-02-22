@@ -58,7 +58,7 @@ public class ElaboraNumUnicoFatturaPBP extends it.cnr.jada.util.action.BulkBP {
 
 	public boolean isRicercaButtonEnabled()
 	{
-		// 17/03/20105 disabilitato perchè inserito alla creazione della fattura passiva
+		// 17/03/20105 disabilitato perchÃ¨ inserito alla creazione della fattura passiva
 		return false;
 	}
 

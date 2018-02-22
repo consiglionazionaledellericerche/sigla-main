@@ -95,7 +95,7 @@ public class V_assestatoBulk extends OggettoBulk implements KeyedPersistent {
 
 	//    DB_IMP_UTILIZZATO DECIMAL(22,0)
 //    utilizzata per memorizzare il valore iniziale dell'importo dell'oggetto 
-//    che risulta gi‡ sottratto alla disponibilit‡ mostrata
+//    che risulta gi√† sottratto alla disponibilit√† mostrata
 	private java.math.BigDecimal db_imp_utilizzato;
 	
 	public java.lang.Integer getEsercizio () {
@@ -283,7 +283,7 @@ public class V_assestatoBulk extends OggettoBulk implements KeyedPersistent {
 
 	/**
 	 * metodo utilizzato per memorizzare il valore iniziale dell'importo dell'oggetto 
-	 * che risulta gi‡ sottratto alla disponibilit‡ mostrata
+	 * che risulta gi√† sottratto alla disponibilit√† mostrata
 	 */
 	public java.math.BigDecimal getDb_imp_utilizzato() {
 		return db_imp_utilizzato;
@@ -291,14 +291,14 @@ public class V_assestatoBulk extends OggettoBulk implements KeyedPersistent {
 
 	/**
 	 * metodo utilizzato per memorizzare il valore iniziale dell'importo dell'oggetto 
-	 * che risulta gi‡ sottratto alla disponibilit‡ mostrata
+	 * che risulta gi√† sottratto alla disponibilit√† mostrata
 	 */
 	public void setDb_imp_utilizzato(java.math.BigDecimal db_imp_utilizzato) {
 		this.db_imp_utilizzato = db_imp_utilizzato;
 	}
 	
 	/**
-	 * restituisce l'importo ancora disponibile per l'associazione (importo al netto di quello gi‡ associato)
+	 * restituisce l'importo ancora disponibile per l'associazione (importo al netto di quello gi√† associato)
 	 */
 	public java.math.BigDecimal getImporto_disponibile_netto() {
 		return Utility.nvl(getImporto_disponibile()).add(Utility.nvl(getDb_imp_utilizzato())).subtract(Utility.nvl(getImp_da_assegnare()));

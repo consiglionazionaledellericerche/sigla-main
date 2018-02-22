@@ -27,9 +27,9 @@ public interface IStampaRegistriIvaMgr extends it.cnr.jada.comp.IRicercaMgr
   *      liquidazione provvisoria o definitiva
   *    PostCondition:
   *      crea la liquidazione
-  *  Si Ë verificato un errore.
+  *  Si √® verificato un errore.
   *    PreCondition:
-  *      Si Ë verificato un errore.
+  *      Si √® verificato un errore.
   *    PostCondition:
   *      Viene inviato un messaggio e non permette l'operazione
  */
@@ -50,12 +50,12 @@ public Liquidazione_iva_annualeVBulk riepilogoLiquidazioneIVA(
   *  Prospetto delle liquidazioni definitive
   *  richiesta la lista delle liquidazioni
   *    PreCondition:
-  *      Viene richiesta la lista delle liquidazioni gi‡ stampate 
+  *      Viene richiesta la lista delle liquidazioni gi√† stampate 
   *    PostCondition:
   *      visualizza la lista delle liquidazioni stampate
   *  si verifica un errore
   *    PreCondition:
-  *      Si Ë verificato un errore.
+  *      Si √® verificato un errore.
   *    PostCondition:
   *      Viene inviato un messaggio con il relativo errore ritornato dal DB
  */
@@ -68,9 +68,9 @@ public abstract java.util.Collection selectProspetti_stampatiByClause(it.cnr.jad
   *      Viene richiesta la lista dei sezionali relativi alla UO di appartenenza
   *    PostCondition:
   *      visualizza la lista dei sezionali
-  *  Si Ë verificato un errore
+  *  Si √® verificato un errore
   *    PreCondition:
-  *      Si Ë verificato un errore.
+  *      Si √® verificato un errore.
   *    PostCondition:
   *      Viene inviato un messaggio con il relativo errore ritornato dal DB
  */

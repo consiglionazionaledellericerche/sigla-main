@@ -40,8 +40,8 @@ public class OfflineReportServlet extends javax.servlet.http.HttpServlet {
 				return;
 			}
 			/*
-			 * se la stampa Ë richiamata dall'applet di firma digitale questa maldigerisce i parametri
-			 * cablati nell'url secondo le specifiche dell'istruzione GET per cui Ë necessario inserire
+			 * se la stampa √® richiamata dall'applet di firma digitale questa maldigerisce i parametri
+			 * cablati nell'url secondo le specifiche dell'istruzione GET per cui √® necessario inserire
 			 * nella sessione il parametro del progressivo della stampa selezionata da firmare
 			 */
 			String pg = request.getParameter("pg");
@@ -118,7 +118,7 @@ public class OfflineReportServlet extends javax.servlet.http.HttpServlet {
 
 			String ti_visibilita = print_spooler.getTiVisibilita();
 
-			// Controllo che il tipo visibilit‡ del report sia compatibile con l'utente
+			// Controllo che il tipo visibilit√† del report sia compatibile con l'utente
 
 			if (Print_spoolerBulk.TI_VISIBILITA_UTENTE.equals(ti_visibilita)) {
 				// ti_visibilita = TI_VISIBILITA_UTENTE
@@ -167,7 +167,7 @@ public class OfflineReportServlet extends javax.servlet.http.HttpServlet {
 	private void unauthorized(javax.servlet.http.HttpServletRequest request,javax.servlet.http.HttpServletResponse response) throws java.io.IOException {
 		response.setStatus(javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED);
 		response.getWriter().println("Impossibile aprire il file pdf.<BR>");
-		response.getWriter().println("Consultare il <a href=\"http://contab.cnr.it/manuali/000%20-%2001%20requisiti%20browser.doc\">Manuale della Procedura di Contabilit‡</a> e verificare le Impostazioni del Browser.");
+		response.getWriter().println("Consultare il <a href=\"http://contab.cnr.it/manuali/000%20-%2001%20requisiti%20browser.doc\">Manuale della Procedura di Contabilit√†</a> e verificare le Impostazioni del Browser.");
 		response.flushBuffer();
 	}
 }

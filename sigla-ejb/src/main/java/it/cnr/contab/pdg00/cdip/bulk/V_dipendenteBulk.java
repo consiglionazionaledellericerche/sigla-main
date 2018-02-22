@@ -24,18 +24,18 @@ public java.lang.String getCd_unita_organizzativa() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'costi_per_elemento_voce'
+ * Restituisce il valore della propriet√† 'costi_per_elemento_voce'
  *
- * @return Il valore della propriet‡ 'costi_per_elemento_voce'
+ * @return Il valore della propriet√† 'costi_per_elemento_voce'
  */
 public it.cnr.jada.bulk.BulkList getCosti_per_elemento_voce() {
 	return costi_per_elemento_voce;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'unita_organizzativa'
+ * Restituisce il valore della propriet√† 'unita_organizzativa'
  *
- * @return Il valore della propriet‡ 'unita_organizzativa'
+ * @return Il valore della propriet√† 'unita_organizzativa'
  */
 public it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk getUnita_organizzativa() {
 	return unita_organizzativa;
@@ -45,7 +45,7 @@ public void setCd_unita_organizzativa(java.lang.String cd_unita_organizzativa) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'costi_per_elemento_voce'
+ * Imposta il valore della propriet√† 'costi_per_elemento_voce'
  *
  * @param newCosti_per_elemento_voce	Il valore da assegnare a 'costi_per_elemento_voce'
  */
@@ -54,7 +54,7 @@ public void setCosti_per_elemento_voce(it.cnr.jada.bulk.BulkList newCosti_per_el
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'unita_organizzativa'
+ * Imposta il valore della propriet√† 'unita_organizzativa'
  *
  * @param newUnita_organizzativa	Il valore da assegnare a 'unita_organizzativa'
  */

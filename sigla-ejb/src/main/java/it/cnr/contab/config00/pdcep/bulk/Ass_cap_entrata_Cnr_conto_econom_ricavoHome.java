@@ -31,7 +31,7 @@ public SQLBuilder createSQLBuilder( )
  * Restituisce il SQLBuilder per selezionare le Categorie di Entrata del Cnr per l'esercizio di scrivania.
  * @param bulk bulk ricevente
  * @param home home del bulk su cui si cerca
- * @param bulkClause è l'istanza di bulk che ha indotto le clauses 
+ * @param bulkClause Ã¨ l'istanza di bulk che ha indotto le clauses 
  * @param clause clause che arrivano dalle properties (form collegata al search tool) 
  * @return it.cnr.jada.persistency.sql.SQLBuilder
  */
@@ -48,7 +48,7 @@ public SQLBuilder selectElemento_voceByClause( Ass_cap_entrata_Cnr_conto_econom_
  * Restituisce il SQLBuilder per selezionare gli elementi con Sezione  diversa da Dare per l'esercizio di scrivania
  * e voce di ricavo.
  * @param home home del bulk su cui si cerca
- * @param bulkClause è l'istanza di bulk che ha indotto le clauses 
+ * @param bulkClause Ã¨ l'istanza di bulk che ha indotto le clauses 
  * @param clause clause che arrivano dalle properties (form collegata al search tool) 
  * @return it.cnr.jada.persistency.sql.SQLBuilder
  */

@@ -1,7 +1,7 @@
 package it.cnr.contab.prevent00.bulk;
 /**
  * Gestisce i dati iniziali per le Spese adattando ed implementando: {@link Pdg_aggregato_spe_detBulk } e  {@link Pdg_aggregato_det_iniziale } 
- * 		perchè si ottengano e si settino gli oggetti complessi.
+ * 		perchÃ¨ si ottengano e si settino gli oggetti complessi.
  */
 public class Pdg_aggregato_spe_det_inizialeBulk extends Pdg_aggregato_spe_detBulk implements Pdg_aggregato_det_iniziale {
 	private Pdg_aggregato_spe_detBulk spe_modificato;

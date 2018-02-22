@@ -9,15 +9,15 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 public class LuogoConsegnaMagBulk extends LuogoConsegnaMagBase {
 	/**
-	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	private Unita_organizzativaBulk unitaOrganizzativa =  new Unita_organizzativaBulk();
 	/**
-	 * [COMUNE Codifica dei comuni italiani e delle citt‡ estere.E' definito un dialogo utente per popolare le citt‡ estere; per i comuni italiani si prevede il recupero in sede di migrazione]
+	 * [COMUNE Codifica dei comuni italiani e delle citt√† estere.E' definito un dialogo utente per popolare le citt√† estere; per i comuni italiani si prevede il recupero in sede di migrazione]
 	 **/
 	private ComuneBulk comune =  new ComuneBulk();
 	/**
-	 * [NAZIONE Codifica delle nazioni. Non Ë stato definito un dialogo utente sulla tabella ma si prevede il recupero in sede di migrazione]
+	 * [NAZIONE Codifica delle nazioni. Non √® stato definito un dialogo utente sulla tabella ma si prevede il recupero in sede di migrazione]
 	 **/
 	private NazioneBulk nazione =  new NazioneBulk();
 	/**
@@ -37,42 +37,42 @@ public class LuogoConsegnaMagBulk extends LuogoConsegnaMagBase {
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	public Unita_organizzativaBulk getUnitaOrganizzativa() {
 		return unitaOrganizzativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle Unit‡ Organizzative in una struttura ad albero organizzata su pi˘ livelli]
+	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle Unit√† Organizzative in una struttura ad albero organizzata su pi√π livelli]
 	 **/
 	public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa)  {
 		this.unitaOrganizzativa=unitaOrganizzativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Codifica dei comuni italiani e delle citt‡ estere.E' definito un dialogo utente per popolare le citt‡ estere; per i comuni italiani si prevede il recupero in sede di migrazione]
+	 * Restituisce il valore di: [Codifica dei comuni italiani e delle citt√† estere.E' definito un dialogo utente per popolare le citt√† estere; per i comuni italiani si prevede il recupero in sede di migrazione]
 	 **/
 	public ComuneBulk getComune() {
 		return comune;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Codifica dei comuni italiani e delle citt‡ estere.E' definito un dialogo utente per popolare le citt‡ estere; per i comuni italiani si prevede il recupero in sede di migrazione]
+	 * Setta il valore di: [Codifica dei comuni italiani e delle citt√† estere.E' definito un dialogo utente per popolare le citt√† estere; per i comuni italiani si prevede il recupero in sede di migrazione]
 	 **/
 	public void setComune(ComuneBulk comune)  {
 		this.comune=comune;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Codifica delle nazioni. Non Ë stato definito un dialogo utente sulla tabella ma si prevede il recupero in sede di migrazione]
+	 * Restituisce il valore di: [Codifica delle nazioni. Non √® stato definito un dialogo utente sulla tabella ma si prevede il recupero in sede di migrazione]
 	 **/
 	public NazioneBulk getNazione() {
 		return nazione;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Codifica delle nazioni. Non Ë stato definito un dialogo utente sulla tabella ma si prevede il recupero in sede di migrazione]
+	 * Setta il valore di: [Codifica delle nazioni. Non √® stato definito un dialogo utente sulla tabella ma si prevede il recupero in sede di migrazione]
 	 **/
 	public void setNazione(NazioneBulk nazione)  {
 		this.nazione=nazione;

@@ -12,7 +12,7 @@ public interface INumerazioneDocAmmMgr
 /** 
   *  tutti i controlli superati.
   *    PreCondition:
-  *      Il progressivo è stato generato senza errori.
+  *      Il progressivo Ã¨ stato generato senza errori.
   *    PostCondition:
   *      Viene consentita la registrazione del progressivo.
   *  esistenza della tipologia della numerazione

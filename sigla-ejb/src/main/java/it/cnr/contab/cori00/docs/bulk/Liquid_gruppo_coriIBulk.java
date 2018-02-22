@@ -1,9 +1,9 @@
 package it.cnr.contab.cori00.docs.bulk;
 
 /**
-  *  Questa classe Ë stata creata con lo scopo di utilizzare la vista <code>V_LIQUID_GRUPPO_CORI</code>,
+  *  Questa classe √® stata creata con lo scopo di utilizzare la vista <code>V_LIQUID_GRUPPO_CORI</code>,
   *	soprattutto per mostrare i dati nei CRUDController.
-  *	Oltre alle propriet‡ della superclasse, sono state aggiunte:
+  *	Oltre alle propriet√† della superclasse, sono state aggiunte:
   *	<dl>
   *	<dt> ds_gruppo_cr la <code>String</code> descrizione del gruppo CORI di appartenenza
   *	<dt> terzo_versamento  <code>String</code> il Terzo del versamento

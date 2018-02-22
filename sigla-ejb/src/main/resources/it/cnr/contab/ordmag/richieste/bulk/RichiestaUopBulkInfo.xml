@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -28,7 +28,7 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Unità Operativa" />
+		label="UnitÃ  Operativa" />
 	<fieldProperty
 		name="cdUnitaOperativa"
 		property="numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa"
@@ -38,7 +38,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="Unità Operativa" />
+		label="UnitÃ  Operativa" />
 	<fieldProperty
 		name="esercizio"
 		property="numerazioneOrd.esercizio"
@@ -128,7 +128,7 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Unità Operativa di Destinazione" />
+		label="UnitÃ  Operativa di Destinazione" />
 	<fieldProperty
 		name="cdUnitaOperativaDest"
 		property="unitaOperativaOrdDest.cdUnitaOperativa"
@@ -137,7 +137,7 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="true"
-		label="Unità Operativa Destinataria" />
+		label="UnitÃ  Operativa Destinataria" />
 	<fieldProperty
 		name="dsUnitaOperativaDest"
 		property="unitaOperativaOrdDest.dsUnitaOperativa"

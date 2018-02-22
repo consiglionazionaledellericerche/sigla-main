@@ -7,7 +7,7 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.*;
 /**
- * Adatta ed implementa {@link it.cnr.jada.util.action.BulkBP } per le funzionalit‡ richieste
+ * Adatta ed implementa {@link it.cnr.jada.util.action.BulkBP } per le funzionalit√† richieste
  * 		al CRUD del PdG aggregato
  * 
  * @author: Vincenzo Bisquadro

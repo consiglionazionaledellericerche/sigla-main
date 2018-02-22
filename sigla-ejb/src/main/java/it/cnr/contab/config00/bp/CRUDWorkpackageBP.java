@@ -78,7 +78,7 @@ public CRUDWorkpackageBP(String function, Pdg_variazione_riga_gestBulk pdgVariaz
 	this.pdgCdrAssegnatario = pdgCdrAssegnatario;
 }
 /**
- * Ritorna i risultati della linea di attivit‡
+ * Ritorna i risultati della linea di attivit√†
  * 
  * @return it.cnr.jada.util.action.SimpleDetailCRUDController
  */
@@ -365,9 +365,9 @@ public boolean isFieldProgettoDisable(){
 @Override
 public void validate(ActionContext actioncontext) throws ValidationException {
 	if ((isMapFromPianoGestioneSpese() || isMapFromVariazioneGestioneSpese()) && WorkpackageBulk.TI_GESTIONE_ENTRATE.equals(((WorkpackageBulk)getModel()).getTi_gestione()))
-		throw new ValidationException("Il tipo di gestione non puÚ essere di tipo entrata.");
+		throw new ValidationException("Il tipo di gestione non pu√≤ essere di tipo entrata.");
 	if ((isMapFromPianoGestioneEntrate() || isMapFromVariazioneGestioneEntrate()) && WorkpackageBulk.TI_GESTIONE_SPESE.equals(((WorkpackageBulk)getModel()).getTi_gestione()))
-		throw new ValidationException("Il tipo di gestione non puÚ essere di tipo spesa.");
+		throw new ValidationException("Il tipo di gestione non pu√≤ essere di tipo spesa.");
 	super.validate(actioncontext);
 }
 @Override

@@ -81,11 +81,11 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 	 * Nome: Inizializzazione;
 	 * Pre:  Preparare l'oggetto alle modifiche;
 	 * Post: Si procede, oltre che alla normale procedura di inizializzazione di un oggetto bulk,
-	 *       anche al caricamento dei dettagli gestionali e al calcolo delle somme gi‡ ripartite.
+	 *       anche al caricamento dei dettagli gestionali e al calcolo delle somme gi√† ripartite.
 	 *
-	 * @param bulk dovr‡ essere sempre <code>Pdg_variazioneBulk</code>.
+	 * @param bulk dovr√† essere sempre <code>Pdg_variazioneBulk</code>.
 	 *
-	 * @return un <code>OggettoBulk</code> che sar‡ sempre un <code>Pdg_variazioneBulk</code>.
+	 * @return un <code>OggettoBulk</code> che sar√† sempre un <code>Pdg_variazioneBulk</code>.
 	 */
 	public OggettoBulk inizializzaBulkPerModifica(UserContext userContext, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 		try {
@@ -134,13 +134,13 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 	 * Pre-post-conditions:
 	 *
 	 * Nome: Modifica di una variazione
-	 * Pre:  La richiesta di modifica di una variazione Ë stata generata
+	 * Pre:  La richiesta di modifica di una variazione √® stata generata
 	 * Post: Viene loccato il record PDG_VARIAZIONE con l'istruzione findAndLock per evitare che salvataggi 
-	 *       simultanei da parte di pi˘ utenti possano alterare i controlli.
+	 *       simultanei da parte di pi√π utenti possano alterare i controlli.
 	 * 	 Vengono verificati i dettagli della variazione gestionale associati al modulo per controllare che 
 	 *       l'assestato di bilancio per la voce modificata non sia negativa.
 	 * 	 In caso affermativo viene generata una ApplicationException per segnalare all'utente 
-	 *       l'impossibilit‡ di effettuare la variazione di Bilancio.
+	 *       l'impossibilit√† di effettuare la variazione di Bilancio.
 	 *
 	 * @param	userContext	lo UserContext che ha generato la richiesta
 	 * @param	oggettobulk il Pdg_variazioneBulk che deve essere modificato
@@ -183,14 +183,14 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 					rigaVar.setArea((CdsBulk)cdsHome.findByPrimaryKey(new CdsBulk(rigaVar.getCdr_assegnatario().getCd_cds())));
 				else if (!rigaVar.getCd_cds_area().equals(rigaVar.getCdr_assegnatario().getCd_cds())) {
 					/*
-					 * Se Ë stata valorizzata l'area occorre controllare:
-					 * 1) Non Ë possibile, tramite storni di entrata, aumentare o ridurre gli importi dell'Area
+					 * Se √® stata valorizzata l'area occorre controllare:
+					 * 1) Non √® possibile, tramite storni di entrata, aumentare o ridurre gli importi dell'Area
 					 * 
 					 * n.b. si suppone che per l'area non si entri mai in questo ramo in quanto il campo Area 
-					 *      Ë impostato automaticamente uguale al CDS del Cdr_accentratore   
+					 *      √® impostato automaticamente uguale al CDS del Cdr_accentratore   
 					 */
 					if (pdgClone.isStorno())
-						throw new ApplicationException("Non Ë possibile effettuare storni di entrata su Area da parte di Istituti.");
+						throw new ApplicationException("Non √® possibile effettuare storni di entrata su Area da parte di Istituti.");
 				}
 					
 				if (rigaVar.getCrudStatus()==OggettoBulk.TO_BE_CREATED || rigaVar.getCrudStatus()==OggettoBulk.TO_BE_UPDATED)
@@ -203,14 +203,14 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 					rigaVar.setArea((CdsBulk)cdsHome.findByPrimaryKey(new CdsBulk(rigaVar.getCdr_assegnatario().getCd_cds())));
 				else if (!rigaVar.getCd_cds_area().equals(rigaVar.getCdr_assegnatario().getCd_cds())) {
 					/*
-					 * Se Ë stata valorizzata l'area occorre controllare:
-					 * 1) Non Ë possibile, tramite lo storno di spesa, sottrarre importi all'Area
+					 * Se √® stata valorizzata l'area occorre controllare:
+					 * 1) Non √® possibile, tramite lo storno di spesa, sottrarre importi all'Area
 					 * 
 					 * n.b. si suppone che per l'area non si entri mai in questo ramo in quanto il campo Area 
-					 *      Ë impostato automaticamente uguale al CDS del Cdr_accentratore   
+					 *      √® impostato automaticamente uguale al CDS del Cdr_accentratore   
 					 */
 					if (pdgClone.isStorno() && rigaVar.getIm_variazione().compareTo(Utility.ZERO)<0)
-						throw new ApplicationException("Non Ë possibile effettuare storni negativi di spesa su Area da parte di Istituti.");
+						throw new ApplicationException("Non √® possibile effettuare storni negativi di spesa su Area da parte di Istituti.");
 				}
 				if (rigaVar.getCrudStatus()==OggettoBulk.TO_BE_CREATED || rigaVar.getCrudStatus()==OggettoBulk.TO_BE_UPDATED)
 					rigaInsModSpe = true;				
@@ -239,7 +239,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 					PdGVariazioniComponentSession comp = Utility.createPdGVariazioniComponentSession();
 					try {
 						if (comp.isRigaLiquidazioneIva(userContext, riga)){
-							throw new ApplicationException ("Attenzione: Non Ë possibile salvare la variazione contenente la GAE di default della liquidazione IVA!");
+							throw new ApplicationException ("Attenzione: Non √® possibile salvare la variazione contenente la GAE di default della liquidazione IVA!");
 						} else {
 							totaleImportoRiga = totaleImportoRiga.add(Utility.nvl(riga.getIm_variazione()));
 						}
@@ -248,7 +248,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 					}
 				}
 				if (ass.getPdg_variazione().isApprovata() && Utility.nvl(ass.getIm_spesa()).compareTo(totaleImportoRiga) != 0){
-					throw new ApplicationException ("Attenzione: la somma degli importi "+totaleImportoRiga+" non corrisponde al totale indicato "+Utility.nvl(ass.getIm_spesa())+" sul centro di responsabilit‡!");
+					throw new ApplicationException ("Attenzione: la somma degli importi "+totaleImportoRiga+" non corrisponde al totale indicato "+Utility.nvl(ass.getIm_spesa())+" sul centro di responsabilit√†!");
 				}
 				CRUDPdgVariazioneGestionaleComponentSession varSession = (CRUDPdgVariazioneGestionaleComponentSession)createComponentSessionVariazioneGestionale();
 				try {
@@ -336,10 +336,10 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 	 * Pre-post-conditions:
 	 *
 	 * Nome: Default
-	 * Pre:  E' stata generata la richiesta di ricerca di una Linea di Attivit‡
-	 * Post: Vengono restituite tutte le Linee di Attivit‡ che:
+	 * Pre:  E' stata generata la richiesta di ricerca di una Linea di Attivit√†
+	 * Post: Vengono restituite tutte le Linee di Attivit√† che:
 	 * 		 - sono associate al CDR Assegnatario del dettaglio gestionale Pdg_modulo_spese_gestBulk;
-	 * 		 - sono associate al Modulo di Attivit‡ del dettaglio gestionale Pdg_modulo_speseBulk;
+	 * 		 - sono associate al Modulo di Attivit√† del dettaglio gestionale Pdg_modulo_speseBulk;
 	 * 		 - siano Linee utilizzabile nella Gestione spese (TI_GESTIONE='S')
 	 * 		 
 	 * @param userContext lo userContext che ha generato la richiesta
@@ -399,7 +399,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		}
 
 		/**
-		 * Escludo la linea di attivit‡ dell'IVA C20
+		 * Escludo la linea di attivit√† dell'IVA C20
 		 */
 		it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 		try {
@@ -457,11 +457,11 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO","PROGETTO_GEST.PG_PROGETTO");
 		sql.addSQLClause("AND","PROGETTO_GEST.FL_UTILIZZABILE",sql.EQUALS,"Y");
 		/*
-		 * Líorigine delle fonti pilota líutilizzo delle GAE sui dettagli della variazione. 
+		 * L¬íorigine delle fonti pilota l¬íutilizzo delle GAE sui dettagli della variazione. 
 		 * In particolare:
  		 *    - Variazione con Fonti Interne: solo GAE di tipo FIN;
 		 *    - Variazione con Fonti Esterne: solo GAE di tipo FES.
-		 * Líorigine delle fonti filtra le GAE utilizzabili sulle righe di variazione ad eccezione 
+		 * L¬íorigine delle fonti filtra le GAE utilizzabili sulle righe di variazione ad eccezione 
 		 * delle GAE del CdR speciale del Personale in CONFIGURAZIONE_CNR, che risultano utilizzabili 
 		 * sia su variazioni di Tipo Interno che Esterno.
 		 */
@@ -553,8 +553,8 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 	 * 		 - sono associate a classificazioni di un livello pari a quello definito in Parametri_Ente;
 	 * 		 - le classificazioni associate sono figlie della classificazione del dettaglio gestionale Pdg_modulo_spese_gestBulk
 	 * 		 - non sia una partita di giro
-	 * 		 - abbia la FUNZIONE uguale a quella della Linea di Attivit‡ del dettaglio gestionale Pdg_modulo_spese_gestBulk
-	 * 		 - il CD_TIPO_UNITA Ë uguale a quello della UO associata al CDR
+	 * 		 - abbia la FUNZIONE uguale a quella della Linea di Attivit√† del dettaglio gestionale Pdg_modulo_spese_gestBulk
+	 * 		 - il CD_TIPO_UNITA √® uguale a quello della UO associata al CDR
 	 * 
 	 * @param userContext lo userContext che ha generato la richiesta
 	 * @param clauses clausole di ricerca gia' specificate dall'utente
@@ -702,7 +702,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		messaggio.setCd_utente(utente.getCd_utente());
 		messaggio.setPriorita(new Integer(1));
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - » stata raggiunta la quota di " + (tipo.equals(Elemento_voceHome.GESTIONE_SPESE)?"Spesa":"Entrata") + " assegnata alla Variazione di competenza");
+		messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - √à stata raggiunta la quota di " + (tipo.equals(Elemento_voceHome.GESTIONE_SPESE)?"Spesa":"Entrata") + " assegnata alla Variazione di competenza");
 		messaggio.setCorpo("Numero variazione:"+ass_var.getPg_variazione_pdg());
 		messaggio.setCorpo(messaggio.getCorpo() + "\n" + "Il CdR :"+ass_var.getCentro_responsabilita().getCd_ds_cdr()+" ha coperto la quota assegnata.");
 		messaggio.setSoggetto(messaggio.getDs_messaggio());

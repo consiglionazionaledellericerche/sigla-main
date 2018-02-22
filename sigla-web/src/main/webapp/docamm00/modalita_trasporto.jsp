@@ -12,7 +12,7 @@
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<title>Modalit‡ Trasporto</title>
+<title>Modalit√† Trasporto</title>
 </head>
 <body class="Form">
 

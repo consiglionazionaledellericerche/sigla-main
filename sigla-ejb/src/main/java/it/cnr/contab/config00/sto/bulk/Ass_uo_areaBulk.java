@@ -58,8 +58,8 @@ public class Ass_uo_areaBulk extends Ass_uo_areaBase {
 	}
 
 	public boolean isROArea_ricerca() {
-//	   Check se l'unit‡ padre Ë di tipo area
-//	   Se l' UO padre Ë un'area, non posso collegare a questa UO un'area
+//	   Check se l'unit√† padre √® di tipo area
+//	   Se l' UO padre √® un'area, non posso collegare a questa UO un'area
 		if (getUnita_organizzativa().getUnita_padre().getCd_tipo_unita() == null ||
 		    getUnita_organizzativa().getUnita_padre().getCrudStatus() == UNDEFINED ||
 			((getUnita_organizzativa().getUnita_padre().getCrudStatus() == NORMAL) && 

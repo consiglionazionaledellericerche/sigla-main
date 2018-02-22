@@ -368,7 +368,7 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 			if(bulk.getNrProtocolloAcq()!=null){
 				prot=bulk.getNrProtocolloAcq();
 			//else
-				//throw new ApplicationException("Non è stato indicato il numero Protocollo Acq/Serv. ricevuti");
+				//throw new ApplicationException("Non Ã¨ stato indicato il numero Protocollo Acq/Serv. ricevuti");
 			// per gestire caso in cui un solo flusso viene accettato
 			for (Iterator i=(SezioneUnoAcquisti(context, bulk)).iterator();i.hasNext();){
 				conta=conta+1;
@@ -443,7 +443,7 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 			if(bulk.getNrProtocolloVen()!=null){
 				prot=bulk.getNrProtocolloVen();
 			//else
-				//throw new ApplicationException("Non è stato indicato il numero Protocollo Cessioni/Serv. resi");
+				//throw new ApplicationException("Non Ã¨ stato indicato il numero Protocollo Cessioni/Serv. resi");
 			for (Iterator i=(SezioneUnoVendite(context, bulk)).iterator();i.hasNext();){
 				conta=conta+1;
     			VIntrastatBulk det=(VIntrastatBulk)i.next();

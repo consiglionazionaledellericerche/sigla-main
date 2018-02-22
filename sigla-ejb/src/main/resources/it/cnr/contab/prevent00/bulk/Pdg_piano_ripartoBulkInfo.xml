@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -54,7 +54,7 @@
 		formName="searchtool" 
 		enabledOnSearch="true"
         enabledOnEdit="true"
-		label="Centro di Responsabilità"
+		label="Centro di ResponsabilitÃ "
 		readonlyProperty="ROCentroResponsabilita" />
 	<fieldProperty
 		name="tot_imp_piano_riparto_spese"
@@ -87,7 +87,7 @@
 		name="esercizio" />
 	<findFieldProperty
 		name="cd_centro_responsabilita" 
-		label="Centro di Responsabilità"/>
+		label="Centro di ResponsabilitÃ "/>
 	<findFieldProperty
 		name="id_classificazione" />
 	<findFieldProperty

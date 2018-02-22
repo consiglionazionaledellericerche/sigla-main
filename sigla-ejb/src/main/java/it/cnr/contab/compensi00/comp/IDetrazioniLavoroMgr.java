@@ -20,7 +20,7 @@ public interface IDetrazioniLavoroMgr extends ICRUDMgr {
   *  superati
   *    PreCondition:
   *      la tabella contiene altri record con stessa chiave di quello che sto inserendo
-  *		 e la data di inizio validit‡ del nuovo record e' successiva a quella 
+  *		 e la data di inizio validit√† del nuovo record e' successiva a quella 
   *		 del record (con stessa chiave) piu' recente in tabella (cioe' che ha data fine 
   *		 validita = infinito)
   *    PostCondition:
@@ -28,9 +28,9 @@ public interface IDetrazioniLavoroMgr extends ICRUDMgr {
   
   *  Riscontrata condizione di errore.
   *    PreCondition:
-  *      Si Ë verificato un errore.
+  *      Si √® verificato un errore.
   *    PostCondition:
-  *      Viene inviato il messaggio "Attenzione, si Ë verificato un errore".
+  *      Viene inviato il messaggio "Attenzione, si √® verificato un errore".
 **/
 
 public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;

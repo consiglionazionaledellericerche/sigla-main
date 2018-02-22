@@ -47,45 +47,45 @@ public Ass_obb_acr_pgiroBulk getAssociazione() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_tipo_documento_amm'
+ * Restituisce il valore della propriet√† 'cd_tipo_documento_amm'
  *
- * @return Il valore della propriet‡ 'cd_tipo_documento_amm'
+ * @return Il valore della propriet√† 'cd_tipo_documento_amm'
  */
 public java.lang.String getCd_tipo_documento_amm() {
 	return cd_tipo_documento_amm;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_uo_ente'
+ * Restituisce il valore della propriet√† 'cd_uo_ente'
  *
- * @return Il valore della propriet‡ 'cd_uo_ente'
+ * @return Il valore della propriet√† 'cd_uo_ente'
  */
 public java.lang.String getCd_uo_ente() {
 	return cd_uo_ente;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'dt_scadenza'
+ * Restituisce il valore della propriet√† 'dt_scadenza'
  *
- * @return Il valore della propriet‡ 'dt_scadenza'
+ * @return Il valore della propriet√† 'dt_scadenza'
  */
 public java.sql.Timestamp getDt_scadenza() {
 	return dt_scadenza;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'esercizio_doc_attivo'
+ * Restituisce il valore della propriet√† 'esercizio_doc_attivo'
  *
- * @return Il valore della propriet‡ 'esercizio_doc_attivo'
+ * @return Il valore della propriet√† 'esercizio_doc_attivo'
  */
 public java.lang.Integer getEsercizio_doc_attivo() {
 	return esercizio_doc_attivo;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'esercizio_reversale'
+ * Restituisce il valore della propriet√† 'esercizio_reversale'
  *
- * @return Il valore della propriet‡ 'esercizio_reversale'
+ * @return Il valore della propriet√† 'esercizio_reversale'
  */
 public java.lang.Integer getEsercizio_reversale() {
 	return esercizio_reversale;
@@ -96,18 +96,18 @@ public String getManagerName() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'pg_doc_attivo'
+ * Restituisce il valore della propriet√† 'pg_doc_attivo'
  *
- * @return Il valore della propriet‡ 'pg_doc_attivo'
+ * @return Il valore della propriet√† 'pg_doc_attivo'
  */
 public java.lang.Long getPg_doc_attivo() {
 	return pg_doc_attivo;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'pg_reversale'
+ * Restituisce il valore della propriet√† 'pg_reversale'
  *
- * @return Il valore della propriet‡ 'pg_reversale'
+ * @return Il valore della propriet√† 'pg_reversale'
  */
 public java.lang.Long getPg_reversale() {
 	return pg_reversale;
@@ -210,7 +210,7 @@ public void setAssociazione(Ass_obb_acr_pgiroBulk newAssociazione) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'cd_tipo_documento_amm'
+ * Imposta il valore della propriet√† 'cd_tipo_documento_amm'
  *
  * @param newCd_tipo_documento_amm	Il valore da assegnare a 'cd_tipo_documento_amm'
  */
@@ -219,7 +219,7 @@ public void setCd_tipo_documento_amm(java.lang.String newCd_tipo_documento_amm) 
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'cd_uo_ente'
+ * Imposta il valore della propriet√† 'cd_uo_ente'
  *
  * @param newCd_uo_ente	Il valore da assegnare a 'cd_uo_ente'
  */
@@ -228,7 +228,7 @@ public void setCd_uo_ente(java.lang.String newCd_uo_ente) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'dt_scadenza'
+ * Imposta il valore della propriet√† 'dt_scadenza'
  *
  * @param newDt_scadenza	Il valore da assegnare a 'dt_scadenza'
  */
@@ -237,7 +237,7 @@ public void setDt_scadenza(java.sql.Timestamp newDt_scadenza) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'esercizio_doc_attivo'
+ * Imposta il valore della propriet√† 'esercizio_doc_attivo'
  *
  * @param newEsercizio_doc_attivo	Il valore da assegnare a 'esercizio_doc_attivo'
  */
@@ -246,7 +246,7 @@ public void setEsercizio_doc_attivo(java.lang.Integer newEsercizio_doc_attivo) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'esercizio_reversale'
+ * Imposta il valore della propriet√† 'esercizio_reversale'
  *
  * @param newEsercizio_reversale	Il valore da assegnare a 'esercizio_reversale'
  */
@@ -261,7 +261,7 @@ public void setFl_isTronco(boolean newFl_isTronco) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'pg_doc_attivo'
+ * Imposta il valore della propriet√† 'pg_doc_attivo'
  *
  * @param newPg_doc_attivo	Il valore da assegnare a 'pg_doc_attivo'
  */
@@ -270,7 +270,7 @@ public void setPg_doc_attivo(java.lang.Long newPg_doc_attivo) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'pg_reversale'
+ * Imposta il valore della propriet√† 'pg_reversale'
  *
  * @param newPg_reversale	Il valore da assegnare a 'pg_reversale'
  */
@@ -284,7 +284,7 @@ public void setUnitaOrganizzativaOptions(java.util.List newUnitaOrganizzativaOpt
 	unitaOrganizzativaOptions = newUnitaOrganizzativaOptions;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
@@ -295,7 +295,7 @@ public void validate() throws ValidationException {
 
 	// controllo su campo DATA REGISTRAZIONE
 	if ( getDt_registrazione() == null )
-		throw new ValidationException( "Il campo DATA Ë obbligatorio." );
+		throw new ValidationException( "Il campo DATA √® obbligatorio." );
 
 	java.sql.Timestamp dataRegistrazione = getDt_registrazione();
 //	java.sql.Timestamp dataSistema = new java.sql.Timestamp(System.currentTimeMillis());
@@ -310,19 +310,19 @@ public void validate() throws ValidationException {
 	}		
 
 	if (dataRegistrazione.after(dataSistema))
-		throw new ValidationException( "Non Ë possibile inserire una data di registrazione posteriore a quella di sistema." );
+		throw new ValidationException( "Non √® possibile inserire una data di registrazione posteriore a quella di sistema." );
 			
 	// controllo su campo DESCRIZIONE
 	if ( getDs_accertamento() == null || getDs_accertamento().equals("") )
-		throw new ValidationException( "Il campo DESCRIZIONE Ë obbligatorio." );
+		throw new ValidationException( "Il campo DESCRIZIONE √® obbligatorio." );
 
 	// controllo su campo DEBITORE
 	if ( getDebitore().getCd_terzo() == null || getDebitore().getCd_terzo().equals("") )
-		throw new ValidationException( "Il campo DEBITORE Ë obbligatorio." );
+		throw new ValidationException( "Il campo DEBITORE √® obbligatorio." );
 		
 	// controlli su campo IMPORTO	
 	if (  getIm_accertamento() == null ) 
-		throw new ValidationException( "L' IMPORTO dell'Annotazione d'Entrata su Partita di Giro non puÚ essere nullo." );
+		throw new ValidationException( "L' IMPORTO dell'Annotazione d'Entrata su Partita di Giro non pu√≤ essere nullo." );
 	
 	if ( this.isAssociataADocAmm() == false && ( ( getIm_accertamento() == null ) || 
 		 (getIm_accertamento().compareTo(new java.math.BigDecimal(0)) <= 0) ))
@@ -330,22 +330,22 @@ public void validate() throws ValidationException {
 
 	// controllo su campo CAPITOLO
 	if ( getCapitolo().getCd_voce() == null || getCapitolo().getCd_voce().equals("") )
-		throw new ValidationException( "Il campo CAPITOLO Ë obbligatorio." );
+		throw new ValidationException( "Il campo CAPITOLO √® obbligatorio." );
 
 	// controllo su campo DATA SCADENZA
 	if ( getDt_scadenza() == null )
-		throw new ValidationException( "Il campo DATA SCADENZA Ë obbligatorio." );
+		throw new ValidationException( "Il campo DATA SCADENZA √® obbligatorio." );
 /*	if ( !Numerazione_doc_contBulk.TIPO_ACR_RES.equals( getCd_tipo_documento_cont()))
 	{ */
 		if ( //  data obbligazione != data scadenza && data_obbligazione >= data_scadenza
 		!(getDt_registrazione().after( getDt_scadenza() ) && getDt_registrazione().before( getDt_scadenza() )) &&
 		  getDt_registrazione().after( getDt_scadenza() ))
-		throw new ValidationException( "Non Ë possibile inserire una data scadenza antecedente a quella di registrazione dell'Annotazione d'Entrata su Partita di Giro." );
+		throw new ValidationException( "Non √® possibile inserire una data scadenza antecedente a quella di registrazione dell'Annotazione d'Entrata su Partita di Giro." );
 		
 		java.util.GregorianCalendar gc = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
 		gc.setTime(getDt_scadenza());
 		if (gc.get(java.util.GregorianCalendar.YEAR) < getEsercizio().intValue())
-			throw new ValidationException( "Non Ë possibile inserire una data scadenza antecedente all'esercizio di creazione dell'Annotazione d'Entrata su Partita di Giro." );
+			throw new ValidationException( "Non √® possibile inserire una data scadenza antecedente all'esercizio di creazione dell'Annotazione d'Entrata su Partita di Giro." );
 /*	}		*/
 
 }

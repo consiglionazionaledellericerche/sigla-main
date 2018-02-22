@@ -143,7 +143,7 @@ public class CRUDRichiestaUopBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ri
 		return righe;
 	}
 	/**
-	 * Imposta il valore della proprietà 'userConfirm'
+	 * Imposta il valore della proprietÃ  'userConfirm'
 	 *
 	 * @param newUserConfirm	Il valore da assegnare a 'userConfirm'
 	 */

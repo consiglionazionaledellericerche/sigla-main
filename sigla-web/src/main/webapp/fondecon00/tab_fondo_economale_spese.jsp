@@ -113,11 +113,11 @@
 					<%	if (fondo.getSquared() != null) {
 							if (!fondo.getSquared().booleanValue()) { %>
 									<span class="FormLabel" style="color:red">
-										L'importo delle spese non documentate non è in quadratura con l'importo della scadenza!
+										L'importo delle spese non documentate non Ã¨ in quadratura con l'importo della scadenza!
 									</span>
 							<%	} else { %>
 									<span class="FormLabel" style="color:blu">
-										L'importo delle spese non documentate è in quadratura con l'importo della scadenza!
+										L'importo delle spese non documentate Ã¨ in quadratura con l'importo della scadenza!
 									</span>
 					<%		}
 						} %>

@@ -35,7 +35,7 @@ public OggettoBulk caricaPdg_aggregato (UserContext userContext,Pdg_aggregatoBul
 		CdrBulk cdr = pdg_aggregato == null ? null : pdg_aggregato.getCdr();
 
 		if (cdr == null && cdrUtente == null) 
-			throw new ApplicationException("L'utente non Ë configurato correttamente per l'utilizzo del pdg aggregato");
+			throw new ApplicationException("L'utente non √® configurato correttamente per l'utilizzo del pdg aggregato");
 
 		if (cdr == null)
 			cdr = cdrUtente;
@@ -55,7 +55,7 @@ public OggettoBulk caricaPdg_aggregato (UserContext userContext,Pdg_aggregatoBul
 		initializeKeysAndOptionsInto(userContext,pdg_aggregato);
 		getHomeCache(userContext).fetchAll(userContext);
 
-		// Lo stato del pdg aggregato Ë modificabile solo
+		// Lo stato del pdg aggregato √® modificabile solo
 		// dal cdr ente o dal cdr stesso (solo in stato B o E)
 		if (isCdrEnte(userContext,cdrUtente) ||
 			pdg_aggregato.STATO_B.equals(pdg_aggregato.getStato()) ||
@@ -101,7 +101,7 @@ private void checkAttualizzScrAltraUo(UserContext userContext,Pdg_aggregatoBulk 
  *    PreCondition:
  *      Esiste almeno un pdg figlio del pdg specificato che si trova in uno stato diverso da quelli specificificati
  *    PostCondition:
- *      Genera una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *      Genera una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  *  Tutti i controlli superati
  *    PreCondition:
  *      Nessun'altra precondizione verificata
@@ -130,7 +130,7 @@ private boolean controllaStatoPdgFigliPadre(UserContext userContext,Pdg_preventi
 						trovato = stati[i].equals(stato_figlio);
 
 					if (!trovato)
-							throw new it.cnr.jada.comp.ApplicationException("Il pdg del cdr "+rs.getString("CD_CENTRO_RESPONSABILITA")+" Ë in stato "+stato_figlio+" che non Ë compatibile con l'operazione richiesta.");
+							throw new it.cnr.jada.comp.ApplicationException("Il pdg del cdr "+rs.getString("CD_CENTRO_RESPONSABILITA")+" √® in stato "+stato_figlio+" che non √® compatibile con l'operazione richiesta.");
 				}
 			} finally {
 				try{rs.close();}catch( java.sql.SQLException e ){};
@@ -171,7 +171,7 @@ private boolean controllaStatoPdgFigliPadre(UserContext userContext,Pdg_preventi
   *      Viene richiesto l'elenco dei titoli compatibili per il dettaglio di spesa specificato con un elenco di clausole specificate
   *  	 Questo per tutti i CDS tranne il SAC    
   *    PostCondition:
-  *      Viene restituita una query sulla tabella ELEMENTO_VOCE con le clausole specificate pi˘: 
+  *      Viene restituita una query sulla tabella ELEMENTO_VOCE con le clausole specificate pi√π: 
   *      esercizio= dettaglioSpesa.esercizio
   *      ti_appartenenza = 'D' (APPARTENENZA_CDS)
   *      ti_gestione = 'S' ( GESTIONE_SPESE )
@@ -332,14 +332,14 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 		bulk = super.inizializzaBulkPerModifica(userContext,bulk);
 		
 		// identifica il bulk corrente (etr o spe)
-		if (bulk instanceof Pdg_aggregato_etr_det_inizialeBulk) { // Ë il bulk delle entrate o una sua sottoclasse
+		if (bulk instanceof Pdg_aggregato_etr_det_inizialeBulk) { // √® il bulk delle entrate o una sua sottoclasse
 			// istanzia il bulk per le entrate e il bulk-home 
 			Pdg_aggregato_etr_det_inizialeBulk etr_det = (Pdg_aggregato_etr_det_inizialeBulk)bulk;
 
 			BulkHome home = getHome(userContext,Pdg_aggregato_etr_detBulk.class);
 			/* istanzia un key-bulk per le entrate "modificate" settando la kiave: cdr, voce, natura, esercizio, modificabile, 
 			   appartenenza e gestione; con questo bulk si accede alla relativa tabella cercando una riga che contenga le
-			   modifiche ("M"): l'accesso avverr‡ tramite quella chiave */
+			   modifiche ("M"): l'accesso avverr√† tramite quella chiave */
 			Pdg_aggregato_etr_detBulk etr_det_mod_key = new Pdg_aggregato_etr_detBulk(
 				etr_det.getCd_centro_responsabilita(),
 				etr_det.getCd_elemento_voce(),
@@ -352,7 +352,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 			// istanzia il bulk per le entrate modificate fetchando il record con la kiave di cui sopra
 			Pdg_aggregato_etr_detBulk etr_det_mod = (Pdg_aggregato_etr_detBulk)home.findByPrimaryKey(etr_det_mod_key);
 
-			// vede se il record fetchato Ë vuoto (= non sono state registrate modifiche sino ad ora)
+			// vede se il record fetchato √® vuoto (= non sono state registrate modifiche sino ad ora)
 			if (etr_det_mod == null) {
 				etr_det_mod = etr_det_mod_key; // scrive nel bulk la kiave del record degli importi modificati
 				etr_det_mod.copiaImportiDa(etr_det); // setta gli importi proposti = agli importi imposti
@@ -360,7 +360,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 			// salva comunque le modifiche
 			etr_det.setEtr_modificato(etr_det_mod);
 		
-		} else if (bulk instanceof Pdg_aggregato_spe_det_inizialeBulk) { // Ë il bulk delle spese o una sua sottoclasse
+		} else if (bulk instanceof Pdg_aggregato_spe_det_inizialeBulk) { // √® il bulk delle spese o una sua sottoclasse
 			// come nel ramo if, solo che ci si riferisce alle spese invece che alle entrate
 			Pdg_aggregato_spe_det_inizialeBulk spe_det = (Pdg_aggregato_spe_det_inizialeBulk)bulk;
 
@@ -394,7 +394,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 
 		if (!pdg_aggregato.STATO_A.equals(pdg_aggregato.getStato()) &&
 			!pdg_aggregato.STATO_M.equals(pdg_aggregato.getStato()))
-			return asRO(bulk,"Il dettaglio non Ë modificabile perchË il pdg aggregato Ë in stato "+pdg_aggregato.getStato());
+			return asRO(bulk,"Il dettaglio non √® modificabile perch√® il pdg aggregato √® in stato "+pdg_aggregato.getStato());
 
 
 		// 05/09/2003
@@ -431,12 +431,12 @@ protected boolean isEsercizioChiuso(UserContext userContext,Pdg_aggregatoBulk pd
 /** 
   *  Utente non AC
   *    PreCondition:
-  *      L'utente non Ë l'Amministrazione Centrale (utente.cdr.livello <> 1 o utente.cdr.unita_organizzativa.cd_tipo_unita <> 'ENTE')
+  *      L'utente non √® l'Amministrazione Centrale (utente.cdr.livello <> 1 o utente.cdr.unita_organizzativa.cd_tipo_unita <> 'ENTE')
   *    PostCondition:
   *      Ritorna false
   *  Tutti i controlli superati
   *    PreCondition:
-  *      Nessun'altra precondizione Ë verificata
+  *      Nessun'altra precondizione √® verificata
   *    PostCondition:
   *      Ritorna true
  */
@@ -468,9 +468,9 @@ private boolean isUtenteEnte(UserContext userContext) throws ComponentException 
 /** 
   *  Tutti i controlli superati
   *    PreCondition:
-  *      Nessun'altra precondizione Ë verificata
+  *      Nessun'altra precondizione √® verificata
   *    PostCondition:
-  *      Viene generata una ApplicationException con il messaggio "L'utente non Ë abilitato alla visualizzazione dei PDG aggregati"
+  *      Viene generata una ApplicationException con il messaggio "L'utente non √® abilitato alla visualizzazione dei PDG aggregati"
   *  Utente AC
   *    PreCondition:
   *      userContext.utente.LIVELLO = 1 e userContext.cdr.unita_organizzativa.cd_tipo_unita = 'ENTE'
@@ -478,12 +478,12 @@ private boolean isUtenteEnte(UserContext userContext) throws ComponentException 
   *      Restituisce una collezione con l'elenco di tutti i CDR di I livello per l'esercizio selezionato per cui esiste un PDG
   *  Utente CDR I livello
   *    PreCondition:
-  *      Il cdr dell'utente Ë di I livello (LIVELLO = 1)
+  *      Il cdr dell'utente √® di I livello (LIVELLO = 1)
   *    PostCondition:
   *      Restituisce una collezione contenente il solo cdr dell'utente
   *  Utente AREA
   *    PreCondition:
-  *      Il cdr dell'utente Ë un'area di ricerca (livello = II e tipo unit‡ = 'AREA')
+  *      Il cdr dell'utente √® un'area di ricerca (livello = II e tipo unit√† = 'AREA')
   *    PostCondition:
   *      Restituisce una collezione contenente il solo cdr dell'utente
  */
@@ -527,7 +527,7 @@ public SQLBuilder listaCdrPdGAggregatoPerUtente(it.cnr.jada.UserContext userCont
 /** 
   *  Tutti i controlli superati
   *    PreCondition:
-  *      Nessun'altra precondition Ë verificata
+  *      Nessun'altra precondition √® verificata
   *    PostCondition:
   *      Dal dettaglio di spesa o entrata specificato viene estratto il dettaglio contenente gli importi modificati e quest'ultimo viene reso persistente.
  */
@@ -542,7 +542,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext,pdg_aggregato))
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile modificare dettagli del pdg aggregato ad esercizio chiuso.");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile modificare dettagli del pdg aggregato ad esercizio chiuso.");
 
 		if (bulk instanceof Pdg_aggregato_etr_det_inizialeBulk) {
 			
@@ -586,12 +586,12 @@ public OggettoBulk modificaStatoPdg_aggregato(UserContext userContext,Pdg_aggreg
 		String vecchioStato = oldPdg_aggregato.getStato();
 
 		if (!isStatoCompatibile(vecchioStato,nuovoStato))
-			throw new ApplicationException("Lo stato "+nuovoStato+" non Ë compatibile con lo stato attuale del pdg aggregato ("+vecchioStato+")");
+			throw new ApplicationException("Lo stato "+nuovoStato+" non √® compatibile con lo stato attuale del pdg aggregato ("+vecchioStato+")");
 
 		// 09/06/2005
 		// Aggiunto controllo sul cambiamento di stato da quello finale, obbligo l'utilizzo delle variazioni al PDG
 		if (vecchioStato.equals(Pdg_aggregatoBulk.STATO_B))
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile modificare lo stato del pdg aggregato poichË Ë in stato Finale.");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile modificare lo stato del pdg aggregato poich√® √® in stato Finale.");
 		
 		pdg_aggregato.setUser(userContext.getUser());
 
@@ -690,7 +690,7 @@ public Query select(UserContext userContext,CompoundFindClause clauses,OggettoBu
 /** 
   *  Normale
   *    PreCondition:
-  *      Viene richiesto l'elenco dei centri di responsabilit‡ compatibili con il livello di responsabilit‡ dell'utente
+  *      Viene richiesto l'elenco dei centri di responsabilit√† compatibili con il livello di responsabilit√† dell'utente
   *    PostCondition:
   *      Viene restituito una query sui cdr con le clausole specificate e una clausola sull'esercizio uguale a quello del pdg specificato
  */
@@ -714,7 +714,7 @@ public Query select(UserContext userContext,CompoundFindClause clauses,OggettoBu
   *    PreCondition:
   *      Viene richiesto l'elenco degli elementi voce compatibili per il dettaglio di entrata specificato con un elenco di clausole specificate
   *    PostCondition:
-  *      Viene restituita una query sulla vista V_ELEMENTO_VOCE_PDG_ETR che contiene le clausole specificate pi˘ la clausola CD_NATURA =  dettaglioSpesa.cd_natura
+  *      Viene restituita una query sulla vista V_ELEMENTO_VOCE_PDG_ETR che contiene le clausole specificate pi√π la clausola CD_NATURA =  dettaglioSpesa.cd_natura
   *      Se il CDR non appartiene alla SAC, viene imposta l'ulteriore condizione che la voce del piano non sia riservata SAC
   */
 //^^@@
@@ -749,7 +749,7 @@ public SQLBuilder selectElemento_voceByClause(UserContext userContext,
   *    PreCondition:
   *      Viene richiesta una ricerca degli elementi voce compatibili con un dettaglio di spesa del pdg aggregato
   *    PostCondition:
-  *      Viene restituita una query sulla tabella degli ELEMENTI_VOCE esistenti nella tabella PDG_AGGREGATO_SPE_DET del CDR selezionato con le clausole specificate pi˘ le seguenti: 
+  *      Viene restituita una query sulla tabella degli ELEMENTI_VOCE esistenti nella tabella PDG_AGGREGATO_SPE_DET del CDR selezionato con le clausole specificate pi√π le seguenti: 
   *      esercizio = dettaglioSpesa.getEsercizio()
   *      ti_appartenenza = dipendente dal dai dettagli presenti in aggregato )
   *      ti_gestione = 'S'  ( GESTIONE_SPESE )

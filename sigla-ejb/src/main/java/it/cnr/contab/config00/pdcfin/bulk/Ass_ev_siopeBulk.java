@@ -173,12 +173,12 @@ public class Ass_ev_siopeBulk extends Ass_ev_siopeBase {
 	public void validate() throws ValidationException {
 		super.validate();
 		if ( elemento_voce == null || elemento_voce.getCd_elemento_voce() == null ||  elemento_voce.getCd_elemento_voce().equals("") )
-			throw new ValidationException( "Il codice del Elemento Voce è obbligatorio." );
+			throw new ValidationException( "Il codice del Elemento Voce Ã¨ obbligatorio." );
 		if ( elemento_voce.getTi_appartenenza() == null || elemento_voce.getTi_appartenenza().equals(""))
-			throw new ValidationException( "Il campo appartenenza è obbligatorio." );
+			throw new ValidationException( "Il campo appartenenza Ã¨ obbligatorio." );
 		if ( elemento_voce.getTi_gestione() == null || elemento_voce.getTi_gestione().equals(""))
-			throw new ValidationException( "Il campo gestione è obbligatorio." );
+			throw new ValidationException( "Il campo gestione Ã¨ obbligatorio." );
 		if ( codici_siope.getCd_siope() == null || codici_siope.getCd_siope().equals(""))
-			throw new ValidationException( "Il campo codice siope è obbligatorio." );
+			throw new ValidationException( "Il campo codice siope Ã¨ obbligatorio." );
 	}
 }

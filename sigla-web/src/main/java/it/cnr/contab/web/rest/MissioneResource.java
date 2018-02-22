@@ -109,7 +109,7 @@ public class MissioneResource implements MissioneLocal{
 	    	Optional.ofNullable(missioneBulk.getCd_cds()).filter(x -> userContext.getCd_cds().equals(x)).
 				orElseThrow(() -> new RestException(Status.BAD_REQUEST, "CdS del contesto diverso da quello della Missione"));
 	    	Optional.ofNullable(missioneBulk.getCd_unita_organizzativa()).filter(x -> userContext.getCd_unita_organizzativa().equals(x)).
-				orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Unit‡ Organizzativa del contesto diversa da quella della Missione"));
+				orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Unit√† Organizzativa del contesto diversa da quella della Missione"));
 		}
 
     	Calendar cal = Calendar.getInstance();

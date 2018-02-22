@@ -92,7 +92,7 @@ public class RESTServlet extends HttpServlet{
         	if (command.equals(COMMAND_GET)) {
                 searchForInfo(req, resp); 
         	} else {
-                throw new ServletException("Non è possibile avere le informazioni sui servizi con il comando POST");
+                throw new ServletException("Non Ã¨ possibile avere le informazioni sui servizi con il comando POST");
         	}
         } else {
             ActionMapping actionmapping = mappings.findActionMapping(s);
