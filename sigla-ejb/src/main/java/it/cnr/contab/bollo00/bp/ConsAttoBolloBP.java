@@ -1,16 +1,19 @@
 
 package it.cnr.contab.bollo00.bp;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
 
 import it.cnr.contab.bollo00.bulk.V_cons_atto_bolloBulk;
+import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
@@ -188,7 +191,25 @@ public class ConsAttoBolloBP extends ConsultazioniBP {
 	public RemoteIterator search(ActionContext context, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws BusinessProcessException {
 		try {
 			setFindclause(compoundfindclause);
-			return Utility.createAttoBolloComponentSession().findConsultazioneDettaglio(context.getUserContext(),getPathConsultazione(),getLivelloConsultazione(),getBaseclause(),compoundfindclause);
+
+			V_cons_atto_bolloBulk model = (V_cons_atto_bolloBulk)getModel();
+			model.setNumGeneraleFogli(0);
+			model.setNumGeneraleEsemplari(0);
+			model.setImGeneraleBollo(BigDecimal.ZERO);
+			
+			RemoteIterator ri = Utility.createAttoBolloComponentSession().findConsultazioneDettaglio(context.getUserContext(),getPathConsultazione(),getLivelloConsultazione(),getBaseclause(),null, true);
+			while (ri.hasMoreElements()) {
+				V_cons_atto_bolloBulk detail = (V_cons_atto_bolloBulk) ri.nextElement();
+				if (Tipo_atto_bolloBulk.TIPO_FOGLIO.equals(detail.getTiDettagli()))
+					model.setNumGeneraleFogli(model.getNumGeneraleFogli()+detail.getNumDettagli());
+				else if (Tipo_atto_bolloBulk.TIPO_ESEMPLARE.equals(detail.getTiDettagli()))
+					model.setNumGeneraleEsemplari(model.getNumGeneraleEsemplari()+detail.getNumDettagli());
+				else
+					throw new ApplicationException("Esistono dettagli diversi da Fogli/Esemplari. Funzione non disponibile.");
+				((V_cons_atto_bolloBulk)getModel()).setImGeneraleBollo(model.getImGeneraleBollo().abs().add(detail.getImTotaleBollo()));
+			}
+			EJBCommonServices.closeRemoteIterator(context, ri);
+			return Utility.createAttoBolloComponentSession().findConsultazioneDettaglio(context.getUserContext(),getPathConsultazione(),getLivelloConsultazione(),getBaseclause(),compoundfindclause, false);
 		}catch(Throwable e) {
 			throw new BusinessProcessException(e);
 		}
@@ -196,7 +217,24 @@ public class ConsAttoBolloBP extends ConsultazioniBP {
 
 	public void openIterator(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
 		try	{	
-			setIterator(context,Utility.createAttoBolloComponentSession().findConsultazioneDettaglio(context.getUserContext(),getPathConsultazione(),getLivelloConsultazione(),getBaseclause(),null));
+			V_cons_atto_bolloBulk model = (V_cons_atto_bolloBulk)getModel();
+			model.setNumGeneraleFogli(0);
+			model.setNumGeneraleEsemplari(0);
+			model.setImGeneraleBollo(BigDecimal.ZERO);
+			
+			RemoteIterator ri = Utility.createAttoBolloComponentSession().findConsultazioneDettaglio(context.getUserContext(),getPathConsultazione(),getLivelloConsultazione(),getBaseclause(),null, true);
+			while (ri.hasMoreElements()) {
+				V_cons_atto_bolloBulk detail = (V_cons_atto_bolloBulk) ri.nextElement();
+				if (Tipo_atto_bolloBulk.TIPO_FOGLIO.equals(detail.getTiDettagli()))
+					model.setNumGeneraleFogli(model.getNumGeneraleFogli()+detail.getNumDettagli());
+				else if (Tipo_atto_bolloBulk.TIPO_ESEMPLARE.equals(detail.getTiDettagli()))
+					model.setNumGeneraleEsemplari(model.getNumGeneraleEsemplari()+detail.getNumDettagli());
+				else
+					throw new ApplicationException("Esistono dettagli diversi da Fogli/Esemplari. Funzione non disponibile.");
+				((V_cons_atto_bolloBulk)getModel()).setImGeneraleBollo(model.getImGeneraleBollo().abs().add(detail.getImTotaleBollo()));
+			}
+			EJBCommonServices.closeRemoteIterator(context, ri);
+			setIterator(context,Utility.createAttoBolloComponentSession().findConsultazioneDettaglio(context.getUserContext(),getPathConsultazione(),getLivelloConsultazione(),getBaseclause(),null,false));
 		}catch(Throwable e) {
 			throw new BusinessProcessException(e);
 		}
