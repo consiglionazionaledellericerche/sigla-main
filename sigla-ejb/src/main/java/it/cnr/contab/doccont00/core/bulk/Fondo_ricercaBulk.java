@@ -8,25 +8,25 @@ public Fondo_ricercaBulk() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_fondo_ricerca'
+ * Restituisce il valore della propriet√† 'cd_fondo_ricerca'
  *
- * @return Il valore della propriet‡ 'cd_fondo_ricerca'
+ * @return Il valore della propriet√† 'cd_fondo_ricerca'
  */
 public java.lang.String getCd_fondo_ricerca() {
 	return cd_fondo_ricerca;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'ds_fondo_ricerca'
+ * Restituisce il valore della propriet√† 'ds_fondo_ricerca'
  *
- * @return Il valore della propriet‡ 'ds_fondo_ricerca'
+ * @return Il valore della propriet√† 'ds_fondo_ricerca'
  */
 public java.lang.String getDs_fondo_ricerca() {
 	return ds_fondo_ricerca;
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'cd_fondo_ricerca'
+ * Imposta il valore della propriet√† 'cd_fondo_ricerca'
  *
  * @param newCd_fondo_ricerca	Il valore da assegnare a 'cd_fondo_ricerca'
  */
@@ -35,7 +35,7 @@ public void setCd_fondo_ricerca(java.lang.String newCd_fondo_ricerca) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'ds_fondo_ricerca'
+ * Imposta il valore della propriet√† 'ds_fondo_ricerca'
  *
  * @param newDs_fondo_ricerca	Il valore da assegnare a 'ds_fondo_ricerca'
  */

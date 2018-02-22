@@ -18,7 +18,7 @@ public Tipo_trattamentoHome(java.sql.Connection conn,PersistentCache persistentC
 	super(Tipo_trattamentoBulk.class,conn,persistentCache);
 }
 /**
- * Inserisce la clausola di validit‡.
+ * Inserisce la clausola di validit√†.
  * I record vengono filtrati secondo la seguente clausola
  *	DATA_INIZIO_VALIDITA <= data <= DATA_FINE_VALIDITA
  *

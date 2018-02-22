@@ -47,7 +47,7 @@ public class ConsTotaleDocContCommessaContrattoAction
 						return (Forward)context.findDefaultForward();
 				
 					if (bp.getSelectedElements(context).isEmpty()) {
-						bp.setMessage("Non è stata selezionata nessuna riga.");
+						bp.setMessage("Non Ã¨ stata selezionata nessuna riga.");
 						return context.findDefaultForward();
 					}							
 					for (Iterator i = bp.getSelectedElements(context).iterator();i.hasNext();) 
@@ -99,7 +99,7 @@ public class ConsTotaleDocContCommessaContrattoAction
 						return (Forward)context.findDefaultForward();
 				
 					if (bp.getSelectedElements(context).isEmpty()) {
-						bp.setMessage("Non è stata selezionata nessuna riga.");
+						bp.setMessage("Non Ã¨ stata selezionata nessuna riga.");
 						return context.findDefaultForward();
 					}							
 					for (Iterator i = bp.getSelectedElements(context).iterator();i.hasNext();) 

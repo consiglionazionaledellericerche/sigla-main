@@ -267,7 +267,7 @@ public void validaDate() throws ValidationException{
 		setDt_fine_validita(it.cnr.contab.config00.esercizio.bulk.EsercizioHome.DATA_INFINITO);
 
 	if (getDt_inizio_validita().compareTo(getDt_fine_validita()) > 0)
-		throw new ValidationException("La Data Inizio Validita non può essere superiore alla Data Fine Validita");
+		throw new ValidationException("La Data Inizio Validita non puÃ² essere superiore alla Data Fine Validita");
 }
 public void validate() throws ValidationException 
 {

@@ -7,7 +7,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.*;
 /**
- * Business Process che gestisce le attivit‡ di Ricerca per l'oggetto Movimento_cogeBulk
+ * Business Process che gestisce le attivit√† di Ricerca per l'oggetto Movimento_cogeBulk
  */
 
 public class RicercaMovContCogeBP extends it.cnr.jada.util.action.SimpleCRUDBP {

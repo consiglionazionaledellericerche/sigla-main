@@ -37,7 +37,7 @@ public Bilancio_preventivoBulk(java.lang.String cd_cds,java.lang.Integer eserciz
  */
 public boolean areBottoniDettagliCdsEnabled(it.cnr.contab.prevent00.bp.CRUDBilancioPrevCdsBP bp) 
 {
-	// Modifica dell' 11/01/2002 - L'accesso ai dettagli Ë sempre abilitato
+	// Modifica dell' 11/01/2002 - L'accesso ai dettagli √® sempre abilitato
     return (true);
 }
 /**
@@ -67,7 +67,7 @@ public java.util.Dictionary getStatiKeys()
  *
  *
  * @param bp business process corrente
- * @return true il pusante Ë da abilitare
+ * @return true il pusante √® da abilitare
  */
  
 public boolean isBottoneApprovaCdsEnabled(it.cnr.contab.prevent00.bp.CRUDBilancioPrevCdsBP bp) 
@@ -85,7 +85,7 @@ public boolean isBottoneApprovaCdsEnabled(it.cnr.contab.prevent00.bp.CRUDBilanci
  *
  *
  * @param bp business process corrente
- * @return true il pusante Ë da abilitare
+ * @return true il pusante √® da abilitare
  */
 
 public boolean isBottoneApprovaCnrEnabled(it.cnr.contab.prevent00.bp.CRUDBilancioPrevCnrBP bp) 
@@ -103,7 +103,7 @@ public boolean isBottoneApprovaCnrEnabled(it.cnr.contab.prevent00.bp.CRUDBilanci
  *
  *
  * @param bp business process corrente
- * @return true il pusante Ë da abilitare
+ * @return true il pusante √® da abilitare
  */
 
 public boolean isBottoneProduciCdsEnabled(it.cnr.contab.prevent00.bp.CRUDBilancioPrevCdsBP bp) 
@@ -122,7 +122,7 @@ public boolean isBottoneProduciCdsEnabled(it.cnr.contab.prevent00.bp.CRUDBilanci
  *
  *
  * @param bp business process corrente
- * @return true il pusante Ë da abilitare
+ * @return true il pusante √® da abilitare
  */
 
 public boolean isBottoneProduciCnrEnabled(it.cnr.contab.prevent00.bp.CRUDBilancioPrevCnrBP bp) 
@@ -137,7 +137,7 @@ public boolean isBottoneProduciCnrEnabled(it.cnr.contab.prevent00.bp.CRUDBilanci
 	return (false);	// disabilito
 }
 /**
- * Controllo di effettuabilit‡ dell'approvazione approvazione del bilancio
+ * Controllo di effettuabilit√† dell'approvazione approvazione del bilancio
  * Nel caso non sia possibile solleva un'eccezione
  *
  * @param bp business process corrente

@@ -105,7 +105,7 @@ private void controlloBonusUnico(UserContext context, BonusBulk bonus) throws Co
 	if(bonus.getPg_bonus()!=null)
 		sql.addSQLClause("AND","PG_BONUS",sql.NOT_EQUALS,bonus.getPg_bonus());
 	if(sql.executeCountQuery(getConnection(context))>0 )
-		throw new ApplicationException("Codice Fiscale già utilizzato per richiedere il bonus.");
+		throw new ApplicationException("Codice Fiscale giÃ  utilizzato per richiedere il bonus.");
 }
 private void controlloBonusUnicoComp(UserContext context, BonusBulk bonus) throws ComponentException, SQLException {
 Bonus_nucleo_famHome home = (Bonus_nucleo_famHome)getHome(context,Bonus_nucleo_famBulk.class);
@@ -117,21 +117,21 @@ if(bonus.getPg_bonus()!=null)
 	sql_det.addSQLClause("AND","PG_BONUS",sql_det.NOT_EQUALS,bonus.getPg_bonus());
 
 if(sql_det.executeCountQuery(getConnection(context))>0 )
-		throw new ApplicationException("Codice Fiscale già utilizzato come conuige per richiedere altro bonus.");
+		throw new ApplicationException("Codice Fiscale giÃ  utilizzato come conuige per richiedere altro bonus.");
 }
 private void controlloBonusComponenteUnico(UserContext context, Bonus_nucleo_famBulk bonus) throws ComponentException, SQLException {
 	SQLBuilder sql = getHome(context, BonusBulk.class).createSQLBuilder();
 	sql.addSQLClause("AND","CODICE_FISCALE",sql.EQUALS,bonus.getCf_componente_nucleo());
 	sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,bonus.getEsercizio());
 	if(sql.executeCountQuery(getConnection(context))>0 )
-		throw new ApplicationException("Codice Fiscale già utilizzato per richiedere il bonus.");
+		throw new ApplicationException("Codice Fiscale giÃ  utilizzato per richiedere il bonus.");
 	 sql = getHome(context, Bonus_nucleo_famBulk.class).createSQLBuilder();
 	 sql.addSQLClause("AND","CF_COMPONENTE_NUCLEO",sql.EQUALS,bonus.getCf_componente_nucleo());
 	 sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,bonus.getEsercizio());
 	 if(sql.executeCountQuery(getConnection(context))>0 )
-			throw new ApplicationException("Codice Fiscale già utilizzato richiedere bonus.");
+			throw new ApplicationException("Codice Fiscale giÃ  utilizzato richiedere bonus.");
 	 if(bonus.getCf_componente_nucleo().compareToIgnoreCase(bonus.getBonus().getCodice_fiscale())==0)
-		 throw new ApplicationException("Codice Fiscale già utilizzato come richiedente bonus.");
+		 throw new ApplicationException("Codice Fiscale giÃ  utilizzato come richiedente bonus.");
 }
 
 private void controlloTerzoRapportovalido(UserContext context, BonusBulk bonus) throws ComponentException, SQLException {
@@ -152,7 +152,7 @@ private void controlloTerzoRapportovalido(UserContext context, BonusBulk bonus) 
 	sql.addSQLClause("OR","TERZO.DT_FINE_RAPPORTO",SQLBuilder.GREATER_EQUALS,bonus.getDt_registrazione());
 	sql.closeParenthesis();
 	if(sql.executeCountQuery(getConnection(context))>1 )
-		throw new ApplicationException("Esiste più di un terzo valido.");
+		throw new ApplicationException("Esiste piÃ¹ di un terzo valido.");
 	sql = getHome(context, AnagraficoBulk.class).createSQLBuilder();
 	sql.addTableToHeader("RAPPORTO,TIPO_RAPPORTO");
 	sql.addSQLJoin("ANAGRAFICO.CD_ANAG","RAPPORTO.CD_ANAG");
@@ -162,7 +162,7 @@ private void controlloTerzoRapportovalido(UserContext context, BonusBulk bonus) 
 	sql.addSQLJoin("RAPPORTO.CD_TIPO_RAPPORTO","TIPO_RAPPORTO.CD_TIPO_RAPPORTO");
 	sql.addSQLClause("AND","TIPO_RAPPORTO.FL_BONUS",SQLBuilder.EQUALS,"Y");
 	if(sql.executeCountQuery(getConnection(context))>1 )
-		throw new ApplicationException("Esiste più di un rapporto valido che prevede il bonus.");
+		throw new ApplicationException("Esiste piÃ¹ di un rapporto valido che prevede il bonus.");
 	if(sql.executeCountQuery(getConnection(context))==0 )
 		throw new ApplicationException("Non esiste un rapporto valido che prevede il bonus.");
 	

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	shortDescription="Consutazione Incarichi, Assegni di ricerca, Borse di Studio"
 	longDescription="Consutazione Incarichi, Assegni di ricerca, Borse di Studio"
@@ -40,7 +40,7 @@
 		maxLength="30"
 		enabledOnEdit="false"
 		nullable="false"
-		label="Unità Organizzativa" />
+		label="UnitÃ  Organizzativa" />
 	<fieldProperty
 		name="stato"
 		property="stato"
@@ -131,14 +131,14 @@
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="Data Inizio Validità" />
+		label="Data Inizio ValiditÃ " />
 	<fieldProperty
 		name="dtFineValidita"
 		property="dtFineValidita"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="Data Fine Validità" />
+		label="Data Fine ValiditÃ " />
 	<fieldProperty
 		name="dtProroga"
 		property="dtProroga"

@@ -42,7 +42,7 @@ public boolean ping(String hostname, Integer tipoPing) {
 					return true;
 				}
 				else {
-					// se è presente una riga con hostname = '*' 
+					// se Ã¨ presente una riga con hostname = '*' 
 					// la regola vale per tutti i server 
 					rs = stm.executeQuery("SELECT "+campo+" FROM APPLICATION_SERVER WHERE HOSTNAME='*'");
 					if(rs.next()) {

@@ -30,17 +30,17 @@ public boolean equalsByPrimaryKey(Object o) {
 	return true;
 }
 /**
- * Restituisce il valore della propriet‡ 'par_num'
+ * Restituisce il valore della propriet√† 'par_num'
  *
- * @return par_num <code>Integer</code> il valore della propriet‡ par_num
+ * @return par_num <code>Integer</code> il valore della propriet√† par_num
  */
 public java.lang.Integer getPar_num() {
 	return par_num;
 }
 /**
- * Restituisce il valore della propriet‡ 'pg_call'
+ * Restituisce il valore della propriet√† 'pg_call'
  *
- * @return pg_call il <code>Long</code> valore della propriet‡ pg_call
+ * @return pg_call il <code>Long</code> valore della propriet√† pg_call
  */
 public java.lang.Long getPg_call() {
 	return pg_call;
@@ -51,7 +51,7 @@ public int primaryKeyHashCode() {
 		calculateKeyHashCode(getPar_num());
 }
 /**
- * Imposta il valore della propriet‡ 'par_num'
+ * Imposta il valore della propriet√† 'par_num'
  *
  * @param newPar_num <code>Integer</code> il nuovo valore
  */
@@ -59,7 +59,7 @@ public void setPar_num(java.lang.Integer newPar_num) {
 	par_num = newPar_num;
 }
 /**
- * Imposta il valore della propriet‡ 'pg_call'
+ * Imposta il valore della propriet√† 'pg_call'
  *
  * @param newPg_call <code>Long</code> il nuovo valore
  */

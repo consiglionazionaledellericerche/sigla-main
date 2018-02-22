@@ -62,7 +62,7 @@ public abstract it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk calco
   * Pre:  E' stata richiesta l'inizializzazione di una istanza di Distinta_cassiereBulk per modifica
   * Post: Viene inizializzato la distinta, calcolati i totali dei mandati/reversali presenti in distinta (suddivivisi per
   *       tipologia) (metodo 'calcolaTotali'),  vengono calcolati
-  *       gli storici degli importi di mandati/reversali gi‡ trasmessi al cassiere (metodo 'calcolaTotaliStorici') e viene recuperato il codice del 
+  *       gli storici degli importi di mandati/reversali gi√† trasmessi al cassiere (metodo 'calcolaTotaliStorici') e viene recuperato il codice del 
   *       Cds Ente (999)
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -80,7 +80,7 @@ public V_ext_cassiere00Bulk caricaLogs(it.cnr.jada.UserContext context, V_ext_ca
   * Pre:  E' stata richiesta l'inizializzazione di una istanza di Distinta_cassiereBulk per modifica
   * Post: Viene inizializzato la distinta, calcolati i totali dei mandati/reversali presenti in distinta (suddivivisi per
   *       tipologia) (metodo 'calcolaTotali'),  vengono calcolati
-  *       gli storici degli importi di mandati/reversali gi‡ trasmessi al cassiere (metodo 'calcolaTotaliStorici') e viene recuperato il codice del 
+  *       gli storici degli importi di mandati/reversali gi√† trasmessi al cassiere (metodo 'calcolaTotaliStorici') e viene recuperato il codice del 
   *       Cds Ente (999)
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -114,7 +114,7 @@ public abstract it.cnr.jada.util.RemoteIterator cercaMandatiEReversali(it.cnr.ja
   * Post: Viene inizializzata la distinta, impostando come Cds quello di scrivania e come data di emissione la data odierna;
   *       vengono impostati a 0 tutti i totali dei mandati/reversali presenti in distinta;
   *       viene assegnato il progressivo distinta ( metodo 'assegnaProgressivo'); vengono calcolati
-  *       gli storici degli importi di mandati/reversali gi‡ trasmessi al cassiere (metodo 'calcolaTotaliStorici'); viene recuperato il codice del 
+  *       gli storici degli importi di mandati/reversali gi√† trasmessi al cassiere (metodo 'calcolaTotaliStorici'); viene recuperato il codice del 
   *       Cds Ente (999). La distinta viene inserita nel database.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -133,7 +133,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
   * Pre:  E' stata richiesta l'inizializzazione di una istanza di Distinta_cassiereBulk per modifica
   * Post: Viene inizializzato la distinta, calcolati i totali dei mandati/reversali presenti in distinta (suddivivisi per
   *       tipologia) (metodo 'calcolaTotali'),  vengono calcolati
-  *       gli storici degli importi di mandati/reversali gi‡ trasmessi al cassiere (metodo 'calcolaTotaliStorici') e viene recuperato il codice del 
+  *       gli storici degli importi di mandati/reversali gi√† trasmessi al cassiere (metodo 'calcolaTotaliStorici') e viene recuperato il codice del 
   *       Cds Ente (999)
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -151,7 +151,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
   * Nome: Inizializzazione per ricerca
   * Pre:  E' stata richiesta l'inizializzazione di una istanza di Distinta_cassiereBulk per ricerca
   * Post: Viene inizializzato il Cds della distinta, viene recuperato il codice del Cds ente (999) e vengono calcolati
-  *       gli storici degli importi di mandati/reversali gi‡ trasmessi al cassiere (metodo 'calcolaTotaliStorici')
+  *       gli storici degli importi di mandati/reversali gi√† trasmessi al cassiere (metodo 'calcolaTotaliStorici')
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> la distinta da inizializzare per la ricerca
@@ -212,7 +212,7 @@ public abstract void modificaDettagliDistinta(it.cnr.jada.UserContext param0,it.
   *      E' stata generata la richiesta di processare un file.
   *		Nessun errore rilevato.
   *    PostCondition:
-  *      Viene richiamata la procedura che processer‡ il file selezionato dall'utente, (metodo callProcessaFile).
+  *      Viene richiamata la procedura che processer√† il file selezionato dall'utente, (metodo callProcessaFile).
   *		Restituisce l'oggetto V_ext_cassiere00Bulk aggiornato.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta.

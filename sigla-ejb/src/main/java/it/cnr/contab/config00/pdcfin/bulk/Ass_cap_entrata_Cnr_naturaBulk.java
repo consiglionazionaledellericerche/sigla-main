@@ -70,7 +70,7 @@ public void setTi_gestione(java.lang.String ti_gestione) {
 	this.getElemento_voce().setTi_gestione(ti_gestione);
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException 
@@ -78,8 +78,8 @@ public void validate() throws ValidationException
 	super.validate();
 
 	if ( elemento_voce == null || elemento_voce.getCd_elemento_voce() == null || elemento_voce.getCd_elemento_voce().equals("") )
-		throw new ValidationException( "Il codice del CAPITOLO ENTRATA CNR Ë obbligatorio." );
+		throw new ValidationException( "Il codice del CAPITOLO ENTRATA CNR √® obbligatorio." );
 	if ( getCd_natura() == null )
-		throw new ValidationException( "Il campo NATURA Ë obbligatorio." );		
+		throw new ValidationException( "Il campo NATURA √® obbligatorio." );		
 }
 }

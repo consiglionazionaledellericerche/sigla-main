@@ -7,7 +7,7 @@ import it.cnr.jada.persistency.sql.*;
 
 /**
  * Adatta e implementa: {@link Pdg_aggregatoBase } 
- * 		perchË si ottengano e si settino gli oggetti complessi.
+ * 		perch√® si ottengano e si settino gli oggetti complessi.
  * 
  * @author: Bisquadro Vincenzo
  */
@@ -69,7 +69,7 @@ public Pdg_aggregatoBulk(java.lang.String cd_centro_responsabilita,java.lang.Int
 	setEsercizio(esercizio);
 }
 /**
- * Restituisce il centro di responsabilit‡.
+ * Restituisce il centro di responsabilit√†.
  * 
  * @return java.lang.String Cd_centro_responsabilita
  */
@@ -118,7 +118,7 @@ public OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.acti
 	return super.initialize(bp, context);
 }
 /**
- * Imposta il centro di responsabilit‡.
+ * Imposta il centro di responsabilit√†.
  *
  * @param cd_centro_responsabilita java.lang.String 
  */
@@ -126,7 +126,7 @@ public void setCd_centro_responsabilita(java.lang.String cd_centro_responsabilit
 	this.getCdr().setCd_centro_responsabilita(cd_centro_responsabilita);
 }
 /**
- * Imposta il centro di responsabilit‡.
+ * Imposta il centro di responsabilit√†.
  *
  * @param newCdr it.cnr.contab.config00.sto.bulk.CdrBulk
  */

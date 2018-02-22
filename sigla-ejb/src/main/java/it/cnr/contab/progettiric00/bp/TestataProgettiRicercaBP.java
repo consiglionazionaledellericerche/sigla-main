@@ -135,11 +135,11 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		setTab("tabProgettoPianoEconomico","tabProgettoPianoEconomicoTotale");
 	}
 	/**
-	 * E' stata generata la richiesta di cercare il Progetto che sar‡ nodo padre del Progetto
+	 * E' stata generata la richiesta di cercare il Progetto che sar√† nodo padre del Progetto
 	 *	che si sta creando.
 	 *  Il metodo restituisce un Iteratore che permette di navigare tra i Progetti passando
 	 *	da un livello ai suoi nodi figli e viceversa. Il metodo isLeaf, permette di definire un 
-	 *	"livello foglia", il livello, cioË, che non ha nodi sotto di esso.
+	 *	"livello foglia", il livello, cio√®, che non ha nodi sotto di esso.
 	 *
 	 * @param context la <code>ActionContext</code> che ha generato la richiesta
 	 *
@@ -181,11 +181,11 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		};
 	}
 	/**
-	 * E' stata generata la richiesta di cercare il Progetto che sar‡ nodo padre del Progetto
+	 * E' stata generata la richiesta di cercare il Progetto che sar√† nodo padre del Progetto
 	 *	che si sta creando.
 	 *  Il metodo restituisce un Iteratore che permette di navigare tra i Progetti passando
 	 *	da un livello ai suoi nodi figli e viceversa. Il metodo isLeaf, permette di definire un 
-	 *	"livello foglia", il livello, cioË, che non ha nodi sotto di esso.
+	 *	"livello foglia", il livello, cio√®, che non ha nodi sotto di esso.
 	 *
 	 * @param context la <code>ActionContext</code> che ha generato la richiesta
 	 *
@@ -228,11 +228,11 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 	
 	/**
-	 * E' stata generata la richiesta di cercare il Progetto che sar‡ nodo padre del Progetto
+	 * E' stata generata la richiesta di cercare il Progetto che sar√† nodo padre del Progetto
 	 *	che si sta creando.
 	 *  Il metodo restituisce un Iteratore che permette di navigare tra i Progetti passando
 	 *	da un livello ai suoi nodi figli e viceversa. Il metodo isLeaf, permette di definire un 
-	 *	"livello foglia", il livello, cioË, che non ha nodi sotto di esso.
+	 *	"livello foglia", il livello, cio√®, che non ha nodi sotto di esso.
 	 *
 	 * @param context la <code>ActionContext</code> che ha generato la richiesta
 	 *
@@ -344,7 +344,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	
 	public void validaUO(ActionContext context, it.cnr.jada.bulk.OggettoBulk detail) throws ValidationException {
 		try {
-			// controllo viene effettuato solo per i moduli attivit‡
+			// controllo viene effettuato solo per i moduli attivit√†
 			if ((this.isFlNuovoPdg() && getLivelloProgetto()==ProgettoBulk.LIVELLO_PROGETTO_SECONDO.intValue()) ||
 				(!this.isFlNuovoPdg() && getLivelloProgetto()==ProgettoBulk.LIVELLO_PROGETTO_TERZO.intValue()))
 				((ProgettoRicercaComponentSession)createComponentSession()).validaCancellazioneUoAssociata(
@@ -521,7 +521,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		if (bulk.getProgettopadre() == null || bulk.getProgettopadre().getPg_progetto() == null)
 			throw new ValidationException("Attenzione: Per salvare "+
 					(this.isFlNuovoPdg()?"il "+ProgettoBulk.LABEL_PROGETTO:"la "+ProgettoBulk.LABEL_COMMESSA)+
-					" Ë necessario inserire "+
+					" √® necessario inserire "+
 					(this.isFlNuovoPdg()?"l' "+ProgettoBulk.LABEL_AREA_PROGETTUALE:"la "+ProgettoBulk.LABEL_COMMESSA)+"!");	                	
 		super.validate(actioncontext);
 	}

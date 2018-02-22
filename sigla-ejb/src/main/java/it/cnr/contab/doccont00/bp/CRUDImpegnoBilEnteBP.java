@@ -7,7 +7,7 @@ import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Impegno da bilancio Ente.
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Impegno da bilancio Ente.
  */
 public class CRUDImpegnoBilEnteBP extends CRUDVirtualObbligazioneBP {
 public CRUDImpegnoBilEnteBP() {
@@ -31,7 +31,7 @@ public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.
 		if ( impegno.getDt_cancellazione() != null )
 		{
 			setStatus(VIEW);
-			setMessage("L'Impegno su bilancio Ente Ë stata cancellato. Non consentita la modifica.");
+			setMessage("L'Impegno su bilancio Ente √® stata cancellato. Non consentita la modifica.");
 		}
 	}
 }
@@ -69,7 +69,7 @@ public OggettoBulk initializeModelForEdit(ActionContext context,OggettoBulk bulk
 	try {
 		it.cnr.jada.ejb.CRUDComponentSession compSession = (getUserTransaction() == null) ?
 																			createComponentSession() :
-																			getVirtualComponentSession(context, false); //responsabilit‡ setSafePoint(true) demandata all'init del bp
+																			getVirtualComponentSession(context, false); //responsabilit√† setSafePoint(true) demandata all'init del bp
 		return compSession.inizializzaBulkPerModifica(
 								context.getUserContext(),
 								bulk.initializeForEdit(this,context));

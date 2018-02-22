@@ -57,17 +57,17 @@ public class OrdineAcqRigaBulk extends OrdineAcqRigaBase implements IDocumentoAm
 	 **/
 	private OrdineAcqBulk ordineAcq =  new OrdineAcqBulk();
 	/**
-	 * [BENE_SERVIZIO Rappresenta la classificazione di beni e servizi il cui dettaglio Ë esposto in sede di registrazione delle righe fattura passiva.
+	 * [BENE_SERVIZIO Rappresenta la classificazione di beni e servizi il cui dettaglio √® esposto in sede di registrazione delle righe fattura passiva.
 
 Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di inventario dalla registrazione di fatture passive]
 	 **/
 	private Bene_servizioBulk beneServizio =  new Bene_servizioBulk();
 	/**
-	 * [VOCE_IVA La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entit‡ si riferisce alla normativa vigente sull'iva.]
+	 * [VOCE_IVA La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entit√† si riferisce alla normativa vigente sull'iva.]
 	 **/
 	private Voce_ivaBulk voceIva =  new Voce_ivaBulk();
 	/**
-	 * [UNITA_MISURA Rappresenta l'anagrafica delle unit‡ di misura.]
+	 * [UNITA_MISURA Rappresenta l'anagrafica delle unit√† di misura.]
 	 **/
 	private UnitaMisuraBulk unitaMisura =  new UnitaMisuraBulk();
 	/**
@@ -101,7 +101,7 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresenta la classificazione di beni e servizi il cui dettaglio Ë esposto in sede di registrazione delle righe fattura passiva.
+	 * Restituisce il valore di: [Rappresenta la classificazione di beni e servizi il cui dettaglio √® esposto in sede di registrazione delle righe fattura passiva.
 
 Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di inventario dalla registrazione di fatture passive]
 	 **/
@@ -110,7 +110,7 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresenta la classificazione di beni e servizi il cui dettaglio Ë esposto in sede di registrazione delle righe fattura passiva.
+	 * Setta il valore di: [Rappresenta la classificazione di beni e servizi il cui dettaglio √® esposto in sede di registrazione delle righe fattura passiva.
 
 Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di inventario dalla registrazione di fatture passive]
 	 **/
@@ -119,28 +119,28 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entit‡ si riferisce alla normativa vigente sull'iva.]
+	 * Restituisce il valore di: [La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entit√† si riferisce alla normativa vigente sull'iva.]
 	 **/
 	public Voce_ivaBulk getVoceIva() {
 		return voceIva;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entit‡ si riferisce alla normativa vigente sull'iva.]
+	 * Setta il valore di: [La tabella iva contiene i codici e le aliquote dell'iva, commerciale o istituzionale, registrata nei dettagli della fattura attiva e passiva. Questa entit√† si riferisce alla normativa vigente sull'iva.]
 	 **/
 	public void setVoceIva(Voce_ivaBulk voceIva)  {
 		this.voceIva=voceIva;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresenta l'anagrafica delle unit‡ di misura.]
+	 * Restituisce il valore di: [Rappresenta l'anagrafica delle unit√† di misura.]
 	 **/
 	public UnitaMisuraBulk getUnitaMisura() {
 		return unitaMisura;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresenta l'anagrafica delle unit‡ di misura.]
+	 * Setta il valore di: [Rappresenta l'anagrafica delle unit√† di misura.]
 	 **/
 	public void setUnitaMisura(UnitaMisuraBulk unitaMisura)  {
 		this.unitaMisura=unitaMisura;

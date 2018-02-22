@@ -26,7 +26,7 @@ public class Stampa_anag_progettiVBulk extends ProgettoBulk {
 		livello_progettoKeys = new it.cnr.jada.util.OrderedHashtable();
 		livello_progettoKeys.put(LIVELLO_PROGETTO_PRIMO,"Progetto");
 		livello_progettoKeys.put(LIVELLO_PROGETTO_SECONDO,"Commessa");
-		livello_progettoKeys.put(LIVELLO_PROGETTO_TERZO,"Modulo di Attivit‡");
+		livello_progettoKeys.put(LIVELLO_PROGETTO_TERZO,"Modulo di Attivit√†");
 		//livello_progettoKeys.put(LIVELLO_PROGETTO_ALL,"Sottogruppo");
 	};		
 	public final static Dictionary tipo_faseKeys;

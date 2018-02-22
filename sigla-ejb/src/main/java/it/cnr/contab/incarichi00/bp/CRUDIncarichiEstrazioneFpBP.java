@@ -108,7 +108,7 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 	
 			if (!(fileInviato == null || fileInviato.getName().equals(""))) { 
 				if (fileInviato.length() > LUNGHEZZA_MAX)
-					throw new ValidationException("Attenzione: la dimensione del file inviato alla Funzione Pubblica è superiore alla massima consentita (10 Mb).");
+					throw new ValidationException("Attenzione: la dimensione del file inviato alla Funzione Pubblica Ã¨ superiore alla massima consentita (10 Mb).");
 	
 				allegato.setFile_inv(fileInviato.getFile());
 				allegato.setNome_file_inv(Incarichi_archivioBulk.parseFilename(fileInviato.getName()));
@@ -123,7 +123,7 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 	
 			if (!(fileRicevuto == null || fileRicevuto.getName().equals(""))) { 
 				if (fileRicevuto.length() > LUNGHEZZA_MAX)
-					throw new ValidationException("Attenzione: la dimensione del file ricevuto dalla Funzione Pubblica è superiore alla massima consentita (10 Mb).");
+					throw new ValidationException("Attenzione: la dimensione del file ricevuto dalla Funzione Pubblica Ã¨ superiore alla massima consentita (10 Mb).");
 	
 				allegato.setFile_ric(fileRicevuto.getFile());
 				allegato.setNome_file_ric(Incarichi_archivioBulk.parseFilename(fileRicevuto.getName()));
@@ -162,7 +162,7 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 				else if (esitoComunicazione==null)
 					throw new ValidationException("Errore nel caricamento del file ricevuto dalla Funzione Pubblica.");
 				else if (comunicazione.getConsulenti().getNuovoIncarico().size()!=esitoComunicazione.getConsulenti().getNuovoIncarico().size())
-					throw new ValidationException("Attenzione: il numero degli incarichi presenti nel file inviato ("+comunicazione.getConsulenti().getNuovoIncarico().size()+") è diverso dal numero degli incarichi presenti nel file ricevuto("+esitoComunicazione.getConsulenti().getNuovoIncarico().size()+").");
+					throw new ValidationException("Attenzione: il numero degli incarichi presenti nel file inviato ("+comunicazione.getConsulenti().getNuovoIncarico().size()+") Ã¨ diverso dal numero degli incarichi presenti nel file ricevuto("+esitoComunicazione.getConsulenti().getNuovoIncarico().size()+").");
 			} else {
 				try {
 					jc = JAXBContext.newInstance(it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ObjectFactory.class, it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ObjectFactory.class, it.perla.accenture.com.anagrafeprestazioni_cancellazioneincarichi.ObjectFactory.class);
@@ -196,15 +196,15 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 					if (comunicazione.getDeclaredType().equals(it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType.class) &&
 						esitoComunicazione.getDeclaredType().equals(it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType.class)) {
 						if (((it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType)comunicazione.getValue()).getInserimentoIncarichi().getNuoviIncarichi().getConsulente().size()!=((it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType)esitoComunicazione.getValue()).getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente().size())
-							throw new ValidationException("Attenzione: il numero degli incarichi presenti nel file inviato ("+((it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType)comunicazione.getValue()).getInserimentoIncarichi().getNuoviIncarichi().getConsulente().size()+") è diverso dal numero degli incarichi presenti nel file ricevuto("+((it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType)esitoComunicazione.getValue()).getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente().size()+").");
+							throw new ValidationException("Attenzione: il numero degli incarichi presenti nel file inviato ("+((it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType)comunicazione.getValue()).getInserimentoIncarichi().getNuoviIncarichi().getConsulente().size()+") Ã¨ diverso dal numero degli incarichi presenti nel file ricevuto("+((it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType)esitoComunicazione.getValue()).getEsitoInserimentoIncarichi().getEsitoNuoviIncarichi().getConsulente().size()+").");
 						else if (((it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ComunicazioneType)esitoComunicazione.getValue()).getEsitoInserimentoIncarichi().getEsitoFile().equals(it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.EsitoType.KO))
-							throw new ValidationException("Attenzione: il file ricevuto dalla funzione pubblica non è andato a buon fine.");
+							throw new ValidationException("Attenzione: il file ricevuto dalla funzione pubblica non Ã¨ andato a buon fine.");
 					} else if (comunicazione.getDeclaredType().equals(it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType.class) &&
 							   esitoComunicazione.getDeclaredType().equals(it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType.class)) {
 						if (((it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType)comunicazione.getValue()).getVariazioneIncarichi().getModificaIncarichi().getConsulente().size()!=((it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType)esitoComunicazione.getValue()).getEsitoVariazioneIncarichi().getEsitoModificaIncarichi().getConsulente().size())
-							throw new ValidationException("Attenzione: il numero degli incarichi presenti nel file inviato ("+((it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType)comunicazione.getValue()).getVariazioneIncarichi().getModificaIncarichi().getConsulente().size()+") è diverso dal numero degli incarichi presenti nel file ricevuto("+((it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType)esitoComunicazione.getValue()).getEsitoVariazioneIncarichi().getEsitoModificaIncarichi().getConsulente().size()+").");
+							throw new ValidationException("Attenzione: il numero degli incarichi presenti nel file inviato ("+((it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType)comunicazione.getValue()).getVariazioneIncarichi().getModificaIncarichi().getConsulente().size()+") Ã¨ diverso dal numero degli incarichi presenti nel file ricevuto("+((it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType)esitoComunicazione.getValue()).getEsitoVariazioneIncarichi().getEsitoModificaIncarichi().getConsulente().size()+").");
 						else if (((it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.ComunicazioneType)esitoComunicazione.getValue()).getEsitoVariazioneIncarichi().getEsitoFile().equals(it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.EsitoType.KO))
-							throw new ValidationException("Attenzione: il file ricevuto dalla funzione pubblica non è andato a buon fine.");
+							throw new ValidationException("Attenzione: il file ricevuto dalla funzione pubblica non Ã¨ andato a buon fine.");
 					} else 
 						throw new ValidationException("Tipologia di file ricevuto dalla Funzione Pubblica non gestita.");
 				}
@@ -225,7 +225,7 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 	
 			if (!(fileRicevuto == null || fileRicevuto.getName().equals(""))) { 
 				if (fileRicevuto.length() > LUNGHEZZA_MAX)
-					throw new ValidationException("Attenzione: la dimensione del file è superiore alla massima consentita (10 Mb).");
+					throw new ValidationException("Attenzione: la dimensione del file Ã¨ superiore alla massima consentita (10 Mb).");
 	
 				allegato.setFile_ric(fileRicevuto.getFile());
 				allegato.setNome_file_ric(Incarichi_archivioBulk.parseFilename(fileRicevuto.getName()));
@@ -565,7 +565,7 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 		} catch (NullPointerException e){
 		}
 
-		//Se trattasi di consulente estero che ha il codice fiscale valorizzato metto il campo estero a "false" così come indicato dalla Dott.ssa Paola Sarti
+		//Se trattasi di consulente estero che ha il codice fiscale valorizzato metto il campo estero a "false" cosÃ¬ come indicato dalla Dott.ssa Paola Sarti
 		//della Funzione Pubblica altrimenti metto quello corretto
 		boolean estero=false;
 		if (elementIncaricatoPersona.getCodiceFiscalePartitaIva()==null ||
@@ -787,7 +787,7 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 		}
 
 		//ESTERO
-		//Se trattasi di consulente estero che ha il codice fiscale valorizzato metto il campo estero a "false" così come indicato dalla Dott.ssa Paola Sarti
+		//Se trattasi di consulente estero che ha il codice fiscale valorizzato metto il campo estero a "false" cosÃ¬ come indicato dalla Dott.ssa Paola Sarti
 		//della Funzione Pubblica altrimenti metto quello corretto
 		boolean estero=false;
 		if (elementConsulente.getIncaricato().getPersonaFisica().getCodiceFiscale()==null ||
@@ -837,7 +837,7 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 		//verifico variazione
 		if (incaricoComunicatoFP.getAnno_riferimento().compareTo(Integer.valueOf(2010))==1 || 
 			(incaricoComunicatoFP.getAnno_riferimento().compareTo(Integer.valueOf(2010))==0 && incaricoComunicatoFP.getSemestre_riferimento().equals(Incarichi_archivio_xml_fpBulk.SECONDO_SEMESTRE))) {
-			/*eliminato perchè nel file di ritorno PERLA non restituisce il valore con la conseguenza che ricreando i file
+			/*eliminato perchÃ¨ nel file di ritorno PERLA non restituisce il valore con la conseguenza che ricreando i file
 			 * di modifica li reimposta tutti
 			if (incaricoComunicatoFP.getAttivita_economica()!="74" &&
 				!Utility.equalsNull(incaricoComunicatoFP.getAttivita_economica(), elementNuovoConsulentePerla.getIncarico().getAttivitaEconomica())) {

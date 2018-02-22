@@ -58,7 +58,7 @@ public void aggiornaCogeCoanInDifferita(it.cnr.jada.UserContext userContext, it.
 }
 /**
  * Aggiornamento in differita dei saldi dell'obbligazione .
- * Un documento amministrativo di spesa che agisce in modalit‡ transazionale ha creato/modificato gli importi 
+ * Un documento amministrativo di spesa che agisce in modalit√† transazionale ha creato/modificato gli importi 
  * relativi ad un'obbligazione; i saldi di tale obbligazione non possono essere aggiornati subito in quanto
  * tale operazione genererebbe dei lock sulle voci del piano che non ne consentirebbere l'utilizzo ad altri utenti;
  * pertanto l'aggiornamento dei saldi dell'obbligazione viene differito al momento del salvataggio
@@ -81,7 +81,7 @@ public void aggiornaCogeCoanInDifferita(it.cnr.jada.UserContext userContext, it.
  * @param	uc	lo UserContext che ha generato la richiesta
  * @param	docContabile	il documento contabile di tipo ObbligazioneBulk o ImpegnoPGirobulk per cui aggiornare lo stato
  * @param	values	la Map che contiene il "pg_ver_rec" iniziale dell'obbligazione e il "checkDisponibilitaCassaEseguito" che indica se
- *          l'utente ha richiesto la forzatura della disponibilit‡ di cassa (parametro impostato dalla Gestione Obbligazione)
+ *          l'utente ha richiesto la forzatura della disponibilit√† di cassa (parametro impostato dalla Gestione Obbligazione)
  * @param	param il parametro che indica se il controllo della disp. di cassa e' necessario (parametro impostato dalla Gestione dei doc. amm.)
  
  */	
@@ -128,7 +128,7 @@ public void aggiornaSaldiInDifferita( UserContext userContext, IDocumentoContabi
   *    PreCondition:
   *      E' stata inoltrata una richiesta di riportare all'esercizio successivo un documento contabile
   *	 PostCondition:
-  *		Il sistema segnala con un errore che questa funzione non Ë richiamabile in modalit‡ transazionele
+  *		Il sistema segnala con un errore che questa funzione non √® richiamabile in modalit√† transazionele
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param doc <code>IDocumentoContabileBulk</code> doc.contabile da riportare
@@ -137,14 +137,14 @@ public void aggiornaSaldiInDifferita( UserContext userContext, IDocumentoContabi
 
 public void callRiportaAvanti (UserContext userContext,IDocumentoContabileBulk doc) throws it.cnr.jada.comp.ComponentException
 {
-	throw new ApplicationException( "Le funzioni di Riporta Avanti e Indietro non sono supporatate in modalit‡ transazionale");
+	throw new ApplicationException( "Le funzioni di Riporta Avanti e Indietro non sono supporatate in modalit√† transazionale");
 }
 /** 
   *  riporta indietro dall'esercizio successivo di un doc.contabile
   *    PreCondition:
   *      E' stata inoltrata una richiesta di riportare indietro dall'esercizio successivo un documento contabile
   *	 PostCondition:
-  *		Il sistema segnala con un errore che questa funzione non Ë richiamabile in modalit‡ transazionele
+  *		Il sistema segnala con un errore che questa funzione non √® richiamabile in modalit√† transazionele
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param doc <code>IDocumentoContabileBulk</code> doc.contabile da riportare
@@ -153,7 +153,7 @@ public void callRiportaAvanti (UserContext userContext,IDocumentoContabileBulk d
 
 public void callRiportaIndietro (UserContext userContext,IDocumentoContabileBulk doc) throws ComponentException
 {
-	throw new ApplicationException( "Le funzioni di Riporta Avanti e Indietro non sono supporatate in modalit‡ transazionale");	
+	throw new ApplicationException( "Le funzioni di Riporta Avanti e Indietro non sono supporatate in modalit√† transazionale");	
 }
 /**
  * @param uc lo <code>UserContext</code> che ha generato la richiesta
@@ -187,14 +187,14 @@ private ObbligazioneBulk caricaObbligazione(UserContext uc, ObbligazioneBulk obb
   *			Viene richiesta la creazione di un'obbligazione generica provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'creaConBulk' su ObbligazioneComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *  Creazione di obbligazioni per impegno di giro provenendo da documenti amministrativi
   *		PreCondition:
   *			Viene richiesta la creazione di un'obbligazione per impegno di giro provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'creaConBulk' su ObbligazionePGiroComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *
   * @param uc lo <code>UserContext</code> che ha generato la richiesta
@@ -283,14 +283,14 @@ private it.cnr.contab.doccont00.ejb.ObbligazionePGiroComponentSession createObbl
   *			Viene richiesta l'eliminazione di un'obbligazione generica provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'eliminaConBulk' su ObbligazioneComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *  Eliminazione di obbligazioni per impegno di giro provenendo da documenti amministrativi
   *		PreCondition:
   *			Viene richiesta l'eliminazione di un'obbligazione per impegno di giro provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'eliminaConBulk' su ObbligazionePGiroComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *
   * @param uc lo <code>UserContext</code> che ha generato la richiesta
@@ -508,14 +508,14 @@ public void lockScadenza( UserContext userContext,IScadenzaDocumentoContabileBul
   *			Viene richiesta la modifica di un'obbligazione generica provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'modificaConBulk' su ObbligazioneComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *  Modifica di obbligazioni per impegno di giro provenendo da documenti amministrativi
   *		PreCondition:
   *			Viene richiesta la modifica di un'obbligazione per impegno di giro provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'modificaConBulk' su ObbligazionePGiroComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *
   * @param uc lo <code>UserContext</code> che ha generato la richiesta
@@ -556,14 +556,14 @@ public OggettoBulk modificaConBulk (UserContext uc,OggettoBulk bulk) throws Comp
   *			Viene richiesta la modifica in automatico di scadenze di un'obbligazione generica provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'modificaScadenzaInAutomatico' su ObbligazioneComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *  Modifica in automatico di scadenze di obbligazioni per impegno di giro provenendo da documenti amministrativi
   *		PreCondition:
   *			Viene richiesta la modifica in automatico di scadenze di un'obbligazione per impegno di giro provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'modificaScadenzaInAutomatico' su ObbligazionePGiroComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   * 
   * @param userContext lo userContext che ha generato la richiesta

@@ -135,9 +135,9 @@ public java.util.Dictionary getClasseDiPagamentoKeys() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'ds_tipo_documento_amm'
+ * Restituisce il valore della propriet√† 'ds_tipo_documento_amm'
  *
- * @return Il valore della propriet‡ 'ds_tipo_documento_amm'
+ * @return Il valore della propriet√† 'ds_tipo_documento_amm'
  */
 public java.lang.String getDs_tipo_documento_amm() 
 {
@@ -169,7 +169,7 @@ public static java.util.Hashtable getFatturaPassivaKeys() {
  * Metodo con cui si ottiene il valore della variabile <code>fl_pgiro_Keys</code>
  * di tipo <code>Hashtable</code>.
  * In particolare, questo metodo carica in una Hashtable l'elenco dei possibili valori 
- * che puÚ assumere il flag <code>fl_pgiro</code>.
+ * che pu√≤ assumere il flag <code>fl_pgiro</code>.
  * @return java.util.Hashtable fl_pgiro_Keys I valori del flag <code>fl_pgiro</code>.
  */
 public java.util.Hashtable getFl_pgiro_Keys() {
@@ -225,9 +225,9 @@ public java.util.Dictionary getStatoKeys() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'ti_fattura'
+ * Restituisce il valore della propriet√† 'ti_fattura'
  *
- * @return Il valore della propriet‡ 'ti_fattura'
+ * @return Il valore della propriet√† 'ti_fattura'
  */
 public java.lang.String getTi_fattura() {
 	return ti_fattura;
@@ -244,9 +244,9 @@ public java.util.Dictionary getTipoDocumentoKeys() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'fl_aggiorna_saldi_per_annullamento'
+ * Restituisce il valore della propriet√† 'fl_aggiorna_saldi_per_annullamento'
  *
- * @return Il valore della propriet‡ 'fl_aggiorna_saldi_per_annullamento'
+ * @return Il valore della propriet√† 'fl_aggiorna_saldi_per_annullamento'
  */
 public boolean isFl_aggiorna_saldi_per_annullamento() {
 	return fl_aggiorna_saldi_per_annullamento;
@@ -277,7 +277,7 @@ public void setEsercizio(java.lang.Integer esercizio) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'fl_aggiorna_saldi_per_annullamento'
+ * Imposta il valore della propriet√† 'fl_aggiorna_saldi_per_annullamento'
  *
  * @param newFl_aggiorna_saldi_per_annullamento	Il valore da assegnare a 'fl_aggiorna_saldi_per_annullamento'
  */
@@ -318,7 +318,7 @@ public void setReversale(ReversaleBulk newReversale) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'ti_fattura'
+ * Imposta il valore della propriet√† 'ti_fattura'
  *
  * @param newTi_fattura	Il valore da assegnare a 'ti_fattura'
  */

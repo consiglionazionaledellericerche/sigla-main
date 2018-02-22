@@ -17,7 +17,7 @@ public class EsercizioHome extends BulkHome {
 
 	static {
 		// (29/10/2002 17:29:52) CNRADM
-		// Imposto la data infinito usando Calendar perchè così sono sicuro
+		// Imposto la data infinito usando Calendar perchÃ¨ cosÃ¬ sono sicuro
 		// che sia relativa al timezone corrente
 		java.util.Calendar cal = java.util.Calendar.getInstance();
 		cal.set(cal.YEAR,2200);

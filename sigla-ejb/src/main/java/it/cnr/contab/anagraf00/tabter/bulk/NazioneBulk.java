@@ -158,7 +158,7 @@ public void setDivisaPerMissione(it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk n
 	divisaPerMissione = newDivisaPerMissione;
 }
 /**
- * Oltre alla normale validate da un avviso di errore se la nazione è nulla.
+ * Oltre alla normale validate da un avviso di errore se la nazione Ã¨ nulla.
  *
  * @exception it.cnr.jada.bulk.ValidationException
 */
@@ -166,13 +166,13 @@ public void validate() throws ValidationException {
 
 	super.validate();
 	if (getDs_nazione()==null)
-		throw new ValidationException("Il campo DESCRIZIONE non può essere vuoto");
+		throw new ValidationException("Il campo DESCRIZIONE non puÃ² essere vuoto");
 	if (getTi_nazione()==null)
 		throw new ValidationException("Selezionare un TIPO NAZIONE");
 	if(getNazionalita() == null)
-		throw new ValidationException("Il campo NAZIONALITA non può essere vuoto");
+		throw new ValidationException("Il campo NAZIONALITA non puÃ² essere vuoto");
 	if(getCd_nazione() == null)
-		throw new ValidationException("Il campo CODICE NAZIONE non può essere vuoto");
+		throw new ValidationException("Il campo CODICE NAZIONE non puÃ² essere vuoto");
 }
 public String getStrutturaIbanLivello(int livello){
 	int nrLivello = 0;

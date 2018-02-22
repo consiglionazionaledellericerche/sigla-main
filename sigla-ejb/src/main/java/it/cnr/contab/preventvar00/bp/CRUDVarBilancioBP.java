@@ -62,11 +62,11 @@ public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.
 		Var_bilancioBulk varBil = (Var_bilancioBulk)bulk;
 		if ( varBil != null && varBil.isDefinitiva()) {
 			setStatus(VIEW);
-			setMessage("Variazione di bilancio Definitiva. Non Ë possibile modificarla");
+			setMessage("Variazione di bilancio Definitiva. Non √® possibile modificarla");
 		}
 		if ( varBil != null && varBil.isCancellatoLogicamente()) {
 			setStatus(VIEW);
-			setMessage("Variazione di bilancio Annullata. Non Ë possibile modificarla");
+			setMessage("Variazione di bilancio Annullata. Non √® possibile modificarla");
 		}
 	}
 }
@@ -94,9 +94,9 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'dettagliCRUDController'
+ * Restituisce il valore della propriet√† 'dettagliCRUDController'
  *
- * @return Il valore della propriet‡ 'dettagliCRUDController'
+ * @return Il valore della propriet√† 'dettagliCRUDController'
  */
 public final it.cnr.jada.util.action.SimpleDetailCRUDController getDettagliCRUDController() {
 	return dettagliCRUDController;
@@ -172,7 +172,7 @@ public boolean isDeleteButtonEnabled() {
 	return (super.isDeleteButtonEnabled() && !((Var_bilancioBulk)getModel()).isDefinitiva());
 }
 /**
- *	Abilito il bottone di Stampa solo se il Model Ë stato riempito
+ *	Abilito il bottone di Stampa solo se il Model √® stato riempito
  *
  */
 public boolean isPrintButtonHidden() 
@@ -181,9 +181,9 @@ public boolean isPrintButtonHidden()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'salvaDefinitivoButtonEnabled'
+ * Restituisce il valore della propriet√† 'salvaDefinitivoButtonEnabled'
  *
- * @return Il valore della propriet‡ 'salvaDefinitivoButtonEnabled'
+ * @return Il valore della propriet√† 'salvaDefinitivoButtonEnabled'
  */
 public boolean isSalvaDefinitivoButtonEnabled() {
 
@@ -259,7 +259,7 @@ public void validaDettaglioVariazioneDiBilancio(ActionContext context, OggettoBu
 	if (varBilancio.hasVoceDuplicata(varBilDett, varBilDett.getVoceFSaldi())){
 		varBilDett.setVoceFSaldi(new V_assestato_voceBulk());
 		varBilDett.setTipoGestione(varBilancio.getTipoGestione());
-		throw new ValidationException("Esiste gi‡ un dettaglio con la voce selezionata!");
+		throw new ValidationException("Esiste gi√† un dettaglio con la voce selezionata!");
 	}
 }
 public boolean isUoEnte(ActionContext context){	

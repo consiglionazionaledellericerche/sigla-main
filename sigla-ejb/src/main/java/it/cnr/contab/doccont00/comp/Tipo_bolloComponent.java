@@ -38,7 +38,7 @@ public class Tipo_bolloComponent extends it.cnr.jada.comp.CRUDComponent implemen
   *      la richiesta di creazione di un tipo bollo di default e' stata generata ed esiste un altro tipo bollo
   *      definito come default
   *    PostCondition:
-  *      una ComponentException viene generata per segnalare all'utente l'impossibilit‡ ad effettuare l'inserimento
+  *      una ComponentException viene generata per segnalare all'utente l'impossibilit√† ad effettuare l'inserimento
   *  Creazione di un tipo bollo default - OK
   *    PreCondition:
   *      la richiesta di creazione di un tipo bollo di default e' stata generata e non esiste un altro tipo bollo
@@ -157,24 +157,24 @@ public OggettoBulk modificaConBulk (UserContext uc,OggettoBulk bulk) throws Comp
 /** 
   *  Flag di default selezionato
   *    PreCondition:
-  *      PuÚ essere creato un solo tipo di bollo di default.
+  *      Pu√≤ essere creato un solo tipo di bollo di default.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare se esiste gi‡ un tipo di bollo di default.
+  *      Il metodo utilizza un Throw Exception per comunicare se esiste gi√† un tipo di bollo di default.
   *  Tipo bollo di default di entrata/spesa
   *    PreCondition:
-  *      PuÚ essere creato un solo tipo di bollo di default di tipo ENTRATA/SPESA
+  *      Pu√≤ essere creato un solo tipo di bollo di default di tipo ENTRATA/SPESA
   *    PostCondition:
   *      Il sistema consente di procedere alla creazione o modifica di un tipo di bollo di default
-  *		 con queste caratteristiche purchË non ne esista gi‡ uno di entrata o di spesa.
+  *		 con queste caratteristiche purch√® non ne esista gi√† uno di entrata o di spesa.
   *  Tipo bollo di default di entrata o di spesa
   *    PreCondition:
-  *      PuÚ essere creato un solo tipo di bollo di default di tipo ENTRATA o di SPESA
+  *      Pu√≤ essere creato un solo tipo di bollo di default di tipo ENTRATA o di SPESA
   *    PostCondition:
   *      Il sistema consente di procedere alla creazione o modifica di un tipo di bollo di default
-  *		 con queste caratteristiche purchË non ne esista gi‡ uno di entrata/spesa.
+  *		 con queste caratteristiche purch√® non ne esista gi√† uno di entrata/spesa.
   *  Flag di default NON selezionato
   *    PreCondition:
-  *      Il tipo di bollo non Ë di default.
+  *      Il tipo di bollo non √® di default.
   *    PostCondition:
   *      Il sistema consente l'aggiornamento del tipo di bollo.
   *
@@ -225,7 +225,7 @@ private void verificaFl_default (UserContext aUC,Tipo_bolloBulk tipo_bollo) thro
 						{
 							String tipo2 =  rs.getString(1);				
 							if( tipo2 != null && !tipo_bollo.getCd_tipo_bollo().equals( tipo2 ) )
-								throw handleException( new it.cnr.jada.comp.ApplicationException( "E' gi‡ stato creato un tipo di bollo di default"));
+								throw handleException( new it.cnr.jada.comp.ApplicationException( "E' gi√† stato creato un tipo di bollo di default"));
 						}	
 					}
 					catch( SQLException e )

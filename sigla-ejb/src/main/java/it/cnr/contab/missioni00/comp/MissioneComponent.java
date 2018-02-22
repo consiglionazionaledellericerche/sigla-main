@@ -213,7 +213,7 @@ private void aggiornaCogeCoanObbligazioniDaCancellare(
  *
  * Nome: Aggiorna obbligazione non temporanea
  * Pre:  L'utente ha richiesto l'inserimento/modifica di una missione
- *       L'utente ha selezionato una scadenza di obbligazione gi‡ esistente
+ *       L'utente ha selezionato una scadenza di obbligazione gi√† esistente
  * Post: Il sistema aggiorna l'importo associato a doc. amministrativi della scadenza di obbligazione e aggiorna il saldo dell'obbligazione
  *       (metodo 'aggiornaSaldi')
  *
@@ -785,7 +785,7 @@ private void caricaTipoTrattamento(MissioneBulk missione)
   *  		Le scadenze vengono aggiunte alla lista delle scadenze congruenti.
   *	Validazione lista delle obbligazioni per le missioni
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle scadenze delle obbligazioni.
+  *			Si √® verificato un errore nel caricamento delle scadenze delle obbligazioni.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	Obbligazione definitiva
@@ -815,7 +815,7 @@ private void caricaTipoTrattamento(MissioneBulk missione)
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Disabilitazione filtro di selezione sul debitore dell'obbligazione
   *		PreCondition:
-  *			La scadenza dell'obbligazione ha un debitore diverso da quello della missione e non Ë di tipo "diversi"
+  *			La scadenza dell'obbligazione ha un debitore diverso da quello della missione e non √® di tipo "diversi"
   * 	PostCondition:
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Abilitazione filtro di selezione sulla data di scadenza
@@ -1139,11 +1139,11 @@ private void controlloTrovato(UserContext aUC,
 			Elemento_voceBulk elementoVoce = (Elemento_voceBulk)voce.get(0);
 			if (elementoVoce.isVocePerTrovati()){
 	            throw new it.cnr.jada.comp.ApplicationException(
-	                    "Non Ë possibile selezionare per missioni obbligazioni su capitoli collegati a Brevetti/Trovati.");
+	                    "Non √® possibile selezionare per missioni obbligazioni su capitoli collegati a Brevetti/Trovati.");
 			}
 			if (!elementoVoce.getFl_missioni()){
 	            throw new it.cnr.jada.comp.ApplicationException(
-	                    "Non Ë possibile selezionare per missioni obbligazioni su capitoli non utilizzabili per le missioni.");
+	                    "Non √® possibile selezionare per missioni obbligazioni su capitoli non utilizzabili per le missioni.");
 			}
 		}
 		
@@ -1365,7 +1365,7 @@ private DivisaBulk findDivisa(UserContext userContext, String cdDivisa) throws C
  * Pre:  E' stata generata una richiesta di caricamento degli inquadramenti disponibili per il terzo specificato per una
  *       missione
  * Post: Il sistema restituisce l'elenco degli inquadramenti validi relativi al terzo della missione, con tipo 
- *       rapporto uguale a quello della missione e data inizio missione inclusa nell'intervallo di validit‡
+ *       rapporto uguale a quello della missione e data inizio missione inclusa nell'intervallo di validit√†
  *       dell'inquadramento
  *
  * @param	uc			lo UserContext che ha generato la richiesta
@@ -1441,16 +1441,16 @@ public java.util.Collection findListabanche(UserContext aUC, MissioneBulk missio
 	return getHome(aUC, BancaBulk.class).fetchAll(selectBancaByClause(aUC, missione, null, null));
 }
 /**
- * Carica i dati relativi alle modalit‡ di pagamento
+ * Carica i dati relativi alle modalit√† di pagamento
  *
  * Pre-post-conditions:
  *
  * Nome: Carica modalita
- * Pre:  E' stata generata una richiesta di caricamento delle modalit‡ di pagamento relative al terzo della missione
- * Post: Il sistema restituisce la lista delle modalit‡ di pagamento relative al terzo della missione
+ * Pre:  E' stata generata una richiesta di caricamento delle modalit√† di pagamento relative al terzo della missione
+ * Post: Il sistema restituisce la lista delle modalit√† di pagamento relative al terzo della missione
  *
  * @param	uc	lo UserContext che ha generato la richiesta
- * @param	bulk la MissioneBulk da cui ricavare il terzo per cui selezionare le modalit‡ di pagamento
+ * @param	bulk la MissioneBulk da cui ricavare il terzo per cui selezionare le modalit√† di pagamento
  *
  * @return la collezione di istanze di tipo Rif_modalita_pagamentoBulk 
  */	
@@ -1579,7 +1579,7 @@ public java.util.Collection findTipi_missione(UserContext userContext, OggettoBu
   * Pre-post-conditions:
   *
   * Nome:	Terzo NON selezionato o data inizio missione non valorizzata
-  * Pre: 	Non Ë stato selezionato un Terzo per la missione oppure non e'
+  * Pre: 	Non √® stato selezionato un Terzo per la missione oppure non e'
   *			stata inserita la data inizio missione
   * Post: 	Non vengono caricati i Tipi di rapporto
   *
@@ -1670,14 +1670,14 @@ public java.util.Collection findTipi_trattamento(UserContext userContext, Oggett
 					RapportoBulk r = (RapportoBulk)i.next();
 					exit=true;
 					if (r.getCd_ente_prev_sti()==null)
-					//throw new it.cnr.jada.comp.ApplicationException("Non Ë stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
-					//non blocco perchË potrebbero esserci trattamenti che non prevedono contributi previdenziali
+					//throw new it.cnr.jada.comp.ApplicationException("Non √® stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
+					//non blocco perch√® potrebbero esserci trattamenti che non prevedono contributi previdenziali
 					//quindi passo il codice fittizio 'XX'
 						filtro.setEntePrev("XX");
 					else
 						filtro.setEntePrev(r.getCd_ente_prev_sti());
 					if (r.getCd_rapp_impiego_sti()==null)
-						throw new it.cnr.jada.comp.ApplicationException("Per il dipendente in esame non Ë definito un Rapporto di Impiego!");
+						throw new it.cnr.jada.comp.ApplicationException("Per il dipendente in esame non √® definito un Rapporto di Impiego!");
 					else
 					{
 						Ass_rapp_impiegoHome assHome = (Ass_rapp_impiegoHome) getHome(userContext, Ass_rapp_impiegoBulk.class );
@@ -2146,8 +2146,8 @@ private int getTipoCancellazione (UserContext aUC, OggettoBulk bulk, int cancell
   *		0			Tutto bene
   *		1			Terzo assente
   *		2			Terzo non valido alla data registrazione
-  *		3			Controllo se ho inserito le modalit‡ di pagamento
-  *		4			Controllo se la modalit‡ di pagamento Ë valida (ha una banca associata)
+  *		3			Controllo se ho inserito le modalit√† di pagamento
+  *		4			Controllo se la modalit√† di pagamento √® valida (ha una banca associata)
   *		5			Tipo rapporto assente
   *		6			Tipo di rapporto non valido in data inizio missione
   *		7			Tipo trattamento assente
@@ -2161,19 +2161,19 @@ private void handleExceptionsTerzo(int error) throws ComponentException
 		case 1: 
 			throw new it.cnr.jada.comp.ApplicationException("Inserire il terzo");		
 		case 2: 
-			throw new it.cnr.jada.comp.ApplicationException("Il Terzo selezionato non Ë valido in Data Registrazione");
+			throw new it.cnr.jada.comp.ApplicationException("Il Terzo selezionato non √® valido in Data Registrazione");
 		case 3: 
-			throw new it.cnr.jada.comp.ApplicationException("Selezionare la Modalit‡ di pagamento");
+			throw new it.cnr.jada.comp.ApplicationException("Selezionare la Modalit√† di pagamento");
 		case 4: 
-			throw new it.cnr.jada.comp.ApplicationException("Selezionare una Modalit‡ di Pagamento valida");
+			throw new it.cnr.jada.comp.ApplicationException("Selezionare una Modalit√† di Pagamento valida");
 		case 5: 
 			throw new it.cnr.jada.comp.ApplicationException("Selezionare il Tipo Rapporto");
 		case 6:
-			throw new it.cnr.jada.comp.ApplicationException("Il Tipo Rapporto selezionato non Ë valido alla Data Inizio Missione");
+			throw new it.cnr.jada.comp.ApplicationException("Il Tipo Rapporto selezionato non √® valido alla Data Inizio Missione");
 		case 7:
 			throw new it.cnr.jada.comp.ApplicationException("Selezionare il Tipo Trattamento");
 		case 8:
-			throw new it.cnr.jada.comp.ApplicationException("Il Tipo Trattamento selezionato non Ë valido alla Data Registrazione");
+			throw new it.cnr.jada.comp.ApplicationException("Il Tipo Trattamento selezionato non √® valido alla Data Registrazione");
 	}
 }
 	
@@ -2253,7 +2253,7 @@ private Timestamp getDataRegistrazione(UserContext aUC, MissioneBulk missione)
  * Pre-post-conditions:
  *
  * Nome: inizializza Missione
- * Pre:  L'utente ha richiesto l'inizializzzaione dei dati di una missione gi‡ inserita per una eventuale modifica
+ * Pre:  L'utente ha richiesto l'inizializzzaione dei dati di una missione gi√† inserita per una eventuale modifica
  * Post: Il sistema carica la missione, il terzo della missione, gli inquadramenti e i tipi di rapporto,
  *       le tappe della missione (metodo 'caricaTappeMissione'), i dettagli di spesa della missione (metodo 'caricaDettagliMissione'),
  *       gli eventuali anticipi, obbligazioni o compensi (metodo 'loadCompenso')
@@ -2270,7 +2270,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 	MissioneBulk missione = (MissioneBulk) bulk;
 	
 	if (missione.getEsercizio() == null)
-		throw new it.cnr.jada.comp.ApplicationException("L'esercizio del documento non Ë valorizzato! Impossibile proseguire.");
+		throw new it.cnr.jada.comp.ApplicationException("L'esercizio del documento non √® valorizzato! Impossibile proseguire.");
 			
 	if (missione.getEsercizio().intValue() > it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext).intValue())
 		throw new it.cnr.jada.comp.ApplicationException("Il documento deve appartenere o all'esercizio di scrivania o ad esercizi precedenti per essere aperto in modifica!");
@@ -2447,16 +2447,16 @@ private boolean isInquadramentoValido(UserContext userContext, MissioneBulk miss
   * Pre-post-conditions
   *
   *	Nome: Missione ANNULLATA - Stato COFI uguale ad 'A' 
-  *	Pre: La missione Ë annullata
-  *	Post: Ritorna <true>. La missione Ë annullata
+  *	Pre: La missione √® annullata
+  *	Post: Ritorna <true>. La missione √® annullata
   *
   *	Nome: Missione NON ANNULLATA - Stato COFI diverso da 'A'
-  *	Pre: La missione non Ë annullata
-  *	Post: Ritorna <false>. La missione non Ë annullata
+  *	Pre: La missione non √® annullata
+  *	Post: Ritorna <false>. La missione non √® annullata
   *
   * @param userContext 	lo UserContext che ha generato la richiesta
   * @param missione 	La missione da controllare  
-  * @return vero se la missione Ë anullata
+  * @return vero se la missione √® anullata
   *			falso altrimenti
   *
 **/
@@ -2576,14 +2576,14 @@ private boolean isTipoTrattamentoValido(UserContext userContext, MissioneBulk mi
 					RapportoBulk r = (RapportoBulk)i.next();
 					exit=true;
 					if (r.getCd_ente_prev_sti()==null)
-						//throw new it.cnr.jada.comp.ApplicationException("Non Ë stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
-						//non blocco perchË potrebbero esserci trattamenti che non prevedono contributi previdenziali
+						//throw new it.cnr.jada.comp.ApplicationException("Non √® stato possibile recuperare l''Ente Previdenziale del dipendente selezionato.");
+						//non blocco perch√® potrebbero esserci trattamenti che non prevedono contributi previdenziali
 						//quindi passo il codice fittizio 'XX'
 						filtro.setEntePrev("XX");
 					else
 						filtro.setEntePrev(r.getCd_ente_prev_sti());
 					if (r.getCd_rapp_impiego_sti()==null)
-						throw new it.cnr.jada.comp.ApplicationException("Per il dipendente in esame non Ë definito un Rapporto di Impiego!");
+						throw new it.cnr.jada.comp.ApplicationException("Per il dipendente in esame non √® definito un Rapporto di Impiego!");
 					else
 					{
 						Ass_rapp_impiegoHome assHome = (Ass_rapp_impiegoHome) getHome(userContext, Ass_rapp_impiegoBulk.class );
@@ -3158,7 +3158,7 @@ public void rollbackToSavePoint(UserContext userContext, String savePointName) t
  * Nome: Ricerca
  * Pre:  L'utente ha richiesto una ricerca di missioni 
  * Post: Il sistema restitusce il SQLBuilder con le clausole specificate dall'utente e in aggiunta con le clausole che
- *       la missione abbia cds, unit‡ organizzativa uguali a quello di scrivania
+ *       la missione abbia cds, unit√† organizzativa uguali a quello di scrivania
  *
  * @param	userContext	lo UserContext che ha generato la richiesta
  * @param   clauses le clausole speicificate dall'utene
@@ -3407,7 +3407,7 @@ public SQLBuilder selectObbligazione_scadenzarioByClause(UserContext aUC, Missio
  * Nome: Ricerca 
  * Pre:  L'utente ha richiesto una ricerca dei tipi di auto per una spesa di una missione
  * Post: Il sistema restitusce il SQLBuilder con le clausole specificate dall'utente e in aggiunta la clausole
- *       che il tipo auto abbia un intervallo di validit‡ comprendente la data di inizio della missione e
+ *       che il tipo auto abbia un intervallo di validit√† comprendente la data di inizio della missione e
  *       un'area geografica  e una nazione comaptibili con quelli della tappa della spesa 
  *
  * @param	userContext	lo UserContext che ha generato la richiesta
@@ -3491,7 +3491,7 @@ public SQLBuilder selectTipo_autoByClause(UserContext aUC,Timestamp dataTappa, N
  * Nome: Ricerca 
  * Pre:  L'utente ha richiesto una ricerca dei tipi di pasto per una spesa di una missione
  * Post: Il sistema restitusce il SQLBuilder con le clausole specificate dall'utente e in aggiunta la clausole
- *       che il tipo pasto abbia un intervallo di validit‡ comprendente la data di inizio della missione,
+ *       che il tipo pasto abbia un intervallo di validit√† comprendente la data di inizio della missione,
  *       un'area geografica e una nazione compatibili con quelli della tappa della spesa e un inqudramento uguale a 
  *       quello selezionato per la missione 
  *
@@ -3587,7 +3587,7 @@ public SQLBuilder selectTipo_pastoByClause(UserContext aUC,Timestamp dataTappa, 
  * Nome: Ricerca 
  * Pre:  L'utente ha richiesto una ricerca dei tipi di spesa per una spesa di una missione
  * Post: Il sistema restitusce il SQLBuilder con le clausole specificate dall'utente e in aggiunta la clausole
- *       che il tipo spesa abbia un intervallo di validit‡ comprendente la data di inizio della missione,
+ *       che il tipo spesa abbia un intervallo di validit√† comprendente la data di inizio della missione,
  *       un'area geografica e una nazione compatibili con quelli della tappa della spesa e un inqudramento uguale a 
  *       quello selezionato per la missione 
  *
@@ -4034,7 +4034,7 @@ private Missione_dettaglioBulk validaMassimaleTipoPasto(UserContext aUC, Mission
 
 	// CONFRONTO IMPORTO SPESA CON MASSIMALE TIPO PASTO
 	if(massimalePastoEuro.compareTo(spesa.getIm_spesa_euro()) == -1)
-		throw new it.cnr.jada.bulk.ValidationException("L'importo della spesa supera il massimale del Tipo Pasto selezionato (Ä"+massimalePastoEuro+")");
+		throw new it.cnr.jada.bulk.ValidationException("L'importo della spesa supera il massimale del Tipo Pasto selezionato (¬Ä"+massimalePastoEuro+")");
 		
 	return spesa;
 }
@@ -4070,7 +4070,7 @@ private Missione_dettaglioBulk validaMassimaleTipoSpesa(UserContext aUC, Mission
 
 	// CONFRONTO IMPORTO SPESA CON MASSIMALE TIPO SPESA
 	if(massimaleSpesaEuro.compareTo(spesa.getIm_spesa_euro()) == -1)
-		throw new it.cnr.jada.bulk.ValidationException("L'importo della spesa supera il massimale del Tipo Spesa selezionato (Ä"+massimaleSpesaEuro+")");
+		throw new it.cnr.jada.bulk.ValidationException("L'importo della spesa supera il massimale del Tipo Spesa selezionato (¬Ä"+massimaleSpesaEuro+")");
 		
 	spesa.setIm_spesa_max(massimaleSpesaEuro);
 	spesa.setIm_spesa_max(spesa.getIm_spesa_max().setScale(2, BigDecimal.ROUND_HALF_UP));	
@@ -4087,7 +4087,7 @@ private Missione_dettaglioBulk validaMassimaleTipoSpesa(UserContext aUC, Mission
  *
  * Nome: calcola importi spesa per rimborso km
  * Pre:  E' stata richiesto il calcolo degli importi di una spesa per rimborso km
- * Post: Il sistema calcola "im_spesa_euro" moltiplicando i km per l'indennit‡ chilometrica (sempre in EURO).
+ * Post: Il sistema calcola "im_spesa_euro" moltiplicando i km per l'indennit√† chilometrica (sempre in EURO).
  *		 Il sistema inizializza pone : "im_spesa_euro", "im_spesa_divisa" e "im_totale_spesa" tutti uguali.
  * 
  * Nome: conversione importo spesa con tipologia diversa da rimborso km
@@ -4175,13 +4175,13 @@ public MissioneBulk validaMassimaliSpesa(UserContext aUC, MissioneBulk missione,
   *		  	Generata una ApplicationException con il messaggio:	"Nessuna obbligazione associata!"
   *
   * Nome: 	Importi obbligazione/scadenza NULLI
-  *	Pre: 	L'importo della obbligazione e/o della scadenza Ë nullo
+  *	Pre: 	L'importo della obbligazione e/o della scadenza √® nullo
   *	Post: 	Non viene consentita l'associazione della scadenza con la missione
   *		  	Generata una ApplicationException con il messaggio:	
-  *			"L'importo dell'obbligazione/scadenza Ë un dato obbligatorio"
+  *			"L'importo dell'obbligazione/scadenza √® un dato obbligatorio"
   *
   * Nome: 	Importo scadenza diverso da quello della missione
-  *	Pre: 	L'importo della scadenza Ë diverso da quello della missione
+  *	Pre: 	L'importo della scadenza √® diverso da quello della missione
   *	Post: 	Non viene consentita l'associazione della scadenza con la missione
   *		  	Generata una ApplicationException con il messaggio:
   *			"La scadenza di obbligazione associata ha un importo diverso da quello della missione!"
@@ -4193,7 +4193,7 @@ public MissioneBulk validaMassimaliSpesa(UserContext aUC, MissioneBulk missione,
   *			"La data della scadenza dell'obbligazione deve essere successiva alla data di registrazione della missione!"
   *  
   * Nome: 	Terzo selezionato NON valido
-  *	Pre: 	Il terzo selezionato Ë diverso dal terzo della missione oppure il tipo entit‡ NON Ë DIVERSI
+  *	Pre: 	Il terzo selezionato √® diverso dal terzo della missione oppure il tipo entit√† NON √® DIVERSI
   *	Post: 	Non viene consentita l'associazione della scadenza con la missione
   *		  	Generata una ApplicationException con il messaggio:
   *			"L'obbligazione deve avere un creditore valido!"
@@ -4213,10 +4213,10 @@ public void validaObbligazione(UserContext userContext, Obbligazione_scadenzario
 	ObbligazioneBulk obbligazione = scadenza.getObbligazione();
 	
 	if (obbligazione.getIm_obbligazione()==null)
-		throw new it.cnr.jada.comp.ApplicationException("L'importo dell'impegno Ë un dato obbligatorio");
+		throw new it.cnr.jada.comp.ApplicationException("L'importo dell'impegno √® un dato obbligatorio");
 		
 	if (scadenza.getIm_scadenza()==null)
-		throw new it.cnr.jada.comp.ApplicationException("L'importo della scadenza Ë un dato obbligatorio");
+		throw new it.cnr.jada.comp.ApplicationException("L'importo della scadenza √® un dato obbligatorio");
 		
 	if (scadenza.getIm_scadenza().compareTo(missione.getImporto_scadenza_obbligazione())!=0)
 		throw new it.cnr.jada.comp.ApplicationException("L'importo della scadenza di impegno deve essere " + missione.getImporto_scadenza_obbligazione().toString());
@@ -4244,11 +4244,11 @@ private void validateBulkForPrint(UserContext userContext, Stampa_vpg_missioneBu
 			throw new it.cnr.jada.bulk.ValidationException("Il campo CDS e' obbligatorio");
 
 		if (stampa.getPgInizio()==null)
-			throw new it.cnr.jada.bulk.ValidationException("Il campo NUMERO INIZIO MISSIONE Ë obbligatorio");
+			throw new it.cnr.jada.bulk.ValidationException("Il campo NUMERO INIZIO MISSIONE √® obbligatorio");
 		if (stampa.getPgFine()==null)
-			throw new it.cnr.jada.bulk.ValidationException("Il campo NUMERO FINE MISSIONE Ë obbligatorio");
+			throw new it.cnr.jada.bulk.ValidationException("Il campo NUMERO FINE MISSIONE √® obbligatorio");
 		if (stampa.getPgInizio().compareTo(stampa.getPgFine())>0)
-			throw new it.cnr.jada.bulk.ValidationException("Il NUMERO INIZIO MISSIONE non puÚ essere superiore al NUMERO FINE MISSIONE");
+			throw new it.cnr.jada.bulk.ValidationException("Il NUMERO INIZIO MISSIONE non pu√≤ essere superiore al NUMERO FINE MISSIONE");
 
 	}catch(it.cnr.jada.bulk.ValidationException ex){
 		throw new ApplicationException(ex);
@@ -4282,7 +4282,7 @@ private void validateEsercizioCOEP(it.cnr.jada.UserContext userContext, Missione
 			status = new String(cs.getString(1));
 
 			if (status.compareTo("Y")!=0){
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non Ë possibile eliminare il documento, poichË l'esercizio economico precedente non Ë chiuso.");	
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non √® possibile eliminare il documento, poich√® l'esercizio economico precedente non √® chiuso.");	
 			}
 		}
 	
@@ -4303,58 +4303,58 @@ private void validateEsercizioCOEP(it.cnr.jada.UserContext userContext, Missione
   * Pre-post-conditions
   *
   * Nome: 	Terzo assente
-  *	Pre: 	Non Ë stato selezionato un terzo
+  *	Pre: 	Non √® stato selezionato un terzo
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
   * 		"Inserire il terzo"
   *
   * Nome: 	Terzo non valido alla data registrazione
-  *	Pre: 	Il terzo selezionato non Ë valido alla data registrazione
+  *	Pre: 	Il terzo selezionato non √® valido alla data registrazione
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Terzo selezionato non Ë valido in Data Registrazione"
+  *			"Il Terzo selezionato non √® valido in Data Registrazione"
   *
   * Nome: 	Modalita di pagamento assente
-  *	Pre: 	Non Ë stato selezionata una modalita di pagamento
+  *	Pre: 	Non √® stato selezionata una modalita di pagamento
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Selezionare la Modalit‡ di pagamento"
+  *			"Selezionare la Modalit√† di pagamento"
   *
   * Nome: 	Modalita di pagamento non valida
   *	Pre: 	La modalita di pagamento non e' valida (con banca)
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Selezionare una Modalit‡ di pagamento valida"
+  *			"Selezionare una Modalit√† di pagamento valida"
   *
   * Nome: 	Tipo rapporto assente
-  *	Pre: 	Non Ë stato selezionato un tipo rapporto
+  *	Pre: 	Non √® stato selezionato un tipo rapporto
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
   *			"Selezionare il Tipo Rapporto"
   *
   * Nome: 	Tipo rapporto non valido alla data inizio missione
-  *	Pre: 	Il tipo rapporto selezionato non Ë valido in data inizio missione
+  *	Pre: 	Il tipo rapporto selezionato non √® valido in data inizio missione
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Tipo Rapporto selezionato non Ë valido alla Data Inizio Missione"
+  *			"Il Tipo Rapporto selezionato non √® valido alla Data Inizio Missione"
   *
   * Nome: 	Tipo trattamento assente
-  *	Pre: 	Non Ë stato selezionato un tipo trattamento
+  *	Pre: 	Non √® stato selezionato un tipo trattamento
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
   *			"Selezionare il Tipo Trattamento"
   *
   * Nome: 	Tipo trattamento non valido alla data registrazione
   *	Pre: 	Il tipo trattamento non e' valido alla data di registrazione
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Tipo Trattamento selezionato non Ë valido alla Data Registrazione"
+  *			"Il Tipo Trattamento selezionato non √® valido alla Data Registrazione"
   *
   * Nome: 	Inquadramento assente
-  *	Pre: 	Non Ë stato selezionato un inquadramento
+  *	Pre: 	Non √® stato selezionato un inquadramento
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
   *			"Selezionare l'Inquadramento"
   *
   * Nome: 	Inquadramento non valido alla data registrazione
   *	Pre: 	L'inquadramento non e' valido alla data di registrazione
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Tipo Trattamento selezionato non Ë valido alla Data Registrazione"
+  *			"Il Tipo Trattamento selezionato non √® valido alla Data Registrazione"
   *  
   * Nome: 	Terzo valido
   *	Pre: 	Il terzo selezionato non ha errori
-  *	Post: 	Il terzo Ë valido e prosegue con l'operazione
+  *	Post: 	Il terzo √® valido e prosegue con l'operazione
   *
   * @param	userContext		lo UserContext che genera la richiesta
   * @param	missione		la missione di cui validare il terzo
@@ -4370,7 +4370,7 @@ private void validateEsercizioCOEP(it.cnr.jada.UserContext userContext, Missione
 //		0			Tutto bene
 //		1			Terzo assente
 //		2			Terzo non valido alla data registrazione
-//		3			Controllo se ho inserito le modalit‡ di pagamento
+//		3			Controllo se ho inserito le modalit√† di pagamento
 //		4			Banca non inserita
 //		5			Tipo rapporto assente
 //		6			Tipo di rapporto non valido in data inizio inizio missione
@@ -4391,43 +4391,43 @@ public void validaTerzo(UserContext userContext, MissioneBulk missione) throws C
   * Pre-post-conditions
   *
   * Nome: 	Terzo assente
-  *	Pre: 	Non Ë stato selezionato un terzo
+  *	Pre: 	Non √® stato selezionato un terzo
   *	Post:	Ritorna il valore 1
   *
   * Nome: 	Terzo non valido alla data registrazione
-  *	Pre: 	Il terzo selezionato non Ë valido alla data registrazione
+  *	Pre: 	Il terzo selezionato non √® valido alla data registrazione
   *	Post: 	Ritorna il valore 2
   *
   * Nome: 	Modalita di pagamento assente
-  *	Pre: 	Non Ë stato selezionata una modalita di pagamento
+  *	Pre: 	Non √® stato selezionata una modalita di pagamento
   *	Post: 	Ritorna il valore 3
   *
   * Nome: 	Banca non inserita
-  *	Pre: 	Non Ë stato selezionato un conto corretto
+  *	Pre: 	Non √® stato selezionato un conto corretto
   *	Post: 	Ritorna il valore 4
   *
   * Nome: 	Tipo rapporto assente
-  *	Pre: 	Non Ë stato selezionato un tipo rapporto
+  *	Pre: 	Non √® stato selezionato un tipo rapporto
   *	Post: 	Ritorna il valore 5
   *
   * Nome: 	Tipo rapporto non valido alla data inizio missione
-  *	Pre: 	Il tipo rapporto selezionato non Ë valido in data inizio missione
+  *	Pre: 	Il tipo rapporto selezionato non √® valido in data inizio missione
   *	Post: 	Ritorna il valore 6
   *
   *	Nome: 	Inquadramento assente
-  *	Pre: 	Non Ë stato selezionato un inquadramento
+  *	Pre: 	Non √® stato selezionato un inquadramento
   *	Post: 	Ritorna il valore 7
   *
   * Nome: 	Inquadramento non valido alla data inizio missione
-  *	Pre: 	L'inquadramento selezionato non Ë valido in data inizio missione
+  *	Pre: 	L'inquadramento selezionato non √® valido in data inizio missione
   *	Post: 	Ritorna il valore 8
   * 
   *	Nome: 	Tipo trattamento assente
-  *	Pre: 	Non Ë stato selezionato un tipo trattamento
+  *	Pre: 	Non √® stato selezionato un tipo trattamento
   *	Post: 	Ritorna il valore 9
   *
   * Nome: 	Tipo trattamento non valido alla data registrazione
-  *	Pre: 	Il tipo trattamento selezionato non Ë valido in data registrazione
+  *	Pre: 	Il tipo trattamento selezionato non √® valido in data registrazione
   *	Post: 	Ritorna il valore 10
   *  
   * Nome: 	Terzo valido
@@ -4451,7 +4451,7 @@ public void validaTerzo(UserContext userContext, MissioneBulk missione) throws C
 //		0			Tutto bene
 //		1			Terzo assente
 //		2			Terzo non valido alla data registrazione
-//		3			Controllo se ho inserito le modalit‡ di pagamento
+//		3			Controllo se ho inserito le modalit√† di pagamento
 //		4			Banca non inserita
 //		5			Tipo rapporto assente
 //		6			Tipo di rapporto non valido in data inizio missione
@@ -4473,7 +4473,7 @@ public int validaTerzo(UserContext userContext, MissioneBulk missione, boolean c
 	if (terzo.getDt_fine_rapporto()!=null && terzo.getDt_fine_rapporto().compareTo(missione.getDt_registrazione())<0)
 		return 2;
 
-	// Controllo se ho inserito le modalit‡ di pagamento
+	// Controllo se ho inserito le modalit√† di pagamento
 	if (checkModPag && missione.getModalita_pagamento()==null)
 		return 3;
 
@@ -4514,7 +4514,7 @@ public int validaTerzo(UserContext userContext, MissioneBulk missione, boolean c
   * Pre-post-conditions
   *
   * Nome:	Terzo obbligazione non valido
-  *	Pre: 	Non Ë stato selezionato il terzo nell'obbligazione
+  *	Pre: 	Non √® stato selezionato il terzo nell'obbligazione
   *	Post: 	Ritorna un ApplicationException con la descrizione dell'errore
   *
   * Nome: 	Terzo obbligazione uguale al terzo della missione
@@ -4525,7 +4525,7 @@ public int validaTerzo(UserContext userContext, MissioneBulk missione, boolean c
   *	Pre: 	L'anagafica associata al terzo dell'obbligazione ha come tipo entita DIVERSI
   *	Post: 	Viene validato il terzo
   *
-  * Nome: 	Nessuna delle due condizioni precedenti Ë verificata
+  * Nome: 	Nessuna delle due condizioni precedenti √® verificata
   *	Pre: 	Il terzo selezionato NON corrisponde al terzo della missione e
   *		 	l'anagrafica associata NON ha tipo entita DIVERSI
   *	Post: 	Ritorna un ApplicationException con la descrizione dell'errore

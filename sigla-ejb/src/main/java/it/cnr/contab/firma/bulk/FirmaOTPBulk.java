@@ -49,7 +49,7 @@ public class FirmaOTPBulk extends OggettoBulk {
     	else if (messageException.contains("0009"))
     		return "Credenziali di delega non valide";
     	else if (messageException.contains("0010"))
-    		return "Lo stato dell'utente non è valido (es. utente sospeso)";
+    		return "Lo stato dell'utente non Ã¨ valido (es. utente sospeso)";
 	    return messageException;
 		
 	}

@@ -81,7 +81,7 @@ public abstract void eliminaConBulk (UserContext userContext,OggettoBulk bulk) t
   *    PreCondition:
   *      Flag Soggetto IVA selezionato di default
   *    PostCondition:
-  *      Il Flag Soggetto IVA viene selezionato di default. Se li flag è selezionato rende obbligatorio l'inserimento della Partita I.V.A.
+  *      Il Flag Soggetto IVA viene selezionato di default. Se li flag Ã¨ selezionato rende obbligatorio l'inserimento della Partita I.V.A.
  */
 //^^@@
 public abstract OggettoBulk inizializzaBulkPerInserimento (UserContext userContext,OggettoBulk bulk) throws ComponentException;

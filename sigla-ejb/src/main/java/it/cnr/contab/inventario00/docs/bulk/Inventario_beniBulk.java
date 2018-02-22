@@ -22,19 +22,19 @@ public class Inventario_beniBulk extends Inventario_beniBase {
 	// VALORE_UNITARIO
 	private java.math.BigDecimal valore_unitario;
 
-	// VARIAZIONE_MENO_INIZIALE: è il valore di variazione meno preso dalla vista V_INVENTARIO_BENI_APG
+	// VARIAZIONE_MENO_INIZIALE: Ã¨ il valore di variazione meno preso dalla vista V_INVENTARIO_BENI_APG
 	private java.math.BigDecimal variazione_meno_iniziale;
 
-	// VARIAZIONE_PIU_INIZIALE: è il valore di variazione piu preso dalla vista V_INVENTARIO_BENI_APG
+	// VARIAZIONE_PIU_INIZIALE: Ã¨ il valore di variazione piu preso dalla vista V_INVENTARIO_BENI_APG
 	private java.math.BigDecimal variazione_piu_iniziale;
 
-	/* FL_VISIBILE: è il flag che indica se il bene deve essere mostrato oppure no. 
+	/* FL_VISIBILE: Ã¨ il flag che indica se il bene deve essere mostrato oppure no. 
 	 *	Viene utilizzato anche per quei beni accessori scaricati in seguito allo scarico di 
-	 *	un bene padre, e sui quali non è possibile fare operazioni.
+	 *	un bene padre, e sui quali non Ã¨ possibile fare operazioni.
 	*/ 
 	private String fl_visibile;
 
-	// VALORE_ALIENAZIONE_APG: è il valore di valore alienazione preso dalla vista V_INVENTARIO_BENI_APG
+	// VALORE_ALIENAZIONE_APG: Ã¨ il valore di valore alienazione preso dalla vista V_INVENTARIO_BENI_APG
 	private java.math.BigDecimal valore_alienazione_apg;
 
 	/*  Bene di riferimento nel caso di un BENE ACCESSORIO */
@@ -467,7 +467,7 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	return this;
 }
 /**
-* Restituisce <code>true</code> se il bene è un Bene Accessorio
+* Restituisce <code>true</code> se il bene Ã¨ un Bene Accessorio
 *
 * @return boolean
 */
@@ -501,7 +501,7 @@ public boolean isCancellabile() {
 	
 }
 /**
-* Restituisce <code>true</code> se il bene è Istituzionale
+* Restituisce <code>true</code> se il bene Ã¨ Istituzionale
 *
 * @return boolean
 */

@@ -30,11 +30,11 @@ public InventarioConsegnatarioComponent() {
 	super();
 }
 /**
-  *  Controlla la data di fine validit‡
+  *  Controlla la data di fine validit√†
   *    PreCondition:
-  *      La data specificata di fine validit‡ Ë superiore alla data di inizio validit‡
+  *      La data specificata di fine validit√† √® superiore alla data di inizio validit√†
   *    PostCondition:
-  *		 Un messaggio di errore viene visualizzato all'utente per indicare che la data di fine validit‡
+  *		 Un messaggio di errore viene visualizzato all'utente per indicare che la data di fine validit√†
   *		deve essere posteriore a quella di inizio.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -46,32 +46,32 @@ private void checkDataFineValidita(UserContext aUC, Inventario_consegnatarioBulk
 
 	if (invC.getDt_fine_validita() != null){
 		if (invC.getDt_inizio_validita().after(invC.getDt_fine_validita()))
-			throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: la data di fine validit‡ deve essere superiore alla data di inizio validita");
+			throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: la data di fine validit√† deve essere superiore alla data di inizio validita");
 	}
 }
 /**
-  *  Controlla la data di fine validit‡ - non specificata
+  *  Controlla la data di fine validit√† - non specificata
   *    PreCondition:
-  *      La data di inizio validit‡ non Ë stata specificata
+  *      La data di inizio validit√† non √® stata specificata
   *    PostCondition:
   *		 Un messaggio di errore viene visualizzato all'utente per indicare che la data di 
-  *		inizio validit‡ Ë obbligatoria
+  *		inizio validit√† √® obbligatoria
   *
-  *  Controlla la data di fine validit‡ - data non valida
+  *  Controlla la data di fine validit√† - data non valida
   *    PreCondition:
-  *      Il periodo specificato si accavalla con uno gi‡ esistente. La data di inizio validit‡ 
-  *		specificata, Ë antecedente alla max data di INIZIO validit‡ registrata su DB.
+  *      Il periodo specificato si accavalla con uno gi√† esistente. La data di inizio validit√† 
+  *		specificata, √® antecedente alla max data di INIZIO validit√† registrata su DB.
   *    PostCondition:
   *		 Un messaggio di errore viene visualizzato all'utente per indicare che la data di 
-  *		inizio validit‡ deve essere superiore all'ultima data inizio validita. 
+  *		inizio validit√† deve essere superiore all'ultima data inizio validita. 
   *
-  *  Controlla la data di fine validit‡ - data non valida
+  *  Controlla la data di fine validit√† - data non valida
   *    PreCondition:
-  *      Il periodo specificato si accavalla con uno gi‡ esistente. La data di inizio validit‡ 
-  *		specificata, Ë antecedente alla max data di FINE validit‡ registrata su DB.
+  *      Il periodo specificato si accavalla con uno gi√† esistente. La data di inizio validit√† 
+  *		specificata, √® antecedente alla max data di FINE validit√† registrata su DB.
   *    PostCondition:
   *		 Un messaggio di errore viene visualizzato all'utente per indicare che la data di 
-  *		inizio validit‡ deve essere superiore all'ultima data fine validita.
+  *		inizio validit√† deve essere superiore all'ultima data fine validita.
   *  
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param invC <code>Inventario_consegnatarioBulk</code> l'OggettoBulk che contiene le 
@@ -82,7 +82,7 @@ private void checkDataInizioValidita(it.cnr.jada.UserContext aUC, Inventario_con
 
 	// Data Inizio Validita == null
 	if (invC.getDt_inizio_validita() == null)
-		throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: la data inizio validita Ë un campo obbligatorio");
+		throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: la data inizio validita √® un campo obbligatorio");
 
 	// Data Inizio Validita < Max Data Inizio Validita
 	Inventario_consegnatarioHome invCHome = (Inventario_consegnatarioHome)getHome(aUC,Inventario_consegnatarioBulk.class);
@@ -107,15 +107,15 @@ private void checkDataInizioValidita(it.cnr.jada.UserContext aUC, Inventario_con
   *    PostCondition:
   *      Non  viene consentito il salvataggio dei dati.
   *
-  *  Errore nella validazione della Data di Inizio validit‡
+  *  Errore nella validazione della Data di Inizio validit√†
   *    PreCondition:
-  *      La data di inizio validit‡ specificata non ha superato i controlli di validit‡, (metodo checkDataInizioValidita).
+  *      La data di inizio validit√† specificata non ha superato i controlli di validit√†, (metodo checkDataInizioValidita).
   *    PostCondition:
   *      Non  viene consentito il salvataggio dei dati.
   *
-  *  Errore nella validazione della Data di Fine validit‡
+  *  Errore nella validazione della Data di Fine validit√†
   *    PreCondition:
-  *      La data di fine validit‡ specificata non ha superato i controlli di validit‡, (metodo checkDataFineValidita).
+  *      La data di fine validit√† specificata non ha superato i controlli di validit√†, (metodo checkDataFineValidita).
   *    PostCondition:
   *      Non  viene consentito il salvataggio dei dati.
   *   
@@ -153,7 +153,7 @@ public OggettoBulk creaConBulk (UserContext aUC,OggettoBulk bulk) throws Compone
   *    PreCondition:
   *      E' stata generata la richiesta di cancellare fisicamente l'ultimo Consegnatario 
   *		dell'Inventario. L'operazione di cancellazione dal DB del Consegnatario, infatti, 
-  *		Ë possibile solo sull'ultimo Consegnatario specificato, (quello attuale), ossia 
+  *		√® possibile solo sull'ultimo Consegnatario specificato, (quello attuale), ossia 
   *		su quel Consegnatario che ha DT_FINE_VALIDITA' = NULL.
   *    PostCondition:
   *		Il sistema cancella il Consegnatario specificato. Viene impostato a NULL il valore
@@ -185,9 +185,9 @@ try{
  }
 }
 /** 
-  *  Cerca l'Inventario di cui la Uo di scrivania Ë responsabile
+  *  Cerca l'Inventario di cui la Uo di scrivania √® responsabile
   *    PreCondition:
-  *      La Uo di scrivania non Ë responsabile di alcun Inventario, (metodo loadInventarioResp).
+  *      La Uo di scrivania non √® responsabile di alcun Inventario, (metodo loadInventarioResp).
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -195,7 +195,7 @@ try{
   *    PreCondition:
   *      E' stata generata la richiesta di inizializzare una istanza di Inventario_consegnatarioBulk.
   *    PostCondition:
-  *      Viene impostata e proposta la data odierna come data di inizio validit‡.
+  *      Viene impostata e proposta la data odierna come data di inizio validit√†.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta.
   * @param bulk <code>OggettoBulk</code> il bulk che deve essere inizializzato.
@@ -207,7 +207,7 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 	try {
 		Inventario_consegnatarioBulk invC = (Inventario_consegnatarioBulk)super.inizializzaBulkPerInserimento(aUC,bulk);
 
-		// carico l'Inventario di cui la U.O. di scrivania Ë responsabile
+		// carico l'Inventario di cui la U.O. di scrivania √® responsabile
 		loadInventarioResp(aUC,invC);
 		invC.setDt_inizio_validita(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
 		invC.setConsegnatario(new it.cnr.contab.anagraf00.core.bulk.TerzoBulk());
@@ -248,9 +248,9 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 
 }
 /** 
-  *  Cerca l'Inventario di cui la Uo di scrivania Ë responsabile
+  *  Cerca l'Inventario di cui la Uo di scrivania √® responsabile
   *    PreCondition:
-  *      La Uo di scrivania non Ë responsabile di alcun Inventario, (metodo loadInventarioResp).
+  *      La Uo di scrivania non √® responsabile di alcun Inventario, (metodo loadInventarioResp).
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -271,7 +271,7 @@ public OggettoBulk inizializzaBulkPerRicerca(UserContext aUC,OggettoBulk bulk) t
 
 		Inventario_consegnatarioBulk invC = (Inventario_consegnatarioBulk)super.inizializzaBulkPerRicerca(aUC,bulk);
 
-		// carico l'Inventario di cui la U.O. di scrivania Ë responsabile
+		// carico l'Inventario di cui la U.O. di scrivania √® responsabile
 		loadInventarioResp(aUC,invC);
 
 		getHomeCache(aUC).fetchAll(aUC);
@@ -284,9 +284,9 @@ public OggettoBulk inizializzaBulkPerRicerca(UserContext aUC,OggettoBulk bulk) t
 	}
 }
 /** 
-  *  Cerca l'Inventario di cui la Uo di scrivania Ë responsabile
+  *  Cerca l'Inventario di cui la Uo di scrivania √® responsabile
   *    PreCondition:
-  *      La Uo di scrivania non Ë responsabile di alcun Inventario, (metodo loadInventarioResp).
+  *      La Uo di scrivania non √® responsabile di alcun Inventario, (metodo loadInventarioResp).
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -307,7 +307,7 @@ public OggettoBulk inizializzaBulkPerRicercaLibera(UserContext aUC,OggettoBulk b
 
 		Inventario_consegnatarioBulk invC = (Inventario_consegnatarioBulk)super.inizializzaBulkPerRicercaLibera(aUC,bulk);
 
-		// carico l'Inventario di cui la U.O. di scrivania Ë responsabile
+		// carico l'Inventario di cui la U.O. di scrivania √® responsabile
 		loadInventarioResp(aUC,invC);
 
 		getHomeCache(aUC).fetchAll(aUC);
@@ -320,15 +320,15 @@ public OggettoBulk inizializzaBulkPerRicercaLibera(UserContext aUC,OggettoBulk b
 	}
 }
 /**
-  *  Carica l'inventario di cui la U.O. di scrivania Ë responsabile.
+  *  Carica l'inventario di cui la U.O. di scrivania √® responsabile.
   *    PreCondition:
-  *      La UO di scrivania non Ë responsabile di alcun Inventario.
+  *      La UO di scrivania non √® responsabile di alcun Inventario.
   *    PostCondition:
-  *		Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di continuare nelle operazioni.
+  *		Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di continuare nelle operazioni.
   *
   *  Carica l'Inventario di competenza
   *    PreCondition:
-  *      E' stato richiesto di caricare l'Inventario di cui la UO di scrivania Ë responsabile.
+  *      E' stato richiesto di caricare l'Inventario di cui la UO di scrivania √® responsabile.
   *    PostCondition:
   *      Viene caricato l'Inventario di competenza. Questo viene utilizzato per impostare l'Inventario di riferimento.
   *
@@ -341,14 +341,14 @@ private void loadInventarioResp(UserContext userContext, Inventario_consegnatari
 	Id_inventarioHome invHome = (Id_inventarioHome)getHome(userContext,Id_inventarioBulk.class);
 	Id_inventarioBulk invResp = invHome.findInventarioRespFor(userContext);
 	if (invResp == null)
-		throw new it.cnr.jada.comp.ApplicationException("L'Unit‡ organizzativa selezionata non Ë responsabile di alcun inventario");
+		throw new it.cnr.jada.comp.ApplicationException("L'Unit√† organizzativa selezionata non √® responsabile di alcun inventario");
 
 	invC.setInventario(invResp);
 }
 /** 
-  *  Errore - data fine validit‡
+  *  Errore - data fine validit√†
   *    PreCondition:
-  *      Le modifiche apportate alla data di fine validit‡ per il Consegnatario non superano 
+  *      Le modifiche apportate alla data di fine validit√† per il Consegnatario non superano 
   *		i controlli di validazione.
   *    PostCondition:
   *      Viene visualizzato un messaggio con la spiegazione dell'errore.
@@ -381,7 +381,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
   *      E' stata generata la richiesta di ricercare un Consegnatario nello storico dell'Inventario.
   *    PostCondition:
   *		E' stato creato il SQLBuilder con le clausole implicite (presenti nell'istanza di Inventario_consegnatarioBulk),
-  *		ed Ë stata aggiunta la clausola che l'Inventario sia quello associato alla UO di scrivania.
+  *		ed √® stata aggiunta la clausola che l'Inventario sia quello associato alla UO di scrivania.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param clauses <code>CompoundFindClause</code> le clausole della selezione
@@ -466,7 +466,7 @@ public SQLBuilder selectDelegatoByClause(UserContext userContext, Inventario_con
 		return sql;		
 }
 /** 
-  *	Imposta la data di fine validit‡ del Consegnatario. Se la data non Ë stata specificata, 
+  *	Imposta la data di fine validit√† del Consegnatario. Se la data non √® stata specificata, 
   *	 viene impostata come DATA_INFINITO.
   *
   * @param inv_consegnatario il <code>Inventario_consegnatarioBulk</code> l'oggetto che contiene le 
@@ -480,14 +480,14 @@ private void setDataFineValidita(Inventario_consegnatarioBulk invC) {
 /** 
   *  valida Consegnatario - Consegnatario non specificato
   *    PreCondition:
-  *      Non Ë stato specificato alcun Terzo Consegnatario.
+  *      Non √® stato specificato alcun Terzo Consegnatario.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit‡ di 
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit√† di 
   *		specificare un Terzo.
   *
-  *  valida Consegnatario - Data inizio validit‡
+  *  valida Consegnatario - Data inizio validit√†
   *    PreCondition:
-  *      Non Ë stata specificata la data inizio validit‡, oppure la data specificata non Ë valida.
+  *      Non √® stata specificata la data inizio validit√†, oppure la data specificata non √® valida.
   *    PostCondition:
   *      Un messaggio di errore viene visualizzato all'utente per indicare l'errore.
   *
@@ -509,7 +509,7 @@ private void validaConsegntario (UserContext aUC,Inventario_consegnatarioBulk co
 		}
 
 		if (consegnatario.getDt_inizio_validita()==null){
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: specificare una Data di inizio Validit‡");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: specificare una Data di inizio Validit√†");
 		}
 		Inventario_consegnatarioHome consH = (Inventario_consegnatarioHome)getHome(aUC,Inventario_consegnatarioBulk.class);
 		consH.checkInserimentoSuccessivo(consegnatario); 

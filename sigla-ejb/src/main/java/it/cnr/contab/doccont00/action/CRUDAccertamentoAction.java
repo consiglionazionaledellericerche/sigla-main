@@ -445,7 +445,7 @@ public Forward doSalva(ActionContext context) throws java.rmi.RemoteException {
 		fillModel(context);
 		bp.validate(context);
 
-		// in questo caso l'acc. modifica Ë stata gi‡ effettuata
+		// in questo caso l'acc. modifica √® stata gi√† effettuata
 		if(((AccertamentoBulk) bp.getModel()).isCheckDisponibilitaContrattoEseguito())
 			return super.doSalva(context);
 
@@ -522,7 +522,7 @@ public Forward doRiportaCondizionato(ActionContext context)
 		fillModel(context);
 		bp.validate(context);
 
-		// in questo caso l'acc. modifica Ë stata gi‡ effettuata
+		// in questo caso l'acc. modifica √® stata gi√† effettuata
 		if(((AccertamentoBulk) bp.getModel()).isCheckDisponibilitaContrattoEseguito())
 			return super.doRiporta(context);
 
@@ -634,7 +634,7 @@ public Forward doTab(ActionContext context,String tabName,String pageName)
 					bp.setMessage("La ricerca del Capitolo non ha fornito alcun risultato.");
 					return context.findDefaultForward();
 				}
-				// MITODO - verificare se Ë necessario validare la testata	
+				// MITODO - verificare se √® necessario validare la testata	
 				//bp.verificaTestataAccertamento( context );
 
 				// Visualizzo il Tab della scadenza
@@ -651,7 +651,7 @@ public Forward doTab(ActionContext context,String tabName,String pageName)
 				//bp.getModel().validate(); 
 				if (((AccertamentoBulk) bp.getModel()).getInternalStatus() == AccertamentoBulk.INT_STATO_CDR_CONFERMATI )
 				{
-					OptionBP option = openConfirm(context,"Le linee di attivit‡ non sono state confermate. Si intende proseguire?",OptionBP.CONFIRM_YES_NO,"doConfirmTabImputazioneFin");
+					OptionBP option = openConfirm(context,"Le linee di attivit√† non sono state confermate. Si intende proseguire?",OptionBP.CONFIRM_YES_NO,"doConfirmTabImputazioneFin");
 					option.addAttribute("tabName",tabName);
 					option.addAttribute("pageName",pageName);					
 					return option;
@@ -689,7 +689,7 @@ public Forward doUndoScadenza(ActionContext context)
 }
 /**
 	 * Metodo utilizzato per gestire la conferma dell'inserimento/modifica di una obbligazione che ha sfondato
-	 * la disponibilit‡ per il contratto
+	 * la disponibilit√† per il contratto
 	 * @param context <code>ActionContext</code> in uso.
 	 * @param option Esito della risposta alla richiesta di sfondamento
 	 *
@@ -756,9 +756,9 @@ public Forward doValidaDataRegistrazione(ActionContext context)
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'indiceVecchiaSelezione'
+ * Restituisce il valore della propriet√† 'indiceVecchiaSelezione'
  *
- * @return Il valore della propriet‡ 'indiceVecchiaSelezione'
+ * @return Il valore della propriet√† 'indiceVecchiaSelezione'
  */
 public int getIndiceVecchiaSelezione() {
 	return indiceVecchiaSelezione;
@@ -771,7 +771,7 @@ public it.cnr.contab.config00.latt.bulk.WorkpackageBulk getVecchiaLA() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'indiceVecchiaSelezione'
+ * Imposta il valore della propriet√† 'indiceVecchiaSelezione'
  *
  * @param newIndiceVecchiaSelezione	Il valore da assegnare a 'indiceVecchiaSelezione'
  */
@@ -860,7 +860,7 @@ public Forward doCaricaCentriDiResponsabilita(ActionContext context)
 		Collection capitoliIniziali = ((AccertamentoBulk)bp.getModel()).getCapitoliDiEntrataCdsSelezionatiColl();
 		fillModel( context );					
 		if (bp.isDirty() && capitoliIniziali.size() > 0)
-			return openConfirm(context,"Attenzione l'imputazione finanziaria corrente verr‡ persa. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmCaricaCentriDiResponsabilita");
+			return openConfirm(context,"Attenzione l'imputazione finanziaria corrente verr√† persa. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmCaricaCentriDiResponsabilita");
 		return doConfirmCaricaCentriDiResponsabilita(context,OptionBP.YES_BUTTON);			
 	} catch(Throwable e) {
 		return handleException(context,e);
@@ -879,7 +879,7 @@ public Forward doCaricaLineeAttivita(ActionContext context)
 		Collection cdrIniziali = ((AccertamentoBulk)bp.getModel()).getCdrSelezionatiColl();
 		fillModel( context );									
 		if (bp.isDirty() && cdrIniziali.size() > 0 )
-			return openConfirm(context,"Attenzione l'imputazione finanziaria corrente verr‡ persa. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmCaricaLineeAttivita");
+			return openConfirm(context,"Attenzione l'imputazione finanziaria corrente verr√† persa. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmCaricaLineeAttivita");
 		return doConfirmCaricaLineeAttivita(context,OptionBP.YES_BUTTON);			
 	} catch(Throwable e) {
 		return handleException(context,e);
@@ -938,7 +938,7 @@ public Forward doCambiaFl_calcolo_automatico(ActionContext context)
 }
 
 /**
- * Gestisce il caricamento delle nuove linee di attivit‡
+ * Gestisce il caricamento delle nuove linee di attivit√†
 	 * @param context <code>ActionContext</code> in uso.
 	 * @param nuovaLatt Oggetto di tipo <code>Linea_attivitaBulk</code> (istanza doc contabili)
 	 * @param latt Oggetto di tipo <code>Linea_attivitaBulk</code>
@@ -966,7 +966,7 @@ public Forward doBringBackCRUDCrea_linea_attivita(ActionContext context)
 	catch(Throwable e) {return handleException(context,e);}
 }
 /**
- * Gestisce il caricamento delle nuove linee di attivit‡
+ * Gestisce il caricamento delle nuove linee di attivit√†
 	 * @param context <code>ActionContext</code> in uso.
 	 * @param nuovaLatt Oggetto di tipo <code>Linea_attivitaBulk</code> (istanza doc contabili)
 	 * @param latt Oggetto di tipo <code>Linea_attivitaBulk</code>
@@ -1013,9 +1013,9 @@ public Forward doInsertPgAccertamento(ActionContext context)
 		/* se trattasi di Accertamento Residuo si antepone al numero dell'accertamento l'anno originale*/
 		if (accertamento.isAccertamentoResiduo()) {
 			/*N.B.: per favorire l'inerimento degli accertamenti residui a 3 nuovi CDS (110, 111, 112), e tenuto 
-			 * conto del fatto che la numerazione Ë univoca per CDS 999 Ë stato deciso di anteporre al numero 
+			 * conto del fatto che la numerazione √® univoca per CDS 999 √® stato deciso di anteporre al numero 
 			 * dell'accertamento residuo (subito dopo l'anno) un numeretto identificativo del CDS.
-			 * Tale gestione dovr‡ essere assolutamente eliminata a regime.
+			 * Tale gestione dovr√† essere assolutamente eliminata a regime.
 			 */
 			Integer lungNumacc = new Integer(AccertamentoResiduoBulk.LUNGHEZZA_NUMERO_ACCERTAMENTO);
 			Integer firstNumber = new Integer(0);
@@ -1069,7 +1069,7 @@ public Forward doModificaConfermata(ActionContext context, int opt) throws Remot
 		CRUDAccertamentoModificaBP newbp = null;
 		if (opt == OptionBP.YES_BUTTON) {
 			// controlliamo prima che abbia l'accesso al BP
-			// per dare un messaggio pi˘ preciso
+			// per dare un messaggio pi√π preciso
 			String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","CRUDAccertamentoModificaBP");
 			if (mode == null) 
 				throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di creazione delle modifiche\nagli accertamenti residui. Impossibile continuare.");
@@ -1096,7 +1096,7 @@ public Forward doModificaConfermataRiporta(ActionContext context, int opt) throw
 		CRUDAccertamentoModificaBP newbp = null;
 		if (opt == OptionBP.YES_BUTTON) {
 			// controlliamo prima che abbia l'accesso al BP
-			// per dare un messaggio pi˘ preciso
+			// per dare un messaggio pi√π preciso
 			String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","CRUDAccertamentoModificaBP");
 			if (mode == null) 
 				throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di creazione delle modifiche\nagli impegni residui. Impossibile continuare.");
@@ -1125,7 +1125,7 @@ public Forward doBringBackAccertamentiModificaWindow(ActionContext context) {
 			if (accertamento.getAccertamento_modifica()!=null && accertamento.getAccertamento_modifica().isTemporaneo())
 				bp.cancellaAccertamentoModTemporanea(context,accertamento.getAccertamento_modifica());
 			if (obbMod.getVariazione()==null && !((it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context)).getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0))
-				throw new it.cnr.jada.action.MessageToUser("La variazione allo stanziamento residuo non Ë stata inserita. Impossibile continuare.");
+				throw new it.cnr.jada.action.MessageToUser("La variazione allo stanziamento residuo non √® stata inserita. Impossibile continuare.");
 			accertamento.setAccertamento_modifica(obbMod);
 			//se provengo da BP che si occupa dell'aggiornamento dei saldi aggiorno
 			if (IDefferedUpdateSaldiBP.class.isAssignableFrom( bp.getParent().getClass()))
@@ -1152,7 +1152,7 @@ public Forward doBringBackAccertamentiModificaRiportaWindow(ActionContext contex
 			if (accertamento.getAccertamento_modifica()!=null && accertamento.getAccertamento_modifica().isTemporaneo())
 				bp.cancellaAccertamentoModTemporanea(context,accertamento.getAccertamento_modifica());
 			if (obbMod.getVariazione()==null && !((it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context)).getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)==0))
-				throw new it.cnr.jada.action.MessageToUser("La variazione allo stanziamento residuo non Ë stata inserita. Impossibile continuare.");
+				throw new it.cnr.jada.action.MessageToUser("La variazione allo stanziamento residuo non √® stata inserita. Impossibile continuare.");
 			accertamento.setAccertamento_modifica(obbMod);
 			//se provengo da BP che si occupa dell'aggiornamento dei saldi aggiorno
 			if (IDefferedUpdateSaldiBP.class.isAssignableFrom( bp.getParent().getClass()))
