@@ -719,7 +719,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
     public void validaLancioStampaAutorizzazionePartenza() throws ValidationException {
 		Blt_visiteBulk visita = (Blt_visiteBulk)getModel();
     	if (visita==null || visita.isToBeCreated() || visita.getCrudStatus()==OggettoBulk.UNDEFINED)
-	    	throw new ValidationException( "Stampa non possibile! L'oggetto da stampare non è correttamente definito!");
+	    	throw new ValidationException( "Stampa non possibile! L'oggetto da stampare non Ã¨ correttamente definito!");
     	if (!visita.getFlStampatoDocCandidatura())
 	    	throw new ValidationException( "Stampa non possibile! Occorre ancora eseguire le stampe iniziali della candidatura!");
     	if (visita.getNumProtTrasmissCandidatura()==null || visita.getDtProtTrasmissCandidatura()==null)
@@ -736,34 +736,34 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
     public void validaLancioStampaPagamentoAnticipo() throws ValidationException {
 		Blt_visiteBulk visita = (Blt_visiteBulk)getModel();
     	if (visita==null || visita.isToBeCreated() || visita.getCrudStatus()==OggettoBulk.UNDEFINED)
-	    	throw new ValidationException( "Stampa non possibile! L'oggetto da stampare non è correttamente definito!");
+	    	throw new ValidationException( "Stampa non possibile! L'oggetto da stampare non Ã¨ correttamente definito!");
     	if (visita.getImRimbSpeseAnt()==null)
 	    	throw new ValidationException( "Stampa non possibile! Indicare l'importo dell'anticipo di pagamento!");
     	if (visita.getBancaAnticipo()==null || visita.getBancaAnticipo().getPg_banca()==null || visita.getModalitaPagamentoAnticipo()==null || visita.getCdModalitaPagAnt()==null)
-	    	throw new ValidationException( "Stampa non possibile! Indicare la modalità di pagamento dell'anticipo!");
+	    	throw new ValidationException( "Stampa non possibile! Indicare la modalitÃ  di pagamento dell'anticipo!");
     }
     public void validaLancioStampaPagamentoSaldo() throws ValidationException {
 		Blt_visiteBulk visita = (Blt_visiteBulk)getModel();
     	if (visita==null || visita.isToBeCreated() || visita.getCrudStatus()==OggettoBulk.UNDEFINED)
-	    	throw new ValidationException( "Stampa non possibile! L'oggetto da stampare non è correttamente definito!");
+	    	throw new ValidationException( "Stampa non possibile! L'oggetto da stampare non Ã¨ correttamente definito!");
     	if (visita.getImRimbSpese()==null)
 	    	throw new ValidationException( "Stampa non possibile! Indicare l'importo del saldo di pagamento o di rimborso!");
     	if (visita.getDtPagamSaldo()==null)
 	    	throw new ValidationException( "Stampa non possibile! Indicare la data di pagamento del saldo di pagamento o di rimborso!");
     	if (visita.getImRimbSpese().compareTo(BigDecimal.ZERO)==1) {
 	    	if (visita.getBanca()==null || visita.getBanca().getPg_banca()==null || visita.getModalitaPagamento()==null || visita.getCdModalitaPag()==null)
-		    	throw new ValidationException( "Stampa non possibile! Indicare la modalità di pagamento del saldo!");
+		    	throw new ValidationException( "Stampa non possibile! Indicare la modalitÃ  di pagamento del saldo!");
 	    	if (visita.isVisitaStraniero() && !visita.isVisitaPagataAdEnteStraniero() &&
 	    		!visita.isNotaAddebitoSaldoConAnticipoRequired() &&
 				(visita.getNumProtAttestatoSogg()==null || visita.getDtProtAttestatoSogg()==null ||
 				 visita.getDtIniVisitaEffettiva()==null || visita.getDtFinVisitaEffettiva()==null))
-	    		throw new ValidationException( "Per effettuare il pagamento del saldo è necessario inserire i dati relativi all'attestato di soggiorno!");
+	    		throw new ValidationException( "Per effettuare il pagamento del saldo Ã¨ necessario inserire i dati relativi all'attestato di soggiorno!");
     	}
     }
     public void validaLancioCreazioneIncarico() throws ValidationException {
 		Blt_visiteBulk visita = (Blt_visiteBulk)getModel();
     	if (visita==null || visita.isToBeCreated() || visita.getCrudStatus()==OggettoBulk.UNDEFINED)
-	    	throw new ValidationException( "Creazione incarico non possibile! La visita di riferimento non è correttamente definita!");
+	    	throw new ValidationException( "Creazione incarico non possibile! La visita di riferimento non Ã¨ correttamente definita!");
     	if (visita.getNumProtContratto()==null || visita.getDataProtContratto()==null)
 	    	throw new ValidationException( "Creazione incarico non possibile! Indicare il protocollo del contratto!");
     	if (visita.isVisitaStraniero()) {
@@ -817,11 +817,11 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 			EsercizioComponentSession esercizioComponentSession = ((it.cnr.contab.config00.ejb.EsercizioComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_EsercizioComponentSession",	EsercizioComponentSession.class));
 			EsercizioBulk lastEsercizio = esercizioComponentSession.getLastEsercizioOpen(context.getUserContext());
 			if (lastEsercizio!=null && !lastEsercizio.getEsercizio().equals(CNRUserContext.getEsercizio(context.getUserContext())))
-				throw new ValidationException("La creazione dell'impegno è possibile effettuarla solo accedendo all'esercizio "+lastEsercizio.getEsercizio()+" che risulta essere l'ultimo aperto!");
+				throw new ValidationException("La creazione dell'impegno Ã¨ possibile effettuarla solo accedendo all'esercizio "+lastEsercizio.getEsercizio()+" che risulta essere l'ultimo aperto!");
 		} catch (ComponentException e) {
-			throw new ValidationException("Creazione impegno non possibile! Si è verificato un errore nella ricerca dell'ultimo esercizio aperto.");
+			throw new ValidationException("Creazione impegno non possibile! Si Ã¨ verificato un errore nella ricerca dell'ultimo esercizio aperto.");
 		} catch (RemoteException e) {
-			throw new ValidationException("Creazione impegno non possibile! Si è verificato un errore nella ricerca dell'ultimo esercizio aperto.");
+			throw new ValidationException("Creazione impegno non possibile! Si Ã¨ verificato un errore nella ricerca dell'ultimo esercizio aperto.");
 		}
 	}
 
@@ -972,7 +972,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 						if (repannogood==null)
 							repannogood = repanno;
 						else
-							throw new it.cnr.jada.comp.ApplicationException("Attenzione! L'incarico risulta essere imputato a più esercizi finanziari! Creazione Obbligazione non consentita.");
+							throw new it.cnr.jada.comp.ApplicationException("Attenzione! L'incarico risulta essere imputato a piÃ¹ esercizi finanziari! Creazione Obbligazione non consentita.");
 					}						
 				}
 				if (repannogood==null)
@@ -1012,7 +1012,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 
 			if (visita.isVisitaStraniero() && visita.isAccordoPagataAdEnteStraniero()) {
 				if (visita.getBltAutorizzatiDett().getBltAutorizzati().getBltProgetti().getBltAccordo().getCd_terzo_ente()==null)
-					throw new it.cnr.jada.comp.ApplicationException("Attenzione! E' previsto il pagamento a favore dell'ente straniero ma sull'accordo non è indicato il codice terzo relativo.");
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione! E' previsto il pagamento a favore dell'ente straniero ma sull'accordo non Ã¨ indicato il codice terzo relativo.");
 				obbligazione.setCreditore(visita.getBltAutorizzatiDett().getBltAutorizzati().getBltProgetti().getBltAccordo().getTerzoEnte());
 			} else {
 				obbligazione.setCreditore(visita.getBltAutorizzatiDett().getBltAutorizzati().getTerzo());
@@ -1020,7 +1020,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 			
 			if (visita.isVisitaStraniero() && visita.isVisitaPagataAdEnteStraniero()) {
 				if (visita.getTerzoPagamento()==null)
-					throw new it.cnr.jada.comp.ApplicationException("Attenzione! E' previsto il pagamento a favore dell'ente straniero ma sulla visita non è indicato il codice terzo relativo.");
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione! E' previsto il pagamento a favore dell'ente straniero ma sulla visita non Ã¨ indicato il codice terzo relativo.");
 				obbligazione.setCreditore(visita.getTerzoPagamento());
 			} else {
 				obbligazione.setCreditore(visita.getBltAutorizzatiDett().getBltAutorizzati().getTerzo());
@@ -1113,7 +1113,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 							if (repannogood==null)
 								repannogood = repanno;
 							else
-								throw new ValidationException("Creazione impegno non possibile! L'incarico risulta essere imputato a più esercizi finanziari!");
+								throw new ValidationException("Creazione impegno non possibile! L'incarico risulta essere imputato a piÃ¹ esercizi finanziari!");
 						}						
 					}
 					if (repannogood==null)
@@ -1144,9 +1144,9 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 					throw new ValidationException("Creazione impegno non possibile! L'impegno deve essere imputato alla voce di bilancio "+visita.getBltAutorizzatiDett().getBltAutorizzati().getBltProgetti().getBltAccordo().getElemento_voce().getCd_elemento_voce()+".");
 			}
 		} catch (ComponentException e) {
-			throw new ValidationException("Creazione impegno non possibile! Si è verificato un errore nella ricerca dell'ultimo esercizio aperto.");
+			throw new ValidationException("Creazione impegno non possibile! Si Ã¨ verificato un errore nella ricerca dell'ultimo esercizio aperto.");
 		} catch (RemoteException e) {
-			throw new ValidationException("Creazione impegno non possibile! Si è verificato un errore nella ricerca dell'ultimo esercizio aperto.");
+			throw new ValidationException("Creazione impegno non possibile! Si Ã¨ verificato un errore nella ricerca dell'ultimo esercizio aperto.");
 		}
 	}
 	@Override

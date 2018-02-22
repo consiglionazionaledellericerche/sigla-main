@@ -86,7 +86,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk)getModel();
 		for (AllegatoPdGVariazioneDocumentBulk result : archiviaStampaPdgVariazioneBulk.getArchivioAllegati()) {
 			if (!result.equals(allegato) && result.getNome().equals(allegato.getNome()))
-				throw new ValidationException("Attenzione file gi‡ presente!");
+				throw new ValidationException("Attenzione file gi√† presente!");
 		}
 	}
 

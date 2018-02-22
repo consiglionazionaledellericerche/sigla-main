@@ -20,7 +20,7 @@ public CRUDAssTiRappTiTrattAction() {
 }
 public Forward handleDuplicateKeyException(ActionContext context, it.cnr.jada.comp.CRUDDuplicateKeyException e) {
 
-	setErrorMessage(context, "Errore! Si sta tentando di creare un oggetto gi‡ esistente in archivio");
+	setErrorMessage(context, "Errore! Si sta tentando di creare un oggetto gi√† esistente in archivio");
 
 	return context.findDefaultForward();
 }

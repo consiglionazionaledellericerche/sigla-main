@@ -16,7 +16,7 @@ public interface ICambioMgr
   *      Consente la modifica del cambio.
   *  validaCambio  non superata
   *    PreCondition:
-  *      L'inizio del periodo è incongruente.
+  *      L'inizio del periodo Ã¨ incongruente.
   *    PostCondition:
   *      Viene inviato il messaggio "Attenzione, non si possono creare cambi con data inizio validita inferiore a quella esistente".
  */
@@ -24,7 +24,7 @@ public interface ICambioMgr
 public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
 /**
   *  Controllo cambio di default
-  *    PreCondition: Il cambio è quello di default
+  *    PreCondition: Il cambio Ã¨ quello di default
   *    PostCondition: Viene sollevata un'eccezione
   *
   *  Tutti i controlli superati.
@@ -53,7 +53,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
   *    PreCondition:
   *      validaCambio = false
   *    PostCondition:
-  *      Viene inviato il messaggio "Attenzione, la modifica di questi dati non è consentita".
+  *      Viene inviato il messaggio "Attenzione, la modifica di questi dati non Ã¨ consentita".
  */
 
 public abstract it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;

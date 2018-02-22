@@ -2,7 +2,7 @@ package it.cnr.contab.inventario00.docs.bulk;
 
 /**
  * Classe utilizzata per tenere traccia dell'associazione di  un CdR utilizzatore e 
- *	le linee di attivit‡ ad esso associate.
+ *	le linee di attivit√† ad esso associate.
  * @author: Gennaro Borriello
  *
  */
@@ -54,9 +54,9 @@ public int addToBuono_cs_utilizzatoriColl (Inventario_utilizzatori_laBulk nuovoU
 	return buono_cs_utilizzatoriColl.size()-1;
 }
 /**
- * Metodo richiamato da Inventario_beniComponent.caricaUtilizzatoriFor(): Ë simile
- *	al metodo addToBuono_cs_utilizzatoriColl(), ma quÏ NON viene creato una nuova istanza
- *	di Linea di attivit‡, bensÏ aggiunge semplicemente la Linea di Attivit‡ alla Collection.
+ * Metodo richiamato da Inventario_beniComponent.caricaUtilizzatoriFor(): √® simile
+ *	al metodo addToBuono_cs_utilizzatoriColl(), ma qu√¨ NON viene creato una nuova istanza
+ *	di Linea di attivit√†, bens√¨ aggiunge semplicemente la Linea di Attivit√† alla Collection.
 */
 public int addToUtilizzatoriColl (Inventario_utilizzatori_laBulk utilizzatore_la)
 {

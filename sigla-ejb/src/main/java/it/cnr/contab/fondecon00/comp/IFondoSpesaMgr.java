@@ -12,7 +12,7 @@ public interface IFondoSpesaMgr extends it.cnr.jada.comp.ICRUDMgr {
  * Creazione Fondo_economaleBulk:
  * importo totale spese = 0,
  * importo residuo fondo = importo ammontare fondo,
- * se importo ammontare iniziale è nullo importo ammontare iniziale = importo ammontare fondo.
+ * se importo ammontare iniziale Ã¨ nullo importo ammontare iniziale = importo ammontare fondo.
  *
  * Creazione Fondo_spesaBulk:
  * inizializzazione della spesa; vedi initSpesa.

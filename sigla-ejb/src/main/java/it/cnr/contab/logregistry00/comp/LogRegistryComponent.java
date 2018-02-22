@@ -20,23 +20,23 @@ public LogRegistryComponent() {
  * Pre-post-conditions:
  *
  * Nome: Clausole non specificate
- * Pre: L'albero delle clausole non è specficato (nullo)
+ * Pre: L'albero delle clausole non Ã¨ specficato (nullo)
  * Post: Viene generato un albero di clausole usando tutti i valori non nulli degli 
  *			attributi dell'OggettoBulk specificato come prototipo. L'elenco degli
- * 			attributi da utilizzare per ottenere le clausole è estratto dal
+ * 			attributi da utilizzare per ottenere le clausole Ã¨ estratto dal
  * 			BulkInfo dell'OggettoBulk
  *
  * Nome: Tutti i controlli superati
  * Pre: Albero delle clausole di ricerca specificato (non nullo)
  * Post: Viene effettuata una ricerca di OggettoBulk compatibili con il bulk specificato. 
  * 			La ricerca deve essere effettuata utilizzando le clausole specificate da "clausole".
- *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome è
+ *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ã¨
  *			ottenuto concatenando il nome della component con la stringa ".find"
  *
  * @param	uc	lo UserContext che ha generato la richiesta
  * @param	clausole	Una CompoundFindClause che descrive l'albero di clausole
  * 			da applicare nella ricerca
- * @param	bulk	l'OggettoBulk che è stato usato come prototipo per la generazione
+ * @param	bulk	l'OggettoBulk che Ã¨ stato usato come prototipo per la generazione
  * 			delle clausole di ricerca.
  * @return	Un RemoteIterator sul risultato della ricerca
  */	

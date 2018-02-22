@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -601,7 +601,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false"
-		label="Oggetto dell'attività" />
+		label="Oggetto dell'attivitÃ " />
 		
 	<fieldProperty
 		name="contratto"
@@ -695,12 +695,12 @@
 		property="codici_attivita_inps"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
-		label="Tipo Attività INPS"/>
+		label="Tipo AttivitÃ  INPS"/>
 	<fieldProperty
 		name="cd_attivita_inps"
 		property="cd_attivita_inps"
 		inputType="TEXT"
-		label="Codice Attività INPS"/>
+		label="Codice AttivitÃ  INPS"/>
 				
 	<fieldProperty
 		name="codici_altra_forma_ass_inps"
@@ -718,14 +718,14 @@
 		property="comune_inps.ds_comune"
 		readonlyProperty="ROds_comune_inps"
 		inputSize="30"
-		label="Comune Attività lavorativa"
+		label="Comune AttivitÃ  lavorativa"
 		inputType="TEXT"
 		enabledOnSearch="true"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="find_comune_inps"
 		property="comune_inps"
-		label="Comune Attività lavorativa"
+		label="Comune AttivitÃ  lavorativa"
 		inputType="SEARCHTOOL"
 		enabledOnSearch="true" />
 	<fieldProperty
@@ -1163,7 +1163,7 @@
 		enabledOnInsert="true"
 		enabledOnEdit="true"
 		readonlyProperty="ROLineaAttivita"
-		label="Modulo di Attività" />
+		label="Modulo di AttivitÃ " />
 	<fieldProperty
 		name="cd_linea_attivita_genrc"
 		property="cd_linea_attivita_genrc"
@@ -1172,7 +1172,7 @@
 		inputType="TEXT"
 		nullable="false"
 		readonlyProperty="ROCdLineaAttivita"
-		label="Modulo di Attività"
+		label="Modulo di AttivitÃ "
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="ds_linea_attivita"
@@ -1181,14 +1181,14 @@
 		inputSize="60"
 		inputType="ROTEXT"
 		caseSensitiveSearch="false"
-		label="Modulo di Attività" />
+		label="Modulo di AttivitÃ " />
 	<fieldProperty
 		name="cd_cdr_genrc"
 		property="cd_cdr_genrc"
 		maxLength="30"
 		inputSize="30"
 		inputType="ROTEXT"
-		label="CDR Modulo di Attività"  />
+		label="CDR Modulo di AttivitÃ "  />
 
 /*********************************************/
 /*********** DATI MISSIONE *******************/

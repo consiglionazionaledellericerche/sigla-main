@@ -26,7 +26,7 @@ public Stampa_vpg_fondo_economaleAction() {
  * @param context	L'ActionContext della richiesta
  * @param fondo	L'OggettoBulk padre del searchtool
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public Forward doFreeSearchFondoForPrint(ActionContext context)	throws java.rmi.RemoteException {
 	

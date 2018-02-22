@@ -106,7 +106,7 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 	/**
 	 * Inizializza il ricevente per la visualizzazione in un <code>FormController</code>.
 	 * Questo metodo viene invocato da {@link #initializeForEdit}, {@link #initializeForInsert},
-	 * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e puÚ contenere
+	 * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e pu√≤ contenere
 	 * inizializzazioni comuni ai 4 stati del <code>FormController</code>
 	 */
 	protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
@@ -137,7 +137,7 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 	/**
 	 * Inizializza il ricevente per la visualizzazione in un <code>FormController</code>.
 	 * Questo metodo viene invocato da {@link #initializeForEdit}, {@link #initializeForInsert},
-	 * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e puÚ contenere
+	 * {@link #initializeForSearch} e {@link #initializeForFreeSearch} e pu√≤ contenere
 	 * inizializzazioni comuni ai 4 stati del <code>FormController</code>
 	 */
 	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
@@ -158,7 +158,7 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 	}
 
 	/**
-	 * Restituisce <code>true</code> se il sezionale Ë di tipo Acquisti
+	 * Restituisce <code>true</code> se il sezionale √® di tipo Acquisti
 	 *
 	 * @return boolean
 	 */
@@ -167,7 +167,7 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 		return ACQUISTI.equals(getTi_acquisti_vendite());
 	}
 	/**
-	 * Restituisce <code>true</code> se il sezionale Ë di tipo Acquisti
+	 * Restituisce <code>true</code> se il sezionale √® di tipo Acquisti
 	 *
 	 * @return boolean
 	 */
@@ -176,7 +176,7 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 		return getFl_autofattura() != null && getFl_autofattura().booleanValue();
 	}
 	/**
-	 * Restituisce <code>true</code> se il sezionale Ë di tipo Istituzionale
+	 * Restituisce <code>true</code> se il sezionale √® di tipo Istituzionale
 	 *
 	 * @return boolean
 	 */
@@ -227,7 +227,7 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 			setFl_autofattura(FALSE);
 
 		if (getTi_acquisti_vendite().equals(VENDITE) && getTi_istituz_commerc().equals(ISTITUZIONALE))
-			throw new ValidationException("Non Ë possibile creare un sezionale di tipo vendite non commerciale");
+			throw new ValidationException("Non √® possibile creare un sezionale di tipo vendite non commerciale");
 		if (getFl_intra_ue().equals(FALSE) &&
 				getFl_extra_ue().equals(FALSE) &&
 				getFl_san_marino_con_iva().equals(FALSE) &&
@@ -235,7 +235,7 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 				getFl_ordinario().equals(FALSE) &&
 				getFl_autofattura().equals(FALSE) &&
 				getFl_split_payment().equals(FALSE))
-			throw new ValidationException("Attenzione non Ë stato selezionato nessun tipo di registro");
+			throw new ValidationException("Attenzione non √® stato selezionato nessun tipo di registro");
 		/*
 	if (tipo_sezionale_vendita.sezionale_ven_liquidazione==null)
 	{
@@ -247,17 +247,17 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 
 		if (!isAcquisti()) {
 			if (!BENE_SERVIZIO.equalsIgnoreCase(getTi_bene_servizio()) && !isAutofattura())
-				throw new ValidationException("Non Ë possibile definire un tipo bene/servizio per tipi sezionali di vendita senza specificare \"autofattura\".");	
+				throw new ValidationException("Non √® possibile definire un tipo bene/servizio per tipi sezionali di vendita senza specificare \"autofattura\".");	
 			setSezionale_ven_liquidazione(null);
 		} else if (getFl_autofattura().booleanValue())
-			throw new ValidationException("Non Ë possibile impostare un tipo sezionale acquisti come autofattura.");	
+			throw new ValidationException("Non √® possibile impostare un tipo sezionale acquisti come autofattura.");	
 
 		if (isIstituzionale()) {
 			setSezionale_ven_liquidazione(null);	
 			setCd_attivita_commerciale(null);
 		} else {
 			if (getCd_attivita_commerciale()==null)
-				throw new ValidationException("Inserire una attivit‡ commerciale");
+				throw new ValidationException("Inserire una attivit√† commerciale");
 			if (getSezionale_ven_liquidazione()==null && getTi_acquisti_vendite().equals(ACQUISTI))
 				throw new ValidationException("Inserire un sezionale vendite");
 		}

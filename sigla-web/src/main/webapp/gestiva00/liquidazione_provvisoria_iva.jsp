@@ -63,7 +63,7 @@
 					pageContext,
 					"tab",
 					new String[][] {
-					{ "tabEsigDetr","Esigibilit‡/Detraibilit‡","/gestiva00/tab_esigdetr.jsp" },
+					{ "tabEsigDetr","Esigibilit√†/Detraibilit√†","/gestiva00/tab_esigdetr.jsp" },
 					{ "tabImporti","Importi aggiuntivi","/gestiva00/tab_importi.jsp" },
 					{ "tabAltro","Altro","/gestiva00/tab_altro.jsp" }},
 					bp.getTab("tab"),

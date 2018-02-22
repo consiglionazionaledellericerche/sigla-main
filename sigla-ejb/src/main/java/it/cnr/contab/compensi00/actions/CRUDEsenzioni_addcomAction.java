@@ -22,7 +22,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 
 		CRUDEsenzioni_addcomBP bp = (CRUDEsenzioni_addcomBP)getBusinessProcess(context);
 		if (!bp.isEditing()) {
-			bp.setMessage("Non è possibile cancellare in questo momento");
+			bp.setMessage("Non Ã¨ possibile cancellare in questo momento");
 		} else {
 			bp.delete(context);
 			Esenzioni_addcomBulk esenzione = (Esenzioni_addcomBulk)bp.getModel();

@@ -19,7 +19,7 @@
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<title>Riepilogo Iva ad esigibilit‡ differita provvisoria</title>
+<title>Riepilogo Iva ad esigibilit√† differita provvisoria</title>
 </head>
 <body class="Form">
 

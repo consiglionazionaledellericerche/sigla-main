@@ -7,7 +7,7 @@ import it.cnr.jada.persistency.sql.*;
 
 /**
  * Adatta e implementa: {@link TariffarioBase }
- * 		perchË si ottengano e si settino gli oggetti complessi.
+ * 		perch√® si ottengano e si settino gli oggetti complessi.
  * 
  * @author: Bisquadro Vincenzo
  */
@@ -67,7 +67,7 @@ public java.util.Collection getVoci_iva() {
 	return voci_iva;
 }
 /**
- * Metodo che inizializza la pagina Html con l'unit‡ organizzativa 
+ * Metodo che inizializza la pagina Html con l'unit√† organizzativa 
  * Creation date: (17/10/2001 17.31.24)
  *
  * @return it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk
@@ -77,7 +77,7 @@ protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.a
 	return super.initialize(bp,context);
 }
 /**
- * Metodo che inizializza la pagina Html con l'unit‡ organizzativa 
+ * Metodo che inizializza la pagina Html con l'unit√† organizzativa 
  * Creation date: (17/10/2001 17.31.24)
  *
  * @return it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk
@@ -122,7 +122,7 @@ public void setVoci_iva(java.util.Collection newVoci_iva) {
 public void validate() throws ValidationException {
 
 	if(getCd_tariffario() == null)
-				throw new ValidationException("Attenzione, il Codice del tariffario Ë obbligatorio!");
+				throw new ValidationException("Attenzione, il Codice del tariffario √® obbligatorio!");
 	if((getIm_tariffario() == null) || getIm_tariffario().compareTo(new java.math.BigDecimal(0)) == 0)
 		   		throw new ValidationException("Attenzione, il Prezzo Unitario deve essere maggiore di zero!");
 		   

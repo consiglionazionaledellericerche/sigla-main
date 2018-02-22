@@ -326,7 +326,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 						}
 						if (bodyParts.size() > 2) {
 							logger.warn("Il messaggio con id:"+message.getMessageNumber()+" recuperato dalla casella PEC:"+userName +
-									" ha pi� di due file allegati.");
+									" ha più di due file allegati.");
 							return;
 						}
 						boolean trovatoFile = false;
@@ -681,7 +681,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	}
 	
 	private void notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(Message message) throws ComponentException {
-		logger.info("Fatture Elettroniche: Attive: Inizio Avvenuta Trasmissione con impossibilit� di recapito.");
+		logger.info("Fatture Elettroniche: Attive: Inizio Avvenuta Trasmissione con impossibilità di recapito.");
 		try {
 			BodyPart bodyPartZip = estraiBodyPartZipNotificaFatturaAttiva(message);
 			if (bodyPartZip != null){
@@ -846,7 +846,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		email.setFrom(userName, userName);
 		email.setSubject(" Notifica di esito " + bulk.getIdentificativoSdi());
 		email.setMsg("Il file trasmesso con identificativo SdI:" + bulk.getIdentificativoSdi() + 
-				(bulk.isRifiutata() ? " è stato Rifiutato (EC02) poiché " + bulk.getMotivoRifiuto() :" É stato Accettato (EC01)") +
+				(bulk.isRifiutata() ? " è stato Rifiutato (EC02) poichè " + bulk.getMotivoRifiuto() :" è stato Accettato (EC01)") +
 				", in allegato la notifica di esito.");
 
 		// add the attachment

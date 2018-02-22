@@ -86,7 +86,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_12.value(),"RIBA");
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_13.value(),"MAV");
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_14.value(),"quietanza erario");
-		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_15.value(),"giroconto su conti di contabilità  speciale");
+		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_15.value(),"giroconto su conti di contabilità speciale");
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_16.value(),"domiciliazione bancaria");
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_17.value(),"domiciliazione postale");
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_18.value(),"bollettino di c/c postale");
@@ -101,7 +101,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	private Unita_organizzativaBulk unitaCompetenza =  new Unita_organizzativaBulk();
 	
 	/**
-	 * [MODALITA_PAGAMENTO Descrive le modalitÃ  di pagamento previste per un dato terzo.]
+	 * [MODALITA_PAGAMENTO Descrive le modalità  di pagamento previste per un dato terzo.]
 	 **/
 	private Modalita_pagamentoBulk modalitaPagamento =  new Modalita_pagamentoBulk();
 	
@@ -231,14 +231,14 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Descrive le modalitÃ  di pagamento previste per un dato terzo.]
+	 * Restituisce il valore di: [Descrive le modalità  di pagamento previste per un dato terzo.]
 	 **/
 	public Modalita_pagamentoBulk getModalitaPagamento() {
 		return modalitaPagamento;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Descrive le modalitÃ  di pagamento previste per un dato terzo.]
+	 * Setta il valore di: [Descrive le modalità di pagamento previste per un dato terzo.]
 	 **/
 	public void setModalitaPagamento(Modalita_pagamentoBulk modalitaPagamento)  {
 		this.modalitaPagamento=modalitaPagamento;
@@ -513,7 +513,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 		return new java.math.BigDecimal(0);
 	}
 */	
-/*  non pi� utilizzate
+/*  non più utilizzate
 	public java.math.BigDecimal calcolaImQuotaEsenteNonImpo(DocumentoEleTestataBulk eleTestata) {
 
 		java.math.BigDecimal quotaEsenteNonImpo = new java.math.BigDecimal(0);
@@ -592,7 +592,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Unit� organizzativa]
+	 * Restituisce il valore di: [Unità organizzativa]
 	 **/
 	public java.lang.String getCdUnitaCompetenza() {
 		Unita_organizzativaBulk unitaOrganizzativa = this.getUnitaCompetenza();
@@ -602,7 +602,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Unit� organizzativa]
+	 * Setta il valore di: [Unità organizzativa]
 	 **/
 	public void setCdUnitaCompetenza(java.lang.String cdUnitaOrganizzativa)  {
 		this.getUnitaCompetenza().setCd_unita_organizzativa(cdUnitaOrganizzativa);

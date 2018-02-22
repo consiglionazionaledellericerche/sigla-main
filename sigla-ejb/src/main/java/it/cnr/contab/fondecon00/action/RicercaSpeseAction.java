@@ -19,7 +19,7 @@ public RicercaSpeseAction() {
  *
  * @param context	L'ActionContext della richiesta
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  * @throws InstantiationException	
  * @throws RemoveException	
  */
@@ -132,7 +132,7 @@ public it.cnr.jada.action.Forward doNuovo(it.cnr.jada.action.ActionContext conte
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.

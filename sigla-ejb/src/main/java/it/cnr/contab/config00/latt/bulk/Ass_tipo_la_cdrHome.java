@@ -9,7 +9,7 @@ import it.cnr.jada.persistency.sql.*;
 
 public class Ass_tipo_la_cdrHome extends BulkHome {
 /**
- * Costruttore associazione tipo/linea attivit‡/cdr Home
+ * Costruttore associazione tipo/linea attivit√†/cdr Home
  *
  * @param conn connessione db	
  */
@@ -17,7 +17,7 @@ public Ass_tipo_la_cdrHome(java.sql.Connection conn) {
 	super(Ass_tipo_la_cdrBulk.class,conn);
 }
 /**
- * Costrutture associazione tipo/linea attivit‡/cdr Home
+ * Costrutture associazione tipo/linea attivit√†/cdr Home
  *
  * @param conn connessione db
  * @param persistentCache cache modelli

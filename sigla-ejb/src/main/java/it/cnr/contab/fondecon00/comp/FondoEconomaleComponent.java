@@ -110,7 +110,7 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
             lockBulk(context, obbscad);
             ObbligazioneBulk obbRicaricata = (ObbligazioneBulk) getHome(context, ObbligazioneBulk.class).findAndLock(obbscad.getObbligazione());
             if ("Y".equalsIgnoreCase(obbRicaricata.getRiportato()))
-                throw new ApplicationException("L'impegno \"" + obbRicaricata.getEsercizio_originale() + "/" + obbRicaricata.getPg_obbligazione() + "\" Ë stato riportato da altri ad esercizio successivo durante la fase di associazione! Operazione interrotta.");
+                throw new ApplicationException("L'impegno \"" + obbRicaricata.getEsercizio_originale() + "/" + obbRicaricata.getPg_obbligazione() + "\" √® stato riportato da altri ad esercizio successivo durante la fase di associazione! Operazione interrotta.");
 
             Fondo_spesaHome spesaHome = (Fondo_spesaHome) getHome(context, Fondo_spesaBulk.class);
 
@@ -356,12 +356,12 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
      * Restituisce l'elenco delle corrispondenze valide
      * Mandati di integrazione.
      * PreCondition:
-     * Una delle corrispondenze Ë gi‡ collegata ad un fondo
+     * Una delle corrispondenze √® gi√† collegata ad un fondo
      * PostCondition:
      * La corrispondenza non viene aggiunta all'elenco
      * Mandati di apertura.
      * PreCondition:
-     * Una delle corrispondenze Ë mandato di apertura fondo economale
+     * Una delle corrispondenze √® mandato di apertura fondo economale
      * PostCondition:
      * La corrispondenza non viene aggiunta all'elenco
      */
@@ -388,7 +388,7 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
      * Le scadenze vengono aggiunte alla lista delle scadenze congruenti.
      * Validazione lista delle obbligazioni per le fatture passive
      * PreCondition:
-     * Si Ë verificato un errore nel caricamento delle scadenze delle obbligazioni.
+     * Si √® verificato un errore nel caricamento delle scadenze delle obbligazioni.
      * PostCondition:
      * Viene inviato il messaggio corrispondente all'errore segnalato.
      * Obbligazione definitiva
@@ -449,7 +449,7 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
         sql.addSQLClause("OR", "IM_ASS_MOD_1210", sql.ISNULL, null);
         sql.closeParenthesis();
 
-        //Errore segnalato. Il controllo sull'importo Ë rimanadato
+        //Errore segnalato. Il controllo sull'importo √® rimanadato
         //alla reversale di chiusura 03/12/2003
         sql.addSQLClause("AND", "(IM_SOSPESO - IM_ASSOCIATO)", sql.GREATER_EQUALS, fondo.getIm_residuo_fondo().subtract(fondo.getIm_totale_netto_spese()));
         // r.p. 12/02/2013 la condizione precedente era commentata
@@ -547,17 +547,17 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
      * Le spese vengono aggiunte alla lista delle spese congruenti.
      * Validazione lista delle obbligazioni per le fatture passive
      * PreCondition:
-     * Si Ë verificato un errore nel caricamento delle scadenze delle spese.
+     * Si √® verificato un errore nel caricamento delle scadenze delle spese.
      * PostCondition:
      * Viene inviato il messaggio corrispondente all'errore segnalato.
      * Spesa reintegrata
      * PreCondition:
-     * La spesa Ë reintegrata
+     * La spesa √® reintegrata
      * PostCondition:
      * La spesa non viene aggiunta alla lista delle spese congruenti.
      * Spesa documentata
      * PreCondition:
-     * La spesa Ë documentata
+     * La spesa √® documentata
      * PostCondition:
      * La spesa non viene aggiunta alla lista delle spese congruenti.
      * Spesa di altro fondo
@@ -565,9 +565,9 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
      * La spesa appartiene ad un altro fondo economale
      * PostCondition:
      * La spesa non viene aggiunta alla lista delle spese congruenti.
-     * Spesa gi‡ associata
+     * Spesa gi√† associata
      * PreCondition:
-     * La spesa Ë gi‡ associata alla scadenza obbligazione passata
+     * La spesa √® gi√† associata alla scadenza obbligazione passata
      * PostCondition:
      * La spesa viene aggiunta alla lista delle spese congruenti per permetterne la disassociazione.
      */
@@ -597,7 +597,7 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
      * Le spese vengono aggiunte alla lista delle spese congruenti.
      * Validazione lista delle spese
      * PreCondition:
-     * Si Ë verificato un errore nel caricamento delle spese.
+     * Si √® verificato un errore nel caricamento delle spese.
      * PostCondition:
      * Viene inviato il messaggio corrispondente all'errore segnalato.
      * Spesa di altro fondo
@@ -605,15 +605,15 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
      * La spesa appartiene ad un altro fondo economale
      * PostCondition:
      * La spesa non viene aggiunta alla lista delle spese congruenti.
-     * Spesa gi‡ reintegrata
+     * Spesa gi√† reintegrata
      * PreCondition:
-     * La spesa Ë gi‡ reintegrata
+     * La spesa √® gi√† reintegrata
      * PostCondition:
      * La spesa viene aggiunta alla lista delle spese congruenti se il  filtro di
      * ricerca per le spese reintegrate era abilitato
      * Spesa documentata
      * PreCondition:
-     * La spesa Ë documentata
+     * La spesa √® documentata
      * PostCondition:
      * La spesa viene aggiunta alla lista delle spese congruenti se il  filtro di
      * ricerca per le spese docuemtnate era abilitato
@@ -643,7 +643,7 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
      * Le spese vengono aggiunte alla lista delle spese congruenti.
      * Validazione lista delle spese
      * PreCondition:
-     * Si Ë verificato un errore nel caricamento delle spese.
+     * Si √® verificato un errore nel caricamento delle spese.
      * PostCondition:
      * Viene inviato il messaggio corrispondente all'errore segnalato.
      * Spesa di altro fondo
@@ -651,9 +651,9 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
      * La spesa appartiene ad un altro fondo economale
      * PostCondition:
      * La spesa non viene aggiunta alla lista delle spese congruenti.
-     * Spesa gi‡ reintegrata
+     * Spesa gi√† reintegrata
      * PreCondition:
-     * La spesa Ë gi‡ reintegrata
+     * La spesa √® gi√† reintegrata
      * PostCondition:
      * La spesa non viene aggiunta alla lista delle spese congruenti
      */
@@ -679,12 +679,12 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
      * Il fondo economale viene chiuso
      * Validazione lista del fondo
      * PreCondition:
-     * Si Ë verificato un errore
+     * Si √® verificato un errore
      * PostCondition:
      * Viene inviato il messaggio corrispondente all'errore segnalato.
-     * Fondo gi‡ chiuso
+     * Fondo gi√† chiuso
      * PreCondition:
-     * Il fondo economale Ë gi‡ stato chiuso
+     * Il fondo economale √® gi√† stato chiuso
      * PostCondition:
      * L'operazione viene annullata
      * Le spese del fondo economale non sono ancora state reintegrate
@@ -723,12 +723,12 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
      * Le spese non reintegrate vengono chiuse con mandato di regolarizzazione
      * Validazione lista del fondo
      * PreCondition:
-     * Si Ë verificato un errore
+     * Si √® verificato un errore
      * PostCondition:
      * Viene inviato il messaggio corrispondente all'errore segnalato.
-     * Spese gi‡ tutte reintegrate
+     * Spese gi√† tutte reintegrate
      * PreCondition:
-     * Tutte le spese esistenti sono gi‡ state reintegrate
+     * Tutte le spese esistenti sono gi√† state reintegrate
      * PostCondition:
      * Il fondo viene solamente impostato a chiuso e l'utente avvisato
      * Non esistono spese da reintegrare
@@ -756,7 +756,7 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
      * Creazione Fondo_economaleBulk:
      * importo totale spese = 0,
      * importo residuo fondo = importo ammontare fondo,
-     * se importo ammontare iniziale Ë nullo importo ammontare iniziale = importo ammontare fondo.
+     * se importo ammontare iniziale √® nullo importo ammontare iniziale = importo ammontare fondo.
      * <p>
      * Creazione Fondo_spesaBulk:
      * inizializzazione della spesa; vedi initSpesa.
@@ -847,7 +847,7 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
      * PreCondition:
      * E' stata eliminata una fattura in stato B or C
      * PostCondition:
-     * Viene inviato un messaggio:"Attenzione non si puÚ eliminare una fattura in stato IVA B o C"
+     * Viene inviato un messaggio:"Attenzione non si pu√≤ eliminare una fattura in stato IVA B o C"
      */
 //^^@@
     public void eliminaConBulk(UserContext aUC, OggettoBulk bulk) throws ComponentException {
@@ -855,14 +855,14 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
         Fondo_economaleBulk fondo = (Fondo_economaleBulk) bulk;
 
         if (fondo.isChiuso())
-            throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile eliminare un fondo economale chiuso!");
+            throw new it.cnr.jada.comp.ApplicationException("Non √® possibile eliminare un fondo economale chiuso!");
 
         if (fondo.isOnlyForClose())
-            throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile eliminare un fondo economale di un altro esercizio!");
+            throw new it.cnr.jada.comp.ApplicationException("Non √® possibile eliminare un fondo economale di un altro esercizio!");
 
         try {
             if (hasSpese(aUC, fondo))
-                throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile eliminare un fondo economale per il quale sono state registrate delle spese!");
+                throw new it.cnr.jada.comp.ApplicationException("Non √® possibile eliminare un fondo economale per il quale sono state registrate delle spese!");
         } catch (it.cnr.jada.persistency.IntrospectionException e) {
             throw handleException(fondo, e);
         } catch (it.cnr.jada.persistency.PersistencyException e) {
@@ -925,12 +925,12 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
     /**
      * Tutti i controlli  superati.
      * PreCondition:
-     * Richiesta ricerca delle modalit‡ di pagamento dell'economo
+     * Richiesta ricerca delle modalit√† di pagamento dell'economo
      * PostCondition:
-     * Restituisce la collezione di modalit‡ di pagamento dell'economo
+     * Restituisce la collezione di modalit√† di pagamento dell'economo
      * Validazione dell'economo
      * PreCondition:
-     * Si Ë verificato un errore nel caricamento delle modalit‡ di pagamento dell'economo.
+     * Si √® verificato un errore nel caricamento delle modalit√† di pagamento dell'economo.
      * PostCondition:
      * Viene inviato il messaggio corrispondente all'errore segnalato.
      */
@@ -1001,7 +1001,7 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
     }
 
     /**
-     * Inizializza l'unit‡ organizzativa del Fondo_economaleBulk all'unit‡ organizzativa corrente.
+     * Inizializza l'unit√† organizzativa del Fondo_economaleBulk all'unit√† organizzativa corrente.
      */
     protected void initializeKeysAndOptionsInto(UserContext aUC, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
         super.initializeKeysAndOptionsInto(aUC, bulk);
@@ -1053,7 +1053,7 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
             java.sql.Timestamp date = fHome.getServerDate();
             int annoSolare = Fondo_spesaBulk.getDateCalendar(date).get(java.util.Calendar.YEAR);
             if (annoSolare != it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext).intValue())
-                throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile inserire un fondo economale in esercizi non corrispondenti all'anno solare!");
+                throw new it.cnr.jada.comp.ApplicationException("Non √® possibile inserire un fondo economale in esercizi non corrispondenti all'anno solare!");
         } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw handleException(fondo, e);
         } catch (it.cnr.jada.persistency.IntrospectionException e) {
@@ -1101,7 +1101,7 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
 
         Fondo_economaleBulk fondo = (Fondo_economaleBulk) bulk;
         if (fondo.getEsercizio() == null)
-            throw new it.cnr.jada.comp.ApplicationException("L'esercizio del fondo economale non Ë valorizzato! Impossibile proseguire.");
+            throw new it.cnr.jada.comp.ApplicationException("L'esercizio del fondo economale non √® valorizzato! Impossibile proseguire.");
 
         if (fondo.getEsercizio().intValue() !=
                 it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC).intValue())
@@ -1287,18 +1287,18 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
      * Le spese selezionate dall'utente vengono reintegrate
      * Spesa reintegrata
      * PreCondition:
-     * La spesa Ë reintegrata
+     * La spesa √® reintegrata
      * PostCondition:
      * La spesa non viene modificata.
      * Spesa non documentata
      * PreCondition:
-     * La spesa non Ë stata associata a scadenza obbligazione
+     * La spesa non √® stata associata a scadenza obbligazione
      * PostCondition:
      * La spesa non viene modificata.
      * Quadratura
      * PreCondition:
      * La somma delle spese non documentate associate alla stessa scadenza
-     * obbligazione non Ë in quadratura con l'importo scadenza stesso
+     * obbligazione non √® in quadratura con l'importo scadenza stesso
      * PostCondition:
      * L'operazione viene interrotta con relativo messaggio
      */
@@ -1407,7 +1407,7 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
      *
      * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
      * @param utilizzatori_la il <code>Inventario_utilizzatori_laBulk</code> CdR di riferimento
-     * @param l_att           la <code>Linea_attivitaBulk</code> Linea di Attivit‡ modello
+     * @param l_att           la <code>Linea_attivitaBulk</code> Linea di Attivit√† modello
      * @param clauses         <code>CompoundFindClause</code> le clausole della selezione
      * @return sql <code>SQLBuilder</code> Risultato della selezione.
      **/
@@ -1597,20 +1597,20 @@ public class FondoEconomaleComponent extends it.cnr.jada.comp.CRUDComponent impl
             }
 
             if (stampa.getDataInizio() == null)
-                throw new ValidationException("Attenzione: il campo DATA INIZIO Ë obbligatorio");
+                throw new ValidationException("Attenzione: il campo DATA INIZIO √® obbligatorio");
             if (stampa.getDataFine() == null)
-                throw new ValidationException("Attenzione: il campo DATA FINE Ë obbligatorio");
+                throw new ValidationException("Attenzione: il campo DATA FINE √® obbligatorio");
 
             java.sql.Timestamp firstDayOfYear = getFirstDayOfYear(stampa.getEsercizio().intValue());
             if (stampa.getDataInizio().compareTo(stampa.getDataFine()) > 0)
-                throw new ValidationException("Attenzione: la DATA INIZIO non puÚ essere superiore alla DATA FINE");
+                throw new ValidationException("Attenzione: la DATA INIZIO non pu√≤ essere superiore alla DATA FINE");
             if (stampa.getDataInizio().compareTo(firstDayOfYear) < 0) {
                 java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                throw new ValidationException("Attenzione: la DATA INIZIO non puÚ essere inferiore a " + formatter.format(firstDayOfYear));
+                throw new ValidationException("Attenzione: la DATA INIZIO non pu√≤ essere inferiore a " + formatter.format(firstDayOfYear));
             }
             if (stampa.getDataFine().compareTo(lastDayOfYear) > 0) {
                 java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                throw new ValidationException("Attenzione: la DATA di FINE PERIODO non puÚ essere superiore a " + formatter.format(lastDayOfYear));
+                throw new ValidationException("Attenzione: la DATA di FINE PERIODO non pu√≤ essere superiore a " + formatter.format(lastDayOfYear));
             }
 
             //Calendar cal_da = Calendar.getInstance();

@@ -37,7 +37,7 @@ public class FatturaPassivaRigaCRUDController extends it.cnr.jada.util.action.Si
     }
 
     /**
-     * Restituisce true se è possibile aggiungere nuovi elementi
+     * Restituisce true se Ã¨ possibile aggiungere nuovi elementi
      */
     public boolean isGrowable() {
 
@@ -72,7 +72,7 @@ public class FatturaPassivaRigaCRUDController extends it.cnr.jada.util.action.Si
     }
 
     /**
-     * Restituisce true se è possibile aggiungere nuovi elementi
+     * Restituisce true se Ã¨ possibile aggiungere nuovi elementi
      */
     public boolean isShrinkable() {
         Fattura_passivaBulk fatturaP = (Fattura_passivaBulk) getParentModel();
@@ -102,7 +102,7 @@ public class FatturaPassivaRigaCRUDController extends it.cnr.jada.util.action.Si
                         ((fpr.getDs_riga_fattura() != null) ?
                                 fpr.getDs_riga_fattura() :
                                 String.valueOf(fpr.getProgressivo_riga().longValue())) +
-                        "\" perchè associato a mandato.");
+                        "\" perchÃ¨ associato a mandato.");
             FatturaPassivaComponentSession comp = ((FatturaPassivaComponentSession) (((SimpleCRUDBP) getParentController()).createComponentSession()));
             comp.eliminaRiga(context.getUserContext(), fpr);
 
@@ -114,7 +114,7 @@ public class FatturaPassivaRigaCRUDController extends it.cnr.jada.util.action.Si
                                 ((fpr.getDs_riga_fattura() != null) ?
                                         fpr.getDs_riga_fattura() :
                                         String.valueOf(fpr.getProgressivo_riga().longValue())) +
-                                "\" perchè associato a mandato annullato.");
+                                "\" perchÃ¨ associato a mandato annullato.");
                 } catch (PersistencyException e) {
                     throw new ComponentException(e);
                 } catch (IntrospectionException e) {

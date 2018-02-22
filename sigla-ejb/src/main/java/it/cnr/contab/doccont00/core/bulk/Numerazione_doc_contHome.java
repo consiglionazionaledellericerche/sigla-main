@@ -52,7 +52,7 @@ public Long getNextPg(UserContext userContext, Integer esercizio, String cd_cds,
 	Long pgCorrente = new Long(progressivo.getCorrente().longValue()+1);
 	//esauriti i progressivi - segnalo errore
 	if ( !(pgCorrente.compareTo( progressivo.getUltimo()) <= 0 ))
-		throw new it.cnr.jada.comp.ApplicationException("Non esistono più progressivi disponibili");
+		throw new it.cnr.jada.comp.ApplicationException("Non esistono piÃ¹ progressivi disponibili");
 	progressivo.setCorrente(pgCorrente);
 	progressivo.setUser(user);
 	try {

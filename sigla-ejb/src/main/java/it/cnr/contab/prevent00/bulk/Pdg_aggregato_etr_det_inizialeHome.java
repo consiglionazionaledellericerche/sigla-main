@@ -1,7 +1,7 @@
 package it.cnr.contab.prevent00.bulk;
 /**
  * Gestisce i dati iniziali per le Entrate adattando ed implementando: {@link Pdg_aggregato_etr_detBulk } e  {@link Pdg_aggregato_det_iniziale } 
- * 		perchè si ottengano e si settino gli oggetti complessi.
+ * 		perchÃ¨ si ottengano e si settino gli oggetti complessi.
  */
 public class Pdg_aggregato_etr_det_inizialeHome extends Pdg_aggregato_etr_detHome {
 public Pdg_aggregato_etr_det_inizialeHome(java.sql.Connection conn) {

@@ -27,7 +27,7 @@ public class Ass_uo_areaHome extends BulkHome {
 	}
 
 	/**
-	 * Ritorna l'UO bulk dell'unità organizzativa presidente dell'area collegata all'UO in processo
+	 * Ritorna l'UO bulk dell'unitÃ  organizzativa presidente dell'area collegata all'UO in processo
 	 * Creation date: (13/09/2008 08:32:22)
 	 * @param assUoArea il legame tra area e Uo
 	 * @return il bulk dell'UO presidente o null
@@ -51,7 +51,7 @@ public class Ass_uo_areaHome extends BulkHome {
  	    java.util.Collection aC = fetchAll(sql);
 	
 		if(aC.size()>1)
-			throw new ApplicationException("Errore nei dati: esiste più di un responsabile per l'area di ricerca " + assUoArea.getCd_area_ricerca() + "!");
+			throw new ApplicationException("Errore nei dati: esiste piÃ¹ di un responsabile per l'area di ricerca " + assUoArea.getCd_area_ricerca() + "!");
 	
 		if(aC.size()==1)
 			return (Unita_organizzativaBulk)uoHome.findByPrimaryKey(((Ass_uo_areaBulk)aC.iterator().next()).getUnita_organizzativa());

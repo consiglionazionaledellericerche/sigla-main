@@ -78,10 +78,10 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
 			boolean flInformix= Utility.createParametriEnteComponentSession().getParametriEnte(userContext).getFl_informix(); 
 				
 	        if (bulk.getUnita_organizzativa() == null)
-				throw new it.cnr.jada.comp.ApplicationException("L'unit‡ organizzativa Ë obbligatoria.");
+				throw new it.cnr.jada.comp.ApplicationException("L'unit√† organizzativa √® obbligatoria.");
 
 			if (bulk.getDipartimento() == null)
-		        throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto Ë necessario inserire il Dipartimento!");
+		        throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto √® necessario inserire il Dipartimento!");
 				
 			if (flNuovoPdg) {
 		        if (bulk.getCd_progetto() == null)
@@ -94,18 +94,18 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
 					   sql.addClause(FindClause.AND, "pg_progetto", SQLBuilder.NOT_EQUALS, bulk.getPg_progetto());
 				   List<ProgettoBulk> progettiClone = progettohome.fetchAll(sql);
 				   if (!progettiClone.isEmpty())
-						throw new it.cnr.jada.comp.ApplicationException("Esiste gi‡ un progetto con il codice indicato (id: "+progettiClone.get(0).getPg_progetto()+").");
+						throw new it.cnr.jada.comp.ApplicationException("Esiste gi√† un progetto con il codice indicato (id: "+progettiClone.get(0).getPg_progetto()+").");
 		        }		        
 
 		        if (bulk.getDs_progetto() == null)
 					throw new it.cnr.jada.comp.ApplicationException("Campo descrizione obbligatorio.");
 
 		        if (!flInformix && (bulk.getPdgProgramma() == null || bulk.getPdgProgramma().getCd_programma() == null))
-					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto Ë necessario inserire il Programma!");
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto √® necessario inserire il Programma!");
 			} else {
 
 				if (bulk.getDt_inizio() == null)
-					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto Ë necessario inserire la data di inizio!");
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto √® necessario inserire la data di inizio!");
 				
 				//se data di fine esiste deve essere minore di data inizio
 				if(bulk.getDt_fine() != null && bulk.getDt_inizio().after( bulk.getDt_fine() ))
@@ -113,18 +113,18 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
 
 				//se data di fine non esiste non deve esistere data di proroga
 				if(bulk.getDt_fine() == null && bulk.getDt_proroga() != null)
-						throw new it.cnr.jada.comp.ApplicationException("Non puÚ esistere una data di proroga se non si indica una data di fine!");
+						throw new it.cnr.jada.comp.ApplicationException("Non pu√≤ esistere una data di proroga se non si indica una data di fine!");
 
 				//se data di proroga esiste deve essere minore di data fine
 				if(bulk.getDt_proroga() != null && bulk.getDt_fine().after( bulk.getDt_proroga() ))
 						throw new it.cnr.jada.comp.ApplicationException("Data di proroga deve essere maggiore della data di fine!");
 
 				if (bulk.getImporto_progetto() == null)
-					throw new it.cnr.jada.comp.ApplicationException("Entit‡ delle risorse necessarie Ë obbligatorio.");
+					throw new it.cnr.jada.comp.ApplicationException("Entit√† delle risorse necessarie √® obbligatorio.");
 
 				//se non vengono specificati dettagli Finanziatori
 				if(((ProgettoBulk)bulk).getDettagliFinanziatori().isEmpty() )
-					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto Ë necessario inserire almeno un Finanziatore!");
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto √® necessario inserire almeno un Finanziatore!");
 				
 				//calcolo la discrepanza tra importo progetto e importo dettagli finanziatori
 				if(!((ProgettoBulk)bulk).getDettagliFinanziatori().isEmpty() ) {
@@ -133,14 +133,14 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
 					for(int i = 0; bulk.getDettagliFinanziatori().size() > i; i++) {
 						residuo = ((Progetto_finanziatoreBulk) bulk.getDettagliFinanziatori().get(i) ).getImporto_finanziato();
 						if (residuo == null)
-						throw new it.cnr.jada.comp.ApplicationException("L'importo dei finanziatori non puÚ essere nullo!");
+						throw new it.cnr.jada.comp.ApplicationException("L'importo dei finanziatori non pu√≤ essere nullo!");
 						sum = sum.add(residuo);
 					}
 					//se i dettagli hanno un importo maggiore del progetto
 					if(sum.compareTo(bulk.getImporto_progetto())> 0) {
-						throw new it.cnr.jada.comp.ApplicationException("La somma degli importi dei finanziatori Ë superiore all'importo del progetto");
+						throw new it.cnr.jada.comp.ApplicationException("La somma degli importi dei finanziatori √® superiore all'importo del progetto");
 					}else if(sum.compareTo(bulk.getImporto_progetto())< 0) {
-						throw new it.cnr.jada.comp.ApplicationException("La somma degli importi dei finanziatori Ë inferiore all'importo del progetto");	
+						throw new it.cnr.jada.comp.ApplicationException("La somma degli importi dei finanziatori √® inferiore all'importo del progetto");	
 					}
 				}
 			}
@@ -148,7 +148,7 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
 			if ((ProgettoBulk)bulk.getProgettopadre() == null)
 			  ((ProgettoBulk)bulk).setLivello(new Integer(1));
 
-			//se nei dettagli non Ë presente la UO cordinatrice viene creata                
+			//se nei dettagli non √® presente la UO cordinatrice viene creata                
 			if( cercaUocordinatrice(bulk) ) {
 				Progetto_uoBulk dett = new Progetto_uoBulk(
 										   bulk.getPg_progetto(),
@@ -198,19 +198,19 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
  * Post: Segnalazione "Data di fine deve essere maggiore della data di inizio!"
  *
  * Pre:  Controllo se Dt_fine = null e Dt_proroga != null
- * Post: Segnalazione "Non puÚ esistere una data di proroga se non si indica una data di fine!"
+ * Post: Segnalazione "Non pu√≤ esistere una data di proroga se non si indica una data di fine!"
  *
  * Pre:  Controllo Dt_fine > Dt_proroga
  * Post: Segnalazione "Data di proroga deve essere maggiore della data di fine!"
  *
- * Pre:  Controllo se la lista dei dettagli Ë vuota
+ * Pre:  Controllo se la lista dei dettagli √® vuota
  * Post: Se vuota viene creato un unico dettaglio che ha:
  *                      UO = l'UO coordinatrice del progetto
  *                      Responsabile = Responsabile del progetto
  *                      Importo = Importo del progetto
  *
  * Pre:  Controllo somma importo dettagli != da importo del progetto
- * Post: Segnalazione "La somma degli importi degli assegnatari Ë diversa dall'importo del progetto"
+ * Post: Segnalazione "La somma degli importi degli assegnatari √® diversa dall'importo del progetto"
  *
  */
 		public OggettoBulk modificaConBulk(UserContext uc, OggettoBulk bulk) throws ComponentException {
@@ -262,19 +262,19 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
  * Post: Segnalazione "Data di fine deve essere maggiore della data di inizio!"
  *
  * Pre:  Controllo se Dt_fine = null e Dt_proroga != null
- * Post: Segnalazione "Non puÚ esistere una data di proroga se non si indica una data di fine!"
+ * Post: Segnalazione "Non pu√≤ esistere una data di proroga se non si indica una data di fine!"
  *
  * Pre:  Controllo Dt_fine > Dt_proroga
  * Post: Segnalazione "Data di proroga deve essere maggiore della data di fine!"
  *
- * Pre:  Controllo se la lista dei dettagli Ë vuota
+ * Pre:  Controllo se la lista dei dettagli √® vuota
  * Post: Se vuota viene creato un unico dettaglio che ha:
  *                      UO = l'UO coordinatrice del Progetto
  *                      Responsabile = Responsabile del Progetto
  *                      Importo = Importo del Progetto
  *
  * Pre:  Controllo somma importo dettagli != da importo del Progetto
- * Post: Segnalazione "La somma degli importi degli assegnatari Ë diversa dall'importo del Progetto"
+ * Post: Segnalazione "La somma degli importi degli assegnatari √® diversa dall'importo del Progetto"
  *
  */        
 		public OggettoBulk creaConBulk(UserContext uc, OggettoBulk bulk) throws ComponentException {
@@ -593,7 +593,7 @@ public RemoteIterator getChildren(UserContext userContext, OggettoBulk bulk) thr
   *    PreCondition:
   *      E' stata generata la richiesta di ricerca del Progetto padre del Progetto specificato negli argomenti.
   *    PostCondition:
-  *		 Viene restituito l'oggetto ProgettoBulk che Ë il Progetto padre cercato.
+  *		 Viene restituito l'oggetto ProgettoBulk che √® il Progetto padre cercato.
   *      
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -617,13 +617,13 @@ public OggettoBulk getParent(UserContext userContext, OggettoBulk bulk) throws C
 /** 
   *  Controlla che il progetto sia una foglia.
   *    PreCondition:
-  *      E' stata generata la richiesta di controllare se il Progetto specificato Ë una foglia,
-  *		ossia se il suo livello Ë l'ultimo, (3). Questo implicherebbe che il Progetto in 
+  *      E' stata generata la richiesta di controllare se il Progetto specificato √® una foglia,
+  *		ossia se il suo livello √® l'ultimo, (3). Questo implicherebbe che il Progetto in 
   *		questione non ha dei Progetti figli.
   *    PostCondition:
   *		 Viene restituito un valore booleano:
-  *			- true: il Progetto Ë una foglia;
-  *			- false: il Progetto non Ë una foglia.
+  *			- true: il Progetto √® una foglia;
+  *			- false: il Progetto non √® una foglia.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> il Progetto di riferimento.
@@ -737,7 +737,7 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 									SQLBroker brokerUtilizzati = moduli_utilizzatiHome.createBroker(sql);
 									if (brokerUtilizzati.next()){
 										listModuliNotDeleted.add(moduli);
-										handleExceptionMail(userContext, new ApplicationException("Si Ë tentato di cancellare il modulo utilizzato: "+moduli.getEsercizio()+"/"+moduli.getPg_progetto()+"/"+moduli.getTipo_fase()));
+										handleExceptionMail(userContext, new ApplicationException("Si √® tentato di cancellare il modulo utilizzato: "+moduli.getEsercizio()+"/"+moduli.getPg_progetto()+"/"+moduli.getTipo_fase()));
 									}else{	
 										moduli.setToBeDeleted();
 										super.eliminaConBulk(userContext, moduli);
@@ -769,7 +769,7 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 									SQLBroker brokerUtilizzati = moduli_utilizzatiHome.createBroker(sql);
 									if (brokerUtilizzati.next()){
 										listCommesseNotDeleted.add(commesse);
-										handleExceptionMail(userContext, new ApplicationException("Si Ë tentato di cancellare il modulo utilizzato: "+commesse.getEsercizio()+"/"+commesse.getPg_progetto()+"/"+commesse.getTipo_fase()));
+										handleExceptionMail(userContext, new ApplicationException("Si √® tentato di cancellare il modulo utilizzato: "+commesse.getEsercizio()+"/"+commesse.getPg_progetto()+"/"+commesse.getTipo_fase()));
 									}else{
 										boolean commessaIsToBeDeleted=true;
 										for (Progetto_sipBulk moduloBulk : listModuliNotDeleted) {
@@ -785,7 +785,7 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 											super.eliminaConBulk(userContext, commesse);
 										} else {
 											listCommesseNotDeleted.add(commesse);
-											handleExceptionMail(userContext, new ApplicationException("Si Ë tentato di cancellare il progetto di secondo livello utilizzato: "+commesse.getEsercizio()+"/"+commesse.getPg_progetto()+"/"+commesse.getTipo_fase()));
+											handleExceptionMail(userContext, new ApplicationException("Si √® tentato di cancellare il progetto di secondo livello utilizzato: "+commesse.getEsercizio()+"/"+commesse.getPg_progetto()+"/"+commesse.getTipo_fase()));
 										}
 									}
 								}
@@ -819,7 +819,7 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 										progetto.setToBeDeleted();
 										super.eliminaConBulk(userContext, progetto);
 									} else {
-										handleExceptionMail(userContext, new ApplicationException("Si Ë tentato di cancellare il progetto utilizzato: "+progetto.getEsercizio()+"/"+progetto.getPg_progetto()+"/"+progetto.getTipo_fase()));
+										handleExceptionMail(userContext, new ApplicationException("Si √® tentato di cancellare il progetto utilizzato: "+progetto.getEsercizio()+"/"+progetto.getPg_progetto()+"/"+progetto.getTipo_fase()));
 									}
 								}
 							}		
@@ -871,7 +871,7 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 										sql.addSQLClause("AND", "TIPO_FASE",SQLBuilder.EQUALS,progetto_sip.getTipo_fase());								
 										SQLBroker brokerUtilizzati = moduli_utilizzatiHome.createBroker(sql);
 										if (brokerUtilizzati.next()){
-											handleExceptionMail(userContext, new ApplicationException("Si Ë tentato di cancellare il modulo utilizzato: "+progetto_sip.getEsercizio()+"/"+progetto_sip.getPg_progetto()+"/"+progetto_sip.getTipo_fase()));
+											handleExceptionMail(userContext, new ApplicationException("Si √® tentato di cancellare il modulo utilizzato: "+progetto_sip.getEsercizio()+"/"+progetto_sip.getPg_progetto()+"/"+progetto_sip.getTipo_fase()));
 										}else{	
 											progetto_sip.setToBeDeleted();
 											super.eliminaConBulk(userContext, progetto_sip);

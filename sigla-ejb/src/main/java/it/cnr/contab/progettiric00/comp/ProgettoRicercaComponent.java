@@ -50,19 +50,19 @@ public ProgettoRicercaComponent() {
  * Post: Segnalazione "Data di fine deve essere maggiore della data di inizio!"
  *
  * Pre:  Controllo se Dt_fine = null e Dt_proroga != null
- * Post: Segnalazione "Non puÚ esistere una data di proroga se non si indica una data di fine!"
+ * Post: Segnalazione "Non pu√≤ esistere una data di proroga se non si indica una data di fine!"
  *
  * Pre:  Controllo Dt_fine > Dt_proroga
  * Post: Segnalazione "Data di proroga deve essere maggiore della data di fine!"
  *
- * Pre:  Controllo se la lista dei dettagli Ë vuota
+ * Pre:  Controllo se la lista dei dettagli √® vuota
  * Post: Se vuota viene creato un unico dettaglio che ha:
  *                      UO = l'UO coordinatrice del Progetto
  *                      Responsabile = Responsabile del Progetto
  *                      Importo = Importo del Progetto
  *
  * Pre:  Controllo somma importo dettagli != da importo del Progetto
- * Post: Segnalazione "La somma degli importi degli assegnatari Ë diversa dall'importo del Progetto"
+ * Post: Segnalazione "La somma degli importi degli assegnatari √® diversa dall'importo del Progetto"
  *
  */
 		public OggettoBulk creaConBulk(UserContext uc, OggettoBulk bulk) throws ComponentException {
@@ -318,7 +318,7 @@ public ProgettoRicercaComponent() {
 			     throw new it.cnr.jada.comp.ApplicationException("Attenzione: il campo Tipo deve essere valorizzato!");
 			     
 				if (!bulk.getFl_previsione() && !bulk.getFl_gestione())
-					throw new it.cnr.jada.comp.ApplicationException("Indicare almeno una fase di operativit‡ del progetto.");
+					throw new it.cnr.jada.comp.ApplicationException("Indicare almeno una fase di operativit√† del progetto.");
 
 				//se data di fine esiste deve essere minore di data inizio
 				if(bulk.getDt_fine() != null && bulk.getDt_inizio().after( bulk.getDt_fine() ))
@@ -326,17 +326,17 @@ public ProgettoRicercaComponent() {
 
 				//se data di fine non esiste non deve esistere data di proroga
 				if(bulk.getDt_fine() == null && bulk.getDt_proroga() != null)
-						throw new it.cnr.jada.comp.ApplicationException("Non puÚ esistere una data di proroga se non si indica una data di fine!");
+						throw new it.cnr.jada.comp.ApplicationException("Non pu√≤ esistere una data di proroga se non si indica una data di fine!");
 
 				//se data di proroga esiste deve essere minore di data fine
 				if(bulk.getDt_proroga() != null && bulk.getDt_fine().after( bulk.getDt_proroga() ))
 						throw new it.cnr.jada.comp.ApplicationException("Data di proroga deve essere maggiore della data di fine!");
 
 				if (bulk.getUnita_organizzativa() == null)
-						throw new it.cnr.jada.comp.ApplicationException("L'unit‡ organizzativa Ë obbligatoria.");
+						throw new it.cnr.jada.comp.ApplicationException("L'unit√† organizzativa √® obbligatoria.");
 
 				if (bulk.getProgettopadre() == null || bulk.getProgettopadre().getPg_progetto() == null)
-					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto Ë necessario inserire il progetto padre!");	                	
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto √® necessario inserire il progetto padre!");	                	
 
 				if ((ProgettoBulk)bulk.getProgettopadre() == null)
 				  ((ProgettoBulk)bulk).setLivello(new Integer(1));
@@ -366,7 +366,7 @@ public ProgettoRicercaComponent() {
 					}
 				}
 				
-				//se nei dettagli non Ë presente la UO cordinatrice viene creata
+				//se nei dettagli non √® presente la UO cordinatrice viene creata
 				if( cercaUocordinatrice(bulk) ) {
 				   Progetto_uoBulk dett = new Progetto_uoBulk(
 					 bulk.getPg_progetto(),
@@ -457,19 +457,19 @@ public ProgettoRicercaComponent() {
  * Post: Segnalazione "Data di fine deve essere maggiore della data di inizio!"
  *
  * Pre:  Controllo se Dt_fine = null e Dt_proroga != null
- * Post: Segnalazione "Non puÚ esistere una data di proroga se non si indica una data di fine!"
+ * Post: Segnalazione "Non pu√≤ esistere una data di proroga se non si indica una data di fine!"
  *
  * Pre:  Controllo Dt_fine > Dt_proroga
  * Post: Segnalazione "Data di proroga deve essere maggiore della data di fine!"
  *
- * Pre:  Controllo se la lista dei dettagli Ë vuota
+ * Pre:  Controllo se la lista dei dettagli √® vuota
  * Post: Se vuota viene creato un unico dettaglio che ha:
  *                      UO = l'UO coordinatrice del progetto
  *                      Responsabile = Responsabile del progetto
  *                      Importo = Importo del progetto
  *
  * Pre:  Controllo somma importo dettagli != da importo del progetto
- * Post: Segnalazione "La somma degli importi degli assegnatari Ë diversa dall'importo del progetto"
+ * Post: Segnalazione "La somma degli importi degli assegnatari √® diversa dall'importo del progetto"
  *
  */
 		public OggettoBulk modificaConBulk(UserContext uc, OggettoBulk bulk) throws ComponentException {
@@ -783,7 +783,7 @@ public RemoteIterator getChildrenWorkpackage(UserContext userContext, OggettoBul
   *    PreCondition:
   *      E' stata generata la richiesta di ricerca del Progetto padre del Progetto specificato negli argomenti.
   *    PostCondition:
-  *		 Viene restituito l'oggetto ProgettoBulk che Ë il Progetto padre cercato.
+  *		 Viene restituito l'oggetto ProgettoBulk che √® il Progetto padre cercato.
   *      
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -807,13 +807,13 @@ public OggettoBulk getParent(UserContext userContext, OggettoBulk bulk) throws C
 /** 
   *  Controlla che il progetto sia una foglia.
   *    PreCondition:
-  *      E' stata generata la richiesta di controllare se il Progetto specificato Ë una foglia,
-  *		ossia se il suo livello Ë l'ultimo, (3). Questo implicherebbe che il Progetto in 
+  *      E' stata generata la richiesta di controllare se il Progetto specificato √® una foglia,
+  *		ossia se il suo livello √® l'ultimo, (3). Questo implicherebbe che il Progetto in 
   *		questione non ha dei Progetti figli.
   *    PostCondition:
   *		 Viene restituito un valore booleano:
-  *			- true: il Progetto Ë una foglia;
-  *			- false: il Progetto non Ë una foglia.
+  *			- true: il Progetto √® una foglia;
+  *			- false: il Progetto non √® una foglia.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> il Progetto di riferimento.
@@ -834,7 +834,7 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
   *    PreCondition:
   *      E' stata generata la richiesta di ricerca del Progetto padre del Progetto specificato negli argomenti.
   *    PostCondition:
-  *		 Viene restituito l'oggetto ProgettoBulk che Ë il Progetto padre cercato.
+  *		 Viene restituito l'oggetto ProgettoBulk che √® il Progetto padre cercato.
   *      
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -858,13 +858,13 @@ public OggettoBulk getParentForSip(UserContext userContext, OggettoBulk bulk) th
 /** 
   *  Controlla che il progetto sia una foglia.
   *    PreCondition:
-  *      E' stata generata la richiesta di controllare se il Progetto specificato Ë una foglia,
-  *		ossia se il suo livello Ë l'ultimo, (3). Questo implicherebbe che il Progetto in 
+  *      E' stata generata la richiesta di controllare se il Progetto specificato √® una foglia,
+  *		ossia se il suo livello √® l'ultimo, (3). Questo implicherebbe che il Progetto in 
   *		questione non ha dei Progetti figli.
   *    PostCondition:
   *		 Viene restituito un valore booleano:
-  *			- true: il Progetto Ë una foglia;
-  *			- false: il Progetto non Ë una foglia.
+  *			- true: il Progetto √® una foglia;
+  *			- false: il Progetto non √® una foglia.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> il Progetto di riferimento.
@@ -966,15 +966,15 @@ public Parametri_cdsBulk parametriCds(UserContext aUC, ProgettoBulk bulk) throws
 	return param;
 }
 /** 
-  *  Verifica se Ë possibile eliminare l'associazione della UO al modulo di attivit‡,
-  *  dato che ciÚ non Ë possibile se esiste un workpackage associato al modulo di attivit‡
+  *  Verifica se √® possibile eliminare l'associazione della UO al modulo di attivit√†,
+  *  dato che ci√≤ non √® possibile se esiste un workpackage associato al modulo di attivit√†
   *  il cui cdr appartiene alla UO associata al modulo stesso 
   *
   *    PreCondition:
   *      E' stata generata la richiesta di cancellare l'associazione fatta durante 
   *		la sessione di lavoro.
   *    PostCondition:
-  *      Verifica se l'associazione puÚ essere eliminata
+  *      Verifica se l'associazione pu√≤ essere eliminata
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param progetto il <code>ProgettoBulk</code> progetto di ricerca.
@@ -998,7 +998,7 @@ public void validaCancellazioneUoAssociata(UserContext userContext, ProgettoBulk
 		List ris = home.fetchAll(sql);
 		if (!ris.isEmpty())
 			throw new ApplicationException("Impossibile cancellare la UO partecipante "+pruo.getCd_unita_organizzativa()+" in quanto\n"+
-               "il livello di progetto Ë collegato al GAE "+((WorkpackageBulk)ris.get(0)).getCd_linea_attivita());
+               "il livello di progetto √® collegato al GAE "+((WorkpackageBulk)ris.get(0)).getCd_linea_attivita());
 		
 		BulkHome moduloHome = getHome(userContext,Pdg_moduloBulk.class);
 		SQLBuilder sqlModulo = moduloHome.createSQLBuilder();
@@ -1018,7 +1018,7 @@ public void validaCancellazioneUoAssociata(UserContext userContext, ProgettoBulk
 		List result = moduloHome.fetchAll(sqlModulo);
 		if (!result.isEmpty())
 			throw new ApplicationException("Impossibile cancellare la UO partecipante "+pruo.getCd_unita_organizzativa()+" in quanto\n"+
-               "il livello di progetto Ë gi‡ stato inserito nel Piano di Gestione "+((Pdg_moduloBulk)result.get(0)).getEsercizio());
+               "il livello di progetto √® gi√† stato inserito nel Piano di Gestione "+((Pdg_moduloBulk)result.get(0)).getEsercizio());
 
 	} catch(Throwable e) {
 		throw handleException(e);
@@ -1227,7 +1227,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			
 			SQLBroker brokerUtilizzati = moduli_utilizzatiHome.createBroker(sqlModuli);
 			if (brokerUtilizzati.next())
-				throw new ApplicationException("Impossibile cancellare il progetto. Risulta gi‡ essere utilizzato.");
+				throw new ApplicationException("Impossibile cancellare il progetto. Risulta gi√† essere utilizzato.");
 				
 			for (Iterator<Progetto_uoBulk> iterator = ((ProgettoBulk)oggettobulk).getDettagli().iterator(); iterator.hasNext();) {
 				validaCancellazioneUoAssociata(usercontext, (ProgettoBulk)oggettobulk, iterator.next());
@@ -1267,7 +1267,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     		List result = home.fetchAll(sql);
     		if (!result.isEmpty())
     			throw new ApplicationException("Impossibile cancellare la voce "+piano.getCd_voce_piano()+" in quanto\n"+
-                   "Ë gi‡ stata collegata alla GAE "+((Ass_linea_attivita_esercizioBulk)result.get(0)).getCd_linea_attivita()+
+                   "√® gi√† stata collegata alla GAE "+((Ass_linea_attivita_esercizioBulk)result.get(0)).getCd_linea_attivita()+
                    " del Cdr "+((Ass_linea_attivita_esercizioBulk)result.get(0)).getCd_centro_responsabilita());
 
     	} catch(Throwable e) {

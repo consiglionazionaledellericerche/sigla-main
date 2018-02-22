@@ -14,7 +14,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 public class CRUDTrasferimentoInventarioBP extends CRUDScaricoInventarioBP {
 
 	
-	// Indica se l'operazione di trasferimento Ë verso un altro Inventario, (extraInv),
+	// Indica se l'operazione di trasferimento √® verso un altro Inventario, (extraInv),
 	//	o all'interno dello stesso Inventario, (intraInv).
 	private final String EXTRA_INVENTARIO = "EXTRA";
 	private final String INTRA_INVENTARIO = "INTRA";
@@ -37,7 +37,7 @@ public CRUDTrasferimentoInventarioBP(String function) {
 }
 /** 
  * Trasferimento intra-inventario - Ricerca nuovo bene padre
- *	Controlla che il bene selezionato non sia gi‡ stato indicato come bene da trasferire
+ *	Controlla che il bene selezionato non sia gi√† stato indicato come bene da trasferire
  * 
  * @param context la <code>ActionContext</code> che ha generato la richiesta.
  * @param nuovo_bene_padre il <code>Inventario_beniBulk</code> nuovo bene padre
@@ -158,7 +158,7 @@ public void resetTabs() {
 /**
  * Imposta la Selezione fatta sul Controller dei Beni che si stanno scaricando.
  *	Invoca:
- *		- <code>BuonoScaricoComponent.modificaBeniScaricatiPerAssocia</code>, se il Buono di Scarico Ë generato da una Fattura Attiva;
+ *		- <code>BuonoScaricoComponent.modificaBeniScaricatiPerAssocia</code>, se il Buono di Scarico √® generato da una Fattura Attiva;
  *		- <code>BuonoScaricoComponent.modificaBeniScaricati</code>, negli altri casi.
  *
  * @param context la <code>ActionContext</code> che ha generato la richiesta

@@ -57,12 +57,12 @@ public class LiquidGruppoCentroAction extends ConsultazioniAction {
 				||
 				liquid.getDa_esercizio_precedente().equals("Y"))
 			{
-				bp.setMessage("Non Ë possibile ribaltare la riga selezionata.");
+				bp.setMessage("Non √® possibile ribaltare la riga selezionata.");
 				return context.findDefaultForward();	
 			}
 			if (liquid.getStato().equals(liquid.STATO_RIBALTATO))
 			{
-				bp.setMessage("La riga selezionata risulta gi‡ ribaltata.");
+				bp.setMessage("La riga selezionata risulta gi√† ribaltata.");
 				return context.findDefaultForward();	
 			}
 			try {
@@ -111,10 +111,10 @@ public class LiquidGruppoCentroAction extends ConsultazioniAction {
 				return context.findDefaultForward();	
 			}
 			try {
-				//verifico se gi‡ esiste una riga per lo stesso gruppo con stato iniziale
+				//verifico se gi√† esiste una riga per lo stesso gruppo con stato iniziale
 				if (bp.esisteRiga(context,liquid) && liquid.getStato().equals(liquid.STATO_SOSPESO))
 				{
-				  bp.setMessage("Esiste gi‡ una riga con stato Iniziale per lo stesso gruppo.");
+				  bp.setMessage("Esiste gi√† una riga con stato Iniziale per lo stesso gruppo.");
 				  return context.findDefaultForward();	
 				}	
 				bp.cambiaStato(context,liquid);

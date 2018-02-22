@@ -16,7 +16,7 @@ public Detrazioni_lavoroHome(java.sql.Connection conn,PersistentCache persistent
 	super(Detrazioni_lavoroBulk.class,conn,persistentCache);
 }
 /**
- * Metodo che verifica la validit‡ delle detrazioni per il lavoro
+ * Metodo che verifica la validit√† delle detrazioni per il lavoro
  * Creation date: (27/11/2001 13.12.51)
  *
  * @param detrazioni_lavoro    Detrazioni_lavoroBulk
@@ -57,7 +57,7 @@ public boolean checkIntervallo(Detrazioni_lavoroBulk detraz)  throws Persistency
 	}
 }
 /**
- * Metodo che verifica la validit‡ delle detrazioni per il lavoro
+ * Metodo che verifica la validit√† delle detrazioni per il lavoro
  * Creation date: (27/11/2001 13.12.51)
  *
  * @param detrazioni_lavoro    Detrazioni_lavoroBulk

@@ -62,7 +62,7 @@ public LiquidIvaInterfBP(String function) {
 			/**
 			if (! sessione.contaRiga(context.getUserContext(), liquid_iva)){
 				sessione.inserisciRighe(context.getUserContext(), liquid_iva);
-				//setMessage("Per il mese in esame non esistono dati. Il sistema li inserir‡ in automatico.");				
+				//setMessage("Per il mese in esame non esistono dati. Il sistema li inserir√† in automatico.");				
 			}**/
 		} catch(Exception e) {
 			throw handleException(e);

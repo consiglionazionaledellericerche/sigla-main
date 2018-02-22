@@ -27,9 +27,9 @@ public CdsBulk asCds()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_da_trasferire'
+ * Restituisce il valore della propriet√† 'im_da_trasferire'
  *
- * @return Il valore della propriet‡ 'im_da_trasferire'
+ * @return Il valore della propriet√† 'im_da_trasferire'
  */
 public java.math.BigDecimal getIm_da_trasferire() {
 	return im_da_trasferire;
@@ -37,16 +37,16 @@ public java.math.BigDecimal getIm_da_trasferire() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_obbligazioni'
+ * Restituisce il valore della propriet√† 'im_obbligazioni'
  *
- * @return Il valore della propriet‡ 'im_obbligazioni'
+ * @return Il valore della propriet√† 'im_obbligazioni'
  */
 public java.math.BigDecimal getIm_obbligazioni() {
 	return im_obbligazioni;
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'im_da_trasferire'
+ * Imposta il valore della propriet√† 'im_da_trasferire'
  *
  * @param newIm_da_trasferire	Il valore da assegnare a 'im_da_trasferire'
  */
@@ -55,7 +55,7 @@ public void setIm_da_trasferire(java.math.BigDecimal newIm_da_trasferire) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'im_obbligazioni'
+ * Imposta il valore della propriet√† 'im_obbligazioni'
  *
  * @param newIm_obbligazioni	Il valore da assegnare a 'im_obbligazioni'
  */
@@ -63,7 +63,7 @@ public void setIm_obbligazioni(java.math.BigDecimal newIm_obbligazioni) {
 	im_obbligazioni = newIm_obbligazioni;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {

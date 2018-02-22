@@ -108,10 +108,10 @@ public class CRUDStatoCdrPdGPBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 						throw new ApplicationException("Attenzione: le righe selezionate devono avere lo stesso stato!");		
 					}
 					if (avanza && !isStatoModificabile(esercizio)) {
-						throw new ApplicationException("Attenzione: non è possibile modificare lo stato del CdR "+esercizio.getCd_centro_responsabilita()+"!");	
+						throw new ApplicationException("Attenzione: non Ã¨ possibile modificare lo stato del CdR "+esercizio.getCd_centro_responsabilita()+"!");	
 					}
 					if (!avanza && !isStatoPrecedenteModificabile(esercizio)) {
-						throw new ApplicationException("Attenzione: non è possibile modificare lo stato del CdR "+esercizio.getCd_centro_responsabilita()+"!");	
+						throw new ApplicationException("Attenzione: non Ã¨ possibile modificare lo stato del CdR "+esercizio.getCd_centro_responsabilita()+"!");	
 					}
 				}
 

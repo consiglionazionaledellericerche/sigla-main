@@ -14,7 +14,7 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ComponentException;
 
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Accertamento Partita di Giro.
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Accertamento Partita di Giro.
  */
 
 public class CRUDAccertamentoPGiroBP extends CRUDVirtualAccertamentoBP {
@@ -43,23 +43,23 @@ public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.
 		if ( accert_pgiro.getDt_cancellazione() != null )
 		{
 			setStatus(VIEW);
-			//il corrispondente impegno Ë stato cancellato
+			//il corrispondente impegno √® stato cancellato
 			//if(accert_pgiro.getDt_cancellazione() != null)
-				setMessage("L'Annotazione d'Entrata su Partita di Giro Ë stata cancellata. Non consentita la modifica.");
+				setMessage("L'Annotazione d'Entrata su Partita di Giro √® stata cancellata. Non consentita la modifica.");
 			//else
-			//	setMessage("La modifica non Ë consentita: l'Annotazione di Spesa su Partita di Giro collegata a questa Annotazione di Entrata Ë stata cancellata.");			
+			//	setMessage("La modifica non √® consentita: l'Annotazione di Spesa su Partita di Giro collegata a questa Annotazione di Entrata √® stata cancellata.");			
 		}
 		/*
 		else if ( "Y".equals(accert_pgiro.getRiportato()) )
 		{
 			setStatus(VIEW);
-			setMessage("L'Annotazione d'Entrata su Partita di Giro Ë stata riportata all'esercizio successivo. Non consentita la modifica.");
+			setMessage("L'Annotazione d'Entrata su Partita di Giro √® stata riportata all'esercizio successivo. Non consentita la modifica.");
 		}*/
 		else if ( "N".equals( accert_pgiro.getRiportato()) && accert_pgiro.getAssociazione() != null && accert_pgiro.getAssociazione().getImpegno() != null &&
 			  "Y".equals(accert_pgiro.getAssociazione().getImpegno().getRiportato()))
 		{
 			//setStatus(VIEW);
-			setMessage("L'Annotazione collegata di Spesa su Partita di Giro Ë stata riportata all'esercizio successivo. Non consentita la modifica.");
+			setMessage("L'Annotazione collegata di Spesa su Partita di Giro √® stata riportata all'esercizio successivo. Non consentita la modifica.");
 		}
 	}
 }

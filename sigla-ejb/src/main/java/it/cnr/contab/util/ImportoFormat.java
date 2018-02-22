@@ -31,9 +31,9 @@ public abstract class ImportoFormat extends java.text.Format implements it.cnr.j
 
     /**
      * <!-- @TODO: da completare -->
-     * Restituisce il valore della propriet‡ 'format'
+     * Restituisce il valore della propriet√† 'format'
      *
-     * @return Il valore della propriet‡ 'format'
+     * @return Il valore della propriet√† 'format'
      */
     public java.text.Format getFormat() {
         return format;
@@ -41,9 +41,9 @@ public abstract class ImportoFormat extends java.text.Format implements it.cnr.j
 
     /**
      * <!-- @TODO: da completare -->
-     * Restituisce il valore della propriet‡ 'precision'
+     * Restituisce il valore della propriet√† 'precision'
      *
-     * @return Il valore della propriet‡ 'precision'
+     * @return Il valore della propriet√† 'precision'
      */
     public int getPrecision() {
         return precision;
@@ -51,7 +51,7 @@ public abstract class ImportoFormat extends java.text.Format implements it.cnr.j
 
     /**
      * <!-- @TODO: da completare -->
-     * Imposta il valore della propriet‡ 'precision'
+     * Imposta il valore della propriet√† 'precision'
      *
      * @param newPrecision Il valore da assegnare a 'precision'
      */
@@ -61,9 +61,9 @@ public abstract class ImportoFormat extends java.text.Format implements it.cnr.j
 
     /**
      * <!-- @TODO: da completare -->
-     * Restituisce il valore della propriet‡ 'round'
+     * Restituisce il valore della propriet√† 'round'
      *
-     * @return Il valore della propriet‡ 'round'
+     * @return Il valore della propriet√† 'round'
      */
     public int getRound() {
         return round;
@@ -71,7 +71,7 @@ public abstract class ImportoFormat extends java.text.Format implements it.cnr.j
 
     /**
      * <!-- @TODO: da completare -->
-     * Imposta il valore della propriet‡ 'round'
+     * Imposta il valore della propriet√† 'round'
      *
      * @param newRound Il valore da assegnare a 'round'
      */
@@ -90,9 +90,9 @@ public abstract class ImportoFormat extends java.text.Format implements it.cnr.j
 
     /**
      * <!-- @TODO: da completare -->
-     * Restituisce il valore della propriet‡ 'symbol'
+     * Restituisce il valore della propriet√† 'symbol'
      *
-     * @return Il valore della propriet‡ 'symbol'
+     * @return Il valore della propriet√† 'symbol'
      */
     public String getSymbol() {
         return null;

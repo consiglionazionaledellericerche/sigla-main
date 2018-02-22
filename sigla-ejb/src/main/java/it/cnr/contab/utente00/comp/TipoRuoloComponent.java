@@ -70,7 +70,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
 	}
 }
 /**
- * Esegue l'inizializzazione di una nuova istanza di Tipo_ruoloBulk impostando l'elenco di Privilegi gi‡ assegnati 
+ * Esegue l'inizializzazione di una nuova istanza di Tipo_ruoloBulk impostando l'elenco di Privilegi gi√† assegnati 
  * e l'elenco di Privilegi ancora disponibili
  *
  * Pre-post-conditions:

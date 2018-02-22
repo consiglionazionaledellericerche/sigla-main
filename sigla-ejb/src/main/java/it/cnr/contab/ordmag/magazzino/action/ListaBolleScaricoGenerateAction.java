@@ -46,7 +46,7 @@ public class ListaBolleScaricoGenerateAction extends SelezionatoreListaAction {
 			context.addHookForward("close", this, "doStampaAnnullata");
 			printbp.setMessage(
 				it.cnr.jada.util.action.OptionBP.MESSAGE,
-				"Il protocollo IVA è stato assegnato correttamente. Per confermare eseguire la stampa.");
+				"Il protocollo IVA Ã¨ stato assegnato correttamente. Per confermare eseguire la stampa.");
 
 			return context.addBusinessProcess(printbp);
 		}

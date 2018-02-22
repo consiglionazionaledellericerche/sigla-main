@@ -289,12 +289,12 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		return toolbar;
 	}
 	/**
-	 * Restituisce il valore della propriet‡ 'salvaDefinitivoButtonEnabled'
-	 * Il bottone di SalvaDefinitivo Ë disponibile solo se:
-	 * - la proposta Ë provvisoria
-	 * - il CDR Ë di 1∞ Livello
+	 * Restituisce il valore della propriet√† 'salvaDefinitivoButtonEnabled'
+	 * Il bottone di SalvaDefinitivo √® disponibile solo se:
+	 * - la proposta √® provvisoria
+	 * - il CDR √® di 1¬∞ Livello
 	 *
-	 * @return Il valore della propriet‡ 'salvaDefinitivoButtonEnabled'
+	 * @return Il valore della propriet√† 'salvaDefinitivoButtonEnabled'
 	 */
 	public boolean isSalvaDefinitivoButtonEnabled() {
 		return (isSaveButtonEnabled()||(super.isSaveButtonEnabled()&&((Pdg_variazioneBulk)getModel()).isPropostaProvvisoria()))&& 
@@ -304,13 +304,13 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		        ((Pdg_variazioneBulk)getModel()).getCentro_responsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds());
 	}
 	/**
-	 * Restituisce il valore della propriet‡ 'approvaButtonEnabled'
-	 * Il bottone di Approva Ë disponibile solo se:
-	 * - Ë attivo il bottone di salvataggio
-	 * - la proposta di variazione PDG Ë definitiva
-	 * - la UO che sta effettuando l'operazione Ë di tipo ENTE
+	 * Restituisce il valore della propriet√† 'approvaButtonEnabled'
+	 * Il bottone di Approva √® disponibile solo se:
+	 * - √® attivo il bottone di salvataggio
+	 * - la proposta di variazione PDG √® definitiva
+	 * - la UO che sta effettuando l'operazione √® di tipo ENTE
 	 *
-	 * @return Il valore della propriet‡ 'approvaButtonEnabled'
+	 * @return Il valore della propriet√† 'approvaButtonEnabled'
 	 */
 	public boolean isApprovaButtonEnabled() {
 
@@ -321,13 +321,13 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		    ((Pdg_variazioneBulk)getModel()).isCdsAbilitatoAdApprovare()));
 	}
 	/**
-	 * Restituisce il valore della propriet‡ 'nonApprovaButtonEnabled'
-	 * Il bottone di NonApprova Ë disponibile solo se:
-	 * - Ë attivo il bottone di salvataggio
-	 * - la proposta di variazione PDG Ë definitiva
-	 * - la UO che sta effettuando l'operazione Ë di tipo ENTE
+	 * Restituisce il valore della propriet√† 'nonApprovaButtonEnabled'
+	 * Il bottone di NonApprova √® disponibile solo se:
+	 * - √® attivo il bottone di salvataggio
+	 * - la proposta di variazione PDG √® definitiva
+	 * - la UO che sta effettuando l'operazione √® di tipo ENTE
 	 *
-	 * @return Il valore della propriet‡ 'nonApprovaButtonEnabled'
+	 * @return Il valore della propriet√† 'nonApprovaButtonEnabled'
 	 */
 	public boolean isNonApprovaButtonEnabled() {
 

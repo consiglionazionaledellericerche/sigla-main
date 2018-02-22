@@ -10,9 +10,9 @@ package it.cnr.contab.prevent00.bulk;
 public interface Pdg_aggregato_det_iniziale extends Pdg_aggregato_det {
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'det_modificato'
+ * Restituisce il valore della propriet√† 'det_modificato'
  *
- * @return Il valore della propriet‡ 'det_modificato'
+ * @return Il valore della propriet√† 'det_modificato'
  */
 Pdg_aggregato_det getDet_modificato();
 }

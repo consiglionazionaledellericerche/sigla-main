@@ -59,8 +59,8 @@ public Stampa_registri_ivaVBulk aggiornaRegistriStampati(
  * 
  *
  * @return 
- * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non Ë possibile effettuare l'operazione
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+ * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non √® possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
  */
 public StampaRegistriIvaComponentSession createComponentSession()
 	throws javax.ejb.EJBException,
@@ -112,71 +112,71 @@ public int getStatus() {
 	return status;
 }
 /**
- * Restituisce il valore della propriet‡ 'bringbackButtonEnabled'
+ * Restituisce il valore della propriet√† 'bringbackButtonEnabled'
  *
- * @return Il valore della propriet‡ 'bringbackButtonEnabled'
+ * @return Il valore della propriet√† 'bringbackButtonEnabled'
  */
 public boolean isBringbackButtonEnabled() {
 	return isSearching();
 }
 /**
- * Restituisce il valore della propriet‡ 'searchButtonHidden'
+ * Restituisce il valore della propriet√† 'searchButtonHidden'
  *
- * @return Il valore della propriet‡ 'searchButtonHidden'
+ * @return Il valore della propriet√† 'searchButtonHidden'
  */
 public boolean isBulkPrintable() {
 	
 	return getModel() != null && isBulkPrintable((Stampa_registri_ivaVBulk)getModel());
 }
 /**
- * Restituisce il valore della propriet‡ 'searchButtonHidden'
+ * Restituisce il valore della propriet√† 'searchButtonHidden'
  *
- * @return Il valore della propriet‡ 'searchButtonHidden'
+ * @return Il valore della propriet√† 'searchButtonHidden'
  */
 protected boolean isBulkPrintable(Stampa_registri_ivaVBulk stampaBulk) {
 	
 	return stampaBulk instanceof IPrintable;
 }
 /**
- * Restituisce il valore della propriet‡ 'searchButtonHidden'
+ * Restituisce il valore della propriet√† 'searchButtonHidden'
  *
- * @return Il valore della propriet‡ 'searchButtonHidden'
+ * @return Il valore della propriet√† 'searchButtonHidden'
  */
 public boolean isBulkReprintable() {
 	
 	return isBulkReprintable((Stampa_registri_ivaVBulk)getModel());
 }
 /**
- * Restituisce il valore della propriet‡ 'searchButtonHidden'
+ * Restituisce il valore della propriet√† 'searchButtonHidden'
  *
- * @return Il valore della propriet‡ 'searchButtonHidden'
+ * @return Il valore della propriet√† 'searchButtonHidden'
  */
 protected boolean isBulkReprintable(Stampa_registri_ivaVBulk stampaBulk) {
 	
 	return isBulkPrintable(stampaBulk) && ((IPrintable)stampaBulk).isRistampabile();
 }
 /**
- * Restituisce il valore della propriet‡ 'bringbackButtonEnabled'
+ * Restituisce il valore della propriet√† 'bringbackButtonEnabled'
  *
- * @return Il valore della propriet‡ 'bringbackButtonEnabled'
+ * @return Il valore della propriet√† 'bringbackButtonEnabled'
  */
 public boolean isReprintButtonEnabled() {
 	
 	return isBulkReprintable();
 }
 /**
- * Restituisce il valore della propriet‡ 'bringbackButtonEnabled'
+ * Restituisce il valore della propriet√† 'bringbackButtonEnabled'
  *
- * @return Il valore della propriet‡ 'bringbackButtonEnabled'
+ * @return Il valore della propriet√† 'bringbackButtonEnabled'
  */
 public boolean isReprintButtonHidden() {
 	
 	return !isBulkReprintable();
 }
 /**
- * Restituisce il valore della propriet‡ 'searchButtonHidden'
+ * Restituisce il valore della propriet√† 'searchButtonHidden'
  *
- * @return Il valore della propriet‡ 'searchButtonHidden'
+ * @return Il valore della propriet√† 'searchButtonHidden'
  */
 public boolean isSearchButtonHidden() {
 	return isSearching();
@@ -185,17 +185,17 @@ public boolean isSearching() {
 	return status == SEARCH;
 }
 /**
- * Restituisce il valore della propriet‡ 'startSearchButtonHidden'
+ * Restituisce il valore della propriet√† 'startSearchButtonHidden'
  *
- * @return Il valore della propriet‡ 'startSearchButtonHidden'
+ * @return Il valore della propriet√† 'startSearchButtonHidden'
  */
 public boolean isStartSearchButtonEnabled() {
 	return isBulkPrintable();
 }
 /**
- * Restituisce il valore della propriet‡ 'startSearchButtonHidden'
+ * Restituisce il valore della propriet√† 'startSearchButtonHidden'
  *
- * @return Il valore della propriet‡ 'startSearchButtonHidden'
+ * @return Il valore della propriet√† 'startSearchButtonHidden'
  */
 public boolean isStartSearchButtonHidden() {
 	return !isSearching();
@@ -206,7 +206,7 @@ public boolean isStartSearchButtonHidden() {
 public void setDirty(boolean newDirty) {	
 }
 /**
- * Imposta il valore della propriet‡ 'status'
+ * Imposta il valore della propriet√† 'status'
  *
  * @param newStatus	Il valore da assegnare a 'status'
  */

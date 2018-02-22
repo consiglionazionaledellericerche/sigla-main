@@ -29,8 +29,8 @@ public class Voce_epBulk extends Voce_epBase {
 		natura_voce_Keys.put("EPR", "EPR - Economico Pluriennale Ricavo");
 		natura_voce_Keys.put("EEC", "EEC - Economico d'Esercizio Costo");
 		natura_voce_Keys.put("EER", "EER - Economico d'Esercizio Ricavo");
-		natura_voce_Keys.put("NUA", "NUA - Numerario Attivit‡");
-		natura_voce_Keys.put("NUP", "NUP - Numerario Passivit‡");
+		natura_voce_Keys.put("NUA", "NUA - Numerario Attivit√†");
+		natura_voce_Keys.put("NUP", "NUP - Numerario Passivit√†");
 		natura_voce_Keys.put("CDO", "CDO - Conto d'Ordine");
 		natura_voce_Keys.put("CDC", "CDC - Conto di Capitale");
 	}	
@@ -46,7 +46,7 @@ public Voce_epBulk(java.lang.String cd_voce_ep,java.lang.Integer esercizio) {
  * Metodo con cui si ottiene il valore della variabile <code>conto_speciale_Keys</code>
  * di tipo <code>Hashtable</code>.
  * In particolare, questo metodo carica in una Hashtable l'elenco dei possibili valori 
- * che puÚ assumere un conto speciale.
+ * che pu√≤ assumere un conto speciale.
  * @return java.util.Hashtable conto_speciale_Keys I valori del conto speciale.
  */
 public java.util.Hashtable getConto_speciale_Keys() {
@@ -68,7 +68,7 @@ public java.util.Hashtable getConto_speciale_Keys() {
  * Metodo con cui si ottiene il valore della variabile <code>fl_a_pareggio_Keys</code>
  * di tipo <code>Hashtable</code>.
  * In particolare, questo metodo carica in una Hashtable l'elenco dei possibili valori 
- * che puÚ assumere il flag <code>fl_a_pareggio</code>.
+ * che pu√≤ assumere il flag <code>fl_a_pareggio</code>.
  * @return java.util.Hashtable fl_a_pareggio_Keys I valori del flag <code>fl_a_pareggio</code>.
  */
 public java.util.Hashtable getFl_a_pareggio_Keys() {
@@ -90,7 +90,7 @@ public OrderedHashtable getGruppiKeys() {
  * Metodo con cui si ottiene il valore della variabile <code>natura_voce_Keys</code>
  * di tipo <code>Hashtable</code>.
  * In particolare, questo metodo carica in una Hashtable l'elenco dei possibili valori
- * che puÚ assumere la natura.
+ * che pu√≤ assumere la natura.
  * @return java.util.Hashtable natura_voce_Keys I valori della natura.
  */
 public java.util.Hashtable getNatura_voce_Keys() 
@@ -101,7 +101,7 @@ public java.util.Hashtable getNatura_voce_Keys()
  * Metodo con cui si ottiene il valore della variabile <code>riepiloga_a_Keys</code>
  * di tipo <code>Hashtable</code>.
  * In particolare, questo metodo carica in una Hashtable l'elenco dei possibili valori 
- * che puÚ assumere il campo <code>riepiloga_a</code>.
+ * che pu√≤ assumere il campo <code>riepiloga_a</code>.
  * @return java.util.Hashtable riepiloga_a_Keys I valori del campo <code>riepiloga_a</code>.
  */
 public java.util.Hashtable getRiepiloga_a_Keys() {
@@ -151,7 +151,7 @@ public void setTi_voce_ep_Keys(java.util.Hashtable newTi_voce_ep_Keys) {
 	ti_voce_ep_Keys = newTi_voce_ep_Keys;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
@@ -159,7 +159,7 @@ public void validate() throws ValidationException {
 		
 	// controllo su campo ESERCIZIO vale per entrambi i tipi (Capoconto,Conto)
 			if ( getEsercizio() == null )
-				throw new ValidationException( "Il campo ESERCIZIO Ë obbligatorio." );
+				throw new ValidationException( "Il campo ESERCIZIO √® obbligatorio." );
 			if ( getEsercizio().toString().length() != 4 )
 				throw new ValidationException( "Il campo ESERCIZIO deve essere di quattro cifre." );
 }
