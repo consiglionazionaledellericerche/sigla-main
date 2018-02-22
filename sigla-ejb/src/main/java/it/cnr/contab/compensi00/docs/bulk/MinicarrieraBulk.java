@@ -156,7 +156,7 @@ public int addToMinicarriera_rate(Minicarriera_rataBulk rata) {
 	return getMinicarriera_rate().size()-1;
 }
 /**
- * Restituisce un boolean 'true' se il tipo anticipo/posticipo non Ë modificabile
+ * Restituisce un boolean 'true' se il tipo anticipo/posticipo non √® modificabile
  */
  
 private boolean basicROImportiIrpef() {
@@ -205,7 +205,7 @@ public static java.sql.Timestamp decrementaData(java.sql.Timestamp data){
 	return new java.sql.Timestamp(gc.getTime().getTime());
 }
 /**
- * Restituisce l'anno della data 'data'. Se data non Ë impostata restituisce l'anno corrente
+ * Restituisce l'anno della data 'data'. Se data non √® impostata restituisce l'anno corrente
  */
  
 public static int getAnno(java.sql.Timestamp data) {
@@ -679,7 +679,7 @@ public boolean isAliquotaCalcolata() {
 	return aliquotaCalcolata;
 }
 /**
- * Restituisce un boolean 'true' se la minicarriera Ë associata parzialmente o
+ * Restituisce un boolean 'true' se la minicarriera √® associata parzialmente o
  * totalmente a compenso
  */
  
@@ -690,7 +690,7 @@ public boolean isAssociataACompenso() {
 			STATO_PARZIALE_ASS_COMPENSO.equalsIgnoreCase(getStato_ass_compenso()));
 }
 /**
- * Restituisce un boolean 'true' se la minicarriera Ë associata parzialmente o
+ * Restituisce un boolean 'true' se la minicarriera √® associata parzialmente o
  * totalmente a compenso
  */
  
@@ -709,7 +709,7 @@ public boolean isAssociataACompensoConTassazioneSeparata() {
 	
 }
 /**
- * Restituisce un boolean 'true' se la minicarriera Ë in stato attivo
+ * Restituisce un boolean 'true' se la minicarriera √® in stato attivo
  */
  
 public boolean isAttiva() {
@@ -717,7 +717,7 @@ public boolean isAttiva() {
 	return getStato() == null || STATO_ATTIVA.equalsIgnoreCase(getStato());
 }
 /**
- * Restituisce un boolean 'true' se la minicarriera Ë in stato cessato
+ * Restituisce un boolean 'true' se la minicarriera √® in stato cessato
  */
  
 public boolean isCessata() {
@@ -725,7 +725,7 @@ public boolean isCessata() {
 	return getStato() != null && STATO_CESSATA.equalsIgnoreCase(getStato());
 }
 /**
- * Restituisce un boolean 'true' se la minicarriera Ë in stato attivo o sospeso.
+ * Restituisce un boolean 'true' se la minicarriera √® in stato attivo o sospeso.
  * permette la modifica in questo caso del modello
  */
  
@@ -733,7 +733,7 @@ public boolean isEditable() {
 	return isAttiva() || isSospesa();
 }
 /**
- * Restituisce un boolean 'true' se nemmeno una rata Ë associata a compenso
+ * Restituisce un boolean 'true' se nemmeno una rata √® associata a compenso
  */
  
 public boolean isNonAssociataACompenso() {
@@ -741,7 +741,7 @@ public boolean isNonAssociataACompenso() {
 	return !isAssociataACompenso() && !isParzialmenteAssociataACompenso();
 }
 /**
- * Restituisce un boolean 'true' se la minicarriera Ë associata parzialmente
+ * Restituisce un boolean 'true' se la minicarriera √® associata parzialmente
  * a compenso
  */
  
@@ -758,7 +758,7 @@ public boolean isRataATassazioneSeparata(Minicarriera_rataBulk rata) {
 			getAnno(rata.getDt_fine_rata()) < getEsercizio().intValue();
 }
 /**
- * Restituisce un boolean 'true' se la minicarriera Ë in stato rinnovato
+ * Restituisce un boolean 'true' se la minicarriera √® in stato rinnovato
  */
  
 public boolean isRinnovata() {
@@ -766,7 +766,7 @@ public boolean isRinnovata() {
 	return getStato() != null && STATO_RINNOVATA.equalsIgnoreCase(getStato());
 }
 /**
- * Restituisce un boolean 'true' se la minicarriera Ë in stato ripristinato
+ * Restituisce un boolean 'true' se la minicarriera √® in stato ripristinato
  */
  
 public boolean isRipristinata() {
@@ -774,7 +774,7 @@ public boolean isRipristinata() {
 	return getStato() != null && STATO_RIPRISTINATA.equalsIgnoreCase(getStato());
 }
 /**
- * Restituisce un boolean 'true' se il tipo anticipo/posticipo non Ë modificabile
+ * Restituisce un boolean 'true' se il tipo anticipo/posticipo non √® modificabile
  */
  
 public boolean isROBottoniImportiIrpef() {
@@ -782,7 +782,7 @@ public boolean isROBottoniImportiIrpef() {
 	return	basicROImportiIrpef();
 }
 /**
- * Restituisce un boolean 'true' se la data cessazione non Ë modificabile
+ * Restituisce un boolean 'true' se la data cessazione non √® modificabile
  */
  
 public boolean isRODtCessazione() {
@@ -792,7 +792,7 @@ public boolean isRODtCessazione() {
 			(getPgMinicarrieraPos() == null && getMinicarriera_origine() != null);
 }
 /**
- * Restituisce un boolean 'true' se la data inizio validit‡ non Ë modificabile
+ * Restituisce un boolean 'true' se la data inizio validit√† non √® modificabile
  */
  
 public boolean isRODtInizioFineValidita() {
@@ -801,7 +801,7 @@ public boolean isRODtInizioFineValidita() {
 			isROField() || hasRateAssociateACompenso();
 }
 /**
- * Restituisce un boolean 'true' se la data inizio validit‡ non Ë modificabile
+ * Restituisce un boolean 'true' se la data inizio validit√† non √® modificabile
  */
  
 public boolean isRODtRegistrazione() {
@@ -809,7 +809,7 @@ public boolean isRODtRegistrazione() {
 	return hasRateAssociateACompenso();
 }
 /**
- * Restituisce un boolean 'true' se la data rinnovo non Ë modificabile
+ * Restituisce un boolean 'true' se la data rinnovo non √® modificabile
  */
  
 public boolean isRODtRinnovo() {
@@ -822,7 +822,7 @@ public boolean isRODtRinnovo() {
 	// minicarriera di origine
 }
 /**
- * Restituisce un boolean 'true' se la data ripristino non Ë modificabile
+ * Restituisce un boolean 'true' se la data ripristino non √® modificabile
  */
  
 public boolean isRODtRipristino() {
@@ -832,7 +832,7 @@ public boolean isRODtRipristino() {
 			(getPgMinicarrieraPos() == null && getMinicarriera_origine() != null);
 }
 /**
- * Restituisce un boolean 'true' se la data sospensione non Ë modificabile
+ * Restituisce un boolean 'true' se la data sospensione non √® modificabile
  */
  
 public boolean isRODtSospensione() {
@@ -842,7 +842,7 @@ public boolean isRODtSospensione() {
 			(getPgMinicarrieraPos() == null && getMinicarriera_origine() != null);
 }
 /**
- * Restituisce un boolean 'true' se lo stato non Ë attivo
+ * Restituisce un boolean 'true' se lo stato non √® attivo
  */
  
 public boolean isROField() {
@@ -870,7 +870,7 @@ public boolean isROFl_tassazione_separata() {
 			(getMinicarriera_rate() != null && !getMinicarriera_rate().isEmpty());
 }
 /**
- * Restituisce un boolean 'true' se il tipo anticipo/posticipo non Ë modificabile
+ * Restituisce un boolean 'true' se il tipo anticipo/posticipo non √® modificabile
  */
  
 public boolean isROImportiIrpef() {
@@ -879,7 +879,7 @@ public boolean isROImportiIrpef() {
 			isAliquotaCalcolata();
 }
 /**
- * Restituisce un boolean 'true' se l'importo totale non Ë modificabile
+ * Restituisce un boolean 'true' se l'importo totale non √® modificabile
  */
  
 public boolean isROImporto() {
@@ -889,7 +889,7 @@ public boolean isROImporto() {
 }
 /**
  * Restituisce un boolean 'true' se l'aspetto mesi per anticipo/posticipo
- * non Ë modificabile
+ * non √® modificabile
  */
  
 public boolean isROMesiAnticipoPosticipo() {
@@ -897,7 +897,7 @@ public boolean isROMesiAnticipoPosticipo() {
 	return isROField() || TIPO_NESSUNO.equalsIgnoreCase(getTi_anticipo_posticipo());
 }
 /**
- * Restituisce un boolean 'true' se il numero delle rate non Ë modificabile
+ * Restituisce un boolean 'true' se il numero delle rate non √® modificabile
  */
  
 public boolean isRONumeroRate() {
@@ -906,7 +906,7 @@ public boolean isRONumeroRate() {
 			isROField();
 }
 /**
- * Restituisce un boolean 'true' se il percipiente non Ë modificabile
+ * Restituisce un boolean 'true' se il percipiente non √® modificabile
  */
  
 public boolean isROPercipiente() {
@@ -942,7 +942,7 @@ public boolean isROTi_istituz_commerc() {
 	return isROPercipiente();
 }
 /**
- * Restituisce un boolean 'true' se il tipo anticipo/posticipo non Ë modificabile
+ * Restituisce un boolean 'true' se il tipo anticipo/posticipo non √® modificabile
  */
  
 public boolean isROTiAnticipoPosticipo() {
@@ -950,7 +950,7 @@ public boolean isROTiAnticipoPosticipo() {
 	return isROField() || (getMinicarriera_rate() != null && !getMinicarriera_rate().isEmpty());
 }
 /**
- * Restituisce un boolean 'true' se la inicarriera Ë in stato sospeso
+ * Restituisce un boolean 'true' se la inicarriera √® in stato sospeso
  */
  
 public boolean isSospesa() {
@@ -958,7 +958,7 @@ public boolean isSospesa() {
 	return getStato() != null && STATO_SOSPESA.equalsIgnoreCase(getStato());
 }
 /**
- * Restituisce un boolean 'true' se il modello Ë temporaneo
+ * Restituisce un boolean 'true' se il modello √® temporaneo
  */
  
 public boolean isTemporaneo() {
@@ -1276,7 +1276,7 @@ public void validaDate() throws ValidationException {
 
 	if (getDt_registrazione().after(getDataOdierna()) &&
 		!getDt_registrazione().equals(getDataOdierna()))
-		throw new ValidationException("La data registrazione non puÚ essere successiva ad oggi.");
+		throw new ValidationException("La data registrazione non pu√≤ essere successiva ad oggi.");
 	
 	java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 	java.sql.Timestamp dataInizioEsercizio = null;
@@ -1287,21 +1287,21 @@ public void validaDate() throws ValidationException {
 	}
 	if (getDt_registrazione().before(dataInizioEsercizio) &&
 		!getDt_registrazione().equals(dataInizioEsercizio))
-		throw new ValidationException("La data di registrazione non puÚ essere precedente alla data di inizio dell'esercizio di scrivania.");
+		throw new ValidationException("La data di registrazione non pu√≤ essere precedente alla data di inizio dell'esercizio di scrivania.");
 
 	validaDateValidita();
 }
 /**
- * Valida le date di inizio e fine validit‡ e relativi periodi della minicarriera
+ * Valida le date di inizio e fine validit√† e relativi periodi della minicarriera
  */
  
 public void validaDateValidita() throws ValidationException {
 
 	if (getDt_inizio_minicarriera() == null || getDt_fine_minicarriera() == null)
-		throw new ValidationException("Inserire le date di validit‡ della minicarriera.");
+		throw new ValidationException("Inserire le date di validit√† della minicarriera.");
 	
 	if (getDt_fine_minicarriera().before(getDt_inizio_minicarriera()))
-		throw new ValidationException("Date di validit‡ minicarriera non corrette. Verificare i periodi.");
+		throw new ValidationException("Date di validit√† minicarriera non corrette. Verificare i periodi.");
 
 	if (getFl_tassazione_separata() == null)
 		throw new ValidationException("Impostare il flag di tassazione separata!");
@@ -1312,7 +1312,7 @@ public void validaDateValidita() throws ValidationException {
 		gc.setTime(new java.util.Date(getDt_inizio_minicarriera().getTime()));
 		int anno = gc.get(gc.YEAR);
 		if (anno >= getEsercizio().intValue())
-			throw new ValidationException("Quando il flag di tassazione separata Ë impostato, la data di inizio validit‡ della minicarriera\ndeve essere anteriore all'esercizio di creazione!");
+			throw new ValidationException("Quando il flag di tassazione separata √® impostato, la data di inizio validit√† della minicarriera\ndeve essere anteriore all'esercizio di creazione!");
 	}
 }
 /**
@@ -1349,13 +1349,13 @@ public int validaPercipiente(boolean throwExc) throws ValidationException{
 		if (getTerzo().getDt_fine_rapporto().compareTo(getDt_registrazione())<0) {
 			if (!throwExc)
 				return V_terzo_per_compensoBulk.TERZO_NON_VALIDO;
-			throw new ValidationException("Il percipiente selezionato non Ë valido");
+			throw new ValidationException("Il percipiente selezionato non √® valido");
 		}
 
 	if (getModalita_pagamento() == null) {
 		if (!throwExc)
 			return V_terzo_per_compensoBulk.TERZO_SENZA_MOD_PAG;
-		throw new ValidationException ("Inserire le modalit‡ di pagamento");
+		throw new ValidationException ("Inserire le modalit√† di pagamento");
 	}
 
 	if (getTipo_rapporto() == null) {
@@ -1373,7 +1373,7 @@ public int validaPercipiente(boolean throwExc) throws ValidationException{
 	if (getDt_registrazione().compareTo(getTipo_trattamento().getDt_ini_validita())<0 || getDt_registrazione().compareTo(getTipo_trattamento().getDt_fin_validita())>0) {
 		if (!throwExc)
 			return V_terzo_per_compensoBulk.TIPO_TRATT_NON_VALIDO;
-		throw new ValidationException("Il tipo trattamento selezionato non Ë valido alla data registrazione specificata");
+		throw new ValidationException("Il tipo trattamento selezionato non √® valido alla data registrazione specificata");
 	}
 
 	return V_terzo_per_compensoBulk.TUTTO_BENE;

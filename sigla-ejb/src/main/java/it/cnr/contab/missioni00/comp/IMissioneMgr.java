@@ -74,7 +74,7 @@ public abstract MissioneBulk cancellaTappePhisically(it.cnr.jada.UserContext use
   *  		Le scadenze vengono aggiunte alla lista delle scadenze congruenti.
   *	Validazione lista delle obbligazioni per le missioni
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle scadenze delle obbligazioni.
+  *			Si √® verificato un errore nel caricamento delle scadenze delle obbligazioni.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	Obbligazione definitiva
@@ -104,7 +104,7 @@ public abstract MissioneBulk cancellaTappePhisically(it.cnr.jada.UserContext use
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Disabilitazione filtro di selezione sul debitore dell'obbligazione
   *		PreCondition:
-  *			La scadenza dell'obbligazione ha un debitore diverso da quello della missione e non Ë di tipo "diversi"
+  *			La scadenza dell'obbligazione ha un debitore diverso da quello della missione e non √® di tipo "diversi"
   * 	PostCondition:
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Abilitazione filtro di selezione sulla data di scadenza
@@ -242,7 +242,7 @@ public abstract it.cnr.contab.docamm00.tabrif.bulk.CambioBulk findCambio(it.cnr.
  * Pre:  E' stata generata una richiesta di caricamento degli inquadramenti disponibili per il terzo specificato per una
  *       missione
  * Post: Il sistema restituisce l'elenco degli inquadramenti validi relativi al terzo della missione, con tipo 
- *       rapporto uguale a quello della missione e data di registrazione inclusa nell'intervallo di validit‡
+ *       rapporto uguale a quello della missione e data di registrazione inclusa nell'intervallo di validit√†
  *       dell'inquadramento
  *
  * @param	uc			lo UserContext che ha generato la richiesta
@@ -293,7 +293,7 @@ public abstract java.util.Collection findListabanche(it.cnr.jada.UserContext par
   * Pre-post-conditions:
   *
   * Nome:	Terzo NON selezionato o data inizio missione non valorizzata
-  * Pre: 	Non Ë stato selezionato un Terzo per la missione oppure non e'
+  * Pre: 	Non √® stato selezionato un Terzo per la missione oppure non e'
   *			stata inserita la data inizio missione
   * Post: 	Non vengono caricati i Tipi di rapporto
   *
@@ -317,7 +317,7 @@ public java.util.Collection findTipi_rapporto(UserContext userContext, OggettoBu
   * Pre-post-conditions:
   *
   * Nome: Tipo di Rapporto NON selezionato
-  * Pre: Non Ë stato selezionato il tipo di rapporto
+  * Pre: Non √® stato selezionato il tipo di rapporto
   * Post: Non vengono caricati i Tipi Trattamento
   *
   * Nome: Terzo selezionato
@@ -383,7 +383,7 @@ public abstract OggettoBulk inizializzaBulkPerInserimento(UserContext aUC, Ogget
  * Pre-post-conditions:
  *
  * Nome: inizializza Missione
- * Pre:  L'utente ha richiesto l'inizializzzaione dei dati di una missione gi‡ inserita per una eventuale modifica
+ * Pre:  L'utente ha richiesto l'inizializzzaione dei dati di una missione gi√† inserita per una eventuale modifica
  * Post: Il sistema carica la missione, il terzo della missione, gli inquadramenti e i tipi di rapporto,
  *       le tappe della missione (metodo 'caricaTappeMissione'), i dettagli di spesa della missione (metodo 'caricaDettagliMissione'),
  *       gli eventuali anticipi, obbligazioni o compensi (metodo 'loadCompenso')
@@ -418,16 +418,16 @@ public abstract it.cnr.contab.missioni00.docs.bulk.MissioneBulk inizializzaDivis
   * Pre-post-conditions
   *
   *	Nome: Missione ANNULLATA - Stato COFI uguale ad 'A' 
-  *	Pre: La missione Ë annullata
-  *	Post: Ritorna <true>. La missione Ë annullata
+  *	Pre: La missione √® annullata
+  *	Post: Ritorna <true>. La missione √® annullata
   *
   *	Nome: Missione NON ANNULLATA - Stato COFI diverso da 'A'
-  *	Pre: La missione non Ë annullata
-  *	Post: Ritorna <false>. La missione non Ë annullata
+  *	Pre: La missione non √® annullata
+  *	Post: Ritorna <false>. La missione non √® annullata
   *
   * @param userContext 	lo UserContext che ha generato la richiesta
   * @param missione 	La missione da controllare  
-  * @return vero se la missione Ë anullata
+  * @return vero se la missione √® anullata
   *			falso altrimenti
   *
 **/
@@ -638,7 +638,7 @@ public abstract void validaEsercizioDataRegistrazione(UserContext aUC, MissioneB
  *
  * Nome: calcola importi spesa per rimborso km
  * Pre:  E' stata richiesto il calcolo degli importi di una spesa per rimborso km
- * Post: Il sistema calcola "im_spesa_euro" moltiplicando i km per l'indennit‡ chilometrica (sempre in EURO).
+ * Post: Il sistema calcola "im_spesa_euro" moltiplicando i km per l'indennit√† chilometrica (sempre in EURO).
  *		 Il sistema inizializza pone : "im_spesa_euro", "im_spesa_divisa" e "im_totale_spesa" tutti uguali.
  * 
  * Nome: conversione importo spesa con tipologia diversa da rimborso km
@@ -683,13 +683,13 @@ public abstract it.cnr.contab.missioni00.docs.bulk.MissioneBulk validaMassimaliS
   *		  	Generata una ApplicationException con il messaggio:	"Nessuna obbligazione associata!"
   *
   * Nome: 	Importi obbligazione/scadenza NULLI
-  *	Pre: 	L'importo della obbligazione e/o della scadenza Ë nullo
+  *	Pre: 	L'importo della obbligazione e/o della scadenza √® nullo
   *	Post: 	Non viene consentita l'associazione della scadenza con la missione
   *		  	Generata una ApplicationException con il messaggio:	
-  *			"L'importo dell'obbligazione/scadenza Ë un dato obbligatorio"
+  *			"L'importo dell'obbligazione/scadenza √® un dato obbligatorio"
   *
   * Nome: 	Importo scadenza diverso da quello della missione
-  *	Pre: 	L'importo della scadenza Ë diverso da quello della missione
+  *	Pre: 	L'importo della scadenza √® diverso da quello della missione
   *	Post: 	Non viene consentita l'associazione della scadenza con la missione
   *		  	Generata una ApplicationException con il messaggio:
   *			"La scadenza di obbligazione associata ha un importo diverso da quello della missione!"
@@ -701,7 +701,7 @@ public abstract it.cnr.contab.missioni00.docs.bulk.MissioneBulk validaMassimaliS
   *			"La data della scadenza dell'obbligazione deve essere successiva alla data di registrazione della missione!"
   *  
   * Nome: 	Terzo selezionato NON valido
-  *	Pre: 	Il terzo selezionato Ë diverso dal terzo della missione oppure il tipo entit‡ NON Ë DIVERSI
+  *	Pre: 	Il terzo selezionato √® diverso dal terzo della missione oppure il tipo entit√† NON √® DIVERSI
   *	Post: 	Non viene consentita l'associazione della scadenza con la missione
   *		  	Generata una ApplicationException con il messaggio:
   *			"L'obbligazione deve avere un creditore valido!"
@@ -721,58 +721,58 @@ public abstract void validaObbligazione(UserContext userContext, it.cnr.contab.d
   * Pre-post-conditions
   *
   * Nome: 	Terzo assente
-  *	Pre: 	Non Ë stato selezionato un terzo
+  *	Pre: 	Non √® stato selezionato un terzo
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
   * 		"Inserire il terzo"
   *
   * Nome: 	Terzo non valido alla data registrazione
-  *	Pre: 	Il terzo selezionato non Ë valido alla data registrazione
+  *	Pre: 	Il terzo selezionato non √® valido alla data registrazione
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Terzo selezionato non Ë valido in Data Registrazione"
+  *			"Il Terzo selezionato non √® valido in Data Registrazione"
   *
   * Nome: 	Modalita di pagamento assente
-  *	Pre: 	Non Ë stato selezionata una modalita di pagamento
+  *	Pre: 	Non √® stato selezionata una modalita di pagamento
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Selezionare la Modalit‡ di pagamento"
+  *			"Selezionare la Modalit√† di pagamento"
   *
   * Nome: 	Modalita di pagamento non valida
   *	Pre: 	La modalita di pagamento non e' valida (con banca)
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Selezionare una Modalit‡ di pagamento valida"
+  *			"Selezionare una Modalit√† di pagamento valida"
   *
   * Nome: 	Tipo rapporto assente
-  *	Pre: 	Non Ë stato selezionato un tipo rapporto
+  *	Pre: 	Non √® stato selezionato un tipo rapporto
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
   *			"Selezionare il Tipo Rapporto"
   *
   * Nome: 	Tipo rapporto non valido alla data inizio missione
-  *	Pre: 	Il tipo rapporto selezionato non Ë valido in data inizio missione
+  *	Pre: 	Il tipo rapporto selezionato non √® valido in data inizio missione
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Tipo Rapporto selezionato non Ë valido alla Data Inizio Missione"
+  *			"Il Tipo Rapporto selezionato non √® valido alla Data Inizio Missione"
   *
   * Nome: 	Tipo trattamento assente
-  *	Pre: 	Non Ë stato selezionato un tipo trattamento
+  *	Pre: 	Non √® stato selezionato un tipo trattamento
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
   *			"Selezionare il Tipo Trattamento"
   *
   * Nome: 	Tipo trattamento non valido alla data registrazione
   *	Pre: 	Il tipo trattamento non e' valido alla data di registrazione
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Tipo Trattamento selezionato non Ë valido alla Data Registrazione"
+  *			"Il Tipo Trattamento selezionato non √® valido alla Data Registrazione"
   *
   * Nome: 	Inquadramento assente
-  *	Pre: 	Non Ë stato selezionato un inquadramento
+  *	Pre: 	Non √® stato selezionato un inquadramento
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
   *			"Selezionare l'Inquadramento"
   *
   * Nome: 	Inquadramento non valido alla data registrazione
   *	Pre: 	L'inquadramento non e' valido alla data di registrazione
   *	Post: 	Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Tipo Trattamento selezionato non Ë valido alla Data Registrazione"
+  *			"Il Tipo Trattamento selezionato non √® valido alla Data Registrazione"
   *  
   * Nome: 	Terzo valido
   *	Pre: 	Il terzo selezionato non ha errori
-  *	Post: 	Il terzo Ë valido e prosegue con l'operazione
+  *	Post: 	Il terzo √® valido e prosegue con l'operazione
   *
   * @param	userContext		lo UserContext che genera la richiesta
   * @param	missione		la missione di cui validare il terzo
@@ -787,43 +787,43 @@ public abstract void validaTerzo(UserContext userContext, MissioneBulk missione)
   * Pre-post-conditions
   *
   * Nome: 	Terzo assente
-  *	Pre: 	Non Ë stato selezionato un terzo
+  *	Pre: 	Non √® stato selezionato un terzo
   *	Post:	Ritorna il valore 1
   *
   * Nome: 	Terzo non valido alla data registrazione
-  *	Pre: 	Il terzo selezionato non Ë valido alla data registrazione
+  *	Pre: 	Il terzo selezionato non √® valido alla data registrazione
   *	Post: 	Ritorna il valore 2
   *
   * Nome: 	Modalita di pagamento assente
-  *	Pre: 	Non Ë stato selezionata una modalita di pagamento
+  *	Pre: 	Non √® stato selezionata una modalita di pagamento
   *	Post: 	Ritorna il valore 3
   *
   * Nome: 	Banca non inserita
-  *	Pre: 	Non Ë stato selezionato un conto corretto
+  *	Pre: 	Non √® stato selezionato un conto corretto
   *	Post: 	Ritorna il valore 4
   *
   * Nome: 	Tipo rapporto assente
-  *	Pre: 	Non Ë stato selezionato un tipo rapporto
+  *	Pre: 	Non √® stato selezionato un tipo rapporto
   *	Post: 	Ritorna il valore 5
   *
   * Nome: 	Tipo rapporto non valido alla data inizio missione
-  *	Pre: 	Il tipo rapporto selezionato non Ë valido in data inizio missione
+  *	Pre: 	Il tipo rapporto selezionato non √® valido in data inizio missione
   *	Post: 	Ritorna il valore 6
   *
   *	Nome: 	Inquadramento assente
-  *	Pre: 	Non Ë stato selezionato un inquadramento
+  *	Pre: 	Non √® stato selezionato un inquadramento
   *	Post: 	Ritorna il valore 7
   *
   * Nome: 	Inquadramento non valido alla data registrazione
-  *	Pre: 	L'inquadramento selezionato non Ë valido in data registrazione
+  *	Pre: 	L'inquadramento selezionato non √® valido in data registrazione
   *	Post: 	Ritorna il valore 8
   * 
   *	Nome: 	Tipo trattamento assente
-  *	Pre: 	Non Ë stato selezionato un tipo trattamento
+  *	Pre: 	Non √® stato selezionato un tipo trattamento
   *	Post: 	Ritorna il valore 9
   *
   * Nome: 	Tipo trattamento non valido alla data registrazione
-  *	Pre: 	Il tipo trattamento selezionato non Ë valido in data registrazione
+  *	Pre: 	Il tipo trattamento selezionato non √® valido in data registrazione
   *	Post: 	Ritorna il valore 10
   *  
   * Nome: 	Terzo valido

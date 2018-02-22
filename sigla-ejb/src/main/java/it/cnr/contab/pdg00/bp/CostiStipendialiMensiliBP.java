@@ -30,8 +30,8 @@ public CostiStipendialiMensiliBP(String function) throws BusinessProcessExceptio
  * Crea il riferimento alla componente CNRPDG00_EJB_CostiDipendenteComponentSession
  *
  * @return Remote interface della componente
- * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non è possibile effettuare l'operazione
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non Ã¨ possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public CostiDipendenteComponentSession createComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
 	return (CostiDipendenteComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPDG00_EJB_CostiDipendenteComponentSession",CostiDipendenteComponentSession.class);
@@ -63,7 +63,7 @@ public boolean isAnnullaScritturaButtonEnabled() {
 	//return 
 		//getStato_mensilita() != null &&
 		//getStato_mensilita().getFl_stato_scarico().booleanValue();
-	// Ritorno sempre true perchè deve essere possibile fare una selezione
+	// Ritorno sempre true perchÃ¨ deve essere possibile fare una selezione
 	// multipla
 	return true;
 }
@@ -71,7 +71,7 @@ public boolean isGeneraScritturaButtonEnabled() {
 	//return 
 		//getStato_mensilita() != null &&
 		//!getStato_mensilita().getFl_stato_scarico().booleanValue();
-	// Ritorno sempre true perchè deve essere possibile fare una selezione
+	// Ritorno sempre true perchÃ¨ deve essere possibile fare una selezione
 	// multipla
 	return true;
 }

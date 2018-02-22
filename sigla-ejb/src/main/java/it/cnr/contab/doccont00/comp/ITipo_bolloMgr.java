@@ -21,7 +21,7 @@ public interface ITipo_bolloMgr extends ICRUDMgr
   *      la richiesta di creazione di un tipo bollo di default e' stata generata ed esiste un altro tipo bollo
   *      definito come default
   *    PostCondition:
-  *      una ComponentException viene generata per segnalare all'utente l'impossibilit‡ ad effettuare l'inserimento
+  *      una ComponentException viene generata per segnalare all'utente l'impossibilit√† ad effettuare l'inserimento
   *  Creazione di un tipo bollo default - OK
   *    PreCondition:
   *      la richiesta di creazione di un tipo bollo di default e' stata generata e non esiste un altro tipo bollo

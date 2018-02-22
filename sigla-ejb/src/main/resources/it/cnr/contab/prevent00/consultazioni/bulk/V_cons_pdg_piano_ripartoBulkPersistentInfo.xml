@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <SQLPersistentInfo
 	persistentClassName="it.cnr.contab.prevent00.consultazioni.bulk.V_cons_pdg_piano_ripartoBulk"
 	homeClassName="it.cnr.contab.prevent00.consultazioni.bulk.V_cons_pdg_piano_ripartoHome">

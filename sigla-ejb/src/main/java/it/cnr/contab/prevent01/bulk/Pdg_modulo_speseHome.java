@@ -166,7 +166,7 @@ public class Pdg_modulo_speseHome extends BulkHome {
 	}	
 	/**
 	 * Ritorna l'SQLBuilder utile per recuperare i dati originali nella tabella PDG_MODULO_SPESE_GEST individuati
-	 * dal fatto che il CDR_Assegnatario appartiene allo stesso CDS del Centro di responsabilit‡ principale  
+	 * dal fatto che il CDR_Assegnatario appartiene allo stesso CDS del Centro di responsabilit√† principale  
 	 * relativi alla testata in uso.
 	 *
 	 * @param testata La testata in uso.
@@ -202,7 +202,7 @@ public class Pdg_modulo_speseHome extends BulkHome {
 	}	
 	/**
 	 * Recupera tutti i dati originali nella tabella PDG_MODULO_SPESE_GEST individuati
-	 * dal fatto che il CDR_Assegnatario appartiene allo stesso CDS del Centro di responsabilit‡ principale  
+	 * dal fatto che il CDR_Assegnatario appartiene allo stesso CDS del Centro di responsabilit√† principale  
 	 * relativi alla testata in uso.
 	 * 
 	 * @param testata La testata in uso.

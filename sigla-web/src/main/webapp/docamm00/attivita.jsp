@@ -18,7 +18,7 @@
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<title>Codici Attivit‡ </title>
+<title>Codici Attivit√† </title>
 </head>
 <body class="Form">
 

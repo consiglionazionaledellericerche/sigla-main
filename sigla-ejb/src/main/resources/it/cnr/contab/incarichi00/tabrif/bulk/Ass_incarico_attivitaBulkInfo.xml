@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
-	shortDescription="Associazione incarico/attività"
-	longDescription="Associazione incarico/attività" >
+	shortDescription="Associazione incarico/attivitÃ "
+	longDescription="Associazione incarico/attivitÃ " >
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -39,7 +39,7 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Tipo Attività" />
+		label="Tipo AttivitÃ " />
 	<fieldProperty
 		name="cd_tipo_attivita"
 		property="tipo_attivita.cd_tipo_attivita"
@@ -52,7 +52,7 @@
 	<fieldProperty
 		name="ds_tipo_attivita"
 		property="tipo_attivita.ds_tipo_attivita"
-		label="Tipo Attività" />
+		label="Tipo AttivitÃ " />
 	<fieldProperty
 		name="tipo_natura"
 		property="tipo_natura"

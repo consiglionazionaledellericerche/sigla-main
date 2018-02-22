@@ -61,7 +61,7 @@ protected void basicCalcolaImportoDisponibileNC(
 	Fattura_passiva_rigaIBulk rigaFP = rigaND.getRiga_fattura_origine();
 	java.math.BigDecimal nuovoImportoDisponibile = rigaFP.getIm_diponibile_nc().add(totaleDiRiga.subtract(vecchioTotale));
 	if (nuovoImportoDisponibile.signum() < 0)
-		throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo di storno massimo ancora disponibile Ë di " + rigaFP.getIm_diponibile_nc() + " EUR!");
+		throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo di storno massimo ancora disponibile √® di " + rigaFP.getIm_diponibile_nc() + " EUR!");
 	rigaFP.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 }
 /**
@@ -136,7 +136,7 @@ private Forward basicDoAddebitaDettagli(
 				hook.addParameter("dettagliDaAddebitare", dettagliDaAddebitare);
 				forward = slbp;
 			} else {
-				throw new it.cnr.jada.comp.ApplicationException("Non sono disponibili scadenze di obbligazioni di altre fatture dello stesso fornitore per i dettagli gi‡ pagati!");
+				throw new it.cnr.jada.comp.ApplicationException("Non sono disponibili scadenze di obbligazioni di altre fatture dello stesso fornitore per i dettagli gi√† pagati!");
 			}
 		}
 		return forward;
@@ -168,7 +168,7 @@ protected void basicDoCalcolaTotaliDiRiga(
 	Fattura_passiva_rigaIBulk rigaFP = rigaND.getRiga_fattura_origine();
 	java.math.BigDecimal nuovoImportoDisponibile = rigaFP.getIm_diponibile_nc().add(totaleDiRiga.subtract(vecchioTotale));
 	if (nuovoImportoDisponibile.signum() < 0)
-		throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo di storno massimo ancora disponibile Ë di " + rigaFP.getIm_diponibile_nc() + " EUR!");
+		throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo di storno massimo ancora disponibile √® di " + rigaFP.getIm_diponibile_nc() + " EUR!");
 	rigaFP.setIm_diponibile_nc(nuovoImportoDisponibile.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 	doSelectObbligazioni(context);
 }
@@ -295,7 +295,7 @@ public Forward doAddToCRUDMain_Obbligazioni_DettaglioObbligazioni(ActionContext 
 				selectedModels.add(riga);
 		}
 		if (selectedModels.isEmpty())
-			throw new it.cnr.jada.comp.ApplicationException("Tutti i dettagli sono gi‡ stati addebitati!");
+			throw new it.cnr.jada.comp.ApplicationException("Tutti i dettagli sono gi√† stati addebitati!");
 		it.cnr.jada.util.action.SelezionatoreListaBP slbp = (it.cnr.jada.util.action.SelezionatoreListaBP) select(
 					context,
 					new it.cnr.jada.util.ListRemoteIterator(selectedModels),
@@ -384,7 +384,7 @@ public Forward doBringBackConfirmDeleteRow(ActionContext context) {
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce pi˘ di un risultato viene creato un
+ * Se la ricerca fornisce pi√π di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -475,7 +475,7 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context, String pref
 		java.math.BigDecimal importoOriginale = (java.math.BigDecimal)notaDiDebito.getFattura_passiva_ass_totaliMap().get(scadenza);
 		java.math.BigDecimal delta = importoAttuale.subtract(importoOriginale);
 		if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(delta) == 0)
-			throw new it.cnr.jada.comp.ApplicationException("La modifica in automatico non Ë disponibile!");
+			throw new it.cnr.jada.comp.ApplicationException("La modifica in automatico non √® disponibile!");
 		try {
 			scadenza = (Obbligazione_scadenzarioBulk)h.modificaScadenzaInAutomatico(
 														context.getUserContext(), 
@@ -664,7 +664,7 @@ public Forward doRemoveFromCRUDMain_Obbligazioni(ActionContext context) {
 		if (bp.isDocumentoContabileModificato(obbligazione))
 			return handleException(
 							context, 
-							new it.cnr.jada.comp.ApplicationException("La scadenza \"" + obbligazione.getDs_scadenza() + "\" Ë stata gi‡ modificata. Impossibile cancellarla."));
+							new it.cnr.jada.comp.ApplicationException("La scadenza \"" + obbligazione.getDs_scadenza() + "\" √® stata gi√† modificata. Impossibile cancellarla."));
 		Nota_di_debitoBulk ndD = (Nota_di_debitoBulk)bp.getModel();
 		java.util.Vector models = (java.util.Vector)ndD.getFattura_passiva_obbligazioniHash().get(obbligazione);
 		try {
@@ -678,11 +678,11 @@ public Forward doRemoveFromCRUDMain_Obbligazioni(ActionContext context) {
 						throw new it.cnr.jada.comp.ApplicationException("Impossibile scollegare l'impegno \"" + 
 														+ obbligazione.getEsercizio_originale().intValue()
 														+ "/" + obbligazione.getPg_obbligazione().longValue() + 
-														"\" perchË il dettaglio collegato \"" + 
+														"\" perch√® il dettaglio collegato \"" + 
 														((fpr.getDs_riga_fattura() != null) ?
 															fpr.getDs_riga_fattura() :
 															String.valueOf(fpr.getProgressivo_riga().longValue())) + 
-														"\" Ë associato a mandato.");
+														"\" √® associato a mandato.");
 				}
 				scollegaDettagliDaObbligazione(context, (java.util.List)models.clone());
 			}
@@ -722,13 +722,13 @@ public Forward doRemoveFromCRUDMain_Obbligazioni_DettaglioObbligazioni(ActionCon
 				Nota_di_debito_rigaBulk dettaglio = (Nota_di_debito_rigaBulk)i.next();
 				Obbligazione_scadenzarioBulk obbligazioneSelezionata = dettaglio.getObbligazione_scadenziario();
 				if (bp.isDocumentoContabileModificato(obbligazioneSelezionata))
-					throw new it.cnr.jada.comp.ApplicationException("La scadenza \"" + obbligazioneSelezionata.getDs_scadenza() + "\" Ë stata gi‡ modificata. Impossibile cancellarla.");
+					throw new it.cnr.jada.comp.ApplicationException("La scadenza \"" + obbligazioneSelezionata.getDs_scadenza() + "\" √® stata gi√† modificata. Impossibile cancellarla.");
 				if (dettaglio.getTi_associato_manrev() != null && dettaglio.ASSOCIATO_A_MANDATO.equalsIgnoreCase(dettaglio.getTi_associato_manrev()))
 					throw new it.cnr.jada.comp.ApplicationException("Impossibile scollegare il dettaglio \"" + 
 													((dettaglio.getDs_riga_fattura() != null) ?
 														dettaglio.getDs_riga_fattura() :
 														String.valueOf(dettaglio.getProgressivo_riga().longValue())) + 
-													"\" perchË associato a mandato.");
+													"\" perch√® associato a mandato.");
 			}
 		scollegaDettagliDaObbligazione(context, models);
 	} catch (it.cnr.jada.comp.ComponentException e) {
@@ -922,7 +922,7 @@ public Forward doSelezionaDettaglioPerNdD(ActionContext context) {
 				Fattura_passiva_rigaIBulk dettaglio = null;
 				if (elementsToDischarged.size() == 1) {
 					dettaglio = (Fattura_passiva_rigaIBulk)elementsToDischarged.firstElement();
-					msg = "Il dettaglio per \"" + dettaglio.getBene_servizio().getDs_bene_servizio() + "\" Ë gi‡ stato inserito\no il bene servizio inserito Ë un bene di tipo sconto/abbuono!";
+					msg = "Il dettaglio per \"" + dettaglio.getBene_servizio().getDs_bene_servizio() + "\" √® gi√† stato inserito\no il bene servizio inserito √® un bene di tipo sconto/abbuono!";
 				} else {
 					msg = "I dettagli per ";
 					for (java.util.Iterator i = elementsToDischarged.iterator(); i.hasNext();) {
@@ -931,7 +931,7 @@ public Forward doSelezionaDettaglioPerNdD(ActionContext context) {
 						if (!(elementsToDischarged.indexOf(dettaglio) == elementsToDischarged.size()-1))
 							msg += ", ";
 					}
-					msg += " sono gi‡ stati inseriti\no il bene servizio inserito Ë un bene di tipo sconto/abbuono!";
+					msg += " sono gi√† stati inseriti\no il bene servizio inserito √® un bene di tipo sconto/abbuono!";
 				}
 				bp.setMessage(msg);
 			}
@@ -1030,7 +1030,7 @@ private void scollegaDettagliDaObbligazione(ActionContext context, java.util.Lis
 			Nota_di_debito_rigaBulk dettaglio = (Nota_di_debito_rigaBulk)i.next();
 			try {
 				if (!dettaglio.STATO_CONTABILIZZATO.equals(dettaglio.getStato_cofi()))
-					throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile scollegare il dettaglio \"" + dettaglio.getDs_riga_fattura() + "\". Questa operazione Ë permessa solo per dettagli in stato \"" + dettaglio.STATO.get(dettaglio.STATO_CONTABILIZZATO) + "\".");
+					throw new it.cnr.jada.comp.ApplicationException("Non √® possibile scollegare il dettaglio \"" + dettaglio.getDs_riga_fattura() + "\". Questa operazione √® permessa solo per dettagli in stato \"" + dettaglio.STATO.get(dettaglio.STATO_CONTABILIZZATO) + "\".");
 			} catch (it.cnr.jada.comp.ApplicationException e) {
 				try {
 					CRUDVirtualObbligazioneBP.rollbackToSafePoint(context);

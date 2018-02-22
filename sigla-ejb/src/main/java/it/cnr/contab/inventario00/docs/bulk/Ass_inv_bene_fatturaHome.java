@@ -61,7 +61,7 @@ public void makePersistentAssocia(UserContext userContext, Ass_inv_bene_fatturaB
 		for (Iterator i = beni_apg.iterator();i.hasNext();){
 			Inventario_beni_apgBulk bene_apg=(Inventario_beni_apgBulk)i.next();
 				try{
-				//r.p. Prendo il progressivo dalla fattura_passivaBulk perchè viene aggiornato
+				//r.p. Prendo il progressivo dalla fattura_passivaBulk perchÃ¨ viene aggiornato
 					nuova_associazione.setRiga_fatt_pass (new Fattura_passiva_rigaIBulk(fattura_passiva.getCd_cds(),fattura_passiva.getCd_unita_organizzativa(),
 							fattura_passiva.getEsercizio(),fattura_passiva.getPg_fattura_passiva(),bene_apg.getProgressivo_riga()));
 					nuova_associazione.getRiga_fatt_pass().setFattura_passivaI(new Fattura_passiva_IBulk(fattura_passiva.getCd_cds(),fattura_passiva.getCd_unita_organizzativa(),
@@ -70,7 +70,7 @@ public void makePersistentAssocia(UserContext userContext, Ass_inv_bene_fatturaB
 					nuova_associazione.setProgressivo(bene_apg.getProgressivo());		
 					nuova_associazione.setTest_buono(new Buono_carico_scaricoBulk(bene_apg.getPg_inventario(),bene_apg.getTi_documento(),bene_apg.getEsercizio(),bene_apg.getPg_buono_c_s()));
 					nuova_associazione.setUser(fattura_passiva.getUser());
-					//perchè gia' loccata in modifica
+					//perchÃ¨ gia' loccata in modifica
 					nuova_associazione.setPg_riga(new Long(
 							(Long)findAndLockMax( nuova_associazione, "pg_riga", new Long(0))).longValue()+1);
 					insert(nuova_associazione, userContext);
@@ -166,7 +166,7 @@ public void makePersistentAssocia(UserContext userContext, Ass_inv_bene_fatturaB
 		Inventario_beni_apgBulk bene_apg=(Inventario_beni_apgBulk)i.next();
 		try{
 		
-		//r.p. Prendo il progressivo dalla fattura_passivaBulk perchè viene aggiornato
+		//r.p. Prendo il progressivo dalla fattura_passivaBulk perchÃ¨ viene aggiornato
 		nuova_associazione.setRiga_fatt_att (new Fattura_attiva_rigaIBulk(fattura.getCd_cds(),fattura.getCd_unita_organizzativa(),
 				fattura.getEsercizio(),fattura.getPg_fattura_attiva(),bene_apg.getProgressivo_riga()));
 		nuova_associazione.getRiga_fatt_att().setFattura_attivaI(new Fattura_attiva_IBulk(fattura.getCd_cds(),fattura.getCd_unita_organizzativa(),
@@ -204,7 +204,7 @@ public void makePersistentAssocia(UserContext userContext, Ass_inv_bene_fatturaB
 	for (Iterator i = beni_apg.iterator();i.hasNext();){
 		Inventario_beni_apgBulk bene_apg=(Inventario_beni_apgBulk)i.next();
 		try{
-		//r.p. Prendo il progressivo dalla fattura_passivaBulk perchè viene aggiornato
+		//r.p. Prendo il progressivo dalla fattura_passivaBulk perchÃ¨ viene aggiornato
 		nuova_associazione.setRiga_doc_gen(new Documento_generico_rigaBulk(doc.getCd_cds(),doc.getCd_tipo_documento_amm(),doc.getCd_unita_organizzativa(),
 				doc.getEsercizio(),doc.getPg_documento_generico(),bene_apg.getProgressivo_riga()));
 		nuova_associazione.getRiga_doc_gen().setDocumento_generico(new Documento_genericoBulk(doc.getCd_cds(),doc.getCd_tipo_documento_amm(),doc.getCd_unita_organizzativa(),
@@ -213,7 +213,7 @@ public void makePersistentAssocia(UserContext userContext, Ass_inv_bene_fatturaB
 		nuova_associazione.setProgressivo(bene_apg.getProgressivo());		
 		nuova_associazione.setTest_buono(new Buono_carico_scaricoBulk(bene_apg.getPg_inventario(),bene_apg.getTi_documento(),bene_apg.getEsercizio(),bene_apg.getPg_buono_c_s()));
 		nuova_associazione.setUser(doc.getUser());
-		//perchè gia' loccata in modifica
+		//perchÃ¨ gia' loccata in modifica
 		nuova_associazione.setPg_riga(new Long(
 				(Long)findAndLockMax( nuova_associazione, "pg_riga", new Long(0))).longValue()+1);
 		insert(nuova_associazione, userContext);

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="https://contab.cnr.it/schema/SIGLA"
@@ -40,7 +40,7 @@
 		maxLength="10"
 		enabledOnEdit="false"
 		nullable="false"
-		label="n° Mandato" />
+		label="nÂ° Mandato" />
 	<fieldProperty
 		name="esercizioObbligazione"
 		property="esercizioObbligazione"
@@ -67,7 +67,7 @@
 		maxLength="10"
 		enabledOnEdit="false"
 		nullable="false"
-		label="n°Impegno" />
+		label="nÂ°Impegno" />
 	<fieldProperty
 		name="pgObbligazioneScadenzario"
 		property="pgObbligazioneScadenzario"
@@ -131,7 +131,7 @@
 		maxLength="10"
 		enabledOnEdit="false"
 		nullable="false"
-		label="n° Doc.Amm." />
+		label="nÂ° Doc.Amm." />
 	<fieldProperty
 		name="cdCup"
 		property="cdCup"

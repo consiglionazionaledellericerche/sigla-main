@@ -120,8 +120,8 @@ public class CRUDPdgPianoRipSpeseAccentAction extends it.cnr.jada.util.action.CR
 	 * Gestione della richiesta di aggiornare al valore "Zero" tutti gli importi null associati al CDR 
 	 * Tale operazione serve in quanto:
 	 *
-	 * 1) se l'importo è nullo i CDR possono caricare importi senza controllo
-	 * 2) se l'importo è 0 i CDR non possono caricare importi nel Preventivo
+	 * 1) se l'importo Ã¨ nullo i CDR possono caricare importi senza controllo
+	 * 2) se l'importo Ã¨ 0 i CDR non possono caricare importi nel Preventivo
 	 *
 	 * @param context	L'ActionContext della richiesta
 	 * @return Il Forward alla pagina di risposta

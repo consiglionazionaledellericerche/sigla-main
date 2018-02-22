@@ -20,7 +20,7 @@ import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.*;
 
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Mandato Automatico da impegni
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Mandato Automatico da impegni
  */
 public class MandatoAutomaticoWizardBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	private final SimpleDetailCRUDController impegni = new SimpleDetailCRUDController("Impegni",V_obbligazioneBulk.class,"impegniColl",this);
@@ -46,7 +46,7 @@ public class MandatoAutomaticoWizardBP extends it.cnr.jada.util.action.SimpleCRU
 	 * <!-- @TODO: da completare -->
 	 * 
 	 *
-	 * @param function	La funzione con cui Ë stato creato il BusinessProcess
+	 * @param function	La funzione con cui √® stato creato il BusinessProcess
 	 * @param codice_cds	
 	 * @param importo	
 	 */
@@ -90,11 +90,11 @@ public class MandatoAutomaticoWizardBP extends it.cnr.jada.util.action.SimpleCRU
 			setStatus(VIEW);
 			MandatoAutomaticoWizardBulk wizard = (MandatoAutomaticoWizardBulk) getModel();
 			if (wizard.getMandatiColl().size() == 0 )
-				setMessage( "Attenzione! Nessun mandato Ë stato generato.");
+				setMessage( "Attenzione! Nessun mandato √® stato generato.");
 			else
 			{
 				if (wizard.getMandatiColl().size() == 1 )
-					setMessage( "Il Mandato automatico" + (wizard.isAutomatismoDaImpegni()?" a favore del Terzo " + wizard.getMandato_terzo().getTerzo().getCd_terzo().toString():"") + " Ë stato generato.");
+					setMessage( "Il Mandato automatico" + (wizard.isAutomatismoDaImpegni()?" a favore del Terzo " + wizard.getMandato_terzo().getTerzo().getCd_terzo().toString():"") + " √® stato generato.");
 				if (wizard.getMandatiColl().size() == 2 )
 					setMessage( "I Mandati automatici" + (wizard.isAutomatismoDaImpegni()?" a favore del Terzo " + wizard.getMandato_terzo().getTerzo().getCd_terzo().toString():"") + " sono stati generati.");
 
@@ -138,7 +138,7 @@ public class MandatoAutomaticoWizardBP extends it.cnr.jada.util.action.SimpleCRU
 
 	/**
 	 * Metodo utilizzato per creare una toolbar applicativa personalizzata.
-	 * @return null In questo caso la toolbar Ë vuota
+	 * @return null In questo caso la toolbar √® vuota
 	 */
 	protected it.cnr.jada.util.jsp.Button[] createToolbar() 
 	{
@@ -147,9 +147,9 @@ public class MandatoAutomaticoWizardBP extends it.cnr.jada.util.action.SimpleCRU
 	
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'codice_terzo'
+	 * Restituisce il valore della propriet√† 'codice_terzo'
 	 *
-	 * @return Il valore della propriet‡ 'codice_terzo'
+	 * @return Il valore della propriet√† 'codice_terzo'
 	 */
 	public Integer getCodice_terzo() {
 		return codice_terzo;
@@ -176,7 +176,7 @@ public class MandatoAutomaticoWizardBP extends it.cnr.jada.util.action.SimpleCRU
 	/**
 	 *	Abilito il bottone di emissione del mandato.
 	 *	@return			TRUE 	Abilitato se non sono ancora stati emessi mandati
-	 *					FALSE 	Non Ë abilitato se sono gi‡ stati emessi i mandati
+	 *					FALSE 	Non √® abilitato se sono gi√† stati emessi i mandati
 	 */
     public boolean isEmettiMandatoButtonEnabled() {
 		return ((MandatoAutomaticoWizardBulk)getModel()).getMandatiColl().size() ==  0 ;
@@ -185,8 +185,8 @@ public class MandatoAutomaticoWizardBP extends it.cnr.jada.util.action.SimpleCRU
 	
 	/**
 	 *	Abilito il flag di calcolo automatico.
-	 *	@return			TRUE 	Il flag di calcolo automatico Ë abilitato
-	 *					FALSE 	Il flag di calcolo automatico non Ë abilitato 
+	 *	@return			TRUE 	Il flag di calcolo automatico √® abilitato
+	 *					FALSE 	Il flag di calcolo automatico non √® abilitato 
 	 */
 	public boolean isFlCalcoloAutomaticoCheckboxEnabled() {
 		return ((MandatoAutomaticoWizardBulk)getModel()).getMandatiColl().size() ==  0 ;
@@ -194,8 +194,8 @@ public class MandatoAutomaticoWizardBP extends it.cnr.jada.util.action.SimpleCRU
 	
 	/**
 	 *	Visualizzo il flag di calcolo automatico.
-	 *	@return			TRUE 	Il flag di calcolo automatico Ë abilitato
-	 *					FALSE 	Il flag di calcolo automatico non Ë abilitato 
+	 *	@return			TRUE 	Il flag di calcolo automatico √® abilitato
+	 *					FALSE 	Il flag di calcolo automatico non √® abilitato 
 	 */
 	public boolean isFlCalcoloAutomaticoCheckboxVisible() {
 		return false ;
@@ -204,7 +204,7 @@ public class MandatoAutomaticoWizardBP extends it.cnr.jada.util.action.SimpleCRU
 	/**
 	 *	Gestisce l'abilitazione o meno del bottone di visualizzazione di un mandato di accreditamento
 	 *	@return			TRUE 	Abilitato se un mandato e' stato selezionato nella lista dei mandati
-	 *					FALSE 	Non Ë abilitato se nessun mandato e' stato selezionato nella lista dei mandati
+	 *					FALSE 	Non √® abilitato se nessun mandato e' stato selezionato nella lista dei mandati
 	 */
 	public boolean isVisualizzaMandatoButtonEnabled() {
 		return getMandati().getModel() != null  ;
@@ -212,7 +212,7 @@ public class MandatoAutomaticoWizardBP extends it.cnr.jada.util.action.SimpleCRU
 	
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'codice_terzo'
+	 * Imposta il valore della propriet√† 'codice_terzo'
 	 *
 	 * @param newCodice_cds	Il valore da assegnare a 'codice_terzo'
 	 */

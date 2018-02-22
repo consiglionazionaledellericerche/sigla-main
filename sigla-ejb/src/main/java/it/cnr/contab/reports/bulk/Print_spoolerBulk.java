@@ -41,7 +41,7 @@ public class Print_spoolerBulk extends Print_spoolerBase {
 		ti_visibilitaKeys = new OrderedHashtable();
 		ti_visibilitaKeys.put(TI_VISIBILITA_UTENTE, "Utente");
 		ti_visibilitaKeys.put(TI_VISIBILITA_CDR, "Cdr");
-		ti_visibilitaKeys.put(TI_VISIBILITA_UNITA_ORGANIZZATIVA, "Unit‡ org.");
+		ti_visibilitaKeys.put(TI_VISIBILITA_UNITA_ORGANIZZATIVA, "Unit√† org.");
 		ti_visibilitaKeys.put(TI_VISIBILITA_CDS, "Cds");
 		ti_visibilitaKeys.put(TI_VISIBILITA_CNR, "Ente");
 		ti_visibilitaKeys.put(TI_VISIBILITA_PUBLICO, "Pubblico");

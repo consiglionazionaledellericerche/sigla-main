@@ -140,7 +140,7 @@
 		else if (anticipo.getModalita_pagamento() != null && (anticipo.getV_terzo() != null && anticipo.getV_terzo().getCrudStatus() != anticipo.getV_terzo().UNDEFINED)) 
 		{ %>
 			<span class="FormLabel" style="color:red">
-				Nessun riferimento trovato per la modalit‡ di pagamento selezionata!
+				Nessun riferimento trovato per la modalit√† di pagamento selezionata!
 			</span>
 	<%	} %>
   	</td>

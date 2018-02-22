@@ -164,9 +164,9 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		return super.initializeForInsert(bp,context);
 	}
 	/**
-	 * Restituisce il valore della propriet‡ 'ds_responsabile'
+	 * Restituisce il valore della propriet√† 'ds_responsabile'
 	 *
-	 * @return Il valore della propriet‡ 'ds_responsabile'
+	 * @return Il valore della propriet√† 'ds_responsabile'
 	 */
 	public java.lang.String getDs_responsabile() {
 		if ( responsabile != null && responsabile.getAnagrafico() != null &&
@@ -176,9 +176,9 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 
 	}
 	/**
-	 * Restituisce il valore della propriet‡ 'ds_firmatario'
+	 * Restituisce il valore della propriet√† 'ds_firmatario'
 	 *
-	 * @return Il valore della propriet‡ 'ds_responsabile'
+	 * @return Il valore della propriet√† 'ds_responsabile'
 	 */
 	public java.lang.String getDs_firmatario() {
 		if ( getFirmatario() != null && getFirmatario().getAnagrafico() != null &&

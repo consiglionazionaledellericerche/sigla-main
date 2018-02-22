@@ -117,7 +117,7 @@
 		else if (missione.getModalita_pagamento() != null && (missione.getV_terzo() != null && missione.getV_terzo().getCrudStatus() != missione.getV_terzo().UNDEFINED)) 
 		{ %>
 			<span class="FormLabel" style="color:red">
-				Nessun riferimento trovato per la modalit‡ di pagamento selezionata!
+				Nessun riferimento trovato per la modalit√† di pagamento selezionata!
 			</span>
 	<%	} %>
   	</td>

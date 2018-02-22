@@ -94,7 +94,7 @@ public java.math.BigDecimal getPgStampa(it.cnr.jada.UserContext userContext) thr
   *    PostCondition:
   *      ritorna un valore 
   *    PreCondition:
-  *      Si è verificato un errore.
+  *      Si Ã¨ verificato un errore.
   *    PostCondition:
   *      Viene inviato un messaggio con il relativo errore ritornato dal DB
  */
@@ -281,7 +281,7 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectVoce_fByClause(
  * @param es <code>Integer</code>  l'esercizio da verificare
  * @param cd_cds <code>String</code>  il cds da verificare 
  *
- * @return FALSE se per il cds interessato non è stato inserito nessun esercizio o se l'esercizio non è in stato di "aperto"
+ * @return FALSE se per il cds interessato non Ã¨ stato inserito nessun esercizio o se l'esercizio non Ã¨ in stato di "aperto"
  *		     TRUE in tutti gli altri casi
  *
  */

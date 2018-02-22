@@ -121,7 +121,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 		CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)context.getBusinessProcess();
 
 		// valore di default nel caso non fose valorizzato
-		String columnDescription="Codice Modulo di Attivit‡";
+		String columnDescription="Codice Modulo di Attivit√†";
 
 		// nome del campo nel file xml
 		final String propName="cd_progetto";
@@ -137,13 +137,13 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 				for (Iterator iterator = ((CdrBulk)bp.getModel()).getDettagli().iterator(); iterator.hasNext();) {
 					Pdg_moduloBulk modulo = (Pdg_moduloBulk) iterator.next();
 					if (modulo.getPg_progetto()!=null && modulo.getPg_progetto().equals(progetto.getPg_progetto())) {
-						setErrorMessage(context,"Attenzione: il valore immesso in "+columnDescription+" Ë gi‡ presente!");
+						setErrorMessage(context,"Attenzione: il valore immesso in "+columnDescription+" √® gi√† presente!");
 						return context.findDefaultForward();
 					}
 				}
 			}
 			if (progetto.getLivello()==null || !progetto.getLivello().equals(bp.getParametriCnr().getLivelloProgetto())) {
-				setErrorMessage(context,"Attenzione: il valore immesso in "+columnDescription+" non Ë valido!");
+				setErrorMessage(context,"Attenzione: il valore immesso in "+columnDescription+" non √® valido!");
 				return context.findDefaultForward();
 			}
 		}
@@ -163,10 +163,10 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			return handleException(context,e);
 		}
 		CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)context.getBusinessProcess();
-		String message = "Lo stato del Piano di Gestione Preliminare per il modulo di attivit‡ verr‡ cambiato.\n"
+		String message = "Lo stato del Piano di Gestione Preliminare per il modulo di attivit√† verr√† cambiato.\n"
 						+ "Vuoi continuare?";
 		if (bp.getParametriCnr().getFl_nuovo_pdg())
-			message = "Lo stato del Piano di Gestione Preliminare per il progetto verr‡ cambiato.\n"
+			message = "Lo stato del Piano di Gestione Preliminare per il progetto verr√† cambiato.\n"
 					+ "Vuoi continuare?";
 		return openConfirm(context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doCambiaStatoConfermato");
 	}
@@ -202,7 +202,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 							bp.getCrudDettagli().setSelection(context, sel);
 						} catch(Throwable e) {
 							bp.cerca(context);
-							setErrorMessage(context,"Modulo di attivit‡ "+mod.getCd_progetto()+". "+e.getMessage());
+							setErrorMessage(context,"Modulo di attivit√† "+mod.getCd_progetto()+". "+e.getMessage());
 							return context.findDefaultForward();
 						}
 					}
@@ -230,7 +230,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 		try {
 			fillModel(context);
 			if (bp.isDirty()) {
-				setErrorMessage(context,"Attenzione: Ë necessario salvare le modifiche effettuate!");
+				setErrorMessage(context,"Attenzione: √® necessario salvare le modifiche effettuate!");
 				return context.findDefaultForward();
 			}
 			BulkBP nbp = (BulkBP)context.getUserInfo().createBusinessProcess(
@@ -255,7 +255,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 		try {
 			fillModel(context);
 			if (bp.isDirty()) {
-				setErrorMessage(context,"Attenzione: Ë necessario salvare le modifiche effettuate!");
+				setErrorMessage(context,"Attenzione: √® necessario salvare le modifiche effettuate!");
 				return context.findDefaultForward();
 			}
 			BulkBP nbp = (BulkBP)context.getUserInfo().createBusinessProcess(
@@ -376,7 +376,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			String labelProgetto = "moduli";
 			if (bp.getParametriCnr()!=null && bp.getParametriCnr().getFl_nuovo_pdg())
 				labelProgetto = "progetti";
-			return openConfirm(context, "Attenzione! Confermi che tutto il personale Ë stato ripartito sui GAE associati ai "+labelProgetto+" di carattere scientifico, evitando di utilizzare GAE associati ai "+labelProgetto+" di carattere gestionale?", OptionBP.CONFIRM_YES_NO, "doConfirmScaricaCostiPersonale");
+			return openConfirm(context, "Attenzione! Confermi che tutto il personale √® stato ripartito sui GAE associati ai "+labelProgetto+" di carattere scientifico, evitando di utilizzare GAE associati ai "+labelProgetto+" di carattere gestionale?", OptionBP.CONFIRM_YES_NO, "doConfirmScaricaCostiPersonale");
 		} catch(Exception e) {
 			return handleException(context,e);
 		}
@@ -420,7 +420,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 					if (!bp.isCdrPdGPUtilizzabile()) {
 						bp.setStatus(bp.VIEW);
 						bp.setEditable(false);
-						setErrorMessage(context,"Lo stato del PdGP - CDR per il CdR "+((CdrBulk)oggettobulk).getCd_centro_responsabilita()+" risulta non impostato oppure\nË chiusa la fase previsionale per l'esercizio "+CNRUserContext.getEsercizio(context.getUserContext())+". Non consentita la modifica.");
+						setErrorMessage(context,"Lo stato del PdGP - CDR per il CdR "+((CdrBulk)oggettobulk).getCd_centro_responsabilita()+" risulta non impostato oppure\n√® chiusa la fase previsionale per l'esercizio "+CNRUserContext.getEsercizio(context.getUserContext())+". Non consentita la modifica.");
 					}
 				}
 				return forward;
@@ -460,7 +460,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 		try {
 			fillModel(context);
 			if (bp.isDirty()) {
-				setErrorMessage(context,"Attenzione: Ë necessario salvare le modifiche effettuate!");
+				setErrorMessage(context,"Attenzione: √® necessario salvare le modifiche effettuate!");
 				return context.findDefaultForward();
 			}
 
@@ -491,12 +491,12 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 		try {
 			fillModel(context);
 			if (bp.isDirty()) {
-				setErrorMessage(context,"Attenzione: Ë necessario salvare le modifiche effettuate!");
+				setErrorMessage(context,"Attenzione: √® necessario salvare le modifiche effettuate!");
 				return context.findDefaultForward();
 			}
 
 			if (pdg_mod==null) {
-				setErrorMessage(context,"Attenzione: Ë necessario selezionare una riga valida!");
+				setErrorMessage(context,"Attenzione: √® necessario selezionare una riga valida!");
 				return context.findDefaultForward();
 			}
 

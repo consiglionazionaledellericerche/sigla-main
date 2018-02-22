@@ -145,7 +145,7 @@ public java.util.Dictionary getStatoKeys() {
  * Metodo con cui si ottiene il valore della variabile <code>tipoMandatoKeys</code>
  * di tipo <code>Hashtable</code>.
  * In particolare, questo metodo carica in una Hashtable l'elenco dei possibili valori 
- * che puÚ assumere il campo <code>ti_mandato</code>.
+ * che pu√≤ assumere il campo <code>ti_mandato</code>.
  * @return java.util.Dictionary tipoMandatoKeys I valori del campo <code>ti_mandato</code>.
  */
 public java.util.Dictionary getTipoMandatoKeys() {
@@ -224,7 +224,7 @@ public void setUoEmittenteForPrint(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	super.setUnita_organizzativa(newUO);
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws it.cnr.jada.bulk.ValidationException {

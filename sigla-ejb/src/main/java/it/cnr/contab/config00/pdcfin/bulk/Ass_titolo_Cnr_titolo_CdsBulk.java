@@ -106,7 +106,7 @@ public void setTi_gestione_coll(java.lang.String ti_gestione_coll) {
 	this.getElemento_voce_coll().setTi_gestione(ti_gestione_coll);
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException 
@@ -114,8 +114,8 @@ public void validate() throws ValidationException
 	super.validate();
 	
 	if ( elemento_voce == null || elemento_voce.getCd_elemento_voce() == null || elemento_voce.getCd_elemento_voce().equals("") )
-		throw new ValidationException( "Il codice del TITOLO SPESA CNR Ë obbligatorio." );
+		throw new ValidationException( "Il codice del TITOLO SPESA CNR √® obbligatorio." );
 	if ( elemento_voce_coll == null || elemento_voce_coll.getCd_elemento_voce() == null || elemento_voce_coll.getCd_elemento_voce().equals(""))
-		throw new ValidationException( "Il codice del TITOLO SPESA CDS Ë obbligatorio." );
+		throw new ValidationException( "Il codice del TITOLO SPESA CDS √® obbligatorio." );
 }
 }

@@ -60,7 +60,7 @@ public CaricaFileCassiereBP(String function) {
 }
 /**
   * Crea la {@link DistintaCassiereComponentSession } da usare per effettuare operazioni.
-  *	Si è resa necessaria la sua implementazione, poichè il BP è un BulkBP piuttosto
+  *	Si Ã¨ resa necessaria la sua implementazione, poichÃ¨ il BP Ã¨ un BulkBP piuttosto
   *	che un SimpleCRUDBP.
   *
   * @return DistintaCassiereComponentSession
@@ -137,7 +137,7 @@ protected void init(Config config,ActionContext context) throws BusinessProcessE
  * <li>una serie di input hidden necessari per conservare la posizione di scoll sul browser
  * 		alla risposta.
  * </ul>
- * Per completare il disegno della FORM è necessario invocare <code>closeForm</code>
+ * Per completare il disegno della FORM Ã¨ necessario invocare <code>closeForm</code>
  * @param context il PageContext della JSP su cui va disegnata la FORM
  * @param action nome della action da eseguire
  * @param target target HTML su cui eseguire la action

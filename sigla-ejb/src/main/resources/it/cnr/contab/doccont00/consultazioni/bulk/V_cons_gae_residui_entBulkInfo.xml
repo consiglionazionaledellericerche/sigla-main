@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -207,7 +207,7 @@
 		inputSize="22"
 		maxLength="22"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Variazioni in più" />
+		label="Variazioni in piÃ¹" />
 	<fieldProperty
 		name="var_meno_acc_res_pro"
 		property="var_meno_acc_res_pro"

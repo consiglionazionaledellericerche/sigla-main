@@ -202,7 +202,7 @@ public int addToModalita_pagamento(Modalita_pagamentoBulk modalita_pagamento) {
 		return telefoni.size()-1;
 	}
 	/**
-	 * Restituisce l'<code>AnagraficoBulk</code> a cui l'oggetto Ë correlato.
+	 * Restituisce l'<code>AnagraficoBulk</code> a cui l'oggetto √® correlato.
 	 *
 	 * @return it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk
 	 *
@@ -459,7 +459,7 @@ public it.cnr.jada.bulk.BulkList getTermini_pagamento() {
 		return DEBITORE_CREDITORE;
 	}
 	/**
-	 * Restituisce l'<code>Unita_organizzativaBulk</code> contenente la descrizione dell'unit‡ organizzativa
+	 * Restituisce l'<code>Unita_organizzativaBulk</code> contenente la descrizione dell'unit√† organizzativa
 	 * relazionata con l'oggetto.
 	 *
 	 * @return it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk
@@ -687,7 +687,7 @@ public Rif_termini_pagamentoBulk removeFromRif_termini_pagamento_disponibili(int
 		return termini_pagamento;
 	}
 	/**
-	 * Imposta l'<code>AnagraficoBulk</code> a cui l'oggetto Ë correlato.
+	 * Imposta l'<code>AnagraficoBulk</code> a cui l'oggetto √® correlato.
 	 *
 	 * @param newAnagrafico Anagrafica di riferimento.
 	 *
@@ -852,10 +852,10 @@ public void setTerzo_speciale(boolean newTerzo_speciale) {
 	terzo_speciale = newTerzo_speciale;
 }
 	/**
-	 * Imposta l'<code>Unita_organizzativaBulk</code> contenente la descrizione dell'unit‡ organizzativa
+	 * Imposta l'<code>Unita_organizzativaBulk</code> contenente la descrizione dell'unit√† organizzativa
 	 * relazionata con l'oggetto.
 	 *
-	 * @param newUnita_organizzativa l'unit‡ organizzativa.
+	 * @param newUnita_organizzativa l'unit√† organizzativa.
 	 *
 	 * @see getUnita_organizzativa
 	 */

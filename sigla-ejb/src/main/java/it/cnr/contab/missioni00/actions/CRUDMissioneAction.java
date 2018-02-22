@@ -167,7 +167,7 @@ protected Forward basicDoRiportaSelezione(ActionContext context, it.cnr.jada.bul
 	return context.findDefaultForward();
 }
 /**
-  * Il metodo gestisce la fine della modalit‡ "modifica/inserimento dettaglio di spesa".
+  * Il metodo gestisce la fine della modalit√† "modifica/inserimento dettaglio di spesa".
   */
   
 private void basicDoUndoSpesa(ActionContext context) throws BusinessProcessException
@@ -176,7 +176,7 @@ private void basicDoUndoSpesa(ActionContext context) throws BusinessProcessExcep
 	bp.undoSpesa(context);
 }
 /**
-  * Il metodo gestisce la fine della modalit‡ "modifica/inserimento di una tappa"
+  * Il metodo gestisce la fine della modalit√† "modifica/inserimento di una tappa"
   */
   
 private void basicDoUndoTappa(ActionContext context) throws BusinessProcessException{
@@ -238,7 +238,7 @@ public Forward doAddToCRUDMain_Tappa(ActionContext context)
   * Il metodo gestisce l' aggiornamento della missione (importi calcolati) dopo il rientro dalla creazione/modifica 
   * del compenso
   * Se il compenso ha impostato la linea di attivita' e se la missione ha associato un anticipo 
-  * devo inizializzare la linea di attivit‡ dell'anticipo con quella del compenso. Cio' servir‡ per
+  * devo inizializzare la linea di attivit√† dell'anticipo con quella del compenso. Cio' servir√† per
   * creare il Rimborso.
   */
 
@@ -299,7 +299,7 @@ public Forward doBlankSearchFind_anticipo(ActionContext context,MissioneBulk mis
 /**
   * Il metodo gestisce l'inizializzazione del terzo della missione.
   * Se la missione possiede dei dettagli di spesa/diaria il metodo ne propone la cancellazione prima di proseguire. 
-  * Se l'utente non conferma tale cancellazione l'inizializzazione del terzo verr‡ annullata.
+  * Se l'utente non conferma tale cancellazione l'inizializzazione del terzo verr√† annullata.
   */
 
 public Forward doBlankSearchFind_terzo(ActionContext context,MissioneBulk missione) 
@@ -361,9 +361,9 @@ public Forward doBlankSearchFind_tipo_spesa(ActionContext context,Missione_detta
 }
 /**
   * Il metodo gestisce il rientro dalla creazione/modifica di un compenso :
-  * - se la missione Ë provvisoria e la creazione del compenso Ë stata annullata riporto
+  * - se la missione √® provvisoria e la creazione del compenso √® stata annullata riporto
   *   la missione in stato provvisorio
-  * - sincronizzo l'obbligazione del compenso con quella presente nella propriet‡ della missione
+  * - sincronizzo l'obbligazione del compenso con quella presente nella propriet√† della missione
   *	  "deferredSaldi" (per l'aggiornamento dei saldi)
   * - aggiorno la missione con gli importi calcolati dal compenso
   */
@@ -554,12 +554,12 @@ public Forward doBringBackSearchFind_divisa_spesa(ActionContext context, Mission
 }
 /**
   *	Il metodo gestisce la selezione di una nazione estera di una tappa.
-  * Vengono inizializzate le seguenti propriet‡ della tappa :
+  * Vengono inizializzate le seguenti propriet√† della tappa :
   *		- la divisa viene inizializzata con quella letta da tabella MISSIONE_DIARIA per la stessa nazione, 
   *		  per l'inquadramento della missione e valida alla data di inizio missione. 
   *		  Tale divisa non sara' modificabile.
   *		- il cambio della divisa trovata valido alla data inizio missione
-  *		  Tale cambio puÚ essere modificato.
+  *		  Tale cambio pu√≤ essere modificato.
   */
 
 public Forward doBringBackSearchFind_nazione(ActionContext context, Missione_tappaBulk tappa, NazioneBulk aNazione) 
@@ -585,7 +585,7 @@ public Forward doBringBackSearchFind_nazione(ActionContext context, Missione_tap
 /**
   * Il metodo gestisce l'inizializzazione di alcuni attributi dell'anticipo relativi al terzo e ai dati
   * bancari del terzo (nome, cognome, ragione sociale, codice fiscale, partita iva, modalita e termini di pagamento).
-  * Vengono inizializzati anche i "Tipi rapporto"; se non presenti l'utente non puÚ proseguire
+  * Vengono inizializzati anche i "Tipi rapporto"; se non presenti l'utente non pu√≤ proseguire
   */
 
 public Forward doBringBackSearchFind_terzo(ActionContext context, MissioneBulk missione, V_terzo_per_compensoBulk aTerzo)
@@ -1254,7 +1254,7 @@ private Forward doCreaCompenso(ActionContext context) throws BusinessProcessExce
 }
 /**
   * Il metodo gestisce l'inizio della modalita modifica dettaglio di spesa verificando 
-  * la fattibilit‡ dell'operazione
+  * la fattibilit√† dell'operazione
   */
 
 public Forward doEditaSpesa(ActionContext context) 
@@ -1333,7 +1333,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException
 		CRUDMissioneBP bp = (CRUDMissioneBP)getBusinessProcess(context);
 		if (!bp.isEditing()) 
 		{
-			bp.setMessage("Non Ë possibile cancellare in questo momento");
+			bp.setMessage("Non √® possibile cancellare in questo momento");
 		} 
 		else 
 		{
@@ -1395,7 +1395,7 @@ public Forward doEliminaScadenzaObbligazione(ActionContext context)
 }
 /**
   * Il metodo gestisce la selezione del bottone di fine configurazione tappe.
-  * In particolare Ë gestita :
+  * In particolare √® gestita :
   *	- la cancellazione fisica delle tappe se queste sono gia' state salvate in tabella
   *  (essendo dt_inizio_tappa parte della chiave non mi e' possibile :
   *			- modificare dt_inizio_tappa (ora) di una tappa gia' salvata
@@ -1449,7 +1449,7 @@ public Forward doFineConfigurazioneTappa(ActionContext context)
 		if (missione.isMissioneConRimborso() && !bp.isRimborsoValidoPerDurataTappeEstere(context))
 		{
 			missione.setTappeConfigurate(false);
-			setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "La durata delle tappe estere Ë inferiore alle 24 ore: Trattamento alternativo di missione non consentito!");
+			setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "La durata delle tappe estere √® inferiore alle 24 ore: Trattamento alternativo di missione non consentito!");
 			return context.findDefaultForward();
 		}
 		
@@ -1501,7 +1501,7 @@ public Forward doFineInserimentoSpese(ActionContext context)
 			missione = bp.generaDiaria(context, missione);
 			
 			// A differenza della diaria, il rimborso viene generato solo se previsto
-			// Controllo che non sia gi‡ inserito (poichË non viene sempre cancellato come la diaria)
+			// Controllo che non sia gi√† inserito (poich√® non viene sempre cancellato come la diaria)
 			if(missione.isMissioneConRimborso() && (missione.getRimborsoMissioneColl() == null || missione.getRimborsoMissioneColl().isEmpty()))
 			    missione = bp.generaRimborso(context, missione);
 
@@ -1661,7 +1661,7 @@ public Forward doModificaScadenzaInAutomatico(ActionContext context)
 }
 /**
   * Alla selezione del bottone di Ricerca il sistema abilita i campi della spesa o della tappa
-  * nell'eventualit‡ che l'utente si trovasse in stato di Edit su una Spesa o Tappa
+  * nell'eventualit√† che l'utente si trovasse in stato di Edit su una Spesa o Tappa
   */
   
 public Forward doNuovaRicerca(ActionContext context) 
@@ -1751,7 +1751,7 @@ public Forward doOnCheckDisponibilitaCassaFailed(ActionContext context, int opti
 }
 /**
  * Metodo utilizzato per gestire la conferma dell'inserimento/modifica di una obbligazione che ha sfondato
- * la disponibilit‡ per il contratto
+ * la disponibilit√† per il contratto
  * @param context <code>ActionContext</code> in uso.
  * @param option Esito della risposta alla richiesta di sfondamento
  *
@@ -1826,12 +1826,12 @@ public Forward doOnDataRegistrazioneChange(ActionContext context)
 			{
 				case 2: 
 				{
-					msg = "Il terzo selezionato non Ë pi˘ valido!";
+					msg = "Il terzo selezionato non √® pi√π valido!";
 					break;
 				}
 				case 10: 
 				{
-					msg = "Il tipo trattamento selezionato non Ë pi˘ valido!";					
+					msg = "Il tipo trattamento selezionato non √® pi√π valido!";					
 					break;
 				}
 			}	
@@ -1937,7 +1937,7 @@ public Forward doOnDiariaManuale(ActionContext context)
 }
 /**
   * Il metodo gestisce la modifica della data di fine missione, verifica se tale data puo' essere modificata
-  * e verifica la validit‡ del nuovo periodo di inizio/fine della missione.
+  * e verifica la validit√† del nuovo periodo di inizio/fine della missione.
   * Vengono ricostruite le collection dei giorni della missione.
   * Se cambio la data di fine missione :
   *	- se la modidica e' in aumento l'applicazione propone la cancellazione di eventuali dettagli di 
@@ -1995,7 +1995,7 @@ public Forward doOnFineMissioneChange(ActionContext context)
 				annoCompetenzaA != annoOldCompetenzaA)
 		{
 			((MissioneBulk)bp.getModel()).setDt_fine_missione(oldDataFine);
-			throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Non Ë possibile cambiare l'anno di Fine missione poichË il Terzo scelto potrebbe essere soggetto ad Agevolazioni per 'Rientro dei Cervelli'.");
+			throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Non √® possibile cambiare l'anno di Fine missione poich√® il Terzo scelto potrebbe essere soggetto ad Agevolazioni per 'Rientro dei Cervelli'.");
 		}
 		
 		if(oldDataFine == null)
@@ -2011,7 +2011,7 @@ public Forward doOnFineMissioneChange(ActionContext context)
 
 		if((gcFineMissione != null) && (gcFineMissione.after(gcUltimoGiorno)))		
 		{
-			// Se la data di fine missione Ë cambiata in aumento e ho dei dettagli di spesa/diaria
+			// Se la data di fine missione √® cambiata in aumento e ho dei dettagli di spesa/diaria
 			// ne propongo la cancellazione				
 			if(missione.getDettagliMissioneColl().size() > 0)
 			{
@@ -2034,7 +2034,7 @@ public Forward doOnFineMissioneChange(ActionContext context)
 		}
 		else
 		{
-			// Se la data di fine missione Ë cambiata e in diminuzione e ho delle tappe configurate e dei dettagli di spesa/diaria
+			// Se la data di fine missione √® cambiata e in diminuzione e ho delle tappe configurate e dei dettagli di spesa/diaria
 			// ne propongo la cancellazione				
 			if(missione.getDettagliMissioneColl().size() > 0)
 			{
@@ -2042,7 +2042,7 @@ public Forward doOnFineMissioneChange(ActionContext context)
 				option.addAttribute("oldDataFine", oldDataFine);
 				return option;			
 			}
-			// Se la data di fine missione Ë cambiata in diminuzione e ho delle tappe configurate ne 
+			// Se la data di fine missione √® cambiata in diminuzione e ho delle tappe configurate ne 
 			// propongo la cancellazione		
 			else if((missione.getTappeMissioneColl()!= null) && (missione.getTappeMissioneColl().size() > 0))
 			{
@@ -2239,7 +2239,7 @@ public Forward doOnInizioMissioneChange(ActionContext context)
 				annoCompetenzaDa != annoOldCompetenzaDa)
 		{
 			((MissioneBulk)bp.getModel()).setDt_inizio_missione(oldDataIniziale);
-			throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Non Ë possibile cambiare l'anno di Inizio missione poichË il Terzo scelto potrebbe essere soggetto ad Agevolazioni per 'Rientro dei Cervelli'.");
+			throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Non √® possibile cambiare l'anno di Inizio missione poich√® il Terzo scelto potrebbe essere soggetto ad Agevolazioni per 'Rientro dei Cervelli'.");
 		}
 		
 		// Se ho dei dettagli di spesa/diaria (avro' sicuramente anche le tappe) ne propongo la cancellazione				
@@ -2317,8 +2317,8 @@ public Forward doOnInquadramentoChange(ActionContext context)
 }
 /**
   * Il metodo gestisce la selezione della flag "commerciale/istituzionale"
-  * L'utente non puÚ modificare la missione da Istituzionale a Commerciale o viceversa se l'eventuale
-  * compenso associato alla missione non e' piu' modificabile o se la missione Ë collegata ad 
+  * L'utente non pu√≤ modificare la missione da Istituzionale a Commerciale o viceversa se l'eventuale
+  * compenso associato alla missione non e' piu' modificabile o se la missione √® collegata ad 
   * anticipo rimborsato.
   * Alla modifica del tipo da istituzionale a commerciale vanno ricaricati i tipi trattamento. Se 
   * l'applicazione non ne trova di eleggibili annullo la modifica
@@ -2370,8 +2370,8 @@ public Forward doOnIstituzionaleCommercialeChange(ActionContext context)
 	}
 }
 /**
-  * Il metodo gestisce la selezione di una modalit‡ di pagamento.
-  * L'utente non puÚ modificare le modalita se ho associato un compenso pagato
+  * Il metodo gestisce la selezione di una modalit√† di pagamento.
+  * L'utente non pu√≤ modificare le modalita se ho associato un compenso pagato
   * Alla selezione della Modalita di Pagamento l'applicazione ricerca le banche eleggibili
   */
 
@@ -2581,7 +2581,7 @@ public OptionBP createOptionBP(ActionContext actioncontext, String message, int 
 }
 /**
   * Il metodo gestisce la selezione del Tipo Rapporto.
-  * La modifica Ë consentita se l'evetuale compenso associato e' modificabile (es. non pagato)
+  * La modifica √® consentita se l'evetuale compenso associato e' modificabile (es. non pagato)
   * Per proseguire con la modifica l'applicazione propone la cancellazione degli eventuali dettagli 
   * di spesa/diaria.
   * Alla selezione del Tipo rapporto l'applicazione ricarica i relativi inquadramenti e tipi trattamento.
@@ -2637,7 +2637,7 @@ public Forward doOnTipoRapportoChange(ActionContext context)
 }
 /**
   * Il metodo gestisce la selezione del Tipo Trattamento.
-  * La modifica Ë consentita se l'eventuale compenso associato alla missione Ë modificabile (es. non pagato).
+  * La modifica √® consentita se l'eventuale compenso associato alla missione √® modificabile (es. non pagato).
   */
 
 public Forward doOnTipoTrattamentoChange(ActionContext context) 
@@ -2670,7 +2670,7 @@ public Forward doOnTipoTrattamentoChange(ActionContext context)
 			missione.setCd_trattamento(missione.getTipo_trattamento().getCd_trattamento());
 			 
 		// A differenza della diaria, il rimborso viene generato solo se previsto
-		// PoichË cambia il trattamento devo ricalcolarlo (puÚ cambiare la quota esente)
+		// Poich√® cambia il trattamento devo ricalcolarlo (pu√≤ cambiare la quota esente)
 		if(missione.isMissioneConRimborso() && missione.getPg_missione()!=null)// && (missione.getRimborsoMissioneColl() == null || missione.getRimborsoMissioneColl().isEmpty()))
 		{	
 			    bp.cancellaRimborso(context);
@@ -2689,7 +2689,7 @@ public Forward doOnTipoTrattamentoChange(ActionContext context)
 }
 /**
   * Il metodo gestisce l'apertura dell'obbligazione per un aggiornamento manuale.
-  * Se la missione non e' modificabile il metodo aprir‡ la obbligazione in visualizzazione
+  * Se la missione non e' modificabile il metodo aprir√† la obbligazione in visualizzazione
   */
 
 public Forward doOpenObbligazioniWindow(ActionContext context) 
@@ -2794,7 +2794,7 @@ public Forward doRemoveFromCRUDMain_Tappa(ActionContext context)
 /**
   * Il metodo gestisce la selezione del bottone "Ricerca Libera".
   * Il metodo visualizza il primo Tab e abilita i campi della spesa o della tappa nel caso 
-  * l'utente si trovi in modalit‡ di edit su una di esse
+  * l'utente si trovi in modalit√† di edit su una di esse
   */
   
 public Forward doRicercaLibera(ActionContext context) 
@@ -2833,9 +2833,9 @@ public Forward doRicercaScadenzaObbligazione(ActionContext context)
 		missione.calcolaConsuntivi();
 		
 		if(missione.getTerzo() == null || missione.getCd_terzo() == null)
-			throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione Ë necessario impostare un fornitore!");
+			throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione √® necessario impostare un fornitore!");
 		if(missione.getImporto_scadenza_obbligazione() == null || missione.getImporto_scadenza_obbligazione().compareTo(new java.math.BigDecimal(0)) == 0)
-			throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione Ë necessario valorizzare l'importo!");
+			throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione √® necessario valorizzare l'importo!");
 			
 		Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
 		filtro.setFornitore(missione.getTerzo());
@@ -2859,7 +2859,7 @@ public Forward doRicercaScadenzaObbligazione(ActionContext context)
 	}
 }
 /**
-  * Il metodo gestisce la selezione del bottone "Riporta avanti". CiÚ implica salvare la missione,
+  * Il metodo gestisce la selezione del bottone "Riporta avanti". Ci√≤ implica salvare la missione,
   * riportare avanti l'obbligazione e committare
   */
   
@@ -2901,7 +2901,7 @@ public Forward doRiportaAvanti(ActionContext context) throws java.rmi.RemoteExce
 	}
 }
 /**
-  * Il metodo gestisce la selezione del bottone "Riporta indietro". CiÚ implica riportare 
+  * Il metodo gestisce la selezione del bottone "Riporta indietro". Ci√≤ implica riportare 
   * indietro l'obbligazione senza committare
   */
   
@@ -3010,10 +3010,10 @@ public Forward doSalvaProvvisorio(ActionContext context) throws java.rmi.RemoteE
 			if(missione.isCompensoObbligatorio() || (missione.isObbligazioneObbligatoria() && !missione.isMissioneConObbligazione())){
 				missione.setMissioneProvvisoria();
 			} else {
-				throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile salvare una missione in provvisorio quando non sono obbligatori il compenso e l'obbligazione");
+				throw new it.cnr.jada.comp.ApplicationException("Non √® possibile salvare una missione in provvisorio quando non sono obbligatori il compenso e l'obbligazione");
 			}
 		} else {
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile salvare una missione in provvisorio quando Ë gi‡ definitiva");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile salvare una missione in provvisorio quando √® gi√† definitiva");
 		}
 	   	return doOnSalvataggio(context, missione);		   
 	}

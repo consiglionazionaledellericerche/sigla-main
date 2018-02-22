@@ -91,9 +91,9 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 	
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'im_totale_impegni_selezionati'
+	 * Restituisce il valore della propriet√† 'im_totale_impegni_selezionati'
 	 *
-	 * @return Il valore della propriet‡ 'im_totale_impegni_selezionati'
+	 * @return Il valore della propriet√† 'im_totale_impegni_selezionati'
 	 */
 	public BigDecimal getIm_totale_impegni_selezionati() {
 		java.math.BigDecimal totImpegni = new BigDecimal(0);
@@ -205,7 +205,7 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 	}
 
 	/**
-	 * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+	 * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
 	 * controllo sintattico o contestuale.
 	 */
 	public void validate() throws ValidationException {
@@ -217,10 +217,10 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 	}
 
 	/**
-	 * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+	 * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
 	 * controllo sintattico o contestuale.
 	 */
-	/* gli impegni sono gi‡ stati ordinati*/
+	/* gli impegni sono gi√† stati ordinati*/
 	public void validatePriorita() throws ValidationException 
 	{
 		V_obbligazioneBulk impegno;
@@ -292,9 +292,9 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 	
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'fl_imputazione_manuale'
+	 * Restituisce il valore della propriet√† 'fl_imputazione_manuale'
 	 *
-	 * @return Il valore della propriet‡ 'fl_imputazione_manuale'
+	 * @return Il valore della propriet√† 'fl_imputazione_manuale'
 	 */
 	public boolean isFl_imputazione_manuale() {
 		return fl_imputazione_manuale;
@@ -302,9 +302,9 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 	
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'im_righe_mandato'
+	 * Restituisce il valore della propriet√† 'im_righe_mandato'
 	 *
-	 * @return Il valore della propriet‡ 'im_righe_mandato'
+	 * @return Il valore della propriet√† 'im_righe_mandato'
 	 */
 	public java.math.BigDecimal getIm_righe_mandato() {
 		java.math.BigDecimal tot = new java.math.BigDecimal( 0 );
@@ -383,7 +383,7 @@ public class MandatoAutomaticoWizardBulk extends MandatoIBulk {
 	
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'fl_imputazione_manuale'
+	 * Imposta il valore della propriet√† 'fl_imputazione_manuale'
 	 *
 	 * @param newFl_imputazione_manuale	Il valore da assegnare a 'fl_imputazione_manuale'
 	 */

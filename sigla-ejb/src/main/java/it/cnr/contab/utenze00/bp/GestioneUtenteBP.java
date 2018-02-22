@@ -18,7 +18,7 @@ import it.cnr.jada.util.jsp.JSPUtils;
 
 /**
  * BusinessProecess che mantiene le informazioni sull'utente connesso
- * e sull'albero del menu applicativo. GestioneUtenteBP Ë il BusinessProcess
+ * e sull'albero del menu applicativo. GestioneUtenteBP √® il BusinessProcess
  * radice di tutti gli altri BusinessProcess applicativi
  */
 public class GestioneUtenteBP extends it.cnr.jada.util.action.FormBP {
@@ -137,20 +137,20 @@ public class GestioneUtenteBP extends it.cnr.jada.util.action.FormBP {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'componentSession'
+	 * Restituisce il valore della propriet√† 'componentSession'
 	 *
-	 * @return Il valore della propriet‡ 'componentSession'
-	 * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non Ë possibile effettuare l'operazione
-	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+	 * @return Il valore della propriet√† 'componentSession'
+	 * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non √® possibile effettuare l'operazione
+	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
 	 */
 	public static GestioneLoginComponentSession getComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException {
 		return (GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession",GestioneLoginComponentSession.class);
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'nodo_attivo'
+	 * Restituisce il valore della propriet√† 'nodo_attivo'
 	 *
-	 * @return Il valore della propriet‡ 'nodo_attivo'
+	 * @return Il valore della propriet√† 'nodo_attivo'
 	 */
 	public it.cnr.contab.utenze00.bulk.Albero_mainBulk getNodo_attivo() {
 		return nodo_attivo;
@@ -166,25 +166,25 @@ public class GestioneUtenteBP extends it.cnr.jada.util.action.FormBP {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'radiceAlbero_main'
+	 * Restituisce il valore della propriet√† 'radiceAlbero_main'
 	 *
-	 * @return Il valore della propriet‡ 'radiceAlbero_main'
+	 * @return Il valore della propriet√† 'radiceAlbero_main'
 	 */
 	public it.cnr.contab.utenze00.bulk.Albero_mainBulk getRadiceAlbero_main() {
 		return radiceAlbero_main;
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'userInfo'
+	 * Restituisce il valore della propriet√† 'userInfo'
 	 *
-	 * @return Il valore della propriet‡ 'userInfo'
+	 * @return Il valore della propriet√† 'userInfo'
 	 */
 	public it.cnr.contab.utenze00.bulk.CNRUserInfo getUserInfo() {
 		return userInfo;
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'nodo_attivo'
+	 * Imposta il valore della propriet√† 'nodo_attivo'
 	 *
 	 * @param newNodo_attivo	Il valore da assegnare a 'nodo_attivo'
 	 */
@@ -193,7 +193,7 @@ public class GestioneUtenteBP extends it.cnr.jada.util.action.FormBP {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'radiceAlbero_main'
+	 * Imposta il valore della propriet√† 'radiceAlbero_main'
 	 *
 	 * @param newRadiceAlbero_main	Il valore da assegnare a 'radiceAlbero_main'
 	 * @throws BusinessProcessException	
@@ -207,7 +207,7 @@ public class GestioneUtenteBP extends it.cnr.jada.util.action.FormBP {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'userInfo'
+	 * Imposta il valore della propriet√† 'userInfo'
 	 *
 	 * @param newUserInfo	Il valore da assegnare a 'userInfo'
 	 */
@@ -254,7 +254,7 @@ public class GestioneUtenteBP extends it.cnr.jada.util.action.FormBP {
 		}
 	}	
 	/**
-	 * Disegna il men˘ applicativo usando il Writer specificato
+	 * Disegna il men√π applicativo usando il Writer specificato
 	 * 
 	 * @param out writer
 	 * @throws IOException	

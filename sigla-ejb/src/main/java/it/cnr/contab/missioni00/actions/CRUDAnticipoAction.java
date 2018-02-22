@@ -393,7 +393,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException
 		
 		if (!bp.isEditing()) 
 		{
-			bp.setMessage("Non Ë possibile cancellare in questo momento");
+			bp.setMessage("Non √® possibile cancellare in questo momento");
 		} 
 		else 
 		{
@@ -575,7 +575,7 @@ public Forward doOnCheckDisponibilitaCassaFailed(ActionContext context, int opti
 }
 /**
  * Metodo utilizzato per gestire la conferma dell'inserimento/modifica di una obbligazione che ha sfondato
- * la disponibilit‡ per il contratto
+ * la disponibilit√† per il contratto
  * @param context <code>ActionContext</code> in uso.
  * @param option Esito della risposta alla richiesta di sfondamento
  *
@@ -665,7 +665,7 @@ public Forward doOnDataRegistrazioneChange(ActionContext context)
 }
 /**
   * Il metodo gestisce la modifica dell'importo dell'anticipo :
-  * - se l'anticipo Ë legato alla missione non posso modificarne l'importo
+  * - se l'anticipo √® legato alla missione non posso modificarne l'importo
   * - l'importo non deve essere negativo
   */
 
@@ -694,7 +694,7 @@ public Forward doOnImportoAnticipoChange(ActionContext context)
 		if(anticipo.getIm_anticipo_divisa().compareTo(new java.math.BigDecimal(0)) == -1 )
 		{
 			anticipo.setIm_anticipo_divisa(null);
-			throw new it.cnr.jada.comp.ApplicationException("L'importo non puÚ essere negativo !");
+			throw new it.cnr.jada.comp.ApplicationException("L'importo non pu√≤ essere negativo !");
 		}
 		return context.findDefaultForward();
 	} 
@@ -834,9 +834,9 @@ public Forward doRicercaScadenzaObbligazione(ActionContext context)
 		AnticipoBulk anticipo = (AnticipoBulk)bp.getModel();
 
 		if(anticipo.getTerzo() == null || anticipo.getCd_terzo() == null)
-			throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione Ë necessario impostare un fornitore!");
+			throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione √® necessario impostare un fornitore!");
 		if(anticipo.getIm_anticipo_divisa() == null || anticipo.getIm_anticipo_divisa().compareTo(new java.math.BigDecimal(0)) == 0)
-			throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione Ë necessario valorizzare l'importo!");
+			throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione √® necessario valorizzare l'importo!");
 			
 		Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
 		filtro.setFornitore(anticipo.getTerzo());
@@ -860,7 +860,7 @@ public Forward doRicercaScadenzaObbligazione(ActionContext context)
 	}
 }
 /**
-  * Il metodo gestisce la selezione del bottone "Riporta avanti". CiÚ implica :
+  * Il metodo gestisce la selezione del bottone "Riporta avanti". Ci√≤ implica :
   * - se non ho rimborso : salvare l'anticipo, riportare avanti l'obbligazione e committare
   * - se ho rimborso : riportare avanti l'accertamento e committare
   */
@@ -892,7 +892,7 @@ public Forward doRiportaAvanti(ActionContext context) throws java.rmi.RemoteExce
 	}
 }
 /**
-  * Il metodo gestisce la selezione del bottone "Riporta indietro". CiÚ implica :
+  * Il metodo gestisce la selezione del bottone "Riporta indietro". Ci√≤ implica :
   * - se non ho rimborso : riportare indietro l'obbligazione senza committare
   * - se ho rimborso : riportare indietro l'accertamento e committare
   */
@@ -937,7 +937,7 @@ public Forward doRiportaSelezione(ActionContext context)  throws java.rmi.Remote
 } 
 /**
   * Il metodo gestisce la ricerca di un terzo verificando che la data di registrazione 
-  * sia gia' stata valorizzata. Tale data servir‡ per validare il terzo
+  * sia gia' stata valorizzata. Tale data servir√† per validare il terzo
   */
 
 public Forward doSearchFind_terzo(ActionContext context) 

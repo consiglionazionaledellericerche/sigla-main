@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -12,7 +12,7 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		readonlyProperty="ROTestata"
-		label="Unità Operativa" />
+		label="UnitÃ  Operativa" />
 	<fieldProperty
 		name="findMagazzino"
 		property="magazzinoAbilitato"
@@ -37,7 +37,7 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Unità Operativa Ricevente" />
+		label="UnitÃ  Operativa Ricevente" />
 	<fieldProperty
 		name="dataCompetenza"
 		property="dataCompetenza"

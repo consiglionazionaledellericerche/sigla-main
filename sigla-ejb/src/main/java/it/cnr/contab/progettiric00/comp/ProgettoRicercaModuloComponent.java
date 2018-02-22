@@ -40,19 +40,19 @@ public class ProgettoRicercaModuloComponent extends it.cnr.jada.comp.CRUDCompone
      * Post: Segnalazione "Data di fine deve essere maggiore della data di inizio!"
      * <p>
      * Pre:  Controllo se Dt_fine = null e Dt_proroga != null
-     * Post: Segnalazione "Non puÚ esistere una data di proroga se non si indica una data di fine!"
+     * Post: Segnalazione "Non pu√≤ esistere una data di proroga se non si indica una data di fine!"
      * <p>
      * Pre:  Controllo Dt_fine > Dt_proroga
      * Post: Segnalazione "Data di proroga deve essere maggiore della data di fine!"
      * <p>
-     * Pre:  Controllo se la lista dei dettagli Ë vuota
+     * Pre:  Controllo se la lista dei dettagli √® vuota
      * Post: Se vuota viene creato un unico dettaglio che ha:
      * UO = l'UO coordinatrice del Progetto
      * Responsabile = Responsabile del Progetto
      * Importo = Importo del Progetto
      * <p>
      * Pre:  Controllo somma importo dettagli != da importo del Progetto
-     * Post: Segnalazione "La somma degli importi degli assegnatari Ë diversa dall'importo del Progetto"
+     * Post: Segnalazione "La somma degli importi degli assegnatari √® diversa dall'importo del Progetto"
      */
     public OggettoBulk creaConBulk(UserContext uc, OggettoBulk bulk) throws ComponentException {
         intBulk(uc, (ProgettoBulk) bulk);
@@ -188,7 +188,7 @@ public class ProgettoRicercaModuloComponent extends it.cnr.jada.comp.CRUDCompone
     private ProgettoBulk intBulk(UserContext userContext, ProgettoBulk bulk) throws ComponentException {
 
         if (bulk.getTipo() == null)
-            throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il modulo di attivit‡ Ë necessario inserire il Tipo!");
+            throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il modulo di attivit√† √® necessario inserire il Tipo!");
 
         //se data di fine esiste deve essere minore di data inizio
         if (bulk.getDt_fine() != null && bulk.getDt_inizio().after(bulk.getDt_fine()))
@@ -196,17 +196,17 @@ public class ProgettoRicercaModuloComponent extends it.cnr.jada.comp.CRUDCompone
 
         //se data di fine non esiste non deve esistere data di proroga
         if (bulk.getDt_fine() == null && bulk.getDt_proroga() != null)
-            throw new it.cnr.jada.comp.ApplicationException("Non puÚ esistere una data di proroga se non si indica una data di fine!");
+            throw new it.cnr.jada.comp.ApplicationException("Non pu√≤ esistere una data di proroga se non si indica una data di fine!");
 
         //se data di proroga esiste deve essere minore di data fine
         if (bulk.getDt_proroga() != null && bulk.getDt_fine().after(bulk.getDt_proroga()))
             throw new it.cnr.jada.comp.ApplicationException("Data di proroga deve essere maggiore della data di fine!");
 
         if (bulk.getProgettopadre() == null)
-            throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto Ë necessario inserire il progetto padre!");
+            throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare il progetto √® necessario inserire il progetto padre!");
 
         if (bulk.getUnita_organizzativa() == null)
-            throw new it.cnr.jada.comp.ApplicationException("L'unit‡ organizzativa Ë obbligatoria.");
+            throw new it.cnr.jada.comp.ApplicationException("L'unit√† organizzativa √® obbligatoria.");
 
         if ((ProgettoBulk) bulk.getProgettopadre() == null)
             ((ProgettoBulk) bulk).setLivello(new Integer(1));
@@ -214,7 +214,7 @@ public class ProgettoRicercaModuloComponent extends it.cnr.jada.comp.CRUDCompone
         if (bulk.getImporto_progetto() == null)
             bulk.setImporto_progetto(new BigDecimal(0));
 
-        //se nei dettagli non Ë presente la UO cordinatrice viene creata
+        //se nei dettagli non √® presente la UO cordinatrice viene creata
         if (cercaUocordinatrice(bulk)) {
             Progetto_uoBulk dett = new Progetto_uoBulk(
                     bulk.getPg_progetto(),
@@ -291,23 +291,23 @@ public class ProgettoRicercaModuloComponent extends it.cnr.jada.comp.CRUDCompone
      * Post: Segnalazione "Data di fine deve essere maggiore della data di inizio!"
      * <p>
      * Pre:  Controllo se Dt_fine = null e Dt_proroga != null
-     * Post: Segnalazione "Non puÚ esistere una data di proroga se non si indica una data di fine!"
+     * Post: Segnalazione "Non pu√≤ esistere una data di proroga se non si indica una data di fine!"
      * <p>
      * Pre:  Controllo Dt_fine > Dt_proroga
      * Post: Segnalazione "Data di proroga deve essere maggiore della data di fine!"
      * <p>
-     * Pre:  Controllo se la lista dei dettagli Ë vuota
+     * Pre:  Controllo se la lista dei dettagli √® vuota
      * Post: Se vuota viene creato un unico dettaglio che ha:
      * UO = l'UO coordinatrice del progetto
      * Responsabile = Responsabile del progetto
      * Importo = Importo del progetto
      * <p>
      * Pre:  Controllo somma importo dettagli != da importo del progetto
-     * Post: Segnalazione "La somma degli importi degli assegnatari Ë diversa dall'importo del progetto"
+     * Post: Segnalazione "La somma degli importi degli assegnatari √® diversa dall'importo del progetto"
      * <p>
      * Pre:  Se la nuova commessa assegnata non appartiene allo stesso progetto della commessa precedente
      * controllo che il vecchio progetto non sia stato utilizzato sul PDG
-     * Post: Segnalazione "Non Ë possibile associare una commessa appartenente ad un progetto diverso dal precedente"
+     * Post: Segnalazione "Non √® possibile associare una commessa appartenente ad un progetto diverso dal precedente"
      */
     public OggettoBulk modificaConBulk(UserContext uc, OggettoBulk bulk) throws ComponentException {
         bulk.setCrudStatus(OggettoBulk.NORMAL);
@@ -317,7 +317,7 @@ public class ProgettoRicercaModuloComponent extends it.cnr.jada.comp.CRUDCompone
     /*
    * Pre:  Se la nuova commessa assegnata non appartiene allo stesso progetto della commessa precedente
    * 		 controllo che il vecchio progetto non sia stato utilizzato sul PDG
-   * Post: Segnalazione "Non Ë possibile associare una commessa appartenente ad un progetto diverso dal precedente"
+   * Post: Segnalazione "Non √® possibile associare una commessa appartenente ad un progetto diverso dal precedente"
    */
     private void verificaCambioProgetto(UserContext userContext, ProgettoBulk progettoOld, ProgettoBulk progettoNew) throws ComponentException {
         if (!progettoOld.getProgettopadre().getProgettopadre().equalsByPrimaryKey(progettoNew.getProgettopadre().getProgettopadre())) {
@@ -327,14 +327,14 @@ public class ProgettoRicercaModuloComponent extends it.cnr.jada.comp.CRUDCompone
                 sqletr.addSQLClause("AND", "CD_ELEMENTO_VOCE", sqletr.ISNOTNULL, null);
 
                 if (sqletr.executeCountQuery(getConnection(userContext)) > 0)
-                    throw new it.cnr.jada.comp.ApplicationException("Attenzione: operazione non possibile!\nNon Ë possibile associare una commessa appartenente ad un progetto diverso dal precedente (" + progettoOld.getProgettopadre().getProgettopadre().getCd_progetto() + ") essendo il modulo associato a linee di attivit‡ utilizzate nel Piano di Gestione.");
+                    throw new it.cnr.jada.comp.ApplicationException("Attenzione: operazione non possibile!\nNon √® possibile associare una commessa appartenente ad un progetto diverso dal precedente (" + progettoOld.getProgettopadre().getProgettopadre().getCd_progetto() + ") essendo il modulo associato a linee di attivit√† utilizzate nel Piano di Gestione.");
 
                 SQLBuilder sqlspe = getHome(userContext, it.cnr.contab.config00.latt.bulk.WorkpackageBulk.class, "V_LINEA_ATT_NOT_IN_PDG").createSQLBuilder();
                 sqlspe.addSQLClause("AND", "PG_PROGETTO", sqlspe.EQUALS, progettoOld.getPg_progetto());
                 sqlspe.addSQLClause("AND", "CD_ELEMENTO_VOCE", sqlspe.ISNOTNULL, null);
 
                 if (sqlspe.executeCountQuery(getConnection(userContext)) > 0)
-                    throw new it.cnr.jada.comp.ApplicationException("Attenzione: operazione non possibile!\nNon Ë possibile associare una commessa appartenente ad un progetto diverso dal precedente (" + progettoOld.getProgettopadre().getProgettopadre().getCd_progetto() + ") essendo il modulo associato a linee di attivit‡ utilizzate nel Piano di Gestione.");
+                    throw new it.cnr.jada.comp.ApplicationException("Attenzione: operazione non possibile!\nNon √® possibile associare una commessa appartenente ad un progetto diverso dal precedente (" + progettoOld.getProgettopadre().getProgettopadre().getCd_progetto() + ") essendo il modulo associato a linee di attivit√† utilizzate nel Piano di Gestione.");
 
             } catch (Throwable t) {
                 throw new ComponentException(t);
@@ -523,7 +523,7 @@ public class ProgettoRicercaModuloComponent extends it.cnr.jada.comp.CRUDCompone
      * PreCondition:
      * E' stata generata la richiesta di ricerca del Progetto padre del Progetto specificato negli argomenti.
      * PostCondition:
-     * Viene restituito l'oggetto ProgettoBulk che Ë il Progetto padre cercato.
+     * Viene restituito l'oggetto ProgettoBulk che √® il Progetto padre cercato.
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
      * @param bulk        <code>OggettoBulk</code> il Progetto di riferimento.
@@ -546,13 +546,13 @@ public class ProgettoRicercaModuloComponent extends it.cnr.jada.comp.CRUDCompone
     /**
      * Controlla che il progetto sia una foglia.
      * PreCondition:
-     * E' stata generata la richiesta di controllare se il Progetto specificato Ë una foglia,
-     * ossia se il suo livello Ë l'ultimo, (3). Questo implicherebbe che il Progetto in
+     * E' stata generata la richiesta di controllare se il Progetto specificato √® una foglia,
+     * ossia se il suo livello √® l'ultimo, (3). Questo implicherebbe che il Progetto in
      * questione non ha dei Progetti figli.
      * PostCondition:
      * Viene restituito un valore booleano:
-     * - true: il Progetto Ë una foglia;
-     * - false: il Progetto non Ë una foglia.
+     * - true: il Progetto √® una foglia;
+     * - false: il Progetto non √® una foglia.
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
      * @param bulk        <code>OggettoBulk</code> il Progetto di riferimento.

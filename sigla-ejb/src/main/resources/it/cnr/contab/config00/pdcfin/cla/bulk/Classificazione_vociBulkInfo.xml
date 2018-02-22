@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -376,7 +376,7 @@
 		name="fl_prev_obb_anno_suc" />		
 	<findFieldProperty
 		name="cdr_accentratore" 
-		label="Centro di Responsabilità Accentratore"/>
+		label="Centro di ResponsabilitÃ  Accentratore"/>
 
 	<columnFieldProperty
 		name="cd_livello1" />

@@ -198,7 +198,7 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase {
      * Metodo con cui si ottiene il valore della variabile <code>classeDiPagamentoKeys</code>
      * di tipo <code>Hashtable</code>.
      * In particolare, questo metodo carica in una Hashtable l'elenco dei possibili valori
-     * che può assumere il campo <code>ti_pagamento</code>.
+     * che puÃ² assumere il campo <code>ti_pagamento</code>.
      *
      * @return java.util.Hashtable classeDiPagamentoKeys I valori del campo <code>ti_pagamento</code>.
      */
@@ -229,7 +229,7 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase {
      * Metodo con cui si ottiene il valore della variabile <code>fl_pgiro_Keys</code>
      * di tipo <code>Hashtable</code>.
      * In particolare, questo metodo carica in una Hashtable l'elenco dei possibili valori
-     * che può assumere il flag <code>fl_pgiro</code>.
+     * che puÃ² assumere il flag <code>fl_pgiro</code>.
      *
      * @return java.util.Hashtable fl_pgiro_Keys I valori del flag <code>fl_pgiro</code>.
      */

@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 	<head>
-		<title>Contabilit‡ CNR</title>
+		<title>Contabilit√† CNR</title>
 		<% JSPUtils.printBaseUrl(pageContext); %>
 		<script language="javascript" src="scripts/css.js"></script>
 		<script language="JavaScript" src="scripts/util.js"></script>
@@ -50,7 +50,7 @@
 	</frameset>
 	<noframes>
 	    <body>
-	        Il browser utilizzato non supporta i frames e non Ë quindi possibile usare l'applicazione
+	        Il browser utilizzato non supporta i frames e non √® quindi possibile usare l'applicazione
 	    </body>
 	</noframes>
 		

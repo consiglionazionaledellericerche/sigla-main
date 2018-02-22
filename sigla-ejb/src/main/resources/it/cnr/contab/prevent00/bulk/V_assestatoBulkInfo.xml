@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	shortDescription="Situazione assestato"
 	longDescription="Situazione assestato" >
@@ -25,7 +25,7 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		label="Centro di responsabilità" />
+		label="Centro di responsabilitÃ " />
 	<fieldProperty
 		name="cd_linea_attivita"
 		property="cd_linea_attivita"
@@ -137,7 +137,7 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
-		label="Disponibilità" />
+		label="DisponibilitÃ " />
 	<fieldProperty
 		name="variazioni_provvisorie"
 		property="variazioni_provvisorie"
@@ -179,7 +179,7 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
-		label="Disponibilità" />
+		label="DisponibilitÃ " />
 
 	<formFieldProperty
 		name="imp_da_assegnare" />

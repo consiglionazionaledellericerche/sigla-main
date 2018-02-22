@@ -309,11 +309,11 @@ public void validate() throws ValidationException {
 
 	// controllo su campo CODICE
 	if ( getCd_ti_spesa() == null)
-		throw new ValidationException( "Il campo CODICE non può essere vuoto!" );
+		throw new ValidationException( "Il campo CODICE non puÃ² essere vuoto!" );
 
 	// controllo su campo DESCRIZIONE
 	if (getDs_ti_spesa() == null)
-		throw new ValidationException( "Il campo DESCRIZIONE non può essere vuoto!" );
+		throw new ValidationException( "Il campo DESCRIZIONE non puÃ² essere vuoto!" );
 
 	// controllo su campo INQUADRAMENTO
 	if (getPg_rif_inquadramento() == null ) 
@@ -325,31 +325,31 @@ public void validate() throws ValidationException {
 
 	// controllo su campo NAZIONE
 	if (getPg_nazione() == null ) 
-		throw new ValidationException( "Il campo NAZIONE non può essere vuoto!" );
+		throw new ValidationException( "Il campo NAZIONE non puÃ² essere vuoto!" );
 
 	// controllo su campo DIVISA
 	if (getCd_divisa() == null)
-		throw new ValidationException( "Il campo VALUTA non può essere vuoto!" );
+		throw new ValidationException( "Il campo VALUTA non puÃ² essere vuoto!" );
 
 	// controllo su campo DATA INIZIO VALIDITA
 	if (getDt_inizio_validita() == null )
-		throw new ValidationException( "Il campo DATA INIZIO VALIDITA non può essere vuoto!" );
+		throw new ValidationException( "Il campo DATA INIZIO VALIDITA non puÃ² essere vuoto!" );
 
 	// controllo su campo LIMITE di SPESA
 	if ( getLimite_max_spesa() == null )
-		throw new ValidationException( "Il campo LIMITE di SPESA non può essere vuoto!" );
+		throw new ValidationException( "Il campo LIMITE di SPESA non puÃ² essere vuoto!" );
 	if (getLimite_max_spesa().compareTo( new java.math.BigDecimal(0))<=0)
 		throw new ValidationException( "Il campo LIMITE di SPESA deve essere maggiore di 0!" );
 
 	// Non occorre mettere il controllo sulla PERCENTUALE di MAGGIORAZIONE
 	// perche' puo' valere anche + di 100%
 	if (getPercentuale_maggiorazione()==null)
-		throw new ValidationException( "Il campo PERCENTUALE di MAGGIORAZIONE non può essere vuoto!" );
+		throw new ValidationException( "Il campo PERCENTUALE di MAGGIORAZIONE non puÃ² essere vuoto!" );
 	if (getPercentuale_maggiorazione().compareTo(new java.math.BigDecimal(0))<0)
 		throw new ValidationException( "Il campo PERCENTUALE di MAGGIORAZIONE deve essere maggiore o uguale a 0!" );
 
 	// controllo su campo DATA CANCELLAZIONE
 	if(getDt_cancellazione()!=null && getDt_cancellazione().compareTo(getDt_inizio_validita())<0)
-		throw new ValidationException("Il campo DATA CANCELLAZIONE deve essere superiore alla Data Inizio Validità");
+		throw new ValidationException("Il campo DATA CANCELLAZIONE deve essere superiore alla Data Inizio ValiditÃ ");
 }
 }

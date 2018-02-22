@@ -50,19 +50,19 @@ public class Incarichi_repertorio_varBulk extends Incarichi_repertorio_varKey {
 		tipo_variazioneMinimaKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
 
 		tipo_variazioneMinimaForAssegniRicercaKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
-		tipo_variazioneMinimaForAssegniRicercaKeys.put(TIPO_VARIAZIONE_MATERNITA,"Variazione per Maternit‡");
+		tipo_variazioneMinimaForAssegniRicercaKeys.put(TIPO_VARIAZIONE_MATERNITA,"Variazione per Maternit√†");
 
 		tipo_variazioneKeys.put(TIPO_INTEGRAZIONE_INCARICO_TRANS,"Periodo transitorio - Adeguamento alla durata del progetto");
 		tipo_variazioneKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
 
 		tipo_variazioneForAssegniRicercaKeys.put(TIPO_INTEGRAZIONE_INCARICO_TRANS,"Periodo transitorio - Adeguamento alla durata del progetto");
 		tipo_variazioneForAssegniRicercaKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
-		tipo_variazioneForAssegniRicercaKeys.put(TIPO_VARIAZIONE_MATERNITA,"Variazione per Maternit‡");
+		tipo_variazioneForAssegniRicercaKeys.put(TIPO_VARIAZIONE_MATERNITA,"Variazione per Maternit√†");
 
 		tipo_variazioneForEnteKeys.put(TIPO_INTEGRAZIONE_INCARICO_TRANS,"Periodo transitorio - Adeguamento alla durata del progetto");
 		tipo_variazioneForEnteKeys.put(TIPO_INTEGRAZIONE_INCARICO,"Adeguamento Incarico");
 		tipo_variazioneForEnteKeys.put(TIPO_VARIAZIONE_CONTRIBUTI,"Adeguamento Incremento Aliquote");
-		tipo_variazioneForEnteKeys.put(TIPO_VARIAZIONE_MATERNITA,"Variazione per Maternit‡");
+		tipo_variazioneForEnteKeys.put(TIPO_VARIAZIONE_MATERNITA,"Variazione per Maternit√†");
 		tipo_variazioneForEnteKeys.put(TIPO_VARIAZIONE_GENERICA,"Variazione Generica");
 	}
 

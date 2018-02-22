@@ -82,11 +82,11 @@ private void checkRigheFattura_perAssociazione(ActionContext context) throws it.
 		else if (tipo_riga== null && notadeb!=null)
 			tipo_riga = notadeb.getTi_istituz_commerc();
 		else if ( riga_fattura!=null && !tipo_riga.equalsIgnoreCase(riga_fattura.getTi_istituz_commerc()))
-			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non è possibile selezionare righe di Fattura di Tipo diverso.");
+			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non Ã¨ possibile selezionare righe di Fattura di Tipo diverso.");
 		else if (nota!=null && !tipo_riga.equalsIgnoreCase(nota.getTi_istituz_commerc()))
-			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non è possibile selezionare righe di Note Credito di Tipo diverso.");
+			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non Ã¨ possibile selezionare righe di Note Credito di Tipo diverso.");
 		else if (notadeb!=null && !tipo_riga.equalsIgnoreCase(notadeb.getTi_istituz_commerc()))
-			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non è possibile selezionare righe di Note Debito di Tipo diverso.");
+			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non Ã¨ possibile selezionare righe di Note Debito di Tipo diverso.");
 			
 		// Controlla il Bene/Servizio
 		if (riga_fattura != null)
@@ -94,32 +94,32 @@ private void checkRigheFattura_perAssociazione(ActionContext context) throws it.
 			if (bene_servizio == null)
 				bene_servizio = riga_fattura.getBene_servizio().getCd_bene_servizio();
 			else if (!bene_servizio.equalsIgnoreCase(riga_fattura.getBene_servizio().getCd_bene_servizio()))
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non è possibile selezionare righe di Fattura il cui Bene/Servizio sia diverso.");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non Ã¨ possibile selezionare righe di Fattura il cui Bene/Servizio sia diverso.");
 		}else if(nota!=null)
 		{
 			if (bene_servizio == null)
 				bene_servizio = nota.getBene_servizio().getCd_bene_servizio();
 			else if (!bene_servizio.equalsIgnoreCase(nota.getBene_servizio().getCd_bene_servizio()))
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non è possibile selezionare righe di Nota Credito il cui Bene/Servizio sia diverso.");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non Ã¨ possibile selezionare righe di Nota Credito il cui Bene/Servizio sia diverso.");
 		}else if(notadeb!=null)
 		{
 			if (bene_servizio == null)
 				bene_servizio = notadeb.getBene_servizio().getCd_bene_servizio();
 			else if (!bene_servizio.equalsIgnoreCase(notadeb.getBene_servizio().getCd_bene_servizio()))
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non è possibile selezionare righe di Nota Debito il cui Bene/Servizio sia diverso.");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non Ã¨ possibile selezionare righe di Nota Debito il cui Bene/Servizio sia diverso.");
 		}
 	}
 }
 /**
-  *  Associa dei Beni ad una o più righe di Fattura. 
+  *  Associa dei Beni ad una o piÃ¹ righe di Fattura. 
   *	Il metodo dapprima controlla che l'utente abbia selezionato almeno una riga di fattura 
   *	a cui associare i beni: in caso negativo, provvede a mandare un messagio di errore dove 
   *	richiede di selezionare una riga di Fattura.
   *	In seguito, il sistema controlla che le righe selezionate dall'utente siano omogenee: 
-  *	controlla, cioè, che siano o tutte ISTITUZIONALI o tutte COMMERCIALI, (metodo checkRigheFattura_perAssociazione).
+  *	controlla, cioÃ¨, che siano o tutte ISTITUZIONALI o tutte COMMERCIALI, (metodo checkRigheFattura_perAssociazione).
   *	Infine, verifica l'esistenza di beni che abbiano le caratteristiche per essere associate 
   *	alle righe selezionate, (metodo cercaBeniAssociabili): se ci sono beni disponibili, questi 
-  *	vengono visualizzati all'utente che selezionerà quelli necessari.
+  *	vengono visualizzati all'utente che selezionerÃ  quelli necessari.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
   *
@@ -135,7 +135,7 @@ public Forward doAddToCRUDMain_DettagliFattura_RigheInventarioDaFattura(ActionCo
 		
 		// Controlla che l'utente abia selezionato almeno una riga di Fattura
 		if (selection == null || selection.size()==0){
-			throw new it.cnr.jada.bulk.ValidationException("Attenzione: selezionare una o più righe di Fattura");
+			throw new it.cnr.jada.bulk.ValidationException("Attenzione: selezionare una o piÃ¹ righe di Fattura");
 		}
 		
 		// Controlla che le righe di Fattura selezionate siano omogenee.
@@ -174,15 +174,15 @@ public Forward doAddToCRUDMain_DettagliFattura_RigheInventarioDaFattura(ActionCo
 	}
 }
 /**
- *  Associa dei Beni ad una o più righe di Fattura. 
+ *  Associa dei Beni ad una o piÃ¹ righe di Fattura. 
  *	Il metodo dapprima controlla che l'utente abbia selezionato almeno una riga di fattura 
  *	a cui associare i beni: in caso negativo, provvede a mandare un messagio di errore dove 
  *	richiede di selezionare una riga di Fattura.
  *	In seguito, il sistema controlla che le righe selezionate dall'utente siano omogenee: 
- *	controlla, cioè, che siano o tutte ISTITUZIONALI o tutte COMMERCIALI, (metodo checkRigheFattura_perAssociazione).
+ *	controlla, cioÃ¨, che siano o tutte ISTITUZIONALI o tutte COMMERCIALI, (metodo checkRigheFattura_perAssociazione).
  *	Infine, verifica l'esistenza di beni che abbiano le caratteristiche per essere associate 
  *	alle righe selezionate, (metodo cercaBeniAssociabili): se ci sono beni disponibili, questi 
- *	vengono visualizzati all'utente che selezionerà quelli necessari.
+ *	vengono visualizzati all'utente che selezionerÃ  quelli necessari.
  *
  * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
  *
@@ -558,7 +558,7 @@ private void checkRigheDocumento_perAssociazione(ActionContext context) throws i
 		if (tipo_riga == null && doc_riga!=null)
 			tipo_riga = doc_riga.getDocumento_generico().getTi_istituz_commerc();
 		else if (doc_riga!=null && !tipo_riga.equalsIgnoreCase(doc_riga.getDocumento_generico().getTi_istituz_commerc()))
-			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non è possibile selezionare righe di Documento di Tipo diverso.");
+			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non Ã¨ possibile selezionare righe di Documento di Tipo diverso.");
 			
 	}
 }
@@ -572,7 +572,7 @@ public Forward doAddToCRUDMain_DettagliDocumento_RigheInventarioDaDocumento(Acti
 		
 		// Controlla che l'utente abia selezionato almeno una riga di Documento
 		if (selection == null || selection.size()==0){
-			throw new it.cnr.jada.bulk.ValidationException("Attenzione: selezionare una o più righe di Documento");
+			throw new it.cnr.jada.bulk.ValidationException("Attenzione: selezionare una o piÃ¹ righe di Documento");
 		}
 		
 		// Controlla che le righe di Documento selezionate siano omogenee.

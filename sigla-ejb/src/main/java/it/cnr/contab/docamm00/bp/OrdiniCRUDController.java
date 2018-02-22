@@ -71,14 +71,14 @@ public class OrdiniCRUDController extends it.cnr.jada.util.action.SimpleDetailCR
     }
 
     /**
-     * Restituisce true se è possibile aggiungere nuovi elementi
+     * Restituisce true se Ã¨ possibile aggiungere nuovi elementi
      */
     public boolean isGrowable() {
         return false;
     }
 
     /**
-     * Restituisce true se è possibile aggiungere nuovi elementi
+     * Restituisce true se Ã¨ possibile aggiungere nuovi elementi
      */
     public boolean isShrinkable() {
         return	super.isShrinkable() && !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching();

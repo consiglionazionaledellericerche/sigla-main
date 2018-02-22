@@ -1,7 +1,7 @@
 package it.cnr.contab.utenze00.bp;
 
 /**
- * Business Process che gestisce l'attivit‡ di Gestione Ruolo: in particolare gestisce 
+ * Business Process che gestisce l'attivit√† di Gestione Ruolo: in particolare gestisce 
  * i due dettagli relativi agli Accessi gia' assegnati al Ruolo e agli Accessi ancora disponibili
  *	
  */
@@ -33,7 +33,7 @@ public void edit(it.cnr.jada.action.ActionContext context,OggettoBulk bulk) thro
 		setStatus(VIEW);
 }
 /**
- * Restituisce il Controller che gestisce il dettaglio degli Accessi gi‡ assegnati ad un Ruolo
+ * Restituisce il Controller che gestisce il dettaglio degli Accessi gi√† assegnati ad un Ruolo
  * @return it.cnr.jada.util.action.SimpleDetailCRUDController controller
  */
 public final it.cnr.jada.util.action.SimpleDetailCRUDController getCrudAccessi() {
@@ -48,9 +48,9 @@ public final it.cnr.jada.util.action.SimpleDetailCRUDController getCrudAccessi_d
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cdsFieldEnabled'
+ * Restituisce il valore della propriet√† 'cdsFieldEnabled'
  *
- * @return Il valore della propriet‡ 'cdsFieldEnabled'
+ * @return Il valore della propriet√† 'cdsFieldEnabled'
  */
 public boolean isCdsFieldEnabled() 
 {
