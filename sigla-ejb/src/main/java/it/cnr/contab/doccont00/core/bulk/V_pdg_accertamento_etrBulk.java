@@ -27,16 +27,16 @@ public class V_pdg_accertamento_etrBulk extends V_pdg_accertamento_etrBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'prcImputazioneFin'
+	 * Restituisce il valore della propriet√† 'prcImputazioneFin'
 	 *
-	 * @return Il valore della propriet‡ 'prcImputazioneFin'
+	 * @return Il valore della propriet√† 'prcImputazioneFin'
 	 */
 	public BigDecimal getPrcImputazioneFin() {
 		return prcImputazioneFin;
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'prcImputazioneFin'
+	 * Imposta il valore della propriet√† 'prcImputazioneFin'
 	 *
 	 * @param newPrcImputazioneFin	Il valore da assegnare a 'prcImputazioneFin'
 	 */

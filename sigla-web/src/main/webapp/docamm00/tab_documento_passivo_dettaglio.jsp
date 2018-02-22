@@ -136,9 +136,9 @@
 			}
 			else{
 			if ((riga.getModalita()==null || riga.getModalita().isEmpty()) && riga.getTerzo().getAnagrafico()!=null && !bp.isSearching()) { %>
-				<span class="FormLabel" style="color:red"> Nessuna modalit‡ di pagamento trovata</span>
+				<span class="FormLabel" style="color:red"> Nessuna modalit√† di pagamento trovata</span>
 			<%} else if (riga.getModalita_pagamento() != null && riga.getTerzo().getCd_terzo()!=null && !bp.isSearching()) {%>
-				<span class="FormLabel" style="color:red">Nessun riferimento trovato per la modalit‡ di pagamento selezionata!</span>
+				<span class="FormLabel" style="color:red">Nessun riferimento trovato per la modalit√† di pagamento selezionata!</span>
 		<%	}}
 		%>
 		</tr>

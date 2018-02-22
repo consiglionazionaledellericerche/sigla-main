@@ -59,13 +59,13 @@ public class BilancioPreventivoComponent  extends it.cnr.jada.comp.CRUDComponent
   *  Tutti controlli superati
   *    PreCondition:
   *      Viene richiesta l'approvazione del bilancio preventivo.
-  *      Lo stato del bilancio preventivo Ë (B) predisposto o prodotto.
+  *      Lo stato del bilancio preventivo √® (B) predisposto o prodotto.
   *    PostCondition:
   *      Viene invocato il controllo di pareggio di bilancio mandatorio (richiesta CINECA/CNR del 04/11/2002)
   *      Lo stato del bilancio preventivo si cambia da 'B' a 'C' approvato.
-  *  Stato bilancio preventivo NON Ë B
+  *  Stato bilancio preventivo NON √® B
   *    PreCondition:
-  *      Lo stato del bilancio preventivo NON Ë B.
+  *      Lo stato del bilancio preventivo NON √® B.
   *    PostCondition:
   *      Operazione non consentita.
   *      Throw exception: Lo stato del bilancio preventivo non consente l'approvazione.
@@ -76,7 +76,7 @@ public Bilancio_preventivoBulk approvaBilancioPreventivo (UserContext aUC,Bilanc
 	// 05/09/2003
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(aUC))
-		throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile approvare il bilancio preventivo ad esercizio chiuso.");
+		throw new it.cnr.jada.comp.ApplicationException("Non √® possibile approvare il bilancio preventivo ad esercizio chiuso.");
 
     // FIX 18/01/2002
     // Rilettura loockante del piano per verificare che nessuno l'abbia modificato dall'apertura della finestra del bilancio testata
@@ -400,7 +400,7 @@ private java.math.BigDecimal checkSpeseBilFinCdsCnr(UserContext userContext, Voc
 	}
 
 /**
-  *  Richiesta creazione di dettaglio in bilancio finaniziario CNR ed esiste gi‡ il dettaglio per la parte residui
+  *  Richiesta creazione di dettaglio in bilancio finaniziario CNR ed esiste gi√† il dettaglio per la parte residui
   *    PreCondition:
   *      Viene richiesta la creazione di un nuovo dettaglio di bilancio preventivo CNR.
   *      Esiste per tale dettaglio la specifica di dettaglio della parte residui
@@ -414,7 +414,7 @@ private java.math.BigDecimal checkSpeseBilFinCdsCnr(UserContext userContext, Voc
   *    PostCondition:
   *      Viene creato un nuovo dettaglio
   *      Viene creato un record relativo alla parte residui
-  *      Se il dettaglio Ë di spesa viene aggiornato l'impegno automatico colegato al capitolo
+  *      Se il dettaglio √® di spesa viene aggiornato l'impegno automatico colegato al capitolo
   *
   *  Creazione di dettaglio in bilancio finaniziario CDS con spareggio di bilancio entrate > spese
   *    PreCondition:
@@ -455,7 +455,7 @@ private java.math.BigDecimal checkSpeseBilFinCdsCnr(UserContext userContext, Voc
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext))
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile creare dettagli ad esercizio chiuso.");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile creare dettagli ad esercizio chiuso.");
 
 		OggettoBulk aBulk = super.creaConBulk(userContext,bulk);
         String aMessage="Operazione completata";
@@ -518,7 +518,7 @@ private java.math.BigDecimal checkSpeseBilFinCdsCnr(UserContext userContext, Voc
 				try {
 					insertBulk(userContext,residui);
 				} catch(it.cnr.jada.persistency.sql.DuplicateKeyException dke) {
-					throw new it.cnr.jada.comp.ApplicationException("Impossibile creare un record di tipo \"residuo\", record gi‡ esistente!");
+					throw new it.cnr.jada.comp.ApplicationException("Impossibile creare un record di tipo \"residuo\", record gi√† esistente!");
 				}
 
 				((Voce_f_saldi_cmpBulk)bulk).setResidui( residui );
@@ -543,7 +543,7 @@ private java.math.BigDecimal checkSpeseBilFinCdsCnr(UserContext userContext, Voc
   *    PreCondition:
   *      Viene richiesta la creazione degli stanziamenti iniziali del bilancio preventivo di un singolo CdS.
   *    PostCondition:
-  *      La creazione degli stanziamenti iniziali del bilancio preventivo di un singolo CdS richiede l'aggregazione per 'Rubrica' dei PdG che appartengono al CdS. Il risultato di questa aggregazione (prodotta/specificata nel metodo aggregaPdGPerRubrica) viene utilizzato per la scrittura degli saldi corrispondenti nella tabella VOCE_F_SALDI_CMP. La procedura ORACLE predisponeBilFinCDS(esercizio, cds, utente) esegue quest'attivit‡.
+  *      La creazione degli stanziamenti iniziali del bilancio preventivo di un singolo CdS richiede l'aggregazione per 'Rubrica' dei PdG che appartengono al CdS. Il risultato di questa aggregazione (prodotta/specificata nel metodo aggregaPdGPerRubrica) viene utilizzato per la scrittura degli saldi corrispondenti nella tabella VOCE_F_SALDI_CMP. La procedura ORACLE predisponeBilFinCDS(esercizio, cds, utente) esegue quest'attivit√†.
  */
 //^^@@
 public void creaStanziamentiInizialiCdS (UserContext aUC,CdsBulk cds) throws ComponentException
@@ -556,7 +556,7 @@ public void creaStanziamentiInizialiCdS (UserContext aUC,CdsBulk cds) throws Com
   *    PreCondition:
   *      Viene richiesta la creazione degli stanziamenti iniziali del bilancio preventivo del CNR.
   *    PostCondition:
-  *      La creazione degli stanziamenti iniziali del bilancio preventivo del CNR richiede la lettura delle righe delle tabelle PDG_AGGREGATO* e la scrittura degli saldi corrispondenti nella tabella VOCE_F_SALDI_CMP. La procedura ORACLE predisponeBilFinCNR(esercizio, utente) esegue quest'attivit‡.
+  *      La creazione degli stanziamenti iniziali del bilancio preventivo del CNR richiede la lettura delle righe delle tabelle PDG_AGGREGATO* e la scrittura degli saldi corrispondenti nella tabella VOCE_F_SALDI_CMP. La procedura ORACLE predisponeBilFinCNR(esercizio, utente) esegue quest'attivit√†.
  */
 //^^@@
 public void creaStanziamentiInizialiCNR (UserContext aUC,short esercizio) throws ComponentException
@@ -729,7 +729,7 @@ protected boolean isEsercizioChiuso(UserContext userContext) throws ComponentExc
   *  Modifica di dettaglio in bilancio finaniziario CNR di spesa
   *    PreCondition:
   *      Viene richiesta la modifica di un dettaglio di bilancio preventivo CNR.
-  *      Il dettaglio Ë di spesa
+  *      Il dettaglio √® di spesa
   *    PostCondition:
   *      Viene aggiornato l'impegno automatico collegato al capitolo
   *      Viene aggiornato il saldo parte competenza
@@ -779,7 +779,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext))
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile modificare dettagli ad esercizio chiuso.");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile modificare dettagli ad esercizio chiuso.");
 
 		OggettoBulk aBulk = super.modificaConBulk(userContext,bulk);
 		String aMessage = "Operazione completata";
@@ -850,7 +850,7 @@ public Bilancio_preventivoBulk predisponeBilancioPreventivoCdS (UserContext aUC,
 	// 05/09/2003
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(aUC))
-		throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile predisporre il bilancio preventivo ad esercizio chiuso.");
+		throw new it.cnr.jada.comp.ApplicationException("Non √® possibile predisporre il bilancio preventivo ad esercizio chiuso.");
 
 	try
 	{
@@ -887,7 +887,7 @@ public Bilancio_preventivoBulk predisponeBilancioPreventivoCNR (UserContext aUC,
 	// 05/09/2003
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(aUC))
-		throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile predisporre il bilancio preventivo ad esercizio chiuso.");
+		throw new it.cnr.jada.comp.ApplicationException("Non √® possibile predisporre il bilancio preventivo ad esercizio chiuso.");
 
 	try
 	{

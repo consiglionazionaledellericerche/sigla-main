@@ -40,7 +40,7 @@ public CRUDLiquidazioneCORIAction() {
   *  E' stata generata la richiesta di calcolare i le liquidazioni da versare.
   * Prima di tutto vengono controllate le date inserite come inizio e fine periodo per il
   *	calcolo della Liquidazione. Viene poi invocato il metodo,(Liquid_coriComponent.calcolaLiquidazione), 
-  *	che far‡ riferimento alla Stored Procedure che effettuer‡ le operazioni di calcolo e la 
+  *	che far√† riferimento alla Stored Procedure che effettuer√† le operazioni di calcolo e la 
   *	popolazione delle tabelle interessate.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
@@ -88,8 +88,8 @@ public Forward doCalcolaLiquidazione(ActionContext context) {
   * L'implementazione di default utilizza il metodo astratto <code>reset</code>
   * di <code>CRUDBusinessProcess</code>
   *
-  * Il metodo Ë stato reimplementato per far sÏ che tutte le operazioni effettuate sulle tabelle
-  *	fossero resettate. Vengono, inoltre, poste a FALSE le propriet‡ <code>isCalcolato</code> 
+  * Il metodo √® stato reimplementato per far s√¨ che tutte le operazioni effettuate sulle tabelle
+  *	fossero resettate. Vengono, inoltre, poste a FALSE le propriet√† <code>isCalcolato</code> 
   *	e <code>isLiquidato</code>.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
@@ -113,7 +113,7 @@ public Forward doConfermaNuovo(ActionContext context,int option) {
 /**
   * Permette di visualizzare i beni accessori del bene su cui si sta lavorando. 
   *	Apre un'altra finestra, (SelezionatoreBP), che ha come Iterator un Iteratore sui beni 
-  *	accessori del bene che Ë Oggetto Model del BP.
+  *	accessori del bene che √® Oggetto Model del BP.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
   *
@@ -169,7 +169,7 @@ public Forward doDettaglioGruppiLocaliFor(ActionContext context) {
   *  E' stata generata la richiesta di liquidare i CORI selezionati dall'utente.
   * Prima di tutto si controlla che l'utente abbia selezionato degli elemnti validi.
   *	Viene poi invocato il metodo,(Liquid_coriComponent.eseguiLiquidazione), 
-  *	che far‡ riferimento alla Stored Procedure che effettuer‡ la liquidazione e la 
+  *	che far√† riferimento alla Stored Procedure che effettuer√† la liquidazione e la 
   *	popolazione delle tabelle interessate.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta

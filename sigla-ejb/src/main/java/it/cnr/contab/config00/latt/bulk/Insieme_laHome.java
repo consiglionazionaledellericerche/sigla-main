@@ -7,7 +7,7 @@ import it.cnr.jada.persistency.sql.*;
 
 public class Insieme_laHome extends BulkHome {
 /**
- * Costrutture insieme linea di attivit‡ Home
+ * Costrutture insieme linea di attivit√† Home
  *
  * @param conn connessione db
  */
@@ -16,7 +16,7 @@ public Insieme_laHome(java.sql.Connection conn) {
 	super(Insieme_laBulk.class,conn);
 }
 /**
- * Costrutture insieme linea di attivit‡ Home
+ * Costrutture insieme linea di attivit√† Home
  *
  * @param conn connessione db
  * @param persistentCache cache modelli

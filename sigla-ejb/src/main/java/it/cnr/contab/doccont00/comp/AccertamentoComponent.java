@@ -247,7 +247,7 @@ public void aggiornaCogeCoanInDifferita(it.cnr.jada.UserContext userContext, it.
 }
 /**
  * Aggiornamento in differita dei saldi dell'accertamento
- * Un documento amministrativo di entrata che agisce in modalit‡ transazionale ha creato/modificato gli importi 
+ * Un documento amministrativo di entrata che agisce in modalit√† transazionale ha creato/modificato gli importi 
  * relativi ad un accertamento; i saldi di tale accertamento non possono essere aggiornati subito in quanto
  * tale operazione genererebbe dei lock sulle voci del piano che non ne consentirebbero l'utilizzo ad altri utenti;
  * pertanto l'aggiornamento dei saldi dell'accertamento viene differito al momento del salvataggio
@@ -358,7 +358,7 @@ private void aggiornaSaldiInModifica( UserContext userContext, AccertamentoBulk 
 
 	List saldiDaAggiornare = ((V_mod_saldi_accertHome)getHome( userContext, V_mod_saldi_accertBulk.class )).findModificheSaldiFor( accertamento, pg_ver_rec );
 	if ( userContext.isTransactional() && saldiDaAggiornare.size() == 0 )
-		throw new ApplicationException( "Attenzione! Il saldo relativo all'accertamento " + accertamento.getEsercizio_originale() + "/" + accertamento.getPg_accertamento() + " non puÚ essere aggiornato perchË l'accertamento non e' presente nello storico.");
+		throw new ApplicationException( "Attenzione! Il saldo relativo all'accertamento " + accertamento.getEsercizio_originale() + "/" + accertamento.getPg_accertamento() + " non pu√≤ essere aggiornato perch√® l'accertamento non e' presente nello storico.");
 	/*
 	* Aggiorno i Saldi per Voce_f_saldi_cmpBulk
 	* e' sempre uno solo
@@ -385,7 +385,7 @@ private void aggiornaSaldiInModifica( UserContext userContext, AccertamentoBulk 
 	*/
 	List saldiDaAggiornareCdrLinea = ((V_mod_saldi_accert_scad_voceHome)getHome( userContext, V_mod_saldi_accert_scad_voceBulk.class )).findModificheSaldiFor( accertamento, pg_ver_rec );
 	if ( userContext.isTransactional() && saldiDaAggiornareCdrLinea.size() == 0 )
-		throw new ApplicationException( "Attenzione! Il saldo relativo all'accertamento " + accertamento.getEsercizio_originale() + "/" + accertamento.getPg_accertamento() + " non puÚ essere aggiornato perchË l'accertamento non e' presente nello storico.");
+		throw new ApplicationException( "Attenzione! Il saldo relativo all'accertamento " + accertamento.getEsercizio_originale() + "/" + accertamento.getPg_accertamento() + " non pu√≤ essere aggiornato perch√® l'accertamento non e' presente nello storico.");
 	for ( Iterator i = saldiDaAggiornareCdrLinea.iterator(); i.hasNext(); )
 	{
 		V_mod_saldi_accert_scad_voceBulk modSaldo = (V_mod_saldi_accert_scad_voceBulk) i.next();
@@ -398,7 +398,7 @@ private void aggiornaSaldiInModifica( UserContext userContext, AccertamentoBulk 
         	voce = new Elemento_voceBulk( modSaldo.getCd_voce(), accertamento.getEsercizio(), modSaldo.getTi_appartenenza(), modSaldo.getTi_gestione() );
 
         if ( modSaldo.getIm_delta_voce().compareTo( new BigDecimal(0)) != 0 ) {
-			// MITODO - verificare se Ë necessario non effettuare l'aggiornamento in questo caso
+			// MITODO - verificare se √® necessario non effettuare l'aggiornamento in questo caso
 			//if (!accertamento.isAccertamentoResiduo())
 			session.aggiornaObbligazioniAccertamenti( userContext, modSaldo.getCd_centro_responsabilita(), modSaldo.getCd_linea_attivita(), voce, modSaldo.getEsercizio_originale(),modSaldo.getCd_tipo_documento_cont().equals(Numerazione_doc_contBulk.TIPO_ACR_RES)?Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_PROPRIO:Voce_f_saldi_cdr_lineaBulk.TIPO_COMPETENZA,modSaldo.getIm_delta_voce(),modSaldo.getCd_tipo_documento_cont());
 		}
@@ -447,7 +447,7 @@ private void annullaRigheDocAmm(UserContext userContext, AccertamentoBulk accert
 							{
 								bFound = true;
 								Documento_generico_rigaBulk docAttivo = (Documento_generico_rigaBulk) it.next();
-								// ricarico rima del lock dato che se Ë stato updatato prima mi darebbe "Risorsa non pi˘ valida"
+								// ricarico rima del lock dato che se √® stato updatato prima mi darebbe "Risorsa non pi√π valida"
 								docAttivo = (Documento_generico_rigaBulk) getHome(userContext, Documento_generico_rigaBulk.class).findByPrimaryKey(docAttivo);
 								if (!docAttivo.getStato_cofi().equals(Documento_generico_rigaBulk.STATO_ANNULLATO)) {
 									lockBulk(userContext,docAttivo);
@@ -479,7 +479,7 @@ private void annullaRigheDocAmm(UserContext userContext, AccertamentoBulk accert
 								}
 							}
 							if (!bFound)
-								throw new ApplicationException( "Attenzione! Non Ë stato trovato il documento attivo a cui Ë collegato la scadenza da azzerare!");
+								throw new ApplicationException( "Attenzione! Non √® stato trovato il documento attivo a cui √® collegato la scadenza da azzerare!");
 						}
 /*
 						if (scadenza.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA)) {
@@ -516,7 +516,7 @@ private void annullaRigheDocAmm(UserContext userContext, AccertamentoBulk accert
 							}
 						}
 						if (!bFound)
-							throw new ApplicationException( "Attenzione! Non Ë stato trovato il documento attivo a cui Ë collegato la scadenza da azzerare!");
+							throw new ApplicationException( "Attenzione! Non √® stato trovato il documento attivo a cui √® collegato la scadenza da azzerare!");
 */
 					}
 				}
@@ -573,18 +573,18 @@ private void aggiornaSaldiAccertamentiResiduiPropri (UserContext uc,Accertamento
   *      scadenza(n+1) esiste
   *      scadenza(n+1).importo > differenza in scadenza(n).importo
   *    PostCondition:
-  *      Il sistema eseguir‡ l'aggiornamento dell'importo della scadenza successiva (n+1) dell'accertamento aggiungendo la differenza fra il nuovo e vecchio importo della scadenza in aggiornamento. 
-  *      La differenza Ë espressa come (scadenzario(n).importo_nuovo - scadenzario(n).importo_vecchio)
+  *      Il sistema eseguir√† l'aggiornamento dell'importo della scadenza successiva (n+1) dell'accertamento aggiungendo la differenza fra il nuovo e vecchio importo della scadenza in aggiornamento. 
+  *      La differenza √® espressa come (scadenzario(n).importo_nuovo - scadenzario(n).importo_vecchio)
   *  scadenza(n+1).importo <= differenza in scadenza(n).importo
   *    PreCondition:
   *      L'utente richiede l'aggiornamento in automatico dell'importo della scadenza successiva (scadenza(n+1)) alla scadenza in elaborazione (scadenza(n)), ma l'aumento dell'importo della scadenza(n) supera il valore dell'importo dell'ultima scadenza dell'accertamento. Una formula per questa condizione sarebbe (scadenzario(n+1).importo - (scadenzario(n).importo_nuovo - scadenzario(n).importo_vecchio) > 0)
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non Ë possibile perchÈ l'aumento dell'importo della scadenza(n) Ë maggiore all'importo dell'ultima scadenza (cercarebbe settare l'importo <= 0). L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non √® possibile perch√© l'aumento dell'importo della scadenza(n) √® maggiore all'importo dell'ultima scadenza (cercarebbe settare l'importo <= 0). L'attivit√† non √® consentita.
   *  scadenza(n+1) non esiste
   *    PreCondition:
-  *      L'utente richiede l'aggiornamento in automatico dell'importo della scadenza successiva (scadenza(n+1)) alla scadenza in elaborazione (scadenza(n)), ma la scadenza in aggiornamento Ë l'ultima scadenza dell'accertamento.
+  *      L'utente richiede l'aggiornamento in automatico dell'importo della scadenza successiva (scadenza(n+1)) alla scadenza in elaborazione (scadenza(n)), ma la scadenza in aggiornamento √® l'ultima scadenza dell'accertamento.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non Ë possibile perchÈ non esiste una scadenza successiva. L'attivit‡ non Ë consentita.
+  *      Il metodo utilizza un Throw Exception per comunicare che l'aggiornamento in automatico dell'importo non √® possibile perch√© non esiste una scadenza successiva. L'attivit√† non √® consentita.
   *
   * @param	aUC	lo UserContext che ha generato la richiesta
   * @param	scadenza	l'Accertamento_scadenzarioBulk per cui aggiornare la scadenza successiva
@@ -626,7 +626,7 @@ public AccertamentoBulk aggiornaScadenzarioSuccessivoAccertamento (UserContext a
 	indice = indice + 1;						// indice della scadenza successiva
 	
 	//non esiste scadenza successiva
-	//se residuo proprio e il delta Ë positivo (Ë stata diminuito l'importo della scadenza precedente)
+	//se residuo proprio e il delta √® positivo (√® stata diminuito l'importo della scadenza precedente)
 	//inserisco una nuova scadenza		
 	if ( indice == accertamento.getAccertamento_scadenzarioColl().size()) {
 		if (delta.doubleValue() < 0)			
@@ -701,7 +701,7 @@ private void aggiornaStatoCOAN_COGEDocAmm( UserContext userContext, Accertamento
  * Nome: Errore doc. amm.
  * Pre:  Una richiesta di annullamento di un accertamento e' stata generata
  *       L'accertamento ha documenti amministartivi associati
- * Post: Una segnalazione di errore viene restituita per comunicare all'utente l'impossibilit‡ di eseguire l'operazione 
+ * Post: Una segnalazione di errore viene restituita per comunicare all'utente l'impossibilit√† di eseguire l'operazione 
  *       di annullamento
  *
  * @param	aUC	lo UserContext che ha generato la richiesta
@@ -808,7 +808,7 @@ public void callDoRiprocAcc(
   *    PreCondition:
   *      E' stata inoltrata una richiesta di riportare all'esercizio successivo un documento contabile
   *	 PostCondition:
-  *		Il doc.contabile Ë stato riportato all'esercizio successivo richiamando 
+  *		Il doc.contabile √® stato riportato all'esercizio successivo richiamando 
   *      la stored procedure CNRCTB046.riportoEsNextDocCont
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -858,7 +858,7 @@ public void callRiportaAvanti (UserContext userContext,IDocumentoContabileBulk d
   *    PreCondition:
   *      E' stata inoltrata una richiesta di riportare indietro dall'esercizio successivo un documento contabile
   *	 PostCondition:
-  *		Il doc.contabile Ë stato riportato all'esercizio successivo richiamando 
+  *		Il doc.contabile √® stato riportato all'esercizio successivo richiamando 
   *      la stored procedure CNRCTB046.deriportoEsNextDocCont
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -904,11 +904,11 @@ public void callRiportaIndietro (UserContext userContext,IDocumentoContabileBulk
  * Pre-post-conditions:
  *
  * Nome: Cancella i dettagli della scadenza
- * Pre:  L'utente ha modificato la selezione della linea di attivit‡ dell'accertamento 
- * Post: Sono stati eliminati i dettagli della scadenza in quanto si riferivano alla precedente linea di attivit‡
+ * Pre:  L'utente ha modificato la selezione della linea di attivit√† dell'accertamento 
+ * Post: Sono stati eliminati i dettagli della scadenza in quanto si riferivano alla precedente linea di attivit√†
  *
  * @param	aUC	lo UserContext che ha generato la richiesta
- * @param	accertamento l' AccertamentoBulk la cui linea di attivit‡ e' stata modificata
+ * @param	accertamento l' AccertamentoBulk la cui linea di attivit√† e' stata modificata
  * @param	scadenza l'Accertamento_scadenzarioBulk per cui eliminare i dettagli
  * @return	l'Accertamento_scadenzarioBulk senza dettagli
 */
@@ -924,7 +924,7 @@ public Accertamento_scadenzarioBulk cancellaDettagliScadenze (UserContext aUC,Ac
 	
 	BulkList listaLAComuni = dettagliScadenzaLAComuni(aUC, accertamento, scadenzario);
 	
-	//cancello i dettagli scadenze per le linee di attivit‡ che non esistono piu'
+	//cancello i dettagli scadenze per le linee di attivit√† che non esistono piu'
 
 	for ( Iterator scadIterator = scadenzario.getAccertamento_scad_voceColl().iterator(); scadIterator.hasNext(); index++)
 	{
@@ -954,7 +954,7 @@ public Accertamento_scadenzarioBulk cancellaDettagliScadenze (UserContext aUC,Ac
 
 		if ( !found )
 		{
-			// dettaglio da cancellare solo se la linea di attivit‡ non Ë
+			// dettaglio da cancellare solo se la linea di attivit√† non √®
 			// tra quelle comuni legate al cdr
 			if (!listaLAComuni.containsByPrimaryKey(osv.getLinea_attivita())) {
 				osv.setToBeDeleted();
@@ -970,7 +970,7 @@ public Accertamento_scadenzarioBulk cancellaDettagliScadenze (UserContext aUC,Ac
   *      E' stata generata la richiesta di creazione di un dettaglio per una scadenza di un accertamento di sistema
   *    PostCondition:
   *      Un dettaglio per la scadenza di un accertamento di sistema e' stato creata con
-  *      importo uguale all'importo della scadenza e linea di attivit‡ uguale alla linea di attivit‡ definita
+  *      importo uguale all'importo della scadenza e linea di attivit√† uguale alla linea di attivit√† definita
   *      in Configurazione CNR come LINEA ATTIVITA' ENTE di ENTRATA
   *
   *
@@ -1070,7 +1070,7 @@ private Accertamento_scadenzarioBulk creaAccertamento_scadenzario (UserContext u
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param mandatoRiga <code>MandatoAccreditamento_rigaBulk</code> la riga del mandato di accreditamento per la quale e' 
   *        necessario creare una riga della reversale di trasferimento associata all'accertamento di sistema da creare
-  * @param uo <code>Unita_organizzativaBulk</code> l'unit‡ organizzativa beneficiaria del mandato di accreditamento
+  * @param uo <code>Unita_organizzativaBulk</code> l'unit√† organizzativa beneficiaria del mandato di accreditamento
   * @return <code>AccertamentoBulk</code> L'accertamento di sistema creato
  */
 
@@ -1176,7 +1176,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 		else
 			accertamento.setCd_tipo_documento_cont( Numerazione_doc_contBulk.TIPO_ACR_PLUR );		
 	}	
-	// MITODO - sull'obbligazione cË la seguente riga, verificare
+	// MITODO - sull'obbligazione c√® la seguente riga, verificare
 	//generaDettagliScadenzaObbligazione( uc, obbligazione, null );	
 	verificaAccertamento( uc, (AccertamentoBulk) bulk );
 
@@ -1200,18 +1200,18 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
  *
  * Pre-post-conditions:
  *
- * Nome: Linea attivit‡ non comune
- * Pre:  L'utente ha selezionato una linea di attivit‡ non comune per l'accertamento 
+ * Nome: Linea attivit√† non comune
+ * Pre:  L'utente ha selezionato una linea di attivit√† non comune per l'accertamento 
  * Post: E' stato generato un dettaglio (Accertamento_scad_voceBulk) per la scadenza con importo pari alla scadenza stessa
  *
- * Nome: Linea attivit‡ comune
- * Pre:  L'utente ha selezionato una linea di attivit‡ comune per l'accertamento 
- * Post: Per ogni linea di attivit‡ collegata a quella selezionata dall'utente e' stato generato un dettaglio (Accertamento_scad_voceBulk) per la scadenza;
- *       tutti i dettagli hanno importo uguale a 0 tranne il dettaglio che esattamente corrisponde alla linea di attivit‡ selezionata
+ * Nome: Linea attivit√† comune
+ * Pre:  L'utente ha selezionato una linea di attivit√† comune per l'accertamento 
+ * Post: Per ogni linea di attivit√† collegata a quella selezionata dall'utente e' stato generato un dettaglio (Accertamento_scad_voceBulk) per la scadenza;
+ *       tutti i dettagli hanno importo uguale a 0 tranne il dettaglio che esattamente corrisponde alla linea di attivit√† selezionata
  *       dall'utente che ha importo pari alla scadenza stessa
  
  * @param	aUC	lo UserContext che ha generato la richiesta
- * @param	accertamento l' AccertamentoBulk da cui recuperare lalinea di attivit‡
+ * @param	accertamento l' AccertamentoBulk da cui recuperare lalinea di attivit√†
  * @param	scadenza l'Accertamento_scadenzarioBulk per cui generare i dettagli
 */
 /*
@@ -1221,7 +1221,7 @@ private void creaDettagliScadenza(UserContext aUC,AccertamentoBulk accertamento,
 	
 	try
 	{
-		//	Linea attivit‡ non comune
+		//	Linea attivit√† non comune
 		if ( !accertamento.getLinea_attivita().getCd_linea_attivita().startsWith( "C" ))
 		{
 			//	Creo un solo dettaglio (Accertamento_scad_voceBulk) della scadenza
@@ -1273,7 +1273,7 @@ private void creaDettagliScadenza(UserContext aUC,AccertamentoBulk accertamento,
 protected void creaDettagliScadenzaLAComuni(UserContext aUC, AccertamentoBulk accertamento, Accertamento_scadenzarioBulk scadenza) throws ComponentException
 {
 	
-	//aggiungiamo i dettagli per le linea attivit‡ comuni
+	//aggiungiamo i dettagli per le linea attivit√† comuni
 	Accertamento_scad_voceBulk dettaglio;
 	it.cnr.contab.config00.latt.bulk.WorkpackageBulk lineaAtt;
 	BulkList listaFinale = dettagliScadenzaLAComuni(aUC, accertamento, scadenza); 
@@ -1301,7 +1301,7 @@ private BulkList dettagliScadenzaLAComuni(UserContext aUC, AccertamentoBulk acce
 	BulkList listaFinale = new BulkList();
 	try
 	{
-		//aggiungiamo i dettagli per le linea attivit‡ comuni
+		//aggiungiamo i dettagli per le linea attivit√† comuni
 		V_pdg_accertamento_etrBulk lineav;
 		WorkpackageBulk linea;
 		//Collection lineeColl = accertamento.getLineeAttivitaSelezionateColl(); 
@@ -1386,7 +1386,7 @@ private it.cnr.contab.doccont00.ejb.SaldoComponentSession createSaldoComponentSe
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param mandatoRiga <code>MandatoAccreditamento_rigaBulk</code> la riga del mandato di accreditamento associata all'impegno
   *        da cui ricavare il capitolo di spesa CNRper la quale e' 
-  * @param uo <code>Unita_organizzativaBulk</code> l'unit‡ organizzativa beneficiaria del mandato di accreditamento da
+  * @param uo <code>Unita_organizzativaBulk</code> l'unit√† organizzativa beneficiaria del mandato di accreditamento da
   *        cui ricavare il tipo del Cds da cui dipende
   * @return <code>Ass_ev_evBulk</code> L'associazione identificata oppure null se l'associazione non esiste
  */
@@ -1427,12 +1427,12 @@ private Ass_ev_evBulk findAssociazioneCapSpesaCNRCapEntrataCdS (UserContext user
 /** 
   *  ricerca anagrafica per UO
   *    PreCondition:
-  *      E' stata generata la richiesta di ricercare la codifica in anagrafica di una unit‡ organizzativa
+  *      E' stata generata la richiesta di ricercare la codifica in anagrafica di una unit√† organizzativa
   *    PostCondition:
   *      Viene restituito il TerzoBulk con cd_unita_organizzativa uguale al codice dell'UO da ricercare
   *  ricerca anagrafica per UO - errore
   *    PreCondition:
-  *      E' stata generata la richiesta di ricercare la codifica in anagrafica di una unit‡ organizzativa ma
+  *      E' stata generata la richiesta di ricercare la codifica in anagrafica di una unit√† organizzativa ma
   *      tale UO non e' ancora stata codificata in anagrafica
   *    PostCondition:
   *      Viene restituito un errore all'utente per segnalare l'assenza di tale anagrafica
@@ -1450,7 +1450,7 @@ private TerzoBulk findTerzoUO (UserContext userContext, String cd_unita_organizz
 		sql.addClause("AND","cd_unita_organizzativa", sql.EQUALS, cd_unita_organizzativa);
 		List result = getHomeCache(userContext).getHome( TerzoBulk.class ).fetchAll( sql );
 		if ( result.size() == 0)
-			throw new ApplicationException("Non e' stato definito in anagrafico il terzo per l'unit‡ organizzativa " + cd_unita_organizzativa);
+			throw new ApplicationException("Non e' stato definito in anagrafico il terzo per l'unit√† organizzativa " + cd_unita_organizzativa);
 		return (TerzoBulk) result.get(0);
 	}	
 	catch( Exception e )
@@ -1528,9 +1528,9 @@ private AccertamentoBulk fineInizializzazioneScadenzeEDettagli(AccertamentoBulk 
  * Post: Vengono modificati i dettagli (metodo 'modificaDettagliScadenza') per la scadenza modificata
  *
  * Nome: modifica linea att.
- * Pre:  Una richiesta di modifica della linea di attivit‡ di un accertamento e' stata generata
+ * Pre:  Una richiesta di modifica della linea di attivit√† di un accertamento e' stata generata
  * Post: Vengono eliminati tutti i dettagli di tutte le scadenze dell'accertamento (metodo 'cancellaDettagliScadenze') e vengono creati dei nuovi dettagli
- *       relativi alla nuova linea di attivit‡ (metodo 'creaDettagliScadenza')
+ *       relativi alla nuova linea di attivit√† (metodo 'creaDettagliScadenza')
  *
  * @param	aUC	lo UserContext che ha generato la richiesta
  * @param	accertamento l' AccertamentoBulk per cui rivedere i dettagli della scadenza
@@ -1682,7 +1682,7 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 		
 		if (!accertamento.isAccertamentoResiduo())
 			if ( ((CNRUserContext)aUC).getCd_unita_organizzativa().equals ( uoEnte.getCd_unita_organizzativa() ))
-				throw new ApplicationException( "Funzione non consentita per Unit‡ Organizzativa " + uoEnte.getCd_unita_organizzativa());
+				throw new ApplicationException( "Funzione non consentita per Unit√† Organizzativa " + uoEnte.getCd_unita_organizzativa());
 		
 		accertamento.setUnita_organizzativa(uoEnte);
 		accertamento.setCd_unita_organizzativa(uoEnte.getCd_unita_organizzativa());
@@ -1727,7 +1727,7 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
   *      La richiesta di inizializzare un accertamento e' stata generata
   *    PostCondition:
   *      L'accertamento e' stato inizializzato, tutte le sue scadenze ed i loro dettagli sono stati inizializzati; le
-  *      linee di attivit‡ eleggibili sono state caricate
+  *      linee di attivit√† eleggibili sono state caricate
   *
   *  Inizializzazione di un accertamento di sistema
   *    PreCondition:
@@ -1843,11 +1843,11 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 		accertamento.setCdrColl( listaCdrPerCapitoli( aUC,  accertamento));
 		accertamento.refreshCdrSelezionatiColl();
 
-		// carica le linee di attivit‡ da PDG
+		// carica le linee di attivit√† da PDG
 		accertamento.setLineeAttivitaColl( listaLineeAttivitaPerCapitoliCdr( aUC,  accertamento));
 		accertamento.refreshLineeAttivitaSelezionateColl();
 
-		// carica le nuove linee di attivit‡
+		// carica le nuove linee di attivit√†
 		accertamento = accertHome.refreshNuoveLineeAttivitaColl( aUC, accertamento );
 
 		accertamento.setInternalStatus( ObbligazioneBulk.INT_STATO_LATT_CONFERMATE );
@@ -1874,14 +1874,14 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
   *  Inizializzazione di un accertamento per ricerca - cds non ente
   *    PreCondition:
   *      La richiesta di inizializzare un accertamento per ricerca e' stata generata
-  *      L'uo di scrivania Ë diversa dall'ente
+  *      L'uo di scrivania √® diversa dall'ente
   *    PostCondition:
   *      L'accertamento e' stato inizializzato con il cds e l'uo di origine uguali a quelli di scrivania
   *
   *  Inizializzazione di un accertamento per ricerca - cds ente
   *    PreCondition:
   *      La richiesta di inizializzare un accertamento per ricerca e' stata generata
-  *      L'uo di scrivania Ë l'ente
+  *      L'uo di scrivania √® l'ente
   *    PostCondition:
   *      L'accertamento e' stato inizializzato e il cds e l'uo di origine non vengono valorizzati
   *
@@ -1917,14 +1917,14 @@ public OggettoBulk inizializzaBulkPerRicerca (UserContext userContext,OggettoBul
   *  Inizializzazione di un accertamento per ricerca - cds non ente
   *    PreCondition:
   *      La richiesta di inizializzare un accertamento per ricerca e' stata generata
-  *      L'uo di scrivania Ë diversa dall'ente
+  *      L'uo di scrivania √® diversa dall'ente
   *    PostCondition:
   *      L'accertamento e' stato inizializzato con il cds e l'uo di origine uguali a quelli di scrivania
   *
   *  Inizializzazione di un accertamento per ricerca - cds ente
   *    PreCondition:
   *      La richiesta di inizializzare un accertamento per ricerca e' stata generata
-  *      L'uo di scrivania Ë l'ente
+  *      L'uo di scrivania √® l'ente
   *    PostCondition:
   *      L'accertamento e' stato inizializzato e il cds e l'uo di origine non vengono valorizzati
   *
@@ -2161,25 +2161,25 @@ private void inizializzaScadenzaConDocumenti(UserContext aUC,OggettoBulk scadenz
 	}		
 }
 /** 
-  *  Inizializzazione linee di attivit‡
+  *  Inizializzazione linee di attivit√†
   *    PreCondition:
   *      La richiesta di inizializzare un accertamento e' stata generata
   *    PostCondition:
-  *      Le linee di attivit‡ eleggibili per l'accertamento sono state caricate (metodo 'listaLineeAttivitaPerCapitolo') 
-  *      e la linea di attivit‡ che era stata selezionata per l'accertamento e' stata caricata
+  *      Le linee di attivit√† eleggibili per l'accertamento sono state caricate (metodo 'listaLineeAttivitaPerCapitolo') 
+  *      e la linea di attivit√† che era stata selezionata per l'accertamento e' stata caricata
   *
-  *  Inizializzazione linee di attivit‡ - errore
+  *  Inizializzazione linee di attivit√† - errore
   *    PreCondition:
-  *      La richiesta di inizializzare un accertamento e' stata generata e la linea di attivit‡ che era stata
-  *      precedentemente selezionata per l'accertamento non e' pi˘ valida
+  *      La richiesta di inizializzare un accertamento e' stata generata e la linea di attivit√† che era stata
+  *      precedentemente selezionata per l'accertamento non e' pi√π valida
   *    PostCondition:
   *      Una segnalazione di errore viene ritornata
   *  
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param accertamento l'istanza di AccertamentoBulk da inizializzare
-  * @param cdLA il codice della linea di attivit‡ selezionata per l'accertamento
-  * @param cdCdr il codice del Cdr della la linea di attivit‡ selezionata per l'accertamento  
-  * @return <code>AccertamentoBulk</code> con le linee di attivit‡ caricate
+  * @param cdLA il codice della linea di attivit√† selezionata per l'accertamento
+  * @param cdCdr il codice del Cdr della la linea di attivit√† selezionata per l'accertamento  
+  * @return <code>AccertamentoBulk</code> con le linee di attivit√† caricate
   *
  */
 
@@ -2242,7 +2242,7 @@ private AccertamentoBulk inizializzoLineeAttivita(UserContext aUC, AccertamentoB
 /* normale
  *		PreCondition :
  *			L'utente ha creato una nuova Linea di attivita' da "Gestione Accertamento"
- *          La nuova linea di attivit‡ deve essere validata per l'accertamento in base alla sua natura
+ *          La nuova linea di attivit√† deve essere validata per l'accertamento in base alla sua natura
  *		PostCondition :
  *			L'applicazione ritorna l'elenco dei codici natura compatibili con il capitolo dell'accertamento
  *
@@ -2269,13 +2269,13 @@ public Vector listaCodiciNaturaPerCapitolo (UserContext aUC,AccertamentoBulk acc
 }
 /* normale
  *		PreCondition :
- *			Una richiesta di estrazione delle linee di attivit‡ valide per un accertamento e' stata generata
+ *			Una richiesta di estrazione delle linee di attivit√† valide per un accertamento e' stata generata
  *		PostCondition :
- *			L'applicazione ritorna l'elenco delle linee di attivit‡ di entrata con cdr appartenente all'unit‡ organizzativa di
+ *			L'applicazione ritorna l'elenco delle linee di attivit√† di entrata con cdr appartenente all'unit√† organizzativa di
  *          scrivania e con natura compatibile con il capitolo selezionato per l'accertamento
  *
  * @param aUC lo <code>UserContext</code> che ha generato la richiesta
- * @param accertamento l'istanza di AccertamentoBulk per cui elencare le linee di attivit‡ valida
+ * @param accertamento l'istanza di AccertamentoBulk per cui elencare le linee di attivit√† valida
  * @return <code>Vector</code> con le istanze di Linea_attivitaBulk
  *
 */
@@ -2357,12 +2357,12 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 	verificaAccertamento( aUC, (AccertamentoBulk) bulk );
 
 /*
- * Raffaele Pagano: controllo eliminato a seguito di nuova gestione residui che prevede la non possibilit‡
+ * Raffaele Pagano: controllo eliminato a seguito di nuova gestione residui che prevede la non possibilit√†
  * 					di modificare sia l'importo che la voce dei residui
  */ 
 /*	try
 	{
-		//	segnalo impossibilit‡ di modificare un residuo se l'esercizio precedente Ë ancora aperto
+		//	segnalo impossibilit√† di modificare un residuo se l'esercizio precedente √® ancora aperto
 		if ( ((AccertamentoBulk) bulk).getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_ACR_RES))
 			verificaStatoEsercizioEsPrecedente( aUC, ((AccertamentoBulk) bulk).getEsercizio(), ((AccertamentoBulk) bulk).getCd_cds());
 	}
@@ -2429,28 +2429,28 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
  *       e l'importo precedente deve essere riportato sulla scadenza successiva
  * Post: L'importo della scadenza e della scadenza successiva sono stati modificati
  *
- * Nome: Scadenza con pi˘ di 1 dettaglio - Errore
- * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e la scadenza ha pi˘ di un dettaglio
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ * Nome: Scadenza con pi√π di 1 dettaglio - Errore
+ * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e la scadenza ha pi√π di un dettaglio
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  *
  * Nome: Scadenza successiva - Errore ultima scadenza
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e non esiste una scadenza
  *       successiva su cui scaricare la differenza fra l'importo attuale scadenza e il nuovo importo
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  *
  * Nome: Scadenza successiva -  Errore importo scadenza successiva
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e (im_scadenza_successisva -
  *       nuovo_im_scadenza + im_scadenza) e' minore di 0
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  * 
  * Nome: Scadenza successiva -  Errore doc amministrativi associati
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e la scadenza successiva ha 
- *       gi‡ dei documenti amministrativi associati
- * Post: Viene generata un'ApplicationException per segnalare l'impossibilit‡ di aggiornamento della scadenza
+ *       gi√† dei documenti amministrativi associati
+ * Post: Viene generata un'ApplicationException per segnalare l'impossibilit√† di aggiornamento della scadenza
  *
  * @param userContext lo userContext che ha generato la richiesta
  * @param scad l'istanza di Accertamento_scadenzarioBulk il cui importo deve essere modificato
- * @param nuovoImporto il valore del nuovo importo che la scadenza di accertamento dovr‡ assumere
+ * @param nuovoImporto il valore del nuovo importo che la scadenza di accertamento dovr√† assumere
  * @param modificaScadenzaSuccessiva il flag che indica se modificare la testata dell'accertamento o modificare la scadenza
  *        successiva dell'accertamento
  * @return l'istanza di Accertamento_scadenzarioBulk con l'importo modificato
@@ -2473,7 +2473,7 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
 
 		if ( accertamento.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_ACR_RES) &&
 				!modificaScadenzaSuccessiva)
-			throw handleException( new ApplicationException( "Non Ë consentita la modifica dell'importo di testata di un accertamento residuo." ));					
+			throw handleException( new ApplicationException( "Non √® consentita la modifica dell'importo di testata di un accertamento residuo." ));					
 
 		// Se la scadenza (e quindi tutte le scadenze) hanno piu' di un dettaglio, non consento l'aggiornamento
 		// automatico.
@@ -2527,7 +2527,7 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
  *
  * @param userContext lo userContext che ha generato la richiesta
  * @param scad l'istanza di Accertamento_scadenzarioBulk il cui importo deve essere sdoppiato
- * @param nuovoImportoScadenzaVecchia il valore del nuovo importo che la scadenza indicata dovr‡ assumere
+ * @param nuovoImportoScadenzaVecchia il valore del nuovo importo che la scadenza indicata dovr√† assumere
  * @return l'istanza di Accertamento_scadenzarioBulk nuova creata in seguito allo sdoppiamento
  */
 public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext,	IScadenzaDocumentoContabileBulk scad,	BigDecimal nuovoImportoScadenzaVecchia) throws ComponentException 
@@ -2623,8 +2623,8 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
 		scadenzaNuova.setToBeCreated();
 		accertamento.setToBeUpdated();
 		/**
-		 * Viene posto il campo che verifica se il controllo della disponibilit‡
-		 * Ë stato effettuato a TRUE, in quanto, l'accertamento Ë in modifica
+		 * Viene posto il campo che verifica se il controllo della disponibilit√†
+		 * √® stato effettuato a TRUE, in quanto, l'accertamento √® in modifica
 		 * e lo sdoppiamento delle righe non cambia il valore complessivo
 		 * dell'accertamento  
 		 */
@@ -2648,7 +2648,7 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
  *
  * @param userContext lo userContext che ha generato la richiesta
  * @param scad l'istanza di Accertamento_scadenzarioBulk il cui importo deve essere modificato
- * @param nuovoImporto il valore del nuovo importo che la scadenza di accertamento dovr‡ assumere
+ * @param nuovoImporto il valore del nuovo importo che la scadenza di accertamento dovr√† assumere
  * @return l'istanza di Accertamento_scadenzarioBulk con l'importo modificato
  */
 
@@ -2674,15 +2674,15 @@ private Accertamento_scadenzarioBulk modificaScadenzaNonInAutomatico( UserContex
 /*
  * Pre-post-conditions:
  *
- * Nome: Linea attivit‡ non comune
+ * Nome: Linea attivit√† non comune
  * Pre:  E' stata generata la richiesta di modifica di una scadenza 
- *       La linea di attivit‡ dell'accertamento non e' comune
+ *       La linea di attivit√† dell'accertamento non e' comune
  * Post: L'importo dell'unico dettaglio della scadenza viene aggiornato con l'importo della scadenza
  *
- * Nome: Linea attivit‡ comune
+ * Nome: Linea attivit√† comune
  * Pre:  E' stata generata la richiesta di modifica di una scadenza 
- *       La linea di attivit‡ dell'accertamento e' comune
- * Post: L'importo del dettaglio della scadenza che corrisponde alla linea di attivit‡ dell'accertamneto
+ *       La linea di attivit√† dell'accertamento e' comune
+ * Post: L'importo del dettaglio della scadenza che corrisponde alla linea di attivit√† dell'accertamneto
  *       viene aggiornato con l'importo della scadenza
  *		 L'importo di tutti gli altri dettagli della scadenza vengono aggiornati a 0
  *
@@ -2698,7 +2698,7 @@ private void modificoDettagliScadenza(UserContext aUC,AccertamentoBulk accertame
 	Accertamento_scad_voceBulk dettaglio;
 	try
 	{
-		//	Linea attivit‡ non comune
+		//	Linea attivit√† non comune
 		if ( !accertamento.getLinea_attivita().getCd_linea_attivita().startsWith( "C" ))
 		{
 			dettaglio = (Accertamento_scad_voceBulk) dettagliScadenze.get(0);
@@ -2950,40 +2950,40 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_re
 			//throw new ValidationException("Il campo CDS e' obbligatorio");
 
 		//if (stampa.getCdUoForPrint()==null)
-			//throw new ValidationException("Il campo UNITA ORGANIZZATIVA Ë obbligatorio");
+			//throw new ValidationException("Il campo UNITA ORGANIZZATIVA √® obbligatorio");
 
 		/**** Controlli sulle Date DA A	*****/
 		if (stampa.getDataInizio()==null)
-			throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 		if (stampa.getDataFine()==null)
-			throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 
   		
 		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
 		java.sql.Timestamp lastDayOfYear = DateServices.getLastDayOfYear(stampa.getEsercizio().intValue());
 		
-		// La Data di Inizio Periodo Ë superiore alla data di Fine Periodo
+		// La Data di Inizio Periodo √® superiore alla data di Fine Periodo
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 			
-		// La Data di Inizio Periodo Ë ANTECEDENTE al 1 Gennaio dell'Esercizio di scrivania
+		// La Data di Inizio Periodo √® ANTECEDENTE al 1 Gennaio dell'Esercizio di scrivania
 		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere inferiore a " + formatter.format(firstDayOfYear));
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere inferiore a " + formatter.format(firstDayOfYear));
 		}
-		// La Data di Fine periodo Ë SUPERIORE alla data odierna
+		// La Data di Fine periodo √® SUPERIORE alla data odierna
 		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non puÚ essere superiore a " + formatter.format(lastDayOfYear));
+			throw new ValidationException("La DATA di FINE PERIODO non pu√≤ essere superiore a " + formatter.format(lastDayOfYear));
 		}
 
 		/**** Controlli sui PG_INIZIO/PG_FINE *****/
 		if (stampa.getPgInizio()==null)
-			throw new ValidationException("Il campo NUMERO INIZIO Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO INIZIO √® obbligatorio");
 		if (stampa.getPgFine()==null)
-			throw new ValidationException("Il campo NUMERO FINE Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO FINE √® obbligatorio");
 		if (stampa.getPgInizio().compareTo(stampa.getPgFine())>0)
-			throw new ValidationException("Il NUMERO INIZIO non puÚ essere superiore al NUMERO FINE");
+			throw new ValidationException("Il NUMERO INIZIO non pu√≤ essere superiore al NUMERO FINE");
 
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);
@@ -3006,9 +3006,9 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_re
 		//try{
 			//CDRComponentSession sess = (CDRComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_CDRComponentSession", CDRComponentSession.class);
 			//if (sess.isEnte(userContext) && stampa.getCdCdsOrigineForPrint()==null)
-				//throw new ValidationException("Il campo CDS di ORIGINE Ë obbligatorio");
+				//throw new ValidationException("Il campo CDS di ORIGINE √® obbligatorio");
 			//if (stampa.getCdUoForPrint()==null)
-				//throw new ValidationException("Il campo UNITA ORGANIZZATIVA Ë obbligatorio");
+				//throw new ValidationException("Il campo UNITA ORGANIZZATIVA √® obbligatorio");
 		//}catch(javax.ejb.EJBException ex){
 			//throw handleException(ex);
 		//}catch(java.rmi.RemoteException ex){
@@ -3016,29 +3016,29 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_re
 		//}
 
 		if (stampa.getDataInizio()==null)
-			throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 		if (stampa.getDataFine()==null)
-			throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 
 		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
 		java.sql.Timestamp lastDayOfYear = DateServices.getLastDayOfYear(stampa.getEsercizio().intValue());
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere inferiore a " + formatter.format(firstDayOfYear));
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere inferiore a " + formatter.format(firstDayOfYear));
 		}
 		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non puÚ essere superiore a " + formatter.format(lastDayOfYear));
+			throw new ValidationException("La DATA di FINE PERIODO non pu√≤ essere superiore a " + formatter.format(lastDayOfYear));
 		}
 
 		if (stampa.getPgInizio()==null)
-			throw new ValidationException("Il campo NUMERO INIZIO MANDATO Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO INIZIO MANDATO √® obbligatorio");
 		if (stampa.getPgFine()==null)
-			throw new ValidationException("Il campo NUMERO FINE MANDATO Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO FINE MANDATO √® obbligatorio");
 		if (stampa.getPgInizio().compareTo(stampa.getPgFine())>0)
-			throw new ValidationException("Il NUMERO INIZIO MANDATO non puÚ essere superiore al NUMERO FINE MANDATO");
+			throw new ValidationException("Il NUMERO INIZIO MANDATO non pu√≤ essere superiore al NUMERO FINE MANDATO");
 
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);
@@ -3060,14 +3060,14 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_sc
 			//throw new ValidationException("Il campo CDS e' obbligatorio");
 
 		//if (stampa.getCdUoForPrint()==null)
-			//throw new ValidationException("Il campo UNITA ORGANIZZATIVA Ë obbligatorio");
+			//throw new ValidationException("Il campo UNITA ORGANIZZATIVA √® obbligatorio");
 
 		if (stampa.getDataInizio()==null)
-			throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 		if (stampa.getDataFine()==null)
-			throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 	
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);
@@ -3080,28 +3080,28 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_sc
   *      La somma degli importi delle scadenze e' uguale all'importo dell'accertamento
   *      La somma degli importi dei dettagli di ogni scadenza e' uguale all'importo della scadenza
   *    PostCondition:
-  *      L'accertamento supera la validazione ed il sistema puÚ pertanto proseguire con il suo salvataggio
+  *      L'accertamento supera la validazione ed il sistema pu√≤ pertanto proseguire con il suo salvataggio
   *  
   *  sum(scadenzario.importo) not = accertamento.importo
   *    PreCondition:
-  *      La somma degli importi delle scadenze dell'accertamento non Ë uguale all'importo dell'accertamento in elaborazione.
+  *      La somma degli importi delle scadenze dell'accertamento non √® uguale all'importo dell'accertamento in elaborazione.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non Ë consentito 
-  *      se l'importo non Ë uguale alla somma degli importi delle scadenze dell'accertamento.
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non √® consentito 
+  *      se l'importo non √® uguale alla somma degli importi delle scadenze dell'accertamento.
   *
   *  sum(scad_voce.importo) not = scadenzario.importo
   *    PreCondition:
   *      La somma degli importi 
-  *      dei dettagli di una scadenza dell' accertamento non Ë uguale all'importo della scadenza
+  *      dei dettagli di una scadenza dell' accertamento non √® uguale all'importo della scadenza
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non Ë consentito 
-  *      se l'importo della scadenza non Ë uguale alla somma degli importi dei dettagli della scadenza dell'accertamento.
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non √® consentito 
+  *      se l'importo della scadenza non √® uguale alla somma degli importi dei dettagli della scadenza dell'accertamento.
   *
   *  scadenze non definite
   *    PreCondition:
   *      Non sono state definite scadenze per l'accertamento 
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non Ë consentito 
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non √® consentito 
   *      se non viene definita almento una scadenza
   *
   * @param aUC lo user context 
@@ -3134,7 +3134,7 @@ public void verificaAccertamento (UserContext aUC,AccertamentoBulk accertamento)
 	   (accertamento.getAccertamento_scadenzarioColl().size() == 0))
 		throw handleException( new it.cnr.jada.comp.ApplicationException( "L'accertamento non ha alcuna SCADENZA associata !"))	;			
 				
-	// La somma degli importi delle scadenze dell'accertamento non Ë uguale all'importo dell'accertamento 
+	// La somma degli importi delle scadenze dell'accertamento non √® uguale all'importo dell'accertamento 
 	// in elaborazione.
 
 	for ( Iterator i = accertamento.getAccertamento_scadenzarioColl().iterator(); i.hasNext(); )
@@ -3166,10 +3166,10 @@ public void verificaAccertamento (UserContext aUC,AccertamentoBulk accertamento)
 		throw handleException( new it.cnr.jada.comp.ApplicationException( "La somma degli importi delle scadenze e' inferiore all'importo complessivo dell'accertamento"))	;
 	if(accertamento.getContratto() != null && accertamento.getContratto().getFigura_giuridica_esterna()!= null && 
 	   !accertamento.getDebitore().equalsByPrimaryKey(accertamento.getContratto().getFigura_giuridica_esterna()))
-	  throw new it.cnr.jada.comp.ApplicationException( "Il Debitore (Codice Terzo:"+accertamento.getDebitore().getCd_terzo()+") \n"+"non Ë congruente con quello del contratto (Codice Terzo:"+accertamento.getContratto().getFigura_giuridica_esterna().getCd_terzo()+")");
+	  throw new it.cnr.jada.comp.ApplicationException( "Il Debitore (Codice Terzo:"+accertamento.getDebitore().getCd_terzo()+") \n"+"non √® congruente con quello del contratto (Codice Terzo:"+accertamento.getContratto().getFigura_giuridica_esterna().getCd_terzo()+")");
 		
 	/*
-	 * Controllo l'eventuale obbligatoriet‡ del Contratto
+	 * Controllo l'eventuale obbligatoriet√† del Contratto
 	 */
 	Elemento_voceHome home = (Elemento_voceHome)getHome(aUC, Elemento_voceBulk.class);
 	Elemento_voceBulk elemento_voce;
@@ -3199,7 +3199,7 @@ public void verificaAccertamento (UserContext aUC,AccertamentoBulk accertamento)
 		if(param_cds != null && param_cds.getIm_soglia_contratto_e()!= null &&
 		   accertamento.getIm_accertamento().compareTo(param_cds.getIm_soglia_contratto_e())!=-1){
 		  if(accertamento.getPg_contratto() == null) 	
-		    throw new it.cnr.jada.comp.ApplicationException( "Il campo contratto non puÚ essere nullo. Importo dell'Accertamento superiore al limite stabilito!");
+		    throw new it.cnr.jada.comp.ApplicationException( "Il campo contratto non pu√≤ essere nullo. Importo dell'Accertamento superiore al limite stabilito!");
 		}
 		  		
 	}
@@ -3315,39 +3315,39 @@ public void verificaCoperturaContratto (UserContext aUC,AccertamentoBulk accerta
 /** 
   *  Tutti controlli superati - creazione
   *    PreCondition:
-  *      Non esiste gi‡ una scadenza per la data.
-  *      Attivit‡ = creazione
+  *      Non esiste gi√† una scadenza per la data.
+  *      Attivit√† = creazione
   *    PostCondition:
-  *      Alla scrittura dell'accertamento il sistema aggiunger‡ questo scadenzario e generer‡ tutti i dettagli della
+  *      Alla scrittura dell'accertamento il sistema aggiunger√† questo scadenzario e generer√† tutti i dettagli della
   *      scadenza (metodo 'generaDettagliScadenzaAccertamento')
   *  Tutti controlli superati - aggiornamento con agg. auto. scad. succ.
   *    PreCondition:
-  *      Attivit‡ = aggiornamento
+  *      Attivit√† = aggiornamento
   *      L'utente ha scelto l'aggiornamento in automatico della scadenza successiva.
   *    PostCondition:
-  *      Alla scrittura dell'accertamento il sistema aggiorner‡ questo scadenzario. 
-  *      In pi˘, il metodo aggiornaScadenzaSuccessivaAccertamento viene utilizzato per aggiornare la scadenza successiva 
+  *      Alla scrittura dell'accertamento il sistema aggiorner√† questo scadenzario. 
+  *      In pi√π, il metodo aggiornaScadenzaSuccessivaAccertamento viene utilizzato per aggiornare la scadenza successiva 
   *      a quella in aggiornamento. 
   *  Tutti controlli superati - aggiornamento senza agg. auto. scad. succ.
   *    PreCondition:
-  *      Attivit‡ = aggiornamento
+  *      Attivit√† = aggiornamento
   *      L'utente NON ha scelto l'aggiornamento in automatico della scadenza successiva.
   *    PostCondition:
-  *      Alla scrittura dell'accertamento il sistema aggiorner‡ questo scadenzario. 
-  *      Sar‡ il compito dell'utente aggiornare una delle scadenze per garantire che la somma degli importi 
+  *      Alla scrittura dell'accertamento il sistema aggiorner√† questo scadenzario. 
+  *      Sar√† il compito dell'utente aggiornare una delle scadenze per garantire che la somma degli importi 
   *      delle scadenze sia uguale all'importo dell'accertamento.
-  *  creazione/modifica - esiste gi‡ una scadenza per la data
+  *  creazione/modifica - esiste gi√† una scadenza per la data
   *    PreCondition:
   *      L'utente richiede la creazione di una scadenza o modifica la data di una scadenza. 
-  *      Per la data scadenza specificata esiste gi‡ una scadenza per l'accertamento.
+  *      Per la data scadenza specificata esiste gi√† una scadenza per l'accertamento.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che la data della scadenza non Ë valida.
+  *      Il metodo utilizza un Throw Exception per comunicare che la data della scadenza non √® valida.
   *  modifica - la scadenza ha doc amministrativi associati e non proviene da documenti amministrativi
   *    PreCondition:
   *      L'utente richiede la modifica dell'importo di una scadenza che ha documenti amministrativi associati
   *      e la richiesta non proviene dal BusinessProcess che gestisce i documenti amministrativi  
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che la modifica della scadenza non Ë valida.
+  *      Il metodo utilizza un Throw Exception per comunicare che la modifica della scadenza non √® valida.
   *  modifica - la scadenza ha doc amministrativi associati e proviene da documenti amministrativi
   *    PreCondition:
   *      L'utente richiede la modifica dell'importo di una scadenza che ha documenti amministrativi associati e la
@@ -3384,11 +3384,11 @@ public AccertamentoBulk verificaScadenzarioAccertamento (UserContext aUC, Accert
 			throw handleException( new it.cnr.jada.comp.ApplicationException( "Esiste gia' una scadenza per la data specificata"));
 	}
 	*/
-	//segnalo impossibilit‡ di modificare importo se ci sono doc amministrativi associati e non provengo dal BP dei
+	//segnalo impossibilit√† di modificare importo se ci sono doc amministrativi associati e non provengo dal BP dei
 	//doc. amministrativi
 	// se richiamato dal tasto di "Azzera" per accertamenti residui
-	// Ë possibile annullare le righe contabili dei documenti associati
-	// se non Ë stato associato a reversali
+	// √® possibile annullare le righe contabili dei documenti associati
+	// se non √® stato associato a reversali
 	// quindi il controllo non viene fatto
 	if (effettuaControlliDocAmm) {
 		if(	!scadenza.isFromDocAmm() && 
@@ -3421,7 +3421,7 @@ public AccertamentoBulk verificaScadenzarioAccertamento (UserContext aUC, Accert
  *
  * @param userContext <code>UserContext</code> 
  *
- * @return FALSE se per il cds interessato l'esercizio precedente non Ë in stato di "chiuso"
+ * @return FALSE se per il cds interessato l'esercizio precedente non √® in stato di "chiuso"
  *		   TRUE in tutti gli altri casi
  *
  */
@@ -3472,92 +3472,92 @@ public Vector listaCdrPerCapitoli (UserContext aUC,AccertamentoBulk accertamento
   *      L'utente ha richiesto l'imputazione automatica dell'accertamento e ha creato una scadenza o ha modificato l'importo
   *      di una scadenza esistente
   *    PostCondition:
-  *      Per ogni linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *      il metodo calcolaPercentualeImputazioneAccertamento viene utilizzato per determinare le percentuali
-  *      assegnate ad ogni linea d'attivit‡/capitolo e per riaprtire l'importo della scadenza sui vari dettagli
+  *      assegnate ad ogni linea d'attivit√†/capitolo e per riaprtire l'importo della scadenza sui vari dettagli
   *      in base a tali percentuali
   *  creazione scadenza/modifica importo - imputazione manuale
   *    PreCondition:
   *      L'utente ha specificato l'imputazione manuale dell'accertamento e ha creato una scadenza o ha modificato l'importo
   *      di una scadenza esistente
   *    PostCondition:
-  *      Per ogni linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *  conferma imputazione finanziaria - imputazione automatica
   *    PreCondition:
-  *      L' utente ha completato l'imputazione finanziaria, confermando le linee di attivit‡ selezionate, e ha richiesto la ripartizione automatica degli importi
+  *      L' utente ha completato l'imputazione finanziaria, confermando le linee di attivit√† selezionate, e ha richiesto la ripartizione automatica degli importi
   *      delle scadenze
   *    PostCondition:
-  *      Per ogni scadenza dell'accertamento e per ogni linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'accertamento e per ogni linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'accertamento e per ogni linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'accertamento e per ogni linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *      il metodo calcolaPercentualeImputazioneAccertamento viene utilizzato per determinare le percentuali
-  *      assegnate ad ogni linea d'attivit‡/capitolo e per ripartire l'importo della scadenza sui vari dettagli
+  *      assegnate ad ogni linea d'attivit√†/capitolo e per ripartire l'importo della scadenza sui vari dettagli
   *      in base a tali percentuali
   *  conferma imputazione finanziaria - imputazione manuale
   *    PreCondition:
-  *      L' utente ha completato l'imputazione finanziaria, confermando le linee di attivit‡ selezionate, e ha selezionato la ripartizione manuale degli importi
+  *      L' utente ha completato l'imputazione finanziaria, confermando le linee di attivit√† selezionate, e ha selezionato la ripartizione manuale degli importi
   *      delle scadenze
   *    PostCondition:
-  *      Per ogni scadenza dell'accertamento e per ogni linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'accertamento e per ogni linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'accertamento e per ogni linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'accertamento e per ogni linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *  modifica imputazione finanziaria - imputazione automatica
   *    PreCondition:
   *      L' utente ha modificato l'imputazione finanziaria definita per l'accertamento e ha richiesto la ripartizione automatica degli importi
   *      delle scadenze
   *    PostCondition:
-  *      Tutti i dettagli delle scadenze dell'accertamento che facevano riferimento a linee di attivit‡ non pi˘ selezionate
+  *      Tutti i dettagli delle scadenze dell'accertamento che facevano riferimento a linee di attivit√† non pi√π selezionate
   *      vengono cancellati
-  *      Per ogni scadenza dell'accertamento e per ogni nuova linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'accertamento e per ogni nuova linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'accertamento e per ogni nuova linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'accertamento e per ogni nuova linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *      il metodo calcolaPercentualeImputazioneAccertamento viene utilizzato per determinare le percentuali
-  *      assegnate ad ogni linea d'attivit‡/capitolo e per ripartire l'importo della scadenza sui vari dettagli
+  *      assegnate ad ogni linea d'attivit√†/capitolo e per ripartire l'importo della scadenza sui vari dettagli
   *      in base a tali percentuali
   *  modifica imputazione finanziaria - imputazione manuale
   *    PreCondition:
   *      L' utente ha modificato l'imputazione finanziaria definita per l'accertamento e ha selezionato la ripartizione manuale degli importi
   *      delle scadenze
   *    PostCondition:
-  *      Tutti i dettagli delle scadenze dell'accertamento che facevano riferimento a linee di attivit‡ non pi˘ selezionate
+  *      Tutti i dettagli delle scadenze dell'accertamento che facevano riferimento a linee di attivit√† non pi√π selezionate
   *      vengono cancellati
-  *      Per ogni scadenza dell'accertamento e per ogni nuova linea di attivit‡ selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'accertamento e per ogni nuova linea di attivit√† selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
   *      scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'accertamento e per ogni nuova linea di attivit‡ selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'accertamento e per ogni nuova linea di attivit√† selezionata dall'utente e non presente nel piano di gestione viene creato 
   *      un dettaglio di scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *  Errore - imputazione automatica per linea att SINGOLA
   *    PreCondition:
-  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attivit‡ dal piano di gestione 
+  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attivit√† dal piano di gestione 
   *      con categoria di dettaglio = SINGOLA e per le quali la somma delle colonne I,K,Q,S,U e' nullo
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare all'utente l'impossibilit‡ di effettuare in automatico la
-  *      ripartizione dell'importo della scadenza sulle linee di attivit‡ scelte
+  *      Il metodo utilizza un Throw Exception per comunicare all'utente l'impossibilit√† di effettuare in automatico la
+  *      ripartizione dell'importo della scadenza sulle linee di attivit√† scelte
   *  Errore - imputazione automatica per linea att SCARICO
   *    PreCondition:
-  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attivit‡ dal piano di gestione 
+  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attivit√† dal piano di gestione 
   *      con categoria di dettaglio = SCARICO e per le quali la somma delle colonne J,L,R,T e' nullo
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare all'utente l'impossibilit‡ di effettuare in automatico la
-  *      ripartizione dell'importo della scadenza sulle linee di attivit‡ scelte
+  *      Il metodo utilizza un Throw Exception per comunicare all'utente l'impossibilit√† di effettuare in automatico la
+  *      ripartizione dell'importo della scadenza sulle linee di attivit√† scelte
   *  Errore - percentuali per nuove linee att.
   *    PreCondition:
-  *      L'utente ha specificato solo delle linee di attivit‡ che non sono presenti nel piano di gestione e la somma
+  *      L'utente ha specificato solo delle linee di attivit√† che non sono presenti nel piano di gestione e la somma
   *      delle percentuali inserite dall'utente da utilizzare nella ripartizione dell'importo di ogni scadenza e' diversa
   *      da 100.
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare l'errore all'utente
   *  Errore - percentuali per nuove linee att. > 100
   *    PreCondition:
-  *      L'utente ha specificato per le linee di attivit‡ che non sono presenti nel piano di gestione 
+  *      L'utente ha specificato per le linee di attivit√† che non sono presenti nel piano di gestione 
   *      delle percentuali  da utilizzare nella ripartizione dell'importo di ogni scadenza e la loro somma e'
   *      maggiore di 100
   *    PostCondition:
@@ -3582,7 +3582,7 @@ protected AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,A
 		accertamento.getNuoveLineeAttivitaColl().size() == 0)
 		return accertamento;
 
-	// la somma delle percentuali delle nuove linee di attivit‡ e' diversa da 100
+	// la somma delle percentuali delle nuove linee di attivit√† e' diversa da 100
 	if (accertamento.getLineeAttivitaSelezionateColl().size() == 0 &&
 		accertamento.getNuoveLineeAttivitaColl().size() > 0)
 	{
@@ -3593,7 +3593,7 @@ protected AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,A
 			throw new ApplicationException( "La somma delle percentuali dei nuovi GAE e' diversa da 100");			
 			
 	}
-	// la somma delle percentuali delle nuove linee di attivit‡ e' maggiore di 100
+	// la somma delle percentuali delle nuove linee di attivit√† e' maggiore di 100
 	else if ( accertamento.getNuoveLineeAttivitaColl().size() > 0)
 	{
 		BigDecimal tot = new BigDecimal(0);
@@ -3628,7 +3628,7 @@ protected AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,A
 		//creo i dettagli della scadenza per le nuove linee attivita 		
 		creaDettagliScadenzaPerNuoveLineeAttivita( aUC, accertamento, scadenzario );
 
-		// aggiunta delle linee di attivit‡ comuni nelle scadenze con importo nullo
+		// aggiunta delle linee di attivit√† comuni nelle scadenze con importo nullo
 		/*
 		 * 21/04/2006 Gestione ripartizione dei ricavi utilizzata fino al 2005. 
 		 *            Eliminata solo a partire dal 2006 
@@ -3646,7 +3646,7 @@ protected AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,A
 	else
 	{
 			
-		// per ogni scadenza aggiorno i suoi dettagli in base alle linee di attivit‡ specificate dall'utente
+		// per ogni scadenza aggiorno i suoi dettagli in base alle linee di attivit√† specificate dall'utente
 		for ( Iterator scadIterator = accertamento.getAccertamento_scadenzarioColl().iterator(); scadIterator.hasNext(); )
 		{
 				os = (Accertamento_scadenzarioBulk) scadIterator.next();		
@@ -3659,7 +3659,7 @@ protected AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,A
 				//creo i dettagli della scadenza per le nuove linee attivita 		
 				creaDettagliScadenzaPerNuoveLineeAttivita( aUC, accertamento, os );
 
-				// aggiunta delle linee di attivit‡ comuni nelle scadenze con importo nullo
+				// aggiunta delle linee di attivit√† comuni nelle scadenze con importo nullo
 				/*
 				 * 21/04/2006 Gestione ripartizione dei ricavi utilizzata fino al 2005. 
 				 *            Eliminata solo a partire dal 2006 
@@ -3684,30 +3684,30 @@ protected AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,A
 /** 
   *  CDS SAC - non scarico
   *    PreCondition:
-  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attivit‡ da piano di gestione 
-  *      ad una accertamento di appartenenza del Cds SAC. La linea di attivit‡ non e' di scarico.
+  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attivit√† da piano di gestione 
+  *      ad una accertamento di appartenenza del Cds SAC. La linea di attivit√† non e' di scarico.
   *    PostCondition:
-  *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attivit‡ e viene
+  *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attivit√† e viene
   *      impostata come voce del piano dei conti del dettaglio della scadenza l'articolo selezionato 
-  *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attivit‡
+  *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attivit√†
   *  CDS SAC - scarico
   *    PreCondition:
-  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attivit‡ da piano di gestione 
-  *      ad una accertamento di appartenenza del Cds SAC. La linea di attivit‡ e' di scarico.
+  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attivit√† da piano di gestione 
+  *      ad una accertamento di appartenenza del Cds SAC. La linea di attivit√† e' di scarico.
   *    PostCondition:
-  *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attivit‡ e viene
+  *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attivit√† e viene
   *      impostata come voce del piano dei conti del dettaglio della scadenza l'articolo selezionato 
-  *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attivit‡ collegata nel 
-  *      piano di gestione alla linea di attivit‡ selezionata
+  *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attivit√† collegata nel 
+  *      piano di gestione alla linea di attivit√† selezionata
   *  CDS diverso da SAC 
   *    PreCondition:
-  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attivit‡ da piano di gestione 
+  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attivit√† da piano di gestione 
   *      ad una accertamento di appartenenza di un Cds con tipologia diversa da SAC. 
-  *      La linea di attivit‡ non e' di scarico.
+  *      La linea di attivit√† non e' di scarico.
   *    PostCondition:
-  *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attivit‡ e viene
+  *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attivit√† e viene
   *      impostata come voce del piano dei conti del dettaglio della scadenza il capitolo selezionato 
-  *      in imputazione finanziaria avente funzione uguale a quello della linea di attivit‡
+  *      in imputazione finanziaria avente funzione uguale a quello della linea di attivit√†
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param accertamento <code>AccertamentoBulk</code> l'accertamento per cui creare i dettagli scadenza
@@ -3724,7 +3724,7 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Accerta
 	Linea_attivitaBulk la;
 	boolean found;
 
-	//creo i dettagli scadenze se non esistono per le linee di attivit‡ da PDG
+	//creo i dettagli scadenze se non esistono per le linee di attivit√† da PDG
 
 	for ( Iterator lattIterator = accertamento.getLineeAttivitaSelezionateColl().iterator(); lattIterator.hasNext(); )
 	{
@@ -3746,7 +3746,7 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Accerta
 			//creo	nuovo Accertamento_scad_voceBulk
 			osv = new Accertamento_scad_voceBulk();
 			osv.setToBeCreated();
-			// MITODO - questi campi non esistono in Accertamento_scad_voce, Ë ok???
+			// MITODO - questi campi non esistono in Accertamento_scad_voce, √® ok???
 			//if ( accertamento.getCds().getCd_tipo_unita().equalsIgnoreCase( "SAC" ) )
 			/*
 			{
@@ -3797,19 +3797,19 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Accerta
   *  CDS SAC 
   *    PreCondition:
   *      E' stata modificato l'imputazione finanziaria aggiungendo ad una accertamento di appartenenza del Cds SAC
-  *      una nuova linea di attivit‡ che non e' presente nel piano di gestione   
+  *      una nuova linea di attivit√† che non e' presente nel piano di gestione   
   *    PostCondition:
-  *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attivit‡ e viene
+  *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attivit√† e viene
   *      impostata come voce del piano dei conti del dettaglio della scadenza l'articolo selezionato 
-  *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attivit‡
+  *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attivit√†
   *  CDS diverso da SAC 
   *    PreCondition:
   *      E' stata modificato l'imputazione finanziaria aggiungendo ad una accertamento di appartenenza ad un Cds diverso da SAC
-  *      una nuova linea di attivit‡ che non e' presente nel piano di gestione   
+  *      una nuova linea di attivit√† che non e' presente nel piano di gestione   
   *    PostCondition:
-  *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attivit‡ e viene
+  *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attivit√† e viene
   *      impostata come voce del piano dei conti del dettaglio della scadenza il capitolo selezionato 
-  *      in imputazione finanziaria avente funzione uguale a quello della linea di attivit‡
+  *      in imputazione finanziaria avente funzione uguale a quello della linea di attivit√†
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param accertamento <code>AccertamentoBulk</code> l'accertamento per cui creare i dettagli scadenza
@@ -3825,7 +3825,7 @@ protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,Accert
 	Linea_attivitaBulk la;
 	boolean found;
 
-	//creo i dettagli scadenze se non esistono per le nuove linee di attivit‡
+	//creo i dettagli scadenze se non esistono per le nuove linee di attivit√†
 
 	for ( Iterator lattIterator = accertamento.getNuoveLineeAttivitaColl().iterator(); lattIterator.hasNext(); )
 	{
@@ -3888,30 +3888,30 @@ protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,Accert
   *      Viene richiesto il calcolo delle percentuali d'imputazione per l'accertamento e la ripartizione dell'importo
   *      delle sacdenze sui vari dettagli secondo tali percentuali
   *    PostCondition:
-  *      Il sistema calcola la percentuale di ripartizione delle linee di attivit‡ nel modo seguente:
-  *      - Per le linee di attivit‡ non presenti nel Piano di Gestione la percentuale e' inserita dall'utente
-  *      - Per le linee di attivit‡ presenti nel Piano di Gestione e con categoria di dettaglio = SINGOLO viene 
+  *      Il sistema calcola la percentuale di ripartizione delle linee di attivit√† nel modo seguente:
+  *      - Per le linee di attivit√† non presenti nel Piano di Gestione la percentuale e' inserita dall'utente
+  *      - Per le linee di attivit√† presenti nel Piano di Gestione e con categoria di dettaglio = SINGOLO viene 
   *        calcolata la somma delle colonne I,K,Q,S,U e viene calcolata la percentuale di questo importo rispetto alla
-  *        somma di tutti questi importi per tutte le linee attivit‡ selezionate
-  *      - Per le linee di attivit‡ presenti nel Piano di Gestione e con categoria di dettaglio = SCARICO viene 
+  *        somma di tutti questi importi per tutte le linee attivit√† selezionate
+  *      - Per le linee di attivit√† presenti nel Piano di Gestione e con categoria di dettaglio = SCARICO viene 
   *        calcolata la somma delle colonne J,L,R,T e viene calcolata la percentuale di questo importo rispetto alla
-  *        somma di tutti questi importi per tutte le linee attivit‡ selezionate
+  *        somma di tutti questi importi per tutte le linee attivit√† selezionate
   *      Esempio di imputazione finanziaria:
-  *      - Linea attivit‡ L0001 non da PdG con percentuale specificata dall'utente: 10%
-  *      - Linea attivit‡ L0002 da PdG con categoria dettaglio = SINGOLO e somma delle colonne I,K,Q,S,U = 50.000,00
-  *      - Linea attivit‡ L0003 da PdG con categoria dettaglio = SCARICO e somma delle colonne I,K,Q,S,U = 40.000,00
+  *      - Linea attivit√† L0001 non da PdG con percentuale specificata dall'utente: 10%
+  *      - Linea attivit√† L0002 da PdG con categoria dettaglio = SINGOLO e somma delle colonne I,K,Q,S,U = 50.000,00
+  *      - Linea attivit√† L0003 da PdG con categoria dettaglio = SCARICO e somma delle colonne I,K,Q,S,U = 40.000,00
   *      Il sistema calcola le seguenti percentuali di ripartizione:
-  *      - Linea attivit‡ L0001 : 10%
-  *      - Linea attivit‡ L0002 : 50%
-  *      - Linea attivit‡ L0003 : 40%
+  *      - Linea attivit√† L0001 : 10%
+  *      - Linea attivit√† L0002 : 50%
+  *      - Linea attivit√† L0003 : 40%
   *      Determinate tali percentuali il sistema procede a ripartire l'importo di ogni scadenza sui singoli dettagli
   *      secondo tali percentuali. Se, per problemi di arrotondamento, alla fine della ripartizione la somma degli
   *      importi dei dettagli della scadenza non e' uguale all'importo della scadenza, il sistema quadra tale somma
   *      assegnando il delta al primo dettaglio della scadenza
   *
-  *  errore - manca percentuale per nuova linea attivit‡
+  *  errore - manca percentuale per nuova linea attivit√†
   *    PreCondition:
-  *      Nell'imputazione finanziaria dell'accertamento e' stata specificata una linea di attivit‡ non presente nel 
+  *      Nell'imputazione finanziaria dell'accertamento e' stata specificata una linea di attivit√† non presente nel 
   *      Piano di Gestione e per tale linea non e' stata specificata la percentuale da usare nella ripartizione 
   *      dell'importo delle scadenze sui dettagli
   *    PostCondition:
@@ -3919,19 +3919,19 @@ protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,Accert
   *
   *  errore - non esistono spese e costi nel piano di gestione per linea attivita SINGOLA
   *    PreCondition:
-  *      Nell'imputazione finanziaria dell'accertamento e' stata specificata una linea di attivit‡ presente nel 
+  *      Nell'imputazione finanziaria dell'accertamento e' stata specificata una linea di attivit√† presente nel 
   *      Piano di Gestione con categoria di dettaglio SINGOLA e per la quale la somma delle colonne I,K,Q,S,U risulta
   *      essere 0
   *    PostCondition:
-  *      Una segnalazione di errore viene restituita all'utente per comunicare che i costi/spese della linea di attivit‡ sono nulli
+  *      Una segnalazione di errore viene restituita all'utente per comunicare che i costi/spese della linea di attivit√† sono nulli
   *
   *  errore - non esistono spese e costi nel piano di gestione per linea attivita SCARICO
   *    PreCondition:
-  *      Nell'imputazione finanziaria dell'accertamento e' stata specificata una linea di attivit‡ presente nel 
+  *      Nell'imputazione finanziaria dell'accertamento e' stata specificata una linea di attivit√† presente nel 
   *      Piano di Gestione con categoria di dettaglio SCARICO e per la quale la somma delle colonne J,L,R,T risulta
   *      essere 0
   *    PostCondition:
-  *      Una segnalazione di errore viene restituita all'utente per comunicare che i costi/spese relativi ad altra UO della linea di attivit‡ sono nulli
+  *      Una segnalazione di errore viene restituita all'utente per comunicare che i costi/spese relativi ad altra UO della linea di attivit√† sono nulli
   *
   * @param aUC lo user context 
   * @param accertamento l'istanza di  <code>AccertamentoBulk</code> per la quale devono essere calcolati gli importi e le percentuali dei suoi
@@ -4033,15 +4033,15 @@ public SQLBuilder selectLinea_attByClause(UserContext userContext, it.cnr.contab
 	return selectLinea_attByClause( userContext, context.getAccertamento(), clauses );
 }
 /*
- * Aggiunge alcune clausole a tutte le operazioni di ricerca delle Linee di Attivit‡ non da PDG
+ * Aggiunge alcune clausole a tutte le operazioni di ricerca delle Linee di Attivit√† non da PDG
  *	
  * Pre-post-conditions:
  *
- * Nome: Richiesta di ricerca di una linea di attivit‡
- * Pre:  E' stata generata la richiesta di ricerca di una linea di attivit‡ non presente nel PDG
+ * Nome: Richiesta di ricerca di una linea di attivit√†
+ * Pre:  E' stata generata la richiesta di ricerca di una linea di attivit√† non presente nel PDG
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
- *       clausole che la Linea Attivit‡ sia valida per l'esercizio di scrivania, che il suo CDR appartenga 
- *       all'UO di scrivania, che la Linea di Attivit‡ non sia presente nel PDG e che la sua funzione 
+ *       clausole che la Linea Attivit√† sia valida per l'esercizio di scrivania, che il suo CDR appartenga 
+ *       all'UO di scrivania, che la Linea di Attivit√† non sia presente nel PDG e che la sua funzione 
  *       sia uguale a quella di uno dei capitoli di spesa selezionati dall'utente
  * @param userContext lo userContext che ha generato la richiesta
  * @param uo istanza di Unita_organizzativaBulk
@@ -4366,7 +4366,7 @@ private Var_stanz_resBulk confirmVarStanzResTemporanea(
 	throws IntrospectionException,PersistencyException, ComponentException {
 	
 	Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class ).findAll().get(0);
-	// in tal caso non esiste la variazione allo stanziamento residuo perchË non viene creata
+	// in tal caso non esiste la variazione allo stanziamento residuo perch√® non viene creata
 	if (((CNRUserContext)userContext).getCd_unita_organizzativa().equals(uoEnte.getCd_unita_organizzativa()))
 		return null;
 
@@ -4630,7 +4630,7 @@ public SQLBuilder selectLineaAttivitaByClause(UserContext userContext, Pdg_vinco
 	}
 	
 	/**
-	 * Escludo la linea di attivit‡ dell'IVA C20
+	 * Escludo la linea di attivit√† dell'IVA C20
 	 */
 	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 	try {
@@ -4702,7 +4702,7 @@ public void verificaDisponibilitaVincoliSpese(UserContext aUC,AccertamentoResidu
 				if (vincolo.getIm_vincolo().compareTo(BigDecimal.ZERO)<=0)
 					throw new ApplicationException("L'importo di vincolo relativo al CDR "+vincolo.getCd_centro_responsabilita()+
 							" G.A.E. "+vincolo.getCd_linea_attivita()+" Voce "+vincolo.getElementoVoce().getCd_voce()+ 
-							" non puÚ essere negativo.");
+							" non pu√≤ essere negativo.");
 
 				String error = session.checkDispObbligazioniAccertamenti(aUC, vincolo.getCd_centro_responsabilita(), 
 															   vincolo.getCd_linea_attivita(), 
@@ -4723,7 +4723,7 @@ public void verificaDisponibilitaVincoliSpese(UserContext aUC,AccertamentoResidu
 				if (vincolo.getIm_vincolo().compareTo(BigDecimal.ZERO)<=0)
 					throw new ApplicationException("L'importo di vincolo relativo alla variazione residua "+
 							vincolo.getVariazioneResidua().getEsercizio()+"/"+vincolo.getVariazioneResidua().getPg_variazione()+
-							" non puÚ essere negativo.");
+							" non pu√≤ essere negativo.");
 
 				List<Accertamento_vincolo_perenteBulk> listVincoli = home.cercaDettagliVincolati(vincolo.getVariazioneResidua());
 				BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).get();
@@ -4751,7 +4751,7 @@ public void verificaDisponibilitaVincoliSpese(UserContext aUC,AccertamentoResidu
 				if (diff.compareTo(BigDecimal.ZERO)<0)
 					throw new ApplicationException("La variazione residua "+vincolo.getVariazioneResidua().getEsercizio()+"/"+
 					vincolo.getVariazioneResidua().getPg_variazione()+
-				   " non puÚ essere associata all'accertamento residuo per un importo superiore a "
+				   " non pu√≤ essere associata all'accertamento residuo per un importo superiore a "
 				   + new it.cnr.contab.util.EuroFormat().format(diff.add(vincolo.getIm_vincolo()))+". Modificare il valore.");
 			}
 

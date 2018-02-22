@@ -11,17 +11,17 @@ public interface IInventario_beniMgr extends it.cnr.jada.comp.ICRUDMgr {
 /** 
   *  L'inventario non esiste
   *    PreCondition:
-  *      Non Ë stato trovato un Inventario associato alla UO di scrivania.
+  *      Non √® stato trovato un Inventario associato alla UO di scrivania.
   *    PostCondition:
   *     Un messaggio di errore viene visualizzato all'utente per segnalare che la UO non ha un
   *		Inventario
   *
-  *  L'inventario non Ë aperto.
+  *  L'inventario non √® aperto.
   *    PreCondition:
-  *      L'Inventario non Ë in stato "A", ossia aperto.
+  *      L'Inventario non √® in stato "A", ossia aperto.
   *    PostCondition:
   *     Un messaggio di errore viene visualizzato all'utente per segnalare che l'Inventario 
-  *		associato alla UO non Ë in stato "Aperto"
+  *		associato alla UO non √® in stato "Aperto"
   *
   *  Carica l'Inventario associato alla UO di scrivania
   *    PreCondition:
@@ -55,7 +55,7 @@ public abstract java.util.Collection findTipiAmmortamento(it.cnr.jada.UserContex
   *    PreCondition:
   *      E' stato richiesto di recuperare/generare l'identificativo di transazione.
   *    PostCondition:
-  *      Viene richiesto l'ID e, se questo non esiste, verr‡ generato, se richiesto
+  *      Viene richiesto l'ID e, se questo non esiste, verr√† generato, se richiesto
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param force <code>boolean</code> il flag che indica se forzare la generazione dell'ID
@@ -67,7 +67,7 @@ public abstract java.lang.String getLocalTransactionID(it.cnr.jada.UserContext p
 /** 
   *  Cerca l'Inventario associato alla Uo di scrivania
   *    PreCondition:
-  *      Non c'Ë un Inventario associato alla Uo di scrivania, oppure l'Inventario non Ë in stato "Aperto"
+  *      Non c'√® un Inventario associato alla Uo di scrivania, oppure l'Inventario non √® in stato "Aperto"
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -96,7 +96,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
   *      E' stata richiesta l'inizializzazione di una istanza di Inventario_beniBulk per modifica
   *    PostCondition:
   *      Vengono caricati gli eventuali Utilizzatori del Bene, gli accessori o il bene padre,
-  *		a seconda se il Bene di riferimento Ë rispettivamente un bene accessorio oppure no;
+  *		a seconda se il Bene di riferimento √® rispettivamente un bene accessorio oppure no;
   *		carica, inoltre, i Tipi Ammortamento legati alla Categoria Gruppo Inventario a cui appartiene il Bene
   *		ed il Tipo Ammortamento associato al Bene stesso.
   *

@@ -9,7 +9,7 @@ import it.cnr.jada.comp.ICRUDMgr;
 public interface IAccertamentoAbstractMgr extends IDocumentoContabileMgr, ICRUDMgr {
 /**
  * Aggiornamento in differita dei saldi dell'accertamento .
- * Un documento amministrativo di entrata che agisce in modalit‡ transazionale ha creato/modificato gli importi 
+ * Un documento amministrativo di entrata che agisce in modalit√† transazionale ha creato/modificato gli importi 
  * relativi ad un accertamento; i saldi di tale accertamento non possono essere aggiornati subito in quanto
  * tale operazione genererebbe dei lock sulle voci del piano che non ne consentirebbere l'utilizzo ad altri utenti;
  * pertanto l'aggiornamento dei saldi dell'accertamento viene differito al momento del salvataggio
@@ -44,14 +44,14 @@ public void callRiportaIndietro (UserContext userContext,it.cnr.contab.doccont00
   *			Viene richiesta la creazione di un'accertamento generico provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'creaConBulk' su AccertamentoComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *  Creazione di accertamenti per impegno di giro provenendo da documenti amministrativi
   *		PreCondition:
   *			Viene richiesta la creazione di un'accertamento per impegno di giro provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'creaConBulk' su AccertamentoPGiroComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
  */
 
@@ -62,14 +62,14 @@ public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext
   *			Viene richiesta l'eliminazione di un'accertamento generico provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'eliminaConBulk' su AccertamentoComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *  Eliminazione di accertamenti per impegno di giro provenendo da documenti amministrativi
   *		PreCondition:
   *			Viene richiesta l'eliminazione di un'accertamento per impegno di giro provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'eliminaConBulk' su AccertamentoPGiroComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
  */
 
@@ -118,14 +118,14 @@ public abstract void lockScadenza(it.cnr.jada.UserContext param0,it.cnr.contab.d
   *			Viene richiesta la modifica di un'accertamento generico provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'modificaConBulk' su AccertamentoComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *  Modifica di accertamenti per impegno di giro provenendo da documenti amministrativi
   *		PreCondition:
   *			Viene richiesta la modifica di un'accertamento per impegno di giro provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'modificaConBulk' su AccertamentoPGiroComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
  */
 
@@ -136,14 +136,14 @@ public abstract it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserCon
   *			Viene richiesta la modifica in automatico di scadenze di un'accertamento generico provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'modificaScadenzaInAutomatico' su AccertamentoComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
   *  Modifica in automatico di scadenze di accertamenti per impegno di giro provenendo da documenti amministrativi
   *		PreCondition:
   *			Viene richiesta la modifica in automatico di scadenze di un'accertamento per impegno di giro provenendo da documento amministrativo.
   *    PostCondition:
   *  		Viene invocato il metodo 'modificaScadenzaInAutomatico' su AccertamentoPGiroComponent
-  *			Se l'oggetto non Ë inizializzato prima della chiamata al suddetto
+  *			Se l'oggetto non √® inizializzato prima della chiamata al suddetto
   *			metodo viene invocato il metodo 'inizializzaPerModifica'
  */
 

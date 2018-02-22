@@ -5,7 +5,7 @@ import it.cnr.contab.config00.util.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.action.*;
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' CDS
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' CDS
  */
 
 
@@ -30,9 +30,9 @@ public final it.cnr.jada.util.action.SimpleDetailCRUDController getPercentuali()
 	return percentuali;
 }
 /**
- * Restituisce il valore della propriet‡ 'addPercentualeButtonEnaled'
+ * Restituisce il valore della propriet√† 'addPercentualeButtonEnaled'
  *
- * @return Il valore della propriet‡ 'addPercentualeButtonEnaled'
+ * @return Il valore della propriet√† 'addPercentualeButtonEnaled'
  */
 public boolean isAddPercentualeButtonEnaled()
 {
@@ -54,9 +54,9 @@ public boolean isAddPercentualeButtonEnaled()
 	return true;
 }
 /**
- * Restituisce il valore della propriet‡ 'percentualeFieldEnaled'
+ * Restituisce il valore della propriet√† 'percentualeFieldEnaled'
  *
- * @return Il valore della propriet‡ 'percentualeFieldEnaled'
+ * @return Il valore della propriet√† 'percentualeFieldEnaled'
  */
 public boolean isPercentualeFieldEnaled()
 {

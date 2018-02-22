@@ -22,7 +22,7 @@ public class LiquidazioneDefinitivaIvaBP extends LiquidazioneIvaBP {
 		public void validate(ActionContext context,OggettoBulk model) throws ValidationException {
 			Liquidazione_iva_ripart_finBulk bulk = (Liquidazione_iva_ripart_finBulk)model;
 			if (bulk.getEsercizio_variazione()==null)
-				throw new ValidationException("Il campo Esercizio Variazione Ë obbligatorio.");
+				throw new ValidationException("Il campo Esercizio Variazione √® obbligatorio.");
 			if (bulk.getIm_variazione()==null || bulk.getIm_variazione().compareTo(BigDecimal.ZERO)<=0)
 				throw new ValidationException("Il campo Importo deve essere valorizzato e di segno positivo.");
 		}
@@ -96,9 +96,9 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 }
 
 /**
- * Restituisce il valore della propriet‡ 'dettaglio_prospetti'
+ * Restituisce il valore della propriet√† 'dettaglio_prospetti'
  *
- * @return Il valore della propriet‡ 'dettaglio_prospetti'
+ * @return Il valore della propriet√† 'dettaglio_prospetti'
  */
 public final it.cnr.jada.util.action.SimpleDetailCRUDController getDettaglio_prospetti() {
 	return dettaglio_prospetti;
@@ -159,7 +159,7 @@ public String[][] getTabs() {
 	TreeMap<Integer, String[]> hash = new TreeMap<Integer, String[]>();
 	int i=0;
 
-	hash.put(i++, new String[]{"tabEsigDetr", "Esigibilit‡/Detraibilit‡","/gestiva00/tab_esigdetr.jsp" });
+	hash.put(i++, new String[]{"tabEsigDetr", "Esigibilit√†/Detraibilit√†","/gestiva00/tab_esigdetr.jsp" });
 	hash.put(i++, new String[]{ "tabImporti", "Importi aggiuntivi", "/gestiva00/tab_importi.jsp" });
 	hash.put(i++, new String[]{ "tabAltro", "Altro", "/gestiva00/tab_altro.jsp" });
 	

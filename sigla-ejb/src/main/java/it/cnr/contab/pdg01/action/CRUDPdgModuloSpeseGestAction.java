@@ -61,7 +61,7 @@ public class CRUDPdgModuloSpeseGestAction extends CRUDAction {
 	/**
 	 * Cancellazione concatenata dell'Elemento_voce e della GAE alla cancellazione del Cdr assegnatario.
 	 * Settaggio a zero degli importi a causa della perdita di informazione del tipo natura FES o FIN 
-	 * legata alla linea di attivit‡ 
+	 * legata alla linea di attivit√† 
 	 *
 	 * @param context	Contesto in utilizzo.
 	 * @param bulk		Non usato.
@@ -81,7 +81,7 @@ public class CRUDPdgModuloSpeseGestAction extends CRUDAction {
 	/**
 	 * Cancellazione concatenata dell'Elemento_voce alla cancellazione del Cdr assegnatario
 	 * Settaggio a zero degli importi a causa della perdita di informazione del tipo natura FES o FIN 
-	 * legata alla linea di attivit‡ 
+	 * legata alla linea di attivit√† 
 	 *
 	 * @param context	Contesto in utilizzo.
 	 * @param bulk		Non usato.

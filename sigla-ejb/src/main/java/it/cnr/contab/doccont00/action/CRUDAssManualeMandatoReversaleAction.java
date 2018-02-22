@@ -17,7 +17,7 @@ public CRUDAssManualeMandatoReversaleAction() {
 	super();
 }
 /**
- * Associa una o più reversali al mandato selezionato
+ * Associa una o piÃ¹ reversali al mandato selezionato
  *
 **/
 public Forward doAggiungiReversali(ActionContext context) {
@@ -40,7 +40,7 @@ public Forward doAggiungiReversali(ActionContext context) {
 	}
 }
 /**
- * Rimove una o più reversali al mandato selezionato
+ * Rimove una o piÃ¹ reversali al mandato selezionato
  *
 **/
 public Forward doRimuoviReversali(ActionContext context) {

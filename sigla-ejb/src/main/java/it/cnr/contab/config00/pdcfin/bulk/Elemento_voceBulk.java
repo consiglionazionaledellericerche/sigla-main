@@ -27,8 +27,8 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	public final static Dictionary indicazioneTrovatoKeys;
 	static {
 		indicazioneTrovatoKeys = new it.cnr.jada.util.OrderedHashtable();
-		indicazioneTrovatoKeys.put(INDICAZIONE_TROVATO_BLOCCANTE,"SÏ - Bloccante");
-		indicazioneTrovatoKeys.put(INDICAZIONE_TROVATO_NON_BLOCCANTE,"SÏ - Non Bloccante");
+		indicazioneTrovatoKeys.put(INDICAZIONE_TROVATO_BLOCCANTE,"S√¨ - Bloccante");
+		indicazioneTrovatoKeys.put(INDICAZIONE_TROVATO_NON_BLOCCANTE,"S√¨ - Non Bloccante");
 		indicazioneTrovatoKeys.put(INDICAZIONE_TROVATO_NESSUNA,"No");	
 	};
 
@@ -60,9 +60,9 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 		return capoconto_fin;
 	}
 	/**
-	 * Restituisce il valore della propriet‡ 'cd_ds_elemento_voce'
+	 * Restituisce il valore della propriet√† 'cd_ds_elemento_voce'
 	 *
-	 * @return Il valore della propriet‡ 'cd_ds_elemento_voce'
+	 * @return Il valore della propriet√† 'cd_ds_elemento_voce'
 	 */
 	public String getCd_ds_elemento_voce() {
 		return getCd_elemento_voce() + " - " + getDs_elemento_voce();
@@ -230,11 +230,11 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	public void validate() throws ValidationException 
 	{
 		if ( getEsercizio() == null  )
-			throw new ValidationException( "Il campo ESERCIZIO Ë obbligatorio." );
+			throw new ValidationException( "Il campo ESERCIZIO √® obbligatorio." );
 		if ( getEsercizio().toString().length() != 4 )
 			throw new ValidationException( "Il campo ESERCIZIO deve essere di quattro cifre. " );
 		if ( getDs_elemento_voce() == null  )
-			throw new ValidationException( "Il campo DESCRIZIONE Ë obbligatorio." );
+			throw new ValidationException( "Il campo DESCRIZIONE √® obbligatorio." );
 		/*if ( !isNullOrEmpty( getCd_proprio_elemento() ) )
 	{
 		long cdLong;

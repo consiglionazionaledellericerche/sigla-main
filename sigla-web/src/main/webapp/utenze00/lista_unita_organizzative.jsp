@@ -25,7 +25,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><span class="FormLabel">Unit‡ organizzativa</span></td>
+				<td><span class="FormLabel">Unit√† organizzativa</span></td>
 			</tr>
 			<tr height="100%">
 				<td>

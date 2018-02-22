@@ -78,7 +78,7 @@
 			}
   		} else if (compenso.getModalitaPagamento() != null && (compenso.getV_terzo() != null && compenso.getV_terzo().getCrudStatus() != compenso.getV_terzo().UNDEFINED)) { %>
 			<span class="FormLabel" style="color:red">
-				Nessun riferimento trovato per la modalit‡ di pagamento selezionata!
+				Nessun riferimento trovato per la modalit√† di pagamento selezionata!
 			</span>
 	<%	} %>
   	</td>

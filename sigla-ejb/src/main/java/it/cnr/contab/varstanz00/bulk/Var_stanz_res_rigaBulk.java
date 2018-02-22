@@ -257,7 +257,7 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 			  throw new ValidationException("L'importo delle righe di variazione deve essere negativo per le Economie.");
 		}
 		if(this.getElemento_voce()!=null && this.getElemento_voce().getFl_azzera_residui()!=null && this.getElemento_voce().getFl_azzera_residui() &&  this.getIm_variazione()!=null && this.getIm_variazione().compareTo(BigDecimal.ZERO)>0)
-			throw new ValidationException ("Attenzione non puÚ essere predisposta una variazione positiva sulla voce "+this.getElemento_voce().getCd_elemento_voce());
+			throw new ValidationException ("Attenzione non pu√≤ essere predisposta una variazione positiva sulla voce "+this.getElemento_voce().getCd_elemento_voce());
 		 
 		for (java.util.Iterator i = var_stanz_res.getRigaVariazione().iterator();i.hasNext();) {
 			Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
@@ -271,7 +271,7 @@ public class Var_stanz_res_rigaBulk extends Var_stanz_res_rigaBase {
 					riga.getCd_linea_attivita().compareTo(this.getCd_linea_attivita())==0 &&
 					this.getCd_elemento_voce()!= null && riga.getCd_elemento_voce()!=null && 
 					riga.getCd_elemento_voce().compareTo(this.getCd_elemento_voce())==0)
-				throw new ValidationException ("Attenzione: combinazione Esercizio/Esercizio residuo/CdR/G.A.E./Voce gi‡ inserita!");
+				throw new ValidationException ("Attenzione: combinazione Esercizio/Esercizio residuo/CdR/G.A.E./Voce gi√† inserita!");
 			}
 		super.validate();
 	}

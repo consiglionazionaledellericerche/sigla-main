@@ -28,18 +28,18 @@ public ObbligazioneBulk getObbligazione() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'prcImputazioneFin'
+ * Restituisce il valore della propriet√† 'prcImputazioneFin'
  *
- * @return Il valore della propriet‡ 'prcImputazioneFin'
+ * @return Il valore della propriet√† 'prcImputazioneFin'
  */
 public BigDecimal getPrcImputazioneFin() {
 	return prcImputazioneFin;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOcd_linea_attivita'
+ * Restituisce il valore della propriet√† 'rOcd_linea_attivita'
  *
- * @return Il valore della propriet‡ 'rOcd_linea_attivita'
+ * @return Il valore della propriet√† 'rOcd_linea_attivita'
  */
 public boolean isROcd_linea_attivita() 
 {
@@ -47,9 +47,9 @@ public boolean isROcd_linea_attivita()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOPrcImputazioneFin'
+ * Restituisce il valore della propriet√† 'rOPrcImputazioneFin'
  *
- * @return Il valore della propriet‡ 'rOPrcImputazioneFin'
+ * @return Il valore della propriet√† 'rOPrcImputazioneFin'
  */
 public boolean isROPrcImputazioneFin() 
 {
@@ -76,7 +76,7 @@ public void setObbligazione(ObbligazioneBulk newObbligazione) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'prcImputazioneFin'
+ * Imposta il valore della propriet√† 'prcImputazioneFin'
  *
  * @param newPrcImputazioneFin	Il valore da assegnare a 'prcImputazioneFin'
  */
@@ -84,7 +84,7 @@ public void setPrcImputazioneFin(BigDecimal newPrcImputazioneFin) {
 	prcImputazioneFin = newPrcImputazioneFin;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {

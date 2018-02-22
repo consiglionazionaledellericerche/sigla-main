@@ -56,7 +56,7 @@ public Dictionary loadNaturaKeys(OggettoBulk bulk) throws it.cnr.jada.comp.Appli
 		catch (Exception e)
 		{
 			naturaKeys = null ;
-			throw new ApplicationException( "Non è possibile recuperare la natura. " );
+			throw new ApplicationException( "Non Ã¨ possibile recuperare la natura. " );
 		}
 	}	
 	return naturaKeys;

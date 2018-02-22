@@ -366,16 +366,16 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			messaggio
 					.setDs_messaggio(sdf.format(EJBCommonServices
 							.getServerTimestamp())
-							+ " - » stata aperta una nuova Variazione al Piano di Gestione");
+							+ " - √à stata aperta una nuova Variazione al Piano di Gestione");
 		} else if (tipo.equals(Pdg_variazioneBulk.STATO_APPROVATA)) {
 			messaggio
 					.setDs_messaggio(sdf.format(EJBCommonServices
 							.getServerTimestamp())
-							+ " - » stata approvata la Variazione al Piano di Gestione");
+							+ " - √à stata approvata la Variazione al Piano di Gestione");
 		} else if (tipo.equals(Pdg_variazioneBulk.STATO_RESPINTA)) {
 			messaggio.setDs_messaggio(sdf.format(EJBCommonServices
 					.getServerTimestamp())
-					+ " - » stata respinta la Variazione al Piano di Gestione");
+					+ " - √à stata respinta la Variazione al Piano di Gestione");
 		}
 		messaggio.setCorpo("Numero variazione:" + pdg.getPg_variazione_pdg());
 		messaggio.setCorpo(messaggio.getCorpo() + "\n" + "CdR proponente:"
@@ -642,15 +642,15 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		inizializzaSommeCdR(userContext, pdg);
 		if (pdg.getAssociazioneCDR().isEmpty())
 			throw new ApplicationException(
-					"Associare almeno un Centro di Responsabilit‡ alla Variazione.");
+					"Associare almeno un Centro di Responsabilit√† alla Variazione.");
 		// P.R.: Controllo proveniente da ModificaConBulk e CreaConBulk
 		// Deciso con Angelini di spostare i controlli in fase di salvataggio
 		// definitivo
 		validaDettagliEntrataSpesa(userContext, pdg);
 		/*
 		 * Confermo l'operazione E' importante salvare in questo momento in
-		 * controllo di disponibilit‡ avviene tramite procedura Pl-Sql che deve
-		 * gi‡ trovare sul DB la variazione con stato Definitivo altrimenti non
+		 * controllo di disponibilit√† avviene tramite procedura Pl-Sql che deve
+		 * gi√† trovare sul DB la variazione con stato Definitivo altrimenti non
 		 * la considera ai fini del controllo
 		 */
 		pdg = (Pdg_variazioneBulk) super.modificaConBulk(userContext, pdg);
@@ -666,7 +666,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 				if (ass_pdgHome.findDettagliSpesa(ass_pdg).isEmpty()) {
 					if (ass_pdgHome.findDettagliEntrata(ass_pdg).isEmpty())
 						throw new ApplicationException(
-								"Associare almeno un dettaglio di variazione al Centro di Responsabilit‡ "
+								"Associare almeno un dettaglio di variazione al Centro di Responsabilit√† "
 										+ ass_pdg.getCd_centro_responsabilita());
 				}
 
@@ -676,14 +676,14 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 									.format(ass_pdg.getEntrata_diff()) + ")"
 							+ "\n" + "per il Cdr "
 							+ ass_pdg.getCd_centro_responsabilita()
-							+ " Ë diversa da zero. ");
+							+ " √® diversa da zero. ");
 				if (ass_pdg.getSpesa_diff().compareTo(ZERO) != 0)
 					throw new ApplicationException("La Differenza di spesa ("
 							+ new it.cnr.contab.util.EuroFormat()
 									.format(ass_pdg.getSpesa_diff()) + ")"
 							+ "\n" + "per il Cdr "
 							+ ass_pdg.getCd_centro_responsabilita()
-							+ " Ë diversa da zero. ");
+							+ " √® diversa da zero. ");
 			}
 			/*
 			 * Verifico che tutti gli importi assestati dell'aggregato abbiano
@@ -862,7 +862,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			 * Confermo l'operazione e provvedo ad aggiornare l'aggregato e a
 			 * mandare i messaggi a tutti gli utenti E' importante salvare in
 			 * questo momento in quanto l'aggiornamento dell'aggregato avviene
-			 * tramite procedura Pl-Sql che deve gi‡ trovare sul DB la
+			 * tramite procedura Pl-Sql che deve gi√† trovare sul DB la
 			 * variazione con stato Approvato altrimenti non la considera ai
 			 * fini del calcolo dell'aggregato
 			 */
@@ -1071,7 +1071,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 	}
 
 	/**
-	 * Verifica che il CDR associato alla variazione Ë eliminabile
+	 * Verifica che il CDR associato alla variazione √® eliminabile
 	 * 
 	 * Pre-post-conditions:
 	 * 
@@ -1090,7 +1090,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			if (!assHome.findDettagliEntrata(assBulk).isEmpty()
 					|| !assHome.findDettagliSpesa(assBulk).isEmpty())
 				throw new ComponentException(
-						"Non Ë possibile eliminare l'associazione della variazione con il CDR "
+						"Non √® possibile eliminare l'associazione della variazione con il CDR "
 								+ assBulk.getCd_centro_responsabilita()
 								+ " in quanto esistono dettagli di entrata/spesa collegati.");
 		} catch (it.cnr.jada.persistency.PersistencyException pe) {
@@ -1148,7 +1148,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 					throw new it.cnr.jada.comp.ApplicationException(
 							"Si sta tentando di inserire un dettaglio con importi negativi sulla colonna "
 									+ columnDescription
-									+ ", ma il totale per GAE e voce del piano Ë negativo ("
+									+ ", ma il totale per GAE e voce del piano √® negativo ("
 									+ new it.cnr.contab.util.EuroFormat()
 											.format(importo) + ").");
 				}
@@ -1198,7 +1198,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 					throw new it.cnr.jada.comp.ApplicationException(
 							"Si sta tentando di inserire un dettaglio con importi negativi sulla colonna "
 									+ columnDescription
-									+ ", ma il totale per GAE e voce del piano Ë negativo ("
+									+ ", ma il totale per GAE e voce del piano √® negativo ("
 									+ new it.cnr.contab.util.EuroFormat()
 											.format(importo) + ").");
 				}
@@ -1488,7 +1488,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 										.format(totSommaSpesa)
 								+ ")"
 								+ "\n"
-								+ "non Ë uguale al totale delle variazioni di entrata ("
+								+ "non √® uguale al totale delle variazioni di entrata ("
 								+ new it.cnr.contab.util.EuroFormat()
 										.format(totSommaEntrata) + ")");
 			}
@@ -1594,7 +1594,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 	/**
 	 * Tutti controlli superati PreCondition: Viene richiesto il ribaltamento
 	 * dei costi del Piano di Gestione del CdR specificato all'area di ricerca a
-	 * cui afferisce. Il bilancio del CNR Ë gi‡ stato approvato PostCondition:
+	 * cui afferisce. Il bilancio del CNR √® gi√† stato approvato PostCondition:
 	 * La procedura Oracle CNRCTB053.ribaltaSuAreaPDG viene eseguita per l'anno
 	 * di esercizio ed il CdR specificati.
 	 */
@@ -1632,7 +1632,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 	/**
 	 * Tutti controlli superati PreCondition: Viene richiesto il ribaltamento
 	 * dei costi del Piano di Gestione del CdR specificato all'area di ricerca a
-	 * cui afferisce. Il bilancio del CNR Ë gi‡ stato approvato PostCondition:
+	 * cui afferisce. Il bilancio del CNR √® gi√† stato approvato PostCondition:
 	 * La procedura Oracle CNRCTB053.ribaltaSuAreaPDG viene eseguita per l'anno
 	 * di esercizio ed il CdR specificati.
 	 */
@@ -1804,7 +1804,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 					+ new it.cnr.contab.util.EuroFormat().format(totSommaSpesa)
 					+ ")"
 					+ "\n"
-					+ "non Ë uguale alla quota di entrata assegnata ("
+					+ "non √® uguale alla quota di entrata assegnata ("
 					+ new it.cnr.contab.util.EuroFormat()
 							.format(totSommaEntrata) + ")");
 		}
@@ -2308,7 +2308,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 	/**
 	 * Identificativo univoco progressivo per la stampa del riepilogo variazioni
 	 * PreCondition: Viene richiesta un progressivo PostCondition: ritorna un
-	 * valore PreCondition: Si Ë verificato un errore. PostCondition: Viene
+	 * valore PreCondition: Si √® verificato un errore. PostCondition: Viene
 	 * inviato un messaggio con il relativo errore ritornato dal DB
 	 */
 	private java.math.BigDecimal getSequence(it.cnr.jada.UserContext userContext)
@@ -2920,7 +2920,7 @@ public void aggiornaDataFirma(UserContext userContext, Integer esercizio,
 
 public boolean isVariazioneFromLiquidazioneIvaDaModificare(UserContext userContext, Pdg_variazioneBulk variazione) throws ComponentException{
 	/**
-	 * Recupero la linea di attivit‡ dell'IVA C20
+	 * Recupero la linea di attivit√† dell'IVA C20
 	 */
 	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 	try {
@@ -2946,7 +2946,7 @@ public boolean isVariazioneFromLiquidazioneIvaDaModificare(UserContext userConte
 }
 public Pdg_variazione_riga_spesa_gestBulk recuperoRigaLiquidazioneIva(UserContext userContext, Ass_pdg_variazione_cdrBulk ass) throws ComponentException{
 	/**
-	 * Recupero la linea di attivit‡ dell'IVA C20
+	 * Recupero la linea di attivit√† dell'IVA C20
 	 */
 	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 	try {
@@ -2970,7 +2970,7 @@ public Pdg_variazione_riga_spesa_gestBulk recuperoRigaLiquidazioneIva(UserContex
 }
 public boolean isRigaLiquidazioneIva(UserContext userContext, Pdg_variazione_riga_gestBulk riga) throws ComponentException{
 	/**
-	 * Recupero la linea di attivit‡ dell'IVA C20
+	 * Recupero la linea di attivit√† dell'IVA C20
 	 */
 	it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 	try {

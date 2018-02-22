@@ -100,7 +100,7 @@ public class PdGPreventivoComponent extends PdGComponent implements it.cnr.jada.
   *    PreCondition:
   *      Nessun'altra precondizione verificata
   *    PostCondition:
-  *      Viene restituito un'istanza di Pdg_preventivoBulk che per il CDR specificato pi˘ l'elenco dei CDR con livello di responsabili‡ inferiore al CDR specificato (listaCdrPdGPerUtente)
+  *      Viene restituito un'istanza di Pdg_preventivoBulk che per il CDR specificato pi√π l'elenco dei CDR con livello di responsabili√† inferiore al CDR specificato (listaCdrPdGPerUtente)
   *  Utente associato a CDR senza PDG
   *    PreCondition:
   *      Il cdr dell'utente non possiede un PDG
@@ -172,7 +172,7 @@ private void controllaAggregatoChiuso(UserContext userContext, Pdg_preventivoBul
 			cs.setString( 3, pdg.getCd_centro_responsabilita());
 			cs.execute();
 		    if (cs.getString(1).equals("N"))
-				throw new it.cnr.jada.comp.ApplicationException("Il piano di gestione aggregato non Ë chiuso. Contattare il CDR di primo livello");
+				throw new it.cnr.jada.comp.ApplicationException("Il piano di gestione aggregato non √® chiuso. Contattare il CDR di primo livello");
 		} finally {
 		    cs.close();
 		}	
@@ -212,7 +212,7 @@ private void controllaAggregatoPdgEtrDetPositivo(UserContext userContext, Pdg_pr
 				    if (property != null)
 				    	columnDescription = property.getLabel();
 			    }
-				throw new it.cnr.jada.comp.ApplicationException("Si sta tentando di inserire un dettaglio con importi negativi sulla colonna "+columnDescription+", ma il totale per GAE e voce del piano Ë negativo ("+new it.cnr.contab.util.EuroFormat().format(importo)+").");
+				throw new it.cnr.jada.comp.ApplicationException("Si sta tentando di inserire un dettaglio con importi negativi sulla colonna "+columnDescription+", ma il totale per GAE e voce del piano √® negativo ("+new it.cnr.contab.util.EuroFormat().format(importo)+").");
 		    }
 		} finally {
 		    cs.close();
@@ -247,7 +247,7 @@ private void controllaAggregatoPdgSpeDetPositivo(UserContext userContext, Pdg_pr
 				    if (property != null)
 				    	columnDescription = property.getLabel();
 			    }
-				throw new it.cnr.jada.comp.ApplicationException("Si sta tentando di inserire un dettaglio con importi negativi sulla colonna "+columnDescription+", ma il totale per GAE e voce del piano Ë negativo ("+new it.cnr.contab.util.EuroFormat().format(importo)+").");
+				throw new it.cnr.jada.comp.ApplicationException("Si sta tentando di inserire un dettaglio con importi negativi sulla colonna "+columnDescription+", ma il totale per GAE e voce del piano √® negativo ("+new it.cnr.contab.util.EuroFormat().format(importo)+").");
 		    }
 		} finally {
 		    cs.close();
@@ -277,7 +277,7 @@ private void controllaBilancioPreventivoCdsApprovato(UserContext userContext,Cdr
   *    PreCondition:
   *      L'invocazione della stored procedure CNRCTB054.isBilancioCNRApprovato ritorna 'N'
   *    PostCondition:
-  *      Viene segnalato con un'eccezione che il bilancio preventivo CNR non Ë approvato
+  *      Viene segnalato con un'eccezione che il bilancio preventivo CNR non √® approvato
   *  Tutti i controlli superati
   *    PreCondition:
   *      L'invocazione della stored procedure CNRCTB054.isBilancioCNRApprovato ritorna 'Y'
@@ -339,12 +339,12 @@ private void controllaDettScarConfermati(UserContext userContext, Pdg_preventivo
  *      Viene generata una ApplicationException con il messaggio "Sono presenti importi complessivi non compatibili con i dati impostati dall'ente."
  *  Tuttti i controlli superati
  *    PreCondition:
- *      Nessun'altra precondizione Ë verificata
+ *      Nessun'altra precondizione √® verificata
  *    PostCondition:
  *      Esce senza alcuna eccezione
  */
 private void controllaDiscrepanzeAggregato(UserContext userContext,Pdg_preventivoBulk pdg,int livelloResponsabilita) throws ComponentException {
-	// Controllo della presenza di discrepanze nell'aggregato; va fatto solo per cdr di 1∞ livello e per le aree
+	// Controllo della presenza di discrepanze nell'aggregato; va fatto solo per cdr di 1¬∞ livello e per le aree
 	if (livelloResponsabilita == 1 ||
 		isCdrArea(userContext,pdg.getCentro_responsabilita())) {
 
@@ -391,12 +391,12 @@ public boolean controllaDiscrepanzeAggregatoForCons(UserContext userContext,Ogge
  *      Viene generata una ApplicationException con il messaggio "Sono presenti importi complessivi non compatibili con i dati impostati dall'ente."
  *  Tuttti i controlli superati
  *    PreCondition:
- *      Nessun'altra precondizione Ë verificata
+ *      Nessun'altra precondizione √® verificata
  *    PostCondition:
  *      Esce senza alcuna eccezione
  */
 private void controllaDiscrepanzeAggregatoPerVariazioni(UserContext userContext,Pdg_preventivoBulk pdg,int livelloResponsabilita) throws ComponentException {
-	// Controllo della presenza di discrepanze nell'aggregato; va fatto solo per cdr di 1∞ livello e per le aree
+	// Controllo della presenza di discrepanze nell'aggregato; va fatto solo per cdr di 1¬∞ livello e per le aree
 	if (livelloResponsabilita == 1 ||
 		isCdrArea(userContext,pdg.getCentro_responsabilita())) {
 
@@ -405,7 +405,7 @@ private void controllaDiscrepanzeAggregatoPerVariazioni(UserContext userContext,
 	}
 }
 /** 
-  *  Quadratura su insieme linee di attivit‡ entrata/spesa
+  *  Quadratura su insieme linee di attivit√† entrata/spesa
   *    PreCondition:
   *      L'invocazione della stored procedure CNRCTB050.checkDiscrepanzeInsiemeLa ritorna 'Y'
   *    PostCondition:
@@ -532,7 +532,7 @@ private void controllaStatoAggregato(UserContext userContext, Pdg_preventivoBulk
  *    PreCondition:
  *      Esiste almeno un pdg figlio del pdg specificato che si trova in uno stato diverso da quelli specificificati
  *    PostCondition:
- *      Genera una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *      Genera una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  *  Tutti i controlli superati
  *    PreCondition:
  *      Nessun'altra precondizione verificata
@@ -561,7 +561,7 @@ private boolean controllaStatoPdgFigli(UserContext userContext,Pdg_preventivoBul
 						trovato = stati[i].equals(stato_figlio);
 
 					if (!trovato)
-							throw new it.cnr.jada.comp.ApplicationException("Il pdg del cdr "+rs.getString("CD_CENTRO_RESPONSABILITA")+" Ë in stato "+stato_figlio+" che non Ë compatibile con l'operazione richiesta.");
+							throw new it.cnr.jada.comp.ApplicationException("Il pdg del cdr "+rs.getString("CD_CENTRO_RESPONSABILITA")+" √® in stato "+stato_figlio+" che non √® compatibile con l'operazione richiesta.");
 				}
 			} finally {
 				try{rs.close();}catch( java.sql.SQLException e ){};
@@ -579,9 +579,9 @@ private boolean controllaStatoPdgFigli(UserContext userContext,Pdg_preventivoBul
  *  Esistono pdg padri in stato diverso da quelli specificati
  *    PreCondition:
  *      Esiste almeno un pdg padre del pdg specificato che si trova in uno stato diverso da quelli specificati.
- *		Se "ricorsivo" Ë true la ricerca viene fatta su tutti i padri fino all'AC, altrimenti solo sul padre diretto
+ *		Se "ricorsivo" √® true la ricerca viene fatta su tutti i padri fino all'AC, altrimenti solo sul padre diretto
  *    PostCondition:
- *      Genera una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *      Genera una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  *  Tutti i controlli superati
  *    PreCondition:
  *      Nessun'altra precondizione verificata
@@ -591,7 +591,7 @@ private boolean controllaStatoPdgFigli(UserContext userContext,Pdg_preventivoBul
 private boolean controllaStatoPdgPadri(UserContext userContext,Pdg_preventivoBulk pdg,int livelloResponsabilita,boolean ricorsivo,String[] stati) throws ComponentException {
 	try {
 
-		// Sel il cdr del pdg Ë di livello 1, o Ë l'ente o Ë in un area di ricerca
+		// Sel il cdr del pdg √® di livello 1, o √® l'ente o √® in un area di ricerca
 		// non ci sono pdg padri, quindi ritorno true
 
 		if (livelloResponsabilita == LV_CDRI ||
@@ -624,7 +624,7 @@ private boolean controllaStatoPdgPadri(UserContext userContext,Pdg_preventivoBul
 						trovato = stati[i].equals(stato_padre);
 
 					if (!trovato)
-							throw new it.cnr.jada.comp.ApplicationException("Il pdg del cdr "+cd_cdr+" Ë in stato "+stato_padre+" che non Ë compatibile con l'operazione richiesta.");
+							throw new it.cnr.jada.comp.ApplicationException("Il pdg del cdr "+cd_cdr+" √® in stato "+stato_padre+" che non √® compatibile con l'operazione richiesta.");
 					
 				} finally {
 					try{rs.close();}catch( java.sql.SQLException e ){};
@@ -706,12 +706,12 @@ private boolean controllaStatoPdgPadri(UserContext userContext,Pdg_preventivoBul
 /** 
  *  Tutti i controlli superati
  *    PreCondition:
- *      Nessun'altra precondizione Ë verificata
+ *      Nessun'altra precondizione √® verificata
  *    PostCondition:
  *      ll dettaglio viene marcato con CATEGORIA 'SIN', FL_SOLA_LETTURA = false e salvato
  *  spesa relativa altra UO
  *    PreCondition:
- *      Viene richiesto il salvataggio di una riga di spese del PDG e l'utente ha compilato qualche colonna relativa a 'spese verso altra UO' (J,L,R,T,AD,AF,AM,AD); il PDG del CDR scelto Ë aperto (stato uguale a A, B, D o E)
+ *      Viene richiesto il salvataggio di una riga di spese del PDG e l'utente ha compilato qualche colonna relativa a 'spese verso altra UO' (J,L,R,T,AD,AF,AM,AD); il PDG del CDR scelto √® aperto (stato uguale a A, B, D o E)
  *    PostCondition:
  *      Viene creata nel PDG del cdr scelto (servente) un nuovo dettaglio di spesa valorizzazzato come segue:
  *      dettaglioServente.esercizio = dettaglioServito.esercizio
@@ -727,14 +727,14 @@ private boolean controllaStatoPdgPadri(UserContext userContext,Pdg_preventivoBul
  *      dettaglioServente.AG = dettaglioServito.AD / AF (quello valorizzato)
  *      dettaglioServente.AP = dettaglioServito.AM / AD (quello valorizzato)
  *      il dettaglio servito viene marcato con CATEGORIA 'SCR', quello servente con categotria 'CAR', e viene messo in STATO 'X'
- *  PDG servente gi‡ chiuso
+ *  PDG servente gi√† chiuso
  *    PreCondition:
- *      Viene richiesto il salvataggio di una riga di spese del PDG e l'utente ha compilato qualche colonna riferita ad un'altro cdr (CLGS != NULL) e il PDG del CDR scelto Ë gi‡ "chiuso" (checkChiusuraPdg genera una Exception)
+ *      Viene richiesto il salvataggio di una riga di spese del PDG e l'utente ha compilato qualche colonna riferita ad un'altro cdr (CLGS != NULL) e il PDG del CDR scelto √® gi√† "chiuso" (checkChiusuraPdg genera una Exception)
  *    PostCondition:
- *      Viene generata una ApplicationException con il messaggio "Il PDG del <cdr> servente Ë stato gi‡ chiuso
+ *      Viene generata una ApplicationException con il messaggio "Il PDG del <cdr> servente √® stato gi√† chiuso
  *  costi senza spese
  *    PreCondition:
- *      Viene richiesto il salvataggio di una riga di spese del PDG e l'utente ha compilato la colonna P, AB o AI ; il PDG del CDR scelto Ë modificabile (stato A, B, D o E), la voce Ë "Prestazioni da struttura dell'ente" (isVoceCSSAC() ritorna true)
+ *      Viene richiesto il salvataggio di una riga di spese del PDG e l'utente ha compilato la colonna P, AB o AI ; il PDG del CDR scelto √® modificabile (stato A, B, D o E), la voce √® "Prestazioni da struttura dell'ente" (isVoceCSSAC() ritorna true)
  *    PostCondition:
  *      Viene creata per il cdr servente un nuovo dettaglio di entrata valorizzazzato come segue:
  *      entrataServente.esercizio = dettaglioServito.esercizio
@@ -754,13 +754,13 @@ private boolean controllaStatoPdgPadri(UserContext userContext,Pdg_preventivoBul
  *      
  *  costi senza spese, voce non valida
  *    PreCondition:
- *      Viene richiesto il salvataggio di una riga di spese del PDG e l'utente ha compilato la colonna P, AB o AI, la voce NON Ë "Prestazioni da struttura dell'ente" (isVoceCSSAC() ritorna false)
+ *      Viene richiesto il salvataggio di una riga di spese del PDG e l'utente ha compilato la colonna P, AB o AI, la voce NON √® "Prestazioni da struttura dell'ente" (isVoceCSSAC() ritorna false)
  *    PostCondition:
  *      Viene generata una ApplicationException con il messaggio "La voce del piano dei conti deve essere 'Prestazioni da struttura dell'ente'"
  *  spesa relativa altra UO, campi non validi
  *    PreCondition:
  *      Viene richiesto il salvataggio di una riga di spese del PDG e l'utente ha compilato qualche colonna relativa a 'spese verso altra UO' (J,L,R,T,AD,AF,AM,AD)
- *      sono compilati pi˘ di uno alla volta di
+ *      sono compilati pi√π di uno alla volta di
  *      - J, L, R, T
  *      - AD, AF
  *      - AM, AD
@@ -777,16 +777,16 @@ private boolean controllaStatoPdgPadri(UserContext userContext,Pdg_preventivoBul
  *      Viene richiesto il salvataggio di una riga di spese del PDG e 
  *      l'utente ha compilato qualche colonna relativa a 'spese verso altra UO' (J,L,R,T,AD,AF,AM,AD) e
  *      isVoceSAUOP(dettaglio.voce) e
- *      il PDG del CDR scelto Ë aperto (stato uguale a A, B, D o E)
+ *      il PDG del CDR scelto √® aperto (stato uguale a A, B, D o E)
  *      la linea di attivita ha natura o funzione diverse da uno
  *    PostCondition:
- *      Viene generata una eccezione con messaggio: "Le spese per personale devono avere una linea di attivit‡ con natura e funzione 1"
+ *      Viene generata una eccezione con messaggio: "Le spese per personale devono avere una linea di attivit√† con natura e funzione 1"
  *  spesa relativa altra UO per il personale
  *    PreCondition:
  *      Viene richiesto il salvataggio di una riga di spese del PDG e 
  *      l'utente ha compilato qualche colonna relativa a 'spese verso altra UO' (J,L,R,T,AD,AF,AM,AD) e
  *      isVoceSAUOP(dettaglio.voce) = true e
- *      il PDG del CDR scelto Ë aperto (stato uguale a A, B, D o E)
+ *      il PDG del CDR scelto √® aperto (stato uguale a A, B, D o E)
  *      la linea di attivita ha natura o funzione uguale a uno
  *    PostCondition:
  *      Viene creata nel PDG del cdr scelto (servente) un nuovo dettaglio di spesa valorizzazzato come segue:
@@ -803,129 +803,129 @@ private boolean controllaStatoPdgPadri(UserContext userContext,Pdg_preventivoBul
  *      dettaglioServente.AG = dettaglioServito.AD / AF (quello valorizzato)
  *      dettaglioServente.AP = dettaglioServito.AM / AD (quello valorizzato)
  *      il dettaglio servito viene marcato con CATEGORIA 'SCR', quello servente con categotria 'CAR', e viene messo in STATO 'X'
- *  PDG gi‡ chiuso
+ *  PDG gi√† chiuso
  *    PreCondition:
  *      checkChiusuraPdg genera una eccezione
  *    PostCondition:
  *      Viene lasciata uscire l'eccezione
- *  linea di attivit‡ di natura 5, cdr non collegato ad area
+ *  linea di attivit√† di natura 5, cdr non collegato ad area
  *    PreCondition:
- *      Linea di attivit‡ con natura 5 e
+ *      Linea di attivit√† con natura 5 e
  *      CDR afferente ad UO non collegata ad area
  *    PostCondition:
- *      Genera una ApplicationException con il messaggio "Non Ë possibile creare dettagli con natura 5 perchË il CDR non Ë collegato ad area attraverso la sua unit‡ organizzativa"
- *  linea di attivit‡ di natura 5, cdr area
+ *      Genera una ApplicationException con il messaggio "Non √® possibile creare dettagli con natura 5 perch√® il CDR non √® collegato ad area attraverso la sua unit√† organizzativa"
+ *  linea di attivit√† di natura 5, cdr area
  *    PreCondition:
- *      Linea di attivit‡ con natura 5 e
+ *      Linea di attivit√† con natura 5 e
  *      CDR afferente UO di tipo area
  *    PostCondition:
- *      Genera una ApplicationException con il messaggio "Non Ë possibile creare dettagli con natura 5 perchË il CDR appartiene ad un'area"
- *  linea di attivit‡ di natura 5, scarico verso altra UO/CDR
+ *      Genera una ApplicationException con il messaggio "Non √® possibile creare dettagli con natura 5 perch√® il CDR appartiene ad un'area"
+ *  linea di attivit√† di natura 5, scarico verso altra UO/CDR
  *    PreCondition:
- *      Linea di attivit‡ con natura 5
- *      e l'utente ha compilato qualche colonna relativa a 'spese verso altra UO' (J,L,R,T,AD,AF,AM,AD); il PDG del CDR scelto Ë aperto (stato uguale a A, B, D o E) o verso altro CDR (P, AB o AI)
+ *      Linea di attivit√† con natura 5
+ *      e l'utente ha compilato qualche colonna relativa a 'spese verso altra UO' (J,L,R,T,AD,AF,AM,AD); il PDG del CDR scelto √® aperto (stato uguale a A, B, D o E) o verso altro CDR (P, AB o AI)
  *    PostCondition:
- *      Genera una ApplicationException con il messaggio "Non Ë possibile scaricare costi su altra UO o CDR con natura 5"
+ *      Genera una ApplicationException con il messaggio "Non √® possibile scaricare costi su altra UO o CDR con natura 5"
  *  Dettaglio di spesa/entrata con importo negativo
  *    PreCondition:
  *      Viene richiesto l'inserimento di un dettaglio di spesa/entrata con importo negativo
  *    PostCondition:
  *      Viene generata una ApplicationException con il messaggio "non e' possibile inserire importi negativi"
- *  linea di attivit‡ di natura 5, dettaglio di entrata
+ *  linea di attivit√† di natura 5, dettaglio di entrata
  *    PreCondition:
- *      Linea di attivit‡ con natura 5 e
- *      il dettaglio specificato Ë un dettaglio di entrata
+ *      Linea di attivit√† con natura 5 e
+ *      il dettaglio specificato √® un dettaglio di entrata
  *    PostCondition:
- *      Genera un ApplicationException con il messaggio "Non Ë possibile creare voci di entrata con natura 5"
- *  dtl costo del personale - CDR non Ë CDR PERSONALE, CDR_SERVIZIO_ENTE - tempo indeterminato
+ *      Genera un ApplicationException con il messaggio "Non √® possibile creare voci di entrata con natura 5"
+ *  dtl costo del personale - CDR non √® CDR PERSONALE, CDR_SERVIZIO_ENTE - tempo indeterminato
  *    PreCondition:
- *      Il CDR Ë diverso da CDR PERSONALE e da CDR_SERVIZIO_ENTE.
- *      Nell'interfaccia stipendi Ë presente almeno un dettaglio stipendiale contenente la voce di spesa Y diversa da voce TFR (identificata in configurazione).
- *      Il dipendente specificato nel dettaglio stipendiale, sulla voce Y, Ë un dipendente a tempo indeterminato.
+ *      Il CDR √® diverso da CDR PERSONALE e da CDR_SERVIZIO_ENTE.
+ *      Nell'interfaccia stipendi √® presente almeno un dettaglio stipendiale contenente la voce di spesa Y diversa da voce TFR (identificata in configurazione).
+ *      Il dipendente specificato nel dettaglio stipendiale, sulla voce Y, √® un dipendente a tempo indeterminato.
  *    PostCondition:
  *      Creazione/Modifica di dettaglio del PDG di un qualsiasi CDR diverso da  CDR DEL PERSONALE e da CDR_SERVIZIO_ENTE, su voce Y diversa da TFR  nel caso su Y esista in interfaccia stipendi un dipendente a tempo indeterminato
  *      Le colonne L e V non saranno imputabile direttamente
- *  dtl costo del personale - CDR Ë CDR PERSONALE  - tempo indeterminato
+ *  dtl costo del personale - CDR √® CDR PERSONALE  - tempo indeterminato
  *    PreCondition:
- *      Il CDR Ë uguale a CDR PERSONALE.
- *      Nell'interfaccia stipendi Ë presente almeno un dettaglio stipendiale contenente la voce di spesa Y diversa da voce TFR (identificata in configurazione).
- *      Il dipendente specificato nel dettaglio stipendiale, sulla voce Y, Ë un dipendente a tempo indeterminato.
+ *      Il CDR √® uguale a CDR PERSONALE.
+ *      Nell'interfaccia stipendi √® presente almeno un dettaglio stipendiale contenente la voce di spesa Y diversa da voce TFR (identificata in configurazione).
+ *      Il dipendente specificato nel dettaglio stipendiale, sulla voce Y, √® un dipendente a tempo indeterminato.
  *    PostCondition:
  *      Creazione/Modifica di dettaglio del PDG del CDR DEL PERSONALE, su voce Y diversa da TFR nel caso su Y esista in interfaccia stipendi un dipendente a tempo indeterminato.
- *      La colonna K non sar‡ imputabile direttamente.
- *  dtl costo del personale - CDR non Ë CDR PERSONALE, CDR_SERVIZIO_ENTE - tempo determinato
+ *      La colonna K non sar√† imputabile direttamente.
+ *  dtl costo del personale - CDR non √® CDR PERSONALE, CDR_SERVIZIO_ENTE - tempo determinato
  *    PreCondition:
- *      Il CDR Ë diverso da CDR PERSONALE e da CDR_SERVIZIO_ENTE.
- *      Nell'interfaccia stipendi Ë presente almeno un dettaglio stipendiale contenente la voce di spesa Y diversa da voce TFR (identificata in configurazione).
- *      Il dipendente specificato nel dettaglio stipendiale, sulla voce Y, Ë un dipendente a tempo determinato.
+ *      Il CDR √® diverso da CDR PERSONALE e da CDR_SERVIZIO_ENTE.
+ *      Nell'interfaccia stipendi √® presente almeno un dettaglio stipendiale contenente la voce di spesa Y diversa da voce TFR (identificata in configurazione).
+ *      Il dipendente specificato nel dettaglio stipendiale, sulla voce Y, √® un dipendente a tempo determinato.
  *    PostCondition:
  *      Creazione/Modifica di dettaglio del PDG di un qualsiasi CDR diverso da  CDR DEL PERSONALE e da CDR_SERVIZIO_ENTE, su voce Y diversa da TFR  nel caso su Y esista in interfaccia stipendi un dipendente a tempo determinato
  *      Le colonne O e V non saranno imputabile direttamente
- *  dtl costo del personale - CDR Ë CDR PERSONALE  - tempo determinato
+ *  dtl costo del personale - CDR √® CDR PERSONALE  - tempo determinato
  *    PreCondition:
- *      Il CDR Ë uguale a CDR PERSONALE.
- *      Nell'interfaccia stipendi Ë presente almeno un dettaglio stipendiale contenente la voce di spesa Y diversa da voce TFR (identificata in configurazione).
- *      Il dipendente specificato nel dettaglio stipendiale, sulla voce Y, Ë un dipendente a tempo determinato.
+ *      Il CDR √® uguale a CDR PERSONALE.
+ *      Nell'interfaccia stipendi √® presente almeno un dettaglio stipendiale contenente la voce di spesa Y diversa da voce TFR (identificata in configurazione).
+ *      Il dipendente specificato nel dettaglio stipendiale, sulla voce Y, √® un dipendente a tempo determinato.
  *    PostCondition:
  *      Creazione/Modifica di dettaglio del PDG del CDR DEL PERSONALE, su voce Y diversa da TFR nel caso su Y esista in interfaccia stipendi un dipendente a tempo determinato.
- *      La colonna O non sar‡ imputabile direttamente.
- *  Check imputabilit‡ importi su voci del personale_1
+ *      La colonna O non sar√† imputabile direttamente.
+ *  Check imputabilit√† importi su voci del personale_1
  *    PreCondition:
- *      Il dettaglio Ë di spesa
- *      Il conto su cui sto registrando il dettaglio NON Ë il conto TFR
- *      Il PDG NON Ë del personale o quello speciale di servizio ENTE
- *      La voce specificata nel dettaglio del PDG Ë presente in COSTO DEL DIPENDENTE su almeno un dipendente a tempo INDETERMINATO
+ *      Il dettaglio √® di spesa
+ *      Il conto su cui sto registrando il dettaglio NON √® il conto TFR
+ *      Il PDG NON √® del personale o quello speciale di servizio ENTE
+ *      La voce specificata nel dettaglio del PDG √® presente in COSTO DEL DIPENDENTE su almeno un dipendente a tempo INDETERMINATO
  *      Le colonne L o V sono valorizzate
  *    PostCondition:
- *      Viene generata una eccezione che segnala la non imputabilit‡ sulle colonne L o V
- *  Check imputabilit‡ importi su voci del personale_2
+ *      Viene generata una eccezione che segnala la non imputabilit√† sulle colonne L o V
+ *  Check imputabilit√† importi su voci del personale_2
  *    PreCondition:
- *      Il dettaglio Ë di spesa
- *      Il conto su cui sto registrando il dettaglio NON Ë il conto TFR
- *      Il PDG NON Ë del personale o quello speciale di servizio ENTE
- *      La voce specificata nel dettaglio del PDG Ë presente in COSTO DEL DIPENDENTE su almeno un dipendente a tempo DETERMINATO
+ *      Il dettaglio √® di spesa
+ *      Il conto su cui sto registrando il dettaglio NON √® il conto TFR
+ *      Il PDG NON √® del personale o quello speciale di servizio ENTE
+ *      La voce specificata nel dettaglio del PDG √® presente in COSTO DEL DIPENDENTE su almeno un dipendente a tempo DETERMINATO
  *      Le colonne O o V sono valorizzate
  *    PostCondition:
- *      Viene generata una eccezione che segnala la non imputabilit‡ sulle colonne O o V
- *  Check imputabilit‡ importi su voci del personale_3
+ *      Viene generata una eccezione che segnala la non imputabilit√† sulle colonne O o V
+ *  Check imputabilit√† importi su voci del personale_3
  *    PreCondition:
- *      Il dettaglio Ë di spesa
- *      Il conto su cui sto registrando il dettaglio NON Ë il conto TFR
- *      Il PDG Ë quello del personale
- *      La voce specificata nel dettaglio del PDG Ë presente in COSTO DEL DIPENDENTE su almeno un dipendente a tempo INDETERMINATO
- *      La colonna K Ë valorizzata
+ *      Il dettaglio √® di spesa
+ *      Il conto su cui sto registrando il dettaglio NON √® il conto TFR
+ *      Il PDG √® quello del personale
+ *      La voce specificata nel dettaglio del PDG √® presente in COSTO DEL DIPENDENTE su almeno un dipendente a tempo INDETERMINATO
+ *      La colonna K √® valorizzata
  *    PostCondition:
- *      Viene generata una eccezione che segnala la non imputabilit‡ sulla colonna K
+ *      Viene generata una eccezione che segnala la non imputabilit√† sulla colonna K
  *      
- *  Check imputabilit‡ importi su voci del personale_4
+ *  Check imputabilit√† importi su voci del personale_4
  *    PreCondition:
- *      Il dettaglio Ë di spesa
- *      Il conto su cui sto registrando il dettaglio NON Ë il conto TFR
- *      Il PDG Ë quello del personale
- *      La voce specificata nel dettaglio del PDG Ë presente in COSTO DEL DIPENDENTE su almeno un dipendente a tempo DETERMINATO
- *      La colonna O Ë valorizzate
+ *      Il dettaglio √® di spesa
+ *      Il conto su cui sto registrando il dettaglio NON √® il conto TFR
+ *      Il PDG √® quello del personale
+ *      La voce specificata nel dettaglio del PDG √® presente in COSTO DEL DIPENDENTE su almeno un dipendente a tempo DETERMINATO
+ *      La colonna O √® valorizzate
  *    PostCondition:
- *      Viene generata una eccezione che segnala la non imputabilit‡ sulla colonna O
- *  Check imputabilit‡ importi su voci del personale_5
+ *      Viene generata una eccezione che segnala la non imputabilit√† sulla colonna O
+ *  Check imputabilit√† importi su voci del personale_5
  *    PreCondition:
- *      Il dettaglio Ë di spesa
- *      Il conto su cui sto registrando il dettaglio Ë il conto TFR
- *      Il PDG NON Ë del personale o quello speciale di servizio ENTE
+ *      Il dettaglio √® di spesa
+ *      Il conto su cui sto registrando il dettaglio √® il conto TFR
+ *      Il PDG NON √® del personale o quello speciale di servizio ENTE
  *      Le colonne O o V sono valorizzate
  *      
  *      
  *      
  *    PostCondition:
- *      Viene generata una eccezione che segnala la non imputabilit‡ sulle colonne O o V
- *  Check imputabilit‡ importi su voci del personale_6
+ *      Viene generata una eccezione che segnala la non imputabilit√† sulle colonne O o V
+ *  Check imputabilit√† importi su voci del personale_6
  *    PreCondition:
- *      Il dettaglio Ë di spesa
- *      Il conto su cui sto registrando il dettaglio Ë il conto TFR
- *      Il PDG Ë del personale
- *      La colonna O Ë valorizzata
+ *      Il dettaglio √® di spesa
+ *      Il conto su cui sto registrando il dettaglio √® il conto TFR
+ *      Il PDG √® del personale
+ *      La colonna O √® valorizzata
  *       
  *    PostCondition:
- *      Viene generata una eccezione che segnala la non imputabilit‡ sulla colonna O
+ *      Viene generata una eccezione che segnala la non imputabilit√† sulla colonna O
  *      
  */
 
@@ -955,7 +955,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext,pdg))
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile creare dettagli del pdg ad esercizio chiuso.");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile creare dettagli del pdg ad esercizio chiuso.");
 
 		init(userContext,pdg,pdgDett);
 
@@ -1063,7 +1063,7 @@ private Pdg_preventivo_spe_detBulk creaSCRAltraUO(UserContext userContext,Pdg_pr
 			getHome(userContext,CdrBulk.class).findByPrimaryKey(pdg.getCentro_responsabilita());
 
 			if(pdg.getCentro_responsabilita().equalsByPrimaryKey( pdgSpe.getCentro_responsabilita() ))
-				throw new it.cnr.jada.comp.ApplicationException("Il CdR del Personale su di una voce stipendiale non puÚ fare lo scarico dei costi su altra UO.");
+				throw new it.cnr.jada.comp.ApplicationException("Il CdR del Personale su di una voce stipendiale non pu√≤ fare lo scarico dei costi su altra UO.");
 
 			pdgSpe.setAltro_cdr(pdg.getCentro_responsabilita());
 		} catch(Throwable e) {
@@ -1083,7 +1083,7 @@ private Pdg_preventivo_spe_detBulk creaSCRAltraUO(UserContext userContext,Pdg_pr
 	if(pdg == null)
 		throw new it.cnr.jada.comp.ApplicationException("CdR altra UO non valido");
 
-	// Controllo chiusura PDG servente se non Ë una variazione
+	// Controllo chiusura PDG servente se non √® una variazione
 	if (pdgSpe.getPdg_variazione() == null){
 		if (pdgSpe.OR_PROPOSTA_VARIAZIONE.equals(pdgSpe.getOrigine()))
 			checkChiusuraPdgPerVariazioni(userContext,pdg);
@@ -1097,7 +1097,7 @@ private Pdg_preventivo_spe_detBulk creaSCRAltraUO(UserContext userContext,Pdg_pr
 			// altrui nel pdg aggregato non viene ricalcolata)
 			String statoPdgAggregato = getStatoAggregato(userContext,pdg.getEsercizio(),pdg.getCd_centro_responsabilita());
 			if (Pdg_aggregatoBulk.STATO_B.equals(statoPdgAggregato))
-				throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile scaricare costi verso altra UO perchË il pdg aggregato del cdr servente Ë gi‡ in stato B");
+				throw new it.cnr.jada.comp.ApplicationException("Non √® possibile scaricare costi verso altra UO perch√® il pdg aggregato del cdr servente √® gi√† in stato B");
 		}
 	}
 
@@ -1350,7 +1350,7 @@ private Pdg_preventivo_spe_detBulk creaSCRVersoCdR(UserContext userContext,Pdg_p
 
 //^^@@
 /** 
-  *  eliminazione dettagli a partire dalla linea di attivi‡
+  *  eliminazione dettagli a partire dalla linea di attivi√†
   *    PreCondition:
   *      Viene richiesta l'eliminazione dei dettagli di spesa ed entrata che corrispondono ad esercizio, CdR e LA indicati.
   *    PostCondition:
@@ -1416,8 +1416,8 @@ private Pdg_preventivo_spe_detBulk creaSCRVersoCdR(UserContext userContext,Pdg_p
   *    PreCondition:
   *      CATEGORIA = 'SCR' o 'CAR'
   *    PostCondition:
-  *      Genera una eccezione con messaggio: "Il dettaglio non puÚ essere eliminato"
-  *  PDG gi‡ chiuso
+  *      Genera una eccezione con messaggio: "Il dettaglio non pu√≤ essere eliminato"
+  *  PDG gi√† chiuso
   *    PreCondition:
   *      checkChiusuraPdg(pdg_det) genera una eccezione
   *    PostCondition:
@@ -1439,29 +1439,29 @@ private Pdg_preventivo_spe_detBulk creaSCRVersoCdR(UserContext userContext,Pdg_p
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext,pdg))
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile eliminare dettagli del pdg ad esercizio chiuso.");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile eliminare dettagli del pdg ad esercizio chiuso.");
 
         checkLivelloResponsabilita(userContext, cdr, pdg);
 
 		if(dett.getFl_sola_lettura().booleanValue())
-			throw new it.cnr.jada.comp.ApplicationException("Il dettaglio non puÚ essere eliminato");
+			throw new it.cnr.jada.comp.ApplicationException("Il dettaglio non pu√≤ essere eliminato");
 
 		if(Pdg_preventivo_detBulk.CAT_SCARICO.equals( dett.getCategoria_dettaglio())&&
 		   dett.getPdg_variazione() == null)
-				throw new it.cnr.jada.comp.ApplicationException("Il dettaglio Ë stato scaricato e non puÚ essere eliminato; contattare il CDR servente");
+				throw new it.cnr.jada.comp.ApplicationException("Il dettaglio √® stato scaricato e non pu√≤ essere eliminato; contattare il CDR servente");
 /*
 		if(Pdg_preventivo_detBulk.CAT_SCARICO.equals( dett.getCategoria_dettaglio()) &&
 			Pdg_preventivo_detBulk.ST_CONFERMA.equals( dett.getStato() ))
-				throw new it.cnr.jada.comp.ApplicationException("Il dettaglio Ë stato confermato dal centro servente e non puÚ essere eliminato; contattare il CDR servente");
+				throw new it.cnr.jada.comp.ApplicationException("Il dettaglio √® stato confermato dal centro servente e non pu√≤ essere eliminato; contattare il CDR servente");
 */
 
 		if(Pdg_preventivo_detBulk.CAT_CARICO.equals( dett.getCategoria_dettaglio() )) {
 		  //	if(Pdg_preventivo_detBulk.ST_NESSUNA_AZIONE.equals( dett.getStato() ))
-//		 throw new it.cnr.jada.comp.ApplicationException("Il dettaglio non Ë eliminabile fino alla chiusura della contrattazione. Contattare il CDR servente");
-		 throw new it.cnr.jada.comp.ApplicationException("Il dettaglio Ë di carico e non puÚ essere eliminato");
+//		 throw new it.cnr.jada.comp.ApplicationException("Il dettaglio non √® eliminabile fino alla chiusura della contrattazione. Contattare il CDR servente");
+		 throw new it.cnr.jada.comp.ApplicationException("Il dettaglio √® di carico e non pu√≤ essere eliminato");
 /*
 			if(Pdg_preventivo_detBulk.ST_CONFERMA.equals( dett.getStato() ))
-				throw new it.cnr.jada.comp.ApplicationException("Il dettaglio non Ë eliminabile perchË confermato.");
+				throw new it.cnr.jada.comp.ApplicationException("Il dettaglio non √® eliminabile perch√® confermato.");
 				
 			Pdg_preventivo_spe_detBulk servente = new Pdg_preventivo_spe_detBulk();
 
@@ -1500,7 +1500,7 @@ private Pdg_preventivo_spe_detBulk creaSCRVersoCdR(UserContext userContext,Pdg_p
 			Configurazione_cnrComponentSession configurazione = (Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession",Configurazione_cnrComponentSession.class);
             String aCdCdr =  configurazione.getVal01(userContext,null,null,"CDR_SPECIALE","CDR_PERSONALE");
             if(aCdCdr==null)
-             throw new it.cnr.jada.comp.ApplicationException("Centro di responsabilit‡ del Personale non definito in Configurazione CNR");
+             throw new it.cnr.jada.comp.ApplicationException("Centro di responsabilit√† del Personale non definito in Configurazione CNR");
 			it.cnr.contab.config00.sto.bulk.CdrHome cdrHome = (it.cnr.contab.config00.sto.bulk.CdrHome)getHome(userContext,CdrBulk.class, "V_CDR_VALIDO");
 			SQLBuilder sql = cdrHome.createSQLBuilder();
 			sql.addClause("AND", "esercizio", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
@@ -1511,7 +1511,7 @@ private Pdg_preventivo_spe_detBulk creaSCRVersoCdR(UserContext userContext,Pdg_p
 			if(broker.next())
 			 aCdrBulk = (CdrBulk)broker.fetch(CdrBulk.class);
 			else
-			 throw new it.cnr.jada.comp.ApplicationException("Il CDR del personale specificato in CONFIGURAZIONE CNR non Ë stato trovato!");
+			 throw new it.cnr.jada.comp.ApplicationException("Il CDR del personale specificato in CONFIGURAZIONE CNR non √® stato trovato!");
 
 			return aCdrBulk;
 		} catch(Throwable e) {
@@ -1545,7 +1545,7 @@ private Pdg_preventivo_spe_detBulk creaSCRVersoCdR(UserContext userContext,Pdg_p
 			if(broker.next())
 			 aCdrBulk = (CdrBulk)broker.fetch(CdrBulk.class);
 			else
-			 throw new it.cnr.jada.comp.ApplicationException("Il CDR di servizio per l'ENTE specificato in CONFIGURAZIONE CNR non Ë stato trovato!");
+			 throw new it.cnr.jada.comp.ApplicationException("Il CDR di servizio per l'ENTE specificato in CONFIGURAZIONE CNR non √® stato trovato!");
 
 			return aCdrBulk;
 		} catch(Throwable e) {
@@ -1639,7 +1639,7 @@ private Pdg_preventivo_spe_detBulk creaSCRVersoCdR(UserContext userContext,Pdg_p
  *
  * Nome: Controlli per inserimento e modifica;
  * Pre:  Implementare tutti i controlli che garantiscano l'integrita del record rappresentato dall oggetto;
- * Post: Verifica che la linea di attivit‡ e l'elemento voce non siano nulli.
+ * Post: Verifica che la linea di attivit√† e l'elemento voce non siano nulli.
  *
  * @param pdg Oggetto da analizzare.
  *
@@ -1650,10 +1650,10 @@ private Pdg_preventivo_spe_detBulk creaSCRVersoCdR(UserContext userContext,Pdg_p
 private void init(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_preventivo_detBulk pdgDett) throws it.cnr.jada.comp.ComponentException {
 	try {
 		if(pdgDett.getLinea_attivita() == null || pdgDett.getLinea_attivita().getCd_linea_attivita() == null)
-			throw new it.cnr.jada.comp.ApplicationException("Il GAE non puÚ essere nullo.");
+			throw new it.cnr.jada.comp.ApplicationException("Il GAE non pu√≤ essere nullo.");
 
 		if(pdgDett.getElemento_voce() == null || pdgDett.getElemento_voce().getCd_elemento_voce() == null)
-			throw new it.cnr.jada.comp.ApplicationException("Voce del piano non puÚ essere nulla.");
+			throw new it.cnr.jada.comp.ApplicationException("Voce del piano non pu√≤ essere nulla.");
 
 		// Carico tutti gli oggetti complessi legati al pdg
 		getHomeCache(userContext).fetchAll(userContext);
@@ -1670,7 +1670,7 @@ private void init(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_preventivo_
 		  checkChiusuraPdg(userContext, pdg, pdgDett);
 
 		if (pdg.isStatoVariazionePdG()&& !pdgDett.isOriginePropostaVariazione())
-			throw new it.cnr.jada.comp.ApplicationException("Il pdg Ë aperto per variazioni. E' possibile modificare o inserire solamente proposte di variazione");
+			throw new it.cnr.jada.comp.ApplicationException("Il pdg √® aperto per variazioni. E' possibile modificare o inserire solamente proposte di variazione");
 			
 		checkLivelloResponsabilita(userContext, cdrFromUserContext(userContext), pdg);
 
@@ -1679,9 +1679,9 @@ private void init(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_preventivo_
 		if ("5".equals( pdgDett.getLinea_attivita().getNatura().getCd_natura())) {
 			Unita_organizzativaHome uoHome = (Unita_organizzativaHome)getHome(userContext, Unita_organizzativaBulk.class);
 			if (uoHome.findAssociazioneUoArea(userContext, pdgDett.getCentro_responsabilita().getUnita_padre()).isEmpty())
-				throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile creare dettagli con natura 5 perchË il CDR non Ë collegato ad area attraverso la sua unit‡ organizzativa");
+				throw new it.cnr.jada.comp.ApplicationException("Non √® possibile creare dettagli con natura 5 perch√® il CDR non √® collegato ad area attraverso la sua unit√† organizzativa");
 			if (isCdrArea(userContext,pdgDett.getCentro_responsabilita()))
-				throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile creare dettagli con natura 5 perchË il CDR appartiene ad un'area");
+				throw new it.cnr.jada.comp.ApplicationException("Non √® possibile creare dettagli con natura 5 perch√® il CDR appartiene ad un'area");
 		}
 		
 		if(pdgDett instanceof it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk)
@@ -1698,7 +1698,7 @@ private void init(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_preventivo_
  *
  * Nome: Controlli per inserimento e modifica;
  * Pre:  Implementare tutti i controlli che garantiscano l'integrita del record rappresentato dall oggetto;
- * Post: Verifica che la linea di attivit‡ e l'elemento voce non siano nulli.
+ * Post: Verifica che la linea di attivit√† e l'elemento voce non siano nulli.
  *
  * @param pdg Oggetto da analizzare.
  *
@@ -1710,7 +1710,7 @@ private OggettoBulk initEtr(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
 
 	
 	if ("5".equals( pdg_det.getLinea_attivita().getNatura().getCd_natura()))
-		throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile creare dettagli di entrata con natura 5");
+		throw new it.cnr.jada.comp.ApplicationException("Non √® possibile creare dettagli di entrata con natura 5");
 
 	boolean importiNegativi = 
 		(pdg_det.getIm_ra_rce().signum() < 0) ||
@@ -1731,9 +1731,9 @@ private OggettoBulk initEtr(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
 			(pdg_det.getIm_rf_a3_ricavi().signum() > 0) ||
 			(pdg_det.getIm_rg_a3_entrate().signum() > 0);
 		if (importiPositivi && importiNegativi)
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile inserire sia importi positivi che negativi.");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile inserire sia importi positivi che negativi.");
 	} else if (importiNegativi) {
-		throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile inserire importi negativi");
+		throw new it.cnr.jada.comp.ApplicationException("Non √® possibile inserire importi negativi");
 	}
 	return pdg_det;
 }
@@ -1743,7 +1743,7 @@ private OggettoBulk initEtr(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
  *
  * Nome: Controlli per inserimento e modifica;
  * Pre:  Implementare tutti i controlli che garantiscano l'integrita del record rappresentato dall oggetto;
- * Post: Verifica che la linea di attivit‡ e l'elemento voce non siano nulli.
+ * Post: Verifica che la linea di attivit√† e l'elemento voce non siano nulli.
  *
  * @param pdg_det Oggetto da analizzare.
  *
@@ -1820,12 +1820,12 @@ private OggettoBulk initSpe(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
 			(pdg_det.getIm_rv_pagamenti().signum() > 0);
 
 		if (importiPositivi && importiNegativi)
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile inserire sia importi positivi che negativi.");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile inserire sia importi positivi che negativi.");
 	} else if (importiNegativi) {
-		throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile inserire importi negativi");
+		throw new it.cnr.jada.comp.ApplicationException("Non √® possibile inserire importi negativi");
 	}
         
-        // Richiesta CNR 137R - Solo la colonna pagamenti Ë modificabile per dettagli di PDG di spesa di CARICO del servente
+        // Richiesta CNR 137R - Solo la colonna pagamenti √® modificabile per dettagli di PDG di spesa di CARICO del servente
         if(pdg_det.getCategoria_dettaglio().equals(pdg_det.CAT_CARICO) && pdg_det.isNotNew())  {
           Pdg_preventivo_spe_detBulk aOrigSpe;
           try {
@@ -1866,7 +1866,7 @@ private OggettoBulk initSpe(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
             || (pdg_det.getIm_rq_ssc_costi_odc().signum() != 0)
             || (pdg_det.getIm_rs_ssc_costi_ogc().signum() != 0)
           ) {
-		throw new it.cnr.jada.comp.ApplicationException("Per i dettagli di carico del servente solo la colonna pagamenti (V) puÚ essere modificata");
+		throw new it.cnr.jada.comp.ApplicationException("Per i dettagli di carico del servente solo la colonna pagamenti (V) pu√≤ essere modificata");
     }}
 
         
@@ -1877,13 +1877,13 @@ private OggettoBulk initSpe(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
 	}
 	if( pdg_det.getIm_rl_ccs_spese_ogc_altra_uo().signum() != 0 ) {
 		if(control)
-			throw new it.cnr.jada.comp.ApplicationException("Impossibile valorizzare pi˘ campi verso altra UO nello stesso anno");
+			throw new it.cnr.jada.comp.ApplicationException("Impossibile valorizzare pi√π campi verso altra UO nello stesso anno");
 		else
 			control = true;
 	}
 	if( pdg_det.getIm_rr_ssc_costi_odc_altra_uo().signum() != 0 ) {
 		if(control)
-			throw new it.cnr.jada.comp.ApplicationException("Impossibile valorizzare pi˘ campi verso altra UO nello stesso anno");
+			throw new it.cnr.jada.comp.ApplicationException("Impossibile valorizzare pi√π campi verso altra UO nello stesso anno");
 		else
 			control = true;
 	}
@@ -1891,17 +1891,17 @@ private OggettoBulk initSpe(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
 		&&
 		control)
 	{
-		throw new it.cnr.jada.comp.ApplicationException("Impossibile valorizzare pi˘ campi verso altra UO nello stesso anno");
+		throw new it.cnr.jada.comp.ApplicationException("Impossibile valorizzare pi√π campi verso altra UO nello stesso anno");
 	}
 
 	if( pdg_det.getIm_rad_a2_spese_odc_altra_uo().signum() != 0 
 		&& pdg_det.getIm_raf_a2_spese_ogc_altra_uo().signum() != 0 ) {
-			throw new it.cnr.jada.comp.ApplicationException("Impossibile valorizzare pi˘ campi verso altra UO nello stesso anno");
+			throw new it.cnr.jada.comp.ApplicationException("Impossibile valorizzare pi√π campi verso altra UO nello stesso anno");
 	}
 
 	if( pdg_det.getIm_ram_a3_spese_odc_altra_uo().signum() != 0 
 		&& pdg_det.getIm_rao_a3_spese_ogc_altra_uo().signum() != 0 ) {
-			throw new it.cnr.jada.comp.ApplicationException("Impossibile valorizzare pi˘ campi verso altra UO nello stesso anno");
+			throw new it.cnr.jada.comp.ApplicationException("Impossibile valorizzare pi√π campi verso altra UO nello stesso anno");
 	}
 
 	if( (pdg_det.getIm_rp_css_verso_altro_cdr().signum() != 0
@@ -1920,7 +1920,7 @@ private OggettoBulk initSpe(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
 			throw new it.cnr.jada.comp.ApplicationException("Impossibile valorizzare campi verso altra UO e verso altro CdR contemporaneamente");
 	}
 
-	// Aggiunto controllo di non imputabilit‡ di colonne di scarico (altra UO e CDR) e colonne non di scarico
+	// Aggiunto controllo di non imputabilit√† di colonne di scarico (altra UO e CDR) e colonne non di scarico
 	// eccetto COSTI (H) per la quadratura
 
 	if(   (
@@ -1936,7 +1936,7 @@ private OggettoBulk initSpe(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
 		   || pdg_det.getIm_ram_a3_spese_odc_altra_uo().signum() != 0
 		   || pdg_det.getIm_rao_a3_spese_ogc_altra_uo().signum() != 0
 	      )
-	   && ( // manca H per questioni di quadratura e costi altrui perchË NON imputabili direttamente
+	   && ( // manca H per questioni di quadratura e costi altrui perch√® NON imputabili direttamente
                   pdg_det.getIm_ri_ccs_spese_odc().signum() != 0		   
                || pdg_det.getIm_rk_ccs_spese_ogc().signum() != 0		   
                || pdg_det.getIm_rm_css_ammortamenti().signum() != 0		   
@@ -1970,7 +1970,7 @@ private OggettoBulk initSpe(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
 		&& pdg_det.getIm_raf_a2_spese_ogc_altra_uo().signum() == 0
 		&& pdg_det.getIm_ram_a3_spese_odc_altra_uo().signum() == 0
 		&& pdg_det.getIm_rao_a3_spese_ogc_altra_uo().signum() == 0 
-        // Richiesta CNR 137R - Solo la colonna pagamenti Ë modificabile per dettagli di PDG di spesa di CARICO del servente
+        // Richiesta CNR 137R - Solo la colonna pagamenti √® modificabile per dettagli di PDG di spesa di CARICO del servente
             && !(pdg_det.getCategoria_dettaglio().equals(pdg_det.CAT_CARICO) && pdg_det.isNotNew())			
     )
 	{
@@ -2018,13 +2018,13 @@ private OggettoBulk initSpe(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
                if(
                  pdg_det.getIm_rl_ccs_spese_ogc_altra_uo().signum() != 0
               || pdg_det.getIm_rv_pagamenti().signum() != 0
-             ) throw new it.cnr.jada.comp.ApplicationException("Per la voce selezionata non Ë possibile imputare importi sulle colonne L e V");                 
+             ) throw new it.cnr.jada.comp.ApplicationException("Per la voce selezionata non √® possibile imputare importi sulle colonne L e V");                 
           }
               if(aV.get(i).equals("DET")) {
                if(
                  pdg_det.getIm_ro_css_altri_costi().signum() != 0
               || pdg_det.getIm_rv_pagamenti().signum() != 0
-             ) throw new it.cnr.jada.comp.ApplicationException("Per la voce selezionata non Ë possibile imputare importi sulle colonne O e V");                 
+             ) throw new it.cnr.jada.comp.ApplicationException("Per la voce selezionata non √® possibile imputare importi sulle colonne O e V");                 
           }		     
 		 }   
 		}   
@@ -2035,17 +2035,17 @@ private OggettoBulk initSpe(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
               if(aV.get(i).equals("IND")) {
                if(
                  pdg_det.getIm_rk_ccs_spese_ogc().signum() != 0
-             ) throw new it.cnr.jada.comp.ApplicationException("Per il CDR del Personale sulla voce selezionata non Ë possibile imputare importi sulla colonna K");                 
+             ) throw new it.cnr.jada.comp.ApplicationException("Per il CDR del Personale sulla voce selezionata non √® possibile imputare importi sulla colonna K");                 
           }
               if(aV.get(i).equals("DET")) {
                if(
                  pdg_det.getIm_ro_css_altri_costi().signum() != 0
-             ) throw new it.cnr.jada.comp.ApplicationException("Per il CDR del Personale sulla voce selezionata non Ë possibile imputare importi sulla colonna O");                 
+             ) throw new it.cnr.jada.comp.ApplicationException("Per il CDR del Personale sulla voce selezionata non √® possibile imputare importi sulla colonna O");                 
           }		     
 		 }   
 		}   
 	 } else { // ... nel caso di voce TFR
-          // Incontro telefonico del 29/01/2002 - Per il TFR il controllo Ë sulla colonna O degli altri costi + V (solo per cdr != Personale e Speciale)
+          // Incontro telefonico del 29/01/2002 - Per il TFR il controllo √® sulla colonna O degli altri costi + V (solo per cdr != Personale e Speciale)
    		  if(
    		 !(// Su tutti i CDR tranne quello del personale e quello speciale
 	   		  pdg_det.getCentro_responsabilita().equalsByPrimaryKey(aCdrPersonaleBulk) 
@@ -2055,14 +2055,14 @@ private OggettoBulk initSpe(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
                if(
                  pdg_det.getIm_ro_css_altri_costi().signum() != 0
               || pdg_det.getIm_rv_pagamenti().signum() != 0
-             ) throw new it.cnr.jada.comp.ApplicationException("Per la voce TFR non Ë possibile imputare importi sulle colonne O e V");                 
+             ) throw new it.cnr.jada.comp.ApplicationException("Per la voce TFR non √® possibile imputare importi sulle colonne O e V");                 
 		}   
    		  if( // sul CDR del personale
    		 pdg_det.getCentro_responsabilita().equalsByPrimaryKey(aCdrPersonaleBulk) 
 	    ) {
                if(
                  pdg_det.getIm_ro_css_altri_costi().signum() != 0
-             ) throw new it.cnr.jada.comp.ApplicationException("Per il CDR del Personale sulla voce TFR non Ë possibile imputare importi sulla colonna O");                 
+             ) throw new it.cnr.jada.comp.ApplicationException("Per il CDR del Personale sulla voce TFR non √® possibile imputare importi sulla colonna O");                 
 		}   
 	 }
 
@@ -2095,7 +2095,7 @@ private OggettoBulk initSpe(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
 				getHome(userContext,CdrBulk.class).findByPrimaryKey(pdg_saup.getCentro_responsabilita());
 
 				if(!pdg_saup.getCentro_responsabilita().equalsByPrimaryKey( pdg_det.getCentro_responsabilita() ))
-					throw new it.cnr.jada.comp.ApplicationException("Per effettuare uno scarico dei costi del personale Ë necessario valorizzare i campi altra UO.");
+					throw new it.cnr.jada.comp.ApplicationException("Per effettuare uno scarico dei costi del personale √® necessario valorizzare i campi altra UO.");
 			} catch(Throwable e) {
 				throw new it.cnr.jada.comp.ComponentException(e);
 			}
@@ -2117,7 +2117,7 @@ private OggettoBulk initSpe(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
 	) {
 		// Richiesta scarico su AREA, minuta C6-40-0091 - Tolto il blocco
 		// if ("5".equals( pdg_det.getLinea_attivita().getNatura().getCd_natura()))
-		//	throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile scaricare costi su altra UO con natura 5");
+		//	throw new it.cnr.jada.comp.ApplicationException("Non √® possibile scaricare costi su altra UO con natura 5");
 		creaSCRAltraUO(userContext, pdg_det);
 	}
 
@@ -2127,11 +2127,11 @@ private OggettoBulk initSpe(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
 		|| pdg_det.getIm_rai_a3_costi_altro_cdr().signum() != 0
 	) {
 		if ("5".equals( pdg_det.getLinea_attivita().getNatura().getCd_natura()))
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile scaricare costi su altro CDR con natura 5");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile scaricare costi su altro CDR con natura 5");
 		creaSCRVersoCdR(userContext, pdg_det);
 	} else if (pdg_det.getElemento_voce() != null && isVoceCSSAC(userContext,pdg_det.getElemento_voce())) {
 	    //  Richiesta CNR 111R La voce prestazioni da strutture dell'ente (CSSAC) deve essere abilitata in scrittura anche nelle colonne proprie
-		//	throw new it.cnr.jada.comp.ApplicationException("La voce 'Prestazioni da struttura dell'ente' puÚ essere usata solo per scaricare costi senza spese verso altro CDR");
+		//	throw new it.cnr.jada.comp.ApplicationException("La voce 'Prestazioni da struttura dell'ente' pu√≤ essere usata solo per scaricare costi senza spese verso altro CDR");
 	}
 	return pdg_det;
 }
@@ -2218,10 +2218,10 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 		else if ((!isPdgModificabile(userContext,pdg) ||
 			(pdg.isStatoVariazionePdG() && !pdg_det.isOriginePropostaVariazione()) ||
 			(!pdg.isStatoVariazionePdG() && !pdg_det.isOrigineDefinitivo())) && (!pdg_det.isDaVariazione()))
-			// Il dettaglio Ë di sola lettura se:
-			// - Il pdg non Ë modificabile (per lo stato o per il livello dell'utente
-			// - il pdg Ë in uno stato di variazione e il dettaglio Ë un dettaglio definitivo o da stipendi
-			// - il pdg non Ë in uno stato di variazione e il dettaglio non Ë un dettaglio definitivo
+			// Il dettaglio √® di sola lettura se:
+			// - Il pdg non √® modificabile (per lo stato o per il livello dell'utente
+			// - il pdg √® in uno stato di variazione e il dettaglio √® un dettaglio definitivo o da stipendi
+			// - il pdg non √® in uno stato di variazione e il dettaglio non √® un dettaglio definitivo
 
 			bulk = asRO(bulk,null);
 
@@ -2476,22 +2476,22 @@ public it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerStampa(it.cnr.jada.UserCon
  *      Lascia uscire l'eccezione
  *  PDG in stato A,B, utente non abilitato
  *    PreCondition:
- *      Lo stato del pdg Ë A o B e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) != 0
+ *      Lo stato del pdg √® A o B e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) != 0
  *    PostCondition:
  *      Restituisce true
  *  PDG in stato Ci, utente non abilitato
  *    PreCondition:
- *      Lo stato del pdg Ë Ci e getLivelloResponsabilitaCDR(cdrFromUserContext()) != i
+ *      Lo stato del pdg √® Ci e getLivelloResponsabilitaCDR(cdrFromUserContext()) != i
  *    PostCondition:
  *      Restituisce true
  *  PDG in stato D,E,G,H utente non abilitato
  *    PreCondition:
- *      Lo stato del pdg Ë D,E,G o H e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) < 0
+ *      Lo stato del pdg √® D,E,G o H e  confrontaLivelloResponsabilita(cdrFromUserContext(),pdg.cdr) < 0
  *    PostCondition:
  *      Restituisce true
  *  Tutti i controlli superati
  *    PreCondition:
- *      Nessun'altra precondizione Ë verificata
+ *      Nessun'altra precondizione √® verificata
  *    PostCondition:
  *      Restituisce false
  */
@@ -2711,7 +2711,7 @@ private boolean isStatoCompatibile (String statoAttuale, int livello, String nuo
 /** 
   *  voce SAUOP
   *    PreCondition:
-  *      La voce specificata Ë SAUOP ( fl_voce_personale = Y )
+  *      La voce specificata √® SAUOP ( fl_voce_personale = Y )
   *      
   *    PostCondition:
   *      Ritorna true
@@ -2730,24 +2730,24 @@ private boolean isStatoCompatibile (String statoAttuale, int livello, String nuo
 /** 
   *  CDR NRUO
   *    PreCondition:
-  *      L'utente in userContext appartiene a un CDR NRUO (getLivelloResponsabilit‡ ritorna 3)
+  *      L'utente in userContext appartiene a un CDR NRUO (getLivelloResponsabilit√† ritorna 3)
   *    PostCondition:
   *      Restituisce un SQL builder per selezionare il solo CDR a cui appartiene l'utente
   *  CDR RUO
   *    PreCondition:
-  *      L'utente in userContext appartiene a un CDR RUO (getLivelloResponsabilit‡ ritorna 2)
+  *      L'utente in userContext appartiene a un CDR RUO (getLivelloResponsabilit√† ritorna 2)
   *    PostCondition:
-  *      Restituisce un SQL builder per selezionare il CDR di apparteneza pi˘ tutti i CDR della sua UO;
+  *      Restituisce un SQL builder per selezionare il CDR di apparteneza pi√π tutti i CDR della sua UO;
   *  CDR I
   *    PreCondition:
-  *      L'utente in userContext appartiene a un CDR I (getLivelloResponsabilit‡ ritorna 1)
+  *      L'utente in userContext appartiene a un CDR I (getLivelloResponsabilit√† ritorna 1)
   *    PostCondition:
-  *      Restituisce un SQL builder per selezionare il CDR di appartenenza pi˘ tutti i CDR della sua UO; se il CDR appartiene alla UOCDS restituisce anche tutti i CDR delle UO che non hanno CDR di I livello.
+  *      Restituisce un SQL builder per selezionare il CDR di appartenenza pi√π tutti i CDR della sua UO; se il CDR appartiene alla UOCDS restituisce anche tutti i CDR delle UO che non hanno CDR di I livello.
   *  AC
   *    PreCondition:
-  *      L'utente in userContext appartiene Ë appartiene al CDR AC
+  *      L'utente in userContext appartiene √® appartiene al CDR AC
   *    PostCondition:
-  *      Restituisce un SQL builder per selezionare tutti i CDR escluso sË stesso
+  *      Restituisce un SQL builder per selezionare tutti i CDR escluso s√® stesso
  */
 //^^@@
 
@@ -2818,7 +2818,7 @@ private boolean isStatoCompatibile (String statoAttuale, int livello, String nuo
   *    PreCondition:
   *      
   *    PostCondition:
-  *      Restituisce una lista dei PDG dei CDR il cui valore del livello di responsabilit‡ Ë maggiore stretto di quello del CDR specificato
+  *      Restituisce una lista dei PDG dei CDR il cui valore del livello di responsabilit√† √® maggiore stretto di quello del CDR specificato
  */
 //^^@@
 
@@ -2871,14 +2871,14 @@ private boolean isStatoCompatibile (String statoAttuale, int livello, String nuo
 /** 
   *  Tutti i controlli superati
   *    PreCondition:
-  *      Nessun'altra precondizione Ë verificata
+  *      Nessun'altra precondizione √® verificata
   *    PostCondition:
   *      Il dettaglio viene salvato
-  *  Dettaglio scaricato, gi‡ chiuso
+  *  Dettaglio scaricato, gi√† chiuso
   *    PreCondition:
   *      PDG modificabile dall'utente, CATEGORIA = 'SCR', stato != 'X'
   *    PostCondition:
-  *      Genera una eccezione con messaggio: "Il dettaglio Ë gi‡ stato contrattato e non Ë pi˘ modificabile. Contattare il CDR servito"
+  *      Genera una eccezione con messaggio: "Il dettaglio √® gi√† stato contrattato e non √® pi√π modificabile. Contattare il CDR servito"
   *  PDG non modificabile
   *    PreCondition:
   *      checkLivelloResponsabilita(pdg,pdg_det) genera una eccezione
@@ -2893,8 +2893,8 @@ private boolean isStatoCompatibile (String statoAttuale, int livello, String nuo
   *    PreCondition:
   *      PDG modificabile dall'utente, CATEGORIA = 'CAR'
   *    PostCondition:
-  *      Genera una ApplicationException con il messaggio "Il dettaglio non Ë modificabile. Contattare il CDR servente"
-  *  PDG gi‡ chiuso
+  *      Genera una ApplicationException con il messaggio "Il dettaglio non √® modificabile. Contattare il CDR servente"
+  *  PDG gi√† chiuso
   *    PreCondition:
   *      checkChiusuraPdg(pdg_det) genera una eccezione
   *    PostCondition:
@@ -2911,11 +2911,11 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 
     if (Pdg_preventivo_detBulk.CAT_SCARICO.equals(pdgDett.getCategoria_dettaglio()) &&
 		!Pdg_preventivo_detBulk.ST_NESSUNA_AZIONE.equals( pdgDett.getStato()))
-		throw new it.cnr.jada.comp.ApplicationException("Il dettaglio Ë gi‡ stato contrattato e non Ë pi˘ modificabile. Contattare il CDR servito");
+		throw new it.cnr.jada.comp.ApplicationException("Il dettaglio √® gi√† stato contrattato e non √® pi√π modificabile. Contattare il CDR servito");
 
 	// Richiesta CNR 137R Solo i dettagli di spesa, sotto certe condizioni, sono modificabili
 	if(pdgDett instanceof it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk && Pdg_preventivo_detBulk.CAT_CARICO.equals( pdgDett.getCategoria_dettaglio()))
-		throw new it.cnr.jada.comp.ApplicationException("Il dettaglio non Ë modificabile. Contattare il CDR servente");
+		throw new it.cnr.jada.comp.ApplicationException("Il dettaglio non √® modificabile. Contattare il CDR servente");
 
 	try {
 		Pdg_preventivoBulk pdg = (Pdg_preventivoBulk)getHome(userContext, Pdg_preventivoBulk.class).findAndLock(
@@ -2926,7 +2926,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext,pdg))
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile modificare dettagli del pdg ad esercizio chiuso.");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile modificare dettagli del pdg ad esercizio chiuso.");
 
 		init(userContext,pdg,pdgDett);
 
@@ -2968,13 +2968,13 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
  *      Viene generata una BusyResourceException
  *  Richiesto cambiamento di stato, nuovo stato non compatibile con lo stato attuale
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg, ma lo stato specificato non Ë compatibile con lo stato
+ *      L'utente ha richiesto il cambiamento di stato di un pdg, ma lo stato specificato non √® compatibile con lo stato
  *		attuale del pdg (secondo isStatoCompatibile())
  *    PostCondition:
  *      Viene generata una ApplicationException con il messaggio "Stato X non compatibile con l'attuale stato Y del Pdg"
  *  Richiesto cambiamento di stato, livello utente insufficiente
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg, ma il livello dell'utente non Ë sufficiente per effettuare l'operazione (confrontaLivelloResponsabilita() < 0)
+ *      L'utente ha richiesto il cambiamento di stato di un pdg, ma il livello dell'utente non √® sufficiente per effettuare l'operazione (confrontaLivelloResponsabilita() < 0)
  *    PostCondition:
  *      Viene generata una ApplicationException con il messaggio "Utente non abilitato ad operare sul PDG"
  *  Richiesto cambiamento di stato, modifica di stato non riuscita
@@ -2982,19 +2982,19 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
  *      L'utente ha richiesto il cambiamento di stato di un pdg e il passaggio di stato provoca qualche errore applicativo (secondo modificaStatoPdG_X_Y() per 
  *    PostCondition:
  *      Viene lasciato uscire l'errore generato
- *  Richiesto cambiamento in stato C, esistono discrepanza sugli insiemi di linee attivit‡
+ *  Richiesto cambiamento in stato C, esistono discrepanza sugli insiemi di linee attivit√†
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg, nessuna delle altre precondizioni Ë verificata ma esistono discrepanze sugli importi entrate/spese legati a insiemi di linee di attivit‡ (secondo controllaDiscrepanzeInsiemeLa())
+ *      L'utente ha richiesto il cambiamento di stato di un pdg, nessuna delle altre precondizioni √® verificata ma esistono discrepanze sugli importi entrate/spese legati a insiemi di linee di attivit√† (secondo controllaDiscrepanzeInsiemeLa())
  *    PostCondition:
  *      Viene effettuata la modifica di stato e viene restituito il messaggio di avvertimento "Esistono discrepanze tra gli importi entrate - spese legati ad insieme di l.a. "
  *  Richiesto cambiamento di stato da C a F
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da C ad F, nessuna delle altre pecondizioni Ë verificata
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da C ad F, nessuna delle altre pecondizioni √® verificata
  *    PostCondition:
  *      Viene creata la variazione di bilancio automatica per la spalmatura delle entrate CNR (creaRipartEntrate())
  *  Normale
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da C ad F, nessuna delle altre pecondizioni Ë verificata
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da C ad F, nessuna delle altre pecondizioni √® verificata
  *    PostCondition:
  *      Viene creata la variazione di bilancio automatica per la spalmatura delle entrate CNR (creaRipartEntrate())
  */
@@ -3006,7 +3006,7 @@ public OggettoBulk modificaStatoPdG (UserContext userContext, Pdg_preventivoBulk
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext,pdg))
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile modificare lo stato del pdg ad esercizio chiuso.");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile modificare lo stato del pdg ad esercizio chiuso.");
 
 		String nuovoStato = pdg.getStato();
 		String vecchioStato = oldPdg.getStato();
@@ -3014,16 +3014,16 @@ public OggettoBulk modificaStatoPdG (UserContext userContext, Pdg_preventivoBulk
 		// 09/06/2005
 		// Aggiunto controllo sul cambiamento di stato da quello finale, obbligo l'utilizzo delle variazioni al PDG
 		if (vecchioStato.equals(Pdg_preventivoBulk.ST_F_CHIUSO_DFNT))
-			throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile modificare lo stato del pdg poichË Ë in chiusura definitiva.");
+			throw new it.cnr.jada.comp.ApplicationException("Non √® possibile modificare lo stato del pdg poich√® √® in chiusura definitiva.");
 
-		// Controllo il nuovo stato del pdg Ë compatibile con lo stato attuale
+		// Controllo il nuovo stato del pdg √® compatibile con lo stato attuale
 		if( !isStatoCompatibile(vecchioStato, livelloResponsabilitaPdg, nuovoStato) )
 			throw new it.cnr.jada.comp.ApplicationException("Stato \"" + nuovoStato + "\" non compatibile con l'attuale stato \"" + vecchioStato + "\" del PdG");
 
 		CdrBulk cdrUtente = cdrFromUserContext(userContext);
 		int livelloResponsabilitaUtente = getLivelloResponsabilitaCDR(userContext,cdrUtente);
 
-		// Controllo se il livello di responsabilit‡ dell'utente Ë sufficiente per cambiare lo stato
+		// Controllo se il livello di responsabilit√† dell'utente √® sufficiente per cambiare lo stato
 		// del pdg
 		if(confrontaLivelloResponsabilita(userContext, cdrUtente,pdg.getCentro_responsabilita(),livelloResponsabilitaUtente,livelloResponsabilitaPdg) < 0)
 			utenteNonAbilitato();
@@ -3055,7 +3055,7 @@ public OggettoBulk modificaStatoPdG (UserContext userContext, Pdg_preventivoBulk
 		oldPdg.setStatiKeys(loadStatiKeys(userContext, oldPdg));
 
 		// Passando da C a F devo creare la variazione di bilancio automatica per spalmatura entrate CNR
-		// Va fatta qui (non in modificaStatoPdG_C_F perchË lo stato del Pdg deve essere gi‡ F
+		// Va fatta qui (non in modificaStatoPdG_C_F perch√® lo stato del Pdg deve essere gi√† F
 		if (Pdg_preventivoBulk.ST_C_CHIUSURA_II.equals(vecchioStato) &&
 			Pdg_preventivoBulk.ST_F_CHIUSO_DFNT.equals(nuovoStato)) {
 			creaRipartEntrate(userContext, oldPdg);
@@ -3079,7 +3079,7 @@ public OggettoBulk modificaStatoPdG (UserContext userContext, Pdg_preventivoBulk
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da A ad B, pdg dipendenti non chiusi (stato <> C o F)
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  */
 public Pdg_preventivoBulk modificaStatoPdG_A_B(
 	UserContext userContext,
@@ -3100,7 +3100,7 @@ public Pdg_preventivoBulk modificaStatoPdG_A_B(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da A ad C, pdg dipendenti non chiusi (stato <> C o F)
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  *  Richiesto cambiamento di stato da A a C, dettagli scaricati non confermati
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da A ad C, esiste qualche dettaglio scaricato su altra UO non ancora confermato o annullato (secondo controllaDettScarConfermati())
@@ -3108,7 +3108,7 @@ public Pdg_preventivoBulk modificaStatoPdG_A_B(
  *		Viene generata una ApplicationException con il messaggio "Esiste qualche spesa scaricata verso altro CDR o UO non ancora confermata o annullata"
  *  Richiesto cambiamento di stato da A a C, costi del dipendente non scaricati completamente
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da A ad C, il cdr del pdg Ë di 1^ livello e i costi del dipendente dell'UO non sono stati scaricati completamente (secondo controllaScaricoCDPCompleto())
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da A ad C, il cdr del pdg √® di 1^ livello e i costi del dipendente dell'UO non sono stati scaricati completamente (secondo controllaScaricoCDPCompleto())
  *    PostCondition:
  *		Viene generata una ApplicationException con il messaggio "Costi del personale non ancora scaricati completamente!"
  *  Richiesto cambiamento di stato da A a C, i ricavi figurativi non quadrano
@@ -3142,7 +3142,7 @@ public Pdg_preventivoBulk modificaStatoPdG_A_C(
 	// Effettuo i controlli di quadratura dei ricavi figurativi	
 	controllaQuadraturaRicaviFigurativi(userContext,pdg);
 
-	// Aggiorno il pdg aggregato (solo per cdr 1∞ livello o cdr figli di uo area
+	// Aggiorno il pdg aggregato (solo per cdr 1¬∞ livello o cdr figli di uo area
 	inizializzaAggregatoPDG(userContext, pdg,livelloResponsabilitaPdg);
 
 	return pdg;
@@ -3153,7 +3153,7 @@ public Pdg_preventivoBulk modificaStatoPdG_A_C(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da B a C, pdg dipendenti non chiusi (stato <> C o F)
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  *  Richiesto cambiamento di stato da B a C, dettagli scaricati non confermati
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da B a C, esiste qualche dettaglio scaricato su altra UO non ancora confermato o annullato (secondo controllaDettScarConfermati())
@@ -3161,7 +3161,7 @@ public Pdg_preventivoBulk modificaStatoPdG_A_C(
  *		Viene generata una ApplicationException con il messaggio "Esiste qualche spesa scaricata verso altro CDR o UO non ancora confermata o annullata"
  *  Richiesto cambiamento di stato da B a C, costi del dipendente non scaricati completamente
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da B a C, il cdr del pdg Ë di 1^ livello e i costi del dipendente dell'UO non sono stati scaricati completamente (secondo controllaScaricoCDPCompleto())
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da B a C, il cdr del pdg √® di 1^ livello e i costi del dipendente dell'UO non sono stati scaricati completamente (secondo controllaScaricoCDPCompleto())
  *    PostCondition:
  *		Viene generata una ApplicationException con il messaggio "Costi del personale non ancora scaricati completamente!"
  *  Richiesto cambiamento di stato da B a C, i ricavi figurativi non quadrano
@@ -3195,7 +3195,7 @@ public Pdg_preventivoBulk modificaStatoPdG_B_C(
 	// Effettuo i controlli di quadratura dei ricavi figurativi	
 	controllaQuadraturaRicaviFigurativi(userContext,pdg);
 
-	// Aggiorno il pdg aggregato (solo per cdr 1∞ livello o cdr figli di uo area
+	// Aggiorno il pdg aggregato (solo per cdr 1¬∞ livello o cdr figli di uo area
 	inizializzaAggregatoPDG(userContext, pdg,livelloResponsabilitaPdg);
 
 	return pdg;
@@ -3206,13 +3206,13 @@ public Pdg_preventivoBulk modificaStatoPdG_B_C(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C ad C0, pdg dipendenti non chiusi (stato <> C)
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  *  Richiesto cambiamento di stato da C a C0, stato padre non compatibile
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C a C0, pdg padre in stato <> C0
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
- *  Richiesto cambiamento di stato da C a C0, livello responsabilit‡ non compatbile
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
+ *  Richiesto cambiamento di stato da C a C0, livello responsabilit√† non compatbile
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C a C0, l'utente NON appartiene al CDR dell'Amministrazione Centrale
  *    PostCondition:
@@ -3244,13 +3244,13 @@ public Pdg_preventivoBulk modificaStatoPdG_C_C0(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C ad C1, pdg dipendenti non chiusi (stato <> C)
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  *  Richiesto cambiamento di stato da C a C1
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C a C1, pdg padre in stato <> C1
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
- *  Richiesto cambiamento di stato da C a C1, livello responsabilit‡ non compatbile
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
+ *  Richiesto cambiamento di stato da C a C1, livello responsabilit√† non compatbile
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C a C1, l'utente NON appartiene ad un CDR di 1^ livello
  *    PostCondition:
@@ -3282,13 +3282,13 @@ public Pdg_preventivoBulk modificaStatoPdG_C_C1(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C ad C2, pdg dipendenti non chiusi (stato <> C)
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  *  Richiesto cambiamento di stato da C a C2
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C a C2, pdg padre in stato <> C2
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
- *  Richiesto cambiamento di stato da C a C2, livello responsabilit‡ non compatbile
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
+ *  Richiesto cambiamento di stato da C a C2, livello responsabilit√† non compatbile
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C a C2, l'utente NON appartiene ad un CDR di 2^ livello (RUO)
  *    PostCondition:
@@ -3320,7 +3320,7 @@ public Pdg_preventivoBulk modificaStatoPdG_C_C2(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C a D, pdg padre in stato <> E
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  */
 public Pdg_preventivoBulk modificaStatoPdG_C_D(
 	UserContext userContext,
@@ -3341,7 +3341,7 @@ public Pdg_preventivoBulk modificaStatoPdG_C_D(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C a E, pdg padre in stato <> E
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  */
 public Pdg_preventivoBulk modificaStatoPdG_C_E(
 	UserContext userContext,
@@ -3362,17 +3362,17 @@ public Pdg_preventivoBulk modificaStatoPdG_C_E(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C ad F, pdg dipendenti non chiusi (stato <> F)
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  *  Richiesto cambiamento di stato da C a F, Bilancio Preventivo CNR non approvato
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da C ad F, il Bilancio Preventivo CNR non Ë stato approvato (secondo controllaBilPrevCnrApprovato())
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da C ad F, il Bilancio Preventivo CNR non √® stato approvato (secondo controllaBilPrevCnrApprovato())
  *    PostCondition:
  *		Viene generata una ApplicationException con il messaggio "Il bilancio preventivo CNR non risulta ancora approvato"
  *  Richiesto cambiamento di stato da C a F, Pdg aggregato aperto
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da C ad F, il pdg del cdr di 1^ livello Ë ancora aperto (secondo controllaAggregatoChiuso)
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da C ad F, il pdg del cdr di 1^ livello √® ancora aperto (secondo controllaAggregatoChiuso)
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il piano di gestione aggregato non Ë chiuso. Contattare il CDR di primo livello"
+ *		Viene generata una ApplicationException con il messaggio "Il piano di gestione aggregato non √® chiuso. Contattare il CDR di primo livello"
  *  Richiesto cambiamento di stato da C a F, esistono discrepanze nel Pdg Aggregato
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C ad F, il cdr del pdg possiede un pdg aggregato ed esistono discrepanze tra gli importi iniziali e quelli modificati nel pdg aggregato (secondo controllaDiscrepanzeAggregato())
@@ -3403,14 +3403,14 @@ public Pdg_preventivoBulk modificaStatoPdG_C_F(
 }
 
 /*
- *  Richiesto cambiamento di stato da C0 a C, livello responsabilit‡ non compatbile
+ *  Richiesto cambiamento di stato da C0 a C, livello responsabilit√† non compatbile
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C0 a C, l'utente NON appartiene al CDR dell'Amministrazione Centrale
  *    PostCondition:
  *		Viene generata una ApplicationException con il messaggio "Utente non abilitato."
  *  Richiesto cambiamento di stato da C0 a C
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da C0 a C, nessun'altra precondizione Ë verificata
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da C0 a C, nessun'altra precondizione √® verificata
  *    PostCondition:
  *		Viene invocato modificaStatoPdG_Ci_C
  */
@@ -3432,14 +3432,14 @@ public Pdg_preventivoBulk modificaStatoPdG_C0_C(
 }
 
 /*
- *  Richiesto cambiamento di stato da C1 a C, livello responsabilit‡ non compatbile
+ *  Richiesto cambiamento di stato da C1 a C, livello responsabilit√† non compatbile
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C1 a C, l'utente appartiene ad un CDR di livello RUO o NRUO
  *    PostCondition:
  *		Viene generata una ApplicationException con il messaggio "Utente non abilitato."
  *  Richiesto cambiamento di stato da C1 a C
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da C1 a C, nessun'altra precondizione Ë verificata
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da C1 a C, nessun'altra precondizione √® verificata
  *    PostCondition:
  *		Viene invocato modificaStatoPdG_Ci_C
  */
@@ -3460,14 +3460,14 @@ public Pdg_preventivoBulk modificaStatoPdG_C1_C(
 	return pdg;
 }
 /*
- *  Richiesto cambiamento di stato da C2 a C, livello responsabilit‡ non compatbile
+ *  Richiesto cambiamento di stato da C2 a C, livello responsabilit√† non compatbile
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C2 a C, l'utente appartiene ad un CDR di livello NRUO
  *    PostCondition:
  *		Viene generata una ApplicationException con il messaggio "Utente non abilitato."
  *  Richiesto cambiamento di stato da C2 a C
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da C2 a C, nessun'altra precondizione Ë verificata
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da C2 a C, nessun'altra precondizione √® verificata
  *    PostCondition:
  *		Viene invocato modificaStatoPdG_Ci_C
  */
@@ -3493,7 +3493,7 @@ public Pdg_preventivoBulk modificaStatoPdG_C2_C(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da C0,C1,C2 ad C, pdg dipendenti non chiusi (stato <> C o F)
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  *  Richiesto cambiamento di stato da Ci a C, i ricavi figurativi non quadrano
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da Ci a C, il controllo dei ricavi figurativi non va a buon fine (secondo controllaQuadraturaRicaviFigurativi()))
@@ -3522,7 +3522,7 @@ public Pdg_preventivoBulk modificaStatoPdG_Ci_C(
 	// Effettuo i controlli di quadratura dei ricavi figurativi	
 	controllaQuadraturaRicaviFigurativi(userContext,pdg);
 
-	// Aggiorno il pdg aggregato (solo per cdr 1∞ livello o cdr figli di uo area
+	// Aggiorno il pdg aggregato (solo per cdr 1¬∞ livello o cdr figli di uo area
 	inizializzaAggregatoPDG(userContext, pdg,livelloResponsabilitaPdg);
 
 	return pdg;
@@ -3536,7 +3536,7 @@ public Pdg_preventivoBulk modificaStatoPdG_Ci_C(
  *		Viene generata una ApplicationException con il messaggio "Esiste qualche spesa scaricata verso altro CDR o UO non ancora confermata o annullata"
  *  Richiesto cambiamento di stato da D a C, costi del dipendente non scaricati completamente
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da D a C, il cdr del pdg Ë di 1^ livello e i costi del dipendente dell'UO non sono stati scaricati completamente (secondo controllaScaricoCDPCompleto())
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da D a C, il cdr del pdg √® di 1^ livello e i costi del dipendente dell'UO non sono stati scaricati completamente (secondo controllaScaricoCDPCompleto())
  *    PostCondition:
  *		Viene generata una ApplicationException con il messaggio "Costi del personale non ancora scaricati completamente!"
  *  Richiesto cambiamento di stato da D a C, i ricavi figurativi non quadrano
@@ -3567,7 +3567,7 @@ public Pdg_preventivoBulk modificaStatoPdG_D_C(
 	// Effettuo i controlli di quadratura dei ricavi figurativi	
 	controllaQuadraturaRicaviFigurativi(userContext,pdg);
 
-	// Aggiorno il pdg aggregato (solo per cdr 1∞ livello o cdr figli di uo area
+	// Aggiorno il pdg aggregato (solo per cdr 1¬∞ livello o cdr figli di uo area
 	inizializzaAggregatoPDG(userContext, pdg,livelloResponsabilitaPdg);
 
 	return pdg;
@@ -3578,7 +3578,7 @@ public Pdg_preventivoBulk modificaStatoPdG_D_C(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da D a E, pdg padre in stato <> E
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  */
 public Pdg_preventivoBulk modificaStatoPdG_D_E(
 	UserContext userContext,
@@ -3602,7 +3602,7 @@ public Pdg_preventivoBulk modificaStatoPdG_D_E(
  *		Viene generata una ApplicationException con il messaggio "Esiste qualche spesa scaricata verso altro CDR o UO non ancora confermata o annullata"
  *  Richiesto cambiamento di stato da E a C, costi del dipendente non scaricati completamente
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da E a C, il cdr del pdg Ë di 1^ livello e i costi del dipendente dell'UO non sono stati scaricati completamente (secondo controllaScaricoCDPCompleto())
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da E a C, il cdr del pdg √® di 1^ livello e i costi del dipendente dell'UO non sono stati scaricati completamente (secondo controllaScaricoCDPCompleto())
  *    PostCondition:
  *		Viene generata una ApplicationException con il messaggio "Costi del personale non ancora scaricati completamente!"
  *  Richiesto cambiamento di stato da E a C, i ricavi figurativi non quadrano
@@ -3633,7 +3633,7 @@ public Pdg_preventivoBulk modificaStatoPdG_E_C(
 	// Effettuo i controlli di quadratura dei ricavi figurativi	
 	controllaQuadraturaRicaviFigurativi(userContext,pdg);
 
-	// Aggiorno il pdg aggregato (solo per cdr 1∞ livello o cdr figli di uo area
+	// Aggiorno il pdg aggregato (solo per cdr 1¬∞ livello o cdr figli di uo area
 	inizializzaAggregatoPDG(userContext, pdg,livelloResponsabilitaPdg);
 
 	return pdg;
@@ -3644,7 +3644,7 @@ public Pdg_preventivoBulk modificaStatoPdG_E_C(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da E ad D, pdg dipendenti non chiusi (stato <> C o F)
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  *  Richiesto cambiamento di stato da E a D, dettagli scaricati non confermati
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da E a D, esiste qualche dettaglio scaricato su altra UO non ancora confermato o annullato (secondo controllaDettScarConfermati())
@@ -3673,17 +3673,17 @@ public Pdg_preventivoBulk modificaStatoPdG_E_D(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da F a G, pdg padre in stato <> F o G
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  *  Richiesto cambiamento di stato da F a G, Pdg aggregato aperto
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da F a G, il pdg del cdr di 1^ livello Ë ancora aperto (secondo controllaAggregatoChiuso)
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da F a G, il pdg del cdr di 1^ livello √® ancora aperto (secondo controllaAggregatoChiuso)
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il piano di gestione aggregato non Ë chiuso. Contattare il CDR di primo livello"
+ *		Viene generata una ApplicationException con il messaggio "Il piano di gestione aggregato non √® chiuso. Contattare il CDR di primo livello"
  *  Richiesto cambiamento di stato da F a G, bilancio preventivo del cds non ancora approvato
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da F a G, il bilancio preventivo del cds a cui appartiene il cdr non Ë ancora approvato (secondo controllaPreventivoCdsApprovato)
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da F a G, il bilancio preventivo del cds a cui appartiene il cdr non √® ancora approvato (secondo controllaPreventivoCdsApprovato)
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il bilancio preventivo del cds non Ë approvato."
+ *		Viene generata una ApplicationException con il messaggio "Il bilancio preventivo del cds non √® approvato."
  */
 public Pdg_preventivoBulk modificaStatoPdG_F_G(
 	UserContext userContext,
@@ -3696,7 +3696,7 @@ public Pdg_preventivoBulk modificaStatoPdG_F_G(
 	// Controllo che i pdg padri siano in stato F o G
 	controllaStatoPdgPadri(userContext,pdg,livelloResponsabilitaPdg,false,new String[] { pdg.ST_F_CHIUSO_DFNT, pdg.ST_G_APERTURA_PER_VARIAZIONI });
 	
-	// Controllo che il pdg aggregato del cdr di 1∞ livello sia chiuso
+	// Controllo che il pdg aggregato del cdr di 1¬∞ livello sia chiuso
 	controllaAggregatoChiuso(userContext,pdg);
 
 	// Controllo che il preventivo finanziario del cds sia approvato
@@ -3710,7 +3710,7 @@ public Pdg_preventivoBulk modificaStatoPdG_F_G(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da G a H, pdg dipendenti in stato <> F o M
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  */
 public Pdg_preventivoBulk modificaStatoPdG_G_H(
 	UserContext userContext,
@@ -3792,7 +3792,7 @@ public Pdg_preventivoBulk modificaStatoPdG_H_M(
 	controllaQuadraturaRicaviFigurativi(userContext,pdg);
 
 	// Se passo in stato M su un pdg di un cdr di 1^ livello
-	// e l'aggregato Ë ancora in stato B, forzo il passaggio dell'aggregato
+	// e l'aggregato √® ancora in stato B, forzo il passaggio dell'aggregato
 	// in stato M
 	if (livelloResponsabilitaPdg == 1 ||
 		isCdrArea(userContext,pdg.getCentro_responsabilita()))
@@ -3811,7 +3811,7 @@ public Pdg_preventivoBulk modificaStatoPdG_H_M(
 			throw handleException(e);
 		}
 
-	// Aggiorno il pdg aggregato (solo per cdr 1∞ livello o cdr figli di uo area
+	// Aggiorno il pdg aggregato (solo per cdr 1¬∞ livello o cdr figli di uo area
 	inizializzaAggregatoPDGPerVariazioni(userContext, pdg,livelloResponsabilitaPdg);
 
 	return pdg;
@@ -3822,10 +3822,10 @@ public Pdg_preventivoBulk modificaStatoPdG_H_M(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da M a F, pdg dipendenti in stato <> F
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  *  Richiesto cambiamento di stato da M a F, stato aggregato non compatibile
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da M a F, il pdg aggregato del cdr di 1^ livello Ë in stato diverso da E
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da M a F, il pdg aggregato del cdr di 1^ livello √® in stato diverso da E
  *    PostCondition:
  *		Viene generata una ApplicationException con il messaggio "Stato del pdg aggregato non compatibile"
  *  Richiesto cambiamento di stato da M a F, esistono discrepanze nel Pdg Aggregato
@@ -3835,7 +3835,7 @@ public Pdg_preventivoBulk modificaStatoPdG_H_M(
  *		Viene generata una ApplicationException con il messaggio "Sono presenti importi complessivi non compatibili con i dati impostati dall'ente."
  *  Richiesto cambiamento di stato da M a F
  *    PreCondition:
- *      L'utente ha richiesto il cambiamento di stato di un pdg da M ad F e nessun'altra precondizione Ë verificata
+ *      L'utente ha richiesto il cambiamento di stato di un pdg da M ad F e nessun'altra precondizione √® verificata
  *    PostCondition:
  *		Viene invocato trasformDettagliVariazioneInDefinitivi() per convertire i dettagli del pdg da dettagli con origine 'MOD' in dettagli con provenienza 'DIR'
  */
@@ -3847,7 +3847,7 @@ public Pdg_preventivoBulk modificaStatoPdG_M_F(
 	int livelloResponsabilitaUtente,
 	int livelloResponsabilitaPdg) throws it.cnr.jada.comp.ComponentException {
 
-	// Controllo che il pdg aggregato del cdr di 1∞ livello sia in stato "E"
+	// Controllo che il pdg aggregato del cdr di 1¬∞ livello sia in stato "E"
 	controllaStatoAggregato(userContext,pdg,it.cnr.contab.prevent00.bulk.Pdg_aggregatoBulk.STATO_E);
 
 	// Controllo che i pdg dipendenti siano in stato F
@@ -3864,12 +3864,12 @@ public Pdg_preventivoBulk modificaStatoPdG_M_F(
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da M a G, pdg padre in stato <> G
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  *  Richiesto cambiamento di stato da M a G, stato padre non compatibile
  *    PreCondition:
  *      L'utente ha richiesto il cambiamento di stato di un pdg da M a G, pdg padre in stato <> E
  *    PostCondition:
- *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX Ë in stato Y che non Ë compatibile con l'operazione richiesta."
+ *		Viene generata una ApplicationException con il messaggio "Il pdg del cdr XXX.XXX.XXX √® in stato Y che non √® compatibile con l'operazione richiesta."
  */
 public Pdg_preventivoBulk modificaStatoPdG_M_G(
 	UserContext userContext,
@@ -3879,10 +3879,10 @@ public Pdg_preventivoBulk modificaStatoPdG_M_G(
 	int livelloResponsabilitaUtente,
 	int livelloResponsabilitaPdg) throws it.cnr.jada.comp.ComponentException {
 
-	// Controllo che il pdg aggregato del cdr di 1∞ livello sia in stato "E"
+	// Controllo che il pdg aggregato del cdr di 1¬∞ livello sia in stato "E"
 	controllaStatoAggregato(userContext,pdg,it.cnr.contab.prevent00.bulk.Pdg_aggregatoBulk.STATO_E);
 
-	// Controllo che il pdg padre sia gi‡ in stato "G"
+	// Controllo che il pdg padre sia gi√† in stato "G"
 	controllaStatoPdgPadri(userContext,pdg,livelloResponsabilitaPdg,false,new String[] { pdg.ST_G_APERTURA_PER_VARIAZIONI });
 
 	return pdg;
@@ -3892,7 +3892,7 @@ public Pdg_preventivoBulk modificaStatoPdG_M_G(
 /** 
   *  Tutti controlli superati
   *    PreCondition:
-  *      Viene richiesto il ribaltamento dei costi del Piano di Gestione del CdR specificato all'area di ricerca a cui afferisce. Il bilancio del CNR Ë gi‡ stato approvato
+  *      Viene richiesto il ribaltamento dei costi del Piano di Gestione del CdR specificato all'area di ricerca a cui afferisce. Il bilancio del CNR √® gi√† stato approvato
   *    PostCondition:
   *      La procedura Oracle CNRCTB053.ribaltaSuAreaPDG viene eseguita per l'anno di esercizio ed il CdR specificati.
  */
@@ -3966,7 +3966,7 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 /** 
   *  Normale
   *    PreCondition:
-  *      Viene richiesto l'elenco dei centri di responsabilit‡ compatibili per un dettaglio di spesa verso altra UO o di costi senza spese con un elenco di clausole specificate
+  *      Viene richiesto l'elenco dei centri di responsabilit√† compatibili per un dettaglio di spesa verso altra UO o di costi senza spese con un elenco di clausole specificate
   *    PostCondition:
   *      Viene restituito una query sui centri di spesa con le clausole specificate e una clausola sull'esercizio uguale a quello del dettaglio di spesa specificato
  */
@@ -3991,7 +3991,7 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 	/** 
 	  *  Normale
 	  *    PreCondition:
-	  *      Viene richiesto l'elenco dei centri di responsabilit‡ compatibili con il livello di responsabilit‡ dell'utente
+	  *      Viene richiesto l'elenco dei centri di responsabilit√† compatibili con il livello di responsabilit√† dell'utente
 	  *    PostCondition:
 	  *      Viene restituito una query sui cdr con le clausole specificate e una clausola sull'esercizio uguale a quello del pdg specificato
 	 */
@@ -4124,7 +4124,7 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 	/** 
 	  *  Normale
 	  *    PreCondition:
-	  *      Viene richiesto l'elenco dei centri di responsabilit‡ compatibili con il livello di responsabilit‡ dell'utente
+	  *      Viene richiesto l'elenco dei centri di responsabilit√† compatibili con il livello di responsabilit√† dell'utente
 	  *    PostCondition:
 	  *      Viene restituito una query sui cdr con le clausole specificate e una clausola sull'esercizio uguale a quello del pdg specificato
 	 */
@@ -4284,7 +4284,7 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 /** 
   *  Normale
   *    PreCondition:
-  *      Viene richiesto l'elenco dei centri di responsabilit‡ compatibili con il livello di responsabilit‡ dell'utente
+  *      Viene richiesto l'elenco dei centri di responsabilit√† compatibili con il livello di responsabilit√† dell'utente
   *    PostCondition:
   *      Viene restituito una query sui cdr con le clausole specificate e una clausola sull'esercizio uguale a quello del pdg specificato
  */
@@ -4302,7 +4302,7 @@ public SQLBuilder selectCdrForPrintByClause (UserContext userContext,
 /** 
   *  Normale
   *    PreCondition:
-  *      Viene richiesto l'elenco dei centri di responsabilit‡ compatibili con il livello di responsabilit‡ dell'utente
+  *      Viene richiesto l'elenco dei centri di responsabilit√† compatibili con il livello di responsabilit√† dell'utente
   *    PostCondition:
   *      Viene restituito una query sui cdr con le clausole specificate e una clausola sull'esercizio uguale a quello del pdg specificato
  */
@@ -4320,7 +4320,7 @@ public SQLBuilder selectCdrForPrintByClause (UserContext userContext,
 /** 
   *  Normale
   *    PreCondition:
-  *      Viene richiesto l'elenco dei centri di responsabilit‡ compatibili con il livello di responsabilit‡ dell'utente
+  *      Viene richiesto l'elenco dei centri di responsabilit√† compatibili con il livello di responsabilit√† dell'utente
   *    PostCondition:
   *      Viene restituito una query sui cdr con le clausole specificate e una clausolOrdineAcqComponentOrdineAcqComponenta sull'esercizio uguale a quello del pdg specificato
  */
@@ -4338,7 +4338,7 @@ public SQLBuilder selectCdrForPrintByClause (UserContext userContext,
 /** 
   *  Normale
   *    PreCondition:
-  *      Viene richiesto l'elenco dei centri di responsabilit‡ compatibili con il livello di responsabilit‡ dell'utente
+  *      Viene richiesto l'elenco dei centri di responsabilit√† compatibili con il livello di responsabilit√† dell'utente
   *    PostCondition:
   *      Viene restituito una query sui cdr con le clausole specificate e una clausola sull'esercizio uguale a quello del pdg specificato
  */
@@ -4365,7 +4365,7 @@ public SQLBuilder selectCdrForPrintByClause (UserContext userContext, Stampa_sit
 /** 
   *  Normale
   *    PreCondition:
-  *      Viene richiesto l'elenco dei centri di responsabilit‡ compatibili con il livello di responsabilit‡ dell'utente
+  *      Viene richiesto l'elenco dei centri di responsabilit√† compatibili con il livello di responsabilit√† dell'utente
   *    PostCondition:
   *      Viene restituito una query sui cdr con le clausole specificate e una clausola sull'esercizio uguale a quello del pdg specificato
  */
@@ -4384,7 +4384,7 @@ public SQLBuilder selectCdsByClause (UserContext userContext,
 /** 
   *  Normale
   *    PreCondition:
-  *      Viene richiesto l'elenco dei centri di responsabilit‡ compatibili con il livello di responsabilit‡ dell'utente
+  *      Viene richiesto l'elenco dei centri di responsabilit√† compatibili con il livello di responsabilit√† dell'utente
   *    PostCondition:
   *      Viene restituito una query sui cdr con le clausole specificate e una clausola sull'esercizio uguale a quello del pdg specificato
  */
@@ -4407,7 +4407,7 @@ public SQLBuilder selectCdsByClause (UserContext userContext,
   *    PreCondition:
   *      Viene richiesto l'elenco degli elementi voce compatibili per il dettaglio di entrata specificato con un elenco di clausole specificate
   *    PostCondition:
-  *      Viene restituita una query sulla vista V_ELEMENTO_VOCE_PDG_ETR che contiene le clausole specificate pi˘ la clausola CD_NATURA =  dettaglioSpesa.cd_natura
+  *      Viene restituita una query sulla vista V_ELEMENTO_VOCE_PDG_ETR che contiene le clausole specificate pi√π la clausola CD_NATURA =  dettaglioSpesa.cd_natura
   *      Se il CDR non appartiene alla SAC, viene imposta l'ulteriore condizione che la voce del piano non sia riservata SAC
   */
 
@@ -4450,7 +4450,7 @@ throws ComponentException, PersistencyException
   *    PreCondition:
   *      Viene richiesto l'elenco degli elementi voce compatibili per il dettaglio di spesa specificato con un elenco di clausole specificate
   *    PostCondition:
-  *      Viene restituita una query sulla vista V_ELEMENTO_VOCE_PDG_SPE che contiene le clausole specificate pi˘ la clausola CD_FUNZIONE =  dettaglioSpesa.cd_funzione, CD_TIPO_UNITA  =  dettaglioSpesa.getCentro_responsabilita().getUnita_padre().getCd_tipo_unita()
+  *      Viene restituita una query sulla vista V_ELEMENTO_VOCE_PDG_SPE che contiene le clausole specificate pi√π la clausola CD_FUNZIONE =  dettaglioSpesa.cd_funzione, CD_TIPO_UNITA  =  dettaglioSpesa.getCentro_responsabilita().getUnita_padre().getCd_tipo_unita()
  */
 //^^@@
 
@@ -4508,7 +4508,7 @@ throws ComponentException, PersistencyException
 /** 
   *  Normale
   *    PreCondition:
-  *      Viene richiesto l'elenco delle linee di attivit‡ utilizzabili dal metodo delDetByLA
+  *      Viene richiesto l'elenco delle linee di attivit√† utilizzabili dal metodo delDetByLA
   *    PostCondition:
   *       Viene restituita una query sulla vista V_LINEA_ATTIVITA_VALIDA per il cdr del pdg specificato.
  */
@@ -4544,9 +4544,9 @@ throws ComponentException, PersistencyException
 /** 
   *  Normale
   *    PreCondition:
-  *      Viene richiesto l'elenco delle linee di attivit‡ compatibili per un dettaglio di spesa con un elenco di clausole specificate
+  *      Viene richiesto l'elenco delle linee di attivit√† compatibili per un dettaglio di spesa con un elenco di clausole specificate
   *    PostCondition:
-  *      Viene restituito una query sulle linee di attivit‡ con le clausole specificate e 
+  *      Viene restituito una query sulle linee di attivit√† con le clausole specificate e 
   *      esercizio = dettaglio_pdg.esercizio
   *      cdr = dettaglio_pdg.cdr
  */
@@ -4570,7 +4570,7 @@ throws ComponentException, PersistencyException
 				dettaglio_pdg.getCentro_responsabilita().getCd_centro_responsabilita()
 		);
 
-		// Date: 20/02/2002 Filtro sulla sezione delle linee di attivit‡ in piano di gestione 
+		// Date: 20/02/2002 Filtro sulla sezione delle linee di attivit√† in piano di gestione 
 		if(dettaglio_pdg instanceof Pdg_preventivo_spe_detBulk) {
 		 sql.addClause("AND","ti_gestione",it.cnr.jada.persistency.sql.SQLBuilder.EQUALS,it.cnr.contab.config00.latt.bulk.Tipo_linea_attivitaBulk.TI_GESTIONE_SPESE);
 		} else if(dettaglio_pdg instanceof Pdg_preventivo_etr_detBulk) {
@@ -4623,7 +4623,7 @@ private void validateBulkForPrint( it.cnr.jada.UserContext userContext, Stampa_s
 			throw new ValidationException("Il campo CDS e' obbligatorio");
 
 		//if (!stampa.isCdsUOInScrivania() && stampa.getCdUoForPrint() == null)
-			//throw new ValidationException("Il campo UNITA ORGANIZZATIVA Ë obbligatorio");
+			//throw new ValidationException("Il campo UNITA ORGANIZZATIVA √® obbligatorio");
 ////			if (it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC.equalsIgnoreCase(uo.getCd_tipo_unita())){
 
 	} catch(ValidationException ex) {
@@ -4742,7 +4742,7 @@ private MessaggioBulk generaMessaggio(UserContext userContext, UtenteBulk utente
 	messaggio.setPg_messaggio(new Long(messHome.fetchNextSequenceValue(userContext,"CNRSEQ00_PG_MESSAGGIO").longValue()));
 	messaggio.setCd_utente(utente.getCd_utente());
 	messaggio.setPriorita(new Integer(1));
-	messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - » stata raggiunta la quota di "+ etr_spe +" assegnata alla Variazione");
+	messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - √à stata raggiunta la quota di "+ etr_spe +" assegnata alla Variazione");
 	messaggio.setCorpo("Numero variazione:"+pdg.getPg_variazione_pdg());
 	messaggio.setCorpo(messaggio.getCorpo() + "\n" + "Il CdR :"+ass_pdg.getCentro_responsabilita().getCd_ds_cdr()+" ha coperto la quota assegnata.");
 	messaggio.setSoggetto(messaggio.getDs_messaggio());

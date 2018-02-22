@@ -722,7 +722,7 @@ public void validate() throws ValidationException {
 	if (getEconomo() == null || getEconomo().getCrudStatus() != OggettoBulk.NORMAL)
 		throw new ValidationException("Specificare l'economo per il fondo economale!");
 	if (getModalita_pagamento() == null)
-		throw new ValidationException("Specificare la modalit‡ di pagamento per il fondo economale!");
+		throw new ValidationException("Specificare la modalit√† di pagamento per il fondo economale!");
 	if (getBanca() == null || getBanca().getCrudStatus() != OggettoBulk.NORMAL)
 		throw new ValidationException("Specificare il conto d'appoggio per il fondo economale!");
 	if (getMandato() == null || getMandato().getCrudStatus() != OggettoBulk.NORMAL)
@@ -741,9 +741,9 @@ public void validate() throws ValidationException {
 	if (getIm_max_gg_spesa_non_doc() == null || zero.compareTo(getIm_max_gg_spesa_non_doc()) == 0)
 		throw new ValidationException("Specificare il massimo importo giornaliero per le spese non documentate!");
 	if (getIm_max_mm_spesa_doc().compareTo(getIm_max_gg_spesa_doc()) < 0)
-		throw new ValidationException("Il massimo importo giornaliero per le spese documentate non puÚ superare il massimo importo mensile!");
+		throw new ValidationException("Il massimo importo giornaliero per le spese documentate non pu√≤ superare il massimo importo mensile!");
 	if (getIm_max_mm_spesa_non_doc().compareTo(getIm_max_gg_spesa_non_doc()) < 0)
-		throw new ValidationException("Il massimo importo giornaliero per le spese non documentate non puÚ superare il massimo importo mensile!");
+		throw new ValidationException("Il massimo importo giornaliero per le spese non documentate non pu√≤ superare il massimo importo mensile!");
 }
 	/**
 	 * @return

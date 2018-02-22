@@ -27,7 +27,7 @@ public Pagamento_esternoBulk(java.lang.Integer cd_anag,java.lang.Integer pg_paga
 }
 
 	/**
-	 * Restituisce l'<code>AnagraficoBulk</code> a cui l'oggetto è correlato.
+	 * Restituisce l'<code>AnagraficoBulk</code> a cui l'oggetto Ã¨ correlato.
 	 *
 	 * @return it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk
 	 *
@@ -44,7 +44,7 @@ public java.lang.Integer getCd_anag() {
 	return anagrafico.getCd_anag();
 }
 	/**
-	 * Imposta l'<code>AnagraficoBulk</code> a cui l'oggetto è correlato.
+	 * Imposta l'<code>AnagraficoBulk</code> a cui l'oggetto Ã¨ correlato.
 	 *
 	 * @param newAnagrafico Anagrafica di riferimento.
 	 *
@@ -102,7 +102,7 @@ public void setCd_anag(java.lang.Integer cd_anag) {
 
 		java.util.Calendar dataPagamento = getDateCalendar(getDt_pagamento());
         if(dataPagamento.after(getDateCalendar(null)))
-		  throw new ValidationException("La data di pagamento non può essere superiore alla data odierna!");
+		  throw new ValidationException("La data di pagamento non puÃ² essere superiore alla data odierna!");
 	}
 	public static Calendar getDateCalendar(java.sql.Timestamp date) {
 

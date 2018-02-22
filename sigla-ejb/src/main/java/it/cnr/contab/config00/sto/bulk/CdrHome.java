@@ -434,7 +434,7 @@ public boolean isEnte(CdrBulk cdr) throws PersistencyException{
 	return cdr.isCdrAC();
 }
 /**
- * Ritorna false se l'esercizio di fine impostato sul cdr è minore del massimo esercizio 
+ * Ritorna false se l'esercizio di fine impostato sul cdr Ã¨ minore del massimo esercizio 
  * esistente per pdg del cdr in processo
  *
  * @param cdr Cdr in processo	

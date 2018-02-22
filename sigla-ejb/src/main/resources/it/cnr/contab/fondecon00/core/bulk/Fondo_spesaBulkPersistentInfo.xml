@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <SQLPersistentInfo
 	persistentClassName="it.cnr.contab.fondecon00.core.bulk.Fondo_spesaBulk"
 	homeClassName="it.cnr.contab.fondecon00.core.bulk.Fondo_spesaHome" >
@@ -25,7 +25,7 @@
 			propertyName="fornitore.cd_terzo"
 			fetchOnly="false" />
 
-<!-- Città -->
+<!-- CittÃ  -->
 		<columnMapping
 			columnName="PG_COMUNE"
 			propertyName="citta.pg_comune"

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -44,14 +44,14 @@
 		inputType="TEXT"
 		inputSize="15"
 		maxLength="15"
-		label="Spese per edilizia ivi compresa manutenzione straordinaria di immobili in proprietà" />
+		label="Spese per edilizia ivi compresa manutenzione straordinaria di immobili in proprietÃ " />
 	<fieldProperty
 		name="amm_immobili"
 		property="amm_immobili"
 		inputType="TEXT"
 		inputSize="15"
 		maxLength="15"
-		label="Costi figurativi per ammortamento immobili in proprietà, in uso all'Istituto" />
+		label="Costi figurativi per ammortamento immobili in proprietÃ , in uso all'Istituto" />
 	<fieldProperty
 		name="acc_tfr"
 		property="acc_tfr"
@@ -72,7 +72,7 @@
 		inputType="TEXT"
 		inputSize="15"
 		maxLength="15"
-		label="Costi figurativi per altri beni durevoli di proprietà acquisite negli esercizi precedenti" />
+		label="Costi figurativi per altri beni durevoli di proprietÃ  acquisite negli esercizi precedenti" />
 	<fieldProperty
 		name="res_fo"
 		property="res_fo"

@@ -55,9 +55,9 @@ public java.lang.String getCd_fondo_ricerca()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_natura'
+ * Restituisce il valore della propriet√† 'cd_natura'
  *
- * @return Il valore della propriet‡ 'cd_natura'
+ * @return Il valore della propriet√† 'cd_natura'
  */
 public String getCd_natura() 
 {
@@ -70,9 +70,9 @@ public String getCd_natura()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_voce'
+ * Restituisce il valore della propriet√† 'cd_voce'
  *
- * @return Il valore della propriet‡ 'cd_voce'
+ * @return Il valore della propriet√† 'cd_voce'
  */
 public java.lang.String getCd_voce() 
 {
@@ -222,9 +222,9 @@ public void storna()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'prc'
+ * Restituisce il valore della propriet√† 'prc'
  *
- * @return Il valore della propriet‡ 'prc'
+ * @return Il valore della propriet√† 'prc'
  */
 public BigDecimal getPrc() 
 {
@@ -239,7 +239,7 @@ public BigDecimal getPrc()
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'prc'
+ * Imposta il valore della propriet√† 'prc'
  *
  * @param newPrc	Il valore da assegnare a 'prc'
  */

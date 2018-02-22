@@ -149,7 +149,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 			this.getCds().setCd_unita_organizzativa(cd_cds);
 	}
 
-// Unit‡ Organizzativa
+// Unit√† Organizzativa
 	public Unita_organizzativaBulk getUnita_organizzativa() {
 		return unita_organizzativa;
 	}
@@ -166,7 +166,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 			this.getUnita_organizzativa().setCd_unita_organizzativa(cd_unita_organizzativa);
 	}
 
-// Comune - Citt‡
+// Comune - Citt√†
 	public ComuneBulk getCitta() {
 		return citta;
 	}
@@ -317,7 +317,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 			this.getProcedura_amministrativa_beneficiario().setCd_proc_amm(cd_proc_amm_benef);
 	}
 
-// Tipo Attivit‡ Richiesta
+// Tipo Attivit√† Richiesta
 	public Tipo_attivitaBulk getTipo_attivita() {
 		return tipo_attivita;
 	}
@@ -457,7 +457,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 		return totale;
 	}
 	/**
-	 * Ritorna TRUE se la richiesta Ë in stato "Provvisorio"
+	 * Ritorna TRUE se la richiesta √® in stato "Provvisorio"
 	 * 
 	 * @return boolean
 	 */
@@ -465,7 +465,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
     	return this.getStato()!=null&&this.getStato().equals(STATO_PROVVISORIO);
     }
 	/**
-	 * Ritorna TRUE se la richiesta Ë in stato "Definitiva"
+	 * Ritorna TRUE se la richiesta √® in stato "Definitiva"
 	 * 
 	 * @return boolean
 	 */
@@ -480,7 +480,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 */    	
     }
 	/**
-	 * Ritorna TRUE se la richiesta Ë in stato "Chiusa"
+	 * Ritorna TRUE se la richiesta √® in stato "Chiusa"
 	 * 
 	 * @return boolean
 	 */
@@ -488,7 +488,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
     	return this.getStato()!=null&&this.getStato().equals(STATO_CHIUSO);
     }
 	/**
-	 * Ritorna TRUE se la richiesta Ë in stato "Respinta"
+	 * Ritorna TRUE se la richiesta √® in stato "Respinta"
 	 * 
 	 * @return boolean
 	 */
@@ -496,7 +496,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
     	return this.getStato()!=null&&this.getStato().equals(STATO_RESPINTO);
     }
 	/**
-	 * Ritorna TRUE se la richiesta Ë in stato "Annullato"
+	 * Ritorna TRUE se la richiesta √® in stato "Annullato"
 	 * 
 	 * @return boolean
 	 */
@@ -504,7 +504,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
     	return this.getStato()!=null&&this.getStato().equals(STATO_ANNULLATO);
     }
 	/**
-	 * Ritorna TRUE se la richiesta Ë in stato "Pubblicata"
+	 * Ritorna TRUE se la richiesta √® in stato "Pubblicata"
 	 * 
 	 * @return boolean
 	 */
@@ -513,9 +513,9 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
     }
 	/**
 	 * Ritorna TRUE se:
-	 *  - la richiesta Ë in stato "Definitivo"
-	 *  - la data di inizio pubblicazione Ë trascorsa 
-	 *  - la data di fine pubblicazione non Ë trascorsa
+	 *  - la richiesta √® in stato "Definitivo"
+	 *  - la data di inizio pubblicazione √® trascorsa 
+	 *  - la data di fine pubblicazione non √® trascorsa
 	 * 
 	 * @return boolean
 	 */
@@ -532,8 +532,8 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
     }
 	/**
 	 * Ritorna TRUE se:
-	 *  - la data di fine pubblicazione Ë trascorsa
-	 *  - la data di scadenza Ë trascorsa
+	 *  - la data di fine pubblicazione √® trascorsa
+	 *  - la data di scadenza √® trascorsa
 	 * 
 	 * @return boolean
 	 */
@@ -547,8 +547,8 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
     }
 	/**
 	 * Ritorna TRUE se:
-	 *  - la data di fine pubblicazione Ë trascorsa
-	 *  - la data di scadenza non Ë trascorsa
+	 *  - la data di fine pubblicazione √® trascorsa
+	 *  - la data di scadenza non √® trascorsa
 	 * 
 	 * @return boolean
 	 */
@@ -599,7 +599,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 	}
 	/**
 	 * Ritorna TRUE se:
-	 *  - la richiesta non Ë in stato "Provvisorio"
+	 *  - la richiesta non √® in stato "Provvisorio"
 	 * 
 	 * @return boolean
 	 */
@@ -700,8 +700,8 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 	 * Modifica inserita per consentire di cambiare il tipo di incarico tra
 	 * Occasioni con e senza partita iva anche dopo la pubblicazione.
 	 * 
-	 * Non Ë possibile cambiare la tipologia di incarico dopo la pubblicazione
-	 * se la stessa Ë associata ad un rapporto che prevede l'inquadramento (Es. Co.Co.Co.)
+	 * Non √® possibile cambiare la tipologia di incarico dopo la pubblicazione
+	 * se la stessa √® associata ad un rapporto che prevede l'inquadramento (Es. Co.Co.Co.)
 	 * E' possibile cambiarlo se il tipo rapporto non prevede inquadramento (occasionali con e 
 	 * senza p.iva), ma solo nell'ambito della stessa tipologia 
 	 */
@@ -730,7 +730,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
 				(isProceduraScaduta() && !isUtenteCollegatoUoEnte() && !isUtenteCollegatoSuperUtente()));
 	}
 	/*
-	 * Modifica inserita per consentire di cambiare il tipo di attivit‡ ad
+	 * Modifica inserita per consentire di cambiare il tipo di attivit√† ad
 	 * un utente di tipo Ente consentito fino a quando l'incarico non assume 
 	 * stato "Definitivo"
 	 */
@@ -978,7 +978,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
     	return this.getFl_sbloccato();
     }
 	/**
-	 * Ritorna TRUE se la richiesta Ë in stato "Inviato Corte Conti"
+	 * Ritorna TRUE se la richiesta √® in stato "Inviato Corte Conti"
 	 * 
 	 * @return boolean
 	 */

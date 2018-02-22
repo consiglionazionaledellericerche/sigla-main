@@ -82,9 +82,9 @@ public class CRUDRicostruzioneResiduiBP extends it.cnr.jada.util.action.SimpleCR
 		super.initialize(context);
 		setRibaltato(initRibaltato(context));
 		if (isRibaltato() && !isUoScrivaniaEnte()) {
-			throw handleException( new ApplicationException("Non Ë possibile utilizzare questa funzione perchË Ë stato effettuato il ribaltamento complessivo dei documenti contabili per il CDS "+CNRUserContext.getCd_cds(context.getUserContext())));
+			throw handleException( new ApplicationException("Non √® possibile utilizzare questa funzione perch√® √® stato effettuato il ribaltamento complessivo dei documenti contabili per il CDS "+CNRUserContext.getCd_cds(context.getUserContext())));
 		}
-		// dal 2006 non si deve usare pi˘ questa funzione (Ë brutto questo controllo cosÏ, ma non importa
+		// dal 2006 non si deve usare pi√π questa funzione (√® brutto questo controllo cos√¨, ma non importa
 		if (((CNRUserContext)context.getUserContext()).getEsercizio().compareTo(new Integer(2006))>=0) {
 			throw handleException( new ApplicationException("Funzione non utilizzabile per questo esercizio contabile."));
 		}
@@ -98,7 +98,7 @@ public class CRUDRicostruzioneResiduiBP extends it.cnr.jada.util.action.SimpleCR
 		if ((Pdg_residuoBulk)getModel() != null && ((Pdg_residuoBulk)getModel()).getCd_centro_responsabilita() != null) {
 			CdrBulk cdr = new CdrBulk(((Pdg_residuoBulk)getModel()).getCd_centro_responsabilita());
 			if (isRibaltato(context,cdr))
-				throw handleException( new ApplicationException("Non Ë possibile utilizzare questa funzione perchË Ë stato effettuato il ribaltamento complessivo dei documenti contabili per il CDS a cui afferisce il CdR selezionato"));
+				throw handleException( new ApplicationException("Non √® possibile utilizzare questa funzione perch√® √® stato effettuato il ribaltamento complessivo dei documenti contabili per il CDS a cui afferisce il CdR selezionato"));
 		}
 	}
 
@@ -140,7 +140,7 @@ public class CRUDRicostruzioneResiduiBP extends it.cnr.jada.util.action.SimpleCR
 
 	/**
 	 * ricerca il CdR del residuo, impostato in fase di inizializzazione della mappa,
-	 * che verr‡ utilizzato per valorizzare la chiave della testata
+	 * che verr√† utilizzato per valorizzare la chiave della testata
 	 * 
 	 * @return
 	 */	
@@ -155,7 +155,7 @@ public class CRUDRicostruzioneResiduiBP extends it.cnr.jada.util.action.SimpleCR
 
 	/**
 	 * getter del CdR del residuo, impostato in fase di inizializzazione della mappa,
-	 * che verr‡ utilizzato per valorizzare la chiave della testata
+	 * che verr√† utilizzato per valorizzare la chiave della testata
 	 * questo rappresenta il CdR di primo livello associato alla uo selezionata
 	 * a meno che la uo non sia della SAC, in tal caso viene impostato con il CdR di secondo livello
 	 * 
@@ -167,7 +167,7 @@ public class CRUDRicostruzioneResiduiBP extends it.cnr.jada.util.action.SimpleCR
 
 	/**
 	 * setter del CdR del residuo, impostato in fase di inizializzazione della mappa,
-	 * che verr‡ utilizzato per valorizzare la chiave della testata
+	 * che verr√† utilizzato per valorizzare la chiave della testata
 	 * questo rappresenta il CdR di primo livello associato alla uo selezionata
 	 * a meno che la uo non sia della SAC, in tal caso viene impostato con il CdR di secondo livello
 	 * 
@@ -220,7 +220,7 @@ public class CRUDRicostruzioneResiduiBP extends it.cnr.jada.util.action.SimpleCR
 	}
 
 	/**
-	 * Il metodo stabilisce se le regole di modificabilit‡ dei campi in base all'uo, cds e cdr
+	 * Il metodo stabilisce se le regole di modificabilit√† dei campi in base all'uo, cds e cdr
 	 * ed allo s
 	 * 
 	 */
@@ -237,7 +237,7 @@ public class CRUDRicostruzioneResiduiBP extends it.cnr.jada.util.action.SimpleCR
 	}
 
 	/**
-	 * Metodo per impostare la navigabilit‡ dei campi
+	 * Metodo per impostare la navigabilit√† dei campi
 	 * 
 	 * @param context
 	 * @param bulk
@@ -379,7 +379,7 @@ public class CRUDRicostruzioneResiduiBP extends it.cnr.jada.util.action.SimpleCR
 	}
 
 	/**
-	 * getter della propriet‡ cdrSAC, impostata a true se il campo "Cdr" di questo BP Ë di tipo SAC
+	 * getter della propriet√† cdrSAC, impostata a true se il campo "Cdr" di questo BP √® di tipo SAC
 	 * 
 	 * @return
 	 */
@@ -388,7 +388,7 @@ public class CRUDRicostruzioneResiduiBP extends it.cnr.jada.util.action.SimpleCR
 	}
 
 	/**
-	 * setter della propriet‡ cdrSAC, impostata a true se il campo "Cdr" di questo BP Ë di tipo SAC
+	 * setter della propriet√† cdrSAC, impostata a true se il campo "Cdr" di questo BP √® di tipo SAC
 	 * 
 	 * @param b
 	 */

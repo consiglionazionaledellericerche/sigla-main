@@ -124,7 +124,7 @@ public CRUDCompensoBP(String function) {
  * Il compenso viene messo in Visualizzazione se :
  *	-	compenso da stipendi
  * 	-	compenso pagato (contabilizzato in cofi o registrato in fondo eco)
- * 		oppure annullato oppure Ë legato ad obbligazione riportata
+ * 		oppure annullato oppure √® legato ad obbligazione riportata
  *
 **/
 private void aggiornaStatoBP() {
@@ -361,7 +361,7 @@ public void findListaBanche(ActionContext context) throws BusinessProcessExcepti
 			//	Assegno di default la prima banca tra quelle selezionate
 			if(coll == null || coll.isEmpty()){
 				compenso.setBanca(null);
-//				throw new it.cnr.jada.comp.ApplicationException("Non esistono banche associate alla modalit‡ selezionata");
+//				throw new it.cnr.jada.comp.ApplicationException("Non esistono banche associate alla modalit√† selezionata");
 			}
 			else
 				compenso.setBanca((it.cnr.contab.anagraf00.core.bulk.BancaBulk)new java.util.Vector(coll).firstElement());
@@ -1008,7 +1008,7 @@ public boolean isRiportaIndietroButtonHidden()
 	return basicRiportaButtonHidden() || (compenso != null && !(compenso.isRiportata() || isCarryingThrough()));
 }
 /**
-  * Se l'esercizio della scrivania Ë precedente a quello solare
+  * Se l'esercizio della scrivania √® precedente a quello solare
   * non posso creare una fattura da compenso
   */
 public boolean isRODatiFatturaPerChiusura(CompensoBulk compenso)
@@ -1171,7 +1171,7 @@ public void riportaIndietro(ActionContext context)throws it.cnr.jada.action.Busi
 {
 	if (isDirty()) 
 	{
-		setMessage("Il documento Ë stato modificato! Operazione annullata.");
+		setMessage("Il documento √® stato modificato! Operazione annullata.");
 		return;
 	}
 	
@@ -1429,7 +1429,7 @@ private void validaDatiLiquidazione(ActionContext context) throws BusinessProces
 }
 /**
   * Validazione dell'obbligazione in fase di creazione di una nuova obbligazione
-  * o modifica di una gi‡ creata.
+  * o modifica di una gi√† creata.
   * Il metodo viene chiamato sul riporta dell'Obbligazione in modo da validare
   * istantaneamente l'oggetto creato.
   * Chi non ne ha bisogno lo lasci vuoto.
@@ -1440,12 +1440,12 @@ public void validaObbligazionePerDocAmm(ActionContext context, it.cnr.jada.bulk.
 /**
   * Significato codici di errore:
   *	-> 0 nessun errore
-  * -> 1 non Ë selezionato il TERZO
-  * -> 2 il TERZO non Ë valido
-  * -> 3 non Ë stato selezionato il TIPO RAPPORTO 
-  * -> 4 il TIPO RAPPORTO non Ë valido
-  * -> 5 non Ë stato selezionato il TIPO TRATTAMENTO
-  * -> 6 il TIPO TRATTAMENTO non Ë valido
+  * -> 1 non √® selezionato il TERZO
+  * -> 2 il TERZO non √® valido
+  * -> 3 non √® stato selezionato il TIPO RAPPORTO 
+  * -> 4 il TIPO RAPPORTO non √® valido
+  * -> 5 non √® stato selezionato il TIPO TRATTAMENTO
+  * -> 6 il TIPO TRATTAMENTO non √® valido
   *
 **/
 public int validaTerzo(ActionContext context, boolean aBool) throws BusinessProcessException {
@@ -1546,13 +1546,13 @@ public BigDecimal prendiUtilizzato(ActionContext context, CompensoBulk compenso,
 	}
 }
 /**
- *	Gestisce l'obbligatoriet‡ dell'inserimento o meno dell'incarico sul compenso
+ *	Gestisce l'obbligatoriet√† dell'inserimento o meno dell'incarico sul compenso
  */
 public boolean isIncaricoRequired(ActionContext context) throws BusinessProcessException {
 	return isIncaricoRequired(context, (CompensoBulk)getModel());
 }
 /**
- *	Gestisce l'obbligatoriet‡ dell'inserimento o meno dell'incarico sul compenso
+ *	Gestisce l'obbligatoriet√† dell'inserimento o meno dell'incarico sul compenso
  */
 public boolean isIncaricoRequired(ActionContext context, CompensoBulk compenso) throws BusinessProcessException {
 	try {

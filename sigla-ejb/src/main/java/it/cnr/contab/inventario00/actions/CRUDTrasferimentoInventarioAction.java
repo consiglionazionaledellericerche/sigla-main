@@ -41,9 +41,9 @@ public it.cnr.jada.action.Forward doBlankSearchFindUoDestinazione(it.cnr.jada.ac
 }
 /**
   * Gestisce il risultato di una ricerca sul Nuovo Bene Padre:
-  *	   in una operazione di trasferimento Intra-Inventario, si Ë selezionato
+  *	   in una operazione di trasferimento Intra-Inventario, si √® selezionato
   *	  un nuovo bene padre per un bene.
-  *	  Se il bene che si sta trasferendo Ë un bene principale con accessori, l'indicazione
+  *	  Se il bene che si sta trasferendo √® un bene principale con accessori, l'indicazione
   *	  del nuovo bene padre viene trasferita anche ai beni accessori.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
@@ -100,10 +100,10 @@ public Forward doBringBackSearchFindUoDestinazione(
 																					false);
 
 			if (inv_destinazione == null){
-				throw new it.cnr.jada.bulk.ValidationException("Attenzione: l'Unit‡ Organizzativa selezionata non Ë associata ad alcun Inventario.\nOperazione non possibile.");
+				throw new it.cnr.jada.bulk.ValidationException("Attenzione: l'Unit√† Organizzativa selezionata non √® associata ad alcun Inventario.\nOperazione non possibile.");
 			}
 			else if (!h.isAperto(userContext, inv_destinazione, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext))){
-				throw new it.cnr.jada.bulk.ValidationException("Attenzione: l'Inventario associato alla UO selezionata non Ë aperto.\nOperazione non possibile.");							
+				throw new it.cnr.jada.bulk.ValidationException("Attenzione: l'Inventario associato alla UO selezionata non √® aperto.\nOperazione non possibile.");							
 			}
 
 			bulk.setUo_destinazione(uo_dest);
@@ -163,7 +163,7 @@ public Forward doOnFlTrasfComePrincChange(ActionContext context) throws it.cnr.j
  *	L'utente ha selezionato il flag "Trasferisci tutti i beni", 
  *	 per una operazione di trasferimento ad un altro Inventario.
  *	Vengono cancellati tutti i beni eventualmente selezionati in precedenza e viene disabilitata
- *	 la possibilit‡ di aggiungere beni.
+ *	 la possibilit√† di aggiungere beni.
  *
  * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
  *

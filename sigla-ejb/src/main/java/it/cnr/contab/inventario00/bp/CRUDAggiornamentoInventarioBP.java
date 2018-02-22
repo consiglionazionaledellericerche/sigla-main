@@ -95,7 +95,7 @@ public OggettoBulk initializeModelForInsert(ActionContext context,OggettoBulk bu
 	return super.initializeModelForInsert(context, bulk);
 }
 /**
- * Restituisce il valore della propriet‡ 'utilizzatori'
+ * Restituisce il valore della propriet√† 'utilizzatori'
  *
  * @return utilizzatori <code>SimpleDetailCRUDController</code> il valore
  */
@@ -103,9 +103,9 @@ public final SimpleDetailCRUDController getUtilizzatori() {
 	return utilizzatori;
 }
 /**
- * Restituisce il valore della propriet‡ 'vutilizzatori'
+ * Restituisce il valore della propriet√† 'vutilizzatori'
  *
- * @return Il valore della propriet‡ 'vutilizzatori'
+ * @return Il valore della propriet√† 'vutilizzatori'
  */
 public final SimpleDetailCRUDController getVutilizzatori() {
 	return vUtilizzatori;
@@ -129,9 +129,9 @@ public it.cnr.jada.persistency.sql.CompoundFindClause getClauses() {
 	return clauses;
 }
 /**
- * Restituisce il valore della propriet‡ 'dettagliCRUDController'
+ * Restituisce il valore della propriet√† 'dettagliCRUDController'
  *
- * @return <code>SimpleDetailCRUDController</code> il valore della propriet‡ 'dettagliCRUDController'
+ * @return <code>SimpleDetailCRUDController</code> il valore della propriet√† 'dettagliCRUDController'
  */
 public final SimpleDetailCRUDController getDettagliCRUDController() {
 	 return dettagliCRUDController;
@@ -163,31 +163,31 @@ public void validate_Percentuali_LA(ActionContext context,OggettoBulk model) thr
 		while (i.hasNext()){
 			Inventario_utilizzatori_laBulk utilizzatore_LA = (Inventario_utilizzatori_laBulk)i.next();
 			
-			// Controlla che sia stata specificata la line di Attivit‡
+			// Controlla che sia stata specificata la line di Attivit√†
 			if (utilizzatore_LA.getLinea_attivita()==null || utilizzatore_LA.getLinea_attivita().getCd_linea_attivita() == null){
 				throw new ValidationException ("GAE non valido. Indicare sia il codice del GAE, sia la sua percentuale di utilizzo");
 			}
 			
-			// Controlla che non vi siano Linee di Attivit‡ DUPLICATE
+			// Controlla che non vi siano Linee di Attivit√† DUPLICATE
 			if (BulkCollections.containsByPrimaryKey(cdr,utilizzatore_LA.getLinea_attivita())){
-				throw new ValidationException ("GAE duplicato. Non Ë possibile indicare pi˘ volte uno stesso GAE");
+				throw new ValidationException ("GAE duplicato. Non √® possibile indicare pi√π volte uno stesso GAE");
 			}
 			else {
 				cdr.add(utilizzatore_LA.getLinea_attivita());
 			}
 			
-			// Controlla che sia stata indicata una PERCENTUALE DI UTILIZZO VALIDA per Linea di Attivit‡
+			// Controlla che sia stata indicata una PERCENTUALE DI UTILIZZO VALIDA per Linea di Attivit√†
 			if (utilizzatore_LA.getPercentuale_utilizzo_la()!=null){
 				percentuale_utilizzo_LA = percentuale_utilizzo_LA.add(utilizzatore_LA.getPercentuale_utilizzo_la());
 			}
 			else{
-				throw new ValidationException ("La percentuale di utilizzo per i GAE non puÚ essere nulla");
+				throw new ValidationException ("La percentuale di utilizzo per i GAE non pu√≤ essere nulla");
 			}
 		}
 
-		// Controlla che il totale delle percentuali di utilizzo delle Linee di Attivit‡ sia 100
+		// Controlla che il totale delle percentuali di utilizzo delle Linee di Attivit√† sia 100
 		if (percentuale_utilizzo_LA.compareTo(cento)!=0)
-			throw new ValidationException ("La percentuale di utilizzo per i GAE non Ë valida");
+			throw new ValidationException ("La percentuale di utilizzo per i GAE non √® valida");
 	}
 }
  
@@ -283,7 +283,7 @@ public void deselectAll(it.cnr.jada.action.ActionContext context) {}
    *
    * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
    * @param no_accessori <code>boolean</code> indica se escludere i beni accessori dalla ricerca
-   * @param beni_da_escludere <code>SimpleBulkList</code> i beni da escludere dalla ricerca, magari perchË gi‡ selezionati
+   * @param beni_da_escludere <code>SimpleBulkList</code> i beni da escludere dalla ricerca, magari perch√® gi√† selezionati
    * @param clauses <code>CompoundFindClause</code> le clausole della selezione.
    *
    * @return l'Iteratore <code>RemoteIterator</code> sui beni trovati.

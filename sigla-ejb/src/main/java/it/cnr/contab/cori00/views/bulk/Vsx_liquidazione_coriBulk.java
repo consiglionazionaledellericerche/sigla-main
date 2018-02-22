@@ -16,12 +16,12 @@ public Vsx_liquidazione_coriBulk() {
 	super();
 }
 /**
-  * Imposta le propriet‡ del Vsx_liquidazione_cori.
+  * Imposta le propriet√† del Vsx_liquidazione_cori.
   *	E' stata generata la richiesta di effettuare una liquidazione: l'utente ha selezionato
   *	i gruppi CORI da liquidare, i quali vengono utilizzati per popolare le tabelle dalle
-  *	quali la procedura di liquidazione andr‡ a prelevare i dati.
-  *	Il metodo setta le varie propriet‡ del Vsx_liquidazione_cori, sulla base del gruppo
-  *	di riferimento. Il bulk cosÏ creato verr‡ poi inserito in tabella.
+  *	quali la procedura di liquidazione andr√† a prelevare i dati.
+  *	Il metodo setta le varie propriet√† del Vsx_liquidazione_cori, sulla base del gruppo
+  *	di riferimento. Il bulk cos√¨ creato verr√† poi inserito in tabella.
   *	
   * @param gruppo il <code>Liquid_gruppo_coriBulk</code> gruppo da liquidare.
 **/  

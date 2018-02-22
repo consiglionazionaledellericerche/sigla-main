@@ -143,7 +143,7 @@ public class ReversaleComponent extends it.cnr.jada.comp.CRUDComponent implement
   *    PostCondition:
   *      Vengono recuperati dai dettagli della scadenza dell'accertamento, associata alla riga della reversale, 
   *      le voci del piano i cui saldi devono essere incrementati e viene richiesto alla component che gestisce i saldi
-  *      di effettuare l'aggiornamento delle voci e di verificare la disponibilit‡ di cassa per ogni voce
+  *      di effettuare l'aggiornamento delle voci e di verificare la disponibilit√† di cassa per ogni voce
   *		 (metodo aggiornaMandatiReversali)
   *  modifica riga - annullamento
   *    PreCondition:
@@ -273,7 +273,7 @@ private void aggiornaCapitoloSaldoRiga (UserContext aUC,Reversale_rigaBulk riga,
   *      pagata con la riga della reversale dell'importo della riga della reversale
   *      (scadenza.im_associato_doc_contabile = scadenza.im_associato_doc_contabile - reversale_riga.im_reversale_riga)
   *		 (metodo aggiornaImportoAccertamentoPerRiga)
-  *  modifica riga - modifica modalit‡ pagamento
+  *  modifica riga - modifica modalit√† pagamento
   *    PreCondition:
   *      E' stata modificata una riga di reversale, ma il suo importo non e' stato modificato
   *    PostCondition:
@@ -308,7 +308,7 @@ private void aggiornaImportoAccertamenti ( UserContext userContext, ReversaleBul
 				accertScadTable.put( scadenza, scadenza );
 			}	
 			else
-				// scadenza gi‡ letto da db			
+				// scadenza gi√† letto da db			
 				scadenza = (Accertamento_scadenzarioBulk) accertScadTable.get( scadenza );
 			if ( scadenza == null )
 				throw  new ApplicationException( "Non esiste la scadenza" );
@@ -321,7 +321,7 @@ private void aggiornaImportoAccertamenti ( UserContext userContext, ReversaleBul
 				accertamentiTable.put( accertamento, accertamento );
 			}	
 			else
-				// scadenza gi‡ letta da db			
+				// scadenza gi√† letta da db			
 				accertamento = (AccertamentoBulk) accertamentiTable.get( accertamento ) ;
 
 			aggiornaImportoAccertamentoPerRiga( userContext, riga, scadenza );
@@ -370,7 +370,7 @@ private void aggiornaImportoAccertamenti ( UserContext userContext, ReversaleBul
   *      Viene decrementato l'importo associato ai documenti contabili della scadenza di accertamento
   *      pagata con la riga della reversale dell'importo della riga della reversale
   *      (scadenza.im_associato_doc_contabile = scadenza.im_associato_doc_contabile - reversale_riga.im_reversale_riga)
-  *  modifica riga - modifica modalit‡ pagamento
+  *  modifica riga - modifica modalit√† pagamento
   *    PreCondition:
   *      E' stata modificata una riga di reversale, ma il suo importo non e' stato modificato
   *    PostCondition:
@@ -396,7 +396,7 @@ private void aggiornaImportoAccertamentoPerRiga ( UserContext userContext, Rever
 	{
 		java.math.BigDecimal importo = null;
 		// (29/10/2003 12.40.38) Giorgio Massussi
-		// Sostituito getHome() con getTempHome() perchË se arrivo da annullaMandato puÚ essere che la
+		// Sostituito getHome() con getTempHome() perch√® se arrivo da annullaMandato pu√≤ essere che la
 		// riga del mandato sia stata appena caricata da db e successivamente modificata; se uso
 		// la stessa HomeCache la rilettura mi seppellisce le modifiche!
 		Reversale_rigaBulk rigaDaDB = (Reversale_rigaBulk) getTempHome(userContext, riga.getClass()).findByPrimaryKey(riga);
@@ -425,7 +425,7 @@ private void aggiornaImportoAccertamentoPerRiga ( UserContext userContext, Rever
   *		 l'importo specificato dall'utente e' superiore all'importo disponibile del sospeso (importo disponibile =
   *      sospeso.im_sospeso - sospeso.im_associati)
   *    PostCondition:
-  *      Viene segnalato all'utente l'impossibilit‡ di creare l'associazione Reversale-Sospeso
+  *      Viene segnalato all'utente l'impossibilit√† di creare l'associazione Reversale-Sospeso
   *  modifica sospeso
   *    PreCondition:
   *      E' stata generata la richiesta di modifica dell'importo di una associazione Reversale-Sospeso (Sospeso_det_etrBulk) e 
@@ -444,7 +444,7 @@ private void aggiornaImportoAccertamentoPerRiga ( UserContext userContext, Rever
   *      superiore all'importo disponibile del sospeso (importo disponibile =
   *      sospeso.im_sospeso - sospeso.im_associati)
   *    PostCondition:
-  *      Viene segnalato all'utente l'impossibilit‡ di aggiornare l'associazione Reversale-Sospeso
+  *      Viene segnalato all'utente l'impossibilit√† di aggiornare l'associazione Reversale-Sospeso
   *  cancellazione sospeso
   *    PreCondition:
   *      E' stata generata la richiesta di cancellazione di una associazione Reversale-Sospeso (Sospeso_det_etrBulk) 
@@ -473,7 +473,7 @@ private ReversaleBulk aggiornaImportoSospesi (UserContext aUC,ReversaleBulk reve
 			if ( sde.isToBeCreated() )
 			{
 				if ( sde.getIm_associato().compareTo( sospeso.getIm_disponibile() ) > 0 )
-					throw new ApplicationException( "L'Importo specificato per il sospeso deve essere inferiore all'Ulteriore disponibilit‡ su sospeso");
+					throw new ApplicationException( "L'Importo specificato per il sospeso deve essere inferiore all'Ulteriore disponibilit√† su sospeso");
 				sospeso.setIm_associato( sospeso.getIm_associato().add( sde.getIm_associato()));
 			}	
 			else if ( sde.isToBeDeleted())
@@ -499,7 +499,7 @@ private ReversaleBulk aggiornaImportoSospesi (UserContext aUC,ReversaleBulk reve
 		}
 /*  24/09/2002
 	Commentata la chiamata al metodo per l'impostazione dell'importo incassato della 
-	Reversale, in quanto adesso non si imposta pi˘ a INCASSATO lo stato di una Reversale, 
+	Reversale, in quanto adesso non si imposta pi√π a INCASSATO lo stato di una Reversale, 
 	quando viene associata ad un sospeso */
 //		reversale.setIm_incassato( totSospesi );
 //		reversale.setToBeUpdated();
@@ -616,7 +616,7 @@ private void aggiornaSaldoIncassato (UserContext userContext,ReversaleBulk rever
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param reversale <code>ReversaleBulk</code> la reversale
-  * @param action <code>String</code> azione che puÚ assumere valori inserimento/annullamento
+  * @param action <code>String</code> azione che pu√≤ assumere valori inserimento/annullamento
   *
 */
 private void aggiornaStatoFattura ( UserContext userContext, ReversaleBulk reversale, String action ) throws ComponentException
@@ -656,26 +656,26 @@ private void aggiornaStatoFattura ( UserContext userContext, ReversaleBulk rever
   *      Il codice terzo dei documenti amministrativi attivi da aggiungere alla reversale non e'
   *      lo stesso per tutti i documenti
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di aggiungere i documenti alla reversale
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di aggiungere i documenti alla reversale
   *  errore - classe di pagamento
   *    PreCondition:
   *      La classe di pagamento (Bancario,Postale,etc.) dei documenti amministrativi attivi da aggiungere alla reversale 
   *      non e' lo stesso per tutti i documenti.
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di aggiungere i documenti alla reversale
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di aggiungere i documenti alla reversale
   *  errore - reversale di regolarizzazione 
   *    PreCondition:
   *      I documenti amministrativi attivi selezionati per essere aggiunti ad una reversale di regolarizzazione sono stati 
   *      contabilizzati in parte su accertamenti relativi a capitoli di bilancio e in parte su accertamenti 
   *      relativi a partite di giro.
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di aggiungere i documenti alla reversale
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di aggiungere i documenti alla reversale
   *  errore - Tipo competenza/residuo
   *    PreCondition:
   *      Il tipo (Competenza,Residuo) dei documenti amministrativi attivi da aggiungere alla reversale 
   *      non e' lo stesso per tutti i documenti.
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di aggiungere i documenti alla reversale
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di aggiungere i documenti alla reversale
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param reversale <code>ReversaleBulk</code> la reversale da aggiornare
@@ -970,7 +970,7 @@ public ReversaleBulk annullaReversale(UserContext userContext, ReversaleBulk rev
   *    PreCondition:
   *      E' stata generata la richiesta di annullare una Reversale che ha riscontri associati
   *    PostCondition:
-  *      Una segnalazione di errore comunica all'utente l'impossibilit‡ di eseguire l'annullamento
+  *      Una segnalazione di errore comunica all'utente l'impossibilit√† di eseguire l'annullamento
   *  
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param reversale <code>ReversaleBulk</code> la reversale da annullare
@@ -984,11 +984,11 @@ public ReversaleBulk annullaReversale(UserContext userContext, ReversaleBulk rev
 	try
 	{
 		if ( reversale.isAnnullato()  )
-			throw handleException( new ApplicationException( "La reversale e' gi‡ stata annullata") );
+			throw handleException( new ApplicationException( "La reversale e' gi√† stata annullata") );
 		verificaStatoEsercizio( userContext, reversale.getEsercizio(), reversale.getCd_cds() );				
 		BigDecimal totdettagli = ((Sospeso_det_etrHome)getHome( userContext, Sospeso_det_etrBulk.class )).calcolaTotDettagli( new V_mandato_reversaleBulk( reversale.getEsercizio(), reversale.getCd_tipo_documento_cont(),reversale.getCd_cds(), reversale.getPg_reversale() ));	
 		if ( totdettagli.compareTo( new BigDecimal(0)) > 0 )			
-			throw new ApplicationException( "Annullamento impossibile! La reversale e' gi‡ stata associata ad un riscontro");
+			throw new ApplicationException( "Annullamento impossibile! La reversale e' gi√† stata associata ad un riscontro");
 		
 //		verificaReversale( userContext, reversale, true );
 		Sospeso_det_etrBulk sde;
@@ -1049,7 +1049,7 @@ public ReversaleBulk annullaReversale(UserContext userContext, ReversaleBulk rev
 			annullaDocContabiliCollegati( userContext, reversale );
 /*  24/09/2002
 	Commentata la chiamata alla stored procedure per l'aggiornamento dei saldi,
-	in quanto adesso non si imposta pi˘ a INCASSATO lo stato di una Reversale, 
+	in quanto adesso non si imposta pi√π a INCASSATO lo stato di una Reversale, 
 	quando viene associata ad un sospeso */
 		// if ( reversale.getIm_reversale().compareTo( reversale.getIm_incassato()) == 0 )
 		//	aggiornaSaldoPagato( userContext, reversale, ANNULLAMENTO_REVERSALE_ACTION );
@@ -1191,7 +1191,7 @@ public void annullaReversaleDiTrasferimento(UserContext userContext, ReversaleBu
   *     Vengono ricercati tutti i sospesi di entrata che non sono ancora stati associati alla reversale 
   *     con cds appartenza uguale al cds appartenenza della reversale,
   *     uo origine uguale all'uo di scrivania, importo disponibile (importo disponibile = importo iniziale del sospeso -
-  *     importo gi‡ associato a reversali) maggiore di zero (metodo findSospesiDiEntrata)
+  *     importo gi√† associato a reversali) maggiore di zero (metodo findSospesiDiEntrata)
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param clausole le clausole specificate dall'utente
@@ -1357,7 +1357,7 @@ public OggettoBulk creaConBulk (UserContext userContext,OggettoBulk bulk) throws
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> la reversale da creare
-  * @param verificaDt_emissione booleano che indica se Ë necessario o meno verificare la dt_emissione della reversale
+  * @param verificaDt_emissione booleano che indica se √® necessario o meno verificare la dt_emissione della reversale
   *
   * @return OggettoBulk la Reversale creata
 */
@@ -1392,7 +1392,7 @@ public OggettoBulk creaConBulk (UserContext userContext,OggettoBulk bulk, boolea
 	
 /*  24/09/2002
 	Commentata la chiamata alla stored procedure per l'aggiornamento dei saldi,
-	in quanto adesso non si imposta pi˘ a INCASSATO lo stato di una Reversale, 
+	in quanto adesso non si imposta pi√π a INCASSATO lo stato di una Reversale, 
 	quando viene associata ad un sospeso */
 	// if ( reversale.getIm_incassato().compareTo( reversale.getIm_reversale()) == 0 )
 	//	aggiornaSaldoPagato( userContext, reversale, INSERIMENTO_REVERSALE_ACTION );
@@ -1844,13 +1844,13 @@ private Reversale_rigaBulk creaReversaleRiga(UserContext userContext, ReversaleB
 		BancaBulk banca = new BancaBulk( dRiga.getCd_terzo_uo_cds(), dRiga.getPg_banca_uo_cds() );
 		riga.setBanca( banca );
 
-		//imposto le modalit‡ di pagamento del terzo uo
+		//imposto le modalit√† di pagamento del terzo uo
 		Modalita_pagamentoBulk mod_pagamento = new Modalita_pagamentoBulk( dRiga.getCd_modalita_pag_uo_cds(), dRiga.getCd_terzo_uo_cds());
 		riga.setModalita_pagamento( mod_pagamento );
 
 		reversale.getReversale_rigaColl().add( riga );
 
-		//Carico automaticamente i codici SIOPE e visualizzo quelli ancora collegabili se la gestione Ë attiva
+		//Carico automaticamente i codici SIOPE e visualizzo quelli ancora collegabili se la gestione √® attiva
 		if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext, reversale.getEsercizio()).getFl_siope().booleanValue()) {
 			riga = aggiornaLegameSIOPE(userContext, riga);
 			riga = setCodiciSIOPECollegabili(userContext, riga);
@@ -1950,7 +1950,7 @@ private Reversale_rigaBulk creaReversaleRiga (UserContext userContext, Reversale
   *    PostCondition:
   *      Viene creata una riga di reversale (metodo 'creaReversaleRigaSenzaModalitaPag')
   *		Vengono inoltre impostati come dati relativi
-  *      alla banca e alla modalit‡ di pagamento quelli presenti nel documento amministrativo
+  *      alla banca e alla modalit√† di pagamento quelli presenti nel documento amministrativo
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param reversale <code>ReversaleBulk</code> la reversale
@@ -1981,7 +1981,7 @@ private Reversale_rigaBulk creaReversaleRigaConModalitaPag (UserContext userCont
 		riga.setBanca( banca );
 		riga.setBancaOptions( findBancaOptions( userContext, riga));
 
-		//imposto le modalit‡ di pagamento del terzo uo
+		//imposto le modalit√† di pagamento del terzo uo
 		Modalita_pagamentoBulk mod_pagamento = new Modalita_pagamentoBulk();
 		mod_pagamento.setTerzo( terzo_uo );
 		Rif_modalita_pagamentoBulk rif_modalita_pagamento = new Rif_modalita_pagamentoBulk( docAttivo.getCd_modalita_pag());
@@ -2042,7 +2042,7 @@ private Reversale_rigaBulk creaReversaleRigaSenzaModalitaPag (UserContext userCo
 
 		((ReversaleIBulk) reversale).addToReversale_rigaColl( riga, docAttivo );
 
-		//Carico automaticamente i codici SIOPE e visualizzo quelli ancora collegabili se la gestione Ë attiva
+		//Carico automaticamente i codici SIOPE e visualizzo quelli ancora collegabili se la gestione √® attiva
 		if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext, reversale.getEsercizio()).getFl_siope().booleanValue()) {
 			riga = (Reversale_rigaIBulk)aggiornaLegameSIOPE(userContext, riga);
 			riga = (Reversale_rigaIBulk)setCodiciSIOPECollegabili(userContext, riga);
@@ -2134,12 +2134,12 @@ private Reversale_terzoBulk creaReversaleTerzo (UserContext userContext, Reversa
   *    PreCondition:
   *      E' stata generata la richiesta di creazione di una Reversale_terzoBulk per una Reversale
   *    PostCondition:
-  *      Viene creata una istanza di Reversale_terzoBulk con unit‡ organizzativa del Cnr e viene impostato
+  *      Viene creata una istanza di Reversale_terzoBulk con unit√† organizzativa del Cnr e viene impostato
   *      il tipo bollo di default.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param reversale <code>ReversaleBulk</code> la reversale
-  * @param cd_unita_organizzativa Il codice dell'unit‡ organizzativa della reversale
+  * @param cd_unita_organizzativa Il codice dell'unit√† organizzativa della reversale
   *
   * @return rTerzo l'istanza di <code>Reversale_terzoBulk</code> creata
   */
@@ -2458,7 +2458,7 @@ public Documento_generico_rigaBulk docGenerico_creaDocumentoGenericoRiga (UserCo
 		riga.setCognome( anagrafico.getCognome());
 		riga.setCodice_fiscale( anagrafico.getCodice_fiscale());
 		riga.setPartita_iva( anagrafico.getPartita_iva());
-		/* tutti duplicati perchË altrimenti non funziona */
+		/* tutti duplicati perch√® altrimenti non funziona */
 		riga.setCd_terzo_uo_cds( mRiga.getCd_terzo() );   //CDS
 		riga.setTerzo_uo_cds( new TerzoBulk( mRiga.getCd_terzo()));
 		riga.setCd_modalita_pag_uo_cds( mRiga.getCd_modalita_pag());
@@ -2586,11 +2586,11 @@ public Documento_generico_rigaBulk docGenerico_creaDocumentoGenericoRiga (UserCo
 		sql.addClause( "AND", "dt_canc", sql.ISNULL, null );		
 		List result = getHome( userContext, TerzoBulk.class ).fetchAll( sql );
 		if ( result == null || result.size() == 0 )
-				throw handleException( new ApplicationException(" Impossibile emettere la reversale: l'unit‡ organizzativa " + documento.getCd_unita_organizzativa() + " non e' stata codificata in anagrafica"));
+				throw handleException( new ApplicationException(" Impossibile emettere la reversale: l'unit√† organizzativa " + documento.getCd_unita_organizzativa() + " non e' stata codificata in anagrafica"));
 		TerzoBulk terzo_uo = (TerzoBulk) result.get(0);
 		riga.setCd_terzo_uo_cds( terzo_uo.getCd_terzo());   
 		riga.setTerzo_uo_cds( terzo_uo );
-		//modalit‡ pagamento
+		//modalit√† pagamento
 		sql = getHome( userContext, Modalita_pagamentoBulk.class ).createSQLBuilder();
 		sql.addClause( "AND", "cd_terzo", sql.EQUALS, terzo_uo.getCd_terzo());
 		sql.addClause( "AND", "cd_terzo_delegato", sql.ISNULL, null );
@@ -2599,7 +2599,7 @@ public Documento_generico_rigaBulk docGenerico_creaDocumentoGenericoRiga (UserCo
 		sql.addSQLClause( "AND", "TI_PAGAMENTO", sql.EQUALS, Rif_modalita_pagamentoBulk.BANCARIO);		
 		result = getHome( userContext, Modalita_pagamentoBulk.class ).fetchAll( sql );
 		if ( result == null || result.size() == 0 )
-				throw handleException( new ApplicationException(" Impossibile emettere la reversale: l'unit‡ organizzativa " + documento.getCd_unita_organizzativa() + " non ha modalit‡ di pagamento associate"));
+				throw handleException( new ApplicationException(" Impossibile emettere la reversale: l'unit√† organizzativa " + documento.getCd_unita_organizzativa() + " non ha modalit√† di pagamento associate"));
 		Modalita_pagamentoBulk mp = (Modalita_pagamentoBulk)result.get(0);		
 		
 		riga.setCd_modalita_pag_uo_cds( mp.getCd_modalita_pag());
@@ -2635,7 +2635,7 @@ public Documento_generico_rigaBulk docGenerico_creaDocumentoGenericoRiga (UserCo
 		}	
 		result = getHome( userContext, BancaBulk.class ).fetchAll( sql );
 		if ( result == null || result.size() == 0 )
-				throw handleException( new ApplicationException(" Impossibile emettere la reversale: l'unit‡ organizzativa " + documento.getCd_unita_organizzativa() + " non ha coordinate bancarie associate"));
+				throw handleException( new ApplicationException(" Impossibile emettere la reversale: l'unit√† organizzativa " + documento.getCd_unita_organizzativa() + " non ha coordinate bancarie associate"));
 		BancaBulk banca = (BancaBulk)result.get(0);		
 
 		riga.setPg_banca_uo_cds( banca.getPg_banca());
@@ -2729,8 +2729,8 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws it.c
 //			updateBulk( userContext, riga);
 			aggiornaCapitoloSaldoRiga( userContext, riga, session );		
 		}
-		/* simona 9.12.2002 commentato perchË altrimenti il doc. generico TRASF_E veniva annullato
-		   e successivamente non si riusciva pi˘ ad annullare il mandato di accreditamento collegato alla reversale
+		/* simona 9.12.2002 commentato perch√® altrimenti il doc. generico TRASF_E veniva annullato
+		   e successivamente non si riusciva pi√π ad annullare il mandato di accreditamento collegato alla reversale
 		aggiornaStatoFattura( userContext, reversale, ANNULLAMENTO_REVERSALE_ACTION );
 		*/
 		aggiornaImportoAccertamenti(userContext, reversale );
@@ -2766,17 +2766,17 @@ public List findBancaOptions (UserContext userContext,Reversale_rigaIBulk riga) 
 	return getHome( userContext, BancaBulk.class ).fetchAll( sql );
 }
 /** 
-  *  lista le modalit‡ di pagamento
+  *  lista le modalit√† di pagamento
   *    PreCondition:
   *      E' stato creata una riga di reversale con tipologia diversa da quella di regolarizzazione e di trasferimento
   *    PostCondition:
-  *     La lista delle modalit‡ di pagamento del terzo debitore, tutte appartenenti alla stessa classe (Bancario/Postale/..) 
+  *     La lista delle modalit√† di pagamento del terzo debitore, tutte appartenenti alla stessa classe (Bancario/Postale/..) 
   *		per cui si sta emettendo la reversale, viene estratta
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param riga <code>Reversale_rigaIBulk</code> la riga della reversale
   *
-  * @return List la lista delle modalit‡ di pagamento definite per il terzo della reversale
+  * @return List la lista delle modalit√† di pagamento definite per il terzo della reversale
 */
 public List findModalita_pagamentoOptions (UserContext userContext,Reversale_rigaIBulk riga) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException, ComponentException
 {
@@ -2815,14 +2815,14 @@ public List findTipoBolloOptions (UserContext userContext,ReversaleBulk reversal
   *  ricerca uo a cui assegnare la reversale per cds diverso da SAC
   *    PreCondition:
   *      E' stato generata la richiesta di creazione di una reversale di trasferimento
-  *      Il Cds beneficiario dell'accreditamento Ë diverso dal SAC
+  *      Il Cds beneficiario dell'accreditamento √® diverso dal SAC
   *    PostCondition:
   *     L'UO-cds del Cds beneficiario dell'accreditamento viene restituito
   *
   *  ricerca uo a cui assegnare la reversale per cds uguale a SAC  
   *    PreCondition:
   *      E' stato generata la richiesta di creazione di una reversale di trasferimento
-  *      Il Cds beneficiario dell'accreditamento Ë uguale al SAC
+  *      Il Cds beneficiario dell'accreditamento √® uguale al SAC
   *    PostCondition:
   *     Viene letta da Configurazione CNR il codice dell'uo per l'accreditamento SAC e vengono resituiti
   *     i dati di tale UO
@@ -2836,7 +2836,7 @@ private Unita_organizzativaBulk findUnita_organizzativa (UserContext userContext
 {
 	try
 	{
-		//verifico se Ë il cds SAC
+		//verifico se √® il cds SAC
 		boolean isSac = false;
 		SQLBuilder sql = getHome( userContext, CdsBulk.class ).createSQLBuilder();
 		sql.addSQLClause( "AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS, mandato.getCodice_cds());
@@ -2853,7 +2853,7 @@ private Unita_organizzativaBulk findUnita_organizzativa (UserContext userContext
 			sql.addSQLClause( "AND", "FL_UO_CDS", sql.EQUALS, "Y");
 			result = getHome( userContext, Unita_organizzativaBulk.class ).fetchAll( sql );
 			if ( result.size() != 1 )
-				throw new ApplicationException( "Non Ë possibile identificare l'uo-cds per il Cds " + mandato.getCodice_cds() );
+				throw new ApplicationException( "Non √® possibile identificare l'uo-cds per il Cds " + mandato.getCodice_cds() );
 			return ((Unita_organizzativaBulk)result.get(0));
 		}
 		else
@@ -2878,23 +2878,23 @@ private Unita_organizzativaBulk findUnita_organizzativa (UserContext userContext
 
 }
 /** 
-  *  lista le unit‡ organizzative - scrivania = Ente
+  *  lista le unit√† organizzative - scrivania = Ente
   *    PreCondition:
-  *      E' stata richiesta una lista delle unit‡ organizzative per cui Ë possibile emettere una reversale e
-  *      l'unit‡ organizzativa di scrivania e' l'UO Ente
+  *      E' stata richiesta una lista delle unit√† organizzative per cui √® possibile emettere una reversale e
+  *      l'unit√† organizzativa di scrivania e' l'UO Ente
   *    PostCondition:
   *     Una lista comprendente solo l'UO Ente viene restituita
-  *  lista le unit‡ organizzative - scrivania diversa da UO Ente
+  *  lista le unit√† organizzative - scrivania diversa da UO Ente
   *    PreCondition:
-  *      E' stata richiesta una lista delle unit‡ organizzative per cui Ë possibile emettere una reversale e
-  *      l'unit‡ organizzativa di scrivania e' diversa dall'UO Ente
+  *      E' stata richiesta una lista delle unit√† organizzative per cui √® possibile emettere una reversale e
+  *      l'unit√† organizzativa di scrivania e' diversa dall'UO Ente
   *    PostCondition:
   *     Una lista comprendente l'UO Ente e l'UO di scrivania viene restituita
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param reversale <code>ReversaleBulk</code> la reversale
   *
-  * @return List la lista delle unit‡ organizzative definite per la reversale
+  * @return List la lista delle unit√† organizzative definite per la reversale
 */
 public List findUnita_organizzativaOptions (UserContext userContext,ReversaleBulk reversale) throws it.cnr.jada.persistency.PersistencyException, it.cnr.jada.persistency.IntrospectionException, ComponentException
 {
@@ -2982,7 +2982,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 		for ( Iterator i = reversale.getReversale_rigaColl().iterator(); i.hasNext(); )
 		{
 			riga = (Reversale_rigaBulk) super.inizializzaBulkPerModifica( aUC, (Reversale_rigaBulk) i.next());
-			//Carico automaticamente i codici SIOPE e visualizzo quelli ancora collegabili se la gestione Ë attiva
+			//Carico automaticamente i codici SIOPE e visualizzo quelli ancora collegabili se la gestione √® attiva
 			if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, reversale.getEsercizio()).getFl_siope().booleanValue()) {
 				riga.setReversale_siopeColl(new BulkList(((Reversale_rigaHome) getHome( aUC, Reversale_rigaBulk.class)).findCodiciCollegatiSIOPE(aUC, riga)));
 				setCodiciSIOPECollegabili(aUC, riga);
@@ -3216,7 +3216,7 @@ private void inizializzaTi_fattura (UserContext userContext,Reversale_rigaBulk r
   *     - cds di appartenenza uguale al cds per cui si vuole emettere la reversale
   *     - (im_scadenza-im_associato_doc_contabile) della scadenza di accertamento su cui il documento amm.
   *       e' stato contabilizzato maggiore di zero
-  *     Fra tutti i documenti individuati vengono esclusi quelli che eventualmente sono gi‡ stati selezionati
+  *     Fra tutti i documenti individuati vengono esclusi quelli che eventualmente sono gi√† stati selezionati
   *     per questa reversale
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -3236,7 +3236,7 @@ public ReversaleBulk listaDocAttivi(UserContext aUC, ReversaleBulk reversale) th
 		if (result.size() == 0)
 			throw new ApplicationException( "La ricerca non ha fornito alcun risultato." );
 			
-		//elimino dal risultato i doc attivi gi‡ selezionati per questa reversale
+		//elimino dal risultato i doc attivi gi√† selezionati per questa reversale
 
 		for ( Iterator j = result.iterator(); j.hasNext(); )
 		{
@@ -3279,7 +3279,7 @@ public ReversaleBulk listaDocAttivi(UserContext aUC, ReversaleBulk reversale) th
   *      (metodo verificaReversale)
   *    PostCondition:
   *      Vengono aggiornati gli importi dei sospesi eventualmente associati alla reversale (metodo aggiornaImportoSospesi) 
-  *      e vengono aggiornate le eventuali modifiche alle modalit‡ di pagamento e al tipo bollo della reversale
+  *      e vengono aggiornate le eventuali modifiche alle modalit√† di pagamento e al tipo bollo della reversale
   *  modifica reversale provvisoria
   *    PreCondition:
   *      E' stata generata la richiesta di modifica di una Reversale provvisoria (TIPO_REV_PROVV) e la reversale supera la 
@@ -3477,31 +3477,31 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_gi
 			throw new ValidationException("Il campo CDS e' obbligatorio");
 
 		if (stampa.getDataInizio()==null)
-			throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 		if (stampa.getDataFine()==null)
-			throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 
 		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere inferiore a " + formatter.format(firstDayOfYear));
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere inferiore a " + formatter.format(firstDayOfYear));
 		}
 		if (stampa.getDataFine().compareTo(dataOdierna)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non puÚ essere superiore a " + formatter.format(dataOdierna));
+			throw new ValidationException("La DATA di FINE PERIODO non pu√≤ essere superiore a " + formatter.format(dataOdierna));
 		}
 
 		if (stampa.getPgInizio()==null)
-			throw new ValidationException("Il campo NUMERO INIZIO REVERSALE Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO INIZIO REVERSALE √® obbligatorio");
 		if (stampa.getPgFine()==null)
-			throw new ValidationException("Il campo NUMERO FINE REVERSALE Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO FINE REVERSALE √® obbligatorio");
 		if (stampa.getPgInizio().compareTo(stampa.getPgFine())>0)
-			throw new ValidationException("Il NUMERO INIZIO REVERSALE non puÚ essere superiore al NUMERO FINE REVERSALE");
+			throw new ValidationException("Il NUMERO INIZIO REVERSALE non pu√≤ essere superiore al NUMERO FINE REVERSALE");
 
 		//if (stampa.getCdUOEmittenteForPrint()==null)
-			//throw new ValidationException("Il campo UO EMITTENTE Ë obbligatorio");
+			//throw new ValidationException("Il campo UO EMITTENTE √® obbligatorio");
 
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);
@@ -3522,75 +3522,75 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_vp
 			throw new ValidationException("Il campo CDS e' obbligatorio");
 
 		if (stampa.getDataInizio()==null)
-			throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 		if (stampa.getDataFine()==null)
-			throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 
 		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere inferiore a " + formatter.format(firstDayOfYear));
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere inferiore a " + formatter.format(firstDayOfYear));
 		}
 		if (stampa.getDataFine().compareTo(dataOdierna)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non puÚ essere superiore a " + formatter.format(dataOdierna));
+			throw new ValidationException("La DATA di FINE PERIODO non pu√≤ essere superiore a " + formatter.format(dataOdierna));
 		}
 
 		if (stampa.getPgInizio()==null)
-			throw new ValidationException("Il campo NUMERO INIZIO MANDATO Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO INIZIO MANDATO √® obbligatorio");
 		if (stampa.getPgFine()==null)
-			throw new ValidationException("Il campo NUMERO FINE MANDATO Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO FINE MANDATO √® obbligatorio");
 		if (stampa.getPgInizio().compareTo(stampa.getPgFine())>0)
-			throw new ValidationException("Il NUMERO INIZIO MANDATO non puÚ essere superiore al NUMERO FINE MANDATO");
+			throw new ValidationException("Il NUMERO INIZIO MANDATO non pu√≤ essere superiore al NUMERO FINE MANDATO");
 
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);
 	}
 }
 /**
-  *  verifica reversale - errore modalit‡ di pagamento
+  *  verifica reversale - errore modalit√† di pagamento
   *    PreCondition:
   *     E' stata richiesta la creazione/modifica di una reversale
   *     Le righe della reversale hanno come tipo di pagamento BANCARIO o POSTALE o QUIETANZA o ALTRO
-  *     Le righe della reversale hanno modalit‡ di pagamento differenti
+  *     Le righe della reversale hanno modalit√† di pagamento differenti
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare la reversale
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare la reversale
   *  verifica reversale - errore mod. pagamento bancario
   *    PreCondition:
   *     E' stata richiesta la creazione/modifica di una reversale
   *     Le righe della reversale hanno come tipo di pagamento BANCARIO
   *     Le righe della reversale hanno coordinate bancarie (abi, cab, nr conto) differenti
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare la reversale
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare la reversale
   *  verifica reversale - errore mod. pagamento postale
   *    PreCondition:
   *     E' stata richiesta la creazione/modifica di una reversale
   *     Le righe della reversale hanno come tipo di pagamento POSTALE
   *     Le righe della reversale hanno coordinate postali ( nr conto ) differenti
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare la reversale
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare la reversale
   *  verifica reversale - errore mod. pagamento quietanza
   *    PreCondition:
   *     E' stata richiesta la creazione/modifica di una reversale
   *     Le righe della reversale hanno come tipo di pagamento QUIETANZA
   *     Le righe della reversale hanno quietanze differenti
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare la reversale
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare la reversale
   *  verifica reversale - errore mod. pagamento quietanza
   *    PreCondition:
   *     E' stata richiesta la creazione/modifica di una reversale
   *     Le righe della reversale hanno come tipo di pagamento ALTRO
   *     Le righe della reversale hanno intestazioni differenti
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare la reversale
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare la reversale
   *  verifica reversale - ok
   *    PreCondition:
   *     E' stata richiesta la creazione/modifica di una reversale
   *     Le righe della reversale hanno la stesse coordinate di pagamento
   *    PostCondition:
-  *     La reversale ha superato la validazione e puÚ pertanto essere salvata
+  *     La reversale ha superato la validazione e pu√≤ pertanto essere salvata
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param reversale <code>ReversaleBulk</code> la reversale di cui si verifica la correttezza
@@ -3626,7 +3626,7 @@ private void verificaModalitaPagamento (UserContext aUC,ReversaleBulk reversale)
 		String intestazione = riga.getBanca().getIntestazione();
 		String cd_modalita_pag = riga.getModalita_pagamento().getCd_modalita_pag();
 
-		/* verifico che ogni riga abbia le modalit‡ di pagamento e gli attributi della banca uguali */
+		/* verifico che ogni riga abbia le modalit√† di pagamento e gli attributi della banca uguali */
 		/* vengono escluse dal test le note di debito e le note di credito */
 		
 		for ( Iterator i = reversale.getReversale_rigaColl().iterator(); i.hasNext(); )
@@ -3635,24 +3635,24 @@ private void verificaModalitaPagamento (UserContext aUC,ReversaleBulk reversale)
 
 //			if ( Numerazione_doc_ammBulk.TIPO_FATTURA_ATTIVA.equals( riga.getCd_tipo_documento_amm() ) &&
 //				  riga.getTi_fattura().equals( Fattura_passiva_IBulk.TIPO_NOTA_DI_CREDITO ) )
-//			// si tratta di una nota di credito - non deve essere effettuato la verifica delle modalit‡ di pagamento
+//			// si tratta di una nota di credito - non deve essere effettuato la verifica delle modalit√† di pagamento
 //				continue;
 //			
-			//modalit‡ di pagamento
+			//modalit√† di pagamento
 			if ( !riga.getModalita_pagamento().getCd_modalita_pag().equals( cd_modalita_pag ))
-				throw new ApplicationException( "Attenzione le righe della reversale devono avere la stessa modalit‡ di pagamento");
+				throw new ApplicationException( "Attenzione le righe della reversale devono avere la stessa modalit√† di pagamento");
 				
 			//conto bancario
 			if ( Rif_modalita_pagamentoBulk.BANCARIO.equals( riga.getBanca().getTi_pagamento()) &&
 				  (!abi.equals( riga.getBanca().getAbi()) ||
 				  !cab.equals( riga.getBanca().getCab()) ||
 				  !nrConto.equals( riga.getBanca().getNumero_conto())))
-				throw new ApplicationException( "Attenzione le righe della reversale devono avere la stessa modalit‡ di pagamento bancario");
+				throw new ApplicationException( "Attenzione le righe della reversale devono avere la stessa modalit√† di pagamento bancario");
 			else
 			//postale
 			if ( Rif_modalita_pagamentoBulk.POSTALE.equals( riga.getBanca().getTi_pagamento()) &&
 				  !nrConto.equals( riga.getBanca().getNumero_conto()))
-				throw new ApplicationException( "Attenzione le righe della reversale devono avere la stessa modalit‡ di pagamento postale");
+				throw new ApplicationException( "Attenzione le righe della reversale devono avere la stessa modalit√† di pagamento postale");
 			else	
 			//quietanza
 			if ( Rif_modalita_pagamentoBulk.QUIETANZA.equals( riga.getBanca().getTi_pagamento()) &&
@@ -3663,7 +3663,7 @@ private void verificaModalitaPagamento (UserContext aUC,ReversaleBulk reversale)
 			if ( (Rif_modalita_pagamentoBulk.ALTRO.equals( riga.getBanca().getTi_pagamento()) ||
 				  Rif_modalita_pagamentoBulk.IBAN.equals( riga.getBanca().getTi_pagamento())) &&
 				  !intestazione.equals( riga.getBanca().getIntestazione()))
-				throw new ApplicationException( "Attenzione le righe della reversale devono avere la stessa modalit‡ di pagamento");
+				throw new ApplicationException( "Attenzione le righe della reversale devono avere la stessa modalit√† di pagamento");
 			
 		}	
 	}
@@ -3677,54 +3677,54 @@ private void verificaModalitaPagamento (UserContext aUC,ReversaleBulk reversale)
   *    PreCondition:
   *     E' stata richiesta la creazione/modifica di una reversale e la reversale non ha dettagli (Reversale_rigaBulk)
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare la reversale
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare la reversale
   *  verifica reversale - errore data di emissione futura
   *    PreCondition:
   *     E' stato richiesto di verificare la data di emissione della reversale
   *     La reversale ha una data di emissione futura
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare la reversale
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare la reversale
   *  verifica reversale - errore data di emissione superiore alla data ultima reversale
   *    PreCondition:
   *     E' stato richiesto di verificare la data di emissione della reversale
   *     La reversale ha una data di emissione maggiore della data di emissione dell'ultima reversale emessa
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare la reversale
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare la reversale
   *  verifica reversale di regolarizzazione/Incasso - errore sospesi
   *    PreCondition:
   *     E' stata richiesta la creazione/modifica di una reversale di regolarizzazione o di incasso 
   *     e dei sospesi di entrata sono stati associati alla reversale
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare una reversale di regolarizzazione
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare una reversale di regolarizzazione
   *     o di incasso con sospesi di entrata
   *  verifica reversale a regolamento sospeso/accreditamento definitiva - errore sospesi
   *    PreCondition:
   *     E' stata richiesta la creazione/modifica di una reversale a regolamento sospeso o di accreditamento definitiva 
   *     e nessun sospeso e' stato associato alla reversale
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare una reversale a regolamento
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare una reversale a regolamento
   *     o una reversale definitiva di accreditamento senza sospesi di entrata
   *  verifica reversale a regolamento sospeso/accreditamento definitiva - errore importo sospesi
   *    PreCondition:
   *     E' stata richiesta la creazione/modifica di una reversale a regolamento sospeso o di accreditamento definitiva 
   *     e la somma degli importi dei sospesi associati e' diverso dall'importo della reversale
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare una reversale a regolamento
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare una reversale a regolamento
   *     o una reversale definitiva di accreditamento con sospesi di entrata che non coprono completamente l'importo della reversale
   *     stessa
-  *  verifica reversale a regolamento sospeso/accreditamento definitiva - errore modalit‡ di pagamento
+  *  verifica reversale a regolamento sospeso/accreditamento definitiva - errore modalit√† di pagamento
   *    PreCondition:
   *     E' stata richiesta la creazione/modifica di una reversale a regolamento sospeso o di accreditamento definitiva 
-  *     e le modalit‡ di pagamento dei sospesi d'entrata CNR associati sono diverse dalle modalit‡ di pagamento della reversale
+  *     e le modalit√† di pagamento dei sospesi d'entrata CNR associati sono diverse dalle modalit√† di pagamento della reversale
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare una reversale a regolamento
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare una reversale a regolamento
   *     o una reversale definitiva di accreditamento con sospesi di entrata CNR che provengono da Banca d'Italia mentre la reversale
-  *		ha modalit‡ di pagamento diverse dai sospesi o viceversa
+  *		ha modalit√† di pagamento diverse dai sospesi o viceversa
   *  verifica reversale - ok
   *    PreCondition:
   *     E' stata richiesta la creazione/modifica di una reversale e tutti i controlli sono stati superati
   *    PostCondition:
-  *     La reversale ha superato la validazione e puÚ pertanto essere salvata
+  *     La reversale ha superato la validazione e pu√≤ pertanto essere salvata
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param reversale <code>ReversaleBulk</code> la reversale di cui si verifica la correttezza
@@ -3774,11 +3774,11 @@ private void verificaReversale (UserContext aUC,ReversaleBulk reversale, boolean
 				Sospeso_det_etrBulk sospeso = (Sospeso_det_etrBulk) reversale.getSospeso_det_etrColl().get(0);
 				if ( sospeso.getSospeso().getTi_cc_bi().equals( SospesoBulk.TIPO_CC ) &&
 					 reversale.isBanca_italia())
-					throw new ApplicationException( "Attenzione! Il sospeso non proviene da Banca d'Italia mentre le modalit‡ di pagamento della reversale sono di Banca d'Italia");
+					throw new ApplicationException( "Attenzione! Il sospeso non proviene da Banca d'Italia mentre le modalit√† di pagamento della reversale sono di Banca d'Italia");
 
 				else if ( sospeso.getSospeso().getTi_cc_bi().equals( SospesoBulk.TIPO_BANCA_ITALIA ) &&
 						  !reversale.isBanca_italia())
-					throw new ApplicationException( "Attenzione! Il sospeso proviene da Banca d'Italia mentre le modalit‡ di pagamento della reversale sono diverse da Banca d'Italia");
+					throw new ApplicationException( "Attenzione! Il sospeso proviene da Banca d'Italia mentre le modalit√† di pagamento della reversale sono diverse da Banca d'Italia");
 			}
 		}	
 		
@@ -3798,10 +3798,10 @@ private void verificaReversale (UserContext aUC,ReversaleBulk reversale, boolean
 									java.text.DateFormat.getDateInstance().format( lastDayOfTheYear ));					
 			
 			if ( reversale.getDt_emissione().compareTo( rh.getServerTimestamp() ) > 0 )
-					throw  new ApplicationException( "Non Ë possibile inserire una reversale con data futura" );  
+					throw  new ApplicationException( "Non √® possibile inserire una reversale con data futura" );  
 			Timestamp dataUltReversale = ((ReversaleHome) getHome( aUC, reversale.getClass() )).findDataUltimaReversalePerCds( reversale );
 			if ( dataUltReversale != null && dataUltReversale.after( reversale.getDt_emissione() ) )
-				throw  new ApplicationException( "Non Ë possibile inserire una reversale con data anteriore a " +  
+				throw  new ApplicationException( "Non √® possibile inserire una reversale con data anteriore a " +  
 									java.text.DateFormat.getDateTimeInstance().format( dataUltReversale ));
 		}
 		verificaModalitaPagamento( aUC, reversale);
@@ -3818,7 +3818,7 @@ private void verificaReversale (UserContext aUC,ReversaleBulk reversale, boolean
  *
  * @param userContext <code>UserContext</code> 
  *
- * @return FALSE se per il cds interessato non Ë stato inserito nessun esercizio o se l'esercizio non Ë in stato di "aperto"
+ * @return FALSE se per il cds interessato non √® stato inserito nessun esercizio o se l'esercizio non √® in stato di "aperto"
  *		   TRUE in tutti gli altri casi
  *
  */
@@ -3837,15 +3837,15 @@ protected void verificaStatoEsercizio( UserContext userContext, Integer es, Stri
   *  verifica tipo bollo
   *    PreCondition:
   *	     E' stata richiesta l'inizializzazione di una istanza di ReversaleBulk e il tipo bollo
-  *		 selezionato Ë corretto
+  *		 selezionato √® corretto
   *    PostCondition:
-  *		 La reversale Ë valida. E' consentito procedere alla sua inizializzazione.
+  *		 La reversale √® valida. E' consentito procedere alla sua inizializzazione.
   *  verifica tipo bollo - errore
   *    PreCondition:
   *	     E' stata richiesta l'inizializzazione di una istanza di ReversaleBulk e il tipo bollo
-  *		 selezionato Ë stato cancellato fisicamente dal database.
+  *		 selezionato √® stato cancellato fisicamente dal database.
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare che il tipo bollo Ë
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare che il tipo bollo √®
   *		inesistente
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -3973,7 +3973,7 @@ private Reversale_rigaBulk setCodiciSIOPECollegabili (UserContext userContext, R
  *    PreCondition:
  *      E' stata generata la richiesta di verificare che la riga della reversale sia associata completamente a codici SIOPE
  *    PostCondition:
- *      Ritorna TRUE se la riga della reversale Ë associata completamente a codici SIOPE
+ *      Ritorna TRUE se la riga della reversale √® associata completamente a codici SIOPE
  *
  * @param aUC lo <code>UserContext</code> che ha generato la richiesta
  * @param riga <code>Reversale_rigaBulk</code> la riga reversale da controllare

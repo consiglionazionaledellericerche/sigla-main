@@ -16,7 +16,7 @@
 
 	/*
 	** Quando navigo la prima volta nella tab e non ci sono 
-	** record selezionati, il valore restituito è -1. 
+	** record selezionati, il valore restituito Ã¨ -1. 
 	** In questo caso imposto il valore a 0.
 	*/
 	if (sel == -1)

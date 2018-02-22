@@ -13,13 +13,13 @@ public interface IBilancioPreventivoMgr extends ICRUDMgr
   *  Tutti controlli superati
   *    PreCondition:
   *      Viene richiesta l'approvazione del bilancio preventivo.
-  *      Lo stato del bilancio preventivo Ë (B) predisposto o prodotto.
+  *      Lo stato del bilancio preventivo √® (B) predisposto o prodotto.
   *    PostCondition:
   *      Viene invocato il controllo di pareggio di bilancio mandatorio (richiesta CINECA/CNR del 04/11/2002)
   *      Lo stato del bilancio preventivo si cambia da 'B' a 'C' approvato.
-  *  Stato bilancio preventivo NON Ë B
+  *  Stato bilancio preventivo NON √® B
   *    PreCondition:
-  *      Lo stato del bilancio preventivo NON Ë B.
+  *      Lo stato del bilancio preventivo NON √® B.
   *    PostCondition:
   *      Operazione non consentita.
   *      Throw exception: Lo stato del bilancio preventivo non consente l'approvazione.
@@ -60,7 +60,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk cercaCdsEnte(it.cnr.jada.UserContex
 
 public abstract it.cnr.jada.bulk.OggettoBulk cercaCdsEnte(it.cnr.jada.UserContext param0,it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk param1) throws it.cnr.jada.comp.ComponentException;
 /**
-  *  Richiesta creazione di dettaglio in bilancio finaniziario CNR ed esiste gi‡ il dettaglio per la parte residui
+  *  Richiesta creazione di dettaglio in bilancio finaniziario CNR ed esiste gi√† il dettaglio per la parte residui
   *    PreCondition:
   *      Viene richiesta la creazione di un nuovo dettaglio di bilancio preventivo CNR.
   *      Esiste per tale dettaglio la specifica di dettaglio della parte residui
@@ -74,7 +74,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk cercaCdsEnte(it.cnr.jada.UserContex
   *    PostCondition:
   *      Viene creato un nuovo dettaglio
   *      Viene creato un record relativo alla parte residui
-  *      Se il dettaglio Ë di spesa viene aggiornato l'impegno automatico colegato al capitolo
+  *      Se il dettaglio √® di spesa viene aggiornato l'impegno automatico colegato al capitolo
   *
   *  Creazione di dettaglio in bilancio finaniziario CDS con spareggio di bilancio entrate > spese
   *    PreCondition:
@@ -118,7 +118,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext
   *    PreCondition:
   *      Viene richiesta la creazione degli stanziamenti iniziali del bilancio preventivo di un singolo CdS.
   *    PostCondition:
-  *      La creazione degli stanziamenti iniziali del bilancio preventivo di un singolo CdS richiede l'aggregazione per 'Rubrica' dei PdG che appartengono al CdS. Il risultato di questa aggregazione (prodotta/specificata nel metodo aggregaPdGPerRubrica) viene utilizzato per la scrittura degli saldi corrispondenti nella tabella VOCE_F_SALDI_CMP. La procedura ORACLE predisponeBilFinCDS(esercizio, cds, utente) esegue quest'attivit‡.
+  *      La creazione degli stanziamenti iniziali del bilancio preventivo di un singolo CdS richiede l'aggregazione per 'Rubrica' dei PdG che appartengono al CdS. Il risultato di questa aggregazione (prodotta/specificata nel metodo aggregaPdGPerRubrica) viene utilizzato per la scrittura degli saldi corrispondenti nella tabella VOCE_F_SALDI_CMP. La procedura ORACLE predisponeBilFinCDS(esercizio, cds, utente) esegue quest'attivit√†.
  */
 
 public abstract void creaStanziamentiInizialiCdS(it.cnr.jada.UserContext param0,it.cnr.contab.config00.sto.bulk.CdsBulk param1) throws it.cnr.jada.comp.ComponentException;
@@ -127,7 +127,7 @@ public abstract void creaStanziamentiInizialiCdS(it.cnr.jada.UserContext param0,
   *    PreCondition:
   *      Viene richiesta la creazione degli stanziamenti iniziali del bilancio preventivo del CNR.
   *    PostCondition:
-  *      La creazione degli stanziamenti iniziali del bilancio preventivo del CNR richiede la lettura delle righe delle tabelle PDG_AGGREGATO* e la scrittura degli saldi corrispondenti nella tabella VOCE_F_SALDI_CMP. La procedura ORACLE predisponeBilFinCNR(esercizio, utente) esegue quest'attivit‡.
+  *      La creazione degli stanziamenti iniziali del bilancio preventivo del CNR richiede la lettura delle righe delle tabelle PDG_AGGREGATO* e la scrittura degli saldi corrispondenti nella tabella VOCE_F_SALDI_CMP. La procedura ORACLE predisponeBilFinCNR(esercizio, utente) esegue quest'attivit√†.
  */
 
 public abstract void creaStanziamentiInizialiCNR(it.cnr.jada.UserContext param0,short param1) throws it.cnr.jada.comp.ComponentException;
@@ -157,7 +157,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
   *  Modifica di dettaglio in bilancio finaniziario CNR di spesa
   *    PreCondition:
   *      Viene richiesta la modifica di un dettaglio di bilancio preventivo CNR.
-  *      Il dettaglio Ë di spesa
+  *      Il dettaglio √® di spesa
   *    PostCondition:
   *      Viene aggiornato l'impegno automatico collegato al capitolo
   *      Viene aggiornato il saldo parte competenza

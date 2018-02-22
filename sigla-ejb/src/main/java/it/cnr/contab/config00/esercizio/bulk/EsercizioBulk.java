@@ -55,16 +55,16 @@ public EsercizioBulk(String cd_cds, java.lang.Integer esercizio ) {
 	super(cd_cds, esercizio );
 }
 /**
- * Restituisce il valore della propriet‡ 'ds_cds'
+ * Restituisce il valore della propriet√† 'ds_cds'
  *
- * @return Il valore della propriet‡ 'ds_cds'
+ * @return Il valore della propriet√† 'ds_cds'
  */
 public java.lang.String getDs_cds() {
 	return ds_cds;
 }
 /**
  * Metodo statico che permette di recuperare il valore dei possibili stati 
- * che puÚ assumere un esercizio contabile.
+ * che pu√≤ assumere un esercizio contabile.
  * @return prossimoStato Variabile di tipo <code>Hashtable</code> che 
  * 						 contiene codici e relative descrizioni degli stati.
  */
@@ -126,8 +126,8 @@ public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	return this;
 }
 /**
- * Metodo che stabilisce se l'esercizio contabile corrente Ë stato chiuso.
- * @return boolean True se l'esercizio contabile in questione Ë stato chiuso
+ * Metodo che stabilisce se l'esercizio contabile corrente √® stato chiuso.
+ * @return boolean True se l'esercizio contabile in questione √® stato chiuso
  *				   in modo provvisorio o definitivo.
  */
 public boolean isChiuso() {
@@ -151,7 +151,7 @@ public static void reset() {
 	statoKeys = null;
 }
 /**
- * Imposta il valore della propriet‡ 'ds_cds'
+ * Imposta il valore della propriet√† 'ds_cds'
  *
  * @param newDs_cds	Il valore da assegnare a 'ds_cds'
  */
@@ -159,12 +159,12 @@ public void setDs_cds(java.lang.String newDs_cds) {
 	ds_cds = newDs_cds;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
 		if ( getEsercizio() == null )
-			throw new ValidationException( "Il campo ESERCIZIO Ë obbligatorio." );
+			throw new ValidationException( "Il campo ESERCIZIO √® obbligatorio." );
 		if ( getEsercizio().toString().length() != 4 )
 			throw new ValidationException( "Il campo ESERCIZIO deve essere di quattro cifre." );
 		if (getSt_apertura_chiusura() == null)

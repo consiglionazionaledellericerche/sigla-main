@@ -309,7 +309,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
     public ScaricoMagazzinoBulk scaricaMagazzino(UserContext userContext, ScaricoMagazzinoBulk scaricoMagazzino) throws ComponentException, PersistencyException {
     	List<BollaScaricoMagBulk> bolleList = new ArrayList<>();
 		if (scaricoMagazzino.getUnitaOperativaAbilitata()==null || scaricoMagazzino.getUnitaOperativaAbilitata().getCdUnitaOperativa()==null)
-			throw new ApplicationException("Errore nello scarico magazzino! Manca l'indicazione della Unit‡ Operativa.");
+			throw new ApplicationException("Errore nello scarico magazzino! Manca l'indicazione della Unit√† Operativa.");
 		if (scaricoMagazzino.getMagazzinoAbilitato()==null || scaricoMagazzino.getMagazzinoAbilitato().getCdMagazzino()==null)
 			throw new ApplicationException("Errore nello scarico magazzino! Manca l'indicazione del Magazzino.");
 		if (scaricoMagazzino.getTipoMovimentoMag()==null || scaricoMagazzino.getTipoMovimentoMag().getCdTipoMovimento()==null)
@@ -383,18 +383,18 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 									set.getKey().getEsercizio()+"/"+set.getKey().getCdNumeratoreMag()+"/"+set.getKey().getPgLotto()+
 									" alla data "+new java.text.SimpleDateFormat("dd/MM/yyyy").format(scaricoMagazzino.getDataCompetenza())+
 									" la giacenza ("+new it.cnr.contab.util.Importo5CifreFormat().format(set.getKey().getGiacenza())+
-									") Ë inferiore alla quantit‡ da scaricare ("+
+									") √® inferiore alla quantit√† da scaricare ("+
 									new it.cnr.contab.util.Importo5CifreFormat().format(set.getValue())+")");
 						});
 					
-					//Verifico che la quantit‡ da scaricare sia pari a quella richiesta
+					//Verifico che la quantit√† da scaricare sia pari a quella richiesta
 					BigDecimal totGiacenzaLotti = mapLotti.entrySet().stream()
 													.map(Entry::getValue)
 													.reduce(BigDecimal.ZERO, BigDecimal::add);
 					if (totGiacenzaLotti.compareTo(scaricoMagazzinoRiga.getQtScaricoConvertita())<0)
 						errorList.add("Alla data "+new java.text.SimpleDateFormat("dd/MM/yyyy").format(scaricoMagazzino.getDataCompetenza())+
 								" la giacenza totale dei lotti ("+new it.cnr.contab.util.Importo5CifreFormat().format(totGiacenzaLotti)+
-								") Ë inferiore alla quantit‡ richiesta da scaricare ("+
+								") √® inferiore alla quantit√† richiesta da scaricare ("+
 								new it.cnr.contab.util.Importo5CifreFormat().format(scaricoMagazzinoRiga.getQtScaricoConvertita())+")");
 
 					if (errorList.isEmpty()) {

@@ -13,7 +13,7 @@ public interface ITariffarioMgr
 /** 
   *  Tutti i controlli superati.
   *    PreCondition:
-  *      La tariffa inserita ha data inizio validit‡ interna all'ultimo periodo preesistente (con data fine = infinito) OR Ë il primo record della validit‡ della tariffa e ha fine = infinito.
+  *      La tariffa inserita ha data inizio validit√† interna all'ultimo periodo preesistente (con data fine = infinito) OR √® il primo record della validit√† della tariffa e ha fine = infinito.
   *    PostCondition:
   *      Consente l'inserimento della tariffa.
   *  Riscontrata condizione di errore.
@@ -21,7 +21,7 @@ public interface ITariffarioMgr
   *      Si e verificato un errore.
   *      
   *    PostCondition:
-  *      Viene inviato il messaggio "Attenzione,  si Ë verificato un errore".
+  *      Viene inviato il messaggio "Attenzione,  si √® verificato un errore".
  */
 
 public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
@@ -50,7 +50,7 @@ public abstract void eliminaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.b
   *      Sono state modificate le date di validita di un periodo esistente.
   *      
   *    PostCondition:
-  *      Viene inviato il messaggio "Attenzione, la modifica di questi dati non Ë consentita".
+  *      Viene inviato il messaggio "Attenzione, la modifica di questi dati non √® consentita".
  */
 
 public abstract it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
@@ -66,7 +66,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserCon
   *      Sono state modificate le date di validita di un periodo esistente.
   *      
   *    PostCondition:
-  *      Viene inviato il messaggio "Attenzione, la modifica di questi dati non Ë consentita".
+  *      Viene inviato il messaggio "Attenzione, la modifica di questi dati non √® consentita".
  */
 //^^@@
 public abstract Query select(UserContext userContext,CompoundFindClause clauses,OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException ;

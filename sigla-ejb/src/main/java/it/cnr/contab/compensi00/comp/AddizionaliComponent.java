@@ -44,7 +44,7 @@ public class AddizionaliComponent extends it.cnr.jada.comp.CRUDComponent{
 			creaConBulk(usercontext, addizionale);
 			return addizionale;
 		}else if (addizionale.getNota()== null && scaglione == null)
-			addizionale.setNota("Non esistono scaglioni da aggiornare o esistono più scaglioni validi - Codice Catastale: "+addizionale.getCd_catastale()+" - "+addizionale.getDs_comune());
+			addizionale.setNota("Non esistono scaglioni da aggiornare o esistono piÃ¹ scaglioni validi - Codice Catastale: "+addizionale.getCd_catastale()+" - "+addizionale.getDs_comune());
 			if(addizionale.getNota()!=null){
 				addizionale.setOld_aliquota(null);
 				addizionale.setToBeCreated();

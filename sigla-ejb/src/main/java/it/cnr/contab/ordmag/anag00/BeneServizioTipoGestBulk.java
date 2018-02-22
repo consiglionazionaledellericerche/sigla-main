@@ -10,7 +10,7 @@ public class BeneServizioTipoGestBulk extends BeneServizioTipoGestBase {
 	 **/
 	private MagazzinoBulk magazzino =  new MagazzinoBulk();
 	/**
-	 * [BENE_SERVIZIO Rappresenta la classificazione di beni e servizi il cui dettaglio è esposto in sede di registrazione delle righe fattura passiva.
+	 * [BENE_SERVIZIO Rappresenta la classificazione di beni e servizi il cui dettaglio Ã¨ esposto in sede di registrazione delle righe fattura passiva.
 
 Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di inventario dalla registrazione di fatture passive]
 	 **/
@@ -47,7 +47,7 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresenta la classificazione di beni e servizi il cui dettaglio è esposto in sede di registrazione delle righe fattura passiva.
+	 * Restituisce il valore di: [Rappresenta la classificazione di beni e servizi il cui dettaglio Ã¨ esposto in sede di registrazione delle righe fattura passiva.
 
 Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di inventario dalla registrazione di fatture passive]
 	 **/
@@ -56,7 +56,7 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresenta la classificazione di beni e servizi il cui dettaglio è esposto in sede di registrazione delle righe fattura passiva.
+	 * Setta il valore di: [Rappresenta la classificazione di beni e servizi il cui dettaglio Ã¨ esposto in sede di registrazione delle righe fattura passiva.
 
 Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di inventario dalla registrazione di fatture passive]
 	 **/

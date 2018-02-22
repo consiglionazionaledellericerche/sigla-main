@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -24,7 +24,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="Unità Operativa" />
+		label="UnitÃ  Operativa" />
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -98,7 +98,7 @@
 		inputSize="10"
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		enabledOnEdit="false"
-		label="Quantità Richiesta" />
+		label="QuantitÃ  Richiesta" />
   	<fieldProperty
 		name="findBeneServizio"
 		property="beneServizioDef"
@@ -131,7 +131,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="Unità di Misura" />
+		label="UnitÃ  di Misura" />
 	<fieldProperty
 		name="cdUnitaMisuraMinima"
 		property="cdUnitaMisuraMinima"
@@ -139,7 +139,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="Unità di Misura Minima" />
+		label="UnitÃ  di Misura Minima" />
 	<fieldProperty
 		name="coefConv"
 		property="coefConv"
@@ -155,7 +155,7 @@
 		inputSize="17"
 		maxLength="17"
 		enabledOnEdit="false"
-		label="Quantità Autorizzata" />
+		label="QuantitÃ  Autorizzata" />
 	<fieldProperty
 		name="notaUopDest"
 		property="notaUopDest"
@@ -203,7 +203,7 @@
 		inputType="ROTEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Centro di Responsabilità" />
+		label="Centro di ResponsabilitÃ " />
 	<fieldProperty
 		name="cdLineaAttivita"
 		property="cdLineaAttivita"
@@ -211,7 +211,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="Linea Attività" />
+		label="Linea AttivitÃ " />
 	<fieldProperty
 		name="cdElementoVoce"
 		property="cdElementoVoce"
@@ -229,7 +229,7 @@
 		inputSize="30"
 		maxLength="300"
 		enabledOnEdit="false"
-		label="Descrizione Linea Attività" />
+		label="Descrizione Linea AttivitÃ " />
 	<fieldProperty
 		name="dsElementoVoce"
 		property="dsElementoVoce"

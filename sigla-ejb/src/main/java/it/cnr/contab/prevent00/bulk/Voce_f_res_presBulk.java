@@ -59,9 +59,9 @@ public OggettoBulk initializeForSearch(CRUDBP bp, ActionContext context)
 	return this;
 }
 /**
- * Restituisce il valore della propriet‡ 'ROVoce'
+ * Restituisce il valore della propriet√† 'ROVoce'
  *
- * @return Il valore della propriet‡ 'ROVoce'
+ * @return Il valore della propriet√† 'ROVoce'
  */
 public boolean isROVoce() 
 {

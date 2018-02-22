@@ -106,8 +106,8 @@ public class PdgPianoRipartoComponent extends CRUDComponent implements Cloneable
 	}
 
 	/**
-	 * Ritorna TRUE se il Piano di Riparto delle Spese accentrate Ë definitivo 
-	 * Ritorna FALSE se il Piano di Riparto delle Spese accentrate Ë provvisorio 
+	 * Ritorna TRUE se il Piano di Riparto delle Spese accentrate √® definitivo 
+	 * Ritorna FALSE se il Piano di Riparto delle Spese accentrate √® provvisorio 
 	 *
 	 * @param userContext
 	 * @param esercizio		l'esercizio di riferimento del Piano di Riparto
@@ -265,7 +265,7 @@ public class PdgPianoRipartoComponent extends CRUDComponent implements Cloneable
     /** 
 	  *  Normale
 	  *    PreCondition:
-	  *      Viene richiesto l'elenco dei centri di responsabilit‡ di primo livello o di tipo AREA 
+	  *      Viene richiesto l'elenco dei centri di responsabilit√† di primo livello o di tipo AREA 
 	  *    PostCondition:
   	  *      Viene restituito una query sui cdr con le clausole specificate e una clausola sull'esercizio uguale a quello del piano di riparto specificato
      */

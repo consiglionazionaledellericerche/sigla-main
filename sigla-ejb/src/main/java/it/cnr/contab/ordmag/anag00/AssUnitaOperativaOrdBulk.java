@@ -6,7 +6,7 @@ package it.cnr.contab.ordmag.anag00;
 
 public class AssUnitaOperativaOrdBulk extends AssUnitaOperativaOrdBase {
 	/**
-	 * [UNITA_OPERATIVA_ORD Rappresenta le unit‡ operative utilizzate in gestione ordine e magazzino.]
+	 * [UNITA_OPERATIVA_ORD Rappresenta le unit√† operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	private UnitaOperativaOrdBulk unitaOperativaOrd =  new UnitaOperativaOrdBulk();
 	private UnitaOperativaOrdBulk unitaOperativaOrdRif =  new UnitaOperativaOrdBulk();
@@ -28,7 +28,7 @@ public class AssUnitaOperativaOrdBulk extends AssUnitaOperativaOrdBase {
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresenta le unit‡ operative utilizzate in gestione ordine e magazzino.]
+	 * Restituisce il valore di: [Rappresenta le unit√† operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	public UnitaOperativaOrdBulk getUnitaOperativaOrd() {
 		return unitaOperativaOrd;
@@ -38,7 +38,7 @@ public class AssUnitaOperativaOrdBulk extends AssUnitaOperativaOrdBase {
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresenta le unit‡ operative utilizzate in gestione ordine e magazzino.]
+	 * Setta il valore di: [Rappresenta le unit√† operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	public void setUnitaOperativaOrd(UnitaOperativaOrdBulk unitaOperativaOrd)  {
 		this.unitaOperativaOrd=unitaOperativaOrd;

@@ -34,16 +34,16 @@ public class IncarichiEstrazioneFpAction extends it.cnr.jada.util.action.CRUDAct
 			Incarichi_archivio_xml_fpBulk archivioXmlFP = (Incarichi_archivio_xml_fpBulk)bp.getModel();
 
 			if (archivioXmlFP==null || archivioXmlFP.getCrudStatus()==CRUDBP.SEARCH){
-				bp.setMessage("Non è stato selezionato alcun periodo per effettuare l'estrazione.");
+				bp.setMessage("Non Ã¨ stato selezionato alcun periodo per effettuare l'estrazione.");
 				return context.findDefaultForward();
 			} else if (archivioXmlFP.getEsercizio()==null){
-				bp.setMessage("Non è stato selezionato l'anno per effettuare l'estrazione.");
+				bp.setMessage("Non Ã¨ stato selezionato l'anno per effettuare l'estrazione.");
 				return context.findDefaultForward();
 			} else if (archivioXmlFP.getSemestre()==null){
-				bp.setMessage("Non è stato selezionato il semestre per effettuare l'estrazione.");
+				bp.setMessage("Non Ã¨ stato selezionato il semestre per effettuare l'estrazione.");
 				return context.findDefaultForward();
 			} else if (archivioXmlFP.getDt_calcolo()==null){
-				bp.setMessage("Non è stato selezionato il tipo di data da utilizzare per effettuare l'estrazione.");
+				bp.setMessage("Non Ã¨ stato selezionato il tipo di data da utilizzare per effettuare l'estrazione.");
 				return context.findDefaultForward();
 			} 
 

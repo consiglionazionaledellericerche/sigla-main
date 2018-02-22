@@ -15,7 +15,7 @@ public interface IBeneServizioMgr {
  * Pre-post-conditions:
  *
  * Nome: Non passa validazione applicativa
- * Pre: l'OggettoBulk non passa i criteri di validit‡ applicativi per l'operazione
+ * Pre: l'OggettoBulk non passa i criteri di validit√† applicativi per l'operazione
  *		di modifica
  * Post: Viene generata CRUDValidationException che descrive l'errore di validazione.
  *
@@ -30,11 +30,11 @@ public interface IBeneServizioMgr {
  * Post: Viene generata una CRUDException con la descrizione dell'errore
  *
  * Nome: Oggetto scaduto
- * Pre: l'OggettoBulk specificato Ë stato modificato da altri utenti dopo la lettura
+ * Pre: l'OggettoBulk specificato √® stato modificato da altri utenti dopo la lettura
  * Post: Viene generata una CRUDException con la descrizione dell'errore
  *
  * Nome: Oggetto occupato
- * Pre: l'OggettoBulk specificato Ë bloccato da qualche altro utente.
+ * Pre: l'OggettoBulk specificato √® bloccato da qualche altro utente.
  * Post: Viene generata una CRUDException con la descrizione dell'errore
  *
  * Nome: Tutti i controlli superati
@@ -79,7 +79,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
  * Pre: L'OggettoBulk specificato esiste.
  * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
  *			per l'operazione di presentazione e modifica nell'interfaccia visuale.
- *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ë
+ *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome √®
  *			ottenuto concatenando il nome della component con la stringa ".edit"
  * 
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -94,7 +94,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
  * Pre-post-conditions:
  *
  * Nome: Non passa validazione applicativa
- * Pre: l'OggettoBulk non passa i criteri di validit‡ applicativi per l'operazione
+ * Pre: l'OggettoBulk non passa i criteri di validit√† applicativi per l'operazione
  *		di modifica
  * Post: Viene generata CRUDValidationException che descrive l'errore di validazione.
  *
@@ -109,11 +109,11 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
  * Post: Viene generata una CRUDException con la descrizione dell'errore
  *
  * Nome: Oggetto scaduto
- * Pre: l'OggettoBulk specificato Ë stato modificato da altri utenti dopo la lettura
+ * Pre: l'OggettoBulk specificato √® stato modificato da altri utenti dopo la lettura
  * Post: Viene generata una CRUDException con la descrizione dell'errore
  *
  * Nome: Oggetto occupato
- * Pre: l'OggettoBulk specificato Ë bloccato da qualche altro utente.
+ * Pre: l'OggettoBulk specificato √® bloccato da qualche altro utente.
  * Post: Viene generata una CRUDException con la descrizione dell'errore
  *
  * Nome: Tutti i controlli superati

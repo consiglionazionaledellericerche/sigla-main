@@ -199,7 +199,7 @@ public void doElaboraFile(ActionContext context,VSpesometroBulk dett) throws Bus
 	    	bw.append(Formatta(null,"S",12," "));//fax
 	    	bw.append(Formatta(null,"S",50," "));//email
 	    	
-	    	// Obbligatori se non è Persona Fisica	
+	    	// Obbligatori se non Ã¨ Persona Fisica	
     	    bw.append(Formatta(null,"S",24," "));//  Cognome
     	    bw.append(Formatta(null,"S",20," "));//  Nome
     	    bw.append(Formatta(null,"D",1," "));// sesso
@@ -207,7 +207,7 @@ public void doElaboraFile(ActionContext context,VSpesometroBulk dett) throws Bus
     	    bw.append(Formatta(null,"S",40," "));//  Comune nascita
     	    bw.append(Formatta(null,"S",2," "));// prov. nascita
 
-//    	   // Obbligatori se non è Persona Fisica  
+//    	   // Obbligatori se non Ã¨ Persona Fisica  
     	    bw.append(Formatta(ente.getRagione_sociale(),"S",60," "));
     	    
     	   bw.append((CNRUserContext.getEsercizio(context.getUserContext())).toString());
@@ -217,7 +217,7 @@ public void doElaboraFile(ActionContext context,VSpesometroBulk dett) throws Bus
     			bw.append(Formatta(null,"D",2,"0"));
     	    // Da verificare
 // 	 	   bw.append(Formatta(resp.getCodice_fiscale(),"S",16," "));//codice fiscale rappresentante
-// 		   bw.append(Formatta(config.getIm02().toString(),"D",2,"0"));//carica rappresentante  ??????? messo 2 PERCHè OBBLIGATORIO
+// 		   bw.append(Formatta(config.getIm02().toString(),"D",2,"0"));//carica rappresentante  ??????? messo 2 PERCHÃ¨ OBBLIGATORIO
 // 		   bw.append(Formatta(null,"D",8,"0"));// dt. inizio procedura 
 // 		   bw.append(Formatta(null,"D",8,"0"));// dt. fine
 // 		   bw.append(Formatta(resp.getCognome(),"S",24," "));//cognome rappresentante     ???????????????
@@ -238,7 +238,7 @@ public void doElaboraFile(ActionContext context,VSpesometroBulk dett) throws Bus
 //		   }
 
     	   bw.append(Formatta(null,"S",16," "));//codice fiscale rappresentante
- 		   bw.append(Formatta(null,"D",2,"0"));//carica rappresentante  ??????? messo 2 PERCHè OBBLIGATORIO
+ 		   bw.append(Formatta(null,"D",2,"0"));//carica rappresentante  ??????? messo 2 PERCHÃ¨ OBBLIGATORIO
  		   bw.append(Formatta(null,"D",8,"0"));// dt. inizio procedura 
  		   bw.append(Formatta(null,"D",8,"0"));// dt. fine
  		   bw.append(Formatta(null,"S",24," "));//cognome rappresentante     ???????????????
@@ -304,7 +304,7 @@ public void doElaboraFile(ActionContext context,VSpesometroBulk dett) throws Bus
 						   // ????? forse da togliere
 						   //if (det.getPartitaIva()!=null)
 							 //  num_col=Formatta(det.getPartitaIva(),"S",16," ",bw,"BL002001",num_col);
-						   // valorizzazione del mese nella view solo per BL Fiscalità speciale
+						   // valorizzazione del mese nella view solo per BL FiscalitÃ  speciale
 						   if(det.getTipoFiscalita().compareTo("FS")==0){ 
 							   num_col=Formatta("1","D",16," ",bw,"BL002002",num_col);
 							   //num_col=Formatta("1","D",16," ",bw,"BL002003",num_col);
@@ -454,11 +454,11 @@ public void doElaboraFile(ActionContext context,VSpesometroBulk dett) throws Bus
 	 	  // Tipo Record Z Coda
 		   bw.append("Z"); // tipo record
 		   bw.append(Formatta(null,"S",14," "));// Filler
-		   bw.append(Formatta("1","D",9,"0"));// N° record tipo B
-		  // bw.append(Formatta(new Integer(lista.size()).toString(),"D",9,"0"));// N° record tipo C
-		   bw.append(Formatta(conta.toString(),"D",9,"0"));// N° record tipo C
-		   bw.append(Formatta("0","D",9,"0"));// N° record tipo D
-		   bw.append(Formatta("1","D",9,"0"));// N° record tipo E
+		   bw.append(Formatta("1","D",9,"0"));// NÂ° record tipo B
+		  // bw.append(Formatta(new Integer(lista.size()).toString(),"D",9,"0"));// NÂ° record tipo C
+		   bw.append(Formatta(conta.toString(),"D",9,"0"));// NÂ° record tipo C
+		   bw.append(Formatta("0","D",9,"0"));// NÂ° record tipo D
+		   bw.append(Formatta("1","D",9,"0"));// NÂ° record tipo E
 	 	   bw.append(Formatta(null,"S",1846," "));// Filler 
 	 	   bw.append("A"); //
 	 	   bw.append("\r\n");
@@ -521,8 +521,8 @@ public String Formatta(String s, String allineamento,Integer dimensione,String r
  * @param riempimento carattere di riempimento per raggiungere la dimensione richiesta
  * @param w buffer di scrittura
  * @param codice parte fissa della colonna del record di tipo C
- * @param colonna n°colonna iniziale  
- * @return n° colonna finale 
+ * @param colonna nÂ°colonna iniziale  
+ * @return nÂ° colonna finale 
   */
 public Integer Formatta(String s, String allineamento,Integer dimensione,String riempimento,BufferedWriter w,String codice,Integer colonna,AnagraficoBulk ente) throws IOException{
 	// Non utilizzata
@@ -571,8 +571,8 @@ public Integer Formatta(String s, String allineamento,Integer dimensione,String 
  * @param riempimento carattere di riempimento per raggiungere la dimensione richiesta
  * @param w buffer di scrittura
  * @param codice parte fissa della colonna del record di tipo C
- * @param colonna n°colonna iniziale  
- * @return n° colonna finale 
+ * @param colonna nÂ°colonna iniziale  
+ * @return nÂ° colonna finale 
   */
 public Integer Formatta(String s, String allineamento,Integer dimensione,String riempimento,BufferedWriter w,String codice,Integer colonna) throws IOException{
 	

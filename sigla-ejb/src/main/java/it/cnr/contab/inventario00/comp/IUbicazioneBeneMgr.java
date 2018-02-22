@@ -52,9 +52,9 @@ public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext
 /** 
   *  L'Ubicazione ha delle Ubicazioni figlie
   *    PreCondition:
-  *      Si sta tentando di cancellare una Ubicazione che ha sotto di sË dei nodi figli.
+  *      Si sta tentando di cancellare una Ubicazione che ha sotto di s√® dei nodi figli.
   *    PostCondition:
-  *      Viene visualizzato un messaggio all'utente con che spiega la necessit‡ di cancellare 
+  *      Viene visualizzato un messaggio all'utente con che spiega la necessit√† di cancellare 
   *		tutti i nodi figli prima di cancellare il nodo padre.
   *
   *  Tutti i controlli superati.
@@ -91,7 +91,7 @@ public abstract it.cnr.jada.util.RemoteIterator getChildren(it.cnr.jada.UserCont
   *    PreCondition:
   *      E' stata generata la richiesta di ricerca dell'Ubicazione padre dell'Ubicazione specificata negli argomenti.
   *    PostCondition:
-  *		 Viene restituito l'oggetto UbicazioneBulk che Ë l'Ubicazione padre cercata.
+  *		 Viene restituito l'oggetto UbicazioneBulk che √® l'Ubicazione padre cercata.
   *      
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -107,7 +107,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk getParent(it.cnr.jada.UserContext p
   *    PreCondition:
   *      E' stata generata la richiesta di inizializzare una istanza di Ubicazione_beneBulk.
   *    PostCondition:
-  *      Vengono inizializzate le propriet‡ dell'Ubicazione_beneBulk e, l'oggetto risultante, viene restituito.
+  *      Vengono inizializzate le propriet√† dell'Ubicazione_beneBulk e, l'oggetto risultante, viene restituito.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta.
   * @param bulk <code>OggettoBulk</code> il bulk che deve essere inizializzato.
@@ -120,13 +120,13 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
 /** 
   *  Controlla che l'ubicazione sia una foglia.
   *    PreCondition:
-  *      E' stata generata la richiesta di controllare se l'Ubicazione specificata Ë una foglia,
-  *		ossia se il suo livello Ë l'ultimo, (3). Questo implicherebbe che l'Ubicazione in 
-  *		questione non puÚ avere delle Ubicazioni figlie.
+  *      E' stata generata la richiesta di controllare se l'Ubicazione specificata √® una foglia,
+  *		ossia se il suo livello √® l'ultimo, (3). Questo implicherebbe che l'Ubicazione in 
+  *		questione non pu√≤ avere delle Ubicazioni figlie.
   *    PostCondition:
   *		 Viene restituito un valore booleano:
-  *			- true: l'Ubicazione Ë una foglia;
-  *			- false: l'Ubicazione non Ë una foglia.
+  *			- true: l'Ubicazione √® una foglia;
+  *			- false: l'Ubicazione non √® una foglia.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> l'Ubicazione di riferimento.
