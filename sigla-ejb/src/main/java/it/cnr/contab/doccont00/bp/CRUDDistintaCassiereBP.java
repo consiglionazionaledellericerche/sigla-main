@@ -1075,12 +1075,12 @@ public class CRUDDistintaCassiereBP extends
 				infoben.setBollo(bollo);
 				benef.setAnagraficaBeneficiario(RemoveAccent
 						.convert(docContabile.getDenominazioneSede())
-						.replace('"', ' ').replace('°', ' '));
+						.replace('"', ' ').replace('\u00b0', ' '));
 				// benef.setStatoBeneficiario(docContabile.getCdIso());
 				if (obb_dati_beneficiario) {
 					benef.setIndirizzoBeneficiario(RemoveAccent
 							.convert(docContabile.getViaSede())
-							.replace('"', ' ').replace('°', ' '));
+							.replace('"', ' ').replace('\u00b0', ' '));
 					if (docContabile.getCapComuneSede() == null)
 						throw new ApplicationException(
 								"Impossibile generare il flusso, Cap benificiario non valorizzato per il terzo "
@@ -1092,7 +1092,7 @@ public class CRUDDistintaCassiereBP extends
 					benef.setCapBeneficiario(docContabile.getCapComuneSede());
 					benef.setLocalitaBeneficiario(RemoveAccent
 							.convert(docContabile.getDsComune())
-							.replace('"', ' ').replace('°', ' '));
+							.replace('"', ' ').replace('\u00b0', ' '));
 					benef.setProvinciaBeneficiario(docContabile
 							.getCdProvincia());
 				}
@@ -1169,7 +1169,7 @@ public class CRUDDistintaCassiereBP extends
 				else
 					infoben.setCausale(docContabile.getDsDocumento());
 				infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
-						.replace('"', ' ').replace('°', ' '));
+						.replace('"', ' ').replace('\u00b0', ' '));
 				// SOSPESO
 				if (docContabile.getTiDocumento().compareTo(
 						MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0) {
@@ -1326,7 +1326,7 @@ public class CRUDDistintaCassiereBP extends
 				infover.setBollo(bollo);
 				versante.setAnagraficaVersante(RemoveAccent
 						.convert(docContabile.getDenominazioneSede())
-						.replace('"', ' ').replace('°', ' '));
+						.replace('"', ' ').replace('\u00b0', ' '));
 				infover.setVersante(versante);
 
 				// gestito inserimento cup nella CAUSALE
@@ -1344,7 +1344,7 @@ public class CRUDDistintaCassiereBP extends
 				else
 					infover.setCausale(docContabile.getDsDocumento());
 				infover.setCausale(RemoveAccent.convert(infover.getCausale())
-						.replace('"', ' ').replace('°', ' '));
+						.replace('"', ' ').replace('\u00b0', ' '));
 				// SOSPESO
 				if (docContabile.getTiDocumento().compareTo(
 						ReversaleBulk.TIPO_REGOLAM_SOSPESO) == 0) {
