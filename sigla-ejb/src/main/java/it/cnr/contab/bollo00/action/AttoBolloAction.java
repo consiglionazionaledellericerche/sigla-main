@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import it.cnr.contab.bollo00.bp.CRUDAttoBolloBP;
 import it.cnr.contab.bollo00.bulk.Atto_bolloBulk;
+import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
@@ -65,4 +66,14 @@ public class AttoBolloAction extends it.cnr.jada.util.action.CRUDAction{
         bp.setAllegatiCollapse(!bp.isAllegatiCollapse());
         return context.findDefaultForward();
     }
+
+	public Forward doBringBackSearchFindTipoAttoBollo(ActionContext context, Atto_bolloBulk atto, Tipo_atto_bolloBulk tipoAtto) 
+	{
+		atto.setTipoAttoBollo(tipoAtto);
+		atto.setNumDettagli(Optional.ofNullable(tipoAtto)
+									.filter(Tipo_atto_bolloBulk::isCalcoloPerEsemplare)
+									.map(el->Integer.valueOf(1))
+									.orElse(null));
+		return context.findDefaultForward();
+	}
 }
