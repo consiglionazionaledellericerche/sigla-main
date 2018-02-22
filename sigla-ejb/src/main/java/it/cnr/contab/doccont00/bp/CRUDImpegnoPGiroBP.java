@@ -8,7 +8,7 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Impegno Partita di Giro.
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Impegno Partita di Giro.
  */
 public class CRUDImpegnoPGiroBP extends CRUDVirtualObbligazioneBP {
 	private boolean flNuovaGestionePg = false;
@@ -36,23 +36,23 @@ public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.
 		if ( impegno.getDt_cancellazione() != null )
 		{
 			setStatus(VIEW);
-			//il corrispondente accertamento pgiro Ë stato cancellato
+			//il corrispondente accertamento pgiro √® stato cancellato
 			//if(impegno.getDt_cancellazione() != null)
-				setMessage("L'Annotazione di Spesa su Partita di Giro Ë stata cancellata. Non consentita la modifica.");
+				setMessage("L'Annotazione di Spesa su Partita di Giro √® stata cancellata. Non consentita la modifica.");
 			//else
-				//setMessage("La modifica non Ë consentita: l'Annotazione di Entrata su Partita di Giro collegata a questa Annotazione di Spesa Ë stata cancellata.");							
+				//setMessage("La modifica non √® consentita: l'Annotazione di Entrata su Partita di Giro collegata a questa Annotazione di Spesa √® stata cancellata.");							
 
 		}
 /*		else if ( "Y".equals(impegno.getRiportato()) )
 		{
 			setStatus(VIEW);
-			setMessage("L'Annotazione di Spesa su Partita di Giro Ë stata riportata all'esercizio successivo. Non consentita la modifica.");
+			setMessage("L'Annotazione di Spesa su Partita di Giro √® stata riportata all'esercizio successivo. Non consentita la modifica.");
 		}*/
 		else if ( "N".equals( impegno.getRiportato()) && impegno.getAssociazione() != null && impegno.getAssociazione().getAccertamento() != null &&
 			  "Y".equals(impegno.getAssociazione().getAccertamento().getRiportato()))
 		{
 			//setStatus(VIEW);
-			setMessage("L'Annotazione collegata di Entrata su Partita di Giro Ë stata riportata all'esercizio successivo. Non consentita la modifica.");
+			setMessage("L'Annotazione collegata di Entrata su Partita di Giro √® stata riportata all'esercizio successivo. Non consentita la modifica.");
 		}
 		
 		
@@ -92,7 +92,7 @@ public OggettoBulk initializeModelForEdit(ActionContext context,OggettoBulk bulk
 	try {
 		it.cnr.jada.ejb.CRUDComponentSession compSession = (getUserTransaction() == null) ?
 																			createComponentSession() :
-																			getVirtualComponentSession(context, false); //responsabilit‡ setSafePoint(true) demandata all'init del bp
+																			getVirtualComponentSession(context, false); //responsabilit√† setSafePoint(true) demandata all'init del bp
 		return compSession.inizializzaBulkPerModifica(
 								context.getUserContext(),
 								bulk.initializeForEdit(this,context));

@@ -8,7 +8,7 @@ import it.cnr.jada.util.*;
 /**
  * Classe che eredita le caratteristiche della classe <code>Voce_epBulk</code>,
  * che contiene le variabili e i metodi comuni a tutte le sue sottoclassi.
- * In particolare si riferisce ad un'entit‡ di tipo Capoconto.
+ * In particolare si riferisce ad un'entit√† di tipo Capoconto.
  */
 public class CapocontoBulk extends Voce_epBulk {
 	
@@ -42,7 +42,7 @@ public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	return this;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
@@ -68,6 +68,6 @@ public void validate() throws ValidationException {
 	}
 	// controllo su campo DESCRIZIONE 
 		if ( getDs_voce_ep() == null || getDs_voce_ep().equals("") )
-			throw new ValidationException("Il campo NOME CAPOCONTO Ë obbligatorio.");
+			throw new ValidationException("Il campo NOME CAPOCONTO √® obbligatorio.");
 }
 }

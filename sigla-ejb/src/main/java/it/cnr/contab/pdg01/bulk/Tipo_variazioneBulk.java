@@ -85,8 +85,8 @@ public class Tipo_variazioneBulk extends Tipo_variazioneBase {
        	return TIPI_APPROVAZIONE;
    }
    /*
-	* Serve per sapere se la variazione è di tipo Prelievo da Fondi
-	* Ritorna un boolean con valore true se la tipologia della variazione è:
+	* Serve per sapere se la variazione Ã¨ di tipo Prelievo da Fondi
+	* Ritorna un boolean con valore true se la tipologia della variazione Ã¨:
 	* 		PRELIEVO_FONDI
 	*/
    public boolean isPrelievoFondi(){
@@ -94,8 +94,8 @@ public class Tipo_variazioneBulk extends Tipo_variazioneBase {
 	         getTi_tipo_variazione().equals(PRELIEVO_FONDI);
    }
    /*
-	* Serve per sapere se la variazione è di tipo Prelievo da Fondi
-	* Ritorna un boolean con valore true se la tipologia della variazione è:
+	* Serve per sapere se la variazione Ã¨ di tipo Prelievo da Fondi
+	* Ritorna un boolean con valore true se la tipologia della variazione Ã¨:
 	* 		RESTITUZIONE_FONDI
 	*/
    public boolean isRestituzioneFondi(){
@@ -103,9 +103,9 @@ public class Tipo_variazioneBulk extends Tipo_variazioneBase {
 	         getTi_tipo_variazione().equals(RESTITUZIONE_FONDI);
    }
    /*
-	* Serve per sapere se è una variazione positiva o negativa su 
+	* Serve per sapere se Ã¨ una variazione positiva o negativa su 
 	* un Fondo di Spesa
-	* Ritorna un boolean con valore true se la tipologia della variazione è:
+	* Ritorna un boolean con valore true se la tipologia della variazione Ã¨:
 	* 	    VARIAZIONE_POSITIVA_FONDI
 	*       VARIAZIONE_NEGATIVA_FONDI
 	*/
@@ -123,7 +123,7 @@ public class Tipo_variazioneBulk extends Tipo_variazioneBase {
    }
    /*
 	* Serve per sapere se la variazione movimenta un Fondo di Spesa
-	* Ritorna un boolean con valore true se la tipologia della variazione è:
+	* Ritorna un boolean con valore true se la tipologia della variazione Ã¨:
 	* 	    PRELIEVO_FONDI
 	*       RESTITUZIONE_FONDI
 	* 	    VARIAZIONE_POSITIVA_FONDI
@@ -133,8 +133,8 @@ public class Tipo_variazioneBulk extends Tipo_variazioneBase {
 	  return isPrelievoFondi() || isRestituzioneFondi() || isVariazioneSuFondi();
    }
    /*
-	* Serve per sapere se la variazione è di tipo Storno
-	* Ritorna un boolean con valore true se la tipologia della variazione è:
+	* Serve per sapere se la variazione Ã¨ di tipo Storno
+	* Ritorna un boolean con valore true se la tipologia della variazione Ã¨:
 	* 		STORNO_ENTRATA_ISTITUTI_DIVERSI
 	* 		STORNO_ENTRATA_STESSO_ISTITUTO
 	* 		STORNO_SPESA_ISTITUTI_DIVERSI
@@ -148,8 +148,8 @@ public class Tipo_variazioneBulk extends Tipo_variazioneBase {
 			  getTi_tipo_variazione().equals(STORNO_SPESA_STESSO_ISTITUTO));
    }
    /*
-	* Serve per sapere se la variazione è di tipo Variazione
-	* Ritorna un boolean con valore true se la tipologia della variazione è:
+	* Serve per sapere se la variazione Ã¨ di tipo Variazione
+	* Ritorna un boolean con valore true se la tipologia della variazione Ã¨:
 	* 		STORNO_ENTRATA_ISTITUTI_DIVERSI
 	* 		STORNO_ENTRATA_STESSO_ISTITUTO
 	* 		STORNO_SPESA_ISTITUTI_DIVERSI
@@ -165,8 +165,8 @@ public class Tipo_variazioneBulk extends Tipo_variazioneBase {
 			  getTi_tipo_variazione().equals(VARIAZIONE_STESSO_ISTITUTO));
    }
    /*
-	* Serve per sapere se la variazione è di tipo Variazione
-	* Ritorna un boolean con valore true se la tipologia della variazione è:
+	* Serve per sapere se la variazione Ã¨ di tipo Variazione
+	* Ritorna un boolean con valore true se la tipologia della variazione Ã¨:
 	* 		STORNO_ENTRATA_ISTITUTI_DIVERSI
 	* 		STORNO_ENTRATA_STESSO_ISTITUTO
 	* 		STORNO_SPESA_ISTITUTI_DIVERSI
@@ -181,7 +181,7 @@ public class Tipo_variazioneBulk extends Tipo_variazioneBase {
    }
    /*
     * Serve per sapere se la variazione consente di effettuare interventi sulle voci di entrata
-	* Ritorna un boolean con valore true se la tipologia della variazione è:
+	* Ritorna un boolean con valore true se la tipologia della variazione Ã¨:
     * 	    STORNO_ENTRATA_STESSO_ISTITUTO
 	* 	    STORNO_ENTRATA_ISTITUTI_DIVERSI
 	*		VARIAZIONE_POSITIVA_STESSO_ISTITUTO
@@ -210,7 +210,7 @@ public class Tipo_variazioneBulk extends Tipo_variazioneBase {
    }
    /*
     * Serve per sapere se la variazione consente di effettuare interventi sulle voci di entrata
-	* Ritorna un boolean con valore true se la tipologia della variazione è:
+	* Ritorna un boolean con valore true se la tipologia della variazione Ã¨:
     * 	    STORNO_SPESA_STESSO_ISTITUTO
 	* 	    STORNO_SPESA_ISTITUTI_DIVERSI
 	*		VARIAZIONE_POSITIVA_STESSO_ISTITUTO

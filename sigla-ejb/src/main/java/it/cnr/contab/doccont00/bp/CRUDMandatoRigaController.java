@@ -33,7 +33,7 @@ public void remove(it.cnr.jada.action.ActionContext context) 	throws ValidationE
 caso 1 - riga non ancora inserita nel db: se l'utente ne richiede la cancellazione viene effettivamente rimossa
          se viene richiesta la cancellazione di una fattura con associate note a debito/credito, anche questi doc. amm
          devono essere rimossi
-caso 2 - NON USATO - riga già salvata nel db: se l'utente ne richiede la cancellazione viene annullata
+caso 2 - NON USATO - riga giÃ  salvata nel db: se l'utente ne richiede la cancellazione viene annullata
 */
 public OggettoBulk removeDetail(int index) 
 {
@@ -61,7 +61,7 @@ public OggettoBulk removeDetail(int index)
 		((MandatoBulk)getParentModel()).removeFromMandato_rigaColl( index );		
 		return rigaDaCancellare;
 	}
-	// la riga e' giaà stata inserita nel db e il suo stato e' != da STATO_ANNULLATO --> aggiorno lo stato
+	// la riga e' giaÃ  stata inserita nel db e il suo stato e' != da STATO_ANNULLATO --> aggiorno lo stato
 	else if ( rigaDaCancellare != null && !rigaDaCancellare.isToBeCreated() && !rigaDaCancellare.getStato().equals( rigaDaCancellare.STATO_ANNULLATO))
 	{
 		rigaDaCancellare.annulla();

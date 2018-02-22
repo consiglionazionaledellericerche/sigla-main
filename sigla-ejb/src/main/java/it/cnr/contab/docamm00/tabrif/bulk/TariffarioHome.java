@@ -16,7 +16,7 @@ public TariffarioHome(java.sql.Connection conn,PersistentCache persistentCache) 
 	super(TariffarioBulk.class,conn,persistentCache);
 }
 /**
- * Metodo che controlla la validit‡ del tariffario relativo ad un'unit‡ 
+ * Metodo che controlla la validit√† del tariffario relativo ad un'unit√† 
  * organizzativa dato il suo codice
  *
  * Creation date: (06/11/2001 17.00.04)
@@ -29,22 +29,22 @@ public boolean checkPeriodi(UserContext userContext, TariffarioBulk tariffario)
 
     boolean accepted = false;
 
-    /* Ricava tutte le righe del tariffario con quella unit‡ organizzativa e quel codice */
+    /* Ricava tutte le righe del tariffario con quella unit√† organizzativa e quel codice */
 
     Timestamp maxData = (Timestamp) findMax(tariffario, "dt_ini_validita", null);
     Timestamp maxDataFineValidita = (Timestamp) findMax(tariffario, "dt_fine_validita", null);
 
-    if (maxData == null) // non ci sono records in tabella: l'inserzione puÚ avvenire   
+    if (maxData == null) // non ci sono records in tabella: l'inserzione pu√≤ avvenire   
         accepted = true;
     else {
-        /* controlla che la data che viene immessa sia successiva alla pi˘ 
+        /* controlla che la data che viene immessa sia successiva alla pi√π 
         	recente tra quelle in tabella: in tal caso l'inserzione avviene */
         if (tariffario.getDt_ini_validita() == null)
-            throw new it.cnr.jada.comp.ApplicationException("La data di inizio validit‡ non puÚ essere vuota!");
+            throw new it.cnr.jada.comp.ApplicationException("La data di inizio validit√† non pu√≤ essere vuota!");
 
         if (maxDataFineValidita==null || !maxDataFineValidita.equals(it.cnr.contab.config00.esercizio.bulk.EsercizioHome.DATA_INFINITO))
             if (tariffario.getDt_ini_validita().after(maxData)) {
-                /* aggiorna la data di fine_validita dell'ultimo periodo gi‡ inserito: corrisponde 
+                /* aggiorna la data di fine_validita dell'ultimo periodo gi√† inserito: corrisponde 
             alla data del giorno precedente a quella ini_validita che si vuol inserire */
                 TariffarioBulk vecchioTariffario =
                     (TariffarioBulk) findByPrimaryKey(new TariffarioBulk(tariffario.getCd_tariffario(),

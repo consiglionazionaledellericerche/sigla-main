@@ -51,7 +51,7 @@ public SQLBuilder createSQLBuilder( )
  * Creation date: (12/04/2001 08:32:22)
  * @param bulk bulk ricevente
  * @param home home del bulk su cui si cerca
- * @param bulkClause è l'istanza di bulk che ha indotto le clauses 
+ * @param bulkClause Ã¨ l'istanza di bulk che ha indotto le clauses 
  * @param clause clause che arrivano dalle properties (form collegata al search tool)
  * @return SQLBuilder
  */
@@ -70,7 +70,7 @@ public SQLBuilder createSQLBuilder( )
  * Creation date: (12/04/2001 08:32:22)
  * @param bulk bulk ricevente
  * @param home home del bulk su cui si cerca
- * @param bulkClause è l'istanza di bulk che ha indotto le clauses 
+ * @param bulkClause Ã¨ l'istanza di bulk che ha indotto le clauses 
  * @param clause clause che arrivano dalle properties (form collegata al search tool)
  * @return SQLBuilder
  */
@@ -88,7 +88,7 @@ public SQLBuilder selectElemento_voceByClause( Ass_cap_spesa_Cnr_natura_cap_entr
  * Seleziona i tipi esistenti di UO escludendo l'UO ente
  * @param bulk bulk ricevente
  * @param home home del bulk su cui si cerca
- * @param bulkClause è l'istanza di bulk che ha indotto le clauses 
+ * @param bulkClause Ã¨ l'istanza di bulk che ha indotto le clauses 
  * @param clause clause che arrivano dalle properties (form collegata al search tool)
  * @return SQLBuilder
  */

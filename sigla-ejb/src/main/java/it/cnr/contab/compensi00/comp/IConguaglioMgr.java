@@ -109,13 +109,13 @@ public abstract it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk doCreaCompenso
   * Pre-post-conditions:
   *
   * Nome: Terzo NON selezionato
-  * Pre: Non Ë stato selezionato un Terzo per il conguaglio
+  * Pre: Non √® stato selezionato un Terzo per il conguaglio
   * Post: Non vengono caricate le banche.
   *
   * Nome: Terzo selezionato
   * Pre: E' stato selezionato un Terzo valido per il conguaglio
   * Post: Viene restituita la lista delle Banche associate al Terzo
-  * 	  e alla Modalit‡ di Pagamento selezionata
+  * 	  e alla Modalit√† di Pagamento selezionata
   *
   * @param	userContext	lo UserContext che ha generato la richiesta
   * @param	conguaglio l'OggettoBulk da completare
@@ -130,7 +130,7 @@ public abstract java.util.List findListaBanche(it.cnr.jada.UserContext param0,it
   * Pre-post-conditions:
   *
   * Nome: Terzo NON selezionato
-  * Pre: Non Ë stato selezionato un Terzo per il conguaglio
+  * Pre: Non √® stato selezionato un Terzo per il conguaglio
   * Post: Non vengono caricate le modalita di pagamento
   *
   * Nome: Terzo selezionato
@@ -150,7 +150,7 @@ public abstract java.util.Collection findModalita(it.cnr.jada.UserContext param0
   * Pre-post-conditions:
   *
   * Nome: Terzo NON selezionato
-  * Pre: Non Ë stato selezionato un Terzo per il conguaglio
+  * Pre: Non √® stato selezionato un Terzo per il conguaglio
   * Post: Non vengono caricati i termini di pagamento
   *
   * Nome: Terzo selezionato
@@ -170,7 +170,7 @@ public abstract java.util.Collection findTermini(it.cnr.jada.UserContext param0,
   * Pre-post-conditions:
   *
   * Nome: Terzo NON selezionato
-  * Pre: Non Ë stato selezionato un Terzo per il conguaglio
+  * Pre: Non √® stato selezionato un Terzo per il conguaglio
   * Post: Non vengono caricati i Tipi di rapporto
   *
   * Nome: Terzo selezionato
@@ -191,7 +191,7 @@ public abstract java.util.Collection findTipiRapporto(it.cnr.jada.UserContext pa
   * Pre-post-conditions:
   *
   * Nome: Tipo di Rapporto NON selezionato
-  * Pre: Non Ë stato selezionato il tipo di rapporto
+  * Pre: Non √® stato selezionato il tipo di rapporto
   * Post: Non vengono caricati i Tipi Trattamento
   *
   * Nome: Terzo selezionato
@@ -220,7 +220,7 @@ public abstract java.util.Collection findTipiTrattamento(it.cnr.jada.UserContext
  * Pre: L'OggettoBulk specificato esiste.
  * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
  *		 per l'operazione di presentazione e modifica nell'interfaccia visuale.
- *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ë
+ *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome √®
  *		 ottenuto concatenando il nome della component con la stringa ".edit"
  * 
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -239,16 +239,16 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
   * Pre-post-conditions
   *
   *	Nome: Conguaglio ANNULLATO - Data cancellazione valorizzata
-  *	Pre: Il conguaglio Ë annullato
-  *	Post: Ritorna <true>. Il conguaglio Ë annullato
+  *	Pre: Il conguaglio √® annullato
+  *	Post: Ritorna <true>. Il conguaglio √® annullato
   *
   *	Nome: Conguaglio NON ANNULLATO - Data cancellazione non valorizzata
-  *	Pre: Il conguaglio non Ë annullato
-  *	Post: Ritorna <false>. Il conguaglio non Ë annullato
+  *	Pre: Il conguaglio non √® annullato
+  *	Post: Ritorna <false>. Il conguaglio non √® annullato
   *
   * @param 	userContext 	lo UserContext che ha generato la richiesta
   * @param 	conguaglio 		il conguaglio da controllare  
-  * @return TRUE 			e il conguaglio Ë anullato, FALSE altrimenti
+  * @return TRUE 			e il conguaglio √® anullato, FALSE altrimenti
   *
 **/
 public abstract boolean isConguaglioAnnullato(UserContext userContext, ConguaglioBulk conguaglio) throws ComponentException;
@@ -284,7 +284,7 @@ public abstract it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk reloadConguagl
   *		0			Tutto bene
   *		1			Terzo assente
   *		2			Terzo non valido alla data registrazione
-  *		3			Controllo se ho inserito le modalit‡ di pagamento
+  *		3			Controllo se ho inserito le modalit√† di pagamento
   *		4			Tipo rapporto assente
   *		5			Tipo di rapporto non valido in data inizio competenza coge
   *		6			Tipo trattamento assente
@@ -293,43 +293,43 @@ public abstract it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk reloadConguagl
   * Pre-post-conditions
   *
   * Nome: Terzo assente
-  *	Pre: Non Ë stato selezionato un terzo
+  *	Pre: Non √® stato selezionato un terzo
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
   * 		"Inserire il terzo"
   *
   * Nome: Terzo non valido alla data registrazione
-  *	Pre: Il terzo selezionato non Ë valido alla data registrazione
+  *	Pre: Il terzo selezionato non √® valido alla data registrazione
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Terzo selezionato non Ë valido in Data Registrazione"
+  *			"Il Terzo selezionato non √® valido in Data Registrazione"
   *
   * Nome: Modalita di pagamento assente
-  *	Pre: Non Ë stato selezionata una modalita di pagamento
+  *	Pre: Non √® stato selezionata una modalita di pagamento
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Selezionare la Modalit‡ di pagamento"
+  *			"Selezionare la Modalit√† di pagamento"
   *
   * Nome: Tipo rapporto assente
-  *	Pre: Non Ë stato selezionato un tipo rapporto
+  *	Pre: Non √® stato selezionato un tipo rapporto
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
   *			"Selezionare il Tipo Rapporto"
   *
   * Nome: Tipo rapporto non valido alla data inizio competenza coge
-  *	Pre: Il tipo rapporto selezionato non Ë valido in data competenza coge
+  *	Pre: Il tipo rapporto selezionato non √® valido in data competenza coge
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Tipo Rapporto selezionato non Ë valido alla Data Inizio Competenza"
+  *			"Il Tipo Rapporto selezionato non √® valido alla Data Inizio Competenza"
   *
   * Nome: Tipo trattamento assente
-  *	Pre: Non Ë stato selezionato un tipo trattamento
+  *	Pre: Non √® stato selezionato un tipo trattamento
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
   *			"Selezionare il Tipo Trattamento"
   *
   * Nome: Tipo trattamento non valido alla data registrazione
-  *	Pre: Non Ë stato selezionato un tipo trattamento
+  *	Pre: Non √® stato selezionato un tipo trattamento
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Tipo Trattamento selezionato non Ë valido alla Data Registrazione"
+  *			"Il Tipo Trattamento selezionato non √® valido alla Data Registrazione"
   *
   * Nome: Terzo valido
   *	Pre: Il terzo selezionato non ha errori
-  *	Post: Il terzo Ë valido e prosegue con l'operazione
+  *	Post: Il terzo √® valido e prosegue con l'operazione
   *
   * @param	userContext		lo UserContext che genera la richiesta
   * @param	conguaglio		il compenso di cui validare il terzo
@@ -345,7 +345,7 @@ public abstract void validaTerzo(UserContext userContext, ConguaglioBulk conguag
   *		0			Tutto bene
   *		1			Terzo assente
   *		2			Terzo non valido alla data registrazione
-  *		3			Controllo se ho inserito le modalit‡ di pagamento
+  *		3			Controllo se ho inserito le modalit√† di pagamento
   *		4			Tipo rapporto assente
   *		5			Tipo di rapporto non valido in data inizio competenza coge
   *		6			Tipo trattamento assente
@@ -354,31 +354,31 @@ public abstract void validaTerzo(UserContext userContext, ConguaglioBulk conguag
   * Pre-post-conditions
   *
   * Nome: Terzo assente
-  *	Pre: Non Ë stato selezionato un terzo
+  *	Pre: Non √® stato selezionato un terzo
   *	Post: Ritorna il valore 1
   *
   * Nome: Terzo non valido alla data registrazione
-  *	Pre: Il terzo selezionato non Ë valido alla data registrazione
+  *	Pre: Il terzo selezionato non √® valido alla data registrazione
   *	Post: Ritorna il valore 2
   *
   * Nome: Modalita di pagamento assente
-  *	Pre: Non Ë stato selezionata una modalita di pagamento
+  *	Pre: Non √® stato selezionata una modalita di pagamento
   *	Post: Ritorna il valore 3
   *
   * Nome: Tipo rapporto assente
-  *	Pre: Non Ë stato selezionato un tipo rapporto
+  *	Pre: Non √® stato selezionato un tipo rapporto
   *	Post: Ritorna il valore 4
   *
   * Nome: Tipo rapporto non valido alla data inizio competenza coge
-  *	Pre: Il tipo rapporto selezionato non Ë valido in data competenza coge
+  *	Pre: Il tipo rapporto selezionato non √® valido in data competenza coge
   *	Post: Ritorna il valore 5
   *
   * Nome: Tipo trattamento assente
-  *	Pre: Non Ë stato selezionato un tipo trattamento
+  *	Pre: Non √® stato selezionato un tipo trattamento
   *	Post: Ritorna il valore 6
   *
   * Nome: Tipo trattamento non valido alla data registrazione
-  *	Pre: Non Ë stato selezionato un tipo trattamento
+  *	Pre: Non √® stato selezionato un tipo trattamento
   *	Post: Ritorna il valore 7
   *
   * Nome: Terzo valido

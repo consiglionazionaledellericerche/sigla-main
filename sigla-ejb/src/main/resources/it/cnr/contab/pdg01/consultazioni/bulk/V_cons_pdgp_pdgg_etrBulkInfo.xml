@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -34,14 +34,14 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnFreeSearch="false"
-		label="Progressivo Modulo di attività" />
+		label="Progressivo Modulo di attivitÃ " />
 	<fieldProperty
 		name="cd_progetto"
 		property="cd_progetto"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Modulo di attività" />
+		label="Modulo di attivitÃ " />
 	<fieldProperty
 		name="ds_progetto"
 		property="ds_progetto"

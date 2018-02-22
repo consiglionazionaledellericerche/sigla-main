@@ -11,9 +11,9 @@
 %>
 <table class="Form" width="100%">
   <tr>
-		<td><span class="GroupLabel">Unit‡ organizzative disponibili</span></td>
+		<td><span class="GroupLabel">Unit√† organizzative disponibili</span></td>
 		<td></td>
-		<td><span class="GroupLabel">Unit‡ organizzative assegnate</span></td>
+		<td><span class="GroupLabel">Unit√† organizzative assegnate</span></td>
   </tr>
   <tr>
 		<td rowspan="2">

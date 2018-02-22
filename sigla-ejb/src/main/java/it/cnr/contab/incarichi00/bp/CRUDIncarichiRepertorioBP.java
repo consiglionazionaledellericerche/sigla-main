@@ -41,11 +41,11 @@ public class CRUDIncarichiRepertorioBP extends it.cnr.jada.util.action.SimpleCRU
 			if (repertorioAnno !=  null)
 				if (repertorioAnno.getImporto_utilizzato() != null && 
 					repertorioAnno.getImporto_utilizzato().compareTo(Utility.ZERO)!=0)
-					throw new ValidationException("Eliminazione non possibile!\nL'importo relativo all'anno selezionato risulta gi‡ utilizzato.");
+					throw new ValidationException("Eliminazione non possibile!\nL'importo relativo all'anno selezionato risulta gi√† utilizzato.");
 				if (repertorioAnno.getIncarichi_repertorio() != null && 
 				    !repertorioAnno.getIncarichi_repertorio().isIncaricoProvvisorio())
 					if (repertorioAnno.getImporto_iniziale()!=null && repertorioAnno.getImporto_iniziale().compareTo(Utility.ZERO)!=0) 
-						throw new ValidationException("Eliminazione non possibile!\nLa richiesta di incarico Ë gi‡ stata pubblicata.\nE' possibile solo modificare l'importo complessivo.");
+						throw new ValidationException("Eliminazione non possibile!\nLa richiesta di incarico √® gi√† stata pubblicata.\nE' possibile solo modificare l'importo complessivo.");
 			super.validateForDelete(actioncontext, oggettobulk);
 		}
 	};
@@ -62,7 +62,7 @@ public class CRUDIncarichiRepertorioBP extends it.cnr.jada.util.action.SimpleCRU
 
 			if (!(file == null || file.getName().equals(""))) { 
 				if (file.length() > LUNGHEZZA_MAX)
-					throw new ValidationException("Attenzione: la dimensione del file Ë superiore alla massima consentita (10 Mb).");
+					throw new ValidationException("Attenzione: la dimensione del file √® superiore alla massima consentita (10 Mb).");
 
 				allegato.setFile(file.getFile());
 				allegato.setNome_file(allegato.parseFilename(file.getName()));
@@ -79,7 +79,7 @@ public class CRUDIncarichiRepertorioBP extends it.cnr.jada.util.action.SimpleCRU
 					if (archivio.getIncarichi_repertorio() != null)
 						if (archivio.getIncarichi_repertorio().isIncaricoDefinitivo() &&
 							archivio.isContratto())
-							throw new ValidationException("Eliminazione non possibile!\nLa richiesta di incarico Ë gi‡ stata resa definitiva.");
+							throw new ValidationException("Eliminazione non possibile!\nLa richiesta di incarico √® gi√† stata resa definitiva.");
 			
 			super.validateForDelete(actioncontext, oggettobulk);
 		}

@@ -22,8 +22,8 @@ public Tipo_unita_organizzativaBulk(java.lang.String cd_tipo_unita) {
 
 public void validate() throws ValidationException {
 	if ( getCd_tipo_unita() == null || getCd_tipo_unita().equals(""))
-		throw new ValidationException( "Il campo CODICE è obbligatorio." );
+		throw new ValidationException( "Il campo CODICE Ã¨ obbligatorio." );
 	if ( getDs_tipo_unita() == null || getDs_tipo_unita().equals(""))
-		throw new ValidationException( "Il campo DESCRIZIONE è obbligatorio." );		
+		throw new ValidationException( "Il campo DESCRIZIONE Ã¨ obbligatorio." );		
 }
 }

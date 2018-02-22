@@ -4,7 +4,7 @@ package it.cnr.contab.cori00.docs.bulk;
   *  Sottoclasse di <code>Liquid_gruppo_cori_detBulk</code>.
   *	E' stata creata una sottoclasse per poter utilizzare la vista <code>V_LIQUID_GRUPPO_CORI_DET</code>,
   *	nella visualizzazione dei dettagli di un gruppo CORI.
-  *	Oltre alle propriet‡ della superclasse, sono state aggiunte:
+  *	Oltre alle propriet√† della superclasse, sono state aggiunte:
   *	<dl>
   *	<dt> ds_terzo <code>String</code> il Terzo del Versamento
   *	<dt> dt_emissione_mandato  <code>Timestamp</code> la data di emissione del mandato

@@ -27,7 +27,7 @@ public class VRichiestaPerOrdiniBulk extends VRichiestaPerOrdiniBase {
 
 	private String allegatiDocumentale;
 	/**
-	 * [BENE_SERVIZIO Rappresenta la classificazione di beni e servizi il cui dettaglio è esposto in sede di registrazione delle righe fattura passiva.
+	 * [BENE_SERVIZIO Rappresenta la classificazione di beni e servizi il cui dettaglio Ã¨ esposto in sede di registrazione delle righe fattura passiva.
 
 Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di inventario dalla registrazione di fatture passive]
 	 **/
@@ -36,7 +36,7 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	/**
 	 * [CATEGORIA_GRUPPO_INVENT Definisce le categorie ed i relativi gruppi di beni associabili ad un record della tabella BENE_SERVIZIO. Tale gestione si applica
 
-L'entità è definita su due livelli obbligatori:
+L'entitÃ  Ã¨ definita su due livelli obbligatori:
 1 livello = Categoria inventariale
 2 livello = Gruppo di appartenenza del bene nell'ambito di una data categoria inventariale
 
@@ -45,22 +45,22 @@ Ogni categoria deve essere associata ad un capitolo del piano dei conti  economi
 	 **/
 	private Categoria_gruppo_inventBulk categoriaGruppoInvent =  new Categoria_gruppo_inventBulk();
 	/**
-	 * [UNITA_MISURA Rappresenta l'anagrafica delle unità di misura.]
+	 * [UNITA_MISURA Rappresenta l'anagrafica delle unitÃ  di misura.]
 	 **/
 	private UnitaMisuraBulk unitaMisura =  new UnitaMisuraBulk();
 	/**
-	 * [OBBLIGAZIONE Rappresenta la testata di una obbligazione; il concetto è gestito sia per il CNR (impegni) che per i CdS.
+	 * [OBBLIGAZIONE Rappresenta la testata di una obbligazione; il concetto Ã¨ gestito sia per il CNR (impegni) che per i CdS.
 
-Sono sempre utilizzati tutti e tre i livelli in cui si articola l'obbligazione; una OBBLIGAZIONE,  più riferimenti a scadenze in OBBLIGAZIONE_SCADENZARIO e, per ciascuno di questi, più occorrenze in OBBLIGAZIONE_SCAD_VOCE.
-In genere sono presenti più occorrenza in OBBLIGAZIONE_SCAD_VOCE per ogni scadenza.
-Nel caso di partita di giro è sempre presente una relazione uno a uno tra i diversi concetti in cui è articolata l'obbligazione; allo stesso modo sono gestiti gli impegni CNR
+Sono sempre utilizzati tutti e tre i livelli in cui si articola l'obbligazione; una OBBLIGAZIONE,  piÃ¹ riferimenti a scadenze in OBBLIGAZIONE_SCADENZARIO e, per ciascuno di questi, piÃ¹ occorrenze in OBBLIGAZIONE_SCAD_VOCE.
+In genere sono presenti piÃ¹ occorrenza in OBBLIGAZIONE_SCAD_VOCE per ogni scadenza.
+Nel caso di partita di giro Ã¨ sempre presente una relazione uno a uno tra i diversi concetti in cui Ã¨ articolata l'obbligazione; allo stesso modo sono gestiti gli impegni CNR
 
 Nella terna di tabelle relative alle obbligazioni sono gestiti anche i residui (solo CNR). Si prevede di estendere tale gestione (riporto a nuovo esercizio del delta non associato a mandati) anche per le obbligazioni del CdS se queste risultano non pagate al termine dell''esercizio contabile.
 ]
 	 **/
 	private ObbligazioneBulk obbligazione =  new ObbligazioneBulk();
 	/**
-	 * [LINEA_ATTIVITA Linea di attività definita per CDR]
+	 * [LINEA_ATTIVITA Linea di attivitÃ  definita per CDR]
 	 **/
 	private WorkpackageBulk lineaAttivita = new WorkpackageBulk();
 	private CdrBulk centroResponsabilita = new CdrBulk();
@@ -106,7 +106,7 @@ Capitolo definito dall"utente collegato a Categoria
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresenta la classificazione di beni e servizi il cui dettaglio è esposto in sede di registrazione delle righe fattura passiva.
+	 * Restituisce il valore di: [Rappresenta la classificazione di beni e servizi il cui dettaglio Ã¨ esposto in sede di registrazione delle righe fattura passiva.
 
 Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di inventario dalla registrazione di fatture passive]
 	 **/
@@ -115,7 +115,7 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresenta la classificazione di beni e servizi il cui dettaglio è esposto in sede di registrazione delle righe fattura passiva.
+	 * Setta il valore di: [Rappresenta la classificazione di beni e servizi il cui dettaglio Ã¨ esposto in sede di registrazione delle righe fattura passiva.
 
 Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di inventario dalla registrazione di fatture passive]
 	 **/
@@ -126,7 +126,7 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [Definisce le categorie ed i relativi gruppi di beni associabili ad un record della tabella BENE_SERVIZIO. Tale gestione si applica
 
-L'entità è definita su due livelli obbligatori:
+L'entitÃ  Ã¨ definita su due livelli obbligatori:
 1 livello = Categoria inventariale
 2 livello = Gruppo di appartenenza del bene nell'ambito di una data categoria inventariale
 
@@ -140,7 +140,7 @@ Ogni categoria deve essere associata ad un capitolo del piano dei conti  economi
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [Definisce le categorie ed i relativi gruppi di beni associabili ad un record della tabella BENE_SERVIZIO. Tale gestione si applica
 
-L'entità è definita su due livelli obbligatori:
+L'entitÃ  Ã¨ definita su due livelli obbligatori:
 1 livello = Categoria inventariale
 2 livello = Gruppo di appartenenza del bene nell'ambito di una data categoria inventariale
 
@@ -152,25 +152,25 @@ Ogni categoria deve essere associata ad un capitolo del piano dei conti  economi
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresenta l'anagrafica delle unità di misura.]
+	 * Restituisce il valore di: [Rappresenta l'anagrafica delle unitÃ  di misura.]
 	 **/
 	public UnitaMisuraBulk getUnitaMisura() {
 		return unitaMisura;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresenta l'anagrafica delle unità di misura.]
+	 * Setta il valore di: [Rappresenta l'anagrafica delle unitÃ  di misura.]
 	 **/
 	public void setUnitaMisura(UnitaMisuraBulk unitaMisura)  {
 		this.unitaMisura=unitaMisura;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresenta la testata di una obbligazione; il concetto è gestito sia per il CNR (impegni) che per i CdS.
+	 * Restituisce il valore di: [Rappresenta la testata di una obbligazione; il concetto Ã¨ gestito sia per il CNR (impegni) che per i CdS.
 
-Sono sempre utilizzati tutti e tre i livelli in cui si articola l'obbligazione; una OBBLIGAZIONE,  più riferimenti a scadenze in OBBLIGAZIONE_SCADENZARIO e, per ciascuno di questi, più occorrenze in OBBLIGAZIONE_SCAD_VOCE.
-In genere sono presenti più occorrenza in OBBLIGAZIONE_SCAD_VOCE per ogni scadenza.
-Nel caso di partita di giro è sempre presente una relazione uno a uno tra i diversi concetti in cui è articolata l'obbligazione; allo stesso modo sono gestiti gli impegni CNR
+Sono sempre utilizzati tutti e tre i livelli in cui si articola l'obbligazione; una OBBLIGAZIONE,  piÃ¹ riferimenti a scadenze in OBBLIGAZIONE_SCADENZARIO e, per ciascuno di questi, piÃ¹ occorrenze in OBBLIGAZIONE_SCAD_VOCE.
+In genere sono presenti piÃ¹ occorrenza in OBBLIGAZIONE_SCAD_VOCE per ogni scadenza.
+Nel caso di partita di giro Ã¨ sempre presente una relazione uno a uno tra i diversi concetti in cui Ã¨ articolata l'obbligazione; allo stesso modo sono gestiti gli impegni CNR
 
 Nella terna di tabelle relative alle obbligazioni sono gestiti anche i residui (solo CNR). Si prevede di estendere tale gestione (riporto a nuovo esercizio del delta non associato a mandati) anche per le obbligazioni del CdS se queste risultano non pagate al termine dell''esercizio contabile.
 ]
@@ -180,11 +180,11 @@ Nella terna di tabelle relative alle obbligazioni sono gestiti anche i residui (
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresenta la testata di una obbligazione; il concetto è gestito sia per il CNR (impegni) che per i CdS.
+	 * Setta il valore di: [Rappresenta la testata di una obbligazione; il concetto Ã¨ gestito sia per il CNR (impegni) che per i CdS.
 
-Sono sempre utilizzati tutti e tre i livelli in cui si articola l'obbligazione; una OBBLIGAZIONE,  più riferimenti a scadenze in OBBLIGAZIONE_SCADENZARIO e, per ciascuno di questi, più occorrenze in OBBLIGAZIONE_SCAD_VOCE.
-In genere sono presenti più occorrenza in OBBLIGAZIONE_SCAD_VOCE per ogni scadenza.
-Nel caso di partita di giro è sempre presente una relazione uno a uno tra i diversi concetti in cui è articolata l'obbligazione; allo stesso modo sono gestiti gli impegni CNR
+Sono sempre utilizzati tutti e tre i livelli in cui si articola l'obbligazione; una OBBLIGAZIONE,  piÃ¹ riferimenti a scadenze in OBBLIGAZIONE_SCADENZARIO e, per ciascuno di questi, piÃ¹ occorrenze in OBBLIGAZIONE_SCAD_VOCE.
+In genere sono presenti piÃ¹ occorrenza in OBBLIGAZIONE_SCAD_VOCE per ogni scadenza.
+Nel caso di partita di giro Ã¨ sempre presente una relazione uno a uno tra i diversi concetti in cui Ã¨ articolata l'obbligazione; allo stesso modo sono gestiti gli impegni CNR
 
 Nella terna di tabelle relative alle obbligazioni sono gestiti anche i residui (solo CNR). Si prevede di estendere tale gestione (riporto a nuovo esercizio del delta non associato a mandati) anche per le obbligazioni del CdS se queste risultano non pagate al termine dell''esercizio contabile.
 ]
@@ -194,14 +194,14 @@ Nella terna di tabelle relative alle obbligazioni sono gestiti anche i residui (
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Linea di attività definita per CDR]
+	 * Restituisce il valore di: [Linea di attivitÃ  definita per CDR]
 	 **/
 	public WorkpackageBulk getLineaAttivita() {
 		return lineaAttivita;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Linea di attività definita per CDR]
+	 * Setta il valore di: [Linea di attivitÃ  definita per CDR]
 	 **/
 	public void setLineaAttivita(WorkpackageBulk lineaAttivita)  {
 		this.lineaAttivita=lineaAttivita;

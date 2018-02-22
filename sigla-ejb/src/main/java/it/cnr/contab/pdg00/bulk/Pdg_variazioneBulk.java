@@ -137,9 +137,9 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	}
 	/**
 	 * Serve per gestire la disabilitazione dei tasti di consultazione assestato entrate/ricavi/spese/costi
-	 * Ritorna TRUE se la variazione al PDG non Ë caricata (numero variazione pdg non assegnato) 
+	 * Ritorna TRUE se la variazione al PDG non √® caricata (numero variazione pdg non assegnato) 
 	 *
-	 * @return Il valore della propriet‡ 'consultazioneAssestatoDisabled'
+	 * @return Il valore della propriet√† 'consultazioneAssestatoDisabled'
 	 */
 	public boolean isConsultazioneAssestatoDisabled() 
 	{
@@ -488,8 +488,8 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	}
 
 	/*
-	 * Serve per sapere se la variazione Ë di tipo Interna all'Istituto
-	 * Ritorna un boolean con valore true se la tipologia della variazione Ë:
+	 * Serve per sapere se la variazione √® di tipo Interna all'Istituto
+	 * Ritorna un boolean con valore true se la tipologia della variazione √®:
 	 * 		TIPO_STORNO_SPESA_STESSO_ISTITUTO 
 	 * 	    TIPO_STORNO_ENTRATA_STESSO_ISTITUTO
 	 *		TIPO_VARIAZIONE_POSITIVA_STESSO_ISTITUTO
@@ -500,8 +500,8 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		       getTipo_variazione().isVariazioneInternaIstituto();
 	}
 	/*
-	 * Serve per sapere se la variazione Ë di tipo Storno
-	 * Ritorna un boolean con valore true se la tipologia della variazione Ë:
+	 * Serve per sapere se la variazione √® di tipo Storno
+	 * Ritorna un boolean con valore true se la tipologia della variazione √®:
 	 * 		TIPO_STORNO_SPESA_STESSO_ISTITUTO 
 	 * 	    TIPO_STORNO_ENTRATA_STESSO_ISTITUTO
 	 * 		TIPO_STORNO_SPESA_ISTITUTI_DIVERSI 
@@ -513,7 +513,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	}
 	/*
 	 * Serve per sapere se la variazione consente di effettuare interventi sulle voci di entrata
-	 * Ritorna un boolean con valore true se la tipologia della variazione Ë:
+	 * Ritorna un boolean con valore true se la tipologia della variazione √®:
 	 * 	    TIPO_STORNO_ENTRATA_STESSO_ISTITUTO
 	 * 	    TIPO_STORNO_ENTRATA_ISTITUTI_DIVERSI
 	 *		TIPO_VARIAZIONE_POSITIVA_STESSO_ISTITUTO
@@ -528,7 +528,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 
 	/*
 	 * Serve per sapere se la variazione consente di effettuare interventi sulle voci di spesa
-	 * Ritorna un boolean con valore true se la tipologia della variazione Ë:
+	 * Ritorna un boolean con valore true se la tipologia della variazione √®:
 	 * 	    TIPO_STORNO_SPESA_STESSO_ISTITUTO
 	 * 	    TIPO_STORNO_SPESA_ISTITUTI_DIVERSI
 	 *		TIPO_VARIAZIONE_POSITIVA_STESSO_ISTITUTO
@@ -668,7 +668,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 
 	/*
 	 * Metodo che serve per conservare l'informazione, utile al component, 
-	 * se la mappa Ë in modalit‡ ricerca
+	 * se la mappa √® in modalit√† ricerca
 	 */
 	public boolean isBulkforSearch() {
 		return isBulkforSearch;

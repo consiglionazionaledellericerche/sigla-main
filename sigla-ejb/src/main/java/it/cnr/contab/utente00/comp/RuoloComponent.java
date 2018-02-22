@@ -35,12 +35,12 @@ public  RuoloComponent()
  * Pre-post-conditions:
  *
  * Nome: Creazione di Ruolo non esistente
- * Pre:  La richiesta di creazione di un Ruolo non ancora definito Ë stata generata
+ * Pre:  La richiesta di creazione di un Ruolo non ancora definito √® stata generata
  * Post: Il Ruolo e' stato inserito nel database
  *
- * Nome: Creazione di Ruolo gi‡ esistente
- * Pre:  La richiesta di creazione di un Ruolo con chiave gi‡ definita Ë stata generata
- * Post: Viene generata una ComponentException per segnalare all'utente l'impossibilit‡ di effettuare la creazione
+ * Nome: Creazione di Ruolo gi√† esistente
+ * Pre:  La richiesta di creazione di un Ruolo con chiave gi√† definita √® stata generata
+ * Post: Viene generata una ComponentException per segnalare all'utente l'impossibilit√† di effettuare la creazione
  *       del ruolo
  *
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -117,7 +117,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
 	}
 }
 /**
- * Esegue l'inizializzazione di una nuova istanza di RuoloBulk impostando l'elenco di Accessi gi‡ assegnati 
+ * Esegue l'inizializzazione di una nuova istanza di RuoloBulk impostando l'elenco di Accessi gi√† assegnati 
  * e l'elenco di Accessi ancora disponibili
  *
  * Pre-post-conditions:

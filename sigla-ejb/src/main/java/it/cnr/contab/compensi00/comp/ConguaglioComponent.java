@@ -491,13 +491,13 @@ public void eliminaConBulk (UserContext aUC, OggettoBulk bulk) throws ComponentE
   * Pre-post-conditions:
   *
   * Nome: Terzo NON selezionato
-  * Pre: Non Ë stato selezionato un Terzo per il conguaglio
+  * Pre: Non √® stato selezionato un Terzo per il conguaglio
   * Post: Non vengono caricate le banche.
   *
   * Nome: Terzo selezionato
   * Pre: E' stato selezionato un Terzo valido per il conguaglio
   * Post: Viene restituita la lista delle Banche associate al Terzo
-  * 	  e alla Modalit‡ di Pagamento selezionata
+  * 	  e alla Modalit√† di Pagamento selezionata
   *
   * @param	userContext	lo UserContext che ha generato la richiesta
   * @param	conguaglio l'OggettoBulk da completare
@@ -521,7 +521,7 @@ public java.util.List findListaBanche(UserContext userContext, ConguaglioBulk co
   * Pre-post-conditions:
   *
   * Nome: Terzo NON selezionato
-  * Pre: Non Ë stato selezionato un Terzo per il conguaglio
+  * Pre: Non √® stato selezionato un Terzo per il conguaglio
   * Post: Non vengono caricate le modalita di pagamento
   *
   * Nome: Terzo selezionato
@@ -556,7 +556,7 @@ public java.util.Collection findModalita(UserContext userContext, OggettoBulk bu
   * Pre-post-conditions:
   *
   * Nome: Terzo NON selezionato
-  * Pre: Non Ë stato selezionato un Terzo per il conguaglio
+  * Pre: Non √® stato selezionato un Terzo per il conguaglio
   * Post: Non vengono caricati i termini di pagamento
   *
   * Nome: Terzo selezionato
@@ -591,7 +591,7 @@ public java.util.Collection findTermini(UserContext userContext, OggettoBulk bul
   * Pre-post-conditions:
   *
   * Nome: Terzo NON selezionato
-  * Pre: Non Ë stato selezionato un Terzo per il conguaglio
+  * Pre: Non √® stato selezionato un Terzo per il conguaglio
   * Post: Non vengono caricati i Tipi di rapporto
   *
   * Nome: Terzo selezionato
@@ -623,7 +623,7 @@ public java.util.Collection findTipiRapporto(UserContext userContext, Conguaglio
   * Pre-post-conditions:
   *
   * Nome: Tipo di Rapporto NON selezionato
-  * Pre: Non Ë stato selezionato il tipo di rapporto
+  * Pre: Non √® stato selezionato il tipo di rapporto
   * Post: Non vengono caricati i Tipi Trattamento
   *
   * Nome: Terzo selezionato
@@ -673,10 +673,10 @@ public java.util.Collection findTipiTrattamento(UserContext userContext, Conguag
 	}
 }
 /**
- * Pre:  L'esercizio di scrivania Ë antecedente a quello corrente
+ * Pre:  L'esercizio di scrivania √® antecedente a quello corrente
  * Post: La data restituita viene inizializzata al 31/12/esercizio scrivania
  *
- * Pre:  L'esercizio di scrivania NON Ë antecedente a quello corrente
+ * Pre:  L'esercizio di scrivania NON √® antecedente a quello corrente
  * Post: La data restituita viene inizializzata alla data odierna
  *
  * @param	aUC		lo UserContext che ha generato la richiesta
@@ -767,8 +767,8 @@ private int getTipoCancellazione (UserContext aUC, OggettoBulk bulk) throws Comp
   *		0			Tutto bene
   *		1			Terzo assente
   *		2			Terzo non valido alla data registrazione
-  *		3			Controllo se ho inserito le modalit‡ di pagamento
-  *		4			Controllo se la modalit‡ di pagamento Ë valida (ha una banca associata)
+  *		3			Controllo se ho inserito le modalit√† di pagamento
+  *		4			Controllo se la modalit√† di pagamento √® valida (ha una banca associata)
   *		5			Tipo rapporto assente
   *		6			Tipo di rapporto non valido in data inizio competenza coge
   *		7			Tipo trattamento assente
@@ -781,19 +781,19 @@ private void handleExceptionsTerzo(int error) throws ComponentException{
 		case 1: {
 			throw new it.cnr.jada.comp.ApplicationException("Inserire il terzo");		
 		}case 2: {
-			throw new it.cnr.jada.comp.ApplicationException("Il Terzo selezionato non Ë valido in Data Registrazione");
+			throw new it.cnr.jada.comp.ApplicationException("Il Terzo selezionato non √® valido in Data Registrazione");
 		}case 3: {
-			throw new it.cnr.jada.comp.ApplicationException("Selezionare la Modalit‡ di pagamento");
+			throw new it.cnr.jada.comp.ApplicationException("Selezionare la Modalit√† di pagamento");
 		}case 4: {
-			throw new it.cnr.jada.comp.ApplicationException("Selezionare una Modalit‡ di Pagamento valida");
+			throw new it.cnr.jada.comp.ApplicationException("Selezionare una Modalit√† di Pagamento valida");
 		}case 5: {
 			throw new it.cnr.jada.comp.ApplicationException("Selezionare il Tipo Rapporto");
 		}case 6: {
-			throw new it.cnr.jada.comp.ApplicationException("Il Tipo Rapporto selezionato non Ë valido alla Data Inizio Competenza");
+			throw new it.cnr.jada.comp.ApplicationException("Il Tipo Rapporto selezionato non √® valido alla Data Inizio Competenza");
 		}case 7: {
 			throw new it.cnr.jada.comp.ApplicationException("Selezionare il Tipo Trattamento");
 		}case 8: {
-			throw new it.cnr.jada.comp.ApplicationException("Il Tipo Trattamento selezionato non Ë valido alla Data Registrazione");
+			throw new it.cnr.jada.comp.ApplicationException("Il Tipo Trattamento selezionato non √® valido alla Data Registrazione");
 		}
 	}
 }
@@ -864,7 +864,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
  * Pre: L'OggettoBulk specificato esiste.
  * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
  *		 per l'operazione di presentazione e modifica nell'interfaccia visuale.
- *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ë
+ *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome √®
  *		 ottenuto concatenando il nome della component con la stringa ".edit"
  * 
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -880,7 +880,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 	ConguaglioBulk conguaglio = (ConguaglioBulk) bulk;
 	
 	if (conguaglio.getEsercizio() == null)
-		throw new it.cnr.jada.comp.ApplicationException("L'esercizio del documento non Ë valorizzato! Impossibile proseguire.");
+		throw new it.cnr.jada.comp.ApplicationException("L'esercizio del documento non √® valorizzato! Impossibile proseguire.");
 			
 	if (conguaglio.getEsercizio().intValue() > it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext).intValue())
 		throw new it.cnr.jada.comp.ApplicationException("Il documento deve appartenere o all'esercizio di scrivania o ad esercizi precedenti per essere aperto in modifica!");
@@ -898,16 +898,16 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
   * Pre-post-conditions
   *
   *	Nome: Conguaglio ANNULLATO - Data cancellazione valorizzata
-  *	Pre: Il conguaglio Ë annullato
-  *	Post: Ritorna <true>. Il conguaglio Ë annullato
+  *	Pre: Il conguaglio √® annullato
+  *	Post: Ritorna <true>. Il conguaglio √® annullato
   *
   *	Nome: Conguaglio NON ANNULLATO - Data cancellazione non valorizzata
-  *	Pre: Il conguaglio non Ë annullato
-  *	Post: Ritorna <false>. Il conguaglio non Ë annullato
+  *	Pre: Il conguaglio non √® annullato
+  *	Post: Ritorna <false>. Il conguaglio non √® annullato
   *
   * @param 	userContext 	lo UserContext che ha generato la richiesta
   * @param 	conguaglio 		il conguaglio da controllare  
-  * @return TRUE 			e il conguaglio Ë anullato, FALSE altrimenti
+  * @return TRUE 			e il conguaglio √® anullato, FALSE altrimenti
   *
 **/
 public boolean isConguaglioAnnullato(UserContext userContext, ConguaglioBulk conguaglio) throws ComponentException
@@ -1187,7 +1187,7 @@ private void upgKeyAssCompensoConguaglio(UserContext userContext, ConguaglioBulk
   * Post: Viene restituita una ComponentException con la desrizione dell'errore
   *
   * Nome: Validazione Dati Esterni NON superata
-  * Pre: Uno degli importi dei dati esterni Ë null
+  * Pre: Uno degli importi dei dati esterni √® null
   * Post: Viene restituita una ComponentException con la desrizione dell'errore
   *
   * @param	userContext	Lo userContext che ha generato la richiesta
@@ -1226,7 +1226,7 @@ private void validaConguaglio(UserContext userContext, ConguaglioBulk conguaglio
   * Post: Viene restituita una ComponentException con la desrizione dell'errore
   *
   * Nome: Validazione Dati Esterni NON superata
-  * Pre: Uno degli importi dei dati esterni Ë null
+  * Pre: Uno degli importi dei dati esterni √® null
   * Post: Viene restituita una ComponentException con la desrizione dell'errore
   *
   * @param	userContext	Lo userContext che ha generato la richiesta
@@ -1265,7 +1265,7 @@ private void validaConguaglioPerCalcolo(UserContext userContext, ConguaglioBulk 
   * Post: Viene restituita una ComponentException con la desrizione dell'errore
   *
   * Nome: Validazione Dati Esterni NON superata
-  * Pre: Uno degli importi dei dati esterni Ë null
+  * Pre: Uno degli importi dei dati esterni √® null
   * Post: Viene restituita una ComponentException con la desrizione dell'errore
   *
   * @param	userContext	Lo userContext che ha generato la richiesta
@@ -1292,7 +1292,7 @@ public void validaAltriDatiEsterni(UserContext userContext, ConguaglioBulk congu
 			 (conguaglio.getCodice_fiscale_esterno().equals(cnrAnag.getCodice_fiscale())||
 			  conguaglio.getCodice_fiscale_esterno().equals(cnrAnag.getPartita_iva())))
 		{
-			throw new it.cnr.jada.comp.ApplicationException("Dati Esterni: Il Codice fiscale/Partita IVA del Datore di lavoro non puÚ essere quello del C.N.R.");
+			throw new it.cnr.jada.comp.ApplicationException("Dati Esterni: Il Codice fiscale/Partita IVA del Datore di lavoro non pu√≤ essere quello del C.N.R.");
 		}
 	} catch (PersistencyException e) {
 		throw handleException(e);
@@ -1318,7 +1318,7 @@ public String verificaIncoerenzaCarichiFam (UserContext userContext, ConguaglioB
 		if (conguaglio.getDetrazioni_co_esterno().compareTo(new BigDecimal(0))!=0 &&
 		    !sess.esisteConiugeValido(userContext, anag, null))
 		{
-			message = "Compenso creato in modo corretto. Attenzione! Nei dati esterni sono state inserite le detrazioni per il coniuge ma nei carichi familiari del terzo non Ë presente un coniuge valido.";
+			message = "Compenso creato in modo corretto. Attenzione! Nei dati esterni sono state inserite le detrazioni per il coniuge ma nei carichi familiari del terzo non √® presente un coniuge valido.";
 			return message;
 		}
 		if (conguaglio.getDetrazioni_al_esterno().compareTo(new BigDecimal(0))!=0 &&
@@ -1344,7 +1344,7 @@ public String verificaIncoerenzaCarichiFam (UserContext userContext, ConguaglioB
   *		0			Tutto bene
   *		1			Terzo assente
   *		2			Terzo non valido alla data registrazione
-  *		3			Controllo se ho inserito le modalit‡ di pagamento
+  *		3			Controllo se ho inserito le modalit√† di pagamento
   *		4			Banca non inserita
   *		5			Tipo rapporto assente
   *		6			Tipo di rapporto non valido in data inizio competenza coge
@@ -1354,48 +1354,48 @@ public String verificaIncoerenzaCarichiFam (UserContext userContext, ConguaglioB
   * Pre-post-conditions
   *
   * Nome: Terzo assente
-  *	Pre: Non Ë stato selezionato un terzo
+  *	Pre: Non √® stato selezionato un terzo
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
   * 		"Inserire il terzo"
   *
   * Nome: Terzo non valido alla data registrazione
-  *	Pre: Il terzo selezionato non Ë valido alla data registrazione
+  *	Pre: Il terzo selezionato non √® valido alla data registrazione
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Terzo selezionato non Ë valido in Data Registrazione"
+  *			"Il Terzo selezionato non √® valido in Data Registrazione"
   *
   * Nome: Modalita di pagamento assente
-  *	Pre: Non Ë stato selezionata una modalita di pagamento
+  *	Pre: Non √® stato selezionata una modalita di pagamento
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Selezionare la Modalit‡ di pagamento"
+  *			"Selezionare la Modalit√† di pagamento"
   *
   * Nome: Modalita di pagamento non valida
-  *	Pre: Non Ë stato selezionata una modalita di pagamento valida (con banca)
+  *	Pre: Non √® stato selezionata una modalita di pagamento valida (con banca)
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Selezionare una Modalit‡ di pagamento valida"
+  *			"Selezionare una Modalit√† di pagamento valida"
   *
   * Nome: Tipo rapporto assente
-  *	Pre: Non Ë stato selezionato un tipo rapporto
+  *	Pre: Non √® stato selezionato un tipo rapporto
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
   *			"Selezionare il Tipo Rapporto"
   *
   * Nome: Tipo rapporto non valido alla data inizio competenza coge
-  *	Pre: Il tipo rapporto selezionato non Ë valido in data competenza coge
+  *	Pre: Il tipo rapporto selezionato non √® valido in data competenza coge
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Tipo Rapporto selezionato non Ë valido alla Data Inizio Competenza"
+  *			"Il Tipo Rapporto selezionato non √® valido alla Data Inizio Competenza"
   *
   * Nome: Tipo trattamento assente
-  *	Pre: Non Ë stato selezionato un tipo trattamento
+  *	Pre: Non √® stato selezionato un tipo trattamento
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
   *			"Selezionare il Tipo Trattamento"
   *
   * Nome: Tipo trattamento non valido alla data registrazione
-  *	Pre: Non Ë stato selezionato un tipo trattamento
+  *	Pre: Non √® stato selezionato un tipo trattamento
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Tipo Trattamento selezionato non Ë valido alla Data Registrazione"
+  *			"Il Tipo Trattamento selezionato non √® valido alla Data Registrazione"
   *
   * Nome: Terzo valido
   *	Pre: Il terzo selezionato non ha errori
-  *	Post: Il terzo Ë valido e prosegue con l'operazione
+  *	Post: Il terzo √® valido e prosegue con l'operazione
   *
   * @param	userContext		lo UserContext che genera la richiesta
   * @param	conguaglio		il compenso di cui validare il terzo
@@ -1415,7 +1415,7 @@ public void validaTerzo(UserContext userContext, ConguaglioBulk conguaglio) thro
   *		0			Tutto bene
   *		1			Terzo assente
   *		2			Terzo non valido alla data registrazione
-  *		3			Controllo se ho inserito le modalit‡ di pagamento
+  *		3			Controllo se ho inserito le modalit√† di pagamento
   *		4			Banca non inserita
   *		5			Tipo rapporto assente
   *		6			Tipo di rapporto non valido in data inizio competenza coge
@@ -1425,35 +1425,35 @@ public void validaTerzo(UserContext userContext, ConguaglioBulk conguaglio) thro
   * Pre-post-conditions
   *
   * Nome: Terzo assente
-  *	Pre: Non Ë stato selezionato un terzo
+  *	Pre: Non √® stato selezionato un terzo
   *	Post: Ritorna il valore 1
   *
   * Nome: Terzo non valido alla data registrazione
-  *	Pre: Il terzo selezionato non Ë valido alla data registrazione
+  *	Pre: Il terzo selezionato non √® valido alla data registrazione
   *	Post: Ritorna il valore 2
   *
   * Nome: Modalita di pagamento assente
-  *	Pre: Non Ë stato selezionata una modalita di pagamento
+  *	Pre: Non √® stato selezionata una modalita di pagamento
   *	Post: Ritorna il valore 3
   *
   * Nome: Banca non inserita
-  *	Pre: Non Ë stato selezionato un conto corretto
+  *	Pre: Non √® stato selezionato un conto corretto
   *	Post: Ritorna il valore 4
   *
   * Nome: Tipo rapporto assente
-  *	Pre: Non Ë stato selezionato un tipo rapporto
+  *	Pre: Non √® stato selezionato un tipo rapporto
   *	Post: Ritorna il valore 5
   *
   * Nome: Tipo rapporto non valido alla data inizio competenza coge
-  *	Pre: Il tipo rapporto selezionato non Ë valido in data competenza coge
+  *	Pre: Il tipo rapporto selezionato non √® valido in data competenza coge
   *	Post: Ritorna il valore 6
   *
   * Nome: Tipo trattamento assente
-  *	Pre: Non Ë stato selezionato un tipo trattamento
+  *	Pre: Non √® stato selezionato un tipo trattamento
   *	Post: Ritorna il valore 7
   *
   * Nome: Tipo trattamento non valido alla data registrazione
-  *	Pre: Non Ë stato selezionato un tipo trattamento
+  *	Pre: Non √® stato selezionato un tipo trattamento
   *	Post: Ritorna il valore 8
   *
   * Nome: Terzo valido
@@ -1477,7 +1477,7 @@ public int validaTerzo(UserContext userContext, ConguaglioBulk conguaglio, boole
 	if (terzo.getDt_fine_rapporto()!=null && terzo.getDt_fine_rapporto().compareTo(conguaglio.getDt_registrazione())<0)
 		return 2;
 
-	// Controllo se ho inserito le modalit‡ di pagamento
+	// Controllo se ho inserito le modalit√† di pagamento
 	if (checkModPag && conguaglio.getModalitaPagamento()==null)
 		return 3;
 

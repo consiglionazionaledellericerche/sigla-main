@@ -15,16 +15,16 @@ public V_obbligazione_im_mandatoBulk() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_mandato'
+ * Restituisce il valore della propriet√† 'im_mandato'
  *
- * @return Il valore della propriet‡ 'im_mandato'
+ * @return Il valore della propriet√† 'im_mandato'
  */
 public java.math.BigDecimal getIm_mandato() {
 	return im_mandato;
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'im_mandato'
+ * Imposta il valore della propriet√† 'im_mandato'
  *
  * @param newIm_mandato	Il valore da assegnare a 'im_mandato'
  */

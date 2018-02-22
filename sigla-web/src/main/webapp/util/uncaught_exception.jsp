@@ -47,7 +47,7 @@ function showStackTrace() {
 	popup.document.writeln("Utente: <%= userInfo.getUserid()%><br>")
 	popup.document.writeln("Esercizio: <%= userInfo.getEsercizio()%><br>")
 	<%   if (userInfo.getUnita_organizzativa() != null) { %>
-	popup.document.writeln("Unit‡ organizzativa: <%= userInfo.getUnita_organizzativa().getCd_unita_organizzativa()%><br>")
+	popup.document.writeln("Unit√† organizzativa: <%= userInfo.getUnita_organizzativa().getCd_unita_organizzativa()%><br>")
 	<%   }
 	   } %>
 	<% if (bp != null) {%>
@@ -65,7 +65,7 @@ function showStackTrace() {
 <% 	BusinessProcess.encode(bp,pageContext); %>
 <input type="hidden" name="comando" value="doDefault">
 <P align=center>
-Non Ë possibile portare a termine l'operazione richiesta a causa di un errore interno del server.
+Non √® possibile portare a termine l'operazione richiesta a causa di un errore interno del server.
 <P align=center>
 <button onclick="if (disableDblClick()) submitForm('doDefault')">Chiudi</button>
 <button onclick="showStackTrace()">Mostra errore</button>

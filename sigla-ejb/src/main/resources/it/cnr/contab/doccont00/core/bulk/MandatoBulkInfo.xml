@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -7,7 +7,7 @@
 		name="im_disp_cassa"
 		property="im_disp_cassa"
 		inputType="ROTEXT"
-		label="Disponibilità di cassa"
+		label="DisponibilitÃ  di cassa"
 		formatName = "it.cnr.contab.util.EuroFormat"
 		enabledOnEdit="false"
 		enabledOnInsert="false"

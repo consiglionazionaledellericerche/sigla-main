@@ -169,7 +169,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 
 		elementRichiesta.appendChild(elementRichiedente);
 		
-		// aggiungiamo le Informazioni sull'Attivit‡
+		// aggiungiamo le Informazioni sull'Attivit√†
 		Element elementAttivita = xmldoc.createElement(getTagRadice()+":attivita");
 
 		Element elementOggetto = xmldoc.createElement(getTagRadice()+":oggetto");
@@ -215,7 +215,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 
 		elementRichiesta.appendChild(elementAggiuntive);
 
-		// aggiungiamo le Date di Validit‡
+		// aggiungiamo le Date di Validit√†
 		Element elementDate = xmldoc.createElement(getTagRadice()+":date");
 
 		Element elementDataInizioPubblicazione = xmldoc.createElement(getTagRadice()+":iniziopubblicazione");
@@ -296,7 +296,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 			elementRichiesta.appendChild(elementUrl);
 		}
 
-		// aggiungiamo le Informazioni sull'Attivit‡
+		// aggiungiamo le Informazioni sull'Attivit√†
 		Element elementAttivita = xmldoc.createElement(getTagRadice()+":attivita");
 
 		Element elementOggetto = xmldoc.createElement(getTagRadice()+":oggetto");
@@ -856,7 +856,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 	    	StreamResult streamResult = new StreamResult(pagecontext.getOut());
 	    	TransformerFactory tf = TransformerFactory.newInstance();
 	    	Transformer serializer = tf.newTransformer();
-	    	serializer.setOutputProperty(OutputKeys.ENCODING,"ISO-8859-1");
+	    	serializer.setOutputProperty(OutputKeys.ENCODING,"UTF-8");
 	    	//serializer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,"http://150.146.206.250/DTD/"+getTagRadice()+".dtd");
 	    	serializer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,getTagRadice());
 	    	serializer.setOutputProperty(OutputKeys.INDENT,"yes");

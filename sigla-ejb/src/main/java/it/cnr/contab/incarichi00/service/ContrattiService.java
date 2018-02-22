@@ -21,7 +21,7 @@ public class ContrattiService extends StoreService {
 		if (storageObjects.size() == 0)
 			return null;
 		if (storageObjects.size() > 1)
-			throw new ApplicationException("Errore di sistema, esistono più procedure di conferimento incarico ("+ incarichi_proceduraBulk.getEsercizio()+
+			throw new ApplicationException("Errore di sistema, esistono piÃ¹ procedure di conferimento incarico ("+ incarichi_proceduraBulk.getEsercizio()+
 					"/"+incarichi_proceduraBulk.getPg_procedura());
 		return StorageDocument.construct(storageObjects.get(0));
 	}
@@ -34,7 +34,7 @@ public class ContrattiService extends StoreService {
 		if (storageObjects.size() == 0)
 			return null;
 		if (storageObjects.size() > 1)
-			throw new ApplicationException("Errore di sistema, esistono più file di tipo decisione a contrattare per la procedura di conferimento incarichi "+
+			throw new ApplicationException("Errore di sistema, esistono piÃ¹ file di tipo decisione a contrattare per la procedura di conferimento incarichi "+
 					incarichi_procedura_archivioBulk.getEsercizio()+"/"+incarichi_procedura_archivioBulk.getProgressivo_riga());
 		return StorageDocument.construct(storageObjects.get(0));
 	}

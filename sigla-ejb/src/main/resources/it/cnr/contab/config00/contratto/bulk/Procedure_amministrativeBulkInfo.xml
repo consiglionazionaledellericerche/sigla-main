@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -29,7 +29,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="false"
 		enabledOnInsert="true"		
-		label="Ricerca Professionalità Interne Obbligatorio" />
+		label="Ricerca ProfessionalitÃ  Interne Obbligatorio" />
 	<fieldProperty
 		name="ti_proc_amm"
 		property="ti_proc_amm"
@@ -65,7 +65,7 @@
 		inputSize="3"
 		maxLength="3"
 		nullable="false"
-		label="Giorni di validità di richiesta incarico per collaborazione dopo la pubblicazione" />
+		label="Giorni di validitÃ  di richiesta incarico per collaborazione dopo la pubblicazione" />
 	<fieldProperty
 		name="cd_gruppo_file"
 		property="gruppo_file.cd_gruppo_file"
@@ -133,7 +133,7 @@
 		label="Giorni di pubblicazione di&lt;BR&gt;richiesta incarico per collaborazione" />
 	<formFieldProperty
 		name="incarico_ric_giorni_scad" 
-		label="Giorni di validità di&lt;BR&gt;richiesta incarico per collaborazione&lt;BR&gt;dopo la pubblicazione" />
+		label="Giorni di validitÃ  di&lt;BR&gt;richiesta incarico per collaborazione&lt;BR&gt;dopo la pubblicazione" />
 	<formFieldProperty
 		name="cd_gruppo_file" />
 	<formFieldProperty

@@ -5,7 +5,7 @@ import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.action.*;
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Accertamento Residuo.
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Accertamento Residuo.
  */
 public class CRUDAccertamentoPGiroResiduoBP extends CRUDAccertamentoPGiroBP {
 /**

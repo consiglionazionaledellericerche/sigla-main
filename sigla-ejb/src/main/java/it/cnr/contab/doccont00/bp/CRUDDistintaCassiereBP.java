@@ -1,9 +1,38 @@
 package it.cnr.contab.doccont00.bp;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.rmi.RemoteException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.datatype.DatatypeConstants;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.apache.commons.io.IOUtils;
+
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
-import it.cnr.contab.doccont00.intcass.bulk.*;
-import it.cnr.contab.spring.storage.SiglaStorageService;
-import it.cnr.contab.spring.storage.bulk.StorageFile;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -11,8 +40,14 @@ import it.cnr.contab.cori00.ejb.Liquid_coriComponentSession;
 import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
-import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
+import it.cnr.contab.doccont00.intcass.bulk.Apparence;
+import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
+import it.cnr.contab.doccont00.intcass.bulk.ExtCassiereCdsBulk;
+import it.cnr.contab.doccont00.intcass.bulk.PdfSignApparence;
+import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
+import it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk;
+import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.intcass.xmlbnl.FlussoOrdinativi;
 import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato;
 import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione;
@@ -26,15 +61,15 @@ import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.StorageException;
+import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.contab.spring.storage.bulk.StorageFile;
+import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
-import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBulk;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.SignP7M;
@@ -55,32 +90,8 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.jada.util.jsp.JSPUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.rmi.RemoteException;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.datatype.DatatypeConstants;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import org.apache.commons.io.IOUtils;
-
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Distinta
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Distinta
  * Cassiere
  *
  * @version 1.1 by Aurelio D'Amico [08/11/2006] conversione stampa Crystal in
@@ -316,7 +327,7 @@ public class CRUDDistintaCassiereBP extends
 
 	/**
 	 * Abilito il bottone di aggiunta doc. contabili solo se la distinta e' in
-	 * fase di modifica/inserimento e la data di invio Ë nulla.
+	 * fase di modifica/inserimento e la data di invio √® nulla.
 	 *
 	 * isEditable = FALSE se la distinta e' in visualizzazione = TRUE se la
 	 * distinta e' in modifica/inserimento
@@ -330,7 +341,7 @@ public class CRUDDistintaCassiereBP extends
 	}
 
 	/**
-	 * Abilito il bottone di delete se la data di invio della distinta Ë nulla.
+	 * Abilito il bottone di delete se la data di invio della distinta √® nulla.
 	 *
 	 * isEditable = FALSE se la distinta e' in visualizzazione = TRUE se la
 	 * distinta e' in modifica/inserimento
@@ -356,7 +367,7 @@ public class CRUDDistintaCassiereBP extends
 
 	/**
 	 * Abilito il bottone di eliminazione doc. contabili solo se la distinta e'
-	 * in fase di modifica/inserimento e la data di invio Ë nulla.
+	 * in fase di modifica/inserimento e la data di invio √® nulla.
 	 *
 	 * isEditable = FALSE se la distinta e' in visualizzazione = TRUE se la
 	 * distinta e' in modifica/inserimento
@@ -370,7 +381,7 @@ public class CRUDDistintaCassiereBP extends
 
 	/**
 	 * Abilito il bottone di save solo se la distinta e' in fase di
-	 * modifica/inserimento e la data di invio Ë nulla.
+	 * modifica/inserimento e la data di invio √® nulla.
 	 *
 	 * isEditable = FALSE se la distinta e' in visualizzazione = TRUE se la
 	 * distinta e' in modifica/inserimento
@@ -427,7 +438,7 @@ public class CRUDDistintaCassiereBP extends
 			if (doc != null && doc.getVersamento_cori() != null
 					&& doc.getVersamento_cori().booleanValue())
 				throw new it.cnr.jada.action.MessageToUser(
-						"Non Ë possibile eliminare i mandati di versamento CORI/IVA accentrati dalla distinta!");
+						"Non √® possibile eliminare i mandati di versamento CORI/IVA accentrati dalla distinta!");
 			// controllo poi i selezionati con flag
 			for (int i = 0; i < sel.length; i++) {
 				rdc.setModelIndex(context, sel[i]);
@@ -435,7 +446,7 @@ public class CRUDDistintaCassiereBP extends
 				if (doc != null && doc.getVersamento_cori() != null
 						&& doc.getVersamento_cori().booleanValue()) {
 					throw new it.cnr.jada.action.MessageToUser(
-							"Non Ë possibile eliminare i mandati di versamento CORI/IVA accentrati dalla distinta!");
+							"Non √® possibile eliminare i mandati di versamento CORI/IVA accentrati dalla distinta!");
 				}
 			}
 
@@ -443,7 +454,7 @@ public class CRUDDistintaCassiereBP extends
 	}
 
 	/**
-	 * E' vero se Ë stato impostato il flag nei parametri generali
+	 * E' vero se √® stato impostato il flag nei parametri generali
 	 * FL_VERSAMENTO_CORI che indica se inserire i mandati di versamento CORI in
 	 * modo obbligatorio e automatico
 	 */
@@ -689,7 +700,7 @@ public class CRUDDistintaCassiereBP extends
 									.getUnita_organizzativa());
 //			currentFlusso.setCodiceEnteBT(currentFlusso.getCodiceEnte() + "-"
 //					+ banca.getCodice_iban() + "-" + extcas.getCodiceSia());
-			//modifica per tesor‡ 
+			//modifica per tesor√† 
 			currentFlusso.setCodiceEnteBT(Formatta(extcas.getCodiceProto(), "D",
 					7, "0"));
 			currentFlusso.setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo
@@ -707,7 +718,7 @@ public class CRUDDistintaCassiereBP extends
 						.next();
 				currentReversale = (Reversale) recuperaDatiReversaleFlusso(
 						context.getUserContext(), bulk);
-				//modifica per tesor‡ 
+				//modifica per tesor√† 
 				/*if (bulk.getTi_cc_bi().compareTo(SospesoBulk.TIPO_BANCA_ITALIA) == 0) {
 					// bisogna aggiornare l'iban se banca d'italia ma lo posso
 					// sapere solo in questo punto
@@ -798,7 +809,7 @@ public class CRUDDistintaCassiereBP extends
 				man.setImportoMandato(docContabile.getImDocumento().setScale(2,
 						BigDecimal.ROUND_HALF_UP));
 				//man.setContoEvidenza(bancauo.getNumero_conto());
-				//modifica per tesor‡ 
+				//modifica per tesor√† 
 				man.setContoEvidenza("1");
 				
 				infoben.setProgressivoBeneficiario(1);// Dovrebbe essere sempre
@@ -1075,12 +1086,12 @@ public class CRUDDistintaCassiereBP extends
 				infoben.setBollo(bollo);
 				benef.setAnagraficaBeneficiario(RemoveAccent
 						.convert(docContabile.getDenominazioneSede())
-						.replace('"', ' ').replace('∞', ' '));
+						.replace('"', ' ').replace("", " "));
 				// benef.setStatoBeneficiario(docContabile.getCdIso());
 				if (obb_dati_beneficiario) {
 					benef.setIndirizzoBeneficiario(RemoveAccent
 							.convert(docContabile.getViaSede())
-							.replace('"', ' ').replace('∞', ' '));
+							.replace('"', ' ').replace("", " "));
 					if (docContabile.getCapComuneSede() == null)
 						throw new ApplicationException(
 								"Impossibile generare il flusso, Cap benificiario non valorizzato per il terzo "
@@ -1092,7 +1103,7 @@ public class CRUDDistintaCassiereBP extends
 					benef.setCapBeneficiario(docContabile.getCapComuneSede());
 					benef.setLocalitaBeneficiario(RemoveAccent
 							.convert(docContabile.getDsComune())
-							.replace('"', ' ').replace('∞', ' '));
+							.replace('"', ' ').replace("", " "));
 					benef.setProvinciaBeneficiario(docContabile
 							.getCdProvincia());
 				}
@@ -1169,7 +1180,7 @@ public class CRUDDistintaCassiereBP extends
 				else
 					infoben.setCausale(docContabile.getDsDocumento());
 				infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
-						.replace('"', ' ').replace('∞', ' '));
+						.replace('"', ' ').replace("", " "));
 				// SOSPESO
 				if (docContabile.getTiDocumento().compareTo(
 						MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0) {
@@ -1258,7 +1269,7 @@ public class CRUDDistintaCassiereBP extends
 				rev.setImportoReversale(docContabile.getImDocumento().setScale(
 						2, BigDecimal.ROUND_HALF_UP));
 				//rev.setContoEvidenza(docContabile.getNumeroConto());
-				//modifica per tesor‡ 
+				//modifica per tesor√† 
 				rev.setContoEvidenza("1");
 				infover.setProgressivoVersante(1);// Dovrebbe essere sempre 1 ?
 				infover.setImportoVersante(docContabile.getImDocumento()
@@ -1326,7 +1337,7 @@ public class CRUDDistintaCassiereBP extends
 				infover.setBollo(bollo);
 				versante.setAnagraficaVersante(RemoveAccent
 						.convert(docContabile.getDenominazioneSede())
-						.replace('"', ' ').replace('∞', ' '));
+						.replace('"', ' ').replace("", " "));
 				infover.setVersante(versante);
 
 				// gestito inserimento cup nella CAUSALE
@@ -1344,7 +1355,7 @@ public class CRUDDistintaCassiereBP extends
 				else
 					infover.setCausale(docContabile.getDsDocumento());
 				infover.setCausale(RemoveAccent.convert(infover.getCausale())
-						.replace('"', ' ').replace('∞', ' '));
+						.replace('"', ' ').replace("", " "));
 				// SOSPESO
 				if (docContabile.getTiDocumento().compareTo(
 						ReversaleBulk.TIPO_REGOLAM_SOSPESO) == 0) {
@@ -1616,7 +1627,7 @@ public class CRUDDistintaCassiereBP extends
 						throw new ApplicationException(
 								"File ["
 										+ storageFile.getFileName()
-										+ "] gi‡ presente o non completo di tutte le propriet‡ obbligatorie. Inserimento non possibile!");
+										+ "] gi√† presente o non completo di tutte le propriet√† obbligatorie. Inserimento non possibile!");
 					throw new ApplicationException(
 							"Errore nella registrazione del file XML sul Documentale (" + e.getMessage() + ")");
 				}

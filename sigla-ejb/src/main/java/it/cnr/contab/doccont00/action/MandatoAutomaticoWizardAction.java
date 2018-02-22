@@ -74,7 +74,7 @@ public class MandatoAutomaticoWizardAction extends CRUDAbstractMandatoAction {
 					if ( wizard.isFl_imputazione_manuale() )
 						bp.setMessage("E' necessario specificare almeno un importo da trasferire!");
 					else
-						bp.setMessage("E' necessario specificare almeno una priorit‡!");				
+						bp.setMessage("E' necessario specificare almeno una priorit√†!");				
 				}
 				else if (wizard.isAutomatismoDaDocumentiPassivi() && wizard.getDocPassiviSelezionatiColl().size() == 0 )
 				{

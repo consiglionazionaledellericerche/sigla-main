@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -107,7 +107,7 @@
 		rows="5"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Attività sintetica" />
+		label="AttivitÃ  sintetica" />
 	<fieldProperty
 		name="competenze"
 		property="competenze"
@@ -205,7 +205,7 @@
 		enabledOnSearch="true"
 		enabledOnView="true"
 		command="doOnPersonaleInternoChange"
-		label="Professionalità interne" />
+		label="ProfessionalitÃ  interne" />
 	<fieldProperty
 		name="email_risposte"
 		property="email_risposte"
@@ -332,7 +332,7 @@
 		label="Oggetto&lt;BR&gt;&lt;/span&gt;&lt;span class=&quot;FormInput&quot;&gt;(Max 800 caratteri)"/>
 	<formFieldProperty
 		name="attivita_breve"
-		label="Attività sintetica&lt;BR&gt;&lt;/span&gt;&lt;span class=&quot;FormInput&quot;&gt;(Max 100 caratteri)"/>
+		label="AttivitÃ  sintetica&lt;BR&gt;&lt;/span&gt;&lt;span class=&quot;FormInput&quot;&gt;(Max 100 caratteri)"/>
 	<formFieldProperty
 		name="competenze"
 		label="Competenze richieste&lt;BR&gt;&lt;/span&gt;&lt;span class=&quot;FormInput&quot;&gt;(Max 800 caratteri)" />

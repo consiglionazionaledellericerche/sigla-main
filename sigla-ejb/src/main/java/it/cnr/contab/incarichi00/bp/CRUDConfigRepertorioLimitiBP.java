@@ -30,7 +30,7 @@ public class CRUDConfigRepertorioLimitiBP extends it.cnr.jada.util.action.Simple
 		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
 			if (detail instanceof Repertorio_limitiBulk)
 				if (((Repertorio_limitiBulk)detail).isUtilizzato())
-					throw new ValidationException("I dettagli gi‡ utilizzati non possono essere eliminati.");
+					throw new ValidationException("I dettagli gi√† utilizzati non possono essere eliminati.");
 		}
 	};
 

@@ -128,7 +128,7 @@ public Forward doCambiaTipoBollo(ActionContext context)
 	catch(Throwable e) {return handleException(context,e);}
 }
 /**
- * Gestisce la selezione dell'unità organizzativa
+ * Gestisce la selezione dell'unitÃ  organizzativa
  *
  */
 public Forward doCambiaUnitaOrganizzativa(ActionContext context) 
@@ -206,7 +206,7 @@ public Forward doConfermaElimina(ActionContext context, int choice ) throws java
 			CRUDReversaleBP bpr = (CRUDReversaleBP)context.getBusinessProcess();
 			ReversaleIBulk rev = (ReversaleIBulk) bp.getModel();
 			if(bpr.isAnnullabileEnte(context, rev))
-				return openConfirm(context,"All'annullamento della reversale seguirà la riemissione?",OptionBP.CONFIRM_YES_NO,"doConfermaRiemissione");
+				return openConfirm(context,"All'annullamento della reversale seguirÃ  la riemissione?",OptionBP.CONFIRM_YES_NO,"doConfermaRiemissione");
 			
 			bp.delete(context);
 			bp.setMessage("Annullamento effettuato");
@@ -247,12 +247,12 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 
 		CRUDBP bp = getBusinessProcess(context);
 		if (!bp.isDeleteButtonEnabled()) {
-			bp.setMessage("Non è possibile cancellare in questo momento");
+			bp.setMessage("Non Ã¨ possibile cancellare in questo momento");
 		} else 
 		{
 			ReversaleIBulk reversale = (ReversaleIBulk) bp.getModel();
 			if ( reversale.isDipendenteDaAltroDocContabile() )
-				bp.setMessage( "Non è possibile annullare la reversale perchè e' stata originata da un altro doc. contabile" );
+				bp.setMessage( "Non Ã¨ possibile annullare la reversale perchÃ¨ e' stata originata da un altro doc. contabile" );
 			else	if ( reversale.getDoc_contabili_collColl().size() > 0 )	
 				return openConfirm(context,"All'annullamento della reversale anche i documenti contabili collegati verranno annullati. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfermaElimina");
 			else 

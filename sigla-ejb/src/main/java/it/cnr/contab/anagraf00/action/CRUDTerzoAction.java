@@ -26,7 +26,7 @@ import java.rmi.RemoteException;
 
 /**
  * Adatta e implementa la {@link it.cnr.jada.util.action.CRUDAction } per le
- * funzionalit‡ supplementari necessarie al crud dell'anagrafina.
+ * funzionalit√† supplementari necessarie al crud dell'anagrafina.
  */
 public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 
@@ -54,7 +54,7 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 									(TerzoBulk) bp.getModel()));
 			int count = ri.countElements();
 			if (count == 0) {
-				bp.setMessage("Nessuna modalit‡ di pagamento trovata");
+				bp.setMessage("Nessuna modalit√† di pagamento trovata");
 				it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(
 						context, ri);
 			} else {
@@ -82,7 +82,7 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 
 			if (modalitaAnnullata)
 				throw new it.cnr.jada.comp.ApplicationException(
-						"Attenzione: non Ë possibile aggiungere nuovi dettagli poichË la modalit‡ di pagamento prescelta Ë stata Annullata.");
+						"Attenzione: non √® possibile aggiungere nuovi dettagli poich√® la modalit√† di pagamento prescelta √® stata Annullata.");
 
 			TerzoComponentSession terzoComponent = (TerzoComponentSession) bp
 					.createComponentSession();
@@ -156,7 +156,7 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 			Modalita_pagamentoBulk modalita_pagamento) {
 		try {
 			CRUDTerzoBP bp = (CRUDTerzoBP) getBusinessProcess(context);
-			// r.p. controllo disabilitato per permettere la gestione di pi˘
+			// r.p. controllo disabilitato per permettere la gestione di pi√π
 			// delegati attivi contemporaneamente
 			// if (bp.getCrudBanche().getElements() != null &&
 			// bp.getCrudBanche().countDetails() >0){
@@ -360,7 +360,7 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 
 			it.cnr.jada.util.action.CRUDBP bp = getBusinessProcess(context);
 			if (!bp.isEditing()) {
-				bp.setMessage("Non Ë possibile cancellare in questo momento");
+				bp.setMessage("Non √® possibile cancellare in questo momento");
 			} else {
 				bp.delete(context);
 				try {
@@ -381,7 +381,7 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 	}
 
 	/**
-	 * Gestisce un comando di cancellazione di una Modalit‡ di Pagamento
+	 * Gestisce un comando di cancellazione di una Modalit√† di Pagamento
 	 * 
 	 * @see it.cnr.jada.util.action.CRUDAction#doElimina
 	 */
@@ -397,7 +397,7 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 		boolean more_mod_pag = false;
 
 		try {
-			// Sono state selezionate pi˘ Modalit‡ di Pagamento: controlla che
+			// Sono state selezionate pi√π Modalit√† di Pagamento: controlla che
 			// non ve ne siano create da Migrazione.
 			if (selected_mod != null && selected_mod.size() > 0) {
 				for (java.util.Iterator i = selected_mod.iterator(); i
@@ -408,26 +408,26 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 							&& sel_modalita.getUtcr().compareTo(
 									"$$$$$MIGRAZIONE$$$$$") == 0) {
 						throw new it.cnr.jada.comp.ApplicationException(
-								"Attenzione: la  Modalit‡ di Pagamento "
+								"Attenzione: la  Modalit√† di Pagamento "
 										+ sel_modalita.getCd_modalita_pag()
-										+ " non Ë cancellabile\npoichË creata da una operazione di migrazione.");
+										+ " non √® cancellabile\npoich√® creata da una operazione di migrazione.");
 					}
 				}
 			} else if (mod_pag != null) {
 
-				// Controlla che la mOdalit‡ di Pagamento NON sia stata creata
+				// Controlla che la mOdalit√† di Pagamento NON sia stata creata
 				// da Migrazione
 				String ti_pagamento = mod_pag.getRif_modalita_pagamento()
 						.getTi_pagamento();
 				if (mod_pag.getUtcr() != null
 						&& mod_pag.getUtcr().compareTo("$$$$$MIGRAZIONE$$$$$") == 0) {
 					throw new it.cnr.jada.comp.ApplicationException(
-							"Attenzione: la  Modalit‡ di Pagamento "
+							"Attenzione: la  Modalit√† di Pagamento "
 									+ mod_pag.getCd_modalita_pag()
-									+ " non Ë cancellabile\npoichË creata da una operazione di migrazione.");
+									+ " non √® cancellabile\npoich√® creata da una operazione di migrazione.");
 				}
 
-				// Verifica l'esistenza di un'altra Modalit‡ di Pagamento che
+				// Verifica l'esistenza di un'altra Modalit√† di Pagamento che
 				// abbia lo stesso ti_pagamento
 				for (java.util.Iterator i = terzo.getModalita_pagamento()
 						.iterator(); i.hasNext();) {
@@ -447,11 +447,11 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 				 * controlla che, tra le banche collegate alla Mod. Pag. da
 				 * cancellare NON ve ne siano che sono state create da procedure
 				 * di MIGRAZIONE, (ORIGINE == 'S'): in tal caso, l'operazione
-				 * sar‡ bloccata.
+				 * sar√† bloccata.
 				 */
 				if (!more_mod_pag && verifyBanche_StipendiFor(terzo, mod_pag)) {
 					throw new it.cnr.jada.comp.ApplicationException(
-							"Attenzione: questa Modalit‡ di Pagamento non Ë cancellabile poichË una o pi˘ banche ad essa associate sono state create da una operazione di migrazione.");
+							"Attenzione: questa Modalit√† di Pagamento non √® cancellabile poich√® una o pi√π banche ad essa associate sono state create da una operazione di migrazione.");
 				}
 			}
 
@@ -488,7 +488,7 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 							throw new it.cnr.jada.comp.ApplicationException(
 									"Attenzione: la banca "
 											+ banca.getIntestazione()
-											+ " non Ë cancellabile,\nin quanto creata da una operazione di migrazione.");
+											+ " non √® cancellabile,\nin quanto creata da una operazione di migrazione.");
 						}
 					}
 				}
@@ -496,7 +496,7 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 				BancaBulk banca = (BancaBulk) bp.getCrudBanche().getModel();
 				if (banca != null && banca.isOrigineStipendi()) {
 					throw new it.cnr.jada.comp.ApplicationException(
-							"Attenzione: la banca selezionata non Ë cancellabile,\nin quanto creata da una operazione di migrazione.");
+							"Attenzione: la banca selezionata non √® cancellabile,\nin quanto creata da una operazione di migrazione.");
 				}
 			}
 			getController(context, "main.Modalita_pagamento.Banche").remove(
@@ -535,11 +535,11 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 	}
 
 	/**
-	 * Metodo reimplementato per controllare le modalit‡ di pagamento.
-	 * Controlla, per ogni modalit‡ di pagamento indicata, se sono state
-	 * speficicati i dati relativi alla banca di riferimento. Se una modalit‡
+	 * Metodo reimplementato per controllare le modalit√† di pagamento.
+	 * Controlla, per ogni modalit√† di pagamento indicata, se sono state
+	 * speficicati i dati relativi alla banca di riferimento. Se una modalit√†
 	 * risulta sprovvista dei dati necessari, viene visualizzato un messaggio
-	 * che indica che quella modalit‡ non verr‡ salvata e chiede se si vuole
+	 * che indica che quella modalit√† non verr√† salvata e chiede se si vuole
 	 * continuare. La risposta dell'Utente viene gestita dal metodo
 	 * doConfirmSalva(ActionContext).
 	 * 
@@ -583,15 +583,15 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 				if (terzo.getBanche(modalita_pagamento).isEmpty()) {
 					OptionBP optionBP = openConfirm(
 							context,
-							"Attenzione: la modalit‡ di pagamento <b><u>"
+							"Attenzione: la modalit√† di pagamento <b><u>"
 									+ modalita_pagamento.getCd_modalita_pag()
-									+ " </u></b>non verr‡ salvata, poichË non sono state specificati i dati relativi ai riferimenti di pagamento.Continuare?",
+									+ " </u></b>non verr√† salvata, poich√® non sono state specificati i dati relativi ai riferimenti di pagamento.Continuare?",
 							OptionBP.CONFIRM_YES_NO, "doConfirmSalva");
 					return optionBP;
 				}				
 			}
 			if(terzo.getAnagrafico()!=null && terzo.getAnagrafico().isStrutturaCNR() && terzo.getCodiceUnivocoPcc()==null){
-				bp.setMessage("Attenzione, l'anagrafica Ë censita nell'indice delle "+
+				bp.setMessage("Attenzione, l'anagrafica √® censita nell'indice delle "+
 						"pubbliche amministrazioni, richiedere tramite helpdesk l'inserimento del codice Pcc relativo al terzo che si sta tentando di modificare/creare." +
 							"Salvataggio eseguito in modo corretto.");					
 			}

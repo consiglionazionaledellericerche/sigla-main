@@ -16,7 +16,7 @@ public CRUDTipoCaricoScaricoBP(String function) {
 }
 /**
  * Abilita il pulsante di Elimina.
- *	Il pulsante di elimina viene abilitato solo se il Tipo di Movimento non Ë stato gi‡ cancellato.
+ *	Il pulsante di elimina viene abilitato solo se il Tipo di Movimento non √® stato gi√† cancellato.
  *
  * @return <code>boolean</code>
 **/
@@ -27,7 +27,7 @@ public boolean isDeleteButtonEnabled() {
 	return ((Tipo_carico_scaricoBulk)getModel()).isCancellabile();
 }
 /** 
- * Restituisce TRUE se il Tipo di Movimento Ë di CARICO.
+ * Restituisce TRUE se il Tipo di Movimento √® di CARICO.
  *
  * @return <code>boolean</code>
 **/

@@ -31,7 +31,7 @@ public SQLBuilder createSQLBuilder( )
  * Restituisce il SQLBuilder per selezionare le Categorie di Spesa del Cds per l'esercizio di scrivania.
  * @param bulk bulk ricevente
  * @param home home del bulk su cui si cerca
- * @param bulkClause è l'istanza di bulk che ha indotto le clauses 
+ * @param bulkClause Ã¨ l'istanza di bulk che ha indotto le clauses 
  * @param clause clause che arrivano dalle properties (form collegata al search tool) 
  * @return it.cnr.jada.persistency.sql.SQLBuilder
  */
@@ -49,7 +49,7 @@ public SQLBuilder selectElemento_voceByClause( Ass_cap_spesa_Cds_conto_econom_co
  * e voce di costo.
  * @param bulk bulk ricevente
  * @param home home del bulk su cui si cerca
- * @param bulkClause è l'istanza di bulk che ha indotto le clauses 
+ * @param bulkClause Ã¨ l'istanza di bulk che ha indotto le clauses 
  * @param clause clause che arrivano dalle properties (form collegata al search tool) 
  * @return it.cnr.jada.persistency.sql.SQLBuilder
  */

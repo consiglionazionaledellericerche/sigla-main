@@ -41,15 +41,15 @@ public interface IInventarioConsegnatarioMgr extends ICRUDMgr
   *    PostCondition:
   *      Non  viene consentito il salvataggio dei dati.
   *
-  *  Errore nella validazione della Data di Inizio validit‡
+  *  Errore nella validazione della Data di Inizio validit√†
   *    PreCondition:
-  *      La data di inizio validit‡ specificata non ha superato i controlli di validit‡, (metodo checkDataInizioValidita).
+  *      La data di inizio validit√† specificata non ha superato i controlli di validit√†, (metodo checkDataInizioValidita).
   *    PostCondition:
   *      Non  viene consentito il salvataggio dei dati.
   *
-  *  Errore nella validazione della Data di Fine validit‡
+  *  Errore nella validazione della Data di Fine validit√†
   *    PreCondition:
-  *      La data di fine validit‡ specificata non ha superato i controlli di validit‡, (metodo checkDataFineValidita).
+  *      La data di fine validit√† specificata non ha superato i controlli di validit√†, (metodo checkDataFineValidita).
   *    PostCondition:
   *      Non  viene consentito il salvataggio dei dati.
   *   
@@ -69,9 +69,9 @@ public interface IInventarioConsegnatarioMgr extends ICRUDMgr
 public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
 
 /** 
-  *  Cerca l'Inventario di cui la Uo di scrivania Ë responsabile
+  *  Cerca l'Inventario di cui la Uo di scrivania √® responsabile
   *    PreCondition:
-  *      La Uo di scrivania non Ë responsabile di alcun Inventario, (metodo loadInventarioResp).
+  *      La Uo di scrivania non √® responsabile di alcun Inventario, (metodo loadInventarioResp).
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -79,7 +79,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext
   *    PreCondition:
   *      E' stata generata la richiesta di inizializzare una istanza di Inventario_consegnatarioBulk.
   *    PostCondition:
-  *      Viene impostata e proposta la data odierna come data di inizio validit‡.
+  *      Viene impostata e proposta la data odierna come data di inizio validit√†.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta.
   * @param bulk <code>OggettoBulk</code> il bulk che deve essere inizializzato.
@@ -106,9 +106,9 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
 public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
 
 /** 
-  *  Cerca l'Inventario di cui la Uo di scrivania Ë responsabile
+  *  Cerca l'Inventario di cui la Uo di scrivania √® responsabile
   *    PreCondition:
-  *      La Uo di scrivania non Ë responsabile di alcun Inventario, (metodo loadInventarioResp).
+  *      La Uo di scrivania non √® responsabile di alcun Inventario, (metodo loadInventarioResp).
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -128,9 +128,9 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.j
 public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerRicerca(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
 
 /** 
-  *  Cerca l'Inventario di cui la Uo di scrivania Ë responsabile
+  *  Cerca l'Inventario di cui la Uo di scrivania √® responsabile
   *    PreCondition:
-  *      La Uo di scrivania non Ë responsabile di alcun Inventario, (metodo loadInventarioResp).
+  *      La Uo di scrivania non √® responsabile di alcun Inventario, (metodo loadInventarioResp).
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -150,9 +150,9 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerRicerca(it.cnr.ja
 public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerRicercaLibera(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
 
 /** 
-  *  Errore - data fine validit‡
+  *  Errore - data fine validit√†
   *    PreCondition:
-  *      Le modifiche apportate alla data di fine validit‡ per il Consegnatario non superano 
+  *      Le modifiche apportate alla data di fine validit√† per il Consegnatario non superano 
   *		i controlli di validazione.
   *    PostCondition:
   *      Viene visualizzato un messaggio con la spiegazione dell'errore.

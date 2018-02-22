@@ -21,9 +21,9 @@ public TipoContributoRitenutaComponent() {
 	super();
 }
 /**
- * Ricerca lista intervalli di validit‡ Tipo CORI
+ * Ricerca lista intervalli di validit√† Tipo CORI
  * PreCondition:
- *   Viene richiesta la lista degli intervalli di validit‡ del tipo CORI
+ *   Viene richiesta la lista degli intervalli di validit√† del tipo CORI
  *        definiti con data inizio = a quella del tipo CORI in processo
  * PostCondition:
  *   Viene restituita la lista dei Tipi CORI o null nel caso il codice tipo CORI
@@ -58,16 +58,16 @@ public OggettoBulk creaConBulk(UserContext userContext, OggettoBulk bulk) throws
 	return inserisciTipoCori(userContext, tipoCori);
 }
 /**
- * Cancellazione di un intervallo di validit‡ con data anteriore alla data odierna
+ * Cancellazione di un intervallo di validit√† con data anteriore alla data odierna
  * PreCondition:
- *   La data di inizio dell'intervallo Ë anteriore alla data odierna
+ *   La data di inizio dell'intervallo √® anteriore alla data odierna
  * PostCondition:
- *   La data di fine validit‡ dell'intervallo viene posta uguale alla data corrente + 1
+ *   La data di fine validit√† dell'intervallo viene posta uguale alla data corrente + 1
  *        Tutti gli intervalli successivi a quello in processo vengono eliminati fisicamente
  *
- * Cancellazione di un intervallo di validit‡ con data uguale alla data odierna
+ * Cancellazione di un intervallo di validit√† con data uguale alla data odierna
  * PreCondition:
- *   La data di inizio dell'intervallo Ë anteriore alla data odierna
+ *   La data di inizio dell'intervallo √® anteriore alla data odierna
  * PostCondition:
  *        Tutti gli intervalli successivi a quello in processo vengono eliminati fisicamente
  */
@@ -115,61 +115,61 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 	return tipoCori;
 }
 /**
- * Inserimento di un nuovo intervallo di validit‡ di tipo CORI (primo intervallo)
+ * Inserimento di un nuovo intervallo di validit√† di tipo CORI (primo intervallo)
  * PreCondition:
- *   La lista degli intervalli di validit‡ esistenti per il record in processo Ë vuota
- *        Il controllo di validit‡ date Ë superato
+ *   La lista degli intervalli di validit√† esistenti per il record in processo √® vuota
+ *        Il controllo di validit√† date √® superato
  * PostCondition:
- *   Viene creato per il tipo CORI il nuovo intervallo di validit‡ (che Ë anche il primo)
+ *   Viene creato per il tipo CORI il nuovo intervallo di validit√† (che √® anche il primo)
  *
- *      Data di inizio validit‡ nuovo intervallo non corretta
+ *      Data di inizio validit√† nuovo intervallo non corretta
  * PreCondition:
- *   La lista degli intervalli di validit‡ esistenti per il record in processo non Ë vuota
- *        Il controllo di validit‡ date Ë superato
- *               La data di inizio validit‡ dell'intervallo in processo <> dalla data di fine dell'ultimo intervallo + 1
- *        oppure la data di inizio validit‡ dell'intervallo in processo <= della data odierna *        oppure la data di inizio validit‡ dell'intervallo in processo > ultima data fine di intervallo esistente
+ *   La lista degli intervalli di validit√† esistenti per il record in processo non √® vuota
+ *        Il controllo di validit√† date √® superato
+ *               La data di inizio validit√† dell'intervallo in processo <> dalla data di fine dell'ultimo intervallo + 1
+ *        oppure la data di inizio validit√† dell'intervallo in processo <= della data odierna *        oppure la data di inizio validit√† dell'intervallo in processo > ultima data fine di intervallo esistente
  * PostCondition:
  *        Viene sollevata un'eccezione
  *
- * Inserimento di un nuovo intervallo di validit‡ di record (intervallo n+1-esimo) futuro
+ * Inserimento di un nuovo intervallo di validit√† di record (intervallo n+1-esimo) futuro
  * PreCondition:
- *   La lista degli intervalli di validit‡ esistenti per il record in processo non Ë vuota
- *        Il controllo di validit‡ date Ë superato
- *        La data di inizio validit‡ dell'intervallo in processo = alla data di fine dell'ultimo intervallo + 1
- *        La data di inizio validit‡ dell'intervallo in processo > ultima data fine di intervallo esistente
+ *   La lista degli intervalli di validit√† esistenti per il record in processo non √® vuota
+ *        Il controllo di validit√† date √® superato
+ *        La data di inizio validit√† dell'intervallo in processo = alla data di fine dell'ultimo intervallo + 1
+ *        La data di inizio validit√† dell'intervallo in processo > ultima data fine di intervallo esistente
  * PostCondition:
- *   Viene creato per il tipo CORI il nuovo intervallo di validit‡
+ *   Viene creato per il tipo CORI il nuovo intervallo di validit√†
  *
  * Inserimento di un nuovo intervallo non valido (intervallo n+1-esimo) a spaccatura dell'intervallo corrente
  * PreCondition:
- *   La lista degli intervalli di validit‡ esistenti per il record in processo non Ë vuota
- *        La data di inizio dell'intervallo nuovo Ë contenuta in un intervallo esistente 
- *        L'intervallo non Ë l'ultimo e la data di fine validit‡ dell'intervallo in processo Ë maggiore della data di fine validit‡ dell'intervallo corrente
+ *   La lista degli intervalli di validit√† esistenti per il record in processo non √® vuota
+ *        La data di inizio dell'intervallo nuovo √® contenuta in un intervallo esistente 
+ *        L'intervallo non √® l'ultimo e la data di fine validit√† dell'intervallo in processo √® maggiore della data di fine validit√† dell'intervallo corrente
  * PostCondition:
  *   Viene sollevata un'eccezione
  *
- * Inserimento di un nuovo intervallo di validit‡ di record (intervallo n+1-esimo) a spaccatura del corrente
+ * Inserimento di un nuovo intervallo di validit√† di record (intervallo n+1-esimo) a spaccatura del corrente
  * PreCondition:
- *   La lista degli intervalli di validit‡ esistenti per il record in processo non Ë vuota
- *        La data di inizio dell'intervallo nuovo Ë contenuta in un intervallo esistente 
- *        La data di fine validit‡ del nuovo intervallo Ë DATA_INFINITO
+ *   La lista degli intervalli di validit√† esistenti per il record in processo non √® vuota
+ *        La data di inizio dell'intervallo nuovo √® contenuta in un intervallo esistente 
+ *        La data di fine validit√† del nuovo intervallo √® DATA_INFINITO
  * PostCondition:
  *   Viene aggiornata la data fine dell'intervallo corrente al giorno precedente alla data di inizio dell'intervallo nuovo
- *        Se la data di fine validit‡ del nuovo intervallo Ë DATA_INFINITO, viene posta uguale alla data di fine dell'intervallo corrente
+ *        Se la data di fine validit√† del nuovo intervallo √® DATA_INFINITO, viene posta uguale alla data di fine dell'intervallo corrente
  *
  * Richiesta di Inserimento di un nuovo intervallo a copertura di intervalli temporali "occupati" parzialmente
  * PreCondition:
- *   La lista degli intervalli di validit‡ esistenti per il record in processo non Ë vuota
- *        La data di inizio dell'intervallo nuovo non Ë contenuta in un intervallo esistente 
- *        La data di fine non Ë precedente ad ogni data di inizio validit‡ di intervalli esistenti
+ *   La lista degli intervalli di validit√† esistenti per il record in processo non √® vuota
+ *        La data di inizio dell'intervallo nuovo non √® contenuta in un intervallo esistente 
+ *        La data di fine non √® precedente ad ogni data di inizio validit√† di intervalli esistenti
  *      PostCondition:
  *   Viene sollevata un'eccezione
  *
  * Inserimento di un nuovo intervallo a copertura di intervalli temporali non "occupati"
  * PreCondition:
- *   La lista degli intervalli di validit‡ esistenti per il record in processo non Ë vuota
- *        La data di inizio dell'intervallo nuovo non Ë contenuta in un intervallo esistente 
- *        La data di fine Ë precedente ad ogni data di inizio validit‡ di intervalli esistenti
+ *   La lista degli intervalli di validit√† esistenti per il record in processo non √® vuota
+ *        La data di inizio dell'intervallo nuovo non √® contenuta in un intervallo esistente 
+ *        La data di fine √® precedente ad ogni data di inizio validit√† di intervalli esistenti
  * PostCondition:
  *   Viene inserito il nuovo intervallo
  *
@@ -198,7 +198,7 @@ private Tipo_contributo_ritenutaBulk inserisciTipoCori(UserContext userContext, 
 				if (tipoCori.getDt_ini_validita().equals(CompensoBulk.incrementaData(ultimo.getDt_fin_validita()))){
 					insertBulk(userContext, tipoCori);
 				}else
-					throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita non Ë valida.\nGli intervalli devono essere contigui");
+					throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita non √® valida.\nGli intervalli devono essere contigui");
 			}else
 				throw new it.cnr.jada.comp.ApplicationException("La Data Inizio Validita deve essere superiore alla data odierna");
 
@@ -214,7 +214,7 @@ private Tipo_contributo_ritenutaBulk inserisciTipoCori(UserContext userContext, 
 
 					if (!isUltimoIntervallo(userContext, corrente)){
 						if(tipoCori.getDt_fin_validita().after(corrente.getDt_fin_validita()))
-							throw new it.cnr.jada.comp.ApplicationException("La Data Fine Validita non Ë valida");
+							throw new it.cnr.jada.comp.ApplicationException("La Data Fine Validita non √® valida");
 					}
 					corrente.setDt_fin_validita(CompensoBulk.decrementaData(tipoCori.getDt_ini_validita()));
 					updateBulk(userContext, corrente);
@@ -243,15 +243,15 @@ private Tipo_contributo_ritenutaBulk inserisciTipoCori(UserContext userContext, 
 	}
 }
 /**
-  *    L'intervallo in processo Ë l'ultimo intervallo esistente
+  *    L'intervallo in processo √® l'ultimo intervallo esistente
   *    PreCondition:
-  *       La data di inizio validit‡ dell'intervallo in processo >= della massima data di inizio di intervalli
+  *       La data di inizio validit√† dell'intervallo in processo >= della massima data di inizio di intervalli
   *    PostCondition:
   *       Viene ritornato TRUE
   *
-  *    L'intervallo in processo non Ë l'ultimo intervallo esistente
+  *    L'intervallo in processo non √® l'ultimo intervallo esistente
   *    PreCondition:
-  *       La data di inizio validit‡ dell'intervallo in processo < della massima data di inizio di intervalli
+  *       La data di inizio validit√† dell'intervallo in processo < della massima data di inizio di intervalli
   *    PostCondition:
   *       Viene ritornato FALSE
  */
@@ -314,7 +314,7 @@ public java.util.Collection loadClassificazioneMontanti(UserContext userContext)
 /**
  * Modifica di intervallo ponendo la data fine nel futuro
  * PreCondition:
- *   Il controllo di validit‡ date Ë superato
+ *   Il controllo di validit√† date √® superato
  * PostCondition:
  *   Viene aggiornato l'intervallo in processo
  *
@@ -326,8 +326,8 @@ public java.util.Collection loadClassificazioneMontanti(UserContext userContext)
  *      Modifica di intervallo ponendo la data fine nel passato
  * PreCondition: La data di fine intervallo = alla data odierna
  * PostCondition:
- *        La data di fine validit‡ dell'intervallo corrente viene posta = data odierna
- *        Viene creato il nuovo intervallo con data di inizio validit‡ = alla data odierna + 1
+ *        La data di fine validit√† dell'intervallo corrente viene posta = data odierna
+ *        Viene creato il nuovo intervallo con data di inizio validit√† = alla data odierna + 1
  *
  */
 public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
@@ -358,7 +358,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 				tipoCori.setDt_ini_validita(CompensoBulk.incrementaData(dataOdierna));
 				insertBulk(userContext, tipoCori);
 			}else{
-				throw new it.cnr.jada.comp.ApplicationException("La data fine validit‡ deve essere superiore alla data odierna");
+				throw new it.cnr.jada.comp.ApplicationException("La data fine validit√† deve essere superiore alla data odierna");
 			}
 		}
 
@@ -373,26 +373,26 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
   *    del nuovo record non superati
   *    PreCondition:
   *  validazione periodo inizio/fine non superata (data inizio validita del nuovo 
-  *  record non definita o maggiore delloa data di fine validit‡)
+  *  record non definita o maggiore delloa data di fine validit√†)
   *    PostCondition:
   *      VIene sollevata un'eccezione
   *
   *    Impostazione data di fine periodo INFINITO
   *    PreCondition:
-  *  la data di fine validit‡ periodo non impostata
+  *  la data di fine validit√† periodo non impostata
   *    PostCondition:
   *      La data di fine periodo viene impostata a DATA_INFINITO
   */
 private void validaDate(UserContext userContext, Tipo_contributo_ritenutaBulk tipoCori) throws ComponentException{
 
 	if (tipoCori.getDt_ini_validita()==null)
-		throw new it.cnr.jada.comp.ApplicationException("Il campo Data Inizio Validit‡ deve essere valorizzato");
+		throw new it.cnr.jada.comp.ApplicationException("Il campo Data Inizio Validit√† deve essere valorizzato");
 
 	if (tipoCori.getDt_fin_validita()==null)
 		tipoCori.setDt_fin_validita(it.cnr.contab.config00.esercizio.bulk.EsercizioHome.DATA_INFINITO);
 
 	if (tipoCori.getDt_ini_validita().after(tipoCori.getDt_fin_validita()))
-		throw new it.cnr.jada.comp.ApplicationException("La Data Fine Validit‡ deve essere superiore alla Data Inizio Validit‡");
+		throw new it.cnr.jada.comp.ApplicationException("La Data Fine Validit√† deve essere superiore alla Data Inizio Validit√†");
 }
 /**
   *    Controlli di validazione del record tipo CORI non superati 

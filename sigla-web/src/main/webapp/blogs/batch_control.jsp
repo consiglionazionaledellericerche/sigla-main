@@ -40,7 +40,7 @@
 		</tr>
 		<tr>
 			<td colspan="5">
-				Lasciando vuoto "Intervallo" il batch verr‡ eseguito immediatamente e solo una volta
+				Lasciando vuoto "Intervallo" il batch verr√† eseguito immediatamente e solo una volta
 			</td>
 		</tr>
 		<tr>

@@ -109,7 +109,7 @@ public void validate() throws ValidationException {
 
 			
 	if (ultimoSezionale.longValue() < primoSezionale.longValue())
-		throw new ValidationException("Attenzione! L' \"ultimo\" intero per il sezionale non può essere minore del \"primo\".");
+		throw new ValidationException("Attenzione! L' \"ultimo\" intero per il sezionale non puÃ² essere minore del \"primo\".");
 
 	Long correnteSezionale = null;
 	if (getCorrente() == null)
@@ -123,9 +123,9 @@ public void validate() throws ValidationException {
 	}
 
 	if (primoSezionale.longValue() > correnteSezionale.longValue()+1)
-			throw new ValidationException("Attenzione! Il Sezionale corrente può essere, al più, uguale al Primo meno uno!");
+			throw new ValidationException("Attenzione! Il Sezionale corrente puÃ² essere, al piÃ¹, uguale al Primo meno uno!");
 	if (correnteSezionale.longValue() > ultimoSezionale.longValue())
-			throw new ValidationException("Attenzione! Il Sezionale corrente non può essere maggiore dell' Ultimo");	
+			throw new ValidationException("Attenzione! Il Sezionale corrente non puÃ² essere maggiore dell' Ultimo");	
 
 }
 }

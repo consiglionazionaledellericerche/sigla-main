@@ -137,10 +137,10 @@ public class ConsPDGPDipfoComponent extends CRUDComponent {
 
 		/**
 		 * Individua e completa l'SQLBuilder da utilizzare:
-		 * 1) è stata effettuata una ricerca mirata (<findClause> != null)
-		 * 	  la select finale è costruita come interrogazione di una view costruita sulla select principale <baseClause>
-		 * 2) non è stata fatta una ricerca mirata
-		 * 	  la select finale è uguale alla select principale
+		 * 1) Ã¨ stata effettuata una ricerca mirata (<findClause> != null)
+		 * 	  la select finale Ã¨ costruita come interrogazione di una view costruita sulla select principale <baseClause>
+		 * 2) non Ã¨ stata fatta una ricerca mirata
+		 * 	  la select finale Ã¨ uguale alla select principale
 		 *
 		 * @param sql la select principale contenente le Sum e i GroupBy
 		 * @param sqlEsterna la select esterna necessaria per interrogare la select principale come view
@@ -247,8 +247,8 @@ public class ConsPDGPDipfoComponent extends CRUDComponent {
 		 * @param sql l'SQLBuilder da aggiornare
 		 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 		 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-		 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-		 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+		 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+		 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 		 */
 		private void addColumnCDR(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
 			tabAlias = getAlias(tabAlias);
@@ -270,8 +270,8 @@ public class ConsPDGPDipfoComponent extends CRUDComponent {
 		 * @param sql l'SQLBuilder da aggiornare
 		 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 		 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-		 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-		 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+		 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+		 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 		 */
 		
 		   private void addColumnDIP(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
@@ -289,8 +289,8 @@ public class ConsPDGPDipfoComponent extends CRUDComponent {
 			 * @param sql l'SQLBuilder da aggiornare
 			 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 			 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-			 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-			 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+			 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+			 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 			 */
 		
 			   private void addColumnPRO(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
@@ -308,8 +308,8 @@ public class ConsPDGPDipfoComponent extends CRUDComponent {
 				 * @param sql l'SQLBuilder da aggiornare
 				 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 				 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-				 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-				 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+				 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+				 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 				 */
 		
 				   private void addColumnCOM(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
@@ -325,8 +325,8 @@ public class ConsPDGPDipfoComponent extends CRUDComponent {
 		 * @param sql l'SQLBuilder da aggiornare
 		 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 		 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-		 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-		 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+		 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+		 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 		 */
 		private void addColumnMOD(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
 			tabAlias = getAlias(tabAlias);
@@ -341,8 +341,8 @@ public class ConsPDGPDipfoComponent extends CRUDComponent {
 		 * @param sql l'SQLBuilder da aggiornare
 		 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 		 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-		 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-		 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+		 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+		 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 		 */
 		private void addColumnLIV1(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL,String livello_arrivo,UserContext context) throws ComponentException{ 
 			tabAlias = getAlias(tabAlias);
@@ -414,8 +414,8 @@ public class ConsPDGPDipfoComponent extends CRUDComponent {
 		 * @param sql l'SQLBuilder da aggiornare
 		 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 		 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-		 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-		 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+		 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+		 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 		 */
 		private void addColumnLIV2(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
 			tabAlias = getAlias(tabAlias);
@@ -444,8 +444,8 @@ public class ConsPDGPDipfoComponent extends CRUDComponent {
 			 * @param sql l'SQLBuilder da aggiornare
 			 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 			 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-			 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-			 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+			 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+			 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 			 */
 			private void addColumnLIV3(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL){ 
 				tabAlias = getAlias(tabAlias);
@@ -475,8 +475,8 @@ public class ConsPDGPDipfoComponent extends CRUDComponent {
 		 * @param sql l'SQLBuilder da aggiornare
 		 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate
 		 * @param addDescrizione se TRUE aggiunge anche la colonna della Descrizione
-		 * @param isBaseSQL indica se il parametro sql indicato è l'SQLBuilder principale
-		 * 		  (necessario perchè solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
+		 * @param isBaseSQL indica se il parametro sql indicato Ã¨ l'SQLBuilder principale
+		 * 		  (necessario perchÃ¨ solo per l'SQLBuilder principale occorre aggiungere i GroupBy) 
 		 */
 		private void addColumnDET(SQLBuilder sql, String tabAlias, boolean addDescrizione, boolean isBaseSQL,String pathDestinazione){ 
 			tabAlias = getAlias(tabAlias);

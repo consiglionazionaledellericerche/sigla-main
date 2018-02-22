@@ -30,16 +30,16 @@ public class CodiceFiscaleControllo {
 
  static {
    MapVocaliAccentate = new Hashtable();
-   MapVocaliAccentate.put("à".toUpperCase(),"A");
-   MapVocaliAccentate.put("á".toUpperCase(),"A");
-   MapVocaliAccentate.put("è".toUpperCase(),"E");
-   MapVocaliAccentate.put("é".toUpperCase(),"E");
-   MapVocaliAccentate.put("ò".toUpperCase(),"O");
-   MapVocaliAccentate.put("ó".toUpperCase(),"O");
-   MapVocaliAccentate.put("ù".toUpperCase(),"U");
-   MapVocaliAccentate.put("ú".toUpperCase(),"U");
-   MapVocaliAccentate.put("ì".toUpperCase(),"I");	 
-   MapVocaliAccentate.put("í".toUpperCase(),"I");	 
+   MapVocaliAccentate.put("Ã ".toUpperCase(),"A");
+   MapVocaliAccentate.put("Ã¡".toUpperCase(),"A");
+   MapVocaliAccentate.put("Ã¨".toUpperCase(),"E");
+   MapVocaliAccentate.put("Ã©".toUpperCase(),"E");
+   MapVocaliAccentate.put("Ã²".toUpperCase(),"O");
+   MapVocaliAccentate.put("Ã³".toUpperCase(),"O");
+   MapVocaliAccentate.put("Ã¹".toUpperCase(),"U");
+   MapVocaliAccentate.put("Ãº".toUpperCase(),"U");
+   MapVocaliAccentate.put("Ã¬".toUpperCase(),"I");	 
+   MapVocaliAccentate.put("Ã­".toUpperCase(),"I");	 
 
    MapCCDispari = new Hashtable();
    MapCCDispari.put("A", new Integer(1));
@@ -177,7 +177,7 @@ public static String calcolaCodNome(String aS) {
  */
 
  public static boolean checkCC(String codice){
-  // Il codice passato per il controllo ha lunghezza n-1 dove n è la lunghezza del codice fiscale
+  // Il codice passato per il controllo ha lunghezza n-1 dove n Ã¨ la lunghezza del codice fiscale
   return getCC(codice.substring(0,codice.length() - 1)).equals(codice.substring(15,16));
  }                                   
 /**

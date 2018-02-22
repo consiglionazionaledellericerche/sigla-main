@@ -29,7 +29,7 @@ public java.lang.Integer getCd_terzo() {
 	return terzo.getCd_terzo();
 }
 	/**
-	 * Restituisce il <code>TerzoBulk</code> a cui è associato l'oggetto contatto.
+	 * Restituisce il <code>TerzoBulk</code> a cui Ã¨ associato l'oggetto contatto.
 	 *
 	 * @return it.cnr.contab.anagraf00.core.bulk.TerzoBulk
 	 *
@@ -43,7 +43,7 @@ public void setCd_terzo(java.lang.Integer cd_terzo) {
 	this.getTerzo().setCd_terzo(cd_terzo);
 }
 	/**
-	 * Imposta il <code>TerzoBulk</code> a cui è associato l'oggetto contatto.
+	 * Imposta il <code>TerzoBulk</code> a cui Ã¨ associato l'oggetto contatto.
 	 *
 	 * @param newTerzo Terzo da associare.
 	 *

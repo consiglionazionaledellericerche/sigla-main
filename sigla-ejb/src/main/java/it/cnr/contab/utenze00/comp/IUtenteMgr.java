@@ -113,7 +113,7 @@ public interface IUtenteMgr
   *      Un utente Amministratore e' stato creato e le istanze Utente_unita_accessoBulk per tutti gli AccessiBulk con tipologia = UTENTE_AMMINISTRATORE sono state generate
   *  Errore di chiave duplicata
   *    PreCondition:
-  *      Esiste gi‡ un UtenteBulk persistente che possiede la stessa chiave primaria di quello specificato.
+  *      Esiste gi√† un UtenteBulk persistente che possiede la stessa chiave primaria di quello specificato.
   *    PostCondition:
   *      Viene generata una CRUDException
  */
@@ -126,7 +126,7 @@ public interface IUtenteMgr
   *    PreCondition:
   *      La richiesta di cancellazione di una utenza e' stata generata
   *    PostCondition:
-  *      La data di fine validit‡ dell'utente e' stata aggiornata alla data odierna
+  *      La data di fine validit√† dell'utente e' stata aggiornata alla data odierna
  */
 //^^@@
         public void eliminaConBulk (UserContext userContext,OggettoBulk bulk) throws ComponentException;

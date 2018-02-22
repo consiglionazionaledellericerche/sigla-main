@@ -105,7 +105,7 @@ public class FirmaDigitaleStampaPdgVariazioneAction extends it.cnr.jada.util.act
 	
 	public Forward doInstalla(ActionContext context) {
 		try {
-			OptionBP option = openConfirm(context,"L'installazione del software di firma digitale va effettuata avviando il browser quando la chiavetta USB Actalis NON è inserita nel computer. Procedere con l'installazione?",
+			OptionBP option = openConfirm(context,"L'installazione del software di firma digitale va effettuata avviando il browser quando la chiavetta USB Actalis NON Ã¨ inserita nel computer. Procedere con l'installazione?",
 					OptionBP.CONFIRM,"doConfirmInstalla");
 			//option.addAttribute("discrepanze", e.getLista());
 			return option;

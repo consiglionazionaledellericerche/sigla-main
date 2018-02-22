@@ -14,12 +14,12 @@ public class Missione_abbattimentiBulk extends Missione_abbattimentiBase {
 
 	private NazioneBulk nazione = new NazioneBulk();
 
-	// la proprietà OPERATORE_DURATA_ORE_KEYS non è più utlizzata
+	// la proprietÃ  OPERATORE_DURATA_ORE_KEYS non Ã¨ piÃ¹ utlizzata
 	private final static java.util.Dictionary OPERATORE_DURATA_ORE_KEYS;
     public final static java.lang.String MAGGIORE	= ">";
 	public final static java.lang.String MINORE		= "<";
 
-	// la proprietà ORA_DURATA_ORE_KEYS non è più utlizzata
+	// la proprietÃ  ORA_DURATA_ORE_KEYS non Ã¨ piÃ¹ utlizzata
     private final static java.util.Dictionary ORA_DURATA_ORE_KEYS;
     public final static java.lang.String QUATTRO	= "4";
 	public final static java.lang.String OTTO		= "8";
@@ -481,7 +481,7 @@ public void validate() throws ValidationException {
 
 	// controllo su campo NAZIONE
 	if (getPg_nazione() == null ) 
-		throw new ValidationException("Il campo NAZIONE non può essere vuoto!");
+		throw new ValidationException("Il campo NAZIONE non puÃ² essere vuoto!");
 
 	// controllo su campo INQUADRAMENTO
 	if (getPg_rif_inquadramento() == null ) 
@@ -500,11 +500,11 @@ public void validate() throws ValidationException {
 
 	// controllo su campo DATA INIZIO VALIDITA
 	if (getDt_inizio_validita() == null )
-		throw new ValidationException("Il campo DATA INIZIO VALIDITA non può essere vuoto!");
+		throw new ValidationException("Il campo DATA INIZIO VALIDITA non puÃ² essere vuoto!");
 
 	// controllo PERCENTUALE
 	if (getPercentuale_abbattimento() == null )
-		throw new ValidationException("Il campo PERCENTUALE ABBATTIMENTO non può essere vuoto!");
+		throw new ValidationException("Il campo PERCENTUALE ABBATTIMENTO non puÃ² essere vuoto!");
 	if (getPercentuale_abbattimento().compareTo(new java.math.BigDecimal(100))>0)
 		throw new ValidationException("Il campo PERCENTUALE ABBATTIMENTO non puo' essere superiore a 100!");
 	if (getPercentuale_abbattimento().compareTo(new java.math.BigDecimal(0))<0)
@@ -512,10 +512,10 @@ public void validate() throws ValidationException {
 
 	// controllo su campo DATA CANCELLAZIONE
 	if(getDt_cancellazione()!=null && getDt_cancellazione().compareTo(getDt_inizio_validita())<0)
-		throw new ValidationException("Il campo DATA CANCELLAZIONE deve essere superiore alla Data Inizio Validità");
+		throw new ValidationException("Il campo DATA CANCELLAZIONE deve essere superiore alla Data Inizio ValiditÃ ");
 
 	// controllo su campo DATA CANCELLAZIONE
 	if(getDt_cancellazione()!=null && getDt_cancellazione().compareTo(getDt_inizio_validita())<0)
-		throw new ValidationException("Il campo DATA CANCELLAZIONE deve essere superiore alla Data Inizio Validità");
+		throw new ValidationException("Il campo DATA CANCELLAZIONE deve essere superiore alla Data Inizio ValiditÃ ");
 }
 }

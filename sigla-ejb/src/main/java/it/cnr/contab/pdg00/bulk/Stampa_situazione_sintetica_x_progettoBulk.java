@@ -259,7 +259,7 @@ public class Stampa_situazione_sintetica_x_progettoBulk extends OggettoBulk {
 	@Override
 	public void validate() throws ValidationException {
 		if (getCdUoForPrint()==null)
-			throw new ValidationException("E' obbligatorio indicare l'unit‡ organizzativa.");
+			throw new ValidationException("E' obbligatorio indicare l'unit√† organizzativa.");
 		if (getPgProgettoForPrint()==null)
 			throw new ValidationException("E' obbligatorio indicare il progetto.");
 		super.validate();

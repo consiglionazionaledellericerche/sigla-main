@@ -169,17 +169,17 @@ private void aggiornaAccertamenti(UserContext userContext, Documento_genericoBul
 			for (java.util.Enumeration e = ((AccertamentiTable)newAccertamentiHash.clone()).keys(); e.hasMoreElements();) {
 				Accertamento_scadenzarioBulk scadenza = (Accertamento_scadenzarioBulk)e.nextElement();
 
-				// se non Ë una partita di giro adeguata
+				// se non √® una partita di giro adeguata
 				if (!(scadenza.getAccertamento().getFl_pgiro().booleanValue()&&
 					 (scadenza.getAccertamento().getCd_tipo_documento_cont().equals(Numerazione_doc_contBulk.TIPO_ACR)||
 					  scadenza.getAccertamento().getCd_tipo_documento_cont().equals(Numerazione_doc_contBulk.TIPO_ACR_RES)))
-					// e se la scadenza non Ë stata associata per tutto l'importo
+					// e se la scadenza non √® stata associata per tutto l'importo
 					&& (scadenza.getIm_scadenza().compareTo(calcolaTotaleAccertamentoPer(userContext, scadenza, documento, TIPO_TOTALE_COMPLETO))!=0)
 					&& !isDettaglioAnnullatoConScadResNulla(scadenza, documento))
 					throw new it.cnr.jada.comp.ApplicationException("Impossibile continuare. L'importo sulla scadenza "+scadenza.getDs_scadenza()+" deve essere coperto interamente.");
 
 				if (scadenza.getIm_associato_doc_amm().add(calcolaTotaleAccertamentoPer(userContext, scadenza, documento, TIPO_TOTALE_PARZIALE)).compareTo(scadenza.getIm_scadenza())>0)
-					throw new it.cnr.jada.comp.ApplicationException("Impossibile continuare. L'importo sulla scadenza "+scadenza.getDs_scadenza()+" Ë minore del totale associato.");
+					throw new it.cnr.jada.comp.ApplicationException("Impossibile continuare. L'importo sulla scadenza "+scadenza.getDs_scadenza()+" √® minore del totale associato.");
 				scadenza.setIm_associato_doc_amm(scadenza.getIm_associato_doc_amm().add(calcolaTotaleAccertamentoPer(userContext, scadenza, documento, TIPO_TOTALE_PARZIALE)));
 
 				updateImportoAssociatoDocAmm(userContext, scadenza);
@@ -188,7 +188,7 @@ private void aggiornaAccertamenti(UserContext userContext, Documento_genericoBul
     }
 }
 /**
- * Controlla se esiste un dettaglio a cui Ë stata agganciata una scadenza di un
+ * Controlla se esiste un dettaglio a cui √® stata agganciata una scadenza di un
  * accertamento residuo azzerato con conseguente annullamento dello stato_cofi del dettaglio,
  * in tal caso i controlli sugli importi non devono essere effettuati
  * 
@@ -453,9 +453,9 @@ private void aggiornaLetteraPagamentoEstero(UserContext userContext,Lettera_paga
 }
 //^^@@
 /** 
-  *  aggiorna le modalit‡ e i temini di pagamento e la lista delle banche 
+  *  aggiorna le modalit√† e i temini di pagamento e la lista delle banche 
   *    PreCondition:
-  *      E' stato aggiunto un dettaglio ad un generico attivo con righe gi‡ inserite.
+  *      E' stato aggiunto un dettaglio ad un generico attivo con righe gi√† inserite.
   *    PostCondition:
   *      Vengono riportate le modalita,termini e banche della prima riga (default)
  */
@@ -532,7 +532,7 @@ private void aggiornaObbligazioni(
 					scadenza.setIm_associato_doc_amm(calcolaTotaleObbligazionePer(userContext, scadenza, documento));
 				else {
 					if (scadenza.getIm_associato_doc_amm().add(calcolaTotaleObbligazioneEntePer(userContext, scadenza, documento)).compareTo(scadenza.getIm_scadenza())>0)
-						throw new it.cnr.jada.comp.ApplicationException("Impossibile continuare. L'importo sulla scadenza "+scadenza.getDs_scadenza()+" Ë minore del totale associato");
+						throw new it.cnr.jada.comp.ApplicationException("Impossibile continuare. L'importo sulla scadenza "+scadenza.getDs_scadenza()+" √® minore del totale associato");
 					else
 						scadenza.setIm_associato_doc_amm(scadenza.getIm_associato_doc_amm().add(calcolaTotaleObbligazioneEntePer(userContext, scadenza, documento)));
 				}
@@ -673,7 +673,7 @@ private void aggiornaSaldi(
 }
 //^^@@
 /** 
-  *  Non Ë utilizzato
+  *  Non √® utilizzato
  */
 //^^@@
 public void aggiornaStatoDocumentiAmministrativi(
@@ -1076,7 +1076,7 @@ private Obbligazione_scadenzarioBulk caricaObbligazionePer(
   *  		Le scadenze vengono aggiunte alla lista delle scadenze congruenti.
   *	Validazione lista delle accertamenti per le documenti generici
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle scadenze degli accertamenti.
+  *			Si √® verificato un errore nel caricamento delle scadenze degli accertamenti.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	accertamento definitiva
@@ -1106,7 +1106,7 @@ private Obbligazione_scadenzarioBulk caricaObbligazionePer(
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Disabilitazione filtro di selezione sul debitore dell'accertamento
   *		PreCondition:
-  *			La scadenza dell'accertamento ha un debitore diverso da quello della documento generico e non Ë di tipo "diversi"
+  *			La scadenza dell'accertamento ha un debitore diverso da quello della documento generico e non √® di tipo "diversi"
   * 	PostCondition:
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Abilitazione filtro di selezione sulla data di scadenza
@@ -1130,7 +1130,7 @@ private Obbligazione_scadenzarioBulk caricaObbligazionePer(
 public RemoteIterator cercaAccertamenti(UserContext context,Filtro_ricerca_accertamentiVBulk filtro)
 	throws ComponentException {
 	
-	// se il filtro mi passa null come terzo il cliente Ë diversi
+	// se il filtro mi passa null come terzo il cliente √® diversi
 	boolean diversi;
 	if (filtro.getCliente()==null || filtro.getCliente().getCd_terzo()==null)
 		diversi=true;
@@ -1350,7 +1350,7 @@ public Documento_genericoBulk cercaCambio(it.cnr.jada.UserContext uc, Documento_
   *  		Le scadenze vengono aggiunte alla lista delle scadenze congruenti.
   *	Validazione lista delle obbligazioni per le documenti generici
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle scadenze delle obbligazioni.
+  *			Si √® verificato un errore nel caricamento delle scadenze delle obbligazioni.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	Obbligazione definitiva
@@ -1380,7 +1380,7 @@ public Documento_genericoBulk cercaCambio(it.cnr.jada.UserContext uc, Documento_
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Disabilitazione filtro di selezione sul debitore dell'obbligazione
   *		PreCondition:
-  *			La scadenza dell'obbligazione ha un debitore diverso da quello della documento generico e non Ë di tipo "diversi"
+  *			La scadenza dell'obbligazione ha un debitore diverso da quello della documento generico e non √® di tipo "diversi"
   * 	PostCondition:
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Abilitazione filtro di selezione sulla data di scadenza
@@ -1404,7 +1404,7 @@ public Documento_genericoBulk cercaCambio(it.cnr.jada.UserContext uc, Documento_
 public RemoteIterator cercaObbligazioni(UserContext context, Filtro_ricerca_obbligazioniVBulk filtro)
 	throws ComponentException {
 
-	// se il filtro mi passa null come fornitore il fornitore Ë diversi
+	// se il filtro mi passa null come fornitore il fornitore √® diversi
 	boolean diversi;
 	if (filtro.getFornitore()==null || filtro.getFornitore().getCd_terzo()==null)
 		diversi=true;
@@ -1713,7 +1713,7 @@ private void validaScadenze(Documento_genericoBulk doc, Obbligazione_scadenzario
 			if(scad.getObbligazione() instanceof ObbligazioneResBulk){
 				if (scad.getObbligazione().equalsByPrimaryKey(newScad.getObbligazione()) && ((ObbligazioneResBulk)scad.getObbligazione()).getObbligazione_modifica()!=null
 					&& ((ObbligazioneResBulk)scad.getObbligazione()).getObbligazione_modifica().getPg_modifica()!=null) {
-					throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'impegno residuo "+scad.getPg_obbligazione()+" poichË Ë stata effettuata una modifica in questo documento amministrativo!");									
+					throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'impegno residuo "+scad.getPg_obbligazione()+" poich√® √® stata effettuata una modifica in questo documento amministrativo!");									
 				}
 			}
 		}
@@ -1727,7 +1727,7 @@ private void validaScadenze(Documento_genericoBulk doc, Obbligazione_scadenzario
     		if(scad.getObbligazione() instanceof ObbligazioneResBulk){
     			if (scad.getObbligazione().equalsByPrimaryKey(newScad.getObbligazione()) && ((ObbligazioneResBulk)scad.getObbligazione()).getObbligazione_modifica()!=null
 					&& ((ObbligazioneResBulk)scad.getObbligazione()).getObbligazione_modifica().getPg_modifica()!=null) {
-    				throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'impegno residuo "+scad.getPg_obbligazione()+" poichË Ë stata effettuata una modifica in questo documento amministrativo!");									
+    				throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'impegno residuo "+scad.getPg_obbligazione()+" poich√® √® stata effettuata una modifica in questo documento amministrativo!");									
     			}
     		}
     	}
@@ -1745,7 +1745,7 @@ private void validaScadenze(Documento_genericoBulk doc, Accertamento_scadenzario
 			if(scad.getAccertamento() instanceof AccertamentoResiduoBulk){
 				if (scad.getAccertamento().equalsByPrimaryKey(newScad.getAccertamento()) && ((AccertamentoResiduoBulk)scad.getAccertamento()).getAccertamento_modifica()!=null
 					&& ((AccertamentoResiduoBulk)scad.getAccertamento()).getAccertamento_modifica().getPg_modifica()!=null) {
-					throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'accertamento residuo "+scad.getPg_accertamento()+" poichË Ë stata effettuata una modifica in questo documento amministrativo!");									
+					throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'accertamento residuo "+scad.getPg_accertamento()+" poich√® √® stata effettuata una modifica in questo documento amministrativo!");									
 				}
 			}
 		}
@@ -1759,7 +1759,7 @@ private void validaScadenze(Documento_genericoBulk doc, Accertamento_scadenzario
     		if(scad.getAccertamento() instanceof AccertamentoResiduoBulk){
     			if (scad.getAccertamento().equalsByPrimaryKey(newScad.getAccertamento()) && ((AccertamentoResiduoBulk)scad.getAccertamento()).getAccertamento_modifica()!=null
 					&& ((AccertamentoResiduoBulk)scad.getAccertamento()).getAccertamento_modifica().getPg_modifica()!=null) {
-    				throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'accertamento residuo "+scad.getPg_accertamento()+" poichË Ë stata effettuata una modifica in questo documento amministrativo!");									
+    				throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'accertamento residuo "+scad.getPg_accertamento()+" poich√® √® stata effettuata una modifica in questo documento amministrativo!");									
     			}
     		}
     	}
@@ -1770,12 +1770,12 @@ private void validaScadenze(Documento_genericoBulk doc, Accertamento_scadenzario
   *	Quadratura delle scadenze obbligazioni di fattura passiva non estera o estera senza lettera di pagamento.
   *		PreCondition:
   * 		La somma algebrica dei dettagli, storni e addebiti (metodo 'calcolaTotaleObbligazionePer') insistenti sull'elenco di dettagli associati
-  *			alla scadenza obbligazione Ë uguale all'importo della scadenza obbligazione stessa
+  *			alla scadenza obbligazione √® uguale all'importo della scadenza obbligazione stessa
   *   	PostCondition:
   *  		Permette la continuazione.
   *	Quadratura delle scadenze obbligazioni di fattura passiva estera con lettera di pagamento.
   *		PreCondition:
-  * 		L'importo della lettera di pagamento Ë uguale all'importo della scadenza obbligazione
+  * 		L'importo della lettera di pagamento √® uguale all'importo della scadenza obbligazione
   *   	PostCondition:
   *  		Permette la continuazione.
   *	Controlli non superati.
@@ -1808,12 +1808,12 @@ public void controllaCompetenzaCOGEDettagli(
   *	Quadratura delle scadenze obbligazioni di fattura passiva non estera o estera senza lettera di pagamento.
   *		PreCondition:
   * 		La somma algebrica dei dettagli, storni e addebiti (metodo 'calcolaTotaleObbligazionePer') insistenti sull'elenco di dettagli associati
-  *			alla scadenza obbligazione Ë uguale all'importo della scadenza obbligazione stessa
+  *			alla scadenza obbligazione √® uguale all'importo della scadenza obbligazione stessa
   *   	PostCondition:
   *  		Permette la continuazione.
   *	Quadratura delle scadenze obbligazioni di fattura passiva estera con lettera di pagamento.
   *		PreCondition:
-  * 		L'importo della lettera di pagamento Ë uguale all'importo della scadenza obbligazione
+  * 		L'importo della lettera di pagamento √® uguale all'importo della scadenza obbligazione
   *   	PostCondition:
   *  		Permette la continuazione.
   *	Controlli non superati.
@@ -1858,12 +1858,12 @@ private void controllaCompetenzaCOGEDettagliAccertamento(
   *	Quadratura delle scadenze obbligazioni di fattura passiva non estera o estera senza lettera di pagamento.
   *		PreCondition:
   * 		La somma algebrica dei dettagli, storni e addebiti (metodo 'calcolaTotaleObbligazionePer') insistenti sull'elenco di dettagli associati
-  *			alla scadenza obbligazione Ë uguale all'importo della scadenza obbligazione stessa
+  *			alla scadenza obbligazione √® uguale all'importo della scadenza obbligazione stessa
   *   	PostCondition:
   *  		Permette la continuazione.
   *	Quadratura delle scadenze obbligazioni di fattura passiva estera con lettera di pagamento.
   *		PreCondition:
-  * 		L'importo della lettera di pagamento Ë uguale all'importo della scadenza obbligazione
+  * 		L'importo della lettera di pagamento √® uguale all'importo della scadenza obbligazione
   *   	PostCondition:
   *  		Permette la continuazione.
   *	Controlli non superati.
@@ -1925,9 +1925,9 @@ private void controllaContabilizzazioneDiTutteLeRighe(
 	doc.setIm_totale(calcolaTotale(userContext,doc));
 	if (numeroDiRigheNonContabilizzate==1)
 		if (riga.getDs_riga()!=null)	
-			throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + riga.getDs_riga() + "\" NON Ë stato contabilizzato!");
+			throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + riga.getDs_riga() + "\" NON √® stato contabilizzato!");
 		else
-			throw new it.cnr.jada.comp.ApplicationException("Un dettaglio NON Ë stato contabilizzato!");
+			throw new it.cnr.jada.comp.ApplicationException("Un dettaglio NON √® stato contabilizzato!");
 	if (numeroDiRigheNonContabilizzate>1){
 		if (riga.getDs_riga()!=null)	
 			throw new it.cnr.jada.comp.ApplicationException(numeroDiRigheNonContabilizzate+"-dettagli non contabilizzati. Il primo e' : Dettaglio "+riga.getDs_riga()+","+riga.getIm_riga()+" non contabilizzato");
@@ -1941,7 +1941,7 @@ private void controllaOmogeneitaTraTerzi(
 	Vector dettagli)
 	throws ApplicationException {
 
-	//SEGNALAZIONE ERRORI n∞ 631 del 22/08/2003
+	//SEGNALAZIONE ERRORI n¬∞ 631 del 22/08/2003
 	
 	if (dettagli != null && !dettagli.isEmpty() && dettagli.size() != 1) {
 		Documento_generico_rigaBulk primoDettaglio = null;
@@ -1955,18 +1955,18 @@ private void controllaOmogeneitaTraTerzi(
 	               	throw new ApplicationException("Attenzione: i terzi della scadenza " + scadenza.getDs_scadenza() + " non sono compatibili! Operazione interrotta.");
 	            if (dettaglio.getDocumento_generico().isGenericoAttivo()) {
 					if (!dettaglio.getModalita_pagamento_uo_cds().equalsByPrimaryKey(primoDettaglio.getModalita_pagamento_uo_cds()))
-		               	throw new ApplicationException("Attenzione: le modalit‡ di pagamento del dettaglio \"" + dettaglio.getDs_riga() + "\" non sono compatibili con le altre modalit‡ di pagamento insistenti sulla scadenza \"" + scadenza.getDs_scadenza() + "\"!");
+		               	throw new ApplicationException("Attenzione: le modalit√† di pagamento del dettaglio \"" + dettaglio.getDs_riga() + "\" non sono compatibili con le altre modalit√† di pagamento insistenti sulla scadenza \"" + scadenza.getDs_scadenza() + "\"!");
 		            //Errore 704: controllo aggiunto per correggere comportamento anomalo di
 		            //mandati e reversali su richiesta di Paolo. 01/12/2003
 					if (!dettaglio.getBanca_uo_cds().equalsByPrimaryKey(primoDettaglio.getBanca_uo_cds()))
-		               	throw new ApplicationException("Attenzione: la banca d'appoggio del dettaglio \"" + dettaglio.getDs_riga() + "\" non Ë compatibile con la banca insistente sulla scadenza \"" + scadenza.getDs_scadenza() + "\"!");
+		               	throw new ApplicationException("Attenzione: la banca d'appoggio del dettaglio \"" + dettaglio.getDs_riga() + "\" non √® compatibile con la banca insistente sulla scadenza \"" + scadenza.getDs_scadenza() + "\"!");
 	            } else {
 		            if (!dettaglio.getModalita_pagamento().equalsByPrimaryKey(primoDettaglio.getModalita_pagamento()))
-		               	throw new ApplicationException("Attenzione: le modalit‡ di pagamento del dettaglio \"" + dettaglio.getDs_riga() + "\" non sono compatibili con le altre modalit‡ di pagamento insistenti sulla scadenza \"" + scadenza.getDs_scadenza() + "\"!");
+		               	throw new ApplicationException("Attenzione: le modalit√† di pagamento del dettaglio \"" + dettaglio.getDs_riga() + "\" non sono compatibili con le altre modalit√† di pagamento insistenti sulla scadenza \"" + scadenza.getDs_scadenza() + "\"!");
 		            //Errore 704: controllo aggiunto per correggere comportamento anomalo di
 		            //mandati e reversali su richiesta di Paolo. 01/12/2003
 					if (!dettaglio.getBanca().equalsByPrimaryKey(primoDettaglio.getBanca()))
-		               	throw new ApplicationException("Attenzione: la banca d'appoggio del dettaglio \"" + dettaglio.getDs_riga() + "\" non Ë compatibile con la banca insistente sulla scadenza \"" + scadenza.getDs_scadenza() + "\"!");
+		               	throw new ApplicationException("Attenzione: la banca d'appoggio del dettaglio \"" + dettaglio.getDs_riga() + "\" non √® compatibile con la banca insistente sulla scadenza \"" + scadenza.getDs_scadenza() + "\"!");
 				}
 			}
 		}
@@ -1977,7 +1977,7 @@ private void controllaOmogeneitaTraTerzi(
   *  Controllo della quadratura
   *    PreCondition:
   *      viene contabilizzata una riga/accertamento o modificato un'importo e
-  *      la quadratura non Ë superata
+  *      la quadratura non √® superata
   *    PostCondition:
   *      Invia un messaggio all'utente di coperto/scoperto
  */
@@ -2002,7 +2002,7 @@ public void controllaQuadraturaAccertamenti(UserContext aUC,Documento_genericoBu
 					sb.append("Attenzione: La scadenza ");
 					sb.append(scadenza.getDs_scadenza());
 					sb.append(" di " + scadenza.getIm_scadenza().doubleValue() + " EUR");
-					sb.append(" Ë stata coperta solo per ");
+					sb.append(" √® stata coperta solo per ");
 					sb.append(totale.doubleValue() + " EUR!");
 					throw new it.cnr.jada.comp.ApplicationException(sb.toString());
 				} else if (delta.compareTo(new java.math.BigDecimal(0)) < 0) {
@@ -2010,7 +2010,7 @@ public void controllaQuadraturaAccertamenti(UserContext aUC,Documento_genericoBu
 					sb.append("Attenzione: La scadenza ");
 					sb.append(scadenza.getDs_scadenza());
 					sb.append(" di " + scadenza.getIm_scadenza().doubleValue() + " EUR");
-					sb.append(" Ë scoperta per ");
+					sb.append(" √® scoperta per ");
 					sb.append(delta.abs().doubleValue() + " EUR!");
 					throw new it.cnr.jada.comp.ApplicationException(sb.toString());
 				}
@@ -2024,7 +2024,7 @@ public void controllaQuadraturaAccertamenti(UserContext aUC,Documento_genericoBu
   *  Controllo della quadratura
   *    PreCondition:
   *      viene contabilizzata una riga/obbligazione o modificato un'importo e
-  *      la quadratura non Ë superata
+  *      la quadratura non √® superata
   *    PostCondition:
   *      Invia un messaggio all'utente di coperto/scoperto
  */
@@ -2058,7 +2058,7 @@ public void controllaQuadraturaObbligazioni(UserContext aUC, Documento_genericoB
                     sb.append("Attenzione: La scadenza ");
                     sb.append(scadenza.getDs_scadenza());
                     sb.append(" di " + scadenza.getIm_scadenza().doubleValue() + " EUR");
-                    sb.append(" Ë stata coperta solo per ");
+                    sb.append(" √® stata coperta solo per ");
                     sb.append(totale.doubleValue() + " EUR!");
                     throw new it.cnr.jada.comp.ApplicationException(sb.toString());
                 } else
@@ -2067,7 +2067,7 @@ public void controllaQuadraturaObbligazioni(UserContext aUC, Documento_genericoB
                         sb.append("Attenzione: La scadenza ");
                         sb.append(scadenza.getDs_scadenza());
                         sb.append(" di " + scadenza.getIm_scadenza().doubleValue() + " EUR");
-                        sb.append(" Ë scoperta per ");
+                        sb.append(" √® scoperta per ");
                         sb.append(delta.abs().doubleValue() + " EUR!");
                         throw new it.cnr.jada.comp.ApplicationException(sb.toString());
                     }
@@ -2094,7 +2094,7 @@ private void controlloTrovato(UserContext aUC,
 			Elemento_voceBulk elementoVoce = (Elemento_voceBulk)voce.get(0);
 			if (elementoVoce.isVocePerTrovati()){
 	            throw new it.cnr.jada.comp.ApplicationException(
-	                    "Sui documenti generici non Ë possibile selezionare obbligazioni su capitoli collegati a Brevetti/Trovati.");
+	                    "Sui documenti generici non √® possibile selezionare obbligazioni su capitoli collegati a Brevetti/Trovati.");
 			}
 		}
 		
@@ -2119,7 +2119,7 @@ private void controlloTrovato(UserContext aUC,
 			Elemento_voceBulk elementoVoce = (Elemento_voceBulk)voce.get(0);
 			if (elementoVoce.isVocePerTrovati()){
 	            throw new it.cnr.jada.comp.ApplicationException(
-	                    "Sui documenti generici non Ë possibile selezionare accertamenti su capitoli collegati a Brevetti/Trovati.");
+	                    "Sui documenti generici non √® possibile selezionare accertamenti su capitoli collegati a Brevetti/Trovati.");
 			}
 		}
 		
@@ -2139,7 +2139,7 @@ private void controlloTrovato(UserContext aUC,
   *      Viene richiesto il salvataggio di un nuovo documento ma le validazioni
   *      non vengono superate
   *    PostCondition:
-  *      Informa l'utente della causa per la quale non Ë possibile salvare
+  *      Informa l'utente della causa per la quale non √® possibile salvare
  */
 
 public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws ComponentException {
@@ -2159,7 +2159,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
   *      Viene richiesto il salvataggio di un nuovo documento ma le validazioni
   *      non vengono superate
   *    PostCondition:
-  *      Informa l'utente della causa per la quale non Ë possibile salvare
+  *      Informa l'utente della causa per la quale non √® possibile salvare
  */
 //^^@@
 public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext userContext, it.cnr.jada.bulk.OggettoBulk bulk, it.cnr.contab.doccont00.core.bulk.OptionRequestParameter status)
@@ -2179,10 +2179,10 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext userCont
 			if (existARowToBeInventoried(userContext,documento)) {
 				verificaEsistenzaEdAperturaInventario(userContext, documento);
 				if (documento.hasCompetenzaCOGEInAnnoPrecedente())
-				  throw new it.cnr.jada.comp.ApplicationException("Attenzione: per le date competenza indicate non Ë possibile inventariare i beni.");		
+				  throw new it.cnr.jada.comp.ApplicationException("Attenzione: per le date competenza indicate non √® possibile inventariare i beni.");		
 						
 				if(hasDocumentoPassivoARowNotInventoried(userContext, documento))
-					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Ë necessario inventariare tutti i dettagli.");
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione: √® necessario inventariare tutti i dettagli.");
 			}
 			validaDocumento(userContext, documento);
 	} catch (it.cnr.jada.comp.ApplicationException e) {
@@ -2266,7 +2266,7 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext userCont
   *    PreCondition:
   *      E' stata eliminata una documento in stato B or C
   *    PostCondition:
-  *      Viene inviato un messaggio:"Attenzione non si puÚ eliminare una documento in stato IVA B o C"
+  *      Viene inviato un messaggio:"Attenzione non si pu√≤ eliminare una documento in stato IVA B o C"
  */
 //^^@@
 
@@ -2318,7 +2318,7 @@ private void deleteLogically(UserContext userContext, Documento_genericoBulk doc
                             update(userContext, riga);
                         } else
                             throw new it.cnr.jada.comp.ApplicationException(
-                                "Questo documento NON Ë annullabile perchÈ almeno uno dei sui dettagli non Ë stato associato a mandato o reversale!");
+                                "Questo documento NON √® annullabile perch√© almeno uno dei sui dettagli non √® stato associato a mandato o reversale!");
                     }
                 }
             }
@@ -2328,7 +2328,7 @@ private void deleteLogically(UserContext userContext, Documento_genericoBulk doc
                 documento.setStato_coge(documento.DA_RIREGISTRARE_IN_COGE);
 
 			// Gennaro Borriello - (11/10/2004 16.59.48)
-			//	Aggiunto controllo sullo STATO_COAN, cosÏ come avviene per gli altri documenti.
+			//	Aggiunto controllo sullo STATO_COAN, cos√¨ come avviene per gli altri documenti.
 			if (documento.CONTABILIZZATO_IN_COAN.equalsIgnoreCase(documento.getStato_coan()))
 				documento.setStato_coan(documento.DA_RICONTABILIZZARE_IN_COAN);
 				
@@ -2349,7 +2349,7 @@ private void deleteLogically(UserContext userContext, Documento_genericoBulk doc
             throw handleException(documento, e);
         }
     }
-    throw new it.cnr.jada.comp.ApplicationException("Questa fattura NON Ë annullabile!");
+    throw new it.cnr.jada.comp.ApplicationException("Questa fattura NON √® annullabile!");
 
 }
 //^^@@
@@ -2363,7 +2363,7 @@ private void deleteLogically(UserContext userContext, Documento_genericoBulk doc
   *    PreCondition:
   *      E' stata eliminata una documento in stato B or C
   *    PostCondition:
-  *      Viene inviato un messaggio:"Attenzione non si puÚ eliminare una documento in stato IVA B o C"
+  *      Viene inviato un messaggio:"Attenzione non si pu√≤ eliminare una documento in stato IVA B o C"
  */
 //^^@@
 
@@ -2419,12 +2419,12 @@ private void deletePhisically(UserContext aUC, Documento_genericoBulk documento)
   *  Eliminazione di un documento
   *	 Elimina
   *    PreCondition:
-  *      Il documento Ë eliminabile
+  *      Il documento √® eliminabile
   *    PostCondition:
   *      richiama la funzione deletePhisically.
   *  Annulla
   *    PreCondition:
-  *      Il documento Ë annullabile
+  *      Il documento √® annullabile
   *    PostCondition:
   *      richiama la funzione deleteLogically.
  */
@@ -2523,22 +2523,22 @@ private void eliminaDocumento(UserContext aUC,Documento_genericoBulk documento)
 		if (documento.isRiportataInScrivania() ){
 			Integer es_prec = new Integer(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC).intValue()-1);
 			if (!isEsercizioCoepChiusoFor(aUC, documento, es_prec)){
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non Ë possibile eliminare il documento, poichË l'esercizio economico precedente a quello in scrivania non Ë chiuso.");	
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non √® possibile eliminare il documento, poich√® l'esercizio economico precedente a quello in scrivania non √® chiuso.");	
 			}
 		} 
 		else 
-		 throw new it.cnr.jada.comp.ApplicationException("Impossibile eliminare il documento perchË non risulta riportato nell'esercizio di scrivania!");
+		 throw new it.cnr.jada.comp.ApplicationException("Impossibile eliminare il documento perch√® non risulta riportato nell'esercizio di scrivania!");
 	}
 
 	if (documento.STATO_PARZIALE.equalsIgnoreCase(documento.getStato_cofi()))
-		throw new it.cnr.jada.comp.ApplicationException("Attenzione: non Ë possibile cancellare un documento in stato parziale.");
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione: non √® possibile cancellare un documento in stato parziale.");
 
 	if (documento.isPagata())
-		throw new it.cnr.jada.comp.ApplicationException("Attenzione: non Ë possibile cancellare un documento pagato o registrato in fondo economale!");
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione: non √® possibile cancellare un documento pagato o registrato in fondo economale!");
 
 	if (documento.getTipo_documento() != null &&
 		"GEN_RC_DAT".equalsIgnoreCase(documento.getTipo_documento().getDs_tipo_documento_amm()))
-		throw new it.cnr.jada.comp.ApplicationException("Attenzione: non Ë possibile cancellare un documento generico \"per recupero crediti da terzi\"!");
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione: non √® possibile cancellare un documento generico \"per recupero crediti da terzi\"!");
 
 	//Controllo nel caso di documento annullabile che tutti i dettagli siano
 	//annullabili.
@@ -2550,7 +2550,7 @@ private void eliminaDocumento(UserContext aUC,Documento_genericoBulk documento)
 				deletable = false;
 		}
 		if (!deletable)
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: questo documento non Ë annullabile perchË ha dettagli non associati a mandati/reversali o\nla testata Ë registrata in COAN o COGE!");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: questo documento non √® annullabile perch√® ha dettagli non associati a mandati/reversali o\nla testata √® registrata in COAN o COGE!");
 	}
 }
 //^^@@
@@ -2562,7 +2562,7 @@ private void eliminaDocumento(UserContext aUC,Documento_genericoBulk documento)
   *      Permette la cancellazione della lettera di pagamento estero (Doc 1210).
   *  validazione esistenza lettera 1210.
   *    PreCondition:
-  *      Non Ë rilevata la presenza di doc 1210
+  *      Non √® rilevata la presenza di doc 1210
   *    PostCondition:
   *      Esce dal metodo senza apportare modifiche
  */
@@ -2603,12 +2603,12 @@ public Documento_genericoBulk eliminaLetteraPagamentoEstero(
 }
 //^^@@
 /** 
-  *  Controlla se una riga del documento Ë eliminabile
-  *  lo stato del documento Ë PAGATO
+  *  Controlla se una riga del documento √® eliminabile
+  *  lo stato del documento √® PAGATO
   *    PreCondition:
   *      Richiesta di eliminare una riga
   *    PostCondition:
-  *      Avverte l'utente che non Ë possibile eliminare dei dettagli in un documento gi‡ pagato
+  *      Avverte l'utente che non √® possibile eliminare dei dettagli in un documento gi√† pagato
  */
 //^^@@
 public void eliminaRiga(
@@ -2618,16 +2618,16 @@ public void eliminaRiga(
 
 
 	//if (Documento_genericoBulk.STATO_PAGATO.equalsIgnoreCase(documentoGenericoRiga.getDocumento_generico().getStato_cofi()))
-		//throw new it.cnr.jada.comp.ApplicationException("Attenzione non si puÚ eliminare un dettaglio in un documento pagato");
+		//throw new it.cnr.jada.comp.ApplicationException("Attenzione non si pu√≤ eliminare un dettaglio in un documento pagato");
 
 	//if (documentoGenericoRiga.getStato_cofi()!=null && (documentoGenericoRiga.getStato_cofi().equals(documentoGenericoRiga.STATO_CONTABILIZZATO) || documentoGenericoRiga.getStato_cofi().equals(documentoGenericoRiga.STATO_PAGATO)))
-		//throw new it.cnr.jada.comp.ApplicationException("Attenzione non si puÚ eliminare un dettaglio in stato non iniziale");
+		//throw new it.cnr.jada.comp.ApplicationException("Attenzione non si pu√≤ eliminare un dettaglio in stato non iniziale");
 		
 	if (documentoGenericoRiga.getDocumento_generico().isPagata())
-		throw new it.cnr.jada.comp.ApplicationException("Attenzione non si puÚ eliminare un dettaglio in un documento pagato");
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione non si pu√≤ eliminare un dettaglio in un documento pagato");
 
 	if (documentoGenericoRiga.isPagata())
-		throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si puÚ eliminare il dettaglio " + ((documentoGenericoRiga.getDs_riga() == null)? "" : documentoGenericoRiga.getDs_riga()) + " gi‡ pagato.");
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si pu√≤ eliminare il dettaglio " + ((documentoGenericoRiga.getDs_riga() == null)? "" : documentoGenericoRiga.getDs_riga()) + " gi√† pagato.");
 }
 //^^@@
 /** 
@@ -2738,12 +2738,12 @@ public java.util.Collection findListabanche(
 /** 
   *	Tutti i controlli  superati.
   *		PreCondition:
-  * 		Richiesta ricerca delle modalit‡ di pagamento del cliente/fornitore
+  * 		Richiesta ricerca delle modalit√† di pagamento del cliente/fornitore
   *   	PostCondition:
-  *  		Restituisce la collezione di modalit‡ di pagamento del cliente/fornitore
+  *  		Restituisce la collezione di modalit√† di pagamento del cliente/fornitore
   *	Validazione del fornitore
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle modalit‡ di pagamento del cliente/fornitore.
+  *			Si √® verificato un errore nel caricamento delle modalit√† di pagamento del cliente/fornitore.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
  */
@@ -2779,11 +2779,11 @@ public java.util.Collection findModalita(
 }
 //^^@@
 /** 
-  *  cerca i dati relativi alla modalit‡ selezionata
+  *  cerca i dati relativi alla modalit√† selezionata
   *    PreCondition:
-  *      Viene cambiata la modalit‡ di pagamento
+  *      Viene cambiata la modalit√† di pagamento
   *    PostCondition:
-  *      restituisce i dati relativi alla modalit‡ selezionata
+  *      restituisce i dati relativi alla modalit√† selezionata
  */
 //^^@@
 public Rif_modalita_pagamentoBulk findModalitaSelezionate(
@@ -2829,7 +2829,7 @@ public Rif_modalita_pagamentoBulk findModalitaSelezionate(
   *  		Restituisce la collezione dei termini di pagamento del fornitore/cliente
   *	Validazione del fornitore
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento dei termini di pagamento del fornitore/cliente.
+  *			Si √® verificato un errore nel caricamento dei termini di pagamento del fornitore/cliente.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
  */
@@ -3346,7 +3346,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext, Oggett
 
 	/**
 	  * Gennaro Borriello - (08/11/2004 13.35.27)
-	  *	Aggiunta propriet‡ <code>esercizioInScrivania</code>, che verr‡ utilizzata
+	  *	Aggiunta propriet√† <code>esercizioInScrivania</code>, che verr√† utilizzata
 	  *	per la gestione di isRiportataInScrivania(), in alcuni casi.
 	 */
 	 documento.setEsercizioInScrivania(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
@@ -3372,7 +3372,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext aUC, OggettoBulk bulk)
 
     Documento_genericoBulk generico = (Documento_genericoBulk) bulk;
 	if (generico.getEsercizio() == null)
-		throw new it.cnr.jada.comp.ApplicationException("L'esercizio del documento non Ë valorizzato! Impossibile proseguire.");
+		throw new it.cnr.jada.comp.ApplicationException("L'esercizio del documento non √® valorizzato! Impossibile proseguire.");
 			
 	if (generico.getEsercizio().intValue() >
 		it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC).intValue())
@@ -3537,7 +3537,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext aUC, OggettoBulk bulk)
 
 		/**
 		  * Gennaro Borriello - (08/11/2004 13.35.27)
-		  *	Aggiunta propriet‡ <code>esercizioInScrivania</code>, che verr‡ utilizzata
+		  *	Aggiunta propriet√† <code>esercizioInScrivania</code>, che verr√† utilizzata
 		  *	per la gestione di isRiportataInScrivania(), in alcuni casi.
 		 */
 		 generico.setEsercizioInScrivania(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC));
@@ -3913,10 +3913,10 @@ public it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext aUC,
 			if (existARowToBeInventoried(aUC,documento)) {
 				verificaEsistenzaEdAperturaInventario(aUC, documento);
 				if (documento.hasCompetenzaCOGEInAnnoPrecedente())
-					  throw new it.cnr.jada.comp.ApplicationException("Attenzione: per le date competenza indicate non Ë possibile inventariare i beni.");		
+					  throw new it.cnr.jada.comp.ApplicationException("Attenzione: per le date competenza indicate non √® possibile inventariare i beni.");		
 					
 				if (hasDocumentoPassivoARowNotInventoried(aUC, documento))
-					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Ë necessario inventariare tutti i dettagli.");
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione: √® necessario inventariare tutti i dettagli.");
 			}
 			validaDocumento(aUC, documento);
 	} catch (it.cnr.jada.comp.ApplicationException e) {
@@ -3953,7 +3953,7 @@ public it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext aUC,
 	}
 
 	//Nel caso in cui TUTTI i dettagli sono stati pagati imposto lo stato pagato
-	//in testata fattura. (Caso in cui era parzialmente pagata Ë ho eliminato tutti
+	//in testata fattura. (Caso in cui era parzialmente pagata √® ho eliminato tutti
 	//i dettagli non pagati)
 	if (documento.isPagataParzialmente() &&
 		documento.getDettagliPagati().size() == documento.getDocumento_generico_dettColl().size()) {
@@ -3963,8 +3963,8 @@ public it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext aUC,
 	}
 		
 	/*
-	 * Se il documento non era modificabile nei suoi elementi principali, ma si Ë solo proceduto a 
-	 * sdoppiare una riga di dettaglio allora la ricontabilizzazione in COAN e COGE non Ë necessaria
+	 * Se il documento non era modificabile nei suoi elementi principali, ma si √® solo proceduto a 
+	 * sdoppiare una riga di dettaglio allora la ricontabilizzazione in COAN e COGE non √® necessaria
 	 */
 	boolean aggiornaStatoCoge = false;
 	if (documento.isGenericoAttivo()) {
@@ -4041,9 +4041,9 @@ public it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext aUC,
 		documento.getDefferredSaldi().putAll(aTempDiffSaldi);
 	
 	/*
-	 * Se il documento non era modificabile nei suoi elementi principali, ma si Ë solo proceduto a 
+	 * Se il documento non era modificabile nei suoi elementi principali, ma si √® solo proceduto a 
 	 * sdoppiare una riga di dettaglio allora il controllo sulla chiusura dell'esercizio del documento
-	 * e sulla ricontabilizzazione in COGE COAN non Ë necessario
+	 * e sulla ricontabilizzazione in COGE COAN non √® necessario
 	 */
 	if (!documento.isDocumentoModificabile() && documento.isDetailDoubled())
 		return documento;
@@ -4149,7 +4149,7 @@ private Documento_genericoBulk resetChangeData(
 	Documento_genericoBulk documentoBulk)
 	throws ComponentException {
 
-	// Viene chiamato solo quando la valuta del documento Ë null
+	// Viene chiamato solo quando la valuta del documento √® null
 	documentoBulk.setInizio_validita_valuta(null);
 	documentoBulk.setFine_validita_valuta(null);
 	documentoBulk.setCambio(new java.math.BigDecimal(0));
@@ -4390,8 +4390,8 @@ public it.cnr.jada.persistency.sql.SQLBuilder selectLettera_pagamento_estero_sos
 		sql.addClause("AND", "ti_entrata_spesa", sql.EQUALS, sospeso.TIPO_SPESA);
 		sql.addClause("AND", "ti_sospeso_riscontro", sql.EQUALS, sospeso.TI_SOSPESO);
 	
-		//Questa operazione Ë possibile perchÈ viene effettuato precedentemente
-		//il controllo di compatibilit‡ sulle modalit‡ di pagam
+		//Questa operazione √® possibile perch√© viene effettuato precedentemente
+		//il controllo di compatibilit√† sulle modalit√† di pagam
 		Rif_modalita_pagamentoBulk aMod = null;
 		if (documento.getDocumento_generico_dettColl() != null &&
 			!documento.getDocumento_generico_dettColl().isEmpty())
@@ -4715,17 +4715,17 @@ private Documento_genericoBulk setChangeDataToEur(
   *      Viene impostato nel dettaglio del documento il conto dell'Ente.
   *  Rifermento di tipo Bancario.
   *    PreCondition:
-  *      Il riferimento non Ë di tipo bancario
+  *      Il riferimento non √® di tipo bancario
   *    PostCondition:
   *      Esce dal metodo senza apportare modifiche
   *  Generico attivo.
   *    PreCondition:
-  *      Il documento non Ë di tipo "attivo"
+  *      Il documento non √® di tipo "attivo"
   *    PostCondition:
   *      Esce dal metodo senza apportare modifiche
   *  Generico attivo di tipo Ente.
   *    PreCondition:
-  *      Il documento attivo non Ë di tipo "Ente"
+  *      Il documento attivo non √® di tipo "Ente"
   *    PostCondition:
   *      Esce dal metodo senza apportare modifiche
  */
@@ -4806,7 +4806,7 @@ private void setDt_termine_creazione_docamm(
 											"CHIUSURA_COSTANTI", 
 											"TERMINE_CREAZIONE_DOCAMM_ES_PREC");
 		if (t == null)
-			throw new it.cnr.jada.comp.ApplicationException("La costante di chiusura \"termine creazione docamm es prec\" NON Ë stata definita! Impossibile proseguire.");
+			throw new it.cnr.jada.comp.ApplicationException("La costante di chiusura \"termine creazione docamm es prec\" NON √® stata definita! Impossibile proseguire.");
 
 		generico.setDt_termine_creazione_docamm(t);
 	} catch (Throwable e) {
@@ -4862,7 +4862,7 @@ public void setSavePoint(UserContext userContext, String savePointName) throws C
 /**  Stampa dei Documenti Generici/Situazione Pagamenti Estero
   *  validazione Documenti Generici tutti i controlli superati (validateBulkForPrint(UserContext, Stampa_vpg_doc_genericoBulk).
   *    PreCondition:
-  *      Nessuna situazione di errore di validazione Ë stata rilevata.
+  *      Nessuna situazione di errore di validazione √® stata rilevata.
   *    PostCondition:
   *      Consentita la stampa.
   */
@@ -4955,11 +4955,11 @@ private void validaDisponibilitaDiCassaCDS(UserContext userContext, Documento_ge
 			List result = null;
 			result = home.fetchAll( sql );
 			if ( result.size() == 0 )
-				throw new ApplicationException("Non esiste il record per la disponibilit‡ di cassa del CDS: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getCd_cds() + " - esercizio: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());
+				throw new ApplicationException("Non esiste il record per la disponibilit√† di cassa del CDS: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getCd_cds() + " - esercizio: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio());
 			V_disp_cassa_cdsBulk cassa = (V_disp_cassa_cdsBulk) result.get(0);
 			if (cassa.getIm_disponibilita_cassa().compareTo(new java.math.BigDecimal(0)) < 0||
 			  ((documento.getLettera_pagamento_estero().getSospeso()==null||documento.getLettera_pagamento_estero().getSospeso().getCd_sospeso()==null) && cassa.getIm_disponibilita_cassa().compareTo(documento.getIm_totale())<0))			
-				throw new it.cnr.jada.comp.ApplicationException("La disponibilit‡ di cassa del CDS: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getCd_cds() + " - esercizio: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() + " Ë stata superata! Salvataggio interrotto.");
+				throw new it.cnr.jada.comp.ApplicationException("La disponibilit√† di cassa del CDS: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getCd_cds() + " - esercizio: " + ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() + " √® stata superata! Salvataggio interrotto.");
 		}
 	} catch ( Exception e )	{
 		throw handleException(documento, e);
@@ -4970,12 +4970,12 @@ private void validaDisponibilitaDiCassaCDS(UserContext userContext, Documento_ge
 /**  Validazione dell'intero documento amministrativo ativo/passivo
   *  tutti i controlli superati
   *    PreCondition:
-  *      Nessuna situazione di errore di validazione Ë stata rilevata.
+  *      Nessuna situazione di errore di validazione √® stata rilevata.
   *    PostCondition:
   *      Consentita la registrazione.
   *  validazione numero di dettagli maggiore di zero.
   *    PreCondition:
-  *      Il numero di dettagli nel documento Ë zero
+  *      Il numero di dettagli nel documento √® zero
   *    PostCondition:
   *      Viene inviato un messaggio: "Attenzione non possono esistere documenti senza almeno un dettaglio".
   *  validazione associazione scadenze
@@ -4996,7 +4996,7 @@ public void validaDocumento(UserContext aUC, Documento_genericoBulk documentoGen
 	/* RP per consentire salvataggio delle associazioni con l'inventario
 	 * tutti i dati risultano comunque non aggiornabili*/
       // if (documentoGenerico.STATO_PAGATO.equalsIgnoreCase(documentoGenerico.getStato_cofi()))
-     //   throw new it.cnr.jada.comp.ApplicationException("Attenzione non si puÚ modificare nulla in un documento pagato");
+     //   throw new it.cnr.jada.comp.ApplicationException("Attenzione non si pu√≤ modificare nulla in un documento pagato");
 
     //controllo dettagli
     if (documentoGenerico.getDocumento_generico_dettColl().isEmpty())
@@ -5022,11 +5022,11 @@ public void validaDocumento(UserContext aUC, Documento_genericoBulk documentoGen
     if (documentoGenerico.getCd_tipo_documento_amm() == null)
         documentoGenerico.setCd_tipo_documento_amm(documentoGenerico.getTipo_documento().getCd_tipo_documento_amm());
 
-	//controlla compatibilit‡ dei clienti/fornitori x accertamenti/obbligazioni
+	//controlla compatibilit√† dei clienti/fornitori x accertamenti/obbligazioni
     for (java.util.Iterator i = documentoGenerico.getDocumento_generico_dettColl().iterator(); i.hasNext();) {
         Documento_generico_rigaBulk riga = (Documento_generico_rigaBulk) i.next();
         if (riga.getStato_cofi().equals(riga.STATO_INIZIALE))
-            throw new it.cnr.jada.comp.ApplicationException("Attenzione la riga " + riga.getDs_riga() + " Ë in stato iniziale");
+            throw new it.cnr.jada.comp.ApplicationException("Attenzione la riga " + riga.getDs_riga() + " √® in stato iniziale");
         if (documentoGenerico.getTi_entrate_spese() == documentoGenerico.ENTRATE) {
             if (!riga.getTerzo().getCd_terzo().equals(riga.getAccertamento_scadenziario().getAccertamento().getCd_terzo())
                 && (!riga
@@ -5086,7 +5086,7 @@ public void validaDocumento(UserContext aUC, Documento_genericoBulk documentoGen
     //controlli per la lettera di pagamento
     if (documentoGenerico.getLettera_pagamento_estero() != null) {
 	    if (!documentoGenerico.controllaCompatibilitaPer1210() || documentoGenerico.isByFondoEconomale())
-	    	throw new it.cnr.jada.comp.ApplicationException("E' stata selezionata una lettera di pagamento per un documento in cui o i terzi e le modalit‡ di pagamento sono differenti o il pagamento del fondo economale Ë stato selezionato");
+	    	throw new it.cnr.jada.comp.ApplicationException("E' stata selezionata una lettera di pagamento per un documento in cui o i terzi e le modalit√† di pagamento sono differenti o il pagamento del fondo economale √® stato selezionato");
     }
 
     return;
@@ -5102,12 +5102,12 @@ public void validaDocumento(UserContext aUC, Documento_genericoBulk documentoGen
   *    PreCondition:
   *      Le date di competenza non sono esatte
   *    PostCondition:
-  *      Viene inviato un messaggio:"La data di inizio competenza non puÚ essere successiva alla fine competenza.
+  *      Viene inviato un messaggio:"La data di inizio competenza non pu√≤ essere successiva alla fine competenza.
   *  validazione modifica  campi di dettaglio di un documento pagato.
   *    PreCondition:
-  *      Non sono state inseririte le modalit‡ di pagamento per la riga
+  *      Non sono state inseririte le modalit√† di pagamento per la riga
   *    PostCondition:
-  *      Viene inviato un messaggio "Inserire le modalit‡ di pagamento per la riga xxx"
+  *      Viene inviato un messaggio "Inserire le modalit√† di pagamento per la riga xxx"
  */
 //^^@@
 public void validaRiga(
@@ -5119,13 +5119,13 @@ public void validaRiga(
             //.equalsIgnoreCase(
                 //documentoGenericoRiga.getDocumento_generico().getStato_cofi()))
             //throw new it.cnr.jada.comp.ApplicationException(
-                //"Attenzione:  questa modifica non Ë permessa");
+                //"Attenzione:  questa modifica non √® permessa");
         //if (documentoGenericoRiga.getDt_da_competenza_coge() != null
             //&& documentoGenericoRiga.getDt_a_competenza_coge() != null
             //&& documentoGenericoRiga.getDt_da_competenza_coge().after(
                 //documentoGenericoRiga.getDt_a_competenza_coge()))
             //throw new it.cnr.jada.comp.ApplicationException(
-                //"La data di inizio competenza non puÚ essere successiva alla fine competenza");
+                //"La data di inizio competenza non pu√≤ essere successiva alla fine competenza");
 
 		try { 
 			documentoGenericoRiga.validaDateCompetenza();
@@ -5138,14 +5138,14 @@ public void validaRiga(
         if (documentoGenerico.getTi_entrate_spese() == documentoGenerico.SPESE) {
             if (documentoGenericoRiga.getModalita_pagamento() == null)
                 throw new it.cnr.jada.comp.ApplicationException(
-                    "Inserire le modalit‡ di pagamento per la riga "
+                    "Inserire le modalit√† di pagamento per la riga "
                         + (documentoGenericoRiga.getDs_riga() != null
                             ? documentoGenericoRiga.getDs_riga()
                             : ""));
         } else {
             if (documentoGenericoRiga.getModalita_pagamento_uo_cds() == null)
                 throw new it.cnr.jada.comp.ApplicationException(
-                    "Inserire le modalit‡ di pagamento per la riga "
+                    "Inserire le modalit√† di pagamento per la riga "
                         + (documentoGenericoRiga.getDs_riga() != null
                             ? documentoGenericoRiga.getDs_riga()
                             : ""));
@@ -5159,55 +5159,55 @@ public void validaRiga(
 /**  Validazione per la stampa dei Documenti Generici
   *  validazione Progressivo Inizio nullo
   *    PreCondition:
-  *      Non Ë stato indicato il progressivo di Documento Iniziale della stampa
+  *      Non √® stato indicato il progressivo di Documento Iniziale della stampa
   *    PostCondition:
-  *      Viene inviato un messaggio: "Il campo NUMERO INIZIO Ë obbligatorio".
+  *      Viene inviato un messaggio: "Il campo NUMERO INIZIO √® obbligatorio".
   *
   *  validazione Progressivo Fine nullo
   *    PreCondition:
-  *      Non Ë stato indicato il progressivo di Documento Finale della stampa
+  *      Non √® stato indicato il progressivo di Documento Finale della stampa
   *    PostCondition:
-  *      Viene inviato un messaggio: "Il campo NUMERO FINE Ë obbligatorio".
+  *      Viene inviato un messaggio: "Il campo NUMERO FINE √® obbligatorio".
   *
   *  validazione Progressivo Inizio maggiore del Progressivo Fine
   *    PreCondition:
-  *      Il progressivo Iniziale Ë minore del Documento Finale
+  *      Il progressivo Iniziale √® minore del Documento Finale
   *    PostCondition:
-  *      Viene inviato un messaggio: "Il NUMERO INIZIO non puÚ essere superiore al NUMERO FINE".
+  *      Viene inviato un messaggio: "Il NUMERO INIZIO non pu√≤ essere superiore al NUMERO FINE".
   *
   *  validazione Data Inizio nulla
   *    PreCondition:
-  *      Non Ë stata indicata alcuna Data di Inizio
+  *      Non √® stata indicata alcuna Data di Inizio
   *    PostCondition:
-  *      Viene inviato un messaggio: "Il campo DATA INIZIO PERIODO Ë obbligatorio".
+  *      Viene inviato un messaggio: "Il campo DATA INIZIO PERIODO √® obbligatorio".
   *
   *  validazione Data Fine nulla
   *    PreCondition:
-  *      Non Ë stata indicata alcuna Data di Fine
+  *      Non √® stata indicata alcuna Data di Fine
   *    PostCondition:
-  *      Viene inviato un messaggio: "Il campo DATA FINE PERIODO Ë obbligatorio".
+  *      Viene inviato un messaggio: "Il campo DATA FINE PERIODO √® obbligatorio".
   *
   *  validazione Data Inizio superiore alla Data Fine
   *    PreCondition:
   *      E' stata indicata una Data di Inizio periodo posteriore alla Data di Fine periodo.
   *    PostCondition:
-  *      Viene inviato un messaggio: "La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO".
+  *      Viene inviato un messaggio: "La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO".
   *
   *  validazione Data Inizio antecedente al 01/01 dell'Esercizio di scrivania
   *    PreCondition:
   *      E' stata indicata una Data di Inizio periodo antecedente al 01/01 dell'Esercizio di scrivania.
   *    PostCondition:
-  *      Viene inviato un messaggio: "La DATA di INIZIO PERIODO non puÚ essere inferiore a....".
+  *      Viene inviato un messaggio: "La DATA di INIZIO PERIODO non pu√≤ essere inferiore a....".
   *
   *  validazione Data Fine maggiore alla data di odierna
   *    PreCondition:
   *      E' stata indicata una Data Fine maggiore alla data di odierna
   *    PostCondition:
-  *      Viene inviato un messaggio: "La DATA di FINE PERIODO non puÚ essere superiore a ....".
+  *      Viene inviato un messaggio: "La DATA di FINE PERIODO non pu√≤ essere superiore a ....".
   *
   *  tutti i controlli superati
   *    PreCondition:
-  *      Nessuna situazione di errore di validazione Ë stata rilevata.
+  *      Nessuna situazione di errore di validazione √® stata rilevata.
   *    PostCondition:
   *      Consentita la stampa.
   *
@@ -5222,32 +5222,32 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_vp
 	
 		/**** Controlli sui PG_INIZIO/PG_FINE *****/
 		if (stampa.getPgInizio()==null)
-			throw new ValidationException("Il campo NUMERO INIZIO Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO INIZIO √® obbligatorio");
 		if (stampa.getPgFine()==null)
-			throw new ValidationException("Il campo NUMERO FINE Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO FINE √® obbligatorio");
 		if (stampa.getPgInizio().compareTo(stampa.getPgFine())>0)
-			throw new ValidationException("Il NUMERO INIZIO non puÚ essere superiore al NUMERO FINE");
+			throw new ValidationException("Il NUMERO INIZIO non pu√≤ essere superiore al NUMERO FINE");
 
 		/**** Controlli sulle Date DA/A	*****/
 		if (stampa.getDataInizio()==null)
-			throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 		if (stampa.getDataFine()==null)
-			throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 
   			
-		// La Data di Inizio Periodo Ë superiore alla data di Fine Periodo
+		// La Data di Inizio Periodo √® superiore alla data di Fine Periodo
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 			
-		// La Data di Inizio Periodo Ë ANTECEDENTE al 1 Gennaio dell'Esercizio di scrivania
+		// La Data di Inizio Periodo √® ANTECEDENTE al 1 Gennaio dell'Esercizio di scrivania
 		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere inferiore a " + formatter.format(firstDayOfYear));
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere inferiore a " + formatter.format(firstDayOfYear));
 		}
-		// La Data di Fine periodo Ë SUPERIORE alla data lastDayOfYear
+		// La Data di Fine periodo √® SUPERIORE alla data lastDayOfYear
 		if (stampa.getDataFine().compareTo(lastDayOfYear)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non puÚ essere superiore a " + formatter.format(lastDayOfYear));
+			throw new ValidationException("La DATA di FINE PERIODO non pu√≤ essere superiore a " + formatter.format(lastDayOfYear));
 		}
 
 		
@@ -5261,10 +5261,10 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_vp
   *    PreCondition:
   *      Nessuna condizione di errore rilevata.
   *    PostCondition:
-  *      Viene consentita l'attivit‡ richiesta
-  *  L'esercizio non Ë aperto
+  *      Viene consentita l'attivit√† richiesta
+  *  L'esercizio non √® aperto
   *    PreCondition:
-  *      L'esercizio su cui insiste il controllo non Ë aperto
+  *      L'esercizio su cui insiste il controllo non √® aperto
   *    PostCondition:
   *      Viene notificato l'errore
  */
@@ -5506,9 +5506,9 @@ public void verificaEsistenzaEdAperturaInventario(
 																						documento.getCd_uo_origine(),
 																						false);
 			if (inventario == null)
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: si informa che non esiste un inventario per questo CDS.\nIn caso di inserimento di dettagli con beni soggetti ad inventario, non sar‡ permesso il salvataggio della fattura,\nfino alla creazione ed apertura di un nuovo inventario!");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: si informa che non esiste un inventario per questo CDS.\nIn caso di inserimento di dettagli con beni soggetti ad inventario, non sar√† permesso il salvataggio della fattura,\nfino alla creazione ed apertura di un nuovo inventario!");
 			else if (!h.isAperto(userContext, inventario, documento.getEsercizio())) {
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: si informa che l'inventario per questo CDS non Ë aperto.\nNel caso di inserimento di dettagli con beni soggetti ad inventario, non sar‡ permesso il salvataggio della fattura\nfino ad apertura di quest'ultimo!");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: si informa che l'inventario per questo CDS non √® aperto.\nNel caso di inserimento di dettagli con beni soggetti ad inventario, non sar√† permesso il salvataggio della fattura\nfino ad apertura di quest'ultimo!");
 			}
 		} catch (Exception e) {
 			throw handleException(documento, e);
@@ -6009,7 +6009,7 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_el
 
 	try{
 		if (stampa.getTerzo()==null||stampa.getTerzo().getCd_terzo()==null)
-			throw new ValidationException("Il campo Terzo Ë obbligatorio");
+			throw new ValidationException("Il campo Terzo √® obbligatorio");
 	
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);

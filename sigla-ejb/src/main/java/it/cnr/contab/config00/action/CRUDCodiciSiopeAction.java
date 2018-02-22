@@ -65,7 +65,7 @@ public class CRUDCodiciSiopeAction extends CRUDAction {
 				it.cnr.jada.persistency.sql.HomeCache homeCache = new it.cnr.jada.persistency.sql.HomeCache(conn);
 				Ass_tipologia_istat_siopeHome AssHome = (Ass_tipologia_istat_siopeHome)homeCache.getHome(Ass_tipologia_istat_siopeBulk.class);
 				if (AssHome.IsUtilizzato(ass)){
-					throw new ApplicationException("Non Ë possibile eliminare l'associazione perchË gi‡ utilizzata.");
+					throw new ApplicationException("Non √® possibile eliminare l'associazione perch√® gi√† utilizzata.");
 				}
 			}finally{
 				   if (conn!=null)
