@@ -59,17 +59,13 @@ function showStackTrace() {
 </script>
 <title>Gestione errori interni</title>
 </head>
-
 <body>
 <form name="mainForm" action="FormAction.do" action-ng="FormAction.do">
-<% 	BusinessProcess.encode(bp,pageContext); %>
-<input type="hidden" name="comando" value="doDefault">
-<P align=center>
-Non è possibile portare a termine l'operazione richiesta a causa di un errore interno del server.
-<P align=center>
-<button onclick="if (disableDblClick()) submitForm('doDefault')">Chiudi</button>
-<button onclick="showStackTrace()">Mostra errore</button>
+    <% 	BusinessProcess.encode(bp,pageContext); %>
+    <input type="hidden" name="comando" value="doDefault">
+    <p align=center>Non è possibile portare a termine l'operazione richiesta a causa di un errore interno del server.</p>
+    <button onclick="if (disableDblClick()) submitForm('doDefault')">Chiudi</button>
+    <button onclick="showStackTrace()">Mostra errore</button>
 </form>
-
 </body>
 </html>
