@@ -81,7 +81,13 @@
 
         <addPrimaryKey columnNames="id" constraintName="tipo_atto_bollo_pkey" tableName="tipo_atto_bollo"/>
 
-        <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_atto_bollo.csv" quotchar="&quot;" separator="," tableName="tipo_atto_bollo"/>
+        <loadData commentLineStartsWith="#" encoding="UTF-8" 
+        		  file="csv/tipo_atto_bollo.csv" quotchar="&quot;" separator="," tableName="tipo_atto_bollo">
+	        <column name="dt_ini_validita" type="DATE"/>
+            <column name="dt_fin_validita" type="DATE"/>
+            <column name="dacr" type="DATE"/>
+            <column name="duva" type="DATE"/>
+        </loadData>
 
         <createTable remarks="Tabella contenente gli atti assoggettati a bollo." tableName="atto_bollo">
             <column name="id" remarks="Chiave Primaria." type="INT">
@@ -102,14 +108,14 @@
             <column name="num_dettagli" remarks="Numero di dettagli su cui calcolare il bollo." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="num_righe" remarks="Numero di righe su cui calcolare il bollo." type="INT">
-            <column name="num_registro" remarks="Progressivo, assegnato automaticamente per anno/UO." type="INT">
+            <column name="num_righe" remarks="Numero di righe su cui calcolare il bollo." type="INT"/>
+            <column name="num_registro" remarks="Progressivo, assegnato automaticamente per anno/UO." type="INT"/>
             <column name="cd_provv" remarks="Codice del provvedimento di registrazione dell''atto." type="VARCHAR(20)"/>
             <column name="nr_provv" remarks="Numero del provvedimento di registrazione dell''atto." type="BIGINT"/>
             <column name="dt_provv" remarks="Data del provvedimento di registrazione dell''atto." type="DATE"/>
-            <column name="esercizio_contratto" remarks="Esercizio del Contratto." type="SMALLINT">
+            <column name="esercizio_contratto" remarks="Esercizio del Contratto." type="SMALLINT"/>
             <column name="stato_contratto" remarks="Stato del Contratto" type="CHAR(1)"/>
-            <column name="pg_contratto" remarks="Progressivo del Contratto" type="BIGINT">
+            <column name="pg_contratto" remarks="Progressivo del Contratto" type="BIGINT"/>
             <column name="dacr" type="DATE">
                 <constraints nullable="false"/>
             </column>
@@ -129,7 +135,7 @@
 
         <addPrimaryKey columnNames="id" constraintName="atto_bollo_pkey" tableName="atto_bollo"/>
 
-        <addForeignKeyConstraint baseColumnNames="id_tipo_atto_bollo" baseTableName="atto_bollo" constraintName="fk_atto_bollo01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tipo_bollo"/>
+        <addForeignKeyConstraint baseColumnNames="id_tipo_atto_bollo" baseTableName="atto_bollo" constraintName="fk_atto_bollo01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tipo_atto_bollo"/>
 
         <addForeignKeyConstraint baseColumnNames="esercizio_contratto,stato_contratto,pg_contratto" baseTableName="atto_bollo" constraintName="fk_atto_bollo02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,stato,pg_contratto" referencedTableName="contratto"/>
 
@@ -173,14 +179,14 @@
 
         <addColumn tableName="pdg_variazione">
             <column name="ti_motivazione_variazione" remarks="Motivazione per cui viene effettuata la variazione di trasferimento per il personale - Dominio: BAN = Bando; PRG = Proroga; ALT = Altre Spese." type="char(3)"/>
-            <column name="id_matricola" type="varchar(10)" remarks="Matricola per cui viene effettuata la variazione.">
-            <column name="id_bando" type="varchar(10)" remarks="Identificativo del bando per cui viene effettuata la variazione.">
+            <column name="id_matricola" type="varchar(10)" remarks="Matricola per cui viene effettuata la variazione."/>
+            <column name="id_bando" type="varchar(10)" remarks="Identificativo del bando per cui viene effettuata la variazione."/>
         </addColumn>
 
         <addColumn tableName="var_stanz_res">
             <column name="ti_motivazione_variazione" remarks="Motivazione per cui viene effettuata la variazione di trasferimento per il personale - Dominio: BAN = Bando; PRG = Proroga; ALT = Altre Spese." type="char(3)"/>
-            <column name="id_matricola" type="varchar(10)" remarks="Matricola per cui viene effettuata la variazione.">
-            <column name="id_bando" type="varchar(10)" remarks="Identificativo del bando per cui viene effettuata la variazione.">
+            <column name="id_matricola" type="varchar(10)" remarks="Matricola per cui viene effettuata la variazione."/>
+            <column name="id_bando" type="varchar(10)" remarks="Identificativo del bando per cui viene effettuata la variazione."/>
         </addColumn>
     </changeSet>
 </databaseChangeLog>
