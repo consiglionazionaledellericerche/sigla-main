@@ -13,6 +13,7 @@ import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 
 /**
  * BP che gestisce gli atti da assoggettare a bollo virtuale
@@ -79,4 +80,21 @@ public class CRUDAttoBolloBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Atto_b
 			.ifPresent(el->el.setFlContrattoRegistrato(Boolean.TRUE));
 		return oggettobulk;
 	}
+	
+	@Override
+	public void validate(ActionContext context) throws ValidationException {
+		super.validate(context);
+		if (Optional.ofNullable(getModel()).filter(Atto_bolloBulk.class::isInstance).isPresent()) {
+			Atto_bolloBulk atto = (Atto_bolloBulk)getModel();
+			atto.getArchivioAllegati().stream()
+					.map(AllegatoGenericoBulk.class::cast)
+					.findAny()
+					.orElseThrow(()->new ValidationException("Inserire almeno un allegato!"));
+			
+			if (Optional.ofNullable(atto.getDt_provv())
+					.filter(el->el.after(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()))
+					.isPresent())
+				throw new ValidationException("Non è possibile inserire una data protocollo successiva alla data odierna!");
+		}
+	}	
 }
