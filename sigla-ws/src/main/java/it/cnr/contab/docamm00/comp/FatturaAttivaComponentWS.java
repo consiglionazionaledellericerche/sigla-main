@@ -1143,7 +1143,7 @@ private SOAPFault generaFault(String localName,String stringFault) throws SOAPEx
        	if (fat.getPg_banca_uo_cds()==null)
        		return new String("Progressivo Banca UO non inserito.");
        	if (fat.getCd_modalita_pag_uo_cds()==null)
-       		return new String("Modalit‡ pagamento Uo non inserita.");
+       		return new String("Modalit√† pagamento Uo non inserita.");
        	if (fat.getCd_divisa()==null)
        		return new String("Divisa non inserita.");
        	if (fat.getCambio()==null)
@@ -1176,7 +1176,7 @@ private SOAPFault generaFault(String localName,String stringFault) throws SOAPEx
     	  if (riga.getCd_tariffario()==null &&
         	  riga.getPrezzo_unitario()!=null &&
         	  riga.getQuantita()==null)
-        		  return new String("Quantit‡ non inserita.");
+        		  return new String("Quantit√† non inserita.");
     	  if(riga.getRighescadvoc()==null||riga.getRighescadvoc().size()==0)
          		return new String("Righe Scadenza voce non inserite.");      	
     	  else
@@ -1194,9 +1194,9 @@ private SOAPFault generaFault(String localName,String stringFault) throws SOAPEx
       }else if (intra!=null){
     	  if(intra.getCod_erogazione()!=null ||intra.getCod_incasso()!=null||intra.getId_cpa()!=null ){
 		  	  if(intra.getCod_erogazione()==null)
-		  		  return new String("Modalit‡ erogazione non inserita.");
+		  		  return new String("Modalit√† erogazione non inserita.");
 		  	  if(intra.getCod_incasso()==null)
-		  		  return new String("Modalit‡ incasso non inserita.");
+		  		  return new String("Modalit√† incasso non inserita.");
 		  	  if(intra.getId_cpa()==null)
 			  		return new String("Id servizio non inserito.");
     	  }
@@ -1209,7 +1209,7 @@ private SOAPFault generaFault(String localName,String stringFault) throws SOAPEx
     		  if(intra.getCd_provincia()==null)
     			  return new String("Provincia non inserita.");
     		  if(intra.getCd_trasporto()==null)
-    			  return new String("Modalit‡ trasporto non inserita.");
+    			  return new String("Modalit√† trasporto non inserita.");
     		  if(intra.getCd_consegna()==null)
     			  return new String("Condizione consegna non inserita.");
     	  }

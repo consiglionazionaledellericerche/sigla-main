@@ -5,7 +5,7 @@
 -->
 
 <%@page import="it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk"%>
-<%@ page import = "it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*, it.cnr.jada.util.action.*, it.cnr.contab.ordmag.richieste.bp.CRUDRichiestaUopBP, it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaDettaglioBulk, it.cnr.contab.ordmag.anag00.*"%>
+<%@ page pageEncoding="UTF-8"  import = "it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*, it.cnr.jada.util.action.*, it.cnr.contab.ordmag.richieste.bp.CRUDRichiestaUopBP, it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaDettaglioBulk, it.cnr.contab.ordmag.anag00.*"%>
 
 <%  
 	CRUDRichiestaUopBP bp = (CRUDRichiestaUopBP)BusinessProcess.getBusinessProcess(request);

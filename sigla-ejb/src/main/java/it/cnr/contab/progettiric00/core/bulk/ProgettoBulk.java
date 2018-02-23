@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.Dictionary;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
@@ -113,7 +112,6 @@ public class ProgettoBulk extends ProgettoBase {
 	private BulkList dettagli = new BulkList();
 	private BulkList dettagliFinanziatori = new BulkList();
 	private BulkList dettagliPartner_esterni = new BulkList();
-	private BulkList dettagliPostIt = new BulkList();
 	private BulkList dettagliPianoEconomicoTotale = new BulkList();
 	private BulkList dettagliPianoEconomicoAnnoCorrente = new BulkList();
 	private BulkList dettagliPianoEconomicoAltriAnni = new BulkList();
@@ -162,12 +160,6 @@ public class ProgettoBulk extends ProgettoBase {
 		return dettagliPartner_esterni.size()-1;
 	}
 
-	public int addToDettagliPostIt(it.cnr.contab.config00.blob.bulk.PostItBulk dett) {
-		dett.setPg_progetto( getPg_progetto() );
-		dettagliPostIt.add(dett);
-		return dettagliPostIt.size()-1;
-	}
-
 	public int addToDettagliPianoEconomicoTotale(Progetto_piano_economicoBulk dett) {
 		dett.setProgetto( this );
 		dett.setPg_progetto( getPg_progetto() );
@@ -190,7 +182,7 @@ public class ProgettoBulk extends ProgettoBase {
 	}
 
 	public it.cnr.jada.bulk.BulkCollection[] getBulkLists() {
-		return new it.cnr.jada.bulk.BulkCollection[] {dettagli,dettagliFinanziatori,dettagliPartner_esterni,dettagliPostIt,dettagliPianoEconomicoTotale,dettagliPianoEconomicoAnnoCorrente,dettagliPianoEconomicoAltriAnni};
+		return new it.cnr.jada.bulk.BulkCollection[] {dettagli,dettagliFinanziatori,dettagliPartner_esterni,dettagliPianoEconomicoTotale,dettagliPianoEconomicoAnnoCorrente,dettagliPianoEconomicoAltriAnni};
 	}
 
 public java.lang.String getCd_divisa() {
@@ -227,10 +219,6 @@ public it.cnr.jada.bulk.BulkList getDettagli() {
 }
 public it.cnr.jada.bulk.BulkList getDettagliFinanziatori() {
 	return dettagliFinanziatori;
-}
-
-public it.cnr.jada.bulk.BulkList getDettagliPostIt() {
-	return dettagliPostIt;
 }
 public BulkList getDettagliPianoEconomicoTotale() {
 	return dettagliPianoEconomicoTotale;
@@ -332,10 +320,6 @@ public Progetto_partner_esternoBulk removeFromDettagliPartner_esterni(int index)
 	return dett;
 }
 
-public PostItBulk removeFromDettagliPostIt(int index) {
-	PostItBulk dett = (PostItBulk)dettagliPostIt.remove(index);
-	return dett;
-}
 public Progetto_piano_economicoBulk removeFromDettagliPianoEconomicoTotale(int index) {
 	Progetto_piano_economicoBulk dett = (Progetto_piano_economicoBulk)dettagliPianoEconomicoTotale.remove(index);
 	return dett;
@@ -371,10 +355,6 @@ public void setDettagli(it.cnr.jada.bulk.BulkList newDettagli) {
 }
 public void setDettagliFinanziatori(it.cnr.jada.bulk.BulkList newDettagliFinanziatori) {
 	dettagliFinanziatori = newDettagliFinanziatori;
-}
-
-public void setDettagliPostIt(it.cnr.jada.bulk.BulkList newDettagliPostIt) {
-	dettagliPostIt = newDettagliPostIt;
 }
 public void setDettagliPianoEconomicoTotale(BulkList dettagliPianoEconomicoTotale) {
 	this.dettagliPianoEconomicoTotale = dettagliPianoEconomicoTotale;

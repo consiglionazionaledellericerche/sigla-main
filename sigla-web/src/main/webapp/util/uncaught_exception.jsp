@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,
 	        it.cnr.jada.action.*,
 	        java.util.*,
@@ -59,13 +59,17 @@ function showStackTrace() {
 </script>
 <title>Gestione errori interni</title>
 </head>
+
 <body>
 <form name="mainForm" action="FormAction.do" action-ng="FormAction.do">
-    <% 	BusinessProcess.encode(bp,pageContext); %>
-    <input type="hidden" name="comando" value="doDefault">
-    <p align=center>Non è possibile portare a termine l'operazione richiesta a causa di un errore interno del server.</p>
-    <button onclick="if (disableDblClick()) submitForm('doDefault')">Chiudi</button>
-    <button onclick="showStackTrace()">Mostra errore</button>
+<% 	BusinessProcess.encode(bp,pageContext); %>
+<input type="hidden" name="comando" value="doDefault">
+<P align=center>
+Non è possibile portare a termine l'operazione richiesta a causa di un errore interno del server.
+<P align=center>
+<button onclick="if (disableDblClick()) submitForm('doDefault')">Chiudi</button>
+<button onclick="showStackTrace()">Mostra errore</button>
 </form>
+
 </body>
 </html>
