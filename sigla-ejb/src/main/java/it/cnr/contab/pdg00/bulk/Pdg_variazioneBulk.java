@@ -28,6 +28,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	private static final java.util.Dictionary ti_tipologia_finKeys = new it.cnr.jada.util.OrderedHashtable();
 	private static final java.util.Dictionary stato_invioKeys = new it.cnr.jada.util.OrderedHashtable();
 	public static final java.util.Dictionary tiMotivazioneVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
+	public static final java.util.Dictionary tiMotivazioneVariazioneForSearchKeys = new it.cnr.jada.util.OrderedHashtable();
 	
 	private String storageMatricola;
 	
@@ -64,6 +65,10 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando da pubblicare");
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altre Spese");
+
+		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando da pubblicare");
+		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
+		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altre Spese");
 	}
 
 	private BulkList associazioneCDR = new BulkList();
@@ -172,6 +177,11 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	public final java.util.Dictionary getTiMotivazioneVariazioneKeys() {
 		return tiMotivazioneVariazioneKeys;
 	}	
+
+	public final java.util.Dictionary getTiMotivazioneVariazioneForSearchKeys() {
+		return tiMotivazioneVariazioneForSearchKeys;
+	}	
+	
 	/**
 	 * @return
 	 */

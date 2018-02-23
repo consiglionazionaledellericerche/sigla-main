@@ -497,6 +497,9 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	public final java.util.Dictionary getTiMotivazioneVariazioneKeys() {
 		return Pdg_variazioneBulk.tiMotivazioneVariazioneKeys;
 	}
+	public final java.util.Dictionary getTiMotivazioneVariazioneForSearchKeys() {
+		return Pdg_variazioneBulk.tiMotivazioneVariazioneForSearchKeys;
+	}
 	
 	public String getStorageMatricola() {
 		return storageMatricola;
