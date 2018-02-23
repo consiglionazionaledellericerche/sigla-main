@@ -44,27 +44,28 @@
    <TD><% bp.getController().writeFormLabel(out,"tipologia");%></TD>
    <TD colspan="5"><% bp.getController().writeFormInput(out,"default","tipologia",bp.isROTipologia(),null,null);%></TD>
   </TR>
-<% if (bp.isAttivaGestioneVariazioniTrasferimento() && 
-		var_stanz_res!=null && Var_stanz_resBulk.TIPOLOGIA_STO.equals(var_stanz_res.getTipologia())) { %>
+<% if (bp.isAttivaGestioneVariazioniTrasferimento() && (bp.isSearching() ||  
+		var_stanz_res!=null && Var_stanz_resBulk.TIPOLOGIA_STO.equals(var_stanz_res.getTipologia()))) { %>
     <TR>
 	  <TD><% bp.getController().writeFormLabel( out, "mapMotivazioneVariazione"); %></TD>
-	  <TD colspan="2"><% bp.getController().writeFormInput(out,"default","mapMotivazioneVariazione",isAbilitato||!var_stanz_res.isPropostaProvvisoria(),null,null);%></TD>
-	  <% if (var_stanz_res.isMotivazioneVariazioneBando()) {%>
+	  <TD colspan="2"><% bp.getController().writeFormInput(out,"default","mapMotivazioneVariazione",!bp.isSearching()&&(isAbilitato||!var_stanz_res.isPropostaProvvisoria()),null,null);%></TD>
+	  <% if (bp.isSearching() || var_stanz_res.isMotivazioneVariazioneBando()) {%>
 		 <TD><% bp.getController().writeFormLabel( out, "idBando"); %></TD>
-		 <TD><% bp.getController().writeFormInput( out, "default","idBando",isAbilitato||!var_stanz_res.isPropostaProvvisoria(),null,null); %></TD>
+		 <TD><% bp.getController().writeFormInput( out, "default","idBando",!bp.isSearching()&&(isAbilitato||!var_stanz_res.isPropostaProvvisoria()),null,null); %></TD>
 	 	 <%	if (var_stanz_res.isApprovata()||var_stanz_res.isApprovazioneControllata()) { %>
 		 <TD>
 		 	<%
 		 		bp.getController().writeFormLabel( out, "idMatricola");
-		 	    bp.getController().writeFormInput( out, "default","idMatricola",!(bp.isCdrScrivania()||bp.isUoEnte())||var_stanz_res.getIdMatricola()!=null,null,null);
+		 	    bp.getController().writeFormInput( out, "default","idMatricola",!bp.isSearching()&&!(bp.isCdrScrivania()||bp.isUoEnte())||var_stanz_res.getIdMatricola()!=null,null,null);
 		 	%>
 		 </TD>
 		 <% } %>
-  	 <% } else if (var_stanz_res.isMotivazioneVariazioneProroga() || var_stanz_res.isMotivazioneVariazioneAltreSpese()) { %>
-		 <TD colspan="3">
+  	 <% } 
+	    if (bp.isSearching() || (var_stanz_res.isMotivazioneVariazioneProroga() || var_stanz_res.isMotivazioneVariazioneAltreSpese())) { %>
+		 <TD <% if (!bp.isSearching()){ %>colspan="3"<% } %>>
 		 	<%	
 		 		bp.getController().writeFormLabel( out, "idMatricola");
-	 	    	bp.getController().writeFormInput( out, "default","idMatricola",isAbilitato||!var_stanz_res.isPropostaProvvisoria(),null,null);
+	 	    	bp.getController().writeFormInput( out, "default","idMatricola",!bp.isSearching()&&(isAbilitato||!var_stanz_res.isPropostaProvvisoria()),null,null);
 		 	%>
 		 </TD>
 	  <% }%>
