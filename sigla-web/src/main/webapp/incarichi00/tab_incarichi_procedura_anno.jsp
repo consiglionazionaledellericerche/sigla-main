@@ -1,9 +1,8 @@
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.action.*,
 		it.cnr.contab.incarichi00.bp.*,
 		it.cnr.contab.incarichi00.bulk.*,
 		it.cnr.jada.util.jsp.*"
-	pageEncoding="UTF-8"
 %>
 
 <%

@@ -1,4 +1,4 @@
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.action.*,
 		it.cnr.jada.util.jsp.*,
 		it.cnr.contab.bilaterali00.bulk.Blt_accordiBulk,

@@ -1731,54 +1731,6 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		return sql;
 	}
 
-	/**
-	 * Archivia i file prodotti da consultazioni effettuate
-	 * 
-	 * @param userContext
-	 * @param Pdg
-	 *            Bulk della variazione di cui si vuole effettuare
-	 *            l'archiviazione
-	 * @param tipo
-	 *            Tipo di consultazione effettuata E/S/C/R
-	 * @param file
-	 *            File da archiviare
-	 * @return void
-	 */
-	public void archiviaConsultazioneExcel(UserContext userContext,
-			Pdg_variazioneBulk pdg, String tipo, File file)
-			throws ComponentException {
-		Pdg_variazione_archivioHome archiveHome = (Pdg_variazione_archivioHome) getHome(
-				userContext, Pdg_variazione_archivioBulk.class);
-		Pdg_variazione_archivioBulk archive = new Pdg_variazione_archivioBulk();
-		archive.setPdg_variazione(pdg);
-		archive.setTipo_archivio(tipo);
-		archive.setToBeCreated();
-		super.creaConBulk(userContext, archive);
-		try {
-			oracle.sql.BLOB blob = (oracle.sql.BLOB) archiveHome.getSQLBlob(
-					archive, "BDATA");
-			java.io.InputStream in = new java.io.BufferedInputStream(
-					new FileInputStream(file));
-			byte[] byteArr = new byte[1024];
-			java.io.OutputStream os = new java.io.BufferedOutputStream(blob
-					.getBinaryOutputStream());
-			int len;
-			while ((len = in.read(byteArr)) > 0) {
-				os.write(byteArr, 0, len);
-			}
-			os.close();
-			in.close();
-		} catch (PersistencyException e) {
-			throw new ComponentException(e);
-		} catch (FileNotFoundException e) {
-			throw new ComponentException(e);
-		} catch (IOException e) {
-			throw new ComponentException(e);
-		} catch (SQLException e) {
-			throw new ComponentException(e);
-		}
-	}
-
 	public String controllaTotPropostoEntrataSpesa(
 			it.cnr.jada.UserContext usercontext,
 			it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk pdg)
