@@ -1,4 +1,4 @@
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*,it.cnr.jada.util.action.*,it.cnr.jada.*,it.cnr.contab.ordmag.richieste.bp.CRUDRichiestaUopBP,it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk,it.cnr.contab.ordmag.anag00.*"
 %>
 <%	CRUDRichiestaUopBP bp = (CRUDRichiestaUopBP)BusinessProcess.getBusinessProcess(request);%>

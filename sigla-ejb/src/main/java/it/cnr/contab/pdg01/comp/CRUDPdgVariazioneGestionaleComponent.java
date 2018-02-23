@@ -539,7 +539,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 			String cdrPersonale = null;
 			if (Optional.ofNullable(pdg.getTiMotivazioneVariazione()).isPresent()) { 
 				cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(usercontext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
-						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
+						.orElseThrow(() -> new ComponentException("Non Ã¨ possibile individuare il codice CDR del Personale."));
 				existDettPersonale = false;
 			} 
 				

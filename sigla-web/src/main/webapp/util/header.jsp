@@ -1,4 +1,4 @@
-<%@ page session="false" %>
+<%@ page pageEncoding="UTF-8"  session="false" %>
 <html>
 <head>
 <title><%=pageContext.getServletContext().getAttribute("APPLICATION_TITLE_VERSION")%></title>

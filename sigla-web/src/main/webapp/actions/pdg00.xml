@@ -42,7 +42,7 @@
       path="/ConsultazioniAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
   </action>
   <action 
-      path="/PdGConsultazioneAssestatoAction" actionClass="it.cnr.contab.pdg00.action.PdGConsultazioneAssestatoAction">
+      path="/PdGConsultazioneAssestatoAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
   </action>
   <action 
       path="/CRUDPdgPianoRipSpeseAccentAction" actionClass="it.cnr.contab.prevent00.action.CRUDPdgPianoRipSpeseAccentAction">
