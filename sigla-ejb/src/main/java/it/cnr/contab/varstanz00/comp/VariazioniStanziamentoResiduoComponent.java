@@ -728,11 +728,16 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	}
 	protected Query select(UserContext userContext,CompoundFindClause clauses,OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
 		SQLBuilder sql = (SQLBuilder)super.select(userContext,clauses,bulk);
-		sql.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addSQLClause("AND","VAR_STANZ_RES.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		
+		Optional.ofNullable(bulk)
+			.filter(Var_stanz_resBulk.class::isInstance)
+			.map(Var_stanz_resBulk.class::cast)
+			.filter(el->Pdg_variazioneBulk.MOTIVAZIONE_GENERICO.equals(el.getMapMotivazioneVariazione()))
+			.ifPresent(var->sql.addSQLClause(FindClause.AND,"VAR_STANZ_RES.TI_MOTIVAZIONE_VARIAZIONE",SQLBuilder.ISNULL,null));
+
 		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 
-		UtenteBulk utente = (UtenteBulk) getHome( userContext, UtenteBulk.class).findByPrimaryKey(new UtenteKey(it.cnr.contab.utenze00.bp.CNRUserContext.getUser(userContext)));
-	
 		CdrHome cdrHome = (CdrHome)getHome(userContext,CdrBulk.class);
 		CdrBulk cdrUtente = (CdrBulk)cdrHome.findByPrimaryKey(new CdrKey(it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cdr(userContext))); 
 
