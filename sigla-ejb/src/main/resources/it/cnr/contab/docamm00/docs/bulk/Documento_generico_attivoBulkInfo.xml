@@ -4,8 +4,8 @@
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
 		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 	<fieldProperty
-		name="tipoDocumentoGenerico"
-		property="tipoDocumentoGenerico"
+		name="tipologiaDocumentoGenerico"
+		property="tipologiaDocumentoGenerico"
 		inputType="TEXT"
 		label="Tipo documento" />
 
@@ -23,7 +23,7 @@
 		<columnFieldProperty
 			name="cd_unita_organizzativa" />
 		<columnFieldProperty
-			name="tipoDocumentoGenerico" />
+			name="tipologiaDocumentoGenerico" />
 		<columnFieldProperty
 			name="ti_associato_manrev"/>
 	</columnSet>

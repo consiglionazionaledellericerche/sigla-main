@@ -414,4 +414,50 @@
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create-table-tipo-documento-generico">
+        <createTable remarks="Tabella contenente le tipologie dei documenti generici." tableName="tipo_documento_generico">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codice" remarks="Codice identificativo del tipo documento generico." type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo_documento" remarks="Tipo Documento (A=Attivo, P=Passivo)" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descrizione" remarks="Descrizione del tipo documento generico." type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="soggetto_bollo" remarks="Soggetto a Bollo (Y=Sì, N=No)" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="tipo_documento_generico_pkey" tableName="tipo_documento_generico"/>
+
+        <addColumn tableName="documento_generico">
+            <column name="id_tipo_documento_generico" type="INT" remarks="ID Tipo documento Generico"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="id_tipo_documento_generico" baseTableName="documento_generico" constraintName="fk_documento_generico06" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tipo_documento_generico"/>
+
+        <createIndex indexName="FX_DOCUMENTO_GENERICO06" tableName="documento_generico">
+            <column name="id_tipo_documento_generico"/>
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>
