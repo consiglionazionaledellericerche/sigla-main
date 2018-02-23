@@ -23,7 +23,7 @@ public Forward doPubblicaSulSito(ActionContext context){
 	try 
 	{
 		fillModel( context );
-		return openConfirm(context, "Attenzione! Confermi la pubblicazione sul sito della \"Verifica Professionalit‡ Interne\" ?", OptionBP.CONFIRM_YES_NO, "doConfirmPubblicaSulSito");
+		return openConfirm(context, "Attenzione! Confermi la pubblicazione sul sito della \"Verifica Professionalit√† Interne\" ?", OptionBP.CONFIRM_YES_NO, "doConfirmPubblicaSulSito");
 	}		
 	catch(Throwable e) 
 	{
@@ -50,7 +50,7 @@ public Forward doAnnullaPubblicazioneSulSito(ActionContext context){
 	try 
 	{
 		fillModel( context );
-		return openConfirm(context, "Attenzione! Confermi l'annullamento della pubblicazione sul sito della ricerca di professionalit‡ interne all'ente?", OptionBP.CONFIRM_YES_NO, "doConfirmAnnullaPubblicazioneSulSito");
+		return openConfirm(context, "Attenzione! Confermi l'annullamento della pubblicazione sul sito della ricerca di professionalit√† interne all'ente?", OptionBP.CONFIRM_YES_NO, "doConfirmAnnullaPubblicazioneSulSito");
 	}		
 	catch(Throwable e) 
 	{
@@ -83,11 +83,11 @@ private Forward doRicercaChiusa(ActionContext context, boolean isByRichiediContr
 		CRUDIncarichiRichiestaBP bp = (CRUDIncarichiRichiestaBP)getBusinessProcess(context);
 		bp.validaChiusuraRicerca(context);
 		if (isByRichiediContratto)
-			return openConfirm(context, "La ricerca di professionalit‡ interna Ë conclusa.\nDopo il salvataggio si proceder‡ alla registrazione dell'incarico.\nSi vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmRicercaChiusaByRichiediContratto");
+			return openConfirm(context, "La ricerca di professionalit√† interna √® conclusa.\nDopo il salvataggio si proceder√† alla registrazione dell'incarico.\nSi vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmRicercaChiusaByRichiediContratto");
 		else if (((Incarichi_richiestaBulk)bp.getModel()).getNrRisorseNonTrovate()==0)
-			return openConfirm(context, "La ricerca di professionalit‡ interna Ë conclusa.\nSi vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmRicercaChiusa");
+			return openConfirm(context, "La ricerca di professionalit√† interna √® conclusa.\nSi vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmRicercaChiusa");
 		else
-			return openConfirm(context, "La ricerca di professionalit‡ interna Ë conclusa.\nDopo il salvataggio si potr‡ effettuare la registrazione dell'incarico.\nSi vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmRicercaChiusa");
+			return openConfirm(context, "La ricerca di professionalit√† interna √® conclusa.\nDopo il salvataggio si potr√† effettuare la registrazione dell'incarico.\nSi vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmRicercaChiusa");
 	}		
 	catch(Throwable e) 
 	{
@@ -254,12 +254,12 @@ public Forward doApriIncarichiProcedura(ActionContext context) {
 		Incarichi_richiestaBulk richiesta = (Incarichi_richiestaBulk)bp.getModel();
 
 		if (richiesta==null || richiesta.getCrudStatus()==CRUDBP.SEARCH){
-			bp.setMessage("Non Ë stata selezionata alcuna verifica di professionalit‡ interna.");
+			bp.setMessage("Non √® stata selezionata alcuna verifica di professionalit√† interna.");
 			return context.findDefaultForward();
 		}
 		else if (richiesta.getIncarichi_proceduraColl() == null ||
 				 richiesta.getIncarichi_proceduraColl().isEmpty()) {
-			bp.setMessage("La verifica di professionalit‡ interna selezionata non risulta collegato ad alcuna procedura di conferimento incarichi.");
+			bp.setMessage("La verifica di professionalit√† interna selezionata non risulta collegato ad alcuna procedura di conferimento incarichi.");
 			return context.findDefaultForward();
 		}
 		else if (bp.getIncarichiProceduraColl() == null ||

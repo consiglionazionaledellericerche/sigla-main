@@ -37,12 +37,12 @@ public it.cnr.jada.action.Forward doBringBackSearchFind_nodo_padre(ActionContext
         if (cgiPadre != null) {
 	        //controlla che venga selezionata una categoria
             if (cgiPadre.getLivello().equals(new Integer(1))) {
-                setErrorMessage(context, "Il nodo padre selezionato non è valido.La struttura può avere solo due livelli!");
+                setErrorMessage(context, "Il nodo padre selezionato non Ã¨ valido.La struttura puÃ² avere solo due livelli!");
                 return context.findDefaultForward();
             }
-            //Non è possibile selezionare lo stesso elemento come padre
+            //Non Ã¨ possibile selezionare lo stesso elemento come padre
             if (cgiPadre.getCd_categoria_gruppo().equals(cgi.getCd_categoria_gruppo())) {
-                setErrorMessage(context, "Non è possibile selezionare lo stesso elemento come padre.");
+                setErrorMessage(context, "Non Ã¨ possibile selezionare lo stesso elemento come padre.");
                 return context.findDefaultForward();
             }
             //----cgi.setDs_categoria_gruppo(cgiPadre.getDs_categoria_gruppo() +(cgi.getDs_categoria_gruppo()!=null?" - "+ cgi.getDs_categoria_gruppo():""));

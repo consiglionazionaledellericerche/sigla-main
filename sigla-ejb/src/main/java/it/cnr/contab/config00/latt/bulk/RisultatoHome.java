@@ -33,9 +33,9 @@ public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,Og
 
 			SQLBuilder sql = createSQLBuilder();
 
-// La gestione user delle linee di attivit‡ Ë limitata a quelle proprie.
-// Tali linee hanno una numerazione del tipo PXX..XX dove XX..XX Ë il progressivo
-// Devono essere inoltre gestite le linee di attivit‡ di tipo SISTEMA SXX..XX dove XX..XX Ë il progressivo
+// La gestione user delle linee di attivit√† √® limitata a quelle proprie.
+// Tali linee hanno una numerazione del tipo PXX..XX dove XX..XX √® il progressivo
+// Devono essere inoltre gestite le linee di attivit√† di tipo SISTEMA SXX..XX dove XX..XX √® il progressivo
 	
 			sql.setHeader("SELECT MAX(PG_RISULTATO)");
 			sql.addClause("AND","cd_linea_attivita",sql.EQUALS,risultato.getLinea_attivita().getCd_linea_attivita());
@@ -57,7 +57,7 @@ public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,Og
 			}
 			
 	} catch(NumberFormatException e) {
-		throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile fornire una numerazione automatica perchË esisitono codici assegnati manualmente non numerici",e);
+		throw new it.cnr.jada.comp.ApplicationException("Non √® possibile fornire una numerazione automatica perch√® esisitono codici assegnati manualmente non numerici",e);
 	}catch(java.sql.SQLException e) {
 		throw new PersistencyException(e);
 	}

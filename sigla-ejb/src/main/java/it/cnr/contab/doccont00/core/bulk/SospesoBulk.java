@@ -303,8 +303,8 @@ public it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk getV_man_rev
 	return v_man_rev;
 }
 /* e' associato se
-   - o il sospeso stesso Ë associato ad un mandato/reversale o lettera pag. 1210
-   - o uno dei suoi figli Ë associato ad un mandato/reversale o lettera pag. 1210
+   - o il sospeso stesso √® associato ad un mandato/reversale o lettera pag. 1210
+   - o uno dei suoi figli √® associato ad un mandato/reversale o lettera pag. 1210
 */   
    
 public boolean isAssociato() 
@@ -336,9 +336,9 @@ public boolean isROCdsOrigine() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rODocumentoCont'
+ * Restituisce il valore della propriet√† 'rODocumentoCont'
  *
- * @return Il valore della propriet‡ 'rODocumentoCont'
+ * @return Il valore della propriet√† 'rODocumentoCont'
  */
 public boolean isRODocumentoCont() {
 	return this.getV_man_rev() == null || this.getV_man_rev().getCrudStatus() == NORMAL;
@@ -351,9 +351,9 @@ public boolean isROFind_cds_origine()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOFindDocumentoCont'
+ * Restituisce il valore della propriet√† 'rOFindDocumentoCont'
  *
- * @return Il valore della propriet‡ 'rOFindDocumentoCont'
+ * @return Il valore della propriet√† 'rOFindDocumentoCont'
  */
 public boolean isROFindDocumentoCont() {
 	
@@ -443,7 +443,7 @@ public  void setV_man_rev_for_search( it.cnr.contab.doccont00.intcass.bulk.V_man
 	v_man_rev = newV_man_rev;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
@@ -451,7 +451,7 @@ public void validate() throws ValidationException {
 	
 	// controllo su campo PROGRESSIVO DOC.CONTABILE
 	if ( this.TI_RISCONTRO.equals( getTi_sospeso_riscontro()) && (getV_man_rev().getPg_documento_cont() == null) )
-		throw new ValidationException( "Il campo PROGRESSIVO DOC.CONTABILE Ë obbligatorio." );
+		throw new ValidationException( "Il campo PROGRESSIVO DOC.CONTABILE √® obbligatorio." );
 
 	// verifica sul campo IMPORTO
 	if ( ( getIm_sospeso() == null ) || getIm_sospeso().compareTo( new java.math.BigDecimal(0) ) <= 0 )
@@ -459,7 +459,7 @@ public void validate() throws ValidationException {
 
 	// verifica sul campo DATA REGISTRAZIONE
 	if ( (getDt_registrazione() == null ) )
-		throw new ValidationException( "Il campo DATA di REGISTRAZIONE Ë obbligatorio." );
+		throw new ValidationException( "Il campo DATA di REGISTRAZIONE √® obbligatorio." );
 
 	java.sql.Timestamp dataRegistrazione = getDt_registrazione();
 //	java.sql.Timestamp dataSistema = new java.sql.Timestamp(System.currentTimeMillis());
@@ -474,23 +474,23 @@ public void validate() throws ValidationException {
 	}		
 
 	if (dataRegistrazione.after(dataSistema))
-		throw new ValidationException( "Non Ë possibile inserire una data di registrazione posteriore a quella di sistema." );
+		throw new ValidationException( "Non √® possibile inserire una data di registrazione posteriore a quella di sistema." );
 
 	// verifica sul campo C/C - BANCA D'ITALIA
 	if ( (getTi_cc_bi() == null ) )
-		throw new ValidationException( "Il campo C/C-BANCA D'ITALIA Ë obbligatorio." );
+		throw new ValidationException( "Il campo C/C-BANCA D'ITALIA √® obbligatorio." );
 
 	// verifica sul campo TIPO
 	if ( (getTi_sospeso_riscontro() == null ) )
-		throw new ValidationException( "Il campo TIPO Ë obbligatorio." );
+		throw new ValidationException( "Il campo TIPO √® obbligatorio." );
 
 	// verifica sul campo ENTRATA/SPESA
 	if ( (getTi_entrata_spesa() == null ) )
-		throw new ValidationException( "Il campo ENTRATA/SPESA Ë obbligatorio." );
+		throw new ValidationException( "Il campo ENTRATA/SPESA √® obbligatorio." );
 
 	// verifica sul campo CODICE
 	if ( (getCd_sospeso() == null ) )
-		throw new ValidationException( "Il campo CODICE Ë obbligatorio." );
+		throw new ValidationException( "Il campo CODICE √® obbligatorio." );
 
 /*		spostato nella component
 if ( SospesoBulk.TI_SOSPESO.equals( getTi_sospeso_riscontro())	&&
@@ -511,14 +511,14 @@ if ( SospesoBulk.TI_SOSPESO.equals( getTi_sospeso_riscontro())	&&
 
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validateFiglio() throws ValidationException 
 {
 	if ( STATO_SOSP_ASS_A_CDS.equals( getStato_sospeso()) &&
 		  getCd_cds_origine() == null )
-		throw new ValidationException( "Per ogni dettaglio con stato 'assegnato a cds', deve essere specificato il Cds a cui Ë stato assegnato." );
+		throw new ValidationException( "Per ogni dettaglio con stato 'assegnato a cds', deve essere specificato il Cds a cui √® stato assegnato." );
 	if ( getIm_sospeso() == null )
 	{
 		setIm_sospeso( new BigDecimal(0));

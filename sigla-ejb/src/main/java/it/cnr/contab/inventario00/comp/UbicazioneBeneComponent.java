@@ -36,11 +36,11 @@ public class UbicazioneBeneComponent
   *    PostCondition:
   *      Viene lanciata una eccezione cche presenta un messaggio informativo all'utente.
   *
-  *  Ubicazione di default gi‡ esistente.
+  *  Ubicazione di default gi√† esistente.
   *    PreCondition:
   *      E' stata generata la richiesta di creazione di una Ubicazione associata alla UO di scrivania.
-  *		L'ubicazione Ë stata indicata come quella di default, (FL_UBICAZIONE_DEFAULT = 'Y'), ma
-  *		esiste gi‡, per la UO di scrivania, una ubicazione indicata come default.
+  *		L'ubicazione √® stata indicata come quella di default, (FL_UBICAZIONE_DEFAULT = 'Y'), ma
+  *		esiste gi√†, per la UO di scrivania, una ubicazione indicata come default.
   *    PostCondition:
   *      Viene lanciata una eccezione cche presenta un messaggio informativo all'utente.
   *
@@ -65,7 +65,7 @@ public OggettoBulk creaConBulk (UserContext aUC,OggettoBulk bulk) throws Compone
 		try{
 			Integer.parseInt(str);
 		} catch(NumberFormatException e){
-			throw new it.cnr.jada.comp.ComponentException(new it.cnr.jada.comp.ApplicationException("Attenzione: il codice proprio non puÚ contenere caratteri alfanumerici."));
+			throw new it.cnr.jada.comp.ComponentException(new it.cnr.jada.comp.ApplicationException("Attenzione: il codice proprio non pu√≤ contenere caratteri alfanumerici."));
 		}
 	}
 	
@@ -76,11 +76,11 @@ public OggettoBulk creaConBulk (UserContext aUC,OggettoBulk bulk) throws Compone
 
 	try{
 		// Si sta creando una Ubicazione indicata come quella di Default x la UO di scrivania,
-		//	ma in base dati esiste gi‡ una ubicazione con questa caratteristica, x la setssa UO.
+		//	ma in base dati esiste gi√† una ubicazione con questa caratteristica, x la setssa UO.
 		if (ubi.getFl_ubicazione_default().booleanValue() &&
 			findUbicazioneFittiziaFor(aUC) != null){
 			
-			throw new it.cnr.jada.comp.ComponentException(new it.cnr.jada.comp.ApplicationException("Attenzione: esiste gi‡ una ubicazione fittizia per questa Unita Organizzativa."));
+			throw new it.cnr.jada.comp.ComponentException(new it.cnr.jada.comp.ApplicationException("Attenzione: esiste gi√† una ubicazione fittizia per questa Unita Organizzativa."));
 		}
 	} catch (it.cnr.jada.persistency.PersistencyException pe){
 		throw handleException(pe);
@@ -96,9 +96,9 @@ public OggettoBulk creaConBulk (UserContext aUC,OggettoBulk bulk) throws Compone
 /** 
   *  L'Ubicazione ha delle Ubicazioni figlie
   *    PreCondition:
-  *      Si sta tentando di cancellare una Ubicazione che ha sotto di sË dei nodi figli.
+  *      Si sta tentando di cancellare una Ubicazione che ha sotto di s√® dei nodi figli.
   *    PostCondition:
-  *      Viene visualizzato un messaggio all'utente con che spiega la necessit‡ di cancellare 
+  *      Viene visualizzato un messaggio all'utente con che spiega la necessit√† di cancellare 
   *		tutti i nodi figli prima di cancellare il nodo padre.
   *
   *  Tutti i controlli superati.
@@ -117,7 +117,7 @@ public void eliminaConBulk (UserContext userContext,OggettoBulk bulk) throws Com
 		Ubicazione_beneHome ubiHome = (Ubicazione_beneHome)getHome(userContext,ubi);
 
 		// CNRADM (09/10/2002 17:03:25)
-		// Modificato perchË usa RemoteIterator in una componente.
+		// Modificato perch√® usa RemoteIterator in una componente.
 		//if(getChildren(userContext,ubi).hasMoreElements())
 		if (ubiHome.selectChildrenFor(userContext,ubi).executeExistsQuery(getConnection(userContext)))
 			throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: l'Ubicazione selezionata ha dei nodi figli. Eliminare prima tutti i figli.");
@@ -186,7 +186,7 @@ public RemoteIterator getChildren(UserContext userContext, OggettoBulk bulk) thr
   *    PreCondition:
   *      E' stata generata la richiesta di ricerca dell'Ubicazione padre dell'Ubicazione specificata negli argomenti.
   *    PostCondition:
-  *		 Viene restituito l'oggetto UbicazioneBulk che Ë l'Ubicazione padre cercata.
+  *		 Viene restituito l'oggetto UbicazioneBulk che √® l'Ubicazione padre cercata.
   *      
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -213,7 +213,7 @@ public OggettoBulk getParent(UserContext userContext, OggettoBulk bulk) throws C
   *    PreCondition:
   *      E' stata generata la richiesta di inizializzare una istanza di Ubicazione_beneBulk.
   *    PostCondition:
-  *      Vengono inizializzate le propriet‡ dell'Ubicazione_beneBulk e, l'oggetto risultante, viene restituito.
+  *      Vengono inizializzate le propriet√† dell'Ubicazione_beneBulk e, l'oggetto risultante, viene restituito.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta.
   * @param bulk <code>OggettoBulk</code> il bulk che deve essere inizializzato.
@@ -241,13 +241,13 @@ public OggettoBulk inizializzaBulkPerInserimento (
 /** 
   *  Controlla che l'ubicazione sia una foglia.
   *    PreCondition:
-  *      E' stata generata la richiesta di controllare se l'Ubicazione specificata Ë una foglia,
-  *		ossia se il suo livello Ë l'ultimo, (3). Questo implicherebbe che l'Ubicazione in 
-  *		questione non puÚ avere delle Ubicazioni figlie.
+  *      E' stata generata la richiesta di controllare se l'Ubicazione specificata √® una foglia,
+  *		ossia se il suo livello √® l'ultimo, (3). Questo implicherebbe che l'Ubicazione in 
+  *		questione non pu√≤ avere delle Ubicazioni figlie.
   *    PostCondition:
   *		 Viene restituito un valore booleano:
-  *			- true: l'Ubicazione Ë una foglia;
-  *			- false: l'Ubicazione non Ë una foglia.
+  *			- true: l'Ubicazione √® una foglia;
+  *			- false: l'Ubicazione non √® una foglia.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> l'Ubicazione di riferimento.
@@ -260,7 +260,7 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 		Ubicazione_beneHome ubiHome = (Ubicazione_beneHome)getHome(userContext,ubi);
 
 		// CNRADM (09/10/2002 17:03:25)
-		// Modificato perchË usa RemoteIterator in una componente.
+		// Modificato perch√® usa RemoteIterator in una componente.
 		//return ( (((Ubicazione_beneBulk)bulk).getLivello().intValue()==2) || 
 					//(getChildren(userContext, bulk).countElements() == 0) );
 		return ( ubi.getLivello().intValue()==2 ||
@@ -270,11 +270,11 @@ public boolean isLeaf(UserContext userContext, OggettoBulk bulk) throws Componen
 	}
 }
 /**
-  *  Ubicazione di default gi‡ esistente.
+  *  Ubicazione di default gi√† esistente.
   *    PreCondition:
   *      E' stata generata la richiesta di modifica di una Ubicazione associata alla UO di scrivania.
-  *		L'ubicazione Ë stata indicata come quella di default, (FL_UBICAZIONE_DEFAULT = 'Y'), ma
-  *		esiste gi‡, per la UO di scrivania, una ubicazione indicata come default.
+  *		L'ubicazione √® stata indicata come quella di default, (FL_UBICAZIONE_DEFAULT = 'Y'), ma
+  *		esiste gi√†, per la UO di scrivania, una ubicazione indicata come default.
   *    PostCondition:
   *      Viene lanciata una eccezione cche presenta un messaggio informativo all'utente.
   *
@@ -295,11 +295,11 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 	
 	try{
 		// Si sta modificando una Ubicazione indicata come quella di Default x la UO di scrivania,
-		//	ma in base dati esiste gi‡ una ubicazione con questa caratteristica, x la setssa UO.
+		//	ma in base dati esiste gi√† una ubicazione con questa caratteristica, x la setssa UO.
 		if (ubi.getFl_ubicazione_default().booleanValue() &&
 			findUbicazioneFittiziaFor(aUC) != null){
 			
-			throw new it.cnr.jada.comp.ComponentException(new it.cnr.jada.comp.ApplicationException("Attenzione: esiste gi‡ una ubicazione fittizia per questa Unita Organizzativa."));
+			throw new it.cnr.jada.comp.ComponentException(new it.cnr.jada.comp.ApplicationException("Attenzione: esiste gi√† una ubicazione fittizia per questa Unita Organizzativa."));
 		}
 	} catch (it.cnr.jada.persistency.PersistencyException pe){
 		throw handleException(pe);
@@ -315,7 +315,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
   *      E' stata generata la richiesta di ricercare una Ubicazione.
   *    PostCondition:
   *		E' stato creato il SQLBuilder con le clausole implicite (presenti nell'istanza di Ubicazione_beneBulk),
-  *		ed Ë stata aggiunta la clausola che l'Ubicazione sia associata alla UO di scrivania.
+  *		ed √® stata aggiunta la clausola che l'Ubicazione sia associata alla UO di scrivania.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
   * @param clauses <code>CompoundFindClause</code> le clausole della selezione.

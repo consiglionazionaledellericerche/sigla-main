@@ -149,7 +149,7 @@ public class Elemento_voceHome extends BulkHome implements ConsultazioniRestHome
 			return key;
 		int len = getLunghezzaChiave( appartenenza, gestione, tipoVoce );
 		if ( key.length() > len )
-			throw new ApplicationException( "Il codice non puÚ essere pi˘ lungo di " + len + " caratteri" );
+			throw new ApplicationException( "Il codice non pu√≤ essere pi√π lungo di " + len + " caratteri" );
 		return leftPadding(key, len);
 
 	}
@@ -202,9 +202,9 @@ public class Elemento_voceHome extends BulkHome implements ConsultazioniRestHome
 		return lunghezzeChiavi;
 	}
 	/**
-	 * Restituisce il valore della propriet‡ 'tipiPadre'
+	 * Restituisce il valore della propriet√† 'tipiPadre'
 	 *
-	 * @return Il valore della propriet‡ 'tipiPadre'
+	 * @return Il valore della propriet√† 'tipiPadre'
 	 */
 	public static java.util.Hashtable getTipiPadre()
 	{
@@ -329,7 +329,7 @@ public class Elemento_voceHome extends BulkHome implements ConsultazioniRestHome
 	 * Restituisce il SQLBuilder per selezionare i Titoli di Spesa del Cds
 	 * @param bulk bulk ricevente
 	 * @param home home del bulk su cui si cerca
-	 * @param bulkClause Ë l'istanza di bulk che ha indotto le clauses
+	 * @param bulkClause √® l'istanza di bulk che ha indotto le clauses
 	 * @param clause clause che arrivano dalle properties (form collegata al search tool)
 	 * @return it.cnr.jada.persistency.sql.SQLBuilder
 	 */
@@ -348,7 +348,7 @@ public class Elemento_voceHome extends BulkHome implements ConsultazioniRestHome
 	 * Restituisce il SQLBuilder per selezionare i Titoli di Spesa del Cnr
 	 * @param bulk bulk ricevente
 	 * @param home home del bulk su cui si cerca
-	 * @param bulkClause Ë l'istanza di bulk che ha indotto le clauses
+	 * @param bulkClause √® l'istanza di bulk che ha indotto le clauses
 	 * @param clause clause che arrivano dalle properties (form collegata al search tool)
 	 * @return it.cnr.jada.persistency.sql.SQLBuilder
 	 */

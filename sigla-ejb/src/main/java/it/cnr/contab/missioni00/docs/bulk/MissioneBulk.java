@@ -111,7 +111,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	private BigDecimal totaleRimborsoDelGiorno = new BigDecimal(0);
 	private BigDecimal totaleEsenteRimborsoDelGiorno = new BigDecimal(0);
 
-	//Unità Organizzativa
+	//UnitÃ  Organizzativa
 	private Unita_organizzativaBulk unitaOrganizzativa;
 
 	// Anagrafico
@@ -690,7 +690,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 			removeFromTappeMissioneColl(0);
 	}
 	/**
-	 * Il metodo verifica la validità del periodo (data e ora) di inizio e fine missione.
+	 * Il metodo verifica la validitÃ  del periodo (data e ora) di inizio e fine missione.
 	 * - la data inzio deve essere antecedente a quella di fine
 	 * - la data inzio deve essere diversa da quella di fine
 	 * - la durata della missione non puo' essere superiore ai sei mesi
@@ -831,7 +831,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 			return;
 
 		// 	Se scopro, che la scadenza da sostituire appartiene alla stessa obbligazione
-		//	della nuova scadenza, devo sincronizzarla perchè l'utente prima di riportare
+		//	della nuova scadenza, devo sincronizzarla perchÃ¨ l'utente prima di riportare
 		//	quella nuova potrebbe avermi modificato quella da sostituire (cioe' quella attulamente 
 		//	associata).
 		if(newScadenza.getObbligazione().equalsByPrimaryKey(getObbligazione_scadenzario().getObbligazione()))
@@ -897,7 +897,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	}
 	/**
 	 * Il metodo ritorna l'eventuale anticipo associato ad una missione gia' esistente 
-	 * che si sta per modificare. Tale anticipo viene salvato in questa proprietà perche'
+	 * che si sta per modificare. Tale anticipo viene salvato in questa proprietÃ  perche'
 	 * se l'utente dovesse associare un anticipo diverso occorre aggiornare il vecchio anticipo
 	 * (riplulire i campi relativi alla sua associazione con la missione)
 	 */
@@ -1026,14 +1026,14 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 
 	/**
 	 * Il metodo restituisce il valore dell'attributo 'collectionGiorni'
-	 * Tale proprietà contiene tutti i singoli giorni tra l'inizio e la fine della missione
+	 * Tale proprietÃ  contiene tutti i singoli giorni tra l'inizio e la fine della missione
 	 */
 	public java.util.Vector getCollectionGiorni() {
 		return collectionGiorni;
 	}
 	/**
 	 * Il metodo restituisce il valore dell'attributo 'collectionGiorniSpese'
-	 * Tale proprietà contiene tutti i singoli giorni tra l'inizio e la fine della missione,
+	 * Tale proprietÃ  contiene tutti i singoli giorni tra l'inizio e la fine della missione,
 	 * essa viene usata per la selezione del giorno della spesa
 	 */
 	public java.util.List getCollectionGiorniSpese() 
@@ -1246,7 +1246,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	/**
 	 * Il metodo inizializza l'importo della scadenza della obbligazione.
 	 * Se la missione non ha anticipo l'importo della scadenza e' pari a quello della missione.
-	 * Se la missione ha un anticipo l'importo della scadenza è pari  a quello della missione meno
+	 * Se la missione ha un anticipo l'importo della scadenza Ã¨ pari  a quello della missione meno
 	 * quello dell'anticipo
 	 */
 
@@ -1757,7 +1757,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	/**
 	 * Il metodo stabilisce se i dati relativi alla banca sono abilitati.
 	 * Abilitati :
-	 * - se la modalità di pagamento e' stata selezionata
+	 * - se la modalitÃ  di pagamento e' stata selezionata
 	 * - se l'eventuale compenso non e' stato pagato
 	 * - la missione non e' pagata (isEditable)
 	 * - se l'esercizio del documento e quello scrivania di scrivania sono diversi da quello solare 
@@ -1878,7 +1878,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	}
 	/**
 	 * Il metodo stabilisce se il compenso associato alla missione puo' essere modificato o meno.
-	 * Il compenso è modificabile se non e' ancora stato pagato (mandato / fondo)
+	 * Il compenso Ã¨ modificabile se non e' ancora stato pagato (mandato / fondo)
 	 */
 
 	public boolean isCompensoModificabile() throws it.cnr.jada.comp.ApplicationException
@@ -1908,8 +1908,8 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		return false;
 	}
 	/**
-	 * Il metodo stabilisce se l'utente può creare/modificare/cancellare una tappa.
-	 * L'operazione può essere effettuata se :
+	 * Il metodo stabilisce se l'utente puÃ² creare/modificare/cancellare una tappa.
+	 * L'operazione puÃ² essere effettuata se :
 	 * - la missione non ho associato alcun compenso pagato (con mandato o fondo)
 	 * - l'utente non ho ancora inserito alcun dettaglio di spesa
 	 * - l'utente non ho associato alcun anticipo rimborsato
@@ -1930,8 +1930,8 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		return true;	
 	}
 	/**
-	 * Il metodo stabilisce se l'utente può modificare la data fine missione.
-	 * La modifica può essere effettuata solo se l'eventuale compenso associato e' modificabile
+	 * Il metodo stabilisce se l'utente puÃ² modificare la data fine missione.
+	 * La modifica puÃ² essere effettuata solo se l'eventuale compenso associato e' modificabile
 	 * e se la missione non e' associata ad anticipo rimborsato
 	 */ 
 
@@ -1943,8 +1943,8 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 			throw new it.cnr.jada.comp.ApplicationException("Impossibile proseguire! La missione ha associato un anticipo rimborsato.");	
 	}
 	/**
-	 * Il metodo stabilisce se l'utente può modificare la data inizio missione.
-	 * La modifica può essere effettuata solo se l'eventuale compenso associato e' modificabile
+	 * Il metodo stabilisce se l'utente puÃ² modificare la data inizio missione.
+	 * La modifica puÃ² essere effettuata solo se l'eventuale compenso associato e' modificabile
 	 *	o se la missione non ha associato un anticipo gia' rimborsato
 	 */
 	public void isDataInizioModificabile() throws it.cnr.jada.comp.ApplicationException
@@ -1986,7 +1986,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		return !isPagata() && !isROPerChiusura();
 	}
 	/**
-	 * Il metodo ritorna TRUE se la missione è associata ad un anticipo di importo maggiore
+	 * Il metodo ritorna TRUE se la missione Ã¨ associata ad un anticipo di importo maggiore
 	 */
 	public boolean isImportoAnticipoMaggioreDiMissione() 
 	{
@@ -2024,8 +2024,8 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		return false;	
 	}
 	/**
-	 * Il metodo stabilisce se l'utente può creare/modificare/cancellare una spesa.
-	 * L'operazione uò essere effettuata se :
+	 * Il metodo stabilisce se l'utente puÃ² creare/modificare/cancellare una spesa.
+	 * L'operazione uÃ² essere effettuata se :
 	 * - non ho associato alcun compenso pagato (con mandato o fondo)
 	 * - non ho associato un anticipo rimborsato
 	 */
@@ -2040,8 +2040,8 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		return true;
 	}
 	/**
-	 * Il metodo stabilisce se l'utente può modificare il Tipo Istituzionale/commerciale
-	 * L'operazione uò essere effettuata se :
+	 * Il metodo stabilisce se l'utente puÃ² modificare il Tipo Istituzionale/commerciale
+	 * L'operazione uÃ² essere effettuata se :
 	 * - l'eventuale compenso associato e' modificabile
 	 * - la missione non ha associato un anticipo gia' rimborsato
 	 */
@@ -2056,7 +2056,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	/**
 	 * Il metodo stabilisce se visualizzare o meno la Labe 'Documento riportato' qundo
 	 * l'obbligazione associata alla missione e' riportata.
-	 * Potrebbe infatti capitare che la missione risulti riportata ma in realtà non ha obbligazione.
+	 * Potrebbe infatti capitare che la missione risulti riportata ma in realtÃ  non ha obbligazione.
 	 */
 
 	public boolean isLabelRiportoToShow() 
@@ -2938,7 +2938,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 				}		
 				else
 				{
-					// Estere - non è la prima nè l'ultima tappa
+					// Estere - non Ã¨ la prima nÃ¨ l'ultima tappa
 					if(	((tappaSuccessiva != null) && (tappaSuccessiva.getFl_comune_estero().booleanValue()) && (!(tappa.getDt_inizio_tappa().compareTo(data_fine_diaria_miss_estero)>0))) ||
 							((tappaPrecedente != null) && (tappaPrecedente.getFl_comune_estero().booleanValue())&& (!(tappa.getDt_inizio_tappa().compareTo(data_fine_diaria_miss_estero)>0))))
 					{

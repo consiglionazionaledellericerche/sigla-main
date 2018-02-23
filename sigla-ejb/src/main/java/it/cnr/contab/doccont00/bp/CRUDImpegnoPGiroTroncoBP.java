@@ -4,7 +4,7 @@ import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Impegno Partita di Giro Tronco.
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Impegno Partita di Giro Tronco.
  */
 public class CRUDImpegnoPGiroTroncoBP extends CRUDImpegnoPGiroBP {
 /**

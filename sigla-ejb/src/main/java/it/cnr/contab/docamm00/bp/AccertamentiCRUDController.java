@@ -51,14 +51,14 @@ public java.util.List getDetails() {
 	return lista;
 }
 /**
- * Restituisce true se è possibile aggiungere nuovi elementi
+ * Restituisce true se Ã¨ possibile aggiungere nuovi elementi
  */
 public boolean isGrowable() {
 	
 	return	super.isGrowable() && !((it.cnr.jada.util.action.CRUDBP)getParentController()).isSearching();
 }
 /**
- * Restituisce true se è possibile aggiungere nuovi elementi
+ * Restituisce true se Ã¨ possibile aggiungere nuovi elementi
  */
 public boolean isShrinkable() {
 

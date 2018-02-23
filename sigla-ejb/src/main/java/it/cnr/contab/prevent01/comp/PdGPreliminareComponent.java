@@ -109,22 +109,22 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 
 				// CONTROLLI
 				if (eseguiControlli) {
-					// solo l'UO 999.000 può avanzare lo stato a STATO_IN_ESAME_CDR e STATO_ESAMINATO_CDR
+					// solo l'UO 999.000 puÃ² avanzare lo stato a STATO_IN_ESAME_CDR e STATO_ESAMINATO_CDR
 					if (next.equals(Pdg_esercizioBulk.STATO_IN_ESAME_CDR)||
 						next.equals(Pdg_esercizioBulk.STATO_ESAMINATO_CDR)) {
 						Unita_organizzativaBulk uo = new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext));
 						uo = (Unita_organizzativaBulk) getHome(userContext,uo).findByPrimaryKey(uo);
 						Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class ).findAll().get(0);
 						if (!uoEnte.equalsByPrimaryKey(uo))
-							throw new ApplicationException( "Lo stato può essere aggiornato unicamente dalla UO "+uoEnte.getCd_unita_organizzativa());
+							throw new ApplicationException( "Lo stato puÃ² essere aggiornato unicamente dalla UO "+uoEnte.getCd_unita_organizzativa());
 					}
 		
-					// solo il direttore può progredire lo stato in uno dei seguenti
+					// solo il direttore puÃ² progredire lo stato in uno dei seguenti
 					if (next.equals(Pdg_esercizioBulk.STATO_CHIUSURA_CDR)||
 						next.equals(Pdg_esercizioBulk.STATO_APERTURA_GESTIONALE_CDR)||
 						next.equals(Pdg_esercizioBulk.STATO_CHIUSURA_GESTIONALE_CDR)) {
 						if (!UtenteBulk.isAbilitatoApprovazioneBilancio(userContext)) {
-							throw new ApplicationException( "Lo stato può essere aggiornato unicamente dal Direttore dell'Istituto");
+							throw new ApplicationException( "Lo stato puÃ² essere aggiornato unicamente dal Direttore dell'Istituto");
 						}
 					}
 				}
@@ -144,7 +144,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 					uo = (Unita_organizzativaBulk) getHome(userContext,uo).findByPrimaryKey(uo);
 					
 					/*
-					 * Il passaggio allo stato ESAMINATO_CDR può avvenire solo se l'Ente ha approvato definitivamente
+					 * Il passaggio allo stato ESAMINATO_CDR puÃ² avvenire solo se l'Ente ha approvato definitivamente
 					 * il Piano di Gestione.
 					 * Il controllo non deve essere effettuato per i CDS della SAC per i quali la contrattazione 
 					 * viene automaticamente alimentata
@@ -152,12 +152,12 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 					/*
 					if (!pcnr.getFl_approvato_definitivo() &&
 					    !pdg_esercizio.getCdr().getUnita_padre().getCd_tipo_unita().equalsIgnoreCase( it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC ))
-						throw new ApplicationException( "Lo stato non può essere aggiornato poichè il PDGP non risulta definitivamente approvato.");
+						throw new ApplicationException( "Lo stato non puÃ² essere aggiornato poichÃ¨ il PDGP non risulta definitivamente approvato.");
 					*/
 					// controlliamo che le righe di pdg_modulo siano tutte CC
 					List listaModuli = findPdgModulo(userContext, pdg_esercizio, Pdg_moduloBulk.STATO_CC );
 					if (!listaModuli.isEmpty())
-						throw new ApplicationException( "Lo stato non può essere aggiornato poichè non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_CC);
+						throw new ApplicationException( "Lo stato non puÃ² essere aggiornato poichÃ¨ non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_CC);
 										
 					controllaImportiFontiEsterneApprovate(userContext, pdg_esercizio);
 					aggiungiModuliContrattazione(userContext, pdg_esercizio);
@@ -184,7 +184,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 					// controlliamo che le righe di pdg_modulo siano tutte CC
 					List listaModuli = findPdgModulo(userContext, pdg_esercizio, Pdg_moduloBulk.STATO_CC );
 					if (!listaModuli.isEmpty())
-						throw new ApplicationException( "Lo stato non può essere aggiornato poichè non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_CC);
+						throw new ApplicationException( "Lo stato non puÃ² essere aggiornato poichÃ¨ non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_CC);
 										
 					controllaPianoRiparto(userContext, pdg_esercizio, false);
 					//viene richiamata la procedura, il controllo viene fatto nel package
@@ -199,7 +199,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 					// controlliamo che le righe di pdg_modulo siano tutte CC
 					List listaModuli = findPdgModulo(userContext, pdg_esercizio, Pdg_moduloBulk.STATO_CC );
 					if (!listaModuli.isEmpty())
-						throw new ApplicationException( "Lo stato non può essere aggiornato poichè non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_CC);
+						throw new ApplicationException( "Lo stato non puÃ² essere aggiornato poichÃ¨ non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_CC);
 										
 					controllaPianoRiparto(userContext, pdg_esercizio, false);
 
@@ -226,18 +226,18 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 					// controlliamo che i moduli in pdg_modulo abbiano stato approvato
 					List listaModuliNA = findPdgModuloAttivitaNonApprovati(userContext, pdg_esercizio );
 					if (!listaModuliNA.isEmpty())
-						throw new ApplicationException( "Lo stato non può essere aggiornato poichè esistono righe del PdGP con moduli di attività con stato NON APPROVATO");
+						throw new ApplicationException( "Lo stato non puÃ² essere aggiornato poichÃ¨ esistono righe del PdGP con moduli di attivitÃ  con stato NON APPROVATO");
 
 					// controlliamo che le righe di pdg_modulo siano tutte AP
 					List listaModuli = findPdgModulo(userContext, pdg_esercizio, Pdg_moduloBulk.STATO_AP );
 					if (!listaModuli.isEmpty())
-						throw new ApplicationException( "Lo stato non può essere aggiornato poichè non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_AP);
+						throw new ApplicationException( "Lo stato non puÃ² essere aggiornato poichÃ¨ non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_AP);
 
 					controllaStatoPianoRiparto(userContext, pdg_esercizio);
 					
 					controllaPianoRiparto(userContext, pdg_esercizio, true);
 					
-					// disabilitato poichè dovrebbe farlo una procedura di stani
+					// disabilitato poichÃ¨ dovrebbe farlo una procedura di stani
 					//aggiornaSpeseAccentrate(userContext, pdg_esercizio);
 
 				}
@@ -249,7 +249,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 					// controlliamo che le righe di pdg_modulo siano tutte AP
 					List listaModuli = findPdgModulo(userContext, pdg_esercizio, Pdg_moduloBulk.STATO_AP );
 					if (!listaModuli.isEmpty())
-						throw new ApplicationException( "Lo stato non può essere aggiornato poichè non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_AP);
+						throw new ApplicationException( "Lo stato non puÃ² essere aggiornato poichÃ¨ non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_AP);
 										
 					// aggiorniamo le righe di pdg_modulo in AG
 					BulkHome home = getHome(userContext,Pdg_moduloBulk.class);
@@ -273,7 +273,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 					// controlliamo che le righe di pdg_modulo siano tutte CG
 					List listaModuli = findPdgModulo(userContext, pdg_esercizio, Pdg_moduloBulk.STATO_CG);
 					if (!listaModuli.isEmpty())
-						throw new ApplicationException( "Lo stato non può essere aggiornato poichè non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_CG);
+						throw new ApplicationException( "Lo stato non puÃ² essere aggiornato poichÃ¨ non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_CG);
 										
 					// aggiorniamo le righe di pdg_modulo in CG
 					BulkHome home = getHome(userContext,Pdg_moduloBulk.class);
@@ -473,7 +473,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 
 	/**
 	 * Controlla che esistono testate in pdg_modulo per il CdR di pdg_esercizio, il
-	 * cui modulo di attività non è stato ancora approvato (STATO!=A)
+	 * cui modulo di attivitÃ  non Ã¨ stato ancora approvato (STATO!=A)
 	 * 
 	 * @param userContext
 	 * @param pdg_esercizio
@@ -509,19 +509,19 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 
 				Pdg_esercizioHome pdg_esercizioHome = (Pdg_esercizioHome) getHome(userContext,pdg_esercizio);
 	
-				// solo l'UO 999.000 può regredire lo stato in STATO_PRECHIUSURA_CDR
+				// solo l'UO 999.000 puÃ² regredire lo stato in STATO_PRECHIUSURA_CDR
 				if (prev.equals(Pdg_esercizioBulk.STATO_PRECHIUSURA_CDR)) {
 					Unita_organizzativaBulk uo = new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext));
 					uo = (Unita_organizzativaBulk) getHome(userContext,uo).findByPrimaryKey(uo);
 					Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class ).findAll().get(0);
 					if (!uoEnte.equalsByPrimaryKey(uo))
-						throw new ApplicationException( "Lo stato può essere aggiornato unicamente dalla UO "+uoEnte.getCd_unita_organizzativa());
+						throw new ApplicationException( "Lo stato puÃ² essere aggiornato unicamente dalla UO "+uoEnte.getCd_unita_organizzativa());
 				}
 	
-				// solo il direttore può regredire lo stato in STATO_APERTURA_CDR
+				// solo il direttore puÃ² regredire lo stato in STATO_APERTURA_CDR
 				if (prev.equals(Pdg_esercizioBulk.STATO_APERTURA_CDR)) {
 					if (!UtenteBulk.isAbilitatoApprovazioneBilancio(userContext)) {
-						throw new ApplicationException( "Lo stato può essere aggiornato unicamente dal Direttore dell'Istituto");
+						throw new ApplicationException( "Lo stato puÃ² essere aggiornato unicamente dal Direttore dell'Istituto");
 					}
 				}
 				//viene richiamata la procedura, il controllo viene fatto nel package
@@ -562,7 +562,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 	public CdrBulk findCdrUo(UserContext userContext) throws ComponentException {
 		try
 		{
-			// uso createSQLBuilderEsteso perchè il metodo createSQLBuilder filtra alcune cose
+			// uso createSQLBuilderEsteso perchÃ¨ il metodo createSQLBuilder filtra alcune cose
 			SQLBuilder sql = ((CdrHome)getHome(userContext, CdrBulk.class)).createSQLBuilderEsteso();
 			sql.addTableToHeader("UNITA_ORGANIZZATIVA");
 			sql.addSQLJoin("CDR.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
@@ -597,19 +597,19 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 				BigDecimal impAssegnato = pr.getImporto_assegnato();
 
 				if (bDefinitivo) {
-					// se la chiusura è definitiva il valore nullo
+					// se la chiusura Ã¨ definitiva il valore nullo
 					// dell'importo assegnato lo assililiamo a zero
 					if (impAssegnato==null)
 						impAssegnato=new BigDecimal(0);
 
 					if (impRipartito.compareTo(impAssegnato)!=0)
-						throw new ApplicationException("L'importo ripartito è diverso dall'importo assegnato nei piani di riparto.\nImpossibile procedere alla chiusura del dettaglio del PdGP.");
+						throw new ApplicationException("L'importo ripartito Ã¨ diverso dall'importo assegnato nei piani di riparto.\nImpossibile procedere alla chiusura del dettaglio del PdGP.");
 				}
 				else {
-					// se la chiusara non è definitiva per il valore nullo
+					// se la chiusara non Ã¨ definitiva per il valore nullo
 					// dell'importo assegnato  il controllo va saltato
 					if (impAssegnato!=null && impRipartito.compareTo(impAssegnato)!=0)
-						throw new ApplicationException("L'importo ripartito è diverso dall'importo assegnato nei piani di riparto.\nImpossibile procedere alla chiusura del dettaglio del PdGP.");
+						throw new ApplicationException("L'importo ripartito Ã¨ diverso dall'importo assegnato nei piani di riparto.\nImpossibile procedere alla chiusura del dettaglio del PdGP.");
 				}
 			}
 
@@ -769,7 +769,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 			DipartimentoBulk dipartimento = createProgettoRicercaModuloComponentSession().getDipartimentoModulo(userContext, progetto);
 
 			if ( dipartimento==null)
-				throw new ApplicationException( "Non è stato possibile individuare il dipartimento associato al modulo " + progetto.getCd_progetto());
+				throw new ApplicationException( "Non Ã¨ stato possibile individuare il dipartimento associato al modulo " + progetto.getCd_progetto());
 
 			CdsHome areahome = (CdsHome)getHome(userContext, CdsBulk.class);
 			CdsBulk area = (CdsBulk)areahome.findByPrimaryKey(new CdsBulk(cds));
@@ -1260,7 +1260,7 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 							Elemento_voceHome home_voce =(Elemento_voceHome)getHome(userContext,Elemento_voceBulk.class);
 							java.util.List voci=home_voce.fetchAll(sql_voce);
 							if(voci.size() >1)// non dovrebbe capitare mai
-								throw new ApplicationException("Esistono più voci sulla stessa classificazione.");
+								throw new ApplicationException("Esistono piÃ¹ voci sulla stessa classificazione.");
 
 								for(Iterator i=voci.iterator();i.hasNext();){
 									Elemento_voceBulk ev = (Elemento_voceBulk)i.next();
@@ -1272,8 +1272,8 @@ public class PdGPreliminareComponent extends it.cnr.jada.comp.CRUDComponent impl
 					// se non ci sono entrate soggette a prelievo bisogna fare lo stesso il controllo
 					if(impTotaleEntrateDaPrel.compareTo(BigDecimal.ZERO)!=0)
 						if(impTotaleEntrateDaPrel.compareTo(impTotaleSpesePrel)!=0)
-							throw new ApplicationException("Per il " + labelProgetto + " "+ pdg.getCd_progetto()+" il contributo per l'attività ordinaria è pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
-									". Impossibile salvare, poichè è stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
+							throw new ApplicationException("Per il " + labelProgetto + " "+ pdg.getCd_progetto()+" il contributo per l'attivitÃ  ordinaria Ã¨ pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
+									". Impossibile salvare, poichÃ¨ Ã¨ stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
 				}	
 				if (parametriCnr.getFl_pdg_quadra_fonti_esterne() && impTotaleSpese.compareTo(impTotaleEntrate)!=0){
 					if ( cds!=null ) {

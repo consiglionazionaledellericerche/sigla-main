@@ -915,7 +915,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
             throws it.cnr.jada.action.BusinessProcessException {
 
         if (isDirty()) {
-            setMessage("Il documento è stato modificato! Operazione annullata.");
+            setMessage("Il documento Ã¨ stato modificato! Operazione annullata.");
             return;
         }
 
@@ -982,7 +982,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         } catch (BusinessProcessException e) {
             rollbackToSavePoint(context,
                     IDocumentoAmministrativoBulk.RIPORTA_AVANTI);
-            // Il setModel è necessario perchè update setta il modello. se
+            // Il setModel Ã¨ necessario perchÃ¨ update setta il modello. se
             // riportaAvanti fallisce il pg_ver_rec
             // rimane disallineato.
             setModel(context, fpClone);
@@ -1070,7 +1070,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
 
     /**
      * Validazione dell'obbligazione in fase di creazione di una nuova
-     * obbligazione o modifica di una già creata. Il metodo viene chiamato sul
+     * obbligazione o modifica di una giÃ  creata. Il metodo viene chiamato sul
      * riporta dell'Obbligazione in modo da validare istantaneamente l'oggetto
      * creato. Chi non ne ha bisogno lo lasci vuoto.
      **/
@@ -1158,7 +1158,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                 return;
             if (documento.getStato_cofi() != null
                     && documento.getStato_cofi().equals(documento.STATO_PAGATO))
-                setMessage("Non è possibile sdoppiare righe in un documento pagato.");
+                setMessage("Non Ã¨ possibile sdoppiare righe in un documento pagato.");
             if (dettaglioSelezionato.getIm_riga_sdoppia() == null
                     || dettaglioSelezionato.getIm_riga_sdoppia().equals(
                     Utility.ZERO)
@@ -1316,7 +1316,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                 if (nuovoDettaglio.isInventariato()) {
 
                     // r.p. Prendo il progressivo dalla fattura_passivaBulk
-                    // perchè viene aggiornato
+                    // perchÃ¨ viene aggiornato
                     BuonoCaricoScaricoComponentSession r = (it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
                             .createEJB(
                                     "CNRINVENTARIO01_EJB_BuonoCaricoScaricoComponentSession",
@@ -1350,11 +1350,11 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     }
 
     /**
-     * Boolean individua le condizioni per cui è possibile sdoppiare i dettagli
+     * Boolean individua le condizioni per cui Ã¨ possibile sdoppiare i dettagli
      * del documento
      * <p>
      * false: - se annullato - se eliminato - se interamente incassato - se,
-     * indipendentemente dall'anno, è stata riportata all'esercizio successivo -
+     * indipendentemente dall'anno, Ã¨ stata riportata all'esercizio successivo -
      * se non di anno corrente e non riportata all'esercizio successivo
      *
      * @return Returns the isDetailDoubleable.
@@ -1411,7 +1411,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         }
     }
 
-    /* spostata nel component perchè chiamata nell'inizializza
+    /* spostata nel component perchÃ¨ chiamata nell'inizializza
     private java.sql.Timestamp getDataInizioFatturazioneElettronica(it.cnr.jada.action.ActionContext context) throws BusinessProcessException {
         try{
         return  Utility.createConfigurazioneCnrComponentSession().getDt01(context.getUserContext(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()), null, Configurazione_cnrBulk.PK_FATTURAZIONE_ELETTRONICA, Configurazione_cnrBulk.SK_PASSIVA);
@@ -1450,7 +1450,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     }
 
     /**
-     * Il metodo è stato sovrascritto per consentire all'utente di modificare lo
+     * Il metodo Ã¨ stato sovrascritto per consentire all'utente di modificare lo
      * stato della liquidazione quando il documento non risulta essere
      * modificabile
      */

@@ -31,18 +31,18 @@ public java.lang.String getDs_cds() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'tipoGestione'
+ * Restituisce il valore della propriet√† 'tipoGestione'
  *
- * @return Il valore della propriet‡ 'tipoGestione'
+ * @return Il valore della propriet√† 'tipoGestione'
  */
 public java.lang.String getTipoGestione() {
 	return tipoGestione;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'totAccertatoMenoAccreditato'
+ * Restituisce il valore della propriet√† 'totAccertatoMenoAccreditato'
  *
- * @return Il valore della propriet‡ 'totAccertatoMenoAccreditato'
+ * @return Il valore della propriet√† 'totAccertatoMenoAccreditato'
  */
 public BigDecimal getTotAccertatoMenoAccreditato() 
 {
@@ -53,9 +53,9 @@ public BigDecimal getTotAccertatoMenoAccreditato()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'totAccreditato'
+ * Restituisce il valore della propriet√† 'totAccreditato'
  *
- * @return Il valore della propriet‡ 'totAccreditato'
+ * @return Il valore della propriet√† 'totAccreditato'
  */
 public BigDecimal getTotAccreditato() 
 {
@@ -66,9 +66,9 @@ public BigDecimal getTotAccreditato()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'totIncassatoMenoAccreditato'
+ * Restituisce il valore della propriet√† 'totIncassatoMenoAccreditato'
  *
- * @return Il valore della propriet‡ 'totIncassatoMenoAccreditato'
+ * @return Il valore della propriet√† 'totIncassatoMenoAccreditato'
  */
 public BigDecimal getTotIncassatoMenoAccreditato() 
 {
@@ -113,7 +113,7 @@ public void setDs_cds(java.lang.String newDs_cds) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'tipoGestione'
+ * Imposta il valore della propriet√† 'tipoGestione'
  *
  * @param newTipoGestione	Il valore da assegnare a 'tipoGestione'
  */

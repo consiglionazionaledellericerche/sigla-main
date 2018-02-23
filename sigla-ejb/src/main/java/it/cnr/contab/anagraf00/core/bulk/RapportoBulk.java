@@ -37,7 +37,7 @@ public RapportoBulk(java.lang.Integer cd_anag,java.lang.String cd_tipo_rapporto,
 
 	public int addToInquadramenti(InquadramentoBulk inquadramento) throws ValidationException {
 		if (getDt_ini_validita() == null || getDt_fin_validita() == null)
-			throw new ValidationException("E' prima necessario impostare il periodo di validit‡ del rapporto");
+			throw new ValidationException("E' prima necessario impostare il periodo di validit√† del rapporto");
 		java.util.Calendar cal = java.util.Calendar.getInstance();
 		if (inquadramenti.isEmpty()) {
 			inquadramento.setDt_ini_validita(getDt_ini_validita());
@@ -62,7 +62,7 @@ public void fetchedFrom(Broker broker) throws it.cnr.jada.persistency.Introspect
 	setDt_fin_validita_originale(getDt_fin_validita());
 }
 	/**
-	 * Restituisce l'<code>AnagraficoBulk</code> a cui l'oggetto Ë correlato.
+	 * Restituisce l'<code>AnagraficoBulk</code> a cui l'oggetto √® correlato.
 	 *
 	 * @return it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk
 	 *
@@ -116,7 +116,7 @@ public java.sql.Timestamp getDt_fin_validita_originale() {
 		return inquadramenti;
 	}
 	/**
-	 * Restituisce l'<code>Tipo_rapportoBulk</code> a cui l'oggetto Ë correlato.
+	 * Restituisce l'<code>Tipo_rapportoBulk</code> a cui l'oggetto √® correlato.
 	 *
 	 * @return it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk
 	 *
@@ -153,7 +153,7 @@ public java.sql.Timestamp getDt_fin_validita_originale() {
 		return (InquadramentoBulk)inquadramenti.remove(index);
 	}
 	/**
-	 * Imposta l'<code>AnagraficoBulk</code> a cui l'oggetto Ë correlato.
+	 * Imposta l'<code>AnagraficoBulk</code> a cui l'oggetto √® correlato.
 	 *
 	 * @param newAnagrafico Anagrafica di riferimento.
 	 *
@@ -190,7 +190,7 @@ public void setDt_fin_validita_originale(java.sql.Timestamp newDt_fin_validita_o
 		inquadramenti = newInquadramenti;
 	}
 	/**
-	 * Imposta l'<code>Tipo_rapportoBulk</code> a cui l'oggetto Ë correlato.
+	 * Imposta l'<code>Tipo_rapportoBulk</code> a cui l'oggetto √® correlato.
 	 *
 	 * @param newTipo_rapporto il tipo di rapporto.
 	 *

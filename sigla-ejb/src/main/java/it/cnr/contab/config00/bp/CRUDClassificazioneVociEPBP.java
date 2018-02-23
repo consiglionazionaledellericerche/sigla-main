@@ -297,7 +297,7 @@ public class CRUDClassificazioneVociEPBP extends SimpleCRUDBP {
 
 	/*
 	 * E' stato selezionato un livello diverso da quello precedentemente memorizzato (il focus del 
-	 * controller Ë diverso da quello memorizzato nel Bulk) vengono annullati tutti i riferimenti 
+	 * controller √® diverso da quello memorizzato nel Bulk) vengono annullati tutti i riferimenti 
 	 * memorizzati nel BP ai Bulk e focus dei livelli successivi.
 	 * Se si naviga dalla Tab1 il processo di annullamento avviene solo se cambia il model del BP
 	 **/
@@ -333,11 +333,11 @@ public class CRUDClassificazioneVociEPBP extends SimpleCRUDBP {
 	}
 
 	/**
-	 * 	E' stata generata la richiesta di cercare la Classificazione che sar‡ nodo padre della Classificazione
+	 * 	E' stata generata la richiesta di cercare la Classificazione che sar√† nodo padre della Classificazione
 	 *	che si sta creando.
 	 *  Il metodo restituisce un Iteratore che permette di navigare tra le Classificazioni passando
 	 *	da un livello ai suoi nodi figli e viceversa. Il metodo isLeaf, permette di definire un 
-	 *	"livello foglia", il livello, cioË, che non ha nodi sotto di esso.
+	 *	"livello foglia", il livello, cio√®, che non ha nodi sotto di esso.
 	 *
 	 * @param context la <code>ActionContext</code> che ha generato la richiesta
 	 *

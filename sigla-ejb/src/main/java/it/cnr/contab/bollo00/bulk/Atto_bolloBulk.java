@@ -3,6 +3,7 @@ package it.cnr.contab.bollo00.bulk;
 import java.util.Optional;
 
 import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
@@ -14,7 +15,10 @@ public class Atto_bolloBulk extends Atto_bolloBase implements AllegatoParentBulk
 
 	private Unita_organizzativaBulk unitaOrganizzativa;
 	private Tipo_atto_bolloBulk tipoAttoBollo;
+	private ContrattoBulk contratto = new ContrattoBulk();	
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
+	
+	private boolean flContrattoRegistrato = Boolean.FALSE;
 	
 	public Atto_bolloBulk() {
 		super();
@@ -99,5 +103,45 @@ public class Atto_bolloBulk extends Atto_bolloBase implements AllegatoParentBulk
 	
 	public void setCdTipoAttoBollo(String cdTipoAttoBollo) {
 		Optional.ofNullable(getTipoAttoBollo()).ifPresent(el->el.setCodice(cdTipoAttoBollo));
+	}
+	
+	public ContrattoBulk getContratto() {
+		return contratto;
+	}
+	
+	public void setContratto(ContrattoBulk contratto) {
+		this.contratto = contratto;
+	}
+	
+ 	public java.lang.Integer getEsercizio_contratto() {
+		return Optional.ofNullable(this.getContratto()).map(ContrattoBulk::getEsercizio).orElse(null);
+	}
+
+	public void setEsercizio_contratto(java.lang.Integer esercizio) {
+		Optional.ofNullable(getContratto()).ifPresent(el->el.setEsercizio(esercizio));
+	}
+
+	public java.lang.String getStato_contratto() {
+		return Optional.ofNullable(this.getContratto()).map(ContrattoBulk::getStato).orElse(null);
+	}
+
+	public void setStato_contratto(java.lang.String stato) {
+		Optional.ofNullable(getContratto()).ifPresent(el->el.setStato(stato));
+	}
+
+	public java.lang.Long getPg_contratto() {
+		return Optional.ofNullable(this.getContratto()).map(ContrattoBulk::getPg_contratto).orElse(null);
+	}
+
+	public void setPg_contratto(java.lang.Long pg_contratto) {
+		Optional.ofNullable(getContratto()).ifPresent(el->el.setPg_contratto(pg_contratto));
+	}
+	
+	public boolean isFlContrattoRegistrato() {
+		return flContrattoRegistrato;
+	}
+	
+	public void setFlContrattoRegistrato(boolean flContrattoRegistrato) {
+		this.flContrattoRegistrato = flContrattoRegistrato;
 	}
 }

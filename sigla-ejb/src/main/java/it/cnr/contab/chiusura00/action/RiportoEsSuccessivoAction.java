@@ -83,7 +83,7 @@ public it.cnr.jada.action.Forward  doCercaDocDaRiportare( it.cnr.jada.action.Act
 			if(bp.isCdsRibaltato(context)) 
 				bp.setMessage("La ricerca non ha fornito alcun risultato.");
 			else {
-				return openConfirm(context,"La ricerca non ha fornito alcun risultato. Si vuole procedere con il ribaltamento delle disponibilit‡ residue?",OptionBP.CONFIRM_YES_NO,"doConfermaRibaltamento");
+				return openConfirm(context,"La ricerca non ha fornito alcun risultato. Si vuole procedere con il ribaltamento delle disponibilit√† residue?",OptionBP.CONFIRM_YES_NO,"doConfermaRibaltamento");
 			}
 //			bp.setMessage("La ricerca non ha fornito alcun risultato.");
 			return context.findDefaultForward();
@@ -185,7 +185,7 @@ public Forward doConfermaRibaltamento(ActionContext context,int option) throws B
 			bp.setMessage("E' stato effettuato il ribaltamento");
 		}
 		if (option == OptionBP.NO_BUTTON) 
-			bp.setMessage("Non Ë stato effettuato il ribaltamento");
+			bp.setMessage("Non √® stato effettuato il ribaltamento");
 				
 		return context.findDefaultForward();
 	} 

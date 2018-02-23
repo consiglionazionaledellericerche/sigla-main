@@ -20,25 +20,25 @@ public LiquidazioneIvaBP(String function) {
 }
 
 /**
- * Restituisce il valore della propriet‡ 'dettaglio'
+ * Restituisce il valore della propriet√† 'dettaglio'
  *
- * @return Il valore della propriet‡ 'dettaglio'
+ * @return Il valore della propriet√† 'dettaglio'
  */
 public final CompoundPropertyController getDettaglio() {
 	return dettaglio;
 }
 
 /**
- * Restituisce il valore della propriet‡ 'liquidato'
+ * Restituisce il valore della propriet√† 'liquidato'
  *
- * @return Il valore della propriet‡ 'liquidato'
+ * @return Il valore della propriet√† 'liquidato'
  */
 public boolean isLiquidato() {
 	return liquidato;
 }
 
 /**
- * Imposta il valore della propriet‡ 'liquidato'
+ * Imposta il valore della propriet√† 'liquidato'
  *
  * @param newLiquidato	Il valore da assegnare a 'liquidato'
  */

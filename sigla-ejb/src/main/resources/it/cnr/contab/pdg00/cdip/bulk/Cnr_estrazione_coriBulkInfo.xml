@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo>
 	<fieldProperty
 		name="cd_cds"
@@ -48,7 +48,7 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		label="1 = missioni 2 = altri pagamenti 3 = attività convenzione SSN (solo Pisa)" />
+		label="1 = missioni 2 = altri pagamenti 3 = attivitÃ  convenzione SSN (solo Pisa)" />
 	<fieldProperty
 		name="esercizio_compenso"
 		property="esercizio_compenso"

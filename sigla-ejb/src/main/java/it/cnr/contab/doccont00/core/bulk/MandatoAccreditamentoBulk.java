@@ -87,18 +87,18 @@ public java.lang.String getCodice_cds() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'fl_imputazione_manuale'
+ * Restituisce il valore della propriet√† 'fl_imputazione_manuale'
  *
- * @return Il valore della propriet‡ 'fl_imputazione_manuale'
+ * @return Il valore della propriet√† 'fl_imputazione_manuale'
  */
 public boolean getFl_imputazione_manuale() {
 	return fl_imputazione_manuale;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_righe_mandato'
+ * Restituisce il valore della propriet√† 'im_righe_mandato'
  *
- * @return Il valore della propriet‡ 'im_righe_mandato'
+ * @return Il valore della propriet√† 'im_righe_mandato'
  */
 public java.math.BigDecimal getIm_righe_mandato() {
 	java.math.BigDecimal tot = new java.math.BigDecimal( 0 );
@@ -185,7 +185,7 @@ public void setBancaOptions(java.util.List newBancaOptions) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'codice_cds'
+ * Imposta il valore della propriet√† 'codice_cds'
  *
  * @param newCodice_cds	Il valore da assegnare a 'codice_cds'
  */
@@ -194,7 +194,7 @@ public void setCodice_cds(java.lang.String newCodice_cds) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'fl_imputazione_manuale'
+ * Imposta il valore della propriet√† 'fl_imputazione_manuale'
  *
  * @param newFl_imputazione_manuale	Il valore da assegnare a 'fl_imputazione_manuale'
  */
@@ -228,7 +228,7 @@ public void setModalita_pagamentoOptions(java.util.List newModalita_pagamentoOpt
 	modalita_pagamentoOptions = newModalita_pagamentoOptions;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
@@ -238,17 +238,17 @@ public void validate() throws ValidationException {
 		((MandatoAccreditamento_rigaBulk) i.next()).validate();					
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validateNuovoImpegno( V_impegnoBulk impegno) throws ValidationException
 {
-	// verifico che l'impegno non sia gi‡ presente fra le righe del mandato
+	// verifico che l'impegno non sia gi√† presente fra le righe del mandato
 	for ( Iterator i = getMandato_rigaColl().iterator(); i.hasNext(); )
 	{
 		MandatoAccreditamento_rigaBulk riga = (MandatoAccreditamento_rigaBulk) i.next();
 		if ( riga.getImpegno().equalsByPrimaryKey( impegno ))
-		 	 throw new ValidationException( "L'impegno selezionato e' gi‡ presente nel mandato");
+		 	 throw new ValidationException( "L'impegno selezionato e' gi√† presente nel mandato");
 	}
 
 }	

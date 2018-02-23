@@ -16,7 +16,7 @@ public interface IScaglioneMgr extends ICRUDMgr{
  * Pre-post-conditions:
  *
  * Nome: Nessuno scaglione aggiunto alla lista
- * Pre:  E' stato richiesto l'inserimento di uno scaglione che NON è stato aggiunto alla lista
+ * Pre:  E' stato richiesto l'inserimento di uno scaglione che NON Ã¨ stato aggiunto alla lista
  * Post: Viene generata una eccezione con la descrizione dell'errore
  *			- "Inserire gli scaglioni" -
  *
@@ -69,7 +69,7 @@ public abstract void eliminaConBulk (UserContext userContext,OggettoBulk bulk) t
  * Pre: L'OggettoBulk specificato esiste.
  * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
  *		 per l'operazione di presentazione e modifica nell'interfaccia visuale.
- *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome è
+ *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ã¨
  *		 ottenuto concatenando il nome della component con la stringa ".edit"
  * 
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -87,12 +87,12 @@ public abstract OggettoBulk inizializzaBulkPerModifica(UserContext userContext, 
  *
  * Pre-post-conditions
  *
- * Nome: L'intervallo in processo è l'ultimo intervallo esistente
- * Pre: La data di inizio validità dell'intervallo in processo >= della massima data di inizio di intervalli
+ * Nome: L'intervallo in processo Ã¨ l'ultimo intervallo esistente
+ * Pre: La data di inizio validitÃ  dell'intervallo in processo >= della massima data di inizio di intervalli
  * Post: Viene ritornato TRUE
  *
- * Nome: L'intervallo in processo non è l'ultimo intervallo esistente
- * Pre: La data di inizio validità dell'intervallo in processo < della massima data di inizio di intervalli
+ * Nome: L'intervallo in processo non Ã¨ l'ultimo intervallo esistente
+ * Pre: La data di inizio validitÃ  dell'intervallo in processo < della massima data di inizio di intervalli
  * Post: Viene ritornato FALSE
  *
 */
@@ -112,8 +112,8 @@ public abstract boolean isUltimoIntervallo(UserContext userContext, ScaglioneBul
  *
  * Nome: Modifica di intervallo avente la data INIZIO validita <= alla data odierna
  * Pre: Viene richiesta una modifica di uno scaglione avente la data inizio validita precedente alla data odierna
- * Post: La data di fine validità dello scaglione corrente viene posta = data odierna
- *       Viene creato il nuovo scaglione con data di inizio validità = alla data odierna + 1
+ * Post: La data di fine validitÃ  dello scaglione corrente viene posta = data odierna
+ *       Viene creato il nuovo scaglione con data di inizio validitÃ  = alla data odierna + 1
  *
 **/
 public abstract OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException ;

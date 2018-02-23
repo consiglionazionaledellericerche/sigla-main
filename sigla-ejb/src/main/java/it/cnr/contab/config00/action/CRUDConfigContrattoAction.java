@@ -148,7 +148,7 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 					ContrattoService.class);		
 			SimpleCRUDBP bp = (SimpleCRUDBP)getBusinessProcess(context);
 			if (!bp.isEditing()) {
-				bp.setMessage("Non è possibile cancellare in questo momento");
+				bp.setMessage("Non Ã¨ possibile cancellare in questo momento");
 			} else {
 				if(bp.getModel() instanceof ContrattoBulk){				
 					if(((ContrattoBulk)bp.getModel()).isProvvisorio()){

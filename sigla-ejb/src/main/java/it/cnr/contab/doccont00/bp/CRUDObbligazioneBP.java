@@ -54,7 +54,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Obbligazione
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Obbligazione
  */
  
 public class CRUDObbligazioneBP extends CRUDVirtualObbligazioneBP
@@ -218,9 +218,9 @@ public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.
 		{
 			setStatus(VIEW);
 //			if ( obb.getDt_cancellazione() != null )
-			setMessage("L'impegno Ë stata cancellato. Non consentita la modifica.");
+			setMessage("L'impegno √® stata cancellato. Non consentita la modifica.");
 /*			else if ( "Y".equals(obb.getRiportato()) )
-				setMessage("L'obbligazione Ë stata riportata all'esercizio successivo. Non consentita la modifica.");*/
+				setMessage("L'obbligazione √® stata riportata all'esercizio successivo. Non consentita la modifica.");*/
 				
 		}
 	}
@@ -259,7 +259,7 @@ public void caricaCapitoliDiSpesaCDS(it.cnr.jada.action.ActionContext context) t
 	}
 }
 /**
- * Gestisce il caricamento dei centri di responsabilit‡.
+ * Gestisce il caricamento dei centri di responsabilit√†.
  * @param context Il contesto dell'azione
  */
 
@@ -302,7 +302,7 @@ public void caricaCentriDiResponsabilita(it.cnr.jada.action.ActionContext contex
 	}
 }
 /**
- * Gestisce il caricamento delle linee di attivit‡.
+ * Gestisce il caricamento delle linee di attivit√†.
  * @param context Il contesto dell'azione
  */
 
@@ -330,7 +330,7 @@ public void caricaLineeAttivita(it.cnr.jada.action.ActionContext context) throws
 }
 /**
  * Metodo utilizzato per la conferma dei dati selezionati o immessi, relativi
- * alle linee di attivit‡.
+ * alle linee di attivit√†.
  * @param context Il contesto dell'azione
  */
 
@@ -552,13 +552,13 @@ public OggettoBulk getBringBackModel() {
 					docAmmBP instanceof CRUDNotaDiDebitoBP ||
 					docAmmBP instanceof CRUDNotaDiCreditoAttivaBP) &&
 					!scadCorrente.equalsByPrimaryKey(scadenzaSelezionata))
-						throw new MessageToUser("La scadenza che si sta tentando di riportare NON Ë corretta! Selezionare \"" + scadCorrente.getDs_scadenza() + "\"",ERROR_MESSAGE);
+						throw new MessageToUser("La scadenza che si sta tentando di riportare NON √® corretta! Selezionare \"" + scadCorrente.getDs_scadenza() + "\"",ERROR_MESSAGE);
 				if (docAmmBP instanceof CRUDFatturaPassivaIBP) {
 					CRUDFatturaPassivaIBP fatturaPassivaBP = (CRUDFatturaPassivaIBP)docAmmBP;
 					Fattura_passiva_IBulk fatturaPassiva = (Fattura_passiva_IBulk)fatturaPassivaBP.getModel();
 					if (!scadCorrente.equalsByPrimaryKey(scadenzaSelezionata)) {
 						if (fatturaPassiva.hasStorni() || fatturaPassiva.hasAddebiti() || fatturaPassivaBP.isDeleting())
-							throw new MessageToUser("Non Ë possibile selezionare una diversa scadenza da quella associata al documento amministrativo, perchÈ esso ha degli addebiti o degli storni associati! Selezionare la scadenza \"" + scadCorrente.getDs_scadenza() + "\".",ERROR_MESSAGE);
+							throw new MessageToUser("Non √® possibile selezionare una diversa scadenza da quella associata al documento amministrativo, perch√© esso ha degli addebiti o degli storni associati! Selezionare la scadenza \"" + scadCorrente.getDs_scadenza() + "\".",ERROR_MESSAGE);
 						if (scadenzaSelezionata.getIm_associato_doc_amm() != null &&
 							scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0 &&
 							!fatturaPassivaBP.isDeleting()) {
@@ -568,7 +568,7 @@ public OggettoBulk getBringBackModel() {
 										scadenzaSelezionata.getEsercizio_doc_passivo(),
 										scadenzaSelezionata.getPg_doc_passivo()
 									).equalsByPrimaryKey(fatturaPassiva))
-								throw new MessageToUser("Non Ë possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perchË Ë gi‡ associata ad altri documenti amministrativi.",ERROR_MESSAGE);
+								throw new MessageToUser("Non √® possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perch√® √® gi√† associata ad altri documenti amministrativi.",ERROR_MESSAGE);
 							}
 					}
 				} else if (docAmmBP instanceof CRUDNotaDiCreditoAttivaBP) {
@@ -583,7 +583,7 @@ public OggettoBulk getBringBackModel() {
 										scadenzaSelezionata.getEsercizio_doc_passivo(),
 										scadenzaSelezionata.getPg_doc_passivo()
 									).equalsByPrimaryKey(nca))
-								throw new MessageToUser("Non Ë possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perchË Ë gi‡ associata ad altri documenti amministrativi.",ERROR_MESSAGE);
+								throw new MessageToUser("Non √® possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perch√® √® gi√† associata ad altri documenti amministrativi.",ERROR_MESSAGE);
 							}
 				}
 				else if (docAmmBP instanceof CRUDDocumentoGenericoPassivoBP)
@@ -606,7 +606,7 @@ public OggettoBulk getBringBackModel() {
 	                        	scadenzaSelezionata.getEsercizio_doc_passivo(),
 	                        	scadenzaSelezionata.getPg_doc_passivo()
                         	).equalsByPrimaryKey(docGenPassivo))
-								throw new MessageToUser("Non Ë possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perchË Ë gi‡ associata ad altri documenti amministrativi.",ERROR_MESSAGE);
+								throw new MessageToUser("Non √® possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perch√® √® gi√† associata ad altri documenti amministrativi.",ERROR_MESSAGE);
 						}
 					}
 				}
@@ -615,13 +615,13 @@ public OggettoBulk getBringBackModel() {
 		if (//getParent() instanceof CRUDFatturaPassivaIBP || 
 				getParent() instanceof CRUDDocumentoGenericoPassivoBP ) {
 			if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
-				throw new MessageToUser("Non Ë possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.",ERROR_MESSAGE);
+				throw new MessageToUser("Non √® possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.",ERROR_MESSAGE);
 		}
 //		if (getParent() instanceof RicercaObbligazioniBP) {
 //			RicercaObbligazioniBP ricercaBP = (RicercaObbligazioniBP)getParent();
 //			if (ricercaBP.getParent() != null && ricercaBP.getParent() instanceof CRUDFatturaPassivaIBP &&
 //				new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
-//					throw new MessageToUser("Non Ë possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.",ERROR_MESSAGE);
+//					throw new MessageToUser("Non √® possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.",ERROR_MESSAGE);
 //		}
 
 		if(	getParent() instanceof IDocumentoAmministrativoBP &&
@@ -634,21 +634,21 @@ public OggettoBulk getBringBackModel() {
 				CRUDMissioneBP missioneBP = (CRUDMissioneBP)docAmmBP;
 				MissioneBulk missione = (MissioneBulk)missioneBP.getModel();
 				if(!new MissioneBulk(scadenzaSelezionata.getCd_cds(), scadenzaSelezionata.getObbligazione().getCd_unita_organizzativa(),scadenzaSelezionata.getEsercizio_doc_passivo(),	scadenzaSelezionata.getPg_doc_passivo()).equalsByPrimaryKey(missione))
-					throw new MessageToUser("Non Ë possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perchË Ë gi‡ associata ad altri documenti amministrativi.",ERROR_MESSAGE);						
+					throw new MessageToUser("Non √® possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perch√® √® gi√† associata ad altri documenti amministrativi.",ERROR_MESSAGE);						
 			}
 			if(	docAmmBP instanceof CRUDAnticipoBP)
 			{
 				CRUDAnticipoBP anticipoBP = (CRUDAnticipoBP)docAmmBP;
 				AnticipoBulk anticipo = (AnticipoBulk)anticipoBP.getModel();
 				if(!new AnticipoBulk(scadenzaSelezionata.getCd_cds(), scadenzaSelezionata.getObbligazione().getCd_unita_organizzativa(),scadenzaSelezionata.getEsercizio_doc_passivo(),	scadenzaSelezionata.getPg_doc_passivo()).equalsByPrimaryKey(anticipo))
-					throw new MessageToUser("Non Ë possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perchË Ë gi‡ associata ad altri documenti amministrativi.",ERROR_MESSAGE);						
+					throw new MessageToUser("Non √® possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perch√® √® gi√† associata ad altri documenti amministrativi.",ERROR_MESSAGE);						
 			}
 			if(	docAmmBP instanceof it.cnr.contab.compensi00.bp.CRUDCompensoBP)
 			{
 				it.cnr.contab.compensi00.bp.CRUDCompensoBP compensoBP = (it.cnr.contab.compensi00.bp.CRUDCompensoBP)docAmmBP;
 				CompensoBulk compenso = (CompensoBulk)compensoBP.getModel();
 				if(!new CompensoBulk(scadenzaSelezionata.getCd_cds(), scadenzaSelezionata.getObbligazione().getCd_unita_organizzativa(),scadenzaSelezionata.getEsercizio_doc_passivo(),	scadenzaSelezionata.getPg_doc_passivo()).equalsByPrimaryKey(compenso))
-					throw new MessageToUser("Non Ë possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perchË Ë gi‡ associata ad altri documenti amministrativi.",ERROR_MESSAGE);						
+					throw new MessageToUser("Non √® possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perch√® √® gi√† associata ad altri documenti amministrativi.",ERROR_MESSAGE);						
 			}			
 		}
 	}
@@ -712,7 +712,7 @@ public OggettoBulk initializeModelForEdit(ActionContext context,OggettoBulk bulk
 	try {
 		it.cnr.jada.ejb.CRUDComponentSession compSession = (getUserTransaction() == null) ?
 																			createComponentSession() :
-																			getVirtualComponentSession(context, false); //responsabilit‡ setSafePoint(true) demandata all'init del bp
+																			getVirtualComponentSession(context, false); //responsabilit√† setSafePoint(true) demandata all'init del bp
 		OggettoBulk oggettobulk = compSession.inizializzaBulkPerModifica(
 									context.getUserContext(),
 									bulk.initializeForEdit(this,context));
@@ -734,9 +734,9 @@ public boolean isBringbackButtonEnabled()
 	return super.isBringbackButtonEnabled() && !isEditingScadenza();
 }
 /**
- *	Abilito il bottone di calcolo della disponibilit‡ di cassa dei due anni 
+ *	Abilito il bottone di calcolo della disponibilit√† di cassa dei due anni 
  *  successivi a quello corrente dell'obbligazione, quando il campo "Voce del
- *  piano" Ë stato valorizzato.
+ *  piano" √® stato valorizzato.
  */
 public boolean isCalcolaDispCassaAnniSuccessiviButtonEnabled() throws it.cnr.jada.action.BusinessProcessException 
 {
@@ -827,9 +827,9 @@ public boolean isUndoScadenzaButtonEnabled() throws it.cnr.jada.action.BusinessP
 	return ( isEditable() && getScadenzario().getModel() != null && isEditingScadenza());
 }
 /**
- * Verifica se il bottone di Visualizzazione delle Spese del Cdr Ë abilitato.
- * @return 				TRUE 	Il bottone di Visualizzazione delle Spese del Cdr Ë abilitato
- *						FALSE 	Il bottone di Visualizzazione delle Spese del Cdr non Ë abilitato
+ * Verifica se il bottone di Visualizzazione delle Spese del Cdr √® abilitato.
+ * @return 				TRUE 	Il bottone di Visualizzazione delle Spese del Cdr √® abilitato
+ *						FALSE 	Il bottone di Visualizzazione delle Spese del Cdr non √® abilitato
  */
 public boolean isVisualizzaSpeseCdrButtonEnabled()
 {
@@ -917,8 +917,8 @@ public void undoScadenza(it.cnr.jada.action.ActionContext context ) throws it.cn
 	
 }
 /** 
-  * Viene richiesta alla component che gestisce l'obbligazione di verificare la validit‡
-  *	 della nuova Linea di Attivit‡
+  * Viene richiesta alla component che gestisce l'obbligazione di verificare la validit√†
+  *	 della nuova Linea di Attivit√†
   */
 public void validaNuovaLineaAttivita(ActionContext context, it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk nuovaLatt, it.cnr.contab.config00.latt.bulk.WorkpackageBulk latt) throws ValidationException 
 {
@@ -936,7 +936,7 @@ public void validaNuovaLineaAttivita(ActionContext context, it.cnr.contab.doccon
 		}
 }
 /**
- * Verifica la validit‡ dell'obbligazione.
+ * Verifica la validit√† dell'obbligazione.
  * @param context Il contesto dell'azione
  */
 public void validate(ActionContext context) throws ValidationException {
@@ -950,7 +950,7 @@ public void validate(ActionContext context) throws ValidationException {
 		}
 }
 /** 
-  * Viene richiesta alla component che gestisce i compensi di verificare la validit‡
+  * Viene richiesta alla component che gestisce i compensi di verificare la validit√†
   *	 dell'Obbligazione per i doc. amministrativi
   */
 public void verificaObbligazionePerDocAmm(ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
@@ -1020,7 +1020,7 @@ public void setVociSelezionate(java.util.List list) {
 public boolean isCreaMandatoButtonHidden() {
 	/*
 	 * 12/04/2006 Pagano 
-	 * Nascosto il tasto in attesa di completare la funzionalit‡
+	 * Nascosto il tasto in attesa di completare la funzionalit√†
 	 * 
 	 */
    return true;	

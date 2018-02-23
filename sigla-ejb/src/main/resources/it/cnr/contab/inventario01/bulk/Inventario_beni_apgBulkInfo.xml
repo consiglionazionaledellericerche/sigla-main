@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -9,14 +9,14 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Codice identificativo dell'unità organizzativa o CDS" />
+		label="Codice identificativo dell'unitÃ  organizzativa o CDS" />
 	<fieldProperty
 		name="cd_unita_organizzativa"
 		property="cd_unita_organizzativa"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Codice identificativo del centro di responsabilità" />
+		label="Codice identificativo del centro di responsabilitÃ " />
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"

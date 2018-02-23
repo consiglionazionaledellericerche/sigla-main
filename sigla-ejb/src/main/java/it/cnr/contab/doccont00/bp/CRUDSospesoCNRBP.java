@@ -7,7 +7,7 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.jsp.*;
 /**
- * Business Process che gestisce le attivit‡ di CRUD per le entita' Sospeso o Riscontro
+ * Business Process che gestisce le attivit√† di CRUD per le entita' Sospeso o Riscontro
  */
 public class CRUDSospesoCNRBP extends it.cnr.jada.util.action.SimpleCRUDBP 
 {
@@ -16,7 +16,7 @@ public class CRUDSospesoCNRBP extends it.cnr.jada.util.action.SimpleCRUDBP
 		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException 
 		{
 			if (  ((SospesoBulk) detail).getIm_associato().compareTo( new java.math.BigDecimal(0)) > 0 )
-				throw new ValidationException("Non Ë possibile cancellare un dettaglio gi‡ utilizzato da qualche reversale.");
+				throw new ValidationException("Non √® possibile cancellare un dettaglio gi√† utilizzato da qualche reversale.");
 		}		
 	};	
 public CRUDSospesoCNRBP() {

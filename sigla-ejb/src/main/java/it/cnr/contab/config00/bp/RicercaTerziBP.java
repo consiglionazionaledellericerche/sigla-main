@@ -241,7 +241,7 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		    	StreamResult streamResult = new StreamResult(pagecontext.getOut());
 		    	TransformerFactory tf = TransformerFactory.newInstance();
 		    	Transformer serializer = tf.newTransformer();
-		    	serializer.setOutputProperty(OutputKeys.ENCODING,"ISO-8859-1");
+		    	serializer.setOutputProperty(OutputKeys.ENCODING,"UTF-8");
 		    	
 		    	if (this.getServizio()!=null && this.getServizio().equalsIgnoreCase("cercacompleta")){
 			    	   serializer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,"https://contab.cnr.it/SIGLA/schema/cercaterzicompleta.dtd");

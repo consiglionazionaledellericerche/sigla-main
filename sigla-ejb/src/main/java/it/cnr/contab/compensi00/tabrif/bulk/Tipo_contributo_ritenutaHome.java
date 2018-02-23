@@ -16,7 +16,7 @@ public Tipo_contributo_ritenutaHome(java.sql.Connection conn,PersistentCache per
 	super(Tipo_contributo_ritenutaBulk.class,conn,persistentCache);
 }
 /**
- * Inserisce la clausola di validit‡.
+ * Inserisce la clausola di validit√†.
  * I record vengono filtrati secondo la seguente clausola
  *	DATA_INIZIO_VALIDITA <= data <= DATA_FINE_VALIDITA
  *

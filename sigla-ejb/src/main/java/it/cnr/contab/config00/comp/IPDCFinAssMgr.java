@@ -14,7 +14,7 @@ public interface IPDCFinAssMgr extends it.cnr.jada.comp.ICRUDMgr
  *
  * Nome: Creazione di una Ass_ev_evBulk
  * Pre:  La richiesta di creazione di una associazione fra un Elemento_voceBulk e un altro Elemento_voceBulk
- *       è stata generata
+ *       Ã¨ stata generata
  * Post: Un Ass_ev_evBulk e' stato creato 
  *
  * Nome: Creazione di una associazione tra spesa CNR ed entrata CDS
@@ -27,29 +27,29 @@ public interface IPDCFinAssMgr extends it.cnr.jada.comp.ICRUDMgr
  *          Titolo '5' entrata Cds => Titolo '5' spesa CNR con capitolo 'Tutti i CdS'.
  *        Non esiste un'altra associazione della spesa CDS con altra entrata CNR
  * Post:
- *		  Una Ass_cap_spesa_Cnr_natura_cap_entrata_CdsBulk è stata creata
+ *		  Una Ass_cap_spesa_Cnr_natura_cap_entrata_CdsBulk Ã¨ stata creata
  *
  * Nome: Creazione di una associazione tra titolo CNR e titolo CDS
  * Pre:   Le seguenti regole di associazione sono verificate:
  *          Non esiste un'altra associazione del titolo CDS con altro titolo CNR
  *          Non esiste un'altra associazione del titolo CNR con altro titolo CDS
  * Post:
- *		  Una Ass_titolo_Cnr_titolo_CdsBulk è stata creata
+ *		  Una Ass_titolo_Cnr_titolo_CdsBulk Ã¨ stata creata
  *
  * Nome: Creazione di una Ass_ev_evBulk - errore
  * Pre:  La richiesta di creazione di una associazione fra un Elemento_voceBulk e un altro Elemento_voceBulk
- *       è stata generata e uno dei due elementi non e' piu' presente o e' stato modificato da un altro utente
+ *       Ã¨ stata generata e uno dei due elementi non e' piu' presente o e' stato modificato da un altro utente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Creazione di una Ass_ev_voce_epBulk
  * Pre:  La richiesta di creazione di una associazione fra un Elemento_voceBulk e una Voce_epBulk
- *       è stata generata
+ *       Ã¨ stata generata
  * Post: Un Ass_ev_voce_epBulk e' stato creato 
  *
  * Nome: Creazione di una Ass_ev_voce_epBulk - errore
  * Pre:  La richiesta di creazione di una associazione fra un Elemento_voceBulk e una Voce_epBulk
- *       è stata generata e uno dei due elementi non e' piu' presente o e' stato modificato da un altro utente
+ *       Ã¨ stata generata e uno dei due elementi non e' piu' presente o e' stato modificato da un altro utente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *

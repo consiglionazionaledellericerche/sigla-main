@@ -19,7 +19,7 @@
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<title>Riepilogo Iva ad esigibilit‡ differita definitiva</title>
+<title>Riepilogo Iva ad esigibilit√† differita definitiva</title>
 </head>
 <body class="Form">
 
@@ -63,7 +63,7 @@
 		</table>
 	</div>
 	<div class="Group" style="width:100%">
-		<div class="GroupLabel">Stampe gi‡ eseguite</div>
+		<div class="GroupLabel">Stampe gi√† eseguite</div>
 		<% bp.getRegistri_stampati().writeHTMLTable(pageContext,"default",false,false,false,"100%","200px"); %>
 	</div>
 <%	bp.closeFormWindow(pageContext); %>

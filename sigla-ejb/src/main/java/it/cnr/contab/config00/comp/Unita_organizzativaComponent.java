@@ -57,7 +57,7 @@ public class Unita_organizzativaComponent extends it.cnr.jada.comp.CRUDComponent
 
 	}
 /* Gestisce l'aggiornamento dell'attributo esercizio fine del Cds e di tutta la struttura organizzativa 
- * da lui dipendente (Unita organizzative, Cdr e Linee di attivit‡)
+ * da lui dipendente (Unita organizzative, Cdr e Linee di attivit√†)
  *  
  * Nome: Modifica dell'attributo esercizio fine 
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un Cds e' stata generata e
@@ -66,13 +66,13 @@ public class Unita_organizzativaComponent extends it.cnr.jada.comp.CRUDComponent
  *       tutte le UO che dipendono dal CDS e hanno esercizio fine maggiore rispetto a quello del Cds; sono stati aggiornati 
  *       in cascata anche tutti gli esercizi fine di tutti i Cdr che dipendono dalle UO che dipendono dal Cds e che hanno
  *       esercizio fine maggiore rispetto a quello del Cds; sono stati aggiornati in cascata anche tutti gli esercizi fine di
- *       tutte le linee di attivit‡ definite per i Cdr che dipendono dalle UO che dipendono dal Cds e che hanno esercizio 
+ *       tutte le linee di attivit√† definite per i Cdr che dipendono dalle UO che dipendono dal Cds e che hanno esercizio 
  *       fine maggiore rispetto a quello del Cds.
  *
  * Nome: Modifica dell'attributo esercizio fine - Errore
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un Cds e' stata generata e
  *       la validazione di tale attributo non e' stata superata ( metodo 'verificaEsercizioFine')
- * Post: Una Application Exception viene generata per segnalare all'utente l'impossibilit‡ ad effettuare tale
+ * Post: Una Application Exception viene generata per segnalare all'utente l'impossibilit√† ad effettuare tale
  *		 modifica
 */
 
@@ -97,20 +97,20 @@ private void aggiornaEsercizioFine(UserContext userContext,CdsBulk cds) throws i
 
 }
 /* Gestisce l'aggiornamento dell'attributo esercizio fine dell'Unita organizzativa e di tutta la struttura organizzativa 
- * da lei dipendente (Cdr e Linee di attivit‡)
+ * da lei dipendente (Cdr e Linee di attivit√†)
  *  
  * Nome: Modifica dell'attributo esercizio fine 
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un'Unita organizzativa e' stata generata e
  *       la validazione di tale attributo e' stata superata ( metodo 'verificaEsercizioFine')
  * Post: sono stati aggiornati tutti gli esercizi fine di tutti i Cdr che dipendono dall'Unita organizzativa e che hanno
  *       esercizio fine maggiore rispetto a quello dell'Unita' organizzativa; sono stati aggiornati in cascata anche tutti gli esercizi fine di
- *       tutte le linee di attivit‡ definite per i Cdr che dipendono dall'Unita' organizzativa e che hanno esercizio 
+ *       tutte le linee di attivit√† definite per i Cdr che dipendono dall'Unita' organizzativa e che hanno esercizio 
  *       fine maggiore rispetto a quello del Cds.
  *
  * Nome: Modifica dell'attributo esercizio fine - Errore
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un'Unita organizzativa e' stata generata e
  *       la validazione di tale attributo non e' stata superata ( metodo 'verificaEsercizioFine')
- * Post: Una Application Exception viene generata per segnalare all'utente l'impossibilit‡ ad effettuare tale
+ * Post: Una Application Exception viene generata per segnalare all'utente l'impossibilit√† ad effettuare tale
  *		 modifica
 */
 
@@ -139,7 +139,7 @@ private void aggiornaEsercizioFine(UserContext userContext,Unita_organizzativaBu
  * Pre-post-conditions:
  *
  * Nome: Ricerca di un CdsBulk o di una Unita_organizzativaBulk
- * Pre:  La richiesta di ricerca di un CdsBulk o di una Unita_organizzativaBulk Ë stata generata
+ * Pre:  La richiesta di ricerca di un CdsBulk o di una Unita_organizzativaBulk √® stata generata
  * Post: La lista di CdsBulk o di Unita_organizzativaBulk che soddisfano i criteri di ricerca sono stati recuperati
  *
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -194,9 +194,9 @@ private void verificaAreeAssociate(UserContext userContext,Unita_organizzativaBu
 }
 
 /**
- * Controllo l'ammissibilit‡ del flag presidente area sull'unit‡ in processo
- * Solo una delle unit‡ organizzative collegate all'area puÚ essere presidente dell'area
- * Una UO del SAC non puÚ essere presidente dell'AREA
+ * Controllo l'ammissibilit√† del flag presidente area sull'unit√† in processo
+ * Solo una delle unit√† organizzative collegate all'area pu√≤ essere presidente dell'area
+ * Una UO del SAC non pu√≤ essere presidente dell'AREA
  *
  * Creation date: (05/04/2001 14:07:09)
  * @param userContext contesto user
@@ -209,7 +209,7 @@ private void checkPresidenteArea(UserContext userContext, Ass_uo_areaBulk assUoA
 	{
 	 
      if ((assUoArea.getCds_area_ricerca()==null) || (assUoArea.getCds_area_ricerca().getCd_unita_organizzativa() == null)) {
-	     // Se il fl_presidente_area Ë a true e l'area non Ë specificata ritorna  eccezione
+	     // Se il fl_presidente_area √® a true e l'area non √® specificata ritorna  eccezione
 	    if(assUoArea.getFl_presidente_area()!=null && assUoArea.getFl_presidente_area().equals(Boolean.TRUE))
 	      	throw new ApplicationException("Prima di impostare l'UO come Presidente dell'area, specificare l'area");
 	    else
@@ -221,19 +221,19 @@ private void checkPresidenteArea(UserContext userContext, Ass_uo_areaBulk assUoA
      	// Area specificata ma fl_presidente area no 
        	return; 
 
-     // Se l'UO appartiene al SAC, non puÚ essere presidente di area 
+     // Se l'UO appartiene al SAC, non pu√≤ essere presidente di area 
      if(assUoArea.getUnita_organizzativa().getCd_tipo_unita() != null && assUoArea.getUnita_organizzativa().getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_SAC))
-		throw new ApplicationException("L'UO corrente appartiene al SAC e non puÚ quindi essere presidente dell'area");
+		throw new ApplicationException("L'UO corrente appartiene al SAC e non pu√≤ quindi essere presidente dell'area");
        
      Ass_uo_areaHome assUoAreaHome = (Ass_uo_areaHome) getHome( userContext,Ass_uo_areaBulk.class);     
       
-     // Se il numero attuale di UO collegate all'area Ë 0, devo aggiungere l'area come sottoarticolo
+     // Se il numero attuale di UO collegate all'area √® 0, devo aggiungere l'area come sottoarticolo
      Unita_organizzativaBulk aPresidente = null;
 
      if ((aPresidente=assUoAreaHome.getUOPresidenteArea(assUoArea)) != null) {
 	 	lockBulk(userContext,aPresidente);
 	  	if (!aPresidente.getCd_unita_organizzativa().equals(assUoArea.getUnita_organizzativa().getCd_unita_organizzativa()))
-       		throw new ApplicationException("Esiste gi‡ un UO presidente dell'area " + assUoArea.getCd_area_ricerca() + " : " + aPresidente.getCd_unita_organizzativa()+ " " +aPresidente.getDs_unita_organizzativa());
+       		throw new ApplicationException("Esiste gi√† un UO presidente dell'area " + assUoArea.getCd_area_ricerca() + " : " + aPresidente.getCd_unita_organizzativa()+ " " +aPresidente.getDs_unita_organizzativa());
      }
 		} catch (Throwable e) 
 	{
@@ -245,13 +245,13 @@ private void checkPresidenteArea(UserContext userContext, Ass_uo_areaBulk assUoA
  * Crea il CDR Responsabile dell'Unita Organizzativa. Tale Cdr puo' essere di I o II livello secondo la
  * seguente regola:
  * <ul>
- * <li>Se l'unita organizzativa da cui dipende e' una UO-CDS e il CDS non Ë di tipo AREA, il CDR Ë di I livello.</li>
- * <li>Se l'unita organizzativa da cui dipende e' una UO-CDS e il CDS Ë di tipo AREA, il CDR Ë di II livello.</li> 
- * <li>Se l'unita organizzativa da cui dipende non e' una UO-CDS e il CDS Ë di tipo SAC e il flag rubrica e' true,
- *		il CDR Ë di I livello.</li>
- * <li>Se l'unita organizzativa da cui dipende non e' una UO-CDS e il CDS Ë di tipo SAC e il flag rubrica e' false,
- *		il CDR Ë di II livello e il Cdr di afferenza e' il Cdr di I livello dell'Unit‡ organizativa di Riferimento.</li> 
- * <li>Se l'unita organizzativa da cui dipende non e' una UO-CDS e il CDS non Ë di tipo SAC, il CDR Ë di II livello.</li>  
+ * <li>Se l'unita organizzativa da cui dipende e' una UO-CDS e il CDS non √® di tipo AREA, il CDR √® di I livello.</li>
+ * <li>Se l'unita organizzativa da cui dipende e' una UO-CDS e il CDS √® di tipo AREA, il CDR √® di II livello.</li> 
+ * <li>Se l'unita organizzativa da cui dipende non e' una UO-CDS e il CDS √® di tipo SAC e il flag rubrica e' true,
+ *		il CDR √® di I livello.</li>
+ * <li>Se l'unita organizzativa da cui dipende non e' una UO-CDS e il CDS √® di tipo SAC e il flag rubrica e' false,
+ *		il CDR √® di II livello e il Cdr di afferenza e' il Cdr di I livello dell'Unit√† organizativa di Riferimento.</li> 
+ * <li>Se l'unita organizzativa da cui dipende non e' una UO-CDS e il CDS non √® di tipo SAC, il CDR √® di II livello.</li>  
  * </ul>
  * @param userContext
  * @param uoBulk unita organizzativa padre del Cdr da creare
@@ -273,11 +273,11 @@ private CdrBulk creaCdrBulk(UserContext userContext,Unita_organizzativaBulk uoBu
 
 		cdrBulk.setDs_cdr( CdrHome.DEFAULT_DS_CDR );
 
-// Se l'UO CDS non Ë di tipo AREA, il CDR responsabile dell'UO Ë di I livello.
-// Se l'UO CDS Ë di tipo AREA, il CDR responsabile dell'UO Ë di II livello.
-// Se l'UO non Ë UO CDS e appartiene al SAC e rubrica = true il CDR responsabile dell'UO Ë di I livello.
-// Se l'UO non Ë UO CDS e appartiene al SAC e rubrica = false il CDR responsabile dell'UO Ë di II livello.
-// Se l'UO non Ë UO CDS e non appartiene al SAC il CDR responsabile dell'UO Ë di II livello.
+// Se l'UO CDS non √® di tipo AREA, il CDR responsabile dell'UO √® di I livello.
+// Se l'UO CDS √® di tipo AREA, il CDR responsabile dell'UO √® di II livello.
+// Se l'UO non √® UO CDS e appartiene al SAC e rubrica = true il CDR responsabile dell'UO √® di I livello.
+// Se l'UO non √® UO CDS e appartiene al SAC e rubrica = false il CDR responsabile dell'UO √® di II livello.
+// Se l'UO non √® UO CDS e non appartiene al SAC il CDR responsabile dell'UO √® di II livello.
 		
 		if ( uoBulk.isUoCds() & !uoBulk.isUoArea() )
 			cdrBulk.setLivello( CdrHome.CDR_PRIMO_LIVELLO );
@@ -327,7 +327,7 @@ private CdrBulk creaCdrBulk(UserContext userContext,Unita_organizzativaBulk uoBu
 	
 /**
  * Crea un Centro di Spesa, l'UO-CDS ad esso associato e il CDR Responsabile dell'UO; 
- * nel caso di un Cds di tipo SAC viene fatta anche la verifica di unicit‡ nella base dati
+ * nel caso di un Cds di tipo SAC viene fatta anche la verifica di unicit√† nella base dati
  *
  * @param lo UserContext che ha generato la richiesta
  * @param uoBulk unita organizzativa padre del Cdr da creare
@@ -339,7 +339,7 @@ private OggettoBulk creaCdsConBulk(UserContext userContext,OggettoBulk bulk) thr
 	// 05/09/2003
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(userContext))
-		throw new ApplicationException("Non Ë possibile creare nuove unit‡ organizzative ad esercizio chiuso.");
+		throw new ApplicationException("Non √® possibile creare nuove unit√† organizzative ad esercizio chiuso.");
 
 	try {
 
@@ -352,7 +352,7 @@ private OggettoBulk creaCdsConBulk(UserContext userContext,OggettoBulk bulk) thr
 
 		if ( cdsBulk.getCd_tipo_unita().equalsIgnoreCase( Tipo_unita_organizzativaHome.TIPO_UO_SAC ))
 		{
-			// verfica se esiste gi‡ un CDS di tipo SAC
+			// verfica se esiste gi√† un CDS di tipo SAC
 			CdsBulk tmp = new CdsBulk();
 			tmp.setCd_tipo_unita( Tipo_unita_organizzativaHome.TIPO_UO_SAC );
 			it.cnr.jada.persistency.sql.SQLBuilder sql = getHome( userContext,tmp).select( tmp, false );
@@ -363,7 +363,7 @@ private OggettoBulk creaCdsConBulk(UserContext userContext,OggettoBulk bulk) thr
 				try
 				{
 					if ( rs.next() )
-						throw new ApplicationException( "Creazione impossibile. Un CDS di tipo SAC Ë gi‡ presente." );
+						throw new ApplicationException( "Creazione impossibile. Un CDS di tipo SAC √® gi√† presente." );
 				}
 				catch( SQLException e )
 				{
@@ -439,24 +439,24 @@ private OggettoBulk creaCdsConBulk(UserContext userContext,OggettoBulk bulk) thr
  * Pre-post-conditions:
  ************************************   CDS *************************************************
  * Nome: Creazione di Cds 
- * Pre:  La richiesta di creazione di un Cds Ë stata generata
+ * Pre:  La richiesta di creazione di un Cds √® stata generata
  * Post: Un Cds viene creato con i dati inseriti dall'utente, il suo codice se non specificato dall'utente  
  *       viene generato automaticamente; vengono create l'Unita' Organizzativa UO-CDS e il Cdr Responsabile dell'U0_CDS.
  *       Al Cdr viene assegnato un livello in base alla regola descritta nel metodo 'creaCdrBulk'
  *
  *
  * Nome: Cds di tipo SAC gia' esistente
- * Pre:  La richiesta di creazione di un Cds con tiplogia SAC Ë stata generata
+ * Pre:  La richiesta di creazione di un Cds con tiplogia SAC √® stata generata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  * 
  * Nome: Errore di Responsabile inesistente
- * Pre:  Il Codice Terzo definito come responsabile del Cds non Ë presente
+ * Pre:  Il Codice Terzo definito come responsabile del Cds non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Errore di chiave duplicata
- * Pre:  Esiste gi‡ un CdsBulk persistente che possiede la stessa chiave
+ * Pre:  Esiste gi√† un CdsBulk persistente che possiede la stessa chiave
  * 		 primaria di quello specificato.
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
@@ -469,50 +469,50 @@ private OggettoBulk creaCdsConBulk(UserContext userContext,OggettoBulk bulk) thr
  *
  ************************************   UNITA ORGANIZZATIVA *************************************************
  *
- * Nome: Creazione di Unit‡ organizzativa dipendente da un CDS di tipo AREA
- * Pre:  La richiesta di creazione di una unit‡ organizzativa che dipende da un CDS di tipo 
- *       Area di ricerca Ë stata generata
- * Post: Viene generate una ApplicationException con il messaggio "Non Ë possibile aggiungere una unit‡ organizzativa ad un'area
+ * Nome: Creazione di Unit√† organizzativa dipendente da un CDS di tipo AREA
+ * Pre:  La richiesta di creazione di una unit√† organizzativa che dipende da un CDS di tipo 
+ *       Area di ricerca √® stata generata
+ * Post: Viene generate una ApplicationException con il messaggio "Non √® possibile aggiungere una unit√† organizzativa ad un'area
  * 		 di ricerca"
  *
  * Nome: Creazione di Unita' organizzativa con specifica di area di ricerca collegata
- * Pre:  La richiesta di creazione di un' Unita' organizzativa Ë stata generata con specifica di codice CDS di area di ricerca collegata
+ * Pre:  La richiesta di creazione di un' Unita' organizzativa √® stata generata con specifica di codice CDS di area di ricerca collegata
  * Post:
  *      Un' unita organizzativa viene creata con i dati inseriti dall'utente, il suo codice se non specificato dall'utente viene generato automaticamente; viene creato il Cdr Responsabile dell'U0 a cui viene assegnato un livello in base alla seguente regola:
- *      - Se il CDS da cui dipende Ë di tipo SAC, il CDR Ë di I livello.
- *      - Se il CDS da cui dipende non Ë di tipo SAC, il CDR Ë di II livello.
+ *      - Se il CDS da cui dipende √® di tipo SAC, il CDR √® di I livello.
+ *      - Se il CDS da cui dipende non √® di tipo SAC, il CDR √® di II livello.
  *
  *      Viene aggiornato il piano dei conti finanziari per la parte 1 spese cnr categoria 1 come segue:
  *      - Si determina se esiste il CDS area come SOTTOARTICOLO della linea del PDC Finanziario parte 1 spese cnr categoria 1 che contiene il CDS presidente dell'area collegata all'UO in processo come CAPITOLO. Nel caso tale SOTTOARTICOLO non sia presente, viene creato
  *
- * Nome: Creazione di Unita' organizzativa collegata ad area di ricerca che Ë Presidente dell'Area
- * Pre: La richiesta di creazione di un' Unita' organizzativa collegata ad Area di ricerca e che sia Presidente dell'area Ë stata generata
+ * Nome: Creazione di Unita' organizzativa collegata ad area di ricerca che √® Presidente dell'Area
+ * Pre: La richiesta di creazione di un' Unita' organizzativa collegata ad Area di ricerca e che sia Presidente dell'area √® stata generata
  * Post: Un' unita organizzativa viene creata collegata ad un area come Presidente dell'area
  *
  * Nome: Creazione di Unita' organizzativa
- * Pre:  La richiesta di creazione di un' Unita' organizzativa Ë stata generata
+ * Pre:  La richiesta di creazione di un' Unita' organizzativa √® stata generata
  * Post: Un' unita organizzativa viene creata con i dati inseriti dall'utente, il suo codice se non specificato 
  *       dall'utente viene generato automaticamente; viene creato il Cdr Responsabile dell'U0 a cui viene assegnato
  *       un livello in base alla regola descritta nel metodo 'creaCdrBulk':
  *
  * Nome: Errore di Responsabile inesistente
- * Pre:  Il Codice Terzo definito come responsabile dell' Unita' organizzativa non Ë presente
+ * Pre:  Il Codice Terzo definito come responsabile dell' Unita' organizzativa non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Errore di Responsabile amministrativo inesistente
- * Pre:  Il Codice Terzo definito come responsabile amministrativo dell' Unita' organizzativa non Ë presente
+ * Pre:  Il Codice Terzo definito come responsabile amministrativo dell' Unita' organizzativa non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente 
  *
  * Nome: Errore di chiave duplicata
- * Pre:  Esiste gi‡ un' Unita_organizzativaBulk persistente che possiede la stessa chiave
+ * Pre:  Esiste gi√† un' Unita_organizzativaBulk persistente che possiede la stessa chiave
  * 		 primaria di quella specificato.
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
- * Nome: Errore Presidente dell'area gi‡ definito
- * Pre:  Esiste gi‡ di un presidente dell'area a cui Ë collegata l'UO
+ * Nome: Errore Presidente dell'area gi√† definito
+ * Pre:  Esiste gi√† di un presidente dell'area a cui √® collegata l'UO
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
@@ -526,13 +526,13 @@ private OggettoBulk creaCdsConBulk(UserContext userContext,OggettoBulk bulk) thr
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
- * Nome: Una UO del SAC non puÚ essere presidente dell'AREA
- * Pre:  L'UO appartiene al SAC ed Ë richiesto che sia Presidente dell'area a cui Ë collegata
+ * Nome: Una UO del SAC non pu√≤ essere presidente dell'AREA
+ * Pre:  L'UO appartiene al SAC ed √® richiesto che sia Presidente dell'area a cui √® collegata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Errore di Esercizio Fine non valido per unita padre
- * Pre:  L'esercio fine dell'UO Ë superiore all'esercizio fine del Cds da cui l'UO dipende
+ * Pre:  L'esercio fine dell'UO √® superiore all'esercizio fine del Cds da cui l'UO dipende
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
@@ -702,7 +702,7 @@ private OggettoBulk creaUOConBulk(UserContext userContext,OggettoBulk bulk) thro
 	// 05/09/2003
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(userContext))
-		throw new ApplicationException("Non Ë possibile creare nuove unit‡ organizzative ad esercizio chiuso.");
+		throw new ApplicationException("Non √® possibile creare nuove unit√† organizzative ad esercizio chiuso.");
 
 	try {
 
@@ -712,7 +712,7 @@ private OggettoBulk creaUOConBulk(UserContext userContext,OggettoBulk bulk) thro
 //		uoBulk.setCd_unita_padre(getLunghezza_chiaviHome().create().formatCdsKey( uoBulk.getCd_xx_unita_padre(), uoBulk.getEsercizio() ));
 
 		if (uoBulk.getUnita_padre().getCd_tipo_unita().equalsIgnoreCase( Tipo_unita_organizzativaHome.TIPO_UO_AREA))
-			throw new ApplicationException("Non Ë possibile aggiungere unit‡ organizzative ad un'area di ricerca");
+			throw new ApplicationException("Non √® possibile aggiungere unit√† organizzative ad un'area di ricerca");
 
 		verificaEsercizioFine( userContext, uoBulk );			
 
@@ -828,7 +828,7 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk)  throws it.
 				// 05/09/2003
 				// Aggiunto controllo sulla chiusura dell'esercizio
 				if (isEsercizioChiuso(userContext,cds))
-					throw new ApplicationException("Non Ë possibile eliminare cds con esercizio di terminazione chiuso.");
+					throw new ApplicationException("Non √® possibile eliminare cds con esercizio di terminazione chiuso.");
 				
 				lockBulk(userContext, cds );
 				
@@ -843,10 +843,10 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk)  throws it.
 			// 05/09/2003
 			// Aggiunto controllo sulla chiusura dell'esercizio
 			if (isEsercizioChiuso(userContext,uo))
-				throw new ApplicationException("Non Ë possibile eliminare uo con esercizio di terminazione chiuso.");
+				throw new ApplicationException("Non √® possibile eliminare uo con esercizio di terminazione chiuso.");
 			
 			if ( uo.getFl_uo_cds().booleanValue() )
-				throw new ApplicationException( "Non Ë possibile cancellare una UO CDS");
+				throw new ApplicationException( "Non √® possibile cancellare una UO CDS");
 			
 			// gestione cleanup su piano dei conti finanziario nel caso
 			// all'UO sia collegata un'area
@@ -951,7 +951,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, Oggett
  * Pre: L'OggettoBulk specificato esiste.
  * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
  *			per l'operazione di presentazione e modifica nell'interfaccia visuale.
- *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ë
+ *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome √®
  *			ottenuto concatenando il nome della component con la stringa ".edit"
  * 
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -974,7 +974,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 			// 05/09/2003
 			// Aggiunto controllo sulla chiusura dell'esercizio
 			if (isEsercizioChiuso(userContext,cds))
-				bulk = asRO(bulk,"Non Ë possibile modificare cds con esercizio di terminazione chiuso.");
+				bulk = asRO(bulk,"Non √® possibile modificare cds con esercizio di terminazione chiuso.");
 			
 		}
 		else if ( bulk instanceof Unita_organizzativaBulk )
@@ -989,10 +989,10 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 			// 05/09/2003
 			// Aggiunto controllo sulla chiusura dell'esercizio
 			if (isEsercizioChiuso(userContext,uo))
-				bulk = asRO(bulk,"Non Ë possibile modificare uo con esercizio di terminazione chiuso.");
+				bulk = asRO(bulk,"Non √® possibile modificare uo con esercizio di terminazione chiuso.");
 			
 			// 12/09/2005
-			// Aggiunta la possibilit‡ di associare pi˘ aree
+			// Aggiunta la possibilit√† di associare pi√π aree
 			uo.setAssociazioneUoArea(new it.cnr.jada.bulk.BulkList(uoHome.findAssociazioneUoArea(userContext, uo)));
 			getHomeCache(userContext).fetchAll(userContext);
 		}	
@@ -1011,12 +1011,12 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
  *    Nome: Inserimento di Cds o UO
  *    Pre: La richiesta di inserimento di un Cds o di una Unita' Organizzativa e' stata generata
  *    Post: Il Cds o l'Unita' Organizzativa e' stato inserito nel database e la stored procedure ORACLEcreaEsplVociUO 
- *          che genera la struttura degli elementi voci dipendenti dall'entit‡ inserita e' stata richiamata
+ *          che genera la struttura degli elementi voci dipendenti dall'entit√† inserita e' stata richiamata
  *
  *    Nome: Inserimento di Cdr
  *    Pre: La richiesta di inserimento di un Cdr stata generata
  *    Post: Il Cdr e' stato inserito nel database e la stored procedure ORACLEcreaEsplVociCdr 
- *          che genera la struttura degli elementi voci dipendenti dall'entit‡ inserita e' stata richiamata
+ *          che genera la struttura degli elementi voci dipendenti dall'entit√† inserita e' stata richiamata
  *
  * @param	userContext	lo UserContext che ha generato la richiesta
  * @param	o il CdsBulk o l'Unita_organizzativaBulk che deve essere inserito
@@ -1147,59 +1147,59 @@ protected boolean isEsercizioChiuso(UserContext userContext,Unita_organizzativaB
  * Pre-post-conditions:
  *
  * Nome: Modifica di Cds 
- * Pre:  La richiesta di modifica di un Cds Ë stata generata
+ * Pre:  La richiesta di modifica di un Cds √® stata generata
  * Post: Un Cds e' stato modificato con i dati inseriti dall'utente 
  *
  * Nome: Modifica della descrizione di un  Cds 
- * Pre:  La richiesta di modifica della descrizione di un Cds Ë stata generata
+ * Pre:  La richiesta di modifica della descrizione di un Cds √® stata generata
  * Post: La descrizione del Cds e' stata modificata e la descrizione dell'UO-CDS e' stata modificata 
  *
  * Nome: Modifica dell'esercizio fine di un  Cds - OK
- * Pre:  La richiesta di modifica dell'esercizio fine di un CDS Ë stata generata e il nuovo esercizio fine e' valido
+ * Pre:  La richiesta di modifica dell'esercizio fine di un CDS √® stata generata e il nuovo esercizio fine e' valido
  *       (metodo 'verificaEsercizioFine')
  * Post: L'esercizio fine del Cds e' stato modificato; sono stati aggiornati in cascata anche tutti gli esercizi fine di
  *       tutte le UO che dipendono dal CDS e hanno esercizio fine maggiore rispetto a quello del Cds; sono stati aggiornati 
  *       in cascata anche tutti gli esercizi fine di tutti i Cdr che dipendono dalle UO che dipendono dal Cds e che hanno
  *       esercizio fine maggiore rispetto a quello del Cds; sono stati aggiornati in cascata anche tutti gli esercizi fine di
- *       tutte le linee di attivit‡ definite per i Cdr che dipendono dalle UO che dipendono dal Cds e che hanno esercizio 
+ *       tutte le linee di attivit√† definite per i Cdr che dipendono dalle UO che dipendono dal Cds e che hanno esercizio 
  *       fine maggiore rispetto a quello del Cds.
  *
  * Nome: Modifica dell'esercizio fine di un  Cds - Errore
- * Pre:  La richiesta di modifica dell'esercizio fine di un CDS Ë stata generata e il nuovo esercizio fine non e' valido
+ * Pre:  La richiesta di modifica dell'esercizio fine di un CDS √® stata generata e il nuovo esercizio fine non e' valido
  *       (metodo 'verificaEsercizioFine')
- * Post: Una ApplicationException viene lanciata per segnalare all'utente l'impossibilit‡ di aggiornare l'esercizio fine
+ * Post: Una ApplicationException viene lanciata per segnalare all'utente l'impossibilit√† di aggiornare l'esercizio fine
  *
  * Nome: Modifica dell'esercizio fine di una Unita organizzativa - OK
- * Pre:  La richiesta di modifica dell'esercizio fine di un'Unita organizzativa Ë stata generata e il nuovo esercizio fine e' valido
+ * Pre:  La richiesta di modifica dell'esercizio fine di un'Unita organizzativa √® stata generata e il nuovo esercizio fine e' valido
  *       (metodo 'verificaEsercizioFine')
  * Post: L'esercizio fine dell'Unita organizzativa e' stato modificato; sono stati aggiornati 
  *       in cascata anche tutti gli esercizi fine di tutti i Cdr che dipendono dall'Unita organizzativa e che hanno
  *       esercizio fine maggiore rispetto a quello dell'Unita organizzativa; sono stati aggiornati in cascata anche tutti 
- *       gli esercizi fine di tutte le linee di attivit‡ definite per i Cdr che dipendono dall'Unita organizzativa e che hanno esercizio 
+ *       gli esercizi fine di tutte le linee di attivit√† definite per i Cdr che dipendono dall'Unita organizzativa e che hanno esercizio 
  *       fine maggiore rispetto a quello dell'Unita organizzativa
  *
  * Nome: Modifica dell'esercizio fine di un'Unita organizzativa - Errore
- * Pre:  La richiesta di modifica dell'esercizio fine di un'Unita organizzativa Ë stata generata e il nuovo esercizio fine non e' valido
+ * Pre:  La richiesta di modifica dell'esercizio fine di un'Unita organizzativa √® stata generata e il nuovo esercizio fine non e' valido
  *       (metodo 'verificaEsercizioFine')
- * Post: Una ApplicationException viene lanciata per segnalare all'utente l'impossibilit‡ di aggiornare l'esercizio fine
+ * Post: Una ApplicationException viene lanciata per segnalare all'utente l'impossibilit√† di aggiornare l'esercizio fine
 
  * Nome: Errore di Responsabile inesistente
- * Pre:  Il Codice Terzo definito come responsabile del Cds non Ë presente
+ * Pre:  Il Codice Terzo definito come responsabile del Cds non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Modifica di Unita' Organizzativa
- * Pre:  La richiesta di modifica di un' Unita' Organizzativa Ë stata generata
+ * Pre:  La richiesta di modifica di un' Unita' Organizzativa √® stata generata
  * Post: L'Unita' Organizzativa e' stato modificata con i dati inseriti dall'utente e il piano dei conti finanziario e' stato
  *       aggiornato di conseguenza
  * 
  * Nome: Errore di Responsabile inesistente
- * Pre:  Il Codice Terzo definito come responsabile dell' Unita' organizzativa non Ë presente
+ * Pre:  Il Codice Terzo definito come responsabile dell' Unita' organizzativa non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Errore di Responsabile amministrativo inesistente
- * Pre:  Il Codice Terzo definito come responsabile amministrativo dell' Unita' organizzativa non Ë presente
+ * Pre:  Il Codice Terzo definito come responsabile amministrativo dell' Unita' organizzativa non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente 
  *
@@ -1209,26 +1209,26 @@ protected boolean isEsercizioChiuso(UserContext userContext,Unita_organizzativaB
  *       visualizzare all'utente
  *
  * Nome: Modifica di Unita' Organizzativa con modifica di Area di Ricerca specificata
- * Pre: L'area di ricerca specificata Ë cambiata
- * Post: L'Unit‡ Organizzativa Ë stata modificata con i dati inseriti dall'utente e il piano dei conti finanziario e' stato aggiornato eventualemente eliminando il SOTTOARTICOLO corrispondente all'area di origine e creando quello corrispondente all'area di destinazione
+ * Pre: L'area di ricerca specificata √® cambiata
+ * Post: L'Unit√† Organizzativa √® stata modificata con i dati inseriti dall'utente e il piano dei conti finanziario e' stato aggiornato eventualemente eliminando il SOTTOARTICOLO corrispondente all'area di origine e creando quello corrispondente all'area di destinazione
  *       n.b. "eventualmente" si riferisce al fatto che l'aggiunta o l'eliminazione del SOTTOARTICOLO sono subordinati al cambiamento o eliminazione di presidente di area. In uqesto caso l'intervento sul PDC finanziario potrebbe essere diretto all'aggiunzione o eliminazione di sottoarticoli relativi alle due aree iniziale e finale.
  *
  * Nome: Modifica di Unita' Organizzativa con rimozione di Area di Ricerca specificata
- * Pre: L'area di ricerca non Ë pi˘ specificata.
- * Post: L'Unit‡ Organizzativa Ë stata modificata con i dati inseriti dall'utente e il piano dei conti finanziario e' stato aggiornato eventualemente eliminando il SOTTOARTICOLO corrispondente all'area di origine
- *       n.b. "eventualmente" si riferisce al fatto che l'eliminazione del SOTTOARTICOLO Ë subordinato al fatto che l'uo eliminata era il presidente dell'areadente dell'area. Per una definizione di SOTTOARTICOLO vedi specifica di "creaConBulk"
+ * Pre: L'area di ricerca non √® pi√π specificata.
+ * Post: L'Unit√† Organizzativa √® stata modificata con i dati inseriti dall'utente e il piano dei conti finanziario e' stato aggiornato eventualemente eliminando il SOTTOARTICOLO corrispondente all'area di origine
+ *       n.b. "eventualmente" si riferisce al fatto che l'eliminazione del SOTTOARTICOLO √® subordinato al fatto che l'uo eliminata era il presidente dell'areadente dell'area. Per una definizione di SOTTOARTICOLO vedi specifica di "creaConBulk"
  *
  * Nome: Modifica di Unita' Organizzativa con aggiunzione di Area di Ricerca specificata
- * Pre: L'area di ricerca non era specificata ed ora lo Ë
- * Post: L'Unit‡ Organizzativa Ë stata modificata con i dati inseriti dall'utente e il piano dei conti finanziario e' stato aggiornato eventualemente aggiungendo il SOTTOARTICOLO corrispondente all'area di destinazione.
- *       n.b. "eventualmente" si riferisce al fatto che l'aggiunta del SOTTOARTICOLO Ë subordinato al fatto che l'uo collegata all'area risulti anche presidente dell'area. Per una definizione di SOTTOARTICOLO vedi specifica di "creaConBulk"
+ * Pre: L'area di ricerca non era specificata ed ora lo √®
+ * Post: L'Unit√† Organizzativa √® stata modificata con i dati inseriti dall'utente e il piano dei conti finanziario e' stato aggiornato eventualemente aggiungendo il SOTTOARTICOLO corrispondente all'area di destinazione.
+ *       n.b. "eventualmente" si riferisce al fatto che l'aggiunta del SOTTOARTICOLO √® subordinato al fatto che l'uo collegata all'area risulti anche presidente dell'area. Per una definizione di SOTTOARTICOLO vedi specifica di "creaConBulk"
  *
  * Nome: Errore di esistenza del Presidente dell'area
  * Pre: L'UO in modifica specifica i essere Presidente dell'area ed esiste per l'area di ricerca un presidente dell'area diverso dall'UO stessa
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da visualizzare all'utente
  *
- * Nome: Una UO del SAC non puÚ essere presidente dell'AREA
- * Pre:  L'UO appartiene al SAC ed Ë richiesto che sia Presidente dell'area a cui Ë collegata
+ * Nome: Una UO del SAC non pu√≤ essere presidente dell'AREA
+ * Pre:  L'UO appartiene al SAC ed √® richiesto che sia Presidente dell'area a cui √® collegata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
@@ -1250,7 +1250,7 @@ public OggettoBulk modificaConBulk(UserContext userContext, OggettoBulk bulk)
 			// 05/09/2003
 			// Aggiunto controllo sulla chiusura dell'esercizio
 			if (isEsercizioChiuso(userContext, uoBulk))
-				throw new ApplicationException("Non Ë possibile modificare uo con esercizio di terminazione chiuso.");
+				throw new ApplicationException("Non √® possibile modificare uo con esercizio di terminazione chiuso.");
 
 			if (uoBulk.getResponsabile() != null
 				&& uoBulk.getResponsabile().getCd_terzo() != null) {
@@ -1292,7 +1292,7 @@ public OggettoBulk modificaConBulk(UserContext userContext, OggettoBulk bulk)
 				// 05/09/2003
 				// Aggiunto controllo sulla chiusura dell'esercizio
 				if (isEsercizioChiuso(userContext, cdsBulk))
-					throw new ApplicationException("Non Ë possibile modificare cds con esercizio di terminazione chiuso.");
+					throw new ApplicationException("Non √® possibile modificare cds con esercizio di terminazione chiuso.");
 
 				if (cdsBulk.getArea_scientifica() == null
 					|| cdsBulk.getArea_scientifica().getCd_area_scientifica() == null)
@@ -1309,7 +1309,7 @@ public OggettoBulk modificaConBulk(UserContext userContext, OggettoBulk bulk)
 
 				//			getHomeCache().fetchAll();
 
-				// se e' stato modificato l'esercizio fine aggiorno tutte le uo, i cdr e le linee attivit‡ sotto al cds
+				// se e' stato modificato l'esercizio fine aggiorno tutte le uo, i cdr e le linee attivit√† sotto al cds
 
 				aggiornaEsercizioFine(userContext, cdsBulk);
 
@@ -1434,7 +1434,7 @@ public SQLBuilder selectCds_area_ricercaByClause(UserContext userContext, Ass_uo
  *
  * Nome: Richiesta di ricerca del Cds padre
  * Pre:  E' stata generata la richiesta di ricerca di un CdsBulk da utilizzare come padre
- *		 per l'Unit‡ organizzativa
+ *		 per l'Unit√† organizzativa
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, la
  *       clausola che il Cds sia valido per l'esercizio di scrivania e che la sua tipologia sia diversa da ENTE
  * 
@@ -1455,17 +1455,17 @@ public SQLBuilder selectUnita_padreByClause(UserContext userContext, Unita_organ
 }
 /*
  * Aggiunge alcune clausole a tutte le operazioni di ricerca dell'unita organizzativa di riferimento per
- * le unit‡ organizzative che dipendono da un Cds di tipo SAC e che non sono rubrica
+ * le unit√† organizzative che dipendono da un Cds di tipo SAC e che non sono rubrica
  * Pre-post-conditions:
  *
  * Nome: Richiesta di ricerca dell'unita organizzativa di riferimento
  * Pre:  E' stata generata la richiesta di ricerca di una Unita_organizzativaBulk da utilizzare come riferimento per
- *		 le unit‡ organizzative che dipendono da un Cds di tipo SAC e che non sono rubrica. Tale Uo di Riferimento
+ *		 le unit√† organizzative che dipendono da un Cds di tipo SAC e che non sono rubrica. Tale Uo di Riferimento
  *       viene utilizzata alla creazione del Cdr Responsabile dell'UO, per impostare come Cdr di afferenza il Cdr responsabile
  *		 dell'Uo di riferimento
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, la
- *       clausola che l'unita' organizzativa sia valida per l'esercizio di scrivania e che il Cds padre dell'unit‡ organizzativa
- *		 sia quello di scrivania e che sotto a tale Unit‡ Organizzativa esista un CDR di I livello
+ *       clausola che l'unita' organizzativa sia valida per l'esercizio di scrivania e che il Cds padre dell'unit√† organizzativa
+ *		 sia quello di scrivania e che sotto a tale Unit√† Organizzativa esista un CDR di I livello
  * 
  * @param userContext lo userContext che ha generato la richiesta
  * @param uo istanza di Unita_organizzativaBulk
@@ -1491,9 +1491,9 @@ public SQLBuilder selectUoDiRiferimentoByClause(UserContext userContext, Unita_o
  * Pre-post-conditions:
  *
  * Nome: Aggiornamento di Cds o di UO
- * Pre: La richiesta di aggiornamento di un Cds o di una Unit‡ Organizzativa e' stata generata
+ * Pre: La richiesta di aggiornamento di un Cds o di una Unit√† Organizzativa e' stata generata
  * Post: Il Cds/UO e' stato aggiornato nel database e la stored procedure ORACLEcreaEsplVociUO 
- *       che aggiorna la struttura degli elementi voci dipendenti dall'entit‡ modificata e' stata richiamata
+ *       che aggiorna la struttura degli elementi voci dipendenti dall'entit√† modificata e' stata richiamata
  *
  * @param	userContext	lo UserContext che ha generato la richiesta
  * @param	o il CdsBulk/Unita_organizzativabulk che deve essere aggiornato
@@ -1542,12 +1542,12 @@ public void updateBulk(UserContext userContext,OggettoBulk o) throws Persistency
  *
  * Nome: Errore per Cds SAC
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un Cds SAC e' stata generata
- * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilit‡ di effettuare tale modifica
+ * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilit√† di effettuare tale modifica
  *
  * Nome: Errore per PDG
  * Pre:  Per un Cds non SAC e' stata specificato un esercizio fine ed esistono dei Cdr dipendenti da UO che dipendono 
- *       dal Cds per i quali e' gi‡ stato aperto il piano di gestione
- * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilit‡ di effettuare tale modifica 
+ *       dal Cds per i quali e' gi√† stato aperto il piano di gestione
+ * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilit√† di effettuare tale modifica 
  *
  * Nome: Controlli superati
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un Cds non SAC e' stata generata 
@@ -1572,25 +1572,25 @@ private void verificaEsercizioFine(UserContext userContext,CdsBulk cds) throws i
 	} 
 
 }
-/* Verifica la correttezza dell'attributo fine di un'unit‡ organizzativa
+/* Verifica la correttezza dell'attributo fine di un'unit√† organizzativa
  *
  * Nome: Errore per UO-CDS
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un'UO-CDS e' stata generata
- * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilit‡ di effettuare tale modifica
+ * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilit√† di effettuare tale modifica
  *
  * Nome: Errore per CDS padre
- * Pre:  Per un'unit‡ organizzativa non UO-CDS e' stata specificato un esercizio fine superiore rispetto a quello
+ * Pre:  Per un'unit√† organizzativa non UO-CDS e' stata specificato un esercizio fine superiore rispetto a quello
  *		 del Cds da cui dipende
- * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilit‡ di effettuare tale modifica 
+ * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilit√† di effettuare tale modifica 
  *
  * Nome: Errore per PDG
- * Pre:  Per un'unit‡ organizzativa non UO-CDS e' stata specificato un esercizio fine ed esistono dei Cdr dipendenti
- *       dall'UO per i quali e' gi‡ stato aperto il piano di gestione
- * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilit‡ di effettuare tale modifica 
+ * Pre:  Per un'unit√† organizzativa non UO-CDS e' stata specificato un esercizio fine ed esistono dei Cdr dipendenti
+ *       dall'UO per i quali e' gi√† stato aperto il piano di gestione
+ * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilit√† di effettuare tale modifica 
  *
  * Nome: Controlli superati
- * Pre:  La richiesta di modifica dell'attributo esercizio fine di un'unit‡ organizzativa non UO-CDS e' stata generata 
- * Post: L'esercizio fine dell'unit‡ organizzativa ha superato tutti i controlli 
+ * Pre:  La richiesta di modifica dell'attributo esercizio fine di un'unit√† organizzativa non UO-CDS e' stata generata 
+ * Post: L'esercizio fine dell'unit√† organizzativa ha superato tutti i controlli 
 */
 
 private void verificaEsercizioFine(UserContext userContext,Unita_organizzativaBulk uo) throws it.cnr.jada.comp.ComponentException 
@@ -1599,7 +1599,7 @@ private void verificaEsercizioFine(UserContext userContext,Unita_organizzativaBu
 	{
 		// non e' possibile modificare l'eser. terminaz. per UO CDS	
 		if ( uo.getFl_uo_cds().booleanValue() )
-			throw new ApplicationException( "Non Ë possibile impostare l'esercizio di terminazione per una UO CDS");			
+			throw new ApplicationException( "Non √® possibile impostare l'esercizio di terminazione per una UO CDS");			
 			
 		//l'esercizio fine deve essere <= dell'esercizio fine del cds da cui dipende
 		if ( uo.getUnita_padre().getEsercizio_fine() != null &&
@@ -1633,13 +1633,13 @@ public OggettoBulk getUoEnte(UserContext userContext) throws ComponentException 
 	}
 }
 /**
- * Recupera l'indirizzo della sede dell'unit‡ organizzativa
+ * Recupera l'indirizzo della sede dell'unit√† organizzativa
  * 
  * @param userContext
  * @param uo		    -- l'Unita' Organizzativa di cui si vuole conoscere l'indirizzo
  * @param withoutComune -- se "true"  restituisce solo l'indirizzo 
  *                         se "false" restituisce l'indirizzo completo di cap e comune 
- * @return l'indirizzo della sede dell'unit‡ organizzativa 
+ * @return l'indirizzo della sede dell'unit√† organizzativa 
  * @throws it.cnr.jada.comp.ComponentException
  */
 public String getIndirizzoUnitaOrganizzativa(UserContext userContext,Unita_organizzativaBulk uo, boolean withoutComune) throws it.cnr.jada.comp.ComponentException

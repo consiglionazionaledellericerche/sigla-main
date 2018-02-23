@@ -123,7 +123,7 @@ public void validate() throws ValidationException {
 
 
 	if (getUnita_organizzativa()==null || getUnita_organizzativa().getCd_unita_organizzativa()==null)
-		throw new ValidationException("Inserire una unit‡ organizzativa");
+		throw new ValidationException("Inserire una unit√† organizzativa");
 	 
     super.validate();
 

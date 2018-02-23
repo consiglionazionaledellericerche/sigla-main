@@ -122,7 +122,7 @@ public class AssBeneFatturaBP extends SimpleCRUDBP implements SelectionListener{
 			resync(context);
 		}
 	};
-	// Controller sulla propriet‡ buono_carico: permette di utilizzare le property dell'oggetto
+	// Controller sulla propriet√† buono_carico: permette di utilizzare le property dell'oggetto
 	//	senza doverle rimappare
 	private final CompoundPropertyController buonoController = new CompoundPropertyController("test_buono", Buono_carico_scaricoBulk.class,"test_buono",this);
 /**
@@ -145,8 +145,8 @@ public AssBeneFatturaBP(String function) {
 }
 /**
   *  Metodo richiesto dall'interfaccia SelectionListener.
-  *	L'utente sta associando dei beni gi‡ presenti sul DB alle righe di una Fattura Passiva.
-  *	Il metodo Ë invocato dal FrameWork tutte le volte che si richiede una operazione di 
+  *	L'utente sta associando dei beni gi√† presenti sul DB alle righe di una Fattura Passiva.
+  *	Il metodo √® invocato dal FrameWork tutte le volte che si richiede una operazione di 
   *	"Aggiungi nuovo bene" da associare alla riga di Fattura.
   *
   * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
@@ -165,7 +165,7 @@ public void clearSelection(it.cnr.jada.action.ActionContext context) throws it.c
 }
 /**
   * Crea la {@link BuonoCaricoScaricoComponentSession } da usare per effettuare operazioni.
-  *	Si Ë resa necessaria la sua implementazione, poichË il BP Ë un BulkBP piuttosto
+  *	Si √® resa necessaria la sua implementazione, poich√® il BP √® un BulkBP piuttosto
   *	che un SimpleCRUDBP.
   *
 **/
@@ -174,7 +174,7 @@ public BuonoCaricoScaricoComponentSession createComponentSession() throws Busine
 }
 /**
   *  Crea la toolbar in sostituzione alla normale toolbar del CRUD.
-  *	Il BusinessProcess, infatti, non Ë di tipo CRUDBP, ma Ë di tipo BulkBP; questo comporta 
+  *	Il BusinessProcess, infatti, non √® di tipo CRUDBP, ma √® di tipo BulkBP; questo comporta 
   *	che la normale barra degli strumenti non viene creata automaticamente e, quindi, 
   *	bisogna provvedere.
   *
@@ -286,9 +286,9 @@ public it.cnr.jada.util.RemoteIterator find(it.cnr.jada.action.ActionContext act
 }
 /** 
   * Permette di reindirizzare la chiamata ad una pagina jsp piuttosto che ad un'altra.
-  * Se isPerAumentoValore == TRUE, vuol dire che la chiamata Ë stata fatta dalla fattura
+  * Se isPerAumentoValore == TRUE, vuol dire che la chiamata √® stata fatta dalla fattura
   *	per una operazione di Aumento valore su Beni, quindi
-  *	sar‡ visualizzata la pagina corrispondente.
+  *	sar√† visualizzata la pagina corrispondente.
   *
   * @return <code>Forward</code>
 **/  
@@ -342,7 +342,7 @@ public final SimpleDetailCRUDController getDettagliFattura() {
   *
   * @param userContext il <code>UserContext</code> che ha generato la richiesta
   * @param no_accessori <code>boolean</code> indica se includere i beni accessori nella ricerca
-  * @param beni_da_escludere la <code>BulkList</code> lista di beni gi‡ selezionati
+  * @param beni_da_escludere la <code>BulkList</code> lista di beni gi√† selezionati
   * @param clauses le <code>CompoundFindClause</code> clausole della ricerca selezionate dall'utente
 **/
 public it.cnr.jada.util.RemoteIterator getListaBeni(
@@ -660,9 +660,9 @@ public java.util.BitSet setSelection(it.cnr.jada.action.ActionContext context, i
 }
 /**
  * Valida i beni associati ad una riga di Fattura.
- *	L'utente sta associando dei beni ad una riga di Fattura. Se la fattura Ë <code>per aumento valore</code>,
+ *	L'utente sta associando dei beni ad una riga di Fattura. Se la fattura √® <code>per aumento valore</code>,
  *	 viene controllato che l'utente abbia inserito un valore valido nel campo variazione piu.
- *	Le propriet‡ che vengono controllate sono:
+ *	Le propriet√† che vengono controllate sono:
  *	<dl>
  *	<dt><b>Valore da caricare</b>
  *
@@ -683,7 +683,7 @@ private void validaAssocia(it.cnr.jada.action.ActionContext context, it.cnr.jada
 /** 
  *  Richiede l'ID univoco di Transazione.
  * E' stato richiesto di recuperare/generare l'identificativo di transazione.
- * Viene richiesto l'ID e, se questo non esiste, verr‡ generato, se force = TRUE
+ * Viene richiesto l'ID e, se questo non esiste, verr√† generato, se force = TRUE
  *
  * @param aUC lo <code>UserContext</code> che ha generato la richiesta.
  * @param force <code>boolean</code> il flag che indica se forzare la generazione dell'ID.

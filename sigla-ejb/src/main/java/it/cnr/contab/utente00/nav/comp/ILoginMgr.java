@@ -38,7 +38,7 @@ public interface ILoginMgr
 /** 
   *  normale
   *    PreCondition:
-  *      Una richiesta viene fatto per la modifica della password. L'utente Ë chiesto di scrivere la password vecchia e due volte la password nuova.
+  *      Una richiesta viene fatto per la modifica della password. L'utente √® chiesto di scrivere la password vecchia e due volte la password nuova.
   *      
   *      Dato un'oggetto UtenteBulk che contiene le informazione dell'utente e la password vecchia (criptata) che ha digitato l'utente, e la password nuova (criptata) che ha digitata l'utente,
   *    PostCondition:
@@ -55,7 +55,7 @@ public abstract UtenteBulk cambiaPassword (UserContext userContext,UtenteBulk ut
   *    PreCondition:
   *      Dato un'istanza di UTENTE specificata dall'parametro UtenteBulk un'istanza di ALBERO_MAIN specificata dall'attributo CD_NODO, e un numero di livelli specificato dal parametro num_livelli
   *    PostCondition:
-  *      sar‡ restituito un'oggetto ALBERO_MAINBULK che contiene le informazioni per l'istanza ALBERO_MAIN che corrisponde al CD_NODO, pi˘ la gerarchia dell'albero di funzioni a cui l'utente ha accesso per numero di livelli NUM_LIVELLI e cominciando dal nodo CD_NODO
+  *      sar√† restituito un'oggetto ALBERO_MAINBULK che contiene le informazioni per l'istanza ALBERO_MAIN che corrisponde al CD_NODO, pi√π la gerarchia dell'albero di funzioni a cui l'utente ha accesso per numero di livelli NUM_LIVELLI e cominciando dal nodo CD_NODO
  */
 //^^@@
 public abstract Albero_mainBulk generaAlberoPerUtente (UserContext userContext,UtenteBulk utente,String cd_unita_organizzativa,String cd_nodo,short num_livelli) throws it.cnr.jada.comp.ComponentException;
@@ -85,7 +85,7 @@ public abstract Albero_mainBulk validaNodoPerUtente(
   *    PreCondition:
   *      Dato un oggetto che contiene il CD_UTENTE e la password digitati dall'utente che richiede accesso all'applicazione
   *    PostCondition:
-  *      Se l'utente esiste in base dati, se la password corrisponde a quella in base dati, sar‡ restituito l'oggetto UtenteBulk.
+  *      Se l'utente esiste in base dati, se la password corrisponde a quella in base dati, sar√† restituito l'oggetto UtenteBulk.
   *      Altrimenti si fa un Throw di un'eccezione.
  */
 //^^@@
@@ -98,12 +98,12 @@ public abstract UtenteBulk validaUtente (UserContext userContext,UtenteBulk uten
   *      Dato un'istanza di UTENTE amminstratore o superutente 
   *		specificata dal parametro UtenteBulk 
   *    PostCondition:
-  *      sar‡ restituito un array di tutti gli esercizi disponibili
+  *      sar√† restituito un array di tutti gli esercizi disponibili
   *  normale
   *    PreCondition:
   *      Dato un'istanza di UTENTE specificata dal parametro UtenteBulk 
   *    PostCondition:
-  *      sar‡ restituito un array degli esercizi su cui l'utente
+  *      sar√† restituito un array degli esercizi su cui l'utente
   * 	 possiede almeno un accesso su qualche unita organizzativa
   *		 (possiede direttamente o tramite i ruoli o l'utente template)
  */
@@ -120,7 +120,7 @@ public Integer[] listaEserciziPerUtente(
   *      Dato un'istanza di UTENTE COMUNE specificata dal parametro UtenteBulk
   * 	 e un esercizio
   *    PostCondition:
-  *      sar‡ restituito un iteratore sulla collezione di unit‡ organizzative
+  *      sar√† restituito un iteratore sulla collezione di unit√† organizzative
   *		 per cui l'utente possiede almeno un accesso per l'esercizio specificato
   *		 (possiede direttamente o tramite i ruoli o l'utente template). Per ogni
   *		 unita organizzativa CDS presente nella collezione devono essere presenti
@@ -141,11 +141,11 @@ public abstract RemoteIterator listaUOPerUtente(
   * 	 un esercizio, il codice di una unita organizzativa e il nome di un
   *		 BusinessProcess
   *    PostCondition:
-  *      sar‡ restituita la modalit‡ di visualizzazione per il BusinessProcess
-  * 	 in base agli accessi posseduti dall'utente. La modalit‡ di visualizzazione
-  *		 Ë determinata dai nodi di ALBERO_MAIN disponibili all'utente
+  *      sar√† restituita la modalit√† di visualizzazione per il BusinessProcess
+  * 	 in base agli accessi posseduti dall'utente. La modalit√† di visualizzazione
+  *		 √® determinata dai nodi di ALBERO_MAIN disponibili all'utente
   *		 in base ai suoi accessi che posseggono il BusinessProcess specificato.
-  * 	 In caso di pi˘ nodi disponibili viene restituita la modalit‡ di 
+  * 	 In caso di pi√π nodi disponibili viene restituita la modalit√† di 
   *		 visualizzazione meno restrittiva
  */
 //^^@@

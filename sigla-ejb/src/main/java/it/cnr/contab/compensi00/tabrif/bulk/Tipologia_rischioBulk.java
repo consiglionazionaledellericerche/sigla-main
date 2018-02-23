@@ -48,15 +48,15 @@ public void setDataFineValidita(java.sql.Timestamp newData) {
 public void validate() throws ValidationException {
 
 	if ( getCd_tipologia_rischio() == null )
-		throw new ValidationException("Il campo CODICE TIPOLOGIA non può essere vuoto");
+		throw new ValidationException("Il campo CODICE TIPOLOGIA non puÃ² essere vuoto");
 	if ( getDs_tipologia_rischio() == null )
-		throw new ValidationException("Il campo DESCRIZIONE non può essere vuoto");
+		throw new ValidationException("Il campo DESCRIZIONE non puÃ² essere vuoto");
 	if ( getDt_inizio_validita() == null )
-		throw new ValidationException( "Il campo DATA INIZIO VALIDITA non può essere vuoto" );
+		throw new ValidationException( "Il campo DATA INIZIO VALIDITA non puÃ² essere vuoto" );
 	if ( getAliquota_ente() == null )
-		throw new ValidationException("Il campo ALIQUOTA ENTE non può essere vuoto");
+		throw new ValidationException("Il campo ALIQUOTA ENTE non puÃ² essere vuoto");
 	if ( getAliquota_percipiente() == null )
-		throw new ValidationException("Il campo ALIQUOTA PERCIPIENTE non può essere vuoto");
+		throw new ValidationException("Il campo ALIQUOTA PERCIPIENTE non puÃ² essere vuoto");
 
 }
 }

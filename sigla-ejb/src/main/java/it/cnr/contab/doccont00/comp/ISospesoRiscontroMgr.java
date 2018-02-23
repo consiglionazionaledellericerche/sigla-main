@@ -39,15 +39,15 @@ public abstract void cambiaStato(it.cnr.jada.UserContext param0,java.util.Collec
   *      E' stata generata la richiesta di creazione di un Sospeso e il sospeso supera la validazione
   *      (metodo verificaSospesoRiscontro)
   *    PostCondition:
-  *      Per i Sospesi d'Entrata del CNR vengono resettati il cds di origine e l'unit‡ organizzativa di 
+  *      Per i Sospesi d'Entrata del CNR vengono resettati il cds di origine e l'unit√† organizzativa di 
   *		 origine e viene impostato lo stato del sospeso a INIZIALE. 
-  *		 In tutti gli altri casi viene resettata l'unit‡ organizzativa di origine, viene impostato il cds
+  *		 In tutti gli altri casi viene resettata l'unit√† organizzativa di origine, viene impostato il cds
   *		 di origine con quello di scrivania e lo stato del sospeso a ASSOCIATO A CDS.
   *  Creazione di un Sospeso - errore
   *    PreCondition:
   *      la richiesta di creazione di un sospeso e' stata generata ed esiste un altro sospeso con la stessa chiave
   *    PostCondition:
-  *      una ComponentException viene generata per segnalare all'utente l'impossibilit‡ ad effettuare l'inserimento
+  *      una ComponentException viene generata per segnalare all'utente l'impossibilit√† ad effettuare l'inserimento
   *  creazione Riscontro
   *    PreCondition:
   *      E' stata generata la richiesta di creazione di un Riscontro e il riscontro supera la validazione
@@ -55,12 +55,12 @@ public abstract void cambiaStato(it.cnr.jada.UserContext param0,java.util.Collec
   *    PostCondition:
   *      Viene aggiornato l'importo del riscontro associato al documento contabile (mandato o reversale).
   *		 Viene poi creato un dettaglio di riscontro (metodo creaDettaglioSospeso), di tipo spesa o entrata, a seconda se
-  *		 il riscontro Ë stato associato rispettivamente a un mandato o a una reversale
+  *		 il riscontro √® stato associato rispettivamente a un mandato o a una reversale
   *  Creazione di un Riscontro - errore
   *    PreCondition:
   *      la richiesta di creazione di un riscontro e' stata generata ed esiste un altro riscontro con la stessa chiave
   *    PostCondition:
-  *      una ComponentException viene generata per segnalare all'utente l'impossibilit‡ ad effettuare l'inserimento
+  *      una ComponentException viene generata per segnalare all'utente l'impossibilit√† ad effettuare l'inserimento
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> il sospeso o riscontro da creare
@@ -120,7 +120,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
   *    PreCondition:
   *     E' stata richiesta l'inizializzazione di un riscontro d'entrata
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare che non Ë stata
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare che non √® stata
   *		associata nessuna reversale al riscontro
   *  inizializzazione di una istanza di SospesoBulk per modifica - errore associazione mandato-reversale
   *    PreCondition:
@@ -132,7 +132,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
   *    PreCondition:
   *     E' stata richiesta l'inizializzazione di un riscontro di spesa
   *    PostCondition:
-  *     Un messaggio di errore viene visualizzato all'utente per segnalare che non Ë stato
+  *     Un messaggio di errore viene visualizzato all'utente per segnalare che non √® stato
   *		associato nessun mandato al riscontro
   *  inizializzazione di una istanza di SospesoBulk per modifica - errore associazione mandato-reversale
   *    PreCondition:

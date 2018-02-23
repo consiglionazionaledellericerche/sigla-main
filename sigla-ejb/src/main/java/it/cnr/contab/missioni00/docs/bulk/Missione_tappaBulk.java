@@ -378,6 +378,6 @@ public class Missione_tappaBulk extends Missione_tappaBase
 		}
 		// Se ho settato "Allogio gratuito" o "Vitto e alloggio gratuito" non posso scegliere il trattamento alternativo
 		if((getFl_alloggio_gratuito().booleanValue()||getFl_vitto_alloggio_gratuito().booleanValue())&& getFl_rimborso().booleanValue())
-			throw new ValidationException( "Non è possibile scegliere il Trattamento alternativo quando l'Alloggio è gratuito !" );
+			throw new ValidationException( "Non Ã¨ possibile scegliere il Trattamento alternativo quando l'Alloggio Ã¨ gratuito !" );
 	}
 }
