@@ -32,7 +32,7 @@ public class NumTempDocContComponent extends it.cnr.jada.comp.CRUDComponent impl
 /** 
   *  tutti i controlli superati.
   *    PreCondition:
-  *      Il progressivo temporaneo è stato generato senza errori.
+  *      Il progressivo temporaneo Ã¨ stato generato senza errori.
   *    PostCondition:
   *      Viene consentita la registrazione del progressivo temporaneo.
   *  validazione
@@ -78,7 +78,7 @@ public java.lang.Long getNextTempPg(
 /** 
   *  tutti i controlli superati.
   *    PreCondition:
-  *      Il progressivo temporaneo è stato generato senza errori.
+  *      Il progressivo temporaneo Ã¨ stato generato senza errori.
   *    PostCondition:
   *      Viene consentita la registrazione del progressivo temporaneo.
   *  validazione

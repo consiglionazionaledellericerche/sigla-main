@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	shortDescription="Repertorio Incarichi"
 	longDescription="Repertorio Incarichi" >
@@ -55,14 +55,14 @@
 		inputType="TEXT"
 		inputSize="6"
 		maxLength="30"
-		label="Unità organizzativa" />
+		label="UnitÃ  organizzativa" />
 	<fieldProperty
 		name="ds_unita_organizzativa"
 		property="unita_organizzativa.ds_unita_organizzativa"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="300"
-		label="Unità organizzativa" />
+		label="UnitÃ  organizzativa" />
 	<fieldProperty
 		name="indirizzo_unita_organizzativa"
 		property="indirizzo_unita_organizzativa"
@@ -78,7 +78,7 @@
 		formName="searchtoolUO"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Unità organizzativa" />
+		label="UnitÃ  organizzativa" />
 	<fieldProperty
 		name="stato"
 		property="stato"

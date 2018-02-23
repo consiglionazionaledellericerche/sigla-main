@@ -64,6 +64,15 @@ public class Pdg_variazioneBase extends Pdg_variazioneKey implements Keyed {
 
 	private java.sql.Timestamp dt_firma;
 	
+	// TI_MOTIVAZIONE_VARIAZIONE VARCHAR2(10)
+	private java.lang.String tiMotivazioneVariazione;
+
+	// ID_MATRICOLA VARCHAR2(10)
+	private java.lang.String idMatricola;
+
+	// ID_BANDO VARCHAR2(30)
+	private java.lang.String idBando;
+
 	public Pdg_variazioneBase() {
 		super();
 	}
@@ -130,79 +139,101 @@ public class Pdg_variazioneBase extends Pdg_variazioneKey implements Keyed {
 	public void setDs_causale_respinta(java.lang.String ds_causale_respinta)  {
 		this.ds_causale_respinta=ds_causale_respinta;
 	}
-/**
- * @return
- */
-public java.lang.String getCd_centro_responsabilita() {
-	return cd_centro_responsabilita;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getCd_centro_responsabilita() {
+		return cd_centro_responsabilita;
+	}
+	
+	/**
+	 * @param string
+	 */
+	public void setCd_centro_responsabilita(java.lang.String string) {
+		cd_centro_responsabilita = string;
+	}
+	
+	public java.sql.Timestamp getDt_app_formale () {
+		return dt_app_formale;
+	}
+	public void setDt_app_formale(java.sql.Timestamp dt_app_formale)  {
+		this.dt_app_formale=dt_app_formale;
+	}
+	public java.lang.String getTipologia () {
+		return tipologia;
+	}
+	public void setTipologia(java.lang.String tipologia)  {
+		this.tipologia=tipologia;
+	}
+	public java.lang.String getTipologia_fin() {
+		return tipologia_fin;
+	}
+	public void setTipologia_fin(java.lang.String string) {
+		tipologia_fin = string;
+	}
+	public java.lang.String getCd_elemento_voce() {
+		return cd_elemento_voce;
+	}
+	
+	public void setCd_elemento_voce(java.lang.String cd_elemento_voce) {
+		this.cd_elemento_voce = cd_elemento_voce;
+	}
+	
+	public java.lang.String getTi_appartenenza() {
+		return ti_appartenenza;
+	}
+	
+	public void setTi_appartenenza(java.lang.String ti_appartenenza) {
+		this.ti_appartenenza = ti_appartenenza;
+	}
+	
+	public java.lang.String getTi_gestione() {
+		return ti_gestione;
+	}
+	
+	public void setTi_gestione(java.lang.String ti_gestione) {
+		this.ti_gestione = ti_gestione;
+	}
+	public Boolean getFl_visto_dip_variazioni() {
+		return fl_visto_dip_variazioni;
+	}
+	public void setFl_visto_dip_variazioni(Boolean fl_visto_dip_variazioni) {
+		this.fl_visto_dip_variazioni = fl_visto_dip_variazioni;
+	}
+	public java.lang.String getStato_invio() {
+		return stato_invio;
+	}
+	public void setStato_invio(java.lang.String statoInvio) {
+		stato_invio = statoInvio;
+	}
+	public java.sql.Timestamp getDt_firma() {
+		return dt_firma;
+	}
+	public void setDt_firma(java.sql.Timestamp dt_firma) {
+		this.dt_firma = dt_firma;
+	}
 
-/**
- * @param string
- */
-public void setCd_centro_responsabilita(java.lang.String string) {
-	cd_centro_responsabilita = string;
-}
+	public java.lang.String getTiMotivazioneVariazione() {
+		return tiMotivazioneVariazione;
+	}
+	
+	public void setTiMotivazioneVariazione(java.lang.String tiMotivazioneVariazione) {
+		this.tiMotivazioneVariazione = tiMotivazioneVariazione;
+	}
+	
+	public java.lang.String getIdMatricola() {
+		return idMatricola;
+	}
+	
+	public void setIdMatricola(java.lang.String idMatricola) {
+		this.idMatricola = idMatricola;
+	}
 
-public java.sql.Timestamp getDt_app_formale () {
-	return dt_app_formale;
-}
-public void setDt_app_formale(java.sql.Timestamp dt_app_formale)  {
-	this.dt_app_formale=dt_app_formale;
-}
-public java.lang.String getTipologia () {
-	return tipologia;
-}
-public void setTipologia(java.lang.String tipologia)  {
-	this.tipologia=tipologia;
-}
-public java.lang.String getTipologia_fin() {
-	return tipologia_fin;
-}
-public void setTipologia_fin(java.lang.String string) {
-	tipologia_fin = string;
-}
-public java.lang.String getCd_elemento_voce() {
-	return cd_elemento_voce;
-}
-
-public void setCd_elemento_voce(java.lang.String cd_elemento_voce) {
-	this.cd_elemento_voce = cd_elemento_voce;
-}
-
-public java.lang.String getTi_appartenenza() {
-	return ti_appartenenza;
-}
-
-public void setTi_appartenenza(java.lang.String ti_appartenenza) {
-	this.ti_appartenenza = ti_appartenenza;
-}
-
-public java.lang.String getTi_gestione() {
-	return ti_gestione;
-}
-
-public void setTi_gestione(java.lang.String ti_gestione) {
-	this.ti_gestione = ti_gestione;
-}
-public Boolean getFl_visto_dip_variazioni() {
-	return fl_visto_dip_variazioni;
-}
-public void setFl_visto_dip_variazioni(Boolean fl_visto_dip_variazioni) {
-	this.fl_visto_dip_variazioni = fl_visto_dip_variazioni;
-}
-public java.lang.String getStato_invio() {
-	return stato_invio;
-}
-public void setStato_invio(java.lang.String statoInvio) {
-	stato_invio = statoInvio;
-}
-public java.sql.Timestamp getDt_firma() {
-	return dt_firma;
-}
-public void setDt_firma(java.sql.Timestamp dt_firma) {
-	this.dt_firma = dt_firma;
-}
-
-
+	public java.lang.String getIdBando() {
+		return idBando;
+	}
+	
+	public void setIdBando(java.lang.String idBando) {
+		this.idBando = idBando;
+	}
 }

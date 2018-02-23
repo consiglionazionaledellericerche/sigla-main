@@ -126,14 +126,14 @@ public class AssVoceCatgrpInventBulk extends AssVoceCatgrpInventBase {
 	public void validate() throws ValidationException {
 		super.validate();
 		if ( elemento_voce == null || elemento_voce.getCd_elemento_voce() == null ||  elemento_voce.getCd_elemento_voce().equals("") )
-			throw new ValidationException( "Il codice del Elemento Voce è obbligatorio." );
+			throw new ValidationException( "Il codice del Elemento Voce Ã¨ obbligatorio." );
 		if ( elemento_voce.getTi_appartenenza() == null || elemento_voce.getTi_appartenenza().equals(""))
-			throw new ValidationException( "Il campo appartenenza è obbligatorio." );
+			throw new ValidationException( "Il campo appartenenza Ã¨ obbligatorio." );
 		if ( elemento_voce.getTi_gestione() == null || elemento_voce.getTi_gestione().equals(""))
-			throw new ValidationException( "Il campo gestione è obbligatorio." );
+			throw new ValidationException( "Il campo gestione Ã¨ obbligatorio." );
 		if ( categoria_gruppo_invent.getCd_categoria_gruppo() == null || categoria_gruppo_invent.getCd_categoria_gruppo().equals(""))
-			throw new ValidationException( "Il campo categoria/gruppo è obbligatorio." );
+			throw new ValidationException( "Il campo categoria/gruppo Ã¨ obbligatorio." );
 		if ( getOrdine() == null || getOrdine().equals(""))
-			throw new ValidationException( "Il campo Ordine è obbligatorio." );
+			throw new ValidationException( "Il campo Ordine Ã¨ obbligatorio." );
 	}
 }

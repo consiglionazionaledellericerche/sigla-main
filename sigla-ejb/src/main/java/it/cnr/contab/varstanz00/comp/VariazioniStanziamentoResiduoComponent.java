@@ -21,6 +21,7 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.CdrKey;
@@ -31,6 +32,8 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_mod_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
@@ -89,6 +92,7 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
@@ -444,7 +448,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 //		var_stanz_res.setDt_chiusura(DateUtils.dataContabile(EJBCommonServices.getServerDate(), CNRUserContext.getEsercizio(userContext)));
 		var_stanz_res.setToBeUpdated();
 		if (var_stanz_res.getAssociazioneCDR().isEmpty()) 
-			throw new ApplicationException("Associare almeno un Centro di Responsabilit‡ alla Variazione.");
+			throw new ApplicationException("Associare almeno un Centro di Responsabilit√† alla Variazione.");
 		
 		var_stanz_res = (Var_stanz_resBulk)super.modificaConBulk(userContext, var_stanz_res);
 		if ((var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_STO)||
@@ -453,17 +457,42 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				throw new ApplicationException("Il Totale da ripartire per uno storno deve essere zero.");
 		    }
 		try{
+			boolean existDettPersonale = true;
+			String cdrPersonale = null;
+			if (Optional.ofNullable(var_stanz_res.getTiMotivazioneVariazione()).isPresent()) { 
+				cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(userContext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
+						.orElseThrow(() -> new ComponentException("Non √® possibile individuare il codice CDR del Personale."));
+				existDettPersonale = false;
+			} 
+
 			for (java.util.Iterator j=var_stanz_res.getAssociazioneCDR().iterator();j.hasNext();){			
 				Ass_var_stanz_res_cdrBulk ass_cdr = (Ass_var_stanz_res_cdrBulk)j.next();
 				Ass_var_stanz_res_cdrHome ass_cdrHome = (Ass_var_stanz_res_cdrHome)getHome(userContext,Ass_var_stanz_res_cdrBulk.class);
 	
-				if (ass_cdrHome.findDettagliSpesa(ass_cdr).isEmpty()) { 
-						throw new ApplicationException("Associare almeno un dettaglio di variazione al Centro di ResponsabilitÔ‡ " + ass_cdr.getCd_centro_responsabilita());
-				}
+				existDettPersonale = existDettPersonale||cdrPersonale.equals(ass_cdr.getCd_centro_responsabilita());
+
+				java.util.Collection<Var_stanz_res_rigaBulk> dettagliSpesa = ass_cdrHome.findDettagliSpesa(ass_cdr);
+				if (dettagliSpesa.isEmpty()) 
+						throw new ApplicationException("Associare almeno un dettaglio di variazione al Centro di Responsabilit√Ø√† " + ass_cdr.getCd_centro_responsabilita());
 				if (ass_cdr.getSpesa_diff().compareTo(Utility.ZERO) != 0)
 					throw new ApplicationException("La Differenza di spesa ("+new it.cnr.contab.util.EuroFormat().format(ass_cdr.getSpesa_diff())+")"+
-												   "\n" + "per il Cdr "+ ass_cdr.getCd_centro_responsabilita()+ " Ë diversa da zero. ");
+												   "\n" + "per il Cdr "+ ass_cdr.getCd_centro_responsabilita()+ " √® diversa da zero. ");
+
+				if (!existDettPersonale) {
+					for (Var_stanz_res_rigaBulk varStanzResRiga : dettagliSpesa) {
+						if (!existDettPersonale) {
+							Elemento_voceBulk voce = (Elemento_voceBulk)getHome(userContext, Elemento_voceBulk.class).findByPrimaryKey(varStanzResRiga.getElemento_voce());
+							Classificazione_vociBulk classif = (Classificazione_vociBulk)getHome(userContext, Classificazione_vociBulk.class).findByPrimaryKey(new Classificazione_vociBulk(voce.getId_classificazione()));
+							existDettPersonale = classif.getFl_accentrato()&&cdrPersonale.equals(classif.getCdr_accentratore());
+						}
+					}
+				}
 			}
+
+			if (!existDettPersonale)
+				throw new ApplicationException("In un variazione di tipo 'Personale' occorre selezionare almeno una voce accentrata "
+						+ "verso il CDR del personale o scegliere tra i CDR partecipanti anche quello del personale ("+cdrPersonale+").");
+
 			aggiornaLimiteSpesa(userContext, var_stanz_res);
 		} catch (IntrospectionException e) {
 			throw new ComponentException(e);
@@ -524,7 +553,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			generaVariazioneBilancio(userContext, var_stanz_res);
 			if (var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_STO)||
 				var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_ECO)){
-				String soggetto = "E' stata approvata la Variazione allo stanziamento residuo n∞ "+var_stanz_res.getPg_variazione();
+				String soggetto = "E' stata approvata la Variazione allo stanziamento residuo n¬∞ "+var_stanz_res.getPg_variazione();
 				generaEMAIL(userContext, var_stanz_res,soggetto,soggetto +" del "+var_stanz_res.getEsercizio()+"<BR>",null, "APP");			    	
 			}						
 		} catch (IntrospectionException e) {
@@ -909,11 +938,11 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		MessaggioBulk messaggio = inizializzaMessaggio(userContext, utente);
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		if (tipo == null){
-			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - Ë stata aperta una nuova Variazione allo Stanziamento residuo");
+			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - √® stata aperta una nuova Variazione allo Stanziamento residuo");
 		}else if (tipo.equals(Var_stanz_resBulk.STATO_APPROVATA)){
-			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - Ë stata approvata la Variazione allo Stanziamento residuo");
+			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - √® stata approvata la Variazione allo Stanziamento residuo");
 		}else if (tipo.equals(Var_stanz_resBulk.STATO_RESPINTA)){
-			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - Ë stata respinta la Variazione allo Stanziamento residuo");
+			messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - √® stata respinta la Variazione allo Stanziamento residuo");
 		}
 		messaggio.setCorpo("Numero variazione:"+var_stanz_res.getPg_variazione());
 		messaggio.setCorpo(messaggio.getCorpo() + "\n" + "CdR proponente:"+var_stanz_res.getCentroDiResponsabilita().getCd_ds_cdr());	
@@ -924,7 +953,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	private MessaggioBulk generaMessaggioCopertura(UserContext userContext, UtenteBulk utente, Var_stanz_resBulk var_stanz_res, Ass_var_stanz_res_cdrBulk ass_var) throws ComponentException, PersistencyException{
 		MessaggioBulk messaggio = inizializzaMessaggio(userContext, utente);
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - Ë stata raggiunta la quota di Spesa assegnata alla Variazione");
+		messaggio.setDs_messaggio(sdf.format(EJBCommonServices.getServerTimestamp()) + " - √® stata raggiunta la quota di Spesa assegnata alla Variazione");
 		messaggio.setCorpo("Numero variazione:"+var_stanz_res.getPg_variazione());
 		messaggio.setCorpo(messaggio.getCorpo() + "\n" + "Il CdR :"+ass_var.getCentro_di_responsabilita().getCd_ds_cdr()+" ha coperto la quota assegnata.");
 		messaggio.setSoggetto(messaggio.getDs_messaggio());
@@ -972,7 +1001,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 								Var_stanz_res_rigaBulk riga = (Var_stanz_res_rigaBulk)i.next();
 									try {
 										if (isRigaLiquidazioneIva(usercontext, riga)){
-											throw new ApplicationException ("Attenzione: Non Ë possibile salvare la variazione contenente la GAE di default della liquidazione IVA!");
+											throw new ApplicationException ("Attenzione: Non √® possibile salvare la variazione contenente la GAE di default della liquidazione IVA!");
 										} else {
 											totaleImportoRiga = totaleImportoRiga.add(Utility.nvl(riga.getIm_variazione()));
 										}
@@ -982,7 +1011,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 								}
 						
 							if (Utility.nvl(ass_var_cdr.getIm_spesa()).compareTo(totaleImportoRiga) != 0){
-								throw new ApplicationException ("Attenzione: la somma degli importi "+totaleImportoRiga+" non corrisponde al totale indicato "+Utility.nvl(ass_var_cdr.getIm_spesa())+" sul centro di responsabilit‡!");
+								throw new ApplicationException ("Attenzione: la somma degli importi "+totaleImportoRiga+" non corrisponde al totale indicato "+Utility.nvl(ass_var_cdr.getIm_spesa())+" sul centro di responsabilit√†!");
 							}
 							try {
 								if(rigaInsMod)
@@ -1037,7 +1066,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 					wp = (WorkpackageBulk) getHome(userContext, WorkpackageBulk.class).findByPrimaryKey(wp);
 					if (wp == null){
 						throw new ApplicationException("Impossibile effettuare l'operazione !\n"+
-								   "Linea Attivit‡ della liquidazione IVA non esistente.");					
+								   "Linea Attivit√† della liquidazione IVA non esistente.");					
 					}
 					rigaCloned.setElemento_voce(riga.getElemento_voce());
 					rigaCloned.setVar_stanz_res(riga.getVar_stanz_res());
@@ -1261,13 +1290,13 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				try {
 					SQLExceptionHandler sqlException = SQLExceptionHandler.getInstance();
 					PersistencyException eccezione = sqlException.handleSQLException(e, var_stanz_res);
-					String soggetto = "Si Ë verificato un errore durante l'approvazione della variazione sul bilancio dell'ente "+var_stanz_res.getEs_var_bil()+"/"+var_stanz_res.getPg_var_bil();
+					String soggetto = "Si √® verificato un errore durante l'approvazione della variazione sul bilancio dell'ente "+var_stanz_res.getEs_var_bil()+"/"+var_stanz_res.getPg_var_bil();
 					
-					String preText = "Si Ë verificato il seguente errore durante l'approvazione della variazione sul bilancio dell'ente "+var_stanz_res.getEs_var_bil()+"/"+var_stanz_res.getPg_var_bil() + 
+					String preText = "Si √® verificato il seguente errore durante l'approvazione della variazione sul bilancio dell'ente "+var_stanz_res.getEs_var_bil()+"/"+var_stanz_res.getPg_var_bil() + 
 					                 "<BR>" + "generata in automatico a seguito della Variazione allo stanziamento residuo num. "+var_stanz_res.getPg_variazione()+
 					                 " del "+  var_stanz_res.getEsercizio()+".<BR><BR>"+
 									 "<b>"+eccezione.getMessage()+"</b><BR><BR>"+
-					                 "La Variazione al bilancio dell'Ente rimarr‡ pertanto PROVVISORIA.<BR>";
+					                 "La Variazione al bilancio dell'Ente rimarr√† pertanto PROVVISORIA.<BR>";
 					generaEMAIL(userContext, var_stanz_res, soggetto, preText, null,"ERR");
 					var_stanz_res.setErroreEsitaVariazioneBilancio(true);
 				}catch (IntrospectionException e1) {
@@ -1324,7 +1353,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 					config = createConfigurazioneCnrComponentSession().getConfigurazione( usercontext, CNRUserContext.getEsercizio(usercontext), null, Configurazione_cnrBulk.PK_ANNI_RESIDUI_VAR_ST_RES, String.valueOf(annoResiduo));
 				if (config != null){
 					if (!origineFonti.equalsIgnoreCase(config.getVal01()) && !origineFonti.equalsIgnoreCase(config.getVal02())){
-						throw new ApplicationException("Non Ë consentito emettere variazioni allo stanziamento residuo\n"+
+						throw new ApplicationException("Non √® consentito emettere variazioni allo stanziamento residuo\n"+
 						   "su residui del "+annoResiduo+" sulle "+ NaturaBulk.tipo_naturaKeys.get(origineFonti));	
 					}
 				}
@@ -1346,7 +1375,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 
 	public boolean isVariazioneFromLiquidazioneIvaDaModificare(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException,java.rmi.RemoteException{
 		/**
-		 * Recupero la linea di attivit‡ dell'IVA C20
+		 * Recupero la linea di attivit√† dell'IVA C20
 		 */
 		it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 		try {
@@ -1363,7 +1392,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	}
 	public Var_stanz_res_rigaBulk recuperoRigaLiquidazioneIva(it.cnr.jada.UserContext userContext, Var_stanz_resBulk bulk) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 			/**
-			 * Recupero la linea di attivit‡ dell'IVA C20
+			 * Recupero la linea di attivit√† dell'IVA C20
 			 */
 			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 			try {
@@ -1388,7 +1417,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	}
 	private boolean isRigaLiquidazioneIva(it.cnr.jada.UserContext userContext, Var_stanz_res_rigaBulk bulk) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		/**
-		 * Recupero la linea di attivit‡ dell'IVA C20
+		 * Recupero la linea di attivit√† dell'IVA C20
 		 */
 		it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 		try {

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -256,7 +256,7 @@
 		inputSize="10"
 		maxLength="256"
 		enabledOnEdit="false"
-		label="Unità di misura" />
+		label="UnitÃ  di misura" />
 	<fieldProperty
 		name="pesoLordo"
 		property="pesoLordo"
@@ -396,7 +396,7 @@
 		inputSize="4"
 		maxLength="4"
 		enabledOnEdit="false"
-		label="Modalità di Pagamento" />
+		label="ModalitÃ Â di Pagamento" />
 	<fieldProperty
 		name="dataterminiPagamento"
 		property="dataterminiPagamento"
@@ -507,7 +507,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="Modalità di Pagamento Sigla" />
+		label="ModalitÃ Â di Pagamento Sigla" />
 	<fieldProperty
 		name="modalitaPagamento"
 		property="modalitaPagamento"
@@ -517,7 +517,7 @@
 		labelStyle="color:blue"
 		enabledOnEdit="true"
 		readonlyPropertyOnEdit="valorizzatoTerzo"
-		label="Modalità di Pagamento" />	
+		label="ModalitÃ Â di Pagamento" />	
 	<fieldProperty
 		name="scontoPagamentoAnt"
 		property="scontoPagamentoAnt"
@@ -540,7 +540,7 @@
 		inputSize="17"
 		maxLength="17"
 		enabledOnEdit="false"
-		label="Imp. penalità Pagamenti ritardati" />
+		label="Imp. penalitÃ Â Pagamenti ritardati" />
 	<fieldProperty
 		name="dataRicorrenzapenale"
 		property="dataRicorrenzapenale"

@@ -28,9 +28,9 @@ public class Costi_dipendenteVBulk extends it.cnr.jada.bulk.OggettoBulk {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'costi_dipendenti'
+	 * Restituisce il valore della propriet√† 'costi_dipendenti'
 	 *
-	 * @return Il valore della propriet‡ 'costi_dipendenti'
+	 * @return Il valore della propriet√† 'costi_dipendenti'
 	 */
 	public it.cnr.jada.bulk.BulkList getCosti_dipendenti() {
 		return costi_dipendenti;
@@ -51,7 +51,7 @@ public class Costi_dipendenteVBulk extends it.cnr.jada.bulk.OggettoBulk {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'costi_dipendenti'
+	 * Imposta il valore della propriet√† 'costi_dipendenti'
 	 *
 	 * @param newCosti_dipendenti	Il valore da assegnare a 'costi_dipendenti'
 	 */

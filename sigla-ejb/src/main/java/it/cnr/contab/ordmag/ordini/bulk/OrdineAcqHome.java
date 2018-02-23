@@ -69,7 +69,7 @@ public class OrdineAcqHome extends BulkHome {
 			NumerazioneOrdHome numerazioneHome, NumerazioneOrdBulk numerazioneBulk, 
 			CompoundFindClause compoundfindclause) throws PersistencyException{
 		if (ordine == null || ordine.getCdUopOrdine() == null){
-			throw new PersistencyException("Selezionare prima l'unit‡ operativa");
+			throw new PersistencyException("Selezionare prima l'unit√† operativa");
 		}
 		SQLBuilder sql = numerazioneHome.selectByClause(userContext, compoundfindclause);
 		sql.addSQLClause("AND", "NUMERAZIONE_ORD.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, ordine.getCdUopOrdine());

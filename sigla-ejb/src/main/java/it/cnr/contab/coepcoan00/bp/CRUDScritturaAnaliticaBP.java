@@ -4,7 +4,7 @@ import it.cnr.contab.coepcoan00.core.bulk.*;
 import it.cnr.jada.action.*;
 import it.cnr.jada.util.action.*;
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Scrittura Analitica
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Scrittura Analitica
  */
 public class CRUDScritturaAnaliticaBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	private final SimpleDetailCRUDController movimenti = new SimpleDetailCRUDController("Movimenti",it.cnr.contab.coepcoan00.core.bulk.Movimento_coanBulk.class,"movimentiColl",this);

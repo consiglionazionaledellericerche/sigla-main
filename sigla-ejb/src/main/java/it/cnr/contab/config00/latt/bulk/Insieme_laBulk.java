@@ -22,9 +22,9 @@ public java.lang.String getCd_centro_responsabilita() {
 	return centro_responsabilita.getCd_centro_responsabilita();
 }
 /**
- * Restituisce il valore della propriet‡ 'centro_responsabilita'
+ * Restituisce il valore della propriet√† 'centro_responsabilita'
  *
- * @return Il valore della propriet‡ 'centro_responsabilita'
+ * @return Il valore della propriet√† 'centro_responsabilita'
  */
 public it.cnr.contab.config00.sto.bulk.CdrBulk getCentro_responsabilita() {
 	return centro_responsabilita;
@@ -33,7 +33,7 @@ public void setCd_centro_responsabilita(java.lang.String cd_centro_responsabilit
 	this.getCentro_responsabilita().setCd_centro_responsabilita(cd_centro_responsabilita);
 }
 /**
- * Imposta il valore della propriet‡ 'centro_responsabilita'
+ * Imposta il valore della propriet√† 'centro_responsabilita'
  *
  * @param newCentro_responsabilita	Il valore da assegnare a 'centro_responsabilita'
  */

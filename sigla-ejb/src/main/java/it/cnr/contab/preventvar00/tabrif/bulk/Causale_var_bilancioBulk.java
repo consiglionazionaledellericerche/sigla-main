@@ -29,9 +29,9 @@ public Causale_var_bilancioBulk(java.lang.String cd_causale_var_bilancio) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'ti_causaleKeys'
+ * Restituisce il valore della propriet√† 'ti_causaleKeys'
  *
- * @return Il valore della propriet‡ 'ti_causaleKeys'
+ * @return Il valore della propriet√† 'ti_causaleKeys'
  */
 public java.util.Dictionary getTi_causaleKeys() {
 

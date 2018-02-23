@@ -38,7 +38,7 @@ public Ass_ev_evHome(java.sql.Connection conn,PersistentCache persistentCache) {
 	super(Ass_ev_evBulk.class,conn,persistentCache);
 }
 /**
- * Carica in un dictionary l'elenco dei possibili valori che può
+ * Carica in un dictionary l'elenco dei possibili valori che puÃ²
  * assumere la natura.
  * @param bulk L'OggettoBulk in uso.
  * @return I valori della natura.

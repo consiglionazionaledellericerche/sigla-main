@@ -73,7 +73,7 @@ public void validaImporti() throws ValidationException {
 
 	// controllo su campo IM_INFERIORE
 	if ( getIm_inferiore().compareTo(new java.math.BigDecimal(0)) < 0 )
-		throw new ValidationException( "Il campo Importo Inferiore non può essere negativo");
+		throw new ValidationException( "Il campo Importo Inferiore non puÃ² essere negativo");
 
 	// controllo campo IM_INFERIORE < IM_SUPERIORE
 	if ( getIm_inferiore().compareTo(getIm_superiore()) >= 0 ) 
@@ -83,16 +83,16 @@ public void validate() throws ValidationException {
 
 	// controllo su campo IM_DETRAZIONE
 	if ( getIm_detrazione() == null )
-		throw new ValidationException("Il campo IMPORTO DETRAZIONE non può essere vuoto");
+		throw new ValidationException("Il campo IMPORTO DETRAZIONE non puÃ² essere vuoto");
 	// controllo su campo IM_INFERIORE
 	if ( getIm_inferiore() == null )
-		throw new ValidationException("Il campo IMPORTO INFERIORE non può essere vuoto");
+		throw new ValidationException("Il campo IMPORTO INFERIORE non puÃ² essere vuoto");
 	// controllo su campo IM_SUPERIORE
 	if ( getIm_superiore() == null )
-		throw new ValidationException("Il campo IMPORTO SUPERIORE non può essere vuoto");
+		throw new ValidationException("Il campo IMPORTO SUPERIORE non puÃ² essere vuoto");
 
 	// controllo su campo DT_INIZIO_VALIDITA
 	if ( getDt_inizio_validita() == null )
-		throw new ValidationException( "Il campo DATA INIZIO VALIDITA non può essere vuoto" );
+		throw new ValidationException( "Il campo DATA INIZIO VALIDITA non puÃ² essere vuoto" );
 }
 }

@@ -48,7 +48,7 @@ private it.cnr.jada.action.Forward basicDoConfermaChiudiFondo(
 	try {
 		fondo.setSospeso_di_chiusura(sospesoDiChiusura);
 		fondo.setToBeUpdated();
-		setErrorMessage(context, "Per confermare la chiusura del fondo è necessario effettuare il salvataggio!");
+		setErrorMessage(context, "Per confermare la chiusura del fondo Ã¨ necessario effettuare il salvataggio!");
 //		FondoEconomaleComponentSession session = (FondoEconomaleComponentSession)bp.createComponentSession();
 //		fondo = session.chiudeFondo(context.getUserContext(), fondo);
 //		bp.commitUserTransaction();
@@ -226,7 +226,7 @@ public it.cnr.jada.action.Forward doAssociaSpeseObbligazione(it.cnr.jada.action.
  * @param context	L'ActionContext della richiesta
  * @param fondo	L'OggettoBulk padre del searchtool
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public Forward doBlankSearchCreditore_scadenza(
 	ActionContext context,
@@ -254,7 +254,7 @@ public Forward doBlankSearchCreditore_scadenza(
  * @param context	L'ActionContext della richiesta
  * @param fondo	L'OggettoBulk padre del searchtool
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public Forward doBlankSearchEconomo(ActionContext context,
 	Fondo_economaleBulk fondo) 
@@ -281,7 +281,7 @@ public Forward doBlankSearchEconomo(ActionContext context,
  * @param context	L'ActionContext della richiesta
  * @param fondo	L'OggettoBulk padre del searchtool
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public Forward doBlankSearchMandato(ActionContext context,
 	Fondo_economaleBulk fondo) 
@@ -289,7 +289,7 @@ public Forward doBlankSearchMandato(ActionContext context,
 		
 	try{
 		if (hasSpese(context, fondo))
-			throw new it.cnr.jada.comp.ApplicationException("Non è possibile cambiare il mandato ad un fondo economale per il quale sono già state registrate delle spese!");
+			throw new it.cnr.jada.comp.ApplicationException("Non Ã¨ possibile cambiare il mandato ad un fondo economale per il quale sono giÃ  state registrate delle spese!");
 
 		FondoEconomaleBP bp = (FondoEconomaleBP)getBusinessProcess(context);
 		MandatoIBulk mandato = new MandatoIBulk();
@@ -315,7 +315,7 @@ public Forward doBlankSearchMandato(ActionContext context,
  * @param context	L'ActionContext della richiesta
  * @param fondo	L'OggettoBulk padre del searchtool
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public Forward doBlankSearchScadenza_ricerca(
 	ActionContext context,
@@ -374,7 +374,7 @@ public it.cnr.jada.action.Forward doBringBackAssociaSpeseObbligazione(it.cnr.jad
  * @param fondo	
  * @param economoTrovato	
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public Forward doBringBackCRUDCrea_economo(ActionContext context,
 	Fondo_economaleBulk fondo,
@@ -393,7 +393,7 @@ public Forward doBringBackCRUDCrea_economo(ActionContext context,
  * @param context	L'ActionContext della richiesta
  * @param fondo	L'OggettoBulk padre del searchtool
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public Forward doBringBackSearchCreditore_scadenza(
 	ActionContext context,
@@ -416,7 +416,7 @@ public Forward doBringBackSearchCreditore_scadenza(
  * @param fondo	L'OggettoBulk padre del searchtool
  * @param economoTrovato	L'OggettoBulk selezionato dall'utente
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public Forward doBringBackSearchEconomo(ActionContext context,
 	Fondo_economaleBulk fondo,
@@ -448,7 +448,7 @@ public Forward doBringBackSearchEconomo(ActionContext context,
  * @param fondo	L'OggettoBulk padre del searchtool
  * @param mandatoTrovato	L'OggettoBulk selezionato dall'utente
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public Forward doBringBackSearchMandato(ActionContext context,
 	Fondo_economaleBulk fondo,
@@ -460,12 +460,12 @@ public Forward doBringBackSearchMandato(ActionContext context,
 		if (mandatoTrovato!=null) {
 
 			if (hasSpese(context, fondo))
-				throw new it.cnr.jada.comp.ApplicationException("Non è possibile cambiare il mandato ad un fondo economale per il quale sono già state registrate delle spese!");
+				throw new it.cnr.jada.comp.ApplicationException("Non Ã¨ possibile cambiare il mandato ad un fondo economale per il quale sono giÃ  state registrate delle spese!");
 
 			if (!((CRUDBP)getBusinessProcess(context)).isSearching()) {
 				java.math.BigDecimal importo = mandatoTrovato.getIm_pagato();
 				if (importo == null || importo.compareTo(mandatoTrovato.getIm_mandato()) != 0)
-					throw new it.cnr.jada.comp.ApplicationException("Il mandato selezionato non è completamente riscontrato! Operazione annullata.");
+					throw new it.cnr.jada.comp.ApplicationException("Il mandato selezionato non Ã¨ completamente riscontrato! Operazione annullata.");
 				fondo.setMandato(mandatoTrovato);
 				if (fondo.getDs_fondo() == null || fondo.getDs_fondo().equals("")) {
 					String ds = "Fondo economale generato dal mandato \"";
@@ -498,7 +498,7 @@ public Forward doBringBackSearchMandato(ActionContext context,
  * @param fondo	L'OggettoBulk padre del searchtool
  * @param scadenzaTrovata	L'OggettoBulk selezionato dall'utente
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public Forward doBringBackSearchScadenza_ricerca(ActionContext context,
 	Fondo_economaleBulk fondo,
@@ -588,7 +588,7 @@ public it.cnr.jada.action.Forward doChiudiSpese(it.cnr.jada.action.ActionContext
 		if (((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getVal01(context.getUserContext(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()), "*", "FONDO_ECONOMALE", "REINTEGRO_OBBLIGATORIO")!=null && 
 		   (((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class)).getVal01(context.getUserContext(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()), "*", "FONDO_ECONOMALE", "REINTEGRO_OBBLIGATORIO").compareTo("S")==0)){
 			if(fondo.getIm_totale_spese()!= null && fondo.getIm_totale_spese().compareTo(BigDecimal.ZERO)!=0)
-				throw new it.cnr.jada.comp.ApplicationException("Prima di procedere è necessario reintegrare tutte le spese. Operazione annullata!");
+				throw new it.cnr.jada.comp.ApplicationException("Prima di procedere Ã¨ necessario reintegrare tutte le spese. Operazione annullata!");
 			else
 				return doConfermaChiudiSpese(context,OptionBP.YES_BUTTON);			
 		}else{
@@ -675,7 +675,7 @@ public Forward doIntegraFondo(ActionContext context) {
 		if (mandatoSelezionato != null)	{
 			java.math.BigDecimal importo = mandatoSelezionato.getIm_pagato();
 			if (importo == null || importo.compareTo(mandatoSelezionato.getIm_mandato()) != 0)
-				throw new it.cnr.jada.comp.ApplicationException("Il mandato selezionato non è completamente riscontrato! Operazione annullata.");
+				throw new it.cnr.jada.comp.ApplicationException("Il mandato selezionato non Ã¨ completamente riscontrato! Operazione annullata.");
 			
 			FondoEconomaleBP bp = (FondoEconomaleBP)getBusinessProcess(context);
 			Fondo_economaleBulk fondo = (Fondo_economaleBulk)bp.getModel();
@@ -684,7 +684,7 @@ public Forward doIntegraFondo(ActionContext context) {
 				for (java.util.Iterator i = fondo.getAssociazioni_mandati().iterator(); i.hasNext();) {
 					Ass_fondo_eco_mandatoBulk ass = (Ass_fondo_eco_mandatoBulk)i.next();
 					if (mandatoSelezionato.equalsByPrimaryKey(ass.getMandato()))
-						throw new it.cnr.jada.comp.ApplicationException("Il mandato selezionato è già stato inserito. Operazione annullata!");
+						throw new it.cnr.jada.comp.ApplicationException("Il mandato selezionato Ã¨ giÃ  stato inserito. Operazione annullata!");
 					
 				}
 
@@ -712,7 +712,7 @@ public Forward doIntegraFondo(ActionContext context) {
 	}
 }
 /**
- * Ricerca le banche associate alla modalità di pagamento dell'economo
+ * Ricerca le banche associate alla modalitÃ  di pagamento dell'economo
  */ 
 
  public Forward doOnModalitaPagamentoChange(ActionContext context) {
@@ -753,7 +753,7 @@ public it.cnr.jada.action.Forward doReintegraSpeseSelezionate(it.cnr.jada.action
 			Fondo_economaleBulk fondo = (Fondo_economaleBulk)bp.getModel();
 			java.math.BigDecimal totaleSpese = calcolaTotaleSpesePer(context, speseSelezionate);
 			if (fondo.getIm_limite_min_reintegro().compareTo(totaleSpese) > 0)
-				throw new it.cnr.jada.comp.ApplicationException("L'importo delle spese di \"" + totaleSpese.toString() + "\" è inferiore al limite minimo di reintegro specificato nel fondo!");
+				throw new it.cnr.jada.comp.ApplicationException("L'importo delle spese di \"" + totaleSpese.toString() + "\" Ã¨ inferiore al limite minimo di reintegro specificato nel fondo!");
 			fondo = ((FondoEconomaleComponentSession)bp.createComponentSession()).
 										reintegraSpese(
 													context.getUserContext(), 
@@ -827,7 +827,7 @@ public Forward doRemoveFromCRUDMain_AssociazioniMandati(ActionContext context) {
 				//Controllo che l'eliminazione non comporti un importo residuo del
 				//fondo minore del totale delle spese registrate
 				if (fondo.getIm_residuo_fondo().compareTo(fondo.getIm_totale_spese()) < 0)
-					throw new it.cnr.jada.comp.ApplicationException("Non è possibile scollegare il mandato \"" + mandatoSelezionato.getDs_mandato() + "\" perché l'importo delle spese registrate\n supererebbe l'importo residuo del fondo stesso!");
+					throw new it.cnr.jada.comp.ApplicationException("Non Ã¨ possibile scollegare il mandato \"" + mandatoSelezionato.getDs_mandato() + "\" perchÃ© l'importo delle spese registrate\n supererebbe l'importo residuo del fondo stesso!");
 			}
 
 			bp.getAssociazioniMandati().remove(context);
@@ -896,7 +896,7 @@ public Forward doSearchListabanche(ActionContext context) {
  *
  * @param context	L'ActionContext della richiesta
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public Forward doSearchMandato(ActionContext context) 
 	throws java.rmi.RemoteException {
@@ -921,7 +921,7 @@ public Forward doSearchMandato(ActionContext context)
  *
  * @param context	L'ActionContext della richiesta
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  */
 public Forward doSearchScadenza_ricerca(ActionContext context) 
 	throws java.rmi.RemoteException {
@@ -964,7 +964,7 @@ public it.cnr.jada.action.Forward doSelezionaSospesoDiChiusuraFondo(
 				ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
 				if (ri == null || ri.countElements() == 0) {
 					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
-					bp.setMessage("Non è stato trovato alcun sospeso valido per la chiusura del fondo economale! Operazione annullata.");
+					bp.setMessage("Non Ã¨ stato trovato alcun sospeso valido per la chiusura del fondo economale! Operazione annullata.");
 					bp.rollbackUserTransaction();
 					return context.findDefaultForward();
 				} else {
@@ -992,7 +992,7 @@ public it.cnr.jada.action.Forward doSelezionaSospesoDiChiusuraFondo(
 /**
  * Metodo utilizzato per gestire dell'eccezione generata dalla squadratura
  * del fondo economale. Pone quesito all'utente per la continuazione e se la
- * risposta è affermativa salva il fondo
+ * risposta Ã¨ affermativa salva il fondo
  *
  * @param context {@link ActionContext } in uso.
  * @param ex Eccezione da gestire.

@@ -71,7 +71,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 	
 	private OggettoBulk intBulk(UserContext userContext, OggettoBulk bulk) throws ComponentException {
 		//if(((CdrBulk)bulk).getDettagli().isEmpty() )
-		//   throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare Ë necessario inserire almeno un dettaglio!");
+		//   throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare √® necessario inserire almeno un dettaglio!");
 		return bulk;
 	}
 	
@@ -134,7 +134,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 		CdrBulk cdrUtente = cdrFromUserContext(userContext);
 	
 		if (cdr == null && cdrUtente == null) 
-			throw new ApplicationException("L'utente non Ë configurato correttamente per l'utilizzo del pdg preliminare");
+			throw new ApplicationException("L'utente non √® configurato correttamente per l'utilizzo del pdg preliminare");
 		
 		CdrBulk cdrLiv1=null;
 		if (cdrUtente.getCd_cdr_afferenza()!= null){
@@ -233,20 +233,20 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 				oldPdg_modulo = (Pdg_moduloBulk)getHome(userContext,pdg_modulo).findAndLock(pdg_modulo);
 			}
 			catch (ObjectNotFoundException e) {
-				throw new ApplicationException("Lo stato del PdGP non Ë modificabile per record non ancora salvati.");
+				throw new ApplicationException("Lo stato del PdGP non √® modificabile per record non ancora salvati.");
 			}
 			String nuovoStato = pdg_modulo.getCambia_stato();
 			String vecchioStato = oldPdg_modulo.getStato();
 
 			if (!isStatoCompatibile(vecchioStato,nuovoStato))
-				throw new ApplicationException("Lo stato "+nuovoStato+" non Ë compatibile con lo stato attuale del PdGP ("+vecchioStato+")");
+				throw new ApplicationException("Lo stato "+nuovoStato+" non √® compatibile con lo stato attuale del PdGP ("+vecchioStato+")");
 
 			Pdg_esercizioBulk es = findPdgEsercizio(userContext, pdg_modulo); 
 			if (es!=null &&
 				(es.getStato().equals(Pdg_esercizioBulk.STATO_APPROVAZIONE_CDR) ||
 				 /*es.getStato().equals(Pdg_esercizioBulk.STATO_APERTURA_GESTIONALE_CDR) ||*/
 				 es.getStato().equals(Pdg_esercizioBulk.STATO_CHIUSURA_GESTIONALE_CDR)))
-				throw new ApplicationException("Non Ë possibile modificare lo stato del PdGP poichË risulta chiusa la fase previsionale per il CdR "+es.getCd_centro_responsabilita());
+				throw new ApplicationException("Non √® possibile modificare lo stato del PdGP poich√® risulta chiusa la fase previsionale per il CdR "+es.getCd_centro_responsabilita());
 
 			pdg_modulo.setUser(userContext.getUser());
 			
@@ -283,7 +283,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 		try {
 			CdrBulk cdr = pdg_modulo.getCdr();
 			if (!isStatoAggiornabilePerCostiDip(userContext, cdr))
-				throw new ApplicationException("Non Ë stato effettuato lo scarico dei dipendenti sul PdGP - CDR per il CdR "+cdr.getCd_centro_responsabilita()+".\nImpossibile modificare lo stato.");
+				throw new ApplicationException("Non √® stato effettuato lo scarico dei dipendenti sul PdGP - CDR per il CdR "+cdr.getCd_centro_responsabilita()+".\nImpossibile modificare lo stato.");
 			
 			controllaImportiFontiEsterne(userContext, pdg_modulo);
 			
@@ -297,9 +297,9 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 		Pdg_esercizioBulk es = findPdgEsercizio(userContext, pdg_modulo); 
 
 		if (es==null)
-			throw new ApplicationException("Non Ë stato impostato lo stato iniziale di apertura del PdGP - CDR per il CdR "+es.getCd_centro_responsabilita());
+			throw new ApplicationException("Non √® stato impostato lo stato iniziale di apertura del PdGP - CDR per il CdR "+es.getCd_centro_responsabilita());
 		if (!es.getStato().equals(Pdg_esercizioBulk.STATO_APERTURA_CDR))
-			throw new ApplicationException("Stato non modificabile poichË non Ë APERTO lo stato del PdGP - CDR per il CdR "+es.getCd_centro_responsabilita());
+			throw new ApplicationException("Stato non modificabile poich√® non √® APERTO lo stato del PdGP - CDR per il CdR "+es.getCd_centro_responsabilita());
 	}
 
 	public void modificaStatoPdg_aggregato_CC_AD(UserContext userContext,Pdg_moduloBulk pdg_modulo) throws it.cnr.jada.comp.ComponentException {
@@ -311,27 +311,27 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 		Pdg_esercizioBulk es = findPdgEsercizio(userContext, pdg_modulo); 
 
 		if (es==null)
-			throw new ApplicationException("Non Ë stato impostato lo stato iniziale di apertura del PdGP - CDR per il CdR "+es.getCd_centro_responsabilita());
+			throw new ApplicationException("Non √® stato impostato lo stato iniziale di apertura del PdGP - CDR per il CdR "+es.getCd_centro_responsabilita());
 		if (!es.getStato().equals(Pdg_esercizioBulk.STATO_APERTURA_GESTIONALE_CDR))
-			throw new ApplicationException("Stato non modificabile poichË non Ë 'Apertura Gestionale del CDR', lo stato del PdGP - CDR per il CdR "+es.getCd_centro_responsabilita());
+			throw new ApplicationException("Stato non modificabile poich√® non √® 'Apertura Gestionale del CDR', lo stato del PdGP - CDR per il CdR "+es.getCd_centro_responsabilita());
 	}
 	public void modificaStatoPdg_aggregato_AP_AD(UserContext userContext,Pdg_moduloBulk pdg_modulo) throws it.cnr.jada.comp.ComponentException {
 
 		Pdg_esercizioBulk es = findPdgEsercizio(userContext, pdg_modulo); 
 
 		if (es==null)
-			throw new ApplicationException("Non Ë stato impostato lo stato iniziale di apertura del PdGP - CDR per il CdR "+es.getCd_centro_responsabilita());
+			throw new ApplicationException("Non √® stato impostato lo stato iniziale di apertura del PdGP - CDR per il CdR "+es.getCd_centro_responsabilita());
 		if (es.getStato().equals(Pdg_esercizioBulk.STATO_APPROVAZIONE_CDR) ||
 			es.getStato().equals(Pdg_esercizioBulk.STATO_APERTURA_GESTIONALE_CDR) ||
 			es.getStato().equals(Pdg_esercizioBulk.STATO_CHIUSURA_GESTIONALE_CDR))
-			throw new ApplicationException("Stato non modificabile poichË risulta chiusa la fase previsionale per il PdGP - CDR per il CdR "+es.getCd_centro_responsabilita());
+			throw new ApplicationException("Stato non modificabile poich√® risulta chiusa la fase previsionale per il PdGP - CDR per il CdR "+es.getCd_centro_responsabilita());
 	}
 
 	public void modificaStatoPdg_aggregato_AD_AP(UserContext userContext,Pdg_moduloBulk pdg_modulo) throws it.cnr.jada.comp.ComponentException {
 		try {
 			CdrBulk cdr = pdg_modulo.getCdr();
 			if (!isStatoAggiornabilePerCostiDip(userContext, cdr))
-				throw new ApplicationException("Non Ë stato effettuato lo scarico dei dipendenti sul PdGP - CDR per il CdR "+cdr.getCd_centro_responsabilita()+" Impossibile modificare lo stato.");
+				throw new ApplicationException("Non √® stato effettuato lo scarico dei dipendenti sul PdGP - CDR per il CdR "+cdr.getCd_centro_responsabilita()+" Impossibile modificare lo stato.");
 			
 			controllaStatoModuloAttivita(userContext, pdg_modulo);
 			
@@ -452,9 +452,9 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 		try {
 			List listaModuli = findPdgModuloNE(userContext, cdr, Pdg_moduloBulk.STATO_AC);
 			List listaModuli2 = findPdgModuloNE(userContext, cdr, Pdg_moduloBulk.STATO_AD);
-			// se gli stati sono tutti AC oppure sono tutti AD puÚ procedere con lo scarico
+			// se gli stati sono tutti AC oppure sono tutti AD pu√≤ procedere con lo scarico
 			if (!(listaModuli.isEmpty() || listaModuli2.isEmpty()))
-				throw new ApplicationException("Lo scarico dei dipendenti non puÚ essere effettuato poichË non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_AC+" oppure "+Pdg_moduloBulk.STATO_AD);
+				throw new ApplicationException("Lo scarico dei dipendenti non pu√≤ essere effettuato poich√® non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_AC+" oppure "+Pdg_moduloBulk.STATO_AD);
 		} catch (Throwable e) {
 			throw handleException(cdr,e);
 		}
@@ -492,7 +492,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 		try {
 			List listaModuli = findPdgModulo(userContext, cdr, Pdg_moduloBulk.STATO_CC);
 			if (!listaModuli.isEmpty())
-				throw new ApplicationException("Lo scarico dei dipendenti non puÚ essere annullato poichË non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_AC);
+				throw new ApplicationException("Lo scarico dei dipendenti non pu√≤ essere annullato poich√® non tutte le righe del PdGP hanno stato "+Pdg_moduloBulk.STATO_AC);
 		} catch (Throwable e) {
 			throw handleException(cdr,e);
 		}
@@ -661,7 +661,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 						sql_voce.addSQLClause("AND","FL_SOGGETTO_PRELIEVO",SQLBuilder.EQUALS,"Y");
 						java.util.List voci=home_voce.fetchAll(sql_voce);
 						if(voci.size() >1)// non dovrebbe capitare mai
-							throw new ApplicationException("Esistono pi˘ voci sulla stessa classificazione.");
+							throw new ApplicationException("Esistono pi√π voci sulla stessa classificazione.");
 							for(Iterator i=voci.iterator();i.hasNext();){
 								Elemento_voceBulk ev = (Elemento_voceBulk)i.next();
 								if(ev!=null && ev.getPerc_prelievo_pdgp_entrate().compareTo(Utility.ZERO)!=0)
@@ -672,8 +672,8 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 				// se non ci sono entrate soggette a prelievo bisogna fare lo stesso il controllo
 				if(impTotaleEntrateDaPrel.compareTo(BigDecimal.ZERO)!=0)
 					if(impTotaleEntrateDaPrel.compareTo(impTotaleSpesePrel)!=0)
-						throw new ApplicationException("Per il "+labelProgetto+" "+pdg.getCd_progetto()+" il contributo per l'attivit‡ ordinaria Ë pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
-									". Impossibile salvare, poichË Ë stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
+						throw new ApplicationException("Per il "+labelProgetto+" "+pdg.getCd_progetto()+" il contributo per l'attivit√† ordinaria √® pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
+									". Impossibile salvare, poich√® √® stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
 			}
 			if (parCnrBulk.getFl_pdg_quadra_fonti_esterne() && impTotaleSpese.compareTo(impTotaleEntrate)!=0)
 				if ( cds!=null ) {
@@ -736,9 +736,9 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 
 	public void validaCancellazionePdgModulo(UserContext userContext, Pdg_moduloBulk pdg_modulo) throws it.cnr.jada.comp.ComponentException {
 		if (isModuloInCostiDipendentiLA(userContext, pdg_modulo))
-			throw new ComponentException("La riga del PdGP non puÚ essere eliminata perchË utilizzata nella ripartizione del personale.");
+			throw new ComponentException("La riga del PdGP non pu√≤ essere eliminata perch√® utilizzata nella ripartizione del personale.");
 		if (isPdgModuloInFigli(userContext, pdg_modulo))
-			throw new ComponentException("La riga del PdGP non puÚ essere eliminata perchË utilizzata nelle tabelle del PdGP.");		
+			throw new ComponentException("La riga del PdGP non pu√≤ essere eliminata perch√® utilizzata nelle tabelle del PdGP.");		
 	}
 
 	private boolean isModuloInCostiDipendentiLA(UserContext userContext, Pdg_moduloBulk pdg_modulo) throws it.cnr.jada.comp.ComponentException {
@@ -823,10 +823,10 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 			modAtt = (Progetto_sipBulk) homeSpese.findByPrimaryKey(modAtt);
 			
 			if (modAtt==null)
-				throw new ApplicationException("Non Ë stato trovata la riga corrispondente nella tabella dei moduli di attivit‡. Impossibile procedere.");
+				throw new ApplicationException("Non √® stato trovata la riga corrispondente nella tabella dei moduli di attivit√†. Impossibile procedere.");
 
 			if (!modAtt.getStato().equals(ProgettoBulk.TIPO_STATO_APPROVATO))
-				throw new ApplicationException("Impossibile modificare lo STATO perchË il modulo non Ë stato Approvato in fase in contrattazione.");
+				throw new ApplicationException("Impossibile modificare lo STATO perch√® il modulo non √® stato Approvato in fase in contrattazione.");
 
 		} catch (PersistencyException e) {
 			throw handleException(e);
@@ -856,9 +856,9 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 			for(Iterator dettagli = modCosti.getDettagliContrSpese().iterator(); dettagli.hasNext();){
 				Pdg_contrattazione_speseBulk pdg_contrattazione_spese = (Pdg_contrattazione_speseBulk)dettagli.next();
 				if (pdg_contrattazione_spese.getDifferenzaFE().compareTo(Utility.ZERO)!=0)
-					throw new ApplicationException("Il totale proposto modificato per le fonti esterne non Ë uguale al totale approvato. Impossibile procedere.");
+					throw new ApplicationException("Il totale proposto modificato per le fonti esterne non √® uguale al totale approvato. Impossibile procedere.");
 				if (pdg_contrattazione_spese.getDifferenzaFI().compareTo(Utility.ZERO)!=0)
-					throw new ApplicationException("Il totale proposto modificato per le fonti interne non Ë uguale al totale approvato. Impossibile procedere.");
+					throw new ApplicationException("Il totale proposto modificato per le fonti interne non √® uguale al totale approvato. Impossibile procedere.");
 			}
 
 			// controlliamo per le entrate
@@ -872,7 +872,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 			for(Iterator dettagli = list.iterator(); dettagli.hasNext();){
 				Pdg_Modulo_EntrateBulk entrata = (Pdg_Modulo_EntrateBulk)dettagli.next();
 				if (Utility.nvl(entrata.getIm_entrata()).compareTo(Utility.nvl(entrata.getIm_entrata_app()))!=0)
-					throw new ApplicationException("L'importo delle entrate proposto modificato non Ë uguale all'importo approvato. Impossibile procedere.");
+					throw new ApplicationException("L'importo delle entrate proposto modificato non √® uguale all'importo approvato. Impossibile procedere.");
 			}
 
 		} catch (PersistencyException e) {
@@ -923,7 +923,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 			java.util.List list_etr = getHome(userContext,V_cons_pdgp_pdgg_etrBulk.class).fetchAll(sql);
 
 			if (!list_etr.isEmpty())
-				throw new ApplicationException("Impossibile modificare lo STATO perchË le somme derivanti dal PdG decisionale per le entrate non sono state completamente ripartite.");
+				throw new ApplicationException("Impossibile modificare lo STATO perch√® le somme derivanti dal PdG decisionale per le entrate non sono state completamente ripartite.");
 
 			V_cons_pdgp_pdgg_speHome home_spe = (V_cons_pdgp_pdgg_speHome)getHome(userContext,V_cons_pdgp_pdgg_speBulk.class);
 			sql = home_spe.createSQLBuilder();
@@ -945,7 +945,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 			java.util.List list_spe = getHome(userContext,V_cons_pdgp_pdgg_speBulk.class).fetchAll(sql);
 
 			if (!list_spe.isEmpty())
-				throw new ApplicationException("Impossibile modificare lo STATO perchË le somme derivanti dal PdG decisionale per le spese non sono state completamente ripartite.");
+				throw new ApplicationException("Impossibile modificare lo STATO perch√® le somme derivanti dal PdG decisionale per le spese non sono state completamente ripartite.");
 
 		} catch (PersistencyException e) {
 			throw handleException(e);

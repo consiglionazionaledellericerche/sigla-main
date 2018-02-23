@@ -138,7 +138,7 @@ public class V_cons_gae_residui_speBulk extends OggettoBulk implements Persisten
 //  IM_OBBL_RES_PRO - VAR_PIU_OBBL_RES_PRO + VAR_MENO_OBBL_RES_PRO = Iniziale DECIMAL(22,0)
 	private java.math.BigDecimal iniziale;
 
-//  Assestato residuo improprio - IM_OBBL_RES_IMP + VAR_MENO_OBBL_RES_PRO - VAR_PIU_OBBL_RES_PRO = Disponibilt‡ residui DECIMAL(22,0)
+//  Assestato residuo improprio - IM_OBBL_RES_IMP + VAR_MENO_OBBL_RES_PRO - VAR_PIU_OBBL_RES_PRO = Disponibilt√† residui DECIMAL(22,0)
 	private java.math.BigDecimal disp_res;
 
 //  IM_OBBL_RES_IMP + IM_OBBL_RES_PRO - IM_MANDATI_REVERSALI_IMP -IM_MANDATI_REVERSALI_PRO= Rimasti da Pagare  DECIMAL(22,0)

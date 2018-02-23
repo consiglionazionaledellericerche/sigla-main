@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
 	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
-	shortDescription="Rappresenta le associazioni/gerarchie tra unità operative per indirizzare le abilitazioni."
-	longDescription="Rappresenta le associazioni/gerarchie tra unità operative per indirizzare le abilitazioni.">
+	shortDescription="Rappresenta le associazioni/gerarchie tra unitÃ  operative per indirizzare le abilitazioni."
+	longDescription="Rappresenta le associazioni/gerarchie tra unitÃ  operative per indirizzare le abilitazioni.">
 	<fieldProperty
 		name="findUnitaOperativaRif"
 		property="unitaOperativaOrdRif"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Unità Operativa" />
+		label="UnitÃ  Operativa" />
 	<fieldProperty
 		name="cdUnitaOperativa"
 		property="unitaOperativaOrd.cdUnitaOperativa"
@@ -22,7 +22,7 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false"
-		label="Codice Unità Operativa" />
+		label="Codice UnitÃ  Operativa" />
 	<fieldProperty
 		name="dsUnitaOperativaRif"
 		property="unitaOperativaOrdRif.dsUnitaOperativa"
@@ -32,7 +32,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="Descrizione Unità Operativa di Riferimento" />
+		label="Descrizione UnitÃ  Operativa di Riferimento" />
 	<fieldProperty
 		name="cdUnitaOperativaRif"
 		property="unitaOperativaOrdRif.cdUnitaOperativa"
@@ -43,7 +43,7 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false"
-		label="Codice Unità Operativa di Riferimento" />
+		label="Codice UnitÃ  Operativa di Riferimento" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"

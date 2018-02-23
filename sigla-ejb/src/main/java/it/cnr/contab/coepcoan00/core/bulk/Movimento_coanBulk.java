@@ -232,7 +232,7 @@ public void setCd_cds(java.lang.String cd_cds) {
 public void setCd_centro_responsabilita(java.lang.String cd_centro_responsabilita) {
 	this.getLatt().getCentro_responsabilita().setCd_centro_responsabilita(cd_centro_responsabilita);
 }
-// metodo modificato perchè oggetto FunzioneBulk non inizializzato
+// metodo modificato perchÃ¨ oggetto FunzioneBulk non inizializzato
 public void setCd_funzione(java.lang.String cd_funzione) {
 	this.getLatt().setFunzione( new it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk(cd_funzione));
 //	this.getLatt().setCd_funzione(cd_funzione);
@@ -240,7 +240,7 @@ public void setCd_funzione(java.lang.String cd_funzione) {
 public void setCd_linea_attivita(java.lang.String cd_linea_attivita) {
 	this.getLatt().setCd_linea_attivita(cd_linea_attivita);
 }
-// metodo modificato perchè oggetto NaturaBulk non inizializzato
+// metodo modificato perchÃ¨ oggetto NaturaBulk non inizializzato
 public void setCd_natura(java.lang.String cd_natura) {
 	this.getLatt().setNatura( new it.cnr.contab.config00.pdcfin.bulk.NaturaBulk(cd_natura));
 }

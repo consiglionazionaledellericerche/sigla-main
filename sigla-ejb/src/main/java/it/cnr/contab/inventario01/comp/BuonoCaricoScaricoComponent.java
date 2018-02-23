@@ -204,7 +204,7 @@ try{
 		throw new ComponentException (ie);
 	}
 }
-/** Viene richiamata la funziona che controlla se l'esercizio coep � chiuso */
+/** Viene richiamata la funziona che controlla se l'esercizio coep è chiuso */
 	public boolean isEsercizioCOEPChiuso(UserContext userContext) throws ComponentException
 {
 	LoggableStatement cs = null;	
@@ -221,7 +221,7 @@ try{
 		status = new String(cs.getString(1));
 		if(status.compareTo("Y")==0)
 			return true;
-		//controlla anche se � chiuso l'inventario
+		//controlla anche se è chiuso l'inventario
 		Id_inventarioHome inventarioHome = (Id_inventarioHome) getHome(userContext, Id_inventarioBulk.class);
 		Id_inventarioBulk inventario = inventarioHome.findInventarioFor(userContext,false);
 		if (!inventarioHome.isAperto(inventario,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext)))
@@ -265,7 +265,7 @@ try{
 	  *
 	  *  Cerca l'Inventario associato alla Uo di scrivania - Inventario non disponibile.
 	  *    PreCondition:
-	  *      Non c'� un Inventario associato alla Uo di scrivania, oppure l'Inventario non � in stato "Aperto"
+	  *      Non c'è un Inventario associato alla Uo di scrivania, oppure l'Inventario non è in stato "Aperto"
 	  *    PostCondition:
 	  *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
 	  *
@@ -329,7 +329,7 @@ try{
 	  * 
 	  *  Cerca l'Inventario associato alla Uo di scrivania - Inventario non disponibile.
 	  *    PreCondition:
-	  *      Non c'� un Inventario associato alla Uo di scrivania, oppure l'Inventario non � in stato "Aperto"
+	  *      Non c'è un Inventario associato alla Uo di scrivania, oppure l'Inventario non è in stato "Aperto"
 	  *    PostCondition:
 	  *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
 	  *
@@ -349,7 +349,7 @@ try{
 		if (bulk == null)
 			throw new ApplicationException("Attenzione: non esiste alcun buono corrispondente ai criteri di ricerca!");
 		if (bulk  instanceof Trasferimento_inventarioBulk) {
-			throw new ApplicationException("Attenzione: maschera non disponibile in modalit� di ricerca!");
+			throw new ApplicationException("Attenzione: maschera non disponibile in modalità di ricerca!");
 		}
 		bulk = super.inizializzaBulkPerRicerca(aUC,bulk);	
 		Buono_carico_scaricoBulk buonoCS = (Buono_carico_scaricoBulk)bulk;
@@ -383,7 +383,7 @@ try{
 	  * 
 	  *  Cerca l'Inventario associato alla Uo di scrivania - Inventario non disponibile.
 	  *    PreCondition:
-	  *      Non c'� un Inventario associato alla Uo di scrivania, oppure l'Inventario non � in stato "Aperto"
+	  *      Non c'è un Inventario associato alla Uo di scrivania, oppure l'Inventario non è in stato "Aperto"
 	  *    PostCondition:
 	  *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
 	  *
@@ -553,7 +553,7 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 	  *  Data una collezione di Utilizzatore_CdrVBulk, (ossia i CdR utilizztori specificati 
 	  *	in una riga di dettaglio dell'Inventario), ne estrae tutti gli utilizzatori,
 	  *	(Inventario_utilizzatori_laBulk), e li inserisce in una collezione,
-	  * (SimpleBulkList), che verr� restituita.
+	  * (SimpleBulkList), che verrè restituita.
 	  *
 	  * @param dettaglio <code>Buono_carico_dettBulk</code> la riga di dettaglio.
 	  *
@@ -587,18 +587,18 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 		return (uo + separatore + codice + separatore + cod_accessorio);
 	}
 	/**
-	  * Dato il Buono di Carico, setta ad ogni riga di dettaglio la propriet� STATO_COGE
-	  *	= "X". Lo stato COGE, infatti, � sempre impostato ad "X", tranne nel caso in cui si 
+	  * Dato il Buono di Carico, setta ad ogni riga di dettaglio la proprietà STATO_COGE
+	  *	= "X". Lo stato COGE, infatti, è sempre impostato ad "X", tranne nel caso in cui si
 	  *	effettui un'operazione di Scarico Totale di un Bene tramite un Buono di Scarico 
-	  *	NON proveniente da Fattura Attiva: in tal caso, lo Stato COGE sar� impostato = "N".
+	  *	NON proveniente da Fattura Attiva: in tal caso, lo Stato COGE sarà impostato = "N".
 	  *
 	  * 07/06/2004 - BORRIELLO - Modifica per Rich. 693.
-	  * Lo stato COGE � impostato, nei Buoni di Carico, tenendo conto del flag FL_ELABORA_BUONO_COGE, 
+	  * Lo stato COGE è impostato, nei Buoni di Carico, tenendo conto del flag FL_ELABORA_BUONO_COGE,
 	  * del Tipo di movimento indicato, (TI_CARICO_SCARICO);
-	  *	se il buono NON � visibile da Fattura Passiva, (TI_CARICO_SCARICO.FL_FATTURABILE = 'N') e
-	  *	il tipo di movimento � soggetto ad elaborazione COGE, (TI_CARICO_SCARICO.FL_ELABORA_BUONO_COGE = 'Y'),
-	  *	allora lo stato COGE � impostato a 'N'.
-	  *	In tutti gli altri casi � impostato ad 'X'.
+	  *	se il buono NON è visibile da Fattura Passiva, (TI_CARICO_SCARICO.FL_FATTURABILE = 'N') e
+	  *	il tipo di movimento è soggetto ad elaborazione COGE, (TI_CARICO_SCARICO.FL_ELABORA_BUONO_COGE = 'Y'),
+	  *	allora lo stato COGE è impostato a 'N'.
+	  *	In tutti gli altri casi è impostato ad 'X'.
 	  *
 	  * @param buonoC il <code>Buono_carico_scaricoBulk</code> il cui STATO_COGE deve essere impostato
 	 * @throws ComponentException 
@@ -670,14 +670,14 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 
 				java.util.Hashtable progressivi = new java.util.Hashtable();
 				
-				// Collezione di beni di cui non � stato possibile aggiornare il campo
+				// Collezione di beni di cui non è stato possibile aggiornare il campo
 				//	IMPONIBILE_AMMOTAMENTO; utilizzato in un Buono di Carico a Valore diretto, (non da Fattura).
 				java.util.Vector notChangedBeniKey = new java.util.Vector();
 			    
 				if (!buonoCS.isPerAumentoValore() && !buonoCS.isByDocumentoPerAumentoValore()){
 					esplodiDettagli(userContext,buonoCS, progressivi);
 					assegnaStatoCOGE(userContext,buonoCS);
-					//non necessario per i documenti in quanto la quantita � sempre 1 
+					//non necessario per i documenti in quanto la quantita è sempre 1
 					if (buonoCS.isByFattura())
 						validaValoreBeneDaFattura(buonoCS);
 				
@@ -732,7 +732,7 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 			// Valida il Buono di Trasferimento
 			validaTrasferimento(userContext, buonoT);
 
-			// Richiama la Procedura che si occuper� di effettuare il trasferimento dei beni selezionati
+			// Richiama la Procedura che si occuperè di effettuare il trasferimento dei beni selezionati
 			callTrasferisciBeni(userContext, buonoT);
 			
 			return asRO(buonoT, "Creazione eseguita in modo corretto.");
@@ -746,8 +746,8 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 	/**
 	  *  Valida Buono - UO destinazione non specificata
 	  *    PreCondition:
-	  *      L'operazione di trasferimento che si sta facendo � di tipo extra-Inventario,
-	  *		ossia, il trasferimento avverr� verso l'inventario di un'altra UO. Non � stata
+	  *      L'operazione di trasferimento che si sta facendo è di tipo extra-Inventario,
+	  *		ossia, il trasferimento avverrè verso l'inventario di un'altra UO. Non è stata
 	  *		specificata la UO destinazione.
 	  *    PostCondition:
 	  *      Un messaggio di errore viene visualizzato all'utente
@@ -760,26 +760,26 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 	  *  
 	  *  Valida Buono - data di scarico inferiore al valore consentito
 	  *    PreCondition:
-	  *      La data di registrazione indicata per il Buono di Scarico � anteriore alla MAX(data_ultima_modifica) 
+	  *      La data di registrazione indicata per il Buono di Scarico è anteriore alla MAX(data_ultima_modifica)
 	  *		registrata per i beni scaricati.
 	  *    PostCondition:
 	  *      Un messaggio di errore viene visualizzato all'utente.
 	  *  
 	  *  Valida Buono - tipo movimento carico non specificato
 	  *    PreCondition:
-	  *      Non � stato specificato un tipo di carico.
+	  *      Non è stato specificato un tipo di carico.
 	  *    PostCondition:
 	  *      Un messaggio di errore viene visualizzato all'utente.
 	  *
 	  *  Valida Buono - tipo movimento scarico non specificato
 	  *    PreCondition:
-	  *      Non � stato specificato un tipo di scarico.
+	  *      Non è stato specificato un tipo di scarico.
 	  *    PostCondition:
 	  *      Un messaggio di errore viene visualizzato all'utente.
 	  *    
 	  *  Valida Buono - descrizione mancante
 	  *    PreCondition:
-	  *      Non � stata specificata una descrizione per il Buono di Scarico.
+	  *      Non è stata specificata una descrizione per il Buono di Scarico.
 	  *    PostCondition:
 	  *      Un messaggio di errore viene visualizzato all'utente
 	  *
@@ -811,7 +811,7 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 					(trasf.getUo_destinazione() == null || trasf.getUo_destinazione().getCd_unita_organizzativa() == null))			
 				throw new it.cnr.jada.comp.ApplicationException("Attenzione: indicare una UO di destinazione");
 
-			// Controlla la validit� della data indicata nel Buono di Scarico
+			// Controlla la validità della data indicata nel Buono di Scarico
 			validaDataBuonoScarico(aUC, trasf);
 
 			// CONTROLLA LA DATA DI TRAFSERIMENTO - DATA DI TRAFSERIMENTO < MAX(DATA_REGISTRAZIONE) per gli inventari interessati
@@ -821,7 +821,7 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 			
 			if (max_dt_registrazione!=null && trasf.getData_registrazione().before(max_dt_registrazione)){
 				StringBuffer msg = new StringBuffer("Attenzione: data di Trasferimento non valida.\n");
-				msg.append("La Data di registrazione non pu� essere antecedente all'ultima data registrata per i buoni di carico/scarico,");
+				msg.append("La Data di registrazione non puè essere antecedente all'ultima data registrata per i buoni di carico/scarico,");
 				msg.append("(" + max_dt_registrazione + ")");
 				
 				throw new it.cnr.jada.comp.ApplicationException(msg.toString());
@@ -834,7 +834,7 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 			/* r.p. non dovrebbe servire vengono scartati prima
 			 * java.sql.Timestamp maxData = getMaxDataFor(aUC, trasf);
 			if (maxData != null && trasf.getData_registrazione().before(maxData)){
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di Scarico non valida.\n La Data di Scarico non pu� essere precedente ad una modifica di uno dei beni scaricati");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di Scarico non valida.\n La Data di Scarico non puè essere precedente ad una modifica di uno dei beni scaricati");
 			}*/
 			
 			// CONTROLLA CHE SIA STATO SPECIFICATO UN TIPO DI MOVIMENTO DI CARICO
@@ -860,7 +860,7 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 	  *    PreCondition:
 	  *      E' stata generata la richiesta di cancellare fisicamente un Buono di Scarico.
 	  *    PostCondition:
-	  *      Il Buono di Scarico con i suoi dettagli � stato eliminato. 
+	  *      Il Buono di Scarico con i suoi dettagli è stato eliminato.
 	  *		Vengono cancellate anche tutti beni scaricati nella sessione di lavoro e presenti 
 	  *		sulla tabella INVENTARIO_BENI_APG.
 	  *
@@ -1022,7 +1022,7 @@ public void eliminaBeniAssociatiConBulk(UserContext userContext, OggettoBulk buo
  *		fatte durante una sessione di lavoro.
  *    PostCondition:
  *      Vengono cancellate dalla tabella d'appoggio INVENTARIO_BENI_APG, i beni associati
- *		alla riga di Fattura selezionata. Se non � stata selezionata alcuna riga di Fattura,
+ *		alla riga di Fattura selezionata. Se non è stata selezionata alcuna riga di Fattura,
  *		verranno cancellate tutti i beni presenti sulla tabella.
  *
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -1150,7 +1150,7 @@ public void eliminaBuoniAssociatiConBulk(UserContext userContext, Ass_inv_bene_f
  *		fatte durante una sessione di lavoro.
  *    PostCondition:
  *      Vengono cancellate dalla tabella d'appoggio INVENTARIO_BENI_APG, i beni associati
- *		alla riga di Fattura selezionata. Se non � stata selezionata alcuna riga di Fattura,
+ *		alla riga di Fattura selezionata. Se non è stata selezionata alcuna riga di Fattura,
  *		verranno cancellate tutti i beni presenti sulla tabella.
  *
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -1222,21 +1222,21 @@ public void eliminaBeniAssociatiConBulk(UserContext userContext, OggettoBulk buo
 
 	/**
 	  * Calcola il valore dell'Intervallo di ogni dettaglio.
-	  *	 Dopo aver "esploso" i dettagli, (metodo esplodiDettagli), non � pi� possibile aggregare 
-	  *	 i dettagli cos� come li aveva creati l'utente. Per dare la possibilit� di individuare 
+	  *	 Dopo aver "esploso" i dettagli, (metodo esplodiDettagli), non è piè possibile aggregare
+	  *	 i dettagli cosè come li aveva creati l'utente. Per dare la possibilitè di individuare
 	  *	 le righe create da un singolo dettaglio, si imposta il valore INTERVALLO, che in pratica, 
 	  *	 permette di individuare le righe carete da un singolo dettaglio. 
 	  *	Per es:
 	  *	 l'utente crea 2 righe:
-	  *		- Dettaglio 1 - quantit� 2
-	  *		- Dettaglio 2 - quantit� 1
+	  *		- Dettaglio 1 - quantitè 2
+	  *		- Dettaglio 2 - quantitè 1
 	  *
 	  *	 Dopo l'esplosione avremo una situazione del genere:
-	  *		- Dettaglio 1 - quantit� 1 - intervallo 1-2
-	  *		- Dettaglio 1 - quantit� 1 - intervallo 1-2
-	  *		- Dettaglio 2 - quantit� 1 - intervallo 3-3
+	  *		- Dettaglio 1 - quantitè 1 - intervallo 1-2
+	  *		- Dettaglio 1 - quantitè 1 - intervallo 1-2
+	  *		- Dettaglio 2 - quantitè 1 - intervallo 3-3
 	  *
-	  * @param quantita la <code>BigDecimal</code> quantit� espressa nel dettaglio.
+	  * @param quantita la <code>BigDecimal</code> quantitè espressa nel dettaglio.
 	  *  
 	  * @return intervallo <code>String</code> l'intervallo.
 	**/
@@ -1267,7 +1267,7 @@ public void eliminaBeniAssociatiConBulk(UserContext userContext, OggettoBulk buo
 	  *		I beni utilizzabili, inoltre, devono avere ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.
 	  *
 	  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-	  * @param dettaglio il <code>Buono_carico_dettBulk</code> dettaglio il cui bene sar� un bene accessorio.
+	  * @param dettaglio il <code>Buono_carico_dettBulk</code> dettaglio il cui bene sarà un bene accessorio.
 	  * @param bene il <code>Inventario_beniBulk</code> Inventario_beniBulk modello.
 	  * @param clauses <code>CompoundFindClause</code> le clausole della selezione.
 	  *
@@ -1357,17 +1357,17 @@ public SQLBuilder selectNuovo_bene_padreByClause(UserContext userContext, Invent
 			return sql;		
 	}
 	/**
-	  *  Ricerca di una Linea di Attivit� per il CdR Utilizzatore
+	  *  Ricerca di una Linea di Attivitè per il CdR Utilizzatore
 	  *    PreCondition:
-	  *      E' stata generata la richiesta di ricerca di una Linea di Attivit� per il
+	  *      E' stata generata la richiesta di ricerca di una Linea di Attivitè per il
 	  *		CdR Utilizzatore
 	  *    PostCondition:
 	  *		Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
-	  *		clausole che la Linea di Attivit� appartenga al CdR indicato.
+	  *		clausole che la Linea di Attivitè appartenga al CdR indicato.
 	  *
 	  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
 	  * @param utilizzatori_la il <code>Inventario_utilizzatori_laBulk</code> CdR di riferimento
-	  * @param l_att la <code>Linea_attivitaBulk</code> Linea di Attivit� modello  
+	  * @param l_att la <code>Linea_attivitaBulk</code> Linea di Attivitè modello
 	  * @param clauses <code>CompoundFindClause</code> le clausole della selezione
 	  *
 	  * @return sql <code>SQLBuilder</code> Risultato della selezione.
@@ -1419,12 +1419,12 @@ public SQLBuilder selectNuovo_bene_padreByClause(UserContext userContext, Invent
 	  *    PostCondition:
 	  *      Vengono cercati e proposti tutti i beni che abbiano i requisiti adatti per essere 
 	  *		utilizzati. I beni dovranno appartenere all'Inventario associato alla UO di scrivania e
-	  *		non dovranno essere gi� stati scaricati totalmente.
+	  *		non dovranno essere già stati scaricati totalmente.
 	  *
 	  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
 	  * @param bulk <code>OggettoBulk</code> il Buono di Carico.
 	  * @param no_accessori <code>boolean</code> il flag che determina se escludere i beni accessori.
-	  * @param beni_da_escludere la <code>SimpleBulkList</code> lista di beni da escludere, (perch� gi� utilizzati nella sessione di lavoro).
+	  * @param beni_da_escludere la <code>SimpleBulkList</code> lista di beni da escludere, (perchè già utilizzati nella sessione di lavoro).
 	  * @param clauses <code>CompoundFindClause</code> le clausole della selezione.
 	  * 
 	  * @param iterator la <code>RemoteIterator</code> l'iteratore sui beni trovati.
@@ -1462,7 +1462,7 @@ public SQLBuilder selectNuovo_bene_padreByClause(UserContext userContext, Invent
 	}
 //	 metodo che viene richiamato dalla setselection alla richiesta di aggiunta nuovi dettagli
 //   sia per lo scarico che per il trasferimento serve solo per verificare che ci siano beni scaricabili
-//   in realt� quando si effettua la ricerca viene richiama getListaBenidaScaricare 	
+//   in realtè quando si effettua la ricerca viene richiama getListaBenidaScaricare
 	public RemoteIterator cercaBeniScaricabili(it.cnr.jada.UserContext userContext, Buono_carico_scaricoBulk buono, boolean no_accessori, SimpleBulkList beni_da_escludere,CompoundFindClause clauses) throws ComponentException {
 		try{
 			String nr_da_escludere = "";
@@ -1471,7 +1471,7 @@ public SQLBuilder selectNuovo_bene_padreByClause(UserContext userContext, Invent
 				sql.addClause(clauses);
 			sql.addSQLClause("AND", "PG_INVENTARIO", SQLBuilder.EQUALS, buono.getInventario().getPg_inventario());	
 			sql.addSQLClause("AND", "FL_TOTALMENTE_SCARICATO", SQLBuilder.EQUALS, Inventario_beniBulk.ISNOTTOTALMENTESCARICATO); // Non scaricati totalmente
-			sql.addSQLClause("AND", "DT_VALIDITA_VARIAZIONE", SQLBuilder.LESS_EQUALS, buono.getData_registrazione()); // Con data di validit� inferiore all'attuale data di Registrazione
+			sql.addSQLClause("AND", "DT_VALIDITA_VARIAZIONE", SQLBuilder.LESS_EQUALS, buono.getData_registrazione()); // Con data di validità inferiore all'attuale data di Registrazione
 		
 			// Aggiunta clausola che visualizzi solo i beni che abbiano 
 			//	ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.
@@ -1492,7 +1492,7 @@ public SQLBuilder selectNuovo_bene_padreByClause(UserContext userContext, Invent
 				sql.addSQLClause("AND", "(NR_INVENTARIO, PROGRESSIVO) NOT IN (" + nr_da_escludere + ")");
 			}	
 				// Se si tratta di un Trasferimento di tipo Intra UO, esclude dalla ricerca
-				//	i beni eventualmente utilizzati come nuovi bene padre per i beni gi� selezionati.
+				//	i beni eventualmente utilizzati come nuovi bene padre per i beni già selezionati.
 				if (buono instanceof Trasferimento_inventarioBulk && ((Trasferimento_inventarioBulk)buono).isTrasferimentoIntraInv()){
 					nr_da_escludere = "";
 					Inventario_beni_apgHome home=(Inventario_beni_apgHome)getHome(userContext,Inventario_beni_apgBulk.class);
@@ -1527,7 +1527,7 @@ public SQLBuilder selectNuovo_bene_padreByClause(UserContext userContext, Invent
 	  *		per essere associati alle righe di Fattura Passiva.
 	  *		I beni disponibili sono tutti quei beni che rispondono alle seguenti caratteristiche:
 	  *		  	- appartengono allo stesso Inventario associato alla UO di scrivania;
-	  *			- NON sono stati gi� associati ad altre righe di Fattura durante la stessa sessione;
+	  *			- NON sono stati già associati ad altre righe di Fattura durante la stessa sessione;
 	  *			- NON sono stati scaricati totalmente, (INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO = 'N');
 	  *			- sono dello stesso tipo, (COMMERCIALE/ISTITUZIONALE), della riga di Fattura.
 	  *		I beni utilizzabili, inoltre, devono avere ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.  
@@ -1548,7 +1548,7 @@ public SQLBuilder selectNuovo_bene_padreByClause(UserContext userContext, Invent
 		sql.addTableToHeader("INVENTARIO_BENI_APG,INVENTARIO_BENI");
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO","INVENTARIO_BENI_APG.PG_INVENTARIO(+)"); // Questa OUT Join
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO(+)"); //  permette di escludere	
-		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati gi� associati con righe
+		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già associati con righe
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO","INVENTARIO_BENI.PG_INVENTARIO");
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO","INVENTARIO_BENI.NR_INVENTARIO");	
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI.PROGRESSIVO"); 	 
@@ -1605,7 +1605,7 @@ public SQLBuilder selectNuovo_bene_padreByClause(UserContext userContext, Invent
 		sql.addTableToHeader("INVENTARIO_BENI_APG");
 		sql.addSQLJoin("INVENTARIO_BENI.PG_INVENTARIO","INVENTARIO_BENI_APG.PG_INVENTARIO(+)"); // Questa OUT Join
 		sql.addSQLJoin("INVENTARIO_BENI.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO(+)"); //  permette di escludere	
-		sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati gi� associati con righe
+		sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già associati con righe
 		
 		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)", SQLBuilder.EQUALS, associa_Bulk.getLocal_transactionID());	// della stessa Fattura.
 		//R.P. Consente di associare piu' volte lo stesso bene
@@ -1626,7 +1626,7 @@ public SQLBuilder selectNuovo_bene_padreByClause(UserContext userContext, Invent
 	  *		per essere associati alle righe di Fattura Passiva.
 	  *		I beni disponibili sono tutti quei beni che rispondono alle seguenti caratteristiche:
 	  *		  	- appartengono allo stesso Inventario associato alla UO di scrivania;
-	  *			- NON sono stati gi� associati ad altre righe di Fattura durante la stessa sessione;
+	  *			- NON sono stati già associati ad altre righe di Fattura durante la stessa sessione;
 	  *			- NON sono stati scaricati totalmente, (INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO = 'N');
 	  *			- sono dello stesso tipo, (COMMERCIALE/ISTITUZIONALE), della riga di Fattura.
 	  *		I beni utilizzabili, inoltre, devono avere ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.  
@@ -1646,7 +1646,7 @@ public SQLBuilder selectNuovo_bene_padreByClause(UserContext userContext, Invent
 		sql.addTableToHeader("INVENTARIO_BENI_APG,INVENTARIO_BENI");
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO","INVENTARIO_BENI_APG.PG_INVENTARIO(+)"); // Questa OUT Join
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO(+)"); //  permette di escludere	
-		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati gi� associati con righe
+		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già associati con righe
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO","INVENTARIO_BENI.PG_INVENTARIO");
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO","INVENTARIO_BENI.NR_INVENTARIO");	
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI.PROGRESSIVO"); 	 
@@ -1707,7 +1707,7 @@ public RemoteIterator cercaBeniAssociabili(UserContext userContext,Ass_inv_bene_
 			sql.addTableToHeader("INVENTARIO_BENI_APG,INVENTARIO_BENI");//,ASS_INV_BENE_FATTURA");
 			sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO","INVENTARIO_BENI_APG.PG_INVENTARIO(+)"); // Questa OUT Join
 			sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO(+)"); //  permette di escludere	
-			sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati gi� associati con righe
+			sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già associati con righe
 			sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO","INVENTARIO_BENI.PG_INVENTARIO");
 			sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO","INVENTARIO_BENI.NR_INVENTARIO");	
 			sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI.PROGRESSIVO");
@@ -1720,7 +1720,7 @@ public RemoteIterator cercaBeniAssociabili(UserContext userContext,Ass_inv_bene_
 			sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.PROGRESSIVO_RIGA_FATT_PASS",SQLBuilder.EQUALS,riga_fattura.getRiga_fattura_origine().getProgressivo_riga());
 			sql.addSQLJoin("INVENTARIO_BENI.PG_INVENTARIO","ASS_INV_BENE_FATTURA.PG_INVENTARIO"); // Questa OUT Join
 			sql.addSQLJoin("INVENTARIO_BENI.NR_INVENTARIO","ASS_INV_BENE_FATTURA.NR_INVENTARIO"); //  permette di escludere	
-			sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","ASS_INV_BENE_FATTURA.PROGRESSIVO"); 	 //  quei beni che sono stati gi� selezioanti
+			sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","ASS_INV_BENE_FATTURA.PROGRESSIVO"); 	 //  quei beni che sono stati già selezioanti
 		    */
 			sql.addSQLClause("AND", "INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)", SQLBuilder.EQUALS, associa_Bulk.getLocal_transactionID());	// della stessa Fattura.
 			//R.P. Consente di associare piu' volte lo stesso bene
@@ -1780,7 +1780,7 @@ if (!associa_Bulk.isPerAumentoValore()){
 	sql.addTableToHeader("INVENTARIO_BENI_APG,INVENTARIO_BENI");//,ASS_INV_BENE_FATTURA");
 	sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO","INVENTARIO_BENI_APG.PG_INVENTARIO(+)"); // Questa OUT Join
 	sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO(+)"); //  permette di escludere	
-	sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati gi� associati con righe
+	sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già associati con righe
 	sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO","INVENTARIO_BENI.PG_INVENTARIO");
 	sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO","INVENTARIO_BENI.NR_INVENTARIO");	
 	sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI.PROGRESSIVO");
@@ -1793,7 +1793,7 @@ if (!associa_Bulk.isPerAumentoValore()){
 	sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.PROGRESSIVO_RIGA_FATT_PASS",SQLBuilder.EQUALS,riga_fattura.getRiga_fattura_origine().getProgressivo_riga());
 	sql.addSQLJoin("INVENTARIO_BENI.PG_INVENTARIO","ASS_INV_BENE_FATTURA.PG_INVENTARIO"); // Questa OUT Join
 	sql.addSQLJoin("INVENTARIO_BENI.NR_INVENTARIO","ASS_INV_BENE_FATTURA.NR_INVENTARIO"); //  permette di escludere	
-	sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","ASS_INV_BENE_FATTURA.PROGRESSIVO"); 	 //  quei beni che sono stati gi� selezioanti
+	sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","ASS_INV_BENE_FATTURA.PROGRESSIVO"); 	 //  quei beni che sono stati già selezioanti
 	*/
 	
 	sql.addSQLClause("AND", "INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)", SQLBuilder.EQUALS, associa_Bulk.getLocal_transactionID());	// della stessa Fattura.
@@ -1850,7 +1850,7 @@ if (!associa_Bulk.isPerAumentoValore()){
 	sql.addTableToHeader("INVENTARIO_BENI_APG");//,ASS_INV_BENE_FATTURA");
 	sql.addSQLJoin("INVENTARIO_BENI.PG_INVENTARIO","INVENTARIO_BENI_APG.PG_INVENTARIO(+)"); // Questa OUT Join
 	sql.addSQLJoin("INVENTARIO_BENI.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO(+)"); //  permette di escludere	
-	sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati gi� associati con righe
+	sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già associati con righe
 	/* r.p. eliminato selezione bene associati alla fattura di origine
 	sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.ESERCIZIO_FATT_PASS",SQLBuilder.EQUALS,riga_fattura.getRiga_fattura_origine().getEsercizio());
 	sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.CD_CDS_FATT_PASS",SQLBuilder.EQUALS,riga_fattura.getRiga_fattura_origine().getCd_cds());
@@ -1859,7 +1859,7 @@ if (!associa_Bulk.isPerAumentoValore()){
 	sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.PROGRESSIVO_RIGA_FATT_PASS",SQLBuilder.EQUALS,riga_fattura.getRiga_fattura_origine().getProgressivo_riga());
 	sql.addSQLJoin("INVENTARIO_BENI.PG_INVENTARIO","ASS_INV_BENE_FATTURA.PG_INVENTARIO"); // Questa OUT Join
 	sql.addSQLJoin("INVENTARIO_BENI.NR_INVENTARIO","ASS_INV_BENE_FATTURA.NR_INVENTARIO"); //  permette di escludere	
-	sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","ASS_INV_BENE_FATTURA.PROGRESSIVO"); 	 //  quei beni che sono stati gi� selezioanti
+	sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","ASS_INV_BENE_FATTURA.PROGRESSIVO"); 	 //  quei beni che sono stati già selezioanti
 	*/	
 	
 	sql.addSQLClause("AND", "INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)", SQLBuilder.EQUALS, associa_Bulk.getLocal_transactionID());	// della stessa Fattura.
@@ -1881,7 +1881,7 @@ if (!associa_Bulk.isPerAumentoValore()){
 	  *		per essere associati alle righe di Fattura Attiva.
 	  *		I beni disponibili sono tutti quei beni che rispondono alle seguenti caratteristiche:
 	  *		  	- appartengono allo stesso Inventario associato alla UO di scrivania;
-	  *			- NON sono stati gi� associati ad altre righe di Fattura durante la stessa sessione;
+	  *			- NON sono stati già associati ad altre righe di Fattura durante la stessa sessione;
 	  *			- NON sono stati scaricati totalmente, (INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO = 'N');
 	  *			- sono dello stesso tipo, (COMMERCIALE/ISTITUZIONALE), della riga di Fattura.
 	  *		I beni utilizzabili, inoltre, devono avere ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.  
@@ -1901,14 +1901,14 @@ if (!associa_Bulk.isPerAumentoValore()){
 		sql.addTableToHeader("INVENTARIO_BENI_APG");
 		sql.addSQLJoin("INVENTARIO_BENI.PG_INVENTARIO","INVENTARIO_BENI_APG.PG_INVENTARIO(+)"); // Questa OUT Join
 		sql.addSQLJoin("INVENTARIO_BENI.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO(+)"); //  permette di escludere	
-		sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati gi� selezioanti
+		sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già selezioanti
 		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)", SQLBuilder.EQUALS, buonoS.getLocal_transactionID());  // nella transazione attuale
 		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.PG_INVENTARIO",SQLBuilder.ISNULL,null);
 		sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, Fattura_passiva_rigaBulk.COMMERCIALE); // Beni dello stesso tipo della riga di Fattura
 		sql.addSQLClause("AND", "INVENTARIO_BENI.PG_INVENTARIO", SQLBuilder.EQUALS, buonoS.getInventario().getPg_inventario());	
 		sql.addSQLClause("AND", "INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO", SQLBuilder.EQUALS, Inventario_beniBulk.ISNOTTOTALMENTESCARICATO); // Non scaricati totalmente
 		sql.addSQLClause("AND", "INVENTARIO_BENI.PROGRESSIVO", SQLBuilder.EQUALS, "0"); // Solo i beni Prinicapali
-		sql.addSQLClause("AND", "INVENTARIO_BENI.DT_VALIDITA_VARIAZIONE", SQLBuilder.LESS_EQUALS, buonoS.getData_registrazione()); // Con data di validit� inferiore all'attuale data di Registrazione	
+		sql.addSQLClause("AND", "INVENTARIO_BENI.DT_VALIDITA_VARIAZIONE", SQLBuilder.LESS_EQUALS, buonoS.getData_registrazione()); // Con data di validità inferiore all'attuale data di Registrazione
 		// Aggiunta clausola che visualizzi solo i beni che abbiano 
 		//	ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.
 		sql.addSQLClause("AND", "INVENTARIO_BENI.ESERCIZIO_CARICO_BENE", SQLBuilder.LESS_EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
@@ -1923,7 +1923,7 @@ if (!associa_Bulk.isPerAumentoValore()){
 	  *		per essere associati alle righe di Fattura Attiva.
 	  *		I beni disponibili sono tutti quei beni che rispondono alle seguenti caratteristiche:
 	  *		  	- appartengono allo stesso Inventario associato alla UO di scrivania;
-	  *			- NON sono stati gi� associati ad altre righe di Fattura durante la stessa sessione;
+	  *			- NON sono stati già associati ad altre righe di Fattura durante la stessa sessione;
 	  *			- NON sono stati scaricati totalmente, (INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO = 'N');
 	  *			- sono dello stesso tipo, (COMMERCIALE/ISTITUZIONALE), della riga di Fattura.
 	  *		I beni utilizzabili, inoltre, devono avere ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.  
@@ -1943,7 +1943,7 @@ if (!associa_Bulk.isPerAumentoValore()){
 		sql.addTableToHeader("INVENTARIO_BENI_APG");//,ASS_INV_BENE_FATTURA");
 		sql.addSQLJoin("INVENTARIO_BENI.PG_INVENTARIO","INVENTARIO_BENI_APG.PG_INVENTARIO(+)"); // Questa OUT Join
 		sql.addSQLJoin("INVENTARIO_BENI.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO(+)"); //  permette di escludere	
-		sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati gi� selezioanti
+		sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già selezioanti
 		
 		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)", SQLBuilder.EQUALS, buonoS.getLocal_transactionID());  // nella transazione attuale
 		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.PG_INVENTARIO",SQLBuilder.ISNULL,null);
@@ -1956,12 +1956,12 @@ if (!associa_Bulk.isPerAumentoValore()){
 		sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.PROGRESSIVO_RIGA_FATT_PASS",SQLBuilder.EQUALS,riga_fattura.getRiga_fattura_origine().getProgressivo_riga());
 		sql.addSQLJoin("INVENTARIO_BENI.PG_INVENTARIO","ASS_INV_BENE_FATTURA.PG_INVENTARIO"); // Questa OUT Join
 		sql.addSQLJoin("INVENTARIO_BENI.NR_INVENTARIO","ASS_INV_BENE_FATTURA.NR_INVENTARIO"); //  permette di escludere	
-		sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","ASS_INV_BENE_FATTURA.PROGRESSIVO"); 	 //  quei beni che sono stati gi� selezioanti
+		sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","ASS_INV_BENE_FATTURA.PROGRESSIVO"); 	 //  quei beni che sono stati già selezioanti
 		*/
 		sql.addSQLClause("AND", "INVENTARIO_BENI.PG_INVENTARIO", SQLBuilder.EQUALS, buonoS.getInventario().getPg_inventario());	
 		sql.addSQLClause("AND", "INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO", SQLBuilder.EQUALS, Inventario_beniBulk.ISNOTTOTALMENTESCARICATO); // Non scaricati totalmente
 		//sql.addSQLClause("AND", "INVENTARIO_BENI.PROGRESSIVO", SQLBuilder.EQUALS, "0"); // Solo i beni Prinicapali
-		sql.addSQLClause("AND", "INVENTARIO_BENI.DT_VALIDITA_VARIAZIONE", SQLBuilder.LESS_EQUALS, buonoS.getData_registrazione()); // Con data di validit� inferiore all'attuale data di Registrazione
+		sql.addSQLClause("AND", "INVENTARIO_BENI.DT_VALIDITA_VARIAZIONE", SQLBuilder.LESS_EQUALS, buonoS.getData_registrazione()); // Con data di validità inferiore all'attuale data di Registrazione
 		sql.addSQLClause("AND","INVENTARIO_BENI.CD_CATEGORIA_GRUPPO",SQLBuilder.EQUALS,riga_fattura.getBene_servizio().getCategoria_gruppo().getCd_categoria_gruppo());
 		// Aggiunta clausola che visualizzi solo i beni che abbiano 
 		//	ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.
@@ -2047,7 +2047,7 @@ if (!associa_Bulk.isPerAumentoValore()){
 	  *    PreCondition:
 	  *      E' stata generata la richiesta di riportare i beni selezionati dall'utente nella tabella 
 	  *		temporanea INVENTARIO_BENI_APG. L'utente, in questa fase, si trova a selezionare dei 
-	  *		beni gi� presenti sul DB, per una operazione di scarico.
+	  *		beni già presenti sul DB, per una operazione di scarico.
 	  *    PostCondition:
 	  *      Vengono riportati sulla tabella INVENTARIO_BENI_APG i dati relativi ai beni selezionati dall'utente.
 	  *
@@ -2063,7 +2063,7 @@ if (!associa_Bulk.isPerAumentoValore()){
 			modificaBeniScaricatiPerTrasferimento(userContext, buonoS, beni, old_ass, ass);
 		} 
 		else {
-			/* Questo metodo viene richiamato tutte le volte che c'� un cambio di pagina del selezionatore 
+			/* Questo metodo viene richiamato tutte le volte che c'è un cambio di pagina del selezionatore
 			 * dei beni, oppure una richiesta di Riporta.
 		    */
 			try {
@@ -2072,13 +2072,13 @@ if (!associa_Bulk.isPerAumentoValore()){
 					if (old_ass.get(i) != ass.get(i)) {
 							
 						if (ass.get(i)) {		
-							// Locko il bene che � stato selezionato per essere scaricato.
+							// Locko il bene che è stato selezionato per essere scaricato.
 							try{
 								lockBulk(userContext, bene)	;
 							} catch (OutdatedResourceException oe){
 								throw handleException(oe);
 							} catch (BusyResourceException bre){
-								throw new ApplicationException("Risorsa occupata.\nIl bene " + bene.getNumeroBeneCompleto() + " � bloccato da un altro utente.");
+								throw new ApplicationException("Risorsa occupata.\nIl bene " + bene.getNumeroBeneCompleto() + " è bloccato da un altro utente.");
 							} catch (it.cnr.jada.persistency.PersistencyException pe){
 								throw handleException(pe);
 							} 
@@ -2197,7 +2197,7 @@ public SQLBuilder selectUo_destinazioneByClause(UserContext userContext, Trasfer
   *      E' stata generata la richiesta di cercare i beni scaricati.
   *    PostCondition:
   *      Viene restituito un Iteratore sui beni presenti sulla tabella INVENTARIO_BENI_APG: se il Buono  
-  *		di Scarico � generato da una Fattura Attiva, visualizza i beni associati alla riga di fattura indicata.
+  *		di Scarico è generato da una Fattura Attiva, visualizza i beni associati alla riga di fattura indicata.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param buonoS il <code>Buono_scaricoBulk</code> Buono di Scarico.
@@ -2561,7 +2561,7 @@ public void selectBeniAssociatiForModifica(
  *  Seleziona beni associati
  *    PreCondition:
  *      E' stata generata la richiesta di cercare i beni assciati ad una data riga di Fattura Passiva:
- *			la fattura � <code>Per Aumento di Valore</code>.
+ *			la fattura è <code>Per Aumento di Valore</code>.
  *    PostCondition:
  *      Viene restituito un Iteratore sui beni presenti sulla tabella INVENTARIO_BENI_APG,
  *			(tramite la vista V_INVENTARIO_BENI_APG).
@@ -2616,20 +2616,20 @@ private RemoteIterator selectBeniAssociatiPerAumento(
 }
 
 /** 
- *  Controlla i beni gi� scaricati durante la sessione di lavoro - Sono presenti beni accessori del bene indicato
+ *  Controlla i beni già scaricati durante la sessione di lavoro - Sono presenti beni accessori del bene indicato
  *    PreCondition:
  *      E' stata generata la richiesta di scaricare totalmente un bene che ha degli accessori. 
- *		L'utente ha gi� indicato, in questo Buono di Scarico, dei beni che sono accessori del 
+ *		L'utente ha già indicato, in questo Buono di Scarico, dei beni che sono accessori del
  *		bene che si sta tentando di scaricare totalmente.
  *    PostCondition:
- *      Viene presentato un messaggio di errore all'utente che spiega l'impossibilit� di scaricare 
- *		totalmente un bene se si sono gi� scaricati dei beni che sono accessori del bene indicato.
+ *      Viene presentato un messaggio di errore all'utente che spiega l'impossibilitè di scaricare
+ *		totalmente un bene se si sono già scaricati dei beni che sono accessori del bene indicato.
  *
- *  Controlla i beni gi� scaricati durante la sessione di lavoro - NON sono presenti beni accessori del bene indicato
+ *  Controlla i beni già scaricati durante la sessione di lavoro - NON sono presenti beni accessori del bene indicato
  *    PreCondition:
  *      Tutti i controlli superati.
  *    PostCondition:
- *      Il bene indicato viene registrato come totalmente scaricato e si pu� proseguire con 
+ *      Il bene indicato viene registrato come totalmente scaricato e si puè proseguire con
  *		le normali operazioni.
  *  
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
@@ -2660,7 +2660,7 @@ public void checkBeniAccessoriAlreadyExistFor(UserContext userContext,Buono_cari
 				sql_acc_non.addSQLClause("AND","INVENTARIO_BENI.PROGRESSIVO", SQLBuilder.NOT_EQUALS,"0");
 				
 				if (sql_acc_non.executeCountQuery(getConnection(userContext))>0)
-					throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non � possibile scaricare totalmente questo bene\n poich�, bisogna scaricare prima i suoi accessori");
+					throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non è possibile scaricare totalmente questo bene\n poichè, bisogna scaricare prima i suoi accessori");
 				else{
 					
 					SQLBuilder sql_acc=getHome(userContext, Inventario_beniBulk.class).createSQLBuilder();
@@ -2678,7 +2678,7 @@ public void checkBeniAccessoriAlreadyExistFor(UserContext userContext,Buono_cari
 				 	sql_acc.addSQLNotExistsClause("AND",sql_non);
 						
 					if (sql_acc.executeCountQuery(getConnection(userContext))>0)
-						throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non � possibile scaricare totalmente questo bene\n poich�, bisogna scaricare prima i suoi accessori");
+						throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non è possibile scaricare totalmente questo bene\n poichè, bisogna scaricare prima i suoi accessori");
 				}
 		}		
 	sql.addTableToHeader("INVENTARIO_BENI");
@@ -2692,7 +2692,7 @@ public void checkBeniAccessoriAlreadyExistFor(UserContext userContext,Buono_cari
 	sql.addSQLClause("AND","INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID",SQLBuilder.EQUALS,buonoS.getLocal_transactionID());
 	sql.addSQLClause("AND","INVENTARIO_BENI_APG.FL_TOTALMENTE_SCARICATO(+)",SQLBuilder.EQUALS,bene_padre.ISNOTTOTALMENTESCARICATO );
  	if (sql.executeCountQuery(getConnection(userContext))>0)
- 		throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non � possibile scaricare totalmente questo bene\n poich�, bisogna scaricare prima i suoi accessori");
+ 		throw new it.cnr.jada.comp.ApplicationException ("Attenzione: non è possibile scaricare totalmente questo bene\n poichè, bisogna scaricare prima i suoi accessori");
 
 	}
 	 	catch (java.sql.SQLException e){
@@ -2742,7 +2742,7 @@ throws ComponentException{
 				if (bene.getFl_totalmente_scaricato().booleanValue()&& buono_dett.getTi_documento().compareTo(Buono_carico_scaricoBulk.CARICO)==0)
 					throw new it.cnr.jada.comp.ApplicationException("Attenzione: Operazione non possibile!\nIl Bene " + 
 							bene.getNumeroBeneCompleto() + 
-							" � stato scaricato definitivamente.");
+							" è stato scaricato definitivamente.");
 				
 				Id_inventarioHome inventarioHome = (Id_inventarioHome) getHome(aUC, Id_inventarioBulk.class);
 				Id_inventarioBulk inventario = inventarioHome.findInventarioFor(aUC,false);
@@ -2769,7 +2769,7 @@ throws ComponentException{
 							if (!beni_buono.containsByPrimaryKey(bene_accessorio))
 							   throw new it.cnr.jada.comp.ApplicationException("Attenzione: Operazione non possibile!\nIl Bene " + 
 									   bene.getNumeroBeneCompleto() + 
-							   		   " � collegato a dei beni accessori.");
+							   		   " è collegato a dei beni accessori.");
 					}
 				}
 				if (bene.isCancellabile()||buono_dett.getTi_documento().compareTo(Buono_carico_scaricoBulk.SCARICO)==0){
@@ -2788,14 +2788,14 @@ throws ComponentException{
 
 
 /** 
- *  Nuovo bene padre - Bene gi� selezionato per il trasferimento
+ *  Nuovo bene padre - Bene già selezionato per il trasferimento
  *    PreCondition:
  *		 Si sta effettuando una operazione di trasferimento intra-inventario e si sta selezionando un nuovo
- *		bene padre per il bene che si sta trasferendo. Il bene indicato come nuovo bene padre � stato a sua 
+ *		bene padre per il bene che si sta trasferendo. Il bene indicato come nuovo bene padre è stato a sua
  *		volta selezionato per essere trasferito.
  *    PostCondition:
- *      Viene presentato un messaggio di errore all'utente che spiega l'impossibilit� di utilizzare 
- *		il bene poich� anch'esso selezionato per il trasferimento.
+ *      Viene presentato un messaggio di errore all'utente che spiega l'impossibilitè di utilizzare
+ *		il bene poichè anch'esso selezionato per il trasferimento.
  *
  *  Nuovo bene padre
  *    PreCondition:
@@ -2816,7 +2816,7 @@ public void checkNuovoBenePadreAlreadySelected(UserContext userContext, Trasferi
 		sql.addSQLClause("AND","PROGRESSIVO",SQLBuilder.EQUALS,nuovo_bene_padre.getProgressivo());
 		
 		if (sql.executeExistsQuery(getConnection(userContext)))
-			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: il bene selezionato � tra quelli che verranno trasferiti.\nOperazione non possibile.");
+			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: il bene selezionato è tra quelli che verranno trasferiti.\nOperazione non possibile.");
 	} catch(java.sql.SQLException e) {
 		throw handleException(e);
 	}
@@ -2865,10 +2865,10 @@ throws PersistencyException, ComponentException {
 		return false;  	  
 }
 /** 
- *  Scarica gli accessori di un bene - Sono stati gi� scaricati alcuni accessori del bene indicato
+ *  Scarica gli accessori di un bene - Sono stati già scaricati alcuni accessori del bene indicato
  *    PreCondition:
  *      E' stata generata la richiesta di scaricare totalmente un bene che ha dei beni accessori, 
- *		ma l'utente ha gi� scaricato dei beni che sono accessori del bene selezionato, (metodo checkBeniAccessoriAlreadyExistFor).
+ *		ma l'utente ha già scaricato dei beni che sono accessori del bene selezionato, (metodo checkBeniAccessoriAlreadyExistFor).
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'errore.
  *
@@ -3027,16 +3027,16 @@ private void aggiornaValoreAlienazioneFor(UserContext userContext, Inventario_be
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
  * @param buonoS il <code>Buono_carico_scaricoBulk</code> Buono di Scarico.
  * @param bene il <code>Inventario_beniBulk</code> bene da scaricare selezionato.
- * @param riga_fattura la <code>Fattura_attiva_rigaIBulk</code> riga di Fattura alla quale sar� eventualmente associato il bene.
+ * @param riga_fattura la <code>Fattura_attiva_rigaIBulk</code> riga di Fattura alla quale sarà eventualmente associato il bene.
 **/ 
 public void modificaBeneScaricato(UserContext userContext,Buono_carico_scaricoBulk buonoS, Inventario_beniBulk bene, OggettoBulk oggetto) throws ComponentException {
 
 	if (buonoS instanceof Trasferimento_inventarioBulk){
 		modificaBeneTrasferito(userContext,buonoS, bene);
 	} else {
-		/* Questo metodo viene richiamato tutte le volte che c'� un cambio di pagina del selezionatore 
-		 *  dei beni, oppure una richiesta di Riporta. NB: per beni associati a Fattura Attiva, questo nn � necessario, in quanto il bene
-		 *	sar� SEMPRE scaricato TOTALMENTE. FORSE: tenere conto del VALORE_ALIENAZIONE.
+		/* Questo metodo viene richiamato tutte le volte che c'è un cambio di pagina del selezionatore
+		 *  dei beni, oppure una richiesta di Riporta. NB: per beni associati a Fattura Attiva, questo nn è necessario, in quanto il bene
+		 *	sarà SEMPRE scaricato TOTALMENTE. FORSE: tenere conto del VALORE_ALIENAZIONE.
 		*/ 
 		Inventario_beni_apgHome home=(Inventario_beni_apgHome)getHome(userContext,Inventario_beni_apgBulk.class);
 		SQLBuilder sql= home.createSQLBuilder();
@@ -3092,25 +3092,25 @@ public void modificaBeneScaricato(UserContext userContext,Buono_carico_scaricoBu
 /** 
  *  Valida Buono - data di scarico non specificata
  *    PreCondition:
- *      Si sta tentando di salvare un Buono di Scarico di cui non � stata indicata una data di registrazione.
+ *      Si sta tentando di salvare un Buono di Scarico di cui non è stata indicata una data di registrazione.
  *    PostCondition:
- *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit� di specificare una data.
+ *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessitè di specificare una data.
  *
  *  Valida Buono - data di scarico superiore alla data di sistema
  *    PreCondition:
- *      La data di registrazione indicata per il Buono di Scarico � superiore alla data di sistema.
+ *      La data di registrazione indicata per il Buono di Scarico è superiore alla data di sistema.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *
  *  Valida Buono - data di scarico non valida
  *    PreCondition:
- *      La data di registrazione indicata per il Buono di Scarico � anteriore all'ultima data di scarico registrata sul DB.
+ *      La data di registrazione indicata per il Buono di Scarico è anteriore all'ultima data di scarico registrata sul DB.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *  
  *  Valida Buono - data di scarico inferiore al valore consentito
  *    PreCondition:
- *      La data di registrazione indicata per il Buono di Scarico � anteriore alla MAX(data_ultima_modifica) 
+ *      La data di registrazione indicata per il Buono di Scarico è anteriore alla MAX(data_ultima_modifica)
  *		registrata per i beni scaricati.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
@@ -3142,17 +3142,17 @@ private void validaDataBuonoScarico (UserContext aUC,Buono_carico_scaricoBulk bu
 
 		// CONTROLLA LA DATA DI SCARICO - DATA DI SCARICO>SYSDATE
 		if (buonoScarico.getData_registrazione().after(dataOdierna))
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di " + ti_buono + " non valida. La Data di " + ti_buono + " non pu� essere superiore alla data odierna");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di " + ti_buono + " non valida. La Data di " + ti_buono + " non può essere superiore alla data odierna");
 			
 		// CONTROLLA LA DATA DI SCARICO - DATA DI SCARICO ALL'INTERNO DELL'ESERCIZIO DI SCRIVANIA
 		java.sql.Timestamp firstDayOfYear = it.cnr.contab.doccont00.comp.DateServices.getFirstDayOfYear(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC).intValue());
 		java.sql.Timestamp lastDayOfYear = it.cnr.contab.doccont00.comp.DateServices.getLastDayOfYear(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC).intValue());		
 		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 		if (buonoScarico.getData_registrazione().before(firstDayOfYear)){
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di " + ti_buono + " non valida. La data di " + ti_buono + " non pu� essere inferiore di " + formatter.format(firstDayOfYear));
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di " + ti_buono + " non valida. La data di " + ti_buono + " non può essere inferiore di " + formatter.format(firstDayOfYear));
 		}
 		if (buonoScarico.getData_registrazione().after(lastDayOfYear)){
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di " + ti_buono + " non valida. La data di " + ti_buono + " non pu� essere maggiore di " + formatter.format(lastDayOfYear));
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di " + ti_buono + " non valida. La data di " + ti_buono + " non può essere maggiore di " + formatter.format(lastDayOfYear));
 		}
 	} catch(Throwable t){
 		throw handleException(t);		
@@ -3223,7 +3223,7 @@ public java.util.List getBeniAccessoriFor(UserContext userContext, Inventario_be
  *    PreCondition:
  *      E' stato richiesto di recuperare/generare l'identificativo di transazione.
  *    PostCondition:
- *      Viene richiesto l'ID e, se questo non esiste, verr� generato, se richiesto.
+ *      Viene richiesto l'ID e, se questo non esiste, verrè generato, se richiesto.
  *
  * @param aUC lo <code>UserContext</code> che ha generato la richiesta.
  * @param force <code>boolean</code> il flag che indica se forzare la generazione dell'ID.
@@ -3287,7 +3287,7 @@ public OggettoBulk modificaEditDettagliScaricoConBulk (UserContext userContext, 
  	  
 	
 	if (buono.getBene().getImponibile_ammortamento().compareTo(new BigDecimal(0))<0)
-		throw new it.cnr.jada.comp.ApplicationException("Attenzione: il valore indicato nel campo 'Valore Scaricato' del bene nr. " + buono.getBene().getNumeroBeneCompleto() + "\n non pu� essere superiore al valore del bene stesso");
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione: il valore indicato nel campo 'Valore Scaricato' del bene nr. " + buono.getBene().getNumeroBeneCompleto() + "\n non può essere superiore al valore del bene stesso");
 
 	try{
 		validaDettaglioPerModifica(userContext,buono);
@@ -3317,7 +3317,7 @@ public SimpleBulkList selezionati(it.cnr.jada.UserContext userContext, Buono_car
  *  Inizializza sessione di lavoro
  *    PreCondition:
  *      Viene richiesta una possibile operazione di associazione di Beni presenti su DB ad 
- *		una o pi� righe di Fattura Passiva.
+ *		una o piè righe di Fattura Passiva.
  *    PostCondition:
  *      Viene impostato un SavePoint sulla tabella INVENTARIO_BENI_APG. 
  *		In caso di chiusura della sessione da parte dell'utente, tutte le operazione fatte 
@@ -3336,7 +3336,7 @@ public void inizializzaBeniAssociatiPerModifica(it.cnr.jada.UserContext userCont
  *  
  * @param aUC lo <code>UserContext</code> che ha generato la richiesta
  * @parama associa_buono lo <code>OggettoBulk</code> che ha generato la richiesta
- * @param riga_fattura_ncnd il <code>OggettoBulk</code> la riga della fattura a cui � associato il bene
+ * @param riga_fattura_ncnd il <code>OggettoBulk</code> la riga della fattura a cui è associato il bene
  * @param bene il <code>Inventario_beniBulk</code> il bene modificato.
  *
  * @return l'oggetto <code>OggettoBulk</code> modificato
@@ -3419,7 +3419,7 @@ public OggettoBulk modificaBeneAssociatoConBulk (
  *    PreCondition:
  *      E' stata generata la richiesta di riportare i beni selezionati dall'utente nella tabella 
  *		temporanea INVENTARIO_BENI_APG. L'utente, in questa fase, si trova a selezionare dei 
- *		beni gi� presenti sul DB, per una operazione di associazione con Fattura Passiva.
+ *		beni già presenti sul DB, per una operazione di associazione con Fattura Passiva.
  *    PostCondition:
  *      Vengono riportati sulla tabella INVENTARIO_BENI_APG i dati relativi ai beni selezionati dall'utente.
  *
@@ -3434,7 +3434,7 @@ public OggettoBulk modificaBeneAssociatoConBulk (
 **/ 
 public void modificaBeniAssociati(UserContext userContext,Ass_inv_bene_fatturaBulk associaBulk, java.util.List righe_fattura,OggettoBulk[] buoni,java.util.BitSet old_ass,java.util.BitSet ass) throws ComponentException {
 
-	/*		Questo metodo viene richiamato tutte le volte che c'� un cambio di pagina del selezionatore 
+	/*		Questo metodo viene richiamato tutte le volte che c'è un cambio di pagina del selezionatore
 	 * 		dei beni, oppure una richiesta di Riporta - Seleziona.
 	*/
 	Fattura_passiva_rigaIBulk riga_fattura=null;
@@ -3747,7 +3747,7 @@ public void modificaBeniAssociati(UserContext userContext,Ass_inv_bene_fatturaBu
  *		riga di fattura stessa.
  *		I beni disponibili sono tutti quei beni che rispondono alle seguenti caratteristiche:
  *		  	- appartengono allo stesso Inventario associato alla UO di scrivania;
- *			- NON sono stati gi� associati ad altre righe di Fattura durante la stessa sessione;
+ *			- NON sono stati già associati ad altre righe di Fattura durante la stessa sessione;
  *			- NON sono stati scaricati totalmente, (INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO = 'N');
  *			- sono dello stesso tipo, (COMMERCIALE/ISTITUZIONALE), della riga di Fattura.
  *
@@ -3831,7 +3831,7 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 				sql.addTableToHeader("INVENTARIO_BENI_APG,INVENTARIO_BENI");	
 				sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO","INVENTARIO_BENI_APG.PG_INVENTARIO(+)"); // Questa OUT Join
 				sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO(+)"); //  permette di escludere	
-				sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati gi� associati con righe
+				sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già associati con righe
 				sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO","INVENTARIO_BENI.PG_INVENTARIO");
 				sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO","INVENTARIO_BENI.NR_INVENTARIO");	
 				sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI.PROGRESSIVO"); 	 
@@ -4070,7 +4070,7 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 				sql.addTableToHeader("INVENTARIO_BENI_APG,INVENTARIO_BENI");	
 				sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO","INVENTARIO_BENI_APG.PG_INVENTARIO(+)"); // Questa OUT Join
 				sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO(+)"); //  permette di escludere	
-				sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati gi� associati con righe
+				sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già associati con righe
 				sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO","INVENTARIO_BENI.PG_INVENTARIO");
 				sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO","INVENTARIO_BENI.NR_INVENTARIO");	
 				sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI.PROGRESSIVO"); 	 
@@ -4339,7 +4339,7 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 	  *    PreCondition:
 	  *      E' stata generata la richiesta di riportare i beni selezionati dall'utente nella tabella 
 	  *		temporanea INVENTARIO_BENI_APG. L'utente, in questa fase, si trova a selezionare dei 
-	  *		beni gi� presenti sul DB, per una operazione di TRASFERIMENTO.
+	  *		beni già presenti sul DB, per una operazione di TRASFERIMENTO.
 	  *    PostCondition:
 	  *      Vengono riportati sulla tabella INVENTARIO_BENI_APG i dati relativi ai beni selezionati dall'utente.
 	  *
@@ -4351,7 +4351,7 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 	**/
 	private void modificaBeniScaricatiPerTrasferimento(UserContext userContext,Buono_carico_scaricoBulk buonoS, OggettoBulk[] beni,java.util.BitSet old_ass,java.util.BitSet ass) throws ComponentException {
 		
-		/* Questo metodo viene richiamato tutte le volte che c'� un cambio di pagina del selezionatore 
+		/* Questo metodo viene richiamato tutte le volte che c'è un cambio di pagina del selezionatore
 		 * dei beni, oppure una richiesta di Riporta.
 	    */
 		
@@ -4364,13 +4364,13 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 						if (bene.isBeneAccessorio() && checkBeneAlreadyExist(userContext, buonoS, bene)){
 							continue;
 						}
-						// Locko il bene che � stato selezionato per essere scaricato.
+						// Locko il bene che è stato selezionato per essere scaricato.
 						try{
 							lockBulk(userContext, bene)	;
 						} catch (OutdatedResourceException oe){
 							throw handleException(oe);
 						} catch (BusyResourceException bre){
-							throw new ApplicationException("Risorsa occupata.\nIl bene " + bene.getNumeroBeneCompleto() + " � bloccato da un altro utente.");
+							throw new ApplicationException("Risorsa occupata.\nIl bene " + bene.getNumeroBeneCompleto() + " è bloccato da un altro utente.");
 						} catch (it.cnr.jada.persistency.PersistencyException pe){
 							throw handleException(pe);
 						} 
@@ -4389,12 +4389,12 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 						new_bene_apg.setPg_buono_c_s(buonoS.getPg_buono_c_s());
 						new_bene_apg.setToBeCreated();	
 						super.creaConBulk(userContext,new_bene_apg);
-						// Se il bene � un bene principale, (progressivo == 0),
+						// Se il bene è un bene principale, (progressivo == 0),
 						//	scarica TUTTI i suoi eventuali Beni Accessori.
 						if (!bene.isBeneAccessorio()){
 							java.util.List accessori = ((Inventario_beniHome)getHome(userContext,Inventario_beniBulk.class)).getBeniAccessoriFor(bene);
 							if (accessori.size() > 0){
-								// Cancello i beni accessori eventualmente gi� presenti, prima di scaricare tutti gli accessori del bene padre
+								// Cancello i beni accessori eventualmente già presenti, prima di scaricare tutti gli accessori del bene padre
 								deleteBeneAccessoriAlreadyExistsFor(userContext, buonoS, bene);							
 								scaricaBeniAccessoriFor(userContext, buonoS, bene, null);
 							}
@@ -4426,13 +4426,13 @@ public void associaTuttiBeni(UserContext userContext,Ass_inv_bene_fatturaBulk as
 	  *  Scarico di un bene
 	  *    PreCondition:
 	  *      E' stata generata la richiesta di scaricare un bene. Il metodo controlla che
-	  *		tale bene non sia stato gi� scaricato; viene utilizzato nei Buoni di Scarico per Trasferimento,
+	  *		tale bene non sia stato già scaricato; viene utilizzato nei Buoni di Scarico per Trasferimento,
 	  *		per evitare che l'utente possa scaricare contemporaneamente un bene padre, 
-	  *		(che in automatico fa s� che vengano scaricati anche i suoi accessori), ed un bene suo accessorio.
+	  *		(che in automatico fa sè che vengano scaricati anche i suoi accessori), ed un bene suo accessorio.
 	  *		Questo provocherebbe una visualizzazione errata dei beni nel tab dei dettagli ed un comportamento anomalo,
 	  *		in caso di cancellazione di uno dei beni in questione.
 	  *    PostCondition:
-	  *      Restituisce <code>true</code> se il bene gi� esiste
+	  *      Restituisce <code>true</code> se il bene già esiste
 	  *  
 	  * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
 	  * @param buonoS <code>Buono_scaricoBulk</code> il Buono di Scarico.
@@ -4460,9 +4460,9 @@ private boolean checkBeneAlreadyExist(UserContext userContext,Buono_carico_scari
  *    PreCondition:
  *      E' stata generata la richiesta di scaricare totalmente un bene che ha degli accessori. 
  *		Prima di scaricare tutti i beni accessori, si provvede a cancellare dalla tabella d'appoggio,
- *		INVENTARIO_BENI_APG, quei beni accessori eventualmente gi� scaricati in precedenza.
+ *		INVENTARIO_BENI_APG, quei beni accessori eventualmente già scaricati in precedenza.
  *	   PostCondition:
- *      Gli eventuali beni accessori vengono cancellati. Si pu� proseguire con le normali operazioni.
+ *      Gli eventuali beni accessori vengono cancellati. Si puè proseguire con le normali operazioni.
  *  
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
  * @param buonoS <code>Buono_scaricoBulk</code> il Buono di Scarico.
@@ -4491,7 +4491,7 @@ private void deleteBeneAccessoriAlreadyExistsFor(UserContext userContext,Buono_c
  *    PreCondition:
  *      E' stata generata la richiesta di riportare i beni selezionati dall'utente nella tabella 
  *		temporanea INVENTARIO_BENI_APG. L'utente, in questa fase, si trova a selezionare dei 
- *		beni gi� presenti sul DB, per una operazione di scarico associato ad una Fattura Atiiva.
+ *		beni già presenti sul DB, per una operazione di scarico associato ad una Fattura Atiiva.
  *    PostCondition:
  *      Vengono riportati sulla tabella INVENTARIO_BENI_APG i dati relativi ai beni selezionati dall'utente.
  *
@@ -4505,7 +4505,7 @@ private void deleteBeneAccessoriAlreadyExistsFor(UserContext userContext,Buono_c
 public void modificaBeniScaricatiPerAssocia(UserContext userContext,Buono_carico_scaricoBulk buonoS, java.util.List righe_fattura,OggettoBulk[] beni,java.util.BitSet old_ass,java.util.BitSet ass) 
 	throws ComponentException {
 
-	/* Questo metodo viene richiamato tutte le volte che c'� un cambio di pagina del selezionatore 
+	/* Questo metodo viene richiamato tutte le volte che c'è un cambio di pagina del selezionatore
 	 * dei beni, oppure una richiesta di Riporta SELEZIONE.
    */	
 	String tipo = null;
@@ -4519,13 +4519,13 @@ public void modificaBeniScaricatiPerAssocia(UserContext userContext,Buono_carico
 				if (old_ass.get(i) != ass.get(i)) {
 						
 					if (ass.get(i)) {		
-						// Locko il bene che � stato selezionato per essere scaricato.
+						// Locko il bene che è stato selezionato per essere scaricato.
 						try{
 							lockBulk(userContext, bene)	;
 						} catch (OutdatedResourceException oe){
 							throw handleException(oe);
 						} catch (BusyResourceException bre){
-							throw new ApplicationException("Risorsa occupata.\nIl bene " + bene.getNumeroBeneCompleto() + " � bloccato da un altro utente.");
+							throw new ApplicationException("Risorsa occupata.\nIl bene " + bene.getNumeroBeneCompleto() + " è bloccato da un altro utente.");
 						} catch (it.cnr.jada.persistency.PersistencyException pe){
 							throw handleException(pe);
 						} 
@@ -4534,7 +4534,7 @@ public void modificaBeniScaricatiPerAssocia(UserContext userContext,Buono_carico
 							tipo = bene.getTi_commerciale_istituzionale();
 						}
 						else if (!tipo.equalsIgnoreCase(bene.getTi_commerciale_istituzionale())){
-							throw new it.cnr.jada.comp.ApplicationException("Attenzione: non � possibile associare beni di tipo diverso.");
+							throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile associare beni di tipo diverso.");
 						}
 						java.util.List accessori = ((Inventario_beniHome)getHome(userContext,Inventario_beniBulk.class)).getBeniAccessoriFor(bene);
 						if (accessori.size() > 0)
@@ -4594,13 +4594,13 @@ public void modificaBeniScaricatiPerAssocia(UserContext userContext,Buono_carico
 				if (old_ass.get(i) != ass.get(i)) {
 						
 					if (ass.get(i)) {		
-						// Locko il bene che � stato selezionato per essere scaricato.
+						// Locko il bene che è stato selezionato per essere scaricato.
 						try{
 							lockBulk(userContext, bene)	;
 						} catch (OutdatedResourceException oe){
 							throw handleException(oe);
 						} catch (BusyResourceException bre){
-							throw new ApplicationException("Risorsa occupata.\nIl bene " + bene.getNumeroBeneCompleto() + " � bloccato da un altro utente.");
+							throw new ApplicationException("Risorsa occupata.\nIl bene " + bene.getNumeroBeneCompleto() + " è bloccato da un altro utente.");
 						} catch (it.cnr.jada.persistency.PersistencyException pe){
 							throw handleException(pe);
 						} 
@@ -4609,7 +4609,7 @@ public void modificaBeniScaricatiPerAssocia(UserContext userContext,Buono_carico
 							tipo = bene.getTi_commerciale_istituzionale();
 						}
 						else if (!tipo.equalsIgnoreCase(bene.getTi_commerciale_istituzionale())){
-							throw new it.cnr.jada.comp.ApplicationException("Attenzione: non � possibile associare beni di tipo diverso.");
+							throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile associare beni di tipo diverso.");
 						}
 						Inventario_beni_apgBulk new_bene_apg = new Inventario_beni_apgBulk();
 						new_bene_apg.setPg_inventario(bene.getPg_inventario());
@@ -4664,13 +4664,13 @@ public void modificaBeniScaricatiPerAssocia(UserContext userContext,Buono_carico
 				if (old_ass.get(i) != ass.get(i)) {
 						
 					if (ass.get(i)) {		
-						// Locko il bene che � stato selezionato per essere scaricato.
+						// Locko il bene che è stato selezionato per essere scaricato.
 						try{
 							lockBulk(userContext, bene)	;
 						} catch (OutdatedResourceException oe){
 							throw handleException(oe);
 						} catch (BusyResourceException bre){
-							throw new ApplicationException("Risorsa occupata.\nIl bene " + bene.getNumeroBeneCompleto() + " � bloccato da un altro utente.");
+							throw new ApplicationException("Risorsa occupata.\nIl bene " + bene.getNumeroBeneCompleto() + " è bloccato da un altro utente.");
 						} catch (it.cnr.jada.persistency.PersistencyException pe){
 							throw handleException(pe);
 						} 
@@ -4679,7 +4679,7 @@ public void modificaBeniScaricatiPerAssocia(UserContext userContext,Buono_carico
 							tipo = bene.getTi_commerciale_istituzionale();
 						}
 						else if (!tipo.equalsIgnoreCase(bene.getTi_commerciale_istituzionale())){
-							throw new it.cnr.jada.comp.ApplicationException("Attenzione: non � possibile associare beni di tipo diverso.");
+							throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile associare beni di tipo diverso.");
 						}
 						Inventario_beni_apgBulk new_bene_apg = new Inventario_beni_apgBulk();
 						new_bene_apg.setPg_inventario(bene.getPg_inventario());
@@ -4925,7 +4925,7 @@ try {
 				/* r.p. eliminata selezione beni gia' associati a fattura origine
 				sql.addSQLJoin("INVENTARIO_BENI.PG_INVENTARIO","ASS_INV_BENE_FATTURA.PG_INVENTARIO"); // Questa OUT Join
 				sql.addSQLJoin("INVENTARIO_BENI.NR_INVENTARIO","ASS_INV_BENE_FATTURA.NR_INVENTARIO"); //  permette di escludere	
-				sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","ASS_INV_BENE_FATTURA.PROGRESSIVO"); 	 //  quei beni che sono stati gi� selezioanti
+				sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","ASS_INV_BENE_FATTURA.PROGRESSIVO"); 	 //  quei beni che sono stati già selezioanti
 				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.ESERCIZIO_FATT_PASS",SQLBuilder.EQUALS,nota.getRiga_fattura_origine().getEsercizio());
 				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.CD_CDS_FATT_PASS",SQLBuilder.EQUALS,nota.getRiga_fattura_origine().getCd_cds());
 				sql.addSQLClause("AND","ASS_INV_BENE_FATTURA.CD_UO_FATT_PASS",SQLBuilder.EQUALS,nota.getRiga_fattura_origine().getCd_unita_organizzativa());
@@ -4941,7 +4941,7 @@ try {
 				sql.addSQLClause("AND","INVENTARIO_BENI_APG.ESERCIZIO(+)",sql.EQUALS,nota.getEsercizio());
 				sql.addSQLClause("AND","INVENTARIO_BENI_APG.PG_FATTURA(+)",sql.EQUALS,nota.getPg_fattura_passiva());
 				sql.addSQLClause("AND","INVENTARIO_BENI_APG.PROGRESSIVO_RIGA(+)",sql.EQUALS,nota.getProgressivo_riga());
-				sql.addSQLClause("AND", "INVENTARIO_BENI.DT_VALIDITA_VARIAZIONE", SQLBuilder.LESS_EQUALS, buonoS.getData_registrazione()); // Con data di validit� inferiore all'attuale data di Registrazione
+				sql.addSQLClause("AND", "INVENTARIO_BENI.DT_VALIDITA_VARIAZIONE", SQLBuilder.LESS_EQUALS, buonoS.getData_registrazione()); // Con data di validità inferiore all'attuale data di Registrazione
 				sql.addSQLClause("AND","INVENTARIO_BENI.CD_CATEGORIA_GRUPPO",SQLBuilder.EQUALS,nota.getBene_servizio().getCategoria_gruppo().getCd_categoria_gruppo());
 				// Aggiunta clausola che visualizzi solo i beni che abbiano 
 				//	ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.
@@ -5005,7 +5005,7 @@ try {
 				sql.addSQLClause("AND","INVENTARIO_BENI_APG.PG_FATTURA(+)",sql.EQUALS,riga.getPg_documento_generico());
 				sql.addSQLClause("AND","INVENTARIO_BENI_APG.CD_TIPO_DOCUMENTO_AMM(+)",sql.EQUALS,riga.getCd_tipo_documento_amm());
 				sql.addSQLClause("AND","INVENTARIO_BENI_APG.PROGRESSIVO_RIGA(+)",sql.EQUALS,riga.getProgressivo_riga());
-				sql.addSQLClause("AND","INVENTARIO_BENI.DT_VALIDITA_VARIAZIONE", SQLBuilder.LESS_EQUALS, buonoS.getData_registrazione()); // Con data di validit� inferiore all'attuale data di Registrazione
+				sql.addSQLClause("AND","INVENTARIO_BENI.DT_VALIDITA_VARIAZIONE", SQLBuilder.LESS_EQUALS, buonoS.getData_registrazione()); // Con data di validità inferiore all'attuale data di Registrazione
 				sql.addSQLClause("AND","INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, riga.getDocumento_generico().getTi_istituz_commerc()); // Beni dello stesso tipo della riga di Fattura
 				// Aggiunta clausola che visualizzi solo i beni che abbiano 
 				//	ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.
@@ -5218,13 +5218,13 @@ public void annullaRiportaAssFattura_Bene(UserContext aUC,OggettoBulk buonoS, ja
 			}		
 	}
 /**
- * Si sta tentando confermare le operazioni compiute per associare delle righe di Fattura Passiva a dei beni gi� presenti sul DB.
+ * Si sta tentando confermare le operazioni compiute per associare delle righe di Fattura Passiva a dei beni già presenti sul DB.
  *
  *  Valida riporta - Righe di Fattura senza beni associati
  *    PreCondition:
  *      Non tutte le righe di fattura sono state associate a dei beni.
  *    PostCondition:
- *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit� di 
+ *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessitè di
  *		associare almeno un bene ad ogni riga di Fattura.
  *
  *  Valida riporta - Tutti i controlli superati
@@ -5253,7 +5253,7 @@ public void validaRiportaAssFattura_Bene(UserContext userContext, Ass_inv_bene_f
 	Documento_generico_rigaBulk documento=null;
 	Inventario_beni_apgHome home=(Inventario_beni_apgHome)getHome(userContext, Inventario_beni_apgBulk.class);
 	//SQLBuilder sql=home.createSQLBuilder();
-	// Se l'associazione � par aumento di valore, valida la testata del Buono di Carico
+	// Se l'associazione è par aumento di valore, valida la testata del Buono di Carico
 	try{
 		if (associaBulk != null){
 			for (Iterator i = associaBulk.getDettagliFatturaColl().iterator(); i.hasNext();){
@@ -5294,7 +5294,7 @@ public void validaRiportaAssFattura_Bene(UserContext userContext, Ass_inv_bene_f
 							sql.addSQLNotExistsClause("AND",sql_ass);
 						} 
 					if (sql.executeCountQuery(getConnection(userContext))==0)
-						throw new ApplicationException("Attenzione: � necessario indicare per ogni riga di Fattura almeno un bene.\n La riga " + riga_fattura.getDs_riga_fattura() +  " non ha beni associati.");
+						throw new ApplicationException("Attenzione: è necessario indicare per ogni riga di Fattura almeno un bene.\n La riga " + riga_fattura.getDs_riga_fattura() +  " non ha beni associati.");
 					
 				}
 				else if (nota!=null){
@@ -5325,7 +5325,7 @@ public void validaRiportaAssFattura_Bene(UserContext userContext, Ass_inv_bene_f
 						
 					}
 					if (sql.executeCountQuery(getConnection(userContext))==0)
-						throw new ApplicationException("Attenzione: � necessario indicare per ogni riga di NC almeno un bene.\n La riga " + nota.getDs_riga_fattura() +  " non ha beni associati.");
+						throw new ApplicationException("Attenzione: è necessario indicare per ogni riga di NC almeno un bene.\n La riga " + nota.getDs_riga_fattura() +  " non ha beni associati.");
 					
 				}else if (notadeb!=null){
 					if (associaBulk.isPerAumentoValore()){	
@@ -5354,7 +5354,7 @@ public void validaRiportaAssFattura_Bene(UserContext userContext, Ass_inv_bene_f
 						sql.addSQLNotExistsClause("AND",sql_ass);
 					}
 				if (sql.executeCountQuery(getConnection(userContext))==0)
-					throw new ApplicationException("Attenzione: � necessario indicare per ogni riga di ND almeno un bene.\n La riga " + notadeb.getDs_riga_fattura() +  " non ha beni associati.");
+					throw new ApplicationException("Attenzione: è necessario indicare per ogni riga di ND almeno un bene.\n La riga " + notadeb.getDs_riga_fattura() +  " non ha beni associati.");
 			}else if (fattura_attiva!=null){			
 					sql.addSQLClause("AND","INVENTARIO_BENI_APG.CD_CDS",sql.EQUALS,fattura_attiva.getCd_cds());
 					sql.addSQLClause("AND","INVENTARIO_BENI_APG.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,fattura_attiva.getCd_unita_organizzativa());
@@ -5372,7 +5372,7 @@ public void validaRiportaAssFattura_Bene(UserContext userContext, Ass_inv_bene_f
 					sql_ass.addSQLJoin("ASS_INV_BENE_FATTURA.TI_DOCUMENTO",sql_ass.EQUALS,"INVENTARIO_BENI_APG.TI_DOCUMENTO");
 					sql.addSQLNotExistsClause("AND",sql_ass);
 				if (sql.executeCountQuery(getConnection(userContext))==0)
-					throw new ApplicationException("Attenzione: � necessario indicare per ogni riga di Fattura Attiva almeno un bene.\n La riga " + fattura_attiva.getDs_riga_fattura() +  " non ha beni associati.");
+					throw new ApplicationException("Attenzione: è necessario indicare per ogni riga di Fattura Attiva almeno un bene.\n La riga " + fattura_attiva.getDs_riga_fattura() +  " non ha beni associati.");
 			}
 				if (associaBulk.isPerAumentoValore()){
 					tot_variazioni_riga = new java.math.BigDecimal(0);
@@ -5510,7 +5510,7 @@ public void validaRiportaAssFattura_Bene(UserContext userContext, Ass_inv_bene_f
 							sql.addSQLNotExistsClause("AND",sql_ass);
 						}
 					if (sql.executeCountQuery(getConnection(userContext))==0)
-						throw new ApplicationException("Attenzione: � necessario indicare per ogni riga di Documento almeno un bene.\n La riga " + documento.getDs_riga() +  " non ha beni associati.");
+						throw new ApplicationException("Attenzione: è necessario indicare per ogni riga di Documento almeno un bene.\n La riga " + documento.getDs_riga() +  " non ha beni associati.");
 					
 				}
 				if (associaBulk.isPerAumentoValoreDoc()){
@@ -5578,31 +5578,31 @@ public void validaRiportaAssFattura_Bene(UserContext userContext, Ass_inv_bene_f
 /** 
  *  Valida Buono - data di carico non specificata
  *    PreCondition:
- *      Si sta tentando di salvare un Buono di Carico di cui non � stata indicata una data di registrazione.
+ *      Si sta tentando di salvare un Buono di Carico di cui non è stata indicata una data di registrazione.
  *    PostCondition:
- *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit� di specificare una data..
+ *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessitè di specificare una data..
  *
  *  Valida Buono - data di carico superiore alla data di sistema
  *    PreCondition:
- *      La data di registrazione indicata per il Buono di Carico � superiore alla data di sistema.
+ *      La data di registrazione indicata per il Buono di Carico è superiore alla data di sistema.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *
  *  Valida Buono - data di carico non valida
  *    PreCondition:
- *      La data di registrazione indicata per il Buono di Carico � anteriore all'ultima data di carico registrata sul DB.
+ *      La data di registrazione indicata per il Buono di Carico è anteriore all'ultima data di carico registrata sul DB.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *
  *  Valida Buono - tipo movimento non specificato
  *    PreCondition:
- *      Si sta tentando di salvare un Buono di Carico di cui non � stato specificato il tipo di movimento.
+ *      Si sta tentando di salvare un Buono di Carico di cui non è stato specificato il tipo di movimento.
  *    PostCondition:
- *      Un messaggio di errore viene visualizzato all'utente indicando la necessit� di scegliere il tipo movimento.
+ *      Un messaggio di errore viene visualizzato all'utente indicando la necessitè di scegliere il tipo movimento.
  *
  *  Valida Buono - descrizione non specificata
  *    PreCondition:
- *      Si sta tentando di salvare un Buono di Carico di cui non � stata specificata la descrizione.
+ *      Si sta tentando di salvare un Buono di Carico di cui non è stata specificata la descrizione.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *
@@ -5626,7 +5626,7 @@ private void validaBuonoCarico_Testata (UserContext aUC,Buono_carico_scaricoBulk
 		
 		// CONTROLLA LA DATA DI CARICO - DATA DI CARICO > DATA ODIERNA
 		if (buonoCarico.getData_registrazione().after(dataOdierna))
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di Carico non valida. La Data di Carico non pu� essere superiore alla data odierna");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di Carico non valida. La Data di Carico non può essere superiore alla data odierna");
 
 		// CONTROLLA CHE SIA STATO SPECIFICATO UN TIPO DI MOVIMENTO DI CARICO
 		if (buonoCarico.getTipoMovimento()==null)
@@ -5636,10 +5636,10 @@ private void validaBuonoCarico_Testata (UserContext aUC,Buono_carico_scaricoBulk
 		java.sql.Timestamp lastDayOfYear = it.cnr.contab.doccont00.comp.DateServices.getLastDayOfYear(CNRUserContext.getEsercizio(aUC).intValue());		
 		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
 		if (buonoCarico.getData_registrazione().before(firstDayOfYear)){
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di Carico non valida. La data di Carico non pu� essere inferiore di " + formatter.format(firstDayOfYear));
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di Carico non valida. La data di Carico non può essere inferiore di " + formatter.format(firstDayOfYear));
 		}
 		if (buonoCarico.getData_registrazione().after(lastDayOfYear)){
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di Carico non valida. La data di Carico non pu� essere maggiore di " + formatter.format(lastDayOfYear));
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di Carico non valida. La data di Carico non può essere maggiore di " + formatter.format(lastDayOfYear));
 		}
 		// CONTROLLA CHE SIA STATA SPECIFICATA UNA DESCRIZIONE PER IL BUONO DI CARICO
 		if (buonoCarico.getDs_buono_carico_scarico()==null)
@@ -5669,7 +5669,7 @@ private void modificaBeneTrasferito(UserContext userContext,Buono_carico_scarico
 	SQLBuilder sql=home.createSQLBuilder();
 	sql.addSQLClause("AND","INVENTARIO_BENI_APG.PG_INVENTARIO",sql.EQUALS,bene.getPg_inventario());
 	sql.addSQLClause("AND","INVENTARIO_BENI_APG.NR_INVENTARIO",sql.EQUALS,bene.getNr_inventario()); 
-	//	 Se il bene che si sta trasferendo � un bene principale, (PROGRESSIVO = 0),
+	//	 Se il bene che si sta trasferendo è un bene principale, (PROGRESSIVO = 0),
 	//	allora il nuovo bene padre viene copiato anche negli EVENTUALI beni accessori
 	//	scaricati insieme al padre.
 	if ((bene.getNuovo_bene_padre() != null && bene.getNuovo_bene_padre().getPg_inventario() != null)){
@@ -5694,7 +5694,7 @@ private void modificaBeneTrasferito(UserContext userContext,Buono_carico_scarico
 			bene_apg.setProgressivo_principale(null);
 		}
 		bene_apg.setCd_categoria_gruppo_new(null);
-		// viene gi� controllato che � di tipo (Trasferimento_inventarioBulk)
+		// viene già controllato che è di tipo (Trasferimento_inventarioBulk)
 		if (((Trasferimento_inventarioBulk)buonoS).isFl_cambio_categoria()){
 			if (bene.getNuova_categoria() != null && bene.getNuova_categoria().getCd_categoria_gruppo() != null){
 				bene_apg.setCd_categoria_gruppo_new(bene.getNuova_categoria().getCd_categoria_gruppo());
@@ -5725,9 +5725,9 @@ private void modificaBeneTrasferito(UserContext userContext,Buono_carico_scarico
  *		 - rendere un bene principale, (PROGRESSIVO == 0), accessorio di un altro bene;
  *		 - sganciare un bene accessorio ed assegnarlo ad un altro bene, oppure trasformarlo in bene principale.
  *		Nel caso di un bene principale che deve essere trasformato in accessorio di un altro bene,
- *		oppure nel caso di un bene accessorio da assegnare ad un altro bene padre, � necessario indicare il nuovo
+ *		oppure nel caso di un bene accessorio da assegnare ad un altro bene padre, è necessario indicare il nuovo
  *		bene padre.
- *		Uno o pi� beni selezionati, non hanno indicato il "Nuovo Bene Padre".  *		
+ *		Uno o piè beni selezionati, non hanno indicato il "Nuovo Bene Padre".  *
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *  
@@ -5748,7 +5748,7 @@ private void validaDettagliTrasferiti (UserContext userContext, Trasferimento_in
 		if (sql.executeCountQuery(home.getConnection())==0){ 
 					if (buonoT.isTrasferimentoIntraInv() ||
 				(buonoT.isTrasferimentoExtraInv() && !buonoT.getFl_scarica_tutti().booleanValue()))
-				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: � necessario specificare almeno un bene da scaricare!");
+				throw new it.cnr.jada.comp.ApplicationException ("Attenzione: è necessario specificare almeno un bene da scaricare!");
 		}
 		if (buonoT.isTrasferimentoIntraInv()){
 			SQLBuilder sql_princ = home.createSQLBuilder();
@@ -5783,8 +5783,8 @@ private void validaDettagliTrasferiti (UserContext userContext, Trasferimento_in
 			}	    
 			else if (sql_princ.executeCountQuery(home.getConnection())!=0 && !buonoT.isFl_cambio_categoria()){
 				StringBuffer msg = new StringBuffer("Attenzione: ");
-				msg.append("un bene principale pu� essere trasferito solo come accessorio di un altro bene.\n");
-				msg.append("Oppure un bene accessorio pu� essere trasferito o come nuovo bene principale, ");
+				msg.append("un bene principale può essere trasferito solo come accessorio di un altro bene.\n");
+				msg.append("Oppure un bene accessorio può essere trasferito o come nuovo bene principale, ");
 				msg.append("o come accessorio di un bene padre diverso.\n");
 				List Inv_canc=home.fetchAll(sql);
 			    for (Iterator i=Inv_canc.iterator();i.hasNext();){
@@ -5916,12 +5916,12 @@ private void insertBeniPerAumentoValore (UserContext aUC,Buono_carico_scaricoBul
  *	 Il sistema si occupa di allineare automaticamente il campo Imponibile_Ammortamento del Bene,
  *	 tenendo presente il valore assestato:
  *
- *	- il valore del bene, (assestato), � uguale a Imponibile_ammortamento: il campo imponibile ammortamento
+ *	- il valore del bene, (assestato), è uguale a Imponibile_ammortamento: il campo imponibile ammortamento
  *		viene aggiornato con il valore unitario del dettaglio del Buono;
  *	
  *	- il valore assestato del bene differisce dall'Imponibile_Ammortamento:
  *		il campo Imponibile_ammortamento NON viene aggiornato. Viene salvato l'oggetto Key
- *		del bene, che sar� poi utilizzato per costruire un messaggio di alert per l'utente.
+ *		del bene, che sarà poi utilizzato per costruire un messaggio di alert per l'utente.
  *	
  * @param bene il <code>Inventario_beniBulk</code> bene da rivalutare.
 **/
@@ -5938,8 +5938,8 @@ private void calcolaVariazione_ImponibileAmmortamento (Buono_carico_scarico_dett
 }
 /**
  *  E' stato richiesto di salvare un Buono di Carico per Aumento di Valore diretto, (NON proveniente da Fattura Passiva).
- *	Durante il salvataggio dei beni, non � stato possibile aggiornare in automatico il campo
- *	IMPONIBILE_AMMORTAMENTO, poich� il valore assestato del bene non � uguale all'imponibile_ammortamento,
+ *	Durante il salvataggio dei beni, non è stato possibile aggiornare in automatico il campo
+ *	IMPONIBILE_AMMORTAMENTO, poichè il valore assestato del bene non è uguale all'imponibile_ammortamento,
  *	(metodo calcolaVariazione_ImponibileAmmortamento()); viene costruito un messaggio per l'utente
  *	che lo avvisa del mancato aggiornamento dei beni.
  *
@@ -5953,7 +5953,7 @@ private String buildBeniNotChanged_Message(java.util.Vector notChangedBeniKey) {
 	StringBuffer msg = new StringBuffer();
 
 	msg.append("Attenzione.\n");
-	msg.append("Per i seguenti beni non � stato possibile aggiornare il campo IMPONIBILE_AMMORTAMENTO:\n");
+	msg.append("Per i seguenti beni non è stato possibile aggiornare il campo IMPONIBILE_AMMORTAMENTO:\n");
 
 	for (Iterator i = notChangedBeniKey.iterator(); i.hasNext();){
 		Inventario_beniKey beneKey = (Inventario_beniKey)i.next();
@@ -6025,7 +6025,7 @@ private void insertBeni (UserContext aUC,Buono_carico_scaricoBulk buonoC, Simple
  *    PostCondition:
  *		 Data la collezione dei dettagli del Buono di Carico, crea una nuova collezione di dettagli:
  *		per ogni dettaglio creato dall'utente vengono creati tanti nuovi dettagli, (che hanno caratteristiche 
- *		del dettaglio originale), ma con quantit� unitaria. La nuova collezione di dettagli sostituir� 
+ *		del dettaglio originale), ma con quantitè unitaria. La nuova collezione di dettagli sostituirè
  *		la collezione originale in fase di salvataggio.
  *
  * @param aUC lo <code>UserContext</code> che ha generato la richiesta.  
@@ -6083,7 +6083,7 @@ private Buono_carico_scaricoBulk esplodiDettagli (UserContext aUC, Buono_carico_
 				* 	diverso a seconda che il bene sia oppure no un bene accessorio.
 				*/ 
 				if (newDettaglio.isBeneAccessorio() && (!newDettaglio.isAccessorioContestuale())){
-					// Bene Accessorio di un bene gi� registrato su DB
+					// Bene Accessorio di un bene già registrato su DB
 					newDettaglio.setNr_inventario(newDettaglio.getBene().getBene_principale().getNr_inventario());
 					newDettaglio.setProgressivo(new Integer(getProgressivoDaBenePrincipale(aUC,newDettaglio.getBene().getBene_principale(), progressivi).intValue()));				
 				}
@@ -6128,7 +6128,7 @@ private Buono_carico_scaricoBulk esplodiDettagli (UserContext aUC, Buono_carico_
  *      E' stato richiesto di recuperare/generare progressivo per i beni accessori relativi 
  *		al bene principale indicato nei parametri.
  *    PostCondition:
- *      Controlla se sono stati gi� chiesti progressivi per il bene principale di riferimento: 
+ *      Controlla se sono stati già chiesti progressivi per il bene principale di riferimento:
  *		in caso affermativo, restituisce il progressivo incrementato di 1; 
  *		in caso negativo, viene richiesto di resuperare dal DB il progressivo per il bene padre indicato.
  *
@@ -6170,7 +6170,7 @@ private java.lang.Long getProgressivoDaBenePrincipale (UserContext aUC,Inventari
 }
 /**
  *  Funziona come il metodo <code>esplodiDettagli</code>, ma viene invocato in presenza di 
- *	una riga di dettaglio che determina la creazione di beni accessori di un bene che � stato 
+ *	una riga di dettaglio che determina la creazione di beni accessori di un bene che è stato
  *	creato nello stesso Buono di Carico.
  *
 **/ 
@@ -6246,7 +6246,7 @@ private void completeUtilizzatori (SimpleBulkList dettagli)
 	// Iteratore sugli utilizzatori
 	Iterator i_utilizzatori;
 
-	// Iteratore sulle Linee di Attivit�
+	// Iteratore sulle Linee di Attivitè
 	Iterator i_linee_attivita;
 	
 	while (i_dettagli.hasNext()){
@@ -6293,7 +6293,7 @@ private void validaValoreBeneDaFattura(Buono_carico_scaricoBulk buonoC) {
 	
 	for (java.util.Enumeration e = righe_fatturaHash.keys(); e.hasMoreElements();){
 		Fattura_passiva_rigaBulk riga_fattura = (Fattura_passiva_rigaBulk)e.nextElement();
-		// Controlla se la riga di fattura � ISTITUZIONALE
+		// Controlla se la riga di fattura è ISTITUZIONALE
 		if (riga_fattura.getTi_istituz_commerc().equals(riga_fattura.ISTITUZIONALE))
 			imponibile_totale =riga_fattura.getIm_imponibile().add(riga_fattura.getIm_iva());
 		else
@@ -6322,31 +6322,31 @@ private void validaValoreBeneDaFattura(Buono_carico_scaricoBulk buonoC) {
 /** 
  *  Valida Buono - data di carico non specificata
  *    PreCondition:
- *      Si sta tentando di salvare un Buono di Carico di cui non � stata indicata una data di registrazione.
+ *      Si sta tentando di salvare un Buono di Carico di cui non è stata indicata una data di registrazione.
  *    PostCondition:
- *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit� di specificare una data..
+ *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessitè di specificare una data..
  *
  *  Valida Buono - data di carico superiore alla data di sistema
  *    PreCondition:
- *      La data di registrazione indicata per il Buono di Carico � superiore alla data di sistema.
+ *      La data di registrazione indicata per il Buono di Carico è superiore alla data di sistema.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *
  *  Valida Buono - data di carico non valida
  *    PreCondition:
- *      La data di registrazione indicata per il Buono di Carico � anteriore all'ultima data di carico registrata sul DB.
+ *      La data di registrazione indicata per il Buono di Carico è anteriore all'ultima data di carico registrata sul DB.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *
  *  Valida Buono - tipo movimento non specificato
  *    PreCondition:
- *      Si sta tentando di salvare un Buono di Carico di cui non � stato specificato il tipo di movimento.
+ *      Si sta tentando di salvare un Buono di Carico di cui non è stato specificato il tipo di movimento.
  *    PostCondition:
- *      Un messaggio di errore viene visualizzato all'utente indicando la necessit� di scegliere il tipo movimento.
+ *      Un messaggio di errore viene visualizzato all'utente indicando la necessitè di scegliere il tipo movimento.
  *
  *  Valida Buono - descrizione non specificata
  *    PreCondition:
- *      Si sta tentando di salvare un Buono di Carico di cui non � stata specificata la descrizione.
+ *      Si sta tentando di salvare un Buono di Carico di cui non è stata specificata la descrizione.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *
@@ -6358,44 +6358,44 @@ private void validaValoreBeneDaFattura(Buono_carico_scaricoBulk buonoC) {
  *
  *  Valida Buono - categoria bene non specificata
  *    PreCondition:
- *      Per uno dei dettagli del Buono di Carico non � stata specificata la Categoria Gruppo Inventario del bene.
+ *      Per uno dei dettagli del Buono di Carico non è stata specificata la Categoria Gruppo Inventario del bene.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *
  *  Valida Buono - descrizione bene non specificata
  *    PreCondition:
- *      Per uno dei dettagli del Buono di Carico non � stata specificata la descrizione del bene.
+ *      Per uno dei dettagli del Buono di Carico non è stata specificata la descrizione del bene.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *
  *  Valida Buono - condizione bene non specificata
  *    PreCondition:
- *      Per uno dei dettagli del Buono di Carico non � stata specificata la descrizione del bene.
+ *      Per uno dei dettagli del Buono di Carico non è stata specificata la descrizione del bene.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *
  *  Valida Buono - bene accessorio senza bene padre
  *    PreCondition:
- *      Non � stato specificato il bene di riferimento per un dettaglio del Buono di Carico 
+ *      Non è stato specificato il bene di riferimento per un dettaglio del Buono di Carico
  *		definito come accessorio di un altro bene.
  *    PostCondition:
- *      Un messaggio di errore viene visualizzato all'utente ondocando la necessit� di specificare il bene padre.
+ *      Un messaggio di errore viene visualizzato all'utente ondocando la necessitè di specificare il bene padre.
  *
  *  Valida Buono - ubicazione bene non specificata
  *    PreCondition:
- *      Per uno dei dettagli del Buono di Carico non � stata specificata l'ubicazione del bene.
+ *      Per uno dei dettagli del Buono di Carico non è stata specificata l'ubicazione del bene.
  *    PostCondition:
- *      Un messaggio di errore viene visualizzato all'utente indicando la necessit� di specificare l'ubicazione.
+ *      Un messaggio di errore viene visualizzato all'utente indicando la necessitè di specificare l'ubicazione.
  *
- *  Valida Buono - quantit� non specificata
+ *  Valida Buono - quantitè non specificata
  *    PreCondition:
- *      Per uno dei dettagli del Buono di Carico non � stata specificata la quantit�.
+ *      Per uno dei dettagli del Buono di Carico non è stata specificata la quantitè.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *
  *  Valida Buono - valore unitario non specificato
  *    PreCondition:
- *      Per uno dei dettagli del Buono di Carico non � stata specificato il valore unitario dei beni.
+ *      Per uno dei dettagli del Buono di Carico non è stata specificato il valore unitario dei beni.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *
@@ -6450,10 +6450,10 @@ private void validaBuonoCarico (UserContext aUC,Buono_carico_scaricoBulk buonoCa
 			// CONTROLLA CHE SIA STATA SPECIFICATA UNA targa PER IL BENE
 			if (bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
 					bene.getCategoria_Bene().getFl_gestione_targa() && bene.getTarga()==null)
-					throw new it.cnr.jada.comp.ApplicationException("Attenzione: � obbligatorio indicare la targa per la Categoria del Bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":""));
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione: è obbligatorio indicare la targa per la Categoria del Bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":""));
 			if (bene.getCategoria_Bene()!=null &&  bene.getCategoria_Bene().getCd_categoria_gruppo()!=null &&
 					bene.getCategoria_Bene().getFl_gestione_seriale() && bene.getSeriale()==null)
-					throw new it.cnr.jada.comp.ApplicationException("Attenzione: � obbligatorio indicare il seriale per la Categoria del Bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":""));
+					throw new it.cnr.jada.comp.ApplicationException("Attenzione: è obbligatorio indicare il seriale per la Categoria del Bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":""));
 
 			// CONTROLLA CHE SIA STATA SPECIFICATA UNA DESCRIZIONE PER IL BENE
 			if (bene.getDs_bene()==null)
@@ -6481,7 +6481,7 @@ private void validaBuonoCarico (UserContext aUC,Buono_carico_scaricoBulk buonoCa
 					
 			// CONTROLLA CHE SIA STATO INSERITO LA QUANTITA' PER IL BENE
 			if (dett.getQuantita()==null || dett.getQuantita().compareTo(new Long(1))<0)
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: la Quantita' del Bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non � valida.\n La Quantit� deve essere maggiore di 0");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: la Quantita' del Bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non è valida.\n La Quantità deve essere maggiore di 0");
 
 			// CONTROLLA CHE SIA STATO INSERITO IL PREZZO UNITARIO PER IL BENE
 			if (dett.getValore_unitario()==null || dett.getValore_unitario().compareTo(new java.math.BigDecimal(0))<=0)
@@ -6498,14 +6498,14 @@ private void validaBuonoCarico (UserContext aUC,Buono_carico_scaricoBulk buonoCa
 				java.math.BigDecimal valore_bene = dett.getBene().getValoreBene().add(dett.getValore_unitario());
 				if (dett.getBene().getImponibile_ammortamento() != null && dett.getBene().getImponibile_ammortamento().compareTo(valore_bene)>0){
 					throw new ValidationException("Attenzione: il valore da ammortizzare di un bene deve essere inferiore  o uguale al valore del bene.\n" + 
-							"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non � valido");
+							"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non è valido");
 				}
 			} else {
 				// Buono di Carico normale
 				// CONTROLLA CHE IL VALORE DA AMMORTIZZARE SIA INFERIORE AL VALORE UNITARIO
 				if (dett.getBene().getImponibile_ammortamento() != null && dett.getBene().getImponibile_ammortamento().compareTo(dett.getValore_unitario())>0){
 					throw new ValidationException("Attenzione: il valore da ammortizzare di un bene deve essere inferiore  o uguale al valore del bene.\n" + 
-							"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non � valido");
+							"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non è valido");
 				}
 			}
 	}catch(Throwable t){
@@ -6573,7 +6573,7 @@ private OggettoBulk creaBuonoScaricoConBulk(UserContext userContext, OggettoBulk
  *    PreCondition:
  *      La data del Buono di Scarico non supera i controlli di validazione, (metodo validaDataBuonoScarico).
  *    PostCondition:
- *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit� di specificare una data.
+ *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessitè di specificare una data.
  *  
  *  Valida dettagli - dettagli non validi
  *    PreCondition:
@@ -6583,22 +6583,22 @@ private OggettoBulk creaBuonoScaricoConBulk(UserContext userContext, OggettoBulk
  *  
  *  Valida Buono - data di scarico inferiore al valore consentito
  *    PreCondition:
- *      La data di registrazione indicata per il Buono di Scarico � anteriore alla MAX(data_ultima_modifica) 
+ *      La data di registrazione indicata per il Buono di Scarico è anteriore alla MAX(data_ultima_modifica)
  *		registrata per i beni scaricati.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *  
  *  Valida Buono - tipo movimento non specificato
  *    PreCondition:
- *      Si sta tentando di salvare un Buono di Scarico di cui non si � specificato il tipo di movimento.
+ *      Si sta tentando di salvare un Buono di Scarico di cui non si è specificato il tipo di movimento.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.
  *  
  *  Valida Buono - descrizione mancante
  *    PreCondition:
- *      Non � stata specificata una descrizione per il Buono di Scarico.
+ *      Non è stata specificata una descrizione per il Buono di Scarico.
  *    PostCondition:
- *      Un messaggio di errore viene visualizzato all'utente indicando la necessit� di specificare la descrizione.
+ *      Un messaggio di errore viene visualizzato all'utente indicando la necessitè di specificare la descrizione.
  *  
  *  Buono di Scarico generato da Fattura Attiva - Valida quadratura non superato
  *    PreCondition:
@@ -6623,13 +6623,13 @@ private void validaBuonoScarico (UserContext aUC,Buono_carico_scaricoBulk buonoS
 	Buono_carico_scarico_dettBulk dett = new Buono_carico_scarico_dettBulk();
 	
 	try{
-		// Controlla la validit� della data indicata nel Buono di Scarico
+		// Controlla la validità della data indicata nel Buono di Scarico
 		validaDataBuonoScarico(aUC, buonoScarico);
 
 		// CONTROLLA LA DATA DI SCARICO - DATA DI SCARICO < ULTIMA DATA DI SCARICO REGISTRATA
 		//java.sql.Timestamp data_ultimo_scarico = ((Buono_carico_scaricoHome)getHome(aUC,Buono_carico_scaricoBulk.class)).getData_di_Scarico(buonoScarico);
 		//if (data_ultimo_scarico!=null && buonoScarico.getData_registrazione().before(data_ultimo_scarico))
-			//throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di Scarico non valida. La Data di Scarico non pu� essere minore dell'ultima data registrata");
+			//throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di Scarico non valida. La Data di Scarico non puè essere minore dell'ultima data registrata");
 
 		// Controlla che ci siano beni associati alla Fattura e che abbiano un VALORE_ALIENAZIONE valido
 		validaDettagliAssociati(aUC,buonoScarico);
@@ -6638,7 +6638,7 @@ private void validaBuonoScarico (UserContext aUC,Buono_carico_scaricoBulk buonoS
 		 *	MODIFICHE SUI SINGOLI BENI SCARICATI
 		*/
 		if (buonoScarico.getData_registrazione().before(getMaxDataFor(aUC, buonoScarico))){
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di Scarico non valida.\n La Data di Scarico non pu� essere precedente ad una modifica di uno dei beni scaricati");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: data di Scarico non valida.\n La Data di Scarico non può essere precedente ad una modifica di uno dei beni scaricati");
 		}
 		
 		// CONTROLLA CHE SIA STATO SPECIFICATO UN TIPO DI MOVIMENTO DI SCARICO
@@ -6685,7 +6685,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
 				dettaglio.getBene().setVariazione_piu(dettaglio.getBene().getVariazione_piu().add(dettaglio.getTotale().negate()).add(dettaglio.getValore_unitario()));
 			assegnaStatoCOGE(aUC,buono_cs);
 			/***************** BORRIELLO - Rich. 693 **********************/
-			// 	Se lo stato del dettaglio � 'C', (Contabilizzato), viene riportato ad 'R', (da riprocessare)
+			// 	Se lo stato del dettaglio è 'C', (Contabilizzato), viene riportato ad 'R', (da riprocessare)
 			if (dettaglio.getStato_coge().equals(Buono_carico_scarico_dettBulk.STATO_COGE_C)){
 				dettaglio.setStato_coge(Buono_carico_scarico_dettBulk.STATO_COGE_R);
 			}
@@ -6720,7 +6720,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk)
  *      E' stata generata la richiesta di rendere persistente su DB il Buono di Scarico ed
  *		i dettagli ad esso correlati.
  *    PostCondition:
- *      Viene richiamata la procedura che scriver� sulle tabelle dell'Inventario i dati inseriti dall'utente.
+ *      Viene richiamata la procedura che scriverè sulle tabelle dell'Inventario i dati inseriti dall'utente.
  *
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
  * @param buonoS il <code>Buono_scaricoBulk</code> Buono di Scarico.
@@ -6768,20 +6768,20 @@ public String makePersistentScarico(UserContext aUC, Buono_carico_scaricoBulk bu
  *    PreCondition:
  *      Si sta tentando di salvare un Buono di Scarico che non ha dettagli.
  *    PostCondition:
- *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit� di specificare almeno un dettaglio.
+ *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessitè di specificare almeno un dettaglio.
  *
  *  Valida Dettagli - Valore da scaricare non specificato
  *    PreCondition:
- *      Si sta tentando di salvare un dettaglio di cui non � stato specificato il valore da scaricare del bene.
+ *      Si sta tentando di salvare un dettaglio di cui non è stato specificato il valore da scaricare del bene.
  *    PostCondition:
- *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit� di specificare il valore.
+ *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessitè di specificare il valore.
  *
  *  Valida Dettagli da Fattura - Beni eterogenei
  *    PreCondition:
- *      Il Buono che si sta salvando � stato generato a partire da una Fattura Attiva. 
+ *      Il Buono che si sta salvando è stato generato a partire da una Fattura Attiva.
  *		Si sono specificati, per una stessa riga di Fattura, beni di tipo diverso (ISTITUZIONALE/COMMERCIALE).
  *    PostCondition:
- *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit� 
+ *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilitè
  *		di associare ad una riga di Fattura beni di tipo diverso.
  *  
  *  Valida Dettagli - Tutti i controlli superati.
@@ -6796,7 +6796,7 @@ public String makePersistentScarico(UserContext aUC, Buono_carico_scaricoBulk bu
 private void validaDettagliAssociati (UserContext userContext, Buono_carico_scaricoBulk buonoS) throws ComponentException {
 
 	boolean hasNoDetails = true;
-	/* Query per il controllo dell'omogeneit� dei tipi (ISTITUZIONALE/COMMERCIALE) dei beni 
+	/* Query per il controllo dell'omogeneitè dei tipi (ISTITUZIONALE/COMMERCIALE) dei beni
 	 * 	associati ad ogni riga di Fattura: la query permette di stabilire se, per una
 	 *	riga di Fattura, sono stati associati beni di tipo diverso.
 	*/	
@@ -6812,17 +6812,17 @@ private void validaDettagliAssociati (UserContext userContext, Buono_carico_scar
 			
 			if(cat!=null && cat.getData_cancellazione()!= null && buonoS.getData_registrazione()!=null &&
 					cat.getData_cancellazione().before(buonoS.getData_registrazione()))
-				throw new ApplicationException("Il Bene "+bene.getNr_inventario()+" ha un categoria non pi� valida");
+				throw new ApplicationException("Il Bene "+bene.getNr_inventario()+" ha un categoria non più valida");
 			*/
 			hasNoDetails = false;
 			if (beneApg.getFl_totalmente_scaricato()!=null && !beneApg.getFl_totalmente_scaricato()){
 				if (beneApg.getVariazione_meno() == null || beneApg.getVariazione_meno().compareTo(new java.math.BigDecimal(0))==0)
-					throw new it.cnr.jada.comp.ApplicationException ("Attenzione: � necessario specificare un valore per ogni bene scaricato.\n" + 
+					throw new it.cnr.jada.comp.ApplicationException ("Attenzione: è necessario specificare un valore per ogni bene scaricato.\n" + 
 								" Indicare un valore per il bene " + beneApg.getNr_inventario() + "-" + beneApg.getProgressivo());
 				}
 		}
 		if (hasNoDetails){
-			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: � necessario specificare almeno un bene da scaricare!");
+			throw new it.cnr.jada.comp.ApplicationException ("Attenzione: è necessario specificare almeno un bene da scaricare!");
 		}
 		//r.p. eliminato controllo fattura a si per il tipo istituzionale commerciale???
 	}catch (PersistencyException e) {
@@ -6831,7 +6831,7 @@ private void validaDettagliAssociati (UserContext userContext, Buono_carico_scar
 }
 /**
  * Restituisce, tra tutti i beni movimentati nel Buono di Scarico, la MAX(dt_validita_variazione), 
- *	 ossia, la data corrispondente alla modifica pi� recente.
+ *	 ossia, la data corrispondente alla modifica piè recente.
  *
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
  * @param Buono_carico_scaricoBulk il <code>Buono_carico_scaricoBulk</code> Buono di Scarico.
@@ -6858,7 +6858,7 @@ private java.sql.Timestamp getMaxDataFor(UserContext userContext, Buono_carico_s
 /** 
  *  Valida Quadratura - Qaudratura non valida
  *    PreCondition:
- *      Il Buono di Scarico che si sta creando, � stato generato a partire da una Fattura 
+ *      Il Buono di Scarico che si sta creando, è stato generato a partire da una Fattura
  *		Attiva. Il totale dei Valore Alienazione specificati per i beni associati ad una riga 
  *		di Fattura non corrispondono col valore atteso.
  *    PostCondition:
@@ -6907,7 +6907,7 @@ try{
 						"Attenzione: il totale dei Valori Alienazione dei beni associati ad una riga di Fattura " + 
 						"deve corrispondere al totale della riga stessa.\n " + "Il totale della riga di Fattura '" + 
 						riga_fattura.getDs_riga_fattura() + "' non corrisponde con il totale dei beni ad essa associati.\n " +
-						"Il valore previsto � " + im_fattura);
+						"Il valore previsto è " + im_fattura);
 			
 		}
 	}else if (buonoS.getDettagliFatturaColl().size()!=0 && buonoS.getDettagliFatturaColl().get(0) instanceof Nota_di_credito_rigaBulk){
@@ -6937,7 +6937,7 @@ try{
 						"Attenzione: il totale delle Variazioni dei beni associati ad una riga di NC " + 
 						"deve corrispondere al totale della riga stessa.\n " + "Il totale della NC '" + 
 						riga_fattura.getDs_riga_fattura() + "' non corrisponde con il totale dei beni ad essa associati.\n " +
-						"Il valore previsto � " + im_fattura);
+						"Il valore previsto è " + im_fattura);
 			
 		}
 	}
@@ -6967,7 +6967,7 @@ try{
 						"Attenzione: il totale delle Variazioni dei beni associati ad una riga di documento generico attivo " + 
 						"deve corrispondere al totale della riga stessa.\n " + "Il totale della documento generico attivo '" + 
 						riga.getDs_riga() + "' non corrisponde con il totale dei beni ad essa associati.\n " +
-						"Il valore previsto � " + im_fattura);
+						"Il valore previsto è " + im_fattura);
 			
 		}
 	}
@@ -6979,10 +6979,10 @@ try{
 /**  
  *  Inizializzazione di una istanza di Trasferimento_inventarioBulk
  *    PreCondition:
- *      Il Buono di Scarico che si sta inizializzando � un buono di Trasferimento di Inventario
+ *      Il Buono di Scarico che si sta inizializzando è un buono di Trasferimento di Inventario
  *    PostCondition:
  *		 Vengono impostate le informazioni relative a Consegnatario, Delegato e UO Resp.
- *		 dell'Inventario a cui � associata la UO di scrivania.
+ *		 dell'Inventario a cui è associata la UO di scrivania.
  *  
  * @param aUC lo <code>UserContext</code> che ha generato la richiesta
  * @param bulk <code>OggettoBulk</code> il buono che deve essere istanziato
@@ -7017,7 +7017,7 @@ private void inizializzaBuonoTrasferimentoPerInserimento (UserContext userContex
  *      E' stata generata la richiesta di cancellare fisicamente un Buono di Carico.
  *		I beni del Buono sono associati a Fattura Passiva/Attiva.
  *    PostCondition:
- *      Viene visualizzato un messaggio che avvisa l'utente dell'impossibilit� di cancellare
+ *      Viene visualizzato un messaggio che avvisa l'utente dell'impossibilitè di cancellare
  *		il Buono.
  *
  *  Controlla i beni del Buono da eliminare - tutti i controlli superati.
@@ -7052,7 +7052,7 @@ private void checkBeniAssociatiPerElimina(UserContext userContext, Buono_carico_
 		
 		sql.addSQLExistsClause("OR",sql_dett); */
 		if (sql.executeCountQuery(getConnection(userContext))>0)
-			throw new it.cnr.jada.comp.ApplicationException("Attenzione: operazione non possibile!\nUno o pi� beni del Buono risultano associati con righe di Documenti amministrativi.");
+			throw new it.cnr.jada.comp.ApplicationException("Attenzione: operazione non possibile!\nUno o più beni del Buono risultano associati con righe di Documenti amministrativi.");
 			
 	} catch (Throwable t){
 		throw new ComponentException (t);
@@ -7090,13 +7090,13 @@ private void eliminaUtilizzatoriBuono (UserContext userContext,Inventario_beniBu
 /** 
  *  Valida dettaglio per modifica - valore unitario non specificato
  *    PreCondition:
- *      Si sta tentando di salvare un dettaglio di cui non � stato indicato il valore unitario.
+ *      Si sta tentando di salvare un dettaglio di cui non è stato indicato il valore unitario.
  *    PostCondition:
- *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessit� di specificare un valore.
+ *      Un messaggio di errore viene visualizzato all'utente per segnalare la necessitè di specificare un valore.
 
  *  Valida dettaglio per modifica - valore da ammortizzare inferiore al valore consentito
  *    PreCondition:
- *      Il valore da ammortizzare indicato per il bene, � inferiore al valore gi� ammortizzato.
+ *      Il valore da ammortizzare indicato per il bene, è inferiore al valore già ammortizzato.
  *    PostCondition:
  *      Un messaggio di errore viene visualizzato all'utente.  
  *
@@ -7120,8 +7120,8 @@ private void validaDettaglioPerModifica(UserContext userContext,Buono_carico_sca
 		if (bene.getValore_ammortizzato() != null){		
 			// CONTROLLA CHE IL VALORE DA AMMORTIZZARE NON SIA INFERIORE AL VALORE AMMORTIZZATO
 			if (bene.getImponibile_ammortamento() == null || bene.getImponibile_ammortamento().compareTo(bene.getValore_ammortizzato())<0){				
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: il valore da ammortizzare di un bene non pu� essere inferiore al valore gi� ammortizzato del bene.\n" + 
-						"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non � valido");
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: il valore da ammortizzare di un bene non può essere inferiore al valore già ammortizzato del bene.\n" + 
+						"Il valore da ammortizzare del bene " + (bene.getDs_bene()!=null?"'"+bene.getDs_bene()+"'":"") + " non è valido");
 			}
 		}
 		
@@ -7203,7 +7203,7 @@ public RemoteIterator cercaBeniAssociabili(UserContext userContext,Ass_inv_bene_
 		sql.addTableToHeader("INVENTARIO_BENI_APG,INVENTARIO_BENI");
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO","INVENTARIO_BENI_APG.PG_INVENTARIO(+)"); // Questa OUT Join
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO(+)"); //  permette di escludere	
-		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati gi� associati con righe
+		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già associati con righe
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PG_INVENTARIO","INVENTARIO_BENI.PG_INVENTARIO");
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.NR_INVENTARIO","INVENTARIO_BENI.NR_INVENTARIO");	
 		sql.addSQLJoin("BUONO_CARICO_SCARICO_DETT.PROGRESSIVO","INVENTARIO_BENI.PROGRESSIVO"); 	 
@@ -7278,7 +7278,7 @@ public RemoteIterator cercaBeniAssociabili(UserContext userContext,Ass_inv_bene_
  		sql.addTableToHeader("INVENTARIO_BENI_APG");
  		sql.addSQLJoin("INVENTARIO_BENI.PG_INVENTARIO","INVENTARIO_BENI_APG.PG_INVENTARIO(+)"); // Questa OUT Join
  		sql.addSQLJoin("INVENTARIO_BENI.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO(+)"); //  permette di escludere	
- 		sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati gi� associati con righe
+ 		sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già associati con righe
  		
  		sql.addSQLClause("AND", "INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)", SQLBuilder.EQUALS, associa_Bulk.getLocal_transactionID());	// della stessa Fattura.
  		//R.P. Consente di associare piu' volte lo stesso bene
@@ -7308,12 +7308,12 @@ public RemoteIterator cercaBeniAssociabili(UserContext userContext,Ass_inv_bene_
 			sql.addTableToHeader("INVENTARIO_BENI_APG");//,ASS_INV_BENE_FATTURA");
 			sql.addSQLJoin("INVENTARIO_BENI.PG_INVENTARIO","INVENTARIO_BENI_APG.PG_INVENTARIO(+)"); // Questa OUT Join
 			sql.addSQLJoin("INVENTARIO_BENI.NR_INVENTARIO","INVENTARIO_BENI_APG.NR_INVENTARIO(+)"); //  permette di escludere	
-			sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati gi� selezioanti
+			sql.addSQLJoin("INVENTARIO_BENI.PROGRESSIVO","INVENTARIO_BENI_APG.PROGRESSIVO(+)"); 	 //  quei beni che sono stati già selezioanti
 			sql.addSQLClause("AND", "INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID(+)", SQLBuilder.EQUALS, buonoS.getLocal_transactionID());  // nella transazione attuale
 			sql.addSQLClause("AND", "INVENTARIO_BENI_APG.PG_INVENTARIO",SQLBuilder.ISNULL,null);
 			sql.addSQLClause("AND", "INVENTARIO_BENI.PG_INVENTARIO", SQLBuilder.EQUALS, buonoS.getInventario().getPg_inventario());	
 			sql.addSQLClause("AND", "INVENTARIO_BENI.FL_TOTALMENTE_SCARICATO", SQLBuilder.EQUALS, "N"); // Non scaricati totalmente
-			sql.addSQLClause("AND", "INVENTARIO_BENI.DT_VALIDITA_VARIAZIONE", SQLBuilder.LESS_EQUALS, buonoS.getData_registrazione()); // Con data di validit� inferiore all'attuale data di Registrazione
+			sql.addSQLClause("AND", "INVENTARIO_BENI.DT_VALIDITA_VARIAZIONE", SQLBuilder.LESS_EQUALS, buonoS.getData_registrazione()); // Con data di validità inferiore all'attuale data di Registrazione
 			sql.addSQLClause("AND", "INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE", SQLBuilder.EQUALS, doc.getDocumento_generico().getTi_istituz_commerc()); // Beni dello stesso tipo della riga di Fattura
 			// Aggiunta clausola che visualizzi solo i beni che abbiano 
 			//	ESERCIZIO_CARICO_BENE <= Esercizio di scrivania.

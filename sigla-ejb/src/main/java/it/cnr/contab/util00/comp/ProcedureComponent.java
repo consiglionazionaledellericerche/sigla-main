@@ -28,7 +28,7 @@ public ProcedureComponent() {
 }
 /**
  * Aggiorna lo stato della variazione al PdG ad Approvazione Formale,
- * è stato inserito in questo EJB poichè questo apre una nuova transazione
+ * Ã¨ stato inserito in questo EJB poichÃ¨ questo apre una nuova transazione
  * 
  * @param userContext
  * @param list
@@ -52,7 +52,7 @@ public void aggiornaApprovazioneFormale(UserContext userContext, List list) thro
 }
 /**
  * Aggiorna lo stato della variazione al PdG ad Approvazione Formale,
- * è stato inserito in questo EJB poichè questo apre una nuova transazione
+ * Ã¨ stato inserito in questo EJB poichÃ¨ questo apre una nuova transazione
  * 
  * @param userContext
  * @param list
@@ -80,7 +80,7 @@ public void aggiornaApprovazioneFormale(UserContext userContext, CompoundFindCla
 }
 /**
  * Aggiorna lo stato della variazione al PdG ad Approvazione Formale,
- * è stato inserito in questo EJB poichè questo apre una nuova transazione
+ * Ã¨ stato inserito in questo EJB poichÃ¨ questo apre una nuova transazione
  * 
  * @param userContext
  * @param list
@@ -102,7 +102,7 @@ public void aggiornaApponiVisto(UserContext userContext, List list, Dipartimento
 }
 /**
  * Aggiorna lo stato della variazione al PdG ad Approvazione Formale,
- * è stato inserito in questo EJB poichè questo apre una nuova transazione
+ * Ã¨ stato inserito in questo EJB poichÃ¨ questo apre una nuova transazione
  * 
  * @param userContext
  * @param list

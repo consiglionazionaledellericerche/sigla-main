@@ -65,11 +65,11 @@ public void cambiaStato(it.cnr.jada.action.ActionContext context) throws it.cnr.
 
 }
 /**
- * Restituisce il valore della propriet‡ 'apriPdGButtonEnabled'
- * Il bottone di apertura dei pdg Ë abilitato solo se l'esercizio Ë in stato (INIZIALE/PDG_APERTO/STATO_APERTO)
- * e lo stato di apertura/chiusura Ë impostato e il modello Ë editabile e si Ë in editing
+ * Restituisce il valore della propriet√† 'apriPdGButtonEnabled'
+ * Il bottone di apertura dei pdg √® abilitato solo se l'esercizio √® in stato (INIZIALE/PDG_APERTO/STATO_APERTO)
+ * e lo stato di apertura/chiusura √® impostato e il modello √® editabile e si √® in editing
  *
- * @return Il valore della propriet‡ 'apriPdGButtonEnabled'
+ * @return Il valore della propriet√† 'apriPdGButtonEnabled'
  */
 public boolean isApriPdGButtonEnabled()
 {
@@ -91,11 +91,11 @@ public boolean isApriPdGButtonHidden()
 		return false;
 }
 /**
- * Restituisce il valore della propriet‡ 'cambiaStatoButtonEnabled'
- * Il bottone di modifica stato dell'esercizio Ë abilitato solo se l'esercizio non Ë in stato (INIZIALE/CHIUSO)
- * e lo stato di apertura/chiusura Ë impostato e il modello Ë editabile e si Ë in editing
+ * Restituisce il valore della propriet√† 'cambiaStatoButtonEnabled'
+ * Il bottone di modifica stato dell'esercizio √® abilitato solo se l'esercizio non √® in stato (INIZIALE/CHIUSO)
+ * e lo stato di apertura/chiusura √® impostato e il modello √® editabile e si √® in editing
  *
- * @return Il valore della propriet‡ 'cambiaStatoButtonEnabled'
+ * @return Il valore della propriet√† 'cambiaStatoButtonEnabled'
  */
 public boolean isCambiaStatoButtonEnabled()
 {

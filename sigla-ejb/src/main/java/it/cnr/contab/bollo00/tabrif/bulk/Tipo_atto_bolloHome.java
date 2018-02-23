@@ -60,7 +60,7 @@ public class Tipo_atto_bolloHome extends BulkHome {
  	    
 		List<Tipo_atto_bolloBulk> l = this.fetchAll(sql);
 		if (l.stream().count()>1)
-			throw new ApplicationException("Errore nei dati: esiste per il codice atto "+codice+" più configurazioni valide per la data selezionata!");
+			throw new ApplicationException("Errore nei dati: esiste per il codice atto "+codice+" piÃ¹ configurazioni valide per la data selezionata!");
 
 		return l.stream().findFirst().orElse(null);
 	}

@@ -119,7 +119,7 @@
 			</table>
 		</div>
 	<% } %>
-		<%if (bp.isCup_attivo() && mandato.isRequiredSiope()) {%> <!--se non è di regolarizzazione !-->
+		<%if (bp.isCup_attivo() && mandato.isRequiredSiope()) {%> <!--se non Ã¨ di regolarizzazione !-->
 		<br><b class="text-primary h3">CUP</b>
 		<div class="Group card">
 			<table border="0" cellspacing="0" cellpadding="2" class="w-100">
@@ -138,7 +138,7 @@
 			</table>
 		</div>
 	<% } %>	 
-	<%if (bp.isSiope_cup_attivo() && mandato.isRequiredSiope()) {%> <!--se non è di regolarizzazione !-->
+	<%if (bp.isSiope_cup_attivo() && mandato.isRequiredSiope()) {%> <!--se non Ã¨ di regolarizzazione !-->
 		<br><b class="text-primary h3">CUP</b>
 		<div class="Group card">
 			<table border="0" cellspacing="0" cellpadding="2" class="w-100">

@@ -76,7 +76,7 @@ public java.util.Dictionary getTi_italiano_esteroKeys() {
 }
 /**
   * Inizializza l'Oggetto Bulk COMUNE
-  * Questo metodo è chiamato sia dall'initializeForInsert()
+  * Questo metodo Ã¨ chiamato sia dall'initializeForInsert()
   * sia dall'initializeForSearch()
   *
  */

@@ -29,16 +29,16 @@ public ReversaleIBulk getReversaleI() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'flCancellazione'
+ * Restituisce il valore della propriet√† 'flCancellazione'
  *
- * @return Il valore della propriet‡ 'flCancellazione'
+ * @return Il valore della propriet√† 'flCancellazione'
  */
 public boolean isFlCancellazione() {
 	return flCancellazione;
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'flCancellazione'
+ * Imposta il valore della propriet√† 'flCancellazione'
  *
  * @param newFlCancellazione	Il valore da assegnare a 'flCancellazione'
  */

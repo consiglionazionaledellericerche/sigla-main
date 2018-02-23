@@ -119,7 +119,7 @@ public class CRUDVar_stanz_resAction extends CRUDAction {
 			fillModel(context);
 			CRUDVar_stanz_resBP bp = (CRUDVar_stanz_resBP)getBusinessProcess(context);
 			if (!bp.isEditing()) {
-				bp.setMessage("Non è possibile cancellare in questo momento");
+				bp.setMessage("Non Ã¨ possibile cancellare in questo momento");
 			} else {
 				bp.delete(context);
 				bp.edit(context, bp.getModel());
@@ -299,5 +299,17 @@ public class CRUDVar_stanz_resAction extends CRUDAction {
 		{
 			return handleException(context,e);
 		}	
+	}
+
+	public Forward doOnChangeMapMotivazioneVariazione(ActionContext context) {
+		try {
+			fillModel(context);
+			((CRUDVar_stanz_resBP)getBusinessProcess(context)).aggiornaMotivazioneVariazione(context);
+			return context.findDefaultForward();
+		}catch(java.lang.ClassCastException ex){
+			return context.findDefaultForward();
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}			
 	}
 }

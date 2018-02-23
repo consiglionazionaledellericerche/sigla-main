@@ -27,18 +27,18 @@ public java.util.Dictionary getCompetenzaResiduoKeys() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_da_trasferire'
+ * Restituisce il valore della propriet√† 'im_da_trasferire'
  *
- * @return Il valore della propriet‡ 'im_da_trasferire'
+ * @return Il valore della propriet√† 'im_da_trasferire'
  */
 public java.math.BigDecimal getIm_da_trasferire() {
 	return im_da_trasferire;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_disponibile'
+ * Restituisce il valore della propriet√† 'im_disponibile'
  *
- * @return Il valore della propriet‡ 'im_disponibile'
+ * @return Il valore della propriet√† 'im_disponibile'
  */
 public java.math.BigDecimal getIm_disponibile() {
 	if ( getIm_scadenza() != null && getIm_associato_doc_contabile() != null )
@@ -47,27 +47,27 @@ public java.math.BigDecimal getIm_disponibile() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'nrImpegni'
+ * Restituisce il valore della propriet√† 'nrImpegni'
  *
- * @return Il valore della propriet‡ 'nrImpegni'
+ * @return Il valore della propriet√† 'nrImpegni'
  */
 public int getNrImpegni() {
 	return nrImpegni;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'priorita'
+ * Restituisce il valore della propriet√† 'priorita'
  *
- * @return Il valore della propriet‡ 'priorita'
+ * @return Il valore della propriet√† 'priorita'
  */
 public java.lang.Integer getPriorita() {
 	return priorita;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'prioritaKeys'
+ * Restituisce il valore della propriet√† 'prioritaKeys'
  *
- * @return Il valore della propriet‡ 'prioritaKeys'
+ * @return Il valore della propriet√† 'prioritaKeys'
  */
 public java.util.Dictionary getPrioritaKeys() {
 	it.cnr.jada.util.OrderedHashtable prioritaKeys = new it.cnr.jada.util.OrderedHashtable();
@@ -77,9 +77,9 @@ public java.util.Dictionary getPrioritaKeys() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'ti_competenza_residuo'
+ * Restituisce il valore della propriet√† 'ti_competenza_residuo'
  *
- * @return Il valore della propriet‡ 'ti_competenza_residuo'
+ * @return Il valore della propriet√† 'ti_competenza_residuo'
  */
 public String getTi_competenza_residuo() 
 {
@@ -93,9 +93,9 @@ public String getTi_competenza_residuo()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'competenza'
+ * Restituisce il valore della propriet√† 'competenza'
  *
- * @return Il valore della propriet‡ 'competenza'
+ * @return Il valore della propriet√† 'competenza'
  */
 public boolean isCompetenza()
 {
@@ -132,7 +132,7 @@ public List ordinaPerPriorita( List impegniColl )
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'im_da_trasferire'
+ * Imposta il valore della propriet√† 'im_da_trasferire'
  *
  * @param newIm_da_trasferire	Il valore da assegnare a 'im_da_trasferire'
  */
@@ -141,7 +141,7 @@ public void setIm_da_trasferire(java.math.BigDecimal newIm_da_trasferire) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'nrImpegni'
+ * Imposta il valore della propriet√† 'nrImpegni'
  *
  * @param newNrImpegni	Il valore da assegnare a 'nrImpegni'
  */
@@ -150,7 +150,7 @@ public void setNrImpegni(int newNrImpegni) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'priorita'
+ * Imposta il valore della propriet√† 'priorita'
  *
  * @param newPriorita	Il valore da assegnare a 'priorita'
  */
@@ -158,7 +158,7 @@ public void setPriorita(java.lang.Integer newPriorita) {
 	priorita = newPriorita;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {

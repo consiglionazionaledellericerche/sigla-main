@@ -34,7 +34,7 @@ public java.lang.Integer getCd_terzo() {
 	return terzo.getCd_terzo();
 }
 	/**
-	 * Restituisce il <code>Rif_termini_pagamentoBulk</code> a cui è associato l'oggetto.
+	 * Restituisce il <code>Rif_termini_pagamentoBulk</code> a cui Ã¨ associato l'oggetto.
 	 *
 	 * @return it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk
 	 *
@@ -45,7 +45,7 @@ public java.lang.Integer getCd_terzo() {
 		return rif_termini_pagamento;
 	}
 	/**
-	 * Restituisce il <code>TerzoBulk</code> a cui è associato l'oggetto.
+	 * Restituisce il <code>TerzoBulk</code> a cui Ã¨ associato l'oggetto.
 	 *
 	 * @return it.cnr.contab.anagraf00.core.bulk.TerzoBulk
 	 *
@@ -62,7 +62,7 @@ public void setCd_terzo(java.lang.Integer cd_terzo) {
 	this.getTerzo().setCd_terzo(cd_terzo);
 }
 	/**
-	 * Imposta il <code>Rif_termini_pagamentoBulk</code> a cui è associato l'oggetto.
+	 * Imposta il <code>Rif_termini_pagamentoBulk</code> a cui Ã¨ associato l'oggetto.
 	 *
 	 * @param newRif_termini_pagamento il tipo termini pagamento
 	 *
@@ -73,7 +73,7 @@ public void setCd_terzo(java.lang.Integer cd_terzo) {
 		rif_termini_pagamento = newRif_termini_pagamento;
 	}
 	/**
-	 * Imposta il <code>TerzoBulk</code> a cui è associato l'oggetto.
+	 * Imposta il <code>TerzoBulk</code> a cui Ã¨ associato l'oggetto.
 	 *
 	 * @param newTerzo Il terzo da associare.
 	 *

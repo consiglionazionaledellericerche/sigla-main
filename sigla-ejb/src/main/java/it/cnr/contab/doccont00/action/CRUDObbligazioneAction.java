@@ -97,7 +97,7 @@ public Forward doBlankSearchFind_elemento_voce(ActionContext context, Obbligazio
 		obbligazione.setElemento_voce( new Elemento_voceBulk() );
 		obbligazione.setElemento_voce_next( new Elemento_voceBulk() );
 		/*
-		// reset dei campi della disponibilit‡ di cassa dei due esercizi successivi a quello di scrivania
+		// reset dei campi della disponibilit√† di cassa dei due esercizi successivi a quello di scrivania
 		obbligazione.setIm_disp_cassa_cds1( null );
 		obbligazione.setIm_disp_cassa_cds2( null );
 		*/
@@ -133,7 +133,7 @@ public Forward doBringBackCRUDCrea_creditore(ActionContext context, Obbligazione
 	catch(Throwable e) {return handleException(context,e);}
 }
 /**
- * Gestisce il caricamento delle nuove linee di attivit‡
+ * Gestisce il caricamento delle nuove linee di attivit√†
  	 * @param context <code>ActionContext</code> in uso.
 	 * @param nuovaLatt Oggetto di tipo <code>Linea_attivitaBulk</code> (istanza doc contabili)
 	 * @param latt Oggetto di tipo <code>Linea_attivitaBulk</code>
@@ -161,7 +161,7 @@ public Forward doBringBackCRUDCrea_linea_attivita(ActionContext context)
 	catch(Throwable e) {return handleException(context,e);}
 }
 /**
- * Gestisce il caricamento delle nuove linee di attivit‡
+ * Gestisce il caricamento delle nuove linee di attivit√†
  	 * @param context <code>ActionContext</code> in uso.
 	 * @param nuovaLatt Oggetto di tipo <code>Linea_attivitaBulk</code> (istanza doc contabili)
 	 * @param latt Oggetto di tipo <code>Linea_attivitaBulk</code>
@@ -211,7 +211,7 @@ public Forward doBringBackSearchFind_elemento_voce(ActionContext context, Obblig
 					!capitolo.getFl_inv_beni_patr().booleanValue() && elemento_ini.getFl_inv_beni_patr().booleanValue()||
 					(capitolo.getFl_inv_beni_patr().booleanValue() && elemento_ini.getFl_inv_beni_patr().booleanValue() && capitolo.getCd_elemento_voce().compareTo(elemento_ini.getCd_elemento_voce())!=0)&&
 				    (ass.compareTo(new BigDecimal(0))!=0)){
-					bp.setMessage("Attenzione sar‡ necessario aggiornare manualmente la parte relativa all'inventario!");
+					bp.setMessage("Attenzione sar√† necessario aggiornare manualmente la parte relativa all'inventario!");
 				}
 			}
 			obbligazione.setElemento_voce( capitolo );
@@ -227,7 +227,7 @@ public Forward doBringBackSearchFind_elemento_voce(ActionContext context, Obblig
 	catch(Throwable e) {return handleException(context,e);}
 }
 /**
- * Gestisce il caricamento delle nuove linee di attivit‡
+ * Gestisce il caricamento delle nuove linee di attivit√†
  	 * @param context <code>ActionContext</code> in uso.
 	 * @param nuovaLatt Oggetto di tipo <code>Linea_attivitaBulk</code> (istanza doc contabili)
 	 * @param latt Oggetto di tipo <code>Linea_attivitaBulk</code>
@@ -284,7 +284,7 @@ public Forward doCaricaCentriDiResponsabilita(ActionContext context)
 		Collection capitoliIniziali = ((ObbligazioneBulk)bp.getModel()).getCapitoliDiSpesaCdsSelezionatiColl();
 		fillModel( context );					
 		if (bp.isDirty() && capitoliIniziali.size() > 0)
-			return openConfirm(context,"Attenzione l'imputazione finanziaria corrente verr‡ persa. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmCaricaCentriDiResponsabilita");
+			return openConfirm(context,"Attenzione l'imputazione finanziaria corrente verr√† persa. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmCaricaCentriDiResponsabilita");
 		return doConfirmCaricaCentriDiResponsabilita(context,OptionBP.YES_BUTTON);			
 	} catch(Throwable e) {
 		return handleException(context,e);
@@ -303,7 +303,7 @@ public Forward doCaricaLineeAttivita(ActionContext context)
 		Collection cdrIniziali = ((ObbligazioneBulk)bp.getModel()).getCdrSelezionatiColl();
 		fillModel( context );									
 		if (bp.isDirty() && cdrIniziali.size() > 0 )
-			return openConfirm(context,"Attenzione l'imputazione finanziaria corrente verr‡ persa. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmCaricaLineeAttivita");
+			return openConfirm(context,"Attenzione l'imputazione finanziaria corrente verr√† persa. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmCaricaLineeAttivita");
 		return doConfirmCaricaLineeAttivita(context,OptionBP.YES_BUTTON);			
 	} catch(Throwable e) {
 		return handleException(context,e);
@@ -553,7 +553,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 
 		CRUDBP bp = getBusinessProcess(context);
 		if (!bp.isEditing()) {
-			bp.setMessage("Non Ë possibile cancellare in questo momento");
+			bp.setMessage("Non √® possibile cancellare in questo momento");
 		} else {
 			bp.delete(context);
 		}
@@ -564,7 +564,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 }
 /**
 	 * Metodo utilizzato per gestire la conferma dell'inserimento/modifica di una obbligazione che ha sfondato
-	 * la disponibilit‡ per il capitolo
+	 * la disponibilit√† per il capitolo
 	 * @param context <code>ActionContext</code> in uso.
 	 * @param option Esito della risposta alla richiesta di sfondamento
 	 *
@@ -597,7 +597,7 @@ public Forward doOnCheckDisponibilitaCassaFailed( ActionContext context, int opt
 }
 /**
 	 * Metodo utilizzato per gestire la conferma dell'inserimento/modifica di una obbligazione che ha sfondato
-	 * la disponibilit‡ per il contratto
+	 * la disponibilit√† per il contratto
 	 * @param context <code>ActionContext</code> in uso.
 	 * @param option Esito della risposta alla richiesta di sfondamento
 	 *
@@ -630,7 +630,7 @@ public Forward doOnCheckDisponibilitaContrattoFailed( ActionContext context, int
 }
 /**
  * Metodo utilizzato per gestire la conferma dell'inserimento/modifica di una obbligazione che ha sfondato
- * la disponibilit‡ per l'incarico conferiro
+ * la disponibilit√† per l'incarico conferiro
  * @param context <code>ActionContext</code> in uso.
  * @param option Esito della risposta alla richiesta di sfondamento
  *
@@ -719,7 +719,7 @@ public Forward doRiportaCondizionato(ActionContext context)
 		fillModel(context);
 		bp.validate(context);
 
-		// in questo caso l'obbl. modifica Ë stata gi‡ effettuata
+		// in questo caso l'obbl. modifica √® stata gi√† effettuata
 		if(((ObbligazioneBulk) bp.getModel()).isCheckDisponibilitaContrattoEseguito()&&
 		   ((ObbligazioneBulk) bp.getModel()).isCheckDisponibilitaIncaricoRepertorioEseguito())
 			return super.doRiporta(context);
@@ -765,7 +765,7 @@ public Forward doTab(ActionContext context,String tabName,String pageName)
 		ObbligazioneBulk obbligazione;
 		fillModel( context );
 		CRUDObbligazioneBP bp = (CRUDObbligazioneBP)getBusinessProcess(context);
-		// validiamo anche se non Ë editabile, come nel caso dei residui propri 
+		// validiamo anche se non √® editabile, come nel caso dei residui propri 
 		bp.getModel().validate();
 		if ( bp.isEditable() )
 		{
@@ -787,7 +787,7 @@ public Forward doTab(ActionContext context,String tabName,String pageName)
 				bp.getModel().validate(); 
 				if (((ObbligazioneBulk) bp.getModel()).getInternalStatus() == ObbligazioneBulk.INT_STATO_CDR_CONFERMATI )
 				{
-					OptionBP option = openConfirm(context,"Le linee di attivit‡ non sono state confermate. Si intende proseguire?",OptionBP.CONFIRM_YES_NO,"doConfirmTabImputazioneFin");
+					OptionBP option = openConfirm(context,"Le linee di attivit√† non sono state confermate. Si intende proseguire?",OptionBP.CONFIRM_YES_NO,"doConfirmTabImputazioneFin");
 					option.addAttribute("tabName",tabName);
 					option.addAttribute("pageName",pageName);					
 					return option;
@@ -830,7 +830,7 @@ public Forward doUndoScadenza(ActionContext context)
 	}
 }
 /**
- * Visualizza il prospetto spese per Cdr e linea attivit‡
+ * Visualizza il prospetto spese per Cdr e linea attivit√†
  	 * @param context <code>ActionContext</code> in uso.
 	 *
 	 * @return <code>Forward</code>
@@ -854,7 +854,7 @@ public Forward doVisualizzaSpeseCdr(ActionContext context)
 	}
 }
 	/**
-	 * Metodo utilizzato per gestire l'eccezione generata dallo sfondamento della disponibilit‡ dei CdR da PdG
+	 * Metodo utilizzato per gestire l'eccezione generata dallo sfondamento della disponibilit√† dei CdR da PdG
 	 *
 	 * @param context <code>ActionContext</code> in uso.
 	 * @param ex Eccezione da gestire.
@@ -872,7 +872,7 @@ public Forward handleException(ActionContext context, Throwable ex)
 	}
 	/*
 	catch(it.cnr.contab.doccont00.comp.CheckDisponibilitaCassaFailed e) {
-		String message = "L'importo dei dettagli inseriti supera la disponiblit‡ di cassa relativa al capitolo e al CdS.\n"
+		String message = "L'importo dei dettagli inseriti supera la disponiblit√† di cassa relativa al capitolo e al CdS.\n"
 						+ "Vuoi continuare?";
 		try {
 			return openConfirm(context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfermaSfondamentoPdG");
@@ -881,7 +881,7 @@ public Forward handleException(ActionContext context, Throwable ex)
 		}
 	} */
 	catch(it.cnr.contab.doccont00.comp.SfondamentoPdGException e) {
-		String message = "La disponiblit‡ prevista nel PdG per i CdR e' stata superata.\n"
+		String message = "La disponiblit√† prevista nel PdG per i CdR e' stata superata.\n"
 						+ "Vuoi continuare?";
 		try {
 			return openConfirm(context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfermaSfondamentoPdG");			
@@ -1003,14 +1003,14 @@ public Forward handleException(ActionContext context, Throwable ex)
 					if (totaleSel.compareTo(new BigDecimal(0))==1 &&
 					    totaleSel.compareTo(obbligazione.getIm_obbligazione())!=0)
 						if  (obbligazione.hasDettagli())
-							return openConfirm(context,"Attenzione!! I dettagli delle scadenze saranno persi e l'importo dell'impegno verr‡ aggiornato al nuovo valore selezionato di " + new it.cnr.contab.util.EuroFormat().format(totaleSel) + ". Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmRiportaSelezioneVoci");
+							return openConfirm(context,"Attenzione!! I dettagli delle scadenze saranno persi e l'importo dell'impegno verr√† aggiornato al nuovo valore selezionato di " + new it.cnr.contab.util.EuroFormat().format(totaleSel) + ". Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmRiportaSelezioneVoci");
 						else
-							return openConfirm(context,"Attenzione!! L'importo dell'impegno verr‡ aggiornato al nuovo valore selezionato di " + new it.cnr.contab.util.EuroFormat().format(totaleSel) + ". Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmRiportaSelezioneVoci");
+							return openConfirm(context,"Attenzione!! L'importo dell'impegno verr√† aggiornato al nuovo valore selezionato di " + new it.cnr.contab.util.EuroFormat().format(totaleSel) + ". Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmRiportaSelezioneVoci");
 				}
 				if (obbligazione.hasDettagli() )
 					return openConfirm(context,"Attenzione i dettagli delle scadenze saranno persi. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmRiportaSelezioneVoci");		
 				else if (obbligazione.getCdrSelezionatiColl().size() > 0)
-					return openConfirm(context,"Attenzione l'imputazione finanziaria corrente verr‡ persa. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmRiportaSelezioneVoci");
+					return openConfirm(context,"Attenzione l'imputazione finanziaria corrente verr√† persa. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmRiportaSelezioneVoci");
 				return doConfirmRiportaSelezioneVoci(context,OptionBP.YES_BUTTON);
 			}
 			return context.findDefaultForward();
@@ -1026,7 +1026,7 @@ public Forward handleException(ActionContext context, Throwable ex)
 			{
 				CRUDObbligazioneBP bp = (CRUDObbligazioneBP)context.getBusinessProcess();
 				bp.riportaSelezioneVoci(context, bp.getVociSelezionate());
-				/*serve per impostare la mappa con la scadenza creata gi‡ evidenziata*/
+				/*serve per impostare la mappa con la scadenza creata gi√† evidenziata*/
 				if (((ObbligazioneBulk)bp.getModel()).hasDettagli()){
 					bp.getScadenzario().getSelection().setFocus(0);
 					bp.getScadenzario().setSelection(context);
@@ -1160,7 +1160,7 @@ public Forward handleException(ActionContext context, Throwable ex)
 			fillModel(context);
 			bp.validate(context);
 
-			// in questo caso l'obbl. modifica Ë stata gi‡ effettuata
+			// in questo caso l'obbl. modifica √® stata gi√† effettuata
 			if(((ObbligazioneBulk) bp.getModel()).isCheckDisponibilitaContrattoEseguito() &&
 			   ((ObbligazioneBulk) bp.getModel()).isCheckDisponibilitaIncaricoRepertorioEseguito())
 				return super.doSalva(context);
@@ -1204,7 +1204,7 @@ public Forward handleException(ActionContext context, Throwable ex)
 			CRUDObbligazioneModificaBP newbp = null;
 			if (opt == OptionBP.YES_BUTTON) {
 				// controlliamo prima che abbia l'accesso al BP
-				// per dare un messaggio pi˘ preciso
+				// per dare un messaggio pi√π preciso
 				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","CRUDObbligazioneModificaBP");
 				if (mode == null) 
 					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di creazione delle modifiche\nagli impegni residui. Impossibile continuare.");
@@ -1231,7 +1231,7 @@ public Forward handleException(ActionContext context, Throwable ex)
 			CRUDObbligazioneModificaBP newbp = null;
 			if (opt == OptionBP.YES_BUTTON) {
 				// controlliamo prima che abbia l'accesso al BP
-				// per dare un messaggio pi˘ preciso
+				// per dare un messaggio pi√π preciso
 				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","CRUDObbligazioneModificaBP");
 				if (mode == null) 
 					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di creazione delle modifiche\nagli impegni residui. Impossibile continuare.");

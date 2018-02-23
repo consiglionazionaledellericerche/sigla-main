@@ -10,7 +10,7 @@ public class AbilUtenteUopOperBulk extends AbilUtenteUopOperBase {
 	 **/
 	private UtenteBulk utente =  new UtenteBulk();
 	/**
-	 * [UNITA_OPERATIVA_ORD Rappresenta le unit‡ operative utilizzate in gestione ordine e magazzino.]
+	 * [UNITA_OPERATIVA_ORD Rappresenta le unit√† operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	private UnitaOperativaOrdBulk unitaOperativaOrd =  new UnitaOperativaOrdBulk();
 	/**
@@ -50,14 +50,14 @@ public class AbilUtenteUopOperBulk extends AbilUtenteUopOperBase {
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresenta le unit‡ operative utilizzate in gestione ordine e magazzino.]
+	 * Restituisce il valore di: [Rappresenta le unit√† operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	public UnitaOperativaOrdBulk getUnitaOperativaOrd() {
 		return unitaOperativaOrd;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresenta le unit‡ operative utilizzate in gestione ordine e magazzino.]
+	 * Setta il valore di: [Rappresenta le unit√† operative utilizzate in gestione ordine e magazzino.]
 	 **/
 	public void setUnitaOperativaOrd(UnitaOperativaOrdBulk unitaOperativaOrd)  {
 		this.unitaOperativaOrd=unitaOperativaOrd;

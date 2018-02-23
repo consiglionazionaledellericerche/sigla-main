@@ -7,5 +7,5 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface AttoBolloComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
-	it.cnr.jada.util.RemoteIterator findConsultazioneDettaglio(it.cnr.jada.UserContext param0,java.lang.String param1,java.lang.String param2,it.cnr.jada.persistency.sql.CompoundFindClause param3,it.cnr.jada.persistency.sql.CompoundFindClause param4) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+	it.cnr.jada.util.RemoteIterator findConsultazioneDettaglio(it.cnr.jada.UserContext param0,java.lang.String param1,java.lang.String param2,it.cnr.jada.persistency.sql.CompoundFindClause param3,it.cnr.jada.persistency.sql.CompoundFindClause param4, boolean param5) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

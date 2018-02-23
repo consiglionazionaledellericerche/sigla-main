@@ -40,8 +40,8 @@ public class Rif_modalita_pagamentoBulk extends Rif_modalita_pagamentoBase {
 		DS_LISTA_PAGAMENTI_KEYS.put(POSTALE,"Conti correnti postali");
 		DS_LISTA_PAGAMENTI_KEYS.put(QUIETANZA,"Quietanza");
 		DS_LISTA_PAGAMENTI_KEYS.put(BANCA_ITALIA,"Banca d'Italia");
-		DS_LISTA_PAGAMENTI_KEYS.put(ALTRO,"Altre modalit‡ di pagamento");
-		DS_LISTA_PAGAMENTI_KEYS.put(IBAN,"Altre modalit‡ di pagamento con Iban obbligatorio");
+		DS_LISTA_PAGAMENTI_KEYS.put(ALTRO,"Altre modalit√† di pagamento");
+		DS_LISTA_PAGAMENTI_KEYS.put(IBAN,"Altre modalit√† di pagamento con Iban obbligatorio");
 
 		TIPO_PAGAMENTO_SDI_KEYS = new it.cnr.jada.util.OrderedHashtable();
 		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_01.value(), "Contanti" );
@@ -59,14 +59,14 @@ public class Rif_modalita_pagamentoBulk extends Rif_modalita_pagamentoBase {
 		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_12.value(),    "RIBA"    );
 		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_13.value(),    "MAV"    );
 		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_14.value(),    "Quietanza Erario"    );
-		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_15.value(),    "Giroconto su Conti di Contabilit‡ Speciale"    );
+		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_15.value(),    "Giroconto su Conti di Contabilit√† Speciale"    );
 		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_16.value(),    "Domiciliazione Bancaria"    );
 		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_17.value(),    "Domiciliazione Postale"    );
 		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_18.value(),    "Bollettino di c/c postale"    );
 		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_19.value(),    "SEPA Direct Debit"    );
 		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_20.value(),    "SEPA Direct Debit CORE"    );
 		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_21.value(),    "SEPA Direct Debit B2B"    );
-		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_22.value(),    "Trattenuta su somme gi‡ riscosse"    );
+		TIPO_PAGAMENTO_SDI_KEYS.put( ModalitaPagamentoType.MP_22.value(),    "Trattenuta su somme gi√† riscosse"    );
 	}
 /**
  * 

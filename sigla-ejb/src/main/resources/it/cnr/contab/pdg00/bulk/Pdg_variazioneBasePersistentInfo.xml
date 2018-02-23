@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <SQLPersistentInfo
 	persistentClassName="it.cnr.contab.pdg00.bulk.Pdg_variazioneBase"
 	keyClassName="it.cnr.contab.pdg00.bulk.Pdg_variazioneKey"
@@ -114,6 +114,24 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="TI_MOTIVAZIONE_VARIAZIONE"
+			propertyName="tiMotivazioneVariazione"
+			sqlTypeName="VARCHAR"
+			columnSize="3"
+			nullable="true"/>
+		<columnMapping
+			columnName="ID_MATRICOLA"
+			propertyName="idMatricola"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true"/>
+		<columnMapping
+			columnName="ID_BANDO"
+			propertyName="idBando"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true"/>
+		<columnMapping
 			columnName="DACR"
 			propertyName="dacr"
 			sqlTypeName="TIMESTAMP"
@@ -193,6 +211,12 @@
 		name="cd_elemento_voce" />
 	<persistentProperty
 		name="fl_visto_dip_variazioni" />
+	<persistentProperty
+		name="tiMotivazioneVariazione" />
+	<persistentProperty
+		name="idMatricola" />
+	<persistentProperty
+		name="idBando" />
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty

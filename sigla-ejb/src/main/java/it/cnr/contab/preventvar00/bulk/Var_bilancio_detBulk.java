@@ -116,9 +116,9 @@ public java.util.Dictionary getTipoGestioneKeys() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'varBilancio'
+ * Restituisce il valore della propriet√† 'varBilancio'
  *
- * @return Il valore della propriet‡ 'varBilancio'
+ * @return Il valore della propriet√† 'varBilancio'
  */
 public Var_bilancioBulk getVarBilancio() {
 	return varBilancio;
@@ -139,18 +139,18 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'voceRO'
+ * Restituisce il valore della propriet√† 'voceRO'
  *
- * @return Il valore della propriet‡ 'voceRO'
+ * @return Il valore della propriet√† 'voceRO'
  */
 public boolean isCdVoceRO() {
 	return (getVoceFSaldi() == null || getVoceFSaldi().getCrudStatus() == OggettoBulk.NORMAL);
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'voceRO'
+ * Restituisce il valore della propriet√† 'voceRO'
  *
- * @return Il valore della propriet‡ 'voceRO'
+ * @return Il valore della propriet√† 'voceRO'
  */
 public boolean isTipoGestioneRO() {
 	return ( Var_bilancioBulk.STORNO_E.equals(varBilancio.getTi_variazione()) ||
@@ -162,9 +162,9 @@ public boolean isTipoGestioneRO() {
 		
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'voceRO'
+ * Restituisce il valore della propriet√† 'voceRO'
  *
- * @return Il valore della propriet‡ 'voceRO'
+ * @return Il valore della propriet√† 'voceRO'
  */
 public boolean isVoceRO() {
 	return this.isNotNew();
@@ -209,7 +209,7 @@ public void setTipoGestione(java.lang.String newTipoGestione) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'varBilancio'
+ * Imposta il valore della propriet√† 'varBilancio'
  *
  * @param newVarBilancio	Il valore da assegnare a 'varBilancio'
  */
@@ -223,10 +223,10 @@ public void setVarBilancio(Var_bilancioBulk newVarBilancio) {
 public void validate() throws ValidationException{
 
 	if (getCd_voce()==null)
-		throw new ValidationException("Il campo VOCE non puÚ essere vuoto");
+		throw new ValidationException("Il campo VOCE non pu√≤ essere vuoto");
 
 	if (getIm_variazione()==null)
-		throw new ValidationException("Il campo IMPORTO non puÚ essere vuoto");
+		throw new ValidationException("Il campo IMPORTO non pu√≤ essere vuoto");
 }
 public V_assestato_voceBulk getVoceFSaldi() {
 	return voceFSaldi;

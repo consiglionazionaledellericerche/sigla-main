@@ -52,7 +52,7 @@ public Forward doBringBackCRUDCrea_creditore(ActionContext context, Obbligazione
 	catch(Throwable e) {return handleException(context,e);}
 }
 /**
- * Gestisce la selezione di un'unit‡ organizzativa
+ * Gestisce la selezione di un'unit√† organizzativa
  *
  */
 public Forward doCambiaUnitaOrganizzativa(ActionContext context) 
@@ -76,7 +76,7 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 
 		CRUDBP bp = getBusinessProcess(context);
 		if (!bp.isEditing()) {
-			bp.setMessage("Non Ë possibile cancellare in questo momento");
+			bp.setMessage("Non √® possibile cancellare in questo momento");
 		} else {
 			bp.delete(context);
 			bp.setMessage("Annullamento effettuato");

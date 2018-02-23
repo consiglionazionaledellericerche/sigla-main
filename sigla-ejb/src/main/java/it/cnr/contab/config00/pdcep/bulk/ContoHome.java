@@ -29,7 +29,7 @@ public SQLBuilder createSQLBuilder( )
  * Restituisce il SQLBuilder per selezionare gli elementi con Sezione di tipo Avere per l'esercizio di scrivania.
  * @param bulk bulk ricevente
  * @param home home del bulk su cui si cerca
- * @param bulkClause è l'istanza di bulk che ha indotto le clauses 
+ * @param bulkClause Ã¨ l'istanza di bulk che ha indotto le clauses 
  * @param clause clause che arrivano dalle properties (form collegata al search tool) 
  * @return it.cnr.jada.persistency.sql.SQLBuilder
  */
@@ -43,7 +43,7 @@ public SQLBuilder selectContiCostoByClause( Voce_epBulk bulk,it.cnr.jada.bulk.Bu
  * Restituisce il SQLBuilder per selezionare gli elementi con Sezione di tipo Dare per l'esercizio di scrivania.
  * @param bulk bulk ricevente
  * @param home home del bulk su cui si cerca
- * @param bulkClause è l'istanza di bulk che ha indotto le clauses 
+ * @param bulkClause Ã¨ l'istanza di bulk che ha indotto le clauses 
  * @param clause clause che arrivano dalle properties (form collegata al search tool) 
  * @return it.cnr.jada.persistency.sql.SQLBuilder
  */

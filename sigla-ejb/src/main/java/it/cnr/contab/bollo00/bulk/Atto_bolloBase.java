@@ -26,6 +26,15 @@ public class Atto_bolloBase extends Atto_bolloKey implements Keyed {
 	// DT_PROVV TIMESTAMP(7)
 	private java.sql.Timestamp dt_provv;
 
+	// ESERCIZIO_CONTRATTO DECIMAL(4,0) NULL
+	private java.lang.Integer esercizio_contratto;
+
+	// STATO_CONTRATTO CHAR(1) NULL
+	private java.lang.String stato_contratto;
+
+	// PG_CONTRATTO DECIMAL(10,0) NULL
+	private java.lang.Long pg_contratto;
+
 	// NUM_DETTAGLI NUMBER(6) NOT NULL
 	private java.lang.Integer numDettagli;
 
@@ -97,6 +106,30 @@ public class Atto_bolloBase extends Atto_bolloKey implements Keyed {
 	
 	public void setDt_provv(java.sql.Timestamp dtProvv) {
 		dt_provv = dtProvv;
+	}
+
+	public java.lang.Integer getEsercizio_contratto() {
+		return esercizio_contratto;
+	}
+
+	public void setEsercizio_contratto(java.lang.Integer integer) {
+		esercizio_contratto = integer;
+	}
+
+	public java.lang.String getStato_contratto() {
+		return stato_contratto;
+	}
+
+	public void setStato_contratto(java.lang.String string) {
+		stato_contratto = string;
+	}
+
+	public java.lang.Long getPg_contratto() {
+		return pg_contratto;
+	}
+
+	public void setPg_contratto(java.lang.Long long1) {
+		pg_contratto = long1;
 	}
 
 	public java.lang.Integer getNumDettagli() {

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -89,7 +89,7 @@
 		inputType="SEARCHTOOL"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Unità di Misura" />
+		label="UnitÃ  di Misura" />
 	<fieldProperty
 		name="findBeneServizio"
 		property="beneServizio"
@@ -122,7 +122,7 @@
 		maxLength="30"
 		inputSize="3"
 		inputType="ROTEXT"
-		label="Unità Misura Minima"
+		label="UnitÃ  Misura Minima"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="cdUnitaMisura"
@@ -131,7 +131,7 @@
 		inputSize="3"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="Unità di Misura" />
+		label="UnitÃ  di Misura" />
 	<fieldProperty
 		name="coefConv"
 		property="coefConv"
@@ -202,7 +202,7 @@
 		formatName="it.cnr.contab.util.PositiveDecimalFormat"
 		enabledOnEdit="true"
 		style="text-align: right"
-		label="Quantità" />
+		label="QuantitÃ " />
 	<fieldProperty
 		name="sconto1"
 		property="sconto1"
@@ -325,7 +325,7 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Unità Operativa Ricevente" />
+		label="UnitÃ  Operativa Ricevente" />
 	<fieldProperty
 		name="dspUopDestinazione"
 		property="dspUopDest.cdUnitaOperativa"
@@ -333,7 +333,7 @@
 		inputSize="6"
 		inputType="TEXT"
 		nullable="true"
-		label="Unità Operativa"
+		label="UnitÃ  Operativa"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="esercizio_ori_obbligazione"

@@ -61,7 +61,7 @@ public abstract java.lang.Long assegnaProgressivoTemporaneo(it.cnr.jada.UserCont
   *  		Le scadenze vengono aggiunte alla lista delle scadenze congruenti.
   *	Validazione lista delle obbligazioni per le fatture passive
   *		PreCondition:
-  *			Si Ë verificato un errore nel caricamento delle scadenze delle obbligazioni.
+  *			Si √® verificato un errore nel caricamento delle scadenze delle obbligazioni.
   * 	PostCondition:
   *  		Viene inviato il messaggio corrispondente all'errore segnalato.
   *	Obbligazione definitiva
@@ -91,7 +91,7 @@ public abstract java.lang.Long assegnaProgressivoTemporaneo(it.cnr.jada.UserCont
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Disabilitazione filtro di selezione sul debitore dell'obbligazione
   *		PreCondition:
-  *			La scadenza dell'obbligazione ha un debitore diverso da quello della fattura passiva e non Ë di tipo "diversi"
+  *			La scadenza dell'obbligazione ha un debitore diverso da quello della fattura passiva e non √® di tipo "diversi"
   * 	PostCondition:
   *  		La scadenza non viene aggiunta alla lista delle scadenze congruenti.
   *	Abilitazione filtro di selezione sulla data di scadenza
@@ -164,7 +164,7 @@ public abstract it.cnr.contab.compensi00.docs.bulk.CompensoBulk completaTerzo(it
 
 public abstract it.cnr.contab.compensi00.docs.bulk.CompensoBulk confermaModificaCORI(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1,it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBulk param2) throws it.cnr.jada.comp.ComponentException;
 /**
- * Ritorna il conguaglio a cui Ë stato associato il compenso selezionato
+ * Ritorna il conguaglio a cui √® stato associato il compenso selezionato
  *
  * Pre-post_conditions
  *
@@ -173,12 +173,12 @@ public abstract it.cnr.contab.compensi00.docs.bulk.CompensoBulk confermaModifica
  * Post: Viene restituito il conguaglio
  *
  * Nome: Compenso NON associato a conguaglio
- * Pre: Il compenso non Ë stato associato a nessun conguaglio
+ * Pre: Il compenso non √® stato associato a nessun conguaglio
  * Post: Viene restituito il valore NULL
  *
  * @param	userContext	lo UserContext che ha generato la richiesta
  * @param	compenso	il compenso da aggiornare
- * @return	il conguaglio a cui Ë associato il compenso
+ * @return	il conguaglio a cui √® associato il compenso
  *
 **/
 public abstract ConguaglioBulk conguaglioAssociatoACompenso(UserContext userContext, CompensoBulk compenso) throws ComponentException ;
@@ -297,19 +297,19 @@ public void eliminaCompensoTemporaneo(UserContext userContext, CompensoBulk comp
   * Pre-post-conditions:
   *
   * Nome: Validazione superata e compenso NON cancellabile fisicamente
-  * Pre: Il compenso passa i criteri di validit‡ di business per l'operazione
-  *		 di cancellazione ed Ë in stato Pagato o associato a Mandato/Reversale 
+  * Pre: Il compenso passa i criteri di validit√† di business per l'operazione
+  *		 di cancellazione ed √® in stato Pagato o associato a Mandato/Reversale 
   * Post: Viene consentita la cancellazione logica del compenso
   * 	  con relativi aggiornamenti degli importi dell'obbligazione associata
   *
   * Nome: Validazione superata e compenso cancellabile fisicamente
-  * Pre: Il compenso passa i criteri di validit‡ di business per l'operazione
-  *		 di cancellazione ed Ë in stato Iniziale oppure Contabilizzato ma non associato a Mandato/Reversale
+  * Pre: Il compenso passa i criteri di validit√† di business per l'operazione
+  *		 di cancellazione ed √® in stato Iniziale oppure Contabilizzato ma non associato a Mandato/Reversale
   * Post: Viene consentita la cancellazione fisica del compenso
   * 	  con relativi aggiornamenti degli importi dell'obbligazione associata
   *
   * Nome: Validazione NON superata
-  * Pre: Il compenso non passa i criteri di validit‡ di business per l'operazione
+  * Pre: Il compenso non passa i criteri di validit√† di business per l'operazione
   *		 di cancellazione 
   * Post: Viene impedita la cancellazione sia fisica che logica del compenso
   *
@@ -367,13 +367,13 @@ public CompensoBulk eseguiCalcolo(UserContext userContext, CompensoBulk compenso
   * Pre-post-conditions:
   *
   * Nome: Terzo NON selezionato
-  * Pre: Non Ë stato selezionato un Terzo per il compenso
+  * Pre: Non √® stato selezionato un Terzo per il compenso
   * Post: Non vengono caricate le banche.
   *
   * Nome: Terzo selezionato
   * Pre: E' stato selezionato un Terzo valido per il compenso
   * Post: Viene restituita la lista delle Banche associate al Terzo
-  * 	  e alla Modalit‡ di Pagamento selezionata
+  * 	  e alla Modalit√† di Pagamento selezionata
   *
   * @param	userContext	lo UserContext che ha generato la richiesta
   * @param	compenso l'OggettoBulk da completare
@@ -388,7 +388,7 @@ public abstract java.util.List findListaBanche(it.cnr.jada.UserContext param0,it
   * Pre-post-conditions:
   *
   * Nome: Terzo NON selezionato
-  * Pre: Non Ë stato selezionato un Terzo per il compenso
+  * Pre: Non √® stato selezionato un Terzo per il compenso
   * Post: Non vengono caricate le modalita di pagamento
   *
   * Nome: Terzo selezionato
@@ -408,7 +408,7 @@ public abstract java.util.Collection findModalita(it.cnr.jada.UserContext param0
   * Pre-post-conditions:
   *
   * Nome: Terzo NON selezionato
-  * Pre: Non Ë stato selezionato un Terzo per il compenso
+  * Pre: Non √® stato selezionato un Terzo per il compenso
   * Post: Non vengono caricati i termini di pagamento
   *
   * Nome: Terzo selezionato
@@ -428,7 +428,7 @@ public abstract java.util.Collection findTermini(it.cnr.jada.UserContext param0,
   * Pre-post-conditions:
   *
   * Nome: Terzo NON selezionato
-  * Pre: Non Ë stato selezionato un Terzo per il compenso
+  * Pre: Non √® stato selezionato un Terzo per il compenso
   * Post: Non vengono caricati i Tipi di rapporto
   *
   * Nome: Terzo selezionato
@@ -449,7 +449,7 @@ public abstract java.util.Collection findTipiRapporto(it.cnr.jada.UserContext pa
   * Pre-post-conditions:
   *
   * Nome: Tipo di Rapporto NON selezionato
-  * Pre: Non Ë stato selezionato il tipo di rapporto
+  * Pre: Non √® stato selezionato il tipo di rapporto
   * Post: Non vengono caricati i Tipi Trattamento
   *
   * Nome: Terzo selezionato
@@ -486,7 +486,7 @@ public abstract java.sql.Timestamp getDataOdierna(it.cnr.jada.UserContext userCo
   * Pre: L'OggettoBulk specificato esiste.
   * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
   *		 per l'operazione di presentazione e modifica nell'interfaccia visuale.
-  *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ë
+  *		 L'operazione di lettura viene effettuata con una FetchPolicy il cui nome √®
   *		 ottenuto concatenando il nome della component con la stringa ".edit"
   * 
   * @param	uc	lo UserContext che ha generato la richiesta
@@ -546,16 +546,16 @@ public abstract CompensoBulk inserisciCompenso(UserContext userContext, Compenso
   * Pre-post-conditions
   *
   *	Nome: Compenso ANNULLATO - Stato COFI uguale ad 'A'
-  *	Pre: Il compenso Ë annullato
-  *	Post: Ritorna <true>. Il compenso Ë annullato
+  *	Pre: Il compenso √® annullato
+  *	Post: Ritorna <true>. Il compenso √® annullato
   *
   *	Nome: Compenso NON ANNULLATO - Stato COFI diverso da 'A'
-  *	Pre: Il compenso non Ë annullato
-  *	Post: Ritorna <false>. Il compenso non Ë annullato
+  *	Pre: Il compenso non √® annullato
+  *	Post: Ritorna <false>. Il compenso non √® annullato
   *
   * @param userContext lo UserContext che ha generato la richiesta
   * @param compenso il compenso da controllare  
-  * @return vero se il compenso Ë anullato, falso altrimenti
+  * @return vero se il compenso √® anullato, falso altrimenti
   *
 **/
 
@@ -568,7 +568,7 @@ public abstract boolean isCompensoAnnullato(it.cnr.jada.UserContext param0,it.cn
   * Nome: Compenso non pagato
   * Pre: Viene richiesta la lista dei Documenti Contabili per un compenso non pagato
   * Post: Viene restituita una ApplicationException con la descrizione dell'errore
-  *			"Il compenso non Ë pagato"
+  *			"Il compenso non √® pagato"
   *
   * Nome: Compenso pagato
   * Pre: Viene richiesta la lista dei Documenti Contabili per un compenso pagato
@@ -744,32 +744,32 @@ public abstract it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBul
   *			- Importo obbligazione e importo scadenza NON NULLI
   *			- Importo obbligazione uguale a importo scadenza
   *			- Importo obbligazione uguale a importo compenso
-  *			- Terzo dell'obbligazione uguale al terzo del compenso o di tipo entit‡ DIVERSI
+  *			- Terzo dell'obbligazione uguale al terzo del compenso o di tipo entit√† DIVERSI
   *
   * Pre-post-conditions
   *
-  * Nome: Selezionata pi˘ di una scadenza
-  *	Pre: E' stata selezionata pi˘ di una scadenza da associare al compenso
+  * Nome: Selezionata pi√π di una scadenza
+  *	Pre: E' stata selezionata pi√π di una scadenza da associare al compenso
   *	Post: Non viene consentita la creazione/modifica dell'obbligazione
   *		  Generata una ApplicationException con il messaggio:
   *			"E' possibile creare solo una scadenza di importo pari all'importo del compenso."
   *
   * Nome: Importi obblig./scadenza NULLI
-  *	Pre: L'importo della obblig. e/o della scadenza Ë nullo
+  *	Pre: L'importo della obblig. e/o della scadenza √® nullo
   *	Post: Non viene consentita la creazione/modifica dell'obbligazione
   *		  Generata una ApplicationException con il messaggio:
-  *			"L'Importo dell'obbligazione/scadenza Ë un dato obbligatorio"
+  *			"L'Importo dell'obbligazione/scadenza √® un dato obbligatorio"
   *
   * Nome: Importi obblig./scadenza diversi da quelli del compenso
-  *	Pre: L'importo della obblig. Ë diverso da quello della scadenza oppure l'importo della scadenza
-  * 	 Ë diverso dall'importo lordo del compenso
+  *	Pre: L'importo della obblig. √® diverso da quello della scadenza oppure l'importo della scadenza
+  * 	 √® diverso dall'importo lordo del compenso
   *	Post: Non viene consentita la creazione/modifica dell'obbligazione
   *		  Generata una ApplicationException con il messaggio:
   *			"L'importo dell'obbligazione deve corrispondere all'importo della scadenza"
   *			"L'importo dell scadenza deve corrispondere all'importo del compenso"
   *
   * Nome: Terzo selezionato NON valido
-  *	Pre: Il terzo selezionato Ë diverso dal terzo del compenso oppure il tipo entit‡ NON Ë DIVERSI
+  *	Pre: Il terzo selezionato √® diverso dal terzo del compenso oppure il tipo entit√† NON √® DIVERSI
   *	Post: Non viene consentita la creazione/modifica dell'obbligazione
   *		  Generata una ApplicationException con il messaggio:
   *			"L'obbligazione deve avere un creditore valido!"
@@ -794,7 +794,7 @@ public abstract void validaObbligazione(it.cnr.jada.UserContext param0,it.cnr.co
   *		0			Tutto bene
   *		1			Terzo assente
   *		2			Terzo non valido alla data registrazione
-  *		3			Controllo se ho inserito le modalit‡ di pagamento
+  *		3			Controllo se ho inserito le modalit√† di pagamento
   *		4			Tipo rapporto assente
   *		5			Tipo di rapporto non valido in data inizio competenza coge
   *		6			Tipo trattamento assente
@@ -803,43 +803,43 @@ public abstract void validaObbligazione(it.cnr.jada.UserContext param0,it.cnr.co
   * Pre-post-conditions
   *
   * Nome: Terzo assente
-  *	Pre: Non Ë stato selezionato un terzo
+  *	Pre: Non √® stato selezionato un terzo
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
   * 		"Inserire il terzo"
   *
   * Nome: Terzo non valido alla data registrazione
-  *	Pre: Il terzo selezionato non Ë valido alla data registrazione
+  *	Pre: Il terzo selezionato non √® valido alla data registrazione
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Terzo selezionato non Ë valido in Data Registrazione"
+  *			"Il Terzo selezionato non √® valido in Data Registrazione"
   *
   * Nome: Modalita di pagamento assente
-  *	Pre: Non Ë stato selezionata una modalita di pagamento
+  *	Pre: Non √® stato selezionata una modalita di pagamento
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Selezionare la Modalit‡ di pagamento"
+  *			"Selezionare la Modalit√† di pagamento"
   *
   * Nome: Tipo rapporto assente
-  *	Pre: Non Ë stato selezionato un tipo rapporto
+  *	Pre: Non √® stato selezionato un tipo rapporto
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
   *			"Selezionare il Tipo Rapporto"
   *
   * Nome: Tipo rapporto non valido alla data inizio competenza coge
-  *	Pre: Il tipo rapporto selezionato non Ë valido in data competenza coge
+  *	Pre: Il tipo rapporto selezionato non √® valido in data competenza coge
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Tipo Rapporto selezionato non Ë valido alla Data Inizio Competenza"
+  *			"Il Tipo Rapporto selezionato non √® valido alla Data Inizio Competenza"
   *
   * Nome: Tipo trattamento assente
-  *	Pre: Non Ë stato selezionato un tipo trattamento
+  *	Pre: Non √® stato selezionato un tipo trattamento
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
   *			"Selezionare il Tipo Trattamento"
   *
   * Nome: Tipo trattamento non valido alla data registrazione
-  *	Pre: Non Ë stato selezionato un tipo trattamento
+  *	Pre: Non √® stato selezionato un tipo trattamento
   *	Post: Ritorna una ApplicationException con la descrizione dell'errore
-  *			"Il Tipo Trattamento selezionato non Ë valido alla Data Registrazione"
+  *			"Il Tipo Trattamento selezionato non √® valido alla Data Registrazione"
   *
   * Nome: Terzo valido
   *	Pre: Il terzo selezionato non ha errori
-  *	Post: Il terzo Ë valido e prosegue con l'operazione
+  *	Post: Il terzo √® valido e prosegue con l'operazione
   *
   * @param	userContext		lo UserContext che genera la richiesta
   * @param	compenso		il compenso di cui validare il terzo
@@ -855,7 +855,7 @@ public abstract void validaTerzo(UserContext userContext, CompensoBulk compenso)
   *		0			Tutto bene
   *		1			Terzo assente
   *		2			Terzo non valido alla data registrazione
-  *		3			Controllo se ho inserito le modalit‡ di pagamento
+  *		3			Controllo se ho inserito le modalit√† di pagamento
   *		4			Tipo rapporto assente
   *		5			Tipo di rapporto non valido in data inizio competenza coge
   *		6			Tipo trattamento assente
@@ -864,31 +864,31 @@ public abstract void validaTerzo(UserContext userContext, CompensoBulk compenso)
   * Pre-post-conditions
   *
   * Nome: Terzo assente
-  *	Pre: Non Ë stato selezionato un terzo
+  *	Pre: Non √® stato selezionato un terzo
   *	Post: Ritorna il valore 1
   *
   * Nome: Terzo non valido alla data registrazione
-  *	Pre: Il terzo selezionato non Ë valido alla data registrazione
+  *	Pre: Il terzo selezionato non √® valido alla data registrazione
   *	Post: Ritorna il valore 2
   *
   * Nome: Modalita di pagamento assente
-  *	Pre: Non Ë stato selezionata una modalita di pagamento
+  *	Pre: Non √® stato selezionata una modalita di pagamento
   *	Post: Ritorna il valore 3
   *
   * Nome: Tipo rapporto assente
-  *	Pre: Non Ë stato selezionato un tipo rapporto
+  *	Pre: Non √® stato selezionato un tipo rapporto
   *	Post: Ritorna il valore 4
   *
   * Nome: Tipo rapporto non valido alla data inizio competenza coge
-  *	Pre: Il tipo rapporto selezionato non Ë valido in data competenza coge
+  *	Pre: Il tipo rapporto selezionato non √® valido in data competenza coge
   *	Post: Ritorna il valore 5
   *
   * Nome: Tipo trattamento assente
-  *	Pre: Non Ë stato selezionato un tipo trattamento
+  *	Pre: Non √® stato selezionato un tipo trattamento
   *	Post: Ritorna il valore 6
   *
   * Nome: Tipo trattamento non valido alla data registrazione
-  *	Pre: Non Ë stato selezionato un tipo trattamento
+  *	Pre: Non √® stato selezionato un tipo trattamento
   *	Post: Ritorna il valore 7
   *
   * Nome: Terzo valido

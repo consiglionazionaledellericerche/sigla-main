@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Consultazione Disponibilità per CDR/GAE/Voce di Bilancio">
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Consultazione DisponibilitÃ  per CDR/GAE/Voce di Bilancio">
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
@@ -108,7 +108,7 @@
 		inputSize="22"
 		maxLength="22"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Disponibilità" />
+		label="DisponibilitÃ " />
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
