@@ -6,6 +6,7 @@ import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBulk;
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
+import it.cnr.contab.docamm00.storage.StorageFolderFatturaAttiva;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
@@ -403,5 +404,74 @@ public class DocumentiCollegatiDocAmmService extends StoreService {
                 logger.error("Cannot convert to html document with id {}", storageObject.getKey(), e);
             }
         }
+    }
+
+    public StorageObject recuperoFolderFatturaByPath(Fattura_attivaBulk fattura) throws DetailedException {
+    	StorageFolderFatturaAttiva folder = new StorageFolderFatturaAttiva(fattura);
+    	String path = folder.getCMISPathForSearch();
+    	return SpringUtil.getBean("storeService", StoreService.class).getStorageObjectByPath(path);
+    }
+    
+	protected List<StorageObject> recuperoDocumento(StorageObject node, String tipoDocumento) {
+		return Optional.ofNullable(node) 
+             .map(StorageObject::getKey)
+             .map(key -> getChildren(key))
+			 .map(lista -> lista.stream()
+			 .filter(storageObj -> storageObj.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains(tipoDocumento))
+			 .collect(Collectors.toList())).orElse(new ArrayList<StorageObject>());
+	}
+	
+    private List<StorageObject> getStorageObjectFatturaAttiva(Fattura_attivaBulk fattura, String tipoDocumento) throws DetailedException {
+    	StorageObject node = recuperoFolderFatturaByPath(fattura);
+    	
+        List<StorageObject> results = recuperoDocumento(node, tipoDocumento);
+        if (results.size() == 0)
+            return null;
+        else {
+            return results;
+        }
+    }
+    private List<String> getDocumentoFatturaAttiva(Fattura_attivaBulk fattura, String tipoDocumento) throws DetailedException {
+    	StorageObject node = recuperoFolderFatturaByPath(fattura);
+    	
+        List<StorageObject> results = recuperoDocumento(node, tipoDocumento);
+        if (results.size() == 0)
+            return null;
+        else {
+            return results.stream()
+                    .map(StorageObject::getKey)
+                    .collect(Collectors.toList());
+        }
+    }
+    public InputStream getStreamXmlFirmatoFatturaAttiva(Fattura_attivaBulk fattura)  throws ApplicationException, IOException {
+    	try {
+        	List<String> ids = getDocumentoFatturaAttiva(fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_POST_FIRMA.value());
+            return getStream(ids);
+		} catch (DetailedException e) {
+			throw new ApplicationException(e);
+		}
+    }
+
+    public InputStream getStreamXmlFatturaAttiva(Fattura_attivaBulk fattura)  throws ApplicationException, IOException {
+    	try {
+        	List<String> ids = getDocumentoFatturaAttiva(fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_ANTE_FIRMA.value());
+            return getStream(ids);
+		} catch (DetailedException e) {
+			throw new ApplicationException(e);
+		}
+    }
+    public StorageObject getFileFirmatoFatturaAttiva(Fattura_attivaBulk fattura)  throws ApplicationException, IOException {
+    	try {
+        	List<StorageObject> lista = getStorageObjectFatturaAttiva(fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_POST_FIRMA.value());
+            if (lista.size() == 0)
+                throw new ApplicationException("Non esiste il file firmato per la fattura attiva");
+            else if (lista.size() > 1) {
+                throw new ApplicationException("Esistono due file firmati per la fattura attiva");
+            } else {	
+            	return lista.get(0);
+            }
+		} catch (DetailedException e) {
+			throw new ApplicationException(e);
+		}
     }
 }
