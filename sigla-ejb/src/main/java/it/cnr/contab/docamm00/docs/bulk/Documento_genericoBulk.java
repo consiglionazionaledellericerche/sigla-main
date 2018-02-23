@@ -4,6 +4,8 @@ import it.cnr.contab.docamm00.bp.*;
 import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.*;
+import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
+
 import java.util.*;
 
 import it.cnr.contab.doccont00.core.bulk.*;
@@ -48,6 +50,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	public final static String NO_FONDO_ECO = "N";
 	public final static String FONDO_ECO = "A";
 	public final static String REGISTRATO_IN_FONDO_ECO = "R";
+	private Tipo_documento_genericoBulk tipoDocumentoGenerico;
 
 	private ObbligazioniTable documento_generico_obbligazioniHash= null;
 	private AccertamentiTable documento_generico_accertamentiHash= null;
@@ -1912,5 +1915,23 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	public void setDataInizioObbligoRegistroUnico(
 			java.sql.Timestamp dataInizioObbligoRegistroUnico) {
 		this.dataInizioObbligoRegistroUnico = dataInizioObbligoRegistroUnico;
+	}
+	public Tipo_documento_genericoBulk getTipoDocumentoGenerico() {
+		return tipoDocumentoGenerico;
+	}
+	public void setTipoDocumentoGenerico(Tipo_documento_genericoBulk tipoDocumentoGenerico) {
+		this.tipoDocumentoGenerico = tipoDocumentoGenerico;
 	}	
+	@Override
+	public Integer getIdTipoDocumentoGenerico() {
+		return Optional.ofNullable(getTipoDocumentoGenerico())
+					.map(Tipo_documento_genericoBulk::getId)
+					.orElse(null);
+	}
+	
+	@Override
+	public void setIdTipoDocumentoGenerico(Integer idTipoDocumentoGenerico) {
+		Optional.ofNullable(getTipoDocumentoGenerico()).ifPresent(el->el.setId(idTipoDocumentoGenerico));
+	}
+	
 }

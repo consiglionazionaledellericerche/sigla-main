@@ -9,6 +9,7 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Vector;
 
 import javax.ejb.EJBException;
@@ -21,6 +22,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
+import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -37,6 +39,7 @@ import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoHome;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaHome;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_accertamentiVBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
@@ -101,6 +104,7 @@ import it.cnr.contab.inventario01.bulk.Inventario_beni_apgBulk;
 import it.cnr.contab.inventario01.bulk.Inventario_beni_apgHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
@@ -4966,29 +4970,70 @@ private void validaDisponibilitaDiCassaCDS(UserContext userContext, Documento_ge
 	}
 
 }
+public BigDecimal getImportoBolloVirtuale(UserContext aUC, Documento_genericoBulk doc) throws ComponentException {
+	final BigDecimal ret = null;
+	try {
+		Configurazione_cnrBulk config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( aUC, doc.getEsercizio(), null, Configurazione_cnrBulk.PK_BOLLO_VIRTUALE, Configurazione_cnrBulk.SK_BOLLO_VIRTUALE_CODICE_FATTURA_ATTIVA);
+		return Optional.ofNullable(config)
+				.map(Configurazione_cnrBulk::getVal01)
+				.map(v->{
+					Tipo_atto_bolloBulk tipoAtto;
+					try {
+						tipoAtto = Utility.createTipoAttoBolloComponentSession().getTipoAttoBollo(aUC, doc.getData_registrazione(), v);
+						return Optional.ofNullable(tipoAtto).map(Tipo_atto_bolloBulk::getImBollo).orElse(null);
+					} catch (Exception e) {
+						throw new DetailedRuntimeException(e);
+					}
+				})
+				.orElse(null);
+	} catch (ComponentException | RemoteException | EJBException | DetailedRuntimeException  e) {
+		throw handleException(e);
+	}
+}
+
+private void controlloBolloVirtuale(UserContext aUC, Documento_genericoBulk documentoGenerico) throws ComponentException {
+	if (documentoGenerico.getTipoDocumentoGenerico() != null && documentoGenerico.getTipoDocumentoGenerico().getSoggetto_bollo()){
+		BigDecimal importoBollo = getImportoBolloVirtuale(aUC, documentoGenerico);
+		if (importoBollo != null){
+			Boolean esisteBollo = false;
+		    for (Object dett : documentoGenerico.getDocumento_generico_dettColl()) {
+		        Documento_generico_rigaBulk riga = (Documento_generico_rigaBulk)dett;
+		        if (riga.getIm_riga() != null && riga.getIm_riga().compareTo(importoBollo) == 0){
+		        	esisteBollo = true;
+		        	break;
+		        }
+		        	
+		    }
+		    if (!esisteBollo){
+		        throw new it.cnr.jada.comp.ApplicationException(
+		                "Attenzione per un documento generico soggetto a bollo è necessario indicare almeno un dettaglio con un importo di "+importoBollo.doubleValue());
+		    }
+		}
+	}
+}
 //^^@@
 /**  Validazione dell'intero documento amministrativo ativo/passivo
-  *  tutti i controlli superati
-  *    PreCondition:
-  *      Nessuna situazione di errore di validazione è stata rilevata.
-  *    PostCondition:
-  *      Consentita la registrazione.
-  *  validazione numero di dettagli maggiore di zero.
-  *    PreCondition:
-  *      Il numero di dettagli nel documento è zero
-  *    PostCondition:
-  *      Viene inviato un messaggio: "Attenzione non possono esistere documenti senza almeno un dettaglio".
-  *  validazione associazione scadenze
-  *    PreCondition:
-  *      Esistono dettagli non collegati ad obbligazione.
-  *    PostCondition:
-  *      Viene inviato un messaggio:"Attenzione esistono dettagli non collegati ad obbligazione."
-  *  validazione modifica documento pagato.
-  *    PreCondition:
-  *      E' satata eseguita una modifica in documento con testata in stato P.
-  *    PostCondition:
-  *      Viene inviato un messaggio:"Attenzione non si modificare nulla in un documento pagato".
- */
+*  tutti i controlli superati
+*    PreCondition:
+*      Nessuna situazione di errore di validazione è stata rilevata.
+*    PostCondition:
+*      Consentita la registrazione.
+*  validazione numero di dettagli maggiore di zero.
+*    PreCondition:
+*      Il numero di dettagli nel documento è zero
+*    PostCondition:
+*      Viene inviato un messaggio: "Attenzione non possono esistere documenti senza almeno un dettaglio".
+*  validazione associazione scadenze
+*    PreCondition:
+*      Esistono dettagli non collegati ad obbligazione.
+*    PostCondition:
+*      Viene inviato un messaggio:"Attenzione esistono dettagli non collegati ad obbligazione."
+*  validazione modifica documento pagato.
+*    PreCondition:
+*      E' satata eseguita una modifica in documento con testata in stato P.
+*    PostCondition:
+*      Viene inviato un messaggio:"Attenzione non si modificare nulla in un documento pagato".
+*/
 //^^@@
 public void validaDocumento(UserContext aUC, Documento_genericoBulk documentoGenerico) throws ComponentException {
 
@@ -5089,6 +5134,9 @@ public void validaDocumento(UserContext aUC, Documento_genericoBulk documentoGen
 	    	throw new it.cnr.jada.comp.ApplicationException("E' stata selezionata una lettera di pagamento per un documento in cui o i terzi e le modalità di pagamento sono differenti o il pagamento del fondo economale è stato selezionato");
     }
 
+	if (documentoGenerico.isGenericoAttivo())	{
+		controlloBolloVirtuale(aUC, documentoGenerico);
+	}
     return;
 }
 //^^@@

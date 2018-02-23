@@ -35,7 +35,7 @@ public String getManagerName() {
 
 	return "CRUDGenericoPassivoBP";
 }
-public String getTipoDocumentoGenerico() {
+public String getTipologiaDocumentoGenerico() {
 
 	if (getCd_tipo_documento_amm() == null) return "Sconosciuto";
 	if (this.GENERICO_E.equalsIgnoreCase(getCd_tipo_documento_amm()) ||
