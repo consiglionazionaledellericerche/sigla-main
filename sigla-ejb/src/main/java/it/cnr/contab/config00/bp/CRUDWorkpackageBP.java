@@ -2,7 +2,6 @@ package it.cnr.contab.config00.bp;
 
 import java.rmi.RemoteException;
 
-import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -35,7 +34,6 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 public class CRUDWorkpackageBP extends SimpleCRUDBP {
 	private final SimpleDetailCRUDController risultati = new SimpleDetailCRUDController("risultati",it.cnr.contab.config00.latt.bulk.RisultatoBulk.class,"risultati",this);
-	private SimpleDetailCRUDController crudDettagliPostIt = new SimpleDetailCRUDController( "DettagliPostIt", PostItBulk.class, "dettagliPostIt", this);
 	private boolean flNuovoPdg = false;
 	private boolean flTiGestioneES = false;
 	private boolean flPrgPianoeco = false;
@@ -85,10 +83,7 @@ public CRUDWorkpackageBP(String function, Pdg_variazione_riga_gestBulk pdgVariaz
 public final it.cnr.jada.util.action.SimpleDetailCRUDController getRisultati() {
 	return risultati;
 }
-/*Angelo 18/11/2004 Aggiunta gestione PostIt*/
-public final it.cnr.jada.util.action.SimpleDetailCRUDController getCrudDettagliPostIt() {
-	return crudDettagliPostIt;
-}
+
 public boolean isDeleteButtonEnabled() {
 	it.cnr.contab.config00.latt.bulk.WorkpackageBulk tipo_la = (it.cnr.contab.config00.latt.bulk.WorkpackageBulk)getModel();
 	return
@@ -151,25 +146,7 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 		throw new BusinessProcessException(e);
 	} 
 }
-/*
- * Utilizzato per la gestione del bottone di attivazione del PostIt
- * Sovrascrive il metodo di SimpleCRUDBP
- * */
-public boolean isActive(OggettoBulk bulk,int sel) {
-  if (bulk instanceof WorkpackageBulk)	
-	try
-	{
-		return ((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(sel)).isROpostit();
-	}
-	catch (RuntimeException e)
-	{
-		if (sel==0)
-		return false;
-		else
-		e.printStackTrace();
-	}
-	return false;
-}
+
 @Override
 public boolean isNewButtonEnabled() {
 	if (isUoArea() && !this.isFlNuovoPdg())

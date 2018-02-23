@@ -4,7 +4,6 @@ import java.rmi.RemoteException;
 
 import javax.ejb.EJBException;
 
-import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
@@ -103,16 +102,6 @@ public class WorkpackageHome extends BulkHome implements ConsultazioniRestHome {
 					linea_attivita.setCd_linea_attivita(lunghezzaChiavi.formatLinea_attivitaKey(userContext,linea_attivita.getCd_linea_attivita()));
 
 				linea_attivita.setCd_linea_attivita(aSuffix+linea_attivita.getCd_linea_attivita().substring(1,linea_attivita.getCd_linea_attivita().length()));
-			/*Se la linea di attivit del PostIt  vuota la valorizzo*/
-				for(int i = 0; linea_attivita.getDettagliPostIt().size() > i; i++)
-				{
-					if ((((PostItBulk)(linea_attivita.getDettagliPostIt().get(i))).getCd_linea_attivita()==null) ||
-							(((PostItBulk)(linea_attivita.getDettagliPostIt().get(i))).getCd_linea_attivita().compareTo(linea_attivita.getCd_linea_attivita())!=0))
-					{
-						((PostItBulk)(linea_attivita.getDettagliPostIt().get(i))).setCd_linea_attivita(linea_attivita.getCd_linea_attivita());
-					}
-
-				}
 			}
 		} catch(javax.ejb.EJBException e) {
 			throw new it.cnr.jada.comp.ComponentException(e);
@@ -127,13 +116,6 @@ public class WorkpackageHome extends BulkHome implements ConsultazioniRestHome {
 		}catch(java.sql.SQLException e) {
 			throw new PersistencyException(e);
 		}
-	}
-	public java.util.Collection findDettagliPostIt(WorkpackageBulk testata) throws IntrospectionException, PersistencyException {
-		PersistentHome dettHome = getHomeCache().getHome(PostItBulk.class);
-		SQLBuilder sql = dettHome.createSQLBuilder();
-		sql.addClause("AND","cd_centro_responsabilita",SQLBuilder.EQUALS,testata.getCd_centro_responsabilita());
-		sql.addClause("AND","cd_linea_attivita",SQLBuilder.EQUALS,testata.getCd_linea_attivita());
-		return dettHome.fetchAll(sql);
 	}
 	public java.util.Collection findDettagliEsercizio(WorkpackageBulk testata) throws IntrospectionException, PersistencyException {
 		PersistentHome dettHome = getHomeCache().getHome(Ass_linea_attivita_esercizioBulk.class);
