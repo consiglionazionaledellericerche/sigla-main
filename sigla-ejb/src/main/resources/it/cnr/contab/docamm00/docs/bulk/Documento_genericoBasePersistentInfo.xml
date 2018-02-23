@@ -161,6 +161,11 @@
 			propertyName="causale"
 			sqlTypeName="VARCHAR"
 			columnSize="10"/>			
+		<columnMapping
+			columnName="ID_TIPO_DOCUMENTO_GENERICO"
+			propertyName="idTipoDocumentoGenerico"
+			sqlTypeName="DECIMAL"
+			columnSize="15" />			
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -216,4 +221,6 @@
 		name="stato_liquidazione" />
 	<persistentProperty
 		name="causale" />									
+	<persistentProperty
+		name="idTipoDocumentoGenerico" />
 </SQLPersistentInfo>
