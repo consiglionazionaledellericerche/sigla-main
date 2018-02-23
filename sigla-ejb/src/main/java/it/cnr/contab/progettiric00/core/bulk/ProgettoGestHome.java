@@ -2,7 +2,6 @@ package it.cnr.contab.progettiric00.core.bulk;
 
 import java.util.Enumeration;
 
-import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
@@ -90,20 +89,6 @@ public class ProgettoGestHome extends BulkHome implements ConsultazioniRestHome 
 	
 	public java.util.Collection findDettagliPartner_esterni(ProgettoGestBulk testata) throws IntrospectionException, PersistencyException {
 		PersistentHome dettHome = getHomeCache().getHome(Progetto_partner_esternoBulk.class);
-		SQLBuilder sql = dettHome.createSQLBuilder();
-		sql.addClause("AND","pg_progetto",sql.EQUALS,testata.getPg_progetto());
-		return dettHome.fetchAll(sql);
-	}	
-	/**
-	 * Recupera tutti i dati nella tabella Postit relativi alla testata in uso.
-	 *
-	 * @param testata La testata in uso.
-	 *
-	 * @return java.util.Collection Collezione di oggetti <code>PostItBulk</code>
-	 */
-	
-	public java.util.Collection findDettagliPostIt(ProgettoGestBulk testata) throws IntrospectionException, PersistencyException {
-		PersistentHome dettHome = getHomeCache().getHome(PostItBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause("AND","pg_progetto",sql.EQUALS,testata.getPg_progetto());
 		return dettHome.fetchAll(sql);

@@ -3,7 +3,7 @@
 					{ "tabCdrAssociati","Cdr associati","/config00/tab_tipo_linea_attivita_cdr_associati.jsp" } };
 %>
 
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*,it.cnr.jada.util.action.*,it.cnr.contab.config00.bp.*,it.cnr.contab.config00.latt.bulk.*"
 %>
 

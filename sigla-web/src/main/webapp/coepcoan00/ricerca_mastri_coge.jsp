@@ -4,7 +4,7 @@
  ?ResourceEdition ""
 -->
 
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,it.cnr.jada.bulk.*,it.cnr.jada.util.action.*,it.cnr.contab.coepcoan00.bp.*"
 %>
 

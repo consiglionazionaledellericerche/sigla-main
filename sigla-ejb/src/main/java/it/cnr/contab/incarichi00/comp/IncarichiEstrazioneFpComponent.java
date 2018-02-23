@@ -58,10 +58,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 
-import oracle.sql.BLOB;
-
 import com.googlecode.jcsv.reader.CSVReader;
 import com.googlecode.jcsv.reader.internal.CSVReaderBuilder;
+import org.apache.commons.io.IOUtils;
 
 /**
  * @author rpagano
@@ -246,38 +245,7 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 		if (!(incaricoArchivioXmlFp.getFile_inv() == null || incaricoArchivioXmlFp.getFile_inv().getName().equals("") ||
 			  incaricoArchivioXmlFp.getFile_ric() == null || incaricoArchivioXmlFp.getFile_ric().getName().equals(""))) {
 			incaricoArchivioXmlFp.setToBeUpdated();
-			try {
-				oracle.sql.BLOB blobInv = (oracle.sql.BLOB)archiveHome.getSQLBlob(incaricoArchivioXmlFp,"BDATA_INV");
-				java.io.InputStream inInv = new java.io.BufferedInputStream(new FileInputStream(incaricoArchivioXmlFp.getFile_inv()));
-				byte[] byteArrInv = new byte[1024];
-				java.io.OutputStream osInv = new java.io.BufferedOutputStream(blobInv.getBinaryOutputStream());
-				int lenInv;			
-				while ((lenInv = inInv.read(byteArrInv))>0){
-					osInv.write(byteArrInv,0,lenInv);
-				}
-				osInv.close();
-				inInv.close();
 
-				oracle.sql.BLOB blobRic = (oracle.sql.BLOB)archiveHome.getSQLBlob(incaricoArchivioXmlFp,"BDATA_RIC");
-				java.io.InputStream inRic = new java.io.BufferedInputStream(new FileInputStream(incaricoArchivioXmlFp.getFile_ric()));
-				byte[] byteArrRic = new byte[1024];
-				java.io.OutputStream osRic = new java.io.BufferedOutputStream(blobRic.getBinaryOutputStream());
-				int lenRic;			
-				while ((lenRic = inRic.read(byteArrRic))>0){
-					osRic.write(byteArrRic,0,lenRic);
-				}
-				osRic.close();
-				inRic.close();
-			} catch (PersistencyException e) {
-				throw new ComponentException(e);	
-			} catch (FileNotFoundException e) {
-				throw new ComponentException(e);	
-			} catch (IOException e) {
-				throw new ComponentException(e);	
-			} catch (SQLException e) {
-				throw new ComponentException(e);	
-			}
-			
 			try{
 				List<Incarichi_comunicati_fpBulk> listIncarichiComunicati = new ArrayList<Incarichi_comunicati_fpBulk>(); 
 				if (!incaricoArchivioXmlFp.getFl_perla()) {
@@ -396,27 +364,7 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 		
 		if (!(incaricoArchivioXmlFp.getFile_ric() == null || incaricoArchivioXmlFp.getFile_ric().getName().equals(""))) {
 			incaricoArchivioXmlFp.setToBeUpdated();
-			try {
-				oracle.sql.BLOB blobRic = (oracle.sql.BLOB)archiveHome.getSQLBlob(incaricoArchivioXmlFp,"BDATA_RIC");
-				java.io.InputStream inRic = new java.io.BufferedInputStream(new FileInputStream(incaricoArchivioXmlFp.getFile_ric()));
-				byte[] byteArrRic = new byte[1024];
-				java.io.OutputStream osRic = new java.io.BufferedOutputStream(blobRic.getBinaryOutputStream());
-				int lenRic;			
-				while ((lenRic = inRic.read(byteArrRic))>0){
-					osRic.write(byteArrRic,0,lenRic);
-				}
-				osRic.close();
-				inRic.close();
-			} catch (PersistencyException e) {
-				throw new ComponentException(e);	
-			} catch (FileNotFoundException e) {
-				throw new ComponentException(e);	
-			} catch (IOException e) {
-				throw new ComponentException(e);	
-			} catch (SQLException e) {
-				throw new ComponentException(e);	
-			}
-			
+
 			
 			List<Incarichi_comunicati_fpBulk> listIncarichiComunicati = new ArrayList<Incarichi_comunicati_fpBulk>(); 
 			List<String[]> righeScartate = new ArrayList<String[]>(); 
@@ -660,37 +608,10 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 	public File getFile(UserContext usercontext, Incarichi_archivio_xml_fpBulk allegato, String tipoBlob, String pathFile, String nomeFile) throws ComponentException {
 		try{
 			Incarichi_archivio_xml_fpHome home = (Incarichi_archivio_xml_fpHome)getHome(usercontext,Incarichi_archivio_xml_fpBulk.class);
-	
-			BLOB blob = (BLOB)home.getSQLBlob(allegato, tipoBlob);
-	
-	        long position;
-	        int bytesRead = 0, totbytesRead = 0, totbytesWritten = 0;
-
-            File outputBinaryFile   = new File(pathFile, nomeFile);
-            FileOutputStream outputFileOutputStream  = new FileOutputStream(outputBinaryFile);
-
-            long   blobLength = blob.length();
-            int    chunkSize = blob.getChunkSize();
-            byte[] binaryBuffer = new byte[chunkSize];
-
-            for (position = 1; position <= blobLength; position += chunkSize) {
-                // Loop through while reading a chunk of data from the BLOB
-                // column using the getBytes() method. This data will be stored
-                // in a temporary buffer that will be written to disk.
-                bytesRead = blob.getBytes(position, chunkSize, binaryBuffer);
-
-                // Now write the buffer to disk.
-                outputFileOutputStream.write(binaryBuffer, 0, bytesRead);
-               
-                totbytesRead += bytesRead;
-                totbytesWritten += bytesRead;
-            }
-            
-            outputFileOutputStream.close();
+			File outputBinaryFile   = new File(pathFile, nomeFile);
+			home.setSQLLob(allegato, tipoBlob, IOUtils.toByteArray(new FileInputStream(outputBinaryFile)));
 			return outputBinaryFile;
 		} catch (PersistencyException e) {
-			throw new ComponentException(e);
-		} catch (SQLException e) {
 			throw new ComponentException(e);
 		} catch (FileNotFoundException e) {
 			throw new ComponentException(e);
