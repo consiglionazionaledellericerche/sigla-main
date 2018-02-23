@@ -99,7 +99,7 @@ protected Forward basicDoRistampa(ActionContext context)
 	bp.rollbackUserTransaction();
 	bp.setMessage(
 				it.cnr.jada.util.action.OptionBP.ERROR_MESSAGE, 
-				"Questo tipo di registro non è ristampabile");
+				"Questo tipo di registro non Ã¨ ristampabile");
 	return context.findDefaultForward();
 }
 /**
@@ -107,7 +107,7 @@ protected Forward basicDoRistampa(ActionContext context)
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -196,7 +196,7 @@ public final Forward doRistampa(ActionContext context) {
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -208,7 +208,7 @@ protected Forward doStampa(
 	it.cnr.jada.bulk.MTUWrapper wrapper)
 	throws BusinessProcessException {
 
-	String message = "L'operazione è stata eseguita correttamente. Per confermare eseguire la stampa del report.";
+	String message = "L'operazione Ã¨ stata eseguita correttamente. Per confermare eseguire la stampa del report.";
 
 	String s = getMessageFrom(wrapper);
 	if (s != null) {
@@ -225,7 +225,7 @@ protected Forward doStampa(
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -271,7 +271,7 @@ protected Forward doStampa(
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.
@@ -303,7 +303,7 @@ protected java.util.GregorianCalendar getGregorianCalendar() {
  *
  * L'implementazione di default utilizza il metodo astratto <code>read</code>
  * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
+ * Se la ricerca fornisce piÃ¹ di un risultato viene creato un
  * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
  * Al business process viene anche chiesto l'elenco delle colonne da
  * visualizzare.

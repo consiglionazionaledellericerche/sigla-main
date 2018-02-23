@@ -157,7 +157,7 @@ public SQLBuilder cercaSpeseDelFondo(
 	sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, fondo.getCd_unita_organizzativa());
 	sql.addClause("AND", "cd_codice_fondo", sql.EQUALS, fondo.getCd_codice_fondo());
 
-	//Compatibilit‡
+	//Compatibilit√†
 	sql.addClause("AND", "fl_reintegrata", sql.EQUALS, fondo.getFl_reintegrata_for_search());
 	sql.addClause("AND", "fl_documentata", sql.EQUALS, fondo.getFl_documentata_for_search());
 
@@ -182,7 +182,7 @@ public SQLBuilder cercaSpeseDelFondo(
 		sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, filtro.getFondo_economale().getCd_unita_organizzativa());
 		sql.addClause("AND", "cd_codice_fondo", sql.EQUALS, filtro.getFondo_economale().getCd_codice_fondo());
 
-		//Obbligazione e compatibilit‡
+		//Obbligazione e compatibilit√†
 		sql.addClause("AND", "fl_reintegrata", sql.EQUALS, Boolean.FALSE);
 		sql.addClause("AND", "fl_documentata", sql.EQUALS, filtro.getFl_documentata());
 		if (!filtro.getFl_documentata().booleanValue()) {
@@ -218,7 +218,7 @@ public SQLBuilder cercaSpeseDelFondo(
 	}
 
 	/**
-	 * Recupera tutti i cap relativi al citt‡ fornitore in uso.
+	 * Recupera tutti i cap relativi al citt√† fornitore in uso.
 	 *
 	 * @param spesa La spesa in uso.
 	 * @param capHome .

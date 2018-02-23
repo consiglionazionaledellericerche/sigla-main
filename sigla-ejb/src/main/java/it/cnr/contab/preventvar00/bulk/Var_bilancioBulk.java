@@ -89,9 +89,9 @@ private String findTipoGestione(String tipoVar) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'bilancio'
+ * Restituisce il valore della propriet√† 'bilancio'
  *
- * @return Il valore della propriet‡ 'bilancio'
+ * @return Il valore della propriet√† 'bilancio'
  */
 public it.cnr.contab.prevent00.bulk.Bilancio_preventivoBulk getBilancio() {
 	return bilancio;
@@ -103,9 +103,9 @@ public BulkCollection[] getBulkLists() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'causaleVariazione'
+ * Restituisce il valore della propriet√† 'causaleVariazione'
  *
- * @return Il valore della propriet‡ 'causaleVariazione'
+ * @return Il valore della propriet√† 'causaleVariazione'
  */
 public Causale_var_bilancioBulk getCausaleVariazione() {
 	return causaleVariazione;
@@ -124,9 +124,9 @@ public java.lang.String getCd_cds() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'dettagli'
+ * Restituisce il valore della propriet√† 'dettagli'
  *
- * @return Il valore della propriet‡ 'dettagli'
+ * @return Il valore della propriet√† 'dettagli'
  */
 public it.cnr.jada.bulk.BulkList getDettagli() {
 	return dettagli;
@@ -139,9 +139,9 @@ public java.lang.Integer getEsercizio() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'tipiVariazioneKeys'
+ * Restituisce il valore della propriet√† 'tipiVariazioneKeys'
  *
- * @return Il valore della propriet‡ 'tipiVariazioneKeys'
+ * @return Il valore della propriet√† 'tipiVariazioneKeys'
  */
 public java.util.Dictionary getEsercizio_importiKeys() {
 	it.cnr.jada.util.OrderedHashtable aD = new it.cnr.jada.util.OrderedHashtable();
@@ -165,18 +165,18 @@ public java.lang.String getTi_appartenenza() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'tipiVariazioneKeys'
+ * Restituisce il valore della propriet√† 'tipiVariazioneKeys'
  *
- * @return Il valore della propriet‡ 'tipiVariazioneKeys'
+ * @return Il valore della propriet√† 'tipiVariazioneKeys'
  */
 public java.util.Dictionary getTipiVariazioneKeys(){
 	return TIPI_VARIAZIONE;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'tipoGestione'
+ * Restituisce il valore della propriet√† 'tipoGestione'
  *
- * @return Il valore della propriet‡ 'tipoGestione'
+ * @return Il valore della propriet√† 'tipoGestione'
  */
 public String getTipoGestione() {
 
@@ -206,9 +206,9 @@ public java.math.BigDecimal getTotaleSpese() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'tipoVariazioneRO'
+ * Restituisce il valore della propriet√† 'tipoVariazioneRO'
  *
- * @return Il valore della propriet‡ 'tipoVariazioneRO'
+ * @return Il valore della propriet√† 'tipoVariazioneRO'
  */
 public boolean hasVoceDuplicata(Var_bilancio_detBulk varDett, it.cnr.contab.prevent00.bulk.V_assestato_voceBulk voce) {
 
@@ -222,18 +222,18 @@ public boolean hasVoceDuplicata(Var_bilancio_detBulk varDett, it.cnr.contab.prev
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'definitiva'
+ * Restituisce il valore della propriet√† 'definitiva'
  *
- * @return Il valore della propriet‡ 'definitiva'
+ * @return Il valore della propriet√† 'definitiva'
  */
 public boolean isDefinitiva() {
 	return (getStato()!=null && getStato().equals(DEFINITIVA));
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'esercizio_importiRO'
+ * Restituisce il valore della propriet√† 'esercizio_importiRO'
  *
- * @return Il valore della propriet‡ 'esercizio_importiRO'
+ * @return Il valore della propriet√† 'esercizio_importiRO'
  */
 public boolean isEsercizio_importiRO() {
 	return false;
@@ -241,9 +241,9 @@ public boolean isEsercizio_importiRO() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'tipoVariazioneRO'
+ * Restituisce il valore della propriet√† 'tipoVariazioneRO'
  *
- * @return Il valore della propriet‡ 'tipoVariazioneRO'
+ * @return Il valore della propriet√† 'tipoVariazioneRO'
  */
 public boolean isTipoVariazioneRO() {
 	return isNotNew() &&
@@ -262,7 +262,7 @@ public Var_bilancio_detBulk removeFromDettagli(int index) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'bilancio'
+ * Imposta il valore della propriet√† 'bilancio'
  *
  * @param newBilancio	Il valore da assegnare a 'bilancio'
  */
@@ -271,7 +271,7 @@ public void setBilancio(it.cnr.contab.prevent00.bulk.Bilancio_preventivoBulk new
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'causaleVariazione'
+ * Imposta il valore della propriet√† 'causaleVariazione'
  *
  * @param newCausaleVariazione	Il valore da assegnare a 'causaleVariazione'
  */
@@ -286,7 +286,7 @@ public void setCd_cds(java.lang.String cd_cds) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'dettagli'
+ * Imposta il valore della propriet√† 'dettagli'
  *
  * @param newDettagli	Il valore da assegnare a 'dettagli'
  */

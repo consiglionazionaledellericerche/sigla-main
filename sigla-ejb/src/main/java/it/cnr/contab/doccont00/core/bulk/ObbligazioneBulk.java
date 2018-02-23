@@ -132,9 +132,9 @@ public ObbligazioneBulk(java.lang.String cd_cds,java.lang.Integer esercizio,java
 	setCds(new it.cnr.contab.config00.sto.bulk.CdsBulk(cd_cds));
 }
 /**
- * Aggiunge una nuova linea di attivit‡ (Linea_attivitaBulk) alla lista di linee di attivit‡
+ * Aggiunge una nuova linea di attivit√† (Linea_attivitaBulk) alla lista di linee di attivit√†
  * definite per l'obbligazione inizializzandone alcuni campi
- * @param latt Linea di attivit‡ da aggiungere alla lista
+ * @param latt Linea di attivit√† da aggiungere alla lista
  * @return int
  */
 
@@ -313,9 +313,9 @@ public java.lang.String getCd_elemento_voce() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_iniziale_elemento_voce'
+ * Restituisce il valore della propriet√† 'cd_iniziale_elemento_voce'
  *
- * @return Il valore della propriet‡ 'cd_iniziale_elemento_voce'
+ * @return Il valore della propriet√† 'cd_iniziale_elemento_voce'
  */
 public java.lang.String getCd_iniziale_elemento_voce() {
 	return cd_iniziale_elemento_voce;
@@ -328,9 +328,9 @@ public java.lang.Integer getCd_terzo() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_terzo_iniziale'
+ * Restituisce il valore della propriet√† 'cd_terzo_iniziale'
  *
- * @return Il valore della propriet‡ 'cd_terzo_iniziale'
+ * @return Il valore della propriet√† 'cd_terzo_iniziale'
  */
 public java.lang.Integer getCd_terzo_iniziale() {
 	return cd_terzo_iniziale;
@@ -399,9 +399,9 @@ public it.cnr.contab.anagraf00.core.bulk.TerzoBulk getCreditore() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'ds_creditore'
+ * Restituisce il valore della propriet√† 'ds_creditore'
  *
- * @return Il valore della propriet‡ 'ds_creditore'
+ * @return Il valore della propriet√† 'ds_creditore'
  */
 public java.lang.String getDs_creditore() {
 	/*
@@ -434,27 +434,27 @@ public Fondo_ricercaBulk getFondo_ricerca() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_iniziale_obbligazione'
+ * Restituisce il valore della propriet√† 'im_iniziale_obbligazione'
  *
- * @return Il valore della propriet‡ 'im_iniziale_obbligazione'
+ * @return Il valore della propriet√† 'im_iniziale_obbligazione'
  */
 public java.math.BigDecimal getIm_iniziale_obbligazione() {
 	return im_iniziale_obbligazione;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_mandati'
+ * Restituisce il valore della propriet√† 'im_mandati'
  *
- * @return Il valore della propriet‡ 'im_mandati'
+ * @return Il valore della propriet√† 'im_mandati'
  */
 public java.math.BigDecimal getIm_mandati() {
 	return im_mandati;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_parz_scadenze'
+ * Restituisce il valore della propriet√† 'im_parz_scadenze'
  *
- * @return Il valore della propriet‡ 'im_parz_scadenze'
+ * @return Il valore della propriet√† 'im_parz_scadenze'
  */
 public java.math.BigDecimal getIm_parz_scadenze() 
 {
@@ -469,8 +469,8 @@ public java.math.BigDecimal getIm_parz_scadenze()
 	return im_parz_scadenze;
 }
 /**
- * Calcola l'importo residuo dell'obbligazione, che Ë dato dalla differenza tra l'importo totale
- * dell'obbligazione e la somma degli importi delle scadenze gi‡ inserite.
+ * Calcola l'importo residuo dell'obbligazione, che √® dato dalla differenza tra l'importo totale
+ * dell'obbligazione e la somma degli importi delle scadenze gi√† inserite.
  * @return im_residuo_obbligazione L'importo residuo dell'obbligazione
  */
 public java.math.BigDecimal getIm_residuo_obbligazione() 
@@ -480,9 +480,9 @@ public java.math.BigDecimal getIm_residuo_obbligazione()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'internalStatus'
+ * Restituisce il valore della propriet√† 'internalStatus'
  *
- * @return Il valore della propriet‡ 'internalStatus'
+ * @return Il valore della propriet√† 'internalStatus'
  */
 public int getInternalStatus() {
 	return internalStatus;
@@ -505,9 +505,9 @@ public String getManagerName() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'nextPgScadenza'
+ * Restituisce il valore della propriet√† 'nextPgScadenza'
  *
- * @return Il valore della propriet‡ 'nextPgScadenza'
+ * @return Il valore della propriet√† 'nextPgScadenza'
  */
 public Long getNextPgScadenza() 
 {
@@ -584,9 +584,9 @@ public it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk getUnita_organizz
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'vociMap'
+ * Restituisce il valore della propriet√† 'vociMap'
  *
- * @return Il valore della propriet‡ 'vociMap'
+ * @return Il valore della propriet√† 'vociMap'
  */
 public PrimaryKeyHashMap getVociMap(boolean flNuovoPdg ) 
 {
@@ -625,9 +625,9 @@ public PrimaryKeyHashMap getVoceFMap( )
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'Obbligazione_scad_voceMap'
+ * Restituisce il valore della propriet√† 'Obbligazione_scad_voceMap'
  *
- * @return Il valore della propriet‡ 'Obbligazione_scad_voceMap'
+ * @return Il valore della propriet√† 'Obbligazione_scad_voceMap'
  */
 public PrimaryKeyHashMap getObbligazione_scad_voceMap(  )
 {
@@ -710,9 +710,9 @@ public boolean isAddNuoveLattEnabled()
 	return getCapitoliDiSpesaCdsSelezionatiColl() != null && getCapitoliDiSpesaCdsSelezionatiColl().size() > 0;
 }	
 /**
- * Verifica se l'obbligazione Ë associata a documenti amministrativi.
- * @return 				TRUE 	L'obbligazione Ë associata a documenti amministrativi
- *						FALSE 	L'obbligazione non Ë associata a documenti amministrativi
+ * Verifica se l'obbligazione √® associata a documenti amministrativi.
+ * @return 				TRUE 	L'obbligazione √® associata a documenti amministrativi
+ *						FALSE 	L'obbligazione non √® associata a documenti amministrativi
  */
 public boolean isAssociataADocAmm() 
 {
@@ -724,35 +724,35 @@ public boolean isAssociataADocAmm()
 	return false;
 }
 /**
- * Verifica se Ë stato eseguito il controllo sulla disponibilit‡ di cassa.
- * @return 				TRUE 	Il controllo sulla disponibilit‡ di cassa Ë stato eseguito
- *						FALSE 	Il controllo sulla disponibilit‡ di cassa non Ë stato eseguito
+ * Verifica se √® stato eseguito il controllo sulla disponibilit√† di cassa.
+ * @return 				TRUE 	Il controllo sulla disponibilit√† di cassa √® stato eseguito
+ *						FALSE 	Il controllo sulla disponibilit√† di cassa non √® stato eseguito
  */
 public boolean isCheckDisponibilitaCassaEseguito() {
 	return checkDisponibilitaCassaEseguito;
 }
 /**
- * Verifica se il bottone di Conferma dei Capitoli Ë abilitato.
- * @return 				TRUE 	Il bottone di Conferma dei Capitoli Ë abilitato
- *						FALSE 	Il bottone di Conferma dei Capitoli non Ë abilitato
+ * Verifica se il bottone di Conferma dei Capitoli √® abilitato.
+ * @return 				TRUE 	Il bottone di Conferma dei Capitoli √® abilitato
+ *						FALSE 	Il bottone di Conferma dei Capitoli non √® abilitato
  */
 public boolean isConfermaCapitoliEnabled()
 {
 	return (getInternalStatus() >= INT_STATO_TESTATA_CONFERMATA) && getCapitoliDiSpesaCdsColl().size() > 0;
 }	
 /**
- * Verifica se il bottone di Conferma dei Centri di Responsabilit‡ Ë abilitato.
- * @return 				TRUE 	Il bottone di Conferma dei Centri di Responsabilit‡ Ë abilitato
- *						FALSE 	Il bottone di Conferma dei Centri di Responsabilit‡ non Ë abilitato
+ * Verifica se il bottone di Conferma dei Centri di Responsabilit√† √® abilitato.
+ * @return 				TRUE 	Il bottone di Conferma dei Centri di Responsabilit√† √® abilitato
+ *						FALSE 	Il bottone di Conferma dei Centri di Responsabilit√† non √® abilitato
  */
 public boolean isConfermaCentriDiResponsabilitaEnabled()
 {
 	return (getInternalStatus() >= INT_STATO_CAPITOLI_CONFERMATI) && getCdrColl().size() > 0 ;
 }	
 /**
- * Verifica se il bottone di Conferma delle Linee di Attivit‡ Ë abilitato.
- * @return 				TRUE 	Il bottone di Conferma delle Linee di Attivit‡ Ë abilitato
- *						FALSE 	Il bottone di Conferma delle Linee di Attivit‡ non Ë abilitato
+ * Verifica se il bottone di Conferma delle Linee di Attivit√† √® abilitato.
+ * @return 				TRUE 	Il bottone di Conferma delle Linee di Attivit√† √® abilitato
+ *						FALSE 	Il bottone di Conferma delle Linee di Attivit√† non √® abilitato
  */
 public boolean isConfermaLineeAttivitaEnabled()
 {
@@ -772,9 +772,9 @@ public boolean isDocRiportato()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'fromDocAmm'
+ * Restituisce il valore della propriet√† 'fromDocAmm'
  *
- * @return Il valore della propriet‡ 'fromDocAmm'
+ * @return Il valore della propriet√† 'fromDocAmm'
  */
 public boolean isFromDocAmm() {
 	return fromDocAmm;
@@ -806,18 +806,18 @@ public boolean isObbligazioneResiduoImproprio() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOCreditore'
+ * Restituisce il valore della propriet√† 'rOCreditore'
  *
- * @return Il valore della propriet‡ 'rOCreditore'
+ * @return Il valore della propriet√† 'rOCreditore'
  */
 public boolean isROCreditore() {
 	return creditore == null || creditore.getCrudStatus() == NORMAL;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOContratto'
+ * Restituisce il valore della propriet√† 'rOContratto'
  *
- * @return Il valore della propriet‡ 'rOContratto'
+ * @return Il valore della propriet√† 'rOContratto'
  */
 public boolean isROContratto() {
 	return contratto == null || contratto.getCrudStatus() == NORMAL;
@@ -825,9 +825,9 @@ public boolean isROContratto() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOContratto'
+ * Restituisce il valore della propriet√† 'rOContratto'
  *
- * @return Il valore della propriet‡ 'ROIncaricoRepertorio'
+ * @return Il valore della propriet√† 'ROIncaricoRepertorio'
  */
 public boolean isROIncaricoRepertorio() {
 	return incarico_repertorio == null || incarico_repertorio.getCrudStatus() == NORMAL;
@@ -835,27 +835,27 @@ public boolean isROIncaricoRepertorio() {
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOElemento_voce'
+ * Restituisce il valore della propriet√† 'rOElemento_voce'
  *
- * @return Il valore della propriet‡ 'rOElemento_voce'
+ * @return Il valore della propriet√† 'rOElemento_voce'
  */
 public boolean isROElemento_voce() {
 	return elemento_voce == null || elemento_voce.getCrudStatus() == NORMAL;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOTipo_obbligazione'
+ * Restituisce il valore della propriet√† 'rOTipo_obbligazione'
  *
- * @return Il valore della propriet‡ 'rOTipo_obbligazione'
+ * @return Il valore della propriet√† 'rOTipo_obbligazione'
  */
 public boolean isROTipo_obbligazione() {
 	return tipo_obbligazione == null || tipo_obbligazione.getCrudStatus() == NORMAL;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'spesePerCostiAltrui'
+ * Restituisce il valore della propriet√† 'spesePerCostiAltrui'
  *
- * @return Il valore della propriet‡ 'spesePerCostiAltrui'
+ * @return Il valore della propriet√† 'spesePerCostiAltrui'
  */
 public boolean isSpesePerCostiAltrui()
 {
@@ -1119,10 +1119,10 @@ public void refreshLineeAttivitaSelezionateColl(java.util.List vociList)
 
 }
 /**
- * Rimuove una linea di attivit‡ (Linea_attivitaBulk) dalla lista di linee di attivit‡
+ * Rimuove una linea di attivit√† (Linea_attivitaBulk) dalla lista di linee di attivit√†
  * definite per l'obbligazione.
- * @param index L'indice per scorrere la lista delle linee di attivit‡ 
- * @return Linea_attivitaBulk La linea di attivit‡ da rimuovere dalla lista
+ * @param index L'indice per scorrere la lista delle linee di attivit√† 
+ * @return Linea_attivitaBulk La linea di attivit√† da rimuovere dalla lista
  */
 public Linea_attivitaBulk removeFromNuoveLineeAttivitaColl(int index) 
 {
@@ -1163,7 +1163,7 @@ public void setCd_elemento_voce(java.lang.String cd_elemento_voce) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'cd_iniziale_elemento_voce'
+ * Imposta il valore della propriet√† 'cd_iniziale_elemento_voce'
  *
  * @param newCd_iniziale_elemento_voce	Il valore da assegnare a 'cd_iniziale_elemento_voce'
  */
@@ -1175,7 +1175,7 @@ public void setCd_terzo(java.lang.Integer cd_terzo) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'cd_terzo_iniziale'
+ * Imposta il valore della propriet√† 'cd_terzo_iniziale'
  *
  * @param newCd_terzo_iniziale	Il valore da assegnare a 'cd_terzo_iniziale'
  */
@@ -1214,7 +1214,7 @@ public void setCds(it.cnr.contab.config00.sto.bulk.CdsBulk newCds) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'checkDisponibilitaCassaEseguito'
+ * Imposta il valore della propriet√† 'checkDisponibilitaCassaEseguito'
  *
  * @param newCheckDisponibilitaCassaEseguito	Il valore da assegnare a 'checkDisponibilitaCassaEseguito'
  */
@@ -1247,7 +1247,7 @@ public void setFondo_ricerca(Fondo_ricercaBulk newFondo_ricerca) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'fromDocAmm'
+ * Imposta il valore della propriet√† 'fromDocAmm'
  *
  * @param newFromDocAmm	Il valore da assegnare a 'fromDocAmm'
  */
@@ -1257,7 +1257,7 @@ public void setFromDocAmm(boolean newFromDocAmm) {
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'im_iniziale_obbligazione'
+ * Imposta il valore della propriet√† 'im_iniziale_obbligazione'
  *
  * @param newIm_iniziale_obbligazione	Il valore da assegnare a 'im_iniziale_obbligazione'
  */
@@ -1266,7 +1266,7 @@ public void setIm_iniziale_obbligazione(java.math.BigDecimal newIm_iniziale_obbl
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'im_mandati'
+ * Imposta il valore della propriet√† 'im_mandati'
  *
  * @param newIm_mandati	Il valore da assegnare a 'im_mandati'
  */
@@ -1275,7 +1275,7 @@ public void setIm_mandati(java.math.BigDecimal newIm_mandati) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'internalStatus'
+ * Imposta il valore della propriet√† 'internalStatus'
  *
  * @param newInternalStatus	Il valore da assegnare a 'internalStatus'
  */
@@ -1372,7 +1372,7 @@ public void  updateScadenzeFromDocAmm( it.cnr.contab.docamm00.docs.bulk.Obbligaz
 	}	
 }
 /**
- * Metodo con cui si verifica la validit‡ di tutte le nuove linee di attivit‡
+ * Metodo con cui si verifica la validit√† di tutte le nuove linee di attivit√†
  */
 public void validaNuoveLatt( ) throws ValidationException 
 {
@@ -1380,7 +1380,7 @@ public void validaNuoveLatt( ) throws ValidationException
 		((Linea_attivitaBulk) i.next()).validate();
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
@@ -1392,7 +1392,7 @@ public void validate() throws ValidationException {
 	
 	// controllo su campo DATA REGISTRAZIONE
 	if ( getDt_registrazione() == null )
-		throw new ValidationException( "Il campo DATA Ë obbligatorio." );
+		throw new ValidationException( "Il campo DATA √® obbligatorio." );
 
 	//java.util.GregorianCalendar gc = (java.util.GregorianCalendar)java.util.GregorianCalendar.getInstance();
 	//gc.setTime(getDt_registrazione());
@@ -1410,19 +1410,19 @@ public void validate() throws ValidationException {
 	}		
 
 	if (dataRegistrazione.after(dataSistema))
-		throw new ValidationException( "Non Ë possibile inserire una data di registrazione posteriore a quella di sistema." );
+		throw new ValidationException( "Non √® possibile inserire una data di registrazione posteriore a quella di sistema." );
 			
 	// controllo su campo DESCRIZIONE
 	if ( getDs_obbligazione() == null || getDs_obbligazione().equals("") )
-		throw new ValidationException( "Il campo DESCRIZIONE Ë obbligatorio." );
+		throw new ValidationException( "Il campo DESCRIZIONE √® obbligatorio." );
 
 	// controllo su campo TIPO
 //	if ( tipo_obbligazione == null || tipo_obbligazione.getCd_tipo_obbligazione() == null )
-//		throw new ValidationException( "Il campo TIPOLOGIA Ë obbligatorio." );
+//		throw new ValidationException( "Il campo TIPOLOGIA √® obbligatorio." );
 
 	// controllo su campo CREDITORE
 	if ( creditore.getCd_terzo() == null || creditore.getCd_terzo().equals("") )
-		throw new ValidationException( "Il campo CREDITORE Ë obbligatorio." );
+		throw new ValidationException( "Il campo CREDITORE √® obbligatorio." );
 	
 	// controllo su campo IMPORTO
 	if ( ( getIm_obbligazione() == null ) ||
@@ -1435,38 +1435,38 @@ public void validate() throws ValidationException {
 
 	// controllo su campo VOCE DEL PIANO
 	if ( elemento_voce.getCd_elemento_voce() == null || elemento_voce.getCd_elemento_voce().equals("") )
-		throw new ValidationException( "Il campo VOCE DEL PIANO Ë obbligatorio." );
+		throw new ValidationException( "Il campo VOCE DEL PIANO √® obbligatorio." );
 
 	//controllo scadenze
 	if ( getFl_pgiro() != null && !getFl_pgiro().booleanValue() )
 	{
 		for (Iterator i = obbligazione_scadenzarioColl.iterator(); i.hasNext(); )
 			((Obbligazione_scadenzarioBulk) i.next()).validate();
-				//controllo sulla validit‡ delle nuove linee di attivit‡
+				//controllo sulla validit√† delle nuove linee di attivit√†
 		validaNuoveLatt();
 	}	
 
 
 }
 /**
- * Metodo con cui si verifica la validit‡ di una nuova linea di attivita
+ * Metodo con cui si verifica la validit√† di una nuova linea di attivita
  */
 public void validateNuovaLineaAttivita( it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk nuovaLatt, it.cnr.contab.config00.latt.bulk.WorkpackageBulk latt) throws ValidationException 
 {
-	// verifico che la linea di attivit‡ sia di tipo SPESE
+	// verifico che la linea di attivit√† sia di tipo SPESE
 	if ( ! it.cnr.contab.config00.latt.bulk.WorkpackageBulk.TI_GESTIONE_SPESE.equals(latt.getTi_gestione()))
 	 	 throw new ValidationException( "Il nuovo GAE deve avere tipo gestione = SPESE");						 	 
 	
-	// verifico che la linea di attivit‡ non sia gi‡ stata inserita
+	// verifico che la linea di attivit√† non sia gi√† stata inserita
 	for ( Iterator i = getNuoveLineeAttivitaColl().iterator(); i.hasNext(); )
 	{
 		it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk la = (it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk) i.next();
 		if ( !la.equals( nuovaLatt ) && latt.getCentro_responsabilita().getCd_centro_responsabilita().equals( la.getLinea_att().getCentro_responsabilita().getCd_centro_responsabilita()) &&
 		 	 latt.getCd_linea_attivita().equals( la.getLinea_att().getCd_linea_attivita() ))
-			 	 throw new ValidationException( "Il nuovo GAE e' gi‡ presente");
+			 	 throw new ValidationException( "Il nuovo GAE e' gi√† presente");
 	}
 
-	// verifico che la funzione della nuova linea di attivit‡ sia fra quelle dei capitoli selezionati
+	// verifico che la funzione della nuova linea di attivit√† sia fra quelle dei capitoli selezionati
 	boolean found = false;
 	for ( Iterator i = getCapitoliDiSpesaCdsSelezionatiColl().iterator(); i.hasNext(); )
 	{
@@ -1479,12 +1479,12 @@ public void validateNuovaLineaAttivita( it.cnr.contab.doccont00.core.bulk.Linea_
 	if ( !found)
 	 	 throw new ValidationException( "La funzione del nuovo GAE non appartiene alla lista di funzioni selezionate");			
 
-	// verifico che il cdr della linea di attivit‡ appartenga all'uo dell'obbligazione
+	// verifico che il cdr della linea di attivit√† appartenga all'uo dell'obbligazione
 //	if ( !getCd_unita_organizzativa().equals(latt.getCentro_responsabilita().getUnita_padre().getCd_unita_organizzativa()))
 	if ( !latt.getCd_centro_responsabilita().startsWith(getCd_unita_organizzativa()))
 	 	 throw new ValidationException( "Il Cdr del nuovo GAE non appartiene all'unita organizzativa dell'impegno");					
 	//per CDS SAC verifico che la coppia CDR/funzione sia presente negli articoli selezionati dall'utente
-	/* simona 8.5.2002 : non pi˘ necessario dopo la modifica della gestione del cds sac per obbligazione
+	/* simona 8.5.2002 : non pi√π necessario dopo la modifica della gestione del cds sac per obbligazione
 	if ( getCds().getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_SAC))
 	{
 		boolean ok = false;
@@ -1503,8 +1503,8 @@ public void validateNuovaLineaAttivita( it.cnr.contab.doccont00.core.bulk.Linea_
 	 	 
 	}
 	*/
-	// verifico che la linea di attivit‡ non sia presente nel piano di gestione //
-	/* simona 7.5.2002: spostato il controllo sulla Component perchË e' necessario accedere al db 
+	// verifico che la linea di attivit√† non sia presente nel piano di gestione //
+	/* simona 7.5.2002: spostato il controllo sulla Component perch√® e' necessario accedere al db 
 	V_pdg_obbligazione_speBulk vpos;
 	for ( Iterator i = lineeAttivitaColl.iterator(); i.hasNext(); )
 	{
@@ -1516,7 +1516,7 @@ public void validateNuovaLineaAttivita( it.cnr.contab.doccont00.core.bulk.Linea_
 	*/
 }
 /**
- * Metodo con cui si verifica la validit‡ di una nuovo terzo
+ * Metodo con cui si verifica la validit√† di una nuovo terzo
  */
 public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) throws ValidationException 
 {
@@ -1533,11 +1533,11 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 
 
 	if ( terzo.getDt_fine_rapporto() != null && terzo.getDt_fine_rapporto().before(dataSistema))
-	 	 throw new ValidationException( "Il terzo non Ë pi˘ abilitato." );
+	 	 throw new ValidationException( "Il terzo non √® pi√π abilitato." );
 	if ( !terzo.getTi_terzo().equals( terzo.CREDITORE) && !terzo.getTi_terzo().equals( terzo.ENTRAMBI) )
 	 	 throw new ValidationException( "Il terzo deve essere di tipo CREDITORE o ENTRAMBI" );
 	if ( isAssociataADocAmm() && !terzo.getCd_terzo().equals( getCd_terzo_iniziale()) && terzo.getAnagrafico() != null && !terzo.getAnagrafico().getTi_entita().equals( it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk.DIVERSI ))
-	 	 throw new ValidationException( "Impegno gi‡ associato a documenti amministrativi: Il terzo deve essere di tipo DIVERSI" );		
+	 	 throw new ValidationException( "Impegno gi√† associato a documenti amministrativi: Il terzo deve essere di tipo DIVERSI" );		
 }
 	/**
 	 * @return
@@ -1828,9 +1828,9 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 		return osNew;
 	}
 	/**
-	 * Verifica se l'obbligazione Ë associata a documenti contabili.
-	 * @return 				TRUE 	L'obbligazione Ë associata a documenti contabili
-	 *						FALSE 	L'obbligazione non Ë associata a documenti contabili
+	 * Verifica se l'obbligazione √® associata a documenti contabili.
+	 * @return 				TRUE 	L'obbligazione √® associata a documenti contabili
+	 *						FALSE 	L'obbligazione non √® associata a documenti contabili
 	 */
 	public boolean isAssociataADocCont() 
 	{

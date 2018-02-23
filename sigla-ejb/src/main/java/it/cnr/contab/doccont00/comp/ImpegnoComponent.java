@@ -54,15 +54,15 @@ public class ImpegnoComponent extends it.cnr.jada.comp.CRUDComponent implements 
 /*
   *  creazione impegno
   *    PreCondition:
-  *      CASO MAI VERIFICABILE (viene mantenuto per omogeneit‡ con gli altri documenti contabili)
+  *      CASO MAI VERIFICABILE (viene mantenuto per omogeneit√† con gli altri documenti contabili)
   *    PostCondition:
   *      Viene chiamato il metodo 'aggiornaSaldiInInserimento' che, per la voce del piano utilizzata nell'obbligazione calcola
   *      l'importo dell' aggiornamento da apportare ai saldi e richiama il metodo sulla Component di Gestione Saldi (SaldoComponent) che
   *      effettua tale aggiornamento
   *  modifica/eliminazione obbligazione
   *    PreCondition:
-  *      Un impegno Ë stato modificato
-  *      Un impegno Ë stato cancellato - CASO MAI VERIFICABILE (viene mantenuto per omogeneit‡ con gli altri documenti contabili)
+  *      Un impegno √® stato modificato
+  *      Un impegno √® stato cancellato - CASO MAI VERIFICABILE (viene mantenuto per omogeneit√† con gli altri documenti contabili)
   *    PostCondition:
   *      Viene chiamato il metodo 'aggiornaSaldiInModifica' che, per la voce del piano utilizzata nell'impegno calcola
   *      l'importo dell' aggiornamento da apportare ai saldi e richiama il metodo sulla Component di Gestione Saldi (SaldoComponent) che
@@ -121,7 +121,7 @@ public void aggiornaCogeCoanInDifferita(it.cnr.jada.UserContext userContext, it.
 }
 /**
  * Aggiornamento in differita dei saldi degli impegni residui
- * Un documento amministrativo di spesa che agisce in modalit‡ transazionale ha creato/modificato gli importi 
+ * Un documento amministrativo di spesa che agisce in modalit√† transazionale ha creato/modificato gli importi 
  * relativi ad un impegno pgiro; i saldi di tale impegno non possono essere aggiornati subito in quanto
  * tale operazione genererebbe dei lock sulle voci del piano che non ne consentirebbere l'utilizzo ad altri utenti;
  * pertanto l'aggiornamento dei saldi dell'obbligazione pgiro viene differito al momento del salvataggio
@@ -130,7 +130,7 @@ public void aggiornaCogeCoanInDifferita(it.cnr.jada.UserContext userContext, it.
  * Pre-post-conditions:
  *
  * Nome: Aggiorna saldi per impegno residuo creato
- * Pre:  MAI VERIFICABILE - mantenuto x omogeneit‡ con tutti i doc. contabili
+ * Pre:  MAI VERIFICABILE - mantenuto x omogeneit√† con tutti i doc. contabili
  *
  * Nome: Aggiorna saldi per impegno residuo esistente
  * Pre:  Una richiesta di aggiornamento dei saldi in differita e' stata generata per un impegno residuo
@@ -167,7 +167,7 @@ public void aggiornaSaldiInDifferita( UserContext userContext, IDocumentoContabi
 }
 /**
  *
- * non usata perchË gli impegni residui non vengono mai inserito dall'on-line
+ * non usata perch√® gli impegni residui non vengono mai inserito dall'on-line
  * @param	userContext	lo UserContext che ha generato la richiesta
  * @param	imp	l'ImpegnoResiduoBulk per cui aggiornare i saldi
  * 
@@ -226,7 +226,7 @@ private void aggiornaSaldiInModifica( UserContext userContext, ImpegnoResiduoBul
 
 	List saldiDaAggiornare = ((V_mod_saldi_obbligHome)getHome( userContext, V_mod_saldi_obbligBulk.class )).findModificheSaldiFor( imp, pg_ver_rec );
 	if ( userContext.isTransactional() && saldiDaAggiornare.size() == 0 )
-		throw new ApplicationException( "Attenzione! I saldi relativi all'impegno " + imp.getEsercizio_originale() + "/" + imp.getPg_obbligazione() + " non possono essere aggiornati perchË l'impegno non e' presente nello storico.");
+		throw new ApplicationException( "Attenzione! I saldi relativi all'impegno " + imp.getEsercizio_originale() + "/" + imp.getPg_obbligazione() + " non possono essere aggiornati perch√® l'impegno non e' presente nello storico.");
 	for ( Iterator i = saldiDaAggiornare.iterator(); i.hasNext(); )
 	{
 		V_mod_saldi_obbligBulk modSaldo = (V_mod_saldi_obbligBulk) i.next();
@@ -234,7 +234,7 @@ private void aggiornaSaldiInModifica( UserContext userContext, ImpegnoResiduoBul
 		if ( modSaldo.getIm_delta_voce().compareTo( new BigDecimal(0)) != 0 )
 		{
 
-			/* il check della disponabilit‡ di cassa deve essere eseguito solo se 
+			/* il check della disponabilit√† di cassa deve essere eseguito solo se 
 			    l'importo delta del saldo e' positivo e
 		 	   l'utente non ha ancora avuto il warning sulla disp.cassa oppure
 			    l'utente ha avuto il warning sulla disp.cassa e ha risposto no */
@@ -253,7 +253,7 @@ private void aggiornaSaldiInModifica( UserContext userContext, ImpegnoResiduoBul
 	*/	
 	List saldiDaAggiornareCdrLinea = ((V_mod_saldi_obblig_scad_voceHome)getHome( userContext, V_mod_saldi_obblig_scad_voceBulk.class )).findModificheSaldiFor( imp, pg_ver_rec );
 	if ( userContext.isTransactional() && saldiDaAggiornareCdrLinea.size() == 0 )
-		throw new ApplicationException( "Attenzione! I saldi relativi all'impegno " + imp.getEsercizio_originale() + "/" + imp.getPg_obbligazione() + " non possono essere aggiornati perchË l'impegno non e' presente nello storico.");
+		throw new ApplicationException( "Attenzione! I saldi relativi all'impegno " + imp.getEsercizio_originale() + "/" + imp.getPg_obbligazione() + " non possono essere aggiornati perch√® l'impegno non e' presente nello storico.");
 	for ( Iterator i = saldiDaAggiornareCdrLinea.iterator(); i.hasNext(); )
 	{
 		V_mod_saldi_obblig_scad_voceBulk modSaldo = (V_mod_saldi_obblig_scad_voceBulk) i.next();
@@ -341,7 +341,7 @@ public void callDoRiprocObb(
   *    PreCondition:
   *      E' stata inoltrata una richiesta di riportare all'esercizio successivo un documento contabile
   *	 PostCondition:
-  *		Il doc.contabile Ë stato riportato all'esercizio successivo richiamando 
+  *		Il doc.contabile √® stato riportato all'esercizio successivo richiamando 
   *      la stored procedure CNRCTB046.riportoEsNextDocCont
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -386,7 +386,7 @@ public void callRiportaAvanti (UserContext userContext,IDocumentoContabileBulk d
   *    PreCondition:
   *      E' stata inoltrata una richiesta di riportare indietro dall'esercizio successivo un documento contabile
   *	 PostCondition:
-  *		Il doc.contabile Ë stato riportato all'esercizio successivo richiamando 
+  *		Il doc.contabile √® stato riportato all'esercizio successivo richiamando 
   *      la stored procedure CNRCTB046.deriportoEsNextDocCont
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -552,7 +552,7 @@ public OggettoBulk inizializzaBulkPerRicerca (UserContext userContext,OggettoBul
 	try
 	{
 		Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk)getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
-		// se l'unit‡ organizzativa Ë diversa da quella dell'Ente, non Ë possibile ricercare/modificare impegni residui
+		// se l'unit√† organizzativa √® diversa da quella dell'Ente, non √® possibile ricercare/modificare impegni residui
 		if ( !((CNRUserContext)userContext).getCd_unita_organizzativa().equals( uoEnte.getCd_unita_organizzativa() ))
 				throw new ApplicationException("Funzione consentita solo per utente abilitato a " + uoEnte.getCd_unita_organizzativa() ); 
 		
@@ -597,7 +597,7 @@ public void lockScadenza( UserContext userContext,IScadenzaDocumentoContabileBul
   *      La richiesta di modifica dell'importo di un impegno su partita di giro e' stata generata ma l'importo totale
   *      dei documenti amministrativi contabilizzati sulla scadenza supera il nuovo importo dell'impegno residuo
   *    PostCondition:
-  *      Un messaggio di errore segnala all'utente l'impossibilit‡ di effettuare la modifica in quanto l'importo dell'impegno
+  *      Un messaggio di errore segnala all'utente l'impossibilit√† di effettuare la modifica in quanto l'importo dell'impegno
   *      deve sempre essere >= importo associato a doc.amm.
   *  modifica importo
   *    PreCondition:
@@ -639,7 +639,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 		
 		//verifico importo
 		if ( imp.getIm_obbligazione().compareTo( scad.getIm_associato_doc_amm()) < 0 )
-			throw new ApplicationException( "Impossibile variare importo perchË esistono documenti amministrativi collegati per un importo pari a " + scad.getIm_associato_doc_amm() );
+			throw new ApplicationException( "Impossibile variare importo perch√® esistono documenti amministrativi collegati per un importo pari a " + scad.getIm_associato_doc_amm() );
 
 		//importo
 		Obbligazione_scadenzarioBulk obblig_scadenzario = (Obbligazione_scadenzarioBulk)imp.getObbligazione_scadenzarioColl().get(0);
@@ -668,7 +668,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 			updateBulk( aUC, obblig_scad_voce );
 		else
 			// se e' stato modificato il capitolo e' necessario ricreare lo scad_voce 
-			// perchË non e' possibile aggiornare la chiave
+			// perch√® non e' possibile aggiornare la chiave
 		{
 			Obbligazione_scad_voceBulk newObblig_scad_voce = new Obbligazione_scad_voceBulk();
 			newObblig_scad_voce.setLinea_attivita( obblig_scad_voce.getLinea_attivita());
@@ -738,7 +738,7 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
 	//aggiorno importo testata
 	ImpegnoResiduoBulk imp = (ImpegnoResiduoBulk) scadenza.getObbligazione();
 	if ( imp.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_IMP_RES) )
-		throw handleException( new ApplicationException( "Non Ë consentita la modifica dell'importo di testata di un'annotazione residua." ));					
+		throw handleException( new ApplicationException( "Non √® consentita la modifica dell'importo di testata di un'annotazione residua." ));					
 	
 	imp.setIm_obbligazione( nuovoImporto );
 	imp.setToBeUpdated();
@@ -762,8 +762,8 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
  *
  * @param userContext <code>UserContext</code> 
  *
- * @return FALSE se per il cds interessato non Ë stato inserito nessun esercizio o se l'esercizio non Ë in stato di "aperto"
- *          o l'esercizio precedente non Ë chiuso
+ * @return FALSE se per il cds interessato non √® stato inserito nessun esercizio o se l'esercizio non √® in stato di "aperto"
+ *          o l'esercizio precedente non √® chiuso
  *		   TRUE in tutti gli altri casi
  *
  */

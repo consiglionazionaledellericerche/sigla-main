@@ -1161,7 +1161,7 @@ public java.util.List findLineeAttivitaSAC(  List cdrList, List capitoliList, Ob
 						ps.setString( j++, ((Voce_fBulk)capitolo).getCd_centro_responsabilita() );		
 					}
 				} else {
-					//nel caso di capitolo instanceof Elemento_voce nell'iterator capitoliList c'Ë sempre un solo elemento
+					//nel caso di capitolo instanceof Elemento_voce nell'iterator capitoliList c'√® sempre un solo elemento
 					//per cui non effettuo il loop sull'iterator capitoliList
 					for (Iterator iterator = cdrList.iterator(); iterator.hasNext();) {
 						CdrBulk cdr = (CdrBulk) iterator.next();
@@ -1394,11 +1394,11 @@ public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,Og
 	}
 }
 /**
- * Metodo per aggiornare la lista delle nuove linee di attivit‡ associate all'obbligazione.
+ * Metodo per aggiornare la lista delle nuove linee di attivit√† associate all'obbligazione.
  *
  * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione da aggiornare
  *
- * @return obbligazione <code>ObbligazioneBulk</code> l'obbligazione con la lista delle nuove linee di attivit‡ aggiornata
+ * @return obbligazione <code>ObbligazioneBulk</code> l'obbligazione con la lista delle nuove linee di attivit√† aggiornata
  */
 public ObbligazioneBulk refreshNuoveLineeAttivitaColl( UserContext usercontext, ObbligazioneBulk obbligazione ) 
 {
@@ -1479,10 +1479,10 @@ public ObbligazioneBulk refreshNuoveLineeAttivitaColl( UserContext usercontext, 
 /*
 - obbligazione non associata a documenti amministartivi: viene selezionato un qualsiasi terzo di tipo CREDITORE
   o ENTRAMBI
-- se l'obbligazione Ë associata a documenti amministrativi e era gia' stato impostato un terzo: la selezione prevede
-  tutti i terzi con tipo entit‡ = DIVERSI di tipo CREDITORE/ENTRAMBI pi˘ il terzo gi‡ selezionato
-- se l'obbligazione Ë associata a documenti amministrativi e non era gia' stato impostato un terzo: la selezione prevede
-  tutti i terzi con tipo entit‡ = DIVERSI di tipo CREDITORE/ENTRAMBI 
+- se l'obbligazione √® associata a documenti amministrativi e era gia' stato impostato un terzo: la selezione prevede
+  tutti i terzi con tipo entit√† = DIVERSI di tipo CREDITORE/ENTRAMBI pi√π il terzo gi√† selezionato
+- se l'obbligazione √® associata a documenti amministrativi e non era gia' stato impostato un terzo: la selezione prevede
+  tutti i terzi con tipo entit√† = DIVERSI di tipo CREDITORE/ENTRAMBI 
 */
 public SQLBuilder selectCreditoreByClause( ObbligazioneBulk bulk, TerzoHome home, TerzoBulk terzo,CompoundFindClause clause) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException 
 {
@@ -1547,7 +1547,7 @@ public SQLBuilder selectCreditoreByClause( ObbligazioneBulk bulk, TerzoHome home
 		bulk.getCrudStatus() != bulk.TO_BE_CREATED && 
 		bulk.getCrudStatus() != bulk.UNDEFINED ) //obbligazione non associata a documenti amministrativi e in fase di modifica
 	{
-		if ( bulk.getCd_terzo() != null ) //terzo gi‡ selezionato
+		if ( bulk.getCd_terzo() != null ) //terzo gi√† selezionato
 		{
 			sql.setStatement(
 						"select distinct A.* from " + 
@@ -1611,7 +1611,7 @@ public SQLBuilder selectCreditoreByClause( ObbligazioneBulk bulk, TerzoHome home
 		sql.addSQLClause("OR","TI_TERZO",sql.EQUALS, terzo.ENTRAMBI );
 		sql.closeParenthesis();		
   	    sql.addSQLClause( "AND", "(DT_FINE_RAPPORTO >= SYSDATE OR DT_FINE_RAPPORTO IS NULL)");		
-		if ( bulk.getCd_terzo() != null ) //terzo gi‡ selezionato
+		if ( bulk.getCd_terzo() != null ) //terzo gi√† selezionato
 		{
 			sql.addSQLClause("AND","CD_TERZO",sql.EQUALS, bulk.getCd_terzo());						
 		}
@@ -1663,7 +1663,7 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 		sql.addClause( clause );
 	}*/
 	
-	/* non usato perchË ridefinito nella sottoclasse ImpegnoPGiroHome, ma viene usato per ImpegnoPGiroResiduo */
+	/* non usato perch√® ridefinito nella sottoclasse ImpegnoPGiroHome, ma viene usato per ImpegnoPGiroResiduo */
 	else if ( bulk instanceof ImpegnoPGiroBulk )
 	{
 		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio() );
@@ -1736,7 +1736,7 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 	return sql; 
 		
 }
-public String recupero_cdr_speciale_stipendi() throws IntrospectionException, PersistencyException {
+public String recupero_cdr_speciale_stipendi() throws PersistencyException {
 	Configurazione_cnrBulk conf_cnr=null;
 	
 	PersistentHome home = getHomeCache().getHome(Configurazione_cnrBulk.class);	

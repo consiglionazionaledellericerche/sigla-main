@@ -33,7 +33,7 @@ import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Piano di Riparto
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Piano di Riparto
  */
 
 public class CRUDPdgPianoRipSpeseAccentBP extends it.cnr.jada.util.action.SimpleCRUDBP {
@@ -143,8 +143,8 @@ public class CRUDPdgPianoRipSpeseAccentBP extends it.cnr.jada.util.action.Simple
 	 * 
 	 *
 	 * @return 
-	 * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non Ë possibile effettuare l'operazione
-	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+	 * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non √® possibile effettuare l'operazione
+	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
 	 */
 	public Classificazione_vociComponentSession createClassificazione_vociComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException, BusinessProcessException {
 		return (Classificazione_vociComponentSession)createComponentSession("CNRCONFIG00_EJB_Classificazione_vociComponentSession",Classificazione_vociComponentSession.class);
@@ -159,8 +159,8 @@ public class CRUDPdgPianoRipSpeseAccentBP extends it.cnr.jada.util.action.Simple
 	}
 
 	/*
-	 * Anche se la mappa Ë basata sul Bulk V_classificazione_voci, la sua funzione principale non 
-	 * Ë di creare classificazioni, ma di caricare i piani di riparto associati alla classificazione 
+	 * Anche se la mappa √® basata sul Bulk V_classificazione_voci, la sua funzione principale non 
+	 * √® di creare classificazioni, ma di caricare i piani di riparto associati alla classificazione 
 	 * Per questo il bottone di creazione deve essere nascosto
 	 */
 	public boolean isNewButtonHidden() {
@@ -168,8 +168,8 @@ public class CRUDPdgPianoRipSpeseAccentBP extends it.cnr.jada.util.action.Simple
 	}
 
 	/*
-	 * Anche se la mappa Ë basata sul Bulk V_classificazione_voci, la sua funzione principale non 
-	 * Ë di cancellare classificazioni, ma di caricare i piani di riparto associati alla classificazione 
+	 * Anche se la mappa √® basata sul Bulk V_classificazione_voci, la sua funzione principale non 
+	 * √® di cancellare classificazioni, ma di caricare i piani di riparto associati alla classificazione 
 	 * Per questo il bottone di cancellazione deve essere nascosto
 	 */
 	public boolean isDeleteButtonHidden() {

@@ -16,8 +16,8 @@ public class Tipo_trattamentoBulk extends Tipo_trattamentoBase {
 
 	static {
 		TIPO_COMMERCIALE = new OrderedHashtable();
-		TIPO_COMMERCIALE.put(ATT_COMMERCIALE, "Attivit‡ commerciali");
-		TIPO_COMMERCIALE.put(ATT_NON_COMMERCIALE, "Attivit‡ NON commerciali");
+		TIPO_COMMERCIALE.put(ATT_COMMERCIALE, "Attivit√† commerciali");
+		TIPO_COMMERCIALE.put(ATT_NON_COMMERCIALE, "Attivit√† NON commerciali");
 	}
 	private java.util.List intervalli;
 	public Tipo_trattamentoBulk() {

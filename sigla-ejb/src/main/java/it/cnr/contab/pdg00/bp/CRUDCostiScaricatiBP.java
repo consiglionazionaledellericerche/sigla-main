@@ -19,7 +19,7 @@ public CRUDCostiScaricatiBP(String function) {
  * <!-- @TODO: da completare -->
  * 
  *
- * @param function	La funzione con cui Ë stato creato il BusinessProcess
+ * @param function	La funzione con cui √® stato creato il BusinessProcess
  * @param cdr	
  */
 public CRUDCostiScaricatiBP(String function, it.cnr.contab.config00.sto.bulk.CdrBulk cdr) {
@@ -51,9 +51,9 @@ public it.cnr.jada.bulk.OggettoBulk createEmptyModelForSearch(it.cnr.jada.action
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'centro_responsabilita'
+ * Restituisce il valore della propriet√† 'centro_responsabilita'
  *
- * @return Il valore della propriet‡ 'centro_responsabilita'
+ * @return Il valore della propriet√† 'centro_responsabilita'
  */
 public it.cnr.contab.config00.sto.bulk.CdrBulk getCentro_responsabilita() {
 		return centro_responsabilita;
@@ -61,7 +61,7 @@ public it.cnr.contab.config00.sto.bulk.CdrBulk getCentro_responsabilita() {
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'centro_responsabilita'
+ * Imposta il valore della propriet√† 'centro_responsabilita'
  *
  * @param newCentro_responsabilita	Il valore da assegnare a 'centro_responsabilita'
  */

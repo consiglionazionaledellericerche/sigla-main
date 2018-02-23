@@ -81,7 +81,7 @@ public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.
 		if ( "Y".equals(accertamento.getRiportato()) )
 		{
 	//		setStatus(VIEW);
-			setMessage("Il documento Ë stato riportato all'esercizio successivo. Non consentita la modifica.");
+			setMessage("Il documento √® stato riportato all'esercizio successivo. Non consentita la modifica.");
 		}
 	}
 }
@@ -249,9 +249,9 @@ public boolean isEditable() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'fromDocAmm'
+ * Restituisce il valore della propriet√† 'fromDocAmm'
  *
- * @return Il valore della propriet‡ 'fromDocAmm'
+ * @return Il valore della propriet√† 'fromDocAmm'
  */
 public boolean isFromDocAmm() 
 {

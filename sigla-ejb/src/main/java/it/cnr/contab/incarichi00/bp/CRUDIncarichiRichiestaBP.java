@@ -64,7 +64,7 @@ public class CRUDIncarichiRichiestaBP extends it.cnr.jada.util.action.SimpleCRUD
 			if (isUtenteAbilitatoFunzioniIncarichi())
 				setMessage("Richiesta in scadenza. Inserire l'informazione sulla ricerca di personale interno o procedere con la fase successiva di richiesta attivazione contratto.");
 			else
-				setMessage("Richiesta in scadenza. PuÚ essere modificata unicamente dal Direttore dell'Istituto.");
+				setMessage("Richiesta in scadenza. Pu√≤ essere modificata unicamente dal Direttore dell'Istituto.");
 		}
 		if (((Incarichi_richiestaBulk)oggettobulk).isPubblicazioneInCorso()){
 			setStatus(CRUDBP.VIEW);
@@ -145,18 +145,18 @@ public class CRUDIncarichiRichiestaBP extends it.cnr.jada.util.action.SimpleCRUD
 		if (getModel() instanceof Incarichi_richiestaBulk) {
 			Incarichi_richiestaBulk inc = (Incarichi_richiestaBulk)getModel();
 			if (inc.isRichiestaScaduta())
-				throw new ValidationException("Non Ë possibile chiudere una ricerca che risulta gi‡ essere scaduta.");
+				throw new ValidationException("Non √® possibile chiudere una ricerca che risulta gi√† essere scaduta.");
 			if (inc.isPubblicazioneInCorso())
-				throw new ValidationException("Non Ë possibile chiudere una ricerca che risulta essere ancora in fase di pubblicazione.");
+				throw new ValidationException("Non √® possibile chiudere una ricerca che risulta essere ancora in fase di pubblicazione.");
 			if (!inc.isRichiestaInScadenza())
-				throw new ValidationException("Non Ë possibile chiudere una ricerca che si trova in uno stato diverso da quello 'In scadenza'.");
+				throw new ValidationException("Non √® possibile chiudere una ricerca che si trova in uno stato diverso da quello 'In scadenza'.");
 			if (inc.getNr_risorse_da_trovare()==1 && inc.getPersonale_interno()==null)
-				throw new ValidationException("Non Ë possibile chiudere una ricerca senza indicare l'esito della ricerca di personale interno.");
+				throw new ValidationException("Non √® possibile chiudere una ricerca senza indicare l'esito della ricerca di personale interno.");
 			if (inc.getNr_risorse_da_trovare()>1 && 
 				(inc.getNr_risorse_trovate_si()+
 				 inc.getNr_risorse_trovate_no()+
 				 inc.getNr_risorse_trovate_na()!=inc.getNr_risorse_da_trovare()))
-				throw new ValidationException("Non Ë possibile chiudere una ricerca senza indicare l'esito totale della verifica di professionalit‡ interna.");
+				throw new ValidationException("Non √® possibile chiudere una ricerca senza indicare l'esito totale della verifica di professionalit√† interna.");
 		}
 	}
 
@@ -164,21 +164,21 @@ public class CRUDIncarichiRichiestaBP extends it.cnr.jada.util.action.SimpleCRUD
 		if (getModel() instanceof Incarichi_richiestaBulk) {
 			Incarichi_richiestaBulk inc = (Incarichi_richiestaBulk)getModel();
 			if (inc.isRichiestaScaduta())
-				throw new ValidationException("Non Ë possibile chiedere l'attivazione di un contratto sulla base di una richiesta scaduta.");
+				throw new ValidationException("Non √® possibile chiedere l'attivazione di un contratto sulla base di una richiesta scaduta.");
 			if (inc.isPubblicazioneInCorso())
-				throw new ValidationException("Non Ë possibile chiedere l'attivazione di un contratto sulla base di una richiesta ancora in fase di pubblicazione.");
+				throw new ValidationException("Non √® possibile chiedere l'attivazione di un contratto sulla base di una richiesta ancora in fase di pubblicazione.");
 			if (!inc.isRichiestaInScadenza())
-				throw new ValidationException("Non Ë possibile chiedere l'attivazione di un contratto sulla base di una richiesta che si trova in uno stato diverso da quello 'In scadenza'.");
+				throw new ValidationException("Non √® possibile chiedere l'attivazione di un contratto sulla base di una richiesta che si trova in uno stato diverso da quello 'In scadenza'.");
 			if (inc.getNr_risorse_trovate_si()==0 && inc.getNr_risorse_trovate_no()==0 && inc.getNr_risorse_trovate_na()==0)
-				throw new ValidationException("Non Ë possibile chiedere l'attivazione di un contratto sulla base di una richiesta senza l'informazione sull'esito della ricerca di personale interno.");
+				throw new ValidationException("Non √® possibile chiedere l'attivazione di un contratto sulla base di una richiesta senza l'informazione sull'esito della ricerca di personale interno.");
 			if (inc.getNr_risorse_da_trovare()==1 && inc.getPersonale_interno()==null)
-				throw new ValidationException("Non Ë possibile chiudere una ricerca senza indicare l'esito della ricerca di personale interno.");
+				throw new ValidationException("Non √® possibile chiudere una ricerca senza indicare l'esito della ricerca di personale interno.");
 			if (inc.getNr_risorse_trovate_si()+
 				inc.getNr_risorse_trovate_no()+
 				inc.getNr_risorse_trovate_na()!=inc.getNr_risorse_da_trovare())
 				throw new ValidationException("Attenzione! Il risultato dell'esito della ricerca deve essere uguale al numero delle risorse cercate.");
 			if (inc.getNr_risorse_da_trovare()==1 && inc.getPersonale_interno().equals(Incarichi_richiestaBulk.PERSONALE_INTERNO_TROVATO))
-				throw new ValidationException("Non Ë possibile chiedere l'attivazione di un contratto sulla base di una richiesta con esito positivo della ricerca di personale interno.");
+				throw new ValidationException("Non √® possibile chiedere l'attivazione di un contratto sulla base di una richiesta con esito positivo della ricerca di personale interno.");
 		}
 	}
 

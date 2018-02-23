@@ -7,7 +7,7 @@ import it.cnr.jada.persistency.sql.*;
 
 public class Gruppo_linea_attivitaHome extends BulkHome {
 /**
- * Costrutture gruppo linea di attivit‡ Home
+ * Costrutture gruppo linea di attivit√† Home
  *
  * @param conn connessione db
  */
@@ -15,7 +15,7 @@ public Gruppo_linea_attivitaHome(java.sql.Connection conn) {
 	super(Gruppo_linea_attivitaBulk.class,conn);
 }
 /**
- * Costrutture gruppo linea di attivit‡ Home
+ * Costrutture gruppo linea di attivit√† Home
  *
  * @param conn connessione db
  * @param persistentCache cache modelli

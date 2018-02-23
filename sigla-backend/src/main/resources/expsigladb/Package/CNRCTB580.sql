@@ -1,0 +1,191 @@
+--------------------------------------------------------
+--  DDL for Package CNRCTB580
+--------------------------------------------------------
+
+  CREATE OR REPLACE PACKAGE "CNRCTB580" AS
+--==================================================================================================
+--
+-- CNRCTB580 - Gestione applicativa anticipi/rimborsi
+--
+-- Date: 19/07/2006
+-- Version: 3.3
+--
+-- Dependency: CNRCTB 001/015/018/020/035/040/080/100/585 IBMERR 001
+--
+-- History:
+--
+-- Date: 24/06/2002
+-- Version: 1.0
+-- Creazione
+--
+-- Date: 25/06/2002
+-- Version: 1.1
+-- Aggiunto controllo sul fatto che la linea di attività per il rimborso sia specificata sull'anticipo
+--
+-- Date: 26/06/2002
+-- Version: 1.2
+-- Fix errori
+--
+-- Date: 26/06/2002
+-- Version: 1.3
+-- Controllo di rimborso su anticipi pagati
+--
+-- Date: 27/06/2002
+-- Version: 1.4
+-- Fix
+--
+-- Date: 01/07/2002
+-- Version: 1.5
+--
+-- Date: 09/07/2002
+-- Version: 1.6
+-- Rimborso dell'anticipo anche se collegato a missione
+--
+-- Date: 18/07/2002
+-- Version: 1.7
+-- Aggiornamento della documentazione
+--
+-- Date: 30/07/2002
+-- Version: 1.8
+-- Fix su rimborso anticipi collegati a missioni con compensi
+--
+-- Date: 30/07/2002
+-- Version: 1.9
+-- Aggiunti dati terzo anticipo su rimborso
+--
+-- Date: 27/09/2002
+-- Version: 2.0
+-- Sgancio anticipo da missione e getter missione
+--
+-- Date: 27/09/2002
+-- Version: 2.1
+-- Fix errore getter su anticipo e non su missione e aggiunto getter su rimborso
+--
+-- Date: 12/11/2002
+-- Version: 2.2
+-- Fix errore mancato messaggio nel caso di importo anticipo <= importo missione
+--
+-- Date: 14/01/2003
+-- Version: 2.3
+-- Rimborso effettuato sulla differenza tra anticipo e netto percipiente del compenso eventualmente collegato a missione
+-- a cui è collegato l'anticipo da rimborsare
+--
+-- Date: 15/07/2003
+-- Version: 2.4
+-- Modificato inizializzazione della data di registrazione di un Rimborso creato nell'esercizio
+-- precedente a quello corrente
+--
+-- Date: 16/07/2003
+-- Version: 2.5
+-- Se la "data competenza coge A" del rimborso e' nell'esercizio precedente -->
+-- la data di registrazione non deve superare la data definita in Configurazione "
+-- "TERMINE_CREAZIONE_DOCAMM_ES_PREC"
+--
+-- Date: 16/07/2003
+-- Version: 2.6
+-- Il Rimborso e il relativo Accertamento non devono piu' ereditare l'esercizio dall'anticipo
+-- ma da quello di scrivania
+--
+-- Date: 21/07/2003
+-- Version: 2.7
+-- Le date di competenza Co.Ge. da/a del rimborso sono inizializzate con la data di registrazione
+-- dello stesso.
+--
+-- Date: 21/07/2003
+-- Version: 2.8
+-- Corretto inizializzazion della variavile 'esercizioPrecedente' (esercizioSrivania-1).
+--
+-- Date: 28/07/2003
+-- Version: 2.9
+-- Aggiunto messaggio di errore nel caso si voglia rimborsare un anticipo non pagato.
+-- Aggiunto condizione che l'anticipo per essere rimborsato deve avere stato_cofi='P' oppure
+-- stato_pagamento_fondo_eco='R'
+--
+-- Date: 25/08/2003
+-- Version: 3.0
+-- Il rimborso di un anticipo legato a missione non deve dar luogo a scrittura coep
+--
+-- Date: 09/06/2004
+-- Version: 3.1
+-- Err. 828 - BORRIELLO
+-- Fix ricerca missioni collegate ad anticipo per rimborso: nel cercare le missioni legate ad un
+--  anticipo, include anche quelle annullate.
+--
+-- Date: 09/06/2004
+-- Version: 3.2
+-- Utilizzato STATO_COFI invece della DT_CANCELLAZIONE per l'esclusione delle misisone annullate
+-- nella ricerca di missioni legate ad un dato anticipo, (v. Version 3.1).
+--
+-- Date: 19/07/2006
+-- Version: 3.3
+-- Gestione Impegni/Accertamenti Residui:
+-- gestito il nuovo campo ESERCIZIO_ORIGINALE
+--
+--==================================================================================================
+--
+-- Constants
+--
+
+-- Functions e Procedures
+
+-- Rimborso anticipo su missione
+--
+-- Rimborso dell'anticipo su missione. Il rimborso può esere totale (anticipo non colegato a missione) o parziale (differenza importi tra anticipo e missione)
+--
+-- pre-post-name: L'anticipo specificato non esiste
+-- pre: Non esiste l'anticipo specificato per il rimborso
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Anticipo non associato a mandato
+-- pre: L'anticipo è in stato non associato a mandati
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Linea di attività non specifica
+-- pre: Nell'anticipo non è specificata la linea di attività (e relativo CDR) imputata dall'utente per la generazione automatica dell'accertamento collegato al rimborso
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Anticipo collegato a missione e missione non trovata
+-- pre: Nell'anticipo è definito un riferimento a missione che non viene trovata
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Anticipo collegato a missione collegata a compenso e compenso non trovato
+-- pre: Nell'anticipo è definito un riferimento a missione riferita a compenso che non viene trovato
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Anticipo collegato a missione con compenso e importo anticipo inferiore o uguale a netto percipiente del compenso
+-- pre: L'importo dell'anticipo risulta minore o uguale a quello netto percipiente del compenso collegato alla missione (nessun rimborso è necessario)
+-- post: Il metodo termina senza segnalazioniene sollevata un'eccezione
+--
+-- pre-post-name: Anticipo collegato a missione non collegata a compenso e importo anticipo inferiore o uguale a quello della missione
+-- pre: L'importo dell'anticipo risulta minore o uguale a quello della missione (nessun rimborso è necessario).Missione non collegata a compenso.
+-- post: Il metodo termina senza segnalazioniene sollevata un'eccezione
+--
+-- pre-post-name: Voce speciale di entrata rimborso anticipi non trovata
+-- pre: Il codice della voce del piano di entrata CNR rimborso anticipi non trovata in CONFIGURAZIONE CNR
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Articolo di  entrata cnr corrispondente all'UO specificata nell'anticipo non trovato
+-- pre: Articolo di  entrata cnr corrispondente all'UO specificata nell'anticipo non trovato in VOCE_F
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Creazione del rimborso
+-- pre: Nessuna delle precondizioni precedenti è verificata
+-- post:
+--  Viene creato un accertamento su bilancio ENTE per l'importo del rimborso e con linea di attività uguale a quella specificata nell'anticipo
+--  L'importo del rimborso è la differenza tra l'importo dell'anticipo e quello della missione nel caso la missione non sia collegata a compenso
+--  altrimenti è la differenza tra quello dell'anticipo e il netto percipiente del compenso collegato alla missione.
+--  Viene creato il documento di rimborso anticipo collegato a tale accertamento
+--  Tale documento contiene anche il riferimento al documento di anticipo a cui è collegato
+--
+-- Parametri:
+-- aCdCds -> Codice del cds dell'anticipo
+-- aEs -> Esercizio dell'anticipo
+-- aCdUo -> UO dell'anticipo
+-- aPgAnticipo -> Progresivo dell'anticipo
+-- aUser -> Utente che effettua l'operazione
+
+ procedure rimborsoCompletoAnticipo(aCdCds varchar2, aEs number, aCdUo varchar2, aPgAnticipo number, aEsercizioScrivania number, aUser varchar2);
+ function getAnticipo(aCdCds varchar2, aCdUo varchar2, aEs number, aPgAnticipo number,eseguiLock char) return anticipo%rowtype;
+ procedure sganciaAnticipoDaMissione(aCdCds varchar2, aCdUo varchar2, aEs number, aPgAnticipo number, aUser varchar2,aTSNow date);
+
+END;

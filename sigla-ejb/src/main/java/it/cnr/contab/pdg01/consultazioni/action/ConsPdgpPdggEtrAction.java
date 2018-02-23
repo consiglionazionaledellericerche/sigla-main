@@ -35,7 +35,7 @@ public class ConsPdgpPdggEtrAction extends ConsultazioniAction {
 			V_cons_pdgp_pdgg_etrBulk consPdgBulk = (V_cons_pdgp_pdgg_etrBulk)bp.getModel();
 
 			if (consPdgBulk==null) {
-				setErrorMessage(context,"Attenzione: è necessario selezionare un dettaglio!");
+				setErrorMessage(context,"Attenzione: Ã¨ necessario selezionare un dettaglio!");
 				return context.findDefaultForward();
 			}
 			

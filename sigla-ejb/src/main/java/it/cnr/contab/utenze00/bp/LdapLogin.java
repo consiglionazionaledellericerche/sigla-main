@@ -28,7 +28,7 @@ public class LdapLogin {
 	public static final boolean ABILITA_UTENTE_IN_LDAP_FALSE = false;
 
 	private static final String USER_NOT_ENABLED = "no";
-	private static final String USER_ENABLED = "si"; // questo puÚ essere un
+	private static final String USER_ENABLED = "si"; // questo pu√≤ essere un
 														// valore qualunque
 														// (diverso da "no")
 	private static final String UID_ATTRIBUTE = "uid";
@@ -175,7 +175,7 @@ public class LdapLogin {
 			
             if (amap.isEmpty())
 				throw new Exception("L'utente con uid=" + userID
-						+ " non Ë stato trovato.");
+						+ " non √® stato trovato.");
             userDN = String.valueOf(amap.get("DN"));
             String sigla = String.valueOf(amap.get(appName));
             LdapContext ctxGCUser = null;
@@ -190,9 +190,9 @@ public class LdapLogin {
             		ctxGCUser.close();	
             }
             /**
-             * se non esiste l'attributo e se il server non Ë di tipo MASTER
+             * se non esiste l'attributo e se il server non √® di tipo MASTER
              * lanciamo una eccezione in modo che si arrivi al server master
-             * per aggiungere l'attributo (il master Ë l'unico su cui si puÚ
+             * per aggiungere l'attributo (il master √® l'unico su cui si pu√≤
              * scrivere
              */
 			if (sigla == null) {
@@ -221,7 +221,7 @@ public class LdapLogin {
 	}
 
 	/**
-	 * Abilita l'utente "userID" se "abilitazione" Ë true, altrimenti disabilita
+	 * Abilita l'utente "userID" se "abilitazione" √® true, altrimenti disabilita
 	 * con le seguenti regole: se l'attributo su ldap "cnrapp1" non esiste lo
 	 * aggiunge a "si" se "abilita" = true, a "no" se "abilita" = false se
 	 * l'attributo su ldap "cnrapp1" = "no" e "abilita" = true, cambia "cnrapp1"
@@ -247,7 +247,7 @@ public class LdapLogin {
 			Map<String, Object> amap = getLDAPAttributes(ctxGC, UID_ATTRIBUTE + "=" + userID);
             if (amap.isEmpty())
 				throw new Exception("L'utente con uid=" + userID
-						+ " non Ë stato trovato.");
+						+ " non √® stato trovato.");
     		String userDN = String.valueOf(amap.get("DN"));
     		String sigla = String.valueOf(amap.get(appName));
     		ModificationItem[] mods = new ModificationItem[1];
@@ -263,9 +263,9 @@ public class LdapLogin {
 				ctxGC.modifyAttributes(userDN, mods);				
 			} else {
 				/*
-				 * se l'utente va disabilitato lo facciamo solo se non lo Ë gi‡
+				 * se l'utente va disabilitato lo facciamo solo se non lo √® gi√†
 				 * se l'utente va abilitato lo facciamo solo se il valore
-				 * dell'attributo Ë "no" questo evita di modificare il valore di
+				 * dell'attributo √® "no" questo evita di modificare il valore di
 				 * "cnrapp1" se questo ha un valore diverso (ma equivalente
 				 * nell'effetto di abilitazione) di "no"
 				 */
@@ -298,7 +298,7 @@ public class LdapLogin {
 			Map<String, Object> amap = getLDAPAttributes(ctxGC, MATRICOLA_ATTRIBUTE + "=" + matricola);
 			if (amap.isEmpty())
 				throw new Exception("L'utente con matricola=" + matricola
-						+ " non Ë stato trovato.");
+						+ " non √® stato trovato.");
 			return new String[]{
 					String.valueOf(amap.get(UID_ATTRIBUTE)), 
 					String.valueOf(amap.get(MAIL_ATTRIBUTE))};
@@ -317,7 +317,7 @@ public class LdapLogin {
 			Map<String, Object> amap = getLDAPAttributes(ctxGC, UID_ATTRIBUTE + "=" + userID);
             if (amap.isEmpty())
 				throw new Exception("L'utente con uid=" + userID
-						+ " non Ë stato trovato.");
+						+ " non √® stato trovato.");
             String sigla = String.valueOf(amap.get(appName));
 
 			if (sigla == null) {

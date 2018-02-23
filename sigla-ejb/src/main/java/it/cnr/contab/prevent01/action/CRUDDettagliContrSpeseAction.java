@@ -74,7 +74,7 @@ public class CRUDDettagliContrSpeseAction extends CRUDAction {
 			if (progetto != null) {
 				if (progetto.getUnita_organizzativa().getCd_tipo_unita().equalsIgnoreCase( it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC )) 
 				{
-					bp.setErrorMessage("Non Ë possibile inserire o modificare "+(bp.isFlNuovoPdg()?"progetti":"moduli di attivit‡")+" afferenti a CDS appartenenti alla SAC.");
+					bp.setErrorMessage("Non √® possibile inserire o modificare "+(bp.isFlNuovoPdg()?"progetti":"moduli di attivit√†")+" afferenti a CDS appartenenti alla SAC.");
 					return context.findDefaultForward();
 				}
 				

@@ -87,7 +87,7 @@ public Forward doBringBackSearchFind_area_ricerca(
  *
  * @param context	L'ActionContext della richiesta
  * @return Il Forward alla pagina di risposta
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ã¨ possibile effettuare l'operazione
  * @throws InstantiationException	
  * @throws RemoveException	
  */

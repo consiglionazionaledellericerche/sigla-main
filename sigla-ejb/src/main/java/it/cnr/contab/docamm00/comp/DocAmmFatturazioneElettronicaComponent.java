@@ -404,7 +404,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				cedentePrestatoreType.setDatiAnagrafici(anagraficiCedenteType);
 				cedentePrestatoreType.setSede(impostaIndirizzo(userContext, factory, terzoUo));
 
-				// TODO: Per il momento non lo gestiamo. Il dato non è obbligatorio.
+				// TODO: Per il momento non lo gestiamo. Il dato non Ã¨ obbligatorio.
 				//				ContattiType contattiCedente = factory.createContattiType();
 				//				contattiCedente.setEmail(value);
 				//				cedentePrestatoreType.setContatti(contattiCedente);
@@ -597,7 +597,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 			Fattura_attiva_rigaBulk riga= (Fattura_attiva_rigaBulk) i.next();
 			if (isRigaFatturaConBollo(userContext, riga)){
 				if (esisteBollo){
-					throw new ApplicationException("Impossibile Procedere! Esistono più righe con tipo Bollo indicate in fattura"); 
+					throw new ApplicationException("Impossibile Procedere! Esistono piÃ¹ righe con tipo Bollo indicate in fattura"); 
 				}
 				DatiBolloType datiBollo = factory.createDatiBolloType();
 				datiBollo.setBolloVirtuale(BolloVirtualeType.SI);
@@ -748,7 +748,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		Rif_modalita_pagamentoBulk modPag = ((Rif_modalita_pagamentoBulk)getHome(userContext, Rif_modalita_pagamentoBulk.class).findByPrimaryKey(fattura.getModalita_pagamento_uo()));
 		
 		if (modPag.getTipoPagamentoSdi() == null){
-			throw new ApplicationException("Impossibile Procedere! Per la modalità di Pagamento: "+fattura.getModalita_pagamento_uo().getCd_ds_modalita_pagamento()+" non è stato indicato il Tipo Pagamento per SDI"); 
+			throw new ApplicationException("Impossibile Procedere! Per la modalitÃ  di Pagamento: "+fattura.getModalita_pagamento_uo().getCd_ds_modalita_pagamento()+" non Ã¨ stato indicato il Tipo Pagamento per SDI"); 
 		}
 		dettaglioPagamento.setModalitaPagamento(ModalitaPagamentoType.fromValue(fattura.getModalita_pagamento_uo().getTipoPagamentoSdi()));				
 			
@@ -767,7 +767,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		} else if (fattura.getModalita_pagamento_uo().isModalitaBancaItalia()){
 			String conto = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_CONTO_CORRENTE_BANCA_ITALIA, Configurazione_cnrBulk.SK_CODICE);
 			if (conto == null){
-				throw new ApplicationException("Impossibile Procedere! Nell'archivio CONFIGURAZIONE_CNR non è inserito il valore relativo al numero di conto in Banca d'Italia"); 
+				throw new ApplicationException("Impossibile Procedere! Nell'archivio CONFIGURAZIONE_CNR non Ã¨ inserito il valore relativo al numero di conto in Banca d'Italia"); 
 			}
 			try {
 				dettaglioPagamento.setIBAN(impostaCodicePaese(userContext, terzoCnr)+Utility.lpad(conto,25,'0'));

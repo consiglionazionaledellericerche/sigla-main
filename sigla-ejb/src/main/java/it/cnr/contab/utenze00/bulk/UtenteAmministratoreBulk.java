@@ -79,7 +79,7 @@ public void validate() throws ValidationException
 	super.validate();
 	
 	if ( cds.getCd_unita_organizzativa() == null  )
-		throw new ValidationException( "Il campo CODICE CDS AMMINISTRATO è obbligatorio." );
+		throw new ValidationException( "Il campo CODICE CDS AMMINISTRATO Ã¨ obbligatorio." );
 
 }
 }

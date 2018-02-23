@@ -235,9 +235,9 @@ public Forward doSelezionaBeniScaricati(ActionContext context) {
  *  L'utente ha selezionato il check-box "Scarico Totale", nel form del Buono di Scarico.
  *	Il metodo controlla se il bene selzionato ha dei beni accessori ed, eventualmente, li carica,
  *	(metodo CRUDScaricoInventarioBP.getBeniAccessoriFor). Il passo successivo, consiste nel
- *	controllare se tra i beni che sono stati gi‡ specificati nel Buono di Carico, ci siano
+ *	controllare se tra i beni che sono stati gi√† specificati nel Buono di Carico, ci siano
  *	dei beni accessori del bene indicato: in caso positivo, viene lanciata una eccezzione con
- *	un messaggio che indica all'utente che non puÚ scaricare totalmente un bene se ne Buono
+ *	un messaggio che indica all'utente che non pu√≤ scaricare totalmente un bene se ne Buono
  *	di Scarico sono stati indicati dei suoi accessori.
  *
  * @param context il <code>ActionContext</code> che contiene le informazioni relative alla richiesta
@@ -387,11 +387,11 @@ public Forward doSalvaVariazioneMeno(ActionContext context) {
 		int result = bene_scaricato.getVariazione_meno().compareTo(bene_scaricato.getValoreBene());
 		// valore da scaricare > valore bene
 		if (result >0)
-			throw new ApplicationException("Attenzione: il valore indicato nel campo 'Valore Scaricato' del bene nr. " + bene_scaricato.getNumeroBeneCompleto() + "\n non puÚ essere superiore al valore del bene stesso");
+			throw new ApplicationException("Attenzione: il valore indicato nel campo 'Valore Scaricato' del bene nr. " + bene_scaricato.getNumeroBeneCompleto() + "\n non pu√≤ essere superiore al valore del bene stesso");
 		// valore da scaricare = valore bene - questa operazione porta a 0 il valore del bene: 
 		//	il bene deve essere scaricato totalmente
 		if (result == 0){
-			//throw new ApplicationException("Attenzione: la variazione per il bene nr. " + bene_scaricato.getNumeroBeneCompleto() + "\n porta il valore del bene a 0.\nQuesta operazione Ë possibile solo scaricando totalmente il bene");
+			//throw new ApplicationException("Attenzione: la variazione per il bene nr. " + bene_scaricato.getNumeroBeneCompleto() + "\n porta il valore del bene a 0.\nQuesta operazione √® possibile solo scaricando totalmente il bene");
 			bene_scaricato.setFl_totalmente_scaricato(new Boolean(true));
 			((it.cnr.contab.inventario01.ejb.BuonoCaricoScaricoComponentSession)bp.createComponentSession()).scaricaBeniAccessori(context.getUserContext(),(Buono_carico_scaricoBulk)bp.getModel(),bene_scaricato);
 		}else

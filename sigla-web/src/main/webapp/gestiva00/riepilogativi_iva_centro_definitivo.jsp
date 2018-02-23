@@ -73,7 +73,7 @@
 		</table>
 	</div>
 	<div class="Group" style="width:100%">
-		<div class="GroupLabel">Stampe già eseguite</div>
+		<div class="GroupLabel">Stampe giÃ  eseguite</div>
 		<% bp.getRegistri_stampati().writeHTMLTable(pageContext,"default",false,false,false,"100%","200px"); %>
 	</div>
 

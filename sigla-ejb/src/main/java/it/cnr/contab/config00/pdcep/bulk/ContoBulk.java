@@ -8,7 +8,7 @@ import it.cnr.jada.util.*;
 /**
  * Classe che eredita le caratteristiche della classe <code>Voce_epBulk</code>,
  * che contiene le variabili e i metodi comuni a tutte le sue sottoclassi.
- * In particolare si riferisce ad un'entit‡ di tipo Conto.
+ * In particolare si riferisce ad un'entit√† di tipo Conto.
  */
 public class ContoBulk extends Voce_epBulk {
 	private CapocontoBulk voce_ep_padre = new CapocontoBulk();
@@ -29,7 +29,7 @@ public ContoBulk(java.lang.String cd_voce_ep,java.lang.Integer esercizio) {
  * Metodo con cui si ottiene il valore della variabile <code>associazioni_natura_gruppo</code>
  * di tipo <code>Hashtable</code>.
  * In particolare, questo metodo carica in una Hashtable l'elenco dei possibili valori
- * che puÚ assumere l'associazione delle nature con i gruppi.
+ * che pu√≤ assumere l'associazione delle nature con i gruppi.
  * @return java.util.Hashtable associazioni_natura_gruppo I valori dell'associazione delle
  * 														  nature con i gruppi.
  */
@@ -113,9 +113,9 @@ public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	return this;
 }
 /**
- * Restituisce il valore della propriet‡ 'fl_gruppoNaturaNonCongruiConfermati'
+ * Restituisce il valore della propriet√† 'fl_gruppoNaturaNonCongruiConfermati'
  *
- * @return Il valore della propriet‡ 'fl_gruppoNaturaNonCongruiConfermati'
+ * @return Il valore della propriet√† 'fl_gruppoNaturaNonCongruiConfermati'
  */
 public boolean isFl_gruppoNaturaNonCongruiConfermati() {
 	return fl_gruppoNaturaNonCongruiConfermati;
@@ -138,7 +138,7 @@ public void setCd_voce_ep_padre(java.lang.String cd_voce_ep_padre) {
 	this.getVoce_ep_padre().setCd_voce_ep(cd_voce_ep_padre);
 }
 /**
- * Imposta il valore della propriet‡ 'fl_gruppoNaturaNonCongruiConfermati'
+ * Imposta il valore della propriet√† 'fl_gruppoNaturaNonCongruiConfermati'
  *
  * @param newFl_gruppoNaturaNonCongruiConfermati	Il valore da assegnare a 'fl_gruppoNaturaNonCongruiConfermati'
  */

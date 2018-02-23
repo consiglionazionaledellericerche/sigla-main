@@ -39,7 +39,7 @@ public class V_incarichi_collaborazioneBulk extends OggettoBulk implements Persi
 //    DT_SCADENZA TIMESTAMP(7)
 	private java.sql.Timestamp dt_scadenza;
  
-//  non esiste su DB, verr‡ riempito con la Sede del CDS
+//  non esiste su DB, verr√† riempito con la Sede del CDS
 	private java.lang.String sede;
 
 	private java.lang.String oggetto;
@@ -47,7 +47,7 @@ public class V_incarichi_collaborazioneBulk extends OggettoBulk implements Persi
 //  non esiste su DB, contiene la procedura di conferimento incarico
 	private Incarichi_proceduraBulk incaricoProcedura;
 
-//  non esiste su DB, verr‡ riempito con ll URL dove scaricare il pdf del bando
+//  non esiste su DB, verr√† riempito con ll URL dove scaricare il pdf del bando
 	private java.lang.String downloadUrl;
 
 	public java.lang.Integer getEsercizio() {

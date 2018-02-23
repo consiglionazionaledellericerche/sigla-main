@@ -90,13 +90,13 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * dell'obbligazione, associata alla riga del mandato, le voci del piano i
      * cui saldi devono essere incrementati e viene richiesto alla component che
      * gestisce i saldi di effettuare l'aggiornamento delle voci e di verificare
-     * la disponibilit‡ di cassa per ogni voce modifica riga - annullamento
+     * la disponibilit√† di cassa per ogni voce modifica riga - annullamento
      * PreCondition: E' stata modificata una riga di mandato e lo stato del
      * mandato e' annullato PostCondition: Vengono recuperati dai dettagli della
      * scadenza dell'obbligazione, associata alla riga del mandato, le voci del
      * piano i cui saldi devono essere decrementati e viene richiesto alla
      * component che gestisce i saldi di effettuare l'aggiornamento delle voci
-     * modifica riga - modifica modalit‡ pagamento PreCondition: E' stata
+     * modifica riga - modifica modalit√† pagamento PreCondition: E' stata
      * modificata una riga di mandato, ma il suo importo non e' stato modificato
      * PostCondition: Nessun aggiornamento all'importo dei saldi viene
      * effettuato
@@ -111,9 +111,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * esegue il check di disponibilita di cassa e aggiorna il capitolo saldo
      * **Mandato Accreditamento ***** riga.crudStatus = - TO_BE_CREATED alla
      * creazione - TO_BE_UPDATED all' annullamento (2) o alla modifica delle
-     * modalit‡ di pagamento (3) - TO_BE_DELETED mai**Mandato Pagamento *****
+     * modalit√† di pagamento (3) - TO_BE_DELETED mai**Mandato Pagamento *****
      * riga.crudStatus = - TO_BE_CREATED alla creazione - TO_BE_UPDATED
-     * all'annullamento (2) o alla modifica delle modalit‡ di pagamento (3) -
+     * all'annullamento (2) o alla modifica delle modalit√† di pagamento (3) -
      * TO_BE_DELETED mai
      */
     protected void aggiornaCapitoloSaldoRiga(UserContext aUC,
@@ -134,8 +134,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 // modificato
                 // l'importo
                 // (29/10/2003 12.40.38) Giorgio Massussi
-                // Sostituito getHome() con getTempHome() perchË se arrivo da
-                // annullaMandato puÚ essere che la
+                // Sostituito getHome() con getTempHome() perch√® se arrivo da
+                // annullaMandato pu√≤ essere che la
                 // riga del mandato sia stata appena caricata da db e
                 // successivamente modificata; se uso
                 // la stessa HomeCache la rilettura mi seppellisce le modifiche!
@@ -278,7 +278,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * obbligazione pagata con la riga del mandato dell'importo della riga del
      * mandato (scadenza.im_associato_doc_contabile =
      * scadenza.im_associato_doc_contabile - mandato_riga.im_mandato_riga)
-     * modifica riga - modifica modalit‡ pagamento PreCondition: E' stata
+     * modifica riga - modifica modalit√† pagamento PreCondition: E' stata
      * modificata una riga di mandato, ma il suo importo non e' stato modificato
      * PostCondition: Nessun aggiornamento all'importo della scadenza viene
      * effettuato
@@ -296,11 +296,11 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         /*
          * **Mandato Accreditamento ***** riga.crudStatus = - TO_BE_CREATED alla
          * creazione //- TO_BE_UPDATED alla modifica dell'importo (1) o
-         * all'annullamento (2) o alla modifica delle modalit‡ di pagamento (3)
-         * - TO_BE_UPDATED all'annullamento (2) o alla modifica delle modalit‡
+         * all'annullamento (2) o alla modifica delle modalit√† di pagamento (3)
+         * - TO_BE_UPDATED all'annullamento (2) o alla modifica delle modalit√†
          * di pagamento (3) - TO_BE_DELETED mai**Mandato Pagamento *****
          * riga.crudStatus = - TO_BE_CREATED alla creazione - TO_BE_UPDATED
-         * all'annullamento (2) o alla modifica delle modalit‡ di pagamento (3)
+         * all'annullamento (2) o alla modifica delle modalit√† di pagamento (3)
          * - TO_BE_DELETED mai
          */
 
@@ -310,8 +310,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                             riga.getIm_mandato_riga()));
         else if (riga.isToBeDeleted()) {
             // (29/10/2003 12.40.38) Giorgio Massussi
-            // Sostituito getHome() con getTempHome() perchË se arrivo da
-            // annullaMandato puÚ essere che la
+            // Sostituito getHome() con getTempHome() perch√® se arrivo da
+            // annullaMandato pu√≤ essere che la
             // riga del mandato sia stata appena caricata da db e
             // successivamente modificata; se uso
             // la stessa HomeCache la rilettura mi seppellisce le modifiche!
@@ -323,8 +323,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         } else if (riga.isToBeUpdated()) {
             java.math.BigDecimal importo = null;
             // (29/10/2003 12.40.38) Giorgio Massussi
-            // Sostituito getHome() con getTempHome() perchË se arrivo da
-            // annullaMandato puÚ essere che la
+            // Sostituito getHome() con getTempHome() perch√® se arrivo da
+            // annullaMandato pu√≤ essere che la
             // riga del mandato sia stata appena caricata da db e
             // successivamente modificata; se uso
             // la stessa HomeCache la rilettura mi seppellisce le modifiche!
@@ -393,7 +393,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                             .findAndLock(scadenza);
                     obblScadTable.put(scadenza, scadenza);
                 } else
-                    // scadenza gi‡ letto da db
+                    // scadenza gi√† letto da db
                     scadenza = (Obbligazione_scadenzarioBulk) obblScadTable
                             .get(scadenza);
                 if (scadenza == null)
@@ -406,7 +406,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                             ObbligazioneBulk.class).findAndLock(obbligazione);
                     obbligazioniTable.put(obbligazione, obbligazione);
                 } else
-                    // scadenza gi‡ letto da db
+                    // scadenza gi√† letto da db
                     obbligazione = (ObbligazioneBulk) obbligazioniTable
                             .get(obbligazione);
 
@@ -461,7 +461,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * associazione Mandato-Sospeso (Sospeso_det_uscBulk) e l'importo
      * specificato dall'utente e' superiore all'importo disponibile del sospeso
      * (importo disponibile = sospeso.im_sospeso - sospeso.im_associati)
-     * PostCondition: Viene segnalato all'utente l'impossibilit‡ di creare
+     * PostCondition: Viene segnalato all'utente l'impossibilit√† di creare
      * l'associazione Mandato-Sospeso modifica sospeso PreCondition: E' stata
      * generata la richiesta di modifica dell'importo di una associazione
      * Mandato-Sospeso (Sospeso_det_uscBulk) e la differenza fra l'importo
@@ -479,7 +479,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * dall'utente per il Sospeso_det_uscBulk e l'importo che aveva in
      * precedenza e' superiore all'importo disponibile del sospeso (importo
      * disponibile = sospeso.im_sospeso - sospeso.im_associati) PostCondition:
-     * Viene segnalato all'utente l'impossibilit‡ di aggiornare l'associazione
+     * Viene segnalato all'utente l'impossibilit√† di aggiornare l'associazione
      * Mandato-Sospeso cancellazione sospeso PreCondition: E' stata generata la
      * richiesta di cancellazione di una associazione Mandato-Sospeso
      * (Sospeso_det_uscBulk) PostCondition: L'istanza di Sospeso_det_uscBulk
@@ -508,7 +508,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     if (sdu.getIm_associato().compareTo(
                             sospeso.getIm_disponibile()) > 0)
                         throw new ApplicationException(
-                                "L'Importo specificato per il sospeso deve essere inferiore all'Ulteriore disponibilit‡ su sospeso");
+                                "L'Importo specificato per il sospeso deve essere inferiore all'Ulteriore disponibilit√† su sospeso");
                     sospeso.setIm_associato(sospeso.getIm_associato().add(
                             sdu.getIm_associato()));
                 } else if (sdu.isToBeDeleted()) {
@@ -545,7 +545,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             /*
              * 24/09/2002 Commentata la chiamata al metodo per l'impostazione
              * dell'importo pagato del Mandato, in quanto adesso non si imposta
-             * pi˘ a PAGATO lo stato di un Mandato, quando viene associato ad un
+             * pi√π a PAGATO lo stato di un Mandato, quando viene associato ad un
              * sospeso
              */
             // mandato.setIm_pagato( totSospesi );
@@ -664,7 +664,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato     <code>MandatoBulk</code> il mandato
-     * @param action      <code>String</code> azione che puÚ assumere valori
+     * @param action      <code>String</code> azione che pu√≤ assumere valori
      *                    inserimento/annullamento
      */
 
@@ -697,24 +697,24 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * nei documenti amministrativi errore - beneficiari diversi PreCondition:
      * Il codice terzo dei documenti amministrativi passivi da aggiungere al
      * mandato non e' lo stesso per tutti i documenti PostCondition: Un
-     * messaggio di errore segnala all'utente l'impossibilit‡ di aggiungere i
+     * messaggio di errore segnala all'utente l'impossibilit√† di aggiungere i
      * documenti al mandato errore - classe di pagamento PreCondition: La classe
      * di pagamento (Bancario,Postale,etc.) dei documenti amministrativi passivi
      * da aggiungere al mandato non e' lo stesso per tutti i documenti.
-     * PostCondition: Un messaggio di errore segnala all'utente l'impossibilit‡
+     * PostCondition: Un messaggio di errore segnala all'utente l'impossibilit√†
      * di aggiungere i documenti al mandato errore - mandato di regolarizzazione
      * PreCondition: I documenti amministrativi passivi selezionati per essere
      * aggiunti ad un mandato di regolarizzazione sono stati contabilizzati in
      * parte su obbligazioni relative a capitoli di bilancio e in parte su
      * obbligazioni relative a partite di giro. PostCondition: Un messaggio di
-     * errore segnala all'utente l'impossibilit‡ di aggiungere i documenti al
+     * errore segnala all'utente l'impossibilit√† di aggiungere i documenti al
      * mandato
      * <p>
      * errore - mandato competenza/residuo PreCondition: I documenti
      * amministrativi passivi selezionati per essere aggiunti ad un mandato sono
      * stati contabilizzati in parte su impegni residui e in parte su impegni di
      * competenza PostCondition: Un messaggio di errore segnala all'utente
-     * l'impossibilit‡ di aggiungere i documenti al mandato
+     * l'impossibilit√† di aggiungere i documenti al mandato
      *
      * @param aUC        lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato    <code>MandatoBulk</code> il mandato da aggiornare
@@ -801,7 +801,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                     new ComuneBulk(terzo.getPg_comune_sede()));
                             if (comune.getTi_italiano_estero().equals(NazioneBulk.ITALIA) && terzo.getCap_comune_sede() == null)
                                 throw new ApplicationException(
-                                        "Attenzione per la modalit‡ di pagamento presente sul documento Ë necessario indicare il cap sul terzo.");
+                                        "Attenzione per la modalit√† di pagamento presente sul documento √® necessario indicare il cap sul terzo.");
                         }
                       }
                     }
@@ -813,7 +813,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         sqlExists.addSQLClause("AND","NAZIONE.FL_SEPA",SQLBuilder.EQUALS,"Y");
                         if (sqlExists.executeCountQuery(getConnection(aUC))!=0 && riga.getBanca().getCodice_swift()==null) 
                 		          throw new ApplicationException(
-                                            "Attenzione per la modalit‡ di pagamento presente sul documento Ë necessario indicare il codice swift/bic.");
+                                            "Attenzione per la modalit√† di pagamento presente sul documento √® necessario indicare il codice swift/bic.");
                         }
                 }
                 // estrae le eventuali note di credito/debito
@@ -1120,12 +1120,12 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * entrata (metodo annullaReversaleTrasferimento) errore riscontri associati
      * PreCondition: E' stata generata la richiesta di annullare un Mandato che
      * ha riscontri associati PostCondition: Una segnalazione di errore comunica
-     * all'utente l'impossibilit‡ di eseguire l'annullamento annullamento
+     * all'utente l'impossibilit√† di eseguire l'annullamento annullamento
      * mandato su anticipo associato a missione PreCondition: E' stata generata
      * la richiesta di annullare un Mandato Il mandato non supera la validazione
      * effettuata dal metodo 'verificaMandatoSuAnticipo' in quanto include un
      * anticipo associato a missione PostCondition: Una segnalazione di errore
-     * comunica all'utente l'impossibilit‡ di eseguire l'annullamento
+     * comunica all'utente l'impossibilit√† di eseguire l'annullamento
      * annullamento mandato di compenso su riscontro PreCondition: E' stata
      * generata la richiesta di annullare un Mandato Il mandato si riferisce a
      * compensi inclusi in conguagli PostCondition: Una segnalazione richiede
@@ -1152,7 +1152,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
             if (mandato.isAnnullato())
                 throw new ApplicationException(
-                        "Il mandato e' gi‡ stato annullato");
+                        "Il mandato e' gi√† stato annullato");
 
             verificaStatoEsercizio(userContext, mandato.getEsercizio(), mandato
                     .getCd_cds());
@@ -1164,7 +1164,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                             mandato.getPg_mandato()));
             if (totdettagli.compareTo(new BigDecimal(0)) > 0)
                 throw new ApplicationException(
-                        "Annullamento impossibile! Il mandato e' gi‡ stato associato ad un riscontro");
+                        "Annullamento impossibile! Il mandato e' gi√† stato associato ad un riscontro");
 
             // verificaMandato( userContext, mandato );
 
@@ -1249,7 +1249,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     ANNULLAMENTO_MANDATO_ACTION);
             /*
              * 24/09/2002 Commentata la chiamata alla stored procedure per
-             * l'aggiornamento dei saldi, in quanto adesso non si imposta pi˘ a
+             * l'aggiornamento dei saldi, in quanto adesso non si imposta pi√π a
              * PAGATO lo stato di un Mandato, quando viene associato ad un
              * sospeso
              */
@@ -1409,7 +1409,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * sospesi di spesa non annullati che non sono ancora stati associati al
      * mandato con cds appartenza uguale al cds appartenenza del mandato,
      * esercizio uguale all'esercizio di scrivania, importo disponibile (importo
-     * disponibile = importo iniziale del sospeso - importo gi‡ associato a
+     * disponibile = importo iniziale del sospeso - importo gi√† associato a
      * mandati) maggiore di zero, stato uguale a ASSOCIATO A CDS
      *
      * @param aUC      lo <code>UserContext</code> che ha generato la richiesta
@@ -1707,7 +1707,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 /*
                  * 24/09/2002 Commentata la chiamata alla stored procedure per
                  * l'aggiornamento dei saldi, in quanto adesso non si imposta
-                 * pi˘ a PAGATO lo stato di un Mandato, quando viene associato
+                 * pi√π a PAGATO lo stato di un Mandato, quando viene associato
                  * ad un sospeso
                  */
                 // if ( mandato.getIm_pagato().compareTo(
@@ -1729,7 +1729,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                      * VARIAZIONE DI BILANCIO Se il CDS ementte un mandato di
                      * regolarizzazione su propri capitoli di spesa deve: 1.
                      * generare sempre la variazione di bilancio se la reversale
-                     * di regolarizzazione emessa Ë su accertamenti o partite di
+                     * di regolarizzazione emessa √® su accertamenti o partite di
                      * giro dell'Ente 2. mai in tutti gli altri casi
                      */
                     Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome(
@@ -1740,7 +1740,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                     ente.getCd_unita_organizzativa()))
                         if (!((Mandato_rigaIBulk) mandato.getMandato_rigaColl()
                                 .get(0)).getFl_pgiro().booleanValue())
-                            // Il mandato Ë stato emesso dal CDS su capitoli di
+                            // Il mandato √® stato emesso dal CDS su capitoli di
                             // spesa propri
                             if (reversale.getCd_unita_organizzativa().equals(
                                     ente.getCd_unita_organizzativa())) {
@@ -1756,7 +1756,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                             userContext, bulk);
                                     mandato = (MandatoIBulk) bulk;
                                 } else {
-                                    // La reversale Ë stata emessa sull'ente
+                                    // La reversale √® stata emessa sull'ente
                                     Var_bilancioBulk varBilancio = creaVariazioneBilancioDiRegolarizzazione(
                                             userContext, (MandatoIBulk) bulk);
 
@@ -1912,7 +1912,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     impegno);
 
             // Carico automaticamente i codici SIOPE e visualizzo quelli ancora
-            // collegabili se la gestione Ë attiva
+            // collegabili se la gestione √® attiva
             if (Utility.createParametriCnrComponentSession().getParametriCnr(
                     userContext, mandato.getEsercizio()).getFl_siope()
                     .booleanValue()) {
@@ -1934,7 +1934,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * mandato coi dati relativi alla scadenza di obbligazione selezionata
      * dall'utente e al documento ammninistrativo di spesa selezionato
      * dall'utente. Vengono inoltre impostati come dati relativi alla banca e
-     * alla modalit‡ di pagamento quelli presenti nel documento amministrativo
+     * alla modalit√† di pagamento quelli presenti nel documento amministrativo
      *
      * @param userContext lo <code>UserContext</code> che ha generato la
      * richiesta
@@ -2034,7 +2034,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         docPassivo.getCd_sospeso());
 
             // Carico automaticamente i codici SIOPE e visualizzo quelli ancora
-            // collegabili se la gestione Ë attiva
+            // collegabili se la gestione √® attiva
             if (Utility.createParametriCnrComponentSession().getParametriCnr(
                     userContext, mandato.getEsercizio()).getFl_siope()
                     .booleanValue()) {
@@ -2054,8 +2054,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     /*
      * creazione riga collegata di mandato PreCondition: E' stata generata la
      * richiesta di creazione di una riga di Mandato relativa ad un documento
-     * (nota credito/debito) collegato ad una fattura (riga principale gi‡
-     * creata) PostCondition: Per le fatture passive per le quali Ë necessario
+     * (nota credito/debito) collegato ad una fattura (riga principale gi√†
+     * creata) PostCondition: Per le fatture passive per le quali √® necessario
      * generare la reversale di incasso IVA, l'importo relativo alle ritenute
      * della riga collegata a fattura (rigaPrincipale) deve essere
      * incrementato/decrementato con l'importo delle eventuali note di
@@ -2072,7 +2072,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * @param docPassivo <code>V_doc_passivo_obbligazioneBulk</code> il
      * documento ammninistrativo di tipo nota credito/debito
      *
-     * @param rigaPrincipale <code>Mandato_rigaBulk</code> riga di mandato gi‡
+     * @param rigaPrincipale <code>Mandato_rigaBulk</code> riga di mandato gi√†
      * creata relativa alla fattura passiva da cui il docPassivo dipende
      *
      * @return riga <code>Mandato_rigaBulk</code> la riga di mandato creata
@@ -2084,7 +2084,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         try {
             if (rigaPrincipale.getIm_ritenute_riga().compareTo(
                     new BigDecimal(0)) != 0)
-            // se la riga principale Ë una fattura passiva con ritenute,
+            // se la riga principale √® una fattura passiva con ritenute,
             // aggiungo/tolgo le ritenute delle note di credito/debito
             {
                 if (docPassivo.getIm_iva_doc_amm().compareTo(new BigDecimal(0)) != 0)
@@ -2143,14 +2143,14 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * creazione mandato terzo per Mandato di accreditamento non SAC
      * PreCondition: E' stata generata la richiesta di creazione di un
      * Mandato_terzoBulk per un Mandato di accreditamento Il Cds beneficiario
-     * del mandato Ë un cds con tipo diverso da SAC PostCondition: Viene creata
+     * del mandato √® un cds con tipo diverso da SAC PostCondition: Viene creata
      * una istanza di Mandato_terzoBulk coi dati dell'uo-cds del Cds
      * beneficiario del mandato di accreditamento e viene impostato il tipo
      * bollo di default.
      *
      * creazione mandato terzo per Mandato di accreditamento SAC PreCondition:
      * E' stata generata la richiesta di creazione di un Mandato_terzoBulk per
-     * un Mandato di accreditamento Il Cds beneficiario del mandato Ë un cds con
+     * un Mandato di accreditamento Il Cds beneficiario del mandato √® un cds con
      * tipo uguale a SAC PostCondition: Viene creata una istanza di
      * Mandato_terzoBulk coi dati dell'uo specificata in Configurazione CNR per
      * il CDS SAC e viene impostato il tipo bollo di default.
@@ -2174,7 +2174,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             mTerzo.setUser(mandato.getUser());
             mTerzo.setMandato(mandato);
 
-            // verifico se Ë il cds SAC
+            // verifico se √® il cds SAC
             boolean isSac = false;
             SQLBuilder sql = getHome(userContext, CdsBulk.class)
                     .createSQLBuilder();
@@ -2186,7 +2186,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             if (result.size() != 0)
                 isSac = true;
 
-            // cerco l'unit‡ organizzativa
+            // cerco l'unit√† organizzativa
             String cd_uo = null;
 
             if (!isSac) {
@@ -2199,7 +2199,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         .fetchAll(sql);
                 if (result.size() != 1)
                     throw new ApplicationException(
-                            "Non Ë possibile identificare l'uo-cds per il Cds "
+                            "Non √® possibile identificare l'uo-cds per il Cds "
                                     + mandato.getCodice_cds());
                 cd_uo = ((Unita_organizzativaBulk) result.get(0))
                         .getCd_unita_organizzativa();
@@ -2608,7 +2608,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * spesa di tipo TRASF_S a partire da un impegno selezionato dall'utente nel
      * mandato di accreditamento PostCondition: Un riga di documento viene
      * creata con i dati relativi al terzo (codice terzo, coordinate bancarie,
-     * modalit‡ di pagamento) derivati da quelli che l'utente ha specificato nel
+     * modalit√† di pagamento) derivati da quelli che l'utente ha specificato nel
      * mandato e i dati relativi all'importo derivati dall'impegno selezionato
      * dall'utente nel mandato; viene inoltre aggiornato l'importo associato ai
      * documenti amministrativi della scadenza di obbligazione che rappresenta
@@ -2774,7 +2774,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                             + impegno.getPg_obbligazione());
         else if (result.size() > 1)
             throw new ApplicationException(
-                    "Attenzione! Esiste pi˘ di una controparte di entrata per l'annotazione di spesa su partita di giro "
+                    "Attenzione! Esiste pi√π di una controparte di entrata per l'annotazione di spesa su partita di giro "
                             + impegno.getEsercizio_originale()
                             + "/"
                             + impegno.getPg_obbligazione());
@@ -2822,7 +2822,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * @param mandato     <code>MandatoAccreditamentoBulk</code> il mandato di
      *                    trasferimento
      * @return result la lista delle banche definite per il terzo beneficiario
-     * del mandato null non Ë stata definita nessuna banca per il terzo
+     * del mandato null non √® stata definita nessuna banca per il terzo
      * beneficiario del mandato
      */
 
@@ -2918,15 +2918,15 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     }
 
     /**
-     * find disponibilit‡ di cassa capitolo PreCondition: E' stata richiesta la
+     * find disponibilit√† di cassa capitolo PreCondition: E' stata richiesta la
      * disponibilita di cassa per ogni capitolo della scadenza di obbligazione
      * presente nella riga del mandato PostCondition: Viene restituita la
-     * disponibilit‡ di cassa di ogni capitolo presente nel dettaglio delle
+     * disponibilit√† di cassa di ogni capitolo presente nel dettaglio delle
      * scadenze dell'obbligazione pagate dalla riga del mandato
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato     <code>Mandato_rigaBulk</code> la riga del mandato di cui si
-     *                    verifica disponibilit‡ sui capitoli
+     *                    verifica disponibilit√† sui capitoli
      */
 
     private List findDisponibilitaDiCassaPerCapitolo(UserContext userContext,
@@ -2971,16 +2971,16 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     }
 
     /**
-     * find disponibilit‡ di cassa capitolo PreCondition: E' stata richiesta la
+     * find disponibilit√† di cassa capitolo PreCondition: E' stata richiesta la
      * disponibilita di cassa per ogni capitolo di ogni obbligazione pagata del
-     * mandato PostCondition: Viene restituita la disponibilit‡ di cassa di ogni
+     * mandato PostCondition: Viene restituita la disponibilit√† di cassa di ogni
      * capitolo presente nel dettaglio delle scadenze delle obbligazioni pagate
      * da ogni riga del mandato (metodo
      * 'findDisponibilitaDiCassaPerCapitolo(Mandato_rigaBulk)')
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato     <code>MandatoIBulk</code> il mandato di cui si verifica
-     *                    disponibilit‡ di cassa sui capitoli
+     *                    disponibilit√† di cassa sui capitoli
      */
 
     public List findDisponibilitaDiCassaPerCapitolo(UserContext userContext,
@@ -3020,16 +3020,16 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     }
 
     /**
-     * find disponibilit‡ di cassa Cds PreCondition: E' stata richiesta la
+     * find disponibilit√† di cassa Cds PreCondition: E' stata richiesta la
      * disponibilita di cassa di un cds diverso da ente ( disp cassa CDS = fondo
      * di cassa iniziale del Cds per l'esercizio di scrivania + mandati di
      * accreditamento del CNR emessi a favore di questo Cds - mandati emessi dal
      * Cds - modello 1210 emessi dal Cds) PostCondition: Viene restituita la
-     * disponibilit‡ di cassa del cds
+     * disponibilit√† di cassa del cds
      *
      * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
-     *                verifica disponibilit‡ di cassa
+     *                verifica disponibilit√† di cassa
      */
 
     private BigDecimal findDisponibilitaDiCassaPerCDS(UserContext userContext,
@@ -3045,7 +3045,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     .fetchAll(sql);
             if (result.size() == 0)
                 throw new ApplicationException(
-                        "Non esiste il record per la disponibilit‡ di cassa del CDS: "
+                        "Non esiste il record per la disponibilit√† di cassa del CDS: "
                                 + mandato.getCd_cds() + " - esercizio: "
                                 + mandato.getEsercizio());
             V_disp_cassa_cdsBulk cassa = (V_disp_cassa_cdsBulk) result.get(0);
@@ -3058,17 +3058,17 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     }
 
     /**
-     * find disponibilit‡ di cassa CNR PreCondition: E' stata richiesta la
+     * find disponibilit√† di cassa CNR PreCondition: E' stata richiesta la
      * disponibilita di cassa dell'ente ( disp cassa CNR = fondo di cassa
      * iniziale del CNR per l'esercizio di scrivania + saldo delle reversali
      * emesse dal CNR + sospesi di entrata non ancora associati alle reversali -
      * saldo dei mandati emessi dal CNR - sospesi di spesa non ancora associati
-     * ai mandati) PostCondition: Viene restituita la disponibilit‡ di cassa
+     * ai mandati) PostCondition: Viene restituita la disponibilit√† di cassa
      * dell'ente
      *
      * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
-     *                verifica disponibilit‡ di cassa
+     *                verifica disponibilit√† di cassa
      */
 
     private BigDecimal findDisponibilitaDiCassaPerCNR(UserContext userContext,
@@ -3086,7 +3086,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     .fetchAll(sql);
             if (result.size() == 0)
                 throw new ApplicationException(
-                        "Non esiste il record per la disponibilit‡ di cassa del CNR: "
+                        "Non esiste il record per la disponibilit√† di cassa del CNR: "
                                 + mandato.getCd_cds() + " - esercizio: "
                                 + mandato.getEsercizio());
             V_disp_cassa_cnrBulk cassa = (V_disp_cassa_cnrBulk) result.get(0);
@@ -3099,24 +3099,24 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     }
 
     /**
-     * find disponibilit‡ di cassa Cds PreCondition: E' stata richiesta la
+     * find disponibilit√† di cassa Cds PreCondition: E' stata richiesta la
      * disponibilita di cassa di un cds diverso da ente ( disp cassa CDS = fondo
      * di cassa iniziale del Cds per l'esercizio di scrivania + mandati di
      * accreditamento del CNR emessi a favore di questo Cds - mandati emessi dal
      * Cds - modello 1210 emessi dal Cds) PostCondition: Viene restituita la
-     * disponibilit‡ di cassa del cds
+     * disponibilit√† di cassa del cds
      * <p>
-     * find disponibilit‡ di cassa CNR PreCondition: E' stata richiesta la
+     * find disponibilit√† di cassa CNR PreCondition: E' stata richiesta la
      * disponibilita di cassa dell'ente ( disp cassa CNR = fondo di cassa
      * iniziale del CNR per l'esercizio di scrivania + saldo delle reversali
      * emesse dal CNR + sospesi di entrata non ancora associati alle reversali -
      * saldo dei mandati emessi dal CNR - sospesi di spesa non ancora associati
-     * ai mandati) PostCondition: Viene restituita la disponibilit‡ di cassa
+     * ai mandati) PostCondition: Viene restituita la disponibilit√† di cassa
      * dell'ente
      *
      * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
-     *                verifica disponibilit‡ di cassa
+     *                verifica disponibilit√† di cassa
      */
 
     private BigDecimal findDisponibilitaDiCassaPerContoCorrente(
@@ -3184,17 +3184,17 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     }
 
     /**
-     * lista le modalit‡ di pagamento PreCondition: E' stato creata una riga di
+     * lista le modalit√† di pagamento PreCondition: E' stato creata una riga di
      * mandato con tipologia diversa da quella di regolarizzazione e di
-     * trasferimento PostCondition: La lista delle modalit‡ di pagamento del
+     * trasferimento PostCondition: La lista delle modalit√† di pagamento del
      * terzo beneficiario, tutte appartenenti alla stessa classe
      * (Bancario/Postale/..) per cui si sta emettendo il mandato, viene
-     * estratta. Vengono escluse le modalit‡ di pagamento riferite a terzi
+     * estratta. Vengono escluse le modalit√† di pagamento riferite a terzi
      * cessionari
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
      * @param riga        <code>Mandato_rigaBulk</code> la riga di mandato
-     * @return List la lista delle modalit‡ di pagamento definite per il terzo
+     * @return List la lista delle modalit√† di pagamento definite per il terzo
      * beneficiario del mandato
      */
 
@@ -3222,19 +3222,19 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     }
 
     /**
-     * lista le modalit‡ di pagamento PreCondition: E' stato creata una riga di
-     * mandato di trasferimento PostCondition: La lista delle modalit‡ di
+     * lista le modalit√† di pagamento PreCondition: E' stato creata una riga di
+     * mandato di trasferimento PostCondition: La lista delle modalit√† di
      * pagamento del terzo beneficiario, tutte appartenenti alla stessa classe
      * (Bancario/Postale/..) per cui si sta emettendo il mandato, viene
-     * estratta.Vengono escluse le modalit‡ di pagamento riferite a terzi
+     * estratta.Vengono escluse le modalit√† di pagamento riferite a terzi
      * cessionari
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato     <code>MandatoAccreditamentoBulk</code> il mandato di
      *                    trasferimento
-     * @return result la lista delle modalit‡ di pagamento definite per il terzo
-     * beneficiario del mandato null non Ë stata definita nessuna
-     * modalit‡ di pagamento per il terzo beneficiario del mandato
+     * @return result la lista delle modalit√† di pagamento definite per il terzo
+     * beneficiario del mandato null non √® stata definita nessuna
+     * modalit√† di pagamento per il terzo beneficiario del mandato
      */
 
     public List findModalita_pagamentoOptions(UserContext userContext,
@@ -3262,7 +3262,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     .fetchAll(sql);
             if (result.size() == 0)
                 throw new ApplicationException(
-                        "Non esistono modalit‡ di pagamento per il terzo "
+                        "Non esistono modalit√† di pagamento per il terzo "
                                 + mandato.getMandato_terzo().getCd_terzo());
             return result;
 
@@ -3294,19 +3294,19 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     }
 
     /**
-     * lista le unit‡ organizzative - scrivania = Ente PreCondition: E' stata
-     * richiesta una lista delle unit‡ organizzative per cui Ë possibile
-     * emettere un mandato e l'unit‡ organizzativa di scrivania e' l'UO Ente
+     * lista le unit√† organizzative - scrivania = Ente PreCondition: E' stata
+     * richiesta una lista delle unit√† organizzative per cui √® possibile
+     * emettere un mandato e l'unit√† organizzativa di scrivania e' l'UO Ente
      * PostCondition: Una lista comprendente solo l'UO Ente viene restituita
-     * lista le unit‡ organizzative - scrivania diversa da UO Ente PreCondition:
-     * E' stata richiesta una lista delle unit‡ organizzative per cui Ë
-     * possibile emettere un mandato e l'unit‡ organizzativa di scrivania e'
+     * lista le unit√† organizzative - scrivania diversa da UO Ente PreCondition:
+     * E' stata richiesta una lista delle unit√† organizzative per cui √®
+     * possibile emettere un mandato e l'unit√† organizzativa di scrivania e'
      * diversa dall'UO Ente PostCondition: Una lista comprendente l'UO Ente e
      * l'UO di scrivania viene restituita
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato     <code>MandatoBulk</code> il mandato
-     * @return result la lista delle unit‡ organizzative definite per il mandato
+     * @return result la lista delle unit√† organizzative definite per il mandato
      */
 
     public List findUnita_organizzativaOptions(UserContext userContext,
@@ -3389,8 +3389,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * richiesta l'inizializzazione di una istanza di
      * RicercaMandatoAccreditamentoBulk, l'oggetto bulk utilizzato per
      * visualizzare i dati di tutti i Cds verso cui emettere i mandati di
-     * accreditamento PostCondition: Viene impostata la disponibilit‡ di cassa
-     * del CNR e viene inizializzata la lista dei Cds con la loro disponibilit‡
+     * accreditamento PostCondition: Viene impostata la disponibilit√† di cassa
+     * del CNR e viene inizializzata la lista dei Cds con la loro disponibilit√†
      * di cassa
      *
      * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
@@ -3521,7 +3521,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 riga = (Mandato_rigaBulk) super.inizializzaBulkPerModifica(aUC,
                         (Mandato_rigaBulk) i.next());
                 // Carico automaticamente i codici SIOPE e visualizzo quelli
-                // ancora collegabili se la gestione Ë attiva
+                // ancora collegabili se la gestione √® attiva
                 if (Utility.createParametriCnrComponentSession()
                         .getParametriCnr(aUC, mandato.getEsercizio())
                         .getFl_siope().booleanValue()) {
@@ -3652,8 +3652,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 ((MandatoAccreditamentoBulk) mandato).setCodice_cds(cd_cds);
             }
             // per mandati a regolamento sospeso con ritenute e reversale
-            // associate verifico se la reversale Ë stata generata
-            // perchË fattura estera istituzuionale di beni intraue o san marino
+            // associate verifico se la reversale √® stata generata
+            // perch√® fattura estera istituzuionale di beni intraue o san marino
             if (mandato.TIPO_REGOLAM_SOSPESO.equals(mandato.getTi_mandato())
                     && mandato.getIm_ritenute().compareTo(new BigDecimal(0)) > 0)
                 mandato = inizializzaFlagFaiReversale(aUC,
@@ -3991,10 +3991,10 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     /**
      * verifica se il mandato contiene righe relative a fatture passive
      * istituzionali di beni intra ue o san marino (in tal caso alla creazione
-     * del mandato Ë stata creata una reversale associata). Questa informazione
+     * del mandato √® stata creata una reversale associata). Questa informazione
      * serve ai fini della quadratura dei PreCondition: E' stata richiesta
      * l'inizializzazione di una istanza di MandatoBulk di tipo A REGOLAMENTO
-     * SOSPESO e con importo ritenute > 0 PostCondition: Il flag fai_reversale Ë
+     * SOSPESO e con importo ritenute > 0 PostCondition: Il flag fai_reversale √®
      * inizializzato a true nel caso in cui il mandato contenga tali tipi di
      * fatture e a false altrimenti
      *
@@ -4283,7 +4283,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * (im_scadenza-im_associato_doc_contabile) della scadenza di obbligazione
      * su cui il documento amm. e' stato contabilizzato maggiore di zero Fra
      * tutti i documenti individuati vengono esclusi quelli che eventualmente
-     * sono gi‡ stati selezionati per questo mandato
+     * sono gi√† stati selezionati per questo mandato
      *
      * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoBulk</code> il mandato
@@ -4302,7 +4302,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 throw new ApplicationException(
                         "La ricerca non ha fornito alcun risultato.");
 
-            // elimino dal risultato i doc passivi gi‡ selezionati per questo
+            // elimino dal risultato i doc passivi gi√† selezionati per questo
             // mandato
             for (Iterator j = result.iterator(); j.hasNext(); ) {
                 docPassivo = (V_doc_passivo_obbligazioneBulk) j.next();
@@ -4352,7 +4352,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * impegni del CNR per emettere un mandato di accreditamento verso un Cds
      * PostCondition: Vengono ricercati tutti gli impegni che hanno un importo
      * disponibile ( importo disponibile = importo iniziale dell'impegno -
-     * importo gi‡ associato ai documenti contabili) e la cui voce del piano
+     * importo gi√† associato ai documenti contabili) e la cui voce del piano
      * abbia come cd_proprio il codice del cds beneficiario del mandato di
      * accreditamento e appartenga alla parte 1 del piano dei conti CNR parte
      * spese
@@ -4386,8 +4386,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     }
 
     /**
-     * lista CdS - disp. cassa PreCondition: E' stata richiesta la disponibilit‡
-     * di cassa di tutti i Cds PostCondition: Vengono estratte le disponibilit‡
+     * lista CdS - disp. cassa PreCondition: E' stata richiesta la disponibilit√†
+     * di cassa di tutti i Cds PostCondition: Vengono estratte le disponibilit√†
      * di cassa di tutti i Cds per l'esercizio di scrivania calcolate nella
      * vista V_DISP_CASSA_CDS
      * <p>
@@ -4416,7 +4416,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         .findSituazioneCassaCds(aUC, ricerca);
                 ricerca.setCentriDiSpesaColl(ricerca
                         .getCentriDiSpesaSelezionatiColl());
-            } else // carica tutti i Cds con la disponibilit‡ di cassa
+            } else // carica tutti i Cds con la disponibilit√† di cassa
             {
                 ricerca
                         .setCentriDiSpesaColl(((V_disp_cassa_cdsHome) getHome(
@@ -4436,7 +4436,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * di un Mandato e il mandato supera la validazione (metodo verificaMandato)
      * PostCondition: Vengono aggiornati gli importi dei sospesi eventualmente
      * associati al mandato (metodo aggiornaImportoSospesi), e vengono
-     * aggiornate le eventuali modifiche alle modalit‡ di pagamento e al tipo
+     * aggiornate le eventuali modifiche alle modalit√† di pagamento e al tipo
      * bollo del mandato
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -4460,7 +4460,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 // verifica che tutti gli impegni selezioanti siano a competenza
                 // o a residuo
                 // aggiorna la testata del mandato
-                // aggiorna le modalit‡ di pagamento se modificate
+                // aggiorna le modalit√† di pagamento se modificate
                 // chiama la stored procedure che aggiorna le righe del mandato,
                 // i saldi (anche del pagato), il doc.amm TRASF_S
                 // inoltre modifica il mandato competenza/residuo
@@ -4473,7 +4473,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         || manAcc.getBanca() == null
                         || manAcc.getBanca().getPg_banca() == null)
                     throw new ApplicationException(
-                            "Deve essere selezionata una modalit‡ di pagamento e una coordinata bancaria ");
+                            "Deve essere selezionata una modalit√† di pagamento e una coordinata bancaria ");
                 Mandato_rigaBulk riga = (Mandato_rigaBulk) mandato
                         .getMandato_rigaColl().get(0);
                 if (!riga.getCd_modalita_pag().equals(
@@ -4491,7 +4491,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 }
 
                 // Carico automaticamente i codici SIOPE e visualizzo quelli
-                // ancora collegabili se la gestione Ë attiva
+                // ancora collegabili se la gestione √® attiva
                 if (Utility.createParametriCnrComponentSession()
                         .getParametriCnr(userContext, mandato.getEsercizio())
                         .getFl_siope().booleanValue()) {
@@ -4792,25 +4792,25 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
             if (stampa.getPgInizioMand() == null)
                 throw new ValidationException(
-                        "Attenzione: il campo Numero Inizio Mandato Ë obbligatorio");
+                        "Attenzione: il campo Numero Inizio Mandato √® obbligatorio");
             if (stampa.getPgFineMand() == null)
                 throw new ValidationException(
-                        "Attenzione: il campo Numero Fine Mandato Ë obbligatorio");
+                        "Attenzione: il campo Numero Fine Mandato √® obbligatorio");
 
             if (stampa.getPgInizioDist() == null)
                 throw new ValidationException(
-                        "Attenzione: il campo Numero Inizio Distinta Ë obbligatorio");
+                        "Attenzione: il campo Numero Inizio Distinta √® obbligatorio");
             if (stampa.getPgFineDist() == null)
                 throw new ValidationException(
-                        "Attenzione: il campo Numero Fine Distinta Ë obbligatorio");
+                        "Attenzione: il campo Numero Fine Distinta √® obbligatorio");
 
             if (stampa.getPgInizioMand().compareTo(stampa.getPgFineMand()) > 0)
                 throw new ValidationException(
-                        "Attenzione: il Numero Inizio Mandato non puÚ essere superiore al Numero Fine Mandato");
+                        "Attenzione: il Numero Inizio Mandato non pu√≤ essere superiore al Numero Fine Mandato");
 
             if (stampa.getPgInizioDist().compareTo(stampa.getPgFineDist()) > 0)
                 throw new ValidationException(
-                        "Attenzione: il Numero Inizio Distinta non puÚ essere superiore al Numero Fine Distinta");
+                        "Attenzione: il Numero Inizio Distinta non pu√≤ essere superiore al Numero Fine Distinta");
 
         } catch (ValidationException ex) {
             throw new ApplicationException(ex);
@@ -4834,44 +4834,44 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
             if (stampa.getDataInizio() == null)
                 throw new ValidationException(
-                        "Il campo DATA INIZIO PERIODO Ë obbligatorio");
+                        "Il campo DATA INIZIO PERIODO √® obbligatorio");
             if (stampa.getDataFine() == null)
                 throw new ValidationException(
-                        "Il campo DATA FINE PERIODO Ë obbligatorio");
+                        "Il campo DATA FINE PERIODO √® obbligatorio");
 
             java.sql.Timestamp firstDayOfYear = DateServices
                     .getFirstDayOfYear(stampa.getEsercizio().intValue());
             if (stampa.getDataInizio().compareTo(stampa.getDataFine()) > 0)
                 throw new ValidationException(
-                        "La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+                        "La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
             if (stampa.getDataInizio().compareTo(firstDayOfYear) < 0) {
                 java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
                         "dd/MM/yyyy");
                 throw new ValidationException(
-                        "La DATA di INIZIO PERIODO non puÚ essere inferiore a "
+                        "La DATA di INIZIO PERIODO non pu√≤ essere inferiore a "
                                 + formatter.format(firstDayOfYear));
             }
             if (stampa.getDataFine().compareTo(dataOdierna) > 0) {
                 java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
                         "dd/MM/yyyy");
                 throw new ValidationException(
-                        "La DATA di FINE PERIODO non puÚ essere superiore a "
+                        "La DATA di FINE PERIODO non pu√≤ essere superiore a "
                                 + formatter.format(dataOdierna));
             }
 
             if (stampa.getPgInizio() == null)
                 throw new ValidationException(
-                        "Il campo NUMERO INIZIO MANDATO Ë obbligatorio");
+                        "Il campo NUMERO INIZIO MANDATO √® obbligatorio");
             if (stampa.getPgFine() == null)
                 throw new ValidationException(
-                        "Il campo NUMERO FINE MANDATO Ë obbligatorio");
+                        "Il campo NUMERO FINE MANDATO √® obbligatorio");
             if (stampa.getPgInizio().compareTo(stampa.getPgFine()) > 0)
                 throw new ValidationException(
-                        "Il NUMERO INIZIO MANDATO non puÚ essere superiore al NUMERO FINE MANDATO");
+                        "Il NUMERO INIZIO MANDATO non pu√≤ essere superiore al NUMERO FINE MANDATO");
 
             // if (stampa.getCdUOEmittenteForPrint()==null)
             // throw new
-            // ValidationException("Il campo UO EMITTENTE Ë obbligatorio");
+            // ValidationException("Il campo UO EMITTENTE √® obbligatorio");
 
         } catch (ValidationException ex) {
             throw new ApplicationException(ex);
@@ -4895,40 +4895,40 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
             if (stampa.getDataInizio() == null)
                 throw new ValidationException(
-                        "Il campo DATA INIZIO PERIODO Ë obbligatorio");
+                        "Il campo DATA INIZIO PERIODO √® obbligatorio");
             if (stampa.getDataFine() == null)
                 throw new ValidationException(
-                        "Il campo DATA FINE PERIODO Ë obbligatorio");
+                        "Il campo DATA FINE PERIODO √® obbligatorio");
 
             java.sql.Timestamp firstDayOfYear = DateServices
                     .getFirstDayOfYear(stampa.getEsercizio().intValue());
             if (stampa.getDataInizio().compareTo(stampa.getDataFine()) > 0)
                 throw new ValidationException(
-                        "La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+                        "La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
             if (stampa.getDataInizio().compareTo(firstDayOfYear) < 0) {
                 java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
                         "dd/MM/yyyy");
                 throw new ValidationException(
-                        "La DATA di INIZIO PERIODO non puÚ essere inferiore a "
+                        "La DATA di INIZIO PERIODO non pu√≤ essere inferiore a "
                                 + formatter.format(firstDayOfYear));
             }
             if (stampa.getDataFine().compareTo(dataOdierna) > 0) {
                 java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(
                         "dd/MM/yyyy");
                 throw new ValidationException(
-                        "La DATA di FINE PERIODO non puÚ essere superiore a "
+                        "La DATA di FINE PERIODO non pu√≤ essere superiore a "
                                 + formatter.format(dataOdierna));
             }
 
             if (stampa.getPgInizio() == null)
                 throw new ValidationException(
-                        "Il campo NUMERO INIZIO MANDATO Ë obbligatorio");
+                        "Il campo NUMERO INIZIO MANDATO √® obbligatorio");
             if (stampa.getPgFine() == null)
                 throw new ValidationException(
-                        "Il campo NUMERO FINE MANDATO Ë obbligatorio");
+                        "Il campo NUMERO FINE MANDATO √® obbligatorio");
             if (stampa.getPgInizio().compareTo(stampa.getPgFine()) > 0)
                 throw new ValidationException(
-                        "Il NUMERO INIZIO MANDATO non puÚ essere superiore al NUMERO FINE MANDATO");
+                        "Il NUMERO INIZIO MANDATO non pu√≤ essere superiore al NUMERO FINE MANDATO");
             MandatoIHome home = (MandatoIHome) getHome(userContext,
                     MandatoIBulk.class);
             SQLBuilder sql = home.createSQLBuilder();
@@ -4954,9 +4954,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 MandatoIBulk mandato = (MandatoIBulk) i.next();
                 if (contaModalitaPagamento(userContext, mandato) > 1)
                     throw new ApplicationException(
-                            "Impossibile stampare il Mandato n∞ "
+                            "Impossibile stampare il Mandato n¬∞ "
                                     + mandato.getPg_mandato()
-                                    + " in quanto le modalit‡ di pagamento dei dettagli sono diverse.");
+                                    + " in quanto le modalit√† di pagamento dei dettagli sono diverse.");
             }
         } catch (ValidationException ex) {
             throw new ApplicationException(ex);
@@ -4970,10 +4970,10 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * creazione/modifica di un mandato che include dei pagamenti 1210 e non
      * tutte le scadenze di obbligazione associate al 1210 sono state incluse
      * PostCondition: Un messaggio di errore viene visualizzato all'utente per
-     * segnalare l'impossibilit‡ di salvare il mandato verifica1210 - ok
+     * segnalare l'impossibilit√† di salvare il mandato verifica1210 - ok
      * PreCondition: E' stata richiesta la creazione/modifica di un mandato e
      * tutti i precedenti controlli sono stati superati PostCondition: Il
-     * mandato ha superato la validazione e puÚ pertanto essere salvato
+     * mandato ha superato la validazione e pu√≤ pertanto essere salvato
      *
      * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoBulk</code> il mandato di cui si verifica la
@@ -5020,23 +5020,23 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     }
 
     /**
-     * verifica disponibilit‡ di cassa- errore PreCondition: E' stata richiesta
+     * verifica disponibilit√† di cassa- errore PreCondition: E' stata richiesta
      * la creazione di un mandato con tipologia diversa da regolarizzazione e il
-     * Cds di appartenenza non ha una disponibilit‡ di cassa sufficiente (metodo
+     * Cds di appartenenza non ha una disponibilit√† di cassa sufficiente (metodo
      * 'findDisponibilitaDiCassaPerContoCorrente') PostCondition: Un messaggio
-     * di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di
+     * di errore viene visualizzato all'utente per segnalare l'impossibilit√† di
      * salvare il mandato
      * <p>
-     * verifica disponibilit‡ di cassa - ok PreCondition: E' stata richiesta la
+     * verifica disponibilit√† di cassa - ok PreCondition: E' stata richiesta la
      * creazione di un mandato con tipologia diversa da regolarizzazione e il
-     * Cds di apparteneza ha una disponibilit‡ di cassa sufficiente
-     * PostCondition: Il mandato supera la validazione sulla disponibilit‡ di
+     * Cds di apparteneza ha una disponibilit√† di cassa sufficiente
+     * PostCondition: Il mandato supera la validazione sulla disponibilit√† di
      * cassa del conto corrente ed e' pertanto possibile proseguire con il suo
      * salvataggio
      *
      * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
-     *                verifica disponibilit‡ di cassa
+     *                verifica disponibilit√† di cassa
      */
 
     private void verificaDisponibilitaDiCassaPerContoCorrente(
@@ -5048,7 +5048,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             /*
              * IMPORTANTE: I mandati di accreditamento aggiornano i saldi sui
              * capitoli prima di effettuare questa verifica, pertanto la
-             * disponibilit‡ di cassa ritonata dalla vista V_DISP_CASSA_CNR
+             * disponibilit√† di cassa ritonata dalla vista V_DISP_CASSA_CNR
              * include l'importo del mandato che si sta emettendo.In questo caso
              * la verifica deve essere im_disp_cassa > 0.
              *
@@ -5059,13 +5059,13 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 if (MandatoBulk.TIPO_ACCREDITAMENTO.equals(mandato.getTi_mandato())) {
                     if (imDispCassa.compareTo(new BigDecimal(0)) < 0)
                         throw new ApplicationException(
-                                "Mandato superiore alla disponibilit‡ di cassa");
+                                "Mandato superiore alla disponibilit√† di cassa");
 
                 } else {
                     if (imDispCassa.subtract(mandato.getIm_mandato()).compareTo(
                             new BigDecimal(0)) < 0)
                         throw new ApplicationException(
-                                "Mandato superiore alla disponibilit‡ di cassa");
+                                "Mandato superiore alla disponibilit√† di cassa");
                 }
             }
         } catch (Exception e) {
@@ -5078,45 +5078,45 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * verifica mandato - errore dettaglio PreCondition: E' stata richiesta la
      * creazione/modifica di un mandato e il mandato non ha dettagli
      * (Mandato_rigaBulk) PostCondition: Un messaggio di errore viene
-     * visualizzato all'utente per segnalare l'impossibilit‡ di salvare il
+     * visualizzato all'utente per segnalare l'impossibilit√† di salvare il
      * mandato verifica mandato - errore regolamento sospeso PreCondition: E'
      * stata richiesta la creazione/modifica di un mandato a regolamento di
      * sospeso e il mandato non e' stato associato a sospesi PostCondition: Un
      * messaggio di errore viene visualizzato all'utente per segnalare
-     * l'impossibilit‡ di salvare il mandato verifica mandato - errore importo
+     * l'impossibilit√† di salvare il mandato verifica mandato - errore importo
      * regolamento sospeso PreCondition: E' stata richiesta la
      * creazione/modifica di un mandato a regolamento di sospeso e la somma dei
      * sospesi associati al mandato e' diverso dall'importo del mandato
      * PostCondition: Un messaggio di errore viene visualizzato all'utente per
-     * segnalare l'impossibilit‡ di salvare il mandato verifica mandato - errore
+     * segnalare l'impossibilit√† di salvare il mandato verifica mandato - errore
      * data di emissione futura PreCondition: E' stata richiesta la
      * creazione/modifica di un mandato con data di emissione futura
      * PostCondition: Un messaggio di errore viene visualizzato all'utente per
-     * segnalare l'impossibilit‡ di salvare il mandato verifica mandato - errore
+     * segnalare l'impossibilit√† di salvare il mandato verifica mandato - errore
      * data di emissione superiore alla data ultimo mandato PreCondition: E'
      * stata richiesta la creazione/modifica di un mandato con data di emissione
      * maggiore della data di emissione dell'ultimo mandato emesso
      * PostCondition: Un messaggio di errore viene visualizzato all'utente per
-     * segnalare l'impossibilit‡ di salvare il mandato verifica mandato - errore
-     * disponibilit‡ di cassa PreCondition: E' stata richiesta la
+     * segnalare l'impossibilit√† di salvare il mandato verifica mandato - errore
+     * disponibilit√† di cassa PreCondition: E' stata richiesta la
      * creazione/modifica di un mandato ma il Cds di appartenenza non ha una
-     * disponibilit‡ di cassa sufficiente (metodo
+     * disponibilit√† di cassa sufficiente (metodo
      * verificaDisponibilitaDiCassaPerContoCorrente) PostCondition: Un messaggio
-     * di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di
+     * di errore viene visualizzato all'utente per segnalare l'impossibilit√† di
      * salvare il mandato verifica mandato - errore modello 1210 PreCondition:
      * E' stata richiesta la creazione/modifica di un mandato Il mandato include
      * dei pagamenti 1210 Il mandato non include i sospesi definiti per il
      * modello 1210 (metodo verificaSospesiDa1210) PostCondition: Un messaggio
-     * di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di
+     * di errore viene visualizzato all'utente per segnalare l'impossibilit√† di
      * salvare il mandato verifica mandato - errore mod. pagamento PreCondition:
      * E' stata richiesta la creazione/modifica di un mandato Le righe del
      * mandato hanno come tipo di pagamento BANCARIO o POSTALE Le righe del
      * mandato hanno coordinate bancarie o postali differenti (metodo
      * 'verificaModalitaPagamento') PostCondition: Un messaggio di errore viene
-     * visualizzato all'utente per segnalare l'impossibilit‡ di salvare il
+     * visualizzato all'utente per segnalare l'impossibilit√† di salvare il
      * mandato verifica mandato - ok PreCondition: E' stata richiesta la
      * creazione/modifica di un mandato e tutti i controlli sono stati superati
-     * PostCondition: Il mandato ha superato la validazione e puÚ pertanto
+     * PostCondition: Il mandato ha superato la validazione e pu√≤ pertanto
      * essere salvato
      *
      * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
@@ -5177,17 +5177,17 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 if (mandato.getDt_emissione()
                         .compareTo(mh.getServerTimestamp()) > 0)
                     throw new ApplicationException(
-                            "Non Ë possibile inserire un mandato con data futura");
+                            "Non √® possibile inserire un mandato con data futura");
                 Timestamp dataUltMandato = ((MandatoHome) getHome(aUC, mandato
                         .getClass())).findDataUltimoMandatoPerCds(mandato);
                 if (dataUltMandato != null
                         && dataUltMandato.after(mandato.getDt_emissione()))
                     throw new ApplicationException(
-                            "Non Ë possibile inserire un mandato con data anteriore a "
+                            "Non √® possibile inserire un mandato con data anteriore a "
                                     + java.text.DateFormat
                                     .getDateTimeInstance().format(
                                             dataUltMandato));
-                // verifica disponibilit‡ su CC
+                // verifica disponibilit√† su CC
                 if (!mandato.getTi_mandato().equals(
                         mandato.TIPO_REGOLARIZZAZIONE))
                     verificaDisponibilitaDiCassaPerContoCorrente(aUC, mandato);
@@ -5211,20 +5211,20 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * verifica mandato di accreditamento PreCondition: E' stata richiesta la
      * modifica di un mandato di accreditamento (modifica dei capitoli
      * finanziari quindi degli impegni) La somma degli importi associati ai
-     * nuovi capitoli Ë uguale all'importo originario di testata del mandato I
+     * nuovi capitoli √® uguale all'importo originario di testata del mandato I
      * nuovi impegni selezionati sono o tutti di competenza o tutti a residuo
-     * PostCondition: Il mandato ha superato la validazione e puÚ pertanto
+     * PostCondition: Il mandato ha superato la validazione e pu√≤ pertanto
      * essere salvato errore importo PreCondition: E' stata richiesta la
      * modifica di un mandato di accreditamento (modifica dei capitoli
      * finanziari quindi degli impegni) La somma degli importi associati ai
-     * nuovi capitoli Ë diverso dall'importo originario di testata del mandato
+     * nuovi capitoli √® diverso dall'importo originario di testata del mandato
      * PostCondition: Una segnalazione di errore viene emessa per comunicare
-     * l'impossibilit‡ a salvare il mandato. errore competenza/residuo
+     * l'impossibilit√† a salvare il mandato. errore competenza/residuo
      * PreCondition: E' stata richiesta la modifica di un mandato di
      * accreditamento (modifica dei capitoli finanziari quindi degli impegni) I
      * nuovi capitoli selezionati dall'utenet sono in parte di competenza e in
      * parte a residuo PostCondition: Una segnalazione di errore viene emessa
-     * per comunicare l'impossibilit‡ a salvare il mandato.
+     * per comunicare l'impossibilit√† a salvare il mandato.
      *
      * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoAccreditamentoBulk</code> il mandato di
@@ -5272,24 +5272,24 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * dall'utente ha un importo disponibile (somma degli importi delle scadenze
      * non associate a doc. amministrativi) da associare ai documenti
      * amministrativi/contabili uguale all'importo del mandato PostCondition: Il
-     * mandato ha superato la validazione e puÚ pertanto essere salvato verifica
+     * mandato ha superato la validazione e pu√≤ pertanto essere salvato verifica
      * mandato di regolarizzazione - errore PreCondition: E' stata richiesta la
      * creazione di un mandato di regolarizzazione e l'accertamento selezionato
      * dall'utente ha un importo disponibile (somma degli importi delle scadenze
      * non associate a doc. amministrativi) da associare ai documenti
      * amministrativi/contabili diverso dall'importo del mandato PostCondition:
      * Un messaggio di errore viene visualizzato all'utente per segnalare
-     * l'impossibilit‡ di salvare il mandato verifica mandato di
+     * l'impossibilit√† di salvare il mandato verifica mandato di
      * regolarizzazione - errore sospesi PreCondition: E' stata richiesta la
      * creazione/modifica di un mandato di regolarizzazione e sono stati
      * associati dei sospesi al mandato PostCondition: Un messaggio di errore
-     * viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare un
+     * viene visualizzato all'utente per segnalare l'impossibilit√† di salvare un
      * mandato di regolarizzazione con sospesi associati verifica mandato di
      * regolarizzazione - errore partite di giro PreCondition: E' stata
      * richiesta la creazione/modifica di un mandato di regolarizzazione e sono
      * stati associati al mandato sia impegni su partita di giro che impegni
      * generici PostCondition: Un messaggio di errore viene visualizzato
-     * all'utente per segnalare l'impossibilit‡ di salvare un mandato di
+     * all'utente per segnalare l'impossibilit√† di salvare un mandato di
      * regolarizzazione con sia impegni su partita di giro che impegni generici
      *
      * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
@@ -5306,7 +5306,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 // garantisco che nessuno lo modifichi mentre
                 // vengono effettuati i controlli e, nello stesso tempo, posso
                 // controllare che il PG_VER_REC dell'accertamento
-                // non sia cambiato da quando Ë stato selezionato.
+                // non sia cambiato da quando √® stato selezionato.
                 lockBulk(aUC, mandato.getAccertamentoPerRegolarizzazione());
 
                 // verifica l'importo dell'accertamento
@@ -5385,7 +5385,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                  * ().getAccertamento().getTi_competenza_residuo
                  * ().equals(ti_competenza_residuo)) throw new
                  * ApplicationException(
-                 * "Non e' possibile creare la reversale perchË il documento amministrativo selezionato e' stato contabilizzato in parte su accertamenti di competenza e in parte su accertamenti a residuo"
+                 * "Non e' possibile creare la reversale perch√® il documento amministrativo selezionato e' stato contabilizzato in parte su accertamenti di competenza e in parte su accertamenti a residuo"
                  * ); }
                  */
 
@@ -5412,7 +5412,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
             if (mandato.getSospeso_det_uscColl().size() > 0)
                 throw new ApplicationException(
-                        "Il mandato di regolarizzazione non puÚ avere sospesi associati");
+                        "Il mandato di regolarizzazione non pu√≤ avere sospesi associati");
         } catch (Exception e) {
             throw handleException(e);
         }
@@ -5423,7 +5423,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * annullamento mandato su anticipo associato a missione PreCondition: E'
      * stata generata la richiesta di annullare un Mandato Il mandato include un
      * anticipo L'anticipo e' associato a missione PostCondition: Una
-     * segnalazione di errore comunica all'utente l'impossibilit‡ di eseguire
+     * segnalazione di errore comunica all'utente l'impossibilit√† di eseguire
      * l'annullamento
      * <p>
      * annullamento mandato su anticipo non associato a missione PreCondition:
@@ -5484,26 +5484,26 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * richiesta la creazione/modifica di un mandato Le righe del mandato hanno
      * come tipo di pagamento BANCARIO Le righe del mandato hanno coordinate
      * bancarie (abi, cab, nr conto) differenti PostCondition: Un messaggio di
-     * errore viene visualizzato all'utente per segnalare l'impossibilit‡ di
+     * errore viene visualizzato all'utente per segnalare l'impossibilit√† di
      * salvare il mandato verifica mandato - errore mod. pagamento postale
      * PreCondition: E' stata richiesta la creazione/modifica di un mandato Le
      * righe del mandato hanno come tipo di pagamento POSTALE Le righe del
      * mandato hanno coordinate postali ( nr conto ) differenti PostCondition:
      * Un messaggio di errore viene visualizzato all'utente per segnalare
-     * l'impossibilit‡ di salvare il mandato verifica mandato - errore mod.
+     * l'impossibilit√† di salvare il mandato verifica mandato - errore mod.
      * pagamento quietanza PreCondition: E' stata richiesta la
      * creazione/modifica di un mandato Le righe del mandato hanno come tipo di
      * pagamento QUIETANZA Le righe del mandato hanno quietanze differenti
      * PostCondition: Un messaggio di errore viene visualizzato all'utente per
-     * segnalare l'impossibilit‡ di salvare il mandato verifica mandato - errore
+     * segnalare l'impossibilit√† di salvare il mandato verifica mandato - errore
      * mod. pagamento quietanza PreCondition: E' stata richiesta la
      * creazione/modifica di un mandato Le righe del mandato hanno come tipo di
      * pagamento ALTRO Le righe del mandato hanno intestazioni differenti
      * PostCondition: Un messaggio di errore viene visualizzato all'utente per
-     * segnalare l'impossibilit‡ di salvare il mandato verifica mandato - ok
+     * segnalare l'impossibilit√† di salvare il mandato verifica mandato - ok
      * PreCondition: E' stata richiesta la creazione/modifica di un mandato Le
      * righe del mandato hanno la stesse coordinate di pagamento PostCondition:
-     * Il mandato ha superato la validazione e puÚ pertanto essere salvato
+     * Il mandato ha superato la validazione e pu√≤ pertanto essere salvato
      *
      * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoBulk</code> il mandato di cui si verifica la
@@ -5532,17 +5532,17 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         new Rif_modalita_pagamentoBulk(riga.getModalita_pagamento().getCd_modalita_pag()));
                 if (rifModPag.isMandatoRegSospeso() && !mandato.isRegolamentoSospeso())
                     throw new ApplicationException(
-                            "Attenzione per la modalit‡ di pagamento indicata il mandato deve essere a regolamento sospeso.");
+                            "Attenzione per la modalit√† di pagamento indicata il mandato deve essere a regolamento sospeso.");
                 if(rifModPag.getCd_modalita_pag().compareTo("F24EP")==0 && mandato.getDt_pagamento_richiesta()==null )
                 	throw new ApplicationException(
-                            "Attenzione per la modalit‡ di pagamento indicata il mandato deve avere la data pagamento richiesta.");
+                            "Attenzione per la modalit√† di pagamento indicata il mandato deve avere la data pagamento richiesta.");
                 if(rifModPag.getCd_modalita_pag().compareTo("F24EP")!=0 && mandato.getDt_pagamento_richiesta()!=null )
                 	throw new ApplicationException(
-                            "Attenzione per la modalit‡ di pagamento "+rifModPag.getCd_modalita_pag()+" la data pagamento richiesta non deve essere indicata."); 
+                            "Attenzione per la modalit√† di pagamento "+rifModPag.getCd_modalita_pag()+" la data pagamento richiesta non deve essere indicata."); 
                 if(rifModPag.getCd_modalita_pag().compareTo("F24EP")==0 && mandato.getDt_pagamento_richiesta()!=null && 
                 	mandato.getDt_emissione()!=null && 	mandato.getDt_pagamento_richiesta().before(mandato.getDt_emissione()))
                 	throw new ApplicationException(
-                            "Attenzione per la modalit‡ di pagamento "+rifModPag.getCd_modalita_pag()+" la data pagamento richiesta non puÚ essere inferiore alla data contabilizzazione.");    	
+                            "Attenzione per la modalit√† di pagamento "+rifModPag.getCd_modalita_pag()+" la data pagamento richiesta non pu√≤ essere inferiore alla data contabilizzazione.");    	
             
             }
             if (riga.getBanca() == null
@@ -5563,7 +5563,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     .getCd_modalita_pag();
 
             /*
-             * verifico che ogni riga abbia le modalit‡ di pagamento e gli
+             * verifico che ogni riga abbia le modalit√† di pagamento e gli
              * attributi della banca uguali
              */
             /* vengono escluse dal test le note di debito e le note di credito */
@@ -5579,27 +5579,27 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         && riga.getIm_mandato_riga().compareTo(
                         new BigDecimal(0)) == 0)
                     // si tratta di una nota di credito - non deve essere
-                    // effettuato la verifica delle modalit‡ di pagamento
+                    // effettuato la verifica delle modalit√† di pagamento
                     continue;
 
                 if (!riga.getModalita_pagamento().getCd_modalita_pag().equals(
                         cd_modalita_pag))
                     throw new ApplicationException(
-                            "Attenzione le righe del mandato devono avere la stessa modalit‡ di pagamento");
+                            "Attenzione le righe del mandato devono avere la stessa modalit√† di pagamento");
 
                 // conto bancario
                 if (Rif_modalita_pagamentoBulk.BANCARIO.equals(riga.getBanca()
                         .getTi_pagamento())
                         && !banca.equalsByPrimaryKey(riga.getBanca()))
                     throw new ApplicationException(
-                            "Attenzione le righe del mandato devono avere la stessa modalit‡ di pagamento bancario");
+                            "Attenzione le righe del mandato devono avere la stessa modalit√† di pagamento bancario");
                 else
                     // postale
                     if (Rif_modalita_pagamentoBulk.POSTALE.equals(riga.getBanca()
                             .getTi_pagamento())
                             && !banca.equalsByPrimaryKey(riga.getBanca()))
                         throw new ApplicationException(
-                                "Attenzione le righe del mandato devono avere la stessa modalit‡ di pagamento postale");
+                                "Attenzione le righe del mandato devono avere la stessa modalit√† di pagamento postale");
                     else
                         // quietanza
                         if (Rif_modalita_pagamentoBulk.QUIETANZA.equals(riga.getBanca()
@@ -5615,7 +5615,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                     && !intestazione.equals(riga.getBanca()
                                     .getIntestazione()))
                                 throw new ApplicationException(
-                                        "Attenzione le righe del mandato devono avere la stessa modalit‡ di pagamento");
+                                        "Attenzione le righe del mandato devono avere la stessa modalit√† di pagamento");
             }
         } catch (Exception e) {
             throw handleException(e);
@@ -5627,15 +5627,15 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * PreCondition: E' stata richiesta la creazione/modifica di un mandato che
      * include dei pagamenti 1210 e il mandato non e' a regolamento sospeso
      * PostCondition: Un messaggio di errore viene visualizzato all'utente per
-     * segnalare l'impossibilit‡ di salvare il mandato verifica sospesi da 1210
+     * segnalare l'impossibilit√† di salvare il mandato verifica sospesi da 1210
      * - errore sospeso PreCondition: E' stata richiesta la creazione/modifica
      * di un mandato che include dei pagamenti 1210 e il mandato a regolamento
      * sospeso non include il sospeso definito nel modello 1210 PostCondition:
      * Un messaggio di errore viene visualizzato all'utente per segnalare
-     * l'impossibilit‡ di salvare il mandato verifica sospesi da 1210 - ok
+     * l'impossibilit√† di salvare il mandato verifica sospesi da 1210 - ok
      * PreCondition: E' stata richiesta la creazione/modifica di un mandato e
      * tutti i precedenti controlli sono stati superati PostCondition: Il
-     * mandato ha superato la validazione e puÚ pertanto essere salvato
+     * mandato ha superato la validazione e pu√≤ pertanto essere salvato
      *
      * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoBulk</code> il mandato di cui si verifica la
@@ -5669,7 +5669,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                         + " definito nella lettera di pagamento 1210.");
                     else
                         throw new ApplicationException(
-                                "Attenzione! Il mandato deve essere a regolamento sospeso perchË include lettera di pagamento 1210.");
+                                "Attenzione! Il mandato deve essere a regolamento sospeso perch√® include lettera di pagamento 1210.");
 
             }
         }
@@ -5679,8 +5679,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * Verifica dello stato dell'esercizio
      *
      * @param userContext <code>UserContext</code>
-     * @return FALSE se per il cds interessato non Ë stato inserito nessun
-     * esercizio o se l'esercizio non Ë in stato di "aperto" TRUE in
+     * @return FALSE se per il cds interessato non √® stato inserito nessun
+     * esercizio o se l'esercizio non √® in stato di "aperto" TRUE in
      * tutti gli altri casi
      */
 
@@ -5775,13 +5775,13 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             throws it.cnr.jada.comp.ComponentException {
         if (contaModalitaPagamento(userContext, mandato) > 1)
             throw new ApplicationException(
-                    "Impossibile stampare. Le modalit‡ di pagamento dei dettagli del mandato sono diverse.");
+                    "Impossibile stampare. Le modalit√† di pagamento dei dettagli del mandato sono diverse.");
     }
 
     /*
      * creazione variazione di bilancio di regolarizzazione PreCondition: E'
      * stata generata la richiesta di creazione di una variazione di bilancio
-     * Ente per ridurre le disponibilit‡ di importi nel bilancio di servizio da
+     * Ente per ridurre le disponibilit√† di importi nel bilancio di servizio da
      * assegnare a seguito di emissione di una reversale di regolarizzazione
      * PostCondition: Viene richiesta alla Component che gestisce le Variazioni
      * di Bilancio la creazione di una variazione di regolarizzazione a partire
@@ -5820,12 +5820,12 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             }
         } catch (Exception e) {
             try {
-                String soggetto = "Si Ë verificato un errore durante l'approvazione della variazione sul bilancio dell'ente "
+                String soggetto = "Si √® verificato un errore durante l'approvazione della variazione sul bilancio dell'ente "
                         + mandato.getVar_bilancio().getEsercizio()
                         + "/"
                         + mandato.getVar_bilancio().getPg_variazione();
 
-                String preText = "Si Ë verificato il seguente errore durante l'approvazione della variazione sul bilancio dell'ente "
+                String preText = "Si √® verificato il seguente errore durante l'approvazione della variazione sul bilancio dell'ente "
                         + mandato.getVar_bilancio().getEsercizio()
                         + "/"
                         + mandato.getVar_bilancio().getPg_variazione()
@@ -5840,7 +5840,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         + "<b>"
                         + e.getMessage()
                         + "</b><BR><BR>"
-                        + "La Variazione al bilancio dell'Ente rimarr‡ pertanto PROVVISORIA.<BR>";
+                        + "La Variazione al bilancio dell'Ente rimarr√† pertanto PROVVISORIA.<BR>";
 
                 generaEMAIL(userContext, mandato, soggetto, preText, null,
                         "ERR");
@@ -6038,7 +6038,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * corrisponde con l'importo della riga stessa PreCondition: E' stata
      * generata la richiesta di verificare che la riga del mandato sia associata
      * completamente a codici SIOPE PostCondition: Ritorna TRUE se la riga del
-     * mandato Ë associata completamente a codici SIOPE
+     * mandato √® associata completamente a codici SIOPE
      *
      * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
      * @param riga <code>Mandato_rigaBulk</code> la riga mandato da controllare
@@ -6184,7 +6184,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
                 if (riga.getCd_modalita_pag() == null || riga.getCd_tipo_documento_amm() == null)
                     throw new ApplicationException(
-                            "Attenzione! esistono righe del mandato per cui non risulta valorizzata la modalit‡ di pagamento oppure il tipo di documento amministrativo");
+                            "Attenzione! esistono righe del mandato per cui non risulta valorizzata la modalit√† di pagamento oppure il tipo di documento amministrativo");
                 try {
                     LoggableStatement cs = new LoggableStatement(
                             getConnection(userContext), "{  call "

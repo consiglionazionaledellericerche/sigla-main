@@ -69,9 +69,9 @@ public java.lang.Long getPg_lettera() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'flCancellazione'
+ * Restituisce il valore della propriet√† 'flCancellazione'
  *
- * @return Il valore della propriet‡ 'flCancellazione'
+ * @return Il valore della propriet√† 'flCancellazione'
  */
 public boolean isFlCancellazione() {
 	return flCancellazione;
@@ -86,7 +86,7 @@ public void setCd_sospeso(java.lang.String newCd_sospeso) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'flCancellazione'
+ * Imposta il valore della propriet√† 'flCancellazione'
  *
  * @param newFlCancellazione	Il valore da assegnare a 'flCancellazione'
  */

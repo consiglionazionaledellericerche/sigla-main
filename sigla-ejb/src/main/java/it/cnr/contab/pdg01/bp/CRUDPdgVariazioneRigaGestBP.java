@@ -151,14 +151,14 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
              validaRiga(actioncontext,dett); 
                 if(dett!=null && dett.getIm_spese_gest_accentrata_int()!=null && dett.getIm_spese_gest_decentrata_int()!=null &&				   
                    dett.getIm_spese_gest_accentrata_int().compareTo(BigDecimal.ZERO)!=0 && dett.getIm_spese_gest_decentrata_int().compareTo(BigDecimal.ZERO)!=0 )
-       	                throw new ValidationException("Non è possibile indicare sulla stessa riga di variazione sia le spese Decentrate Esterne che le spese Accentrate Esterne, inserire un nuovo dettaglio.");				
+       	                throw new ValidationException("Non Ã¨ possibile indicare sulla stessa riga di variazione sia le spese Decentrate Esterne che le spese Accentrate Esterne, inserire un nuovo dettaglio.");				
                 else if(dett!=null && dett.getIm_spese_gest_accentrata_est()!=null && dett.getIm_spese_gest_decentrata_est()!=null &&	
       	           dett.getIm_spese_gest_accentrata_est().compareTo(BigDecimal.ZERO)!=0 && dett.getIm_spese_gest_decentrata_est().compareTo(BigDecimal.ZERO)!=0 )	
-      	                throw new ValidationException("Non è possibile indicare sulla stessa riga di variazione sia le spese Decentrate Esterne che le spese Accentrate Esterne, inserire un nuovo dettaglio.");			
+      	                throw new ValidationException("Non Ã¨ possibile indicare sulla stessa riga di variazione sia le spese Decentrate Esterne che le spese Accentrate Esterne, inserire un nuovo dettaglio.");			
                 else if(dett!=null && dett.getIm_spese_gest_accentrata_int()!=null && dett.getIm_spese_gest_accentrata_int().compareTo(BigDecimal.ZERO)<0)	
-                        throw new ValidationException("Non è possibile indicare un importo negativo per le spese Accentrare Interne, le restituzioni si registrano chiamando a partecipare alla variazione il CdR della SAC titolare della Spesa.");	
+                        throw new ValidationException("Non Ã¨ possibile indicare un importo negativo per le spese Accentrare Interne, le restituzioni si registrano chiamando a partecipare alla variazione il CdR della SAC titolare della Spesa.");	
                 else if(dett!=null && dett.getIm_spese_gest_accentrata_est()!=null && dett.getIm_spese_gest_accentrata_est().compareTo(BigDecimal.ZERO)<0)
-                	throw new ValidationException("Non è possibile indicare un importo negativo per le spese Accentrare Esterne, le restituzioni si registrano chiamando a partecipare alla variazione il CdR della SAC titolare della Spesa.");		
+                	throw new ValidationException("Non Ã¨ possibile indicare un importo negativo per le spese Accentrare Esterne, le restituzioni si registrano chiamando a partecipare alla variazione il CdR della SAC titolare della Spesa.");		
                 else{								
                   super.validate(actioncontext, oggettobulk);	
                   calcolaTotaleQuotaSpesaRipartita();			
@@ -215,7 +215,7 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 				    riga.getCd_linea_attivita().compareTo(oggettobulk.getCd_linea_attivita())==0 &&
 				    riga.getCd_elemento_voce()!=null && oggettobulk.getCd_elemento_voce()!=null &&
 				    riga.getCd_elemento_voce().compareTo(oggettobulk.getCd_elemento_voce())==0)
-				throw new ValidationException ("Attenzione: combinazione Esercizio/CdR/Area/G.A.E./Voce già inserita!");
+				throw new ValidationException ("Attenzione: combinazione Esercizio/CdR/Area/G.A.E./Voce giÃ  inserita!");
 			}
 	
 		Ass_pdg_variazione_cdrBulk ass = (Ass_pdg_variazione_cdrBulk)this.getModel();
@@ -237,7 +237,7 @@ public class CRUDPdgVariazioneRigaGestBP extends SimpleCRUDBP {
 							riga.getCd_linea_attivita().compareTo(oggettobulk.getCd_linea_attivita())==0 &&
 							riga.getCd_elemento_voce()!=null && oggettobulk.getCd_elemento_voce()!=null &&
 							riga.getCd_elemento_voce().compareTo(oggettobulk.getCd_elemento_voce())==0)
-				throw new ValidationException ("Attenzione: combinazione Esercizio/CdR/Area/G.A.E./Voce già inserita!");
+				throw new ValidationException ("Attenzione: combinazione Esercizio/CdR/Area/G.A.E./Voce giÃ  inserita!");
 		}
 	}
 	

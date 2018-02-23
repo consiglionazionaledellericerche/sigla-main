@@ -44,7 +44,7 @@ public void caricaPdg(it.cnr.jada.action.ActionContext context,it.cnr.contab.con
 	}
 
 /*
- * Fake method: la ricerca su piano di gestione non Ë gestita direttamente
+ * Fake method: la ricerca su piano di gestione non √® gestita direttamente
  */
 
 public it.cnr.jada.util.RemoteIterator find(
@@ -74,9 +74,9 @@ public it.cnr.jada.util.RemoteIterator find(it.cnr.jada.action.ActionContext act
 
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOStato'
+ * Restituisce il valore della propriet√† 'rOStato'
  *
- * @return Il valore della propriet‡ 'rOStato'
+ * @return Il valore della propriet√† 'rOStato'
  */
 public boolean isROStato() {
 		return roStato;

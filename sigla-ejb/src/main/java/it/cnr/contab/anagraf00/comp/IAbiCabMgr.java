@@ -18,11 +18,11 @@ public interface IAbiCabMgr extends it.cnr.jada.comp.ICRUDMgr {
  */
 public AbicabBulk findCaps(UserContext userContext, AbicabBulk abiCab) throws ComponentException;
 /**
- * Ricerca TRUE se l'oggetto bulk è cancellato logicamento
+ * Ricerca TRUE se l'oggetto bulk Ã¨ cancellato logicamento
  *
  * @param userContext	lo UserContext che ha generato la richiesta
  * @param abiCab		L'abiCab in uso
- * @return TRUE se l'oggetto byulk è cancellato logicamento, FALSE altrimenti
+ * @return TRUE se l'oggetto byulk Ã¨ cancellato logicamento, FALSE altrimenti
  */
 public boolean isCancellatoLogicamente(UserContext userContext, AbicabBulk abiCab) throws ComponentException;
 }

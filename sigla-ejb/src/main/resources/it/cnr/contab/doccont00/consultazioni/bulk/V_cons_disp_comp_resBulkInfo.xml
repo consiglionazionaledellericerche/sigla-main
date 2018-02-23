@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -187,7 +187,7 @@
 		property="disp_comp"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Disponibilità  (F=D-E)" />
+		label="DisponibilitÃ   (F=D-E)" />
 	<fieldProperty
 		name="pagato_comp"
 		property="pagato_comp"
@@ -265,7 +265,7 @@
 		property="disp_res"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Disponibiltà residui    (U=N-O-Q+R-T)" />
+		label="DisponibiltÃ  residui    (U=N-O-Q+R-T)" />
 	<fieldProperty
 		name="pagato_res"
 		property="pagato_res"

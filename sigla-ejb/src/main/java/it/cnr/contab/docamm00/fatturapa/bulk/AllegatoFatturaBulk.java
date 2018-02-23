@@ -16,12 +16,12 @@ public class AllegatoFatturaBulk extends AllegatoGenericoBulk {
 
 	static {
 		aspectNamesKeys.put("P:sigla_fatture_attachment:durc","DURC");
-		aspectNamesKeys.put("P:sigla_fatture_attachment:tacciabilita","Tracciabilit‡");
+		aspectNamesKeys.put("P:sigla_fatture_attachment:tacciabilita","Tracciabilit√†");
 		aspectNamesKeys.put("P:sigla_fatture_attachment:prestazione_resa","Prestazione Resa");
 		aspectNamesKeys.put("P:sigla_fatture_attachment:altro","Altro");
 
 		aspectNamesDecorrenzaTerminiKeys = (OrderedHashtable) aspectNamesKeys.clone();
-		aspectNamesDecorrenzaTerminiKeys.put("P:sigla_fatture_attachment:comunicazione_non_registrabilita","Comunicazione di non registrabilit‡");
+		aspectNamesDecorrenzaTerminiKeys.put("P:sigla_fatture_attachment:comunicazione_non_registrabilita","Comunicazione di non registrabilit√†");
 	}
 	private String aspectName;
 

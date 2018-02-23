@@ -45,7 +45,7 @@
     <td></td>
   </tr>
   <tr> 
-    <td colspan=4><b>Stampa aggregata per unit‡ organizzativa</b>
+    <td colspan=4><b>Stampa aggregata per unit√† organizzativa</b>
     </td>
   </tr>
   <tr> 

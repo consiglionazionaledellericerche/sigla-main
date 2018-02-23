@@ -28,7 +28,7 @@ public class V_struttura_organizzativaHome extends BulkHome {
 	 * Metodo per cercare nella struttura organizzativa dell'esercizio <code>esercizio</code> 
 	 * tutte le UO appartenenti al CDS cui appartiene la UO richiedente.
 	 *
-	 * @param uo <code>UnitaOrganizzativaBulk</code> l'Unit‡ Organizzativa richiedente
+	 * @param uo <code>UnitaOrganizzativaBulk</code> l'Unit√† Organizzativa richiedente
 	 * @param esercizio <code>int</code> l'esercizio della struttura organizzativa da interrogare
 	 *
 	 * @return result una collection di Uo <Unita_organizzativeBulk> appartenenti al CDS di appartenenza della UO richiedente nell'esercizio indicato.
@@ -56,7 +56,7 @@ public class V_struttura_organizzativaHome extends BulkHome {
 	 * Metodo per cercare nella struttura organizzativa dell'esercizio <code>esercizio</code> 
 	 * tutte i CDR appartenenti alla UO richiedente.
 	 *
-	 * @param uo <code>UnitaOrganizzativaBulk</code> l'Unit‡ Organizzativa richiedente
+	 * @param uo <code>UnitaOrganizzativaBulk</code> l'Unit√† Organizzativa richiedente
 	 * @param esercizio <code>int</code> l'esercizio della struttura organizzativa da interrogare
 	 *
 	 * @return result una Collection di Cdr <CdrBulk> appartenenti alla UO richiedente nell'esercizio indicato.
@@ -80,7 +80,7 @@ public class V_struttura_organizzativaHome extends BulkHome {
 	 * Metodo per cercare nella struttura organizzativa dell'esercizio <code>esercizio</code> 
 	 * il CDR di riferimento della CDS cui appartiene la UO richiedente.
 	 *
-	 * @param uo <code>UnitaOrganizzativaBulk</code> l'Unit‡ Organizzativa richiedente
+	 * @param uo <code>UnitaOrganizzativaBulk</code> l'Unit√† Organizzativa richiedente
 	 * @param esercizio <code>int</code> l'esercizio della struttura organizzativa da interrogare
 	 *
 	 * @return result il Cdr <CdrBulk> di riferimento della CDS cui appartiene la UO richiedente nell'esercizio indicato.
@@ -113,7 +113,7 @@ public class V_struttura_organizzativaHome extends BulkHome {
 	 * Metodo per cercare nella struttura organizzativa dell'esercizio <code>esercizio</code> 
 	 * il CDR di riferimento della UO richiedente.
 	 *
-	 * @param uo <code>UnitaOrganizzativaBulk</code> l'Unit‡ Organizzativa richiedente
+	 * @param uo <code>UnitaOrganizzativaBulk</code> l'Unit√† Organizzativa richiedente
 	 * @param esercizio <code>int</code> l'esercizio della struttura organizzativa da interrogare
 	 *
 	 * @return result il Cdr <CdrBulk> di riferimento della UO richiedente nell'esercizio indicato.

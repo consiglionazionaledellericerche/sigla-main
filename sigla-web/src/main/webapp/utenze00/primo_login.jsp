@@ -22,7 +22,7 @@
 			<table class="Panel">
 			  <tr>
 				<td rowspan="2"><img src="img/question.gif"></td>
-			  	<td>Questo è il primo login.</td>
+			  	<td>Questo Ã¨ il primo login.</td>
 			  </tr>
 			  <tr>
 			  	<td>E' necessario assegnare una password</td>

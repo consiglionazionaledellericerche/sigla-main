@@ -34,7 +34,7 @@ public final it.cnr.jada.util.action.SimpleDetailCRUDController getUoDisponibili
 	return uoDisponibili;
 }
 /**
- * Abilita il pulsante di ASSOCIA solo se lo stato del processo è EDIT.
+ * Abilita il pulsante di ASSOCIA solo se lo stato del processo Ã¨ EDIT.
  *
  * @return <code>boolean</code> lo stato del pulsante
  */
@@ -60,7 +60,7 @@ public boolean isBottoneImpostaUoEnabled() {
 	return (false);	// disabilitato
 }
 /**
- * Abilita il pulsante di RIMUOVI solo se lo stato del processo è EDIT.
+ * Abilita il pulsante di RIMUOVI solo se lo stato del processo Ã¨ EDIT.
  *
  * @return <code>boolean</code> lo stato del pulsante
  */

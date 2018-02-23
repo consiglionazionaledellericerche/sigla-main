@@ -148,7 +148,7 @@ public class CRUDPdgModuloSpeseGestBP extends SimpleCRUDBP {
 	}
 	/*
 	 * I dettagli gestionali non possono essere mai gestiti se:
-	 * - Il dettaglio è stato generato dalla ripartizione dei costi del personale 
+	 * - Il dettaglio Ã¨ stato generato dalla ripartizione dei costi del personale 
 	 *   (Classificazione_voci.Fl_accentrato = 'N' e Classificazione_voci.Fl_decentrato = 'N') 
 	 */
 	public boolean isDettagliGestionaliEnable(Pdg_modulo_speseBulk dett) {
@@ -161,9 +161,9 @@ public class CRUDPdgModuloSpeseGestBP extends SimpleCRUDBP {
 		}
 	}
 	/*
-	 * Il singolo dettaglio gestionale non può essere mai gestito se:
-	 * - Il CDR collegato è quello di primo livello (corrispondente al CDR della testata)
-	 * - Il CDR collegato è uguale al CDR Assegnatario
+	 * Il singolo dettaglio gestionale non puÃ² essere mai gestito se:
+	 * - Il CDR collegato Ã¨ quello di primo livello (corrispondente al CDR della testata)
+	 * - Il CDR collegato Ã¨ uguale al CDR Assegnatario
 	 */
 	public boolean isDettaglioGestionaleEnable(Pdg_modulo_spese_gestBulk dett) {
 		try {

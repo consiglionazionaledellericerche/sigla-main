@@ -333,7 +333,7 @@ public java.lang.Integer getCd_ente_appartenenza() {
 		return comune_nascita;
 	}
 	/**
-	 * Ritorna la concatenazione di 3 campi rappresentativi dell'entit‡ anagrafica (nome/cognome e ragione sociale).
+	 * Ritorna la concatenazione di 3 campi rappresentativi dell'entit√† anagrafica (nome/cognome e ragione sociale).
 	 *
 	 * @return La descrizione.
 	 */
@@ -362,7 +362,7 @@ public java.lang.Boolean getFl_codice_fiscale_forzato() {
 	return fl_codice_fiscale_forzato;
 }
 	/**
-	 * Restituisce il <code>NazioneBulk</code> relativo alla nazione della nazionalit‡ selezionata.
+	 * Restituisce il <code>NazioneBulk</code> relativo alla nazione della nazionalit√† selezionata.
 	 *
 	 * @return it.cnr.jada.bulk.BulkList
 	 *
@@ -411,7 +411,7 @@ public java.lang.Long getPg_nazione_nazionalita() {
 		return rapporti;
 	}
 	/**
-	 * Restituisce il <code>Dictionary</code> per la gestione dei tipi di entit‡ fisica.
+	 * Restituisce il <code>Dictionary</code> per la gestione dei tipi di entit√† fisica.
 	 *
 	 * @return java.util.Dictionary
 	 */
@@ -420,7 +420,7 @@ public java.lang.Long getPg_nazione_nazionalita() {
 		return ENTITA_FISICA;
 	}
 	/**
-	 * Restituisce il <code>Dictionary</code> per la gestione dei tipi di entit‡ giuridica.
+	 * Restituisce il <code>Dictionary</code> per la gestione dei tipi di entit√† giuridica.
 	 *
 	 * @return java.util.Dictionary
 	 */
@@ -437,7 +437,7 @@ public int getTi_entita_persona_struttura() {
 	return ti_entita_persona_struttura;
 }
 	/**
-	 * Restituisce il <code>Dictionary</code> per la gestione dei tipi di entit‡.
+	 * Restituisce il <code>Dictionary</code> per la gestione dei tipi di entit√†.
 	 *
 	 * @return java.util.Dictionary
 	 */
@@ -810,7 +810,7 @@ public void setFl_codice_fiscale_forzato(java.lang.Boolean newFl_codice_fiscale_
 	fl_codice_fiscale_forzato = newFl_codice_fiscale_forzato;
 }
 	/**
-	 * Imposta il <code>NazioneBulk</code> relativo alla nazione della nazionalit‡ selezionata.
+	 * Imposta il <code>NazioneBulk</code> relativo alla nazione della nazionalit√† selezionata.
 	 *
 	 * @param newNazionalita <code>it.cnr.jada.bulk.BulkList</code>
 	 *
@@ -877,7 +877,7 @@ public void setTi_entita_persona_struttura(int newTi_entita_persona_struttura) {
 	public void validate() throws ValidationException{
 		super.validate();
 		if(getDt_nascita()!=null && getDt_nascita().after(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()))
-			throw new ValidationException("La Data di nascita non puÚ essere antecedente alla data odierna");
+			throw new ValidationException("La Data di nascita non pu√≤ essere antecedente alla data odierna");
 		if (getFl_cervellone() == true && getDt_inizio_res_italia()==null)
 			throw new ValidationException("Inserire la Data di Inizio residenza/domicilio in italia");
 		if (getFl_abilita_diaria_miss_est() == true && (getDt_inizio_diaria_miss_est()==null || getDt_fine_diaria_miss_est()==null))
