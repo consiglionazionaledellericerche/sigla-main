@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -45,7 +45,7 @@
 		maxLength="30"
 		inputSize="30"
 		inputType="TEXT"
-		label="Codice Unità Organizzativa"
+		label="Codice UnitÃ  Organizzativa"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="esercizio"
@@ -82,7 +82,7 @@
 		maxLength="30"
 		inputSize="30"
 		inputType="TEXT"
-		label="Codice Centro Responsabilità"
+		label="Codice Centro ResponsabilitÃ "
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="cd_proprio_voce"

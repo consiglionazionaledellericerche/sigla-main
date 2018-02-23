@@ -9,7 +9,7 @@ import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.jsp.Button;
 
 /**
- * Business process che gestisce attivit‡ relative alla situazione del CdS.
+ * Business process che gestisce attivit√† relative alla situazione del CdS.
  */
 
 public class SituazioneCdSBP extends it.cnr.jada.util.action.SimpleCRUDBP {
@@ -55,7 +55,7 @@ public void cercaObbligazioniCds(it.cnr.jada.action.ActionContext context) throw
 	}
 }
 /**
- * Metodo utilizzato per la ricerca di tutti i CdS e della loro disponibilit‡ di cassa
+ * Metodo utilizzato per la ricerca di tutti i CdS e della loro disponibilit√† di cassa
  * @param context Il contesto dell'azione
  */
 
@@ -85,7 +85,7 @@ public void cercaTuttiCds(it.cnr.jada.action.ActionContext context) throws it.cn
 /**
  * Metodo utilizzato per creare una toolbar applicativa personalizzata.
  *
- * @return null In questo caso la toolbar Ë vuota
+ * @return null In questo caso la toolbar √® vuota
  */
 
 protected it.cnr.jada.util.jsp.Button[] createToolbar() {

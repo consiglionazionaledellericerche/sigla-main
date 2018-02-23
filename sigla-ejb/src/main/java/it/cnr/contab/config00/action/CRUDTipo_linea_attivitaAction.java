@@ -40,7 +40,7 @@ public Forward doAddToCRUDMain_cdrAssociati(ActionContext context) {
 }
 
 /**
- * Seleziona i CDR associati al tipo di linea di attivit‡ in processo
+ * Seleziona i CDR associati al tipo di linea di attivit√† in processo
  *
  * @param context	L'ActionContext della richiesta
  * @return Il Forward alla pagina di risposta

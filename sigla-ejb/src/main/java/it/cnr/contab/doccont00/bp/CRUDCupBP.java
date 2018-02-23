@@ -60,10 +60,10 @@ public class CRUDCupBP extends SimpleCRUDBP {
 		if ( bulk.getCdCup()==null) 
 			throw new ValidationException("E' necessario inserire il Codice");
 		if (  bulk.getCdCup().length()!=15) 
-			throw new ValidationException("La lunghezza del Codice non è valida");
+			throw new ValidationException("La lunghezza del Codice non Ã¨ valida");
 		for (int i = 0;i < bulk.getCdCup().length();i++)
 			if (!Character.isLetterOrDigit(bulk.getCdCup().charAt(i)))
-				throw new ValidationException( "Il codice cup può essere composto solo da cifre o lettere e non può contenere spazi o caratteri speciali." );
+				throw new ValidationException( "Il codice cup puÃ² essere composto solo da cifre o lettere e non puÃ² contenere spazi o caratteri speciali." );
 		if ( bulk.getDescrizione()==null) 
 			throw new ValidationException("E' necessario inserire la Descrizione");
 	}

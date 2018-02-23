@@ -37,7 +37,7 @@ public class Pdg_esercizioBulk extends Pdg_esercizioBase {
 
 	/**
 	 * Metodo statico che permette di recuperare il valore dei possibili stati 
-	 * che può assumere un esercizio contabile.
+	 * che puÃ² assumere un esercizio contabile.
 	 * @return prossimoStato Variabile di tipo <code>Hashtable</code> che 
 	 * 						 contiene codici e relative descrizioni degli stati.
 	 */

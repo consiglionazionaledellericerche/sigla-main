@@ -42,10 +42,10 @@ public class ConsGAEComResSintComponent extends CRUDComponent {
 	}			
 	/**
 	 * Individua e completa l'SQLBuilder da utilizzare:
-	 * 1) è stata effettuata una ricerca mirata (<findClause> != null)
-	 * 	  la select finale è costruita come interrogazione di una view costruita sulla select principale <baseClause>
-	 * 2) non è stata fatta una ricerca mirata
-	 * 	  la select finale è uguale alla select principale
+	 * 1) Ã¨ stata effettuata una ricerca mirata (<findClause> != null)
+	 * 	  la select finale Ã¨ costruita come interrogazione di una view costruita sulla select principale <baseClause>
+	 * 2) non Ã¨ stata fatta una ricerca mirata
+	 * 	  la select finale Ã¨ uguale alla select principale
 	 *
 	 * @param sql la select principale contenente le Sum e i GroupBy
 	 * @param tabAlias l'alias della tabella da aggiungere alle colonne interrogate

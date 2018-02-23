@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -145,6 +145,7 @@
 		property="tipologia"
 		inputType="SELECT"
 		keysProperty="ti_tipologiaKeys"
+		command="doDefault"
 		readonlyProperty="ROTipologia"
 		maxLength="10"
 		enabledOnInsert="true"
@@ -224,7 +225,37 @@
         enabledOnSearch="true"		
         inputSize="100"
 		maxLength="300"
-		label="Descrizione" />		
+		label="Descrizione" />
+		
+	<fieldProperty
+		name="mapMotivazioneVariazione"
+		property="mapMotivazioneVariazione"
+		inputType="SELECT"		
+		keysProperty="tiMotivazioneVariazioneKeys"
+		maxLength="10"
+		command="doOnChangeMapMotivazioneVariazione"
+		enabledOnInsert="true"
+        enabledOnSearch="true"
+        enabledOnEdit="true"                
+		nullable="false"
+		label="Motivo Variazione" />
+	<fieldProperty
+		name="idMatricola"
+		property="idMatricola"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		label="Matricola" />
+	<fieldProperty
+		name="idBando"
+		property="idBando"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		label="Dettagli Bando" />
+		
 	<form name="searchtool">
     	<formFieldProperty
     		name="esercizio" />
@@ -289,6 +320,12 @@
 		name="pg_variazione_bilancio" />
 	<formFieldProperty
 		name="ds_variazione_bilancio" />		
+	<formFieldProperty
+		name="mapMotivazioneVariazione" />
+	<formFieldProperty
+		name="idMatricola" />
+	<formFieldProperty
+		name="idBando" />
 		
 	<findFieldProperty
 		name="esercizio" />

@@ -302,12 +302,12 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 		    		if (!crudbp.isUoEnte()&&!crudbp.isUtenteAbilitatoFunzioniIncarichi())
 	   				    throw new ValidationException( "Eliminazione consentita solo ad utenti con l'abilitazione alle funzioni di direttore di istituto.");
 		    		if (crudbp.isIncaricoUtilizzato(actioncontext))
-		    			return openConfirm(actioncontext, "Attenzione! Avendo la procedura incarico associati gi‡ utilizzati, non sar‡ eliminata/stornata ma chiusa. \n" +
-		    					"Dopo l'operazione non sar‡ piu' possibile utilizzare la procedura di conferimento incarichi. \n" +
+		    			return openConfirm(actioncontext, "Attenzione! Avendo la procedura incarico associati gi√† utilizzati, non sar√† eliminata/stornata ma chiusa. \n" +
+		    					"Dopo l'operazione non sar√† piu' possibile utilizzare la procedura di conferimento incarichi. \n" +
 		    					"Vuoi procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmChiudiProceduraIncarico");
 		    	}
 				return openConfirm(actioncontext, "Attenzione! \n" +
-						"Dopo l'operazione non sar‡ piu' possibile utilizzare l'incarico. \n" +
+						"Dopo l'operazione non sar√† piu' possibile utilizzare l'incarico. \n" +
 						"Vuoi procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmStornaProceduraIncarico");
 		    }
 		    return actioncontext.findDefaultForward();
@@ -358,10 +358,10 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 	        bp.validate(context);
 	        Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)bp.getIncarichiColl().getModel();
         	if (incarico.isIncaricoProvvisorio() && incarico.getFl_inviato_corte_conti() && incarico.getEsito_corte_conti()==null)
-        		return openConfirm(context, "Attenzione! E' stato selezionato l'invio alla Corte dei Conti. Dopo il salvataggio non sar‡ pi˘ possibile modificare i dati inseriti. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmSalvaDefinitivo");
+        		return openConfirm(context, "Attenzione! E' stato selezionato l'invio alla Corte dei Conti. Dopo il salvataggio non sar√† pi√π possibile modificare i dati inseriti. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmSalvaDefinitivo");
         	else if (incarico.getFl_inviato_corte_conti() && incarico.getEsito_corte_conti()!=null && incarico.getEsito_corte_conti().equals(Incarichi_repertorioBulk.ESITO_ILLEGITTIMO))
-       			return openConfirm(context, "Attenzione! L'esito del controllo della Corte dei Conti Ë stato definito \"ILLEGITTIMO\". L'incarico sar‡ annullato. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmConcludiMonoIncarico");
-        	return openConfirm(context, "Attenzione! Dopo il salvataggio definitivo non sar‡ pi˘ possibile modificare i dati inseriti. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmSalvaDefinitivo");
+       			return openConfirm(context, "Attenzione! L'esito del controllo della Corte dei Conti √® stato definito \"ILLEGITTIMO\". L'incarico sar√† annullato. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmConcludiMonoIncarico");
+        	return openConfirm(context, "Attenzione! Dopo il salvataggio definitivo non sar√† pi√π possibile modificare i dati inseriti. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmSalvaDefinitivo");
 		}		
 		catch(Throwable e) 
 		{
@@ -394,10 +394,10 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 	        bp.validate(context);
 	        Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)bp.getIncarichiColl().getModel();
         	if (incarico.isIncaricoProvvisorio() && incarico.getFl_inviato_corte_conti() && incarico.getEsito_corte_conti()==null)
-        		return openConfirm(context, "Attenzione! E' stato selezionato l'invio alla Corte dei Conti. Dopo il salvataggio non sar‡ pi˘ possibile modificare i dati inseriti. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmSalvaDefinitivoContratto");
+        		return openConfirm(context, "Attenzione! E' stato selezionato l'invio alla Corte dei Conti. Dopo il salvataggio non sar√† pi√π possibile modificare i dati inseriti. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmSalvaDefinitivoContratto");
         	else if (incarico.getFl_inviato_corte_conti() && incarico.getEsito_corte_conti()!=null && incarico.getEsito_corte_conti().equals(Incarichi_repertorioBulk.ESITO_ILLEGITTIMO))
-        		return openConfirm(context, "Attenzione! L'esito del controllo della Corte dei Conti Ë stato definito \"ILLEGITTIMO\". L'incarico sar‡ annullato. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmConcludiIncarico");
-			return openConfirm(context, "Attenzione! Dopo il salvataggio definitivo non sar‡ pi˘ possibile modificare il contratto. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmSalvaDefinitivoContratto");
+        		return openConfirm(context, "Attenzione! L'esito del controllo della Corte dei Conti √® stato definito \"ILLEGITTIMO\". L'incarico sar√† annullato. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmConcludiIncarico");
+			return openConfirm(context, "Attenzione! Dopo il salvataggio definitivo non sar√† pi√π possibile modificare il contratto. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmSalvaDefinitivoContratto");
 		}		
 		catch(Throwable e) 
 		{
@@ -433,7 +433,7 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 		try 
 		{
 			fillModel( context );
-			return openConfirm(context, "Attenzione! Si desidera annullare la definitivit‡ della procedura di conferimento incarichi?", OptionBP.CONFIRM_YES_NO, "doConfirmAnnullaDefinitivo");
+			return openConfirm(context, "Attenzione! Si desidera annullare la definitivit√† della procedura di conferimento incarichi?", OptionBP.CONFIRM_YES_NO, "doConfirmAnnullaDefinitivo");
 		}		
 		catch(Throwable e) 
 		{
@@ -464,9 +464,9 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 			Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)(bp.getModel());
 			
 			if (procedura.isProceduraChiusa() ||procedura.isProceduraAnnullata())
-				throw new ValidationException( "Lo stato della procedura di conferimento incarichi non consente di annullare la definitivit‡ del contratto.");
+				throw new ValidationException( "Lo stato della procedura di conferimento incarichi non consente di annullare la definitivit√† del contratto.");
 				
-			return openConfirm(context, "Attenzione! Si desidera annullare la definitivit‡ del contratto?", OptionBP.CONFIRM_YES_NO, "doConfirmAnnullaDefinitivoContratto");
+			return openConfirm(context, "Attenzione! Si desidera annullare la definitivit√† del contratto?", OptionBP.CONFIRM_YES_NO, "doConfirmAnnullaDefinitivoContratto");
 		}		
 		catch(Throwable e) 
 		{
@@ -625,8 +625,8 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 				    throw new ValidationException( "Operazione consentita solo ad utenti con l'abilitazione alle funzioni di direttore di istituto.");
 	    		if (procedura.getIncarichi_repertorioColl().isEmpty())
 	    			return openConfirm(actioncontext, "Attenzione! \n" +
-	    											  "La procedura non ha incarichi associati e pertanto sar‡ eliminata/stornata. \n" + 
-	    											  "Dopo l'operazione non sar‡ piu' possibile utilizzare la procedura. \n" +
+	    											  "La procedura non ha incarichi associati e pertanto sar√† eliminata/stornata. \n" + 
+	    											  "Dopo l'operazione non sar√† piu' possibile utilizzare la procedura. \n" +
 	    											  "Vuoi procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmStornaProceduraIncarico");
 	    		else 
 	    		{
@@ -638,7 +638,7 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 	
 	    			if (procedura.getIncarichi_repertorioColl().size() < procedura.getNr_contratti())    			
 	    				return openConfirm(actioncontext, "Attenzione! \n" +
-	    												  "Dopo l'operazione non sar‡ piu' possibile associare altri incarichi alla procedura. \n" +
+	    												  "Dopo l'operazione non sar√† piu' possibile associare altri incarichi alla procedura. \n" +
 	    												  "Vuoi procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmConcludiProceduraIncarico");
 	    			else
 	    				doConfirmConcludiProceduraIncarico(actioncontext,OptionBP.YES_BUTTON);    				
@@ -683,17 +683,17 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 				    throw new ValidationException( "Operazione consentita solo ad utenti con l'abilitazione alle funzioni di direttore di istituto.");
 	
 		    	if (procedura.getNr_contratti().compareTo(1)!=0)
-				    throw new ValidationException( "Funzionalit‡ consentita solo per procedure di conferimento mono-incarico.");
+				    throw new ValidationException( "Funzionalit√† consentita solo per procedure di conferimento mono-incarico.");
 		    	else if (procedura.getIncarichi_repertorioValidiColl().size()!=1)
-		    		throw new ValidationException( "Funzionalit‡ consentita solo per procedure di conferimento a cui risulta associato un solo incarico.");
+		    		throw new ValidationException( "Funzionalit√† consentita solo per procedure di conferimento a cui risulta associato un solo incarico.");
 		    	else {
 		    		Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)procedura.getIncarichi_repertorioValidiColl().get(0); 
 		    		if (!incarico.isIncaricoDefinitivo())
-			    		throw new ValidationException( "Funzionalit‡ consentita solo per procedura di conferimento a cui risulta associato un solo incarico con stato Definitivo.");
+			    		throw new ValidationException( "Funzionalit√† consentita solo per procedura di conferimento a cui risulta associato un solo incarico con stato Definitivo.");
 		    	}
 	
 	   			return openConfirm(actioncontext, "Attenzione! \n" +
-	   											  "Dopo l'operazione non sar‡ piu' possibile utilizzare l'incarico. \n" +
+	   											  "Dopo l'operazione non sar√† piu' possibile utilizzare l'incarico. \n" +
 	   											  "Vuoi procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmConcludiMonoIncarico");
 	    	}
 		    return actioncontext.findDefaultForward();
@@ -735,12 +735,12 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 				    throw new ValidationException( "Operazione consentita solo ad utenti con l'abilitazione alle funzioni di direttore di istituto.");
 	
 		    	if (procedura.getNr_contratti().compareTo(1)!=1)
-				    throw new ValidationException( "Funzionalit‡ consentita solo per procedure di conferimento multi-incarico.");
+				    throw new ValidationException( "Funzionalit√† consentita solo per procedure di conferimento multi-incarico.");
 		    	else if (procedura.getIncarichi_repertorioValidiColl().size()<=1)
-		    		throw new ValidationException( "Funzionalit‡ consentita solo per procedure di conferimento a cui risultano associati pi˘ incarichi.");
+		    		throw new ValidationException( "Funzionalit√† consentita solo per procedure di conferimento a cui risultano associati pi√π incarichi.");
 	
 	   			return openConfirm(actioncontext, "Attenzione! \n" +
-	   											  "Dopo l'operazione non sar‡ piu' possibile utilizzare l'incarico. \n" +
+	   											  "Dopo l'operazione non sar√† piu' possibile utilizzare l'incarico. \n" +
 	   											  "Vuoi procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmConcludiIncarico");
 	    	}
 		    return actioncontext.findDefaultForward();
@@ -777,7 +777,7 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 
 			if (Utility.nvl(variazione.getImporto_lordo()).compareTo(Utility.ZERO)==-1){
 				variazione.setImporto_lordo(oldImporto);
-				bp.setMessage("Non Ë possibile inserire variazioni di importo negativo.");
+				bp.setMessage("Non √® possibile inserire variazioni di importo negativo.");
 				return context.findDefaultForward();
 			}
 
@@ -798,7 +798,7 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 
 			if (Utility.nvl(variazione.getImporto_complessivo()).compareTo(Utility.ZERO)==-1){
 				variazione.setImporto_complessivo(oldImporto);
-				bp.setMessage("Non Ë possibile inserire variazioni di importo negativo.");
+				bp.setMessage("Non √® possibile inserire variazioni di importo negativo.");
 				return context.findDefaultForward();
 			}
 
@@ -807,7 +807,7 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 				BigDecimal importoMaxVar = variazione.getIncarichi_repertorio().getIncarichi_procedura().getImporto_complessivo().multiply(prcIncrementoVar.divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_EVEN));
 				if (variazione.getImporto_complessivo().compareTo(importoMaxVar)==1) {
 					variazione.setImporto_complessivo(oldImporto);
-					bp.setMessage("Attenzione: la variazione massima consentita per \"Adeguamento Incremento Aliquote\" Ë " + 
+					bp.setMessage("Attenzione: la variazione massima consentita per \"Adeguamento Incremento Aliquote\" √® " + 
 								  new it.cnr.contab.util.EuroFormat().format(importoMaxVar)+
 								  " pari al " + new it.cnr.contab.util.PercentFormat().format(prcIncrementoVar) + 
 								  " dell'importo lordo percipiente.");
@@ -845,7 +845,7 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 				}
 				if (ultimaData!=null && variazione.getDt_fine_validita().compareTo(ultimaData)!=1){
 					variazione.setDt_fine_validita(oldData);
-					bp.setMessage("Non Ë possibile inserire una data inferiore o uguale a quella attualmente valida ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(ultimaData)+").");
+					bp.setMessage("Non √® possibile inserire una data inferiore o uguale a quella attualmente valida ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(ultimaData)+").");
 				}				
 			}
 		} catch (it.cnr.jada.bulk.FillException e){
@@ -991,7 +991,7 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 			CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getBusinessProcess(context);
 			bp.completeSearchTools(context, bp);
 	        bp.validate(context);
-			return openConfirm(context, "Attenzione! Dopo il salvataggio definitivo non sar‡ pi˘ possibile modificare la variazione del contratto. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmSalvaDefinitivoVariazioneContratto");
+			return openConfirm(context, "Attenzione! Dopo il salvataggio definitivo non sar√† pi√π possibile modificare la variazione del contratto. Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmSalvaDefinitivoVariazioneContratto");
 		}		
 		catch(Throwable e) 
 		{
@@ -1243,7 +1243,7 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 				incarico.getIncarichi_procedura().getTipo_prestazione()!=null && 
 				incarico.getIncarichi_procedura().getTipo_prestazione().isPrevistaDaNormeDiLegge()){
 				incarico.setFl_inviato_corte_conti(Boolean.FALSE);
-				throw new ValidationException( "Non \350 possibile selezionare il flag in quanto l'incarico Ë per prestazioni previste da norme di legge!");
+				throw new ValidationException( "Non \350 possibile selezionare il flag in quanto l'incarico √® per prestazioni previste da norme di legge!");
 			}
 			return context.findDefaultForward();
 		}

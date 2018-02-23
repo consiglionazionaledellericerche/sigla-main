@@ -6,7 +6,7 @@
 <html>
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="javascript" src="scripts/css.js"></script>
 <script language="JavaScript" src="scripts/util.js"></script>
@@ -104,7 +104,7 @@ if (window.top.MessageCheckFrame) {
 <%}%>  
 <tr>
 	<% if (bp.getUserInfo().getUtente().isSupervisore()) { %>
-		<td><%	JSPUtils.buttonWithTitle(out,"img/find16.gif","javascript:selezionaListaUnitaOrganizzativa()","Lista Unità Organizzative", bp.getParentRoot().isBootstrap()); %></td>
+		<td><%	JSPUtils.buttonWithTitle(out,"img/find16.gif","javascript:selezionaListaUnitaOrganizzativa()","Lista UnitÃ  Organizzative", bp.getParentRoot().isBootstrap()); %></td>
 	<% } else { %>
 		<td></td>
 	<% } %>
@@ -129,7 +129,7 @@ if (window.top.MessageCheckFrame) {
 </tr>
 <% } %>
 <tr>
-	<td><%	JSPUtils.buttonWithTitle(out,"img/find16.gif","javascript:selezionaUnitaOrganizzativa()","Cambia Unità Organizzativa", bp.getParentRoot().isBootstrap()); %></td>
+	<td><%	JSPUtils.buttonWithTitle(out,"img/find16.gif","javascript:selezionaUnitaOrganizzativa()","Cambia UnitÃ  Organizzativa", bp.getParentRoot().isBootstrap()); %></td>
 	<td><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","cd_unita_organizzativa",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap(), false); %></td>
 	<td align=left><% bp.getUserInfo().writeFormInput(out,"scelta_esercizio_uo","ds_unita_organizzativa",false,null,"onchange=\"javascript:submitForm('doSelezionaEsercizio')\"",null,FormController.EDIT,bp.getFieldValidationMap(), false); %></td>
 </tr>

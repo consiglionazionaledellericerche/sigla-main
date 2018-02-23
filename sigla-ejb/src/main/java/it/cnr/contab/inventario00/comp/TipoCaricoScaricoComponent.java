@@ -33,7 +33,7 @@ public TipoCaricoScaricoComponent() {
   *    PreCondition:
   *      E' stata generata la richiesta di eliminazione di un tipo di Movimento Carico/Scarico dell'Inventario.
   *    PostCondition:
-  *      La cancellazione è solo logica, quindi viene aggiornato il record sul DB relativo 
+  *      La cancellazione Ã¨ solo logica, quindi viene aggiornato il record sul DB relativo 
   *		al movimento di riferimento, impostando la data di cancellazione uguale al TimeStamp.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta

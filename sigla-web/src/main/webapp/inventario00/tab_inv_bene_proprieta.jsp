@@ -17,7 +17,7 @@
 	<center>
 		<h2>Spiacente!<h2>
 		<br>
-		<h3>Questa pagina è... </h3>
+		<h3>Questa pagina Ã¨... </h3>
 	</center>
 	<br>
 	<marquee>

@@ -36,12 +36,12 @@ public class Parametri_cnrBulk extends Parametri_cnrBase {
 
 		super.validate();
 		if (getLivello_contratt_pdg_spe() != null && getLivello_contratt_pdg_spe().compareTo(getLivello_pdg_decis_spe())>0)
-			throw new ValidationException("Il livello di contrattazione Piano di Gestione Spese non può essere\n"+
+			throw new ValidationException("Il livello di contrattazione Piano di Gestione Spese non puÃ² essere\n"+
 				"maggiore del livello di classificazione Spesa PDG Decisionale");
 	}
 
 	/**
-	 * Restituisce il <code>Tipo_rapportoBulk</code> a cui l'oggetto è correlato.
+	 * Restituisce il <code>Tipo_rapportoBulk</code> a cui l'oggetto Ã¨ correlato.
 	 *
 	 * @return it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk
 	 */
@@ -49,7 +49,7 @@ public class Parametri_cnrBulk extends Parametri_cnrBase {
 		return tipo_rapporto;
 	}
 	/**
-	 * Imposta il <code>Tipo_rapportoBulk</code> a cui l'oggetto è correlato.
+	 * Imposta il <code>Tipo_rapportoBulk</code> a cui l'oggetto Ã¨ correlato.
 	 *
 	 * @param newTipo_rapporto il tipo di rapporto.
 	 */
@@ -71,7 +71,7 @@ public class Parametri_cnrBulk extends Parametri_cnrBase {
 		return tipo_rapporto_prof;
 	}
 	/**
-	 * Imposta il <code>Tipo_rapportoBulk</code> a cui l'oggetto è correlato.
+	 * Imposta il <code>Tipo_rapportoBulk</code> a cui l'oggetto Ã¨ correlato.
 	 *
 	 * @param newTipo_rapporto il tipo di rapporto.
 	 */

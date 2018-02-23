@@ -167,7 +167,7 @@ public Forward doBringBackSearchFind_uo_per_ruolo(ActionContext context,UtenteTe
 public Forward doElimina(ActionContext context) throws java.rmi.RemoteException {
  super.doElimina(context);
  CRUDBP bp = getBusinessProcess(context);
- bp.setMessage("Cancellazione effettuata. E' stata modificata la data di fine validit‡ dell'utente.");
+ bp.setMessage("Cancellazione effettuata. E' stata modificata la data di fine validit√† dell'utente.");
  return context.findDefaultForward();
 }
 /**
@@ -297,11 +297,11 @@ public Forward doVerificaAbilitazioneUtenteLdap(ActionContext context)
 		boolean isAbilitato = bp.isUtenteAbilitatoLdap(context.getUserContext());
 		String message = null;
 		if (isAbilitato) {
-			message = "L'utente Ë abilitato ad accedere in SIGLA, si vuole disabilitarne l'accesso?";
+			message = "L'utente √® abilitato ad accedere in SIGLA, si vuole disabilitarne l'accesso?";
 			openConfirm(context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doDisabilitaUtenteLdap");
 		}
 		else {
-			message = "L'utente non Ë abilitato ad accedere in SIGLA, si vuole abilitarne l'accesso?";
+			message = "L'utente non √® abilitato ad accedere in SIGLA, si vuole abilitarne l'accesso?";
 			openConfirm(context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doAbilitaUtenteLdap");
 		}
 		return context.findDefaultForward();

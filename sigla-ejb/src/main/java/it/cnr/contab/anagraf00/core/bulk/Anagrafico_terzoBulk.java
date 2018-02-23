@@ -21,7 +21,7 @@ public class Anagrafico_terzoBulk extends Anagrafico_terzoBase {
 	}
 
 	/**
-	 * Restituisce l'<code>AnagraficoBulk</code> a cui l'oggetto Ë correlato.
+	 * Restituisce l'<code>AnagraficoBulk</code> a cui l'oggetto √® correlato.
 	 *
 	 * @return it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk
 	 *
@@ -33,7 +33,7 @@ public class Anagrafico_terzoBulk extends Anagrafico_terzoBase {
 	}
 
 	/**
-	 * Restituisce l'<code>V_persona_fisicaBulk</code> a cui l'oggetto Ë correlato.
+	 * Restituisce l'<code>V_persona_fisicaBulk</code> a cui l'oggetto √® correlato.
 	 *
 	 * @return it.cnr.contab.anagraf00.core.bulk.TerzoBulk
 	 *
@@ -45,7 +45,7 @@ public class Anagrafico_terzoBulk extends Anagrafico_terzoBase {
 	}
 
 	/**
-	 * Imposta l'<code>AnagraficoBulk</code> a cui l'oggetto Ë correlato.
+	 * Imposta l'<code>AnagraficoBulk</code> a cui l'oggetto √® correlato.
 	 *
 	 * @param newAnagrafico Anagrafica di riferimento.
 	 *
@@ -57,7 +57,7 @@ public class Anagrafico_terzoBulk extends Anagrafico_terzoBase {
 	}
 
 	/**
-	 * Imposta l'<code>V_persona_fisicaBulk</code> a cui l'oggetto Ë correlato.
+	 * Imposta l'<code>V_persona_fisicaBulk</code> a cui l'oggetto √® correlato.
 	 *
 	 * @param newTerzo Terzo di riferimento.
 	 *
@@ -93,9 +93,9 @@ public class Anagrafico_terzoBulk extends Anagrafico_terzoBase {
 	}	
 
 	/**
-	 * Restituisce il valore della propriet‡ 'ds_terzo'
+	 * Restituisce il valore della propriet√† 'ds_terzo'
 	 *
-	 * @return Il valore della propriet‡ 'ds_terzo'
+	 * @return Il valore della propriet√† 'ds_terzo'
 	 */
 	public java.lang.String getDs_terzo() {
 		if ( getTerzo() != null && getTerzo().getAnagrafico() != null &&

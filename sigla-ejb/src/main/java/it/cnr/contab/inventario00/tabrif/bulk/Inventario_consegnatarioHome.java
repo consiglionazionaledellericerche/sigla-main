@@ -114,7 +114,7 @@ public Inventario_consegnatarioBulk findInventarioConsegnatarioFor(Id_inventario
 /** 
   *  Carico il Consegnatario/Delegato dell'Inventario selezionato
   *  	(dalla tabella INVENTARIO_CONSEGNATARIO)
-  *  Se non è presente, inizializzo un nuovo oggetto settando
+  *  Se non Ã¨ presente, inizializzo un nuovo oggetto settando
   *  	come Consegnatario il responsabile della UO di scrivania
  */
 //^^@@

@@ -42,9 +42,9 @@ public class CdsBulk extends CdsBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'area_scientifica'
+	 * Restituisce il valore della propriet√† 'area_scientifica'
 	 *
-	 * @return Il valore della propriet‡ 'area_scientifica'
+	 * @return Il valore della propriet√† 'area_scientifica'
 	 */
 	public Area_scientificaBulk getArea_scientifica() {
 		return area_scientifica;
@@ -62,9 +62,9 @@ public class CdsBulk extends CdsBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'cd_ds_cds'
+	 * Restituisce il valore della propriet√† 'cd_ds_cds'
 	 *
-	 * @return Il valore della propriet‡ 'cd_ds_cds'
+	 * @return Il valore della propriet√† 'cd_ds_cds'
 	 */
 	public String getCd_ds_cds() {
 		return getCd_unita_organizzativa() + " - " + getDs_unita_organizzativa();
@@ -77,9 +77,9 @@ public class CdsBulk extends CdsBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'ds_responsabile'
+	 * Restituisce il valore della propriet√† 'ds_responsabile'
 	 *
-	 * @return Il valore della propriet‡ 'ds_responsabile'
+	 * @return Il valore della propriet√† 'ds_responsabile'
 	 */
 	public java.lang.String getDs_responsabile() {
 		if ( responsabile != null && responsabile.getAnagrafico() != null )
@@ -88,18 +88,18 @@ public class CdsBulk extends CdsBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'esercizioDiScrivania'
+	 * Restituisce il valore della propriet√† 'esercizioDiScrivania'
 	 *
-	 * @return Il valore della propriet‡ 'esercizioDiScrivania'
+	 * @return Il valore della propriet√† 'esercizioDiScrivania'
 	 */
 	public java.lang.Integer getEsercizioDiScrivania() {
 		return esercizioDiScrivania;
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Restituisce il valore della propriet‡ 'percentuali'
+	 * Restituisce il valore della propriet√† 'percentuali'
 	 *
-	 * @return Il valore della propriet‡ 'percentuali'
+	 * @return Il valore della propriet√† 'percentuali'
 	 */
 	public it.cnr.jada.bulk.BulkList getPercentuali() {
 		return percentuali;
@@ -163,7 +163,7 @@ public class CdsBulk extends CdsBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'area_scientifica'
+	 * Imposta il valore della propriet√† 'area_scientifica'
 	 *
 	 * @param newArea_scientifica	Il valore da assegnare a 'area_scientifica'
 	 */
@@ -178,7 +178,7 @@ public class CdsBulk extends CdsBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'esercizioDiScrivania'
+	 * Imposta il valore della propriet√† 'esercizioDiScrivania'
 	 *
 	 * @param newEsercizioDiScrivania	Il valore da assegnare a 'esercizioDiScrivania'
 	 */
@@ -187,7 +187,7 @@ public class CdsBulk extends CdsBase {
 	}
 	/**
 	 * <!-- @TODO: da completare -->
-	 * Imposta il valore della propriet‡ 'percentuali'
+	 * Imposta il valore della propriet√† 'percentuali'
 	 *
 	 * @param newPercentuali	Il valore da assegnare a 'percentuali'
 	 */
@@ -213,7 +213,7 @@ public class CdsBulk extends CdsBase {
 	public void validate() throws ValidationException 
 	{	
 		if ( isNullOrEmpty( getCd_tipo_unita() ))
-			throw new ValidationException( "Il campo TIPOLOGIA Ë obbligatorio. " );
+			throw new ValidationException( "Il campo TIPOLOGIA √® obbligatorio. " );
 
 		if ( getCd_tipo_unita().equals( Tipo_unita_organizzativaHome.TIPO_UO_SAC ) && 
 				!getEsercizio_fine().equals( it.cnr.contab.config00.esercizio.bulk.EsercizioBulk.ESERCIZIO_FINE))
@@ -225,13 +225,13 @@ public class CdsBulk extends CdsBase {
 			throw new ValidationException( "Il campo Esercizio di Terminazione deve essere valorizzato. " );
 		}
 		if ( getEsercizio_fine().compareTo( getEsercizio_inizio()) < 0 )
-			throw new ValidationException( "L' esercizio di terminazione non puÚ essere minore dell'esercizio di creazione. " );
+			throw new ValidationException( "L' esercizio di terminazione non pu√≤ essere minore dell'esercizio di creazione. " );
 
 		if ( getEsercizio_fine().toString().length() != 4 )
 			throw new ValidationException( "Il campo Esercizio di terminazione deve essere di quattro cifre. " );
 
 		if ( responsabile.getCd_terzo() == null )
-			throw new ValidationException( "Il campo RESPONSABILE Ë obbligatorio. " );	
+			throw new ValidationException( "Il campo RESPONSABILE √® obbligatorio. " );	
 		if ( !isNullOrEmpty( getCd_proprio_unita() ) )
 		{
 			long cdLong;

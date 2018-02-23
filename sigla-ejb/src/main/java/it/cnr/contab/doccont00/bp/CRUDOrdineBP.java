@@ -123,7 +123,7 @@ public OrdineBulk findOrdineFor(ActionContext context, it.cnr.contab.doccont00.c
  */
 public OrdineBulk generaOrdinePer(ActionContext context, it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obblig) throws BusinessProcessException{
 
-	// Se Ë gi‡ stato generato un ordine per l'obbligazione
+	// Se √® gi√† stato generato un ordine per l'obbligazione
 	// allora carico l'ordine corrispondente
 
 	OrdineBulk ordine = findOrdineFor(context,obblig);
@@ -140,9 +140,9 @@ public OrdineBulk generaOrdinePer(ActionContext context, it.cnr.contab.doccont00
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'dettagliCRUDController'
+ * Restituisce il valore della propriet√† 'dettagliCRUDController'
  *
- * @return Il valore della propriet‡ 'dettagliCRUDController'
+ * @return Il valore della propriet√† 'dettagliCRUDController'
  */
 public final SimpleDetailCRUDController getDettagliCRUDController() {
 	return dettagliCRUDController;
@@ -161,7 +161,7 @@ public boolean isStampaOrdineButtonEnabled() {
 }
 /**
  *	Abilito il bottone di stampa dell'Ordine
- *	se Ë in stato Editonly
+ *	se √® in stato Editonly
  */
 
 public boolean isStampaOrdineButtonHidden() {
@@ -181,13 +181,13 @@ public void validaDettaglioOrdine(ActionContext context, OggettoBulk bulk) throw
 	Ordine_dettBulk ordDett = (Ordine_dettBulk)bulk;
 
 	if (ordDett.getDs_dettaglio()==null){
-		throw new ValidationException("Il campo Descrizione Ë obbligatorio!");
+		throw new ValidationException("Il campo Descrizione √® obbligatorio!");
 	}
 	if (ordDett.getQuantita()==null || ordDett.getQuantita().compareTo(new java.math.BigDecimal(0))<=0){
-		throw new ValidationException("Il campo Quantit‡ Ë obbligatorio!");
+		throw new ValidationException("Il campo Quantit√† √® obbligatorio!");
 	}
 	if (ordDett.getIm_unitario()==null){
-		throw new ValidationException("Il campo Importo Unitario Ë obbligatorio!");
+		throw new ValidationException("Il campo Importo Unitario √® obbligatorio!");
 	}
 
 }

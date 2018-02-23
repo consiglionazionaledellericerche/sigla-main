@@ -1,7 +1,7 @@
 package it.cnr.contab.inventario00.docs.bulk;
 
 /**
- * Oggetto creato per la gestione del controllo sulla Data Inizio Validit‡ del Consegnatario
+ * Oggetto creato per la gestione del controllo sulla Data Inizio Validit√† del Consegnatario
  *	in fase di apertura dell'Inventario.
  *
  * Creation date: (28/10/2002 11.09.17)

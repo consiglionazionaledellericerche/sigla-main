@@ -68,7 +68,7 @@
 												}
 											} else {
 												if ((model.getModalitaPagamentoAnticipoOptions()==null || model.getModalitaPagamentoAnticipoOptions().isEmpty()) && model.getTerzoPagamento().getAnagrafico()!=null && !bp.isSearching()) { %>
-													<span class="FormLabel" style="color:red"> Nessuna modalità di pagamento trovata</span>
+													<span class="FormLabel" style="color:red"> Nessuna modalitÃ  di pagamento trovata</span>
 								<%			}
 										} %>
 							</tr>

@@ -24,18 +24,9 @@
 <%
 	bp.openFormWindow(pageContext);
 %>
-
-	<table class="Panel">
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"id");%>
-			</TD><TD>
-			<% bp.getController().writeFormInput(out,"id");%>
-		</TD></TR>	
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"descrizione");%>
-			</TD><TD>
-			<% bp.getController().writeFormInput(out,"descrizione");%>
-		</TD></TR>
+	<table class="Panel card p-2">
+		<TR><% bp.getController().writeFormField(out,"id");%></TR>
+		<TR><% bp.getController().writeFormField(out,"descrizione");%></TR>
 		<TR><TD>
 			<% bp.getController().writeFormLabel(out,"tipo_db");%>
 			</TD><TD colspan="3">
@@ -46,76 +37,20 @@
 			</TD><TD colspan="3">
 			<% bp.getController().writeFormInput(out,"attivo");%>
 		</TD></TR>
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"cancella_stampe");%>
-			</TD><TD>
-			<% bp.getController().writeFormInput(out,"cancella_stampe");%>
-		</TD></TR>
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"fl_autenticazione_ldap");%>
-			</TD><TD>
-			<% bp.getController().writeFormInput(out,"fl_autenticazione_ldap");%>
-		</TD></TR>
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"ldap_user");%>
-			</TD><TD>
-			<% bp.getController().writeFormInput(out,"ldap_user");%>
-		</TD></TR>
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"ldap_password");%>
-			</TD><TD>
-			<% bp.getController().writeFormInput(out,"ldap_password");%>
-		</TD></TR>
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"ldap_base_dn");%>
-			</TD><TD>
-			<% bp.getController().writeFormInput(out,"ldap_base_dn");%>
-		</TD></TR>
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"ldap_app_name");%>
-			</TD><TD>
-			<% bp.getController().writeFormInput(out,"ldap_app_name");%>
-		</TD></TR>
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"dt_ldap_migrazione");%>
-			</TD><TD>
-			<% bp.getController().writeFormInput(out,"dt_ldap_migrazione");%>
-		</TD></TR>
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"ldap_link_cambio_password");%>
-			</TD><TD>
-			<% bp.getController().writeFormInput(out,"ldap_link_cambio_password");%>
-		</TD></TR>
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"fl_informix");%>
-			</TD><TD>
-			<% bp.getController().writeFormInput(out,"fl_informix");%>
-		</TD></TR>
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"fl_gae_es");%>
-			</TD><TD>
-			<% bp.getController().writeFormInput(out,"fl_gae_es");%>
-		</TD></TR>
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"fl_prg_pianoeco");%>
-			</TD><TD>
-			<% bp.getController().writeFormInput(out,"fl_prg_pianoeco");%>
-		</TD></TR>
-		<TR><TD>
-			<% bp.getController().writeFormLabel(out,"abil_progetto_strorg");%>
-			</TD><TD>
-			<% bp.getController().writeFormInput(out,"abil_progetto_strorg");%>
-		</TD></TR>
-		<TABLE width="400">
-		<TR>		
-		<TD align="center" width="50%"><% bp.getController().writeFormLabel(out,"box_scadenze");%></TD>
-		<TD align="center" width="50%"><% bp.getController().writeFormLabel(out,"box_comunicazioni");%></TD>		
-		</TR>
-		<TR>		
-		<TD align="center" width="50%"><% bp.getController().writeFormInput(out,"box_scadenze");%></TD>
-		<TD align="center" width="50%"><% bp.getController().writeFormInput(out,"box_comunicazioni");%></TD>		
-		</TR>		
-		</TABLE>
+		<TR><% bp.getController().writeFormField(out,"cancella_stampe");%></TR>
+		<TR><% bp.getController().writeFormField(out,"fl_autenticazione_ldap");%></TR>
+		<TR><% bp.getController().writeFormField(out,"ldap_user");%></TR>
+		<TR><% bp.getController().writeFormField(out,"ldap_password");%></TR>
+		<TR><% bp.getController().writeFormField(out,"ldap_base_dn");%></TR>
+		<TR><% bp.getController().writeFormField(out,"ldap_app_name");%></TR>
+		<TR><% bp.getController().writeFormField(out,"dt_ldap_migrazione");%></TR>
+		<TR><% bp.getController().writeFormField(out,"ldap_link_cambio_password");%></TR>
+		<TR><% bp.getController().writeFormField(out,"fl_informix");%></TR>
+		<TR><% bp.getController().writeFormField(out,"fl_gae_es");%></TR>
+		<TR><% bp.getController().writeFormField(out,"fl_prg_pianoeco");%></TR>
+
+		<TR><% bp.getController().writeFormField(out,"abil_progetto_strorg");%></TR>
+		<TR><% bp.getController().writeFormField(out,"fl_variazioni_trasferimento");%></TR>
 	</table>
 
 <%	bp.closeFormWindow(pageContext); %>

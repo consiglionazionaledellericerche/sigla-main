@@ -61,7 +61,7 @@ public void setPg_comune(java.lang.Long pg_comune) {
 	this.getComune().setPg_comune(pg_comune);
 }
 /**
- * Oltre alla normale validate da un avviso di errore se la nazione è nulla.
+ * Oltre alla normale validate da un avviso di errore se la nazione Ã¨ nulla.
  *
  * @exeption it.cnr.jada.bulk.ValidationException
 */
@@ -69,8 +69,8 @@ public void validate() throws ValidationException {
 
 	super.validate();
 	if (getPg_comune()==null)
-		throw new ValidationException("Il campo COMUNE non può essere vuoto");
+		throw new ValidationException("Il campo COMUNE non puÃ² essere vuoto");
 	if (getCd_cap()==null)
-		throw new ValidationException("Il campo CAP non può essere vuoto");
+		throw new ValidationException("Il campo CAP non puÃ² essere vuoto");
 }
 }

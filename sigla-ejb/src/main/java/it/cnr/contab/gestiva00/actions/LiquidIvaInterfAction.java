@@ -40,7 +40,7 @@ public Forward doCerca(ActionContext context) throws RemoteException, Instantiat
 		bp.fillModel(context); 
 	    if (!bp.controllaQuery(context,(Liquid_iva_interfBulk) bp.getModel()))
 	    {
-			return openConfirm(context,"Non esistono dati per il periodo selezionato. Il sistema li caricher‡ automaticamente. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmCerca");
+			return openConfirm(context,"Non esistono dati per il periodo selezionato. Il sistema li caricher√† automaticamente. Vuoi continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmCerca");
 	    }
 		super.doCerca(context);
 	    return context.findDefaultForward();

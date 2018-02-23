@@ -22,7 +22,7 @@
 	  <% if (fatturaAttiva.isCongelata() && !bp.isSearching()) { %>	
 	      <tr>
 			<span class="FormLabel" style="color:red">
-				Il documento Ë stato CONGELATO!
+				Il documento √® stato CONGELATO!
 			</span>
 	      </tr>
 	  <% } %>
@@ -284,11 +284,11 @@
    			} else {
 				if ((fatturaAttiva.getModalita_uo()==null || fatturaAttiva.getModalita_uo().isEmpty()) && !bp.isSearching()) { %>
 					<span class="FormLabel" style="color:red">
-						Nessuna modalit‡ di pagamento trovata per la UO
+						Nessuna modalit√† di pagamento trovata per la UO
 					</span>
 				<%} else if ((fatturaAttiva.getModalita_pagamento_uo() != null) && !bp.isSearching()) {%>
 				<span class="FormLabel" style="color:red">
-					Nessun riferimento trovato per la modalit‡ di pagamento selezionata!
+					Nessun riferimento trovato per la modalit√† di pagamento selezionata!
 				</span>
 								
 		<%	}} %>

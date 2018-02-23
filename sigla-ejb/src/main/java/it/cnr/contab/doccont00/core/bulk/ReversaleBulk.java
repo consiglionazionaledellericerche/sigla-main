@@ -122,7 +122,7 @@ public ReversaleBulk(java.lang.String cd_cds,java.lang.Integer esercizio,java.la
 public  Sospeso_det_etrBulk addToSospeso_det_etrColl( SospesoBulk sospeso ) 
 {
 	Sospeso_det_etrBulk sde = null, tmp ;
-	// verifico che il sospeso esiste gi‡ con stato annullato
+	// verifico che il sospeso esiste gi√† con stato annullato
 	for ( Iterator i = getSospeso_det_etrColl().deleteIterator(); i.hasNext(); )
 	{
 		tmp = (Sospeso_det_etrBulk)i.next() ;
@@ -136,7 +136,7 @@ public  Sospeso_det_etrBulk addToSospeso_det_etrColl( SospesoBulk sospeso )
 		sde = new Sospeso_det_etrBulk();
 	else
 	{
-		sde.setToBeUpdated();	// il sospeso esiste gi‡
+		sde.setToBeUpdated();	// il sospeso esiste gi√†
 		sde.setIm_associato( null );
 	}	
 	sde.setReversale( this );
@@ -166,7 +166,7 @@ public void annulla()
 		sospeso.setToBeUpdated();
 	}
 	/*
-	la delete Iterator contiene gi‡ tutti i record con stato = ANNULLATO
+	la delete Iterator contiene gi√† tutti i record con stato = ANNULLATO
 	for (i = getSospeso_det_etrColl().deleteIterator(); i.hasNext(); )
 	{
 		// ((Sospeso_det_etrBulk) i.next()).setToBeDeleted();
@@ -213,9 +213,9 @@ public java.lang.String getCd_unita_organizzativa() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_uo_ente'
+ * Restituisce il valore della propriet√† 'cd_uo_ente'
  *
- * @return Il valore della propriet‡ 'cd_uo_ente'
+ * @return Il valore della propriet√† 'cd_uo_ente'
  */
 public java.lang.String getCd_uo_ente() {
 	return cd_uo_ente;
@@ -230,7 +230,7 @@ public it.cnr.contab.config00.sto.bulk.CdsBulk getCds() {
  * Metodo con cui si ottiene il valore della variabile <code>classeDiPagamentoKeys</code>
  * di tipo <code>Dictionary</code>.
  * In particolare, questo metodo carica in un Dictionary l'elenco dei possibili valori 
- * che puÚ assumere il campo <code>ti_pagamento</code>.
+ * che pu√≤ assumere il campo <code>ti_pagamento</code>.
  * @return java.util.Hashtable classeDiPagamentoKeys I valori del campo <code>ti_pagamento</code>.
  */
 public java.util.Dictionary getClasseDiPagamentoKeys() {
@@ -238,15 +238,15 @@ public java.util.Dictionary getClasseDiPagamentoKeys() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'doc_contabili_collColl'
+ * Restituisce il valore della propriet√† 'doc_contabili_collColl'
  *
- * @return Il valore della propriet‡ 'doc_contabili_collColl'
+ * @return Il valore della propriet√† 'doc_contabili_collColl'
  */
 public java.util.Collection getDoc_contabili_collColl() {
 	return doc_contabili_collColl;
 }
 /**
- * Calcola l'importo residuo della reversale, che Ë dato dalla differenza tra l'importo totale
+ * Calcola l'importo residuo della reversale, che √® dato dalla differenza tra l'importo totale
  * della reversale e la somma degli importi ripartiti sui singoli sospesi associati.
  * @return im_residuo_reversale L'importo residuo della reversale
  */
@@ -357,9 +357,9 @@ public java.util.Dictionary getTipoDocumentoPerRicercaKeys() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'tipoReversaleKeys'
+ * Restituisce il valore della propriet√† 'tipoReversaleKeys'
  *
- * @return Il valore della propriet‡ 'tipoReversaleKeys'
+ * @return Il valore della propriet√† 'tipoReversaleKeys'
  */
 public java.util.Dictionary getTipoReversaleKeys() {
 	if ( getUnita_organizzativa() == null || getUnita_organizzativa().getCd_unita_organizzativa() == null)
@@ -438,8 +438,8 @@ public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 /**
  * Verifica se la reversale ha lo stato "annullato".
  * @return Lo stato della reversale 
- *						TRUE 	La reversale Ë annullata
- *						FALSE 	La reversale non Ë annullata
+ *						TRUE 	La reversale √® annullata
+ *						FALSE 	La reversale non √® annullata
  */
 public boolean isAnnullato() 
 {
@@ -455,18 +455,18 @@ public boolean isBanca_italia()
 /**
  * Verifica se la reversale ha lo stato "incassato".
  * @return Lo stato della reversale 
- *						TRUE 	La reversale Ë incassata
- *						FALSE 	La reversale non Ë incassata
+ *						TRUE 	La reversale √® incassata
+ *						FALSE 	La reversale non √® incassata
  */
 public boolean isIncassato() 
 {
 	return STATO_REVERSALE_INCASSATO.equals(getStato());
 }
 /**
- * Verifica se la reversale Ë provvisoria.
+ * Verifica se la reversale √® provvisoria.
  * @return Il tipo di reversale 
- *						TRUE 	La reversale Ë provvisoria
- *						FALSE 	La reversale non Ë provvisoria
+ *						TRUE 	La reversale √® provvisoria
+ *						FALSE 	La reversale non √® provvisoria
  */
 public boolean isProvvisoria() 
 {
@@ -474,9 +474,9 @@ public boolean isProvvisoria()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOUnitaOrganizzativa'
+ * Restituisce il valore della propriet√† 'rOUnitaOrganizzativa'
  *
- * @return Il valore della propriet‡ 'rOUnitaOrganizzativa'
+ * @return Il valore della propriet√† 'rOUnitaOrganizzativa'
  */
 public boolean isROUnitaOrganizzativa() {
 	// return unita_organizzativa == null || unita_organizzativa.getCrudStatus() == NORMAL;
@@ -546,7 +546,7 @@ public void setCd_unita_organizzativa(java.lang.String cd_unita_organizzativa) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'cd_uo_ente'
+ * Imposta il valore della propriet√† 'cd_uo_ente'
  *
  * @param newCd_uo_ente	Il valore da assegnare a 'cd_uo_ente'
  */
@@ -561,7 +561,7 @@ public void setCds(it.cnr.contab.config00.sto.bulk.CdsBulk newCds) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'doc_contabili_collColl'
+ * Imposta il valore della propriet√† 'doc_contabili_collColl'
  *
  * @param newDoc_contabili_collColl	Il valore da assegnare a 'doc_contabili_collColl'
  */
@@ -663,7 +663,7 @@ public void validaSospesi( List sospesi ) throws ValidationException
 			throw new ValidationException( "I sospesi associabili alla reversale devono avere la stessa provenienza (Banca d'Italia o C/C)." );	
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {
@@ -671,7 +671,7 @@ public void validate() throws ValidationException {
 	
 	// controllo su campo DATA EMISSIONE
 	if ( getDt_emissione() == null )
-		throw new ValidationException( "Il campo DATA CONTABILITA' Ë obbligatorio." );
+		throw new ValidationException( "Il campo DATA CONTABILITA' √® obbligatorio." );
 	if(getDs_reversale()!=null && getDs_reversale().length()!=0){
 			for (int i = 0;i <getDs_reversale().length();i++){
 				if ((((int) RemoveAccent.convert(getDs_reversale()).charAt(i))<31||
@@ -686,48 +686,48 @@ public void validate() throws ValidationException {
 
 }
 /**
- * Verifica se la reversale Ë di tipo "trasferimento".
+ * Verifica se la reversale √® di tipo "trasferimento".
  * @return Il tipo di reversale 
- *						TRUE 	La reversale Ë di tipo "trasferimento"
- *						FALSE 	La reversale non Ë di tipo "trasferimento"
+ *						TRUE 	La reversale √® di tipo "trasferimento"
+ *						FALSE 	La reversale non √® di tipo "trasferimento"
  */
 public boolean isTrasferimento(){
 	return getTi_reversale()!=null && getTi_reversale().equals(ReversaleBulk.TIPO_TRASFERIMENTO);
 }
 /**
- * Verifica se la reversale Ë di tipo "regolarizzazione".
+ * Verifica se la reversale √® di tipo "regolarizzazione".
  * @return Il tipo di reversale 
- *						TRUE 	La reversale Ë di tipo "regolarizzazione"
- *						FALSE 	La reversale non Ë di tipo "regolarizzazione"
+ *						TRUE 	La reversale √® di tipo "regolarizzazione"
+ *						FALSE 	La reversale non √® di tipo "regolarizzazione"
  */
 public boolean isReversaleRegolarizzazione(){
 	return getTi_reversale()!=null && getTi_reversale().equals(ReversaleBulk.TIPO_REGOLARIZZAZIONE);
 }
 /**
- * Verifica se la reversale Ë di tipo "regolamento sospeso".
+ * Verifica se la reversale √® di tipo "regolamento sospeso".
  * @return Il tipo di reversale 
- *						TRUE 	La reversale Ë di tipo "regolamento sospeso"
- *						FALSE 	La reversale non Ë di tipo "regolamento sospeso"
+ *						TRUE 	La reversale √® di tipo "regolamento sospeso"
+ *						FALSE 	La reversale non √® di tipo "regolamento sospeso"
  */
 public boolean isRegolamentoSospeso(){
 	return getTi_reversale()!=null && getTi_reversale().equals(ReversaleBulk.TIPO_REGOLAM_SOSPESO);
 }
 /**
- * Verifica se la reversale Ë di tipo "incasso".
+ * Verifica se la reversale √® di tipo "incasso".
  * @return Il tipo di reversale 
- *						TRUE 	La reversale Ë di tipo "incasso"
- *						FALSE 	La reversale non Ë di tipo "incasso"
+ *						TRUE 	La reversale √® di tipo "incasso"
+ *						FALSE 	La reversale non √® di tipo "incasso"
  */
 public boolean isIncasso(){
 	return getTi_reversale()!=null && getTi_reversale().equals(ReversaleBulk.TIPO_INCASSO);
 }
 /**
  * Verifica se la reversale richiede la gestione SIOPE
- * @return l'obbligatoriet‡ della gestione SIOPE 
- *						TRUE 	Sulle righe di reversale Ë richiesta la gestione SIOPE
- *						FALSE 	Sulle righe di reversale non Ë richiesta la gestione SIOPE
+ * @return l'obbligatoriet√† della gestione SIOPE 
+ *						TRUE 	Sulle righe di reversale √® richiesta la gestione SIOPE
+ *						FALSE 	Sulle righe di reversale non √® richiesta la gestione SIOPE
  *
- * Sulle reversali non Ë obbligatorio caricare i codici SIOPE solo se trattasi di reversali di tipo interno
+ * Sulle reversali non √® obbligatorio caricare i codici SIOPE solo se trattasi di reversali di tipo interno
  * e quindi di Trasferimento generate sui CdR e di Regolarizzazione
  */
 public boolean isRequiredSiope(){
@@ -748,9 +748,9 @@ public boolean isSiopeTotalmenteAssociato(){
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'im_associato_siope'
+ * Restituisce il valore della propriet√† 'im_associato_siope'
  *
- * @return Il valore della propriet‡ 'im_associato_siope'
+ * @return Il valore della propriet√† 'im_associato_siope'
  */
 public java.math.BigDecimal getIm_associato_siope() {
 	BigDecimal totale = Utility.ZERO;

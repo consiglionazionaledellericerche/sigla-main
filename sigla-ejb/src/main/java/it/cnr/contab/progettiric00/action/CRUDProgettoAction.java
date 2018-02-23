@@ -72,13 +72,13 @@ public Forward doBringBackSearchFind_nodo_padre(ActionContext context, ProgettoB
 	if(progetto_padre != null){
 		// L'utente ha selezionato come Progetto padre il Progetto che sta modificando
 		if (progetto_padre.getCd_progetto().equals(progetto.getCd_progetto())){
-			setErrorMessage(context,"Attenzione: non è possibile selezionare come padre il Progetto stesso");
+			setErrorMessage(context,"Attenzione: non Ã¨ possibile selezionare come padre il Progetto stesso");
 			return context.findDefaultForward();
 		}
 		/* riporto le informazioni ereditate dal progetto padre */
 		CRUDBP bp = getBusinessProcess(context);
 		if (((TestataProgettiRicercaBP)bp).getLivelloProgetto()!=((progetto_padre.getLivello()).intValue()+1)) {
-			setErrorMessage(context,"Attenzione: il codice inserito non è del tipo richiesto");
+			setErrorMessage(context,"Attenzione: il codice inserito non Ã¨ del tipo richiesto");
 			return context.findDefaultForward();
 		}
 		if(bp.getStatus() == bp.INSERT || bp.getStatus() == bp.EDIT){
@@ -93,7 +93,7 @@ public Forward doBringBackSearchFind_nodo_padre(ActionContext context, ProgettoB
 		  progetto.setStato(progetto_padre.getStato());
 		  progetto.setDt_inizio(progetto_padre.getDt_inizio());
 		  progetto.setLivello(new Integer(progetto_padre.getLivello().intValue() + 1));
-		  // se il padre è una commessa proponiamo anche i seguenti:
+		  // se il padre Ã¨ una commessa proponiamo anche i seguenti:
 		  if (progetto_padre.getLivello().equals(new Integer(2))) {
 			progetto.setDt_fine(progetto_padre.getDt_fine());
 			progetto.setDurata_progetto(progetto_padre.getDurata_progetto());
@@ -139,7 +139,7 @@ public it.cnr.jada.action.Forward doSearchFind_nodo_padre(ActionContext context)
 			
 		if (cd != null){
 			if (cd.equals(progetto.getCd_progetto())){
-				return handleException(context, new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile indicare come nodo padre il progetto corrente"));
+				return handleException(context, new it.cnr.jada.comp.ApplicationException("Attenzione: non Ã¨ possibile indicare come nodo padre il progetto corrente"));
 			} else{
 				// L'utente ha indicato un codice da cercare: esegue una ricerca mirata.
 				return search(context, getFormField(context, "main.find_nodo_padre"),null);
@@ -190,7 +190,7 @@ public it.cnr.jada.action.Forward OLDdoBringBackSearchResult(ActionContext conte
 	if(ubiPadre != null){
 		// L'utente ha selezionato come Progetto padre il Progetto che sta modificando
 		if (ubiPadre.getCd_progetto().equals(ubi.getCd_progetto())){
-			setErrorMessage(context,"Attenzione: non è possibile selezionare come padre il Progetto stesso");
+			setErrorMessage(context,"Attenzione: non Ã¨ possibile selezionare come padre il Progetto stesso");
 			return context.findDefaultForward();
 		}
 		if (ubi.isToBeCreated())
@@ -224,7 +224,7 @@ public Forward doSalva(ActionContext context) {
 				  throw new it.cnr.jada.comp.ApplicationException("Attenzione: selezionare un File da caricare.");
 			  }
 			  if (file.length() > lunghezzaMax){
-				  throw new it.cnr.jada.comp.ApplicationException("Attenzione: la dimensione del file è superiore alla massima consentita (10 Mb).");
+				  throw new it.cnr.jada.comp.ApplicationException("Attenzione: la dimensione del file Ã¨ superiore alla massima consentita (10 Mb).");
 			  }  
 		
 			  /* Nome (compreso di Path) del file selezionato*/
@@ -239,7 +239,7 @@ public Forward doSalva(ActionContext context) {
 			  super.doSalva(context);
 			  ProgettoBulk progetto = (ProgettoBulk)bp.getModel();
 			  if (progetto.getPg_progetto()==null)
-				  throw new it.cnr.jada.comp.ApplicationException("Il campo ''Codice commessa'' non può essere vuoto.");			  
+				  throw new it.cnr.jada.comp.ApplicationException("Il campo ''Codice commessa'' non puÃ² essere vuoto.");			  
 			  /*Inserimento nella colonna BLOB*/
 			  ((it.cnr.contab.config00.ejb.Linea_attivitaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Linea_attivitaComponentSession", it.cnr.contab.config00.ejb.Linea_attivitaComponentSession.class)).Inserimento_BLOB(context.getUserContext(), progetto, file.getFile());
 				  

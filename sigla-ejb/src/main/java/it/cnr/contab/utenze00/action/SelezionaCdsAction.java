@@ -27,7 +27,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import javax.servlet.http.HttpSessionBindingEvent;
 
 /**
- * Action di gestione della selezione di unit‡ organizzative di scrivania
+ * Action di gestione della selezione di unit√† organizzative di scrivania
  */
 
 public class SelezionaCdsAction extends it.cnr.jada.util.action.BulkAction {
@@ -100,7 +100,7 @@ public Forward doSelezionaCds(ActionContext context) {
         if (cds==null||cds.getCd_unita_organizzativa()==null)
 			throw new MessageToUser("Il CdS deve essere valorizzato!",bp.ERROR_MESSAGE);
         if (uo==null||uo.getCd_unita_organizzativa()==null)
-			throw new MessageToUser("L'unit‡ Organizzativa deve essere valorizzata!",bp.ERROR_MESSAGE);
+			throw new MessageToUser("L'unit√† Organizzativa deve essere valorizzata!",bp.ERROR_MESSAGE);
         if (cdr==null||cdr.getCd_centro_responsabilita()==null)
 			throw new MessageToUser("Il CdR deve essere valorizzato!",bp.ERROR_MESSAGE);
         	

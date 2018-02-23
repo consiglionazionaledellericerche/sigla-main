@@ -16,7 +16,7 @@ public void validate() throws ValidationException {
 	super.validate();
 	
 	if (getAnnotazioni() != null && getAnnotazioni().length() > 1000)
-		throw new ValidationException("Il campo \"annotazioni\" è troppo lungo: il massimo consentito è di 1000 caratteri!");
+		throw new ValidationException("Il campo \"annotazioni\" Ã¨ troppo lungo: il massimo consentito Ã¨ di 1000 caratteri!");
 }
 public boolean equalsByImporti(Liquidazione_ivaBulk bulk) {
 	if(!compareKey(getCd_cds(),bulk.getCd_cds())) return false;

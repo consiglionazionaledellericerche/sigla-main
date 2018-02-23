@@ -11,12 +11,12 @@ public Vsx_liquidazione_rateBulk() {
 	super();
 }
 /**
-  * Imposta le propriet‡ del Vsx_liquidazione_rate.
+  * Imposta le propriet√† del Vsx_liquidazione_rate.
   *	E' stata generata la richiesta di effettuare una liquidazione: l'utente ha selezionato
   *	le rate da liquidare, le quali vengono utilizzati per popolare le tabelle dalle
-  *	quali la procedura di liquidazione andr‡ a prelevare i dati.
-  *	Il metodo setta le varie propriet‡ del Vsx_liquidazione_rate, sulla base della rata selezionata.
-  * Il bulk cosÏ creato verr‡ poi inserito in tabella.
+  *	quali la procedura di liquidazione andr√† a prelevare i dati.
+  *	Il metodo setta le varie propriet√† del Vsx_liquidazione_rate, sulla base della rata selezionata.
+  * Il bulk cos√¨ creato verr√† poi inserito in tabella.
   *	
   * @param rata La <code>Liquidazione_rate_minicarrieraBulk</code> rata da liquidare.
 **/  

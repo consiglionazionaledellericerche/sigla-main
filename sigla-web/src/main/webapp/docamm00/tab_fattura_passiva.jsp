@@ -21,7 +21,7 @@
 	  <% if (fatturaPassiva.isCongelata() && !bp.isSearching()) { %>	
 	      <tr>
 			<span class="FormLabel" style="color:red">
-				Il documento è stato CONGELATO!
+				Il documento Ã¨ stato CONGELATO!
 			</span>
 	      </tr>
 	  <% } %>

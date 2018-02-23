@@ -95,7 +95,7 @@ public Forward doBringBackToRiassocia(ActionContext context) {
 }
 /**
   *  E' stata generata la richiesta di cambiare il Tipo Ammortamento.
-  *	Questo metodo Ë invocato ogni volta che l'utente seleziona o deseleziona uno dei check-box 
+  *	Questo metodo √® invocato ogni volta che l'utente seleziona o deseleziona uno dei check-box 
   *	relativi al tipo dell'ammortamento che sta creando.
   *	Il metodo provvede ad azzerare le percentuali precedentemente indicate per il tipo selezionato.
   *
@@ -169,7 +169,7 @@ public Forward doConfirmRiassocia(ActionContext context, OptionBP optionBP) {
 }
 /**
   *   Gestisce un comando di cancellazione di un Tipo Ammortamento.
-  *  La cancellazione Ë solo logica, e le Categorie Gruppo Inventario associate a questo Tipo 
+  *  La cancellazione √® solo logica, e le Categorie Gruppo Inventario associate a questo Tipo 
   *	Ammortamento risulteranno NON associate a nessun ammortamento e, quindi, disponibili per 
   *	ulteriori associazioni
   *
@@ -185,7 +185,7 @@ public Forward doElimina(ActionContext context)throws java.rmi.RemoteException {
 	
 	try {		
 		fillModel(context);
-		OptionBP optionBP = openConfirm(context,"Attenzione: questa operazione canceller‡ le associazioni originarie.\n " + 
+		OptionBP optionBP = openConfirm(context,"Attenzione: questa operazione canceller√† le associazioni originarie.\n " + 
 										"Tutti i beni appartenenti ai gruppi associati a questo Tipo\n " + 
 										"risulteranno privi di un Ammortamento. Si vuol continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmElimina");
 		optionBP.addAttribute("tipo_ammortamento", tipo_ammortamento);
@@ -203,7 +203,7 @@ public Forward doRiassocia(ActionContext context) throws it.cnr.jada.comp.Applic
 	
 	try {		
 		fillModel(context);
-		OptionBP optionBP = openConfirm(context,"Attenzione: questa operazione canceller‡ le associazioni originarie. Si vuol continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmRiassocia");
+		OptionBP optionBP = openConfirm(context,"Attenzione: questa operazione canceller√† le associazioni originarie. Si vuol continuare?",OptionBP.CONFIRM_YES_NO,"doConfirmRiassocia");
 		optionBP.addAttribute("tipo_ammortamento", tipo_ammortamento);
 		return optionBP;
 	} catch(Throwable e) {		

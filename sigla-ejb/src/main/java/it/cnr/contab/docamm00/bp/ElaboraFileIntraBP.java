@@ -180,7 +180,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
 	    	
     		bw.append("A");// Tipo frontespizio Acquisti
 	    	bw.append(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()).toString().substring(2));// Tipo frontespizio Acquisti
-	    	bw.append("M");// Periodicità mensile
+	    	bw.append("M");// PeriodicitÃ  mensile
 	    	bw.append(Formatta(dett.getMese().toString(),"D",2,"0"));
 	    	bw.append(P_iva);
 	    	bw.append("0");//0=operazione sono riferite al mese o trimestre completo 9(1)
@@ -372,7 +372,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append(Formatta(null,"S",15," "));//bw.append(Formatta(det.getNrFattura(),"S",15," "));
     			bw.append(Formatta(null,"S",6," "));//bw.append(Formatta(det.getDtFattura(),"S",6," "));
     			bw.append(Formatta(det.getCdCpa(),"D",5,"0"));
-    			bw.append(Formatta(null,"S",1," "));//diminuzione 1 carattere codice cpa
+    			bw.append(Formatta(null,"S",1,"0"));//diminuzione 1 carattere codice cpa
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
     			bw.append(Formatta(det.getProvenienza(),"S",2," "));
@@ -418,7 +418,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append(Formatta(null,"S",15," "));//bw.append(Formatta(det.getNrFattura(),"S",15," "));
     			bw.append(Formatta(null,"S",6," "));//bw.append(Formatta(det.getDtFattura(),"S",6," "));
     			bw.append(Formatta(null,"D",5,"0"));
-    			bw.append(Formatta(null,"S",1," "));//diminuzione 1 carattere codice cpa
+    			bw.append(Formatta(null,"S",1,"0"));//diminuzione 1 carattere codice cpa
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
     			bw.append(Formatta(null,"S",2," "));//bw.append(Formatta(det.getProvenienza(),"S",2," "));
@@ -446,7 +446,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     		
 	    	bw.append("C");// Tipo frontespizio Cessioni
 	    	bw.append(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()).toString().substring(2));// Tipo frontespizio VEndite
-	    	bw.append("M");// Periodicità mensile
+	    	bw.append("M");// PeriodicitÃ  mensile
 	    	bw.append(Formatta(dett.getMese().toString(),"D",2,"0"));
 	    	bw.append(P_iva);
 	    	bw.append("0");//0=operazione sono riferite al mese o trimestre completo 9(1)
@@ -632,7 +632,7 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append(Formatta(null,"S",15," "));//bw.append(Formatta(det.getNrFattura(),"S",15," "));
     			bw.append(Formatta(null,"S",6," "));//bw.append(Formatta(det.getDtFattura(),"S",6," "));
     			bw.append(Formatta(det.getCdCpa(),"D",5,"0"));
-    			bw.append(Formatta(null,"S",1," "));//diminuzione 1 carattere codice cpa
+    			bw.append(Formatta(null,"S",1,"0"));//diminuzione 1 carattere codice cpa
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
     			bw.append(Formatta(det.getDest(),"S",2," "));
@@ -666,8 +666,8 @@ public void doElaboraFile(ActionContext context,VIntrastatBulk dett,Boolean invi
     			bw.append(Formatta(null,"D",13,"0"));//bw.append(Formatta(new BigDecimal(det.getAmmontareEuro()).abs().toString(),"D",13,"0"));  
     			bw.append(Formatta(null,"S",15," "));//bw.append(Formatta(det.getNrFattura(),"S",15," "));
     			bw.append(Formatta(null,"S",6," "));//bw.append(Formatta(det.getDtFattura(),"S",6," "));
-    			bw.append(Formatta(det.getCdCpa(),"D",5,"0"));
-    			bw.append(Formatta(null,"S",1," "));//diminuzione 1 carattere codice cpa
+    			bw.append(Formatta(det.getCdCpa(),"D",5,"0")); 
+    			bw.append(Formatta(null,"S",1,"0"));//diminuzione 1 carattere codice cpa
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaErogazione(),"S",1," "));
     			bw.append(Formatta(null,"S",1," "));//bw.append(Formatta(det.getCdModalitaIncasso(),"S",1," "));
     			bw.append(Formatta(null,"S",2," "));//bw.append(Formatta(det.getDest(),"S",2," "));
@@ -876,9 +876,9 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 	   bw.append(Formatta(null,"S",2," "));// prov. nascita
 	   bw.append(Formatta(null,"D",8,"0"));// dt. nascita
 	   bw.append(Formatta(null,"D",1," "));// sesso
-	   // Obbligatori se non è Persona Fisica  
+	   // Obbligatori se non Ã¨ Persona Fisica  
  	   bw.append(Formatta(ente.getRagione_sociale(),"S",60," "));
-	   bw.append(Formatta(config.getIm01().toString(),"D",2,"0"));// NATURA GIURIDICA ????????? messo 1 PERCHè OBBLIGATORIO
+	   bw.append(Formatta(config.getIm01().toString(),"D",2,"0"));// NATURA GIURIDICA ????????? messo 1 PERCHÃ¨ OBBLIGATORIO
 	   bw.append(Formatta(null,"S",40," "));// Filler
 	   bw.append(Formatta(null,"S",2," "));// Filler
 	   bw.append(Formatta(null,"S",35," "));// Filler
@@ -886,7 +886,7 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 	   bw.append(Formatta(null,"S",4," "));// Filler
 	   
 	   bw.append(Formatta(resp.getCodice_fiscale(),"S",16," "));//codice fiscale rappresentante
-	   bw.append(Formatta(config.getIm02().toString(),"D",2,"0"));//carica rappresentante  ??????? messo 2 PERCHè OBBLIGATORIO
+	   bw.append(Formatta(config.getIm02().toString(),"D",2,"0"));//carica rappresentante  ??????? messo 2 PERCHÃ¨ OBBLIGATORIO
 	   bw.append(Formatta(Codice_Fiscale,"S",11," "));//codice fiscale societa dichiarante
 	   
 	   bw.append(Formatta(resp.getCognome(),"S",24," "));//cognome rappresentante     ???????????????
@@ -1048,7 +1048,7 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
 		  
 	   }
 	   else
-		   throw new ApplicationException("Il pagamento della liquidazione iva ente per il mese selezionato non è stato effettuato!");  
+		   throw new ApplicationException("Il pagamento della liquidazione iva ente per il mese selezionato non Ã¨ stato effettuato!");  
 	   num_col++; 
 	   bw.append(Formatta(null,"D",(limite_col-num_col)*24," ")); 
 	   
@@ -1060,8 +1060,8 @@ public void doElaboraFile(ActionContext context, VIntra12Bulk dett)throws Busine
  	  // Tipo Record Z Coda
 	   bw.append("Z"); // tipo record
 	   bw.append(Formatta(null,"S",14," "));// Filler
-	   bw.append(Formatta("1","D",9,"0"));// N° record tipo B
-	   bw.append(Formatta("1","D",9,"0"));// N° record tipo C
+	   bw.append(Formatta("1","D",9,"0"));// NÂ° record tipo B
+	   bw.append(Formatta("1","D",9,"0"));// NÂ° record tipo C
 	   
  	   bw.append(Formatta(null,"S",1864," "));// Filler 
  	   bw.append("A"); //

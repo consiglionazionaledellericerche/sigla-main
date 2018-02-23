@@ -56,7 +56,7 @@ public class Incarichi_parametriBase extends Incarichi_parametriKey implements K
 			enabledOnInsert=false,
 			enabledOnEdit=false,
 			nullable=false,
-			label="Ricerca Professionalit‡ Interne Obbligatorio")
+			label="Ricerca Professionalit√† Interne Obbligatorio")
 	private java.lang.String ricerca_interna;
 	
 //  MERAMENTE_OCCASIONALE CHAR(1)
@@ -124,7 +124,7 @@ public class Incarichi_parametriBase extends Incarichi_parametriKey implements K
 			enabledOnSearch=true,
 			enabledOnInsert=false,
 			enabledOnEdit=false,
-			label="Giorni di validit‡ di richiesta incarico per collaborazione dopo la pubblicazione")
+			label="Giorni di validit√† di richiesta incarico per collaborazione dopo la pubblicazione")
 	private Integer incarico_ric_giorni_scad;
 
 //  CD_GRUPPO_FILE VARCHAR(10)

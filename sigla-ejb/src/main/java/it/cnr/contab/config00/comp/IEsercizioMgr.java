@@ -42,18 +42,18 @@ public interface IEsercizioMgr extends ICRUDMgr
  * Pre-post-conditions:
  *
  * Nome: Apertura PdG da parte dell'ENTE
- * Pre:  La richiesta di aprire i piani di gestione Ë stata fatta dal CDS ENTE e l'esercizio Ë in stato STATO_INIZIALE = 'I'
+ * Pre:  La richiesta di aprire i piani di gestione √® stata fatta dal CDS ENTE e l'esercizio √® in stato STATO_INIZIALE = 'I'
  * Post: Viene richiamata la stored procedure che aggiorna a STATO_PDG_APERTO = 'G' lo stato del PDG ENTE 
  * 
  * Nome: Apertura PDG da parte di CDS non ENTE da stato = a STATO_INIZIALE
- * Pre:	 La richiesta di aprire i propri piani di gestione Ë stata fatta da un CDS non ENTE per un esercizio in STATO_INIZIALE = 'I'
- * Pre:  Lo stato dell'esercizio per l'ENTE Ë in STATO_PDG_APERTO = 'G'
+ * Pre:	 La richiesta di aprire i propri piani di gestione √® stata fatta da un CDS non ENTE per un esercizio in STATO_INIZIALE = 'I'
+ * Pre:  Lo stato dell'esercizio per l'ENTE √® in STATO_PDG_APERTO = 'G'
  * Post: Viene richiamata la stored procedure che apre tutti i piani di gestione dei cdr appartenenti al CDS e viene aggiornato
  *       lo stato dell'esercizio selezionato dal valore STATO_INIZIALE al valore STATO_PDG_APERTO per il CDS in processo 
  *
  * Nome: Apertura PDG da parte di CDS non ENTE da stato DIVERSO da STATO_INIZIALE
- * Pre:	 La richiesta di aprire i propri piani di gestione Ë stata fatta da un CDS non ENTE per un esercizio in stato DIVERSO da STATO_INIZIALE
- * Pre:  Lo stato dell'esercizio per l'ENTE Ë in STATO_PDG_APERTO = 'G'
+ * Pre:	 La richiesta di aprire i propri piani di gestione √® stata fatta da un CDS non ENTE per un esercizio in stato DIVERSO da STATO_INIZIALE
+ * Pre:  Lo stato dell'esercizio per l'ENTE √® in STATO_PDG_APERTO = 'G'
  * Post: Viene richiamata la stored procedure che apre tutti i piani di gestione dei cdr appartenenti al CDS
  *
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -69,37 +69,37 @@ public abstract it.cnr.contab.config00.esercizio.bulk.EsercizioBulk apriPianoDiG
  * Pre-post-conditions:
  *
  * Nome: Modifica stato Esercizio iniziale
- * Pre:  La richiesta di modifica dello stato di un Esercizio con stato 'iniziale' Ë stata generata
+ * Pre:  La richiesta di modifica dello stato di un Esercizio con stato 'iniziale' √® stata generata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente ("Non e' possibile cambiare lo stato iniziale");
  *
  * Nome: Modifica stato Esercizio a aperto - OK
- * Pre:  La richiesta di modifica dello stato di un Esercizio da 'Piano di gestione aperto' a 'aperto' Ë stata generata 
+ * Pre:  La richiesta di modifica dello stato di un Esercizio da 'Piano di gestione aperto' a 'aperto' √® stata generata 
  *       e lo stato dell'esercizio precedente per il cds corrente e' chiuso ( provvisoriamente o definitivamente) e 
  *       non esistono cds con (esercizio - 2) in stato diverso da chiuso (provvisoriamente o definitivamente)
  * Post: Lo stato dell'Esercizio viene aggiornato ad 'aperto'
  *
  * Nome: Modifica stato Esercizio a aperto - Errore 1
- * Pre:  La richiesta di modifica dello stato di un Esercizio da 'iniziale' a 'aperto' Ë stata generata e lo stato
+ * Pre:  La richiesta di modifica dello stato di un Esercizio da 'iniziale' a 'aperto' √® stata generata e lo stato
  *       dell'esercizio precedente per il cds corrente non e' chiuso ( provvisoriamente o definitivamente)
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
- *       visualizzare all'utente ("L'esercizio precedente non Ë stato chiuso");
+ *       visualizzare all'utente ("L'esercizio precedente non √® stato chiuso");
  *
  * Nome: Modifica stato Esercizio a aperto - Errore 2
- * Pre:  La richiesta di modifica dello stato di un Esercizio da 'iniziale' a 'aperto' Ë stata generata e esiste almeno
+ * Pre:  La richiesta di modifica dello stato di un Esercizio da 'iniziale' a 'aperto' √® stata generata e esiste almeno
  *       un cds per il quale l'esercizio del secondo anno precedente (esercizio -2) e' in stato non chiuso
  *       provvisoriamente o definitivamente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente ("Esistono esercizi non chiusi per l'anno XXXX");
 
  * Nome: Modifica stato Esercizio chiuso definitivamente
- * Pre:  La richiesta di modifica dello stato di un Esercizio con stato 'chiuso definitivamente' Ë stata generata
+ * Pre:  La richiesta di modifica dello stato di un Esercizio con stato 'chiuso definitivamente' √® stata generata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente ("Non e' possibile cambiare lo stato");
  *
  * Nome: Modifica stato Esercizio a chiuso 
  * Pre:  La richiesta di modifica dello stato di un Esercizio a 'chiuso' ( provvisoriamente o definitivamente)
- *       Ë stata generata 
+ *       √® stata generata 
  * Post: Lo stato dell'Esercizio e' stato aggiornato
  *
  * @param	uc	lo UserContext che ha generato la richiesta
@@ -115,28 +115,28 @@ public abstract it.cnr.contab.config00.esercizio.bulk.EsercizioBulk cambiaStatoC
  * Pre-post-conditions:
  *
  * Nome: Creazione dell'esercizio per l'ente
- * Pre:  La richiesta di creazione dell'esercizio per l'ente Ë stata generata
+ * Pre:  La richiesta di creazione dell'esercizio per l'ente √® stata generata
  * Post: L'esercizio dell'ente e' stato creato con stato 'iniziale'
  *
- * Nome: Creazione di un esercizio consecutivo ad un esercizio gi‡ creato per cds ente
- * Pre:  La richiesta di creazione di un esercizio consecutivo ad un esercizio gi‡ creato in precedenza
- *       Ë stata generata
+ * Nome: Creazione di un esercizio consecutivo ad un esercizio gi√† creato per cds ente
+ * Pre:  La richiesta di creazione di un esercizio consecutivo ad un esercizio gi√† creato in precedenza
+ *       √® stata generata
  * Post: Il nuovo Esercizio e' stato creato con stato 'iniziale'
  *
- * Nome: Creazione di un esercizio consecutivo ad un esercizio gi‡ creato per cds diverso da ente e lo stesso esercizio esiste per l'ente
- * Pre:  La richiesta di creazione di un esercizio consecutivo ad un esercizio gi‡ creato per cds diverso da ente e lo stesso esercizio esiste per l'ente
- *       Ë stata generata
+ * Nome: Creazione di un esercizio consecutivo ad un esercizio gi√† creato per cds diverso da ente e lo stesso esercizio esiste per l'ente
+ * Pre:  La richiesta di creazione di un esercizio consecutivo ad un esercizio gi√† creato per cds diverso da ente e lo stesso esercizio esiste per l'ente
+ *       √® stata generata
  * Post: Il nuovo Esercizio e' stato creato con stato 'iniziale'
  *
- * Nome: Creazione di un esercizio consecutivo ad un esercizio gi‡ creato per cds diverso da ente e lo stesso esercizio non esiste per l'ente
- * Pre:  La richiesta di creazione di un esercizio consecutivo ad un esercizio gi‡ creato per cds diverso da ente e lo stesso esercizio non esiste per l'ente
- *       Ë stata generata
+ * Nome: Creazione di un esercizio consecutivo ad un esercizio gi√† creato per cds diverso da ente e lo stesso esercizio non esiste per l'ente
+ * Pre:  La richiesta di creazione di un esercizio consecutivo ad un esercizio gi√† creato per cds diverso da ente e lo stesso esercizio non esiste per l'ente
+ *       √® stata generata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
- * Nome: Creazione di un esercizio non consecutivo agli esercizi gi‡ creati
- * Pre:  La richiesta di creazione di un esercizio non consecutivo agli esercizi gi‡ creat in precedenza
- *       Ë stata generata
+ * Nome: Creazione di un esercizio non consecutivo agli esercizi gi√† creati
+ * Pre:  La richiesta di creazione di un esercizio non consecutivo agli esercizi gi√† creat in precedenza
+ *       √® stata generata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
@@ -154,7 +154,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext
  * Pre-post-conditions:
  *
  * Nome: Cancellazione Esercizio
- * Pre:  La richiesta di cancellazione di un Esercizio Ë stata generata
+ * Pre:  La richiesta di cancellazione di un Esercizio √® stata generata
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente ("Non e' possibile cancellare un Esercizio");
  *

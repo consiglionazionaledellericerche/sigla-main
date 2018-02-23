@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -9,7 +9,7 @@
 		maxLength="30"
 		inputSize="30"
 		inputType="TEXT"
-		label="Codice Unità Organizzativa"
+		label="Codice UnitÃ  Organizzativa"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="unita_organizzativa"
@@ -18,7 +18,7 @@
 		formName="searchtool"
 		readonlyProperty="notNew"
 		enabledOnSearch="true"
-		label="Unità Organizzativa" />	
+		label="UnitÃ  Organizzativa" />	
 
 	<fieldProperty
 		name="pg_progetto"
@@ -43,9 +43,9 @@
 		<formFieldProperty
 			name="ds_unita_organizzativa"
 			property="unita_organizzativa.ds_unita_organizzativa"
-			label="Descrizione Unità Organizzativa"
+			label="Descrizione UnitÃ  Organizzativa"
 			/>
-		<!-- Per ora l'importo non è gestito 	
+		<!-- Per ora l'importo non Ã¨ gestito 	
 		<formFieldProperty
 			name="importo"
 			/> -->
@@ -56,8 +56,8 @@
 		<columnFieldProperty
 			name="ds_unita_organizzativa"
 			property="unita_organizzativa.ds_unita_organizzativa"
-			label="Descrizione Unità Organizzativa"/>
-		<!-- Per ora l'importo non è gestito 	
+			label="Descrizione UnitÃ  Organizzativa"/>
+		<!-- Per ora l'importo non Ã¨ gestito 	
 		<columnFieldProperty
 			name="importo"/> -->
 	</columnSet>

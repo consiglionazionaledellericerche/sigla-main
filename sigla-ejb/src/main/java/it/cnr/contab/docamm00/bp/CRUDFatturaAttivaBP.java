@@ -135,7 +135,7 @@ public CRUDFatturaAttivaBP(String function) throws BusinessProcessException{
 /**
  * 
  *
- * @param function	La funzione con cui è stato creato il BusinessProcess
+ * @param function	La funzione con cui Ã¨ stato creato il BusinessProcess
  * @param dettAccertamentiControllerClass	
  * @throws BusinessProcessException	
  */
@@ -273,9 +273,9 @@ public it.cnr.jada.util.RemoteIterator findObbligazioniAttributes(it.cnr.jada.ac
 	return null;
 }
 /**
- * Restituisce il valore della proprietà 'accertamentiController'
+ * Restituisce il valore della proprietÃ  'accertamentiController'
  *
- * @return Il valore della proprietà 'accertamentiController'
+ * @return Il valore della proprietÃ  'accertamentiController'
  */
 public final AccertamentiCRUDController getAccertamentiController() {
 	return accertamentiController;
@@ -301,18 +301,18 @@ public String getColumnsetForGenericSearch() {
 	return "default";
 }
 /**
- * Restituisce il valore della proprietà 'consuntivoController'
+ * Restituisce il valore della proprietÃ  'consuntivoController'
  *
- * @return Il valore della proprietà 'consuntivoController'
+ * @return Il valore della proprietÃ  'consuntivoController'
  */
 public final SimpleDetailCRUDController getConsuntivoController() {
 	return consuntivoController;
 	
 }
 /**
- * Restituisce il valore della proprietà 'crudRiferimentiBanca'
+ * Restituisce il valore della proprietÃ  'crudRiferimentiBanca'
  *
- * @return Il valore della proprietà 'crudRiferimentiBanca'
+ * @return Il valore della proprietÃ  'crudRiferimentiBanca'
  */
 public final SimpleDetailCRUDController getCrudRiferimentiBanca() {
 	return crudRiferimentiBanca;
@@ -338,15 +338,15 @@ public it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk getDeleteMan
 	return deleteManager;
 }
 /**
- * Restituisce il valore della proprietà 'dettaglio'
+ * Restituisce il valore della proprietÃ  'dettaglio'
  *
- * @return Il valore della proprietà 'dettaglio'
+ * @return Il valore della proprietÃ  'dettaglio'
  */
 public abstract FatturaAttivaRigaCRUDController getDettaglio();
 /**
- * Restituisce il valore della proprietà 'dettaglioAccertamentoController'
+ * Restituisce il valore della proprietÃ  'dettaglioAccertamentoController'
  *
- * @return Il valore della proprietà 'dettaglioAccertamentoController'
+ * @return Il valore della proprietÃ  'dettaglioAccertamentoController'
  */
 public final it.cnr.jada.util.action.SimpleDetailCRUDController getDettaglioAccertamentoController() {
 	return dettaglioAccertamentoController;
@@ -361,9 +361,9 @@ public String getPropertyForGenericSearch() {
 	return "cliente";
 }
 /**
- * Restituisce il valore della proprietà 'userConfirm'
+ * Restituisce il valore della proprietÃ  'userConfirm'
  *
- * @return Il valore della proprietà 'userConfirm'
+ * @return Il valore della proprietÃ  'userConfirm'
  */
 public it.cnr.contab.doccont00.core.bulk.OptionRequestParameter getUserConfirm() {
 	return userConfirm;
@@ -628,7 +628,7 @@ public void riportaIndietro(ActionContext context)
 	throws it.cnr.jada.action.BusinessProcessException {
 	
 	if (isDirty()) {
-		setMessage("Il documento è stato modificato! Operazione annullata.");
+		setMessage("Il documento Ã¨ stato modificato! Operazione annullata.");
 		return;
 	}
 	
@@ -689,7 +689,7 @@ public void salvaRiportandoAvanti(ActionContext context)
 		riportaAvanti(context);
 	} catch (BusinessProcessException e) {
 		rollbackToSavePoint(context, IDocumentoAmministrativoBulk.RIPORTA_AVANTI);
-		//Il setModel è necessario perchè update setta il modello. se riportaAvanti fallisce il pg_ver_rec
+		//Il setModel Ã¨ necessario perchÃ¨ update setta il modello. se riportaAvanti fallisce il pg_ver_rec
 		//rimane disallineato.
 		setModel(context, faClone);
 		throw handleException(e);
@@ -801,7 +801,7 @@ public void setSavePoint(ActionContext context, String savePointName) throws Bus
 	}
 }
 /**
- * Imposta il valore della proprietà 'userConfirm'
+ * Imposta il valore della proprietÃ  'userConfirm'
  *
  * @param newUserConfirm	Il valore da assegnare a 'userConfirm'
  */
@@ -828,7 +828,7 @@ public void update(ActionContext context)
 }
 /**
   * Validazione dell'obbligazione in fase di creazione di una nuova obbligazione
-  * o modifica di una già creata.
+  * o modifica di una giÃ  creata.
   * Il metodo viene chiamato sul riporta dell'Obbligazione in modo da validare
   * istantaneamente l'oggetto creato.
   * Chi non ne ha bisogno lo lasci vuoto.
@@ -891,7 +891,7 @@ public void sdoppiaDettaglioInAutomatico(ActionContext context) throws Validatio
 		
         if (dettaglioSelezionato==null) return;
         if (documento.getStato_cofi() != null && documento.getStato_cofi().equals(documento.STATO_PAGATO))
-       		setMessage("Non è possibile sdoppiare righe in un documento pagato.");
+       		setMessage("Non Ã¨ possibile sdoppiare righe in un documento pagato.");
         if (dettaglioSelezionato.getIm_riga_sdoppia()==null ||
         	//dettaglioSelezionato.getIm_riga_sdoppia().equals(Utility.ZERO) ||
        		dettaglioSelezionato.getIm_riga_sdoppia().compareTo(dettaglioSelezionato.getSaldo())>1) {
@@ -915,7 +915,7 @@ public void sdoppiaDettaglioInAutomatico(ActionContext context) throws Validatio
 		BigDecimal newPrezzoRigaNuova = dettaglioSelezionato.getPrezzo_unitario().subtract(newPrezzoRigaVecchia);
 		
 		if (dettaglioSelezionato.getAccertamento_scadenzario()!=null) {
-		// se importoIva è diverso da zero vuole dire che è in split_payment ed ho calcolato la quota parte dell'iva  da considerare per sdoppiare le scadenze dell'accertamento 
+		// se importoIva Ã¨ diverso da zero vuole dire che Ã¨ in split_payment ed ho calcolato la quota parte dell'iva  da considerare per sdoppiare le scadenze dell'accertamento 
 	     	  if(importoIva.compareTo(BigDecimal.ZERO)!=0)
         		  	scadenzaNuova=(Accertamento_scadenzarioBulk) h.sdoppiaScadenzaInAutomatico(context.getUserContext(),
     								                                                       scadenzaVecchia,
@@ -1007,13 +1007,13 @@ public void sdoppiaDettaglioInAutomatico(ActionContext context) throws Validatio
 }
 /**
  * Boolean
- *   individua le condizioni per cui è possibile sdoppiare i dettagli del 
+ *   individua le condizioni per cui Ã¨ possibile sdoppiare i dettagli del 
  *   documento
  *   
  *   false: - se annullato
  * 		    - se eliminato
  * 		    - se interamente incassato
- * 		    - se, indipendentemente dall'anno, è stata riportata all'esercizio successivo 
+ * 		    - se, indipendentemente dall'anno, Ã¨ stata riportata all'esercizio successivo 
  * 		    - se non di anno corrente e non riportata all'esercizio successivo 
  *
  * @return Returns the isDetailDoubleable.
@@ -1034,7 +1034,7 @@ public boolean isDetailDoubleable() {
 }
 /**
  * Boolean 
- *   true: è in corso lo sdoppiamento di una riga di dettaglio
+ *   true: Ã¨ in corso lo sdoppiamento di una riga di dettaglio
  *
  * @return Returns the isDetailDoubling.
  */

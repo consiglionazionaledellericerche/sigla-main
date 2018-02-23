@@ -67,18 +67,18 @@ public java.math.BigDecimal getIm_1210() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'residui'
+ * Restituisce il valore della propriet√† 'residui'
  *
- * @return Il valore della propriet‡ 'residui'
+ * @return Il valore della propriet√† 'residui'
  */
 public Voce_f_saldi_cdr_linea_resBulk getResidui() {
 	return residui;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'voce'
+ * Restituisce il valore della propriet√† 'voce'
  *
- * @return Il valore della propriet‡ 'voce'
+ * @return Il valore della propriet√† 'voce'
  */
 public it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk getVoce() 
 {
@@ -335,9 +335,9 @@ public void initializzaAttributiComuniPerSearch(it.cnr.jada.util.action.CRUDBP b
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOParte'
+ * Restituisce il valore della propriet√† 'rOParte'
  *
- * @return Il valore della propriet‡ 'rOParte'
+ * @return Il valore della propriet√† 'rOParte'
  */
 public boolean isROParte() 
 {
@@ -349,9 +349,9 @@ public boolean isROParte()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOPerRicercaVoce'
+ * Restituisce il valore della propriet√† 'rOPerRicercaVoce'
  *
- * @return Il valore della propriet‡ 'rOPerRicercaVoce'
+ * @return Il valore della propriet√† 'rOPerRicercaVoce'
  */
 public boolean isROPerRicercaVoce() 
 {
@@ -368,9 +368,9 @@ public boolean isROPerRicercaVoce()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOVoce'
+ * Restituisce il valore della propriet√† 'rOVoce'
  *
- * @return Il valore della propriet‡ 'rOVoce'
+ * @return Il valore della propriet√† 'rOVoce'
  */
 public boolean isROVoce() 
 {
@@ -389,7 +389,7 @@ public void setIm_1210(java.math.BigDecimal newIm_1210) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'residui'
+ * Imposta il valore della propriet√† 'residui'
  *
  * @param newResidui	Il valore da assegnare a 'residui'
  */
@@ -398,7 +398,7 @@ public void setResidui(Voce_f_saldi_cdr_linea_resBulk newResidui) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'voce'
+ * Imposta il valore della propriet√† 'voce'
  *
  * @param newVoce	Il valore da assegnare a 'voce'
  */

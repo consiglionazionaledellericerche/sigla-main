@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
@@ -25,11 +26,14 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
@@ -39,6 +43,7 @@ import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
 import it.cnr.contab.pdg00.comp.PdGVariazioniComponent;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneHome;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
@@ -52,7 +57,9 @@ import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -88,14 +95,14 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 		pdg.setToBeUpdated();
 		inizializzaSommeCdR(userContext, pdg);
 		if (pdg.getAssociazioneCDR().isEmpty()) 
-			throw new ApplicationException("Associare almeno un Centro di Responsabilit‡ alla Variazione.");
+			throw new ApplicationException("Associare almeno un Centro di Responsabilit√† alla Variazione.");
 		//	P.R.: Controllo proveniente da ModificaConBulk e CreaConBulk
 		//	Deciso con Angelini di spostare i controlli in fase di salvataggio definitivo
 		validaDettagliEntrataSpesa(userContext, pdg);
 		/*
 		 * Confermo l'operazione
-		 * E' importante salvare in questo momento in controllo di disponibilit‡ avviene tramite
-		 * procedura Pl-Sql che deve gi‡ trovare sul DB la variazione con stato Definitivo altrimenti non la 
+		 * E' importante salvare in questo momento in controllo di disponibilit√† avviene tramite
+		 * procedura Pl-Sql che deve gi√† trovare sul DB la variazione con stato Definitivo altrimenti non la 
 		 * considera ai fini del controllo  
 		 */ 
 		pdg = (Pdg_variazioneBulk)super.modificaConBulk(userContext, pdg);
@@ -107,15 +114,15 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 	
 				if (ass_pdgHome.findDettagliSpesaVariazioneGestionale(ass_pdg).isEmpty()) { 
 					if (ass_pdgHome.findDettagliEntrataVariazioneGestionale(ass_pdg).isEmpty()) 
-						throw new ApplicationException("Associare almeno un dettaglio di variazione al Centro di Responsabilit‡ " + ass_pdg.getCd_centro_responsabilita());
+						throw new ApplicationException("Associare almeno un dettaglio di variazione al Centro di Responsabilit√† " + ass_pdg.getCd_centro_responsabilita());
 				}
 	
 				if (ass_pdg.getEntrata_diff().compareTo(Utility.ZERO) != 0)
 					throw new ApplicationException("La Differenza di entrata ("+new it.cnr.contab.util.EuroFormat().format(ass_pdg.getEntrata_diff())+")"+
-												   "\n" + "per il Cdr "+ ass_pdg.getCd_centro_responsabilita()+ " Ë diversa da zero. ");
+												   "\n" + "per il Cdr "+ ass_pdg.getCd_centro_responsabilita()+ " √® diversa da zero. ");
 				if (ass_pdg.getSpesa_diff().compareTo(Utility.ZERO) != 0)
 					throw new ApplicationException("La Differenza di spesa ("+new it.cnr.contab.util.EuroFormat().format(ass_pdg.getSpesa_diff())+")"+
-												   "\n" + "per il Cdr "+ ass_pdg.getCd_centro_responsabilita()+ " Ë diversa da zero. ");
+												   "\n" + "per il Cdr "+ ass_pdg.getCd_centro_responsabilita()+ " √® diversa da zero. ");
 			}
 
 			if (!pdg.isStorno() && !pdg.getTipo_variazione().isMovimentoSuFondi())
@@ -335,7 +342,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 
 			generaVariazioneBilancio(userContext, varPdg);
 			if (!varPdg.isVariazioneInternaIstituto()){
-				String soggetto = "E' stata approvata la Variazione al Pdg n∞ "+varPdg.getPg_variazione_pdg();
+				String soggetto = "E' stata approvata la Variazione al Pdg n¬∞ "+varPdg.getPg_variazione_pdg();
 				generaEMAIL(userContext, varPdg,soggetto,soggetto +" del "+varPdg.getEsercizio()+"<BR>",null, "APP");			    	
 			}						
 		} catch (IntrospectionException e) {
@@ -486,13 +493,13 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 	 * 		le righe di variazione possono essere solo per la spesa ed il saldo algebrico pari a zero.
 	 * 		I CdR chiamati a partecipare possono essere solo quelli appartenenti al CDS che ha aperto 
 	 * 		la variazione.
-	 * STO_E_CDS: le righe di variazione possono essere solo per líentrata ed il saldo algebrico pari a zero.
+	 * STO_E_CDS: le righe di variazione possono essere solo per l¬íentrata ed il saldo algebrico pari a zero.
 	 * 			  I CdR chiamati a partecipare possono essere solo quelli appartenenti al CDS che ha aperto 
 	 * 			  la variazione.
 	 * STO_S_TOT: le righe di variazione possono essere solo per la spesa ed il saldo algebrico pari a zero.
 	 * 			  I CdR chiamati a partecipare possono anche appartenere a CDS diversi da quello che ha aperto 
 	 * 			  la variazione.
-	 * STO_E_TOT: le righe di variazione possono essere solo per líentrata ed il saldo algebrico pari a zero.
+	 * STO_E_TOT: le righe di variazione possono essere solo per l¬íentrata ed il saldo algebrico pari a zero.
 	 * 			  I CdR chiamati a partecipare possono anche appartenere a CDS diversi da quello che ha aperto
 	 * 			  la variazione.
 	 * VAR_PIU_CDS: le righe di variazione devono essere sia di entrata che di spesa (obbligatoriamente), 
@@ -528,8 +535,18 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 			int contaRigheEntrata = Utility.ZERO.intValue();
 			int contaRigheSpesa = Utility.ZERO.intValue();
 
-			for (java.util.Iterator j=pdg.getAssociazioneCDR().iterator();j.hasNext();){			
+			boolean existDettPersonale = true;
+			String cdrPersonale = null;
+			if (Optional.ofNullable(pdg.getTiMotivazioneVariazione()).isPresent()) { 
+				cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(usercontext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
+						.orElseThrow(() -> new ComponentException("Non Ë possibile individuare il codice CDR del Personale."));
+				existDettPersonale = false;
+			} 
+				
+			for (java.util.Iterator j=pdg.getAssociazioneCDR().iterator();j.hasNext();){
 				Ass_pdg_variazione_cdrBulk ass_pdg = (Ass_pdg_variazione_cdrBulk)j.next();
+
+				existDettPersonale = existDettPersonale||cdrPersonale.equals(ass_pdg.getCd_centro_responsabilita());
 
 				if (pdg.getTipologia().equals(Tipo_variazioneBulk.STORNO_SPESA_STESSO_ISTITUTO) ||
 					pdg.getTipologia().equals(Tipo_variazioneBulk.STORNO_ENTRATA_STESSO_ISTITUTO) ||
@@ -575,6 +592,12 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 						totImportoSpesaPositivo = totImportoSpesaPositivo.add(spesa_det.getIm_variazione());
 					else
 						totImportoSpesaNegativo = totImportoSpesaNegativo.add(spesa_det.getIm_variazione());
+					
+					if (!existDettPersonale) {
+						Elemento_voceBulk voce = (Elemento_voceBulk)getHome(usercontext, Elemento_voceBulk.class).findByPrimaryKey(spesa_det.getElemento_voce());
+						Classificazione_vociBulk classif = (Classificazione_vociBulk)getHome(usercontext, Classificazione_vociBulk.class).findByPrimaryKey(new Classificazione_vociBulk(voce.getId_classificazione()));
+						existDettPersonale = classif.getFl_accentrato()&&cdrPersonale.equals(classif.getCdr_accentratore());
+					}
 				}
 				//Aggiorno il totalizzatore complessivo
 				totSommaSpesa = totSommaSpesa.add(sommaSpesa);
@@ -586,44 +609,46 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 												   new it.cnr.contab.util.EuroFormat().format(sommaSpesa.subtract(ass_pdg.getIm_spesa())));
 				}
 			}
-			if (totSommaEntrata.compareTo(totSommaSpesa)!=0 && !isUoPdgUoEnte(usercontext, pdg)) {
+			if (totSommaEntrata.compareTo(totSommaSpesa)!=0 && !isUoPdgUoEnte(usercontext, pdg))
 				throw new ApplicationException("Il totale delle variazioni di spesa ("+new it.cnr.contab.util.EuroFormat().format(totSommaSpesa)+")"+
-										   "\n" + "non Ë uguale al totale delle variazioni di entrata ("+
+										   "\n" + "non √® uguale al totale delle variazioni di entrata ("+
 										   new it.cnr.contab.util.EuroFormat().format(totSommaEntrata)+")");
-			}
+			if (!existDettPersonale)
+				throw new ApplicationException("In un variazione di tipo 'Personale' occorre selezionare almeno una voce accentrata "
+						+ "verso il CDR del personale o scegliere tra i CDR partecipanti anche quello del personale ("+cdrPersonale+").");
 			if (pdg.getTipologia().equals(Tipo_variazioneBulk.STORNO_SPESA_STESSO_ISTITUTO) ||
 				pdg.getTipologia().equals(Tipo_variazioneBulk.STORNO_SPESA_ISTITUTI_DIVERSI)) {
 				if (contaRigheEntrata>Utility.ZERO.intValue())
-					throw new ApplicationException("Non Ë possibile inserire dettagli di entrata in un variazione di tipo 'Storno Spesa'");
+					throw new ApplicationException("Non √® possibile inserire dettagli di entrata in un variazione di tipo 'Storno Spesa'");
 				if (totSommaSpesa.compareTo(Utility.ZERO)!=0)
 					throw new ApplicationException("In un variazione di tipo 'Storno Spesa' il saldo algebrico deve essere nullo");
 			} else if (pdg.getTipologia().equals(Tipo_variazioneBulk.STORNO_ENTRATA_STESSO_ISTITUTO) ||
 					   pdg.getTipologia().equals(Tipo_variazioneBulk.STORNO_ENTRATA_ISTITUTI_DIVERSI)) {
 				if (contaRigheSpesa>Utility.ZERO.intValue())
-					throw new ApplicationException("Non Ë possibile inserire dettagli di spesa in un variazione di tipo 'Storno Entrata'");
+					throw new ApplicationException("Non √® possibile inserire dettagli di spesa in un variazione di tipo 'Storno Entrata'");
 				if (totSommaEntrata.compareTo(Utility.ZERO)!=0)
 					throw new ApplicationException("In un variazione di tipo 'Storno Entrata' il saldo algebrico deve essere nullo");
 			} else if (pdg.getTipologia().equals(Tipo_variazioneBulk.PRELIEVO_FONDI)) {
 				if (contaRigheEntrata>Utility.ZERO.intValue())
-					throw new ApplicationException("Non Ë possibile inserire dettagli di entrata in un variazione di tipo 'Prelievo Fondi'");
+					throw new ApplicationException("Non √® possibile inserire dettagli di entrata in un variazione di tipo 'Prelievo Fondi'");
 				if (totSommaSpesa.compareTo(Utility.ZERO)!=1)
 					throw new ApplicationException("In un variazione di tipo 'Prelievo da Fondi' il saldo algebrico deve essere positivo");
 			} else if (pdg.getTipologia().equals(Tipo_variazioneBulk.VARIAZIONE_NEGATIVA_FONDI)) {
 				if (contaRigheSpesa>Utility.ZERO.intValue())
-					throw new ApplicationException("Non Ë possibile inserire dettagli di spesa in un variazione di tipo 'Decremento Fondi'");
+					throw new ApplicationException("Non √® possibile inserire dettagli di spesa in un variazione di tipo 'Decremento Fondi'");
 				if (totImportoEntrataPositivo.compareTo(Utility.ZERO)!=0)
-					throw new ApplicationException("In un variazione di tipo 'Decremento Fondi' non Ë possibile inserire dettagli di entrata con importi positivi.");
+					throw new ApplicationException("In un variazione di tipo 'Decremento Fondi' non √® possibile inserire dettagli di entrata con importi positivi.");
 			} else if (pdg.getTipologia().equals(Tipo_variazioneBulk.VARIAZIONE_POSITIVA_FONDI)) {
 				if (contaRigheSpesa>Utility.ZERO.intValue())
-					throw new ApplicationException("Non Ë possibile inserire dettagli di spesa in un variazione di tipo 'Incremento\\Decremento Fondi'");
+					throw new ApplicationException("Non √® possibile inserire dettagli di spesa in un variazione di tipo 'Incremento\\Decremento Fondi'");
 				if (totImportoEntrataNegativo.compareTo(Utility.ZERO)!=0)
-					throw new ApplicationException("In un variazione di tipo 'Incremento Fondi' non Ë possibile inserire dettagli di entrata con importi negativi.");
+					throw new ApplicationException("In un variazione di tipo 'Incremento Fondi' non √® possibile inserire dettagli di entrata con importi negativi.");
 			} else if (pdg.getTipologia().equals(Tipo_variazioneBulk.VARIAZIONE_POSITIVA_STESSO_ISTITUTO) ||
 					   pdg.getTipologia().equals(Tipo_variazioneBulk.VARIAZIONE_POSITIVA_ISTITUTI_DIVERSI)) {
 				if (contaRigheSpesa==Utility.ZERO.intValue()|| contaRigheEntrata==Utility.ZERO.intValue())
 					throw new ApplicationException("E' necessario inserire sia dettagli di spesa che di entrata in un variazione di tipo 'Variazione Positiva'");
 				if (totImportoSpesaNegativo.compareTo(Utility.ZERO)!=0 || totImportoEntrataNegativo.compareTo(Utility.ZERO)!=0)
-					throw new ApplicationException("In un variazione di tipo 'Variazione Positiva' non Ë possibile inserire dettagli di entrata/spesa con importi negativi.");			
+					throw new ApplicationException("In un variazione di tipo 'Variazione Positiva' non √® possibile inserire dettagli di entrata/spesa con importi negativi.");			
 								CdrBulk cdr_prel=null;
 								Pdg_variazioneHome pdgHome = (Pdg_variazioneHome)getHome(usercontext, Pdg_variazioneBulk.class);
 								//Calcolo il totale delle entrate 
@@ -648,8 +673,8 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 							if (impTotaleEntrateDaPrel.compareTo(ZERO)!=0){
 								//if(impTotaleSpesePrel.compareTo(ZERO)!=0){
 									if(impTotaleEntrateDaPrel.compareTo(impTotaleSpesePrel)!=0)
-										throw new ApplicationException("Il contributo per l'attivit‡ ordinaria per il cdr "+cdr_prel.getCd_centro_responsabilita()+" Ë pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
-											". Impossibile salvare, poichË Ë stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
+										throw new ApplicationException("Il contributo per l'attivit√† ordinaria per il cdr "+cdr_prel.getCd_centro_responsabilita()+" √® pari a "+ new it.cnr.contab.util.EuroFormat().format(impTotaleEntrateDaPrel)+
+											". Impossibile salvare, poich√® √® stato imputato sulla voce dedicata l'importo di "+new it.cnr.contab.util.EuroFormat().format(impTotaleSpesePrel)+".");
 								//}		
 							}
 						if (totSommaEntrata.compareTo(totSommaSpesa)!=0)
@@ -662,7 +687,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 				if (contaRigheSpesa==Utility.ZERO.intValue() || contaRigheEntrata==Utility.ZERO.intValue())
 					throw new ApplicationException("E' necessario inserire sia dettagli di spesa che di entrata in un variazione di tipo 'Variazione Negativa'");
 				if (totImportoSpesaPositivo.compareTo(Utility.ZERO)!=0 || totImportoEntrataPositivo.compareTo(Utility.ZERO)!=0)
-					throw new ApplicationException("In un variazione di tipo 'Variazione Negativa' non Ë possibile inserire dettagli di entrata/spesa con importi positivi.");
+					throw new ApplicationException("In un variazione di tipo 'Variazione Negativa' non √® possibile inserire dettagli di entrata/spesa con importi positivi.");
 				if (totSommaEntrata.compareTo(totSommaSpesa)!=0) {
 					throw new ApplicationException("In un variazione di tipo 'Variazione Negativa' il totale delle variazioni di spesa ("+
 											   new it.cnr.contab.util.EuroFormat().format(totSommaSpesa)+")"+
@@ -675,7 +700,6 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 		}					
 	}
 
-	
 	public void inizializzaSommeCdR(UserContext userContext, Pdg_variazioneBulk pdg) throws ComponentException{
 		try {		
 			Ass_pdg_variazione_cdrHome testataHome = (Ass_pdg_variazione_cdrHome)getHome(userContext, Ass_pdg_variazione_cdrBulk.class);
@@ -711,7 +735,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 	/** 
 	  *  Tutti controlli superati
 	  *    PreCondition:
-	  *      Viene richiesto il ribaltamento dei costi del Piano di Gestione del CdR specificato all'area di ricerca a cui afferisce. Il bilancio del CNR Ë gi‡ stato approvato
+	  *      Viene richiesto il ribaltamento dei costi del Piano di Gestione del CdR specificato all'area di ricerca a cui afferisce. Il bilancio del CNR √® gi√† stato approvato
 	  *    PostCondition:
 	  *      La procedura Oracle CNRCTB053.ribaltaSuAreaPDG viene eseguita per l'anno di esercizio ed il CdR specificati.
 	 */
@@ -857,13 +881,13 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 				try {
 					SQLExceptionHandler sqlException = SQLExceptionHandler.getInstance();
 					PersistencyException eccezione = sqlException.handleSQLException(e, pdgVar);
-					String soggetto = "Si Ë verificato un errore durante l'approvazione della variazione sul bilancio dell'ente "+pdgVar.getEs_var_bil()+"/"+pdgVar.getPg_var_bil();
+					String soggetto = "Si √® verificato un errore durante l'approvazione della variazione sul bilancio dell'ente "+pdgVar.getEs_var_bil()+"/"+pdgVar.getPg_var_bil();
 					
-					String preText = "Si Ë verificato il seguente errore durante l'approvazione della variazione sul bilancio dell'ente "+pdgVar.getEs_var_bil()+"/"+pdgVar.getPg_var_bil() + 
-					                 "<BR>" + "generata in automatico a seguito della Variazione al PdG n∞"+pdgVar.getPg_variazione_pdg()+
+					String preText = "Si √® verificato il seguente errore durante l'approvazione della variazione sul bilancio dell'ente "+pdgVar.getEs_var_bil()+"/"+pdgVar.getPg_var_bil() + 
+					                 "<BR>" + "generata in automatico a seguito della Variazione al PdG n¬∞"+pdgVar.getPg_variazione_pdg()+
 					                 " del "+  pdgVar.getEsercizio()+".<BR><BR>"+
 									 "<b>"+eccezione.getMessage()+"</b><BR><BR>"+
-					                 "La Variazione al bilancio dell'Ente rimarr‡ pertanto PROVVISORIA.<BR>";
+					                 "La Variazione al bilancio dell'Ente rimarr√† pertanto PROVVISORIA.<BR>";
 					generaEMAIL(userContext, pdgVar, soggetto, preText, null,"ERR");
 					pdgVar.setErroreEsitaVariazioneBilancio(true);
 				}catch (IntrospectionException e1) {
@@ -1067,16 +1091,16 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 					if (messaggio!=null && messaggio.length()>0) 
 						messaggio = messaggio+ "<BR>";
 					messaggio = messaggio +  
-					     "La disponibilit‡ del CdR "+rigaVar.getCd_cdr_assegnatario()+
+					     "La disponibilit√† del CdR "+rigaVar.getCd_cdr_assegnatario()+
 					     " per la Voce " + rigaVar.getCd_elemento_voce() + " e GAE " + rigaVar.getCd_linea_attivita() + 
-					     " non Ë sufficiente a coprire<BR>la variazione che risulta di " + 
+					     " non √® sufficiente a coprire<BR>la variazione che risulta di " + 
 					     new it.cnr.contab.util.EuroFormat().format(rigaVar.getIm_variazione()) + ".<BR>";
 				}
 			}
 
 			/*
-			 * Se Ë una variazione di tipo "Movimentazione da Fondi" effettuo la verifica che il Fondo prescelto
-			 * abbia una disponibilit‡ sufficiente a coprire la variazione  
+			 * Se √® una variazione di tipo "Movimentazione da Fondi" effettuo la verifica che il Fondo prescelto
+			 * abbia una disponibilit√† sufficiente a coprire la variazione  
 			 */
 			if (pdgVariazione.getTipo_variazione().isMovimentoSuFondi()) {
 				it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_ATTIVITA_SPESA_ENTE );
@@ -1099,7 +1123,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 					messaggio = messaggio +  
 					     "La Voce del Fondo " + pdgVariazione.getCd_elemento_voce() +
 					     " del CdR "+pdgVariazione.getCd_centro_responsabilita() +
-					     " non Ë sufficiente a coprire la variazione che risulta di " + 
+					     " non √® sufficiente a coprire la variazione che risulta di " + 
 					     new it.cnr.contab.util.EuroFormat().format(totVariazioneSpe) + ".<BR>";
 				}
 			}
@@ -1146,7 +1170,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 						if (!area.equals(pdgVar.getCd_centro_responsabilita()) && impSpe.compareTo(impEtr)!=0)
 							throw new ApplicationException("L'importo assegnato all'Area "+area+" di parte spese (" +
 										new it.cnr.contab.util.EuroFormat().format(impSpe) + 
-										") Ë diverso dall'importo assegnato alla stessa Area di parte entrate (" +
+										") √® diverso dall'importo assegnato alla stessa Area di parte entrate (" +
 										new it.cnr.contab.util.EuroFormat().format(impEtr) + ").");
 						}
 					} catch (java.sql.SQLException e) {
@@ -1214,7 +1238,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
     	return false;
     }
 	/**
-	  * Verifica che il CDR associato alla variazione Ë eliminabile 
+	  * Verifica che il CDR associato alla variazione √® eliminabile 
 	  *
 	  * Pre-post-conditions:
 	  *
@@ -1229,7 +1253,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 
 			if (!assHome.findDettagliEntrataVariazioneGestionale(assBulk).isEmpty() ||
 				!assHome.findDettagliSpesaVariazioneGestionale(assBulk).isEmpty())
-				throw new ComponentException("Non Ë possibile eliminare l'associazione della variazione con il CDR " + assBulk.getCd_centro_responsabilita() + " in quanto esistono dettagli di entrata/spesa collegati.");
+				throw new ComponentException("Non √® possibile eliminare l'associazione della variazione con il CDR " + assBulk.getCd_centro_responsabilita() + " in quanto esistono dettagli di entrata/spesa collegati.");
 		} catch (it.cnr.jada.persistency.PersistencyException pe){
 			throw new ComponentException(pe);
 		}
@@ -1265,7 +1289,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 		}
 		if (!pdg.getTipo_variazione().isMovimentoSuFondi() && totSommaEntrata.compareTo(totSommaSpesa)!=0) {
 			return ("La quota di spesa assegnata ("+new it.cnr.contab.util.EuroFormat().format(totSommaSpesa)+")"+
-									   "\n" + "non Ë uguale alla quota di entrata assegnata ("+
+									   "\n" + "non √® uguale alla quota di entrata assegnata ("+
 									   new it.cnr.contab.util.EuroFormat().format(totSommaEntrata)+")");
 		}
 	  return null;

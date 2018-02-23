@@ -444,7 +444,7 @@ public boolean isDirectlyLinkedToDC() {
 }
 public boolean isPagata() {
 
-	//Se si necessita di modifica, verificare che la condizione in 'checkIfRiportata' è ancora valida!
+	//Se si necessita di modifica, verificare che la condizione in 'checkIfRiportata' Ã¨ ancora valida!
 	return STATO_PAGATO.equals(getStato_cofi());
 }
 public boolean isRiportata() {
