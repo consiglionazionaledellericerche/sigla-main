@@ -413,6 +413,18 @@
 		formatName="date_short"
 		inputSize="8"
 		label="Data firma" />	
+
+	<fieldProperty
+		name="tiMotivazioneVariazione"
+		property="tiMotivazioneVariazione"
+		inputType="SELECT"		
+		keysProperty="tiMotivazioneVariazioneForSearchKeys"
+		maxLength="10"
+		enabledOnInsert="true"
+        enabledOnSearch="true"
+        enabledOnEdit="true"                
+		nullable="false"
+		label="Motivo Variazione" />
 	<fieldProperty
 		name="mapMotivazioneVariazione"
 		property="mapMotivazioneVariazione"
@@ -431,6 +443,9 @@
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
+		enabledOnInsert="true"
+        enabledOnSearch="true"
+        enabledOnEdit="true"                
 		nullable="false"
 		label="Matricola" />
 	<fieldProperty
@@ -439,6 +454,9 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
+		enabledOnInsert="true"
+        enabledOnSearch="true"
+        enabledOnEdit="true"                
 		nullable="false"
 		label="Dettagli Bando" />
 
@@ -562,6 +580,8 @@
 	<formFieldProperty
 		name="dt_firma" />	
 	<formFieldProperty
+		name="tiMotivazioneVariazione" />
+	<formFieldProperty
 		name="mapMotivazioneVariazione" />
 	<formFieldProperty
 		name="idMatricola" />
@@ -610,7 +630,14 @@
 	<findFieldProperty
 		name="stato_invio" />
 	<findFieldProperty
-		name="dt_firma" />	
+		name="dt_firma" />
+	<findFieldProperty
+		name="tiMotivazioneVariazione" />
+	<findFieldProperty
+		name="idMatricola" />
+	<findFieldProperty
+		name="idBando" />
+
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty

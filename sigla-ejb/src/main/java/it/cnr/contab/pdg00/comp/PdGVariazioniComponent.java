@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.ejb.EJBException;
@@ -391,24 +392,19 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		return generaMessaggio(userContext, utente, pdg, null);
 	}
 
-	private SQLBuilder selectBase(UserContext userContext,
-			CompoundFindClause clauses, OggettoBulk bulk)
-			throws ComponentException,
-			it.cnr.jada.persistency.PersistencyException {
-			SQLBuilder sql = getHome(userContext, bulk, "VP_PDG_VARIAZIONE")
-					.createSQLBuilder();
-			sql.addClause(clauses);
-			sql.addClause(bulk.buildFindClauses(new Boolean(true)));
-			sql.addClause("AND", "esercizio", sql.EQUALS, CNRUserContext
-					.getEsercizio(userContext));
-			Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome(
-					userContext, Unita_organizzativa_enteBulk.class).findAll()
-					.get(0);
+	private SQLBuilder selectBase(UserContext userContext, CompoundFindClause clauses, OggettoBulk bulk) throws ComponentException,	it.cnr.jada.persistency.PersistencyException {
+		SQLBuilder sql = getHome(userContext, bulk, "VP_PDG_VARIAZIONE").createSQLBuilder();
+		sql.addClause(clauses);
+		sql.addClause(bulk.buildFindClauses(new Boolean(true)));
+		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
 
-			UtenteBulk utente = (UtenteBulk) getHome(userContext,
-					UtenteBulk.class).findByPrimaryKey(
-					new UtenteKey(it.cnr.contab.utenze00.bp.CNRUserContext
-							.getUser(userContext)));
+		Optional.ofNullable(bulk)
+			.filter(Pdg_variazioneBulk.class::isInstance)
+			.map(Pdg_variazioneBulk.class::cast)
+			.filter(el->Pdg_variazioneBulk.MOTIVAZIONE_GENERICO.equals(el.getMapMotivazioneVariazione()))
+			.ifPresent(var->sql.addSQLClause(FindClause.AND,"VP_PDG_VARIAZIONE.TI_MOTIVAZIONE_VARIAZIONE",SQLBuilder.ISNULL,null));
+			
+		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome(userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 
 			CdrHome cdrHome = (CdrHome) getHome(userContext, CdrBulk.class);
 			CdrBulk cdrUtente = (CdrBulk) cdrHome.findByPrimaryKey(new CdrKey(
