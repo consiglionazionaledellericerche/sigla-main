@@ -59,7 +59,6 @@ function doScaricaFile() {
 				<% bp.getController().writeFormField(out,"dt_provv");%>
 			</tr>
 		</table>
-		</fieldset>
 	</div>
 
 	<div class="GroupLabel font-weight-bold text-primary ml-2">Repertorio</div>  
@@ -79,7 +78,6 @@ function doScaricaFile() {
 			</tr>
 		</table>
 		<% } %>
-		</fieldset>
 	</div>
 </div>		
 
@@ -100,7 +98,6 @@ function doScaricaFile() {
 					<% } %>
 				<% } %>		
 		</table>
-		</fieldset>
 	</div>
 </div>
 
