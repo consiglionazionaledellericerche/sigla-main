@@ -171,7 +171,7 @@
         </addColumn>
 
         <addColumn tableName="tipo_variazione">
-            <column name="fl_variazioni_trasferimento" type="CHAR(1)" defaultValue="N" remarks="Variazioni che consente anche trasferimento risorse del personale - Dominio: S = Sì; N = No;.">
+            <column name="fl_variazione_trasferimento" type="CHAR(1)" defaultValue="N" remarks="Variazioni che consente anche trasferimento risorse del personale - Dominio: S = Sì; N = No;.">
                 <constraints nullable="false"/>
             </column>
         </addColumn>

@@ -228,6 +228,17 @@
 		label="Descrizione" />
 		
 	<fieldProperty
+		name="tiMotivazioneVariazione"
+		property="tiMotivazioneVariazione"
+		inputType="SELECT"		
+		keysProperty="tiMotivazioneVariazioneForSearchKeys"
+		maxLength="10"
+		enabledOnInsert="true"
+        enabledOnSearch="true"
+        enabledOnEdit="true"                
+		nullable="false"
+		label="Motivo Variazione" />
+	<fieldProperty
 		name="mapMotivazioneVariazione"
 		property="mapMotivazioneVariazione"
 		inputType="SELECT"		
@@ -245,6 +256,9 @@
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
+		enabledOnInsert="true"
+        enabledOnSearch="true"
+        enabledOnEdit="true"                
 		nullable="false"
 		label="Matricola" />
 	<fieldProperty
@@ -253,6 +267,9 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
+		enabledOnInsert="true"
+        enabledOnSearch="true"
+        enabledOnEdit="true"                
 		nullable="false"
 		label="Dettagli Bando" />
 		
@@ -321,6 +338,8 @@
 	<formFieldProperty
 		name="ds_variazione_bilancio" />		
 	<formFieldProperty
+		name="tiMotivazioneVariazione" />
+	<formFieldProperty
 		name="mapMotivazioneVariazione" />
 	<formFieldProperty
 		name="idMatricola" />
@@ -355,6 +374,12 @@
 		name="tipologia" />
 	<findFieldProperty
 		name="tipologia_fin" />
+	<findFieldProperty
+		name="tiMotivazioneVariazione" />
+	<findFieldProperty
+		name="idMatricola" />
+	<findFieldProperty
+		name="idBando" />
 		
 	<columnFieldProperty
 		name="esercizio" />
