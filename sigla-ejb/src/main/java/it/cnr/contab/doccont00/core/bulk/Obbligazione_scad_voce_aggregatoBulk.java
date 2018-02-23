@@ -28,27 +28,27 @@ public Obbligazione_scad_voce_aggregatoBulk( String codice, Timestamp dt_scadenz
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'codice'
+ * Restituisce il valore della propriet√† 'codice'
  *
- * @return Il valore della propriet‡ 'codice'
+ * @return Il valore della propriet√† 'codice'
  */
 public java.lang.String getCodice() {
 	return codice;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'dt_scadenza'
+ * Restituisce il valore della propriet√† 'dt_scadenza'
  *
- * @return Il valore della propriet‡ 'dt_scadenza'
+ * @return Il valore della propriet√† 'dt_scadenza'
  */
 public java.sql.Timestamp getDt_scadenza() {
 	return dt_scadenza;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'importo'
+ * Restituisce il valore della propriet√† 'importo'
  *
- * @return Il valore della propriet‡ 'importo'
+ * @return Il valore della propriet√† 'importo'
  */
 public java.math.BigDecimal getImporto() {
 	return importo;
@@ -95,7 +95,7 @@ public Vector ordina( Vector aggregati )
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'codice'
+ * Imposta il valore della propriet√† 'codice'
  *
  * @param newCodice	Il valore da assegnare a 'codice'
  */
@@ -104,7 +104,7 @@ public void setCodice(java.lang.String newCodice) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'dt_scadenza'
+ * Imposta il valore della propriet√† 'dt_scadenza'
  *
  * @param newDt_scadenza	Il valore da assegnare a 'dt_scadenza'
  */
@@ -113,7 +113,7 @@ public void setDt_scadenza(java.sql.Timestamp newDt_scadenza) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'importo'
+ * Imposta il valore della propriet√† 'importo'
  *
  * @param newImporto	Il valore da assegnare a 'importo'
  */

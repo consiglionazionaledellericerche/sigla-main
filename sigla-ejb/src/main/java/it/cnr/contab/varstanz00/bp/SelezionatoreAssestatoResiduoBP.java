@@ -186,7 +186,7 @@ public class SelezionatoreAssestatoResiduoBP extends ConsultazioniBP{
 		}
 	}
 	/**
-	 * @return editable TRUE Se l'obbligazione Ë editabile
+	 * @return editable TRUE Se l'obbligazione √® editabile
 	 *					FALSE in caso contrario
 	 */
 	public boolean isEditable() {
@@ -239,7 +239,7 @@ public class SelezionatoreAssestatoResiduoBP extends ConsultazioniBP{
 		}
 	}
 	/**
-	 * Imposta il valore della propriet‡ 'bulkClass'
+	 * Imposta il valore della propriet√† 'bulkClass'
 	 *
 	 * @param newBulkClass	Il valore da assegnare a 'bulkClass'
 	 */
@@ -247,7 +247,7 @@ public class SelezionatoreAssestatoResiduoBP extends ConsultazioniBP{
 		bulkClass = newBulkClass;
 	}
 	/**
-	 * Imposta il valore della propriet‡ 'bulkClassName'
+	 * Imposta il valore della propriet√† 'bulkClassName'
 	 *
 	 * @param bulkClassName	Il valore da assegnare a 'bulkClassName'
 	 * @throws ClassNotFoundException	
@@ -261,7 +261,7 @@ public class SelezionatoreAssestatoResiduoBP extends ConsultazioniBP{
 		bulkInfo = newBulkInfo;
 	}
 	/**
-	 * Imposta il valore della propriet‡ 'componentSessioneName'
+	 * Imposta il valore della propriet√† 'componentSessioneName'
 	 *
 	 * @param newComponentSessioneName	Il valore da assegnare a 'componentSessioneName'
 	 */

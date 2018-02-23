@@ -80,14 +80,14 @@ public int addToRisultati(RisultatoBulk risultato) {
 
 public int addToDettagliPostIt(it.cnr.contab.config00.blob.bulk.PostItBulk dett) {	
 	dett.setCd_centro_responsabilita(getCd_centro_responsabilita());
-	/*Nel caso di creazione del Wp da Zero la linea_attivita Ë null*/
+	/*Nel caso di creazione del Wp da Zero la linea_attivita √® null*/
 	dett.setCd_linea_attivita(getCd_linea_attivita());
 	dettagliPostIt.add(dett);
 	return dettagliPostIt.size()-1;
 }
 
 /*
- * Ritorna true se il ricevente Ë valido nell'esercizio specificato
+ * Ritorna true se il ricevente √® valido nell'esercizio specificato
  */
 
 public boolean checkValiditaInEsercizio(Integer aEsercizio) {
@@ -136,57 +136,57 @@ public java.lang.String getCd_tipo_linea_attivita() {
 	return tipo_linea_attivita.getCd_tipo_linea_attivita();
 }
 /**
- * Restituisce il valore della propriet‡ 'centro_responsabilita'
+ * Restituisce il valore della propriet√† 'centro_responsabilita'
  *
- * @return Il valore della propriet‡ 'centro_responsabilita'
+ * @return Il valore della propriet√† 'centro_responsabilita'
  */
 public it.cnr.contab.config00.sto.bulk.CdrBulk getCentro_responsabilita() {
 	return centro_responsabilita;
 }
 /**
- * Restituisce il valore della propriet‡ 'funzione'
+ * Restituisce il valore della propriet√† 'funzione'
  *
- * @return Il valore della propriet‡ 'funzione'
+ * @return Il valore della propriet√† 'funzione'
  */
 public FunzioneBulk getFunzione() {
 	return funzione;
 }
 /**
- * Restituisce il valore della propriet‡ 'funzioni'
+ * Restituisce il valore della propriet√† 'funzioni'
  *
- * @return Il valore della propriet‡ 'funzioni'
+ * @return Il valore della propriet√† 'funzioni'
  */
 public java.util.Collection getFunzioni() {
 	return funzioni;
 }
 /**
- * Restituisce il valore della propriet‡ 'gruppo_linea_attivita'
+ * Restituisce il valore della propriet√† 'gruppo_linea_attivita'
  *
- * @return Il valore della propriet‡ 'gruppo_linea_attivita'
+ * @return Il valore della propriet√† 'gruppo_linea_attivita'
  */
 public Gruppo_linea_attivitaBulk getGruppo_linea_attivita() {
 	return gruppo_linea_attivita;
 }
 /**
- * Restituisce il valore della propriet‡ 'insieme_la'
+ * Restituisce il valore della propriet√† 'insieme_la'
  *
- * @return Il valore della propriet‡ 'insieme_la'
+ * @return Il valore della propriet√† 'insieme_la'
  */
 public Insieme_laBulk getInsieme_la() {
 	return insieme_la;
 }
 /**
- * Restituisce il valore della propriet‡ 'natura'
+ * Restituisce il valore della propriet√† 'natura'
  *
- * @return Il valore della propriet‡ 'natura'
+ * @return Il valore della propriet√† 'natura'
  */
 public NaturaBulk getNatura() {
 	return natura;
 }
 /**
- * Restituisce il valore della propriet‡ 'nature'
+ * Restituisce il valore della propriet√† 'nature'
  *
- * @return Il valore della propriet‡ 'nature'
+ * @return Il valore della propriet√† 'nature'
  */
 public java.util.Collection getNature() {
 	return nature;
@@ -199,25 +199,25 @@ public it.cnr.jada.bulk.BulkList getRisultati() {
 	return risultati;
 }
 /**
- * Restituisce il valore della propriet‡ 'ti_gestioneKeys'
+ * Restituisce il valore della propriet√† 'ti_gestioneKeys'
  *
- * @return Il valore della propriet‡ 'ti_gestioneKeys'
+ * @return Il valore della propriet√† 'ti_gestioneKeys'
  */
 public java.util.Dictionary getTi_gestioneKeys() {
 	return ti_gestioneKeys;
 }
 /**
- * Restituisce il valore della propriet‡ 'ti_gestioneKeys'
+ * Restituisce il valore della propriet√† 'ti_gestioneKeys'
  *
- * @return Il valore della propriet‡ 'ti_gestioneKeys'
+ * @return Il valore della propriet√† 'ti_gestioneKeys'
  */
 public java.util.Dictionary getTi_gestioneESKeys() {
 	return ti_gestioneESKeys;
 }
 /**
- * Restituisce il valore della propriet‡ 'dettagliPostIt'
+ * Restituisce il valore della propriet√† 'dettagliPostIt'
  *
- * @return Il valore della propriet‡ 'dettagliPostIt'
+ * @return Il valore della propriet√† 'dettagliPostIt'
  */
 public it.cnr.jada.bulk.BulkList getDettagliPostIt() {
 	return dettagliPostIt;
@@ -242,9 +242,9 @@ public java.util.Collection getTipi_risultato() {
 	return tipi_risultato;
 }
 /**
- * Restituisce il valore della propriet‡ 'tipo_linea_attivita'
+ * Restituisce il valore della propriet√† 'tipo_linea_attivita'
  *
- * @return Il valore della propriet‡ 'tipo_linea_attivita'
+ * @return Il valore della propriet√† 'tipo_linea_attivita'
  */
 public Tipo_linea_attivitaBulk getTipo_linea_attivita() {
 	return tipo_linea_attivita;
@@ -288,9 +288,9 @@ public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	return super.initializeForSearch(bp,context);
 }
 /**
- * Restituisce il valore della propriet‡ 'linea_attivita_sistema'
+ * Restituisce il valore della propriet√† 'linea_attivita_sistema'
  *
- * @return Il valore della propriet‡ 'linea_attivita_sistema'
+ * @return Il valore della propriet√† 'linea_attivita_sistema'
  */
 public boolean isLinea_attivita_sistema() {
 	return 
@@ -299,25 +299,25 @@ public boolean isLinea_attivita_sistema() {
 		getTipo_linea_attivita().getTi_tipo_la().equals(Tipo_linea_attivitaBulk.SISTEMA);
 }
 /**
- * Restituisce il valore della propriet‡ 'rOCentro_responsabilita'
+ * Restituisce il valore della propriet√† 'rOCentro_responsabilita'
  *
- * @return Il valore della propriet‡ 'rOCentro_responsabilita'
+ * @return Il valore della propriet√† 'rOCentro_responsabilita'
  */
 public boolean isROCentro_responsabilita() {
 	return false;
 }
 /**
- * Restituisce il valore della propriet‡ 'rODenominazione'
+ * Restituisce il valore della propriet√† 'rODenominazione'
  *
- * @return Il valore della propriet‡ 'rODenominazione'
+ * @return Il valore della propriet√† 'rODenominazione'
  */
 public boolean isRODenominazione() {
 	return tipo_linea_attivita == null || !Tipo_linea_attivitaBulk.PROPRIA.equals(tipo_linea_attivita.getTi_tipo_la());
 }
 /**
- * Restituisce il valore della propriet‡ 'rOprogetto'
+ * Restituisce il valore della propriet√† 'rOprogetto'
  *
- * @return Il valore della propriet‡ 'rOprogetto'
+ * @return Il valore della propriet√† 'rOprogetto'
  */
 public boolean isROprogetto() {
 	return getProgetto() == null ||
@@ -339,25 +339,25 @@ public boolean isROCofog() {
 		  getCofog().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL;
 }
 /**
- * Restituisce il valore della propriet‡ 'rODescrizione'
+ * Restituisce il valore della propriet√† 'rODescrizione'
  *
- * @return Il valore della propriet‡ 'rODescrizione'
+ * @return Il valore della propriet√† 'rODescrizione'
  */
 public boolean isRODescrizione() {
 	return tipo_linea_attivita == null || !Tipo_linea_attivitaBulk.PROPRIA.equals(tipo_linea_attivita.getTi_tipo_la());
 }
 /**
- * Restituisce il valore della propriet‡ 'rOEsercizio_fine'
+ * Restituisce il valore della propriet√† 'rOEsercizio_fine'
  *
- * @return Il valore della propriet‡ 'rOEsercizio_fine'
+ * @return Il valore della propriet√† 'rOEsercizio_fine'
  */
 public boolean isROEsercizio_fine() {
 	return tipo_linea_attivita == null || !Tipo_linea_attivitaBulk.PROPRIA.equals(tipo_linea_attivita.getTi_tipo_la());
 }
 /**
- * Restituisce il valore della propriet‡ 'rOFunzione'
+ * Restituisce il valore della propriet√† 'rOFunzione'
  *
- * @return Il valore della propriet‡ 'rOFunzione'
+ * @return Il valore della propriet√† 'rOFunzione'
  */
 public boolean isROFunzione() {
 // Modifica del 06/05/2002 -> concordato con Mingarelli il 3/5/2002
@@ -365,9 +365,9 @@ public boolean isROFunzione() {
 //	return tipo_linea_attivita == null || !Tipo_linea_attivitaBulk.PROPRIA.equals(tipo_linea_attivita.getTi_tipo_la());
 }
 /**
- * Restituisce il valore della propriet‡ 'rONatura'
+ * Restituisce il valore della propriet√† 'rONatura'
  *
- * @return Il valore della propriet‡ 'rONatura'
+ * @return Il valore della propriet√† 'rONatura'
  */
 public boolean isRONatura() {
 // Modifica del 06/05/2002 -> concordato con Mingarelli il 3/5/2002
@@ -400,7 +400,7 @@ public void setCd_tipo_linea_attivita(java.lang.String cd_tipo_linea_attivita) {
 	this.getTipo_linea_attivita().setCd_tipo_linea_attivita(cd_tipo_linea_attivita);
 }
 /**
- * Imposta il valore della propriet‡ 'centro_responsabilita'
+ * Imposta il valore della propriet√† 'centro_responsabilita'
  *
  * @param newCentro_responsabilita	Il valore da assegnare a 'centro_responsabilita'
  */
@@ -408,7 +408,7 @@ public void setCentro_responsabilita(it.cnr.contab.config00.sto.bulk.CdrBulk new
 	centro_responsabilita = newCentro_responsabilita;
 }
 /**
- * Imposta il valore della propriet‡ 'funzione'
+ * Imposta il valore della propriet√† 'funzione'
  *
  * @param newFunzione	Il valore da assegnare a 'funzione'
  */
@@ -416,7 +416,7 @@ public void setFunzione(FunzioneBulk newFunzione) {
 	funzione = newFunzione;
 }
 /**
- * Imposta il valore della propriet‡ 'funzioni'
+ * Imposta il valore della propriet√† 'funzioni'
  *
  * @param newFunzioni	Il valore da assegnare a 'funzioni'
  */
@@ -424,7 +424,7 @@ public void setFunzioni(java.util.Collection newFunzioni) {
 	funzioni = newFunzioni;
 }
 /**
- * Imposta il valore della propriet‡ 'gruppo_linea_attivita'
+ * Imposta il valore della propriet√† 'gruppo_linea_attivita'
  *
  * @param newGruppo_linea_attivita	Il valore da assegnare a 'gruppo_linea_attivita'
  */
@@ -432,7 +432,7 @@ public void setGruppo_linea_attivita(Gruppo_linea_attivitaBulk newGruppo_linea_a
 	gruppo_linea_attivita = newGruppo_linea_attivita;
 }
 /**
- * Imposta il valore della propriet‡ 'insieme_la'
+ * Imposta il valore della propriet√† 'insieme_la'
  *
  * @param newInsieme_la	Il valore da assegnare a 'insieme_la'
  */
@@ -440,7 +440,7 @@ public void setInsieme_la(Insieme_laBulk newInsieme_la) {
 	insieme_la = newInsieme_la;
 }
 /**
- * Imposta il valore della propriet‡ 'natura'
+ * Imposta il valore della propriet√† 'natura'
  *
  * @param newNatura	Il valore da assegnare a 'natura'
  */
@@ -448,7 +448,7 @@ public void setNatura(NaturaBulk newNatura) {
 	natura = newNatura;
 }
 /**
- * Imposta il valore della propriet‡ 'nature'
+ * Imposta il valore della propriet√† 'nature'
  *
  * @param newNature	Il valore da assegnare a 'nature'
  */
@@ -470,7 +470,7 @@ public void setTipi_risultato(java.util.Collection newTipi_risultato) {
 	tipi_risultato = newTipi_risultato;
 }
 /**
- * Imposta il valore della propriet‡ 'tipo_linea_attivita'
+ * Imposta il valore della propriet√† 'tipo_linea_attivita'
  *
  * @param newTipo_linea_attivita	Il valore da assegnare a 'tipo_linea_attivita'
  */
@@ -497,7 +497,7 @@ public void validate() throws ValidationException
 {
 	super.validate();
     if( getCd_linea_attivita()!=null && getCd_linea_attivita().contains("'"))
-    	throw new ValidationException( "Il campo codice non puÚ contenere virgolette. " );
+    	throw new ValidationException( "Il campo codice non pu√≤ contenere virgolette. " );
 	if ( getResponsabile() == null || getResponsabile().getCd_terzo() == null)
 	{
 		throw new ValidationException( "Il campo Responsabile deve essere valorizzato. " );
@@ -509,13 +509,13 @@ public void validate() throws ValidationException
 		throw new ValidationException( "Il campo Esercizio di Terminazione deve essere valorizzato. " );
 	}
 	if ( getEsercizio_fine().compareTo( getEsercizio_inizio()) < 0 )
-		throw new ValidationException( "L' esercizio di terminazione non puÚ essere minore dell'esercizio di creazione. " );
+		throw new ValidationException( "L' esercizio di terminazione non pu√≤ essere minore dell'esercizio di creazione. " );
 
 	if ( getEsercizio_fine().toString().length() != 4 )
 		throw new ValidationException( "Il campo Esercizio di terminazione deve essere di quattro cifre. " );
 
 	if (getCd_centro_responsabilita() == null )
-		throw new ValidationException( "Il campo CENTRO DI RESPONSABILITA' non puÚ essere nullo. " );
+		throw new ValidationException( "Il campo CENTRO DI RESPONSABILITA' non pu√≤ essere nullo. " );
 }
 	/**
 	 * Returns the progetto.

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -82,7 +82,7 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		label="Fornitore saltuario" />
-<!-- Comune / Città -->
+<!-- Comune / CittÃ  -->
 	<fieldProperty
 		name="pg_comune"
 		property="citta.pg_comune"
@@ -109,7 +109,7 @@
 		formName="searchtool"
 		readonlyProperty="fornitore_non_saltuario"
 		enabledOnSearch="true"
-		label="Città" />	
+		label="CittÃ " />	
 
 <!-- Fornitore -->
 	<fieldProperty
@@ -243,7 +243,7 @@
 		inputType="TEXT"
 		nullable="false"
 		enabledOnFreeSearch="false"
-		label="Unità Organizzativa" />
+		label="UnitÃ  Organizzativa" />
 	<fieldProperty
 		name="dt_spesa"
 		property="dt_spesa"

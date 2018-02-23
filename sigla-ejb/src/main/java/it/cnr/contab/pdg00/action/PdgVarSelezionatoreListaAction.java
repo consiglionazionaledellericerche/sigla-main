@@ -31,7 +31,7 @@ public class PdgVarSelezionatoreListaAction extends ConsultazioniAction {
 			java.util.List l = bp.getSelectedElements(context);
 			
 			if (l.isEmpty()) {
-				bp.setMessage("Non è stata selezionata nessuna riga.");
+				bp.setMessage("Non Ã¨ stata selezionata nessuna riga.");
 				return context.findDefaultForward();
 			}
 

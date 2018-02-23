@@ -4,37 +4,32 @@
 */
 package it.cnr.contab.pdg00.bulk;
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
-import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.SimpleBulkList;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.persistency.IntrospectionException;
-import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.CRUDBP;
-import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellatoLogicamente{
 	private static final java.util.Dictionary ti_statoKeys = new it.cnr.jada.util.OrderedHashtable();
 	private static final java.util.Dictionary ti_tipologia_finKeys = new it.cnr.jada.util.OrderedHashtable();
 	private static final java.util.Dictionary stato_invioKeys = new it.cnr.jada.util.OrderedHashtable();
+	public static final java.util.Dictionary tiMotivazioneVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
+	
+	private String storageMatricola;
 	
 	final public static String STATO_PROPOSTA_PROVVISORIA = "PRP";
 	final public static String STATO_PROPOSTA_DEFINITIVA = "PRD";
@@ -45,6 +40,11 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 
 	final public static String STATO_DA_INVIARE = "DAI";
 	final public static String STATO_INVIATA = "INV";
+
+	final public static String MOTIVAZIONE_GENERICO = "GEN";
+	final public static String MOTIVAZIONE_BANDO = "BAN";
+	final public static String MOTIVAZIONE_PROROGA = "PRG";
+	final public static String MOTIVAZIONE_ALTRE_SPESE = "ALT";
 
 	static {
 		ti_statoKeys.put(STATO_PROPOSTA_PROVVISORIA,"Proposta Provvisoria");
@@ -60,6 +60,10 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		stato_invioKeys.put(STATO_DA_INVIARE,"Da inviare");
 		stato_invioKeys.put(STATO_INVIATA,"Inviata");
 
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_GENERICO,"Variazione Generica");
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando da pubblicare");
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altre Spese");
 	}
 
 	private BulkList associazioneCDR = new BulkList();
@@ -69,6 +73,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	private Tipo_variazioneBulk tipo_variazione;
 	private java.util.Dictionary ti_causale_respintaKeys = new it.cnr.jada.util.OrderedHashtable();
 	protected java.util.Collection tipologie_variazione;
+	
 	private boolean isBulkforSearch = false; 
 	private BigDecimal somma_spesa_var_piu;
 	private BigDecimal somma_spesa_var_meno;
@@ -85,7 +90,11 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	private boolean isCdsAbilitatoAdApprovare = false;
 	private boolean erroreEsitaVariazioneBilancio = false;
 	private boolean checkDispAssestatoCdrGAEVoceEseguito = false;
-	
+
+	// variabile utilizzata per gestire consentire l'inserimento di valori null in tiMotivazioneVariazione
+	// ma rendere allo stesso tempo obbligatorio l'indicazione del campo da parte dell'utente
+	private java.lang.String mapMotivazioneVariazione;
+
 	private String cds_var_bil;
 	private Integer es_var_bil;
 	private Character ti_app_var_bil;
@@ -98,8 +107,8 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	private BulkList riepilogoSpese = new BulkList();
 	private BulkList riepilogoEntrate = new BulkList();
     private String statoDocumentale;
-    	   
-	public String getStatoDocumentale() {
+
+    public String getStatoDocumentale() {
 		return statoDocumentale;
 	}
 	public void setStatoDocumentale(String statoDocumentale) {
@@ -128,9 +137,9 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	}
 	/**
 	 * Serve per gestire la disabilitazione dei tasti di consultazione assestato entrate/ricavi/spese/costi
-	 * Ritorna TRUE se la variazione al PDG non Ë caricata (numero variazione pdg non assegnato) 
+	 * Ritorna TRUE se la variazione al PDG non √® caricata (numero variazione pdg non assegnato) 
 	 *
-	 * @return Il valore della propriet‡ 'consultazioneAssestatoDisabled'
+	 * @return Il valore della propriet√† 'consultazioneAssestatoDisabled'
 	 */
 	public boolean isConsultazioneAssestatoDisabled() 
 	{
@@ -160,6 +169,9 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	public final java.util.Dictionary getTi_causale_respintaKeys() {
 		return ti_causale_respintaKeys;
 	}
+	public final java.util.Dictionary getTiMotivazioneVariazioneKeys() {
+		return tiMotivazioneVariazioneKeys;
+	}	
 	/**
 	 * @return
 	 */
@@ -476,8 +488,8 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	}
 
 	/*
-	 * Serve per sapere se la variazione Ë di tipo Interna all'Istituto
-	 * Ritorna un boolean con valore true se la tipologia della variazione Ë:
+	 * Serve per sapere se la variazione √® di tipo Interna all'Istituto
+	 * Ritorna un boolean con valore true se la tipologia della variazione √®:
 	 * 		TIPO_STORNO_SPESA_STESSO_ISTITUTO 
 	 * 	    TIPO_STORNO_ENTRATA_STESSO_ISTITUTO
 	 *		TIPO_VARIAZIONE_POSITIVA_STESSO_ISTITUTO
@@ -488,8 +500,8 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		       getTipo_variazione().isVariazioneInternaIstituto();
 	}
 	/*
-	 * Serve per sapere se la variazione Ë di tipo Storno
-	 * Ritorna un boolean con valore true se la tipologia della variazione Ë:
+	 * Serve per sapere se la variazione √® di tipo Storno
+	 * Ritorna un boolean con valore true se la tipologia della variazione √®:
 	 * 		TIPO_STORNO_SPESA_STESSO_ISTITUTO 
 	 * 	    TIPO_STORNO_ENTRATA_STESSO_ISTITUTO
 	 * 		TIPO_STORNO_SPESA_ISTITUTI_DIVERSI 
@@ -501,7 +513,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	}
 	/*
 	 * Serve per sapere se la variazione consente di effettuare interventi sulle voci di entrata
-	 * Ritorna un boolean con valore true se la tipologia della variazione Ë:
+	 * Ritorna un boolean con valore true se la tipologia della variazione √®:
 	 * 	    TIPO_STORNO_ENTRATA_STESSO_ISTITUTO
 	 * 	    TIPO_STORNO_ENTRATA_ISTITUTI_DIVERSI
 	 *		TIPO_VARIAZIONE_POSITIVA_STESSO_ISTITUTO
@@ -516,7 +528,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 
 	/*
 	 * Serve per sapere se la variazione consente di effettuare interventi sulle voci di spesa
-	 * Ritorna un boolean con valore true se la tipologia della variazione Ë:
+	 * Ritorna un boolean con valore true se la tipologia della variazione √®:
 	 * 	    TIPO_STORNO_SPESA_STESSO_ISTITUTO
 	 * 	    TIPO_STORNO_SPESA_ISTITUTI_DIVERSI
 	 *		TIPO_VARIAZIONE_POSITIVA_STESSO_ISTITUTO
@@ -615,10 +627,19 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	}
 	public void validate() throws ValidationException {
 		super.validate();
-		if (getTipo_variazione()!=null &&
-			getTipo_variazione().isMovimentoSuFondi() && 
-		    (getElemento_voce()==null || getElemento_voce().getCd_elemento_voce()==null))
-			throw new ValidationException("Occorre valorizzare la voce di tipo 'Fondo' da utilizzare per il prelievo.");
+		if (getTipo_variazione()!=null) {
+			if (getTipo_variazione().isMovimentoSuFondi() && 
+				(getElemento_voce()==null || getElemento_voce().getCd_elemento_voce()==null))
+				throw new ValidationException("Occorre valorizzare la voce di tipo 'Fondo' da utilizzare per il prelievo.");
+			if (getTipo_variazione().getFl_variazione_trasferimento() && getMapMotivazioneVariazione()==null) 
+				throw new ValidationException("Occorre indicare la motivazione per cui viene effettuata la variazione.");
+		}			
+		if (this.isMotivazioneVariazioneBando() && getIdBando()==null) 
+			throw new ValidationException("Occorre inserire i dettagli del bando per cui si effettua la variazione.");
+		if (this.isMotivazioneVariazioneProroga() && getIdMatricola()==null) 
+			throw new ValidationException("Occorre inserire la matricola del dipendente per cui si effettua la variazione di proroga contratto.");
+		if (this.isMotivazioneVariazioneAltreSpese() && getIdMatricola()==null) 
+			throw new ValidationException("Occorre inserire la matricola del dipendente per cui si effettua la variazione per altre spese del personale.");
 	}
 	
 	public Tipo_variazioneBulk getTipo_variazione() {
@@ -644,9 +665,10 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	public void setTipologie_variazione(java.util.Collection tipologie_variazione) {
 		this.tipologie_variazione = tipologie_variazione;
 	}
+
 	/*
 	 * Metodo che serve per conservare l'informazione, utile al component, 
-	 * se la mappa Ë in modalit‡ ricerca
+	 * se la mappa √® in modalit√† ricerca
 	 */
 	public boolean isBulkforSearch() {
 		return isBulkforSearch;
@@ -690,5 +712,38 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
     	V_pdg_variazione_riepilogoBulk dett = (V_pdg_variazione_riepilogoBulk)riepilogoEntrate.remove(index);
     	return dett;
     }
-}
+
+	public boolean isMotivazioneVariazioneBando() {
+		return MOTIVAZIONE_BANDO.equals(this.getTiMotivazioneVariazione());
+	}
+
+	public boolean isMotivazioneVariazioneProroga() {
+		return MOTIVAZIONE_PROROGA.equals(this.getTiMotivazioneVariazione());
+	}
+
+	public boolean isMotivazioneVariazioneAltreSpese() {
+		return MOTIVAZIONE_ALTRE_SPESE.equals(this.getTiMotivazioneVariazione());
+	}
+
+	public boolean isMotivazioneGenerico() {
+		return this.getTiMotivazioneVariazione()==null;
+	}
+
+	public java.lang.String getMapMotivazioneVariazione() {
+		return mapMotivazioneVariazione;
+	}
+
+	// serve per consentire l'inserimento di valori null in tiMotivazioneVariazione
+	// ma rendere allo stesso tempo obbligatorio l'indicazione del campo da parte dell'utente
+	public void setMapMotivazioneVariazione(String mapMotivazioneVariazione) {
+		this.mapMotivazioneVariazione = mapMotivazioneVariazione; 
+	}
 	
+	public String getStorageMatricola() {
+		return storageMatricola;
+	}
+	
+	public void setStorageMatricola(String storageMatricola) {
+		this.storageMatricola = storageMatricola;
+	}
+}

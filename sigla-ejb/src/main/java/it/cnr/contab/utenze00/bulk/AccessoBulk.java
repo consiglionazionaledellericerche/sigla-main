@@ -1,7 +1,7 @@
 package it.cnr.contab.utenze00.bulk;
 
 /**
- * Definisce "cosa" un utente puÚ fare all'interno di tutte le funzionalit‡ della Gestione Contabile
+ * Definisce "cosa" un utente pu√≤ fare all'interno di tutte le funzionalit√† della Gestione Contabile
  *	
  */
 

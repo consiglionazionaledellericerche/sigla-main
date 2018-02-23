@@ -891,24 +891,24 @@ public void validaDateCompetenzaCogeEsterne() throws ApplicationException{
 public void validaDatiEsterni() throws ApplicationException{
 
 	if (getImponibile_fiscale_esterno()==null)
-		throw new ApplicationException("Il campo IMPONIBILE FISCALE non puÚ essere vuoto");
+		throw new ApplicationException("Il campo IMPONIBILE FISCALE non pu√≤ essere vuoto");
 	if (getIm_addreg_esterno()==null)
-		throw new ApplicationException("Il campo ADDIZIONALE REGIONALE non puÚ essere vuoto");
+		throw new ApplicationException("Il campo ADDIZIONALE REGIONALE non pu√≤ essere vuoto");
 	if (getIm_addprov_esterno()==null)
-		throw new ApplicationException("Il campo ADDIZIONALE PROVINCIALE non puÚ essere vuoto");
+		throw new ApplicationException("Il campo ADDIZIONALE PROVINCIALE non pu√≤ essere vuoto");
 	if (getIm_addcom_esterno()==null)
-		throw new ApplicationException("Il campo ADDIZIONALE COMUNALE non puÚ essere vuoto");
+		throw new ApplicationException("Il campo ADDIZIONALE COMUNALE non pu√≤ essere vuoto");
 
 	if (getDetrazioni_la_esterno()==null)
-		throw new ApplicationException("Il campo DETRAZIONI LAVORO non puÚ essere vuoto");
+		throw new ApplicationException("Il campo DETRAZIONI LAVORO non pu√≤ essere vuoto");
 	if (getDetrazioni_pe_esterno()==null)
-		throw new ApplicationException("Il campo DETRAZIONI PERCIPIENTE non puÚ essere vuoto");
+		throw new ApplicationException("Il campo DETRAZIONI PERCIPIENTE non pu√≤ essere vuoto");
 	if (getDetrazioni_co_esterno()==null)
-		throw new ApplicationException("Il campo DETRAZIONI CONIUGE non puÚ essere vuoto");
+		throw new ApplicationException("Il campo DETRAZIONI CONIUGE non pu√≤ essere vuoto");
 	if (getDetrazioni_fi_esterno()==null)
-		throw new ApplicationException("Il campo DETRAZIONI FIGLI non puÚ essere vuoto");
+		throw new ApplicationException("Il campo DETRAZIONI FIGLI non pu√≤ essere vuoto");
 	if (getDetrazioni_al_esterno()==null)
-		throw new ApplicationException("Il campo DETRAZIONI ALTRI non puÚ essere vuoto");	
+		throw new ApplicationException("Il campo DETRAZIONI ALTRI non pu√≤ essere vuoto");	
 }
 public void validaTerzo() throws ApplicationException{
 
@@ -916,13 +916,13 @@ public void validaTerzo() throws ApplicationException{
 		throw new ApplicationException("Inserire il terzo");
 	if (getTerzo().getDt_fine_rapporto()!=null)
 		if (getTerzo().getDt_fine_rapporto().compareTo(getDt_da_competenza_coge())<=0)
-			throw new ApplicationException("Il terzo selezionato non Ë valido");
+			throw new ApplicationException("Il terzo selezionato non √® valido");
 
 //	if (getDt_registrazione().compareTo(getV_terzo().getDt_ini_validita())<0 || getDt_registrazione().compareTo(getV_terzo().getDt_fin_validita())>0)
-//		throw new ApplicationException("Il terzo selezionato non Ë valido alla Data Registrazione del compenso");
+//		throw new ApplicationException("Il terzo selezionato non √® valido alla Data Registrazione del compenso");
 		
 	if (getModalitaPagamento()==null)
-		throw new ApplicationException("Inserire le modalit‡ di pagamento");
+		throw new ApplicationException("Inserire le modalit√† di pagamento");
 
 	if (getTipoRapporto()==null)
 		throw new ApplicationException("Inserire il tipo rapporto");
@@ -930,7 +930,7 @@ public void validaTerzo() throws ApplicationException{
 	if (getTipoTrattamento()==null)
 		throw new ApplicationException("Inserire il tipo trattamento");
 	if (getDt_registrazione().compareTo(getTipoTrattamento().getDt_ini_validita())<0 || getDt_registrazione().compareTo(getTipoTrattamento().getDt_fin_validita())>0)
-		throw new ApplicationException("Il tipo trattamento selezionato non Ë valido alla Data Registrazione del conguaglio");
+		throw new ApplicationException("Il tipo trattamento selezionato non √® valido alla Data Registrazione del conguaglio");
 }
 public void validaTestata() throws ApplicationException, java.text.ParseException, javax.ejb.EJBException
 {

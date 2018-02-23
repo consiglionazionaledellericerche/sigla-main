@@ -15,20 +15,20 @@ public interface ICDRMgr extends it.cnr.jada.comp.ICRUDMgr
  *
  * Nome: Creazione di Cdr dipendente da un CDS di tipo AREA
  * Pre:  La richiesta di creazione di un Cdr che dipende da una unita' organizzativa definita per un CDS di tipo 
- *       Area di ricerca Ë stata generata
- * Post: Viene generate una ApplicationException con il messaggio "Non Ë possibile aggiungere un CDR ad un'area
+ *       Area di ricerca √® stata generata
+ * Post: Viene generate una ApplicationException con il messaggio "Non √® possibile aggiungere un CDR ad un'area
  * 		 di ricerca"
  *
  * Nome: Creazione di Cdr dipendente da un CDS di tipo SAC
  * Pre:  La richiesta di creazione di un Cdr che dipende da una unita' organizzativa definita per un CDS di tipo 
- *       Struttura Amministrativa Centrale Ë stata generata
+ *       Struttura Amministrativa Centrale √® stata generata
  * Post: Un Cdr di secondo livello viene creato con i dati inseriti dall'utente, se l'utente non ha specificato un 
  *       codice proprio del Cdr ne viene generato uno automaticamente; il cdr di afferenza assegnato e' il CDR di 
  *       primo livello dell'Unita' organizzativa da cui dipende il Cdr appena creato.
  *
  * Nome: Creazione di Cdr dipendente da un CDS di tipo diverso da SAC
  * Pre:  La richiesta di creazione di un Cdr che dipende da una unita' organizzativa definita per un CDS di tipologia 
- *       differente da Struttura Amministrativa Centrale Ë stata generata
+ *       differente da Struttura Amministrativa Centrale √® stata generata
  * Post: Un Cdr di secondo livello viene creato con i dati inseriti dall'utente, se l'utente non ha specificato un 
  *       codice proprio del Cdr ne viene generato uno automaticamente; il cdr di afferenza assegnato e' il CDR
  *       responsabile dell'UO CDS. 
@@ -39,17 +39,17 @@ public interface ICDRMgr extends it.cnr.jada.comp.ICRUDMgr
  *       visualizzare all'utente
  *
  * Nome: Errore di Cdr afferenza inesistente
- * Pre:  Il Cdr di afferenza del Cdr da creare non Ë presente
+ * Pre:  Il Cdr di afferenza del Cdr da creare non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Errore di Responsabile inesistente
- * Pre:  Il Codice Terzo definito come responsabile del Cdr non Ë presente
+ * Pre:  Il Codice Terzo definito come responsabile del Cdr non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Errore di chiave duplicata
- * Pre:  Esiste gi‡ un CdrBulk persistente che possiede la stessa chiave
+ * Pre:  Esiste gi√† un CdrBulk persistente che possiede la stessa chiave
  * 		 primaria di quello specificato.
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
@@ -104,24 +104,24 @@ public abstract boolean isEnte(UserContext userContext) throws ComponentExceptio
  * Pre-post-conditions:
  *
  * Nome: Modifica di attributi diversi da esercizio fine
- * Pre:  La richiesta di modifica di un attributo diverso da esercizio fine per un Cdr Ë stata generata
+ * Pre:  La richiesta di modifica di un attributo diverso da esercizio fine per un Cdr √® stata generata
  * Post: Il Cdr e' stato modificato
  *
  * Nome: Modifica dell'attributo esercizio fine - Errore 
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un Cdr e' stata generata
  *       e la verifica della correttezza del nuovo esercizio (eseguita dal metodo 'verificaEsercizioFine') non e'
  *		 stata superata
- * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilit‡ di effettuare tale modifica
+ * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilit√† di effettuare tale modifica
  *
  * Nome: Modifica dell'attributo esercizio fine - Ok
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un Cdr e' stata generata e
  *       tutti i controlli sono stati superati
- * Post: L'esercizio fine del Cdr e' stato aggiornato e tutti gli esercizi fine delle linee di attivit‡ definite per
+ * Post: L'esercizio fine del Cdr e' stato aggiornato e tutti gli esercizi fine delle linee di attivit√† definite per
  *		 quel Cdr e che hanno esercizio fine maggiore rispetto a quello del Cdr sono stati aggiornati 
  *       (metodo 'aggiornaEsercizioFine')
  *
  * Nome: Errore di Responsabile inesistente
- * Pre:  Il Codice Terzo definito come responsabile del Cdr non Ë presente
+ * Pre:  Il Codice Terzo definito come responsabile del Cdr non √® presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *

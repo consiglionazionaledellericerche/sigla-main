@@ -134,9 +134,9 @@ public java.lang.String getComponentSessioneName() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'tipoDocumento'
+ * Restituisce il valore della propriet√† 'tipoDocumento'
  *
- * @return Il valore della propriet‡ 'tipoDocumento'
+ * @return Il valore della propriet√† 'tipoDocumento'
  */
 public java.lang.String getTipoDocumento() {
 	return tipoDocumento;
@@ -159,7 +159,7 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 	}
 }
 /**
- * @return editable TRUE Se la reversale Ë editabile
+ * @return editable TRUE Se la reversale √® editabile
  *					FALSE in caso contrario
  */
 public boolean isEditable() {
@@ -213,7 +213,7 @@ public void setBulkClass(java.lang.Class newBulkClass) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'bulkClassName'
+ * Imposta il valore della propriet√† 'bulkClassName'
  *
  * @param bulkClassName	Il valore da assegnare a 'bulkClassName'
  * @throws ClassNotFoundException	
@@ -240,7 +240,7 @@ public void setEditable(boolean newEditable) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'tipoDocumento'
+ * Imposta il valore della propriet√† 'tipoDocumento'
  *
  * @param newTipoDocumento	Il valore da assegnare a 'tipoDocumento'
  */

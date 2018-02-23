@@ -70,7 +70,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	private boolean visualizzaCodici_altra_forma_ass_inps = false;
 	private java.util.Collection contributi;
 	private it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazioneScadenzario;
-	// Unità Organizzativa
+	// UnitÃ  Organizzativa
 	private Unita_organizzativaBulk unitaOrganizzativa;
 
 	private ComuneBulk comune_inps;
@@ -1195,7 +1195,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	}
 
 	/**
-	 * Ritorna TRUE se ho selezionato una linea di attività valida, FALSE
+	 * Ritorna TRUE se ho selezionato una linea di attivitÃ  valida, FALSE
 	 * altrimenti
 	 * 
 	 */
@@ -1391,8 +1391,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	}
 
 	/**
-	 * Se il compenso è associato a Missione, Minicarriera o Conguaglio la Data
-	 * Competenza Coge non è modificabile
+	 * Se il compenso Ã¨ associato a Missione, Minicarriera o Conguaglio la Data
+	 * Competenza Coge non Ã¨ modificabile
 	 * 
 	 * @return boolean
 	 */
@@ -1458,7 +1458,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	}
 
 	/**
-	 * Puo' capitare che il compenso risulti riportato ma in realtà non ha
+	 * Puo' capitare che il compenso risulti riportato ma in realtÃ  non ha
 	 * obbligazione.
 	 */
 
@@ -1468,7 +1468,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 
 	/**
 	 * E' obbligatorio associare al compenso un'obbligazione solo se l'importo
-	 * lordo è strettamente positivo
+	 * lordo Ã¨ strettamente positivo
 	 * 
 	 **/
 	public boolean isObbligazioneObbligatoria() {
@@ -1546,8 +1546,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	}
 
 	/**
-	 * Se il compenso è associato a Missione, Minicarriera o Conguaglio la Data
-	 * Competenza Coge non è modificabile
+	 * Se il compenso Ã¨ associato a Missione, Minicarriera o Conguaglio la Data
+	 * Competenza Coge non Ã¨ modificabile
 	 * 
 	 * @return boolean
 	 */
@@ -1559,8 +1559,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	}
 
 	/**
-	 * Se il compenso è associato a Missione, Minicarriera o Conguaglio la Data
-	 * Competenza Coge non è modificabile
+	 * Se il compenso Ã¨ associato a Missione, Minicarriera o Conguaglio la Data
+	 * Competenza Coge non Ã¨ modificabile
 	 * 
 	 * @return boolean
 	 */
@@ -1572,8 +1572,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	}
 
 	/**
-	 * Se il compenso è associato a Missione, Minicarriera o Conguaglio la Data
-	 * Registrazione non è modificabile
+	 * Se il compenso Ã¨ associato a Missione, Minicarriera o Conguaglio la Data
+	 * Registrazione non Ã¨ modificabile
 	 * 
 	 * @return boolean
 	 */
@@ -1616,8 +1616,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	}
 
 	/**
-	 * Se il compenso è associato a Missione, Minicarriera o Conguaglio il flag
-	 * Senza Calcoli non è modificabile
+	 * Se il compenso Ã¨ associato a Missione, Minicarriera o Conguaglio il flag
+	 * Senza Calcoli non Ã¨ modificabile
 	 * 
 	 * @return boolean
 	 */
@@ -1764,8 +1764,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	}
 
 	/**
-	 * Se il compenso è associato a Missione, Minicarriera o Conguaglio il flag
-	 * Senza Calcoli non è modificabile
+	 * Se il compenso Ã¨ associato a Missione, Minicarriera o Conguaglio il flag
+	 * Senza Calcoli non Ã¨ modificabile
 	 * 
 	 * @return boolean
 	 */
@@ -2717,7 +2717,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 					"La Data registrazione deve essere nell'esercizio in corso");
 		if (getDt_registrazione().compareTo(getDataOdierna()) > 0)
 			throw new it.cnr.jada.comp.ApplicationException(
-					"La Data registrazione non può essere superiore alla data odierna");
+					"La Data registrazione non puÃ² essere superiore alla data odierna");
 
 		validaDateCompetenzaCoge();
 	}
@@ -2772,17 +2772,17 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 				throw new ApplicationException("Inserire il numero di protocollo di entrata!");
 			if (getData_protocollo() != null && getData_protocollo().before(getDt_fattura_fornitore()))
 				throw new it.cnr.jada.comp.ApplicationException(
-						"La data di protocollo non può essere precedente alla data di emissione del documento del fornitore!");
+						"La data di protocollo non puÃ² essere precedente alla data di emissione del documento del fornitore!");
 		}
 
 		if (getData_protocollo() != null && getData_protocollo().after(getDt_registrazione()))
 			throw new it.cnr.jada.comp.ApplicationException(
-					"La data protocollo di entrata non può essere superiore alla data registrazione del compenso");
+					"La data protocollo di entrata non puÃ² essere superiore alla data registrazione del compenso");
 		if (getDt_fattura_fornitore() != null && getDt_fattura_fornitore().compareTo(getDt_registrazione()) > 0)
 			throw new it.cnr.jada.comp.ApplicationException(
-					"La data fattura fornitore non può essere superiore alla data registrazione del compenso");
+					"La data fattura fornitore non puÃ² essere superiore alla data registrazione del compenso");
 
-		// E' stato richiesta la generazione di una fattura ma è stato
+		// E' stato richiesta la generazione di una fattura ma Ã¨ stato
 		// selezionato un tipo trattamento non compatibile
 		if (getTipoTrattamento() != null)
 			if (Boolean.TRUE.equals(getFl_generata_fattura())
@@ -2800,26 +2800,26 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 			throw new ValidationException("Selezionare un Terzo");
 
 		if (Utility.nvl(getIm_netto_da_trattenere()).compareTo(new BigDecimal(0)) < 0) {
-			throw new ValidationException("L'importo Netto da sospendere non può essere negativo.");
+			throw new ValidationException("L'importo Netto da sospendere non puÃ² essere negativo.");
 		}
 		if (Utility.nvl(getIm_netto_da_trattenere()).compareTo(new BigDecimal(0)) > 0) {
 			if (Utility.nvl(getIm_netto_percipiente()).compareTo(Utility.nvl(getIm_netto_da_trattenere())) < 0) {
 				throw new ValidationException(
-						"L'importo Netto da sospendere non può superare l'importo netto da pagare.");
+						"L'importo Netto da sospendere non puÃ² superare l'importo netto da pagare.");
 			}
 		}
 	}
 
 	public void validaTerzo() throws it.cnr.jada.comp.ApplicationException {
 
-		// Controllo se il terzo è valido
+		// Controllo se il terzo Ã¨ valido
 		if (getTerzo().getDt_fine_rapporto() != null)
 			if (getTerzo().getDt_fine_rapporto().compareTo(getDt_registrazione()) < 0)
-				throw new it.cnr.jada.comp.ApplicationException("Il terzo selezionato non è valido");
+				throw new it.cnr.jada.comp.ApplicationException("Il terzo selezionato non Ã¨ valido");
 
-		// Controllo se ho inserito le modalità di pagamento
+		// Controllo se ho inserito le modalitÃ  di pagamento
 		if (getModalitaPagamento() == null)
-			throw new it.cnr.jada.comp.ApplicationException("Inserire le modalità di pagamento");
+			throw new it.cnr.jada.comp.ApplicationException("Inserire le modalitÃ  di pagamento");
 
 		// Controllo se ho inserito il tipo rapporto
 		if (getTipoRapporto() == null)

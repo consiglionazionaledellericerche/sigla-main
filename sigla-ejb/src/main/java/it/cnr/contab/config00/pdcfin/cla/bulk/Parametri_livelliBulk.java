@@ -119,7 +119,7 @@ public class Parametri_livelliBulk extends Parametri_livelliBase {
 
 	/*
 	 * Ritorna ValidationException se:
-	 * - Il numero dei livelli ENTRATA o SPESA inseriti è maggiore di 7
+	 * - Il numero dei livelli ENTRATA o SPESA inseriti Ã¨ maggiore di 7
 	 * - Non risultano valorizzati campi di un livello da gestire
 	 * - Risultano valorizzati campi di un livello da non gestire
 	 */
@@ -128,10 +128,10 @@ public class Parametri_livelliBulk extends Parametri_livelliBase {
 
 		/*Controllo Livelli SPESA*/
 		if (this.getLivelli_spesa() != null && this.getLivelli_spesa().intValue()>7)
-			throw new ValidationException("Attenzione! Il livello massimo consentito è 7.");
+			throw new ValidationException("Attenzione! Il livello massimo consentito Ã¨ 7.");
 
 		if (this.getLivelli_entrata() != null && this.getLivelli_entrata().intValue()>7)
-			throw new ValidationException("Attenzione! Il livello massimo consentito è 7.");
+			throw new ValidationException("Attenzione! Il livello massimo consentito Ã¨ 7.");
 
 		validaLivelliValorizzati();
 		validaLivelliNonValorizzati();

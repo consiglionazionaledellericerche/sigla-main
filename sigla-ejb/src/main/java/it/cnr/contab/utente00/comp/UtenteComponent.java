@@ -71,8 +71,8 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 		return super.cerca(userContext,clausole,bulk,contesto,attributo);
 	}
 	/**
-	 * Esegue la ricerca di tutti gli accessi gi‡ definiti in precedenza e di tutti gli accessi ancora disponibili 
-	 * per un utente  e per una unit‡ organizzativa.
+	 * Esegue la ricerca di tutti gli accessi gi√† definiti in precedenza e di tutti gli accessi ancora disponibili 
+	 * per un utente  e per una unit√† organizzativa.
 	 *
 	 * Pre-post-conditions:
 	 *
@@ -120,8 +120,8 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 
 	}
 	/**
-	 * Esegue la ricerca di tutti i ruoli gi‡ definiti in precedenza e di tutti i ruoli ancora disponibili 
-	 * per un utente  e per una unit‡ organizzativa.
+	 * Esegue la ricerca di tutti i ruoli gi√† definiti in precedenza e di tutti i ruoli ancora disponibili 
+	 * per un utente  e per una unit√† organizzativa.
 	 *
 	 * Pre-post-conditions:
 	 *
@@ -244,9 +244,9 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 	 *		 con tipologia = UTENTE_AMMINISTRATORE sono state generate
 	 * 
 	 * Nome: Errore di chiave duplicata
-	 * Pre:  Esiste gi‡ un UtenteBulk persistente che possiede la stessa chiave
+	 * Pre:  Esiste gi√† un UtenteBulk persistente che possiede la stessa chiave
 	 * 		 primaria di quello specificato.
-	 * Post: Viene segnalato all'utente l'impossibilit‡ di inserimento
+	 * Post: Viene segnalato all'utente l'impossibilit√† di inserimento
 	 *
 	 * @param	uc	lo UserContext che ha generato la richiesta
 	 * @param	bulk	l'UtenteBulk che deve essere creato
@@ -257,7 +257,7 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 		{	
 			UtenteBulk ute = (UtenteBulk) bulk;
 			if (ute!=null && ute.getFl_autenticazione_ldap() && ute.getCd_utente_uid()==null) {
-				throw new ApplicationException("Il campo Codice Utente Ufficiale CNR Ë obbligatorio.");		
+				throw new ApplicationException("Il campo Codice Utente Ufficiale CNR √® obbligatorio.");		
 			}
 			if (ute!=null && ute.getFl_autenticazione_ldap() && ute.getCd_utente_uid()!=null) {
 				// controlliamo se l'utente esiste su ldap e abilitiamolo a sigla
@@ -305,7 +305,7 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 						    	xu.setStruttura((ute.getCd_cdr().substring(0, 7)));
 						    //xu.setStruttura("2");
 						    xu.setEnabled("y");
-						    xu.setMailStop("y");// mettendo il flag a y Ë possibile non specificare email
+						    xu.setMailStop("y");// mettendo il flag a y √® possibile non specificare email
 						    try{
 						    	UtenteHDService.newUser(xu, "HDEsterno");
 						    }
@@ -344,14 +344,14 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 		return super.modificaConBulk(userContext, bulk);
 	}	
 	/**
-	 * Esegue una operazione di eliminazione logica di UtenteBulk modificando la data di fine validit‡ 
+	 * Esegue una operazione di eliminazione logica di UtenteBulk modificando la data di fine validit√† 
 	 * dell'utenza alla data odierna.
 	 *
 	 * Pre-post-conditions:
 	 *
 	 * Nome: Cancellazione logica di un Utente
 	 * Pre:  La richiesta di cancellazione di una utenza e' stata generata
-	 * Post: La data di fine validit‡ dell'utente e' stata aggiornata alla data odierna
+	 * Post: La data di fine validit√† dell'utente e' stata aggiornata alla data odierna
 	 * 
 	 * @param userContext lo userContext che ha generato la richiesta
 	 * @param bulk l'istanza di UtenteBulk che deve essere cancellata logicamente
@@ -680,7 +680,7 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 	 * Nome: Ricerca Cdr da parte di gestore con CDS diverso da '*'
 	 * Pre:  E' stata generata la richiesta di ricerca di un Cdr da parte di un gestore abilitato ad un solo Cds 
 	 * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, la
-	 *       clausola che il Cdr sia valido per l'esercizio di scrivania e il Cdr appartenga ad una delle unit‡ organizzative
+	 *       clausola che il Cdr sia valido per l'esercizio di scrivania e il Cdr appartenga ad una delle unit√† organizzative
 	 *       che dipendono dal Cds a cui e' abilitato il gestore
 	 *
 	 * @param userContext lo userContext che ha generato la richiesta
@@ -777,19 +777,19 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 
 	}
 	/**
-	 * Aggiunge una clausola a tutte le operazioni di ricerca eseguite sull'Unit‡ organizzativa da utilizzare per la
+	 * Aggiunge una clausola a tutte le operazioni di ricerca eseguite sull'Unit√† organizzativa da utilizzare per la
 	 * definizione degli accessi
 	 *	
 	 * Pre-post-conditions:
 	 *
 	 * Nome: Ricerca UO per accesso per gestore con CDS = '*'
-	 * Pre:  E' stata generata la richiesta di ricerca di un'Unit‡ organizzativa da parte di un gestore abilitato a tutti
+	 * Pre:  E' stata generata la richiesta di ricerca di un'Unit√† organizzativa da parte di un gestore abilitato a tutti
 	 *       i Cds ('*')
 	 * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, la
 	 *       clausola che l'UO sia valida per l'esercizio di scrivania 
 	 *
 	 * Nome: Ricerca UO per accesso per gestore con CDS diverso da '*'
-	 * Pre:  E' stata generata la richiesta di ricerca di un'Unit‡ organizzativa da parte di un gestore abilitato ad un solo
+	 * Pre:  E' stata generata la richiesta di ricerca di un'Unit√† organizzativa da parte di un gestore abilitato ad un solo
 	 *       Cds 
 	 * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, la
 	 *       clausola che l'UO sia valida per l'esercizio di scrivania e che l'UO appartenga al Cds al quale il gestore e'
@@ -812,19 +812,19 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 		return sql;
 	}
 	/**
-	 * Aggiunge una clausola a tutte le operazioni di ricerca eseguite sull'Unit‡ organizzativa da utilizzare per la
+	 * Aggiunge una clausola a tutte le operazioni di ricerca eseguite sull'Unit√† organizzativa da utilizzare per la
 	 * definizione dei ruoli
 	 *	
 	 * Pre-post-conditions:
 	 *
 	 * Nome: Ricerca UO per ruolo per gestore con CDS = '*'
-	 * Pre:  E' stata generata la richiesta di ricerca di un'Unit‡ organizzativa da parte di un gestore abilitato a tutti
+	 * Pre:  E' stata generata la richiesta di ricerca di un'Unit√† organizzativa da parte di un gestore abilitato a tutti
 	 *       i Cds ('*')
 	 * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, la
 	 *       clausola che l'UO sia valida per l'esercizio di scrivania 
 	 *
 	 * Nome: Ricerca UO per ruolo per gestore con CDS diverso da '*'
-	 * Pre:  E' stata generata la richiesta di ricerca di un'Unit‡ organizzativa da parte di un gestore abilitato ad un solo
+	 * Pre:  E' stata generata la richiesta di ricerca di un'Unit√† organizzativa da parte di un gestore abilitato ad un solo
 	 *       Cds 
 	 * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, la
 	 *       clausola che l'UO sia valida per l'esercizio di scrivania e che l'UO appartenga al Cds al quale il gestore e'
@@ -988,7 +988,7 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 								esercizio)
 						);
 				if (esercizioBulk == null)
-					throw  new it.cnr.jada.comp.ApplicationException("Il CDS "+scds.getCds().getCd_unita_organizzativa()+ " non Ë presente nell'esercizio "+esercizio);		
+					throw  new it.cnr.jada.comp.ApplicationException("Il CDS "+scds.getCds().getCd_unita_organizzativa()+ " non √® presente nell'esercizio "+esercizio);		
 			}
 
 		} catch (Throwable e) 

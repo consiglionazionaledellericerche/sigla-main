@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -16,33 +16,33 @@
 		formName="searchtool"
 		inputType="SEARCHTOOL"
 		enabledOnSearch="true"		
-		label="Unità Organizzativa" />
+		label="UnitÃ  Organizzativa" />
 	<fieldProperty
 		name="cd_unita_organizzativa"
 		property="unita_organizzativa.cd_unita_organizzativa"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Codice Unità Organizzativa" />
+		label="Codice UnitÃ  Organizzativa" />
 	<fieldProperty
 		name="fl_gestione_moduli"
 		property="fl_gestione_moduli"
 		inputType="CHECKBOX"
-		label="Attivazione della gestione per moduli di attività" />
+		label="Attivazione della gestione per moduli di attivitÃ " />
 	<fieldProperty
 		name="pg_modulo_default"
 		property="modulo_default.pg_progetto"
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
-		label="Modulo di attività di default" />
+		label="Modulo di attivitÃ  di default" />
 	<fieldProperty
 		name="modulo_default"
 		property="modulo_default"
 		formName="searchtool"
 		inputType="SEARCHTOOL"
 		enabledOnSearch="true"		
-		label="Modulo di Attività di default" />
+		label="Modulo di AttivitÃ  di default" />
 
 	<formFieldProperty
 		name="esercizio" />

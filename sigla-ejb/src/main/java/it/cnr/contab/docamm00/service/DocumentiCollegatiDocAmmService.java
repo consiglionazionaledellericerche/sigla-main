@@ -222,7 +222,7 @@ public class DocumentiCollegatiDocAmmService extends StoreService {
                 });
             } catch (StorageException _ex) {
                 if (_ex.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
-                    throw new ApplicationException("CMIS - File [" + storageFile.getFileName() + "] gi‡ presente o non completo di tutte le propriet‡ obbligatorie. Inserimento non possibile!");
+                    throw new ApplicationException("CMIS - File [" + storageFile.getFileName() + "] gi√† presente o non completo di tutte le propriet√† obbligatorie. Inserimento non possibile!");
                 throw new ApplicationException("CMIS - Errore nella registrazione del file XML sul Documentale (" + _ex.getMessage() + ")");
             }
         } catch (Exception e) {

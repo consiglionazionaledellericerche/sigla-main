@@ -7,6 +7,7 @@
 package it.cnr.contab.varstanz00.bp;
 
 import java.rmi.RemoteException;
+import java.util.Optional;
 
 import javax.ejb.RemoveException;
 
@@ -15,7 +16,6 @@ import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
@@ -191,10 +191,10 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 
 		if (getStatus()!=VIEW){
 			Var_stanz_resBulk var_stanz_res = (Var_stanz_resBulk)getModel();
-			if (var_stanz_res!=null && var_stanz_res.isCancellatoLogicamente() || 
-					var_stanz_res.isPropostaDefinitiva() || 
-//					var_stanz_res.isApprovata() || 
-					var_stanz_res.isRespinta()) {
+			if (var_stanz_res!=null && 
+					(var_stanz_res.isCancellatoLogicamente() || 
+					 var_stanz_res.isPropostaDefinitiva() || 
+					 var_stanz_res.isRespinta())) {
 				setStatus(VIEW);
 			}	
 		}
@@ -217,10 +217,10 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	
 	protected void initialize(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
 		super.initialize(context);
-		VariazioniStanziamentoResiduoComponentSession comp = (VariazioniStanziamentoResiduoComponentSession)createComponentSession();
 		try {
 			setCentro_responsabilita_scrivania(Utility.createCdrComponentSession().cdrFromUserContext(context.getUserContext()));
 			setAbilitatoModificaDescVariazioni(UtenteBulk.isAbilitatoModificaDescVariazioni(context.getUserContext()));
+			setAttivaGestioneVariazioniTrasferimento(Utility.createParametriEnteComponentSession().getParametriEnte(context.getUserContext()).getFl_variazioni_trasferimento());
 		} catch (ComponentException e) {
 			throw handleException(e);
 		} catch (RemoteException e) {
@@ -250,9 +250,15 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	}
 	public OggettoBulk initializeModelForEdit(ActionContext context,OggettoBulk bulk) throws BusinessProcessException {
 		Var_stanz_resBulk var = (Var_stanz_resBulk)super.initializeModelForEdit(context,bulk);
-		if (isDaAccertamentoModifica()) {
+		if (isDaAccertamentoModifica())
 			var.setAccMod(getAccMod());
-		}
+		Optional.ofNullable(var)
+				.filter(Var_stanz_resBulk.class::isInstance)
+				.map(Var_stanz_resBulk.class::cast)
+				.ifPresent(el->{
+					el.setMapMotivazioneVariazione(Optional.ofNullable(el.getTiMotivazioneVariazione()).orElse(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO));	
+					el.setStorageMatricola(el.getIdMatricola());
+				});
 		return var;
 	}
 	/**
@@ -279,22 +285,27 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	}
 	public boolean isSaveButtonEnabled()
 	{
-		if (!isAbilitatoModificaDescVariazioni() && ((Var_stanz_resBulk)getModel()).isApprovata())
+		Var_stanz_resBulk varStanzRes = (Var_stanz_resBulk)getModel();
+		if (!isAbilitatoModificaDescVariazioni() && varStanzRes.isApprovata())
 			return false;
+		else if ((isUoEnte() || isCdrScrivania()) && 
+				(varStanzRes.isApprovata() || varStanzRes.isApprovazioneControllata()) &&
+				varStanzRes.isMotivazioneVariazioneBando() && varStanzRes.getStorageMatricola()==null)
+			return true;
 		else
-		return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte());
+			return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte());
 	}	
 	public boolean isDeleteButtonEnabled()
 	{
 		return super.isDeleteButtonEnabled() && (isCdrScrivania() || isUoEnte()) && !((Var_stanz_resBulk)getModel()).isApprovata();
 	}
 	/**
-	 * Restituisce il valore della propriet� 'salvaDefinitivoButtonEnabled'
-	 * Il bottone di SalvaDefinitivo � disponibile solo se:
-	 * - la proposta � provvisoria
-	 * - il CDR � di 1� Livello
+	 * Restituisce il valore della proprietà 'salvaDefinitivoButtonEnabled'
+	 * Il bottone di SalvaDefinitivo è disponibile solo se:
+	 * - la proposta è provvisoria
+	 * - il CDR è di 1è Livello
 	 *
-	 * @return Il valore della propriet� 'salvaDefinitivoButtonEnabled'
+	 * @return Il valore della proprietà 'salvaDefinitivoButtonEnabled'
 	 */
 	public boolean isSalvaDefinitivoButtonEnabled() {
 		try{
@@ -326,13 +337,13 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	}
 	
 	/**
-	 * Restituisce il valore della propriet� 'approvaButtonEnabled'
-	 * Il bottone di Approva � disponibile solo se:
-	 * - � attivo il bottone di salvataggio
-	 * - la proposta di variazione PDG � definitiva
-	 * - la UO che sta effettuando l'operazione � di tipo ENTE
+	 * Restituisce il valore della proprietà 'approvaButtonEnabled'
+	 * Il bottone di Approva è disponibile solo se:
+	 * - è attivo il bottone di salvataggio
+	 * - la proposta di variazione PDG è definitiva
+	 * - la UO che sta effettuando l'operazione è di tipo ENTE
 	 *
-	 * @return Il valore della propriet� 'approvaButtonEnabled'
+	 * @return Il valore della proprietà 'approvaButtonEnabled'
 	 */
 	public boolean isApprovaButtonEnabled() {
 		try{
@@ -348,8 +359,8 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	}
 	/**
 	 * ritorna true se proviene dalla mappa degli accertamenti modifica, nel senso
-	 * che la variazione � legata ad una modifica ad accertamento residuo, in
-	 * tal caso non � necessario che il cdr sia di primo livello
+	 * che la variazione è legata ad una modifica ad accertamento residuo, in
+	 * tal caso non è necessario che il cdr sia di primo livello
 	 * @return
 	 */
 	public boolean controllaCdrDaAccMod() {
@@ -397,13 +408,13 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	
 	/**
 	 * 
-	 * Restituisce il valore della propriet� 'nonApprovaButtonEnabled'
-	 * Il bottone di NonApprova � disponibile solo se:
-	 * - � attivo il bottone di salvataggio
-	 * - la proposta di variazione PDG � definitiva
-	 * - la UO che sta effettuando l'operazione � di tipo ENTE
+	 * Restituisce il valore della proprietà 'nonApprovaButtonEnabled'
+	 * Il bottone di NonApprova è disponibile solo se:
+	 * - è attivo il bottone di salvataggio
+	 * - la proposta di variazione PDG è definitiva
+	 * - la UO che sta effettuando l'operazione è di tipo ENTE
 	 *
-	 * @return Il valore della propriet� 'nonApprovaButtonEnabled'
+	 * @return Il valore della proprietà 'nonApprovaButtonEnabled'
 	 */
 	public boolean isNonApprovaButtonEnabled() {
 		return isApprovaButtonEnabled();
@@ -483,7 +494,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	}
 
 	/**
-	 * se true la variazione � stata richiamata da una modifica
+	 * se true la variazione è stata richiamata da una modifica
 	 * all'accertamento residuo, in tal caso il processo deve essere
 	 * transazionale in modo da creare una modifica e una variazione
 	 * in contemporanea
@@ -561,6 +572,17 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	public void setAbilitatoModificaDescVariazioni(boolean abilitatoModificaDescVariazioni) {
 		this.abilitatoModificaDescVariazioni = abilitatoModificaDescVariazioni;
 	}	
+
+	private boolean attivaGestioneVariazioniTrasferimento;
+	
+	public boolean isAttivaGestioneVariazioniTrasferimento() {
+		return attivaGestioneVariazioniTrasferimento;
+	}
+
+	private void setAttivaGestioneVariazioniTrasferimento(boolean attivaGestioneVariazioniTrasferimento) {
+		this.attivaGestioneVariazioniTrasferimento = attivaGestioneVariazioniTrasferimento;
+	}
+
 	public boolean isVariazioneFromLiquidazioneIvaDaModificare(ActionContext context, Var_stanz_resBulk variazione) throws BusinessProcessException{
 		try {
 			VariazioniStanziamentoResiduoComponentSession comp = (VariazioniStanziamentoResiduoComponentSession)createComponentSession();
@@ -568,5 +590,32 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 		} catch (Throwable e) {
 			throw new BusinessProcessException(e.getMessage());
 		}
+	}
+
+	public void aggiornaMotivazioneVariazione(ActionContext context) throws BusinessProcessException{
+		Var_stanz_resBulk var = (Var_stanz_resBulk)this.getModel();
+		var.setTiMotivazioneVariazione(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO.equals(var.getMapMotivazioneVariazione())
+											?null
+											:var.getMapMotivazioneVariazione());
+
+		if (var.isMotivazioneVariazioneBando())
+			var.setIdMatricola(null);
+		else if (var.isMotivazioneVariazioneProroga() || var.isMotivazioneVariazioneAltreSpese())
+			var.setIdBando(null);
+		else {
+			var.setIdMatricola(null);
+			var.setIdBando(null);
+		}
+	}
+	
+	@Override
+	public void validate(ActionContext actioncontext) throws ValidationException {
+		if (this.isAttivaGestioneVariazioniTrasferimento()) 
+			Optional.ofNullable(getModel())
+					.filter(Var_stanz_resBulk.class::isInstance)
+					.map(Var_stanz_resBulk.class::cast)
+					.filter(el->!Var_stanz_resBulk.TIPOLOGIA_STO.equals(el.getTipologia()) || el.getMapMotivazioneVariazione()!=null)
+					.orElseThrow(()->new ValidationException("Occorre indicare la motivazione per cui viene effettuata la variazione."));
+		super.validate(actioncontext);
 	}
 }

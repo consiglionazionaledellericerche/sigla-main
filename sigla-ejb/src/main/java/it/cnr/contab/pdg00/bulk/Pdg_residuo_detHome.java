@@ -28,7 +28,7 @@ public class Pdg_residuo_detHome extends BulkHome {
 	/**
 	 * Questo metodo fa in modo di gestire l'inizializzazione della chiave primaria
 	 * in automatico, ma si limita ad inizializzare il pg_dettaglio in quanto il resto 
-	 * della chiave Ë stato gi‡ valorizzato dal trasporto di chiave dal padre
+	 * della chiave √® stato gi√† valorizzato dal trasporto di chiave dal padre
 	 */
 	public void initializePrimaryKeyForInsert(it.cnr.jada.UserContext userContext,OggettoBulk bulk) throws PersistencyException, ComponentException {
 		Integer max = (Integer)findMax(bulk, "pg_dettaglio", null);

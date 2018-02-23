@@ -57,6 +57,6 @@ public class ConsInventarioRicBP extends BulkBP{
 		if (bulk.getData()== null)
 			throw new ValidationException("Indicare la data a cui limitare la selezione.");
 		if(bulk.getUoForPrint()==null|| bulk.getUoForPrint().getCd_unita_organizzativa()== null)
-			throw new ValidationException("Indicare l'Unit‡ Organizzativa.");
+			throw new ValidationException("Indicare l'Unit√† Organizzativa.");
 	}
 }

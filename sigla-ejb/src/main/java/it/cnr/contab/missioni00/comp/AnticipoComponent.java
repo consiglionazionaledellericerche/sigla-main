@@ -158,7 +158,7 @@ private void aggiornaCogeCoanObbligazioniDaCancellare(
  *
  * Nome: Aggiorna obbligazione non temporanea
  * Pre:  L'utente ha richiesto l'inserimento/modifica di un anticipo
- *       L'utente ha selezionato una scadenza di obbligazione gi‡ esistente
+ *       L'utente ha selezionato una scadenza di obbligazione gi√† esistente
  * Post: Il sistema aggiorna l'importo associato a doc. amministrativi della scadenza di obbligazione e aggiorna il saldo dell'obbligazione
  *       (metodo 'aggiornaSaldi')
  *
@@ -321,7 +321,7 @@ private void aggiornaSaldi(it.cnr.jada.UserContext userContext, AnticipoBulk ant
  * Nome: Carica terzo
  * Pre:  Il sistema carica in modifica un anticipo selezionato
  * Post: Il sistema carica i dati relativi al terzo dell'anticipo, comprensivi dei termini 
- *		 e delle modalit‡ di pagamento
+ *		 e delle modalit√† di pagamento
  *
  * Nome: Carica terzo - errore 
  * Pre:  Il sistema non trova il terzo da caricare per l'anticipo che si sta aprendo in modifica
@@ -558,17 +558,17 @@ public OggettoBulk creaConBulk(it.cnr.jada.UserContext userContext,OggettoBulk b
  * Pre-post-conditions:
  *
  * Nome: Crea rimborso
- * Pre:  Una richiesta di creazione di un rimborso completo di un anticipo Ë stata generata
+ * Pre:  Una richiesta di creazione di un rimborso completo di un anticipo √® stata generata
  *       L'anticipo e' in stato pagato
- *       L'utente ha selezionato la linea di attivit‡ per cui creare l'accertamento su cui contabilizzare il rimborso
+ *       L'utente ha selezionato la linea di attivit√† per cui creare l'accertamento su cui contabilizzare il rimborso
  * Post: Viene chiamata la stored procedure che 
  *       - crea un accertamento nel bilancio del CNR con voce del piano uguale
- *         a quella specificata in Configurazione CNR e linea di attivit‡ uguale a quella specificata dall'utente
+ *         a quella specificata in Configurazione CNR e linea di attivit√† uguale a quella specificata dall'utente
  *       - crea un rimborso contabilizzato sull'accertamento precedente 
  *
  * Nome: Crea rimborso - errore 
- * Pre:  Una richiesta di creazione di un rimborso completo di un anticipo Ë stata generata
- *       L'utente non ha selezionato una linea di attivit‡ per cui creare l'accertamento su cui contabilizzare il rimborso
+ * Pre:  Una richiesta di creazione di un rimborso completo di un anticipo √® stata generata
+ *       L'utente non ha selezionato una linea di attivit√† per cui creare l'accertamento su cui contabilizzare il rimborso
  * Post: Una segnalazione di errore viene restituita all'utente
  *
  *
@@ -826,16 +826,16 @@ public java.util.Collection findListabanche(UserContext aUC, AnticipoBulk antici
 	return getHome(aUC, BancaBulk.class).fetchAll(selectBancaByClause(aUC, anticipo, null, null));
 }
 /**
- * Carica i dati relativi alle modalit‡ di pagamento
+ * Carica i dati relativi alle modalit√† di pagamento
  *
  * Pre-post-conditions:
  *
  * Nome: Carica modalita
- * Pre:  E' stata generata una richiesta di caricamento delle modalit‡ di pagamento relative al terzo dell'anticipo
- * Post: Il sistema restituisce la lista delle modalit‡ di pagamento relative al terzo dell'anticipo
+ * Pre:  E' stata generata una richiesta di caricamento delle modalit√† di pagamento relative al terzo dell'anticipo
+ * Post: Il sistema restituisce la lista delle modalit√† di pagamento relative al terzo dell'anticipo
  *
  * @param	uc		lo UserContext che ha generato la richiesta
- * @param	bulk 	l' AnticipoBulk da cui ricavare il terzo per cui selezionare le modalit‡ di pagamento
+ * @param	bulk 	l' AnticipoBulk da cui ricavare il terzo per cui selezionare le modalit√† di pagamento
  *
  * @return la collezione di istanze di tipo Rif_modalita_pagamentoBulk 
  */	
@@ -944,10 +944,10 @@ public AnticipoBulk gestisciCambioDataRegistrazione(UserContext aUC, AnticipoBul
 	return anticipo;
 }
 /**
- * Pre:  L'esercizio di scrivania Ë antecedente a quello corrente
+ * Pre:  L'esercizio di scrivania √® antecedente a quello corrente
  * Post: La data restituita viene inizializzata al 31/12/esercizio scrivania
  *
- * Pre:  L'esercizio di scrivania NON Ë antecedente a quello corrente
+ * Pre:  L'esercizio di scrivania NON √® antecedente a quello corrente
  * Post: La data restituita viene inizializzata alla data odierna
  *
  * @param	aUC		lo UserContext che ha generato la richiesta
@@ -1261,7 +1261,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 	try
 	{
 		if (anticipo.getEsercizio() == null)
-		throw new it.cnr.jada.comp.ApplicationException("L'esercizio del documento non Ë valorizzato! Impossibile proseguire.");
+		throw new it.cnr.jada.comp.ApplicationException("L'esercizio del documento non √® valorizzato! Impossibile proseguire.");
 			
 		if (anticipo.getEsercizio().intValue() > it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext).intValue())
 			throw new it.cnr.jada.comp.ApplicationException("Il documento deve appartenere o all'esercizio di scrivania o ad esercizi precedenti per essere aperto in modifica!");
@@ -1367,7 +1367,7 @@ private AnticipoBulk inizializzaRimborso(UserContext userContext,AnticipoBulk an
   *
   * @param userContext 	lo UserContext che ha generato la richiesta
   * @param anticipo 	L'anticipo da controllare  
-  * @return vero se l'anticipo Ë anullato falso altrimenti
+  * @return vero se l'anticipo √® anullato falso altrimenti
   *
 **/
 public boolean isAnticipoAnnullato(UserContext userContext, AnticipoBulk anticipo) throws ComponentException
@@ -1699,7 +1699,7 @@ public void rollbackToSavePoint(UserContext userContext, String savePointName) t
  * Nome: Ricerca
  * Pre:  L'utente ha richiesto una ricerca di anticipi 
  * Post: Il sistema restitusce il SQLBuilder con le clausole specificate dall'utente e in aggiunta con le clausole che
- *       l'anticipo abbia cds, unit‡ organizzativa uguali a quello di scrivania
+ *       l'anticipo abbia cds, unit√† organizzativa uguali a quello di scrivania
  *
  * @param	userContext	lo UserContext che ha generato la richiesta
  * @param   clauses le clausole speicificate dall'utene
@@ -1753,14 +1753,14 @@ public SQLBuilder selectBancaByClause(UserContext aUC, AnticipoBulk anticipo, Ba
  *
  * Pre-post-conditions:
  *
- * Nome: Seleziona linee attivit‡
- * Pre:  Una richiesta di listare le linee di attivit‡ da cui selezionare quella da utilizzare 
+ * Nome: Seleziona linee attivit√†
+ * Pre:  Una richiesta di listare le linee di attivit√† da cui selezionare quella da utilizzare 
  *       per la creazione del rimborso e' stata generata
  * Post: Viene restituito il SQLBuilder con le clausole specificate dall'utente e le clausole aggiuntive che
- *       la linea di attivit‡ sia di Entrata e il Cdr della Linea di attivit‡ appartenga all'Uo di scrivania
+ *       la linea di attivit√† sia di Entrata e il Cdr della Linea di attivit√† appartenga all'Uo di scrivania
  *
  * @param	uc	lo UserContext che ha generato la richiesta
- * @param	anticipo l' AnticipoBulk per cui selezionare la linea di attivit‡
+ * @param	anticipo l' AnticipoBulk per cui selezionare la linea di attivit√†
  * @param	latt la Linea_attivitaBulk da ricercare
  * @param	clauses le clausole specificate dall'utente
  * @return 	il SQLBuilder con tutte le clausole
@@ -1969,7 +1969,7 @@ private void validaDataRegistrazione(UserContext userContext, AnticipoBulk antic
 {
 	java.sql.Timestamp dtUltimoAnticipo = ((AnticipoHome) getHome( userContext, AnticipoBulk.class )).findDataRegistrazioneUltimoAnticipo( anticipo );
 	if((dtUltimoAnticipo != null) && (dtUltimoAnticipo.after(anticipo.getDt_registrazione())))
-		throw  new it.cnr.jada.comp.ApplicationException( "Non Ë possibile inserire un'Anticipo con data anteriore a " +  java.text.DateFormat.getDateInstance().format(dtUltimoAnticipo));
+		throw  new it.cnr.jada.comp.ApplicationException( "Non √® possibile inserire un'Anticipo con data anteriore a " +  java.text.DateFormat.getDateInstance().format(dtUltimoAnticipo));
 }
 /**
   * Viene richiesta la validazione dell'obbligazione associata all'anticipo
@@ -1982,13 +1982,13 @@ private void validaDataRegistrazione(UserContext userContext, AnticipoBulk antic
   *		  	Generata una ApplicationException con il messaggio:	"Nessuna obbligazione associata!"
   *
   * Nome: 	Importi obbligazione/scadenza NULLI
-  *	Pre: 	L'importo della obbligazione e/o della scadenza Ë nullo
+  *	Pre: 	L'importo della obbligazione e/o della scadenza √® nullo
   *	Post: 	Non viene consentita l'associazione della scadenza con l'anticipo
   *		  	Generata una ApplicationException con il messaggio:	
-  *			"L'importo dell'obbligazione/scadenza Ë un dato obbligatorio"
+  *			"L'importo dell'obbligazione/scadenza √® un dato obbligatorio"
   *
   * Nome: 	Importo scadenza diverso da quello dell'anticipo
-  *	Pre: 	L'importo della scadenza Ë diverso da quello dell' anticipo
+  *	Pre: 	L'importo della scadenza √® diverso da quello dell' anticipo
   *	Post: 	Non viene consentita l'associazione della scadenza con l'anticipo
   *		  	Generata una ApplicationException con il messaggio:
   *			"La scadenza di obbligazione associata ha un importo diverso da quello dell'anticipo!"
@@ -2000,7 +2000,7 @@ private void validaDataRegistrazione(UserContext userContext, AnticipoBulk antic
   *			"La data della scadenza dell'obbligazione deve essere successiva alla data di registrazione dell' anticipo!"
   *  
   * Nome: 	Terzo selezionato NON valido
-  *	Pre: 	Il terzo selezionato Ë diverso dal terzo dell'anticipo oppure il tipo entit‡ NON Ë DIVERSI
+  *	Pre: 	Il terzo selezionato √® diverso dal terzo dell'anticipo oppure il tipo entit√† NON √® DIVERSI
   *	Post: 	Non viene consentita l'associazione della scadenza con l'anticipo
   *		  	Generata una ApplicationException con il messaggio:
   *			"L'obbligazione deve avere un creditore valido!"
@@ -2022,10 +2022,10 @@ public void validaObbligazione(UserContext userContext, Obbligazione_scadenzario
 		throw new it.cnr.jada.comp.ApplicationException("Nessun impegno associato!");
 		
 	if (obbligazione.getIm_obbligazione()==null)
-		throw new it.cnr.jada.comp.ApplicationException("L'importo dell'impegno Ë un dato obbligatorio");
+		throw new it.cnr.jada.comp.ApplicationException("L'importo dell'impegno √® un dato obbligatorio");
 		
 	if (scadenza.getIm_scadenza()==null)
-		throw new it.cnr.jada.comp.ApplicationException("L'importo della scadenza Ë un dato obbligatorio");
+		throw new it.cnr.jada.comp.ApplicationException("L'importo della scadenza √® un dato obbligatorio");
 		
 	if (scadenza.getIm_scadenza().compareTo(anticipo.getIm_anticipo_divisa())!=0)
 		throw new it.cnr.jada.comp.ApplicationException("La scadenza dell'impegno associato ha un importo diverso da quello dell'anticipo!");
@@ -2066,7 +2066,7 @@ private void validateEsercizioCOEP(it.cnr.jada.UserContext userContext, Anticipo
 			status = new String(cs.getString(1));
 
 			if (status.compareTo("Y")!=0){
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non Ë possibile eliminare il documento, poichË l'esercizio economico precedente non Ë chiuso.");	
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: non √® possibile eliminare il documento, poich√® l'esercizio economico precedente non √® chiuso.");	
 			}
 		}
 	
@@ -2088,7 +2088,7 @@ private void validateEsercizioCOEP(it.cnr.jada.UserContext userContext, Anticipo
   * Pre-post-conditions
   *
   * Nome:	Terzo obbligazione non valido
-  *	Pre: 	Non Ë stato selezionato il terzo nell'obbligazione
+  *	Pre: 	Non √® stato selezionato il terzo nell'obbligazione
   *	Post: 	Ritorna un ApplicationException con la descrizione dell'errore
   *
   * Nome: 	Terzo obbligazione uguale al terzo dell'anticipo 
@@ -2099,7 +2099,7 @@ private void validateEsercizioCOEP(it.cnr.jada.UserContext userContext, Anticipo
   *	Pre: 	L'anagafica associata al terzo dell'obbligazione ha come tipo entita DIVERSI
   *	Post: 	Viene validato il terzo
   *
-  * Nome: 	Nessuna delle due condizioni precedenti Ë verificata
+  * Nome: 	Nessuna delle due condizioni precedenti √® verificata
   *	Pre: 	Il terzo selezionato NON corrisponde al terzo dell'anticipo e
   *		 	l'anagrafica associata NON ha tipo entita DIVERSI
   *	Post: 	Ritorna un ApplicationException con la descrizione dell'errore

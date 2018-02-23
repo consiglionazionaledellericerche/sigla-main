@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
 	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
-	shortDescription="Rappresenta le unità operative utilizzate in gestione ordine e magazzino."
-	longDescription="Rappresenta le unità operative utilizzate in gestione ordine e magazzino.">
+	shortDescription="Rappresenta le unitÃ  operative utilizzate in gestione ordine e magazzino."
+	longDescription="Rappresenta le unitÃ  operative utilizzate in gestione ordine e magazzino.">
 	<fieldProperty
 		name="cdUnitaOperativa"
 		property="cdUnitaOperativa"
@@ -38,7 +38,7 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Codice Unità Organizzativa" />
+		label="Codice UnitÃ  Organizzativa" />
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"

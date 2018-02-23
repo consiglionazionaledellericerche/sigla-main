@@ -12,7 +12,7 @@ public interface ITipologia_linea_attivitaMgr
 /** 
   *  Default
   *    PreCondition:
-  *      L'utente ha annullato l'associazione tar cdr e una tipologia linea attivit‡
+  *      L'utente ha annullato l'associazione tar cdr e una tipologia linea attivit√†
   *    PostCondition:
   *		 Effettua un rollback al savepoint impostato in inizializzaCdrAssociati
  */
@@ -21,11 +21,11 @@ public abstract void annullaModificaCdrAssociati(it.cnr.jada.UserContext param0,
 /** 
   *  Default
   *    PreCondition:
-  *      Viene richiesta l'associazione di una tipologia linea attivit‡ con tutti i cdr disponibili
+  *      Viene richiesta l'associazione di una tipologia linea attivit√† con tutti i cdr disponibili
   *    PostCondition:
   *		 Inserisce nella tabella ASS_TIPO_LA_CDR tante righe quanti sono i cdr mancanti nella associazione
-  *		 con la tipologia linea attivit‡ specificata;
-  *		 Per ogni cdr associato crea una linea attivit‡ secondo le specifiche di modificaCdrAssociati
+  *		 con la tipologia linea attivit√† specificata;
+  *		 Per ogni cdr associato crea una linea attivit√† secondo le specifiche di modificaCdrAssociati
  */
 
 public abstract void associaTuttiCdr(it.cnr.jada.UserContext param0,it.cnr.contab.config00.latt.bulk.Tipo_linea_attivitaBulk param1) throws it.cnr.jada.comp.ComponentException;
@@ -35,14 +35,14 @@ public abstract void associaTuttiCdr(it.cnr.jada.UserContext param0,it.cnr.conta
   *      Viene richiesto l'elenco dei cdr associabli ad una tipologia linea attivita
   *    PostCondition:
   *		 Effettua una query sulla tabella dei cdr che NON compaiono nella tabella ASS_TIPO_LA_CDR per
-  *		 la tipologia linea attivit‡ specificata per l'esercizio di scrivania
+  *		 la tipologia linea attivit√† specificata per l'esercizio di scrivania
  */
 
 public abstract it.cnr.jada.util.RemoteIterator cercaCdrAssociabili(it.cnr.jada.UserContext param0,it.cnr.contab.config00.latt.bulk.Tipo_linea_attivitaBulk param1) throws it.cnr.jada.comp.ComponentException;
 /** 
   *  Default
   *    PreCondition:
-  *      Viene richiesto la creazione di una nuova tipologia linea attivita e delle associazioni della stessa con uno o pi˘ CDR
+  *      Viene richiesto la creazione di una nuova tipologia linea attivita e delle associazioni della stessa con uno o pi√π CDR
   *    PostCondition:
   *		 Imposta ti_tipo_la = 'C'
  */
@@ -53,7 +53,7 @@ public abstract it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext
   *    PreCondition:
   *      L'utente ha richiesto l'inserimento di una tipologia linea attivita
   *    PostCondition:
-  *		 Il tipo linea attivit‡ viene inizializzato con CD_CDR_CREATORE uguale al
+  *		 Il tipo linea attivit√† viene inizializzato con CD_CDR_CREATORE uguale al
   *		 codice del CDR dell'utente
  */
 
@@ -63,14 +63,14 @@ public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerInserimento(it.cn
   *    PreCondition:
   *      L'utente ha richiesto la modifica di una tipologia linea attivita
   *    PostCondition:
-  *		 Viene posto un lock sulla tipologia linea attivit‡ specificata
+  *		 Viene posto un lock sulla tipologia linea attivit√† specificata
  */
 
 public abstract it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerModifica(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
 /** 
   *  Default
   *    PreCondition:
-  *      L'utente ha richiesto l'associazione di nuovi cdr ad una tipologia linea attivit‡
+  *      L'utente ha richiesto l'associazione di nuovi cdr ad una tipologia linea attivit√†
   *    PostCondition:
   *		 Inizializza un SAVEPOINT sulla transazione utente per poter eventualmente annullare
   *		 le modifiche alle associazioni
@@ -80,12 +80,12 @@ public abstract void inizializzaCdrAssociatiPerModifica(it.cnr.jada.UserContext 
 /** 
   *  Default
   *    PreCondition:
-  *      Viene richiesta la modifica delle associazioni di una tipologia linea attivit‡ con uno
-  * 	 o pi˘ cdr.
+  *      Viene richiesta la modifica delle associazioni di una tipologia linea attivit√† con uno
+  * 	 o pi√π cdr.
   *    PostCondition:
   *		 Per ogni cdr specificato viene eliminata o creata una associazione con la tipologia
-  * 	 linea attivit‡ specificata. Per ogni nuova associazione creata viene inserita una linea
-  * 	 di attivit‡ con le seguenti informazioni:
+  * 	 linea attivit√† specificata. Per ogni nuova associazione creata viene inserita una linea
+  * 	 di attivit√† con le seguenti informazioni:
   *			CD_LINEA_ATTIVITA = "C"+tipo_la.CD_TIPO_LINEA_ATTIVITA
   *			CD_CENTRO_RESPONSABILITA = CD_CDR (dal cdr corrente)
   *			CD_TIPO_LINEA_ATTIVITA = tipo_la.CD_TIPO_LINEA_ATTIVITA
@@ -106,7 +106,7 @@ public abstract void modificaCdrAssociati(it.cnr.jada.UserContext param0,it.cnr.
 /** 
   *  Default
   *    PreCondition:
-  *      Viene richiesto il salvataggio di una tipologia di linea attivita e delle associazioni della stessa con uno o pi˘ CDR
+  *      Viene richiesto il salvataggio di una tipologia di linea attivita e delle associazioni della stessa con uno o pi√π CDR
   *    PostCondition:
   *		 Per ogni nuova associazione con un cdr invoca creaLineaAttivitaComune
   *		 Rende persistenti la nuova tipologia e le associazioni con i cdr.

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -6,7 +6,7 @@
 	<fieldProperty name="tipo" property="tipo" inputType="SELECT" keysProperty="sommeKeys" label="Tipologia"/>
 	<fieldProperty name="esercizio" property="esercizio" inputType="TEXT" inputSize="4" maxLength="4" label="Esercizio"/>
 	<fieldProperty name="mese" property="mese" inputType="SELECT" label="Mese" keysProperty="meseKeys"/>
-	<fieldProperty name="uo" property="uo" inputType="TEXT" inputSize="30" maxLength="30" label="Unità operativa"/>
+	<fieldProperty name="uo" property="uo" inputType="TEXT" inputSize="30" maxLength="30" label="UnitÃ  operativa"/>
 	<fieldProperty name="cdr" property="cdr" inputType="TEXT" inputSize="30" maxLength="30" label="CDR"/>
 	<fieldProperty name="altra_uo" property="altra_uo" inputType="TEXT" inputSize="30" maxLength="30" label="UO di provenienza / destinazione"/>
 	<fieldProperty name="cd_progetto" property="cd_progetto" inputType="TEXT" inputSize="30" maxLength="30" label="Codice Progetto"/>
@@ -15,8 +15,8 @@
 	<fieldProperty name="ds_dipartimento" property="ds_dipartimento" inputType="TEXT" inputSize="30" maxLength="300" label="Descrzione dipartimento"/>		
 	<fieldProperty name="cd_commessa" property="cd_commessa" inputType="TEXT" inputSize="30" maxLength="30" label="Codice Commessa"/>
 	<fieldProperty name="ds_commessa" property="ds_commessa" inputType="TEXTAREA" cols="60" rows="5" maxLength="400" label="Descr. Commessa"/>
-	<fieldProperty name="cd_modulo" property="cd_modulo" inputType="TEXT" inputSize="30" maxLength="30" label="Codice Modulo di attività"/>
-	<fieldProperty name="ds_modulo" property="ds_modulo" inputType="TEXTAREA" cols="60" rows="5" maxLength="400" label="Descr. Modulo di attività"/>
+	<fieldProperty name="cd_modulo" property="cd_modulo" inputType="TEXT" inputSize="30" maxLength="30" label="Codice Modulo di attivitÃ "/>
+	<fieldProperty name="ds_modulo" property="ds_modulo" inputType="TEXTAREA" cols="60" rows="5" maxLength="400" label="Descr. Modulo di attivitÃ "/>
 	<fieldProperty name="cd_linea_attivita" property="cd_linea_attivita" inputType="TEXT" inputSize="10" maxLength="10" label="Codice GAE"/>
 	<fieldProperty name="ds_linea_attivita" property="ds_linea_attivita" inputType="TEXTAREA" cols="60" rows="5" maxLength="300" label="Descr. GAE"/>
 	<fieldProperty name="id_matricola" property="id_matricola" inputType="TEXT" inputSize="10" maxLength="10" label="Matricola"/>

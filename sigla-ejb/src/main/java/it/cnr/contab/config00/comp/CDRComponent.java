@@ -46,19 +46,19 @@ public class CDRComponent extends it.cnr.jada.comp.CRUDComponent implements ICDR
 //<< CONSTRUCTORCSTT
 
 	}
-/* Gestisce l'aggiornamento dell'attributo esercizio fine del Cdr e di tutte le linee di attività che
+/* Gestisce l'aggiornamento dell'attributo esercizio fine del Cdr e di tutte le linee di attivitÃ  che
    dipendono da quel Cdr.
  *  
  * Nome: Modifica dell'attributo esercizio fine 
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un Cdr e' stata generata e
  *       tutti i controlli sono stati superati
- * Post: Tutti gli esercizi fine delle linee di attività definite per
+ * Post: Tutti gli esercizi fine delle linee di attivitÃ  definite per
  *		 quel Cdr e che hanno esercizio fine maggiore rispetto a quello del Cdr sono stati aggiornati
  *
  * Nome: Modifica dell'attributo esercizio fine - Errore
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un Cdr e' stata generata e
  *       la validazione di tale attributo non e' stata superata ( metodo 'verificaEsercizioFine')
- * Post: Una Application Exception viene generata per segnalare all'utente l'impossibilità ad effettuare tale
+ * Post: Una Application Exception viene generata per segnalare all'utente l'impossibilitÃ  ad effettuare tale
  *		 modifica
 */
 
@@ -106,20 +106,20 @@ public CdrBulk cdrFromUserContext(UserContext userContext) throws ComponentExcep
  *
  * Nome: Creazione di Cdr dipendente da un CDS di tipo AREA
  * Pre:  La richiesta di creazione di un Cdr che dipende da una unita' organizzativa definita per un CDS di tipo 
- *       Area di ricerca è stata generata
- * Post: Viene generate una ApplicationException con il messaggio "Non è possibile aggiungere un CDR ad un'area
+ *       Area di ricerca Ã¨ stata generata
+ * Post: Viene generate una ApplicationException con il messaggio "Non Ã¨ possibile aggiungere un CDR ad un'area
  * 		 di ricerca"
  *
  * Nome: Creazione di Cdr dipendente da un CDS di tipo SAC
  * Pre:  La richiesta di creazione di un Cdr che dipende da una unita' organizzativa definita per un CDS di tipo 
- *       Struttura Amministrativa Centrale è stata generata
+ *       Struttura Amministrativa Centrale Ã¨ stata generata
  * Post: Un Cdr di secondo livello viene creato con i dati inseriti dall'utente, se l'utente non ha specificato un 
  *       codice proprio del Cdr ne viene generato uno automaticamente; il cdr di afferenza assegnato e' il CDR di 
  *       primo livello dell'Unita' organizzativa da cui dipende il Cdr appena creato.
  *
  * Nome: Creazione di Cdr dipendente da un CDS di tipo diverso da SAC
  * Pre:  La richiesta di creazione di un Cdr che dipende da una unita' organizzativa definita per un CDS di tipologia 
- *       differente da Struttura Amministrativa Centrale è stata generata
+ *       differente da Struttura Amministrativa Centrale Ã¨ stata generata
  * Post: Un Cdr di secondo livello viene creato con i dati inseriti dall'utente, se l'utente non ha specificato un 
  *       codice proprio del Cdr ne viene generato uno automaticamente; il cdr di afferenza assegnato e' il CDR
  *       responsabile dell'UO CDS. 
@@ -130,17 +130,17 @@ public CdrBulk cdrFromUserContext(UserContext userContext) throws ComponentExcep
  *       visualizzare all'utente
  *
  * Nome: Errore di Cdr afferenza inesistente
- * Pre:  Il Cdr di afferenza del Cdr da creare non è presente
+ * Pre:  Il Cdr di afferenza del Cdr da creare non Ã¨ presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Errore di Responsabile inesistente
- * Pre:  Il Codice Terzo definito come responsabile del Cdr non è presente
+ * Pre:  Il Codice Terzo definito come responsabile del Cdr non Ã¨ presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Errore di chiave duplicata
- * Pre:  Esiste già un CdrBulk persistente che possiede la stessa chiave
+ * Pre:  Esiste giÃ  un CdrBulk persistente che possiede la stessa chiave
  * 		 primaria di quello specificato.
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
@@ -167,7 +167,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext))
-			throw new ApplicationException("Non è possibile creare cdr ad esercizio chiuso.");
+			throw new ApplicationException("Non Ã¨ possibile creare cdr ad esercizio chiuso.");
 	
 		CdrHome cdrHome = (CdrHome) getHomeCache(userContext).getHome( bulk.getClass());
 
@@ -192,7 +192,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 		if ( cdsBulk.getCd_tipo_unita().equalsIgnoreCase( Tipo_unita_organizzativaHome.TIPO_UO_SAC ))
 			keyAff = cdrHome.findCdCdrAfferenzaForSAC( cdrBulk.getUnita_padre().getCd_unita_organizzativa());							
 		else if (cdsBulk.getCd_tipo_unita().equalsIgnoreCase(Tipo_unita_organizzativaHome.TIPO_UO_AREA))
-			throw new ApplicationException("Non è possibile aggiungere CDR ad un'area di ricera");
+			throw new ApplicationException("Non Ã¨ possibile aggiungere CDR ad un'area di ricera");
 		else // Macro
 			keyAff = cdrHome.findCdCdrAfferenzaForMacro( cdsBulk.getCd_unita_organizzativa());
 			
@@ -269,10 +269,10 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws it.c
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext,cdr))
-			throw new ApplicationException("Non è possibile eliminare cdr con esercizio di terminazione chiuso.");
+			throw new ApplicationException("Non Ã¨ possibile eliminare cdr con esercizio di terminazione chiuso.");
 		
 		if ( Long.parseLong( cdr.getCd_proprio_cdr()) == 0 )
-			throw new it.cnr.jada.comp.ApplicationException( "Non è possibile cancellare il CDR responsabile dell'UO");
+			throw new it.cnr.jada.comp.ApplicationException( "Non Ã¨ possibile cancellare il CDR responsabile dell'UO");
 		makeBulkPersistent( userContext,bulk );
 	}
 	catch(it.cnr.jada.persistency.sql.ReferentialIntegrityException e) 
@@ -348,7 +348,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	bulk = super.inizializzaBulkPerModifica(userContext,bulk);
 	if (isEsercizioChiuso(userContext,(CdrBulk)bulk))
-		bulk = asRO(bulk,"Non è possibile modificare cdr con esercizio di terminazione chiuso.");
+		bulk = asRO(bulk,"Non Ã¨ possibile modificare cdr con esercizio di terminazione chiuso.");
 	return bulk;
 }
 /**
@@ -425,7 +425,7 @@ public CdrBulk getCdrEnte(UserContext userContext)throws ComponentException{
 			unitaEnte = (Unita_organizzativaBulk)broker.fetch(Unita_organizzativaBulk.class);
 		}
 		if (unitaEnte == null)
-			throw new ApplicationException("Unità ENTE non trovata!");
+			throw new ApplicationException("UnitÃ  ENTE non trovata!");
 		CdrHome cdrHome = (CdrHome)getHome(userContext,CdrBulk.class,"V_CDR_VALIDO");
 		SQLBuilder sqlCdr = cdrHome.createSQLBuilderEsteso();
 		sqlCdr.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, unitaEnte.getCd_unita_organizzativa());
@@ -468,24 +468,24 @@ protected boolean isEsercizioChiuso(UserContext userContext,CdrBulk cdr) throws 
  * Pre-post-conditions:
  *
  * Nome: Modifica di attributi diversi da esercizio fine
- * Pre:  La richiesta di modifica di un attributo diverso da esercizio fine per un Cdr è stata generata
+ * Pre:  La richiesta di modifica di un attributo diverso da esercizio fine per un Cdr Ã¨ stata generata
  * Post: Il Cdr e' stato modificato
  *
  * Nome: Modifica dell'attributo esercizio fine - Errore 
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un Cdr e' stata generata
  *       e la verifica della correttezza del nuovo esercizio (eseguita dal metodo 'verificaEsercizioFine') non e'
  *		 stata superata
- * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilità di effettuare tale modifica
+ * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilitÃ  di effettuare tale modifica
  *
  * Nome: Modifica dell'attributo esercizio fine - Ok
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un Cdr e' stata generata e
  *       tutti i controlli sono stati superati
- * Post: L'esercizio fine del Cdr e' stato aggiornato e tutti gli esercizi fine delle linee di attività definite per
+ * Post: L'esercizio fine del Cdr e' stato aggiornato e tutti gli esercizi fine delle linee di attivitÃ  definite per
  *		 quel Cdr e che hanno esercizio fine maggiore rispetto a quello del Cdr sono stati aggiornati 
  *       (metodo 'aggiornaEsercizioFine')
  *
  * Nome: Errore di Responsabile inesistente
- * Pre:  Il Codice Terzo definito come responsabile del Cdr non è presente
+ * Pre:  Il Codice Terzo definito come responsabile del Cdr non Ã¨ presente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
@@ -502,7 +502,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 		// 05/09/2003
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext,cdrBulk))
-			throw new ApplicationException("Non è possibile modificare cdr con esercizio di terminazione chiuso.");
+			throw new ApplicationException("Non Ã¨ possibile modificare cdr con esercizio di terminazione chiuso.");
 		
 		if ( cdrBulk.getResponsabile() != null && cdrBulk.getResponsabile().getCd_terzo() != null )
 		{
@@ -534,7 +534,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
  * Pre:  E' stata generata la richiesta di ricerca di un CdrBulk
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, la
  *       clausola che il cdr sia valido per l'esercizio presente in scrivania
- *       Inoltre le unità organizzative di appartenenza dei cdr ricercati devono essere tutte e sole quelle appartenenti a:
+ *       Inoltre le unitÃ  organizzative di appartenenza dei cdr ricercati devono essere tutte e sole quelle appartenenti a:
  *         1. CDS a cui appartiene il CDR specificato in UserContext (Utente comune di scrivania)
  *         2. CDS di influenza dell'utente specificato in UserContext (Utente amministratore di utenze)
  *         3. TUTTI I CDS nel caso il CDS di influenza dell'utente specificato in UserContext (Utente amministratore di utenze) sia *
@@ -566,9 +566,9 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
  * Pre:  E' stata generata la richiesta di ricerca di una Unita_organizzativaBulk da utilizzare come padre
  *		 per il Cdr
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, la
- *       clausola che l'unita' organizzativa sia valida per l'esercizio di scrivania e che l'unità organizzativa
+ *       clausola che l'unita' organizzativa sia valida per l'esercizio di scrivania e che l'unitÃ  organizzativa
  *		 dipenda da un cds con tipologia diversa da SAC e da PNIR.
- *       Inoltre le unità organizzative devono essere tutte e sole quelle appartenenti a:
+ *       Inoltre le unitÃ  organizzative devono essere tutte e sole quelle appartenenti a:
  *         1. CDS a cui appartiene il CDR specificato in UserContext (Utente comune di scrivania)
  *         2. CDS di influenza dell'utente specificato in UserContext (Utente amministratore di utenze)
  *         3. TUTTI I CDS nel caso il CDS di influenza dell'utente specificato in UserContext (Utente amministratore di utenze) sia *
@@ -588,8 +588,8 @@ public SQLBuilder selectUnita_padreByClause(UserContext userContext, CdrBulk cdr
 	sql.addSQLClause("AND", "esercizio", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
 	sql.addSQLClause("AND", "CD_TIPO_UNITA", sql.NOT_EQUALS, Tipo_unita_organizzativaHome.TIPO_UO_SAC);
 	sql.addSQLClause("AND", "CD_TIPO_UNITA", sql.NOT_EQUALS, Tipo_unita_organizzativaHome.TIPO_UO_PNIR);
-	// 11/01/2005 Eliminato da Angelo a seguito della segnalazione n° 19
-    // Ora è possibile ricercare anche le UO non apparrtenenti al CDS dell'Utente
+	// 11/01/2005 Eliminato da Angelo a seguito della segnalazione nÂ° 19
+    // Ora Ã¨ possibile ricercare anche le UO non apparrtenenti al CDS dell'Utente
     /*   
     CdsBulk aCDS = getCDSUtente(userContext);
 	if(!aCDS.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_ENTE)) {
@@ -653,17 +653,17 @@ public void updateBulk(UserContext userContext,OggettoBulk o) throws Persistency
  *
  * Nome: Errore per Cdr responsabile UO
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un Cdr Responsabile dell'UO e' stata generata
- * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilità di effettuare tale modifica
+ * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilitÃ  di effettuare tale modifica
  *
  * Nome: Errore per UO padre
  * Pre:  Per un Cdr non Responsabile dell'UO e' stata specificato un esercizio fine superiore rispetto a quello
  *		 dell'Unita Organizzativa da cui il Cdr dipende
- * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilità di effettuare tale modifica 
+ * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilitÃ  di effettuare tale modifica 
  *
  * Nome: Errore per PDG
  * Pre:  Per un Cdr non Responsabile dell'UO e' stata specificato un esercizio fine 
- *       per il quale e' già stato aperto il piano di gestione
- * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilità di effettuare tale modifica 
+ *       per il quale e' giÃ  stato aperto il piano di gestione
+ * Post: E' stata generata un'Application Exception per segnalare all'utente l'impossibilitÃ  di effettuare tale modifica 
  *
  * Nome: Controlli superati
  * Pre:  La richiesta di modifica dell'attributo esercizio fine di un Cdr non Responsabile dell'UO e' stata generata 
@@ -678,7 +678,7 @@ private void verificaEsercizioFine(UserContext userContext, CdrBulk cdr) throws 
 
 		// non e' possibile impostare l'es. terminaz. per CDR resposnabile UO
 		if ( cdr.getCd_proprio_cdr() != null && Long.parseLong( cdr.getCd_proprio_cdr()) == 0 )
-			throw new it.cnr.jada.comp.ApplicationException( "Non è possibile impostare l'esercizio di terminazione ad un CDR responsabile dell'UO");
+			throw new it.cnr.jada.comp.ApplicationException( "Non Ã¨ possibile impostare l'esercizio di terminazione ad un CDR responsabile dell'UO");
 			
 		//l'esercizio fine deve essere <= dell'esercizio fine dell'UO da cui dipende
 		if ( cdr.getUnita_padre().getEsercizio_fine() != null &&

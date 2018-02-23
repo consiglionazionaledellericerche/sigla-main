@@ -103,7 +103,7 @@ public class PrintSpoolerBP extends it.cnr.jada.util.action.SelezionatoreListaBP
 	}
 	/* 11/09/2009 R.P. Eliminato per impostare il model e visualizzare le info della mail
 	 * 
-	 * Riscritto perchË in questo caso non voglio che quando l'utente
+	 * Riscritto perch√® in questo caso non voglio che quando l'utente
 	 * seleziona una riga nel selezionatore venga anche impostato
 	 * il modello del BulkBP
 
@@ -220,7 +220,7 @@ protected void setFocusedElement(it.cnr.jada.action.ActionContext context,Object
 			handleException(e);
 		}
 		if (servizioPecProtocollo == null)
-			throw new ValidationException("Non Ë presente l'email per l'invio della posta certificata per l'ufficio del Protocollo. Impossibile procedere!");
+			throw new ValidationException("Non √® presente l'email per l'invio della posta certificata per l'ufficio del Protocollo. Impossibile procedere!");
 		// PEC derivata dalla stampa specifica
 		ServizioPecBulk servizioPec = null;
 		try {
@@ -233,7 +233,7 @@ protected void setFocusedElement(it.cnr.jada.action.ActionContext context,Object
 			handleException(e);
 		}
 		if (servizioPec == null)
-			throw new ValidationException("L'ufficio di competenza per l'invio della posta certificata non Ë definito. Impossibile procedere!");
+			throw new ValidationException("L'ufficio di competenza per l'invio della posta certificata non √® definito. Impossibile procedere!");
 		if (!parametriEnte.getTipo_db().equals(Parametri_enteBulk.DB_PRODUZIONE)){
 			testMode=true;
 		}
@@ -287,7 +287,7 @@ protected void setFocusedElement(it.cnr.jada.action.ActionContext context,Object
 			handleException(e);
 		}
 		if (uoPec == null || (uoPec.getEmailPec().equals("") && uoPec.getEmailPecDirettore().equals("")))
-			throw new ValidationException("L'indirizzo email di posta certificata per la unit‡ organizzativa "+cdUoPec+" non Ë definito. Impossibile procedere!");
+			throw new ValidationException("L'indirizzo email di posta certificata per la unit√† organizzativa "+cdUoPec+" non √® definito. Impossibile procedere!");
 
 		if (!pbulk.getDs_oggetto_pec().equals(""))
 			datiPEC.setOggetto(pbulk.getDs_oggetto_pec());

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 	shortDescription="Tipologie Variazione"
 	longDescription="Tipologie Variazione" >
@@ -68,6 +68,12 @@
 		enabledOnSearch="true"
 		nullable="false"
 		label="Livello approvazione" />
+	<fieldProperty
+		name="fl_variazione_trasferimento"
+		property="fl_variazione_trasferimento"
+		inputType="CHECKBOX"
+		nullable="false"
+		label="Variazione per Trasferimento Risorse Personale" />
 
 	<formFieldProperty
 		name="esercizio" />
@@ -85,6 +91,8 @@
 		name="fl_utilizzabile_cds" />
 	<formFieldProperty
 		name="ti_approvazione" />
+	<formFieldProperty
+		name="fl_variazione_trasferimento" />
 
 	<columnFieldProperty
 		name="esercizio" />
@@ -119,4 +127,6 @@
 		name="fl_utilizzabile_cds" />
 	<findFieldProperty
 		name="ti_approvazione" />
+	<findFieldProperty
+		name="fl_variazione_trasferimento" />
 </bulkInfo>

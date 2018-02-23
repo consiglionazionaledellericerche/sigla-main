@@ -58,7 +58,7 @@ public it.cnr.jada.util.OrderedHashtable loadTipologiaCdsKeys() throws it.cnr.ja
 		catch (Exception e )
 		{
 			tipologiaKeys = null ;
-			throw new it.cnr.jada.comp.ApplicationException( "Non è possibile recuperare le tipologie dei Centri di Spesa. " );
+			throw new it.cnr.jada.comp.ApplicationException( "Non Ã¨ possibile recuperare le tipologie dei Centri di Spesa. " );
 		}				
 
 	}
@@ -87,7 +87,7 @@ public it.cnr.jada.util.OrderedHashtable loadTipologiaKeys() throws it.cnr.jada.
 		catch (Exception e )
 		{
 			tipologiaKeys = null ;
-			throw new it.cnr.jada.comp.ApplicationException( "Non è possibile recuperare le tipologie dei Centri di Spesa. " );
+			throw new it.cnr.jada.comp.ApplicationException( "Non Ã¨ possibile recuperare le tipologie dei Centri di Spesa. " );
 		}				
 
 	}

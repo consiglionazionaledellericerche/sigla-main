@@ -40,7 +40,7 @@
 			"tab",
 			new String[][] {
 					{ "tabAnagrafica","Anagrafica","/anagraf00/tab_terzo_anagrafica.jsp" },
-					{ "tabModalitaPagamento","Modalit‡ di pagamento","/anagraf00/tab_terzo_modalita_pagamento.jsp" },
+					{ "tabModalitaPagamento","Modalit√† di pagamento","/anagraf00/tab_terzo_modalita_pagamento.jsp" },
 					{ "tabTerminiPagamento","Termini di pagamento","/anagraf00/tab_terzo_termini_pagamento.jsp" },
 					{ "tabRecapiti","Recapiti","/anagraf00/tab_terzo_recapiti.jsp" },
 					{ "tabContatti","Contatti","/anagraf00/tab_terzo_contatti.jsp" } },

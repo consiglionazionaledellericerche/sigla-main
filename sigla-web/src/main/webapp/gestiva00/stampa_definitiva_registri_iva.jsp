@@ -66,7 +66,7 @@
 			</tr>
 		</table>
 	</div>
-	<div class="GroupLabel text-primary h3">Stampe già eseguite</div>
+	<div class="GroupLabel text-primary h3">Stampe giÃ  eseguite</div>
 	<div class="Group card" style="width:100%">
 		<% bp.getRegistri_stampati().writeHTMLTable(pageContext,"default",false,false,false,"100%","200px"); %>
 	</div>

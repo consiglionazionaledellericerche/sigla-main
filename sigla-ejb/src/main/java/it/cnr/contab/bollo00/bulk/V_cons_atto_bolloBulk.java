@@ -58,6 +58,12 @@ public class V_cons_atto_bolloBulk extends OggettoBulk implements Persistent {
 
 	private java.lang.String tipoConsultazione;
 	
+	private java.lang.Integer numGeneraleFogli;
+
+	private java.lang.Integer numGeneraleEsemplari;
+
+	private BigDecimal imGeneraleBollo;
+
 	public java.lang.Integer getEsercizio() {
 		return esercizio;
 	}
@@ -160,5 +166,29 @@ public class V_cons_atto_bolloBulk extends OggettoBulk implements Persistent {
 
 	public static Dictionary<String, String> getTiDettagliKeysKeys() {
 		return tiDettagliKeys;
+	}
+	
+	public BigDecimal getImGeneraleBollo() {
+		return imGeneraleBollo;
+	}
+	
+	public void setImGeneraleBollo(BigDecimal imGeneraleBollo) {
+		this.imGeneraleBollo = imGeneraleBollo;
+	}
+	
+	public java.lang.Integer getNumGeneraleEsemplari() {
+		return numGeneraleEsemplari;
+	}
+	
+	public void setNumGeneraleEsemplari(java.lang.Integer numGeneraleEsemplari) {
+		this.numGeneraleEsemplari = numGeneraleEsemplari;
+	}
+	
+	public java.lang.Integer getNumGeneraleFogli() {
+		return numGeneraleFogli;
+	}
+	
+	public void setNumGeneraleFogli(java.lang.Integer numGeneraleFogli) {
+		this.numGeneraleFogli = numGeneraleFogli;
 	}
 }

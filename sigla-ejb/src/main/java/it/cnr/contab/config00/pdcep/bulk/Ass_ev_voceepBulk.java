@@ -128,13 +128,13 @@ public void setVoce_ep(ContoBulk newVoce_ep) {
 	voce_ep = newVoce_ep;
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException 
 {
 	if ( getEsercizio() == null  )
-		throw new ValidationException( "Il campo ESERCIZIO Ë obbligatorio." );
+		throw new ValidationException( "Il campo ESERCIZIO √® obbligatorio." );
 	if ( getEsercizio().toString().length() != 4 )
 		throw new ValidationException( "Il campo ESERCIZIO deve essere di quattro cifre. " );		
 }

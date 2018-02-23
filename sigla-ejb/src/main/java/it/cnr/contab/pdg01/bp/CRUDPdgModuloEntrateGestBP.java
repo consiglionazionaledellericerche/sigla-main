@@ -133,9 +133,9 @@ public class CRUDPdgModuloEntrateGestBP extends SimpleCRUDBP {
 		uoScrivania = string;
 	}
 	/*
-	 * Il singolo dettaglio gestionale non può essere mai gestito se:
-	 * - Il CDR collegato è quello di primo livello (corrispondente al CDR della testata)
-	 * - Il CDR collegato è uguale al CDR Assegnatario
+	 * Il singolo dettaglio gestionale non puÃ² essere mai gestito se:
+	 * - Il CDR collegato Ã¨ quello di primo livello (corrispondente al CDR della testata)
+	 * - Il CDR collegato Ã¨ uguale al CDR Assegnatario
 	 */
 	public boolean isDettaglioGestionaleEnable(Pdg_modulo_entrate_gestBulk dett) {
 		try {

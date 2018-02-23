@@ -47,6 +47,15 @@ public class Var_stanz_resBase extends Var_stanz_resKey implements Keyed {
 	// FL_PERENZIONE CHAR(1) NOT NULL
 	private java.lang.Boolean fl_perenzione;
 
+	// TI_MOTIVAZIONE_VARIAZIONE VARCHAR2(10)
+	private java.lang.String tiMotivazioneVariazione;
+
+	// ID_MATRICOLA VARCHAR2(10)
+	private java.lang.String idMatricola;
+
+	// ID_BANDO VARCHAR2(30)
+	private java.lang.String idBando;
+
 	public Var_stanz_resBase() {
 		super();
 	}
@@ -119,37 +128,61 @@ public class Var_stanz_resBase extends Var_stanz_resKey implements Keyed {
 	public void setTipologia(java.lang.String tipologia)  {
 		this.tipologia=tipologia;
 	}
-/**
- * @return
- */
-public java.lang.String getTipologia_fin() {
-	return tipologia_fin;
-}
+	/**
+	 * @return
+	 */
+	public java.lang.String getTipologia_fin() {
+		return tipologia_fin;
+	}
+	
+	/**
+	 * @param string
+	 */
+	public void setTipologia_fin(java.lang.String string) {
+		tipologia_fin = string;
+	}
+	
+	/**
+	 * @return
+	 */
+	public Integer getEsercizio_residuo() {
+		return esercizio_residuo;
+	}
+	
+	/**
+	 * @param integer
+	 */
+	public void setEsercizio_residuo(Integer integer) {
+		esercizio_residuo = integer;
+	}
+	public java.lang.Boolean getFl_perenzione() {
+		return fl_perenzione;
+	}
+	public void setFl_perenzione(java.lang.Boolean fl_perenzione) {
+		this.fl_perenzione = fl_perenzione;
+	}
 
-/**
- * @param string
- */
-public void setTipologia_fin(java.lang.String string) {
-	tipologia_fin = string;
-}
+	public java.lang.String getTiMotivazioneVariazione() {
+		return tiMotivazioneVariazione;
+	}
+	
+	public void setTiMotivazioneVariazione(java.lang.String tiMotivazioneVariazione) {
+		this.tiMotivazioneVariazione = tiMotivazioneVariazione;
+	}
+	
+	public java.lang.String getIdMatricola() {
+		return idMatricola;
+	}
+	
+	public void setIdMatricola(java.lang.String idMatricola) {
+		this.idMatricola = idMatricola;
+	}
 
-/**
- * @return
- */
-public Integer getEsercizio_residuo() {
-	return esercizio_residuo;
-}
-
-/**
- * @param integer
- */
-public void setEsercizio_residuo(Integer integer) {
-	esercizio_residuo = integer;
-}
-public java.lang.Boolean getFl_perenzione() {
-	return fl_perenzione;
-}
-public void setFl_perenzione(java.lang.Boolean fl_perenzione) {
-	this.fl_perenzione = fl_perenzione;
-}
+	public java.lang.String getIdBando() {
+		return idBando;
+	}
+	
+	public void setIdBando(java.lang.String idBando) {
+		this.idBando = idBando;
+	}
 }

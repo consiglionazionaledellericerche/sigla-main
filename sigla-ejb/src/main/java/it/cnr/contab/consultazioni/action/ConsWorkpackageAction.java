@@ -143,7 +143,7 @@ public class ConsWorkpackageAction extends SelezionatoreListaAction {
 			
 			
 			if (wp.isEmpty()) {
-				bp.setMessage("Non è stata selezionata nessuna riga.");
+				bp.setMessage("Non Ã¨ stata selezionata nessuna riga.");
 				return context.findDefaultForward();
 			}
 
@@ -184,7 +184,7 @@ public class ConsWorkpackageAction extends SelezionatoreListaAction {
 			java.util.List wp = bp.getSelectedElements(context);
 			
 			if (wp.isEmpty()) {
-				bp.setMessage("Non è stata selezionata nessuna riga.");
+				bp.setMessage("Non Ã¨ stata selezionata nessuna riga.");
 				return context.findDefaultForward();
 			}
 
@@ -228,7 +228,7 @@ public class ConsWorkpackageAction extends SelezionatoreListaAction {
 				
 				java.util.List wp = bp.getSelectedElements(context);
 				if (wp.isEmpty()) {
-					bp.setMessage("Non è stata selezionata nessuna riga.");
+					bp.setMessage("Non Ã¨ stata selezionata nessuna riga.");
 					return context.findDefaultForward();
 				}
 				
@@ -258,7 +258,7 @@ public class ConsWorkpackageAction extends SelezionatoreListaAction {
 					
 				java.util.List wp = bp.getSelectedElements(context);
 				if (wp.isEmpty()) {
-					bp.setMessage("Non è stata selezionata nessuna riga.");
+					bp.setMessage("Non Ã¨ stata selezionata nessuna riga.");
 					return context.findDefaultForward();
 				}
 					
