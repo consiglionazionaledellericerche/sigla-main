@@ -46,27 +46,28 @@
    	  <TD><% bp.getController().writeFormLabel(out,"tipo_variazione");%></TD>
    	  <TD colspan=5><% bp.getController().writeFormInput(out,"tipo_variazione");%></TD>
 	</TR>
-	<% if (bp.isAttivaGestioneVariazioniTrasferimento() && 
-			bk!=null && bk.getTipo_variazione()!=null && bk.getTipo_variazione().getFl_variazione_trasferimento()) { %>
+	<% if (bp.isAttivaGestioneVariazioniTrasferimento() && (bp.isSearching() ||  
+			bk!=null && bk.getTipo_variazione()!=null && bk.getTipo_variazione().getFl_variazione_trasferimento())) { %>
     <TR>
 	  <TD><% bp.getController().writeFormLabel( out, "mapMotivazioneVariazione"); %></TD>
-	  <TD colspan="2"><% bp.getController().writeFormInput(out,"default","mapMotivazioneVariazione",isAbilitato,null,null);%></TD>
-	  <% if (bk.isMotivazioneVariazioneBando()) {%>
+	  <TD colspan="2"><% bp.getController().writeFormInput(out,"default","mapMotivazioneVariazione",!bp.isSearching()&&(isAbilitato||!bk.isPropostaProvvisoria()),null,null);%></TD>
+	  <% if (bp.isSearching() || bk.isMotivazioneVariazioneBando()) {%>
 		 <TD><% bp.getController().writeFormLabel( out, "idBando"); %></TD>
-		 <TD><% bp.getController().writeFormInput( out, "default","idBando",isAbilitato,null,null); %></TD>
+		 <TD><% bp.getController().writeFormInput( out, "default","idBando",!bp.isSearching()&&(isAbilitato||!bk.isPropostaProvvisoria()),null,null); %></TD>
 	 	 <%	if (bk.isApprovata()||bk.isApprovazioneFormale()) { %>
 		 <TD>
 		 	<%
 		 		bp.getController().writeFormLabel( out, "idMatricola");
-		 	    bp.getController().writeFormInput( out, "default","idMatricola",!(bp.isCdrScrivania()||bp.isUoEnte())||bk.getIdMatricola()!=null,null,null);
+		 	    bp.getController().writeFormInput( out, "default","idMatricola",!bp.isSearching()&&!(bp.isCdrScrivania()||bp.isUoEnte())||bk.getIdMatricola()!=null,null,null);
 		 	%>
 		 </TD>
 		 <% } %>
-	  <% } else if (bk.isMotivazioneVariazioneProroga() || bk.isMotivazioneVariazioneAltreSpese()) { %>
-		 <TD colspan="3">
+	  <% } 
+	     if (bp.isSearching() || (bk.isMotivazioneVariazioneProroga() || bk.isMotivazioneVariazioneAltreSpese())) { %>
+		 <TD <% if (!bp.isSearching()){ %>colspan="3"<% } %>>
 		 	<%	
 		 		bp.getController().writeFormLabel( out, "idMatricola");
-	 	    	bp.getController().writeFormInput( out, "default","idMatricola",isAbilitato,null,null);
+	 	    	bp.getController().writeFormInput( out, "default","idMatricola",!bp.isSearching()&&(isAbilitato||!bk.isPropostaProvvisoria()),null,null);
 		 	%>
 		 </TD>
 	  <% }%>
