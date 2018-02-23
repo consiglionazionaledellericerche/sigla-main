@@ -24,6 +24,11 @@
 			columnName="CD_UNITA_ORGANIZZATIVA"
 			propertyName="lettera_pagamento_estero.cd_unita_organizzativa"
 			fetchOnly="true" />
+		<columnMapping
+			columnName="ID_TIPO_DOCUMENTO_GENERICO"
+			propertyName="tipoDocumentoGenerico.id"
+			sqlTypeName="DECIMAL"
+			columnSize="15" />
 	</defaultColumnMap>		
 
 	<persistentProperty
@@ -33,4 +38,6 @@
 		partOfOid="true" />
 	<persistentProperty
 		name="lettera_pagamento_estero" />
+	<persistentProperty
+		name="tipoDocumentoGenerico" />
 </SQLPersistentInfo>
