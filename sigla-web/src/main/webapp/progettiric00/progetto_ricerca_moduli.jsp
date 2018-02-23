@@ -1,4 +1,4 @@
-<%@ page
+<%@ page pageEncoding="UTF-8"
         import="it.cnr.jada.action.*,
                 it.cnr.jada.bulk.*,
                 it.cnr.jada.util.action.*,
@@ -25,10 +25,7 @@
 <% ModuloAttivitaBP bp = (ModuloAttivitaBP)BusinessProcess.getBusinessProcess(request);
    bp.openFormWindow(pageContext);   
    tabs = new String[][] {
-                   { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_moduli.jsp" }};//,
-                   //{ "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" },
-                   //{ "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" },
-                   //{ "tabDettagliPostIt","Post-It","/config00/dettagliPostIt.jsp" }};
+                   { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_moduli.jsp" }};
    JSPUtils.tabbed(
                    pageContext,
                    "tab",

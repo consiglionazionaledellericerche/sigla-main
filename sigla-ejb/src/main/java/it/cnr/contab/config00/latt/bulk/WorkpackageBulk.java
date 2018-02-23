@@ -1,7 +1,6 @@
 package it.cnr.contab.config00.latt.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
@@ -30,7 +29,6 @@ public class WorkpackageBulk extends WorkpackageBase implements CostantiTi_gesti
 	public boolean utilizzata2016 = Boolean.FALSE;
 
 	private BulkList risultati;
-	private BulkList dettagliPostIt = new BulkList();
 	private java.lang.Integer esercizio;
 	
 	public final static String TI_GESTIONE_ENTRAMBE = "X" ;
@@ -78,13 +76,6 @@ public int addToRisultati(RisultatoBulk risultato) {
 	return risultati.size()-1;
 }
 
-public int addToDettagliPostIt(it.cnr.contab.config00.blob.bulk.PostItBulk dett) {	
-	dett.setCd_centro_responsabilita(getCd_centro_responsabilita());
-	/*Nel caso di creazione del Wp da Zero la linea_attivita è null*/
-	dett.setCd_linea_attivita(getCd_linea_attivita());
-	dettagliPostIt.add(dett);
-	return dettagliPostIt.size()-1;
-}
 
 /*
  * Ritorna true se il ricevente è valido nell'esercizio specificato
@@ -97,7 +88,7 @@ public boolean checkValiditaInEsercizio(Integer aEsercizio) {
    );
 }
 public BulkCollection[] getBulkLists() {
-	return new BulkList[] { risultati,dettagliPostIt };
+	return new BulkList[] { risultati };
 }
 public java.lang.String getCd_centro_responsabilita() {
 	it.cnr.contab.config00.sto.bulk.CdrBulk centro_responsabilita = this.getCentro_responsabilita();
@@ -213,26 +204,6 @@ public java.util.Dictionary getTi_gestioneKeys() {
  */
 public java.util.Dictionary getTi_gestioneESKeys() {
 	return ti_gestioneESKeys;
-}
-/**
- * Restituisce il valore della proprietà 'dettagliPostIt'
- *
- * @return Il valore della proprietà 'dettagliPostIt'
- */
-public it.cnr.jada.bulk.BulkList getDettagliPostIt() {
-	return dettagliPostIt;
-}
-/**
- * Rimuove il PostIt selezionato dai dettagliPostIt
- *
- * @return PostIt
- */
-public PostItBulk removeFromDettagliPostIt(int index) {
-	PostItBulk dett = (PostItBulk)dettagliPostIt.remove(index);
-	return dett;
-}
-public void setDettagliPostIt(it.cnr.jada.bulk.BulkList newDettagliPostIt) {
-	dettagliPostIt = newDettagliPostIt;
 }
 /**
  * Ritorna i tipi di risultati

@@ -19,6 +19,5 @@ it.cnr.contab.config00.latt.bulk.WorkpackageBulk inizializzaNature(it.cnr.jada.U
 java.util.List findListaGAEWS(it.cnr.jada.UserContext userContext,String cdr,String tipo,String query,String dominio,String tipoRicerca)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.util.List findListaGAEWS(it.cnr.jada.UserContext userContext,String cdr,String tipo,String query,String dominio,String tipoRicerca,String tipoFiltro)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 WorkpackageBulk completaOggetto(UserContext userContext,WorkpackageBulk linea)throws ComponentException, PersistencyException,java.rmi.RemoteException;
-void Inserimento_BLOB(UserContext userContext,it.cnr.jada.bulk.OggettoBulk oggetto,java.io.File file)throws ComponentException, PersistencyException, EJBException, java.rmi.RemoteException;
 java.util.List findListaGAEFEWS(it.cnr.jada.UserContext userContext,String cdr,Integer modulo)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

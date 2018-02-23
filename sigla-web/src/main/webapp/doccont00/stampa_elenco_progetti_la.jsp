@@ -1,5 +1,5 @@
 <%@page import="it.cnr.contab.doccont00.bp.StampaElencoProgettiBP"%>
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,
 			it.cnr.jada.action.*,
 			java.util.*,

@@ -76,8 +76,7 @@ import java.util.*;
 import javax.activation.MimetypesFileTypeMap;
 import javax.ejb.EJBException;
 
-import oracle.sql.BLOB;
-
+import org.apache.commons.lang.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1750,69 +1749,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 	}
 
 	public void migrateAllegatiFromDBToCMIS(UserContext userContext, Incarichi_proceduraBulk procedura) throws ComponentException{
-		IncarichiRepertorioComponentSession incaricoSession = Utility.createIncarichiRepertorioComponentSession();
-			
-		procedura = (Incarichi_proceduraBulk)inizializzaBulkPerModifica(userContext, procedura);
-				
-		try{
-			BulkList<Incarichi_archivioBulk> listArchiviFile = new BulkList<Incarichi_archivioBulk>();
-	
-			listArchiviFile.addAll(addArchivioForMigrateFromDBToCMIS(userContext, procedura.getArchivioAllegati()));
-			for (Iterator<Incarichi_repertorioBulk> i = procedura.getIncarichi_repertorioColl().iterator();i.hasNext();){
-				Incarichi_repertorioBulk incarico = i.next();
-				listArchiviFile.addAll(addArchivioForMigrateFromDBToCMIS(userContext, incarico.getArchivioAllegati()));
-				listArchiviFile.addAll(addArchivioForMigrateFromDBToCMIS(userContext, incarico.getIncarichi_repertorio_varColl()));
-				listArchiviFile.addAll(addArchivioForMigrateFromDBToCMIS(userContext, incarico.getIncarichi_repertorio_rappColl()));
-			}
-			
-			archiviaAllegatiCMIS(userContext, listArchiviFile);
-			
-			for (Iterator iterator = procedura.getIncarichi_repertorioColl().iterator(); iterator.hasNext();) {
-				Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk) iterator.next();
-				if (incarico.isIncaricoDefinitivo())
-					incaricoSession.salvaDefinitivoCMIS(userContext, incarico);
-				else
-					incaricoSession.annullaDefinitivoCMIS(userContext, incarico);
-			}
-			if (procedura.isProceduraDefinitiva())
-				salvaDefinitivoCMIS(userContext, procedura);
-			else
-				annullaDefinitivoCMIS(userContext, procedura);
-			procedura.setFl_migrata_to_cmis(Boolean.TRUE);
-			procedura.setToBeUpdated();
-			updateBulk(userContext, procedura);
-		} catch (RemoteException e) {
-			logger.error("Errore in fase attivazione EJB IncarichiComponent",e);
-			throw new ApplicationException("Errore in fase attivazione EJB IncarichiComponent");			
-		} catch (PersistencyException e) {
-			logger.error("Errore in fase aggiornamento flag su IncarichiProcedura",e);
-			throw new ApplicationException("Errore in fase aggiornamento flag su IncarichiProcedura");			
-		}
-	}
-	
-	private List<Incarichi_archivioBulk> addArchivioForMigrateFromDBToCMIS(UserContext userContext, List<Incarichi_archivioBulk> listArchivio) {
-		BulkList<Incarichi_archivioBulk> listArchivioForCMIS = new BulkList<Incarichi_archivioBulk>();
-		for (Iterator<Incarichi_archivioBulk> iterator = listArchivio.iterator(); iterator.hasNext();) {
-			Incarichi_archivioBulk archivioBulk = iterator.next();
-			try {
-				archivioBulk.setFile(File.createTempFile(archivioBulk.getNome_file(), ".tmp"));
-				BLOB blob = (BLOB)getHome(userContext, archivioBulk.getClass()).getSQLBlob(archivioBulk, "BDATA");
-				if (!blob.isEmptyLob()){
-					InputStream is = blob.getBinaryStream();
-					OutputStream os = new FileOutputStream(archivioBulk.getFile());
-					byte buf[]=new byte[1024];
-					int len;
-					while((len=is.read(buf))>0)
-						os.write(buf,0,len);
-					os.close();
-					is.close();
-	
-					listArchivioForCMIS.add(archivioBulk);
-				}
-			} catch (Exception e) {
-			}
-		}
-		return listArchivioForCMIS;
+		throw new NotImplementedException();
 	}
 	
 	public List getIncarichiForMergeWithCMIS(UserContext userContext, Integer esercizio, Long procedura) throws ComponentException{

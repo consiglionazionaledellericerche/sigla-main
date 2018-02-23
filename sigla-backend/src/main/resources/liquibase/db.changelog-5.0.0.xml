@@ -414,4 +414,10 @@
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+	<changeSet id="drop-table-excel_blob" author="marco.spasiano">
+		<dropTable tableName="excel_blob"></dropTable>
+	</changeSet>
+	<changeSet id="drop-table-doc_firma_digitale" author="marco.spasiano">
+		<dropTable tableName="doc_firma_digitale"></dropTable>
+	</changeSet>
 </databaseChangeLog>
