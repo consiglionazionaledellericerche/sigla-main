@@ -598,13 +598,15 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 											?null
 											:var.getMapMotivazioneVariazione());
 
-		if (var.isMotivazioneVariazioneBando())
-			var.setIdMatricola(null);
-		else if (var.isMotivazioneVariazioneProroga() || var.isMotivazioneVariazioneAltreSpese())
-			var.setIdBando(null);
-		else {
-			var.setIdMatricola(null);
-			var.setIdBando(null);
+		if (!this.isSearching()) {
+			if (var.isMotivazioneVariazioneBando())
+				var.setIdMatricola(null);
+			else if (var.isMotivazioneVariazioneProroga() || var.isMotivazioneVariazioneAltreSpese())
+				var.setIdBando(null);
+			else {
+				var.setIdMatricola(null);
+				var.setIdBando(null);
+			}
 		}
 	}
 	
