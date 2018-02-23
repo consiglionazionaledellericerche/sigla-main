@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -65,7 +65,7 @@
 		maxLength="10"
 		inputSize="10"
 		inputType="TEXT"
-		label="Moduli di Attività"
+		label="Moduli di AttivitÃ "
 		enabledOnSearch="true"
 		formatName="it.cnr.jada.util.UppercaseStringFormat"		
 		caseSensitiveSearch="false" />

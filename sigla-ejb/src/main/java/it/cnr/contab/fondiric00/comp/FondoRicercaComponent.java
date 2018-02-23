@@ -23,19 +23,19 @@ public FondoRicercaComponent() {
  * Post: Segnalazione "Data di fine deve essere maggiore della data di inizio!"
  *
  * Pre:  Controllo se Dt_fine = null e Dt_proroga != null
- * Post: Segnalazione "Non puÚ esistere una data di proroga se non si indica una data di fine!"
+ * Post: Segnalazione "Non pu√≤ esistere una data di proroga se non si indica una data di fine!"
  *
  * Pre:  Controllo Dt_fine > Dt_proroga
  * Post: Segnalazione "Data di proroga deve essere maggiore della data di fine!"
  *
- * Pre:  Controllo se la lista dei dettagli Ë vuota
+ * Pre:  Controllo se la lista dei dettagli √® vuota
  * Post: Se vuota viene creato un unico dettaglio che ha:
  *			UO = l'UO coordinatrice del fondo
  *			Responsabile = Responsabile del fondo
  *			Importo = Importo del fondo
  *			
  * Pre:  Controllo somma importo dettagli != da importo del fondo
- * Post: Segnalazione "La somma degli importi degli assegnatari Ë diversa dall'importo del fondo"
+ * Post: Segnalazione "La somma degli importi degli assegnatari √® diversa dall'importo del fondo"
  *
  */
 	public OggettoBulk creaConBulk(UserContext uc, OggettoBulk bulk) throws ComponentException {
@@ -86,17 +86,17 @@ public FondoRicercaComponent() {
 
 		//se data di fine non esiste non deve esistere data di proroga
 		if(bulk.getDt_fine() == null && bulk.getDt_proroga() != null)
-			throw new it.cnr.jada.comp.ApplicationException("Non puÚ esistere una data di proroga se non si indica una data di fine!");
+			throw new it.cnr.jada.comp.ApplicationException("Non pu√≤ esistere una data di proroga se non si indica una data di fine!");
 
 		//se data di proroga esiste deve essere minore di data fine
 		if(bulk.getDt_proroga() != null && bulk.getDt_fine().after( bulk.getDt_proroga() ))
 			throw new it.cnr.jada.comp.ApplicationException("Data di proroga deve essere maggiore della data di fine!");
 
 		if (bulk.getImporto_fondo() == null)
-			throw new it.cnr.jada.comp.ApplicationException("L'importo Ë obbligatorio.");
+			throw new it.cnr.jada.comp.ApplicationException("L'importo √® obbligatorio.");
 
 		if (bulk.getUnita_organizzativa() == null)
-			throw new it.cnr.jada.comp.ApplicationException("L'unit‡ organizzativa Ë obbligatoria.");
+			throw new it.cnr.jada.comp.ApplicationException("L'unit√† organizzativa √® obbligatoria.");
 
 		//se non vengono specificati dettagli si crea un dettaglio di default
 		if( bulk.getDettagli().isEmpty() ) {
@@ -132,7 +132,7 @@ public FondoRicercaComponent() {
 
 			//se i detagli hanno un importo maggiore del fondo
 			if(sum.doubleValue() < 0) {
-				throw new it.cnr.jada.comp.ApplicationException("La somma degli importi degli assegnatari Ë superiore all'importo del fondo");
+				throw new it.cnr.jada.comp.ApplicationException("La somma degli importi degli assegnatari √® superiore all'importo del fondo");
 
 			//se i detagli hanno un importo minore del fondo
 			} else if(residuo.compareTo(sum) != 0
@@ -152,7 +152,7 @@ public FondoRicercaComponent() {
 					)
 				);
 
-				//se non c'Ë lo creo con un importo uguale alla squadratura
+				//se non c'√® lo creo con un importo uguale alla squadratura
 				if(c == bulk.getDettagli().size()) {
 					Fondo_assegnatarioBulk dett = new Fondo_assegnatarioBulk(
 						bulk.getUnita_organizzativa().getCd_unita_organizzativa(),
@@ -164,7 +164,7 @@ public FondoRicercaComponent() {
 					dett.setUser( bulk.getUser() );
 					bulk.addToDettagli(dett);
 
-				//se c'Ë gli assegno un importo uguale alla squadratura
+				//se c'√® gli assegno un importo uguale alla squadratura
 				} else {
 					((Fondo_assegnatarioBulk) bulk.getDettagli().get(c) ).setImporto( sum );
 				}
@@ -180,19 +180,19 @@ public FondoRicercaComponent() {
  * Post: Segnalazione "Data di fine deve essere maggiore della data di inizio!"
  *
  * Pre:  Controllo se Dt_fine = null e Dt_proroga != null
- * Post: Segnalazione "Non puÚ esistere una data di proroga se non si indica una data di fine!"
+ * Post: Segnalazione "Non pu√≤ esistere una data di proroga se non si indica una data di fine!"
  *
  * Pre:  Controllo Dt_fine > Dt_proroga
  * Post: Segnalazione "Data di proroga deve essere maggiore della data di fine!"
  *
- * Pre:  Controllo se la lista dei dettagli Ë vuota
+ * Pre:  Controllo se la lista dei dettagli √® vuota
  * Post: Se vuota viene creato un unico dettaglio che ha:
  *			UO = l'UO coordinatrice del fondo
  *			Responsabile = Responsabile del fondo
  *			Importo = Importo del fondo
  *			
  * Pre:  Controllo somma importo dettagli != da importo del fondo
- * Post: Segnalazione "La somma degli importi degli assegnatari Ë diversa dall'importo del fondo"
+ * Post: Segnalazione "La somma degli importi degli assegnatari √® diversa dall'importo del fondo"
  *
  */
 	public OggettoBulk modificaConBulk(UserContext uc, OggettoBulk bulk) throws ComponentException {

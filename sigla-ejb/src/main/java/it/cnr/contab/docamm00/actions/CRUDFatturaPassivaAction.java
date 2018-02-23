@@ -88,7 +88,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) context.getBusinessProcess();
         if (!notaDiCredito.isEditable() || target.isViewing()) {
             if (!bp.getDettaglio().getSelection().isEmpty())
-                target.setErrorMessage("Uno o pi˘ dettagli non sono stati aggiunti perchË la nota di credito Ë gi‡ stata pagata o annullata o riportata!");
+                target.setErrorMessage("Uno o pi√π dettagli non sono stati aggiunti perch√® la nota di credito √® gi√† stata pagata o annullata o riportata!");
         } else {
             for (java.util.Iterator i = bp.getDettaglio().getSelection().iterator(); i.hasNext(); ) {
                 Fattura_passiva_rigaIBulk dettaglio = (Fattura_passiva_rigaIBulk) bp.getDettaglio().getDetails().get(((Integer) i.next()).intValue());
@@ -99,7 +99,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                     try {
                         try {
                             if (((FatturaPassivaComponentSession) bp.createComponentSession()).isBeneServizioPerSconto(context.getUserContext(), dettaglio))
-                                throw new it.cnr.jada.bulk.FillException("Uno dei dettagli selezionati Ë un \"bene sconto\". Dettaglio non aggiunto.");
+                                throw new it.cnr.jada.bulk.FillException("Uno dei dettagli selezionati √® un \"bene sconto\". Dettaglio non aggiunto.");
                         } catch (ComponentException exc) {
                             throw new BusinessProcessException(exc);
                         } catch (java.rmi.RemoteException exc) {
@@ -112,7 +112,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                             addedElements.add(dettaglioNdC);
                         }
                     } catch (it.cnr.jada.bulk.FillException e) {
-                        target.setErrorMessage("Uno o pi˘ dettagli non sono stati aggiunti o per mancanza di disponibilt‡ o perchË il bene contenuto Ë di tipo sconto/abbuono!");
+                        target.setErrorMessage("Uno o pi√π dettagli non sono stati aggiunti o per mancanza di disponibilt√† o perch√® il bene contenuto √® di tipo sconto/abbuono!");
                     }
                 }
             }
@@ -149,7 +149,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) context.getBusinessProcess();
         if (!notaDiDebito.isEditable() || target.isViewing()) {
             if (!bp.getDettaglio().getSelection().isEmpty())
-                target.setErrorMessage("Uno o pi˘ dettagli non sono stati aggiunti perchË la nota di debito Ë gi‡ stata pagata o annullata o riportata!");
+                target.setErrorMessage("Uno o pi√π dettagli non sono stati aggiunti perch√® la nota di debito √® gi√† stata pagata o annullata o riportata!");
         } else {
             for (java.util.Iterator i = bp.getDettaglio().getSelection().iterator(); i.hasNext(); ) {
                 Fattura_passiva_rigaIBulk dettaglio = (Fattura_passiva_rigaIBulk) bp.getDettaglio().getDetails().get(((Integer) i.next()).intValue());
@@ -160,7 +160,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                     try {
                         try {
                             if (((FatturaPassivaComponentSession) bp.createComponentSession()).isBeneServizioPerSconto(context.getUserContext(), dettaglio))
-                                throw new it.cnr.jada.bulk.FillException("Uno dei dettagli selezionati Ë un \"bene sconto\". Dettaglio non aggiunto.");
+                                throw new it.cnr.jada.bulk.FillException("Uno dei dettagli selezionati √® un \"bene sconto\". Dettaglio non aggiunto.");
                         } catch (ComponentException exc) {
                             throw new BusinessProcessException(exc);
                         } catch (java.rmi.RemoteException exc) {
@@ -173,7 +173,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                             addedElements.add(dettaglioNdD);
                         }
                     } catch (it.cnr.jada.bulk.FillException e) {
-                        target.setErrorMessage("Uno o pi˘ dettagli non sono stati aggiunti o per mancanza di disponibilt‡ o perchË il bene contenuto Ë di tipo sconto/abbuono!");
+                        target.setErrorMessage("Uno o pi√π dettagli non sono stati aggiunti o per mancanza di disponibilt√† o perch√® il bene contenuto √® di tipo sconto/abbuono!");
                     }
                 }
             }
@@ -223,7 +223,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             java.math.BigDecimal impStorni = vecchioTotale.subtract(rigaFP.getIm_diponibile_nc());
             java.math.BigDecimal impDisponibile = nuovoTotale.subtract(impStorni);
             if (impDisponibile.signum() < 0)
-                throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo totale di riga (" + nuovoTotale + ") Ë inferiore all'importo totale di " + impStorni + " degli storni ad essa associati!");
+                throw new it.cnr.jada.bulk.FillException("Attenzione: l'importo totale di riga (" + nuovoTotale + ") √® inferiore all'importo totale di " + impStorni + " degli storni ad essa associati!");
             rigaFP.setIm_diponibile_nc(impDisponibile);
         }
     }
@@ -315,7 +315,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
 
     /**
      * Gestisce l'associazione della scadenza riportata con il documento amm.
-     * Se non esiste l'aggiunge, altrimenti sincronizza l'istanza gi‡ presente
+     * Se non esiste l'aggiunge, altrimenti sincronizza l'istanza gi√† presente
      *
      * @param context   L'ActionContext della richiesta
      * @param newObblig scadenza selezionata dall'utente con riporta
@@ -332,14 +332,14 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             if (!fp.getFornitore().equalsByPrimaryKey(creditore) &&
                     !AnagraficoBulk.DIVERSI.equalsIgnoreCase(creditore.getAnagrafico().getTi_entita()))
                 throw new it.cnr.jada.comp.ApplicationException("La scadenza selezionata deve appartenere ad un'obbligazione che ha come creditore il fornitore della fattura!");
-/* 	Rospuc 15/01/2015 Controllo SOSPESO  compatibilit‡ dell'obbligazione con il titolo capitolo selezionato
+/* 	Rospuc 15/01/2015 Controllo SOSPESO  compatibilit√† dell'obbligazione con il titolo capitolo selezionato
        SOSPESO PER ESERCIZIO 2015	*/
             if (fp instanceof Fattura_passiva_IBulk) {
                 java.util.List dettagliDaContabilizzare = (java.util.List) fp.getObbligazioniHash().get(newObblig);
                 if (dettagliDaContabilizzare != null && !dettagliDaContabilizzare.isEmpty()) {
                     List titoloCapitoloValidolist = controllaSelezionePerTitoloCapitoloLista(context, dettagliDaContabilizzare.iterator());
                     Elemento_voceBulk titoloCapitoloObbligazione = newObblig.getObbligazione().getElemento_voce();
-                    //Controllo la compatibilit‡ dell'obbligazione con il titolo capitolo selezionato
+                    //Controllo la compatibilit√† dell'obbligazione con il titolo capitolo selezionato
                     Boolean compatibile = null;
                     if (titoloCapitoloValidolist != null && titoloCapitoloValidolist.size() != 0)
                         for (Iterator i = titoloCapitoloValidolist.iterator(); (i.hasNext() && (compatibile == null || !compatibile)); ) {
@@ -350,7 +350,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                                 compatibile = new Boolean(false);
                         }
                     if (compatibile != null && !compatibile)
-                        throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non Ë compatibile con il titolo capitolo della categoria");//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
+                        throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non √® compatibile con il titolo capitolo della categoria");//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
                 }
             }
 
@@ -413,7 +413,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
      * <p>
      * L'implementazione di default utilizza il metodo astratto <code>read</code>
      * di <code>CRUDBusinessProcess</code>.
-     * Se la ricerca fornisce pi˘ di un risultato viene creato un
+     * Se la ricerca fornisce pi√π di un risultato viene creato un
      * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
      * Al business process viene anche chiesto l'elenco delle colonne da
      * visualizzare.
@@ -446,7 +446,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
     }
 
     /**
-     * Gestisce la contabilizzazione dei dettagli selezionati, cioË crea
+     * Gestisce la contabilizzazione dei dettagli selezionati, cio√® crea
      * l'associazione della scadenza riportata con i dettagli selezionati.
      * Se non esiste la scadenza viene aggiunta, altrimenti aggiunge alla
      * scadenza esistente il dettaglio risincronizzando infine le istanze
@@ -484,9 +484,9 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                                     .flatMap(fattura_passiva_rigaIBulk -> Optional.ofNullable(fattura_passiva_rigaIBulk.getBene_servizio()))
                                     .flatMap(bene_servizioBulk -> Optional.ofNullable(bene_servizioBulk.getFl_gestione_inventario()));
                             if (flGestioneInventario.isPresent() && flGestioneInventario.get())
-                                throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non Ë utilizzabile per beni patrimoniali da inventariare!");
+                                throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non √® utilizzabile per beni patrimoniali da inventariare!");
                             else
-                                throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non Ë utilizzabile per beni/servizi da non inventariare!");
+                                throw new it.cnr.jada.comp.ApplicationException("Il titolo capitolo dell'impegno selezionato non √® utilizzabile per beni/servizi da non inventariare!");
                         }
                     }
                 }
@@ -496,7 +496,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 if (dettagliDaContabilizzare != null && !dettagliDaContabilizzare.isEmpty()) {
                     titoloCapitoloValidolist = controllaSelezionePerTitoloCapitoloLista(context, dettagliDaContabilizzare.iterator());
 
-                    //Controllo la compatibilit‡ dell'obbligazione con il titolo capitolo selezionato
+                    //Controllo la compatibilit√† dell'obbligazione con il titolo capitolo selezionato
                     Boolean compatibile = null;
                     if (titoloCapitoloValidolist != null && titoloCapitoloValidolist.size() != 0)
                         for (Iterator i = titoloCapitoloValidolist.iterator(); (i.hasNext() && (compatibile == null || !compatibile)); ) {
@@ -507,7 +507,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                                 compatibile = new Boolean(false);
                         }
                     if (compatibile != null && !compatibile)
-                        throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non Ë compatibile con il titolo capitolo della categoria");//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
+                        throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non √® compatibile con il titolo capitolo della categoria");//+ titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
                 }
             } catch (PersistencyException e1) {
                 bp.handleException(e1);
@@ -518,13 +518,13 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             } catch (BusinessProcessException e1) {
                 bp.handleException(e1);
             }
-        /*	Rospuc 15/01/2015 Controllo SOSPESO  compatibilit‡ dell'obbligazione con il titolo capitolo selezionato
+        /*	Rospuc 15/01/2015 Controllo SOSPESO  compatibilit√† dell'obbligazione con il titolo capitolo selezionato
 		    SOSPESO PER ESERCIZIO 2015
-		//Controllo la compatibilit‡ dell'obbligazione con il titolo capitolo selezionato
+		//Controllo la compatibilit√† dell'obbligazione con il titolo capitolo selezionato
 		if (titoloCapitoloValido != null &&
 			!(titoloCapitoloObbligazione.getCd_elemento_voce().startsWith(titoloCapitoloValido.getCd_elemento_voce()) ||
 			titoloCapitoloValido.getCd_elemento_voce().startsWith(titoloCapitoloObbligazione.getCd_elemento_voce())))
-			throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non Ë compatibile con il titolo capitolo \"" + titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
+			throw new it.cnr.jada.comp.ApplicationException("L'impegno selezionato non √® compatibile con il titolo capitolo \"" + titoloCapitoloValido.getCd_ds_elemento_voce() + "\"!");
 		 */
             try {
                 FatturaPassivaComponentSession h = (FatturaPassivaComponentSession) bp.createComponentSession();
@@ -562,22 +562,22 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk) bp.getModel();
 
         if (fp.isRiportata() && esercizioScrivania.intValue() == fp.getEsercizio().intValue())
-            throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile generare note di credito per fatture riportate!");
+            throw new it.cnr.jada.comp.ApplicationException("Non √® possibile generare note di credito per fatture riportate!");
 
         // Gennaro Borriello - (02/11/2004 16.48.21)
         // 	Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato
         //	riportato DA UN ES. PRECEDENTE a quello di scrivania.
         // RP 16/03/2010 Da commentare per generare NC di fatture di anni precedenti
         //else if (!fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania()) && esercizioScrivania.intValue() != fp.getEsercizio().intValue())
-        //throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
+        //throw new it.cnr.jada.comp.ApplicationException("Non √® possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
 
         //if (fp.isRiportata() && !fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportata()))
-        //throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile generare note di credito per fatture non riportate completamente!");
+        //throw new it.cnr.jada.comp.ApplicationException("Non √® possibile generare note di credito per fatture non riportate completamente!");
         try {
             java.sql.Timestamp date = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
             int annoSolare = fp.getDateCalendar(date).get(java.util.Calendar.YEAR);
             if (annoSolare != esercizioScrivania.intValue())
-                throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile inserire note di credito in esercizi non corrispondenti all'anno solare!");
+                throw new it.cnr.jada.comp.ApplicationException("Non √® possibile inserire note di credito in esercizi non corrispondenti all'anno solare!");
         } catch (javax.ejb.EJBException e) {
             return handleException(context, e);
         }
@@ -607,21 +607,21 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk) bp.getModel();
 
         if (fp.isRiportata() && esercizioScrivania.intValue() == fp.getEsercizio().intValue())
-            throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile generare note di debito per fatture riportate!");
+            throw new it.cnr.jada.comp.ApplicationException("Non √® possibile generare note di debito per fatture riportate!");
 
         // Gennaro Borriello - (02/11/2004 16.48.21)
         // 	Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato
         //	riportato DA UN ES. PRECEDENTE a quello di scrivania.
 //	else if (!fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportataInScrivania()) && esercizioScrivania.intValue() != fp.getEsercizio().intValue())
-//		throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
+//		throw new it.cnr.jada.comp.ApplicationException("Non √® possibile generare note di credito per fatture non completamente riportate nell'esercizio di scrivania!");
 
         //if (fp.isRiportata() && !fp.COMPLETAMENTE_RIPORTATO.equalsIgnoreCase(fp.getRiportata()))
-        //throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile generare note di debito per fatture non riportate completamente!");
+        //throw new it.cnr.jada.comp.ApplicationException("Non √® possibile generare note di debito per fatture non riportate completamente!");
         try {
             java.sql.Timestamp date = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
             int annoSolare = fp.getDateCalendar(date).get(java.util.Calendar.YEAR);
             if (annoSolare != esercizioScrivania.intValue())
-                throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile inserire note di debito in esercizi non corrispondenti all'anno solare!");
+                throw new it.cnr.jada.comp.ApplicationException("Non √® possibile inserire note di debito in esercizi non corrispondenti all'anno solare!");
         } catch (javax.ejb.EJBException e) {
             return handleException(context, e);
         }
@@ -639,14 +639,14 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
 
     /**
      * creo una nuova istanza di buono di carico; lo inizializzo, aggiungo i dettagli
-     * selezionati e ne richiedo l'apertura. Se esistevano gi‡ dei buoni di carico, li
+     * selezionati e ne richiedo l'apertura. Se esistevano gi√† dei buoni di carico, li
      * elimino
      *
      * @param context L'ActionContext della richiesta
      * @return Il Forward alla pagina di risposta
      * @throws BusinessProcessException
      * @throws ComponentException
-     * @throws RemoteException          Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+     * @throws RemoteException          Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
      */
     public Forward basicDoInventariaDettagli(ActionContext context)
             throws BusinessProcessException,
@@ -702,7 +702,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             hook.addParameter("dettagliDaInventariare", dettagliDaInventariare);
             return context.addBusinessProcess(ibp);
         }
-        bp.setMessage("Nessun dettaglio Ë inventariabile o tutti i dettagli inventariabili sono gi‡ stati caricati!");
+        bp.setMessage("Nessun dettaglio √® inventariabile o tutti i dettagli inventariabili sono gi√† stati caricati!");
         return context.findDefaultForward();
     }
 
@@ -753,7 +753,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             HookForward hook = (HookForward) context.findForward("bringback");
             hook.addParameter("dettagliDaInventariare", dettagliDaInventariare);
             return context.addBusinessProcess(ibp);
-        } else {  //R.P. MODIFICA BENI gi‡ ASSOCIATI(IN SOSPESO)
+        } else {  //R.P. MODIFICA BENI gi√† ASSOCIATI(IN SOSPESO)
             if (fattura.getCrudStatus() != OggettoBulk.TO_BE_CREATED) {
                 List dettagli = bp.getDettaglio().getDetails();
                 for (Iterator i = dettagli.iterator(); i.hasNext(); ) {
@@ -772,7 +772,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                     }
                 }
                 if (dettagliDaInventariare.size() == 0) {
-                    bp.setMessage("Nessun dettaglio Ë inventariabile o tutti i dettagli inventariabili sono gi‡ stati caricati!");
+                    bp.setMessage("Nessun dettaglio √® inventariabile o tutti i dettagli inventariabili sono gi√† stati caricati!");
                     return context.findDefaultForward();
                 }
 
@@ -792,7 +792,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 hook.addParameter("dettagliDaInventariare", dettagliDaInventariare);
                 return context.addBusinessProcess(ibp);
             } else {
-                bp.setMessage("Nessun dettaglio Ë inventariabile o tutti i dettagli inventariabili sono gi‡ stati caricati!");
+                bp.setMessage("Nessun dettaglio √® inventariabile o tutti i dettagli inventariabili sono gi√† stati caricati!");
                 return context.findDefaultForward();
             }
         }
@@ -827,10 +827,10 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                     }
                 }
             }
-		/*commentato perchË da problemi con la fatturazione elettronica che trova gi‡ il fornitore caricato
+		/*commentato perch√® da problemi con la fatturazione elettronica che trova gi√† il fornitore caricato
 		if (fattura.getFornitore() != null && fattura.getFornitore().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.NORMAL) {
 			doBlankSearchFornitore(context, fattura);
-			((it.cnr.jada.util.action.CRUDBP)context.getBusinessProcess()).setMessage("Attenzione: il fornitore non Ë pi˘ valido. Selezionare un altro fornitore!");
+			((it.cnr.jada.util.action.CRUDBP)context.getBusinessProcess()).setMessage("Attenzione: il fornitore non √® pi√π valido. Selezionare un altro fornitore!");
 		}*/
         } catch (Throwable t) {
             throw new it.cnr.jada.comp.ComponentException(t);
@@ -866,7 +866,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             else {
                 Fattura_passiva_rigaBulk firstRow = (Fattura_passiva_rigaBulk) models.get(0);
 
-                //	Rospuc 15/01/2015 Controllo SOSPESO  compatibilit‡ dell'obbligazione con il titolo capitolo selezionato
+                //	Rospuc 15/01/2015 Controllo SOSPESO  compatibilit√† dell'obbligazione con il titolo capitolo selezionato
                 //SOSPESO PER ESERCIZIO 2015
 //			if (firstRow.getBene_servizio().getFl_gestione_inventario().booleanValue()) {
 //				Elemento_voceBulk ev = getElementoVoce(context, firstRow.getBene_servizio().getCategoria_gruppo());
@@ -976,7 +976,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 Collectors.groupingBy(o -> o.getOrdineAcqConsegna().getOrdineAcqRiga().getCdBeneServizio())
         );
         if (collectBeneServizio.size() > 1) {
-            crudFatturaPassivaBP.get().setMessage("Non Ë possibile collegare alla stessa riga di fattura consegne che hanno beni diversi ["
+            crudFatturaPassivaBP.get().setMessage("Non √® possibile collegare alla stessa riga di fattura consegne che hanno beni diversi ["
                     .concat(collectBeneServizio.keySet().stream().collect(Collectors.joining(","))).concat("]"));
             return context.findDefaultForward();
         }
@@ -984,7 +984,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 Collectors.groupingBy(o -> o.getOrdineAcqConsegna().getOrdineAcqRiga().getCdVoceIva())
         );
         if (collectCodiciIva.size() > 1) {
-            crudFatturaPassivaBP.get().setMessage("Non Ë possibile collegare alla stessa riga di fattura consegne che hanno codici iva diversi ["
+            crudFatturaPassivaBP.get().setMessage("Non √® possibile collegare alla stessa riga di fattura consegne che hanno codici iva diversi ["
                     .concat(collectCodiciIva.keySet().stream().collect(Collectors.joining(","))).concat("]"));
             return context.findDefaultForward();
         }
@@ -1149,7 +1149,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 Fattura_passivaBulk fp = (Fattura_passivaBulk) bp.getModel();
 
                 if (!bp.isEditing()) {
-                    bp.setMessage("Non Ë possibile cancellare in questo momento");
+                    bp.setMessage("Non √® possibile cancellare in questo momento");
                 } else {
                     bp.delete(context);
 
@@ -1248,7 +1248,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             while (selectedModels.hasNext()) {
                 Fattura_passiva_rigaBulk rigaSelected = (Fattura_passiva_rigaBulk) selectedModels.next();
                 if (!Fattura_passiva_rigaBulk.STATO_INIZIALE.equals(rigaSelected.getStato_cofi()))
-                    throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getDs_riga_fattura() + "\" Ë gi‡ stato contabilizzato! Modificare la selezione.");
+                    throw new it.cnr.jada.comp.ApplicationException("Il dettaglio \"" + rigaSelected.getDs_riga_fattura() + "\" √® gi√† stato contabilizzato! Modificare la selezione.");
                 try {
                     rigaSelected.validaDateCompetenza();
                 } catch (ValidationException e) {
@@ -1260,7 +1260,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
 
     /**
      * In base alla data fattura fornitore di testata calcola e imposta l'esercizio
-     * di validit‡ del fornitore
+     * di validit√† del fornitore
      *
      * @param context         L'ActionContext della richiesta
      * @param fattura_passiva
@@ -1330,10 +1330,10 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             Fattura_passivaBulk fatturaPassiva = (Fattura_passivaBulk) bp.getModel();
 
             if (fatturaPassiva.isGestione_doc_ele() && fatturaPassiva.isGenerataDaCompenso())
-                throw new it.cnr.jada.comp.ApplicationException("La fattura deve essere associata a compenso, la contabilizzazione verr‡ fatta direttamente nel compenso!");
+                throw new it.cnr.jada.comp.ApplicationException("La fattura deve essere associata a compenso, la contabilizzazione verr√† fatta direttamente nel compenso!");
 
             if (fatturaPassiva.getFornitore() == null || fatturaPassiva.getFornitore().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.UNDEFINED)
-                throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione Ë necessario selezionare un fornitore!");
+                throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione √® necessario selezionare un fornitore!");
             return basicDoRicercaObbligazione(context, fatturaPassiva, null);
         } catch (Throwable e) {
             return handleException(context, e);
@@ -1361,7 +1361,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                     selectedModels.add(riga);
             }
             if (selectedModels.isEmpty())
-                throw new it.cnr.jada.comp.ApplicationException("Tutti i dettagli sono gi‡ stati contabilizzati!");
+                throw new it.cnr.jada.comp.ApplicationException("Tutti i dettagli sono gi√† stati contabilizzati!");
             it.cnr.jada.util.action.SelezionatoreListaBP slbp = (it.cnr.jada.util.action.SelezionatoreListaBP) select(
                     context,
                     new it.cnr.jada.util.ListRemoteIterator(selectedModels),
@@ -1435,7 +1435,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
     /**
      * Come conseguenza della selezione del bottone di testata 'Apri note...', vengono
      * ricercate le note create dalla fattura e presenta all'utente il selezionatore
-     * per la scelta. Se l'elenco della ricerca Ë = 1 questo elemento viene aperto
+     * per la scelta. Se l'elenco della ricerca √® = 1 questo elemento viene aperto
      *
      * @param context L'ActionContext della richiesta
      * @return Il Forward alla pagina di risposta
@@ -1464,7 +1464,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
     /**
      * Come conseguenza della selezione del bottone di testata 'Apri note...', vengono
      * ricercate le note create dalla fattura e presenta all'utente il selezionatore
-     * per la scelta. Se l'elenco della ricerca Ë = 1 questo elemento viene aperto
+     * per la scelta. Se l'elenco della ricerca √® = 1 questo elemento viene aperto
      *
      * @param context L'ActionContext della richiesta
      * @return Il Forward alla pagina di risposta
@@ -1490,7 +1490,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
     }
 
     /**
-     * Associa ad un buono di carico gi‡ creato i dettagli selezionati in fattura
+     * Associa ad un buono di carico gi√† creato i dettagli selezionati in fattura
      *
      * @param context L'ActionContext della richiesta
      * @return Il Forward alla pagina di risposta
@@ -1505,7 +1505,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             controllaQuadraturaConti(context, fattura);
 
             if ((fattura.getAssociazioniInventarioHash() != null && !fattura.getAssociazioniInventarioHash().isEmpty()) || (fattura.getHa_beniColl()))
-                return openConfirm(context, "Alcuni dettagli sono gi‡ stati associati. Si vuole continuare?", it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfermaAssocia");
+                return openConfirm(context, "Alcuni dettagli sono gi√† stati associati. Si vuole continuare?", it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfermaAssocia");
 
             return basicDoAssociaDettagli(context);
 
@@ -1521,7 +1521,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
      * @param context         L'ActionContext della richiesta
      * @param fattura_passiva L'OggettoBulk padre del searchtool
      * @return Il Forward alla pagina di risposta
-     * @throws RemoteException Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+     * @throws RemoteException Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
      */
     public Forward doBlankSearchFatturaEstera(ActionContext context,
                                               Fattura_passivaBulk fattura_passiva)
@@ -1550,7 +1550,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
      * @param context         L'ActionContext della richiesta
      * @param fattura_passiva L'OggettoBulk padre del searchtool
      * @return Il Forward alla pagina di risposta
-     * @throws RemoteException Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+     * @throws RemoteException Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
      */
     public Forward doBlankSearchFornitore(ActionContext context,
                                           Fattura_passivaBulk fattura_passiva)
@@ -1586,7 +1586,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
      * @param context         L'ActionContext della richiesta
      * @param fattura_passiva L'OggettoBulk padre del searchtool
      * @return Il Forward alla pagina di risposta
-     * @throws RemoteException Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+     * @throws RemoteException Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
      */
     public Forward doBlankSearchSospeso(ActionContext context,
                                         Fattura_passivaBulk fattura_passiva)
@@ -1724,7 +1724,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
      * @param fattura_passiva
      * @param fornitoreTrovato
      * @return Il Forward alla pagina di risposta
-     * @throws RemoteException Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+     * @throws RemoteException Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
      */
     public Forward doBringBackCRUDCrea_fornitore(ActionContext context,
                                                  Fattura_passivaBulk fattura_passiva,
@@ -1830,7 +1830,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 if (fatturaPassiva.ISTITUZIONALE.equalsIgnoreCase(fatturaPassiva.getTi_istituz_commerc())) {
                     voceIvaB = caricaVoceIVADefault(context);
                     //if (voceIvaB == null)
-                    //((it.cnr.jada.util.action.CRUDBP)context.getBusinessProcess()).setErrorMessage("Attenzione: non Ë stata caricata una voce IVA di default per le fatture istituzionali!");
+                    //((it.cnr.jada.util.action.CRUDBP)context.getBusinessProcess()).setErrorMessage("Attenzione: non √® stata caricata una voce IVA di default per le fatture istituzionali!");
                 } else
                     voceIvaB = beneTrovato.getVoce_iva();
             }
@@ -1849,7 +1849,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
      * @param fattura_passiva  L'OggettoBulk padre del searchtool
      * @param fornitoreTrovato L'OggettoBulk selezionato dall'utente
      * @return Il Forward alla pagina di risposta
-     * @throws RemoteException Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+     * @throws RemoteException Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
      */
     public Forward doBringBackSearchFornitore(ActionContext context,
                                               Fattura_passivaBulk fattura_passiva,
@@ -1864,7 +1864,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                         fornitoreTrovato.getAnagrafico().setNazionalita(fornitoreTrovato.getAnagrafico().getComune_fiscale().getNazione());
                         if (fornitoreTrovato.getAnagrafico().getNazionalita().getDivisa() != null &&
                                 fattura_passiva.getValuta().getCd_divisa().compareTo(fornitoreTrovato.getAnagrafico().getNazionalita().getDivisa().getCd_divisa()) != 0)
-                            crudFattura.setMessage("La valuta del fornitore " + fornitoreTrovato.getAnagrafico().getNazionalita().getDivisa().getDs_divisa() + " non Ë coerente con quella indicata in testata.");
+                            crudFattura.setMessage("La valuta del fornitore " + fornitoreTrovato.getAnagrafico().getNazionalita().getDivisa().getDs_divisa() + " non √® coerente con quella indicata in testata.");
                     }
                 }
                 FatturaPassivaComponentSession fpcs = (FatturaPassivaComponentSession) crudFattura.createComponentSession();
@@ -1895,7 +1895,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
      * @param fattura_passiva L'OggettoBulk padre del searchtool
      * @param sospesoTrovato  L'OggettoBulk selezionato dall'utente
      * @return Il Forward alla pagina di risposta
-     * @throws RemoteException Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+     * @throws RemoteException Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
      */
     public Forward doBringBackSearchSospeso(ActionContext context,
                                             Fattura_passivaBulk fattura_passiva,
@@ -1926,7 +1926,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
      * @param fattura_passiva_riga L'OggettoBulk padre del searchtool
      * @param ivaTrovata           L'OggettoBulk selezionato dall'utente
      * @return Il Forward alla pagina di risposta
-     * @throws RemoteException Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+     * @throws RemoteException Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
      */
     public Forward doBringBackSearchVoce_iva(ActionContext context,
                                              Fattura_passiva_rigaBulk fattura_passiva_riga,
@@ -2086,7 +2086,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                             !fattura.isSanMarinoConIVA() &&
                             !fattura.isBollaDoganale()) {
                         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                        throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
+                        throw new it.cnr.jada.comp.ApplicationException("Non √® possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
                     }
 
                 fattura.validateDate();
@@ -2181,11 +2181,11 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                     if (fattura.getData_protocollo() != null)
                         cal.setTime(fattura.getData_protocollo());
                     else
-                        throw new ValidationException("La data di protocollo/ricezione non puÚ essere nulla!");
+                        throw new ValidationException("La data di protocollo/ricezione non pu√≤ essere nulla!");
                     cal.add(Calendar.DAY_OF_MONTH, 45);
 
                     if (fattura.getDt_scadenza() != null && fattura.getDt_scadenza().after(cal.getTime())) {
-                        OptionBP optionBP = openConfirm(context, "Attenzione: la data di scadenza indicata Ë superiore a quanto previsto dalla normativa. Vuoi continuare?", OptionBP.CONFIRM_YES_NO, "doConfirmDtScadenza");
+                        OptionBP optionBP = openConfirm(context, "Attenzione: la data di scadenza indicata √® superiore a quanto previsto dalla normativa. Vuoi continuare?", OptionBP.CONFIRM_YES_NO, "doConfirmDtScadenza");
                         return optionBP;
                     }
                 }
@@ -2238,7 +2238,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
      * <p>
      * L'implementazione di default utilizza il metodo astratto <code>read</code>
      * di <code>CRUDBusinessProcess</code>.
-     * Se la ricerca fornisce pi˘ di un risultato viene creato un
+     * Se la ricerca fornisce pi√π di un risultato viene creato un
      * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
      * Al business process viene anche chiesto l'elenco delle colonne da
      * visualizzare.
@@ -2299,7 +2299,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 CRUDFatturaPassivaIBP bp = (CRUDFatturaPassivaIBP) context.getBusinessProcess();
                 Fattura_passiva_IBulk fattura = (Fattura_passiva_IBulk) bp.getModel();
                 if (!fattura.isBollaDoganale() && !fattura.isSpedizioniere())
-                    throw new it.cnr.jada.comp.ApplicationException("Comando disponibile solo se la fattura Ë di tipo bolla doganale o spedizioniere");
+                    throw new it.cnr.jada.comp.ApplicationException("Comando disponibile solo se la fattura √® di tipo bolla doganale o spedizioniere");
                 Fattura_passiva_IBulk fatturaEstera = fattura.getFattura_estera();
                 if (fatturaEstera == null || fatturaEstera.getCrudStatus() != OggettoBulk.NORMAL)
                     throw new it.cnr.jada.comp.ApplicationException("Specificare la fattura estera collegata!");
@@ -2434,11 +2434,11 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
 					/*if (fp.hasAddebiti() || fp.hasStorni())
 						return handleException(
 									context,
-									new it.cnr.jada.comp.ApplicationException("La lettera di pagamento estero non puo' essere creata se la fattura Ë ha storni o addebiti!")); */
+									new it.cnr.jada.comp.ApplicationException("La lettera di pagamento estero non puo' essere creata se la fattura √® ha storni o addebiti!")); */
                         if (fp.isByFondoEconomale())
                             return handleException(
                                     context,
-                                    new it.cnr.jada.comp.ApplicationException("La lettera di pagamento estero non puo' essere creata perchË la fattura Ë destinata al pagamento tramite fondo economale!"));
+                                    new it.cnr.jada.comp.ApplicationException("La lettera di pagamento estero non puo' essere creata perch√® la fattura √® destinata al pagamento tramite fondo economale!"));
                     }
                     Lettera_pagam_esteroBulk lettera = new Lettera_pagam_esteroBulk(
                             model.getCd_cds_origine(),
@@ -2451,7 +2451,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 } else {
                     return handleException(
                             context,
-                            new it.cnr.jada.comp.ApplicationException("La lettera per il pagamento estero Ë gi‡ stata creata!"));
+                            new it.cnr.jada.comp.ApplicationException("La lettera per il pagamento estero √® gi√† stata creata!"));
                 }
             }
             return context.findDefaultForward();
@@ -2599,10 +2599,10 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             java.util.List dettagliDaInventariare = getDettagliDaInventariare(context, bp.getDettaglio().getDetails().iterator());
             if (dettagliDaInventariare != null && !dettagliDaInventariare.isEmpty())
                 //if (fattura.getCarichiInventarioHash() != null && !fattura.getCarichiInventarioHash().isEmpty())
-                //return openConfirm(context,"Alcuni dettagli sono gi‡ stati inventariati. Se si procede tutti i buoni carico/scarico gi‡ creati verranno persi. Continuare?",it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,"doConfermaInventaria");
+                //return openConfirm(context,"Alcuni dettagli sono gi√† stati inventariati. Se si procede tutti i buoni carico/scarico gi√† creati verranno persi. Continuare?",it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO,"doConfermaInventaria");
                 return basicDoInventariaDettagli(context);
             else
-                bp.setMessage("Nessun dettaglio Ë inventariabile o tutti i dettagli inventariabili sono gi‡ stati caricati!");
+                bp.setMessage("Nessun dettaglio √® inventariabile o tutti i dettagli inventariabili sono gi√† stati caricati!");
             return context.findDefaultForward();
 
         } catch (Exception e) {
@@ -2665,7 +2665,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 hook.addParameter("dettagliDaInventariare", dettagliDaInventariare);
                 return context.addBusinessProcess(ibp);
             }
-            bp.setMessage("Nessun dettaglio Ë inventariabile o tutti i dettagli inventariabili sono gi‡ stati caricati!");
+            bp.setMessage("Nessun dettaglio √® inventariabile o tutti i dettagli inventariabili sono gi√† stati caricati!");
             return context.findDefaultForward();
         } catch (Exception e) {
             return handleException(context, e);
@@ -2788,12 +2788,12 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 fp.setCambio(cambioAttuale);
                 if (cambioAttuale.compareTo(new java.math.BigDecimal(0)) == 0) {
                     fp.setCambio(vecchioCambio);
-                    throw new it.cnr.jada.comp.ApplicationException("Non Ë stato inserito un cambio valido (>0)");
+                    throw new it.cnr.jada.comp.ApplicationException("Non √® stato inserito un cambio valido (>0)");
                 }
                 if (fp.getObbligazioniHash() != null && !fp.getObbligazioniHash().isEmpty())
-                    bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio Ë necessario riportare in quadratura le scadenze delle obbligazioni!");
+                    bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio √® necessario riportare in quadratura le scadenze delle obbligazioni!");
                 if (fp.getAccertamentiHash() != null && !fp.getAccertamentiHash().isEmpty())
-                    bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio Ë necessario riportare in quadratura le scadenze degli accertamenti!");
+                    bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio √® necessario riportare in quadratura le scadenze degli accertamenti!");
                 fp.aggiornaImportiTotali();
                 basicDoCalcolaTotaleFatturaFornitoreInEur(fp);
                 for (java.util.Iterator i = fp.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
@@ -2844,7 +2844,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
 
     /**
      * Metodo utilizzato per gestire la conferma dell'inserimento/modifica di una obbligazione che ha sfondato
-     * la disponibilit‡ per il contratto
+     * la disponibilit√† per il contratto
      *
      * @param context <code>ActionContext</code> in uso.
      * @param option  Esito della risposta alla richiesta di sfondamento
@@ -3030,7 +3030,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                         !fattura.isSanMarinoConIVA() &&
                         !fattura.isBollaDoganale()) {
                     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                    throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
+                    throw new it.cnr.jada.comp.ApplicationException("Non √® possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
                 }
                 if (Boolean.TRUE.equals(fattura.getFl_bolla_doganale())) {
                     fattura.setFl_intra_ue(Boolean.FALSE);
@@ -3111,7 +3111,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                         !fattura.isSanMarinoConIVA() &&
                         !fattura.isBollaDoganale()) {
                     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                    throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
+                    throw new it.cnr.jada.comp.ApplicationException("Non √® possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
                 }
 
                 if (Boolean.TRUE.equals(fattura.getFl_extra_ue())) {
@@ -3197,7 +3197,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                         !fattura.isSanMarinoConIVA() &&
                         !fattura.isBollaDoganale()) {
                     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                    throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
+                    throw new it.cnr.jada.comp.ApplicationException("Non √® possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
                 }
 
                 if (Boolean.TRUE.equals(fattura.getFl_intra_ue())) {
@@ -3283,7 +3283,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                         !fattura.isSanMarinoConIVA() &&
                         !fattura.isBollaDoganale()) {
                     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                    throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
+                    throw new it.cnr.jada.comp.ApplicationException("Non √® possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
                 }
                 if (Boolean.TRUE.equals(fattura.getFl_san_marino_con_iva())) {
                     fattura.setFl_intra_ue(Boolean.FALSE);
@@ -3361,7 +3361,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                         !fattura.isSanMarinoConIVA() &&
                         !fattura.isBollaDoganale()) {
                     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                    throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
+                    throw new it.cnr.jada.comp.ApplicationException("Non √® possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
                 }
 
                 if (Boolean.TRUE.equals(fattura.getFl_san_marino_senza_iva())) {
@@ -3495,7 +3495,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
 
             if (fattura.existARowInventoried())
-                throw new it.cnr.jada.comp.ApplicationException("Alcuni dettagli sono gi‡ stati associati all'inventario. Modifica non possibile!");
+                throw new it.cnr.jada.comp.ApplicationException("Alcuni dettagli sono gi√† stati associati all'inventario. Modifica non possibile!");
 
             java.util.Collection sezionaliOld = fattura.getSezionali();
             Boolean intraUE = fattura.getFl_intra_ue();
@@ -3550,7 +3550,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
     }
 
     /**
-     * Gestisce il cambiamento delle modalit‡ di pagamento del fornitore
+     * Gestisce il cambiamento delle modalit√† di pagamento del fornitore
      *
      * @param context L'ActionContext della richiesta
      * @return Il Forward alla pagina di risposta
@@ -3567,14 +3567,14 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             fillModel(context);
             CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
             Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
-            //se c'Ë almeno un dettaglio non faccio pi˘ modificare la modalit‡ di pagamento
-            //commentato perchË per le fatture elettroniche hanno gi‡ i dettagli caricati
+            //se c'√® almeno un dettaglio non faccio pi√π modificare la modalit√† di pagamento
+            //commentato perch√® per le fatture elettroniche hanno gi√† i dettagli caricati
 		/*
 		if(fattura.getFattura_passiva_dettColl().size()>0)
 		{
 			if (old_modalita!=null)
 			   fattura.setModalita_pagamento(old_modalita);
-			throw new it.cnr.jada.comp.ApplicationException("Esiste almeno un dettaglio e quindi la Modalit‡ di pagamento deve essere cambiata sul dettaglio stesso.");
+			throw new it.cnr.jada.comp.ApplicationException("Esiste almeno un dettaglio e quindi la Modalit√† di pagamento deve essere cambiata sul dettaglio stesso.");
 		}
 		*/
             if (fattura.getModalita_pagamento() != null) {
@@ -3596,7 +3596,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 fattura.setCessionario(null);
             }
 
-            //se c'Ë un solo dettaglio non pagato cambio la modalit‡ anche al dettaglio
+            //se c'√® un solo dettaglio non pagato cambio la modalit√† anche al dettaglio
 		/*
 		if(fattura.getFattura_passiva_dettColl().size()==1)
 		{
@@ -3616,7 +3616,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
     }
 
     /**
-     * Gestisce il cambiamento della quantit‡ del dettaglio
+     * Gestisce il cambiamento della quantit√† del dettaglio
      *
      * @param context L'ActionContext della richiesta
      * @return Il Forward alla pagina di risposta
@@ -3653,7 +3653,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
     }
 
     /**
-     * Gestisce il cambiamento delle modalit‡ di pagamento del fornitore
+     * Gestisce il cambiamento delle modalit√† di pagamento del fornitore
      *
      * @param context L'ActionContext della richiesta
      * @return Il Forward alla pagina di risposta
@@ -3806,7 +3806,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             fillModel(context);
 
             if (((Fattura_passivaBulk) bp.getModel()).isGenerataDaCompenso())
-                throw new it.cnr.jada.comp.ApplicationException("La fattura passiva Ë stata generata da un compenso. Obbligazione non presente!");
+                throw new it.cnr.jada.comp.ApplicationException("La fattura passiva √® stata generata da un compenso. Obbligazione non presente!");
 
             Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk) bp.getObbligazioniController().getModel();
             boolean viewMode = bp.isViewing();
@@ -4065,11 +4065,11 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                             throw new it.cnr.jada.comp.ApplicationException("Impossibile scollegare l'impegno \"" +
                                     +obbligazione.getEsercizio_originale().intValue()
                                     + "/" + obbligazione.getPg_obbligazione().longValue() +
-                                    "\" perchË il dettaglio collegato \"" +
+                                    "\" perch√® il dettaglio collegato \"" +
                                     ((fpr.getDs_riga_fattura() != null) ?
                                             fpr.getDs_riga_fattura() :
                                             String.valueOf(fpr.getProgressivo_riga().longValue())) +
-                                    "\" Ë associato a mandato.");
+                                    "\" √® associato a mandato.");
                     }
                     scollegaDettagliDaObbligazione(context, (java.util.List) models.clone());
                 }
@@ -4111,7 +4111,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                             ((fpr.getDs_riga_fattura() != null) ?
                                     fpr.getDs_riga_fattura() :
                                     String.valueOf(fpr.getProgressivo_riga().longValue())) +
-                            "\" perchË associato a mandato.");
+                            "\" perch√® associato a mandato.");
             }
             scollegaDettagliDaObbligazione(context, models);
         } catch (it.cnr.jada.comp.ComponentException e) {
@@ -4140,7 +4140,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
     }
     /**
      * Ricerca un'obbligazione valida da associare al doc amm
-     * richeide la validit‡ delle selezioni effettuate
+     * richeide la validit√† delle selezioni effettuate
      */
     public Forward doRicercaObbligazione(ActionContext context, boolean manually) {
 
@@ -4167,9 +4167,9 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                     .orElse(false);
 
             if (fatturaPassiva.isGestione_doc_ele() && fatturaPassiva.isGenerataDaCompenso())
-                throw new it.cnr.jada.comp.ApplicationException("La fattura deve essere associata a compenso, la contabilizzazione verr‡ fatta direttamente nel compenso!");
+                throw new it.cnr.jada.comp.ApplicationException("La fattura deve essere associata a compenso, la contabilizzazione verr√† fatta direttamente nel compenso!");
             if (fatturaPassiva.getFornitore() == null || fatturaPassiva.getFornitore().getCrudStatus() == it.cnr.jada.bulk.OggettoBulk.UNDEFINED)
-                throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione Ë necessario impostare un fornitore!");
+                throw new it.cnr.jada.comp.ApplicationException("Per eseguire questa operazione √® necessario impostare un fornitore!");
             if (!isDaOrdini) {
                 controllaSelezionePerContabilizzazione(context, models.get().iterator());
                 try {
@@ -4188,7 +4188,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
     }
     /**
      * Ricerca un'obbligazione valida da associare al doc amm
-     * richeide la validit‡ delle selezioni effettuate
+     * richeide la validit√† delle selezioni effettuate
      */
     public Forward doContabilzzaRighePerOrdini(ActionContext context) {
         return doRicercaObbligazione(context, false);
@@ -4265,7 +4265,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
         if (getBusinessProcess(context).isInserting())
             return search(context, getFormField(context, "main.listabanche"), fattura.getModalita_pagamento().getTi_pagamento());
         else {
-            getBusinessProcess(context).setMessage("Esiste almeno un dettaglio e quindi la Modalit‡ di pagamento deve essere cambiata sul dettaglio stesso.");
+            getBusinessProcess(context).setMessage("Esiste almeno un dettaglio e quindi la Modalit√† di pagamento deve essere cambiata sul dettaglio stesso.");
             return context.findDefaultForward();
         }
     }
@@ -4354,9 +4354,9 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
 
                     bp.setModel(context, fattura);
                     if (fattura.getObbligazioniHash() != null && !fattura.getObbligazioniHash().isEmpty())
-                        bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio Ë necessario riportare in quadratura le scadenze delle obbligazioni!");
+                        bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio √® necessario riportare in quadratura le scadenze delle obbligazioni!");
                     if (fattura.getAccertamentiHash() != null && !fattura.getAccertamentiHash().isEmpty())
-                        bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio Ë necessario riportare in quadratura le scadenze degli accertamenti!");
+                        bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio √® necessario riportare in quadratura le scadenze degli accertamenti!");
                 }
                 return context.findDefaultForward();
             } catch (it.cnr.jada.comp.ComponentException e) {
@@ -4380,9 +4380,9 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             fattura = h.selezionaValutaDiDefault(context.getUserContext(), fattura);
             basicDoCalcolaTotaleFatturaFornitoreInEur(fattura);
             if (fattura.getObbligazioniHash() != null && !fattura.getObbligazioniHash().isEmpty())
-                bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio Ë necessario riportare in quadratura le scadenze delle obbligazioni!");
+                bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio √® necessario riportare in quadratura le scadenze delle obbligazioni!");
             if (fattura.getAccertamentiHash() != null && !fattura.getAccertamentiHash().isEmpty())
-                bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio Ë necessario riportare in quadratura le scadenze degli accertamenti!");
+                bp.setErrorMessage("Attenzione: si ricorda che modificando il valore del cambio √® necessario riportare in quadratura le scadenze degli accertamenti!");
             return fattura;
         } catch (BusinessProcessException e) {
             throw new ComponentException(e);
@@ -4597,7 +4597,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             if (doc instanceof Fattura_passiva_IBulk) {
                 Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk) doc;
                 if (fp.isDoc1210Associato()) {
-                    String msg = "L'importo della lettera di pagamento 1210 supera la disponiblit‡ di cassa relativa al capitolo! Operazione interrotta.";
+                    String msg = "L'importo della lettera di pagamento 1210 supera la disponiblit√† di cassa relativa al capitolo! Operazione interrotta.";
                     return super.handleException(context, new it.cnr.jada.comp.ApplicationException(msg));
                 }
             }
@@ -4709,12 +4709,12 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             try {
 //			if (!((CRUDFatturaPassivaBP)getBusinessProcess(context)).isDeleting() &&
 //				hasRangeDetailWithDocAmmAssociated(context, models))
-//				throw new it.cnr.jada.comp.ApplicationException("Uno o pi˘ dettagli hanno storni o addebiti collegati! Impossibile scollegare.");
+//				throw new it.cnr.jada.comp.ApplicationException("Uno o pi√π dettagli hanno storni o addebiti collegati! Impossibile scollegare.");
 
                 for (java.util.Iterator i = models.iterator(); i.hasNext(); ) {
                     Fattura_passiva_rigaBulk dettaglio = (Fattura_passiva_rigaBulk) i.next();
                     if (!dettaglio.STATO_CONTABILIZZATO.equals(dettaglio.getStato_cofi()))
-                        throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile scollegare il dettaglio \"" + dettaglio.getDs_riga_fattura() + "\". Questa operazione Ë permessa solo per dettagli in stato \"" + dettaglio.STATO.get(dettaglio.STATO_CONTABILIZZATO) + "\".");
+                        throw new it.cnr.jada.comp.ApplicationException("Non √® possibile scollegare il dettaglio \"" + dettaglio.getDs_riga_fattura() + "\". Questa operazione √® permessa solo per dettagli in stato \"" + dettaglio.STATO.get(dettaglio.STATO_CONTABILIZZATO) + "\".");
                     dettaglio.getFattura_passiva().removeFromFattura_passiva_obbligazioniHash(dettaglio);
                     dettaglio.setStato_cofi(dettaglio.STATO_INIZIALE);
                     dettaglio.setObbligazione_scadenziario(null);
@@ -4842,8 +4842,8 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                     it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ric);
                     fattura.setFl_liquidazione_differita((fattura.getFl_liquidazione_differita()) ? Boolean.FALSE : Boolean.TRUE);
                     bp.setModel(context, fattura);
-                    throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile effettuare tale modifica poichË esistono note di credito collegate per questa fattura!");
-                    //bp.setMessage("Non Ë possibile effettuare tale modifica poichË esistono note di credito collegate per questa fattura!");
+                    throw new it.cnr.jada.comp.ApplicationException("Non √® possibile effettuare tale modifica poich√® esistono note di credito collegate per questa fattura!");
+                    //bp.setMessage("Non √® possibile effettuare tale modifica poich√® esistono note di credito collegate per questa fattura!");
                 }
                 it.cnr.jada.util.RemoteIterator rid = findNoteDiDebitoFor(context, (Fattura_passiva_IBulk) bp.getModel());
                 rid = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context, rid);
@@ -4851,8 +4851,8 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                     it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, rid);
                     fattura.setFl_liquidazione_differita((fattura.getFl_liquidazione_differita()) ? Boolean.FALSE : Boolean.TRUE);
                     bp.setModel(context, fattura);
-                    throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile effettuare tale modifica poichË esistono note di debito collegate per questa fattura!");
-                    //bp.setMessage("Non Ë possibile effettuare tale modifica poichË esistono note di debito collegate per questa fattura!");
+                    throw new it.cnr.jada.comp.ApplicationException("Non √® possibile effettuare tale modifica poich√® esistono note di debito collegate per questa fattura!");
+                    //bp.setMessage("Non √® possibile effettuare tale modifica poich√® esistono note di debito collegate per questa fattura!");
                 }
             }
 
@@ -5151,7 +5151,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                                     CategoriaGruppoInventComponentSession.class);
                     titoliCapitoli = h.findAssVoceFList(context.getUserContext(), beneServizio.getCategoria_gruppo());
                     if (titoliCapitoli == null)
-                        throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: il bene/servizio \"" + beneServizio.getDs_bene_servizio() + "\" non Ë stato attribuito ad alcuna categoria gruppo per l'inventario!");
+                        throw new it.cnr.jada.comp.ApplicationException("Selezione non omogenea: il bene/servizio \"" + beneServizio.getDs_bene_servizio() + "\" non √® stato attribuito ad alcuna categoria gruppo per l'inventario!");
                 }
             }
 
@@ -5182,7 +5182,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             Fattura_passiva_IBulk fp = (Fattura_passiva_IBulk) bp.getModel();
 
             if (fp.getCompenso() != null)
-                throw new it.cnr.jada.comp.ApplicationException("Esiste gi‡ un compenso associato alla fattura!");
+                throw new it.cnr.jada.comp.ApplicationException("Esiste gi√† un compenso associato alla fattura!");
 
             bp.validaFatturaPerCompenso(context);
 
@@ -5380,12 +5380,12 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             if (Boolean.TRUE.equals(fatcomp) && fattura.getCompenso() != null) {
                 fattura.setFl_fattura_compenso(fatcomp);
                 bp.setModel(context, fattura);
-                throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile modificare questa informazione poichË esiste gi‡ un compenso collegato!");
+                throw new it.cnr.jada.comp.ApplicationException("Non √® possibile modificare questa informazione poich√® esiste gi√† un compenso collegato!");
             }
             if (Boolean.FALSE.equals(fatcomp) && fattura.hasDettagliContabilizzati()) {
                 fattura.setFl_fattura_compenso(fatcomp);
                 bp.setModel(context, fattura);
-                throw new it.cnr.jada.comp.ApplicationException("Non Ë possibile modificare questa informazione poichË risultano gi‡ contabilizzati i dettagli della fattura!");
+                throw new it.cnr.jada.comp.ApplicationException("Non √® possibile modificare questa informazione poich√® risultano gi√† contabilizzati i dettagli della fattura!");
 
             }
             return context.findDefaultForward();
@@ -5440,7 +5440,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             if (fattura.getFl_split_payment() != null && fattura.getFl_split_payment() && !fattura.isGestioneSplitPayment() && fattura.getDt_fattura_fornitore() != null) {
                 fattura.setFl_split_payment(Boolean.FALSE);
                 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                throw new ValidationException("Non Ë possibile registrare una fattura di tipo Split Payment che abbia data di emissione inferiore al " + sdf.format(fattura.getDataInizioSplitPayment()) + "!");
+                throw new ValidationException("Non √® possibile registrare una fattura di tipo Split Payment che abbia data di emissione inferiore al " + sdf.format(fattura.getDataInizioSplitPayment()) + "!");
             }
             basicDoOnIstituzionaleCommercialeChange(context, fattura);
             return context.findDefaultForward();

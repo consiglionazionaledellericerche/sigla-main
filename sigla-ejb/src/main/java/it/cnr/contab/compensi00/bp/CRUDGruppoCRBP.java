@@ -96,7 +96,7 @@ public void findListaModalita(ActionContext context,boolean valorizza) throws Bu
 	try{
 		Gruppo_cr_detBulk det = (Gruppo_cr_detBulk)getDettagliGruppoBP().getModel();
 		coll =createComponentSession().findModalitaOptions(context.getUserContext(), det);
-//		Assegno di default la prima modalit‡ tra quelle selezionate
+//		Assegno di default la prima modalit√† tra quelle selezionate
 		 if(coll == null || coll.isEmpty())
 			 det.setModalitaPagamento(null);
 		 else

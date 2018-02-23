@@ -21,7 +21,7 @@
 		<% JSPUtils.printBaseUrl(pageContext);%>
 	</head>
 	<script language="javascript" src="scripts/css.js"></script>
-	<title>Disponibilit‡ sul Capitolo</title>
+	<title>Disponibilit√† sul Capitolo</title>
 	<body class="Form">
 	<% DispCassaCapitoloBP bp = (DispCassaCapitoloBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); 

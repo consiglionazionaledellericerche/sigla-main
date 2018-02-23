@@ -23,7 +23,7 @@ public boolean isGrowable() {
  * @return boolean
  */
 /**
- * Restituisce true se è possibile aggiungere nuovi elementi
+ * Restituisce true se Ã¨ possibile aggiungere nuovi elementi
  */
 public boolean isShrinkable() {
 	OrdineAcqBulk ordine = (OrdineAcqBulk)getParentModel();
@@ -56,7 +56,7 @@ public boolean isShrinkable() {
 //											((fpr.getDs_riga_fattura() != null) ?
 //												fpr.getDs_riga_fattura() :
 //												String.valueOf(fpr.getProgressivo_riga().longValue())) + 
-//											"\" perchè associato a mandato.");
+//											"\" perchÃ¨ associato a mandato.");
 //		FatturaPassivaComponentSession comp = ((FatturaPassivaComponentSession)(((SimpleCRUDBP)getParentController()).createComponentSession()));
 //		comp.eliminaRiga(context.getUserContext(), fpr);
 //
@@ -68,7 +68,7 @@ public boolean isShrinkable() {
 //							((fpr.getDs_riga_fattura() != null) ?
 //								fpr.getDs_riga_fattura() :
 //								String.valueOf(fpr.getProgressivo_riga().longValue())) + 
-//							"\" perchè associato a mandato annullato.");
+//							"\" perchÃ¨ associato a mandato annullato.");
 //			} catch (PersistencyException e) {
 //				throw new ComponentException(e);
 //			} catch (IntrospectionException e) {

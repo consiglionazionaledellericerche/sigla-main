@@ -17,7 +17,7 @@ public interface ISaldoMgr
   *      E' stata cancellato un mandato o creata/cancellata una reversale 
   *    PostCondition:
   *      Viene aggiornato l'importo associato a mandati e reversali della voce del piano (di competenza o residuo) interessata dal mandato o
-  *      dalla reversale senza eseguire il controllo di disponibilit‡ di cassa
+  *      dalla reversale senza eseguire il controllo di disponibilit√† di cassa
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui aggiornare i saldi
@@ -32,16 +32,16 @@ public abstract it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk aggiornaMandat
   *  creazione mandato
   *    PreCondition:
   *      E' stata creato un nuovo mandato e viene superato il controllo di
-  *      di disponibilit‡ di cassa (metodo checkDisponabilitaCassaMandati)
+  *      di disponibilit√† di cassa (metodo checkDisponabilitaCassaMandati)
   *    PostCondition:
   *      Viene aggiornato per il cds di appartenenza del mandato l'importo associato a mandati e reversali 
   *      della voce del piano (di competenza o residuo) interessata dal mandato 
   *  creazione mandato - errore
   *    PreCondition:
   *      E' stata creato un nuovo mandato e non viene superato il controllo di
-  *      di disponibilit‡ di cassa (metodo checkDisponabilitaCassaMandati)
+  *      di disponibilit√† di cassa (metodo checkDisponabilitaCassaMandati)
   *    PostCondition:
-  *      Viene segnalato con un errore l'impossibilit‡ di emettere il mandato
+  *      Viene segnalato con un errore l'impossibilit√† di emettere il mandato
   *  annullamento mandato
   *    PreCondition:
   *      E' stata annullato un mandato 
@@ -50,7 +50,7 @@ public abstract it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk aggiornaMandat
   *      della voce del piano (di competenza o residuo) interessata dal mandato
   *  creazione/annullamento reversale
   *    PreCondition:
-  *      E' stata creata una nuova reversale o e' stata annullata una reversale gi‡ emessa 
+  *      E' stata creata una nuova reversale o e' stata annullata una reversale gi√† emessa 
   *    PostCondition:
   *      Viene aggiornato per il cds di appartenenza del mandato l'importo associato a mandati e reversali 
   *      della voce del piano (di competenza o residuo) interessata dalla reversale
@@ -60,7 +60,7 @@ public abstract it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk aggiornaMandat
   * @param cd_cds il codice del Cds per cui aggiornare i saldi  
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
   * @param ti_competenza_residuo identifica il tipo di voce (di competenza o residuo) da aggiornare
-  * @param checkDisponibilitaCassa  valore booleano che indica se eseguire la verifica della disponibilit‡ di cassa sulla
+  * @param checkDisponibilitaCassa  valore booleano che indica se eseguire la verifica della disponibilit√† di cassa sulla
   *        voce del piano
 */
 
@@ -73,7 +73,7 @@ public abstract it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk aggiornaMandat
   *    PostCondition:
   *      Viene aggiornato l'importo associato a obbligazioni/accertamenti della voce del piano (di competenza o residuo) 
   *      interessata dall'accertamento o dai dettagli delle scadenze dell'obbligazione
-  *      senza eseguire il controllo di disponibilit‡ di cassa
+  *      senza eseguire il controllo di disponibilit√† di cassa
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui aggiornare i saldi
@@ -88,7 +88,7 @@ public abstract it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk aggiornaObblig
   *    PreCondition:
   *      E' stato creato un nuovo dettaglio di scadenza di obbligazione o ne e' stato incrementato l'importo
   *      e viene superato il controllo di
-  *      di disponibilit‡ di cassa (metodo checkDisponabilitaCassaObbligazione)
+  *      di disponibilit√† di cassa (metodo checkDisponabilitaCassaObbligazione)
   *    PostCondition:
   *      Viene aggiornato per il cds di appartenenza dell'obbligazione l'importo associato a obbligazione e accertamenti 
   *      della voce del piano (di competenza o residuo) interessata dal dettaglio della scadenza di obbligazione
@@ -96,9 +96,9 @@ public abstract it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk aggiornaObblig
   *    PreCondition:
   *      E' stato creato un nuovo dettaglio di scadenza di obbligazione o ne e' stato incrementato l'importo
   *      e non viene superato il controllo di
-  *      di disponibilit‡ di cassa (metodo checkDisponabilitaCassaObbligazione)
+  *      di disponibilit√† di cassa (metodo checkDisponabilitaCassaObbligazione)
   *    PostCondition:
-  *      Viene segnalato con un errore l'impossibilit‡ di creare/aggiornare l'obbligazione
+  *      Viene segnalato con un errore l'impossibilit√† di creare/aggiornare l'obbligazione
   *  eliminazione obbligazione
   *    PreCondition:
   *      E' stata eliminato un dettaglio di scadenza di obbligazione
@@ -118,7 +118,7 @@ public abstract it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk aggiornaObblig
   * @param cd_cds il codice del Cds per cui aggiornare i saldi  
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
   * @param ti_competenza_residuo identifica il tipo di voce (di competenza o residuo) da aggiornare
-  * @param checkDisponibilitaCassa  valore booleano che indica se eseguire la verifica della disponibilit‡ di cassa sulla
+  * @param checkDisponibilitaCassa  valore booleano che indica se eseguire la verifica della disponibilit√† di cassa sulla
   *        voce del piano
   * 
 */
@@ -159,50 +159,50 @@ public abstract it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk aggiornaObblig
 
 public abstract it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk aggiornaPagamentiIncassi(it.cnr.jada.UserContext param0,it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param1,java.lang.String param2,java.math.BigDecimal param3, String ti_competenza_residuo) throws it.cnr.jada.comp.ComponentException;
 /** 
-  *  verifica disponibilit‡ di cassa - errore
+  *  verifica disponibilit√† di cassa - errore
   *    PreCondition:
   *      La somma dello stanziamento iniziale della voce del piano di competenza o residuo + variazioni in positivo 
   *      - variazione in negativo - importo 
-  *      dei mandati gi‡ emessi e' inferiore all'importo del mandato che l'utente vuole emettere
+  *      dei mandati gi√† emessi e' inferiore all'importo del mandato che l'utente vuole emettere
   *    PostCondition:
   *      Una segnalazione di errore comunica il problema all'utente e non consente il salvataggio del mandato
-  *  verifica disponibilit‡ di cassa - ok
+  *  verifica disponibilit√† di cassa - ok
   *    PreCondition:
   *      La somma dello stanziamento iniziale della voce del piano di competenza o residuo + variazioni in positivo 
   *      - variazione in negativo - importo 
-  *      dei mandati gi‡ emessi e' superiore o uguale all'importo del mandato che l'utente vuole emettere  
+  *      dei mandati gi√† emessi e' superiore o uguale all'importo del mandato che l'utente vuole emettere  
   *    PostCondition:
   *      Il mandato supera la validazione di Cassa ed e' pertanto possibile proseguire con il suo salvataggio
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-  * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la verifica di disponibilit‡ di cassa
-  * @param cd_cds il codice del Cds per cui effettuare la verifica di disponibilit‡ di cassa
-  * @param importo l'importo (positivo o negativo) per cui effettuare la verifica di disponibilit‡ di cassa
-  * @param ti_competenza_residuo identifica il tipo di voce (di competenza o residuo) per cui effettuare la verifica di disponibilit‡ di cassa
+  * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la verifica di disponibilit√† di cassa
+  * @param cd_cds il codice del Cds per cui effettuare la verifica di disponibilit√† di cassa
+  * @param importo l'importo (positivo o negativo) per cui effettuare la verifica di disponibilit√† di cassa
+  * @param ti_competenza_residuo identifica il tipo di voce (di competenza o residuo) per cui effettuare la verifica di disponibilit√† di cassa
 */
 
 public abstract it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk checkDisponabilitaCassaMandati(it.cnr.jada.UserContext param0,it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk param1,java.lang.String param2,java.math.BigDecimal param3,java.lang.String param4) throws it.cnr.jada.comp.ComponentException;
 /** 
-  *  verifica disponibilit‡ di cassa - errore
+  *  verifica disponibilit√† di cassa - errore
   *    PreCondition:
   *      La somma dello stanziamento iniziale della voce del piano di competenza + variazioni in positivo 
   *      - variazione in negativo - importo 
-  *      delle obbligazioni gi‡ emesse e' inferiore all'importo dell'obbligazione che l'utente vuole emettere
+  *      delle obbligazioni gi√† emesse e' inferiore all'importo dell'obbligazione che l'utente vuole emettere
   *    PostCondition:
-  *      Una segnalazione di errore comunica il problema all'utente, lasciondogli comunque la possibilit‡ di forzare questo
+  *      Una segnalazione di errore comunica il problema all'utente, lasciondogli comunque la possibilit√† di forzare questo
   *      controllo e di salvare l'obbligazione
-  *  verifica disponibilit‡ di cassa - ok
+  *  verifica disponibilit√† di cassa - ok
   *    PreCondition:
   *      La somma dello stanziamento iniziale della voce del piano di competenza + variazioni in positivo 
   *      - variazione in negativo - importo 
-  *      delle obbligazioni gi‡ emesse e' superiore o uguale all'importo dell'obbligazione che l'utente vuole emettere
+  *      delle obbligazioni gi√† emesse e' superiore o uguale all'importo dell'obbligazione che l'utente vuole emettere
   *    PostCondition:
   *      L'obbligazione supera la validazione di Cassa ed e' pertanto possibile proseguire con il suo salvataggio
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-  * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la verifica di disponibilit‡ di cassa
-  * @param cd_cds il codice del Cds per cui effettuare la verifica di disponibilit‡ di cassa
-  * @param importo l'importo (positivo o negativo) per cui effettuare la verifica di disponibilit‡ di cassa
+  * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la verifica di disponibilit√† di cassa
+  * @param cd_cds il codice del Cds per cui effettuare la verifica di disponibilit√† di cassa
+  * @param importo l'importo (positivo o negativo) per cui effettuare la verifica di disponibilit√† di cassa
   * @param ti_competenza_residuo identifica il tipo di voce (di competenza o residuo) da aggiornare  
   *  
 */

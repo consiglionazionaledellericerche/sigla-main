@@ -113,7 +113,7 @@ private void checkAssData(UserContext userContext,OggettoBulk bulk) throws it.cn
 			)
 			 throw handleException( new it.cnr.jada.comp.ApplicationException("Associazione non possibile. Violazione regole di associazione!"));
 
-		// Controllo di univocità dell'associazione
+		// Controllo di univocitÃ  dell'associazione
 		
 			Ass_cap_spesa_Cnr_natura_cap_entrata_CdsHome assHome = (Ass_cap_spesa_Cnr_natura_cap_entrata_CdsHome) getHomeCache(userContext).getHome( Ass_cap_spesa_Cnr_natura_cap_entrata_CdsBulk.class );
 			Ass_cap_spesa_Cnr_natura_cap_entrata_CdsBulk assTemp = new Ass_cap_spesa_Cnr_natura_cap_entrata_CdsBulk();
@@ -122,20 +122,20 @@ private void checkAssData(UserContext userContext,OggettoBulk bulk) throws it.cn
 			assTemp.setTipo_unita(ass.getTipo_unita());
 			assTemp.setCd_natura(ass.getCd_natura());
 			if(!assHome.find(assTemp).isEmpty())
-			 throw handleException( new it.cnr.jada.comp.ApplicationException("Spesa CNR già collegata ad altra entrata CDS o associazione già presente!"));
+			 throw handleException( new it.cnr.jada.comp.ApplicationException("Spesa CNR giÃ  collegata ad altra entrata CDS o associazione giÃ  presente!"));
 
 // Controllo eliminato per eplicita richiesta del cliente 04/01/2002
 //			assTemp = new Ass_cap_spesa_Cnr_natura_cap_entrata_CdsBulk();
 //			assTemp.setEsercizio(ass.getEsercizio());
 //			assTemp.setElemento_voce_coll(ass.getElemento_voce_coll());
 //			if(!assHome.find(assTemp).isEmpty())
-//			 throw handleException( new it.cnr.jada.comp.ApplicationException("Entrata CDS già collegata ad altra spesa CNR o associazione già presente!"));
+//			 throw handleException( new it.cnr.jada.comp.ApplicationException("Entrata CDS giÃ  collegata ad altra spesa CNR o associazione giÃ  presente!"));
 	 }
 
 	 if ( bulk instanceof Ass_titolo_Cnr_titolo_CdsBulk )
 	 {
-		// Controllo di univocità dell'associazione
-		// In elemento voce c'è il titolo di spesa CNR
+		// Controllo di univocitÃ  dell'associazione
+		// In elemento voce c'Ã¨ il titolo di spesa CNR
 			
 			Ass_titolo_Cnr_titolo_CdsBulk ass = (Ass_titolo_Cnr_titolo_CdsBulk ) bulk;
 
@@ -145,21 +145,21 @@ private void checkAssData(UserContext userContext,OggettoBulk bulk) throws it.cn
 			assTemp.setEsercizio(ass.getEsercizio());
 			assTemp.setElemento_voce(ass.getElemento_voce());
 			if(!assHome.find(assTemp).isEmpty())
-			 throw handleException( new it.cnr.jada.comp.ApplicationException("Titolo CNR già collegata ad altro titolo CDS o associazione già presente!"));
+			 throw handleException( new it.cnr.jada.comp.ApplicationException("Titolo CNR giÃ  collegata ad altro titolo CDS o associazione giÃ  presente!"));
 
-		// In elemento voce collegato c'è il titolo di spesa CDS
+		// In elemento voce collegato c'Ã¨ il titolo di spesa CDS
 
 			assTemp = new Ass_titolo_Cnr_titolo_CdsBulk();
 
 			assTemp.setEsercizio(ass.getEsercizio());
 			assTemp.setElemento_voce_coll(ass.getElemento_voce_coll());
 			if(!assHome.find(assTemp).isEmpty())
-			 throw handleException( new it.cnr.jada.comp.ApplicationException("Titolo CDS già collegata ad altro titolo CNR o associazione già presente!"));
+			 throw handleException( new it.cnr.jada.comp.ApplicationException("Titolo CDS giÃ  collegata ad altro titolo CNR o associazione giÃ  presente!"));
 	 }		
 	 if ( bulk instanceof Ass_cap_spesa_Cds_tipo_interventoBulk )
 	 {
-		// Controllo di univocità dell'associazione
-		// Ogni voce del piano di spesa può essere collegata ad una e una sola tipologia di intervento
+		// Controllo di univocitÃ  dell'associazione
+		// Ogni voce del piano di spesa puÃ² essere collegata ad una e una sola tipologia di intervento
 			
 			Ass_cap_spesa_Cds_tipo_interventoBulk ass = (Ass_cap_spesa_Cds_tipo_interventoBulk) bulk;
 
@@ -169,12 +169,12 @@ private void checkAssData(UserContext userContext,OggettoBulk bulk) throws it.cn
 			assTemp.setEsercizio(ass.getEsercizio());
 			assTemp.setElemento_voce(ass.getElemento_voce());
 			if(!assHome.find(assTemp).isEmpty())
-			 throw handleException( new it.cnr.jada.comp.ApplicationException("Esiste già una tipologia di intervento collegata alla voce di spesa CDS!"));
+			 throw handleException( new it.cnr.jada.comp.ApplicationException("Esiste giÃ  una tipologia di intervento collegata alla voce di spesa CDS!"));
 	 }		
 	}
 	catch ( it.cnr.jada.persistency.FindException e )
 	{
-		throw handleException( new it.cnr.jada.comp.ApplicationException("Non è possibile inserire l'associazione"));
+		throw handleException( new it.cnr.jada.comp.ApplicationException("Non Ã¨ possibile inserire l'associazione"));
 	}
 	catch ( it.cnr.jada.persistency.sql.DuplicateKeyException d)
 	{
@@ -193,7 +193,7 @@ private void checkAssData(UserContext userContext,OggettoBulk bulk) throws it.cn
  *
  * Nome: Creazione di una Ass_ev_evBulk
  * Pre:  La richiesta di creazione di una associazione fra un Elemento_voceBulk e un altro Elemento_voceBulk
- *       è stata generata
+ *       Ã¨ stata generata
  * Post: Un Ass_ev_evBulk e' stato creato 
  *
  * Nome: Creazione di una associazione tra spesa CNR ed entrata CDS
@@ -206,29 +206,29 @@ private void checkAssData(UserContext userContext,OggettoBulk bulk) throws it.cn
  *          Titolo '5' entrata Cds => Titolo '5' spesa CNR con capitolo 'Tutti i CdS'.
  *        Non esiste un'altra associazione della spesa CDS con altra entrata CNR
  * Post:
- *		  Una Ass_cap_spesa_Cnr_natura_cap_entrata_CdsBulk è stata creata
+ *		  Una Ass_cap_spesa_Cnr_natura_cap_entrata_CdsBulk Ã¨ stata creata
  *
  * Nome: Creazione di una associazione tra titolo CNR e titolo CDS
  * Pre:   Le seguenti regole di associazione sono verificate:
  *          Non esiste un'altra associazione del titolo CDS con altro titolo CNR
  *          Non esiste un'altra associazione del titolo CNR con altro titolo CDS
  * Post:
- *		  Una Ass_titolo_Cnr_titolo_CdsBulk è stata creata
+ *		  Una Ass_titolo_Cnr_titolo_CdsBulk Ã¨ stata creata
  *
  * Nome: Creazione di una Ass_ev_evBulk - errore
  * Pre:  La richiesta di creazione di una associazione fra un Elemento_voceBulk e un altro Elemento_voceBulk
- *       è stata generata e uno dei due elementi non e' piu' presente o e' stato modificato da un altro utente
+ *       Ã¨ stata generata e uno dei due elementi non e' piu' presente o e' stato modificato da un altro utente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
  * Nome: Creazione di una Ass_ev_voce_epBulk
  * Pre:  La richiesta di creazione di una associazione fra un Elemento_voceBulk e una Voce_epBulk
- *       è stata generata
+ *       Ã¨ stata generata
  * Post: Un Ass_ev_voce_epBulk e' stato creato 
  *
  * Nome: Creazione di una Ass_ev_voce_epBulk - errore
  * Pre:  La richiesta di creazione di una associazione fra un Elemento_voceBulk e una Voce_epBulk
- *       è stata generata e uno dei due elementi non e' piu' presente o e' stato modificato da un altro utente
+ *       Ã¨ stata generata e uno dei due elementi non e' piu' presente o e' stato modificato da un altro utente
  * Post: Viene generata una ComponentException che ha come dettaglio l'ApplicationException che descrive l'errore da
  *       visualizzare all'utente
  *
@@ -243,7 +243,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 	// 05/09/2003
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(userContext))
-		throw new ApplicationException("Non è possibile creare nuove associazioni ad esercizio chiuso.");
+		throw new ApplicationException("Non Ã¨ possibile creare nuove associazioni ad esercizio chiuso.");
 	
 	try
 	{	
@@ -273,7 +273,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 	}
 	catch ( it.cnr.jada.persistency.FindException e )
 	{
-		throw handleException( new it.cnr.jada.comp.ApplicationException("Non è possibile inserire l'associazione"));
+		throw handleException( new it.cnr.jada.comp.ApplicationException("Non Ã¨ possibile inserire l'associazione"));
 	}
 	catch ( it.cnr.jada.persistency.sql.DuplicateKeyException d)
 	{
@@ -291,7 +291,7 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws it.c
 	// 05/09/2003
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(userContext))
-		throw new ApplicationException("Non è possibile eliminare associazioni ad esercizio chiuso.");
+		throw new ApplicationException("Non Ã¨ possibile eliminare associazioni ad esercizio chiuso.");
 	
 	super.eliminaConBulk(userContext,bulk);
 }
@@ -300,7 +300,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	bulk = super.inizializzaBulkPerModifica(userContext,bulk);
 	if (isEsercizioChiuso(userContext))
-		bulk = asRO(bulk,"Non è possibile modificare associazioni ad esercizio chiuso.");
+		bulk = asRO(bulk,"Non Ã¨ possibile modificare associazioni ad esercizio chiuso.");
 	return bulk;
 }
 protected boolean isEsercizioChiuso(UserContext userContext) throws ComponentException {
@@ -315,7 +315,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 	// 05/09/2003
 	// Aggiunto controllo sulla chiusura dell'esercizio
 	if (isEsercizioChiuso(userContext))
-		throw new ApplicationException("Non è possibile modificare associazioni ad esercizio chiuso.");
+		throw new ApplicationException("Non Ã¨ possibile modificare associazioni ad esercizio chiuso.");
 	
 	return super.modificaConBulk(userContext,bulk);
 }

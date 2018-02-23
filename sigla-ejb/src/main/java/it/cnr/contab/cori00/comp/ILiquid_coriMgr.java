@@ -48,7 +48,7 @@ public abstract it.cnr.contab.cori00.docs.bulk.Liquid_coriBulk eseguiLiquidazion
   *    PreCondition:
   *      E' stata generata la richiesta di inizializzare una istanza di Liquid_coriBulk.
   *    PostCondition:
-  *      Vengono impostate le proprit‡ relative al CdS alla UO ed alle date di inizio e fine
+  *      Vengono impostate le proprit√† relative al CdS alla UO ed alle date di inizio e fine
   *		periodo di Liquidazione, (metodo impostaDate).
   *		Viene cercato il progressivo da assegnare alla Liquidazione, (metodo getNumLiquidazione);
   *		viene restituito l'oggetto Liquid_coriBulk inizializzato.

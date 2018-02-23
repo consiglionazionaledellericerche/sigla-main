@@ -132,7 +132,7 @@ public class SelezionatoreAssestatoDocContBP extends SelezionatoreAssestatoBP{
 			}
 			refreshList( actioncontext );
 
-			// individuo e seleziono automaticamente le combinazioni CDR/VOCE/LINEA gi‡ utilizzati
+			// individuo e seleziono automaticamente le combinazioni CDR/VOCE/LINEA gi√† utilizzati
 			// nell'obbligazione 
 			it.cnr.jada.util.action.Selection models = getSelection();
 			V_assestatoBulk assestato;
@@ -164,7 +164,7 @@ public class SelezionatoreAssestatoDocContBP extends SelezionatoreAssestatoBP{
 					totaleSelVoci = totaleSelVoci.add( Utility.nvl(voceSel.getImp_da_assegnare()) );
 			}
 			if (totaleSelVoci.compareTo(((ObbligazioneBulk)getBulkCaller()).getIm_obbligazione()) > 0)
-				throw new BusinessProcessException("Per passare alla modalit‡ di selezione percentuale il totale importo selezionato " 
+				throw new BusinessProcessException("Per passare alla modalit√† di selezione percentuale il totale importo selezionato " 
 												 + "non deve essere superiore all'importo dell'obbligazione.");
 		}
 		super.impostaModalitaMappa(actioncontext, modalitaMappa);

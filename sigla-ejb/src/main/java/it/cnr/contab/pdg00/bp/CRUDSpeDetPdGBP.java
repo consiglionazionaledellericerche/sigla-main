@@ -23,7 +23,7 @@ public CRUDSpeDetPdGBP(String function) {
  * <!-- @TODO: da completare -->
  * 
  *
- * @param function	La funzione con cui Ë stato creato il BusinessProcess
+ * @param function	La funzione con cui √® stato creato il BusinessProcess
  * @param cdr	
  */
 public CRUDSpeDetPdGBP(String function, it.cnr.contab.config00.sto.bulk.CdrBulk cdr) {
@@ -37,9 +37,9 @@ public CRUDSpeDetPdGBP(String function, it.cnr.contab.config00.sto.bulk.CdrBulk 
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'centro_responsabilita'
+ * Restituisce il valore della propriet√† 'centro_responsabilita'
  *
- * @return Il valore della propriet‡ 'centro_responsabilita'
+ * @return Il valore della propriet√† 'centro_responsabilita'
  */
 public it.cnr.contab.config00.sto.bulk.CdrBulk getCentro_responsabilita() {
 		return centro_responsabilita;
@@ -59,7 +59,7 @@ public boolean isInputReadonly() {
 
 	/**
 	 * Permette un'assegnazione di default dei tab in uso.
-	 * Questa operazione Ë particolarmente utile in startpu dove viene utilizzata per
+	 * Questa operazione √® particolarmente utile in startpu dove viene utilizzata per
 	 * permettere la visualizzazione del primo tab senza che l'utente lo selezioni.
 	 *
 	 * @param context <code>ActionContext</code> in uso.
@@ -74,7 +74,7 @@ public boolean isInputReadonly() {
 
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'centro_responsabilita'
+ * Imposta il valore della propriet√† 'centro_responsabilita'
  *
  * @param newCentro_responsabilita	Il valore da assegnare a 'centro_responsabilita'
  */

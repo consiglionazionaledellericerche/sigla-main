@@ -27,7 +27,7 @@ public class ConsGAEResAction extends ConsultazioniAction {
 				selectElements = Integer.valueOf(bp.getSelection().getFocus()).compareTo(-1);
 			
 			if (selectElements == 0) {
-				bp.setMessage("Non è stata selezionata nessuna riga.");
+				bp.setMessage("Non Ã¨ stata selezionata nessuna riga.");
 				return context.findDefaultForward();
 			}			
 			ConsGAEResBP consultazioneBP = null;

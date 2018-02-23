@@ -44,7 +44,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 /**
- * Business Process che gestisce le attivit‡ di CRUD per l'entita' Accertamento
+ * Business Process che gestisce le attivit√† di CRUD per l'entita' Accertamento
  */
 
 public class CRUDAccertamentoBP extends CRUDVirtualAccertamentoBP {
@@ -103,11 +103,11 @@ public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.
 		if (!accertamento.getCd_uo_origine().equals(cd_uo_scrivania)) {
 			if (!accertamento.isResiduo()) {
 				setStatus(VIEW);
-				setMessage("Accertamento creato dall'Unit‡ Organizzativa " + accertamento.getCd_uo_origine() + ". Non consentita la modifica.");
-			//QUESTO CONFRONTO E' POSSIBILE SOLO perchË i residui esistono per l'Ente e non per CDS (uo = 999.000)
+				setMessage("Accertamento creato dall'Unit√† Organizzativa " + accertamento.getCd_uo_origine() + ". Non consentita la modifica.");
+			//QUESTO CONFRONTO E' POSSIBILE SOLO perch√® i residui esistono per l'Ente e non per CDS (uo = 999.000)
 			} else if (!cd_uo_scrivania.equals(accertamento.getCd_unita_organizzativa())) {
 				setStatus(VIEW);
-				setMessage("Accertamento creato dall'Unit‡ Organizzativa " + accertamento.getCd_uo_origine() + ". Non consentita la modifica.");
+				setMessage("Accertamento creato dall'Unit√† Organizzativa " + accertamento.getCd_uo_origine() + ". Non consentita la modifica.");
 			}
 		}
 
@@ -131,7 +131,7 @@ public void validaContratto(it.cnr.jada.action.ActionContext context,ContrattoBu
 	catch(Exception e) {throw handleException(e);}
 }
 /**
- * Carica le linee di attivit‡ associate al capitolo selezionato nell'accertamento.
+ * Carica le linee di attivit√† associate al capitolo selezionato nell'accertamento.
  * @param context Il contesto dell'azione
  */ 
 public void caricaLineeAttivita(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException, it.cnr.jada.action.MessageToUser
@@ -205,8 +205,8 @@ public void confermaScadenza(it.cnr.jada.action.ActionContext context) throws it
  * Metodo per modificare l'accertamento.
  * @param context Il contesto dell'azione
  * @param bulk L'oggetto bulk in uso
- * @param true/false TRUE = l'oggetto bulk in uso Ë stato inizializzato per la modifica
- *					 FALSE = l'oggetto bulk in uso non Ë stato inizializzato per la modifica
+ * @param true/false TRUE = l'oggetto bulk in uso √® stato inizializzato per la modifica
+ *					 FALSE = l'oggetto bulk in uso non √® stato inizializzato per la modifica
  */
 public void edit(it.cnr.jada.action.ActionContext context, it.cnr.jada.bulk.OggettoBulk bulk, boolean initializeForEdit) throws it.cnr.jada.action.BusinessProcessException 
 {
@@ -254,7 +254,7 @@ public void save(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.ac
  * @param context	L'ActionContext della richiesta
  * @throws BusinessProcessException	
  * @throws ComponentException	
- * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non Ë possibile effettuare l'operazione
+ * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non √® possibile effettuare l'operazione
  * @throws ApplicationException	
  */
 public void eliminaLogicamenteAccertamento(it.cnr.jada.action.ActionContext context ) throws it.cnr.jada.action.BusinessProcessException, it.cnr.jada.comp.ComponentException, java.rmi.RemoteException, it.cnr.jada.comp.ApplicationException
@@ -295,23 +295,23 @@ public OggettoBulk getBringBackModel() {
     if (getParent() != null && (getParent() instanceof IDocumentoAmministrativoBP)) {
         AccertamentoBulk accertamento= (AccertamentoBulk) getModel();
         if (Numerazione_doc_contBulk.TIPO_ACR_PLUR.equalsIgnoreCase(accertamento.getCd_tipo_documento_cont()))
-            throw new MessageToUser("L'accertamento non puÚ essere di tipo \"pluriennale\"!", ERROR_MESSAGE);
+            throw new MessageToUser("L'accertamento non pu√≤ essere di tipo \"pluriennale\"!", ERROR_MESSAGE);
         if (Numerazione_doc_contBulk.TIPO_ACR_SIST.equalsIgnoreCase(accertamento.getCd_tipo_documento_cont()))
-            throw new MessageToUser("L'accertamento non puÚ essere di tipo \"sistema\"!", ERROR_MESSAGE);
+            throw new MessageToUser("L'accertamento non pu√≤ essere di tipo \"sistema\"!", ERROR_MESSAGE);
 
         IDocumentoAmministrativoBP docAmmBP= (IDocumentoAmministrativoBP) getParent();
         Accertamento_scadenzarioBulk scadCorrente= docAmmBP.getAccertamento_scadenziario_corrente();
         if (scadCorrente != null) {
             if ((docAmmBP instanceof CRUDNotaDiCreditoAttivaBP || docAmmBP instanceof CRUDNotaDiDebitoAttivaBP || docAmmBP instanceof CRUDNotaDiCreditoBP)
                 && !scadCorrente.equalsByPrimaryKey(scadenzaSelezionata))
-                throw new MessageToUser("La scadenza che si sta tentando di riportare NON Ë corretta! Selezionare \"" + scadCorrente.getDs_scadenza() + "\"", ERROR_MESSAGE);
+                throw new MessageToUser("La scadenza che si sta tentando di riportare NON √® corretta! Selezionare \"" + scadCorrente.getDs_scadenza() + "\"", ERROR_MESSAGE);
             if (docAmmBP instanceof CRUDFatturaAttivaIBP) {
                 CRUDFatturaAttivaIBP fatturaAttivaBP= (CRUDFatturaAttivaIBP) docAmmBP;
                 Fattura_attiva_IBulk fatturaAttiva= (Fattura_attiva_IBulk) fatturaAttivaBP.getModel();
                 if (!scadCorrente.equalsByPrimaryKey(scadenzaSelezionata)) {
                     if (fatturaAttiva.hasStorni() || fatturaAttiva.hasAddebiti() || fatturaAttivaBP.isDeleting())
                         throw new MessageToUser(
-                            "Non Ë possibile modificare la scadenza associata al documento, perchÈ esso ha degli addebiti o degli storni associati! Selezionare la scadenza \"" + scadCorrente.getDs_scadenza() + "\".",
+                            "Non √® possibile modificare la scadenza associata al documento, perch√© esso ha degli addebiti o degli storni associati! Selezionare la scadenza \"" + scadCorrente.getDs_scadenza() + "\".",
                             ERROR_MESSAGE);
                     if (scadenzaSelezionata.getIm_associato_doc_amm() != null
                         && scadenzaSelezionata.getIm_associato_doc_amm().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) != 0
@@ -322,7 +322,7 @@ public OggettoBulk getBringBackModel() {
 									scadenzaSelezionata.getEsercizio_doc_attivo(),
 									scadenzaSelezionata.getPg_doc_attivo()
 								).equalsByPrimaryKey(fatturaAttiva))
-		                        throw new MessageToUser("Non Ë possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perchË Ë gi‡ associata ad altri documenti amministrativi.", ERROR_MESSAGE);
+		                        throw new MessageToUser("Non √® possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perch√® √® gi√† associata ad altri documenti amministrativi.", ERROR_MESSAGE);
                         }
                 }
             } else if (docAmmBP instanceof CRUDDocumentoGenericoAttivoBP) {
@@ -344,13 +344,13 @@ public OggettoBulk getBringBackModel() {
 	                        	scadenzaSelezionata.getEsercizio_doc_attivo(),
 	                        	scadenzaSelezionata.getPg_doc_attivo()
                         	).equalsByPrimaryKey(docGenAttivo))
-	                        throw new MessageToUser("Non Ë possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perchË Ë gi‡ associata ad altri documenti amministrativi.", ERROR_MESSAGE);
+	                        throw new MessageToUser("Non √® possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" perch√® √® gi√† associata ad altri documenti amministrativi.", ERROR_MESSAGE);
                         }
                 }
             }
             if (getParent() instanceof CRUDFatturaAttivaIBP || getParent() instanceof CRUDDocumentoGenericoAttivoBP) {
                 if (new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP).compareTo(scadenzaSelezionata.getIm_scadenza()) == 0)
-                    throw new MessageToUser("Non Ë possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.", ERROR_MESSAGE);
+                    throw new MessageToUser("Non √® possibile collegare la scadenza \"" + scadenzaSelezionata.getDs_scadenza() + "\" con importo 0.", ERROR_MESSAGE);
             }
         }
     }
@@ -407,9 +407,9 @@ public boolean isBringbackButtonEnabled()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'confermaScadenzaButtonEnabled'
+ * Restituisce il valore della propriet√† 'confermaScadenzaButtonEnabled'
  *
- * @return Il valore della propriet‡ 'confermaScadenzaButtonEnabled'
+ * @return Il valore della propriet√† 'confermaScadenzaButtonEnabled'
  * @throws BusinessProcessException	
  */
 public boolean isConfermaScadenzaButtonEnabled() throws it.cnr.jada.action.BusinessProcessException 
@@ -428,9 +428,9 @@ public boolean isDeleteButtonEnabled()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'editingScadenza'
+ * Restituisce il valore della propriet√† 'editingScadenza'
  *
- * @return Il valore della propriet‡ 'editingScadenza'
+ * @return Il valore della propriet√† 'editingScadenza'
  */
 public boolean isEditingScadenza() 
 {
@@ -438,9 +438,9 @@ public boolean isEditingScadenza()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'editScadenzaButtonEnabled'
+ * Restituisce il valore della propriet√† 'editScadenzaButtonEnabled'
  *
- * @return Il valore della propriet‡ 'editScadenzaButtonEnabled'
+ * @return Il valore della propriet√† 'editScadenzaButtonEnabled'
  * @throws BusinessProcessException	
  */
 public boolean isEditScadenzaButtonEnabled() throws it.cnr.jada.action.BusinessProcessException 
@@ -468,9 +468,9 @@ public boolean isUndoBringBackButtonEnabled()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'undoScadenzaButtonEnabled'
+ * Restituisce il valore della propriet√† 'undoScadenzaButtonEnabled'
  *
- * @return Il valore della propriet‡ 'undoScadenzaButtonEnabled'
+ * @return Il valore della propriet√† 'undoScadenzaButtonEnabled'
  * @throws BusinessProcessException	
  */
 public boolean isUndoScadenzaButtonEnabled() throws it.cnr.jada.action.BusinessProcessException 
@@ -565,7 +565,7 @@ public void undoScadenza(it.cnr.jada.action.ActionContext context ) throws it.cn
 ******************************/	
 }
 /**
- * Verifica la validit‡ della nuova linea di attivita'
+ * Verifica la validit√† della nuova linea di attivita'
  * @param context Il contesto dell'azione
  */
 public void validaLineaAttivita( ActionContext context, it.cnr.contab.config00.latt.bulk.WorkpackageBulk latt ) throws ValidationException 
@@ -580,7 +580,7 @@ public void validaLineaAttivita( ActionContext context, it.cnr.contab.config00.l
 		    
 		//cdr
 		if ( !latt.getCd_centro_responsabilita().startsWith( accertamento.getCd_uo_origine()))
-		    throw new ValidationException( "Non e' possibile selezionare un GAE con CDR non appartenente all'unit‡ organizzativa di scrivania");
+		    throw new ValidationException( "Non e' possibile selezionare un GAE con CDR non appartenente all'unit√† organizzativa di scrivania");
 		    
 		//natura
 		Vector nature = ((AccertamentoComponentSession)createComponentSession()).listaCodiciNaturaPerCapitolo(context.getUserContext(),(AccertamentoBulk) getModel());
@@ -604,7 +604,7 @@ public void validaLineaAttivita( ActionContext context, it.cnr.contab.config00.l
 	}
 }
 /**
- * Verifica la validit‡ dell'accertamento.
+ * Verifica la validit√† dell'accertamento.
  * @param context Il contesto dell'azione
  */
 public void validate(ActionContext context) throws ValidationException {
@@ -618,9 +618,9 @@ public void validate(ActionContext context) throws ValidationException {
 		}
 }
 /**
- * Verifica se il bottone di Visualizzazione delle Spese del Cdr Ë abilitato.
- * @return 				TRUE 	Il bottone di Visualizzazione delle Spese del Cdr Ë abilitato
- *						FALSE 	Il bottone di Visualizzazione delle Spese del Cdr non Ë abilitato
+ * Verifica se il bottone di Visualizzazione delle Spese del Cdr √® abilitato.
+ * @return 				TRUE 	Il bottone di Visualizzazione delle Spese del Cdr √® abilitato
+ *						FALSE 	Il bottone di Visualizzazione delle Spese del Cdr non √® abilitato
  */
 public boolean isVisualizzaSpeseCdrButtonEnabled()
 {
@@ -715,7 +715,7 @@ private void annullaImputazioneFinanziariaDettagli(it.cnr.jada.action.ActionCont
  * @param context Il contesto dell'azione
  */
 /**
- * Gestisce il caricamento dei centri di responsabilit‡.
+ * Gestisce il caricamento dei centri di responsabilit√†.
  * @param context Il contesto dell'azione
  */
 
@@ -740,7 +740,7 @@ public void caricaCentriDiResponsabilita(it.cnr.jada.action.ActionContext contex
 }
 /**
  * Metodo utilizzato per la conferma dei dati selezionati o immessi, relativi
- * alle linee di attivit‡.
+ * alle linee di attivit√†.
  * @param context Il contesto dell'azione
  */
 
@@ -822,8 +822,8 @@ public void cambiaFl_calcolo_automatico(it.cnr.jada.action.ActionContext context
 	}
 }
 /** 
-  * Viene richiesta alla component che gestisce l'obbligazione di verificare la validit‡
-  *	 della nuova Linea di Attivit‡
+  * Viene richiesta alla component che gestisce l'obbligazione di verificare la validit√†
+  *	 della nuova Linea di Attivit√†
   */
 public void validaNuovaLineaAttivita(ActionContext context, it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk nuovaLatt, it.cnr.contab.config00.latt.bulk.WorkpackageBulk latt) throws ValidationException 
 {
@@ -832,7 +832,7 @@ public void validaNuovaLineaAttivita(ActionContext context, it.cnr.contab.doccon
 		if (latt != null )
 		{
 			nuovaLatt.getAccertamento().validateNuovaLineaAttivita( nuovaLatt, latt );
-			// nel component della obbligazione il metodo Ë vuoto quindi non lo riporto
+			// nel component della obbligazione il metodo √® vuoto quindi non lo riporto
 			//((AccertamentoComponentSession)createComponentSession()).verificaNuovaLineaAttivita(context.getUserContext(), latt );
 			nuovaLatt.setLinea_att( latt );			
 		}	

@@ -72,53 +72,53 @@ private void aggiornaInventario(UserContext userContext, Id_inventarioBulk inv)
 	invHome.update(inv, userContext);
 }
 /**
-  *  Controlla validit‡ Consegnatario
+  *  Controlla validit√† Consegnatario
   *    PreCondition:
   *      Si sta tentando di salvare un Inventario senza aver specificato una data di inizio 
-  *		validit‡ per il Consegnatario
+  *		validit√† per il Consegnatario
   *    PostCondition:
-  *		Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare l'Inventario
+  *		Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare l'Inventario
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param invCons il <code>Inventario_consegnatarioBulk</code> Consegnatario dell'Inventario
 **/
 private void checkConsegnatario(it.cnr.jada.UserContext userContext, Inventario_consegnatarioBulk invCons) throws ComponentException {
 
-	// Controllo su Data Inizio Validit‡. Campo Obbligatorio
+	// Controllo su Data Inizio Validit√†. Campo Obbligatorio
 	if (invCons.getDt_inizio_validita()==null){
-		throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: la data Inizio Validit‡ del Consegnatario Ë un dato obbligatorio.");
+		throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: la data Inizio Validit√† del Consegnatario √® un dato obbligatorio.");
 	}
 }
 /** 
   *  checkDataApertura - Data non specificata
   *    PreCondition:
-  *      Si sta tentando di salvare un Inventario di cui non Ë stata indicata la data di Apertura.
+  *      Si sta tentando di salvare un Inventario di cui non √® stata indicata la data di Apertura.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare l'Inventario
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare l'Inventario
   *
   *  checkDataApertura - Data non in esercizio corrente
   *    PreCondition:
-  *      Si sta tentando di salvare un Inventario la cui data di apertura non Ë nell'esercizio corrente
+  *      Si sta tentando di salvare un Inventario la cui data di apertura non √® nell'esercizio corrente
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare l'Inventario
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare l'Inventario
   *
   *  checkDataApertura - Data non valida su data apertura
   *    PreCondition:
-  *      La data indicata Ë antecedente all'ultima data di APERTURA registrata sul DB, per l'Inventario indicato.
+  *      La data indicata √® antecedente all'ultima data di APERTURA registrata sul DB, per l'Inventario indicato.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare l'Inventario
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare l'Inventario
   *
   *  checkDataApertura - Data non valida su data chiusura
   *    PreCondition:
-  *      La data indicata Ë antecedente all'ultima data di CHIUSURA registrata sul DB, per l'Inventario indicato
+  *      La data indicata √® antecedente all'ultima data di CHIUSURA registrata sul DB, per l'Inventario indicato
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare l'Inventario
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare l'Inventario
   *
   *  checkDataApertura - Data non valida su data sistema
   *    PreCondition:
-  *      La data indicata Ë posteriore alla data di sistema.
+  *      La data indicata √® posteriore alla data di sistema.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare l'Inventario
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare l'Inventario
   *
   *  Tutti i controlli superati
   *    PreCondition:
@@ -157,34 +157,34 @@ private void checkDataApertura(it.cnr.jada.UserContext aUC, Inventario_ap_chBulk
 		// Data Apertura > Data odierna
 		java.sql.Timestamp dataOdierna = getHome(aUC,Inventario_ap_chBulk.class).getServerTimestamp();
 		if (invApCh.getDt_apertura().after(dataOdierna))
-			throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: la data Aperura non puÚ essere superiore alla data odierna.");
+			throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: la data Aperura non pu√≤ essere superiore alla data odierna.");
 	}
 
 }
 /** 
   *  checkDataChiusura - Data non specificata
   *    PreCondition:
-  *      Si sta tentando di salvare un Inventario di cui non Ë stata indicata la data di Chiusura.
+  *      Si sta tentando di salvare un Inventario di cui non √® stata indicata la data di Chiusura.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare l'Inventario
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare l'Inventario
   *
   *  checkDataChiusura - Data in esercizio
   *    PreCondition:
-  *      Si sta tentando di salvare un Inventario la cui data di Chiusura non Ë nell'esercizio corrente
+  *      Si sta tentando di salvare un Inventario la cui data di Chiusura non √® nell'esercizio corrente
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare l'Inventario
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare l'Inventario
   *
   *  checkDataChiusura - Data non valida su apertura
   *    PreCondition:
-  *      La data indicata Ë antecedente alla data di APERTURA per l'Inventario indicato.
+  *      La data indicata √® antecedente alla data di APERTURA per l'Inventario indicato.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare l'Inventario
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare l'Inventario
   *
   *  checkDataChiusura - Data non valida su data sistema
   *    PreCondition:
-  *      La data indicata Ë posteriore alla data di sistema.
+  *      La data indicata √® posteriore alla data di sistema.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare l'Inventario
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare l'Inventario
   *
   *  Tutti i controlli superati
   *    PreCondition:
@@ -212,22 +212,22 @@ private void checkDataChiusura(UserContext userContext, Inventario_ap_chBulk inv
 		// Data Chiusura <= Data Odierna
 		java.sql.Timestamp dataOdierna = getHome(userContext,Inventario_ap_chBulk.class).getServerTimestamp();
 		if (invApCh.getDt_chiusura().after(dataOdierna))
-			throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: la data Chiusura non puÚ essere superiore alla data odierna.");
+			throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: la data Chiusura non pu√≤ essere superiore alla data odierna.");
 	}
 	else if (invApCh.isOpen() && (invApCh.getDt_chiusura() == null || (invApCh.getDt_chiusura().equals(EsercizioHome.DATA_INFINITO))) )
 		throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: indicare una data di Chiusura");
 }
 /**
-  *  Controlla validit‡ Nr Bene Iniziale - Valore non specificato
+  *  Controlla validit√† Nr Bene Iniziale - Valore non specificato
   *    PreCondition:
-  *      Si sta tentando di salvare un Inventario in cui non si Ë specificato un numero di 
+  *      Si sta tentando di salvare un Inventario in cui non si √® specificato un numero di 
   *		partenza per la numerazione dei Beni.
   *    PostCondition:
   *		Un messaggio di errore viene visualizzato all'utente per segnalare di indicare un valore
   *
-  *  Controlla validit‡ Nr Bene Iniziale - Valore non valido
+  *  Controlla validit√† Nr Bene Iniziale - Valore non valido
   *    PreCondition:
-  *      Si sta tentando di salvare un Inventario in cui si Ë specificato un numero di 
+  *      Si sta tentando di salvare un Inventario in cui si √® specificato un numero di 
   *		partenza per la numerazione dei Beni inferiore a 0.
   *    PostCondition:
   *		Un messaggio di errore viene visualizzato all'utente per segnalare di modificare il valore indicato
@@ -244,7 +244,7 @@ private void checkNumeroBeneIniziale(Inventario_ap_chBulk inventario_ApCh) throw
 
 	Id_inventarioBulk inventario = inventario_ApCh.getInventario();
 	
-	// Il Nr. Iniziale del Bene Inventariato non Ë stato specificato
+	// Il Nr. Iniziale del Bene Inventariato non √® stato specificato
 	if (inventario.getNr_inventario_iniziale() == null)
 		throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: specificare un valore per il numero iniziale del Bene.");
 		
@@ -255,9 +255,9 @@ private void checkNumeroBeneIniziale(Inventario_ap_chBulk inventario_ApCh) throw
 /**
   *  checkStatoInventario
   *    PreCondition:
-  *      Si sta tentando di aprire un Inventario che si trova gi‡ nello stato "A", per l'esercizio corrente.
+  *      Si sta tentando di aprire un Inventario che si trova gi√† nello stato "A", per l'esercizio corrente.
   *    PostCondition:
-  *		Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di salvare l'Inventario
+  *		Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di salvare l'Inventario
   *
   *  Controlli superati
   *    PreCondition:
@@ -273,7 +273,7 @@ private void checkStatoInventario(it.cnr.jada.UserContext aUC, Inventario_ap_chB
 
 	Inventario_ap_chHome invApChHome = (Inventario_ap_chHome)getHome(aUC,Inventario_ap_chBulk.class);
   	if (invApChHome.isAperto(invApCh,invApCh.getEsercizio()))
-	  throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: l'Inventario Ë gi‡ aperto.\n E' necessario chiudere l'inventario prima di riaprirlo.");
+	  throw new it.cnr.jada.comp.CRUDValidationException("Attenzione: l'Inventario √® gi√† aperto.\n E' necessario chiudere l'inventario prima di riaprirlo.");
 }
 /** 
   *  Errore nella validazione inventario.
@@ -339,7 +339,7 @@ public OggettoBulk creaConBulk(UserContext aUC,OggettoBulk bulk,it.cnr.contab.in
 			//inserisciInventarioConsegnatario(aUC, invApCh, status);
 		//}
 
-		// Controlla se Ë la prima volta che si apre l'Inventario
+		// Controlla se √® la prima volta che si apre l'Inventario
 		if (invApChHome.findLastAperturaChiusuraObjFor(invApCh.getInventario(), invApCh.getEsercizio()) == null){
 			inserisciInventarioConsegnatario(aUC, invApCh, status);
 		}
@@ -355,9 +355,9 @@ public OggettoBulk creaConBulk(UserContext aUC,OggettoBulk bulk,it.cnr.contab.in
 	}
 }
 /** 
-  *  Cerca l'Inventario di cui la Uo di scrivania Ë responsabile
+  *  Cerca l'Inventario di cui la Uo di scrivania √® responsabile
   *    PreCondition:
-  *      La Uo di scrivania non Ë responsabile di alcun Inventario, (metodo loadInventario).
+  *      La Uo di scrivania non √® responsabile di alcun Inventario, (metodo loadInventario).
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -379,7 +379,7 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 		
 		getHomeCache(aUC).fetchAll(aUC);
 		
-		// Carico l'Inventario di cui la U.O. di scrivania Ë responsabile
+		// Carico l'Inventario di cui la U.O. di scrivania √® responsabile
 		loadInventario(aUC,invApCh);
 		
 		// Controllo che sia la prima volta che inserisco questo Inventario
@@ -426,7 +426,7 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
   *    PreCondition:
   *      E' stata richiesta l'inizializzazione di una istanza di Inventario_ap_chBulk per modifica
   *    PostCondition:
-  *      Viene caricato il Consegnatario dell'Inventario ed abilita la possibilit‡ di modificare 
+  *      Viene caricato il Consegnatario dell'Inventario ed abilita la possibilit√† di modificare 
   *		il valore di riferimento iniziale per la numerazione dei Beni facenti parte dell'Inventario.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -481,9 +481,9 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 
 }
 /** 
-  *  Cerca l'Inventario di cui la Uo di scrivania Ë responsabile
+  *  Cerca l'Inventario di cui la Uo di scrivania √® responsabile
   *    PreCondition:
-  *      La Uo di scrivania non Ë responsabile di alcun Inventario, (metodo loadInventario).
+  *      La Uo di scrivania non √® responsabile di alcun Inventario, (metodo loadInventario).
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -504,7 +504,7 @@ public OggettoBulk inizializzaBulkPerRicerca(UserContext aUC,OggettoBulk bulk) t
 
 		Inventario_ap_chBulk invApCh = (Inventario_ap_chBulk)super.inizializzaBulkPerRicerca(aUC,bulk);
 
-		// Carico l'Inventario di cui la U.O. di scrivania Ë responsabile
+		// Carico l'Inventario di cui la U.O. di scrivania √® responsabile
 		loadInventario(aUC,invApCh);
 
 		getHomeCache(aUC).fetchAll(aUC);
@@ -518,9 +518,9 @@ public OggettoBulk inizializzaBulkPerRicerca(UserContext aUC,OggettoBulk bulk) t
 
 }
 /** 
-  *  Cerca l'Inventario di cui la Uo di scrivania Ë responsabile
+  *  Cerca l'Inventario di cui la Uo di scrivania √® responsabile
   *    PreCondition:
-  *      La Uo di scrivania non Ë responsabile di alcun Inventario, (metodo loadInventario).
+  *      La Uo di scrivania non √® responsabile di alcun Inventario, (metodo loadInventario).
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
@@ -552,7 +552,7 @@ private void inserisciInventarioConsegnatario(UserContext userContext, Inventari
 
 
 
-	String msg = "Attenzione: la data di inizio validit‡ del Consegnatario non puÚ essere posteriore alla data di apertura dell'Inventario.\nLa data di inizio validit‡ del primo Consegnatario verr‡ modificata.\nContinuare?";
+	String msg = "Attenzione: la data di inizio validit√† del Consegnatario non pu√≤ essere posteriore alla data di apertura dell'Inventario.\nLa data di inizio validit√† del primo Consegnatario verr√† modificata.\nContinuare?";
 		
 	Inventario_consegnatarioBulk invC = invApCh.getInventarioConsegnatario();
 	
@@ -568,17 +568,17 @@ private void inserisciInventarioConsegnatario(UserContext userContext, Inventari
 		invCHome.insert(invC, userContext);
 		return;
 	}
-	// Esiste gi‡ un Consegnatario definito per l'Inventario 
+	// Esiste gi√† un Consegnatario definito per l'Inventario 
 	else {
 		/* Il primo Consegnatario definito per l'Inventario, 
-			ha data di inizio validit‡ posteriore all'apertura dell'Inventario. 
-			Lancia un messaggio all'utente che spiega che la data di inizio validit‡ del primo
-			Consegnatario verr‡ modificata */
+			ha data di inizio validit√† posteriore all'apertura dell'Inventario. 
+			Lancia un messaggio all'utente che spiega che la data di inizio validit√† del primo
+			Consegnatario verr√† modificata */
 		if (status == null && first_consegnatario.getDt_inizio_validita().after(invApCh.getDt_apertura())){
 			throw new it.cnr.jada.comp.OptionRequestException("onCheckDataConsegnatarioFailed",msg);	
 		}
 		/* Il primo Consegnatario definito per l'Inventario, 
-			ha data di inizio validit‡ posteriore all'apertura dell'Inventario. 
+			ha data di inizio validit√† posteriore all'apertura dell'Inventario. 
 			L'utente ha accettato la modifica. */
 		else if (status != null && first_consegnatario.getDt_inizio_validita().after(invApCh.getDt_apertura())){
 			Inventario_consegnatarioBulk nuovo_consegnatario = (Inventario_consegnatarioBulk)first_consegnatario.clone();
@@ -597,11 +597,11 @@ private void inserisciInventarioConsegnatario(UserContext userContext, Inventari
 	
 }
 /**
-  *  loadInventario - Carica l'inventario di cui la U.O. di scrivania Ë responsabile.
+  *  loadInventario - Carica l'inventario di cui la U.O. di scrivania √® responsabile.
   *    PreCondition:
-  *      La UO di scrivania non Ë responsabile di alcun Inventario.
+  *      La UO di scrivania non √® responsabile di alcun Inventario.
   *    PostCondition:
-  *		Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ di continuare nelle operazioni.
+  *		Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† di continuare nelle operazioni.
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param invApCh <code>Inventario_ap_chBulk</code> l'Inventario modello
@@ -611,20 +611,20 @@ private void loadInventario(UserContext aUC,Inventario_ap_chBulk invApCh) throws
 	Id_inventarioHome invHome = (Id_inventarioHome)getHome(aUC,Id_inventarioBulk.class);
 	Id_inventarioBulk invResp = invHome.findInventarioRespFor(aUC);
 	if (invResp == null)
-		throw new it.cnr.jada.comp.ApplicationException("L'Unit‡ Organizzativa selezionata non Ë responsabile di alcun Inventario");
+		throw new it.cnr.jada.comp.ApplicationException("L'Unit√† Organizzativa selezionata non √® responsabile di alcun Inventario");
 
 	invApCh.setInventario(invResp);
 }
 /** 
-  *  Cerca l'Inventario di cui la Uo di scrivania Ë responsabile
+  *  Cerca l'Inventario di cui la Uo di scrivania √® responsabile
   *    PreCondition:
-  *      La Uo di scrivania non Ë responsabile di alcun Inventario.
+  *      La Uo di scrivania non √® responsabile di alcun Inventario.
   *    PostCondition:
   *      Viene visualizzato un messaggio all'utente con la spiegazione dell'errore
   *
   *  Carica l'Inventario di competenza
   *    PreCondition:
-  *      E' stato richiesto di caricare l'Inventario di cui la UO di scrivania Ë responsabile.
+  *      E' stato richiesto di caricare l'Inventario di cui la UO di scrivania √® responsabile.
   *    PostCondition:
   *      Viene caricato l'Inventario di competenza impostando come clausole di ricerca che
   *		la data di apertura sia l'ultima registrata sul DB; questo per essere sicuri che lo stato
@@ -643,7 +643,7 @@ public Inventario_ap_chBulk loadInventarioApChAttuale(UserContext aUC)
 	Id_inventarioHome invHome = (Id_inventarioHome)getHome(aUC,Id_inventarioBulk.class);
 	Id_inventarioBulk inventario = invHome.findInventarioRespFor(aUC);
 	if (inventario == null)
-		throw new it.cnr.jada.comp.ApplicationException("L'Unit‡ Organizzativa selezionata non Ë responsabile di alcun Inventario");
+		throw new it.cnr.jada.comp.ApplicationException("L'Unit√† Organizzativa selezionata non √® responsabile di alcun Inventario");
 
 	
 	String schema = it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema();
@@ -812,7 +812,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
   *		associato alla UO di scrivania.
   *    PostCondition:
   *		E' stato creato il SQLBuilder con le clausole implicite (presenti nell'istanza di Inventario_ap_chBulk),
-  *		ed Ë stata aggiunta la clausola che l'Inventario sia quello associato alla UO di scrivania,
+  *		ed √® stata aggiunta la clausola che l'Inventario sia quello associato alla UO di scrivania,
   *		e appartenga all'esercizio atttuale.
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -833,7 +833,7 @@ protected it.cnr.jada.persistency.sql.Query select(UserContext userContext,Compo
 	return sql;
 }
 /** 
-  *	Imposta la data di chiusura dell'Inventario. Se la data non Ë stata specificata, 
+  *	Imposta la data di chiusura dell'Inventario. Se la data non √® stata specificata, 
   *	ci si trova nella situazione di un Inventario in stato "A", quindi la Data di Chiusura
   *	viene impostata come DATA_INFINITO.
   *
@@ -866,7 +866,7 @@ private void setStatoApertura(UserContext aUC,Inventario_ap_chBulk invApCh) thro
 		invApCh.setStato(invApCh.CLOSE);
 		//chiamare procedura che lancia il job
 		
-		//r.p. 13/01/2016 disabilitato creava pi˘ problemi che benefici
+		//r.p. 13/01/2016 disabilitato creava pi√π problemi che benefici
 //		if (invApCh.getStato().equals(invApCh.CLOSE))
 //			callAmmortamentoBeni(aUC);
 	}
@@ -876,31 +876,31 @@ private void setStatoApertura(UserContext aUC,Inventario_ap_chBulk invApCh) thro
 /** 
   *  Valida Inventario per INSERIMENTO - Inventario in stato "A"
   *    PreCondition:
-  *      E' stato richiesto di impostare lo stato dell'Inventario ad "Aperto",ma lo stato e gi‡ "A".
+  *      E' stato richiesto di impostare lo stato dell'Inventario ad "Aperto",ma lo stato e gi√† "A".
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ 
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† 
   *		di proseguire con il salvataggio.
   *
   *  Valida Inventario per INSERIMENTO - data di Apertura non valida.
   *    PreCondition:
-  *      La data di apertura specificata dall'utente non Ë valida.
+  *      La data di apertura specificata dall'utente non √® valida.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ 
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† 
   *		di proseguire con il salvataggio.
   *
   *  Valida Inventario per INSERIMENTO - valore di riferimento per i Beni non valido
   *    PreCondition:
   *      Il valore da tenere come riferimento per la numerazione dei Beni che andranno 
-  *		in Inventario non Ë valido.
+  *		in Inventario non √® valido.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ 
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† 
   *		di proseguire con il salvataggio.
   *
   *  Valida Inventario per INSERIMENTO - Consegnatario non valido
   *    PreCondition:
   *      I dati specificati dall'utente, relativi al Consegnatario non sono validi.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ 
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† 
   *		di proseguire con il salvataggio.
   *
   *  Controlli superati
@@ -917,7 +917,7 @@ private void validaSuInserimento(UserContext aUC,Inventario_ap_chBulk invApCh)
 			it.cnr.jada.persistency.PersistencyException,
 			it.cnr.jada.persistency.IntrospectionException{
 
-	// Controllo se Inventario gi‡ aperto
+	// Controllo se Inventario gi√† aperto
 	//	--> necessario prima chiuderlo
 	checkStatoInventario(aUC, invApCh);
 	
@@ -933,24 +933,24 @@ private void validaSuInserimento(UserContext aUC,Inventario_ap_chBulk invApCh)
 /** 
   *  Valida Inventario per MODIFICA - data di Apertura non valida.
   *    PreCondition:
-  *      La data di apertura specificata dall'utente non Ë valida.
+  *      La data di apertura specificata dall'utente non √® valida.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ 
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† 
   *		di proseguire con il salvataggio.
   *
   *  Valida Inventario per MODIFICA - data di Chiusura non valida.
   *    PreCondition:
-  *      La data di chiusura specificata dall'utente non Ë valida.
+  *      La data di chiusura specificata dall'utente non √® valida.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ 
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† 
   *		di proseguire con il salvataggio.
   *
   *  Valida Inventario per MODIFICA - valore di riferimento per i Beni non valido
   *    PreCondition:
   *      Il valore da tenere come riferimento per la numerazione dei Beni che andranno 
-  *		in Inventario non Ë valido.
+  *		in Inventario non √® valido.
   *    PostCondition:
-  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit‡ 
+  *      Un messaggio di errore viene visualizzato all'utente per segnalare l'impossibilit√† 
   *		di proseguire con il salvataggio.
   *    
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta

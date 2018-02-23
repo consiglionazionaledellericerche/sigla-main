@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <SQLPersistentInfo
 	persistentClassName="it.cnr.contab.pdg01.bulk.Tipo_variazioneBase"
 	keyClassName="it.cnr.contab.pdg01.bulk.Tipo_variazioneKey"
@@ -45,6 +45,13 @@
 			columnSize="1"
 			nullable="false" />
 		<columnMapping
+			columnName="FL_VARIAZIONE_TRASFERIMENTO"
+			propertyName="fl_variazione_trasferimento"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="DACR"
 			propertyName="dacr"
 			sqlTypeName="TIMESTAMP"
@@ -87,6 +94,8 @@
 		name="fl_utilizzabile_cds" />
 	<persistentProperty
 		name="ti_approvazione" />
+	<persistentProperty
+		name="fl_variazione_trasferimento" />
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty

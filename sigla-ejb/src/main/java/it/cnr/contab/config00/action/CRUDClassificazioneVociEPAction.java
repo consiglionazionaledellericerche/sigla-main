@@ -39,7 +39,7 @@ public class CRUDClassificazioneVociEPAction extends CRUDAction {
 		int intTabNew = (new Integer(pageName.substring("tabLivello".length()))).intValue();
 
 		/* 
-		 * Non è possibile cambiare Tab se esistono dati non confermati.
+		 * Non Ã¨ possibile cambiare Tab se esistono dati non confermati.
 		 */
 		try {
 			fillModel(actioncontext);
@@ -52,7 +52,7 @@ public class CRUDClassificazioneVociEPAction extends CRUDAction {
 		}
 
 		/*
-		 * Se la navigazione tra le Tab è in avanti deve essere selezionato sul Bulk corrente
+		 * Se la navigazione tra le Tab Ã¨ in avanti deve essere selezionato sul Bulk corrente
 		 * almeno un livello successivo da utilizzare per il caricamento delle Bulk successive.
 		 * Regola non valida se si naviga dalla Tab1
 		 */
@@ -64,15 +64,15 @@ public class CRUDClassificazioneVociEPAction extends CRUDAction {
 		}
 		
 		/*
-		 * Se è stato selezionato un livello diverso da quello precedentemente memorizzato (il focus del 
-		 * controller è diverso da quello memorizzato nel Bulk) vengono annullati tutti i riferimenti 
+		 * Se Ã¨ stato selezionato un livello diverso da quello precedentemente memorizzato (il focus del 
+		 * controller Ã¨ diverso da quello memorizzato nel Bulk) vengono annullati tutti i riferimenti 
 		 * memorizzati nel BP ai Bulk e focus dei livelli successivi.
 		 * Se si naviga dalla Tab1 il processo di annullamento avviene se cambia il model del BP
 		 */
 		bp.allineaFocusBulkTab(intTabOld);
 
 		/*
-		 * Se la navigazione tra le Tab è in avanti è possibile navigare solo fino alla Tab immediatamente
+		 * Se la navigazione tra le Tab Ã¨ in avanti Ã¨ possibile navigare solo fino alla Tab immediatamente
 		 * successiva all'ultima Tab caricata.
 		 */
 		if ((new Integer(intTabNew)).compareTo(new Integer(intTabOld))>0 && 

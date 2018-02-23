@@ -72,7 +72,7 @@ public class OfflineReportPrintBP extends ReportPrintBP {
 			try {
 				serverPriority = Integer.parseInt(config.getInitParameter("serverPriority"));
 			} catch(Throwable e) {
-				throw new BusinessProcessException("Errore: priorit‡ del server di stampa non valida. "+s);
+				throw new BusinessProcessException("Errore: priorit√† del server di stampa non valida. "+s);
 			}
 		model = new Print_spoolerBulk();
 		model.setTiVisibilita(model.TI_VISIBILITA_UTENTE);

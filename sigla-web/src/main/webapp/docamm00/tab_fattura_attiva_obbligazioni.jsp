@@ -89,7 +89,7 @@
 					}
 				} else if (notaDiCredito.getModalita_pagamento() != null && (cliente != null && cliente.getCrudStatus() != cliente.UNDEFINED)) { %>
 					<span class="FormLabel" style="color:red">
-						Nessun riferimento trovato per la modalit‡ di pagamento selezionata!
+						Nessun riferimento trovato per la modalit√† di pagamento selezionata!
 					</span>
 			<%	} %>
 			<td>

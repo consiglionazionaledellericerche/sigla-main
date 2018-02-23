@@ -21,8 +21,8 @@ public class Monito_cococoBulk extends Monito_cococoBase {
 		if (attivitaKeys == null)
 		{
 			attivitaKeys = new OrderedHashtable();
-			attivitaKeys.put("1", "Attivit‡ Istituzionale");	
-			attivitaKeys.put("0", "Altre Attivit‡");	
+			attivitaKeys.put("1", "Attivit√† Istituzionale");	
+			attivitaKeys.put("0", "Altre Attivit√†");	
 		}
 		return attivitaKeys;
 	}

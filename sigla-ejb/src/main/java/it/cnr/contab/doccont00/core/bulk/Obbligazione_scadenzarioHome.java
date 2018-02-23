@@ -101,7 +101,7 @@ public void aggiornaImportoAssociatoADocAmm(
  * @param os <code>Obbligazione_scadenzarioBulk</code> la scadenza dell'obbligazione
  *
  * @return <code>V_doc_passivo_obbligazioneBulk</code> i documenti passivi associati all'obbligazione
- * 		   null non è stato trovato nessun documento passivo associato all'obbligazione
+ * 		   null non Ã¨ stato trovato nessun documento passivo associato all'obbligazione
  *
  */
 public V_doc_passivo_obbligazioneBulk findDoc_passivo( Obbligazione_scadenzarioBulk os ) throws IntrospectionException,PersistencyException 

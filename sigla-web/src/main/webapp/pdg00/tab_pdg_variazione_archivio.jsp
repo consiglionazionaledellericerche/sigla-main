@@ -25,7 +25,7 @@
 	
 	/*
 	** Quando navigo la prima volta nella tab e non ci sono 
-	** record selezionati, il valore restituito è -1. 
+	** record selezionati, il valore restituito Ã¨ -1. 
 	** In questo caso imposto il valore a 0.
 	*/
 	if (sel == -1)
@@ -40,7 +40,7 @@
 	   nomeArchivio    = ((Pdg_variazione_archivioBulk) ((Pdg_variazioneBulk)bp.getModel()).getArchivioConsultazioni().get(sel)).getNomeFile();
     }
     
-    // Se c'è un record in insert valorizzo con false il flag di gestione dell'inserimento multiplo senza salvare
+    // Se c'Ã¨ un record in insert valorizzo con false il flag di gestione dell'inserimento multiplo senza salvare
 	boolean isTableEnabled = (bp.isCdrScrivania() && pdg.isPropostaProvvisoria());
 	boolean isFieldEnabled = !isTableEnabled;
 

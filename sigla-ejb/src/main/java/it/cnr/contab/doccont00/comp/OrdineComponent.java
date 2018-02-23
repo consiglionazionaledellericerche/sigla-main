@@ -36,8 +36,8 @@ public OrdineComponent() {
  * Pre-post-conditions
  *
  * Nome: Completamento ordine da terzo
- * Pre: Vengono richiesti i Termini e le Modalit‡ di Pagamento del Terzo selezionato
- * Post: Viene restituito l'ordine con i Termini e le Modalit‡ di Pagamento associati
+ * Pre: Vengono richiesti i Termini e le Modalit√† di Pagamento del Terzo selezionato
+ * Post: Viene restituito l'ordine con i Termini e le Modalit√† di Pagamento associati
  *
  * @param	userContext	lo UserContext che ha generato la richiesta
  * @param	ordine l'OggettoBulk da completare
@@ -66,13 +66,13 @@ public OrdineBulk completaTerzo(UserContext userContext,OrdineBulk ordine) throw
  * Pre-post-conditions:
  *
  * Nome: Validazione superata
- * Pre: L'ordine NON Ë stato stampato in modo definitivo
+ * Pre: L'ordine NON √® stato stampato in modo definitivo
  * Post: Viene consentita l'eliminazione dell'ordine
  *
  * Nome: Validazione NON superata
- * Pre: L'ordine Ë stato stampato in modo definitivo
+ * Pre: L'ordine √® stato stampato in modo definitivo
  * Post: Viene generata una ApplicationException con il messaggio:
- *		 "L'Ordine Ë gi‡ stato stampato. Non Ë possibile eliminarlo!"
+ *		 "L'Ordine √® gi√† stato stampato. Non √® possibile eliminarlo!"
  *
  * @param	userContext	lo UserContext che ha generato la richiesta
  * @param	bulk l'OggettoBulk da eliminare
@@ -85,7 +85,7 @@ public OrdineBulk completaTerzo(UserContext userContext,OrdineBulk ordine) throw
 public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 
 	if(!validaOrdineSuElimina((OrdineBulk)bulk))
-		throw new ApplicationException( "L'Ordine Ë gi‡ stato stampato. Non Ë possibile eliminarlo!");
+		throw new ApplicationException( "L'Ordine √® gi√† stato stampato. Non √® possibile eliminarlo!");
 
 	super.eliminaConBulk(userContext,bulk);
 
@@ -97,7 +97,7 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws it.c
  * Pre-post-conditions:
  *
  * Nome: Terzo NON selezionato
- * Pre: Non Ë stato selezionato un Terzo per l'ordine
+ * Pre: Non √® stato selezionato un Terzo per l'ordine
  * Post: Non vengono caricate le banche.
  *
  * Nome: Terzo selezionato
@@ -210,7 +210,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
  * Pre:	L'OggettoBulk specificato esiste.
  * Post: Viene riletto l'OggettoBulk, inizializzato con tutti gli oggetti collegati e preparato
  *			per l'operazione di presentazione e modifica nell'interfaccia visuale.
- *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome Ë
+ *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome √®
  *			ottenuto concatenando il nome della component con la stringa ".edit"
  *
  *			In particolare vengono caricate tutte le Righe associate all'Ordine selezionato
@@ -444,11 +444,11 @@ protected void validaCreaModificaConBulk(UserContext userContext,OggettoBulk bul
 }	
 /**
  *
- *	Ritorna VERO se l'ordine <ordine> Ë stato stampato in modo definitivo;
+ *	Ritorna VERO se l'ordine <ordine> √® stato stampato in modo definitivo;
  *	FALSO altrimenti
  *
  * @param	ordine l'Ordine da validare
- * @return	TRUE se l'ordine Ë eliminabile, FALSE altrimenti
+ * @return	TRUE se l'ordine √® eliminabile, FALSE altrimenti
  *
 **/
 private boolean validaOrdineSuElimina(OrdineBulk ordine) {
@@ -470,20 +470,20 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_vp
 			throw new ValidationException("Il campo CDS e' obbligatorio");
 
 		if (stampa.getDataInizio()==null)
-			throw new ValidationException("Il campo DATA INIZIO PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA INIZIO PERIODO √® obbligatorio");
 		if (stampa.getDataFine()==null)
-			throw new ValidationException("Il campo DATA FINE PERIODO Ë obbligatorio");
+			throw new ValidationException("Il campo DATA FINE PERIODO √® obbligatorio");
 
 		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere superiore alla DATA di FINE PERIODO");
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere superiore alla DATA di FINE PERIODO");
 		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di INIZIO PERIODO non puÚ essere inferiore a " + formatter.format(firstDayOfYear));
+			throw new ValidationException("La DATA di INIZIO PERIODO non pu√≤ essere inferiore a " + formatter.format(firstDayOfYear));
 		}
 		if (stampa.getDataFine().compareTo(lastDayOfYear)>0 && lastDayOfYear.compareTo(dataOdierna)>0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			throw new ValidationException("La DATA di FINE PERIODO non puÚ essere superiore a " + formatter.format(lastDayOfYear));
+			throw new ValidationException("La DATA di FINE PERIODO non pu√≤ essere superiore a " + formatter.format(lastDayOfYear));
 		}
 
 	
@@ -500,13 +500,13 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_or
 	try{	
 		/**** Controlli sui PG_INIZIO/PG_FINE *****/
 		if (stampa.getPgInizio()==null)
-			throw new ValidationException("Il campo NUMERO INIZIO Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO INIZIO √® obbligatorio");
 		if (stampa.getPgFine()==null)
-			throw new ValidationException("Il campo NUMERO FINE Ë obbligatorio");
+			throw new ValidationException("Il campo NUMERO FINE √® obbligatorio");
 		if (stampa.getPgInizio().compareTo(stampa.getPgFine())>0)
-			throw new ValidationException("Il NUMERO INIZIO non puÚ essere superiore al NUMERO FINE");
+			throw new ValidationException("Il NUMERO INIZIO non pu√≤ essere superiore al NUMERO FINE");
 		if (stampa.getUoForPrint().getCd_unita_organizzativa()==null)
-			throw new ValidationException("Il campo Unit‡ Organizzativa Ë obbligatorio");
+			throw new ValidationException("Il campo Unit√† Organizzativa √® obbligatorio");
 		
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);

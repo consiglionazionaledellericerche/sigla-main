@@ -20,8 +20,8 @@
 
 <body class="Form">
 <% bp.openFormWindow(pageContext); %>
-<div class="Group">
-	<table class="Panel">
+<div class="card p-2">
+	<table class="w-100">
 		<tr>
 	        <td><% bp.getController().writeFormLabel(out,"label_variazione_riga"); %></td>
 	        <td><% bp.getController().writeFormInput(out,"pg_variazione"); %>
@@ -33,7 +33,7 @@
 	        <td><% bp.getController().writeFormInput(out,"cdr"); %></td>
 		</tr>	
 	</table>
-</div>	
+</div>
 <table class="Panel" width="100%">
 	<tr>
         <td><%controller.writeHTMLTable(pageContext,"rigaVariazione",true,false,true,"100%","200px"); %></td>
@@ -52,17 +52,19 @@
   </tr>		
   <tr valign="top">
    <td>
-	<div class="Group">
-		<table class="Panel">
+	<div class="card p-2">
+		<table class="w-100"> 
 			<tr>
 		        <td><% controller.writeFormLabel(out,"linea_di_attivita"); %></td>
 		        <td colspan="3"><% controller.writeFormInput(out,"linea_di_attivita"); %></td>
 			</tr>  
 			 <% if (bp.getParametriCnr().getFl_nuovo_pdg().booleanValue()) { %>
 			   <tr>
-					<td><% controller.writeFormLabel(out,"missione"); %></td>
-					<td><% controller.writeFormInput(out,"missione"); %></td>
-		        	<td><% controller.writeFormField(out,"programma"); %></td>
+					<% controller.writeFormField(out,"missione"); %>
+		        	<td colspan="2">
+		        		<% controller.writeFormLabel(out,"programma"); %>
+		        		<% controller.writeFormInput(out,"programma"); %>
+		        	</td>
 		        </tr>   
 	        <% } %>
 			<tr>
@@ -77,16 +79,16 @@
 			<tr>
 			<%	if (bp.isVariazioneApprovata()) { %> 
 				<td><% controller.writeFormLabel(out,"elemento_voce_vis"); %></td>
-				<td><% controller.writeFormInput(out,"elemento_voce_vis"); %></td>
+				<td colspan="3"><% controller.writeFormInput(out,"elemento_voce_vis"); %></td>
 			<% } else {%>
 				<td><% controller.writeFormLabel(out,"elemento_voce"); %></td>
-				<td><% controller.writeFormInput(out,"elemento_voce"); %></td>
+				<td colspan="3"><% controller.writeFormInput(out,"elemento_voce"); %></td>
 			<% } %>
 			</tr>
 			<%	if (!bp.getParametriCnr().getFl_nuovo_pdg()) { %> 
 			<tr>
 				<td><% controller.writeFormLabel(out,"voce_f"); %></td>
-				<td><% controller.writeFormInput(out,"voce_f"); %></td>
+				<td colspan="3"><% controller.writeFormInput(out,"voce_f"); %></td>
 			</tr>
 			<% } %>
 			<tr>

@@ -52,11 +52,11 @@ public class Parametri_cnrComponent extends CRUDComponent {
 				throw new ApplicationException("Attenzione! Mancano i parametri livelli. Impostare a zero il valore del campo 'Livello Classificazione per Riparto Spese Accentrate'");
 			if (parCnr.getLivello_pdg_decis_spe() != null && parCnr.getLivello_pdg_decis_spe().intValue()>0){
 				if (parCnr.getLivello_pdg_decis_spe().compareTo(bulk.getLivelli_spesa())==1)
-					throw new ApplicationException("Attenzione! Il campo 'Livello Classificazione Spese PDG Decisionale' non può assumere valore superiore a " + bulk.getLivelli_spesa() + ".");
+					throw new ApplicationException("Attenzione! Il campo 'Livello Classificazione Spese PDG Decisionale' non puÃ² assumere valore superiore a " + bulk.getLivelli_spesa() + ".");
 			}
 			if (parCnr.getLivello_pdg_decis_etr() != null && parCnr.getLivello_pdg_decis_etr().intValue()>0){
 				if (parCnr.getLivello_pdg_decis_etr().compareTo(bulk.getLivelli_entrata())==1)
-					throw new ApplicationException("Attenzione! Il campo 'Livello Classificazione Entrate PDG Decisionale' non può assumere valore superiore a " + bulk.getLivelli_entrata() + ".");
+					throw new ApplicationException("Attenzione! Il campo 'Livello Classificazione Entrate PDG Decisionale' non puÃ² assumere valore superiore a " + bulk.getLivelli_entrata() + ".");
 			}
 		}catch(it.cnr.jada.persistency.PersistencyException ex){
 			throw handleException(ex);

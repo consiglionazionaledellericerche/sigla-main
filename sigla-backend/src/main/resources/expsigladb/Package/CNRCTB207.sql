@@ -1,0 +1,230 @@
+--------------------------------------------------------
+--  DDL for Package CNRCTB207
+--------------------------------------------------------
+
+  CREATE OR REPLACE PACKAGE "CNRCTB207" as
+--
+-- CNRCTB207 - Package COGE-COAN STIPENDI
+-- Date: 14/07/2006
+-- Version: 2.13
+--
+-- Package per la gestione delle scritture COGE/COAN Stipendi
+--
+-- Dependency: CNRCTB 200/204 IBMERR 001
+--
+-- History:
+--
+-- Date: 22/09/2002
+-- Version: 1.0
+-- Creazione
+--
+-- Date: 23/09/2002
+-- Version: 1.1
+-- Gestione del mese
+--
+-- Date: 23/09/2002
+-- Version: 1.2
+-- Gestione aggiornamento tabella stipendi_coan
+--
+-- Date: 30/09/2002
+-- Version: 1.3
+-- Modificato interfaccia per passare direttamente il codice dell'UO
+-- al posto del codice del CDR
+--
+-- Date: 16/10/2002
+-- Version: 1.4
+-- Rafforzati controlli su carico/scarico analitico
+--
+-- Date: 16/10/2002
+-- Version: 1.5
+-- Aggiunta contabilizzazione economica stipendi (prima scrittura)
+--
+-- Date: 18/10/2002
+-- Version: 1.6
+-- Fix numerazione scrittura COGE
+--
+-- Date: 22/10/2002
+-- Version: 1.7
+-- Fix su campi scrittura economica stipendi
+--
+-- Date: 23/10/2002
+-- Version: 1.8
+-- Fix date competenza coge movimenti principali scrittura economica
+--
+-- Date: 25/10/2002
+-- Version: 1.9
+-- Documentazione
+--
+-- Date: 27/10/2002
+-- Version: 2.0
+-- Recupero del corretto conto di contropartita cliente/fornitore
+--
+-- Date: 04/11/2002
+-- Version: 2.1
+-- Fix recupero UO in annulamento ribaltamento PDG in gestione
+-- Controllo configurazione completa CDP del mese per UO in processo
+--
+-- Date: 11/11/2002
+-- Version: 2.2
+-- Lock su Costo del dipendente
+--
+-- Date: 13/11/2002
+-- Version: 2.3
+-- Fix su stipendi in analiticica
+--
+-- Date: 18/11/2002
+-- Version: 2.4
+-- Spostamento costanti in CNRCTB200 da CNRCTB205 e riorganizzazione CNRCTB205
+--
+-- Date: 11/12/2002
+-- Version: 2.5
+-- Fix messaggio errato
+--
+-- Date: 11/12/2002
+-- Version: 2.6
+-- Fix estrazione cdr RUO
+--
+-- Date: 16/07/2003
+-- Version: 2.7
+-- Modifica interfaccia trova conto anag
+--
+-- Date: 18/07/2003
+-- Version: 2.8
+-- Revisione per gestione dei cori negativi: richiamati metodi standard del package 204
+-- Aggiunto controllo apertura esercizio+revisione pre-post
+--
+-- Date: 05/08/2003
+-- Version: 2.9
+-- Fix errori minori per test: aggiunti controlli di non ripetizione
+-- Il terzo dei movimenti della scrittura economica è stato unifornmato a quello delle obbligazioni
+--
+-- Date: 13/11/2003
+-- Version: 2.10
+-- Aggiunti i controlli su esercizio corrente e precedente per l'effettuazione delle operazioni
+--
+-- Date: 23/01/2004
+-- Version: 2.11
+-- Aggiunta gestione dei rotti in scarico dei costi del personale in gestione sull'analitica
+--
+-- Date: 01/03/2004
+-- Version: 2.12
+-- Evidenziati nella scrittura economica degli stipendi i soli carichi ENTE
+--
+-- Date: 14/07/2006
+-- Version: 2.13
+-- Gestione Impegni/Accertamenti Residui:
+-- aggiornata la funzione per tener conto anche del campo Esercizio Originale Impegno/Accertamento
+--
+-- Constants:
+
+-- Functions e Procedures
+
+-- Generazione delle scritture analitiche per scarico dei costi del personale mensili in gestione
+--
+-- Mensilmente dopo aver configurato come per la fase prvisionale la ripartizione dei costi del personale in gestione
+-- viene effettuato lo scarico in analitica (Piano di Gestione in Gestione)
+-- Tale scarico viene fatto per Unità Organizzativa (una scrittura analitica per UO)
+--
+-- pre-post-name: Esercizio non aperto
+-- pre: L'esercizio contabile in processo non risulta aperto
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Esercizio economico precedente non chiuso definitivamente
+-- pre: L'esercizio economico precedente a quello in processo non è chiuso definitivamente
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Scarico su piano di gestione in gestione già effettuato
+-- pre: Scarico del mese in processo su piano di gestione in gestione già effettuato
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Scarico mese precedente non ancora effetutato
+-- pre: Il mese in processo > 1 e il mese precedente non è ancora stato scaricato
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Configurazione di scarico non completa
+-- pre: La configurazione di scarico per il mese in processo NON è completa
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Creazione della scrittura analitica
+-- pre: Nessun'altra precondizione verificata
+-- post: Viene creata una scrittura analitica con la seguente regola:
+--       1. Origine scrittura = 'STIPENDI'
+--       2. N. movimenti corrispondenti alla spaccatura analitica relativa ai costi stipendiali per il mese in processo
+--          all'interno dell'UO: il capitolo economico viene recuperato dall'associazione tra conto finanziario ed economico
+--
+-- Parametri:
+-- aEs -> esercizio contabile
+-- aMese -> numero del mese di riferimento
+-- aCdUO -> codice UO che scarica il PDG in GESTIONE
+-- aUser -> utente che effettua la modifica
+
+ procedure scaricaCDPSuPdgGestione(aEsercizio number, aMese number, aCdUO varchar2, aUser varchar2);
+
+-- Annulamento delle scritture analitiche per scarico dei costi del personale mensili in gestione
+--
+-- pre-post-name: Esercizio non aperto
+-- pre: L'esercizio contabile in processo non risulta aperto
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Esercizio economico precedente non chiuso definitivamente
+-- pre: L'esercizio economico precedente a quello in processo non è chiuso definitivamente
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name:  Check che il mese corrente sia stato scaricato
+-- pre: Il mese in processo non è ancora stato scaricato sul piano di gestione in gestione per l'UO specificata
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Scarico mese successivo a quello in processo già effettuato per l'UO specificata
+-- pre: Il mese in processo < 12 e il mese successivo è già stato scaricato
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Annullamneto scarico piano di gestione in gestione
+-- pre: Nessun'altra precondizione verificata
+-- post: Viene creata una scrittura analitica di storno della scrittura precedentementemente effetuata.
+--
+-- Parametri:
+-- aEs -> esercizio contabile
+-- aMese -> numero del mese di riferimento
+-- aCdUO -> codice UO che scarica il PDG in GESTIONE
+-- aUser -> utente che effettua la modifica
+
+ procedure annullaScaricaCDPSuPdgGestione(aEsercizio number, aMese number, aCdUO varchar2, aUser varchar2);
+
+-- Generazione della prima scrittura economica per liquidazione mensile degli stipendi
+--
+-- pre-post-name:  Check liquidazione mensile stipendi già effettuata per il mese in processo
+-- pre: La liquidazione mensileIl mese in processo non è ancora stato effettuata
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Esercizio finanziario non aperto per il CDS stipendi
+-- pre: L'esercizio non è aperto per il CDS stipendi
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Esercizio economico precedente non chiuso definitivamente
+-- pre: L'esercizio economico precedente a quello in processo non è chiuso definitivamente per il CDS stipendi
+-- post: Viene sollevata un'eccezione
+--
+-- pre-post-name: Creazione della prima scrittura economica
+-- pre: Nesun'altra precondizione verificata
+-- post: Viene creata una scrittura economica con le seguenti caratteristiche:
+--   1. nx movimenti di costo corrispondenti alle n scadenze di obbligazione processate in finanziaria per il mese aggregate
+--      per conto economico, sezione e data inizio e fine competenza (sempre = primo e ultimo giorno del mese in processo).
+--      l'importo di ogni movimento è calcolato distribuendo l'importo del mandato stipendi meno i cori ente (sommati algebricamente) con
+--      le percentuali rispetto al totale del mandato di ogni singola scadenza finanziaria.
+--      Gli eventuali rotti vengono aggiunti all'ultimo movimento
+--   2. mx movimenti relativi agli m cori ente (come nella contabilizzazione economica del compenso)  aggregati
+--      per conto economico, sezione e data inizio e fine competenza ereditati dal compenso stipendi
+--	 3. 1 movimento di contropartita sul terzo utilizzato nel mandato principale stipendi che chiude la scrittura
+--
+-- Parametri:
+-- aEs -> esercizio contabile
+-- aMese -> numero del mese di riferimento
+-- aUser -> utente che effettua la modifica
+
+ procedure regStipendiCOGE(aEs number, aMese number, aUser varchar2);
+
+ procedure regStipendiCOGE(aEs number, aUser varchar2);
+
+ procedure ins_ASS_CDP_MESE_ROUND (aDest ASS_CDP_MESE_ROUND%rowtype);
+
+end;

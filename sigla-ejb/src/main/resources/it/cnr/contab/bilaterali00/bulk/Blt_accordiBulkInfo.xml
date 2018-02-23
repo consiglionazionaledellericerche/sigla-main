@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -274,7 +274,7 @@
 		inputType="TEXT"
 		maxLength="10"
 		inputSize="10"
-		label="Numero Articolo Proprietà Intellettuale" />
+		label="Numero Articolo ProprietÃ  Intellettuale" />
 	<fieldProperty
 		name="find_elemento_voce"
 		property="elemento_voce"
@@ -434,7 +434,7 @@
 		inputType="TEXT"
 		maxLength="100"
 		inputSize="60"
-		label="Descrizione Aggettivo Nazionalità" 
+		label="Descrizione Aggettivo NazionalitÃ " 
 		nullable="false" />
 	<fieldProperty
 		name="indirizzo_ente_str"
@@ -450,7 +450,7 @@
 		inputType="TEXT"
 		maxLength="100"
 		inputSize="40"
-		label="Città Ente Straniero" 
+		label="CittÃ  Ente Straniero" 
 		nullable="false" />
 	<fieldProperty
 		name="email_trasmissione_passaporto"
@@ -628,7 +628,7 @@
 		label="Numero Articolo&lt;BR&gt;Convenzione Fiscale"/>
 	<formFieldProperty
 		name="num_articolo_prop_intel"
-		label="Numero Articolo&lt;BR&gt;Proprietà Intellettuale"/>
+		label="Numero Articolo&lt;BR&gt;ProprietÃ  Intellettuale"/>
 	<formFieldProperty
 		name="find_elemento_voce" />
 	<formFieldProperty
@@ -684,13 +684,13 @@
 		label="Nazione&lt;br&gt;in Inglese"	/>
 	<formFieldProperty
 		name="ds_aggettivo_nazional" 
-		label="Nazionalità&lt;br&gt;in Inglese"	/>
+		label="NazionalitÃ &lt;br&gt;in Inglese"	/>
 	<formFieldProperty
 		name="indirizzo_ente_str" 
 		label="Indirizzo" />
 	<formFieldProperty
 		name="citta_ente_str" 
-		label="Città" />
+		label="CittÃ " />
 	<formFieldProperty
 		name="email_trasmissione_passaporto" 
 		label="Email Trasmissione Passaporto"/>
@@ -807,7 +807,7 @@
 		label="Numero Articolo&lt;BR&gt;Convenzione Fiscale"/>
 	<findFieldProperty
 		name="num_articolo_prop_intel"
-		label="Numero Articolo&lt;BR&gt;Proprietà Intellettuale"/>
+		label="Numero Articolo&lt;BR&gt;ProprietÃ  Intellettuale"/>
 	<findFieldProperty
 		name="find_elemento_voce" />
 	<findFieldProperty

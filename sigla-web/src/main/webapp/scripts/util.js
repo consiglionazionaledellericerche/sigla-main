@@ -56,7 +56,7 @@ function showElement(target,name) {
 function disableDblClick() {
 	if(document.mainForm.submitted != true)
 		return true;
-//	alert("Attendere, richiesta già inoltrata...");
+//	alert("Attendere, richiesta giï¿½ inoltrata...");
 	return false;
 }
 
@@ -388,7 +388,7 @@ setMessage("img/spacer.gif",null);
 function checkFormAlreadySubmitted() {
 	if(submitted==false)
 		return true;
-	alert("Attendere, richiesta già inoltrata...");
+	alert("Attendere, richiesta giï¿½ inoltrata...");
 	return false;
 }
 
@@ -466,7 +466,8 @@ function modalInputFocused(input) {
 			  element != confirmButton && 
 			  element != cancelButton && 
 			 !element.disabled &&
-			  element.className.indexOf("fieldset") == -1
+			  element.className.indexOf("fieldset") == -1 &&
+			  element.type.indexOf("fieldset") == -1
 			 //r.p. 28/11/2007 firefox non disabilitava i bottoni e le tab
 			 //&& element.type != "submit"
 			 ) {

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -17,7 +17,7 @@
                 enabledOnSearch="true"
                 completeOnSave="true"
                	readonlyProperty="uoForPrintEnabled"
-		  		label="Unità organizzativa" />
+		  		label="UnitÃ  organizzativa" />
 		<fieldProperty
 			name="cdUoForPrint"
 			property="cdUoForPrint"/>
@@ -100,7 +100,7 @@
                 formatName="date_short"
                 enabledOnInsert="true"
                 nullable="false"
-                label="Data di inizio Validità da" />
+                label="Data di inizio ValiditÃ  da" />
         <fieldProperty
                 name="DataInizioValidita_a"
                 property="dataInizioValidita_a"
@@ -108,7 +108,7 @@
                 formatName="date_short"
                 enabledOnInsert="true"
                 nullable="false"
-                label="Data di inizio Validità a" />
+                label="Data di inizio ValiditÃ  a" />
         <fieldProperty
                 name="DataFineValidita_da"
                 property="dataFineValidita_da"
@@ -116,7 +116,7 @@
                 formatName="date_short"
                 enabledOnInsert="true"
                 nullable="false"
-                label="Data di fine Validità da " />
+                label="Data di fine ValiditÃ  da " />
         <fieldProperty
                 name="DataFineValidita_a"
                 property="dataFineValidita_a"
@@ -124,7 +124,7 @@
                 formatName="date_short"
                 enabledOnInsert="true"
                 nullable="false"
-                label="Data di fine Validità a" />
+                label="Data di fine ValiditÃ  a" />
 	    
         <formFieldProperty name="findUoForPrint"/>
         <formFieldProperty name="cdUoForPrint"/> 

@@ -272,7 +272,7 @@ public class ConsFileCassiereBP extends ConsultazioniBP {
 						   parzclause.addClause("AND","im_man_storni",SQLBuilder.ISNOTNULL,null);
 						   parzclause.addClause("AND","tr",SQLBuilder.EQUALS,"30");
 					   }
-					   // in realt‡ non serve (solo se nel caso si aggiunga la multiselezione)
+					   // in realt√† non serve (solo se nel caso si aggiunga la multiselezione)
 					   clauses = clauses.or(clauses, parzclause);
 				   }
 			      return clauses;

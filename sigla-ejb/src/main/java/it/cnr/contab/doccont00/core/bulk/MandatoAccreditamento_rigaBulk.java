@@ -55,9 +55,9 @@ public java.lang.Long getPg_obbligazione_scadenzario() {
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOFindVoce'
+ * Restituisce il valore della propriet√† 'rOFindVoce'
  *
- * @return Il valore della propriet‡ 'rOFindVoce'
+ * @return Il valore della propriet√† 'rOFindVoce'
  */
 public boolean isROFindVoce() 
 {
@@ -72,9 +72,9 @@ public boolean isROFindVoce()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'rOVoce'
+ * Restituisce il valore della propriet√† 'rOVoce'
  *
- * @return Il valore della propriet‡ 'rOVoce'
+ * @return Il valore della propriet√† 'rOVoce'
  */
 public boolean isROVoce() 
 {
@@ -118,7 +118,7 @@ public void setPg_obbligazione_scadenzario(java.lang.Long pg_obbligazione_scaden
 	this.getImpegno().setPg_obbligazione_scadenzario(pg_obbligazione_scadenzario);
 }
 /**
- * Metodo con cui si verifica la validit‡ di alcuni campi, mediante un 
+ * Metodo con cui si verifica la validit√† di alcuni campi, mediante un 
  * controllo sintattico o contestuale.
  */
 public void validate() throws ValidationException {

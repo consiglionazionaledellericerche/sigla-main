@@ -6,7 +6,7 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.action.*;
 
 /**
- * Business process che gestisce attivit‡ relative al bilancio del Cds.
+ * Business process che gestisce attivit√† relative al bilancio del Cds.
  */
 
 public class ViewBilancioCdSBP extends it.cnr.jada.util.action.SimpleCRUDBP {
@@ -18,7 +18,7 @@ public ViewBilancioCdSBP() {}
  * <!-- @TODO: da completare -->
  * 
  *
- * @param function	La funzione con cui Ë stato creato il BusinessProcess
+ * @param function	La funzione con cui √® stato creato il BusinessProcess
  * @param cd_cds	
  */
 public ViewBilancioCdSBP(String function, String cd_cds ) {
@@ -26,7 +26,7 @@ public ViewBilancioCdSBP(String function, String cd_cds ) {
 	setCd_cds( cd_cds);}
 /**
  * Metodo utilizzato per creare una toolbar applicativa personalizzata.
- * @return null In questo caso la toolbar Ë vuota
+ * @return null In questo caso la toolbar √® vuota
  */
 protected it.cnr.jada.util.jsp.Button[] createToolbar() 
 {
@@ -34,18 +34,18 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar()
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'cd_cds'
+ * Restituisce il valore della propriet√† 'cd_cds'
  *
- * @return Il valore della propriet‡ 'cd_cds'
+ * @return Il valore della propriet√† 'cd_cds'
  */
 public java.lang.String getCd_cds() {
 	return cd_cds;
 }
 /**
  * <!-- @TODO: da completare -->
- * Restituisce il valore della propriet‡ 'tipoGestione'
+ * Restituisce il valore della propriet√† 'tipoGestione'
  *
- * @return Il valore della propriet‡ 'tipoGestione'
+ * @return Il valore della propriet√† 'tipoGestione'
  */
 public java.lang.String getTipoGestione() {
 	return tipoGestione;
@@ -68,7 +68,7 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'cd_cds'
+ * Imposta il valore della propriet√† 'cd_cds'
  *
  * @param newCd_cds	Il valore da assegnare a 'cd_cds'
  */
@@ -77,7 +77,7 @@ public void setCd_cds(java.lang.String newCd_cds) {
 }
 /**
  * <!-- @TODO: da completare -->
- * Imposta il valore della propriet‡ 'tipoGestione'
+ * Imposta il valore della propriet√† 'tipoGestione'
  *
  * @param newTipoGestione	Il valore da assegnare a 'tipoGestione'
  */

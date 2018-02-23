@@ -285,7 +285,7 @@ public final MinicarrieraRataCRUDController getRateCRUDController() {
 	return rateCRUDController;
 }
 /**
- * Attributo dei dati relativi alla scelta dell'utente di proseguire con loù
+ * Attributo dei dati relativi alla scelta dell'utente di proseguire con loÃ¹
  * sfondamento di cassa
  */
  

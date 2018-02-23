@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -56,7 +56,7 @@
 		name="find_nodo_padre"
 		property="progettopadre"
 		inputType="SEARCHTOOL"
-		label="Commessa/Modulo Attività"
+		label="Commessa/Modulo AttivitÃ "
 		readonlyProperty="ROfind_nodo_padre"
 		freeSearchSet="filtro_ricerca_aree_short"
 		columnSet="filtro_ricerca_aree_short"
@@ -199,7 +199,7 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnSearch="true"
-		label="Entità delle risorse necessarie"
+		label="EntitÃ  delle risorse necessarie"
 		nullable="false" />
 	<fieldProperty
 		name="importo_divisa"
@@ -249,7 +249,7 @@
 		enabledOnSearch="true"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		label="Codice Modulo di Attività"
+		label="Codice Modulo di AttivitÃ "
 		nullable="false" />
 	<fieldProperty
 		name="ds_progetto_comm_wp"
@@ -454,7 +454,7 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false"
 		enabledOnEdit="false"
-		label="Edilizia ivi compresa manutenzione straordinaria di immobili in proprietà"
+		label="Edilizia ivi compresa manutenzione straordinaria di immobili in proprietÃ "
 		nullable="false" />
 	<fieldProperty
 		name="totaleSpese"
@@ -474,7 +474,7 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false"
 		enabledOnEdit="false"
-		label="Ammortamento immobili in proprietà, in uso all'Istituto"
+		label="Ammortamento immobili in proprietÃ , in uso all'Istituto"
 		nullable="false" />
 	<fieldProperty
 		name="acc_tfr"
@@ -494,7 +494,7 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false"
 		enabledOnEdit="false"
-		label="Quota di ammortamento apparecchiature tecnico-scientifiche di proprietà acquisite negli esercizi precedenti"
+		label="Quota di ammortamento apparecchiature tecnico-scientifiche di proprietÃ  acquisite negli esercizi precedenti"
 		nullable="false" />
 	<fieldProperty
 		name="amm_altri_beni"
@@ -504,7 +504,7 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false"
 		enabledOnEdit="false"
-		label="Quota di ammortamento di altri beni durevoli di proprietà acquisite negli esercizi precedenti"
+		label="Quota di ammortamento di altri beni durevoli di proprietÃ  acquisite negli esercizi precedenti"
 		nullable="false" />
 	<fieldProperty
 		name="totaleCostiFigurativi"
@@ -1030,7 +1030,7 @@
 		name="filtro_ricerca_moduli">
 		<columnFieldProperty
 			name="cd_progetto"
-			label="Codice Modulo di Attività" />
+			label="Codice Modulo di AttivitÃ " />
 		<columnFieldProperty
 			name="cd_progetto_padre"
 			label="Codice Commessa" />
@@ -1234,7 +1234,7 @@
 		name="filtro_ricerca_moduli">
 		<findFieldProperty
 			name="cd_progetto"
-			label="Codice Modulo di Attività" />
+			label="Codice Modulo di AttivitÃ " />
 		<findFieldProperty
 			name="cd_progetto_padre"
 			label="Codice Commessa" />

@@ -201,7 +201,7 @@ public void resetTabs() {
 };
 /* Controller utilizzato per la visualizzazione dei dettagli del Buono  di Scarico 
  *	in fase di modifica. Permette di lavorare sulla tabella BUONO_CARICO_SCARICO_DETT.
- *	In fase di creazione verr‡ utilizzto il controller dettagliCRUDController, (v.)
+ *	In fase di creazione verr√† utilizzto il controller dettagliCRUDController, (v.)
 */ 
 private final RemoteDetailCRUDController editDettController = new RemoteDetailCRUDController("editDettController",Buono_carico_scarico_dettBulk.class,"EditDettagliScarico","CNRINVENTARIO01_EJB_BuonoCaricoScaricoComponentSession",this) {
 	protected it.cnr.jada.util.RemoteIterator createRemoteIterator(ActionContext context) {
@@ -218,7 +218,7 @@ private final RemoteDetailCRUDController editDettController = new RemoteDetailCR
 };
 /**
  * Cerca tutti i beni associati ad una riga di Fattura Attiva
- *	Il Buono di Scarico che si sta creando Ë stato generato da una Fattura Attiva. E' stata
+ *	Il Buono di Scarico che si sta creando √® stato generato da una Fattura Attiva. E' stata
  *	generata la richiesta di visualizzare i beni associati ad una riga di dettaglio della Fattura.
  *	Invoca il metodo <code>BuonoScaricoComponent.selectBeniAssociatiByClause</code>
  *
@@ -330,7 +330,7 @@ private void eliminaBeniAssociatiConBulk(ActionContext context,it.cnr.jada.bulk.
 				Inventario_beniBulk dett = (Inventario_beniBulk)details[i];
 				if (dett.isBeneAccessorio() && (dett.isTotalmenteScaricato()))
 					throw handleException(new ValidationException("Attenzione: durante l'associazione di un Buono di Scarico ad una Fattura Attiva\n " +
-						"Non Ë possibile eliminare beni accessori.\n Il bene " + dett.getNumeroBeneCompleto() + " non puÚ essere eliminato direttamente."));
+						"Non √® possibile eliminare beni accessori.\n Il bene " + dett.getNumeroBeneCompleto() + " non pu√≤ essere eliminato direttamente."));
 			}
 		}
 		((BuonoCaricoScaricoComponentSession)createComponentSession()).eliminaBeniAssociatiConBulk(
@@ -406,9 +406,9 @@ public it.cnr.jada.persistency.sql.CompoundFindClause getClauses() {
 }
 
 /**
- * Restituisce il valore della propriet‡ 'DettController'
+ * Restituisce il valore della propriet√† 'DettController'
  *
- * @return <code>RemoteDetailCRUDController</code> il valore della propriet‡ 'DettController'
+ * @return <code>RemoteDetailCRUDController</code> il valore della propriet√† 'DettController'
  */
 public final RemoteDetailCRUDController getDettController() {
 	return dettController;
@@ -432,7 +432,7 @@ private String getIntervallo(Buono_carico_scaricoBulk buonoS){
  *
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
  * @param no_accessori <code>boolean</code> indica se escludere i beni accessori dalla ricerca
- * @param beni_da_escludere <code>SimpleBulkList</code> i beni da escludere dalla ricerca, magari perchË gi‡ selezionati
+ * @param beni_da_escludere <code>SimpleBulkList</code> i beni da escludere dalla ricerca, magari perch√® gi√† selezionati
  * @param clauses <code>CompoundFindClause</code> le clausole della selezione.
  *
  * @return l'Iteratore <code>RemoteIterator</code> sui beni trovati.
@@ -457,7 +457,7 @@ public it.cnr.jada.util.RemoteIterator getListaBeniDaScaricare(
 /**
  * Abilito il pulsane "Nuovo" della finestra dei dettagli.
  *	Permette di nascondere il pulsane "Nuovo" della finestra dei dettagli del Buono di Scarico:
- *	restituisce TRUE se il bene della riga di dettagio Ë un bene accessorio NON Ë un bene 
+ *	restituisce TRUE se il bene della riga di dettagio √® un bene accessorio NON √® un bene 
  *	accessorio.
  * 
  * @return <code>boolean</code> lo stato del pulsante.
@@ -494,7 +494,7 @@ public boolean isBottoneScaricaBeneEnabled() {
 	return true;
 }
 /**
- * Disabilito il tasto Cancella, in quanto NON Ë possibile cancellare un Buono di Scarico
+ * Disabilito il tasto Cancella, in quanto NON √® possibile cancellare un Buono di Scarico
  * 	una volta creato.
  * 
  * @return <code>boolean</code> lo stato del pulsante.
@@ -509,7 +509,7 @@ public boolean isDeleteButtonEnabled() {
 		return true;// abilito	
 }
 /**
- * Nascondo il tasto Cancella, in quanto NON Ë possibile cancellare un Buono di Scarico
+ * Nascondo il tasto Cancella, in quanto NON √® possibile cancellare un Buono di Scarico
  * 	una volta creato.
  * 
  * @return <code>boolean</code> lo stato del pulsante.
@@ -542,7 +542,7 @@ public boolean isNonIniziatoAmmortamento() {
 	return false;
 }
 /**
- * Disabilita il campo relativo alla propriet‡ <i>Valore Scaricato</i>.
+ * Disabilita il campo relativo alla propriet√† <i>Valore Scaricato</i>.
  *	Restituisce TRUE, (il campo viene disabilitato), se ho scelto di scaricare il bene in 
  *	modo totale.
  *
@@ -584,12 +584,12 @@ public void setClauses(it.cnr.jada.persistency.sql.CompoundFindClause newClauses
  * Valida i dettagli del Buono di Scarico.
  *	L'utente sta creando un Buono di Scarico: il metodo controlla che tutti i campi obbligatori
  *	siano stati correttamente inseriti.
- *	Le propriet‡ che vengono controllate sono:
+ *	Le propriet√† che vengono controllate sono:
  *	<dl>
  *	<dt><b>Valore da scaricare</b>
  *	<dd>Controlla che sia stato inserito il valore dello scarico e che il valore inserito sia 
- *		congruente con il valore del bene. Se il bene Ë totalmente scaricato, il controllo 
- *		non viene eseguito, in quanto il valore da scaricare sar‡ il valore del bene stesso.  
+ *		congruente con il valore del bene. Se il bene √® totalmente scaricato, il controllo 
+ *		non viene eseguito, in quanto il valore da scaricare sar√† il valore del bene stesso.  
  *
  * @param context la <code>ActionContext</code> che ha generato la richiesta 
  * @param bulk il <code>OggettoBulk</code> bene scaricato.
@@ -610,13 +610,13 @@ public void validaDettaglioScarico(it.cnr.jada.action.ActionContext context, it.
 
 			// valore da scaricare > valore bene
 			if (result >0){
-				throw new ValidationException("Attenzione: il valore indicato nel campo 'Valore Scaricato' del bene nr. " + bene_scaricato.getNumeroBeneCompleto() + "\n non puÚ essere superiore al valore del bene stesso");
+				throw new ValidationException("Attenzione: il valore indicato nel campo 'Valore Scaricato' del bene nr. " + bene_scaricato.getNumeroBeneCompleto() + "\n non pu√≤ essere superiore al valore del bene stesso");
 			}
 
 			// valore da scaricare = valore bene - questa operazione porta a 0 il valore del bene: 
 			//	il bene deve essere scaricato totalmente
 			if (result == 0){
-				throw new ValidationException("Attenzione: la variazione per il bene nr. " + bene_scaricato.getNumeroBeneCompleto() + "\n porta il valore del bene a 0.\nQuesta operazione Ë possibile solo scaricando totalmente il bene");
+				throw new ValidationException("Attenzione: la variazione per il bene nr. " + bene_scaricato.getNumeroBeneCompleto() + "\n porta il valore del bene a 0.\nQuesta operazione √® possibile solo scaricando totalmente il bene");
 			}
 
 
@@ -652,7 +652,7 @@ public void validaDettaglioScarico(it.cnr.jada.action.ActionContext context, it.
  *
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
  * @param no_accessori <code>boolean</code> indica se escludere i beni accessori dalla ricerca
- * @param beni_da_escludere <code>SimpleBulkList</code> i beni da escludere dalla ricerca, magari perchË gi‡ selezionati
+ * @param beni_da_escludere <code>SimpleBulkList</code> i beni da escludere dalla ricerca, magari perch√® gi√† selezionati
  * @param clauses <code>CompoundFindClause</code> le clausole della selezione.
  *
  * @return l'Iteratore <code>RemoteIterator</code> sui beni trovati.
@@ -737,12 +737,12 @@ public void checkBeniAccessoriAlreadyExistFor(ActionContext context,Buono_carico
  *	E' stata generata la richiesta di scaricare totalmente, (cancellazione logica), un bene
  *	dall'Inventario.
  *	Invoca i metodi:
- *		- <i>BuonoCaricoScaricoComponent.scaricaBeniAccessoriFor</i>, (solo se scarica_accessori Ë TRUE);
+ *		- <i>BuonoCaricoScaricoComponent.scaricaBeniAccessoriFor</i>, (solo se scarica_accessori √® TRUE);
  *		- <i>BuonoCaricoScaricoComponent.modificaBeneScaricato</i>.
  *
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
  * @param bene il <code>Inventario_beniBulk</code> bene 	
- * @param selected_righe_fatt <code>List</code> le righe di Fattura Attiva alle quali Ë eventualmente associato il bene
+ * @param selected_righe_fatt <code>List</code> le righe di Fattura Attiva alle quali √® eventualmente associato il bene
  * @param scarica_accessori	<code>boolen</code> indica se scaricare anche i beni accessori
 **/
 public void scaricoTotale(it.cnr.jada.UserContext userContext, Inventario_beniBulk bene,java.util.List selected_righe_fatt, boolean scarica_accessori) throws BusinessProcessException {
@@ -781,7 +781,7 @@ public void scaricoTotale(it.cnr.jada.UserContext userContext, Inventario_beniBu
  *
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
  * @param bene il <code>Inventario_beniBulk</code> bene di riferimento
- * @param selected_righe_fatt il <code>List</code> le righe di Fattura Attiva alle quali il bene Ë eventualmente associato.
+ * @param selected_righe_fatt il <code>List</code> le righe di Fattura Attiva alle quali il bene √® eventualmente associato.
 **/ 
 public void rimuoviBeniAccessoriFor(it.cnr.jada.UserContext userContext, Inventario_beniBulk bene_padre, java.util.List selected_righe_fatt) throws it.cnr.jada.comp.ComponentException, BusinessProcessException{
 
@@ -982,7 +982,7 @@ public BitSet setSelection(it.cnr.jada.action.ActionContext context, it.cnr.jada
 	}
 }
 /* r.p. Serve per riportare in inserimento la mappa dopo il salvataggio di un trasferimento
-* Se il Buono di Scarico Ë creato da una Fattura Attiva, mantiene traccia
+* Se il Buono di Scarico √® creato da una Fattura Attiva, mantiene traccia
 * della PrimaryKeyHashtable che contiene l'associazione tra le righe di Fattura e le righe
 * di Inventario ad esse associate.
 *
@@ -1004,17 +1004,17 @@ public RemoteDetailCRUDController getEditDettController() {
 	return editDettController;
 }
 /**
- * Restituisce il valore della propriet‡ 'dettagliFattura'
+ * Restituisce il valore della propriet√† 'dettagliFattura'
  *
- * @return <code>SimpleDetailCRUDController</code> il valore della propriet‡ 'dettagliFattura'
+ * @return <code>SimpleDetailCRUDController</code> il valore della propriet√† 'dettagliFattura'
  */
 public final SimpleDetailCRUDController getDettagliFattura() {
 	return dettagliFattura;
 }
 /**
- * Restituisce il valore della propriet‡ 'righeInventarioDaFattura'
+ * Restituisce il valore della propriet√† 'righeInventarioDaFattura'
  *
- * @return <code>AbstractDetailCRUDController</code> il valore della propriet‡ 'righeInventarioDaFattura'
+ * @return <code>AbstractDetailCRUDController</code> il valore della propriet√† 'righeInventarioDaFattura'
  */
 public final AbstractDetailCRUDController getRigheInventarioDaFattura() {
 	return righeInventarioDaFattura;
@@ -1035,14 +1035,14 @@ private void validateDettagliDaFattura(it.cnr.jada.action.ActionContext context,
 	if (getDettagliFattura().getModel() instanceof Fattura_attiva_rigaIBulk){
 		if (!bene.isBeneAccessorio()){
 			if (bene.getValore_alienazione_apg() == null || bene.getValore_alienazione_apg().compareTo(new java.math.BigDecimal(0))==0){
-				throw new ValidationException("Attenzione: Ë necessario specificare un Valore Alienazione per ogni bene.\n Specificare un valore per il bene " + bene.getNumeroBeneCompleto());
+				throw new ValidationException("Attenzione: √® necessario specificare un Valore Alienazione per ogni bene.\n Specificare un valore per il bene " + bene.getNumeroBeneCompleto());
 			}
 		}
 	}
      else{
 			if (!bene.isBeneAccessorio()){
 				if (bene.getVariazione_meno() == null || bene.getVariazione_meno().compareTo(new java.math.BigDecimal(0))==0){
-					throw new ValidationException("Attenzione: Ë necessario specificare un Valore di scarico per ogni bene.\n Specificare un valore per il bene " + bene.getNumeroBeneCompleto());
+					throw new ValidationException("Attenzione: √® necessario specificare un Valore di scarico per ogni bene.\n Specificare un valore per il bene " + bene.getNumeroBeneCompleto());
 				}
 			}	
 	}
@@ -1074,7 +1074,7 @@ private void validateDettagliDaDocumento(it.cnr.jada.action.ActionContext contex
 	Inventario_beniBulk bene = (Inventario_beniBulk)bulk;
 			if (!bene.isBeneAccessorio()){
 				if (bene.getVariazione_meno() == null || bene.getVariazione_meno().compareTo(new java.math.BigDecimal(0))==0){
-					throw new ValidationException("Attenzione: Ë necessario specificare un Valore di scarico per ogni bene.\n Specificare un valore per il bene " + bene.getNumeroBeneCompleto());
+					throw new ValidationException("Attenzione: √® necessario specificare un Valore di scarico per ogni bene.\n Specificare un valore per il bene " + bene.getNumeroBeneCompleto());
 				}
 			}	
 	}
@@ -1085,7 +1085,7 @@ private void eliminaBeniAssociatiDocConBulk(ActionContext context,it.cnr.jada.bu
 					Inventario_beniBulk dett = (Inventario_beniBulk)details[i];
 					if (dett.isBeneAccessorio() && (dett.isTotalmenteScaricato()))
 						throw handleException(new ValidationException("Attenzione: durante l'associazione di un Buono di Scarico ad una Documento generico attivo \n " +
-							"Non Ë possibile eliminare beni accessori.\n Il bene " + dett.getNumeroBeneCompleto() + " non puÚ essere eliminato direttamente."));
+							"Non √® possibile eliminare beni accessori.\n Il bene " + dett.getNumeroBeneCompleto() + " non pu√≤ essere eliminato direttamente."));
 				}
 			}
 			((BuonoCaricoScaricoComponentSession)createComponentSession()).eliminaBeniAssociatiConBulk(

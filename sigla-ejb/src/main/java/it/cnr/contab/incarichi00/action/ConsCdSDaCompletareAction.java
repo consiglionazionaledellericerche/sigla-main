@@ -21,7 +21,7 @@ public class ConsCdSDaCompletareAction extends ConsultazioniAction {
 					return (Forward)actioncontext.findDefaultForward();
 			
 				if (cds.isEmpty()) {
-					bp.setMessage("Non è stata selezionata nessuna riga.");
+					bp.setMessage("Non Ã¨ stata selezionata nessuna riga.");
 					return actioncontext.findDefaultForward();
 				}							
 				bp.inviaEMail(actioncontext, cds);

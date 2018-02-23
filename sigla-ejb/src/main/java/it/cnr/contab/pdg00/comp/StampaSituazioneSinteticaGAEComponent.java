@@ -82,7 +82,7 @@ public class StampaSituazioneSinteticaGAEComponent extends it.cnr.jada.comp.CRUD
 	  *    PostCondition:
 	  *      ritorna un valore 
 	  *    PreCondition:
-	  *      Si è verificato un errore.
+	  *      Si Ã¨ verificato un errore.
 	  *    PostCondition:
 	  *      Viene inviato un messaggio con il relativo errore ritornato dal DB
 	 */

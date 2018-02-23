@@ -22,7 +22,7 @@ public PingServlet() {
 /**
  * Invocato da client per il PING di verifica attivazione del server applicativo.
  * Effettua le seguenti operazioni:
- *    1. Verifica la validit‡ dell'UTENTE specificato sulla form
+ *    1. Verifica la validit√† dell'UTENTE specificato sulla form
  *    2. Invoca il metodo ping sulla componente di ping
  *    3. Ritorna lo stato di attivazione del server
  *

@@ -111,7 +111,7 @@ public void validate() throws ValidationException {
 	if (getFl_gestione_inventario()==null)
 		setFl_gestione_inventario(Boolean.FALSE);
 	if (getFl_gestione_inventario().booleanValue() && getFl_gestione_magazzino().booleanValue())
-		throw new ValidationException("Attenzione: non è possibile che un bene servizio sia a magazzino e ad inventario");	
+		throw new ValidationException("Attenzione: non Ã¨ possibile che un bene servizio sia a magazzino e ad inventario");	
 	if (!getFl_gestione_inventario().booleanValue() && !getFl_gestione_magazzino().booleanValue())
 		throw new ValidationException("Attenzione: scegliere la gestione tra magazzino o inventario");	
 

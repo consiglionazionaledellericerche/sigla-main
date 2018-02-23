@@ -394,7 +394,7 @@ public class PdGVariazioneAction extends it.cnr.jada.util.action.CRUDAction {
 
 			PdGVariazioneBP bp = (PdGVariazioneBP)getBusinessProcess(context);
 			if (!bp.isEditing()) {
-				bp.setMessage("Non è possibile cancellare in questo momento");
+				bp.setMessage("Non Ã¨ possibile cancellare in questo momento");
 			} else {
 				bp.delete(context);
 				bp.edit(context, bp.getModel());
@@ -593,6 +593,11 @@ public class PdGVariazioneAction extends it.cnr.jada.util.action.CRUDAction {
 			Pdg_variazioneBulk pdgVar = (Pdg_variazioneBulk)getBusinessProcess(context).getModel();
 			if (!pdgVar.getTipo_variazione().isMovimentoSuFondi())
 				pdgVar.setElemento_voce(null);
+			if (!pdgVar.getTipo_variazione().getFl_variazione_trasferimento()) {
+				pdgVar.setTiMotivazioneVariazione(null);
+				pdgVar.setIdMatricola(null);
+				pdgVar.setIdBando(null);
+			}				
 			return context.findDefaultForward();
 		}catch(java.lang.ClassCastException ex){
 			return context.findDefaultForward();
@@ -616,6 +621,18 @@ public class PdGVariazioneAction extends it.cnr.jada.util.action.CRUDAction {
 			}
 			bp.edit(context, bp.getModel());
 			setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Operazione eseguita con successo");
+			return context.findDefaultForward();
+		}catch(java.lang.ClassCastException ex){
+			return context.findDefaultForward();
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}			
+	}
+
+	public Forward doOnChangeMapMotivazioneVariazione(ActionContext context) {
+		try {
+			fillModel(context);
+			((PdGVariazioneBP)getBusinessProcess(context)).aggiornaMotivazioneVariazione(context);
 			return context.findDefaultForward();
 		}catch(java.lang.ClassCastException ex){
 			return context.findDefaultForward();

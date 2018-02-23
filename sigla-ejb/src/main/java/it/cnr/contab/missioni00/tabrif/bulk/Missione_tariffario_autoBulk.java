@@ -57,25 +57,25 @@ public void validate() throws ValidationException {
 
 	// controllo su campo CODICE
 	if (getCd_tariffa_auto() == null )
-		throw new ValidationException( "Il campo CODICE non può essere vuoto!" );
+		throw new ValidationException( "Il campo CODICE non puÃ² essere vuoto!" );
 
 	// controllo su campo DESCRIZIONE
 	if (getDs_tariffa_auto() == null ) 
-		throw new ValidationException( "Il campo DESCRIZIONE non può essere vuoto!" );
+		throw new ValidationException( "Il campo DESCRIZIONE non puÃ² essere vuoto!" );
 
 	// controllo su campo INDENNITA CHILOMETRICA
 	if (getIndennita_chilometrica() == null )
-		throw new ValidationException( "Il campo INDENNITA CHILOMETRICA non può essere vuoto!" );
+		throw new ValidationException( "Il campo INDENNITA CHILOMETRICA non puÃ² essere vuoto!" );
 	if (getIndennita_chilometrica().compareTo(new java.math.BigDecimal(0))<=0)
 		throw new ValidationException( "Il campo INDENNITA CHILOMETRICA deve essere maggiore di 0!" );
 
 	// controllo su campo DATA INIZIO VALIDITA
 	if (getDt_inizio_validita() == null )
-		throw new ValidationException( "Il campo DATA INIZIO VALIDITA non può essere vuoto!" );
+		throw new ValidationException( "Il campo DATA INIZIO VALIDITA non puÃ² essere vuoto!" );
 
 	// controllo su campo DATA CANCELLAZIONE
 	if(getDt_cancellazione()!=null && getDt_cancellazione().compareTo(getDt_inizio_validita())<0)
-		throw new ValidationException("Il campo DATA CANCELLAZIONE deve essere superiore alla Data Inizio Validità");
+		throw new ValidationException("Il campo DATA CANCELLAZIONE deve essere superiore alla Data Inizio ValiditÃ ");
 	
 }		
 }

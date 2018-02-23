@@ -103,7 +103,7 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 			this.getCds().setCd_unita_organizzativa(cd_cds);
 	}
 
-// Unit‡ Organizzativa
+// Unit√† Organizzativa
 	public Unita_organizzativaBulk getUnita_organizzativa() {
 		return unita_organizzativa;
 	}
@@ -205,9 +205,9 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 	}
 
 	/**
-	 * Restituisce il valore della propriet‡ 'ds_terzo'
+	 * Restituisce il valore della propriet√† 'ds_terzo'
 	 *
-	 * @return Il valore della propriet‡ 'ds_terzo'
+	 * @return Il valore della propriet√† 'ds_terzo'
 	 */
 	public java.lang.String getDs_terzo() {
 		if ( getTerzo() != null && getTerzo().getAnagrafico() != null &&
@@ -357,7 +357,7 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 		return totale;
 	}
 	/**
-	 * Ritorna TRUE se la richiesta Ë in stato "Provvisorio"
+	 * Ritorna TRUE se la richiesta √® in stato "Provvisorio"
 	 * 
 	 * @return boolean
 	 */
@@ -365,7 +365,7 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
     	return this.getStato()!=null&&this.getStato().equals(STATO_PROVVISORIO);
     }
 	/**
-	 * Ritorna TRUE se la richiesta Ë in stato "Definitiva"
+	 * Ritorna TRUE se la richiesta √® in stato "Definitiva"
 	 * 
 	 * @return boolean
 	 */
@@ -373,7 +373,7 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
     	return this.getStato()!=null&&this.getStato().equals(STATO_DEFINITIVO);
     }
 	/**
-	 * Ritorna TRUE se la richiesta Ë in stato "Chiusa"
+	 * Ritorna TRUE se la richiesta √® in stato "Chiusa"
 	 * 
 	 * @return boolean
 	 */
@@ -381,7 +381,7 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
     	return this.getStato()!=null&&this.getStato().equals(STATO_CHIUSO);
     }
 	/**
-	 * Ritorna TRUE se la richiesta Ë in stato "Annullato"
+	 * Ritorna TRUE se la richiesta √® in stato "Annullato"
 	 * 
 	 * @return boolean
 	 */
@@ -389,7 +389,7 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
     	return this.getStato()!=null&&this.getStato().equals(STATO_ANNULLATO);
     }
 	/**
-	 * Ritorna TRUE se la richiesta Ë in stato "Inviato Corte Conti"
+	 * Ritorna TRUE se la richiesta √® in stato "Inviato Corte Conti"
 	 * 
 	 * @return boolean
 	 */

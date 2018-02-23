@@ -32,7 +32,7 @@ public boolean isItaliano(){
 	return true;
 }
 /**
- * Oltre alla normale validate da un avviso di errore se la nazione è nulla.
+ * Oltre alla normale validate da un avviso di errore se la nazione Ã¨ nulla.
  *
  * @exeption it.cnr.jada.bulk.ValidationException
 */
@@ -40,12 +40,12 @@ public void validate() throws ValidationException {
 
 	super.validate();
 	if (getDs_comune()==null)
-		throw new ValidationException("Il campo DESCRIZIONE non può essere vuoto");
+		throw new ValidationException("Il campo DESCRIZIONE non puÃ² essere vuoto");
 	if (getCd_catastale()==null)
-		throw new ValidationException("Il campo CODICE CATASTALE non può essere vuoto");
+		throw new ValidationException("Il campo CODICE CATASTALE non puÃ² essere vuoto");
 	if (getCd_cap()==null)
-		throw new ValidationException("Il campo CAP non può essere vuoto");
+		throw new ValidationException("Il campo CAP non puÃ² essere vuoto");
 	if(getCd_provincia() == null)
-		throw new ValidationException("Il campo PROVINCIA non può essere vuoto");
+		throw new ValidationException("Il campo PROVINCIA non puÃ² essere vuoto");
 }
 }

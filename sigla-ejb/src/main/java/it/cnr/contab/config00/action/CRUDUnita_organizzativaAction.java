@@ -115,7 +115,7 @@ public it.cnr.jada.action.Forward doCheckFl_rubrica(it.cnr.jada.action.ActionCon
 
 }
 /**
-	 * Metodo utilizzato per richiamare un'entit‡ di tipo Terzo associata 
+	 * Metodo utilizzato per richiamare un'entit√† di tipo Terzo associata 
 	 * all'unita' organizzativa in questione.
 	 * @param context <code>ActionContext</code> in uso.
 	 *

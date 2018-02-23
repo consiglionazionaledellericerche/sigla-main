@@ -37,7 +37,7 @@ public Forward doAddToCRUDMain_DettagliCRUDController(ActionContext context){
 		Gruppo_crBulk gruppo = (Gruppo_crBulk)bp.getModel();
 		if (gruppo!=null && gruppo.getCd_gruppo_cr()!=null &&  gruppo.getDs_gruppo_cr()!=null )
 			if (gruppo.getCrudStatus()==OggettoBulk.TO_BE_CREATED && bp.controllaEsistenzaGruppo(context,gruppo))
-				throw new ApplicationException("Gruppo gi‡ esistente!");
+				throw new ApplicationException("Gruppo gi√† esistente!");
 			//else if (gruppo.getCrudStatus()==OggettoBulk.TO_BE_CREATED && !bp.controllaEsistenzaGruppo(context,gruppo))
 				//throw new ApplicationException("Creare prima il gruppo!");
 			else 

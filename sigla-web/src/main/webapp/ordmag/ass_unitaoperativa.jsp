@@ -15,7 +15,7 @@ CRUDAssUnitaOperativaBP bp = (CRUDAssUnitaOperativaBP)BusinessProcess.getBusines
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="javascript" src="scripts/css.js"></script>
 <script language="JavaScript" src="scripts/util.js"></script>
-<title>Associazione Unit‡ Operativa</title>
+<title>Associazione Unit√† Operativa</title>
 </head>
 <body class="Form">
 <%
@@ -35,7 +35,7 @@ CRUDAssUnitaOperativaBP bp = (CRUDAssUnitaOperativaBP)BusinessProcess.getBusines
 		<TR>
 		 	<TD colspan="3">
 			<fieldset>
-				<legend class="GroupLabel">Unit‡ operative associate</legend>
+				<legend class="GroupLabel">Unit√† operative associate</legend>
 				<table width="100%">
 				<tr>
 					<td ><%bp.getAssUnitaOperativaController().writeHTMLTable(pageContext,null,true,false,true,"100%","200px"); %></td>
