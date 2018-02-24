@@ -87,6 +87,10 @@
 		<url-pattern>/help/</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>OfflineReportServlet</servlet-name>
+		<url-pattern>/offline_report/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>MessageCheckServlet</servlet-name>
 		<url-pattern>/messaggio01/checkmessage</url-pattern>
 	</servlet-mapping>
