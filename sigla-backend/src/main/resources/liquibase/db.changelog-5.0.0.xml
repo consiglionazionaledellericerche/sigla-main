@@ -23,11 +23,11 @@
             <column header="val04" name="val04" type="STRING"/>
             <column header="im01" name="im01" type="NUMERIC"/>
             <column header="im02" name="im02" type="NUMERIC"/>
-            <column header="dt01" name="dt01" type="DATE"/>
-            <column header="dt02" name="dt02" type="DATE"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dt01" name="dt01" type="${date.type}"/>
+            <column header="dt02" name="dt02" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -57,17 +57,17 @@
                 <constraints nullable="false"/>
             </column>
             <column name="righe_foglio" remarks="Numero Righe per Foglio" type="INT"/>
-            <column name="dt_ini_validita" remarks="Data Inizio Validita del bollo" type="DATE">
+            <column name="dt_ini_validita" remarks="Data Inizio Validita del bollo" type="${date.type}">
                 <constraints nullable="false"/>
             </column>
-            <column name="dt_fin_validita" remarks="Data Fine Validita del bollo" type="DATE"/>
-            <column name="dacr" type="DATE">
+            <column name="dt_fin_validita" remarks="Data Fine Validita del bollo" type="${date.type}"/>
+            <column name="dacr" type="${date.type}">
                 <constraints nullable="false"/>
             </column>
             <column name="utcr" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
-            <column name="duva" type="DATE">
+            <column name="duva" type="${date.type}">
                 <constraints nullable="false"/>
             </column>
             <column name="utuv" type="VARCHAR(20)">
@@ -82,10 +82,10 @@
 
         <loadData commentLineStartsWith="#" encoding="UTF-8" 
         		  file="csv/tipo_atto_bollo.csv" quotchar="&quot;" separator="," tableName="tipo_atto_bollo">
-	        <column name="dt_ini_validita" type="DATE"/>
-            <column name="dt_fin_validita" type="DATE"/>
-            <column name="dacr" type="DATE"/>
-            <column name="duva" type="DATE"/>
+	        <column name="dt_ini_validita" type="${date.type}"/>
+            <column name="dt_fin_validita" type="${date.type}"/>
+            <column name="dacr" type="${date.type}"/>
+            <column name="duva" type="${date.type}"/>
         </loadData>
 
         <createTable remarks="Tabella contenente gli atti assoggettati a bollo." tableName="atto_bollo">
@@ -111,17 +111,17 @@
             <column name="num_registro" remarks="Progressivo, assegnato automaticamente per anno/UO." type="INT"/>
             <column name="cd_provv" remarks="Codice del provvedimento di registrazione dell''atto." type="VARCHAR(20)"/>
             <column name="nr_provv" remarks="Numero del provvedimento di registrazione dell''atto." type="BIGINT"/>
-            <column name="dt_provv" remarks="Data del provvedimento di registrazione dell''atto." type="DATE"/>
+            <column name="dt_provv" remarks="Data del provvedimento di registrazione dell''atto." type="${date.type}"/>
             <column name="esercizio_contratto" remarks="Esercizio del Contratto." type="SMALLINT"/>
             <column name="stato_contratto" remarks="Stato del Contratto" type="CHAR(1)"/>
             <column name="pg_contratto" remarks="Progressivo del Contratto" type="BIGINT"/>
-            <column name="dacr" type="DATE">
+            <column name="dacr" type="${date.type}">
                 <constraints nullable="false"/>
             </column>
             <column name="utcr" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
-            <column name="duva" type="DATE">
+            <column name="duva" type="${date.type}">
                 <constraints nullable="false"/>
             </column>
             <column name="utuv" type="VARCHAR(20)">
@@ -194,9 +194,9 @@
         	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOM"/>
         	<column name="ti_accesso" type="CHAR(1)" value=""/>
         	<column name="ds_accesso" type="VARCHAR(200)" value="Gestione Tipo Atto Soggetto a Bollo"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -204,9 +204,9 @@
         	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOV"/>
         	<column name="ti_accesso" type="CHAR(1)" value=""/>
         	<column name="ds_accesso" type="VARCHAR(200)" value="Gestione Tipo Atto Soggetto a Bollo"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -214,9 +214,9 @@
         	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOM"/>
         	<column name="ti_accesso" type="CHAR(1)" value=""/>
         	<column name="ds_accesso" type="VARCHAR(200)" value="Gestione Atto Soggetto a Bollo"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -224,9 +224,9 @@
         	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOV"/>
         	<column name="ti_accesso" type="CHAR(1)" value=""/>
         	<column name="ds_accesso" type="VARCHAR(200)" value="Gestione Atto Soggetto a Bollo"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -234,9 +234,9 @@
         	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOCONSATTO"/>
         	<column name="ti_accesso" type="CHAR(1)" value=""/>
         	<column name="ds_accesso" type="VARCHAR(200)" value="Consultazione Atti Soggetti a Bollo"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -244,9 +244,9 @@
         	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOM"/>
         	<column name="business_process" type="VARCHAR(200)" value="CRUDConfigTipoAttoBolloBP"/>
         	<column name="ti_funzione" type="CHAR(1)" value="M"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -254,9 +254,9 @@
         	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOV"/>
         	<column name="business_process" type="VARCHAR(200)" value="CRUDConfigTipoAttoBolloBP"/>
         	<column name="ti_funzione" type="CHAR(1)" value="V"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -264,9 +264,9 @@
         	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOM"/>
         	<column name="business_process" type="VARCHAR(200)" value="CRUDAttoBolloBP"/>
         	<column name="ti_funzione" type="CHAR(1)" value="M"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -274,18 +274,18 @@
         	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOV"/>
         	<column name="business_process" type="VARCHAR(200)" value="CRUDAttoBolloBP"/>
         	<column name="ti_funzione" type="CHAR(1)" value="V"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     	<insert tableName="ass_bp_accesso">
         	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOCONSATTO"/>
         	<column name="business_process" type="VARCHAR(200)" value="ConsAttoBolloBP"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -299,9 +299,9 @@
         	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="BOLLO"/>
         	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG"/>
         	<column name="url_icona" type="VARCHAR(200)" value="leaf.gif"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -315,9 +315,9 @@
         	<column name="livello" type="SMALLINT" value="4"/>
         	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
         	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -331,9 +331,9 @@
         	<column name="livello" type="SMALLINT" value="4"/>
         	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
         	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -347,9 +347,9 @@
         	<column name="livello" type="SMALLINT" value="4"/>
         	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="C"/>
         	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -361,9 +361,9 @@
         	<column name="livello" type="SMALLINT" value="4"/>
         	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="TABRIF"/>
         	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -375,9 +375,9 @@
         	<column name="livello" type="SMALLINT" value="5"/>
         	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="TIPOATT"/>
         	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -391,9 +391,9 @@
         	<column name="livello" type="SMALLINT" value="6"/>
         	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
         	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF.TIPOATT"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
@@ -407,9 +407,9 @@
         	<column name="livello" type="SMALLINT" value="6"/>
         	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
         	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF.TIPOATT"/>
-        	<column name="duva" type="DATE" valueDate="${now}"/>
+        	<column name="duva" type="${date.type}" valueDate="${now}"/>
         	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="DATE" valueDate="${now}"/>
+        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
         	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
         	<column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
