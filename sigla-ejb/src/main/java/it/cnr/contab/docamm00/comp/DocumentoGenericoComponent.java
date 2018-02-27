@@ -4970,6 +4970,19 @@ private void validaDisponibilitaDiCassaCDS(UserContext userContext, Documento_ge
 	}
 
 }
+private BigDecimal getImportoLimiteBolloVirtuale(UserContext aUC) throws ComponentException {
+	BigDecimal importoLimite;
+	try {
+		importoLimite = Utility.createConfigurazioneCnrComponentSession().getIm01(aUC, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC), null, Configurazione_cnrBulk.PK_BOLLO_VIRTUALE, Configurazione_cnrBulk.SK_BOLLO_VIRTUALE_IMPORTO_LIMITE);
+	} catch (ComponentException e) {
+    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+	} catch (RemoteException e) {
+    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+	} catch (EJBException e) {
+    	throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+	}
+	return importoLimite;
+}
 public BigDecimal getImportoBolloVirtuale(UserContext aUC, Documento_genericoBulk doc) throws ComponentException {
 	final BigDecimal ret = null;
 	try {
@@ -4993,21 +5006,26 @@ public BigDecimal getImportoBolloVirtuale(UserContext aUC, Documento_genericoBul
 
 private void controlloBolloVirtuale(UserContext aUC, Documento_genericoBulk documentoGenerico) throws ComponentException {
 	if (documentoGenerico.getTipoDocumentoGenerico() != null && documentoGenerico.getTipoDocumentoGenerico().getSoggetto_bollo()){
-		BigDecimal importoBollo = getImportoBolloVirtuale(aUC, documentoGenerico);
-		if (importoBollo != null){
-			Boolean esisteBollo = false;
-		    for (Object dett : documentoGenerico.getDocumento_generico_dettColl()) {
-		        Documento_generico_rigaBulk riga = (Documento_generico_rigaBulk)dett;
-		        if (riga.getIm_riga() != null && riga.getIm_riga().compareTo(importoBollo) == 0){
-		        	esisteBollo = true;
-		        	break;
-		        }
-		        	
-		    }
-		    if (!esisteBollo){
-		        throw new it.cnr.jada.comp.ApplicationException(
-		                "Attenzione per un documento generico soggetto a bollo è necessario indicare almeno un dettaglio con un importo di "+importoBollo.doubleValue());
-		    }
+		BigDecimal importoLimiteBolloVirtuale = getImportoLimiteBolloVirtuale(aUC);
+		if (importoLimiteBolloVirtuale != null){
+			if (documentoGenerico.getIm_totale().compareTo(importoLimiteBolloVirtuale) > 0){
+				BigDecimal importoBollo = getImportoBolloVirtuale(aUC, documentoGenerico);
+				if (importoBollo != null){
+					Boolean esisteBollo = false;
+				    for (Object dett : documentoGenerico.getDocumento_generico_dettColl()) {
+				        Documento_generico_rigaBulk riga = (Documento_generico_rigaBulk)dett;
+				        if (riga.getIm_riga() != null && riga.getIm_riga().compareTo(importoBollo) == 0){
+				        	esisteBollo = true;
+				        	break;
+				        }
+				        	
+				    }
+				    if (!esisteBollo){
+				        throw new it.cnr.jada.comp.ApplicationException(
+				                "Attenzione per un documento generico soggetto a bollo è necessario indicare almeno un dettaglio con un importo di "+importoBollo.doubleValue());
+				    }
+				}
+			}
 		}
 	}
 }
