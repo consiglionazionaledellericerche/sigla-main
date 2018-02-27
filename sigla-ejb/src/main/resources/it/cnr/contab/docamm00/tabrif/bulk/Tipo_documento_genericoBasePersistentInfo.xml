@@ -21,7 +21,7 @@
 			columnName="TIPO_DOCUMENTO"
 			propertyName="tipoDocumento"
 			sqlTypeName="VARCHAR"
-			columnSize="1000"
+			columnSize="1"
 			nullable="false" />
 		<columnMapping
 			columnName="SOGGETTO_BOLLO"
