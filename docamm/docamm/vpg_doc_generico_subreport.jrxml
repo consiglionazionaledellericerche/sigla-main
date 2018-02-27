@@ -165,18 +165,7 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="20" splitType="Stretch">
-				<textField isBlankWhenNull="true">
-					<reportElement key="textField-26" style="TNR10" x="4" y="0" width="528" height="20" uuid="1b605c27-ca10-446d-b6dd-a84bccd1a496"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textFieldExpression><![CDATA[$F{DS_VOCE}]]></textFieldExpression>
-				</textField>
-			</band>
+			<band splitType="Stretch"/>
 		</groupFooter>
 	</group>
 	<group name="Page_Header_b" isReprintHeaderOnEachPage="true">
@@ -584,10 +573,20 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 			<band splitType="Stretch"/>
 		</groupHeader>
 		<groupFooter>
-			<band height="1" splitType="Stretch">
+			<band height="25" splitType="Stretch">
 				<line direction="BottomUp">
 					<reportElement key="line-26" style="TNR8" x="2" y="0" width="531" height="1" uuid="313cef7b-2c5c-4705-b7d9-1f7d1bc12f44"/>
 				</line>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField-26" style="TNR10" x="4" y="0" width="528" height="20" uuid="1b605c27-ca10-446d-b6dd-a84bccd1a496"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$F{DS_VOCE}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>
