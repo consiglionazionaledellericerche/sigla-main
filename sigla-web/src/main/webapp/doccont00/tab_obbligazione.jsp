@@ -4,7 +4,7 @@
  ?ResourceEdition "1.0"
 -->
 
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,it.cnr.contab.doccont00.bp.*"
 %>
 
@@ -196,7 +196,7 @@
 			<%JSPUtils.button(out, 
 					bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/find16.gif",
 					bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/find16.gif",
-					bp.getParentRoot().isBootstrap() ? "Disponibilità Voce":"Disponibilità<BR>Voce", 
+					bp.getParentRoot().isBootstrap() ? "Disponibilità Voce":"Disponibilità<BR>Voce",
 					"if (disableDblClick()) submitForm('doConsultaInserisciVoce')",
 					"btn-secondary btn-outline-primary btn-title faa-parent animated-hover",
 					true, 

@@ -3,30 +3,11 @@
   <action 
       path="/CRUDBframeBlobAction" actionClass="it.cnr.jada.blobs.action.CRUDBframeBlobAction">
   </action>
-  <action
-  	path="/ExcelBlobAction" actionClass="it.cnr.jada.blobs.action.ExcelBlobAction">
-  </action>
-  
+
   <businessProcess
       name="CRUDBframeBlobBP" className="it.cnr.jada.blobs.bp.CRUDBframeBlobBP">
     <forward name="default" path="/blobs/browser_bframe_blobs.jsp"/>
     <init-param name="defaultAction" value="CRUDBframeBlobAction" />
   </businessProcess>
 
- <businessProcess
-      name="ExcelBlobBP" className="it.cnr.jada.blobs.bp.ExcelBlobBP">
-    <forward name="default" path="/blobs/browser_excel_blobs.jsp" />
-    <init-param name="defaultAction" value="ExcelBlobAction" />
-  </businessProcess>
-  <action 
-      path="/CRUDConfigExcelBlobAction" actionClass="it.cnr.jada.blobs.action.CRUDConfigExcelBlobAction">
-  </action>
-
-  <businessProcess
-      name="CRUDConfigExcelBlobBP" className="it.cnr.jada.blobs.bp.CRUDConfigExcelBlobBP">
-    <forward name="default" path="/blobs/excel_blob.jsp"/>
-    <init-param name="bulkClassName" value="it.cnr.jada.blobs.bulk.Excel_blobBulk" />
-    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
-    <init-param name="defaultAction" value="CRUDConfigExcelBlobAction" />
-  </businessProcess>
 </action-mappings>

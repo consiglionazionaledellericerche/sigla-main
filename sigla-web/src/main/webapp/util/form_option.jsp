@@ -6,7 +6,7 @@
  ?ResourceEdition "1.0"
 -->
 
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*,it.cnr.jada.util.action.*"
 %>
 
