@@ -1,8 +1,6 @@
 package it.cnr.contab.progettiric00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.config00.blob.bulk.PostItBulk;
-import it.cnr.contab.config00.blob.bulk.PostItHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.*;
@@ -75,23 +73,6 @@ public class ProgettoRicercaModuloComponent extends it.cnr.jada.comp.CRUDCompone
         for (int i = 0; ((ProgettoBulk) bulk).getDettagli().size() > i; i++) {
             ((Progetto_uoBulk) ((ProgettoBulk) bulk).getDettagli().get(i)).setPg_progetto(new Integer(sq_progetto.intValue()));
         }
-        for (int i = 0; ((ProgettoBulk) bulk).getDettagliPostIt().size() > i; i++) {
-                    /*Valorizzazione id PostIt*/
-            if (((PostItBulk) ((ProgettoBulk) bulk).getDettagliPostIt().get(i)).getId() == null) {
-                Integer idPostit = new Integer(0);
-                PostItHome PostIt_home = (PostItHome) getHome(uc, PostItBulk.class);
-                try {
-                    idPostit = PostIt_home.getMaxId();
-                } catch (it.cnr.jada.persistency.IntrospectionException ie) {
-                    throw handleException(ie);
-                } catch (PersistencyException pe) {
-                    throw handleException(pe);
-                }
-                ((PostItBulk) ((ProgettoBulk) bulk).getDettagliPostIt().get(i)).setId(idPostit);
-            }
-					/*Fine valorizzazione id PostIt*/
-            ((PostItBulk) ((ProgettoBulk) bulk).getDettagliPostIt().get(i)).setPg_progetto(new Integer(sq_progetto.intValue()));
-        }
         return super.creaConBulk(uc, bulk);
     }
 
@@ -107,9 +88,6 @@ public class ProgettoRicercaModuloComponent extends it.cnr.jada.comp.CRUDCompone
             }
             for (int i = 0; ((ProgettoBulk) bulk).getDettagliPartner_esterni().size() > i; i++) {
                 ((Progetto_partner_esternoBulk) ((ProgettoBulk) bulk).getDettagliPartner_esterni().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
-            }
-            for (int i = 0; ((ProgettoBulk) bulk).getDettagliPostIt().size() > i; i++) {
-                ((PostItBulk) ((ProgettoBulk) bulk).getDettagliPostIt().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
             }
         }
         super.eliminaConBulk(aUC, bulk);
@@ -132,7 +110,6 @@ public class ProgettoRicercaModuloComponent extends it.cnr.jada.comp.CRUDCompone
             testata.setDettagli(new it.cnr.jada.bulk.BulkList(testataHome.findDettagli(testata)));
             testata.setDettagliFinanziatori(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliFinanziatori(testata)));
             testata.setDettagliPartner_esterni(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPartner_esterni(testata)));
-            testata.setDettagliPostIt(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPostIt(testata)));
             testata.setSpeseEsercizio(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliSpese(userContext, testata)));
 
             getHomeCache(userContext).fetchAll(userContext);

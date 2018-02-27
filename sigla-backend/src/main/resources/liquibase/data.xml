@@ -16,9 +16,9 @@
             <column header="cap" name="cap" type="STRING"/>
             <column header="frazione" name="frazione" type="STRING"/>
             <column header="pg_comune" name="pg_comune" type="NUMERIC"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
@@ -31,9 +31,9 @@
             <column header="cd_tipo_operazione" name="cd_tipo_operazione" type="STRING"/>
             <column header="tutti_magazzini" name="tutti_magazzini" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -46,9 +46,9 @@
             <column header="cd_cds" name="cd_cds" type="STRING"/>
             <column header="cd_magazzino" name="cd_magazzino" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -315,9 +315,9 @@
             <column header="cd_accesso" name="cd_accesso" type="STRING"/>
             <column header="ti_accesso" name="ti_accesso" type="STRING"/>
             <column header="ds_accesso" name="ds_accesso" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -385,9 +385,9 @@
             <column header="livello" name="livello" type="NUMERIC"/>
             <column header="url_icona" name="url_icona" type="STRING"/>
             <column header="cd_proprio_nodo" name="cd_proprio_nodo" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_nodo_padre" name="cd_nodo_padre" type="STRING"/>
@@ -471,7 +471,7 @@
             <column header="nome" name="nome" type="STRING"/>
             <column header="cognome" name="cognome" type="STRING"/>
             <column header="ti_sesso" name="ti_sesso" type="STRING"/>
-            <column header="dt_nascita" name="dt_nascita" type="DATE"/>
+            <column header="dt_nascita" name="dt_nascita" type="${date.type}"/>
             <column header="pg_comune_nascita" name="pg_comune_nascita" type="NUMERIC"/>
             <column header="via_fiscale" name="via_fiscale" type="STRING"/>
             <column header="num_civico_fiscale" name="num_civico_fiscale" type="STRING"/>
@@ -500,9 +500,9 @@
             <column header="dt_antimafia" name="dt_antimafia"/>
             <column header="cd_ente_appartenenza" name="cd_ente_appartenenza"/>
             <column header="note" name="note" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_cervellone" name="fl_cervellone" type="STRING"/>
@@ -517,7 +517,7 @@
             <column header="fl_sospensione_irpef" name="fl_sospensione_irpef" type="STRING"/>
             <column header="titolo_studio" name="titolo_studio" type="STRING"/>
             <column header="codice_amministrazione_ipa" name="codice_amministrazione_ipa" type="STRING"/>
-            <column header="data_avvio_fatt_elettr" name="data_avvio_fatt_elettr" type="DATE"/>
+            <column header="data_avvio_fatt_elettr" name="data_avvio_fatt_elettr" type="${date.type}"/>
             <column header="fl_abilita_diaria_miss_est" name="fl_abilita_diaria_miss_est" type="STRING"/>
             <column header="dt_inizio_diaria_miss_est" name="dt_inizio_diaria_miss_est"/>
             <column header="dt_fine_diaria_miss_est" name="dt_fine_diaria_miss_est"/>
@@ -635,9 +635,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/area_scientifica.csv.gz" quotchar="&quot;" separator="," tableName="area_scientifica">
             <column header="cd_area_scientifica" name="cd_area_scientifica" type="STRING"/>
             <column header="ds_area_scientifica" name="ds_area_scientifica" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -663,9 +663,9 @@
             <column header="cd_accesso" name="cd_accesso" type="STRING"/>
             <column header="business_process" name="business_process" type="STRING"/>
             <column header="ti_funzione" name="ti_funzione" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="esercizio_inizio_validita" name="esercizio_inizio_validita" type="NUMERIC"/>
@@ -918,9 +918,9 @@
             <column header="cd_tipo_documento_amm" name="cd_tipo_documento_amm" type="STRING"/>
             <column header="cd_modalita_pag" name="cd_modalita_pag" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -938,9 +938,9 @@
             <column header="ti_elemento_voce" name="ti_elemento_voce" type="STRING"/>
             <column header="ti_elemento_voce_coll" name="ti_elemento_voce_coll"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -967,9 +967,9 @@
             <column header="ti_gestione_siope" name="ti_gestione_siope" type="STRING"/>
             <column header="cd_siope" name="cd_siope" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -1209,9 +1209,9 @@
             <column header="ti_appartenenza_clg" name="ti_appartenenza_clg" type="STRING"/>
             <column header="ti_gestione_clg" name="ti_gestione_clg" type="STRING"/>
             <column header="cd_voce_clg" name="cd_voce_clg" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -1293,9 +1293,9 @@
             <column header="cd_rapp_impiego_sti" name="cd_rapp_impiego_sti" type="STRING"/>
             <column header="ds_rapp_impiego_sti" name="ds_rapp_impiego_sti" type="STRING"/>
             <column header="tipo_rapp_impiego" name="tipo_rapp_impiego" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -1304,9 +1304,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/ass_ti_rapp_ti_prest.csv.gz" quotchar="&quot;" separator="," tableName="ass_ti_rapp_ti_prest">
             <column header="cd_tipo_rapporto" name="cd_tipo_rapporto" type="STRING"/>
             <column header="cd_ti_prestazione" name="cd_ti_prestazione" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -1315,9 +1315,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/ass_ti_rapp_ti_tratt.csv.gz" quotchar="&quot;" separator="," tableName="ass_ti_rapp_ti_tratt">
             <column header="cd_tipo_rapporto" name="cd_tipo_rapporto" type="STRING"/>
             <column header="cd_trattamento" name="cd_trattamento" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -1330,9 +1330,9 @@
             <column header="esercizio_competenza" name="esercizio_competenza" type="NUMERIC"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -1350,16 +1350,16 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/ass_tipo_contr_ritenuta_siope.csv.gz" quotchar="&quot;" separator="," tableName="ass_tipo_contr_ritenuta_siope">
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="cd_contributo_ritenuta" name="cd_contributo_ritenuta" type="STRING"/>
-            <column header="dt_ini_validita" name="dt_ini_validita" type="DATE"/>
+            <column header="dt_ini_validita" name="dt_ini_validita" type="${date.type}"/>
             <column header="esercizio_siope_s" name="esercizio_siope_s" type="NUMERIC"/>
             <column header="ti_gestione_siope_s" name="ti_gestione_siope_s" type="STRING"/>
             <column header="cd_siope_s" name="cd_siope_s" type="STRING"/>
             <column header="esercizio_siope_e" name="esercizio_siope_e" type="NUMERIC"/>
             <column header="ti_gestione_siope_e" name="ti_gestione_siope_e" type="STRING"/>
             <column header="cd_siope_e" name="cd_siope_e" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -1373,9 +1373,9 @@
             <column header="cd_contributo_ritenuta" name="cd_contributo_ritenuta" type="STRING"/>
             <column header="cd_elemento_voce" name="cd_elemento_voce" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -1398,9 +1398,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/ass_tipo_gruppo_file.csv.gz" quotchar="&quot;" separator="," tableName="ass_tipo_gruppo_file">
             <column header="cd_tipo_file" name="cd_tipo_file" type="STRING"/>
             <column header="cd_gruppo_file" name="cd_gruppo_file" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -1420,8 +1420,8 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/ass_tipo_ruolo_privilegio.csv.gz" quotchar="&quot;" separator="," tableName="ass_tipo_ruolo_privilegio">
             <column header="tipo" name="tipo" type="STRING"/>
             <column header="cd_privilegio" name="cd_privilegio" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
@@ -1434,9 +1434,9 @@
             <column header="ti_gestione_siope" name="ti_gestione_siope" type="STRING"/>
             <column header="cd_siope" name="cd_siope" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -1465,9 +1465,9 @@
             <column header="cd_unita_operativa" name="cd_unita_operativa" type="STRING"/>
             <column header="cd_unita_operativa_rif" name="cd_unita_operativa_rif" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -1520,9 +1520,9 @@
             <column header="cd_attivita_commerciale" name="cd_attivita_commerciale" type="STRING"/>
             <column header="ds_attivita_commerciale" name="ds_attivita_commerciale" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -1600,7 +1600,7 @@
             <column header="pg_banca" name="pg_banca" type="NUMERIC"/>
             <column header="cab" name="cab" type="STRING"/>
             <column header="abi" name="abi" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="intestazione" name="intestazione" type="STRING"/>
             <column header="quietanza" name="quietanza" type="STRING"/>
             <column header="numero_conto" name="numero_conto" type="STRING"/>
@@ -1608,7 +1608,7 @@
             <column header="codice_iban" name="codice_iban" type="STRING"/>
             <column header="codice_swift" name="codice_swift" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
@@ -1645,8 +1645,8 @@
             <column header="messaggio" name="messaggio" type="STRING"/>
             <column header="trace" name="trace"/>
             <column header="note" name="note"/>
-            <column header="dacr" name="dacr" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
@@ -1658,8 +1658,8 @@
             <column header="ti_log" name="ti_log" type="STRING"/>
             <column header="ds_log_tipo" name="ds_log_tipo" type="STRING"/>
             <column header="note" name="note" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
@@ -1673,8 +1673,8 @@
             <column header="fl_errori" name="fl_errori" type="STRING"/>
             <column header="ds_log" name="ds_log" type="STRING"/>
             <column header="note" name="note"/>
-            <column header="dacr" name="dacr" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
@@ -1687,9 +1687,9 @@
             <column header="ds_procedura" name="ds_procedura" type="STRING"/>
             <column header="object_name" name="object_name" type="STRING"/>
             <column header="package_name" name="package_name" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_utente" name="cd_utente" type="STRING"/>
@@ -1714,9 +1714,9 @@
             <column header="valore_varchar" name="valore_varchar" type="STRING"/>
             <column header="valore_date" name="valore_date"/>
             <column header="valore_number" name="valore_number" type="NUMERIC"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -1730,9 +1730,9 @@
             <column header="fl_gestione_magazzino" name="fl_gestione_magazzino" type="STRING"/>
             <column header="cd_voce_iva" name="cd_voce_iva" type="STRING"/>
             <column header="cd_categoria_gruppo" name="cd_categoria_gruppo" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="ti_bene_servizio" name="ti_bene_servizio" type="STRING"/>
@@ -1792,8 +1792,8 @@
             <column header="root" name="root" type="STRING"/>
             <column header="upd_callback" name="upd_callback" type="STRING"/>
             <column header="del_callback" name="del_callback" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
@@ -1811,9 +1811,9 @@
             <column header="session_counter" name="session_counter" type="NUMERIC"/>
             <column header="free_memory" name="free_memory" type="NUMERIC"/>
             <column header="total_memory" name="total_memory" type="NUMERIC"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -1825,9 +1825,9 @@
             <column header="ti_appartenenza" name="ti_appartenenza" type="STRING"/>
             <column header="dt_approvazione" name="dt_approvazione"/>
             <column header="stato" name="stato" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -2139,7 +2139,7 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="cd_numeratore_mag" name="cd_numeratore_mag" type="STRING"/>
             <column header="pg_bolla_sca" name="pg_bolla_sca" type="NUMERIC"/>
-            <column header="dt_bolla_sca" name="dt_bolla_sca" type="DATE"/>
+            <column header="dt_bolla_sca" name="dt_bolla_sca" type="${date.type}"/>
             <column header="cd_cds_mag" name="cd_cds_mag" type="STRING"/>
             <column header="cd_magazzino_mag" name="cd_magazzino_mag" type="STRING"/>
             <column header="cd_uop_dest" name="cd_uop_dest" type="STRING"/>
@@ -2147,9 +2147,9 @@
             <column header="cd_magazzino_dest" name="cd_magazzino_dest"/>
             <column header="stato" name="stato" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -2188,9 +2188,9 @@
             <column header="riga_ordine" name="riga_ordine" type="NUMERIC"/>
             <column header="consegna" name="consegna" type="NUMERIC"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -2231,9 +2231,9 @@
             <column header="numero_componenti" name="numero_componenti" type="NUMERIC"/>
             <column header="im_reddito_limite" name="im_reddito_limite" type="NUMERIC"/>
             <column header="im_bonus" name="im_bonus" type="NUMERIC"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -2300,21 +2300,21 @@
             <column header="cap" name="cap" type="STRING"/>
             <column header="provincia" name="provincia" type="STRING"/>
             <column header="frazione" name="frazione" type="STRING"/>
-            <column header="dt_attivazione" name="dt_attivazione" type="DATE"/>
-            <column header="dt_cessazione" name="dt_cessazione" type="DATE"/>
+            <column header="dt_attivazione" name="dt_attivazione" type="${date.type}"/>
+            <column header="dt_cessazione" name="dt_cessazione" type="${date.type}"/>
             <column header="tipo" name="tipo" type="STRING"/>
         </loadData>
     </changeSet>
     <changeSet author="sigla" id="1516802834820-120">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/cambio.csv.gz" quotchar="&quot;" separator="," tableName="cambio">
             <column header="cd_divisa" name="cd_divisa" type="STRING"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
             <column header="cambio" name="cambio" type="NUMERIC"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -2323,9 +2323,9 @@
             <column header="pg_comune" name="pg_comune" type="NUMERIC"/>
             <column header="cd_cap" name="cd_cap" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -2333,9 +2333,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/capoconto_fin.csv.gz" quotchar="&quot;" separator="," tableName="capoconto_fin">
             <column header="cd_capoconto_fin" name="cd_capoconto_fin" type="STRING"/>
             <column header="ds_capoconto_fin" name="ds_capoconto_fin" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -2372,9 +2372,9 @@
             <column header="cd_proprio" name="cd_proprio" type="STRING"/>
             <column header="livello" name="livello" type="NUMERIC"/>
             <column header="data_cancellazione" name="data_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_categoria_padre" name="cd_categoria_padre" type="STRING"/>
@@ -2388,9 +2388,9 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="ti_appartenenza" name="ti_appartenenza" type="STRING"/>
             <column header="ti_gestione" name="ti_gestione" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_elemento_voce" name="cd_elemento_voce" type="STRING"/>
@@ -2430,9 +2430,9 @@
             <column header="cd_causale_annull" name="cd_causale_annull" type="STRING"/>
             <column header="ds_causale_annull" name="ds_causale_annull" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -2445,8 +2445,8 @@
             <column header="ti_causale_coge" name="ti_causale_coge" type="STRING"/>
             <column header="centro_costo" name="centro_costo"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
@@ -2486,9 +2486,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/causale_var_bilancio.csv.gz" quotchar="&quot;" separator="," tableName="causale_var_bilancio">
             <column header="cd_causale_var_bilancio" name="cd_causale_var_bilancio" type="STRING"/>
             <column header="ds_causale_var_bilancio" name="ds_causale_var_bilancio" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="ti_causale" name="ti_causale" type="STRING"/>
@@ -2503,9 +2503,9 @@
             <column header="cd_proprio_cdr" name="cd_proprio_cdr" type="STRING"/>
             <column header="cd_responsabile" name="cd_responsabile" type="NUMERIC"/>
             <column header="indirizzo" name="indirizzo"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_cdr_afferenza" name="cd_cdr_afferenza" type="STRING"/>
@@ -2560,9 +2560,9 @@
             <column header="cd_unita_organizzativa" name="cd_unita_organizzativa" type="STRING"/>
             <column header="ds_cig" name="ds_cig" type="STRING"/>
             <column header="fl_valido" name="fl_valido" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -2571,9 +2571,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/classificazione_anag.csv.gz" quotchar="&quot;" separator="," tableName="classificazione_anag">
             <column header="cd_classific_anag" name="cd_classific_anag" type="STRING"/>
             <column header="dt_canc" name="dt_canc"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="ds_classific_anag" name="ds_classific_anag" type="STRING"/>
@@ -2583,9 +2583,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/classificazione_cori.csv.gz" quotchar="&quot;" separator="," tableName="classificazione_cori">
             <column header="cd_classificazione_cori" name="cd_classificazione_cori" type="STRING"/>
             <column header="ds_classificazione_cori" name="ds_classificazione_cori" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -2609,9 +2609,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/classificazione_montanti.csv.gz" quotchar="&quot;" separator="," tableName="classificazione_montanti">
             <column header="pg_classificazione_montanti" name="pg_classificazione_montanti" type="NUMERIC"/>
             <column header="ds_classificazione_montanti" name="ds_classificazione_montanti" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -2652,9 +2652,9 @@
             <column header="fl_decentrato" name="fl_decentrato" type="STRING"/>
             <column header="cdr_accentratore" name="cdr_accentratore" type="STRING"/>
             <column header="fl_piano_riparto" name="fl_piano_riparto" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_esterna_da_quadrare_sac" name="fl_esterna_da_quadrare_sac" type="STRING"/>
@@ -2679,9 +2679,9 @@
             <column header="cd_livello8" name="cd_livello8" type="STRING"/>
             <column header="id_class_padre" name="id_class_padre" type="NUMERIC"/>
             <column header="fl_mastrino" name="fl_mastrino" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -2709,7 +2709,7 @@
             <column header="ds_comune_cir" name="ds_comune_cir" type="STRING"/>
             <column header="cd_provincia_cir" name="cd_provincia_cir" type="STRING"/>
             <column header="utente" name="utente" type="STRING"/>
-            <column header="timestamp" name="timestamp" type="DATE"/>
+            <column header="timestamp" name="timestamp" type="${date.type}"/>
         </loadData>
     </changeSet>
     <changeSet author="sigla" id="1516802834820-147">
@@ -3046,9 +3046,9 @@
             <column header="ds_gruppo_ep" name="ds_gruppo_ep" type="STRING"/>
             <column header="segno" name="segno" type="STRING"/>
             <column header="fl_mastrino" name="fl_mastrino" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_piano_padre" name="cd_piano_padre" type="STRING"/>
@@ -3160,9 +3160,9 @@
             <column header="ti_piano" name="ti_piano" type="STRING"/>
             <column header="ds_piano_gruppi" name="ds_piano_gruppi" type="STRING"/>
             <column header="stato" name="stato" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -3279,9 +3279,9 @@
             <column header="altra_ass_previd_inps" name="altra_ass_previd_inps" type="STRING"/>
             <column header="ds_altra_ass_previd_inps" name="ds_altra_ass_previd_inps" type="STRING"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -3291,9 +3291,9 @@
             <column header="cd_attivita_inps" name="cd_attivita_inps" type="STRING"/>
             <column header="ds_attivita_inps" name="ds_attivita_inps" type="STRING"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -3305,9 +3305,9 @@
             <column header="cd_cpa" name="cd_cpa" type="STRING"/>
             <column header="ds_cpa" name="ds_cpa" type="STRING"/>
             <column header="livello" name="livello" type="NUMERIC"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="ti_bene_servizio" name="ti_bene_servizio" type="STRING"/>
@@ -3320,9 +3320,9 @@
             <column header="ds_rapporto_inps" name="ds_rapporto_inps" type="STRING"/>
             <column header="fl_attivita_obbl" name="fl_attivita_obbl" type="STRING"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -3334,9 +3334,9 @@
             <column header="cd_siope" name="cd_siope" type="STRING"/>
             <column header="descrizione" name="descrizione" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -3351,9 +3351,9 @@
             <column header="fl_accentrato" name="fl_accentrato" type="STRING"/>
             <column header="fl_decentrato" name="fl_decentrato" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -3522,7 +3522,7 @@
     <changeSet author="sigla" id="1516802834820-181">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/comune.csv.gz" quotchar="&quot;" separator="," tableName="comune">
             <column header="pg_comune" name="pg_comune" type="NUMERIC"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="ds_comune" name="ds_comune" type="STRING"/>
             <column header="ti_italiano_estero" name="ti_italiano_estero" type="STRING"/>
             <column header="cd_comune" name="cd_comune" type="STRING"/>
@@ -3531,11 +3531,11 @@
             <column header="pg_nazione" name="pg_nazione" type="NUMERIC"/>
             <column header="cd_provincia" name="cd_provincia" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_addcom_aliqmax" name="fl_addcom_aliqmax" type="STRING"/>
-            <column header="dt_canc" name="dt_canc" type="DATE"/>
+            <column header="dt_canc" name="dt_canc" type="${date.type}"/>
         </loadData>
     </changeSet>
     <changeSet author="sigla" id="1516802834820-182">
@@ -3543,9 +3543,9 @@
             <column header="cd_condizione_bene" name="cd_condizione_bene" type="STRING"/>
             <column header="ds_condizione_bene" name="ds_condizione_bene" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -3555,9 +3555,9 @@
             <column header="cd_incoterm" name="cd_incoterm" type="STRING"/>
             <column header="cd_gruppo" name="cd_gruppo" type="STRING"/>
             <column header="ds_condizione_consegna" name="ds_condizione_consegna" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -3618,11 +3618,11 @@
             <column header="val04" name="val04" type="STRING"/>
             <column header="im01" name="im01" type="NUMERIC"/>
             <column header="im02" name="im02" type="NUMERIC"/>
-            <column header="dt01" name="dt01" type="DATE"/>
-            <column header="dt02" name="dt02" type="DATE"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dt01" name="dt01" type="${date.type}"/>
+            <column header="dt02" name="dt02" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -3636,9 +3636,9 @@
             <column header="im02" name="im02"/>
             <column header="dt01" name="dt01"/>
             <column header="fl01" name="fl01"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -3797,13 +3797,13 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/contatto.csv.gz" quotchar="&quot;" separator="," tableName="contatto">
             <column header="cd_terzo" name="cd_terzo" type="NUMERIC"/>
             <column header="pg_contatto" name="pg_contatto" type="NUMERIC"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="motivo" name="motivo" type="STRING"/>
             <column header="telefono" name="telefono" type="STRING"/>
             <column header="fax" name="fax"/>
             <column header="email" name="email"/>
             <column header="ds_contatto" name="ds_contatto" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
@@ -3818,7 +3818,7 @@
             <column header="stato_padre" name="stato_padre"/>
             <column header="pg_contratto_padre" name="pg_contratto_padre"/>
             <column header="cd_unita_organizzativa" name="cd_unita_organizzativa" type="STRING"/>
-            <column header="dt_registrazione" name="dt_registrazione" type="DATE"/>
+            <column header="dt_registrazione" name="dt_registrazione" type="${date.type}"/>
             <column header="fig_giur_int" name="fig_giur_int" type="NUMERIC"/>
             <column header="cd_terzo_resp" name="cd_terzo_resp" type="NUMERIC"/>
             <column header="cd_terzo_firmatario" name="cd_terzo_firmatario" type="NUMERIC"/>
@@ -3829,9 +3829,9 @@
             <column header="cd_proc_amm" name="cd_proc_amm" type="STRING"/>
             <column header="oggetto" name="oggetto" type="STRING"/>
             <column header="cd_protocollo" name="cd_protocollo"/>
-            <column header="dt_stipula" name="dt_stipula" type="DATE"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
+            <column header="dt_stipula" name="dt_stipula" type="${date.type}"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
             <column header="dt_proroga" name="dt_proroga"/>
             <column header="im_contratto_attivo" name="im_contratto_attivo"/>
             <column header="im_contratto_passivo" name="im_contratto_passivo" type="NUMERIC"/>
@@ -3850,9 +3850,9 @@
             <column header="esercizio_protocollo" name="esercizio_protocollo"/>
             <column header="cd_protocollo_generale" name="cd_protocollo_generale"/>
             <column header="fl_art82" name="fl_art82" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_tipo_norma_perla" name="cd_tipo_norma_perla" type="STRING"/>
@@ -3874,7 +3874,7 @@
             <column header="stato_padre" name="stato_padre"/>
             <column header="pg_contratto_padre" name="pg_contratto_padre"/>
             <column header="cd_unita_organizzativa" name="cd_unita_organizzativa" type="STRING"/>
-            <column header="dt_registrazione" name="dt_registrazione" type="DATE"/>
+            <column header="dt_registrazione" name="dt_registrazione" type="${date.type}"/>
             <column header="fig_giur_int" name="fig_giur_int" type="NUMERIC"/>
             <column header="cd_terzo_resp" name="cd_terzo_resp" type="NUMERIC"/>
             <column header="cd_terzo_firmatario" name="cd_terzo_firmatario" type="NUMERIC"/>
@@ -3885,9 +3885,9 @@
             <column header="cd_proc_amm" name="cd_proc_amm" type="STRING"/>
             <column header="oggetto" name="oggetto" type="STRING"/>
             <column header="cd_protocollo" name="cd_protocollo"/>
-            <column header="dt_stipula" name="dt_stipula" type="DATE"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
+            <column header="dt_stipula" name="dt_stipula" type="${date.type}"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
             <column header="dt_proroga" name="dt_proroga"/>
             <column header="im_contratto_attivo" name="im_contratto_attivo"/>
             <column header="im_contratto_passivo" name="im_contratto_passivo" type="NUMERIC"/>
@@ -3906,9 +3906,9 @@
             <column header="esercizio_protocollo" name="esercizio_protocollo"/>
             <column header="cd_protocollo_generale" name="cd_protocollo_generale"/>
             <column header="fl_art82" name="fl_art82" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_tipo_norma_perla" name="cd_tipo_norma_perla" type="STRING"/>
@@ -3984,9 +3984,9 @@
             <column header="cd_cds" name="cd_cds" type="STRING"/>
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="stato" name="stato" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -3998,9 +3998,9 @@
             <column header="cd_cds" name="cd_cds" type="STRING"/>
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="cd_utente" name="cd_utente" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -4092,14 +4092,14 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/detrazioni_familiari.csv.gz" quotchar="&quot;" separator="," tableName="detrazioni_familiari">
             <column header="ti_persona" name="ti_persona" type="STRING"/>
             <column header="numero" name="numero" type="NUMERIC"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
             <column header="im_inferiore" name="im_inferiore" type="NUMERIC"/>
             <column header="im_superiore" name="im_superiore" type="NUMERIC"/>
             <column header="im_detrazione" name="im_detrazione" type="NUMERIC"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="im_detrazione_primo_figlio" name="im_detrazione_primo_figlio" type="NUMERIC"/>
@@ -4112,14 +4112,14 @@
     <changeSet author="sigla" id="1516802834820-206">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/detrazioni_lavoro.csv.gz" quotchar="&quot;" separator="," tableName="detrazioni_lavoro">
             <column header="ti_lavoro" name="ti_lavoro" type="STRING"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
             <column header="im_inferiore" name="im_inferiore" type="NUMERIC"/>
             <column header="im_superiore" name="im_superiore" type="NUMERIC"/>
             <column header="im_detrazione" name="im_detrazione" type="NUMERIC"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="im_maggiorazione" name="im_maggiorazione" type="NUMERIC"/>
@@ -4158,15 +4158,15 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/dipartimento.csv.gz" quotchar="&quot;" separator="," tableName="dipartimento">
             <column header="cd_dipartimento" name="cd_dipartimento" type="STRING"/>
             <column header="ds_dipartimento" name="ds_dipartimento" type="STRING"/>
-            <column header="dt_istituzione" name="dt_istituzione" type="DATE"/>
+            <column header="dt_istituzione" name="dt_istituzione" type="${date.type}"/>
             <column header="ds_del_ist" name="ds_del_ist"/>
             <column header="cd_terzo" name="cd_terzo"/>
             <column header="id_dipartimento" name="id_dipartimento" type="NUMERIC"/>
             <column header="dt_soppressione" name="dt_soppressione"/>
             <column header="ds_del_soppr" name="ds_del_soppr"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -4246,10 +4246,10 @@
             <column header="ds_divisa" name="ds_divisa" type="STRING"/>
             <column header="precisione" name="precisione" type="NUMERIC"/>
             <column header="fl_calcola_con_diviso" name="fl_calcola_con_diviso" type="STRING"/>
-            <column header="dt_cancellazione" name="dt_cancellazione" type="DATE"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dt_cancellazione" name="dt_cancellazione" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -4743,10 +4743,10 @@
             <column header="fl_voce_personale" name="fl_voce_personale" type="STRING"/>
             <column header="cd_parte" name="cd_parte"/>
             <column header="ds_elemento_voce" name="ds_elemento_voce" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_elemento_padre" name="cd_elemento_padre"/>
             <column header="fl_partita_giro" name="fl_partita_giro" type="STRING"/>
@@ -4782,13 +4782,13 @@
     <changeSet author="sigla" id="1516802834820-230">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/esenzioni_addcom.csv.gz" quotchar="&quot;" separator="," tableName="esenzioni_addcom">
             <column header="cd_catastale" name="cd_catastale" type="STRING"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
             <column header="importo" name="importo" type="NUMERIC"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
             <column header="pg_comune" name="pg_comune" type="NUMERIC"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -4814,9 +4814,9 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="ds_esercizio" name="ds_esercizio" type="STRING"/>
             <column header="st_apertura_chiusura" name="st_apertura_chiusura" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="im_cassa_iniziale" name="im_cassa_iniziale" type="NUMERIC"/>
@@ -4825,8 +4825,8 @@
     <changeSet author="sigla" id="1516802834820-233">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/esercizio_base.csv.gz" quotchar="&quot;" separator="," tableName="esercizio_base">
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
-            <column header="dacr" name="dacr" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
@@ -5225,13 +5225,13 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="cd_numeratore_mag" name="cd_numeratore_mag" type="STRING"/>
             <column header="numero" name="numero" type="NUMERIC"/>
-            <column header="data_bolla" name="data_bolla" type="DATE"/>
+            <column header="data_bolla" name="data_bolla" type="${date.type}"/>
             <column header="numero_bolla" name="numero_bolla" type="STRING"/>
-            <column header="data_consegna" name="data_consegna" type="DATE"/>
+            <column header="data_consegna" name="data_consegna" type="${date.type}"/>
             <column header="stato" name="stato" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -5253,9 +5253,9 @@
             <column header="consegna" name="consegna" type="NUMERIC"/>
             <column header="quantita_evasa" name="quantita_evasa" type="NUMERIC"/>
             <column header="stato" name="stato" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -6009,9 +6009,9 @@
     <changeSet author="sigla" id="1516802834820-267">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/funzione.csv.gz" quotchar="&quot;" separator="," tableName="funzione">
             <column header="cd_funzione" name="cd_funzione" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="ds_funzione" name="ds_funzione" type="STRING"/>
@@ -6024,9 +6024,9 @@
             <column header="cd_gruppo_cr" name="cd_gruppo_cr" type="STRING"/>
             <column header="ds_gruppo_cr" name="ds_gruppo_cr" type="STRING"/>
             <column header="fl_accentrato" name="fl_accentrato" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_anno_prec" name="fl_anno_prec" type="STRING"/>
@@ -6088,9 +6088,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/gruppo_file.csv.gz" quotchar="&quot;" separator="," tableName="gruppo_file">
             <column header="cd_gruppo_file" name="cd_gruppo_file" type="STRING"/>
             <column header="ds_gruppo_file" name="ds_gruppo_file" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -6100,9 +6100,9 @@
             <column header="cd_gruppo_inquadramento" name="cd_gruppo_inquadramento" type="STRING"/>
             <column header="ds_gruppo_inquadramento" name="ds_gruppo_inquadramento" type="STRING"/>
             <column header="fl_default" name="fl_default" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -6111,9 +6111,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/gruppo_iva.csv.gz" quotchar="&quot;" separator="," tableName="gruppo_iva">
             <column header="cd_gruppo_iva" name="cd_gruppo_iva" type="STRING"/>
             <column header="ds_gruppo_iva" name="ds_gruppo_iva" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -6134,9 +6134,9 @@
             <column header="cd_gruppo_merceologico" name="cd_gruppo_merceologico" type="STRING"/>
             <column header="ds_gruppo_merceologico" name="ds_gruppo_merceologico" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -6146,9 +6146,9 @@
             <column header="cd_help" name="cd_help" type="STRING"/>
             <column header="page" name="page" type="STRING"/>
             <column header="help_url" name="help_url" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="ds_page" name="ds_page" type="STRING"/>
@@ -6400,9 +6400,9 @@
             <column header="importo_iniziale" name="importo_iniziale" type="NUMERIC"/>
             <column header="importo_complessivo" name="importo_complessivo" type="NUMERIC"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -6418,9 +6418,9 @@
             <column header="tipo_archivio" name="tipo_archivio" type="STRING"/>
             <column header="stato" name="stato" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -6577,9 +6577,9 @@
             <column header="ds_file" name="ds_file"/>
             <column header="tipo_archivio" name="tipo_archivio" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="stato" name="stato" type="STRING"/>
         </loadData>
@@ -6657,9 +6657,9 @@
             <column header="cd_terzo" name="cd_terzo" type="NUMERIC"/>
             <column header="dt_registrazione" name="dt_registrazione"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dt_stipula" name="dt_stipula" type="DATE"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
+            <column header="dt_stipula" name="dt_stipula" type="${date.type}"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
             <column header="dt_proroga" name="dt_proroga"/>
             <column header="dt_proroga_pagam" name="dt_proroga_pagam"/>
             <column header="ti_istituz_commerc" name="ti_istituz_commerc" type="STRING"/>
@@ -6669,9 +6669,9 @@
             <column header="importo_lordo" name="importo_lordo" type="NUMERIC"/>
             <column header="importo_complessivo" name="importo_complessivo" type="NUMERIC"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -6954,8 +6954,8 @@
             <column header="indirizzo" name="indirizzo" type="STRING"/>
             <column header="cap" name="cap" type="STRING"/>
             <column header="cf" name="cf" type="STRING"/>
-            <column header="dt_verifica_cf" name="dt_verifica_cf" type="DATE"/>
-            <column header="data_avvio_sfe" name="data_avvio_sfe" type="DATE"/>
+            <column header="dt_verifica_cf" name="dt_verifica_cf" type="${date.type}"/>
+            <column header="data_avvio_sfe" name="data_avvio_sfe" type="${date.type}"/>
         </loadData>
     </changeSet>
     <changeSet author="sigla" id="1516802834820-313">
@@ -6971,11 +6971,11 @@
             <column header="cd_tipo_doc" name="cd_tipo_doc" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="user_" name="user_" type="STRING"/>
-            <column header="dt_transaction_" name="dt_transaction_" type="DATE"/>
+            <column header="dt_transaction_" name="dt_transaction_" type="${date.type}"/>
             <column header="action_" name="action_" type="STRING"/>
         </loadData>
     </changeSet>
@@ -6987,7 +6987,7 @@
             <column header="pg_banca" name="pg_banca" type="NUMERIC"/>
             <column header="cab" name="cab" type="STRING"/>
             <column header="abi" name="abi" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="intestazione" name="intestazione" type="STRING"/>
             <column header="quietanza" name="quietanza" type="STRING"/>
             <column header="numero_conto" name="numero_conto" type="STRING"/>
@@ -6995,7 +6995,7 @@
             <column header="codice_iban" name="codice_iban" type="STRING"/>
             <column header="codice_swift" name="codice_swift"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
@@ -7004,7 +7004,7 @@
             <column header="origine" name="origine" type="STRING"/>
             <column header="fl_cc_cds" name="fl_cc_cds" type="STRING"/>
             <column header="user_" name="user_" type="STRING"/>
-            <column header="dt_transaction_" name="dt_transaction_" type="DATE"/>
+            <column header="dt_transaction_" name="dt_transaction_" type="${date.type}"/>
             <column header="action_" name="action_" type="STRING"/>
         </loadData>
     </changeSet>
@@ -7012,11 +7012,11 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/l_configurazione_cnr.csv.gz" quotchar="&quot;" separator="," tableName="l_configurazione_cnr">
             <column header="pg_storico_" name="pg_storico_" type="NUMERIC"/>
             <column header="im02" name="im02"/>
-            <column header="dt01" name="dt01" type="DATE"/>
+            <column header="dt01" name="dt01" type="${date.type}"/>
             <column header="dt02" name="dt02"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
@@ -7029,7 +7029,7 @@
             <column header="val04" name="val04" type="STRING"/>
             <column header="im01" name="im01" type="NUMERIC"/>
             <column header="user_" name="user_" type="STRING"/>
-            <column header="dt_transaction_" name="dt_transaction_" type="DATE"/>
+            <column header="dt_transaction_" name="dt_transaction_" type="${date.type}"/>
             <column header="action_" name="action_" type="STRING"/>
         </loadData>
     </changeSet>
@@ -7040,14 +7040,14 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="ds_esercizio" name="ds_esercizio" type="STRING"/>
             <column header="st_apertura_chiusura" name="st_apertura_chiusura" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="im_cassa_iniziale" name="im_cassa_iniziale" type="NUMERIC"/>
             <column header="user_" name="user_" type="STRING"/>
-            <column header="dt_transaction_" name="dt_transaction_" type="DATE"/>
+            <column header="dt_transaction_" name="dt_transaction_" type="${date.type}"/>
             <column header="action_" name="action_" type="STRING"/>
         </loadData>
     </changeSet>
@@ -7567,26 +7567,26 @@
             <column header="nome_table_log" name="nome_table_log" type="STRING"/>
             <column header="ds_table_log" name="ds_table_log" type="STRING"/>
             <column header="stato_trg_ad" name="stato_trg_ad" type="STRING"/>
-            <column header="dt_ultimo_start_ad" name="dt_ultimo_start_ad" type="DATE"/>
+            <column header="dt_ultimo_start_ad" name="dt_ultimo_start_ad" type="${date.type}"/>
             <column header="stato_trg_ai" name="stato_trg_ai" type="STRING"/>
-            <column header="dt_ultimo_start_ai" name="dt_ultimo_start_ai" type="DATE"/>
+            <column header="dt_ultimo_start_ai" name="dt_ultimo_start_ai" type="${date.type}"/>
             <column header="stato_trg_au" name="stato_trg_au" type="STRING"/>
-            <column header="dt_ultimo_start_au" name="dt_ultimo_start_au" type="DATE"/>
-            <column header="dt_attivazione_ad" name="dt_attivazione_ad" type="DATE"/>
-            <column header="dt_disattivazione_ad" name="dt_disattivazione_ad" type="DATE"/>
-            <column header="dt_attivazione_ai" name="dt_attivazione_ai" type="DATE"/>
-            <column header="dt_disattivazione_ai" name="dt_disattivazione_ai" type="DATE"/>
-            <column header="dt_attivazione_au" name="dt_attivazione_au" type="DATE"/>
-            <column header="dt_disattivazione_au" name="dt_disattivazione_au" type="DATE"/>
+            <column header="dt_ultimo_start_au" name="dt_ultimo_start_au" type="${date.type}"/>
+            <column header="dt_attivazione_ad" name="dt_attivazione_ad" type="${date.type}"/>
+            <column header="dt_disattivazione_ad" name="dt_disattivazione_ad" type="${date.type}"/>
+            <column header="dt_attivazione_ai" name="dt_attivazione_ai" type="${date.type}"/>
+            <column header="dt_disattivazione_ai" name="dt_disattivazione_ai" type="${date.type}"/>
+            <column header="dt_attivazione_au" name="dt_attivazione_au" type="${date.type}"/>
+            <column header="dt_disattivazione_au" name="dt_disattivazione_au" type="${date.type}"/>
             <column header="num_righe_in_table_log" name="num_righe_in_table_log" type="NUMERIC"/>
             <column header="num_max_righe_table_log" name="num_max_righe_table_log" type="NUMERIC"/>
             <column header="nome_trg_ad" name="nome_trg_ad" type="STRING"/>
             <column header="nome_trg_ai" name="nome_trg_ai" type="STRING"/>
             <column header="nome_trg_au" name="nome_trg_au" type="STRING"/>
             <column header="nome_pkg" name="nome_pkg" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -7605,7 +7605,7 @@
             <column header="giacenza" name="giacenza" type="NUMERIC"/>
             <column header="quantita_valore" name="quantita_valore" type="NUMERIC"/>
             <column header="lotto_fornitore" name="lotto_fornitore"/>
-            <column header="dt_carico" name="dt_carico" type="DATE"/>
+            <column header="dt_carico" name="dt_carico" type="${date.type}"/>
             <column header="valore_unitario" name="valore_unitario" type="NUMERIC"/>
             <column header="costo_unitario" name="costo_unitario" type="NUMERIC"/>
             <column header="quantita_carico" name="quantita_carico" type="NUMERIC"/>
@@ -7622,9 +7622,9 @@
             <column header="cd_divisa" name="cd_divisa" type="STRING"/>
             <column header="cambio" name="cambio" type="NUMERIC"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -7655,9 +7655,9 @@
             <column header="tabella" name="tabella" type="STRING"/>
             <column header="attributo" name="attributo" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="lunghezza" name="lunghezza" type="NUMERIC"/>
         </loadData>
@@ -7672,9 +7672,9 @@
             <column header="pg_comune" name="pg_comune" type="NUMERIC"/>
             <column header="pg_nazione" name="pg_nazione" type="NUMERIC"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -7705,21 +7705,21 @@
             <column header="cd_tipo_movimento_rv_neg" name="cd_tipo_movimento_rv_neg" type="STRING"/>
             <column header="cd_cds_chi" name="cd_cds_chi" type="STRING"/>
             <column header="cd_tipo_movimento_chi" name="cd_tipo_movimento_chi" type="STRING"/>
-            <column header="dt_ult_val_sca" name="dt_ult_val_sca" type="DATE"/>
+            <column header="dt_ult_val_sca" name="dt_ult_val_sca" type="${date.type}"/>
             <column header="esercizio_val_sca" name="esercizio_val_sca" type="NUMERIC"/>
             <column header="cd_cds_raggr_sca" name="cd_cds_raggr_sca" type="STRING"/>
             <column header="cd_raggr_magazzino_sca" name="cd_raggr_magazzino_sca" type="STRING"/>
             <column header="metodo_val_sca" name="metodo_val_sca" type="STRING"/>
-            <column header="dt_ult_val_rim" name="dt_ult_val_rim" type="DATE"/>
+            <column header="dt_ult_val_rim" name="dt_ult_val_rim" type="${date.type}"/>
             <column header="esercizio_val_rim" name="esercizio_val_rim" type="NUMERIC"/>
             <column header="cd_cds_raggr_rim" name="cd_cds_raggr_rim" type="STRING"/>
             <column header="cd_raggr_magazzino_rim" name="cd_raggr_magazzino_rim" type="STRING"/>
             <column header="metodo_val_rim" name="metodo_val_rim" type="STRING"/>
             <column header="abil_tutti_beni_serv" name="abil_tutti_beni_serv" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -8180,13 +8180,13 @@
             <column header="fl_alloggio_gratuito" name="fl_alloggio_gratuito" type="STRING"/>
             <column header="fl_vitto_alloggio_gratuito" name="fl_vitto_alloggio_gratuito" type="STRING"/>
             <column header="durata_ore" name="durata_ore" type="STRING"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
             <column header="percentuale_abbattimento" name="percentuale_abbattimento" type="NUMERIC"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -8241,13 +8241,13 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/missione_diaria.csv.gz" quotchar="&quot;" separator="," tableName="missione_diaria">
             <column header="pg_nazione" name="pg_nazione" type="NUMERIC"/>
             <column header="cd_gruppo_inquadramento" name="cd_gruppo_inquadramento" type="STRING"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
             <column header="im_diaria" name="im_diaria" type="NUMERIC"/>
             <column header="cd_divisa" name="cd_divisa" type="STRING"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -8255,12 +8255,12 @@
     <changeSet author="sigla" id="1516802834820-365">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/missione_quota_esente.csv.gz" quotchar="&quot;" separator="," tableName="missione_quota_esente">
             <column header="ti_italia_estero" name="ti_italia_estero" type="STRING"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
             <column header="quota_esente" name="quota_esente" type="NUMERIC"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -8269,13 +8269,13 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/missione_quota_rimborso.csv.gz" quotchar="&quot;" separator="," tableName="missione_quota_rimborso">
             <column header="cd_area_estera" name="cd_area_estera" type="STRING"/>
             <column header="cd_gruppo_inquadramento" name="cd_gruppo_inquadramento" type="STRING"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
             <column header="im_rimborso" name="im_rimborso" type="NUMERIC"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -8284,13 +8284,13 @@
             <column header="ti_auto" name="ti_auto" type="STRING"/>
             <column header="ti_area_geografica" name="ti_area_geografica" type="STRING"/>
             <column header="pg_nazione" name="pg_nazione" type="NUMERIC"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
             <column header="indennita_chilometrica" name="indennita_chilometrica" type="NUMERIC"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -8345,14 +8345,14 @@
             <column header="ti_area_geografica" name="ti_area_geografica" type="STRING"/>
             <column header="pg_nazione" name="pg_nazione" type="NUMERIC"/>
             <column header="pg_rif_inquadramento" name="pg_rif_inquadramento" type="NUMERIC"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
             <column header="cd_divisa" name="cd_divisa" type="STRING"/>
             <column header="limite_max_pasto" name="limite_max_pasto" type="NUMERIC"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_area_estera" name="cd_area_estera" type="STRING"/>
@@ -8364,7 +8364,7 @@
             <column header="ti_area_geografica" name="ti_area_geografica" type="STRING"/>
             <column header="pg_nazione" name="pg_nazione" type="NUMERIC"/>
             <column header="pg_rif_inquadramento" name="pg_rif_inquadramento" type="NUMERIC"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
             <column header="ds_ti_spesa" name="ds_ti_spesa" type="STRING"/>
             <column header="fl_giustificativo_richiesto" name="fl_giustificativo_richiesto" type="STRING"/>
             <column header="fl_pasto" name="fl_pasto" type="STRING"/>
@@ -8374,11 +8374,11 @@
             <column header="cd_divisa" name="cd_divisa" type="STRING"/>
             <column header="limite_max_spesa" name="limite_max_spesa" type="NUMERIC"/>
             <column header="percentuale_maggiorazione" name="percentuale_maggiorazione" type="NUMERIC"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_ammissibile_con_rimborso" name="fl_ammissibile_con_rimborso" type="STRING"/>
@@ -8389,9 +8389,9 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="cd_modalita_erogazione" name="cd_modalita_erogazione" type="STRING"/>
             <column header="ds_modalita_erogazione" name="ds_modalita_erogazione" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -8401,9 +8401,9 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="cd_modalita_incasso" name="cd_modalita_incasso" type="STRING"/>
             <column header="ds_modalita_incasso" name="ds_modalita_incasso" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -8413,9 +8413,9 @@
             <column header="cd_terzo" name="cd_terzo" type="NUMERIC"/>
             <column header="cd_modalita_pag" name="cd_modalita_pag" type="STRING"/>
             <column header="cd_terzo_delegato" name="cd_terzo_delegato" type="NUMERIC"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -8425,9 +8425,9 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="cd_modalita_trasporto" name="cd_modalita_trasporto" type="STRING"/>
             <column header="ds_modalita_trasporto" name="ds_modalita_trasporto" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -8568,12 +8568,12 @@
     <changeSet author="sigla" id="1516802834820-380">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/movimenti_mag.csv.gz" quotchar="&quot;" separator="," tableName="movimenti_mag">
             <column header="pg_movimento" name="pg_movimento" type="NUMERIC"/>
-            <column header="dt_movimento" name="dt_movimento" type="DATE"/>
+            <column header="dt_movimento" name="dt_movimento" type="${date.type}"/>
             <column header="cd_cds_tipo_movimento" name="cd_cds_tipo_movimento" type="STRING"/>
             <column header="cd_tipo_movimento" name="cd_tipo_movimento" type="STRING"/>
-            <column header="data_bolla" name="data_bolla" type="DATE"/>
+            <column header="data_bolla" name="data_bolla" type="${date.type}"/>
             <column header="numero_bolla" name="numero_bolla"/>
-            <column header="dt_riferimento" name="dt_riferimento" type="DATE"/>
+            <column header="dt_riferimento" name="dt_riferimento" type="${date.type}"/>
             <column header="cd_cds_ordine" name="cd_cds_ordine" type="STRING"/>
             <column header="cd_unita_operativa_ordine" name="cd_unita_operativa_ordine" type="STRING"/>
             <column header="esercizio_ordine" name="esercizio_ordine" type="NUMERIC"/>
@@ -8617,9 +8617,9 @@
             <column header="prezzo_unitario" name="prezzo_unitario" type="NUMERIC"/>
             <column header="stato" name="stato" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="pg_movimento_rif" name="pg_movimento_rif" type="NUMERIC"/>
@@ -8678,9 +8678,9 @@
     <changeSet author="sigla" id="1516802834820-383">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/natura.csv.gz" quotchar="&quot;" separator="," tableName="natura">
             <column header="cd_natura" name="cd_natura" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="ds_natura" name="ds_natura" type="STRING"/>
@@ -8696,9 +8696,9 @@
             <column header="cd_natura_transazione" name="cd_natura_transazione" type="STRING"/>
             <column header="cd_oper_triangolare" name="cd_oper_triangolare" type="STRING"/>
             <column header="ds_natura_transazione" name="ds_natura_transazione" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -8715,9 +8715,9 @@
             <column header="cd_nazione_770" name="cd_nazione_770" type="STRING"/>
             <column header="cd_nazione" name="cd_nazione" type="STRING"/>
             <column header="cd_iso" name="cd_iso" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_iban" name="fl_iban" type="STRING"/>
@@ -8733,9 +8733,9 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="cd_catastale" name="cd_catastale" type="STRING"/>
             <column header="ds_nazione" name="ds_nazione" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_nazione" name="cd_nazione" type="STRING"/>
@@ -8748,9 +8748,9 @@
             <column header="cd_nomenclatura_combinata" name="cd_nomenclatura_combinata" type="STRING"/>
             <column header="ds_nomenclatura_combinata" name="ds_nomenclatura_combinata" type="STRING"/>
             <column header="livello" name="livello" type="NUMERIC"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="esercizio_inizio" name="esercizio_inizio" type="NUMERIC"/>
@@ -8765,9 +8765,9 @@
             <column header="nota" name="nota" type="STRING"/>
             <column header="nota2" name="nota2"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -8806,9 +8806,9 @@
             <column header="tabella" name="tabella" type="STRING"/>
             <column header="cd_corrente" name="cd_corrente" type="STRING"/>
             <column header="cd_massimo" name="cd_massimo" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_iniziale" name="cd_iniziale" type="STRING"/>
@@ -8838,9 +8838,9 @@
             <column header="cd_tipo_documento_amm" name="cd_tipo_documento_amm" type="STRING"/>
             <column header="corrente" name="corrente" type="NUMERIC"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -8853,9 +8853,9 @@
             <column header="corrente" name="corrente" type="NUMERIC"/>
             <column header="ultimo" name="ultimo" type="NUMERIC"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -8868,9 +8868,9 @@
             <column header="corrente" name="corrente" type="NUMERIC"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -8885,9 +8885,9 @@
             <column header="data_progressivo" name="data_progressivo"/>
             <column header="cd_tipo_sezionale" name="cd_tipo_sezionale"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="perc_prorata" name="perc_prorata" type="NUMERIC"/>
@@ -9183,7 +9183,7 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="cd_numeratore" name="cd_numeratore" type="STRING"/>
             <column header="numero" name="numero" type="NUMERIC"/>
-            <column header="data_ordine" name="data_ordine" type="DATE"/>
+            <column header="data_ordine" name="data_ordine" type="${date.type}"/>
             <column header="cd_divisa" name="cd_divisa" type="STRING"/>
             <column header="cambio" name="cambio" type="NUMERIC"/>
             <column header="cd_terzo" name="cd_terzo" type="NUMERIC"/>
@@ -9215,9 +9215,9 @@
             <column header="perc_prorata" name="perc_prorata" type="NUMERIC"/>
             <column header="ti_attivita" name="ti_attivita" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="im_imponibile" name="im_imponibile" type="NUMERIC"/>
@@ -9238,7 +9238,7 @@
             <column header="consegna" name="consegna" type="NUMERIC"/>
             <column header="stato" name="stato" type="STRING"/>
             <column header="tipo_consegna" name="tipo_consegna" type="STRING"/>
-            <column header="dt_prev_consegna" name="dt_prev_consegna" type="DATE"/>
+            <column header="dt_prev_consegna" name="dt_prev_consegna" type="${date.type}"/>
             <column header="quantita" name="quantita" type="NUMERIC"/>
             <column header="im_imponibile_divisa" name="im_imponibile_divisa" type="NUMERIC"/>
             <column header="im_iva_divisa" name="im_iva_divisa" type="NUMERIC"/>
@@ -9260,9 +9260,9 @@
             <column header="arr_ali_iva" name="arr_ali_iva"/>
             <column header="stato_fatt" name="stato_fatt" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="vecchia_consegna" name="vecchia_consegna" type="NUMERIC"/>
@@ -9295,9 +9295,9 @@
             <column header="im_iva_nd" name="im_iva_nd" type="NUMERIC"/>
             <column header="im_totale_riga" name="im_totale_riga" type="NUMERIC"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -9323,13 +9323,13 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/organo.csv.gz" quotchar="&quot;" separator="," tableName="organo">
             <column header="cd_organo" name="cd_organo" type="STRING"/>
             <column header="ds_organo" name="ds_organo" type="STRING"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
             <column header="fl_non_definito" name="fl_non_definito" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -9355,9 +9355,9 @@
             <column header="cd_cds" name="cd_cds" type="STRING"/>
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="fl_commessa_obbligatoria" name="fl_commessa_obbligatoria" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_progetto_numeratore" name="fl_progetto_numeratore" type="STRING"/>
@@ -9394,9 +9394,9 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="cd_tipo_rapporto" name="cd_tipo_rapporto" type="STRING"/>
             <column header="importo_franchigia_occa" name="importo_franchigia_occa" type="NUMERIC"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_versamenti_cori" name="fl_versamenti_cori" type="STRING"/>
@@ -9427,7 +9427,7 @@
             <column header="fl_obb_intrastat" name="fl_obb_intrastat" type="STRING"/>
             <column header="fl_cup" name="fl_cup" type="STRING"/>
             <column header="clausola_ordine" name="clausola_ordine"/>
-            <column header="data_stipula_contratti" name="data_stipula_contratti" type="DATE"/>
+            <column header="data_stipula_contratti" name="data_stipula_contratti" type="${date.type}"/>
             <column header="livello_pdg_cofog" name="livello_pdg_cofog" type="NUMERIC"/>
             <column header="fl_siope_cup" name="fl_siope_cup" type="STRING"/>
             <column header="fl_credito_irpef" name="fl_credito_irpef" type="STRING"/>
@@ -9448,9 +9448,9 @@
             <column header="id" name="id" type="NUMERIC"/>
             <column header="descrizione" name="descrizione" type="STRING"/>
             <column header="attivo" name="attivo" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cancella_stampe" name="cancella_stampe" type="NUMERIC"/>
@@ -9462,7 +9462,7 @@
             <column header="ldap_password" name="ldap_password" type="STRING"/>
             <column header="ldap_base_dn" name="ldap_base_dn" type="STRING"/>
             <column header="ldap_app_name" name="ldap_app_name" type="STRING"/>
-            <column header="dt_ldap_migrazione" name="dt_ldap_migrazione" type="DATE"/>
+            <column header="dt_ldap_migrazione" name="dt_ldap_migrazione" type="${date.type}"/>
             <column header="ldap_link_cambio_password" name="ldap_link_cambio_password" type="STRING"/>
             <column header="fl_informix" name="fl_informix" type="STRING"/>
             <column header="fl_gae_es" name="fl_gae_es" type="STRING"/>
@@ -9503,9 +9503,9 @@
             <column header="ds_livello6s" name="ds_livello6s" type="STRING"/>
             <column header="lung_livello7s" name="lung_livello7s"/>
             <column header="ds_livello7s" name="ds_livello7s"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -9547,9 +9547,9 @@
             <column header="ds_livello7p" name="ds_livello7p" type="STRING"/>
             <column header="lung_livello8p" name="lung_livello8p" type="STRING"/>
             <column header="ds_livello8p" name="ds_livello8p" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -9591,10 +9591,10 @@
             <column header="nome" name="nome" type="STRING"/>
             <column header="descrizione" name="descrizione" type="STRING"/>
             <column header="sequenza_esecuzione" name="sequenza_esecuzione" type="NUMERIC"/>
-            <column header="data_esecuzione" name="data_esecuzione" type="DATE"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="data_esecuzione" name="data_esecuzione" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -9861,9 +9861,9 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="cd_centro_responsabilita" name="cd_centro_responsabilita" type="STRING"/>
             <column header="stato" name="stato" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -10711,9 +10711,9 @@
             <column header="report_name" name="report_name" type="STRING"/>
             <column header="priority" name="priority" type="NUMERIC"/>
             <column header="ds_report" name="ds_report" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -10773,8 +10773,8 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/privilegio.csv.gz" quotchar="&quot;" separator="," tableName="privilegio">
             <column header="cd_privilegio" name="cd_privilegio" type="STRING"/>
             <column header="ds_privilegio" name="ds_privilegio" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
@@ -10798,9 +10798,9 @@
             <column header="cd_proc_amm" name="cd_proc_amm" type="STRING"/>
             <column header="ds_proc_amm" name="ds_proc_amm" type="STRING"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="ti_proc_amm" name="ti_proc_amm" type="STRING"/>
@@ -10992,9 +10992,9 @@
             <column header="cd_provincia" name="cd_provincia" type="STRING"/>
             <column header="cd_regione" name="cd_regione" type="STRING"/>
             <column header="ds_provincia" name="ds_provincia" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -11020,9 +11020,9 @@
             <column header="tipo" name="tipo" type="STRING"/>
             <column header="metodo" name="metodo" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -11031,13 +11031,13 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/rapporto.csv.gz" quotchar="&quot;" separator="," tableName="rapporto">
             <column header="cd_tipo_rapporto" name="cd_tipo_rapporto" type="STRING"/>
             <column header="cd_anag" name="cd_anag" type="NUMERIC"/>
-            <column header="dt_ini_validita" name="dt_ini_validita" type="DATE"/>
+            <column header="dt_ini_validita" name="dt_ini_validita" type="${date.type}"/>
             <column header="matricola_dipendente" name="matricola_dipendente" type="NUMERIC"/>
             <column header="causale_fine_rapporto" name="causale_fine_rapporto"/>
-            <column header="dt_fin_validita" name="dt_fin_validita" type="DATE"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dt_fin_validita" name="dt_fin_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_ente_prev_sti" name="cd_ente_prev_sti" type="STRING"/>
@@ -11101,9 +11101,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/regione.csv.gz" quotchar="&quot;" separator="," tableName="regione">
             <column header="cd_regione" name="cd_regione" type="STRING"/>
             <column header="ds_regione" name="ds_regione" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_addreg_aliqmax" name="fl_addreg_aliqmax" type="STRING"/>
@@ -11481,13 +11481,13 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="pg_esecuzione" name="pg_esecuzione" type="NUMERIC"/>
             <column header="ds_processo" name="ds_processo" type="STRING"/>
-            <column header="start_exec" name="start_exec" type="DATE"/>
-            <column header="end_exec" name="end_exec" type="DATE"/>
+            <column header="start_exec" name="start_exec" type="${date.type}"/>
+            <column header="end_exec" name="end_exec" type="${date.type}"/>
             <column header="stato" name="stato" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -11498,16 +11498,16 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="cd_numeratore" name="cd_numeratore" type="STRING"/>
             <column header="numero" name="numero" type="NUMERIC"/>
-            <column header="data_richiesta" name="data_richiesta" type="DATE"/>
+            <column header="data_richiesta" name="data_richiesta" type="${date.type}"/>
             <column header="stato" name="stato" type="STRING"/>
             <column header="ds_richiesta" name="ds_richiesta" type="STRING"/>
             <column header="nota" name="nota"/>
             <column header="cd_unita_operativa_dest" name="cd_unita_operativa_dest" type="STRING"/>
-            <column header="data_invio" name="data_invio" type="DATE"/>
+            <column header="data_invio" name="data_invio" type="${date.type}"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_uop_richiesta" name="cd_uop_richiesta" type="STRING"/>
@@ -11544,9 +11544,9 @@
             <column header="cd_elemento_voce" name="cd_elemento_voce"/>
             <column header="pg_progetto" name="pg_progetto"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -11557,9 +11557,9 @@
             <column header="ds_area_estera" name="ds_area_estera" type="STRING"/>
             <column header="ti_italia_estero" name="ti_italia_estero" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -11572,9 +11572,9 @@
             <column header="ds_inquadramento" name="ds_inquadramento" type="STRING"/>
             <column header="ti_dipendente_altro" name="ti_dipendente_altro" type="STRING"/>
             <column header="cd_gruppo_inquadramento" name="cd_gruppo_inquadramento" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -11585,9 +11585,9 @@
             <column header="ds_modalita_pag" name="ds_modalita_pag" type="STRING"/>
             <column header="codice_cassiere" name="codice_cassiere"/>
             <column header="ti_pagamento" name="ti_pagamento" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_per_cessione" name="fl_per_cessione" type="STRING"/>
@@ -11615,9 +11615,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/rif_termini_pagamento.csv.gz" quotchar="&quot;" separator="," tableName="rif_termini_pagamento">
             <column header="cd_termini_pag" name="cd_termini_pag" type="STRING"/>
             <column header="ds_termini_pag" name="ds_termini_pag" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -11719,9 +11719,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/ruolo.csv.gz" quotchar="&quot;" separator="," tableName="ruolo">
             <column header="cd_ruolo" name="cd_ruolo" type="STRING"/>
             <column header="ds_ruolo" name="ds_ruolo" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_cds" name="cd_cds" type="STRING"/>
@@ -11733,9 +11733,9 @@
             <column header="cd_ruolo" name="cd_ruolo" type="STRING"/>
             <column header="cd_accesso" name="cd_accesso" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -11862,7 +11862,7 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/scaglione.csv.gz" quotchar="&quot;" separator="," tableName="scaglione">
             <column header="cd_contributo_ritenuta" name="cd_contributo_ritenuta" type="STRING"/>
             <column header="ti_anagrafico" name="ti_anagrafico" type="STRING"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
             <column header="im_inferiore" name="im_inferiore" type="NUMERIC"/>
             <column header="cd_regione" name="cd_regione" type="STRING"/>
             <column header="cd_provincia" name="cd_provincia" type="STRING"/>
@@ -11871,10 +11871,10 @@
             <column header="im_superiore" name="im_superiore" type="NUMERIC"/>
             <column header="aliquota" name="aliquota" type="NUMERIC"/>
             <column header="base_calcolo" name="base_calcolo" type="NUMERIC"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -11987,9 +11987,9 @@
             <column header="ds_tipo_semaforo" name="ds_tipo_semaforo" type="STRING"/>
             <column header="pattern" name="pattern" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -12002,9 +12002,9 @@
             <column header="email3" name="email3"/>
             <column header="email_test" name="email_test" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -12031,9 +12031,9 @@
             <column header="primo" name="primo" type="NUMERIC"/>
             <column header="corrente" name="corrente" type="NUMERIC"/>
             <column header="ultimo" name="ultimo" type="NUMERIC"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -12168,9 +12168,9 @@
             <column header="cd_cds_mandato" name="cd_cds_mandato"/>
             <column header="esercizio_mandato" name="esercizio_mandato"/>
             <column header="pg_mandato" name="pg_mandato"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -12228,9 +12228,9 @@
             <column header="cd_contributo_ritenuta" name="cd_contributo_ritenuta" type="STRING"/>
             <column header="ti_ente_percipiente" name="ti_ente_percipiente" type="STRING"/>
             <column header="cd_regione" name="cd_regione" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -12339,7 +12339,7 @@
             <column header="str08" name="str08" type="STRING"/>
             <column header="str09" name="str09"/>
             <column header="str10" name="str10"/>
-            <column header="dt01" name="dt01" type="DATE"/>
+            <column header="dt01" name="dt01" type="${date.type}"/>
             <column header="dt02" name="dt02"/>
             <column header="dt03" name="dt03"/>
             <column header="dt04" name="dt04"/>
@@ -12367,9 +12367,9 @@
             <column header="dec08" name="dec08"/>
             <column header="dec09" name="dec09"/>
             <column header="dec10" name="dec10"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -12455,9 +12455,9 @@
             <column header="ds_riferimento" name="ds_riferimento" type="STRING"/>
             <column header="ti_riferimento" name="ti_riferimento" type="STRING"/>
             <column header="riferimento" name="riferimento" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -12478,9 +12478,9 @@
             <column header="cd_terzo" name="cd_terzo" type="NUMERIC"/>
             <column header="cd_termini_pag" name="cd_termini_pag" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -12502,9 +12502,9 @@
             <column header="nome_unita_organizzativa" name="nome_unita_organizzativa" type="STRING"/>
             <column header="note" name="note" type="STRING"/>
             <column header="dt_canc" name="dt_canc"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="codice_univoco_ufficio_ipa" name="codice_univoco_ufficio_ipa" type="STRING"/>
@@ -12533,9 +12533,9 @@
             <column header="numero_anni" name="numero_anni" type="NUMERIC"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -12544,9 +12544,9 @@
             <column header="cd_tipo_articolo" name="cd_tipo_articolo" type="STRING"/>
             <column header="ds_tipo_articolo" name="ds_tipo_articolo" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -12574,9 +12574,9 @@
             <column header="cd_tipo_attivita_padre" name="cd_tipo_attivita_padre" type="STRING"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -12586,9 +12586,9 @@
             <column header="ds_tipo_atto" name="ds_tipo_atto" type="STRING"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
             <column header="fl_non_definito" name="fl_non_definito" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -12603,9 +12603,9 @@
             <column header="fl_default" name="fl_default" type="STRING"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="assoggettamento_bollo" name="assoggettamento_bollo" type="STRING"/>
         </loadData>
@@ -12615,13 +12615,13 @@
             <column header="cd_tipo_carico_scarico" name="cd_tipo_carico_scarico" type="STRING"/>
             <column header="ds_tipo_carico_scarico" name="ds_tipo_carico_scarico" type="STRING"/>
             <column header="ti_documento" name="ti_documento" type="STRING"/>
-            <column header="dt_cancellazione" name="dt_cancellazione" type="DATE"/>
+            <column header="dt_cancellazione" name="dt_cancellazione" type="${date.type}"/>
             <column header="fl_fatturabile" name="fl_fatturabile" type="STRING"/>
             <column header="fl_aumento_valore" name="fl_aumento_valore" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_elabora_buono_coge" name="fl_elabora_buono_coge" type="STRING"/>
             <column header="fl_buono_per_trasferimento" name="fl_buono_per_trasferimento" type="STRING"/>
@@ -12634,14 +12634,14 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_compenso.csv.gz" quotchar="&quot;" separator="," tableName="tipo_compenso">
             <column header="cd_trattamento" name="cd_trattamento" type="STRING"/>
             <column header="cd_ti_compenso" name="cd_ti_compenso" type="STRING"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
             <column header="ds_ti_compenso" name="ds_ti_compenso" type="STRING"/>
             <column header="fl_registra_fattura" name="fl_registra_fattura" type="STRING"/>
             <column header="fl_diaria" name="fl_diaria" type="STRING"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -12650,8 +12650,8 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_consegna.csv.gz" quotchar="&quot;" separator="," tableName="tipo_consegna">
             <column header="cd_tipo_consegna" name="cd_tipo_consegna" type="STRING"/>
             <column header="ds_tipo_consegna" name="ds_tipo_consegna" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
@@ -12663,9 +12663,9 @@
             <column header="ds_tipo_contratto" name="ds_tipo_contratto" type="STRING"/>
             <column header="natura_contabile" name="natura_contabile" type="STRING"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_cig" name="fl_cig" type="STRING"/>
@@ -12675,16 +12675,16 @@
     <changeSet author="sigla" id="1516802834820-566">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_contributo_ritenuta.csv.gz" quotchar="&quot;" separator="," tableName="tipo_contributo_ritenuta">
             <column header="cd_contributo_ritenuta" name="cd_contributo_ritenuta" type="STRING"/>
-            <column header="dt_ini_validita" name="dt_ini_validita" type="DATE"/>
+            <column header="dt_ini_validita" name="dt_ini_validita" type="${date.type}"/>
             <column header="ds_contributo_ritenuta" name="ds_contributo_ritenuta" type="STRING"/>
             <column header="ti_cassa_competenza" name="ti_cassa_competenza" type="STRING"/>
             <column header="cd_tributo_erario" name="cd_tributo_erario" type="STRING"/>
             <column header="fl_assistenza_fiscale" name="fl_assistenza_fiscale" type="STRING"/>
             <column header="precisione" name="precisione" type="NUMERIC"/>
-            <column header="dt_fin_validita" name="dt_fin_validita" type="DATE"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dt_fin_validita" name="dt_fin_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="pg_classificazione_montanti" name="pg_classificazione_montanti" type="NUMERIC"/>
@@ -12704,9 +12704,9 @@
             <column header="esercizio" name="esercizio" type="NUMERIC"/>
             <column header="cd_contributo_ritenuta" name="cd_contributo_ritenuta" type="STRING"/>
             <column header="cd_gruppo_cr" name="cd_gruppo_cr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -12719,9 +12719,9 @@
             <column header="fl_doc_generico" name="fl_doc_generico" type="STRING"/>
             <column header="fl_utilizzo_doc_generico" name="fl_utilizzo_doc_generico" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_solo_partita_giro" name="fl_solo_partita_giro" type="STRING"/>
             <column header="fl_manrev_utente" name="fl_manrev_utente" type="STRING"/>
@@ -12732,9 +12732,9 @@
             <column header="cd_tipo_documento_cont" name="cd_tipo_documento_cont" type="STRING"/>
             <column header="ds_tipo_documento_cont" name="ds_tipo_documento_cont" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -12744,9 +12744,9 @@
             <column header="ds_tipo_file" name="ds_tipo_file" type="STRING"/>
             <column header="estensione_file" name="estensione_file" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -12768,14 +12768,14 @@
             <column header="prc_incremento" name="prc_incremento" type="NUMERIC"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_tipo_rapporto" name="cd_tipo_rapporto" type="STRING"/>
             <column header="prc_incremento_var" name="prc_incremento_var" type="NUMERIC"/>
             <column header="tipo_associazione" name="tipo_associazione" type="STRING"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
         </loadData>
     </changeSet>
     <changeSet author="sigla" id="1516802834820-573">
@@ -12784,9 +12784,9 @@
             <column header="ds_tipo_limite" name="ds_tipo_limite" type="STRING"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -12810,9 +12810,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_missione.csv.gz" quotchar="&quot;" separator="," tableName="tipo_missione">
             <column header="cd_tipo_missione" name="cd_tipo_missione" type="STRING"/>
             <column header="ds_tipo_missione" name="ds_tipo_missione" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_valido" name="fl_valido" type="STRING"/>
@@ -12830,9 +12830,9 @@
             <column header="cd_cds_alt" name="cd_cds_alt"/>
             <column header="cd_tipo_movimento_alt" name="cd_tipo_movimento_alt"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -12877,9 +12877,9 @@
             <column header="valido" name="valido" type="STRING"/>
             <column header="valorizzazione_costo_effettivo" name="valorizzazione_costo_effettivo" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -12890,13 +12890,13 @@
             <column header="ds_tipo_norma" name="ds_tipo_norma" type="STRING"/>
             <column header="cd_tipo_norma_perla" name="cd_tipo_norma_perla" type="STRING"/>
             <column header="numero_tipo_norma" name="numero_tipo_norma" type="STRING"/>
-            <column header="dt_tipo_norma" name="dt_tipo_norma" type="DATE"/>
+            <column header="dt_tipo_norma" name="dt_tipo_norma" type="${date.type}"/>
             <column header="articolo_tipo_norma" name="articolo_tipo_norma" type="STRING"/>
             <column header="comma_tipo_norma" name="comma_tipo_norma" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="tipo_associazione" name="tipo_associazione" type="STRING"/>
         </loadData>
@@ -12905,9 +12905,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_obbligazione.csv.gz" quotchar="&quot;" separator="," tableName="tipo_obbligazione">
             <column header="cd_tipo_obbligazione" name="cd_tipo_obbligazione" type="STRING"/>
             <column header="ds_tipo_obbligazione" name="ds_tipo_obbligazione" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -12917,9 +12917,9 @@
             <column header="cd_tipo_operazione" name="cd_tipo_operazione" type="STRING"/>
             <column header="ds_tipo_operazione" name="ds_tipo_operazione" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -12929,9 +12929,9 @@
             <column header="cd_tipo_ordine" name="cd_tipo_ordine" type="STRING"/>
             <column header="ds_tipo_ordine" name="ds_tipo_ordine" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -12943,9 +12943,9 @@
             <column header="tipo_classificazione" name="tipo_classificazione" type="STRING"/>
             <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -12957,9 +12957,9 @@
             <column header="fl_contratto" name="fl_contratto" type="STRING"/>
             <column header="fl_controllo_fondi" name="fl_controllo_fondi" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -12980,9 +12980,9 @@
             <column header="ds_tipo_rapporto" name="ds_tipo_rapporto" type="STRING"/>
             <column header="ti_dipendente_altro" name="ti_dipendente_altro" type="STRING"/>
             <column header="ti_rapporto_altro" name="ti_rapporto_altro" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_inquadramento" name="fl_inquadramento" type="STRING"/>
@@ -12995,9 +12995,9 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_risultato.csv.gz" quotchar="&quot;" separator="," tableName="tipo_risultato">
             <column header="cd_tipo_risultato" name="cd_tipo_risultato" type="STRING"/>
             <column header="ds_tipo_risultato" name="ds_tipo_risultato" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -13006,8 +13006,8 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_ruolo.csv.gz" quotchar="&quot;" separator="," tableName="tipo_ruolo">
             <column header="tipo" name="tipo" type="STRING"/>
             <column header="ds_tipo" name="ds_tipo" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
@@ -13019,8 +13019,8 @@
             <column header="ds_tipo" name="ds_tipo" type="STRING"/>
             <column header="fl_approva_bil" name="fl_approva_bil" type="STRING"/>
             <column header="fl_aggiorna_inv" name="fl_aggiorna_inv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
@@ -13045,9 +13045,9 @@
             <column header="fl_extra_ue" name="fl_extra_ue" type="STRING"/>
             <column header="fl_autofattura" name="fl_autofattura" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="sezionale_ven_liquidazione" name="sezionale_ven_liquidazione" type="STRING"/>
             <column header="ti_bene_servizio" name="ti_bene_servizio" type="STRING"/>
@@ -13060,8 +13060,8 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_spesa.csv.gz" quotchar="&quot;" separator="," tableName="tipo_spesa">
             <column header="cd_tipo_spesa" name="cd_tipo_spesa" type="STRING"/>
             <column header="ds_tipo_spesa" name="ds_tipo_spesa" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
@@ -13070,7 +13070,7 @@
     <changeSet author="sigla" id="1516802834820-591">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_trattamento.csv.gz" quotchar="&quot;" separator="," tableName="tipo_trattamento">
             <column header="cd_trattamento" name="cd_trattamento" type="STRING"/>
-            <column header="dt_ini_validita" name="dt_ini_validita" type="DATE"/>
+            <column header="dt_ini_validita" name="dt_ini_validita" type="${date.type}"/>
             <column header="ds_ti_trattamento" name="ds_ti_trattamento" type="STRING"/>
             <column header="ti_anagrafico" name="ti_anagrafico" type="STRING"/>
             <column header="fl_diaria" name="fl_diaria" type="STRING"/>
@@ -13082,10 +13082,10 @@
             <column header="ti_commerciale" name="ti_commerciale" type="STRING"/>
             <column header="fl_soggetto_conguaglio" name="fl_soggetto_conguaglio" type="STRING"/>
             <column header="fl_registra_fattura" name="fl_registra_fattura" type="STRING"/>
-            <column header="dt_fin_validita" name="dt_fin_validita" type="DATE"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dt_fin_validita" name="dt_fin_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_default_conguaglio" name="fl_default_conguaglio" type="STRING"/>
@@ -13107,9 +13107,9 @@
     <changeSet author="sigla" id="1516802834820-592">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_unita_organizzativa.csv.gz" quotchar="&quot;" separator="," tableName="tipo_unita_organizzativa">
             <column header="cd_tipo_unita" name="cd_tipo_unita" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="ds_tipo_unita" name="ds_tipo_unita" type="STRING"/>
@@ -13125,9 +13125,9 @@
             <column header="fl_utilizzabile_area" name="fl_utilizzabile_area" type="STRING"/>
             <column header="fl_utilizzabile_cds" name="fl_utilizzabile_cds" type="STRING"/>
             <column header="ti_approvazione" name="ti_approvazione" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_visto_dip_saldo_modulo" name="fl_visto_dip_saldo_modulo" type="STRING"/>
@@ -13137,14 +13137,14 @@
     <changeSet author="sigla" id="1516802834820-594">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipologia_rischio.csv.gz" quotchar="&quot;" separator="," tableName="tipologia_rischio">
             <column header="cd_tipologia_rischio" name="cd_tipologia_rischio" type="STRING"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
             <column header="ds_tipologia_rischio" name="ds_tipologia_rischio" type="STRING"/>
             <column header="aliquota_percipiente" name="aliquota_percipiente" type="NUMERIC"/>
             <column header="aliquota_ente" name="aliquota_ente" type="NUMERIC"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -13154,9 +13154,9 @@
             <column header="pg_tipologia" name="pg_tipologia" type="NUMERIC"/>
             <column header="ds_tipologia" name="ds_tipologia" type="STRING"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -13170,14 +13170,14 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/trattamento_cori.csv.gz" quotchar="&quot;" separator="," tableName="trattamento_cori">
             <column header="cd_trattamento" name="cd_trattamento" type="STRING"/>
             <column header="cd_contributo_ritenuta" name="cd_contributo_ritenuta" type="STRING"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
             <column header="id_riga" name="id_riga" type="STRING"/>
             <column header="segno" name="segno" type="STRING"/>
             <column header="calcolo_imponibile" name="calcolo_imponibile" type="STRING"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -13206,9 +13206,9 @@
             <column header="cd_unita_misura" name="cd_unita_misura" type="STRING"/>
             <column header="ds_unita_misura" name="ds_unita_misura" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -13237,9 +13237,9 @@
             <column header="ds_unita_operativa" name="ds_unita_operativa" type="STRING"/>
             <column header="cd_unita_organizzativa" name="cd_unita_organizzativa" type="STRING"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
@@ -13259,9 +13259,9 @@
             <column header="cd_responsabile" name="cd_responsabile" type="NUMERIC"/>
             <column header="cd_responsabile_amm" name="cd_responsabile_amm"/>
             <column header="fl_presidente_area" name="fl_presidente_area" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="cd_unita_padre" name="cd_unita_padre" type="STRING"/>
@@ -13298,21 +13298,21 @@
             <column header="fl_password_change" name="fl_password_change" type="STRING"/>
             <column header="cd_cdr" name="cd_cdr" type="STRING"/>
             <column header="cd_cds_configuratore" name="cd_cds_configuratore" type="STRING"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
-            <column header="dt_fine_validita" name="dt_fine_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
             <column header="ti_utente" name="ti_utente" type="STRING"/>
             <column header="nome" name="nome" type="STRING"/>
             <column header="indirizzo" name="indirizzo"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="cd_utente_templ" name="cd_utente_templ" type="STRING"/>
-            <column header="dt_ultima_var_password" name="dt_ultima_var_password" type="DATE"/>
+            <column header="dt_ultima_var_password" name="dt_ultima_var_password" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_altra_proc" name="fl_altra_proc" type="STRING"/>
             <column header="cd_dipartimento" name="cd_dipartimento"/>
-            <column header="dt_ultimo_accesso" name="dt_ultimo_accesso" type="DATE"/>
+            <column header="dt_ultimo_accesso" name="dt_ultimo_accesso" type="${date.type}"/>
             <column header="fl_autenticazione_ldap" name="fl_autenticazione_ldap" type="STRING"/>
             <column header="cd_utente_uid" name="cd_utente_uid" type="STRING"/>
             <column header="fl_supervisore" name="fl_supervisore" type="STRING"/>
@@ -13324,15 +13324,15 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/utente_firma_dettaglio.csv.gz" quotchar="&quot;" separator="," tableName="utente_firma_dettaglio">
             <column header="cd_utente" name="cd_utente" type="STRING"/>
             <column header="cd_unita_organizzativa" name="cd_unita_organizzativa" type="STRING"/>
-            <column header="da_data" name="da_data" type="DATE"/>
-            <column header="a_data" name="a_data" type="DATE"/>
+            <column header="da_data" name="da_data" type="${date.type}"/>
+            <column header="a_data" name="a_data" type="${date.type}"/>
             <column header="funzioni_abilitate" name="funzioni_abilitate" type="STRING"/>
             <column header="titolo_firma" name="titolo_firma" type="STRING"/>
             <column header="delegato_da" name="delegato_da"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -13354,9 +13354,9 @@
             <column header="fl_err_appr_var_bil_cnr_res" name="fl_err_appr_var_bil_cnr_res" type="STRING"/>
             <column header="fl_com_app_var_stanz_res" name="fl_com_app_var_stanz_res" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_err_appr_var_bil_cnr_comp" name="fl_err_appr_var_bil_cnr_comp" type="STRING"/>
             <column header="fl_com_app_var_stanz_comp" name="fl_com_app_var_stanz_comp" type="STRING"/>
@@ -13386,9 +13386,9 @@
             <column header="cd_unita_organizzativa" name="cd_unita_organizzativa" type="STRING"/>
             <column header="cd_accesso" name="cd_accesso" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -13398,9 +13398,9 @@
             <column header="cd_utente" name="cd_utente" type="STRING"/>
             <column header="cd_ruolo" name="cd_ruolo" type="STRING"/>
             <column header="utuv" name="utuv" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
@@ -13669,7 +13669,7 @@
             <column header="cd_voce_iva" name="cd_voce_iva" type="STRING"/>
             <column header="ds_voce_iva" name="ds_voce_iva" type="STRING"/>
             <column header="percentuale" name="percentuale" type="NUMERIC"/>
-            <column header="dt_inizio_validita" name="dt_inizio_validita" type="DATE"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
             <column header="dt_cancellazione" name="dt_cancellazione"/>
             <column header="fl_detraibile" name="fl_detraibile" type="STRING"/>
             <column header="percentuale_detraibilita" name="percentuale_detraibilita" type="NUMERIC"/>
@@ -13683,9 +13683,9 @@
             <column header="fl_autofattura" name="fl_autofattura" type="STRING"/>
             <column header="fl_bolla_doganale" name="fl_bolla_doganale" type="STRING"/>
             <column header="fl_default_istituzionale" name="fl_default_istituzionale" type="STRING"/>
-            <column header="dacr" name="dacr" type="DATE"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
             <column header="utcr" name="utcr" type="STRING"/>
-            <column header="duva" name="duva" type="DATE"/>
+            <column header="duva" name="duva" type="${date.type}"/>
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
             <column header="fl_iva_non_recuperabile" name="fl_iva_non_recuperabile" type="STRING"/>
