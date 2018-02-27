@@ -5,7 +5,7 @@
 -->
 
 <%@page import="it.cnr.contab.doccont00.bp.CRUDImpegnoPGiroBP"%>
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*,it.cnr.jada.util.action.*,it.cnr.contab.doccont00.core.bulk.ImpegnoPGiroBulk"
 %>
 

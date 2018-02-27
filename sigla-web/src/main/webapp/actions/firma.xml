@@ -1,26 +1,15 @@
 <action-mappings>
-    <action
-            path="/CRUDFirmaAction" actionClass="it.cnr.jada.firma.action.CRUDFirmaAction">
-    </action>
 
     <action
             path="/FirmaOTPAction" actionClass="it.cnr.contab.firma.action.FirmaOTPAction">
     </action>
-
-    <businessProcess
-            name="CRUDFirmaBP" className="it.cnr.jada.firma.bp.CRUDFirmaBP">
-        <forward name="default" path="/util/firma.jsp"/>
-        <init-param name="bulkClassName" value="it.cnr.jada.firma.bulk.Doc_firma_digitaleBulk"/>
-        <init-param name="componentSessionName" value="JADAEJB_EJB_FirmaComponentSession"/>
-        <init-param name="defaultAction" value="CRUDFirmaAction"/>
-    </businessProcess>
+    
     <businessProcess
             name="FirmaOTPBP" className="it.cnr.contab.firma.bp.FirmaOTPBP">
         <forward name="default" path="/util/firmaotp.jsp"/>
-        <forward name="bootstrap" path="/bootstrap/util/firmaotp.jsp"/>
-        <init-param name="bulkClassName" value="it.cnr.contab.firma.bulk.FirmaOTPBulk"/>
-        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
-        <init-param name="defaultAction" value="FirmaOTPAction"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.firma.bulk.FirmaOTPBulk" />
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+        <init-param name="defaultAction" value="FirmaOTPAction" />
     </businessProcess>
 
 </action-mappings>
