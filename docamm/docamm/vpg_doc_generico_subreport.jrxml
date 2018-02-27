@@ -166,7 +166,6 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 		</groupHeader>
 		<groupFooter>
 			<band height="20" splitType="Stretch">
-				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.compareTo("A")==0 && $F{TI_RECORD_L2}.compareTo("C")==0 && $F{DS_VOCE}!=null)]]></printWhenExpression>
 				<textField isBlankWhenNull="true">
 					<reportElement key="textField-26" style="TNR10" x="4" y="0" width="528" height="20" uuid="1b605c27-ca10-446d-b6dd-a84bccd1a496"/>
 					<box>
