@@ -49,4 +49,12 @@ public class Tipo_documento_genericoBase extends Tipo_documento_genericoKey impl
 		this.soggetto_bollo = soggetto_bollo;
 	}
 
+	public java.lang.String getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+	public void setTipoDocumento(java.lang.String tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+	}
+
 }
