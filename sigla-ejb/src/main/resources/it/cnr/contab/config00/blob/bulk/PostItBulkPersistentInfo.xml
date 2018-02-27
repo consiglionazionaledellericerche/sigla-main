@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<SQLPersistentInfo
-	persistentClassName="it.cnr.contab.config00.blob.bulk.PostItBulk"
-	homeClassName="it.cnr.contab.config00.blob.bulk.PostItHome" >
-</SQLPersistentInfo>

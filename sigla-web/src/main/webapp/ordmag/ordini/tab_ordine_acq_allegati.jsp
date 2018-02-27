@@ -1,4 +1,4 @@
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*,it.cnr.jada.util.action.*,it.cnr.jada.*,it.cnr.contab.ordmag.ordini.bp.CRUDOrdineAcqBP,it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk,it.cnr.contab.ordmag.anag00.*"
 %>
 <%	CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request);%>

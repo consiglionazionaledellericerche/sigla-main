@@ -1,4 +1,4 @@
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.action.*,
 		it.cnr.contab.anagraf00.bp.*,
 		it.cnr.jada.util.jsp.*"

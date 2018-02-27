@@ -10,7 +10,7 @@
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
 </head>
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,
 		it.cnr.jada.action.*,
 		it.cnr.jada.bulk.*,

@@ -1,4 +1,4 @@
-<%@ page
+<%@ page pageEncoding="UTF-8"
 	session="false"
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,it.cnr.contab.utenze00.bp.*,java.util.*,it.cnr.jada.util.action.*,it.cnr.jada.UserContext" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//Dtd HTML 4.0 Transitional//EN">

@@ -1,4 +1,4 @@
-<%@ page session="false" import="it.cnr.jada.action.*,it.cnr.contab.utenze00.bp.*,it.cnr.contab.utenze00.bulk.*" %>
+<%@ page pageEncoding="UTF-8"  session="false" import="it.cnr.jada.action.*,it.cnr.contab.utenze00.bp.*,it.cnr.contab.utenze00.bulk.*" %>
 <html>
 	<head>
 		<% 	it.cnr.jada.util.jsp.JSPUtils.printBaseUrl(pageContext); %>

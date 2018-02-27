@@ -1,4 +1,4 @@
-<%@ page
+<%@ page pageEncoding="UTF-8"
         import="it.cnr.jada.action.*,
                 it.cnr.jada.bulk.*,
                 it.cnr.jada.util.action.*,
@@ -26,11 +26,7 @@
 <% TestataProgettiRicercaNuovoBP bp = (TestataProgettiRicercaNuovoBP)BusinessProcess.getBusinessProcess(request);
    bp.openFormWindow(pageContext);
    tabs = new String[][] {
-	               { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata.jsp" }};//,
-	               //{ "tabDettagliFinanziatori","Finanziatori","/progettiric00/progetto_ricerca_dettagliFinanziatori.jsp" },
-	               //{ "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" },
-	               //{ "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" },
-	               //{ "tabDettagliPostIt","Post-It","/config00/dettagliPostIt.jsp" }};
+	               { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata.jsp" }};
 
     if (bp.isFlNuovoPdg()) { %>
     <jsp:include page="/progettiric00/progetto_ricerca_testata.jsp" />
