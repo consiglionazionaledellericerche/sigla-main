@@ -4124,6 +4124,7 @@ public class DistintaCassiereComponent extends
 			bframe_blob.setUser(userContext.getUser());
 			home.insert(bframe_blob, userContext);
 			home.setSQLLob(bframe_blob, "CDATA", IOUtils.toString(new FileInputStream(file), "UTF-8"));
+			home.update(bframe_blob, userContext);
 		} catch (Throwable e) {
 			throw handleException(e);
 		} finally {
