@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="codice"
+		property="codice"
+		maxLength="3"
+		inputSize="5"
+		inputType="TEXT"
+		label="Codice Identificativo"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		enabledOnEdit="false"				
+		nullable="false" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		maxLength="1000"
+		cols="60"
+		rows="4"
+		inputType="TEXTAREA"
+		label="Tipologia"
+		nullable="false" />
+	<fieldProperty
+		name="soggetto_bollo"
+		property="soggetto_bollo"
+		inputType="CHECKBOX"
+		label="Soggetto a Bollo"
+		enabledOnFreeSearch="false"
+		enabledOnSearch="false"/>
+
+	<formFieldProperty
+		name="codice" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="soggetto_bollo" />
+
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="codice"
+			inputType="TEXT" />
+		<formFieldProperty
+			name="descrizione"
+			inputType="TEXT"
+			inputSize="30" />
+	</form>
+	
+	<columnFieldProperty
+		name="codice" />
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="soggetto_bollo" />
+
+	<findFieldProperty
+		name="codice" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="soggetto_bollo" />
+</bulkInfo>
