@@ -4983,7 +4983,7 @@ private BigDecimal getImportoLimiteBolloVirtuale(UserContext aUC) throws Compone
 	}
 	return importoLimite;
 }
-public BigDecimal getImportoBolloVirtuale(UserContext aUC, Documento_genericoBulk doc) throws ComponentException {
+public Tipo_atto_bolloBulk getTipoAttoBolloVirtuale(UserContext aUC, Documento_genericoBulk doc) throws ComponentException {
 	final BigDecimal ret = null;
 	try {
 		Configurazione_cnrBulk config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( aUC, doc.getEsercizio(), null, Configurazione_cnrBulk.PK_BOLLO_VIRTUALE, Configurazione_cnrBulk.SK_BOLLO_VIRTUALE_CODICE_FATTURA_ATTIVA);
@@ -4993,7 +4993,7 @@ public BigDecimal getImportoBolloVirtuale(UserContext aUC, Documento_genericoBul
 					Tipo_atto_bolloBulk tipoAtto;
 					try {
 						tipoAtto = Utility.createTipoAttoBolloComponentSession().getTipoAttoBollo(aUC, doc.getData_registrazione(), v);
-						return Optional.ofNullable(tipoAtto).map(Tipo_atto_bolloBulk::getImBollo).orElse(null);
+						return Optional.ofNullable(tipoAtto).orElse(null);
 					} catch (Exception e) {
 						throw new DetailedRuntimeException(e);
 					}
@@ -5006,24 +5006,27 @@ public BigDecimal getImportoBolloVirtuale(UserContext aUC, Documento_genericoBul
 
 private void controlloBolloVirtuale(UserContext aUC, Documento_genericoBulk documentoGenerico) throws ComponentException {
 	if (documentoGenerico.getTipoDocumentoGenerico() != null && documentoGenerico.getTipoDocumentoGenerico().getSoggetto_bollo()){
-		BigDecimal importoLimiteBolloVirtuale = getImportoLimiteBolloVirtuale(aUC);
-		if (importoLimiteBolloVirtuale != null){
-			if (documentoGenerico.getIm_totale().compareTo(importoLimiteBolloVirtuale) > 0){
-				BigDecimal importoBollo = getImportoBolloVirtuale(aUC, documentoGenerico);
-				if (importoBollo != null){
-					Boolean esisteBollo = false;
-				    for (Object dett : documentoGenerico.getDocumento_generico_dettColl()) {
-				        Documento_generico_rigaBulk riga = (Documento_generico_rigaBulk)dett;
-				        if (riga.getIm_riga() != null && riga.getIm_riga().compareTo(importoBollo) == 0){
-				        	esisteBollo = true;
-				        	break;
-				        }
-				        	
-				    }
-				    if (!esisteBollo){
-				        throw new it.cnr.jada.comp.ApplicationException(
-				                "Attenzione per un documento generico soggetto a bollo è necessario indicare almeno un dettaglio con un importo di "+importoBollo.doubleValue());
-				    }
+		Tipo_atto_bolloBulk tipoAtto = getTipoAttoBolloVirtuale(aUC, documentoGenerico);
+		if (tipoAtto != null){
+			BigDecimal importoLimiteBolloVirtuale = tipoAtto.getLimiteCalcolo();
+			if (importoLimiteBolloVirtuale != null){
+				if (documentoGenerico.getIm_totale().compareTo(importoLimiteBolloVirtuale) > 0){
+					BigDecimal importoBollo = tipoAtto.getImBollo();
+					if (importoBollo != null){
+						Boolean esisteBollo = false;
+					    for (Object dett : documentoGenerico.getDocumento_generico_dettColl()) {
+					        Documento_generico_rigaBulk riga = (Documento_generico_rigaBulk)dett;
+					        if (riga.getIm_riga() != null && riga.getIm_riga().compareTo(importoBollo) == 0){
+					        	esisteBollo = true;
+					        	break;
+					        }
+					        	
+					    }
+					    if (!esisteBollo){
+					        throw new it.cnr.jada.comp.ApplicationException(
+					                "Attenzione per un documento generico soggetto a bollo è necessario indicare almeno un dettaglio con un importo di "+importoBollo.doubleValue());
+					    }
+					}
 				}
 			}
 		}
