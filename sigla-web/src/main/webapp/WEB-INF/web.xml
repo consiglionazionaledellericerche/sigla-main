@@ -74,6 +74,10 @@
 		<servlet-name>DownloadIncarichiServlet</servlet-name>
 		<servlet-class>it.cnr.contab.incarichi00.servlet.DownloadIncarichiServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>DownloadBlobServlet</servlet-name>
+		<servlet-class>it.cnr.contab.blobs.servlet.DownloadBlobServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>ActionServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
@@ -149,6 +153,14 @@
 	<servlet-mapping>
 		<servlet-name>GenericDownloadServlet</servlet-name>
 		<url-pattern>/genericdownload/</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DownloadBlobServlet</servlet-name>
+		<url-pattern>/download_blob/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DownloadBlobServlet</servlet-name>
+		<url-pattern>/download_blob/</url-pattern>
 	</servlet-mapping>
 	<mime-mapping>
 		<extension>TXT</extension>
