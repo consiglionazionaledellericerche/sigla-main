@@ -2,7 +2,7 @@
 --  DDL for View VP_FATTURA_ATTIVA_N
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "VP_FATTURA_ATTIVA_N" ("ID_REPORT", "CD_CDS", "CD_UNITA_ORGANIZZATIVA", "ESERCIZIO", "PG_FATTURA_ATTIVA", "TI_RECORD", "TI_STAMPA", "PROGRESSIVO_RIGA", "CD_CDS_ORIGINE", "CD_UO_ORIGINE", "DS_UO_ORIGINE", "TI_FATTURA", "DT_REGISTRAZIONE", "DT_EMISSIONE", "PROTOCOLLO_IVA", "DS_FATTURA_ATTIVA", "DENOMINAZIONE_SEDE", "VIA_SEDE", "NUMERO_CIVICO_SEDE", "CAP_COMUNE_SEDE", "DS_COMUNE_SEDE", "FRAZIONE_SEDE", "CD_PROVINCIA_SEDE", "CODICE_FISCALE", "PARTITA_IVA", "IM_TOTALE_FATTURA", "IM_TOTALE_IMPONIBILE", "IM_TOTALE_IVA", "RIFERIMENTO_ORDINE", "CODICE_FISCALE_ENTE", "PARTITA_IVA_ENTE", "VIA_ENTE", "NUM_CIVICO_ENTE", "CAP_COMUNE_ENTE", "DS_COMUNE_ENTE", "CD_PROVINCIA_ENTE", "VIA_UO", "NUM_CIVICO_UO", "CAP_COMUNE_UO", "DS_COMUNE_UO", "CD_PROVINCIA_UO", "IBAN", "NUMERO_CONTO", "CIN", "INTESTAZIONE", "ABI", "CAB", "DS_ABICAB", "DS_COMUNE_BANCA", "CD_PROVINCIA_BANCA", "DS_RIGA_FATTURA", "PREZZO_UNITARIO", "QUANTITA", "IM_TOTALE_DIVISA", "CD_VOCE_IVA", "IM_IVA", "DS_VOCE_IVA", "PERCENTUALE", "FL_NON_IMPONIBILE", "FL_ESENTE", "FL_NON_SOGGETTO", "FL_ESCLUSO", "IM_IMPONIBILE_V_IVA", "IM_TOTALE_V_IVA", "TI_ITALIANO_ESTERO") AS 
+  CREATE OR REPLACE FORCE VIEW "VP_FATTURA_ATTIVA_N" ("ID_REPORT", "CD_CDS", "CD_UNITA_ORGANIZZATIVA", "ESERCIZIO", "PG_FATTURA_ATTIVA", "TI_RECORD", "TI_STAMPA", "PROGRESSIVO_RIGA", "CD_CDS_ORIGINE", "CD_UO_ORIGINE", "DS_UO_ORIGINE", "TI_FATTURA", "DT_REGISTRAZIONE", "DT_EMISSIONE", "PROTOCOLLO_IVA", "DS_FATTURA_ATTIVA", "DENOMINAZIONE_SEDE", "VIA_SEDE", "NUMERO_CIVICO_SEDE", "CAP_COMUNE_SEDE", "DS_COMUNE_SEDE", "FRAZIONE_SEDE", "CD_PROVINCIA_SEDE", "CODICE_FISCALE", "PARTITA_IVA", "IM_TOTALE_FATTURA", "IM_TOTALE_IMPONIBILE", "IM_TOTALE_IVA", "RIFERIMENTO_ORDINE", "CODICE_FISCALE_ENTE", "PARTITA_IVA_ENTE", "VIA_ENTE", "NUM_CIVICO_ENTE", "CAP_COMUNE_ENTE", "DS_COMUNE_ENTE", "CD_PROVINCIA_ENTE", "VIA_UO", "NUM_CIVICO_UO", "CAP_COMUNE_UO", "DS_COMUNE_UO", "CD_PROVINCIA_UO", "IBAN", "NUMERO_CONTO", "CIN", "INTESTAZIONE", "ABI", "CAB", "DS_ABICAB", "DS_COMUNE_BANCA", "CD_PROVINCIA_BANCA", "DS_RIGA_FATTURA", "PREZZO_UNITARIO", "QUANTITA", "IM_TOTALE_DIVISA", "CD_VOCE_IVA", "IM_IVA", "DS_VOCE_IVA", "PERCENTUALE", "FL_NON_IMPONIBILE", "FL_ESENTE", "FL_NON_SOGGETTO", "FL_ESCLUSO", "IM_IMPONIBILE_V_IVA", "IM_TOTALE_V_IVA", "TI_ITALIANO_ESTERO", "TI_BOLLO") AS 
   (SELECT
 --
 -- Date: 06/03/2008
@@ -156,6 +156,8 @@
            0                                      --totale iva per cd_voce_iva
             ,
            com1.ti_italiano_estero                         -- comune del terzo
+           ,
+           null                           -- ti_bollo
       FROM v_stm_paramin_ft_attiva vpar,
            fattura_attiva fa,
            unita_organizzativa uo,
@@ -273,6 +275,8 @@
            0                                      --totale iva per cd_voce_iva
             ,
            NULL                                            -- comune del terzo
+           ,
+           null											-- tipo bollo voce iva
       FROM v_stm_paramin_ft_attiva vpar,
            fattura_attiva fa,
            fattura_attiva_riga frg,
@@ -391,6 +395,8 @@
              SUM (frg.im_iva)                                    -- totale iva
                              ,
              NULL                                          -- comune del terzo
+           ,
+           vi.ti_bollo											-- tipo bollo voce iva
         FROM v_stm_paramin_ft_attiva vpar,
              fattura_attiva fa,
              fattura_attiva_riga frg,
@@ -424,7 +430,8 @@
              vi.fl_non_soggetto,
              vi.fl_escluso,
              vi.ds_voce_iva,
-             vi.cd_voce_iva
+             vi.cd_voce_iva,
+             vi.ti_bollo
     UNION ALL
 -- r.p. 12/03/2013 in realtà la select sotto non serve in questo momento avendo indicato le modalita fisse :( sulla stampa
 -- ma la stampa si aspetta ti_record 'D'
@@ -544,6 +551,8 @@
            0                                      --totale iva per cd_voce_iva
             ,
            NULL                                            -- comune del terzo
+           ,
+           null											-- tipo bollo voce iva
       FROM v_stm_paramin_ft_attiva vpar,
            fattura_attiva fa,
            unita_organizzativa uo,
@@ -656,6 +665,8 @@
            0                                      --totale iva per cd_voce_iva
             ,
            com1.ti_italiano_estero                         -- comune del terzo
+           ,
+           null											-- tipo bollo voce iva
       FROM v_stm_paramin_ft_attiva vpar,
            fattura_attiva fa,
            unita_organizzativa uo,
@@ -773,6 +784,8 @@
            0                                      --totale iva per cd_voce_iva
             ,
            NULL                                            -- comune del terzo
+           ,
+           null											-- tipo bollo voce iva
       FROM v_stm_paramin_ft_attiva vpar,
            fattura_attiva fa,
            fattura_attiva_riga frg,
@@ -891,6 +904,8 @@
              SUM (frg.im_iva)                                    -- totale iva
                              ,
              NULL                                          -- comune del terzo
+           ,
+           vi.ti_bollo											-- tipo bollo voce iva
         FROM v_stm_paramin_ft_attiva vpar,
              fattura_attiva fa,
              fattura_attiva_riga frg,
@@ -924,7 +939,8 @@
              vi.fl_non_soggetto,
              vi.fl_escluso,
              vi.ds_voce_iva,
-             vi.cd_voce_iva
+             vi.cd_voce_iva,
+             vi.ti_bollo
     UNION ALL
 -- r.p. 12/03/2013 in realtà la select sotto non serve in questo momento avendo indicato le modalita fisse :( sulla stampa
 -- ma la stampa si aspetta ti_record 'D'
@@ -1046,6 +1062,8 @@
            0                                      --totale iva per cd_voce_iva
             ,
            NULL                                            -- comune del terzo
+           ,
+           null											-- tipo bollo voce iva
       FROM v_stm_paramin_ft_attiva vpar,
            fattura_attiva fa,
            unita_organizzativa uo,
