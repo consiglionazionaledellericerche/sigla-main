@@ -25,41 +25,23 @@
 	if(missione == null)
 		missione = new MissioneBulk();	
 %>
-
-<table width="100%">
-	<tr></tr>
-	<tr></tr>
-		
- 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "esercizio"); %>
-		<% bp.getController().writeFormInput( out, "esercizio"); %></td>
-	<td><% bp.getController().writeFormLabel( out, "pg_missione"); %>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<% bp.getController().writeFormInput( out, "pg_missione"); %></td>
-	</tr>
-
-	<tr>	
-	<td><% bp.getController().writeFormLabel( out, "cd_cds"); %>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<% bp.getController().writeFormInput( out, "cd_cds"); %></td>
-	<td><% bp.getController().writeFormLabel( out, "cd_unita_organizzativa"); %>
-		<% bp.getController().writeFormInput( out, "cd_unita_organizzativa"); %></td>
-	</tr>
-
-	<% if (missione.isRiportataInScrivania() && missione.isLabelRiportoToShow() && !bp.isSearching()) { %>
-			<tr>
-			<td><span class="FormLabel" style="color:red">
-					Documento Riportato
-				</span>
-			</td>
-			<td></td>
-	      </tr>
-  	<% } %>
-	
-	<tr></tr>	
-	<tr></tr>
-</table>
-
+<div class="card mb-2 p-1">
+    <table width="100%">
+        <tr>
+            <% bp.getController().writeFormField( out, "esercizio"); %>
+            <% bp.getController().writeFormField( out, "pg_missione"); %>
+        </tr>
+        <tr>
+            <% bp.getController().writeFormField( out, "cd_cds");%>
+            <% bp.getController().writeFormField( out, "cd_unita_organizzativa"); %>
+        </tr>
+        <% if (missione.isRiportataInScrivania() && missione.isLabelRiportoToShow() && !bp.isSearching()) { %>
+        <tr>
+                <td colspan="4"><span class="FormLabel text-danger" style="color:red">Documento Riportato</span></td>
+        </tr>
+        <% } %>
+    </table>
+</div>
 <table class="Panel" width="100%">
 	<tr><td>
 		<%	

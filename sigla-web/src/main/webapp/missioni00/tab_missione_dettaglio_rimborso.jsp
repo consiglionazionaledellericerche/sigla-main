@@ -9,27 +9,21 @@
 <%  
 	CRUDMissioneBP bp = (CRUDMissioneBP)BusinessProcess.getBusinessProcess(request);
 %>
-
-<table width="100%">
-	<tr>
-	<td>
-		<% bp.getController().writeFormLabel( out, "tipo_trattamento"); %>
-		<% bp.getController().writeFormInput( out, null,"tipo_trattamento",false,null,"onChange=\"submitForm('doOnTipoTrattamentoChange')\"");%>		
-	</td>
-	</tr>
-</table>
-
-<div class="Group" style="width:93%">
-<table width="100%">
-	<tr></tr>
-	<tr></tr>
-
-	<tr>
-	<td><% bp.getRimborsoController().writeHTMLTable(pageContext, "dettaglioRimborsoSet",false,false,false,"700px","150px");%></td>
-	</tr>
-
-	<tr></tr>
-	<tr></tr>
-</table>
+<div class="Group card p-2">
+    <table width="100%">
+        <tr>
+        <td>
+            <% bp.getController().writeFormLabel( out, "tipo_trattamento"); %>
+            <% bp.getController().writeFormInput( out, null,"tipo_trattamento",false,null,"onChange=\"submitForm('doOnTipoTrattamentoChange')\"");%>
+        </td>
+        </tr>
+    </table>
+</div>
+<div class="Group">
+    <table width="100%">
+        <tr>
+            <td><% bp.getRimborsoController().writeHTMLTable(pageContext, "dettaglioRimborsoSet",false,false,false,"700px","150px");%></td>
+        </tr>
+    </table>
 </div>
 

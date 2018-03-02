@@ -86,8 +86,9 @@ public class CRUDBltAccordiBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 				return true;
 			return super.isReadonly();
 		};
-		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete) throws java.io.IOException, javax.servlet.ServletException {
-			super.writeHTMLToolbar(context, reset, find, delete);
+		@Override
+		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
+			super.writeHTMLToolbar(context, reset, find, delete, false);
 
 			Blt_autorizzatiBulk autorizzato = (Blt_autorizzatiBulk)getParentModel();
 			Blt_autorizzati_dettBulk autorizzatoDett = (Blt_autorizzati_dettBulk)getModel();
@@ -101,6 +102,7 @@ public class CRUDBltAccordiBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 						"Apri Visita",
 						HttpActionContext.isFromBootstrap(context));
 			}
+			super.closeButtonGROUPToolbar(context);
 		}	
 	};
 
@@ -119,8 +121,9 @@ public class CRUDBltAccordiBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 				return true;
 			return super.isReadonly();
 		};
-		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete) throws java.io.IOException, javax.servlet.ServletException {
-			super.writeHTMLToolbar(context, reset, find, delete);
+		@Override
+		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
+			super.writeHTMLToolbar(context, reset, find, delete, false);
 
 			Blt_autorizzatiBulk autorizzato = (Blt_autorizzatiBulk)getParentModel();
 			Blt_autorizzati_dettBulk autorizzatoDett = (Blt_autorizzati_dettBulk)getModel();
@@ -134,6 +137,7 @@ public class CRUDBltAccordiBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 						"Apri Visita",
 						HttpActionContext.isFromBootstrap(context));
 			}
+			super.closeButtonGROUPToolbar(context);
 		}	
 	};
 
