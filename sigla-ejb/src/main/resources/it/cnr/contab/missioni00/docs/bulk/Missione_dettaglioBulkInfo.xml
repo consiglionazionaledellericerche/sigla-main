@@ -11,7 +11,6 @@
 		optionsProperty="missione.collectionGiorniSpese"
 		maxLength="30"
 		inputSize="30"
-		style="width:100px;height:100px"
 		inputType="SELECT"
 		formatName="date_short"		 
 		label="Giorno"
@@ -30,6 +29,7 @@
 		name="find_tipo_spesa"
 		property="tipo_spesa"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		label="Tipo spesa"		
 		/>
 	<fieldProperty
@@ -55,6 +55,7 @@
 		property="ds_spesa"
 		maxLength="100"
 		inputSize="50"
+		inputCssClass="w-100"
 		inputType="TEXT"
 		label="Descrizione"
 		/>
@@ -69,6 +70,7 @@
 		property="localita_spostamento"
 		maxLength="200"
 		inputSize="50"
+		inputCssClass="w-100"
 		inputType="TEXT"
 		label="Localita spostamento"
 		/>
@@ -77,6 +79,7 @@
 		property="id_giustificativo"
 		maxLength="20"
 		inputSize="20"
+		inputCssClass="w-100"
 		inputType="TEXT"
 		label="Id. giustificativo"
 		/>				
@@ -85,6 +88,7 @@
 		property="ds_giustificativo"
 		maxLength="100"
 		inputSize="50"
+		inputCssClass="w-100"
 		inputType="TEXT"
 		label="Descrizione giustificativo"
 		/>		
@@ -93,6 +97,7 @@
 		property="ds_no_giustificativo"
 		maxLength="100"
 		inputSize="50"
+		inputCssClass="w-100"
 		inputType="TEXT"
 		label="Mancanza giustificativo"
 		/>
@@ -100,6 +105,7 @@
 		name="find_tipo_auto"
 		property="tipo_auto"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		label="Tipo auto"		
 		/>
 	<fieldProperty
@@ -116,6 +122,7 @@
 		name="find_tipo_pasto"
 		property="tipo_pasto"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		label="Tipo pasto"		
 		/>
 	<fieldProperty
@@ -149,6 +156,7 @@
 		name="find_divisa_spesa"
 		property="divisa_spesa"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		label="Valuta spesa"		
 		/>		
 	<fieldProperty

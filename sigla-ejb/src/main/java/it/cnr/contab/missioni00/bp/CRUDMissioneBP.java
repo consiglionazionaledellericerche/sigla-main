@@ -61,21 +61,34 @@ import java.util.stream.Collectors;
 public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, MissioneBulk>
         implements IDefferedUpdateSaldiBP, IDocumentoAmministrativoSpesaBP, IValidaDocContBP {
     private final SimpleDetailCRUDController tappaController = new SimpleDetailCRUDController("Tappa", Missione_tappaBulk.class, "tappeMissioneColl", this) {
-        public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete) throws java.io.IOException, javax.servlet.ServletException {
-            super.writeHTMLToolbar(context, reset, find, delete);
+        @Override
+        public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
+            super.writeHTMLToolbar(context, reset, find, delete, false);
 
             // Aggiungo alla table delle tappe il bottone di fine configurazione tappa
-            it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/import16.gif", isViewing() ? null : "javascript:submitForm('doFineConfigurazioneTappa')", true, "Fine Configurazione",
+            it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context,
+                    HttpActionContext.isFromBootstrap(context) ? "fa fa-lock":"img/import16.gif",
+                    isViewing() ? null : "javascript:submitForm('doFineConfigurazioneTappa')",
+                    false,
+                    "Fine Configurazione",
+                    "btn-title btn-outline-primary",
                     HttpActionContext.isFromBootstrap(context));
+            super.closeButtonGROUPToolbar(context);
         }
     };
     private final CRUDMissione_spesaController spesaController = new CRUDMissione_spesaController("Spesa", Missione_dettaglioBulk.class, "speseMissioneColl", this) {
-        public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete) throws java.io.IOException, javax.servlet.ServletException {
-            super.writeHTMLToolbar(context, reset, find, delete);
-
+        @Override
+        public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
+            super.writeHTMLToolbar(context, reset, find, delete, false);
             // Aggiungo alla table delle spese il bottone di fine inserimento spese
-            it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context, "img/import16.gif", isViewing() ? null : "javascript:submitForm('doFineInserimentoSpese')", true, "Fine Inserimento Spese",
+            it.cnr.jada.util.jsp.JSPUtils.toolbarButton(context,
+                    HttpActionContext.isFromBootstrap(context) ? "fa fa-lock":"img/import16.gif",
+                    isViewing() ? null : "javascript:submitForm('doFineInserimentoSpese')",
+                    false,
+                    "Fine Inserimento Spese",
+                    "btn-title btn-outline-primary",
                     HttpActionContext.isFromBootstrap(context));
+            super.closeButtonGROUPToolbar(context);
         }
 
         @Override

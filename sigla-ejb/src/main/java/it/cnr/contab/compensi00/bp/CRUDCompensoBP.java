@@ -48,9 +48,10 @@ import java.rmi.RemoteException;
 public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IDefferedUpdateSaldiBP, IDocumentoAmministrativoSpesaBP, IValidaDocContBP
 {
 	private final SimpleDetailCRUDController contributiCRUDController = new SimpleDetailCRUDController("contributiCRUDController",Contributo_ritenutaBulk.class,"contributi",this, false){
-		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context,	boolean reset, boolean find, boolean delete) throws java.io.IOException, javax.servlet.ServletException 
+		@Override
+		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context,	boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException
 		{
-			super.writeHTMLToolbar(context, reset, find, delete);
+			super.writeHTMLToolbar(context, reset, find, delete, false);
 
 			// Aggiungo alla table dei contributi per visualizzare ulteriori dettagli per ogni riga
 			boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
@@ -68,15 +69,17 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 						false,
 						"Visualizza dettagli",
 						isFromBootstrap);
+			super.closeButtonGROUPToolbar(context);
 				
 		}
 	};
 	private it.cnr.contab.doccont00.core.bulk.OptionRequestParameter userConfirm = null;
 	private final SimpleDetailCRUDController docContAssociatiCRUDController = new SimpleDetailCRUDController("docContAssociatiCRUDController",V_doc_cont_compBulk.class,"docContAssociati",this, false){
-		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context,	boolean reset, boolean find, boolean delete) throws java.io.IOException, javax.servlet.ServletException
+		@Override
+		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context,	boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException
 		{
 
-			super.writeHTMLToolbar(context, reset, find, delete);
+			super.writeHTMLToolbar(context, reset, find, delete, false);
 
 			// Aggiungo un bottone alla toolbar dei documenti associati per aprire in visualizzazione il documento contabile associato
 			boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
@@ -94,6 +97,7 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 						false,
 						"Visualizza documento",
 						isFromBootstrap);
+			super.closeButtonGROUPToolbar(context);
 		}
 	};
 

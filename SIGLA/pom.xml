@@ -114,7 +114,7 @@
                 <configuration>
                     <jbossHome>${project.build.directory}/wildfly-${wildfly.version}</jbossHome>
                     <server-args>
-                        <server-arg>-Dspring.profiles.active=CMIS,liquibase</server-arg>
+                        <server-arg>-Dspring.profiles.active=CMIS</server-arg>
                     </server-args>
                     <java-opts>
                         <java-opt>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</java-opt>
