@@ -235,7 +235,9 @@
 		inputType="BUTTON"
 		img="img/find16.gif"
 		href="javascript:submitForm('doSearch(main.listabanche)')"
-		label="Conto/i d'appoggio" />
+		label="Conto/i d'appoggio"
+		iconClass="fa fa-fw fa-credit-card"
+		buttonClass="btn-outline-info btn-title"/>
 	<fieldProperty
 		name="pg_banca"
 		property="pg_banca"

@@ -88,15 +88,16 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 	};
 
 	private SimpleDetailCRUDController crudArchivioAllegati = new Incarichi_archivioCRUDController( "ProceduraArchivioAllegati", Incarichi_procedura_archivioBulk.class, "archivioAllegati", this){
-		public void writeHTMLToolbar(
+		@Override
+	    public void writeHTMLToolbar(
 				javax.servlet.jsp.PageContext context,
 				boolean reset,
 				boolean find,
-				boolean delete) throws java.io.IOException, javax.servlet.ServletException {
+				boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
 
 			Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)getParentModel();
 			boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
-
+			super.openButtonGROUPToolbar(context);
 			if (isGrowable() &&
 					procedura != null &&
 					!procedura.isProceduraAnnullata() && !procedura.isProceduraChiusa() && !procedura.isProceduraDefinitiva()) {
@@ -144,7 +145,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 						"Allegato Generico",
 						"btn btn-sm btn-secondary btn-outline-secondary",
 						isFromBootstrap);
-				super.writeHTMLToolbar(context, false, false, delete);
+				super.writeHTMLToolbar(context, false, false, delete, false, false);
 			} else if (procedura != null && isGrowable() &&
 					(procedura.isProceduraDefinitiva() || procedura.isProceduraInviataCorteConti() ||
 							procedura.isProceduraChiusa() || procedura.isProceduraAnnullata())) {
@@ -157,9 +158,10 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"Allegato Generico",
 							"btn btn-sm btn-secondary btn-outline-secondary",
 							isFromBootstrap);
-					super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()));
+					super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()), false, false);
 				}
 			}
+            super.closeButtonGROUPToolbar(context);
 		}
 	};
 
@@ -243,11 +245,12 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			model.setTipo_archivio(Incarichi_procedura_archivioBulk.TIPO_GENERICO);
 			add(actioncontext, model);
 		}
+		@Override
 		public void writeHTMLToolbar(
 				javax.servlet.jsp.PageContext context,
 				boolean reset,
 				boolean find,
-				boolean delete) throws java.io.IOException, javax.servlet.ServletException {
+				boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
 
 			Incarichi_proceduraBulk procedura = (Incarichi_proceduraBulk)getParentModel();
 			Incarichi_parametriBulk parametri = null;
@@ -256,7 +259,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			} catch (Exception e) {}
 
 			boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
-
+            super.openButtonGROUPToolbar(context);
 			if (procedura != null && !procedura.isProceduraAnnullata() && !procedura.isProceduraChiusa() &&
 					!procedura.isProceduraDefinitiva() && isGrowable()) {
 				if (procedura.getBando() == null && procedura.isProceduraDaPubblicare()) {
@@ -352,7 +355,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 						"Allegato Generico",
 						"btn btn-sm btn-secondary btn-outline-secondary",
 						isFromBootstrap);
-				super.writeHTMLToolbar(context, false, false, delete);
+				super.writeHTMLToolbar(context, false, false, delete, false, false);
 			} else if (procedura != null && isGrowable() &&
 					(procedura.isProceduraDefinitiva() || procedura.isProceduraInviataCorteConti() ||
 							procedura.isProceduraChiusa() || procedura.isProceduraAnnullata())) {
@@ -375,7 +378,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 									"btn btn-sm btn-secondary btn-outline-secondary",
 									isFromBootstrap);
 						}
-						super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isContratto()));
+						super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isContratto()), false, false);
 					}
 				}
 				if (procedura.getNr_contratti().compareTo(1)==0 &&
@@ -416,9 +419,10 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"Allegato Generico",
 							"btn btn-sm btn-secondary btn-outline-secondary",
 							isFromBootstrap);
-					super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()));
+					super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()), false, false);
 				}
 			}
+            super.closeButtonGROUPToolbar(context);
 		}
 	};
 
@@ -452,17 +456,18 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			}
 			return oggettobulk;
 		}
+		@Override
 		public void writeHTMLToolbar(
 				javax.servlet.jsp.PageContext context,
 				boolean reset,
 				boolean find,
-				boolean delete) throws java.io.IOException, javax.servlet.ServletException {
+				boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
 
 			CRUDIncarichiProceduraBP bp = (CRUDIncarichiProceduraBP)getParentController();
 			Incarichi_proceduraBulk  procedura = (Incarichi_proceduraBulk)bp.getModel();
 			Incarichi_repertorioBulk incarico  = (Incarichi_repertorioBulk)getModel();
 
-			super.writeHTMLToolbar(context, reset, false, delete&&incarico!=null&&incarico.isIncaricoProvvisorio());
+			super.writeHTMLToolbar(context, reset, false, delete&&incarico!=null&&incarico.isIncaricoProvvisorio(), false);
 
 			boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
 
@@ -518,6 +523,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 					}
 				}
 			}
+            super.closeButtonGROUPToolbar(context);
 		}
 	};
 
@@ -545,11 +551,12 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 	};
 
 	private SimpleDetailCRUDController crudIncarichiArchivioAllegati = new Incarichi_archivioCRUDController( "IncarichiArchivioAllegati", Incarichi_repertorio_archivioBulk.class, "archivioAllegati", incarichiColl){
-		public void writeHTMLToolbar(
+		@Override
+	    public void writeHTMLToolbar(
 				javax.servlet.jsp.PageContext context,
 				boolean reset,
 				boolean find,
-				boolean delete) throws java.io.IOException, javax.servlet.ServletException {
+				boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
 
 			Incarichi_repertorioBulk incarico  = (Incarichi_repertorioBulk)getParentModel();
 			Incarichi_parametriBulk parametri = null;
@@ -558,7 +565,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			} catch (Exception e) {}
 
 			boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
-
+            super.openButtonGROUPToolbar(context);
 			if (isGrowable() &&
 					incarico != null &&
 					!incarico.isIncaricoAnnullato() && !incarico.isIncaricoChiuso() && !incarico.isIncaricoDefinitivo()) {
@@ -613,7 +620,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 						"Allegato Generico",
 						"btn btn-sm btn-secondary btn-outline-secondary",
 						isFromBootstrap);
-				super.writeHTMLToolbar(context, false, false, delete);
+				super.writeHTMLToolbar(context, false, false, delete, false, false);
 			} else if (incarico != null && isGrowable() &&
 					(incarico.isIncaricoDefinitivo() || incarico.isIncaricoChiuso() || incarico.isIncaricoAnnullato())) {
 				if (((CRUDIncarichiProceduraBP)getParentController().getParentController()).isSuperUtente() ||
@@ -627,7 +634,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"Contratto",
 								isFromBootstrap);
 					}
-					super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isContratto()));
+					super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isContratto()), false, false);
 				}
 				if (incarico.getCurriculumVincitore()==null) {
 					if (parametri!=null && parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) {
@@ -650,9 +657,10 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"Allegato Generico",
 							"btn btn-sm btn-secondary btn-outline-secondary",
 							isFromBootstrap);
-					super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()));
+					super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()), false, false);
 				}
 			}
+            super.closeButtonGROUPToolbar(context);
 		}
 	};
 
@@ -721,11 +729,11 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				javax.servlet.jsp.PageContext context,
 				boolean reset,
 				boolean find,
-				boolean delete) throws java.io.IOException, javax.servlet.ServletException {
+				boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
 
 			Incarichi_repertorio_varBulk incaricoVar = (Incarichi_repertorio_varBulk)getModel();
 
-			super.writeHTMLToolbar(context, reset, find, delete);
+			super.writeHTMLToolbar(context, reset, find, delete, false);
 
 			if (incaricoVar!=null) {
 				if (isEditing() &&
@@ -743,6 +751,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							isFromBootstrap);
 				}
 			}
+			super.closeButtonGROUPToolbar(context);
 		}
 	};
 
