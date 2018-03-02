@@ -254,6 +254,10 @@
 		enabledOnFreeSearch="true" />		
 /**************************/			
 
+	<form name="searchtool">
+		<formFieldProperty name="cd_ti_spesa" />
+		<formFieldProperty name="ds_ti_spesa" inputType="TEXT"/>	
+	</form>
 	<formFieldProperty name="pg_rif_inquadramento" />	
 	<formFieldProperty name="cd_ti_spesa" />
 	<formFieldProperty name="ti_area_geografica" />
