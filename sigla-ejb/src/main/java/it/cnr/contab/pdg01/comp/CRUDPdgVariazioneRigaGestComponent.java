@@ -457,11 +457,11 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO","PROGETTO_GEST.PG_PROGETTO");
 		sql.addSQLClause("AND","PROGETTO_GEST.FL_UTILIZZABILE",sql.EQUALS,"Y");
 		/*
-		 * Lorigine delle fonti pilota lutilizzo delle GAE sui dettagli della variazione. 
+		 * L'origine delle fonti pilota l'utilizzo delle GAE sui dettagli della variazione.
 		 * In particolare:
  		 *    - Variazione con Fonti Interne: solo GAE di tipo FIN;
 		 *    - Variazione con Fonti Esterne: solo GAE di tipo FES.
-		 * Lorigine delle fonti filtra le GAE utilizzabili sulle righe di variazione ad eccezione 
+		 * L'origine delle fonti filtra le GAE utilizzabili sulle righe di variazione ad eccezione
 		 * delle GAE del CdR speciale del Personale in CONFIGURAZIONE_CNR, che risultano utilizzabili 
 		 * sia su variazioni di Tipo Interno che Esterno.
 		 */

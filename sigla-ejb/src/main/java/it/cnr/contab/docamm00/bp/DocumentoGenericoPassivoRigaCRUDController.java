@@ -75,14 +75,14 @@ public class DocumentoGenericoPassivoRigaCRUDController extends it.cnr.jada.util
 			throw new it.cnr.jada.DetailedRuntimeException(e);
 		}
 	}
-
+	@Override
 	public void writeHTMLToolbar(
 			javax.servlet.jsp.PageContext context,
 			boolean reset,
 			boolean find,
-			boolean delete) throws java.io.IOException, javax.servlet.ServletException {
+			boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
 
-		super.writeHTMLToolbar(context, reset, find, delete);
+		super.writeHTMLToolbar(context, reset, find, delete, false);
 
         boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
 
@@ -95,6 +95,7 @@ public class DocumentoGenericoPassivoRigaCRUDController extends it.cnr.jada.util
 				"Contabilizza",
 				"btn-sm btn-outline-primary btn-title",
                 isFromBootstrap);
+		super.closeButtonGROUPToolbar(context);
 	}
 	@Override
 	public void writeFormInput(JspWriter jspwriter, String s, String s1,

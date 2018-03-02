@@ -45,15 +45,15 @@ private void addSQLTipoTrattamento(SQLBuilder sql, Filtro_trattamentoBulk filtro
 	sql.addClause("AND","fl_agevolazioni_cervelli",sql.EQUALS, filtro.getFlAgevolazioniCervelli());
 	sql.addClause("AND","fl_incarico",sql.EQUALS, filtro.getFlIncarico());
 	sql.addClause("AND","fl_tipo_prestazione_obbl",sql.EQUALS, filtro.getFlTipoPrestazioneObbl());
-	sql.addClause("AND","fl_agevolazioni_rientro_lav",sql.EQUALS, filtro.getFlAgevolazioniRientroLav());	
-	sql.addClause("AND","fl_solo_inail_ente",sql.EQUALS, filtro.getFlSoloInailEnte());	
+	sql.addClause("AND","fl_agevolazioni_rientro_lav",sql.EQUALS, filtro.getFlAgevolazioniRientroLav());
+	sql.addClause("AND","fl_solo_inail_ente",sql.EQUALS, filtro.getFlSoloInailEnte());
 	sql.addClause("AND","fl_split_payment",sql.EQUALS, filtro.getFlSplitPayment());
 	if (filtro.getCdTipoRapporto() != null && filtro.getCdTipoRapporto().equals("DIP"))
-	{   
+	{
 		sql.addClause("AND (","fl_anno_prec",sql.ISNULL,null);
 		sql.addClause("OR","fl_anno_prec",sql.EQUALS, filtro.getFlAnnoPrec());
 		sql.closeParenthesis();
-		
+
 		sql.addClause("AND (","tipo_rapp_impiego",sql.ISNULL,null);
 		sql.addClause("OR","tipo_rapp_impiego",sql.EQUALS, filtro.getTipoRappImpiego());
 		sql.closeParenthesis();
@@ -84,7 +84,7 @@ public Tipo_trattamentoBulk findIntervallo(Tipo_trattamentoBulk tratt) throws Pe
 /**
  *  Ritorna tutti i tipi trattamento compatibili con il filtro impostato
  *
- * @param filtro	
+ * @param filtro
  * @return Collezione dei Tipi_trattamentoBulk validi
 **/
 public java.util.Collection findTipiTrattamento(Filtro_trattamentoBulk filtro) throws PersistencyException{
@@ -108,11 +108,11 @@ public Tipo_trattamentoBulk findTipoTrattamentoValido(Filtro_trattamentoBulk fil
 	if (broker.next())
 		tratt = (Tipo_trattamentoBulk)fetch(broker);
 	broker.close();
-		
+
 	return tratt;
 }
 /**
-  * Ritorna TRUE se esiste il tipo trattamento che verifica 
+  * Ritorna TRUE se esiste il tipo trattamento che verifica
   * le condizione inserite nel filtro
   *
   * @param filtro		Filtro per la ricerca del tipo trattamento
@@ -147,12 +147,12 @@ private SQLBuilder selectTipoTrattamento(Filtro_trattamentoBulk filtro) {
 			sql.addSQLClause("OR","(NOT EXISTS ( SELECT 1 FROM V_TIPO_TRATTAMENTO_TIPO_CORI V" +
 														   " WHERE V.CD_TRATTAMENTO = V_TIPO_TRATTAMENTO_TIPO_CORI.CD_TRATTAMENTO" +
 														   " AND V.CD_CLASSIFICAZIONE_CORI ", sql.EQUALS, "PR");
-			sql.closeParenthesis();	
-			sql.closeParenthesis();			
+			sql.closeParenthesis();
+			sql.closeParenthesis();
 			sql.closeParenthesis();
 		}
 	addSQLTipoTrattamento(sql, filtro);
-	if (filtro.getFlBonus()==null || !filtro.getFlBonus()){  
+	if (filtro.getFlBonus()==null || !filtro.getFlBonus()){
 		SQLBuilder sql_not = createSQLBuilder();
 		sql_not.resetColumns();
 		sql_not.addTableToHeader("TIPO_RAPPORTO");
@@ -171,7 +171,7 @@ private SQLBuilder selectTipoTrattamento(Filtro_trattamentoBulk filtro) {
   * Ritorna l'SQL statement per la ricerca di un tipo trattamento
   * con le seguenti clausole impostate nel filtro
   *
-  * @param filtro	
+  * @param filtro
   * @return L'SQL statement relativo
   *
 **/
@@ -192,7 +192,7 @@ public  Tipo_trattamentoBulk findTipoTrattamentoBonusValido(BonusBulk bonus) thr
 	if (broker.next())
 		tratt = (Tipo_trattamentoBulk)fetch(broker);
 	broker.close();
-		
+
 	return tratt;
 }
 }
