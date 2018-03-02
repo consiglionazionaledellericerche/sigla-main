@@ -9,41 +9,31 @@
 <%  
 	CRUDMissioneBP bp = (CRUDMissioneBP)BusinessProcess.getBusinessProcess(request);
 %>
-
-<table width="100%">
-	<tr>
-	<td>
-		<% bp.getController().writeFormLabel( out, "tipo_trattamento"); %>
-		<% bp.getController().writeFormInput( out, null,"tipo_trattamento",false,null,"onChange=\"submitForm('doOnTipoTrattamentoChange')\"");%>		
-	</td>
-	</tr>
-</table>
-
-<div class="Group" style="width:93%">
-<table width="100%">
-	<tr></tr>
-	<tr></tr>
-
-	<tr>
-	<td><% bp.getDiariaController().writeHTMLTable(pageContext, "dettaglioDiariaSet",false,false,false,"700px","150px");%></td>
-	</tr>
-
-	<tr></tr>
-	<tr></tr>
-</table>
+<div class="Group card p-2">
+    <table width="100%">
+        <tr>
+            <td>
+                <% bp.getController().writeFormLabel( out, "tipo_trattamento"); %>
+                <% bp.getController().writeFormInput( out, null,"tipo_trattamento",false,null,"onChange=\"submitForm('doOnTipoTrattamentoChange')\"");%>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="Group">
+    <table width="100%">
+        <tr>
+            <td><% bp.getDiariaController().writeHTMLTable(pageContext, "dettaglioDiariaSet",false,false,false,"100%","150px");%></td>
+        </tr>
+    </table>
 </div>
 
-<div class="Group" style="width:93%">
-<table width="100%">
-	<tr>
-	<td>
-		<% bp.getDiariaController().writeFormLabel( out, "im_diaria_netto"); %>
-		<% bp.getDiariaController().writeFormInput( out, "im_diaria_netto"); %>		
-	</td>
-	<td>
-		<% bp.getDiariaController().writeFormLabel( out, "im_quota_esente"); %>
-		<% bp.getDiariaController().writeFormInput( out, "im_quota_esente"); %>		
-	</td>	
-	</tr>
-</table>
+<div class="Group card p-2">
+    <table width="100%">
+        <tr>
+            <td><% bp.getDiariaController().writeFormLabel( out, "im_diaria_netto"); %></td>
+            <td><% bp.getDiariaController().writeFormInput( out, "im_diaria_netto"); %></td>
+            <td><% bp.getDiariaController().writeFormLabel( out, "im_quota_esente"); %></td>
+            <td><% bp.getDiariaController().writeFormInput( out, "im_quota_esente"); %></td>
+        </tr>
+    </table>
 </div>

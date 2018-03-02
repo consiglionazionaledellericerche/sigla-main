@@ -493,13 +493,13 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 	 * 		le righe di variazione possono essere solo per la spesa ed il saldo algebrico pari a zero.
 	 * 		I CdR chiamati a partecipare possono essere solo quelli appartenenti al CDS che ha aperto 
 	 * 		la variazione.
-	 * STO_E_CDS: le righe di variazione possono essere solo per lentrata ed il saldo algebrico pari a zero.
+	 * STO_E_CDS: le righe di variazione possono essere solo per l'entrata ed il saldo algebrico pari a zero.
 	 * 			  I CdR chiamati a partecipare possono essere solo quelli appartenenti al CDS che ha aperto 
 	 * 			  la variazione.
 	 * STO_S_TOT: le righe di variazione possono essere solo per la spesa ed il saldo algebrico pari a zero.
 	 * 			  I CdR chiamati a partecipare possono anche appartenere a CDS diversi da quello che ha aperto 
 	 * 			  la variazione.
-	 * STO_E_TOT: le righe di variazione possono essere solo per lentrata ed il saldo algebrico pari a zero.
+	 * STO_E_TOT: le righe di variazione possono essere solo per l'entrata ed il saldo algebrico pari a zero.
 	 * 			  I CdR chiamati a partecipare possono anche appartenere a CDS diversi da quello che ha aperto
 	 * 			  la variazione.
 	 * VAR_PIU_CDS: le righe di variazione devono essere sia di entrata che di spesa (obbligatoriamente), 

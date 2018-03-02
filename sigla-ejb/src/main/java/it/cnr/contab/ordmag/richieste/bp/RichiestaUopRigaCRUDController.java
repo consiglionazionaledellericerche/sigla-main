@@ -80,21 +80,6 @@ public void validateForDelete(ActionContext context, OggettoBulk detail) throws 
 //	}
 }
 
-public void writeHTMLToolbar(
-		javax.servlet.jsp.PageContext context,
-		boolean reset,
-		boolean find,
-		boolean delete) throws java.io.IOException, javax.servlet.ServletException {
-
-		super.writeHTMLToolbar(context, reset, find, delete);
-
-//		String command = "javascript:submitForm('doRicercaObbligazione')";
-//		it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
-//			context,
-//			"img/history16.gif",
-//			!(isInputReadonly() || getDetails().isEmpty() || ((CRUDRichiestaUopBP)getParentController()).isSearching())? command : null,
-//			true,"Contabilizza");
-}
 @Override
 	public void writeFormInput(JspWriter jspwriter, String s, String s1,
 			boolean flag, String s2, String s3) throws IOException {

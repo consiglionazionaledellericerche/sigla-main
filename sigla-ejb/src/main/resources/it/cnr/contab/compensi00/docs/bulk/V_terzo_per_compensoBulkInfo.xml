@@ -25,6 +25,7 @@
 		inputSize="50"
 		inputType="TEXT"
 		label="Nome"
+        enabledOnFreeSearch="true"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="cd_terzo_precedente"
@@ -126,6 +127,7 @@
 		inputSize="50"
 		inputType="TEXT"
 		label="Cognome"
+        enabledOnFreeSearch="true"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="ds_provincia_fiscale"
@@ -155,7 +157,12 @@
 		inputType="TEXT"
 		enabledOnFreeSearch="true"
 		label="Fine validita terzo" />
-
+	<form
+		name="searchtool" >
+		<formFieldProperty
+				name="cd_terzo"
+                inputCssClass=" col-2 "/>
+	</form>
 	<formFieldProperty name="dt_ini_validita" />
 	<formFieldProperty name="partita_iva" />
 	<formFieldProperty name="nome" />

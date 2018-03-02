@@ -6,6 +6,7 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.util.PropertyNames;
 
 import java.util.*;
 
@@ -184,8 +185,7 @@ public boolean isEsercizioChiuso(it.cnr.jada.UserContext userContext,Integer ese
 			return false;
 			
 		LoggableStatement cs = new LoggableStatement(getConnection(),
-				"{ ? = call " + it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() 
-				+	"CNRCTB008.isEsercizioChiusoYesNo(?,?)}",false,this.getClass());		
+				PropertyNames.getProperty("package.cnrctb008.isEsercizioChiusoYesNo"),false,this.getClass());
 
 		try {
 			cs.registerOutParameter( 1, java.sql.Types.CHAR);
