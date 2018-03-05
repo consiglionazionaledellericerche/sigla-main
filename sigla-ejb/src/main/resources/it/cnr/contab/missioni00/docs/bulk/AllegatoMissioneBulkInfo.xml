@@ -9,6 +9,7 @@
 		inputType="SELECT"
 		keysProperty="aspectNamesKeys"
 		inputSize="40"
+		inputCssClass="w-100"
 		nullable="false"
 		enabledOnInsert="false"
 		enabledOnEdit="false"
@@ -63,6 +64,8 @@
 		enabledOnView="true"
 		readonlyProperty="nodeNotPresent"
 		img="img/import24.gif"
+		buttonClass="btn-outline-primary btn-title w-100"
+		iconClass="fa fa-fw fa-cloud-download"
 		href="javascript:doScaricaAllegato()"
 		label="Apri File" />
 		
