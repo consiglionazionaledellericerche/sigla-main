@@ -22,7 +22,7 @@
 <div class="Group">
     <table width="100%">
         <tr>
-            <td><% bp.getRimborsoController().writeHTMLTable(pageContext, "dettaglioRimborsoSet",false,false,false,"700px","150px");%></td>
+            <td><% bp.getRimborsoController().writeHTMLTable(pageContext, "dettaglioRimborsoSet",false,false,false,"100%","150px");%></td>
         </tr>
     </table>
 </div>
