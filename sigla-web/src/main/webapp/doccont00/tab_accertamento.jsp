@@ -15,23 +15,22 @@
 	<table border="0" cellspacing="0" cellpadding="2" class="w-100">
 	
 	<tr>
-	<td><% bp.getController().writeFormLabel( out, "esercizio_originale"); %></td>
-	<td><% bp.getController().writeFormInput( out,"default","esercizio_originale",false,null,null); %>
-	  		<% if ( !accertamento.isResiduo()) 
-	  			{ 
-			 		bp.getController().writeFormLabel( out, "dt_cancellazione"); 
-	 		   	bp.getController().writeFormInput( out, "dt_cancellazione"); 
-	 		   }	%>
-	</td>		
-	<td align="right">
-		<%if (bp instanceof CRUDAccertamentoResiduoBP && ((CRUDAccertamentoResiduoBP)bp).isFlagAutomaticoEnabledOnView()) { %>
-	        <% bp.getController().writeFormInput(out,"default","fl_calcolo_automatico_eov",false,null,"onclick=\"submitForm('doCambiaFl_calcolo_automatico')\""); %>
-  	        <% bp.getController().writeFormLabel( out, "fl_calcolo_automatico_eov"); %></td>
-		<% } else { %>
-		<td align="right">
-	        <% bp.getController().writeFormInput(out,"default","fl_calcolo_automatico",false,null,"onclick=\"submitForm('doCambiaFl_calcolo_automatico')\""); %>
-  	        <% bp.getController().writeFormLabel( out, "fl_calcolo_automatico"); %></td>
-		<% } %>
+        <td><% bp.getController().writeFormLabel( out, "esercizio_originale"); %></td>
+        <td><% bp.getController().writeFormInput( out,"default","esercizio_originale",false,null,null); %>
+            <% if ( !accertamento.isResiduo()){
+                bp.getController().writeFormLabel( out, "dt_cancellazione");
+                bp.getController().writeFormInput( out, "dt_cancellazione");
+            }%>
+        </td>
+        <td align="right">
+            <%if (bp instanceof CRUDAccertamentoResiduoBP && ((CRUDAccertamentoResiduoBP)bp).isFlagAutomaticoEnabledOnView()) { %>
+                <% bp.getController().writeFormInput(out,"default","fl_calcolo_automatico_eov",false,null,"onclick=\"submitForm('doCambiaFl_calcolo_automatico')\""); %>
+                <% bp.getController().writeFormLabel( out, "fl_calcolo_automatico_eov"); %></td>
+            <% } else { %>
+            <td align="right">
+                <% bp.getController().writeFormInput(out,"default","fl_calcolo_automatico",false,null,"onclick=\"submitForm('doCambiaFl_calcolo_automatico')\""); %>
+                <% bp.getController().writeFormLabel( out, "fl_calcolo_automatico"); %></td>
+            <% } %>
 	</tr>
 	
 	<tr>
@@ -45,22 +44,19 @@
 	</tr>
 	
 	<tr>
-<%  if( bp instanceof CRUDAccertamentoResiduoBP && bp.isSearching() ) { %>
-		<td>			<% bp.getController().writeFormLabel( out, "pg_accertamento_search"); %></td>	
-		<td colspan=2>  <% bp.getController().writeFormInput( out, "pg_accertamento_search"); %>
-<%  } else { %>
-		<td>	<% bp.getController().writeFormLabel( out, "pg_accertamento"); %></td>	
-		<td colspan=2>  <% bp.getController().writeFormInput( out, "pg_accertamento"); %>
-<%  } %>
-
-				<% bp.getController().writeFormLabel( out, "dt_registrazione"); %>
-		  		<% bp.getController().writeFormInput(out,null,"dt_registrazione",false,null,"onChange=\"javascript:submitForm('doValidaDataRegistrazione')\"");%>
-
-<%  if( bp instanceof CRUDAccertamentoResiduoBP ) { %>
-	  		<% bp.getController().writeFormLabel( out, "pg_accertamento_ori_riporto"); %>
-	  		<% bp.getController().writeFormInput( out, "pg_accertamento_ori_riporto"); %>
-	  		
-<%  } %>
+        <%  if( bp instanceof CRUDAccertamentoResiduoBP && bp.isSearching() ) { %>
+                <td><% bp.getController().writeFormLabel( out, "pg_accertamento_search"); %></td>
+                <td colspan=2>  <% bp.getController().writeFormInput( out, "pg_accertamento_search"); %>
+        <%  } else { %>
+                <td><% bp.getController().writeFormLabel( out, "pg_accertamento"); %></td>
+                <td colspan=2>  <% bp.getController().writeFormInput( out, "pg_accertamento"); %>
+        <%  } %>
+        <% bp.getController().writeFormLabel( out, "dt_registrazione"); %>
+        <% bp.getController().writeFormInput(out,"dt_registrazione");%>
+        <%  if( bp instanceof CRUDAccertamentoResiduoBP ) { %>
+            <% bp.getController().writeFormLabel( out, "pg_accertamento_ori_riporto"); %>
+            <% bp.getController().writeFormInput( out, "pg_accertamento_ori_riporto"); %>
+        <%  } %>
 
 		</td>
 	</tr>
@@ -83,26 +79,26 @@
 	</table>
 </div>
 
-<div class="Group card p-3 m-1">
-<div class="GroupLabel font-weight-bold text-primary ml-2">Repertorio Contratti</div>  
-	<div class="Group">
-	<table class="w-100">
-	  <tr>
-		<%if (bp instanceof CRUDAccertamentoResiduoBP && ((CRUDAccertamentoResiduoBP)bp).isContrattoEnabledOnView()) { %>
-	        <td><% bp.getController().writeFormLabel( out, "find_contratto_eov"); %></td>
-		    <td colspan=2>
-				<% bp.getController().writeFormInput( out, "find_contratto_eov"); %>
-		    </td>
-		<% } else { %>
-	        <td><% bp.getController().writeFormLabel( out, "find_contratto"); %></td>
-		    <td colspan=2>
-				<% bp.getController().writeFormInput( out, "find_contratto"); %>
-		    </td>
-		<% } %>
-	  </tr>
-	</table>	
+<div class="Group">
+    <div class="GroupLabel font-weight-bold text-primary ml-2">Repertorio Contratti</div>
+        <div class="Group card p-3 m-1">
+            <table class="w-100">
+              <tr>
+                <%if (bp instanceof CRUDAccertamentoResiduoBP && ((CRUDAccertamentoResiduoBP)bp).isContrattoEnabledOnView()) { %>
+                    <td><% bp.getController().writeFormLabel( out, "find_contratto_eov"); %></td>
+                    <td colspan=2>
+                        <% bp.getController().writeFormInput( out, "find_contratto_eov"); %>
+                    </td>
+                <% } else { %>
+                    <td><% bp.getController().writeFormLabel( out, "find_contratto"); %></td>
+                    <td colspan=2>
+                        <% bp.getController().writeFormInput( out, "find_contratto"); %>
+                    </td>
+                <% } %>
+              </tr>
+            </table>
+        </div>
     </div>
-</div>
 </div>
 
 <div class="Group card p-3 m-1">
