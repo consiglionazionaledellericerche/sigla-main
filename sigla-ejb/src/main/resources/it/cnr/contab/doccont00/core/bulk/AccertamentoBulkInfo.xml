@@ -78,6 +78,7 @@
 		name="dt_registrazione"
 		property="dt_registrazione"
 		label="Data"
+		command="doValidaDataRegistrazione"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
