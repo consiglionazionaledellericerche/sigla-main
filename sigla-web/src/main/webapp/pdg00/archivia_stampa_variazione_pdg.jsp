@@ -30,26 +30,26 @@ function doScaricaAllegato() {
 <body class="Form">
 
 <%	bp.openFormWindow(pageContext); %>
-<div class="card p-2">
+<div>
 	<table width=100%>
 	 <tr>
 	  <td>
 		<fieldset class="fieldset">
-	    <legend class="GroupLabel"><% bp.getController().writeFormInput(out,null,"ti_signedText",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;\"");%></legend>
-			<table>
-			  <tr>	
-				<td><% bp.getController().writeFormLabel(out,"findpdg_variazioneForPrint"); %></td>
-				<td><% bp.getController().writeFormInput(out,"findpdg_variazioneForPrint"); %></td>
-				<td><% bp.getController().writeFormInput(out,"default","attivaFile");%></td>
-			  </tr>  
-			</table>
-		</fieldset>
+            <legend class="GroupLabel"><% bp.getController().writeFormInput(out,null,"ti_signedText",true,"GroupLabel text-primary h3","style=\"background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;\"");%></legend>
+                <table class="card p-2">
+                  <tr>
+                    <td><% bp.getController().writeFormLabel(out,"findpdg_variazioneForPrint"); %></td>
+                    <td><% bp.getController().writeFormInput(out,"findpdg_variazioneForPrint"); %></td>
+                    <td><% bp.getController().writeFormInput(out,"default","attivaFile");%></td>
+                  </tr>
+                </table>
+            </fieldset>
 	   </td>
 	  </tr>
 	</table>
 </div>	
 <fieldset class="fieldset">
-<legend class="GroupLabel"><span class="GroupLabel" style="background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;">Allegati</span></legend>
+<legend class="GroupLabel"><span class="GroupLabel text-primary h3 ml-3" style="background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;">Allegati</span></legend>
 	<table width=100%>
 	  <tr>
 	  	<td>
@@ -58,7 +58,7 @@ function doScaricaAllegato() {
 	  </tr>
 	  <tr>
 	  	<td>
-			<table class="Panel" cellspacing=2>
+			<table class="Panel card p-2" cellspacing=2>
 				<% if (!bp.isSigned()){%>
 					<tr>
 				        <td><% controller.writeFormLabel(out,"default","file"); %></td>
