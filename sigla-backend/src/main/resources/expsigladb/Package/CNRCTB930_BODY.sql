@@ -1404,7 +1404,8 @@ BEGIN
               aStringa:=aStringa || RPAD(' ', 4, ' ');  -- codice comune (dovrebbe essere valorizzato solo in casi da noi non gestiti)
               --aStringa:=aStringa || RPAD(SUBSTR(aCodiceComuneDomicilio, 1, 4), 4, ' '); -- codice comune domicilio
               --aStringa:=aStringa || RPAD(SUBSTR(Upper(aIndirizzo), 1, 40), 40, ' ');   -- indirizzo
-              aStringa:=aStringa || RPAD(' ', 40, ' ');   -- indirizzo
+              aStringa:=aStringa || RPAD(' ', 4, ' ');  -- codice comune fusione 2017 N
+              aStringa:=aStringa || RPAD(' ', 40, ' ');   --comune
 
       	      aStringa:=aStringa || RPAD(SUBSTR(Upper(aProvinciaDomicilio), 1, 2), 2, ' ');   -- provincia domicilio fiscale
       	      aStringa:=aStringa || RPAD(' ', 4, ' ');  -- codice comune (dovrebbe essere valorizzato solo in casi da noi non gestiti)
@@ -1424,12 +1425,12 @@ BEGIN
                 aStringa:=aStringa ||  '000';   -- codice stato estero numeri di 3
              end if;
              aStringa:=aStringa ||  'A';   -- livello totalizzazione  vale 'A' autonomo
-             -- fino a 434 caratteri
+             -- fino a 438 caratteri
              	 aStringa:= aStringa || RPAD('CONSIGLIO NAZIONALE DELL', 24, ' ');
              	 aStringa:= aStringa || RPAD('E RICERCHE', 24, ' ');
                aStringa:= aStringa || RPAD(' ', 48, ' ');
                aStringa:= aStringa || LPAD('0', 10, '0'); -- calce
-             -- fino a 540 caratteri
+             -- fino a 544 caratteri
                aStringa:= aStringa || RPAD('ROMA', 24, ' '); -- caaf comune
                aStringa:= aStringa || RPAD('RM', 2, ' '); -- caaf prov
                aStringa:= aStringa || RPAD('00185', 5, ' '); -- caaf cap
@@ -1440,7 +1441,7 @@ BEGIN
                aStringa:= aStringa || RPAD('721909', 6, ' '); -- codice attività
                aStringa:= aStringa || RPAD(' ', 3, ' '); -- codice sede
               --  aStringa:= aStringa || RPAD(' ', 150, ' ');
-              -- fino a 690 caratteri
+              -- fino a 705 caratteri
 
                aStringa:= aStringa || LPAD(to_char(trunc(sysdate),'DDMMYYYY'), 8, '0'); -- data stampa
                aStringa:= aStringa || RPAD('IL PRESIDENTE MASSIMO INGUSCIO', 50, ' ');
@@ -1455,12 +1456,12 @@ BEGIN
                aStringa:= aStringa || LPAD('0', 5, '0');
                aStringa:= aStringa || LPAD(inEsercizio, 4, '0'); -- anno denuncia
                aStringa:= aStringa || RPAD(' ', 132, ' ');
-             -- fino a 1112 caratteri
+             -- fino a 1127 caratteri
                aStringa:= aStringa || LPAD('0', 5, '0'); -- progressivo cert.
                aStringa:= aStringa || RPAD(' ', 24, ' ');
                aStringa:= aStringa || '0'; -- FLAG conferma certificazione ????
 
-               aStringa:= aStringa || RPAD(' ', 2226, ' ');
+               aStringa:= aStringa || RPAD(' ', 2222, ' ');
                aStringa:= aStringa || RPAD(' ', 1, ' ');-- flag validazione
                aStringa:= aStringa || RPAD(' ', 10, ' ');-- codice caricamento
                aStringa:= aStringa || RPAD(' ', 7, ' '); -- codice utente
