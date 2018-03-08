@@ -1,5 +1,5 @@
 <%@page import="it.cnr.contab.doccont00.tabrif.bulk.Tipo_bolloBulk"%>
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.action.*,
 		it.cnr.jada.util.action.*,
 		it.cnr.jada.util.jsp.*,

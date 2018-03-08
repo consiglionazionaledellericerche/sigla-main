@@ -81,14 +81,14 @@ public class ObbligazioniCRUDController extends it.cnr.jada.util.action.SimpleDe
 
         return super.isShrinkable() && !((it.cnr.jada.util.action.CRUDBP) getParentController()).isSearching();
     }
-
+    @Override
     public void writeHTMLToolbar(
             javax.servlet.jsp.PageContext context,
             boolean reset,
             boolean find,
-            boolean delete) throws java.io.IOException, javax.servlet.ServletException {
+            boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
 
-        super.writeHTMLToolbar(context, reset, find, delete);
+        super.writeHTMLToolbar(context, reset, find, delete, false);
 
         it.cnr.jada.util.action.CRUDBP bp = (it.cnr.jada.util.action.CRUDBP) getParentController();
         boolean enabled = !bp.isSearching();
@@ -126,6 +126,6 @@ public class ObbligazioniCRUDController extends it.cnr.jada.util.action.SimpleDe
                 "Aggiorna in automatico",
                 "btn btn-outline-info btn-sm btn-title",
                 HttpActionContext.isFromBootstrap(context));
-
+        super.closeButtonGROUPToolbar(context);
     }
 }

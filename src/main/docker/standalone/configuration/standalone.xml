@@ -435,7 +435,7 @@
                 </host>
             </server>
             <servlet-container name="default" use-listener-encoding="true" default-encoding="UTF-8">
-                <jsp-config/>
+                <jsp-config development="true" tag-pooling="false"/>
                 <websockets/>
             </servlet-container>
             <handlers>

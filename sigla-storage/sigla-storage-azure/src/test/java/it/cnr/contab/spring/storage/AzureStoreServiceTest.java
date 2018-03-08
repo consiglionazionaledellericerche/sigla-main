@@ -52,7 +52,7 @@ public class AzureStoreServiceTest {
         Map<String, Object> map = new HashMap();
         map.put(StoragePropertyNames.NAME.value(), CIAONE);
         map.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), Arrays.asList(P_CM_TITLED));
-        map.put(StoragePropertyNames.TITLE.value(), "Raffaella Carr‡");
+        map.put(StoragePropertyNames.TITLE.value(), "Raffaella Carr√†");
         StorageObject document = storeService.storeSimpleDocument(is, "text/plain", FOO, map);
         InputStream iss = storeService.getResource(FOO_CIAONE);
         assertEquals(TEXT, IOUtils.toString(iss, Charset.defaultCharset()));

@@ -1,5 +1,5 @@
 <%@page import="it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk"%>
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.action.*,
 		it.cnr.jada.util.jsp.*,
 		it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP"%>

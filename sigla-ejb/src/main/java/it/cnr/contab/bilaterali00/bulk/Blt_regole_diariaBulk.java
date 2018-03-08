@@ -5,7 +5,7 @@
 package it.cnr.contab.bilaterali00.bulk;
 public class Blt_regole_diariaBulk extends Blt_regole_diariaBase {
 	/**
-	 * [BLT_ACCORDI Contiene la descrizione dettagliata e le caratteristiche principali dellAccordo Bilaterale tra CNR e Ente omologo straniero da gestire]
+	 * [BLT_ACCORDI Contiene la descrizione dettagliata e le caratteristiche principali dell'Accordo Bilaterale tra CNR e Ente omologo straniero da gestire]
 	 **/
 	private Blt_accordiBulk bltAccordi =  new Blt_accordiBulk();
 	/**
@@ -25,14 +25,14 @@ public class Blt_regole_diariaBulk extends Blt_regole_diariaBase {
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Contiene la descrizione dettagliata e le caratteristiche principali dellAccordo Bilaterale tra CNR e Ente omologo straniero da gestire]
+	 * Restituisce il valore di: [Contiene la descrizione dettagliata e le caratteristiche principali dell'Accordo Bilaterale tra CNR e Ente omologo straniero da gestire]
 	 **/
 	public Blt_accordiBulk getBltAccordi() {
 		return bltAccordi;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Contiene la descrizione dettagliata e le caratteristiche principali dellAccordo Bilaterale tra CNR e Ente omologo straniero da gestire]
+	 * Setta il valore di: [Contiene la descrizione dettagliata e le caratteristiche principali dell'Accordo Bilaterale tra CNR e Ente omologo straniero da gestire]
 	 **/
 	public void setBltAccordi(Blt_accordiBulk bltAccordi)  {
 		this.bltAccordi=bltAccordi;

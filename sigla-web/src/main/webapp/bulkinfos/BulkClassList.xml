@@ -181,9 +181,6 @@
 <class name="it.cnr.contab.compensi00.tabrif.bulk.Trattamento_coriKey" />
 <class name="it.cnr.contab.compensi00.tabrif.bulk.V_tipo_trattamento_tipo_coriBase" />
 <class name="it.cnr.contab.compensi00.tabrif.bulk.V_tipo_trattamento_tipo_coriBulk" />
-<class name="it.cnr.contab.config00.blob.bulk.PostItBase" />
-<class name="it.cnr.contab.config00.blob.bulk.PostItBulk" />
-<class name="it.cnr.contab.config00.blob.bulk.PostItKey" />
 <class name="it.cnr.contab.config00.bulk.Configurazione_cnrBase" />
 <class name="it.cnr.contab.config00.bulk.Configurazione_cnrBulk" />
 <class name="it.cnr.contab.config00.bulk.Configurazione_cnrKey" />

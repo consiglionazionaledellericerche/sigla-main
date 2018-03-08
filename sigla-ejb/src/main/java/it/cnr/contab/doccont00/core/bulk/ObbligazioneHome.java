@@ -1736,7 +1736,7 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 	return sql; 
 		
 }
-public String recupero_cdr_speciale_stipendi() throws IntrospectionException, PersistencyException {
+public String recupero_cdr_speciale_stipendi() throws PersistencyException {
 	Configurazione_cnrBulk conf_cnr=null;
 	
 	PersistentHome home = getHomeCache().getHome(Configurazione_cnrBulk.class);	

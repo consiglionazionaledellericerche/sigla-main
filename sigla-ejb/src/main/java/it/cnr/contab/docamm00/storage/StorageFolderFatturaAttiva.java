@@ -311,19 +311,36 @@ public class StorageFolderFatturaAttiva extends StorageFolderFattura {
 	}
 
 	public String getCMISPath(){
-		final String folderName = "Fattura " + this.getEsercizioFattura().toString() +
-				Utility.lpad(this.getPgFattura().toString(),10,'0');
 		return SpringUtil.getBean("storeService", StoreService.class)
 				.createFolderIfNotPresent(
-						getCMISPrincipalPath().concat(SiglaStorageService.SUFFIX).concat(
-								Optional.ofNullable(getEsercizioFattura())
-										.map(esercizio -> String.valueOf(esercizio))
-										.orElse("0")
-						),
-						folderName,
+						getPathFolderFatturaAttiva(),
+						getLastFolderFatturaAttiva(),
 						null, null, this);
 	}
+
+	public String getPathFolderFatturaAttiva() {
+		return getCMISPrincipalPath().concat(SiglaStorageService.SUFFIX).concat(
+				Optional.ofNullable(getEsercizioFattura())
+						.map(esercizio -> String.valueOf(esercizio))
+						.orElse("0")
+		);
+	}
+
+	private String getLastFolderFatturaAttiva() {
+		final String folderName = "Fattura " + this.getEsercizioFattura().toString() +
+				Utility.lpad(this.getPgFattura().toString(),10,'0');
+		return folderName;
+	}
 	
+	public String getCMISPathForSearch(){
+        return Arrays.asList(
+        		getPathFolderFatturaAttiva(),
+        		getLastFolderFatturaAttiva()
+        ).stream().collect(
+                Collectors.joining(SiglaStorageService.SUFFIX)
+        );
+	}
+
 	public Fattura_attivaBulk getFattura_attivaBulk() {
 		return fattura_attivaBulk;
 	}
