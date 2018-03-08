@@ -62,6 +62,8 @@ import java.util.stream.Collectors;
 
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.bouncycastle.cms.CMSException;
@@ -146,18 +148,10 @@ public class FirmaDigitalePdgVariazioniBP extends
 				.getHandler().getProperties(getClass()), "Toolbar.refresh");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.print");
-//		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-//				.getHandler().getProperties(getClass()), "Toolbar.download");
-//		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-//				.getHandler().getProperties(getClass()), "Toolbar.sign");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.signOTP");
-//		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-//				.getHandler().getProperties(getClass()), "Toolbar.upload");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.printSigned");
-//		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
-//				.getHandler().getProperties(getClass()), "Toolbar.installa");
 		toolbar[i-1].setSeparator(true);
 		return toolbar;
 	}
@@ -174,7 +168,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 				nomeFileAllegato = nomeFileTest;
 
 			toolbar[1]
-					.setHref("doPrint('genericdownload/"
+					.setHref("doPrint('"+ JSPUtils.getAppRoot((HttpServletRequest) pageContext.getRequest()) + "genericdownload/"
 							+ nomeFileAllegato
 							+ "?methodName=scaricaFile&it.cnr.jada.action.BusinessProcess="
 							+ getPath() + "')");
@@ -193,7 +187,7 @@ public class FirmaDigitalePdgVariazioniBP extends
 				if (signedFileName!=null)
 					//toolbar[6]
 					toolbar[3]
-							.setHref("doPrint('genericdownload/"
+							.setHref("doPrint('"+ JSPUtils.getAppRoot((HttpServletRequest) pageContext.getRequest()) + "genericdownload/"
 									+ signedFileName
 									+ "?methodName=scaricaFileFirmato&it.cnr.jada.action.BusinessProcess="
 									+ getPath() + "')");
@@ -331,50 +325,40 @@ public class FirmaDigitalePdgVariazioniBP extends
 			ServletException {
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
 		InputStream is = null;
+		final HttpServletResponse response = ((HttpActionContext) actioncontext).getResponse();
 		if (!isTestSession()) {
 			is = pdgVariazioniService.getResource(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject());
-			((HttpActionContext) actioncontext).getResponse().setContentType(
+			response.setContentType(
 					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
 							.getStorageObject().getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-			((HttpActionContext) actioncontext).getResponse().setContentLength(
+			response.setContentLength(
 					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
 							.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
 		} else {
 			is = new BufferedInputStream(new FileInputStream(nomeFilePathTest));
 		}
-		OutputStream os = ((HttpActionContext) actioncontext).getResponse()
-				.getOutputStream();
-		int nextChar;
-		while ((nextChar = is.read()) != -1)
-			os.write(nextChar);
-		os.write('\n');
-		os.flush();
+		IOUtils.copyLarge(is, response.getOutputStream());
 	}
 
 	public void scaricaFileGenerico(ActionContext actioncontext) throws IOException,
 			ServletException {
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
 		InputStream is = null;
+		final HttpServletResponse response = ((HttpActionContext) actioncontext).getResponse();
 		if (!isTestSession()) {
 			is = pdgVariazioniService
 					.getResource(archiviaStampaPdgVariazioneBulk
 							.getPdgVariazioneDocument().getStorageObject());
-			((HttpActionContext) actioncontext).getResponse().setContentType(
+			response.setContentType(
 					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
 							.getStorageObject().getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-			((HttpActionContext) actioncontext).getResponse().setContentLength(
+			response.setContentLength(
 					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument()
 							.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
 		} else {
 			is = new BufferedInputStream(new FileInputStream(nomeFilePathTest));
 		}
-		OutputStream os = ((HttpActionContext) actioncontext).getResponse()
-				.getOutputStream();
-		int nextChar;
-		while ((nextChar = is.read()) != -1)
-			os.write(nextChar);
-		os.write('\n');
-		os.flush();
+		IOUtils.copyLarge(is, response.getOutputStream());
 	}
 
 	public File scaricaSuFile(ActionContext actioncontext, File filePath) throws IOException,
@@ -411,23 +395,18 @@ public class FirmaDigitalePdgVariazioniBP extends
 			throws IOException, ServletException, ApplicationException {
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
 		InputStream is = null;
+		final HttpServletResponse response = ((HttpActionContext) actioncontext).getResponse();
 		if (!isTestSession()) {
 			StorageObject firmato = getNodeFileFirmato(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject());
 			is = pdgVariazioniService.getResource(firmato);
-			((HttpActionContext) actioncontext).getResponse().setContentType(
+			response.setContentType(
 					firmato.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-			((HttpActionContext) actioncontext).getResponse().setContentLength(
+			response.setContentLength(
 					firmato.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
 		} else {
 			is = new BufferedInputStream(new FileInputStream(nomeFileTestFirmato));
 		}
-		OutputStream os = ((HttpActionContext) actioncontext).getResponse()
-				.getOutputStream();
-		int nextChar;
-		while ((nextChar = is.read()) != -1)
-			os.write(nextChar);
-		os.write('\n');
-		os.flush();
+		IOUtils.copyLarge(is, response.getOutputStream());
 	}
 
 	public StorageObject getNodeFileFirmato(StorageObject nodePdf) throws ApplicationException {
@@ -467,15 +446,6 @@ public class FirmaDigitalePdgVariazioniBP extends
 		}
 	}
 
-	public void installa(ActionContext context) throws BusinessProcessException {
-		try {
-			ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
-			setSignEnabled(true);
-		} catch (Throwable e) {
-			throw new BusinessProcessException(e);
-		}
-	}
-
 	public boolean isSignEnabled() {
 		return signEnabled;
 	}
@@ -502,51 +472,6 @@ public class FirmaDigitalePdgVariazioniBP extends
 				return nomeFileTest;
 		else
 			return (null);
-	}
-
-	public String getDownloadFile(javax.servlet.jsp.PageContext pageContext) throws BusinessProcessException {
-		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk) getFocusedElement();
-		File file = null;
-		File fileDir = null;
-		File fileTest = null;
-		try {
-			fileDir = File.createTempFile("var", "pdg", new File(System
-					.getProperty("tmp.dir.SIGLAWeb")
-					+ "/tmp/"));
-			fileDir.delete();
-			if (!fileDir.mkdir())
-				throw new BusinessProcessException(
-						"Directory gi? esistente, riprovare a generare la firma!");
-
-			file = new File(fileDir, getFileName());
-			InputStream is = null;
-			if (!isTestSession()) {
-				is = pdgVariazioniService
-						.getResource(archiviaStampaPdgVariazioneBulk
-								.getPdgVariazioneDocument().getStorageObject());
-			} else {
-				is = new BufferedInputStream(new FileInputStream(nomeFilePathTest));
-			}
-
-
-			OutputStream out = new FileOutputStream(file);
-			int c;
-			while ((c = is.read()) != -1) {
-				out.write(c);
-			}
-			is.close();
-			out.flush();
-			out.close();
-		} catch (IOException e) {
-			throw handleException(e);
-		} catch (BusinessProcessException e) {
-			throw handleException(e);
-		}
-		String dirName = new File(fileDir.getName()).getName();
-		// ripuliamo il path
-		String fileName = new File(file.getName()).getName();
-		return JSPUtils.buildAbsoluteUrl(pageContext, null, "tmp/" + dirName
-				+ "/" + fileName);
 	}
 
 	public String getPgStampa() {
