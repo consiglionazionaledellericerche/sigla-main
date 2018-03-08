@@ -3,6 +3,7 @@ package it.cnr.contab.utenze00.action;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.rmi.RemoteException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Optional;
 
 import javax.ejb.EJBException;
 
+import it.cnr.jada.comp.ComponentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -501,14 +503,34 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 				Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_unita_organizzativa(context.getUserContext())),
 				Optional.ofNullable(cds).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_cds(context.getUserContext())),
 				Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase("null")).orElse(CNRUserContext.getCd_cdr(context.getUserContext())));
-			if (Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).isPresent()){
-				ui.setUnita_organizzativa((Unita_organizzativaBulk) Utility.createUnita_organizzativaComponentSession()
-						.findByPrimaryKey(userContext, new Unita_organizzativaBulk(uo)));
-			}
-			if (Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase("null")).isPresent()){
-				ui.setCdr((CdrBulk) Utility.createCdrComponentSession()
-						.findByPrimaryKey(userContext, new CdrBulk(cdr)));
-			}
+
+			ui.setUnita_organizzativa(Optional.ofNullable(uo)
+					.filter(x -> !x.equalsIgnoreCase("null"))
+					.map(x -> new Unita_organizzativaBulk(x))
+					.map(unita_organizzativaBulk -> {
+						try {
+							return Utility.createUnita_organizzativaComponentSession().findByPrimaryKey(userContext, unita_organizzativaBulk);
+						} catch (ComponentException|RemoteException e) {
+							throw new RuntimeException(e);
+						}
+					})
+					.filter(Unita_organizzativaBulk.class::isInstance)
+					.map(Unita_organizzativaBulk.class::cast)
+					.orElse(null));
+
+			ui.setCdr(Optional.ofNullable(cdr)
+					.filter(x -> !x.equalsIgnoreCase("null"))
+					.map(x -> new CdrBulk(x))
+					.map(cdrBulk -> {
+						try {
+							return Utility.createUnita_organizzativaComponentSession().findByPrimaryKey(userContext, cdrBulk);
+						} catch (ComponentException|RemoteException e) {
+							throw new RuntimeException(e);
+						}
+					})
+					.filter(CdrBulk.class::isInstance)
+					.map(CdrBulk.class::cast)
+					.orElse(null));
 			userContext.getAttributes().put("bootstrap", true);
 			bp.setBootstrap(true);
 			context.setUserContext(userContext);
