@@ -241,6 +241,8 @@
 		img="img/find16.gif"
 		readonlyProperty="abledToInsertBank"
 		label="Conto/i d'appoggio"
+		iconClass="fa fa-fw fa-credit-card"
+		buttonClass="btn-outline-info btn-title"
 		href="javascript:submitForm('doSearch(main.listabanche)')" 
 		/>
 	<fieldProperty
@@ -683,6 +685,9 @@
 		enabledOnFreeSearch="true"		
 		/>
 
+	<form name="searchtool">
+		<formFieldProperty name="pg_anticipo" />
+	</form>
 	<formFieldProperty name="cd_cds" />
 	<formFieldProperty name="cd_unita_organizzativa" />	
 	<formFieldProperty name="esercizio" />	

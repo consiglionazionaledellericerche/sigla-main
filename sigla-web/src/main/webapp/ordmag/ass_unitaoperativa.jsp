@@ -1,5 +1,5 @@
 <%@page import="it.cnr.contab.ordmag.anag00.bp.CRUDAssUnitaOperativaBP"%>
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.action.*,
 		it.cnr.jada.util.jsp.*,
 		it.cnr.contab.ordmag.anag00.bp.*"

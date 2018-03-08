@@ -166,23 +166,6 @@ public void validaAssociazioneCDRPerCancellazione(it.cnr.jada.UserContext param0
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
-public void archiviaConsultazioneExcel(it.cnr.jada.UserContext param0, it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk param1, java.lang.String param2, java.io.File param3) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
-	pre_component_invocation(param0,componentObj);
-	try {
-		((PdGVariazioniComponent)componentObj).archiviaConsultazioneExcel(param0,param1,param2,param3);
-		component_invocation_succes(param0,componentObj);
-	} catch(it.cnr.jada.comp.NoRollbackException e) {
-		component_invocation_succes(param0,componentObj);
-		throw e;
-	} catch(it.cnr.jada.comp.ComponentException e) {
-		component_invocation_failure(param0,componentObj);
-		throw e;
-	} catch(RuntimeException e) {
-		throw uncaughtRuntimeException(param0,componentObj,e);
-	} catch(Error e) {
-		throw uncaughtError(param0,componentObj,e);
-	}
-}
 public String controllaTotPropostoEntrataSpesa(it.cnr.jada.UserContext param0,it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 	pre_component_invocation(param0,componentObj);
 	try {

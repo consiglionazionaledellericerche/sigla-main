@@ -70,6 +70,9 @@ public class Documento_genericoBase extends Documento_genericoKey implements Key
 	
 	private java.lang.String causale;
 
+	// ID_TIPO_DOCUMENTO_GENERICO NUMBER NOT NULL
+	private java.lang.Integer idTipoDocumentoGenerico;
+
 public Documento_genericoBase() {
 	super();
 }
@@ -327,5 +330,11 @@ public java.lang.String getCausale() {
 }
 public void setCausale(java.lang.String causale) {
 	this.causale = causale;
+}
+public java.lang.Integer getIdTipoDocumentoGenerico() {
+	return idTipoDocumentoGenerico;
+}
+public void setIdTipoDocumentoGenerico(java.lang.Integer idTipoDocumentoGenerico) {
+	this.idTipoDocumentoGenerico = idTipoDocumentoGenerico;
 }
 }

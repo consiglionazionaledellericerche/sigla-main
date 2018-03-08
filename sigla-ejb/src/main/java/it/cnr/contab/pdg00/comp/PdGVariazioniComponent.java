@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.ejb.EJBException;
@@ -391,24 +392,19 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		return generaMessaggio(userContext, utente, pdg, null);
 	}
 
-	private SQLBuilder selectBase(UserContext userContext,
-			CompoundFindClause clauses, OggettoBulk bulk)
-			throws ComponentException,
-			it.cnr.jada.persistency.PersistencyException {
-			SQLBuilder sql = getHome(userContext, bulk, "VP_PDG_VARIAZIONE")
-					.createSQLBuilder();
-			sql.addClause(clauses);
-			sql.addClause(bulk.buildFindClauses(new Boolean(true)));
-			sql.addClause("AND", "esercizio", sql.EQUALS, CNRUserContext
-					.getEsercizio(userContext));
-			Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome(
-					userContext, Unita_organizzativa_enteBulk.class).findAll()
-					.get(0);
+	private SQLBuilder selectBase(UserContext userContext, CompoundFindClause clauses, OggettoBulk bulk) throws ComponentException,	it.cnr.jada.persistency.PersistencyException {
+		SQLBuilder sql = getHome(userContext, bulk, "VP_PDG_VARIAZIONE").createSQLBuilder();
+		sql.addClause(clauses);
+		sql.addClause(bulk.buildFindClauses(new Boolean(true)));
+		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
 
-			UtenteBulk utente = (UtenteBulk) getHome(userContext,
-					UtenteBulk.class).findByPrimaryKey(
-					new UtenteKey(it.cnr.contab.utenze00.bp.CNRUserContext
-							.getUser(userContext)));
+		Optional.ofNullable(bulk)
+			.filter(Pdg_variazioneBulk.class::isInstance)
+			.map(Pdg_variazioneBulk.class::cast)
+			.filter(el->Pdg_variazioneBulk.MOTIVAZIONE_GENERICO.equals(el.getMapMotivazioneVariazione()))
+			.ifPresent(var->sql.addSQLClause(FindClause.AND,"VP_PDG_VARIAZIONE.TI_MOTIVAZIONE_VARIAZIONE",SQLBuilder.ISNULL,null));
+			
+		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome(userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 
 			CdrHome cdrHome = (CdrHome) getHome(userContext, CdrBulk.class);
 			CdrBulk cdrUtente = (CdrBulk) cdrHome.findByPrimaryKey(new CdrKey(
@@ -1733,54 +1729,6 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			sql.addClause(clause);
 		sql.addOrderBy("CD_CENTRO_RESPONSABILITA");
 		return sql;
-	}
-
-	/**
-	 * Archivia i file prodotti da consultazioni effettuate
-	 * 
-	 * @param userContext
-	 * @param Pdg
-	 *            Bulk della variazione di cui si vuole effettuare
-	 *            l'archiviazione
-	 * @param tipo
-	 *            Tipo di consultazione effettuata E/S/C/R
-	 * @param file
-	 *            File da archiviare
-	 * @return void
-	 */
-	public void archiviaConsultazioneExcel(UserContext userContext,
-			Pdg_variazioneBulk pdg, String tipo, File file)
-			throws ComponentException {
-		Pdg_variazione_archivioHome archiveHome = (Pdg_variazione_archivioHome) getHome(
-				userContext, Pdg_variazione_archivioBulk.class);
-		Pdg_variazione_archivioBulk archive = new Pdg_variazione_archivioBulk();
-		archive.setPdg_variazione(pdg);
-		archive.setTipo_archivio(tipo);
-		archive.setToBeCreated();
-		super.creaConBulk(userContext, archive);
-		try {
-			oracle.sql.BLOB blob = (oracle.sql.BLOB) archiveHome.getSQLBlob(
-					archive, "BDATA");
-			java.io.InputStream in = new java.io.BufferedInputStream(
-					new FileInputStream(file));
-			byte[] byteArr = new byte[1024];
-			java.io.OutputStream os = new java.io.BufferedOutputStream(blob
-					.getBinaryOutputStream());
-			int len;
-			while ((len = in.read(byteArr)) > 0) {
-				os.write(byteArr, 0, len);
-			}
-			os.close();
-			in.close();
-		} catch (PersistencyException e) {
-			throw new ComponentException(e);
-		} catch (FileNotFoundException e) {
-			throw new ComponentException(e);
-		} catch (IOException e) {
-			throw new ComponentException(e);
-		} catch (SQLException e) {
-			throw new ComponentException(e);
-		}
 	}
 
 	public String controllaTotPropostoEntrataSpesa(

@@ -4,7 +4,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
 import it.cnr.contab.bollo00.comp.AttoBolloComponent;
-import it.cnr.contab.prevent01.consultazioni.comp.ConsPDGPDipComponent;
 
 /**
  * Bean implementation class for Enterprise Bean: CNRBOLLO00_EJB_AttoBolloComponentSession
@@ -18,10 +17,10 @@ public class AttoBolloComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {
 		return new AttoBolloComponentSessionBean();
 	}
-	public it.cnr.jada.util.RemoteIterator findConsultazioneDettaglio(it.cnr.jada.UserContext param0, java.lang.String param1, java.lang.String param2, it.cnr.jada.persistency.sql.CompoundFindClause param3,it.cnr.jada.persistency.sql.CompoundFindClause param4) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public it.cnr.jada.util.RemoteIterator findConsultazioneDettaglio(it.cnr.jada.UserContext param0, java.lang.String param1, java.lang.String param2, it.cnr.jada.persistency.sql.CompoundFindClause param3,it.cnr.jada.persistency.sql.CompoundFindClause param4, boolean param5) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
-			it.cnr.jada.util.RemoteIterator result = ((AttoBolloComponent)componentObj).findConsultazioneDettaglio(param0,param1,param2,param3,param4);
+			it.cnr.jada.util.RemoteIterator result = ((AttoBolloComponent)componentObj).findConsultazioneDettaglio(param0,param1,param2,param3,param4,param5);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

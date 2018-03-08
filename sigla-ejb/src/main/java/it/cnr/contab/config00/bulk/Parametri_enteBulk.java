@@ -69,7 +69,8 @@ public class Parametri_enteBulk extends Parametri_enteBase
     	setFl_gae_es(Boolean.FALSE);
     	setFl_prg_pianoeco(Boolean.FALSE);
     	setAbil_progetto_strorg(V_struttura_organizzativaHome.LIVELLO_UO);
-	  return this;
+    	setFl_variazioni_trasferimento(Boolean.FALSE);
+    	return this;
 	}
 
 	public boolean isAutenticazioneLdap() {

@@ -7,11 +7,18 @@ import it.cnr.contab.bollo00.bulk.Atto_bolloBulk;
 import it.cnr.contab.bollo00.bulk.Atto_bolloHome;
 import it.cnr.contab.bollo00.bulk.V_cons_atto_bolloBulk;
 import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsHome;
+import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -100,11 +107,14 @@ public class AttoBolloComponent extends CRUDComponent {
 		return sqlBuilder;
 	}
 
-	public RemoteIterator findConsultazioneDettaglio(UserContext userContext, String pathDestinazione, String livelloDestinazione, CompoundFindClause baseClause, CompoundFindClause findClause) throws it.cnr.jada.comp.ComponentException {
+	public RemoteIterator findConsultazioneDettaglio(UserContext userContext, String pathDestinazione, String livelloDestinazione, CompoundFindClause baseClause, CompoundFindClause findClause, boolean totGenerale) throws it.cnr.jada.comp.ComponentException {
 		try{
 			Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk) getHome(userContext,Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
 			
-			BulkHome home = getHome(userContext, V_cons_atto_bolloBulk.class, pathDestinazione);
+			String innerPathDestinazione = totGenerale?ConsAttoBolloBP.LIVELLO_TIP:pathDestinazione;
+			String innerLivelloDestinazione = totGenerale?ConsAttoBolloBP.LIVELLO_TIP:livelloDestinazione;
+
+			BulkHome home = getHome(userContext, V_cons_atto_bolloBulk.class, innerPathDestinazione);
 			SQLBuilder sql = home.createSQLBuilder();
 			SQLBuilder sqlEsterna = home.createSQLBuilder();
 
@@ -113,7 +123,7 @@ public class AttoBolloComponent extends CRUDComponent {
 				sql.addSQLClause(FindClause.AND, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());
 				sqlEsterna.addSQLClause(FindClause.AND, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());
 			}
-			if (pathDestinazione.indexOf(ConsAttoBolloBP.LIVELLO_DET)>=0) {
+			if (innerPathDestinazione.indexOf(ConsAttoBolloBP.LIVELLO_DET)>=0) {
 				sql.addClause(baseClause);
 				return iterator(userContext,sql,V_cons_atto_bolloBulk.class,null);
 			} else {
@@ -123,13 +133,13 @@ public class AttoBolloComponent extends CRUDComponent {
 				addColumnBase(sql,tabAlias,true);
 				addColumnBase(sqlEsterna,tabAlias,false);
 
-				if (pathDestinazione.indexOf(ConsAttoBolloBP.LIVELLO_TIP)>=0) {
-					addColumnTIP(sql,tabAlias,livelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_TIP),true);
-					addColumnTIP(sqlEsterna,tabAlias,livelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_TIP),false);
+				if (totGenerale || innerPathDestinazione.indexOf(ConsAttoBolloBP.LIVELLO_TIP)>=0) {
+					addColumnTIP(sql,tabAlias,innerLivelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_TIP),true);
+					addColumnTIP(sqlEsterna,tabAlias,innerLivelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_TIP),false);
 				}
-				if (pathDestinazione.indexOf(ConsAttoBolloBP.LIVELLO_UO)>=0){
-					addColumnUO(sql,tabAlias,livelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_UO),true);
-					addColumnUO(sqlEsterna,tabAlias,livelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_UO),false);
+				if (!totGenerale && innerPathDestinazione.indexOf(ConsAttoBolloBP.LIVELLO_UO)>=0){
+					addColumnUO(sql,tabAlias,innerLivelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_UO),true);
+					addColumnUO(sqlEsterna,tabAlias,innerLivelloDestinazione.equals(ConsAttoBolloBP.LIVELLO_UO),false);
 				}
 
 				return iterator(userContext,completaSQL(sql,sqlEsterna,tabAlias,baseClause,findClause),V_cons_atto_bolloBulk.class,null);
@@ -282,4 +292,67 @@ public class AttoBolloComponent extends CRUDComponent {
 		return sql; 
 	}
 	
+	public SQLBuilder selectContrattoByClause(UserContext userContext, Atto_bolloBulk attoBollo, ContrattoBulk contratto, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+	{
+		Parametri_cdsHome paramHome = (Parametri_cdsHome)getHome(userContext, Parametri_cdsBulk.class);
+		Parametri_cdsBulk paramCds;
+		try {
+			paramCds = (Parametri_cdsBulk) paramHome.findByPrimaryKey(new Parametri_cdsBulk(CNRUserContext.getCd_cds(userContext),
+					CNRUserContext.getEsercizio(userContext)));
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+		
+		SQLBuilder sql = getHome(userContext,ContrattoBulk.class).createSQLBuilder();
+		
+		if (clauses != null) 
+		  sql.addClause(clauses);
+
+		sql.openParenthesis(FindClause.AND);  
+		  sql.addSQLClause(FindClause.AND,"NATURA_CONTABILE",SQLBuilder.EQUALS, ContrattoBulk.NATURA_CONTABILE_PASSIVO);
+		  sql.addSQLClause(FindClause.OR,"NATURA_CONTABILE",SQLBuilder.EQUALS, ContrattoBulk.NATURA_CONTABILE_ATTIVO_E_PASSIVO);
+		sql.closeParenthesis();  
+		
+		if(paramCds != null && paramCds.getFl_contratto_cessato().booleanValue()){
+			sql.openParenthesis(FindClause.AND);  
+			  sql.addSQLClause(FindClause.AND,"STATO",SQLBuilder.EQUALS, ContrattoBulk.STATO_DEFINITIVO);
+			  sql.addSQLClause(FindClause.OR,"STATO",SQLBuilder.EQUALS, ContrattoBulk.STATO_CESSSATO);
+			sql.closeParenthesis();		
+		}	
+		else  
+		  sql.addSQLClause("AND", "STATO", SQLBuilder.EQUALS, ContrattoBulk.STATO_DEFINITIVO);
+
+		// Se uo 999.000 in scrivania: visualizza tutti i contratti
+		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
+		if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
+		  sql.openParenthesis(FindClause.AND);
+			sql.addSQLClause(FindClause.AND,"CONTRATTO.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(userContext));
+			SQLBuilder sqlAssUo = getHome(userContext,Ass_contratto_uoBulk.class).createSQLBuilder();		   
+			sqlAssUo.addSQLJoin("CONTRATTO.ESERCIZIO","ASS_CONTRATTO_UO.ESERCIZIO");
+			sqlAssUo.addSQLJoin("CONTRATTO.PG_CONTRATTO","ASS_CONTRATTO_UO.PG_CONTRATTO");
+			sqlAssUo.addSQLClause(FindClause.AND,"ASS_CONTRATTO_UO.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(userContext));
+			sql.addSQLExistsClause(FindClause.OR,sqlAssUo);
+		  sql.closeParenthesis();  		 
+		}
+		return sql;
+	}
+	
+	@Override
+	protected void validaCreaModificaConBulk(UserContext userContext, OggettoBulk oggettoBulk) throws ComponentException {
+		try {
+			if (Optional.ofNullable(oggettoBulk)
+					.filter(Atto_bolloBulk.class::isInstance)
+					.map(Atto_bolloBulk.class::cast)
+					.filter(el->Optional.ofNullable(el.getDt_provv()).isPresent()&&Optional.ofNullable(el.getCdTipoAttoBollo()).isPresent())
+					.isPresent()) {
+				Atto_bolloBulk atto = (Atto_bolloBulk)oggettoBulk;
+				Tipo_atto_bolloBulk tipoAtto = Utility.createTipoAttoBolloComponentSession().getTipoAttoBollo(userContext, atto.getDt_provv(), atto.getCdTipoAttoBollo());
+				Optional.ofNullable(tipoAtto)
+					.orElseThrow(() -> new ApplicationException("Il Tipo Atto "+atto.getCdTipoAttoBollo()+" non risulta attivo per la data di protocollo indicata."));
+			}
+			super.validaCreaModificaConBulk(userContext, oggettoBulk);
+		} catch (Exception e) {
+			throw handleException(e);
+		}
+	}
 }
