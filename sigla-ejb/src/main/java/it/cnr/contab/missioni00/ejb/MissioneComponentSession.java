@@ -65,4 +65,5 @@ public BigDecimal recuperoCambio(UserContext userContext, String divisa, Timesta
 public DivisaBulk getDivisaDefault(UserContext userContext) throws ComponentException,java.rmi.RemoteException, it.cnr.jada.persistency.PersistencyException;
 public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException;
 public AnticipoBulk recuperoAnticipoDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException;
+public MissioneBulk caricaTerzoInModificaMissione(UserContext userContext, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException;
 }

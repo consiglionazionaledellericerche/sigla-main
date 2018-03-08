@@ -12,12 +12,15 @@ import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 
 /**
  * BP che gestisce gli atti da assoggettare a bollo virtuale
  */
 public class CRUDAttoBolloBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Atto_bolloBulk> {
 	private static final long serialVersionUID = 1L;
+    private boolean allegatiCollapse = true;
 
 	public CRUDAttoBolloBP() {
 		super();
@@ -58,4 +61,40 @@ public class CRUDAttoBolloBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Atto_b
 	protected Class<AllegatoGenericoBulk> getAllegatoClass() {
 		return AllegatoGenericoBulk.class;
 	}
+	
+	public boolean isAllegatiCollapse() {
+		return allegatiCollapse;
+	}
+	
+	public void setAllegatiCollapse(boolean allegatiCollapse) {
+		this.allegatiCollapse = allegatiCollapse;
+	}
+	
+	@Override
+	public OggettoBulk initializeModelForEdit(ActionContext actioncontext, OggettoBulk oggettobulk)	throws BusinessProcessException {
+		oggettobulk = super.initializeModelForEdit(actioncontext, oggettobulk);
+		Optional.ofNullable(oggettobulk)
+			.filter(Atto_bolloBulk.class::isInstance)
+			.map(Atto_bolloBulk.class::cast)
+			.filter(el->el.getEsercizio_contratto()!=null&&el.getPg_contratto()!=null&&el.getStato_contratto()!=null)
+			.ifPresent(el->el.setFlContrattoRegistrato(Boolean.TRUE));
+		return oggettobulk;
+	}
+	
+	@Override
+	public void validate(ActionContext context) throws ValidationException {
+		super.validate(context);
+		if (Optional.ofNullable(getModel()).filter(Atto_bolloBulk.class::isInstance).isPresent()) {
+			Atto_bolloBulk atto = (Atto_bolloBulk)getModel();
+			atto.getArchivioAllegati().stream()
+					.map(AllegatoGenericoBulk.class::cast)
+					.findAny()
+					.orElseThrow(()->new ValidationException("Inserire almeno un allegato!"));
+			
+			if (Optional.ofNullable(atto.getDt_provv())
+					.filter(el->el.after(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()))
+					.isPresent())
+				throw new ValidationException("Non è possibile inserire una data protocollo successiva alla data odierna!");
+		}
+	}	
 }

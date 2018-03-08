@@ -9,8 +9,6 @@ import java.util.StringTokenizer;
 
 import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPBulk;
 import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPHome;
-import it.cnr.contab.config00.blob.bulk.PostItBulk;
-import it.cnr.contab.config00.blob.bulk.PostItHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -203,28 +201,7 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 			latt.setEsercizio_fine( latt.getCentro_responsabilita().getEsercizio_fine());
 		validaFunzione(uc,latt);
 		validaNaturaPerInsieme(uc,latt);
-		/* Angelo 18/11/2004 Aggiunta gestione PostIt*/
-		for(int i = 0; ((WorkpackageBulk)bulk).getDettagliPostIt().size() > i; i++) {
-			/*Valorizzazione id PostIt*/
-			if (((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).getId()== null )
-			{					
-			 Integer idPostit = new Integer (0);
-			 PostItHome PostIt_home = (PostItHome) getHome(uc,PostItBulk.class);
-			  try{		
-				 idPostit = PostIt_home.getMaxId();
-			  }catch (it.cnr.jada.persistency.IntrospectionException ie){
-			   throw handleException(ie);
-			  }catch (PersistencyException pe){
-			   throw handleException(pe);
-			  }
-			 ((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).setId(idPostit);
-			}
-			/*Fine valorizzazione id PostIt*/
-		  ((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).setCd_centro_responsabilita(latt.getCd_centro_responsabilita());
-		  /*Attenzione qui il codice linea attivita è ancora nullo !*/
-		  ((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).setCd_linea_attivita(latt.getCd_linea_attivita());
-		}
-		/*Fine PostIt*/		
+
 		ProgettoBulk modulo2015=null,progetto2016=null;
 		Voce_piano_economico_prgBulk vocePianoEconomico2016=null;
 		if (latt.getModulo2015()!=null && latt.getModulo2015().getPg_progetto()!=null)
@@ -484,12 +461,6 @@ public void eliminaConBulk(UserContext userContext,OggettoBulk bulk) throws it.c
 		// Aggiunto controllo sulla chiusura dell'esercizio
 		if (isEsercizioChiuso(userContext,(WorkpackageBulk)bulk))
 			throw new ApplicationException("Non è possibile eliminare GAE con esercizio di fine validità chiuso.");
-		  /*Se sto cancellando il Workpackage cancello anche tutti i dettagli */
-		  if (bulk instanceof WorkpackageBulk){
-			for(int i = 0; ((WorkpackageBulk)bulk).getDettagliPostIt().size() > i; i++) {
-			  ((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).setCrudStatus(bulk.TO_BE_DELETED);
-			}            
-		  }
 
 		WorkpackageHome testataHome = (WorkpackageHome)getHome(userContext, WorkpackageBulk.class);
 		it.cnr.jada.bulk.BulkList<Ass_linea_attivita_esercizioBulk> assGaeEsercizioList = new it.cnr.jada.bulk.BulkList(testataHome.findDettagliEsercizio((WorkpackageBulk)bulk));
@@ -545,8 +516,6 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 		WorkpackageHome testataHome = (WorkpackageHome)getHome(userContext, WorkpackageBulk.class);
 		ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
 		Progetto_other_fieldHome progetto_other_fieldHome = (Progetto_other_fieldHome)getHome(userContext, Progetto_other_fieldBulk.class);
-		/* Angelo 18/11/2004 Aggiunta gestione PostIt*/
-		aLA.setDettagliPostIt(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPostIt(aLA)));
 
 		it.cnr.jada.bulk.BulkList<Ass_linea_attivita_esercizioBulk> assGaeEsercizioList = new it.cnr.jada.bulk.BulkList(testataHome.findDettagliEsercizio(aLA));
 		for (Iterator i = assGaeEsercizioList.iterator(); i.hasNext();) {
@@ -728,26 +697,7 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 		validaModificaInsieme(userContext,linea_attivita);
 		validaNaturaPerInsieme(userContext,linea_attivita);
 		validaModificaFunzioneNatura(userContext,linea_attivita);
-		/* Angelo 18/11/2004 Aggiunta gestione PostIt*/
-		/*Valorizzazione id PostIt*/	
-		for(int i = 0; ((WorkpackageBulk)bulk).getDettagliPostIt().size() > i; i++) {
-		 /* Solo per i dettagli senza id */
-		 if (((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).getId()== null )
-		 {					
-		  Integer idPostit = new Integer (0);
-		  PostItHome PostIt_home = (PostItHome) getHome(userContext,PostItBulk.class);
-		   try{		
-			 idPostit = PostIt_home.getMaxId();
-		   }catch (it.cnr.jada.persistency.IntrospectionException ie){
-			throw handleException(ie);
-		   }catch (PersistencyException pe){
-			throw handleException(pe);
-		   }
-		  ((PostItBulk) ((WorkpackageBulk)bulk).getDettagliPostIt().get(i)).setId(idPostit);
-		 }
-		 /* Fine if*/
-		/*Fine valorizzazione id PostIt*/
-		}	
+
 		WorkpackageHome testataHome = (WorkpackageHome)getHome(userContext, WorkpackageBulk.class);
 		it.cnr.jada.bulk.BulkList<Ass_linea_attivita_esercizioBulk> assGaeEsercizioList = new it.cnr.jada.bulk.BulkList(testataHome.findDettagliEsercizio(linea_attivita));
 		Ass_linea_attivita_esercizioBulk assGaeEsercizio2015 = null, assGaeEsercizio2016 = null;
@@ -1290,45 +1240,6 @@ public WorkpackageBulk completaOggetto(UserContext userContext,WorkpackageBulk l
 	linea.getProgetto().setProgettopadre((ProgettoBulk)getHome(userContext,ProgettoBulk.class).findByPrimaryKey(new ProgettoBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext),linea.getProgetto().getPg_progetto_padre(),ProgettoBulk.TIPO_FASE_NON_DEFINITA)));
  return linea;
 }
-
-/*Inserimento nella colonna BLOB*/
-public void Inserimento_BLOB(UserContext userContext,it.cnr.jada.bulk.OggettoBulk oggetto,java.io.File file)throws ComponentException, PersistencyException{
-	try {
-		  /* Codice di recupero dell'ultimo id inserito nel Db */
-		  PostItHome home = (PostItHome)getHome(userContext,PostItBulk.class);
-		  SQLBuilder sql = home.createSQLBuilder();
-		  int max = 0;
-		  PostItBulk postIt_Bulk =new PostItBulk();
-		  if (oggetto instanceof WorkpackageBulk) {
-			  WorkpackageBulk wp=(WorkpackageBulk)oggetto;
-			  postIt_Bulk.setCd_centro_responsabilita(wp.getCd_centro_responsabilita());
-			  postIt_Bulk.setCd_linea_attivita(wp.getCd_linea_attivita());
-		  }
-		  else if(oggetto instanceof WorkpackageBulk) {
-			  ProgettoBulk progetto=(ProgettoBulk)oggetto;
-			  postIt_Bulk.setPg_progetto(progetto.getPg_progetto());
-		  }
-		  max=home.getMaxId(postIt_Bulk);
-		  
-		  postIt_Bulk = (PostItBulk)getHome(userContext,PostItBulk.class).findByPrimaryKey(new PostItBulk(new Integer(max)));
-		  java.io.InputStream in = new java.io.BufferedInputStream(new FileInputStream(file));
-		  byte[] byteArr = new byte[1024];
-		  oracle.sql.BLOB blob = (oracle.sql.BLOB)getHome(userContext,postIt_Bulk).getSQLBlob(postIt_Bulk,"BDATA");
-		  java.io.OutputStream os = new java.io.BufferedOutputStream(blob.getBinaryOutputStream());
-		  int len;
-			
-		  while ((len = in.read(byteArr))>0){
-			  os.write(byteArr,0,len);
-		  }
-		  os.close();
-		  in.close();
-		  home.update(postIt_Bulk, userContext);
-	} catch(Throwable e) {
-		  throw handleException(e);
-	} finally {					
-		  file.delete();
-	}	
-  }
 public java.util.List findListaGAEFEWS(UserContext userContext,String cdr,Integer modulo)throws ComponentException{
 	try {		
 		WorkpackageHome home = (WorkpackageHome)getHome(userContext,WorkpackageBulk.class,"V_LINEA_ATTIVITA_VALIDA");

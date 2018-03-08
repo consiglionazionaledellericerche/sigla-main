@@ -1,4 +1,4 @@
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,
 	it.cnr.jada.action.*,
 	java.util.*,
@@ -35,15 +35,18 @@
 				    <% bp.writeFormInput(out,null,"tipoConsultazione",false,null,"onclick=\"javascript:submitForm('doCambiaVisibilita')\""); %>
 				</div>
 			</td>		
+			<% bp.writeFormField(out,"numGeneraleFogli"); %>				
+			<% bp.writeFormField(out,"numGeneraleEsemplari"); %>				
+			<% bp.writeFormField(out,"imGeneraleBollo"); %>				
 		</tr>
 		<% } %>
 		<tr height="100%">
-			<td colspan="4">
+			<td colspan="10">
 				<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
 			</td> 
 		</tr>
 		<tr>
-			<td colspan="4">
+			<td colspan="10">
 				<% bp.writeHTMLNavigator(out); %>
 			</td>
 		</tr>

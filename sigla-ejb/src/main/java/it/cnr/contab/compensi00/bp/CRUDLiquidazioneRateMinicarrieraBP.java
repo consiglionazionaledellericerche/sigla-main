@@ -14,10 +14,12 @@ import it.cnr.jada.util.action.*;
 public class CRUDLiquidazioneRateMinicarrieraBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 
 	private final SimpleDetailCRUDController rateCRUDController = new SimpleDetailCRUDController("rateCRUDController",Liquidazione_rate_minicarrieraBulk.class,"rate",this, true){
-		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context,	boolean reset, boolean find, boolean delete) throws java.io.IOException, javax.servlet.ServletException 
+		@Override
+		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context,	boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException
 		{
-			super.writeHTMLToolbar(context, reset, find, delete);
+			super.writeHTMLToolbar(context, reset, find, delete, false);
 			writeExtraHTMLToolbar(context);
+			super.closeButtonGROUPToolbar(context);
 		}
 	};
 /**

@@ -1,9 +1,38 @@
---------------------------------------------------------
---  DDL for View VP_PDG_VARIAZIONE
---------------------------------------------------------
-
-  CREATE OR REPLACE FORCE VIEW "VP_PDG_VARIAZIONE" ("ESERCIZIO", "PG_VARIAZIONE_PDG", "CD_CENTRO_RESPONSABILITA", "DS_CDR", "DT_APERTURA", "DT_CHIUSURA", "DT_APPROVAZIONE", "DT_ANNULLAMENTO", "DS_VARIAZIONE", "DS_DELIBERA", "STATO", "RIFERIMENTI", "CD_CAUSALE_RESPINTA", "DS_CAUSALE_RESPINTA", "DACR", "UTCR", "DUVA", "UTUV", "PG_VER_REC", "DT_APP_FORMALE", "TIPOLOGIA", "TIPOLOGIA_FIN", "TI_APPARTENENZA", "TI_GESTIONE", "CD_ELEMENTO_VOCE", "FL_VISTO_DIP_VARIAZIONI", "STATO_INVIO", "DT_FIRMA") AS 
-  select
+/* Formatted on 2018/02/16 09:47 (Formatter Plus v4.8.8) */
+CREATE OR REPLACE FORCE VIEW vp_pdg_variazione (esercizio,
+                                                pg_variazione_pdg,
+                                                cd_centro_responsabilita,
+                                                ds_cdr,
+                                                dt_apertura,
+                                                dt_chiusura,
+                                                dt_approvazione,
+                                                dt_annullamento,
+                                                ds_variazione,
+                                                ds_delibera,
+                                                stato,
+                                                riferimenti,
+                                                cd_causale_respinta,
+                                                ds_causale_respinta,
+                                                dacr,
+                                                utcr,
+                                                duva,
+                                                utuv,
+                                                pg_ver_rec,
+                                                dt_app_formale,
+                                                tipologia,
+                                                tipologia_fin,
+                                                ti_appartenenza,
+                                                ti_gestione,
+                                                cd_elemento_voce,
+                                                fl_visto_dip_variazioni,
+                                                stato_invio,
+                                                dt_firma,
+                                                ti_motivazione_variazione,
+                                                id_matricola,
+                                                id_bando
+                                               )
+AS
+   SELECT
 --
 -- Date: 21/11/2006
 -- Version: 1.0
@@ -19,33 +48,13 @@
 --
 -- Body:
 --
-v.ESERCIZIO,
-v.PG_VARIAZIONE_PDG,
-v.CD_CENTRO_RESPONSABILITA,
-c.DS_CDR,
-v.DT_APERTURA,
-v.DT_CHIUSURA,
-v.DT_APPROVAZIONE,
-v.DT_ANNULLAMENTO,
-v.DS_VARIAZIONE,
-v.DS_DELIBERA,
-v.STATO,
-v.RIFERIMENTI,
-v.CD_CAUSALE_RESPINTA,
-v.DS_CAUSALE_RESPINTA,
-v.DACR,
-v.UTCR,
-v.DUVA,
-v.UTUV,
-v.PG_VER_REC,
-v.DT_APP_FORMALE,
-v.TIPOLOGIA,
-v.TIPOLOGIA_FIN,
-v.TI_APPARTENENZA,
-v.TI_GESTIONE,
-v.CD_ELEMENTO_VOCE,
-v.FL_VISTO_DIP_VARIAZIONI,
-v.stato_invio,
-v.dt_firma
-from pdg_variazione v, cdr c
-where v.CD_CENTRO_RESPONSABILITA = c.CD_CENTRO_RESPONSABILITA;
+          v.esercizio, v.pg_variazione_pdg, v.cd_centro_responsabilita,
+          c.ds_cdr, v.dt_apertura, v.dt_chiusura, v.dt_approvazione,
+          v.dt_annullamento, v.ds_variazione, v.ds_delibera, v.stato,
+          v.riferimenti, v.cd_causale_respinta, v.ds_causale_respinta, v.dacr,
+          v.utcr, v.duva, v.utuv, v.pg_ver_rec, v.dt_app_formale, v.tipologia,
+          v.tipologia_fin, v.ti_appartenenza, v.ti_gestione,
+          v.cd_elemento_voce, v.fl_visto_dip_variazioni, v.stato_invio,
+          v.dt_firma, v.ti_motivazione_variazione, v.id_matricola, v.id_bando
+     FROM pdg_variazione v, cdr c
+    WHERE v.cd_centro_responsabilita = c.cd_centro_responsabilita;

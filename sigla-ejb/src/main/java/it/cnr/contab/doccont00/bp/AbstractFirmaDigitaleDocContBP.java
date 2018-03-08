@@ -48,6 +48,7 @@ import java.rmi.RemoteException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.IOUtils;
@@ -393,7 +394,9 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
                                                                 .concat(allegatoGenericoBulk.getNome()));
                                                             zos.putNextEntry(zipEntryChild);
                                                             IOUtils.copyLarge(documentiContabiliService.getResource(allegatoGenericoBulk.getStorageKey()), zos);
-                                                        } catch (IOException e) {
+                                                        } catch (ZipException e) {
+															log.warn("Cannot add entry to zip file", e);
+														} catch (IOException e) {
                                                             throw new DetailedRuntimeException(e);
                                                         }
                                                     });
