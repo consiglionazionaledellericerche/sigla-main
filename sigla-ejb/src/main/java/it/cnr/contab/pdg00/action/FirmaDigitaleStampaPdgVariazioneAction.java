@@ -101,29 +101,6 @@ public class FirmaDigitaleStampaPdgVariazioneAction extends it.cnr.jada.util.act
 			return handleException(context,e);
 		}
 		return context.findDefaultForward();
-	}	
-	
-	public Forward doInstalla(ActionContext context) {
-		try {
-			OptionBP option = openConfirm(context,"L'installazione del software di firma digitale va effettuata avviando il browser quando la chiavetta USB Actalis NON è inserita nel computer. Procedere con l'installazione?",
-					OptionBP.CONFIRM,"doConfirmInstalla");
-			//option.addAttribute("discrepanze", e.getLista());
-			return option;
-		} catch(Exception e) {
-			return handleException(context,e);
-		}
-	}
-
-	public Forward doConfirmInstalla(ActionContext context, it.cnr.jada.util.action.OptionBP option) {
-		try {
-			FirmaDigitalePdgVariazioniBP bp = (FirmaDigitalePdgVariazioniBP)context.getBusinessProcess();
-			if (option.getOption() == it.cnr.jada.util.action.OptionBP.OK_BUTTON) {
-				bp.installa(context);
-			}
-			return context.findDefaultForward();
-		} catch(Exception e) {
-			return handleException(context,e);
-		}
 	}
 
 	public Forward doPersist(ActionContext context) {
@@ -133,28 +110,6 @@ public class FirmaDigitaleStampaPdgVariazioneAction extends it.cnr.jada.util.act
 			String signFileRicevuto = ((HttpActionContext)context).getParameter("sign_file_ricevuto");
         	String fileNameCompleto = pathFirmaTempDir+"/"+signFileRicevuto;
 			bp.persist(context, fileNameCompleto);
-			return context.findDefaultForward();
-		} catch(Exception e) {
-			return handleException(context,e);
-		}
-	}
-
-	public Forward doUpload(ActionContext context) {
-		try {
-			FirmaDigitalePdgVariazioniBP bp = (FirmaDigitalePdgVariazioniBP)context.getBusinessProcess();
-			if (!bp.isUploadFile())
-				bp.setUploadFile(true);
-			return context.findDefaultForward();
-		} catch(Exception e) {
-			return handleException(context,e);
-		}
-	}
-
-	public Forward doDownload(ActionContext context) {
-		try {
-			FirmaDigitalePdgVariazioniBP bp = (FirmaDigitalePdgVariazioniBP)context.getBusinessProcess();
-			if (!bp.isUploadFile())
-				bp.setUploadFile(true);
 			return context.findDefaultForward();
 		} catch(Exception e) {
 			return handleException(context,e);
