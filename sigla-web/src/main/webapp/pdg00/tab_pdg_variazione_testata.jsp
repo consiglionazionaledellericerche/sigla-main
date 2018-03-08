@@ -1,4 +1,4 @@
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.action.*,
 		it.cnr.jada.bulk.*,
 		it.cnr.jada.util.action.*,
@@ -23,8 +23,11 @@
 	<% } %> 
 <table class="Panel w-100">	
   <TR>
-   <% bp.getController().writeFormField(out,"esercizio");%>
-   <% bp.getController().writeFormField(out,"pg_variazione_pdg");%>
+   	<% bp.getController().writeFormField(out,"esercizio");%>
+    <TD colspan="4">
+    	<% bp.getController().writeFormLabel(out,"pg_variazione_pdg");%>
+    	<% bp.getController().writeFormInput(out,"pg_variazione_pdg");%>
+    </TD>
   </TR>
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"centro_responsabilita");%></TD>
@@ -43,42 +46,69 @@
    	  <TD><% bp.getController().writeFormLabel(out,"tipo_variazione");%></TD>
    	  <TD colspan=5><% bp.getController().writeFormInput(out,"tipo_variazione");%></TD>
 	</TR>
+	<% if (bp.isAttivaGestioneVariazioniTrasferimento() && (bp.isSearching() ||  
+			bk!=null && bk.getTipo_variazione()!=null && bk.getTipo_variazione().getFl_variazione_trasferimento())) { %>
+    <TR>
+	  <TD><% bp.getController().writeFormLabel( out, "mapMotivazioneVariazione"); %></TD>
+	  <TD colspan="2"><% bp.getController().writeFormInput(out,"default","mapMotivazioneVariazione",!bp.isSearching()&&(isAbilitato||!bk.isPropostaProvvisoria()),null,null);%></TD>
+	  <% if (bp.isSearching() || bk.isMotivazioneVariazioneBando()) {%>
+		 <TD><% bp.getController().writeFormLabel( out, "idBando"); %></TD>
+		 <TD><% bp.getController().writeFormInput( out, "default","idBando",!bp.isSearching()&&(isAbilitato||!bk.isPropostaProvvisoria()),null,null); %></TD>
+	 	 <%	if (bk.isApprovata()||bk.isApprovazioneFormale()) { %>
+		 <TD>
+		 	<%
+		 		bp.getController().writeFormLabel( out, "idMatricola");
+		 	    bp.getController().writeFormInput( out, "default","idMatricola",!bp.isSearching()&&!(bp.isCdrScrivania()||bp.isUoEnte())||bk.getIdMatricola()!=null,null,null);
+		 	%>
+		 </TD>
+		 <% } %>
+	  <% } 
+	     if (bp.isSearching() || (bk.isMotivazioneVariazioneProroga() || bk.isMotivazioneVariazioneAltreSpese())) { %>
+		 <TD <% if (!bp.isSearching()){ %>colspan="3"<% } %>>
+		 	<%	
+		 		bp.getController().writeFormLabel( out, "idMatricola");
+	 	    	bp.getController().writeFormInput( out, "default","idMatricola",!bp.isSearching()&&(isAbilitato||!bk.isPropostaProvvisoria()),null,null);
+		 	%>
+		 </TD>
+	  <% }%>
+    </TR>
+    <% } %>
 	<% if (bp.isMovimentoSuFondi()) { %>
     <TR>
 	  <TD><% bp.getController().writeFormLabel( out, "find_fondo_spesa"); %></TD>
-	  <TD colspan=5><% bp.getController().writeFormInput( out, "find_fondo_spesa"); %></TD>
+	  <TD colspan="5"><% bp.getController().writeFormInput( out, "find_fondo_spesa"); %></TD>
     </TR>
     <% } %>
     <TR>
       <TD><% bp.getController().writeFormLabel(out,"tipologia_fin");%></TD>
-      <TD colspan=5><% bp.getController().writeFormInput(out,"tipologia_fin");%></TD>
+      <TD colspan="5"><% bp.getController().writeFormInput(out,"tipologia_fin");%></TD>
     </TR>
 <% } %>
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"dt_apertura");%></TD>
-   <TD><% bp.getController().writeFormInput(out,"default","dt_apertura",isFieldEnabled,null,null);%></TD>
+   <TD colspan="2"><% bp.getController().writeFormInput(out,"default","dt_apertura",isFieldEnabled,null,null);%></TD>
    <TD><% bp.getController().writeFormLabel(out,"dt_approvazione");%></TD>
-   <TD><% bp.getController().writeFormInput(out,"default","dt_approvazione",isFieldEnabled,null,null);%></TD>   
+   <TD colspan="2"><% bp.getController().writeFormInput(out,"default","dt_approvazione",isFieldEnabled,null,null);%></TD>   
   </TR>
   <TR>  
    <TD><% bp.getController().writeFormLabel(out,"dt_chiusura");%></TD>
-   <TD><% bp.getController().writeFormInput(out,"default","dt_chiusura",isFieldEnabled,null,null);%></TD>
+   <TD colspan="2"><% bp.getController().writeFormInput(out,"default","dt_chiusura",isFieldEnabled,null,null);%></TD>
    <TD><% bp.getController().writeFormLabel(out,"dt_annullamento");%></TD>
-   <TD><% bp.getController().writeFormInput(out,"default","dt_annullamento",isFieldEnabled,null,null);%></TD>      
+   <TD colspan="2"><% bp.getController().writeFormInput(out,"default","dt_annullamento",isFieldEnabled,null,null);%></TD>      
   </TR>
 <% if (!(bp instanceof CRUDPdgVariazioneGestionaleBP)) {  %>
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"ds_delibera");%></TD>
-   <TD colspan=3><% bp.getController().writeFormInput(out,"default","ds_delibera",isAbilitato,null,null);%></TD>
+   <TD colspan="5"><% bp.getController().writeFormInput(out,"default","ds_delibera",isAbilitato,null,null);%></TD>
   </TR>
 <% } %>
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"ds_variazione");%></TD>
-   <TD colspan=3><% bp.getController().writeFormInput(out,"default","ds_variazione",isAbilitato,null,null);%></TD>
+   <TD colspan="5"><% bp.getController().writeFormInput(out,"default","ds_variazione",isAbilitato,null,null);%></TD>
   </TR>
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"riferimenti");%></TD>
-   <TD colspan=3><% bp.getController().writeFormInput(out,"default","riferimenti",isAbilitato,null,null);%></TD>
+   <TD colspan="5"><% bp.getController().writeFormInput(out,"default","riferimenti",isAbilitato,null,null);%></TD>
   </TR>
 </table>
 <%
@@ -90,11 +120,11 @@ if ((bp.isSearching())||(bk.isRespinta())||(bk.isPropostaDefinitiva()&&bp.isUoEn
 	<table class="Panel w-100" align="left" cellspacing=1 cellpadding=1>
 	  <tr>
         <TD><% bp.getController().writeFormLabel(out,"cd_causale_respinta");%></TD>
-        <TD colspan=3><% bp.getController().writeFormInput(out,"default","cd_causale_respinta",isFieldNonApprovaEnabled,null,null);%></TD>
+        <TD colspan="5"><% bp.getController().writeFormInput(out,"default","cd_causale_respinta",isFieldNonApprovaEnabled,null,null);%></TD>
       </tr>
 	  <tr>
         <TD><% bp.getController().writeFormLabel(out,"ds_causale_respinta");%></TD>
-        <TD colspan=3><% bp.getController().writeFormInput(out,"default","ds_causale_respinta",isFieldNonApprovaEnabled,null,null);%></TD>
+        <TD colspan="5"><% bp.getController().writeFormInput(out,"default","ds_causale_respinta",isFieldNonApprovaEnabled,null,null);%></TD>
       </tr>
    	</table>
 </div>	

@@ -383,24 +383,7 @@ public WorkpackageBulk completaOggetto(UserContext userContext,
 		}
 	}
 }
-public void Inserimento_BLOB(UserContext param0,it.cnr.jada.bulk.OggettoBulk param1,java.io.File param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, PersistencyException, RemoteException  {
-	try {
-		invoke("Inserimento_BLOB",new Object[] {
-				param0,
-				param1,
-				param2});
-	} catch(java.rmi.RemoteException e) {
-		throw e;
-	} catch(java.lang.reflect.InvocationTargetException e) {
-		try {
-			throw e.getTargetException();
-		} catch(it.cnr.jada.comp.ComponentException ex) {
-			throw ex;
-		} catch(Throwable ex) {
-			throw new java.rmi.RemoteException("Uncaugth exception",ex);
-		}
-	}
-}
+
 public List findListaGAEFEWS(UserContext userContext, String cdr, Integer modulo)
 		throws ComponentException, RemoteException {
 	try {

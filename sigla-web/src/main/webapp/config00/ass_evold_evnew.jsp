@@ -6,7 +6,7 @@
 
 <%@page import="it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewBulk,
 it.cnr.contab.config00.bp.CRUDConfigAssEvoldEvnewBP"%>
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,
 	        it.cnr.jada.action.*,
 	        java.util.*, 

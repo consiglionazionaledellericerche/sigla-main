@@ -300,4 +300,16 @@ public class CRUDVar_stanz_resAction extends CRUDAction {
 			return handleException(context,e);
 		}	
 	}
+
+	public Forward doOnChangeMapMotivazioneVariazione(ActionContext context) {
+		try {
+			fillModel(context);
+			((CRUDVar_stanz_resBP)getBusinessProcess(context)).aggiornaMotivazioneVariazione(context);
+			return context.findDefaultForward();
+		}catch(java.lang.ClassCastException ex){
+			return context.findDefaultForward();
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}			
+	}
 }

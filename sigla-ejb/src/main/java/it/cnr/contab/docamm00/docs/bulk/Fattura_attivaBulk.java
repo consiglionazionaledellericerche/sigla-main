@@ -350,6 +350,13 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		return null;
 	}
 
+	public Boolean isFatturaElettronicaAllaFirma() {
+		if (FATT_ELETT_ALLA_FIRMA.equals(getStatoInvioSdi())){
+			return true;
+		}
+		return false;
+	}
+
 	public void addToDettagliCancellati(IDocumentoAmministrativoRigaBulk dettaglio) {
 
 		if (dettaglio != null && ((OggettoBulk)dettaglio).getCrudStatus() == OggettoBulk.NORMAL) {

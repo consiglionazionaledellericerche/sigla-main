@@ -23,6 +23,9 @@ public class Tipo_variazioneBase extends Tipo_variazioneKey implements Keyed {
 //    TI_APPROVAZIONE CHAR(1) NOT NULL
 	private java.lang.String ti_approvazione;
  
+//    FL_VARIAZIONE_TRASFERIMENTO CHAR(1) NOT NULL
+	private java.lang.Boolean fl_variazione_trasferimento;
+
 	public Tipo_variazioneBase() {
 		super();
 	}
@@ -64,5 +67,11 @@ public class Tipo_variazioneBase extends Tipo_variazioneKey implements Keyed {
 	}
 	public void setTi_approvazione(java.lang.String ti_approvazione)  {
 		this.ti_approvazione=ti_approvazione;
+	}
+	public java.lang.Boolean getFl_variazione_trasferimento() {
+		return fl_variazione_trasferimento;
+	}
+	public void setFl_variazione_trasferimento(java.lang.Boolean fl_variazione_trasferimento) {
+		this.fl_variazione_trasferimento = fl_variazione_trasferimento;
 	}
 }
