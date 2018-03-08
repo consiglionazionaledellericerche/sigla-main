@@ -2487,6 +2487,17 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     }
 
     @Override
+    public void delete(ActionContext actioncontext) throws BusinessProcessException {
+        if (Optional.ofNullable(getModel())
+                .filter(MissioneBulk.class::isInstance)
+                .map(MissioneBulk.class::cast)
+                .map(MissioneBulk::isMissioneFromGemis)
+                .orElse(Boolean.FALSE))
+            throw handleException(new ApplicationException("Missione non eliminabile in quanto proveniente da un flusso approvato."));
+        super.delete(actioncontext);
+    }
+
+    @Override
     protected String getStorePath(MissioneBulk missioneBulk, boolean create) throws BusinessProcessException {
         if (missioneBulk.isMissioneFromGemis() && missioneBulk.getIdFolderRimborsoMissione() != null) {
             return missioniCMISService.getCMISPathFromFolderRimborso(missioneBulk);
