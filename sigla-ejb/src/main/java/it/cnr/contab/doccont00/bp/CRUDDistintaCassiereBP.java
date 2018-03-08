@@ -800,221 +800,482 @@ public class CRUDDistintaCassiereBP extends
 				//man.setContoEvidenza(bancauo.getNumero_conto());
 				//modifica per tesorà 
 				man.setContoEvidenza("1");
-				
-				infoben.setProgressivoBeneficiario(1);// Dovrebbe essere sempre
-				// 1 ?
-				infoben.setImportoBeneficiario(docContabile.getImDocumento()
-						.setScale(2, BigDecimal.ROUND_HALF_UP));
-				if(bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute())==0)
-					 infoben.setTipoPagamento("COMPENSAZIONE");
-				else if (docContabile.getTiDocumento().compareTo(
-						MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0)
-					infoben.setTipoPagamento("REGOLARIZZAZIONE");
-				else if (docContabile.getTiDocumento().compareTo(
-						MandatoBulk.TIPO_PAGAMENTO) == 0
-						&& docContabile.getModalitaPagamento() != null
-						&& (docContabile.getModalitaPagamento()
-						.compareTo("ASC") == 0 || docContabile
-						.getModalitaPagamento().compareTo("ASCNT") == 0)) {
-					infoben.setTipoPagamento("ASSEGNO CIRCOLARE");
-					obb_dati_beneficiario = true;
-				} else if (docContabile.getTiDocumento().compareTo(
-						MandatoBulk.TIPO_PAGAMENTO) == 0
-						&& docContabile.getCdIso() != null
-						&& docContabile.getCdIso().compareTo("IT") == 0 
-						&& docContabile.getAbi()!=null) {
-					// 18/06/2014 BNL non gestisce sepa
-					// infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
-					infoben.setTipoPagamento("BONIFICO BANCARIO E POSTALE");
+				boolean multibeneficiario=false;
+				BigDecimal coef=new BigDecimal(0);
+				BigDecimal totSiope = BigDecimal.ZERO;
+				if((bulk.getIm_ritenute().compareTo(BigDecimal.ZERO)!=0) && (bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute())!=0)){
+					 if ((docContabile.getTiDocumento().compareTo(
+								MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0)||(docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO) == 0
+								&& docContabile.getModalitaPagamento() != null
+								&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0 && docContabile.getDtPagamentoRichiesta()!=null &&
+										(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().before(docContabile.getDtPagamentoRichiesta())))){
+						multibeneficiario=true;
+					 }
+				}
+				if (multibeneficiario){
+					bollo = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Bollo();
+					benef = new it.cnr.contab.doccont00.intcass.xmlbnl.Beneficiario();
+					sosp = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
+					riten = new it.cnr.contab.doccont00.intcass.xmlbnl.Ritenute();
+					aggiuntive = new it.cnr.contab.doccont00.intcass.xmlbnl.InformazioniAggiuntive();
 					
-					// 08/09/2014 resi obbligatori come da mail ricevuta da
-					// ANGELINI/MESSERE
-					obb_dati_beneficiario = true;
-					obb_iban = true;
-				}else if (docContabile.getTiDocumento().compareTo(
-						MandatoBulk.TIPO_PAGAMENTO) == 0
-						&& docContabile.getCdIso() != null
-						&& docContabile.getCdIso().compareTo("IT") == 0 
-						&& docContabile.getAbi()==null) {
-					infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
-					obb_iban = true;
-				}  
-				else if (docContabile.getTiDocumento().compareTo(
-						MandatoBulk.TIPO_PAGAMENTO) == 0
-						&& docContabile.getCdIso() != null
-						&& docContabile.getCdIso().compareTo("IT") != 0) {
-					infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
-					// 11/07/2015 Verificare se per i mandati circuito sepa
-					// escluso quelli italiani funziona
-					// obb_dati_beneficiario=true;
-					obb_iban = true;
-				} else if (docContabile.getTiDocumento().compareTo(
-						MandatoBulk.TIPO_PAGAMENTO) == 0
-						&& docContabile.getModalitaPagamento() != null
-						&& docContabile.getModalitaPagamento().compareTo("RD") == 0) {
-					infoben.setTipoPagamento("CASSA");
-				} else if (docContabile.getTiDocumento().compareTo(
-						MandatoBulk.TIPO_PAGAMENTO) == 0
-						&& docContabile.getModalitaPagamento() != null
-						&& docContabile.getModalitaPagamento().compareTo("CCP") == 0) {
-					infoben.setTipoPagamento("ACCREDITO CONTO CORRENTE POSTALE");
-					obb_conto = true;
-				} else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO) == 0
-						&& docContabile.getModalitaPagamento() != null
-						&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0 && docContabile.getDtPagamentoRichiesta()==null
-						) {
-					throw new ApplicationException(
-							"Impossibile generare il flusso, indicare data richiesta pagamento nel mandato cds "
-									+ docContabile.getCdCds()
-									+ " n. "
-									+ docContabile.getPgDocumento());
-				} else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO) == 0
-						&& docContabile.getModalitaPagamento() != null
-						&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0 && docContabile.getDtPagamentoRichiesta()!=null &&
-								(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().after(docContabile.getDtPagamentoRichiesta())))
-						 {
-					throw new ApplicationException(
-							"Impossibile generare il flusso, indicare data richiesta pagamento nel mandato "
-									+ " cds "
-									+ docContabile.getCdCds()
-									+ " mandato "
-									+ docContabile.getPgDocumento()+ " superiore alla data odierna!");
-						 }
+					infoben=new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario();
+					infoben.setProgressivoBeneficiario(1);// Dovrebbe essere sempre
+					// 1 ?
+					infoben.setImportoBeneficiario(docContabile.getImDocumento().subtract(bulk.getIm_ritenute())
+							.setScale(2, BigDecimal.ROUND_HALF_UP));
+					if (docContabile.getTiDocumento().compareTo(
+							MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0)
+							infoben.setTipoPagamento("REGOLARIZZAZIONE");
 					else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO) == 0
+								&& docContabile.getModalitaPagamento() != null
+								&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0 && docContabile.getDtPagamentoRichiesta()!=null &&
+										(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().before(docContabile.getDtPagamentoRichiesta())))
+						{
+							infoben.setTipoPagamento("F24EP");
+							gcdi.setTime(docContabile.getDtPagamentoRichiesta());
+							xgc = DatatypeFactory.newInstance()
+									.newXMLGregorianCalendar(gcdi);
+							xgc.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
+							xgc.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+							xgc.setSecond(DatatypeConstants.FIELD_UNDEFINED);
+							xgc.setMinute(DatatypeConstants.FIELD_UNDEFINED);
+							xgc.setHour(DatatypeConstants.FIELD_UNDEFINED);
+							infoben.setDataEsecuzionePagamento(xgc);
+							infoben.setDataScadenzaPagamento(xgc);
+							infoben.setDestinazione("LIBERA");
+							infoben.setNumeroContoBancaItaliaEnteRicevente("0001777");
+							infoben.setTipoContabilitaEnteRicevente("INFRUTTIFERA");
+						}
+					infoben.setDestinazione("LIBERA");
+					//infoben.setTipoContabilitaEnteRicevente("INFRUTTIFERA");
+					List listClass = componentDistinta.findDocumentiFlussoClass(
+							userContext, bulk);
+					VDocumentiFlussoBulk oldDoc = null; 
+					for (Iterator c = listClass.iterator(); c.hasNext();) {
+						VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c.next();
+						// 17/01/2018 per non indicare cup nel tag ma solo nella causale e ripartire gli importi solo per siope 
+						boolean salta= false;
+						//nel caso di multibeneficiario non considero il cup comunque 
+						if (tagCup!=null && tagCup.compareTo("N")==0  || multibeneficiario){ 
+							if(doc.getCdCup()!=null){ 
+								if (infoben.getCausale() != null) {
+									if (!infoben.getCausale().contains(
+										doc.getCdCup()))
+										infoben.setCausale(infoben.getCausale()
+											+ "-" + doc.getCdCup());
+								} else
+									infoben.setCausale("CUP " + doc.getCdCup());
+								doc.setCdCup(null);
+							}
+						
+							if (infoben.getClassificazione()!=null && infoben.getClassificazione().size()!=0){
+								for (Iterator it=infoben.getClassificazione().iterator();it.hasNext();){
+									Classificazione presente= (Classificazione)it.next();
+									if (doc.getCdSiope().compareTo(presente.getCodiceCgu())==0){
+										salta=true;
+										break;	
+									}							
+								}	
+							}	
+						}
+						if(!salta){
+							// 17/01/2018 per non indicare cup nel tag - fine aggiunta
+							if (doc.getCdSiope() != null) {
+											clas = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
+											clas.setCodiceCgu(doc.getCdSiope());
+											if(doc.getImDocumento().compareTo(doc.getImportoCge())==0)
+												clas.setImporto(infoben.getImportoBeneficiario());
+											else{
+												coef=infoben.getImportoBeneficiario().divide(doc.getImDocumento(), 10, BigDecimal.ROUND_HALF_UP);
+												clas.setImporto((doc.getImportoCge().multiply(coef)).setScale(2,
+														BigDecimal.ROUND_HALF_UP));
+											}
+											totSiope=totSiope.add(clas.getImporto());
+											infoben.getClassificazione().add(clas);
+							}
+							oldDoc = doc;
+						}
+					}  
+					if((totSiope.compareTo(infoben.getImportoBeneficiario())!=0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal("0.01"))==0))){
+						clas=((it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione)(infoben.getClassificazione().get(0)));
+						if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(new BigDecimal("0.01"))==0)
+							clas.setImporto(clas.getImporto().subtract(new BigDecimal("0.01")));
+						else
+							clas.setImporto(clas.getImporto().add(new BigDecimal("0.01")));
+					}else if((totSiope.compareTo(infoben.getImportoBeneficiario())!=0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal("0.01"))!=0))){
+						throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
+					}
+					
+					bollo.setAssoggettamentoBollo(docContabile
+							.getAssoggettamentoBollo());
+					bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
+					infoben.setBollo(bollo);
+					benef.setAnagraficaBeneficiario(RemoveAccent
+							.convert(docContabile.getDenominazioneSede())
+							.replace('"', ' ').replace('°', ' '));
+					// benef.setStatoBeneficiario(docContabile.getCdIso());
+					infoben.setBeneficiario(benef);
+				   if (infoben.getCausale() != null
+							&& (infoben.getCausale() + docContabile
+							.getDsDocumento()).length() > 99)
+						infoben.setCausale((infoben.getCausale() + " " + docContabile
+								.getDsDocumento()).substring(0, 98));
+					else if (infoben.getCausale() != null)
+						infoben.setCausale(infoben.getCausale() + " "
+								+ docContabile.getDsDocumento());
+					else if (docContabile.getDsDocumento().length() > 99)
+						infoben.setCausale(docContabile.getDsDocumento().substring(
+								0, 98));
+					else
+						infoben.setCausale(docContabile.getDsDocumento());
+					infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
+							.replace('"', ' ').replace('°', ' '));
+					// SOSPESO
+					if (docContabile.getTiDocumento().compareTo(
+							MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0) {
+
+						List listSosp = componentDistinta
+								.findDocumentiFlussoSospeso(userContext, bulk);
+						for (Iterator c = listSosp.iterator(); c.hasNext();) {
+							VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c
+									.next();
+							if (doc.getCdSospeso() != null) {
+								sosp = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
+								try {
+									sosp.setNumeroProvvisorio(new Long(
+											doc.getCdSospeso()
+													.substring(
+															0,
+															doc.getCdSospeso()
+																	.indexOf(".")).replace(" ", ""))
+											.longValue());
+								} catch (NumberFormatException e) {
+									throw new ApplicationException(
+											"Formato del codice del sospeso non compatibile.");
+								}
+								sosp.setImportoProvvisorio(doc.getImAssociato()
+										.setScale(2, BigDecimal.ROUND_HALF_UP));
+								infoben.getSospeso().add(sosp);
+							}
+						}
+					}
+					// Fine sospeso
+
+					man.getInformazioniBeneficiario().add(infoben);
+					
+					bollo = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Bollo();
+					benef = new it.cnr.contab.doccont00.intcass.xmlbnl.Beneficiario();
+					sosp = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
+					riten = new it.cnr.contab.doccont00.intcass.xmlbnl.Ritenute();
+					aggiuntive = new it.cnr.contab.doccont00.intcass.xmlbnl.InformazioniAggiuntive();
+					infoben = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario();
+					totSiope=BigDecimal.ZERO;
+					infoben.setProgressivoBeneficiario(2);
+					infoben.setImportoBeneficiario(bulk.getIm_ritenute()
+							.setScale(2, BigDecimal.ROUND_HALF_UP));
+					infoben.setTipoPagamento("COMPENSAZIONE");
+					infoben.setDestinazione("LIBERA");
+					//infoben.setTipoContabilitaEnteRicevente("INFRUTTIFERA");
+					listClass = componentDistinta.findDocumentiFlussoClass(
+							userContext, bulk);
+					oldDoc = null; 
+					for (Iterator c = listClass.iterator(); c.hasNext();) {
+						VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c.next();
+						// 17/01/2018 per non indicare cup nel tag ma solo nella causale e ripartire gli importi solo per siope 
+						boolean salta= false;
+						//nel caso di multibeneficiario non considero il cup comunque 
+						if (tagCup!=null && tagCup.compareTo("N")==0  || multibeneficiario){ 
+							if(doc.getCdCup()!=null){ 
+								if (infoben.getCausale() != null) {
+									if (!infoben.getCausale().contains(
+										doc.getCdCup()))
+										infoben.setCausale(infoben.getCausale()
+											+ "-" + doc.getCdCup());
+								} else
+									infoben.setCausale("CUP " + doc.getCdCup());
+								doc.setCdCup(null);
+							}
+						
+							if (infoben.getClassificazione()!=null && infoben.getClassificazione().size()!=0){
+								for (Iterator it=infoben.getClassificazione().iterator();it.hasNext();){
+									Classificazione presente= (Classificazione)it.next();
+									if (doc.getCdSiope().compareTo(presente.getCodiceCgu())==0){
+										salta=true;
+										break;	
+									}							
+								}	
+							}	
+						}
+						if(!salta){
+							// 17/01/2018 per non indicare cup nel tag - fine aggiunta
+							if (doc.getCdSiope() != null) {
+											clas = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
+											clas.setCodiceCgu(doc.getCdSiope());
+											if(doc.getImDocumento().compareTo(doc.getImportoCge())==0)
+												clas.setImporto(infoben.getImportoBeneficiario());
+											else{
+												coef=infoben.getImportoBeneficiario().divide(doc.getImDocumento(), 10, BigDecimal.ROUND_HALF_UP);
+												clas.setImporto((doc.getImportoCge().multiply(coef)).setScale(2,
+														BigDecimal.ROUND_HALF_UP));
+											}
+											totSiope=totSiope.add(clas.getImporto());
+											infoben.getClassificazione().add(clas);
+							} 
+							oldDoc = doc;
+						}
+					}  
+					if((totSiope.compareTo(infoben.getImportoBeneficiario())!=0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal("0.01"))==0))){
+						clas=((it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione)(infoben.getClassificazione().get(0)));
+						if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(new BigDecimal("0.01"))==0)
+							clas.setImporto(clas.getImporto().subtract(new BigDecimal("0.01")));
+						else
+							clas.setImporto(clas.getImporto().add(new BigDecimal("0.01")));
+					}else if((totSiope.compareTo(infoben.getImportoBeneficiario())!=0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal("0.01"))!=0))){
+						throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
+					}
+					
+					bollo.setAssoggettamentoBollo(docContabile
+							.getAssoggettamentoBollo());
+					bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
+					infoben.setBollo(bollo);
+					benef.setAnagraficaBeneficiario(RemoveAccent
+							.convert(docContabile.getDenominazioneSede())
+							.replace('"', ' ').replace('°', ' '));
+					// benef.setStatoBeneficiario(docContabile.getCdIso());
+					infoben.setBeneficiario(benef);
+				   if (infoben.getCausale() != null
+							&& (infoben.getCausale() + docContabile
+							.getDsDocumento()).length() > 99)
+						infoben.setCausale((infoben.getCausale() + " " + docContabile
+								.getDsDocumento()).substring(0, 98));
+					else if (infoben.getCausale() != null)
+						infoben.setCausale(infoben.getCausale() + " "
+								+ docContabile.getDsDocumento());
+					else if (docContabile.getDsDocumento().length() > 99)
+						infoben.setCausale(docContabile.getDsDocumento().substring(
+								0, 98));
+					else
+						infoben.setCausale(docContabile.getDsDocumento());
+					infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
+							.replace('"', ' ').replace('°', ' '));
+					if (bulk.getIm_ritenute().compareTo(BigDecimal.ZERO) != 0) {
+						List list_rev = componentDistinta.findReversali(
+								userContext, bulk);
+						for (Iterator iRev = list_rev.iterator(); iRev.hasNext();) {
+							riten = new it.cnr.contab.doccont00.intcass.xmlbnl.Ritenute();
+							V_mandato_reversaleBulk rev = (V_mandato_reversaleBulk) iRev
+									.next();
+							riten.setImportoRitenute(rev.getIm_documento_cont()
+									.setScale(2, BigDecimal.ROUND_HALF_UP));
+							riten.setNumeroReversale(rev.getPg_documento_cont()
+									.intValue());
+							riten.setProgressivoVersante(1);// ???
+							infoben.getRitenute().add(riten);
+						}
+					}
+					man.getInformazioniBeneficiario().add(infoben);					
+				} // if multibeneficiario
+				else{	
+					infoben.setProgressivoBeneficiario(1);// Dovrebbe essere sempre
+					// 1 ?
+					infoben.setImportoBeneficiario(docContabile.getImDocumento()
+							.setScale(2, BigDecimal.ROUND_HALF_UP));
+					if(bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute())==0)
+						 infoben.setTipoPagamento("COMPENSAZIONE");
+					else if (docContabile.getTiDocumento().compareTo(
+							MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0)
+						infoben.setTipoPagamento("REGOLARIZZAZIONE");
+					else if (docContabile.getTiDocumento().compareTo(
+							MandatoBulk.TIPO_PAGAMENTO) == 0
+							&& docContabile.getModalitaPagamento() != null
+							&& (docContabile.getModalitaPagamento()
+							.compareTo("ASC") == 0 || docContabile
+							.getModalitaPagamento().compareTo("ASCNT") == 0)) {
+						infoben.setTipoPagamento("ASSEGNO CIRCOLARE");
+						obb_dati_beneficiario = true;
+					} else if (docContabile.getTiDocumento().compareTo(
+							MandatoBulk.TIPO_PAGAMENTO) == 0
+							&& docContabile.getCdIso() != null
+							&& docContabile.getCdIso().compareTo("IT") == 0 
+							&& docContabile.getAbi()!=null) {
+						// 18/06/2014 BNL non gestisce sepa
+						// infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
+						infoben.setTipoPagamento("BONIFICO BANCARIO E POSTALE");
+						
+						// 08/09/2014 resi obbligatori come da mail ricevuta da
+						// ANGELINI/MESSERE
+						obb_dati_beneficiario = true;
+						obb_iban = true;
+					}else if (docContabile.getTiDocumento().compareTo(
+							MandatoBulk.TIPO_PAGAMENTO) == 0
+							&& docContabile.getCdIso() != null
+							&& docContabile.getCdIso().compareTo("IT") == 0 
+							&& docContabile.getAbi()==null) {
+						infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
+						obb_iban = true;
+					}  
+					else if (docContabile.getTiDocumento().compareTo(
+							MandatoBulk.TIPO_PAGAMENTO) == 0
+							&& docContabile.getCdIso() != null
+							&& docContabile.getCdIso().compareTo("IT") != 0) {
+						infoben.setTipoPagamento("SEPA CREDIT TRANSFER");
+						// 11/07/2015 Verificare se per i mandati circuito sepa
+						// escluso quelli italiani funziona
+						// obb_dati_beneficiario=true;
+						obb_iban = true;
+					} else if (docContabile.getTiDocumento().compareTo(
+							MandatoBulk.TIPO_PAGAMENTO) == 0
+							&& docContabile.getModalitaPagamento() != null
+							&& docContabile.getModalitaPagamento().compareTo("RD") == 0) {
+						infoben.setTipoPagamento("CASSA");
+					} else if (docContabile.getTiDocumento().compareTo(
+							MandatoBulk.TIPO_PAGAMENTO) == 0
+							&& docContabile.getModalitaPagamento() != null
+							&& docContabile.getModalitaPagamento().compareTo("CCP") == 0) {
+						infoben.setTipoPagamento("ACCREDITO CONTO CORRENTE POSTALE");
+						obb_conto = true;
+					} else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO) == 0
+							&& docContabile.getModalitaPagamento() != null
+							&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0 && docContabile.getDtPagamentoRichiesta()==null
+							) {
+						throw new ApplicationException(
+								"Impossibile generare il flusso, indicare data richiesta pagamento nel mandato cds "
+										+ docContabile.getCdCds()
+										+ " n. "
+										+ docContabile.getPgDocumento());
+					} else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO) == 0
 							&& docContabile.getModalitaPagamento() != null
 							&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0 && docContabile.getDtPagamentoRichiesta()!=null &&
-									(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().before(docContabile.getDtPagamentoRichiesta())))
-					{
-						infoben.setTipoPagamento("F24EP");
-						gcdi.setTime(docContabile.getDtPagamentoRichiesta());
-						xgc = DatatypeFactory.newInstance()
-								.newXMLGregorianCalendar(gcdi);
-						xgc.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
-						xgc.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
-						xgc.setSecond(DatatypeConstants.FIELD_UNDEFINED);
-						xgc.setMinute(DatatypeConstants.FIELD_UNDEFINED);
-						xgc.setHour(DatatypeConstants.FIELD_UNDEFINED);
-						infoben.setDataEsecuzionePagamento(xgc);
-						infoben.setDataScadenzaPagamento(xgc);
-						infoben.setDestinazione("LIBERA");
-						infoben.setNumeroContoBancaItaliaEnteRicevente("0001777");
-						infoben.setTipoContabilitaEnteRicevente("INFRUTTIFERA");
-					}
-				// 19/11/2015 MANDATI a NETTO 0, richiesta modifica tipo
-				// pagamento
-				// if(bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute())==0)
-				// infoben.setTipoPagamento("COMPENSAZIONE");
-				// Classificazioni
-				infoben.setDestinazione("LIBERA");
-				//infoben.setTipoContabilitaEnteRicevente("INFRUTTIFERA");
-				List listClass = componentDistinta.findDocumentiFlussoClass(
-						userContext, bulk);
-				BigDecimal totAssSiope = BigDecimal.ZERO;
-				BigDecimal totAssCup = BigDecimal.ZERO;
-				VDocumentiFlussoBulk oldDoc = null; 
-				for (Iterator c = listClass.iterator(); c.hasNext();) {
-					VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c.next();
-					// 17/01/2018 per non indicare cup nel tag ma solo nella causale e ripartire gli importi solo per siope 
-					boolean salta= false;
-					
-					if (tagCup!=null && tagCup.compareTo("N")==0){ 
-						if(doc.getCdCup()!=null){ 
-							if (infoben.getCausale() != null) {
-								if (!infoben.getCausale().contains(
-									doc.getCdCup()))
-									infoben.setCausale(infoben.getCausale()
-										+ "-" + doc.getCdCup());
-							} else
-								infoben.setCausale("CUP " + doc.getCdCup());
-							doc.setCdCup(null);
+									(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().after(docContabile.getDtPagamentoRichiesta())))
+							 {
+						throw new ApplicationException(
+								"Impossibile generare il flusso, indicare data richiesta pagamento nel mandato "
+										+ " cds "
+										+ docContabile.getCdCds()
+										+ " mandato "
+										+ docContabile.getPgDocumento()+ " superiore alla data odierna!");
+							 }
+						else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO) == 0
+								&& docContabile.getModalitaPagamento() != null
+								&& docContabile.getModalitaPagamento().compareTo("F24EP") == 0 && docContabile.getDtPagamentoRichiesta()!=null &&
+										(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().before(docContabile.getDtPagamentoRichiesta())))
+						{
+							infoben.setTipoPagamento("F24EP");
+							gcdi.setTime(docContabile.getDtPagamentoRichiesta());
+							xgc = DatatypeFactory.newInstance()
+									.newXMLGregorianCalendar(gcdi);
+							xgc.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
+							xgc.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+							xgc.setSecond(DatatypeConstants.FIELD_UNDEFINED);
+							xgc.setMinute(DatatypeConstants.FIELD_UNDEFINED);
+							xgc.setHour(DatatypeConstants.FIELD_UNDEFINED);
+							infoben.setDataEsecuzionePagamento(xgc);
+							infoben.setDataScadenzaPagamento(xgc);
+							infoben.setDestinazione("LIBERA");
+							infoben.setNumeroContoBancaItaliaEnteRicevente("0001777");
+							infoben.setTipoContabilitaEnteRicevente("INFRUTTIFERA");
 						}
-					
-						if (infoben.getClassificazione()!=null && infoben.getClassificazione().size()!=0){
-							for (Iterator it=infoben.getClassificazione().iterator();it.hasNext();){
-								Classificazione presente= (Classificazione)it.next();
-								if (doc.getCdSiope().compareTo(presente.getCodiceCgu())==0){
-									salta=true;
-									break;	
-								}							
+					// 19/11/2015 MANDATI a NETTO 0, richiesta modifica tipo
+					// pagamento
+					// if(bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute())==0)
+					// infoben.setTipoPagamento("COMPENSAZIONE");
+					// Classificazioni
+					infoben.setDestinazione("LIBERA");
+					//infoben.setTipoContabilitaEnteRicevente("INFRUTTIFERA");
+					List listClass = componentDistinta.findDocumentiFlussoClass(
+							userContext, bulk);
+					BigDecimal totAssSiope = BigDecimal.ZERO;
+					BigDecimal totAssCup = BigDecimal.ZERO;
+					VDocumentiFlussoBulk oldDoc = null; 
+					for (Iterator c = listClass.iterator(); c.hasNext();) {
+						VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c.next();
+						// 17/01/2018 per non indicare cup nel tag ma solo nella causale e ripartire gli importi solo per siope 
+						boolean salta= false;
+						
+						if (tagCup!=null && tagCup.compareTo("N")==0){ 
+							if(doc.getCdCup()!=null){ 
+								if (infoben.getCausale() != null) {
+									if (!infoben.getCausale().contains(
+										doc.getCdCup()))
+										infoben.setCausale(infoben.getCausale()
+											+ "-" + doc.getCdCup());
+								} else
+									infoben.setCausale("CUP " + doc.getCdCup());
+								doc.setCdCup(null);
+							}
+						
+							if (infoben.getClassificazione()!=null && infoben.getClassificazione().size()!=0){
+								for (Iterator it=infoben.getClassificazione().iterator();it.hasNext();){
+									Classificazione presente= (Classificazione)it.next();
+									if (doc.getCdSiope().compareTo(presente.getCodiceCgu())==0){
+										salta=true;
+										break;	
+									}							
+								}	
 							}	
-						}	
-					}
-					if(!salta){
-						// 17/01/2018 per non indicare cup nel tag - fine aggiunta
-					  if (doc.getCdSiope() != null) {
-						// cambio codice siope senza cup dovrebbe essere il
-						// resto
-						if (oldDoc != null
-								&& oldDoc.getCdSiope().compareTo(
-								doc.getCdSiope()) != 0
-								&& doc.getCdCup() == null
-								&& totAssSiope.compareTo(totAssCup) != 0
-								&& totAssCup.compareTo(BigDecimal.ZERO) != 0) {
-							clas = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-							clas.setCodiceCgu(oldDoc.getCdSiope());
-							clas.setImporto((totAssSiope.subtract(totAssCup))
-									.setScale(2, BigDecimal.ROUND_HALF_UP));
-							totAssCup = BigDecimal.ZERO;
-							totAssSiope = BigDecimal.ZERO;
-							infoben.getClassificazione().add(clas);
-
-						} else
-							// stesso codice siope senza cup resto
+						}
+						if(!salta){
+							// 17/01/2018 per non indicare cup nel tag - fine aggiunta
+						  if (doc.getCdSiope() != null) {
+							// cambio codice siope senza cup dovrebbe essere il
+							// resto
 							if (oldDoc != null
 									&& oldDoc.getCdSiope().compareTo(
-									doc.getCdSiope()) == 0
+									doc.getCdSiope()) != 0
 									&& doc.getCdCup() == null
 									&& totAssSiope.compareTo(totAssCup) != 0
 									&& totAssCup.compareTo(BigDecimal.ZERO) != 0) {
 								clas = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
 								clas.setCodiceCgu(oldDoc.getCdSiope());
-								clas.setImporto(totAssSiope.subtract(totAssCup)
+								clas.setImporto((totAssSiope.subtract(totAssCup))
 										.setScale(2, BigDecimal.ROUND_HALF_UP));
 								totAssCup = BigDecimal.ZERO;
 								totAssSiope = BigDecimal.ZERO;
 								infoben.getClassificazione().add(clas);
-							} else // stesso codice siope con cup
+	
+							} else
+								// stesso codice siope senza cup resto
 								if (oldDoc != null
 										&& oldDoc.getCdSiope().compareTo(
 										doc.getCdSiope()) == 0
-										&& doc.getCdCup() != null
+										&& doc.getCdCup() == null
 										&& totAssSiope.compareTo(totAssCup) != 0
 										&& totAssCup.compareTo(BigDecimal.ZERO) != 0) {
 									clas = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-									clas.setCodiceCgu(doc.getCdSiope());
-									clas.setCodiceCup(doc.getCdCup());
-									clas.setImporto(doc.getImportoCup().setScale(2,
-											BigDecimal.ROUND_HALF_UP));
-									totAssCup = totAssCup.add(doc.getImportoCup());
-									// Causale Cup
-									if (infoben.getCausale() != null) {
-										if (!infoben.getCausale().contains(
-												doc.getCdCup()))
-											infoben.setCausale(infoben.getCausale()
-													+ "-" + doc.getCdCup());
-									} else
-										infoben.setCausale("CUP " + doc.getCdCup());
+									clas.setCodiceCgu(oldDoc.getCdSiope());
+									clas.setImporto(totAssSiope.subtract(totAssCup)
+											.setScale(2, BigDecimal.ROUND_HALF_UP));
+									totAssCup = BigDecimal.ZERO;
+									totAssSiope = BigDecimal.ZERO;
 									infoben.getClassificazione().add(clas);
-								} else // stesso siope con cup null precedente
-									// completamente associato a cup
+								} else // stesso codice siope con cup
 									if (oldDoc != null
 											&& oldDoc.getCdSiope().compareTo(
 											doc.getCdSiope()) == 0
-											&& doc.getCdCup() == null
-											&& totAssSiope.compareTo(totAssCup) == 0
+											&& doc.getCdCup() != null
+											&& totAssSiope.compareTo(totAssCup) != 0
 											&& totAssCup.compareTo(BigDecimal.ZERO) != 0) {
 										clas = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
 										clas.setCodiceCgu(doc.getCdSiope());
-										clas.setImporto(doc.getImportoCge().setScale(2,
+										clas.setCodiceCup(doc.getCdCup());
+										clas.setImporto(doc.getImportoCup().setScale(2,
 												BigDecimal.ROUND_HALF_UP));
-										totAssSiope = BigDecimal.ZERO;
-										totAssCup = BigDecimal.ZERO;
+										totAssCup = totAssCup.add(doc.getImportoCup());
+										// Causale Cup
+										if (infoben.getCausale() != null) {
+											if (!infoben.getCausale().contains(
+													doc.getCdCup()))
+												infoben.setCausale(infoben.getCausale()
+														+ "-" + doc.getCdCup());
+										} else
+											infoben.setCausale("CUP " + doc.getCdCup());
 										infoben.getClassificazione().add(clas);
-									} else // diverso siope con cup null e precedente
+									} else // stesso siope con cup null precedente
 										// completamente associato a cup
 										if (oldDoc != null
 												&& oldDoc.getCdSiope().compareTo(
-												doc.getCdSiope()) != 0
+												doc.getCdSiope()) == 0
 												&& doc.getCdCup() == null
 												&& totAssSiope.compareTo(totAssCup) == 0
 												&& totAssCup.compareTo(BigDecimal.ZERO) != 0) {
@@ -1025,198 +1286,214 @@ public class CRUDDistintaCassiereBP extends
 											totAssSiope = BigDecimal.ZERO;
 											totAssCup = BigDecimal.ZERO;
 											infoben.getClassificazione().add(clas);
-										} else
-											// primo inserimento
-											if (doc.getCdCup() != null
-													&& doc.getImportoCup().compareTo(
-													BigDecimal.ZERO) != 0) {
-												clas = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-												clas.setCodiceCgu(doc.getCdSiope());
-												clas.setCodiceCup(doc.getCdCup());
-												clas.setImporto(doc.getImportoCup().setScale(2,
-														BigDecimal.ROUND_HALF_UP));
-												totAssCup = doc.getImportoCup();
-												totAssSiope = doc.getImportoCge();
-												// Causale Cup
-												if (infoben.getCausale() != null) {
-													if (!infoben.getCausale().contains(
-															doc.getCdCup()))
-														infoben.setCausale(infoben.getCausale()
-																+ "-" + doc.getCdCup());
-												} else
-													infoben.setCausale("CUP " + doc.getCdCup());
-												infoben.getClassificazione().add(clas);
-											} else {
+										} else // diverso siope con cup null e precedente
+											// completamente associato a cup
+											if (oldDoc != null
+													&& oldDoc.getCdSiope().compareTo(
+													doc.getCdSiope()) != 0
+													&& doc.getCdCup() == null
+													&& totAssSiope.compareTo(totAssCup) == 0
+													&& totAssCup.compareTo(BigDecimal.ZERO) != 0) {
 												clas = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
 												clas.setCodiceCgu(doc.getCdSiope());
 												clas.setImporto(doc.getImportoCge().setScale(2,
 														BigDecimal.ROUND_HALF_UP));
-												totAssSiope = doc.getImportoCge();
+												totAssSiope = BigDecimal.ZERO;
+												totAssCup = BigDecimal.ZERO;
 												infoben.getClassificazione().add(clas);
-											}
-						oldDoc = doc;
-					}
-				 } // if(!salta){ -- 17/01/2018 per non indicare cup nel tag  
-				}	
-				// differenza ultimo
-				if (totAssSiope.subtract(totAssCup).compareTo(BigDecimal.ZERO) > 0) {
-					if (totAssCup.compareTo(BigDecimal.ZERO) != 0
-							&& totAssCup.compareTo(totAssSiope) != 0) {
-						clas = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
-						clas.setCodiceCgu(oldDoc.getCdSiope());
-						clas.setImporto((totAssSiope.subtract(totAssCup))
-								.setScale(2, BigDecimal.ROUND_HALF_UP));
-						infoben.getClassificazione().add(clas);
-					}
-				}
-				bollo.setAssoggettamentoBollo(docContabile
-						.getAssoggettamentoBollo());
-				bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
-				infoben.setBollo(bollo);
-				benef.setAnagraficaBeneficiario(RemoveAccent
-						.convert(docContabile.getDenominazioneSede())
-						.replace('"', ' ').replace('°', ' '));
-				// benef.setStatoBeneficiario(docContabile.getCdIso());
-				if (obb_dati_beneficiario) {
-					benef.setIndirizzoBeneficiario(RemoveAccent
-							.convert(docContabile.getViaSede())
-							.replace('"', ' ').replace('°', ' '));
-					if (docContabile.getCapComuneSede() == null)
-						throw new ApplicationException(
-								"Impossibile generare il flusso, Cap benificiario non valorizzato per il terzo "
-										+ docContabile.getCdTerzo()
-										+ " cds "
-										+ docContabile.getCdCds()
-										+ " mandato "
-										+ docContabile.getPgDocumento());
-					benef.setCapBeneficiario(docContabile.getCapComuneSede());
-					benef.setLocalitaBeneficiario(RemoveAccent
-							.convert(docContabile.getDsComune())
-							.replace('"', ' ').replace('°', ' '));
-					benef.setProvinciaBeneficiario(docContabile
-							.getCdProvincia());
-				}
-				infoben.setBeneficiario(benef);
-				if (obb_iban && docContabile.getCdIso().compareTo("IT") == 0 && docContabile.getAbi()!=null) {
-					piazzatura.setAbiBeneficiario(docContabile.getAbi());
-					piazzatura.setCabBeneficiario(docContabile.getCab());
-					piazzatura.setNumeroContoCorrenteBeneficiario(docContabile
-							.getNumeroConto());
-					piazzatura.setCaratteriControllo(docContabile
-							.getCodiceIban().substring(2, 4));
-					piazzatura.setCodiceCin(docContabile.getCin());
-					piazzatura.setCodicePaese(docContabile.getCdIso());
-					infoben.setPiazzatura(piazzatura);
-					// 18/06/2014 BNL non gestisce sepa
-					/*
-					 * sepa.setIban(docContabile.getNumeroConto());
-					 * if(docContabile.getBic()!=null &&
-					 * docContabile.getNumeroConto()!=null &&
-					 * (docContabile.getBic().length()>=8 &&
-					 * docContabile.getBic().length()<=11 ))// &&
-					 * docContabile.getNumeroConto().substring(0,
-					 * 2).compareTo("IT")!=0 )
-					 * sepa.setBic(docContabile.getBic()); else throw new
-					 * ApplicationException
-					 * ("Formato del codice bic non valido.");
-					 * sepa.setIdentificativoEndToEnd
-					 * (docContabile.getEsercizio()
-					 * .toString()+"-"+docContabile.getCdUoOrigine
-					 * ()+"-"+docContabile.getPgDocumento().toString());
-					 * infoben.setSepaCreditTransfer(sepa);
-					 */
-				}
-				if (obb_conto) {
-					aggiuntive.setRiferimentoDocumentoEsterno(docContabile
-							.getNumeroConto().toString());
-					infoben.setInformazioniAggiuntive(aggiuntive);
-				}
-				if (obb_iban && (docContabile.getCdIso().compareTo("IT") != 0 || docContabile.getAbi()==null)) {
-					// 11/07/2015 BNL non gestisce sepa
-					sepa.setIban(docContabile.getCodiceIban());
-					if (docContabile.getBic() != null
-							&& docContabile.getCodiceIban() != null
-							&& (docContabile.getBic().length() == 8 || 
-							    docContabile.getBic().length() == 11) && 
-							    !docContabile.getBic().contains(" "))// &&
-						// docContabile.getNumeroConto().substring(0,
-						// 2).compareTo("IT")!=0
-						// )
-						sepa.setBic(docContabile.getBic());
-					else
-						throw new ApplicationException(
-								"Formato del codice bic non valido per il terzo "
-										+ docContabile.getCdTerzo()										
-								);
-					sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
-							.toString()
-							+ "-"
-							+ docContabile.getCdUoOrigine()
-							+ "-" + docContabile.getPgDocumento().toString());
-					infoben.setSepaCreditTransfer(sepa);
-				}
-				if (infoben.getCausale() != null
-						&& (infoben.getCausale() + docContabile
-						.getDsDocumento()).length() > 99)
-					infoben.setCausale((infoben.getCausale() + " " + docContabile
-							.getDsDocumento()).substring(0, 98));
-				else if (infoben.getCausale() != null)
-					infoben.setCausale(infoben.getCausale() + " "
-							+ docContabile.getDsDocumento());
-				else if (docContabile.getDsDocumento().length() > 99)
-					infoben.setCausale(docContabile.getDsDocumento().substring(
-							0, 98));
-				else
-					infoben.setCausale(docContabile.getDsDocumento());
-				infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
-						.replace('"', ' ').replace('°', ' '));
-				// SOSPESO
-				if (docContabile.getTiDocumento().compareTo(
-						MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0) {
-
-					List listSosp = componentDistinta
-							.findDocumentiFlussoSospeso(userContext, bulk);
-					for (Iterator c = listSosp.iterator(); c.hasNext();) {
-						VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c
-								.next();
-						if (doc.getCdSospeso() != null) {
-							sosp = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
-							try {
-								sosp.setNumeroProvvisorio(new Long(
-										doc.getCdSospeso()
-												.substring(
-														0,
-														doc.getCdSospeso()
-																.indexOf(".")).replace(" ", ""))
-										.longValue());
-							} catch (NumberFormatException e) {
-								throw new ApplicationException(
-										"Formato del codice del sospeso non compatibile.");
-							}
-							sosp.setImportoProvvisorio(doc.getImAssociato()
+											} else
+												// primo inserimento
+												if (doc.getCdCup() != null
+														&& doc.getImportoCup().compareTo(
+														BigDecimal.ZERO) != 0) {
+													clas = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
+													clas.setCodiceCgu(doc.getCdSiope());
+													clas.setCodiceCup(doc.getCdCup());
+													clas.setImporto(doc.getImportoCup().setScale(2,
+															BigDecimal.ROUND_HALF_UP));
+													totAssCup = doc.getImportoCup();
+													totAssSiope = doc.getImportoCge();
+													// Causale Cup
+													if (infoben.getCausale() != null) {
+														if (!infoben.getCausale().contains(
+																doc.getCdCup()))
+															infoben.setCausale(infoben.getCausale()
+																	+ "-" + doc.getCdCup());
+													} else
+														infoben.setCausale("CUP " + doc.getCdCup());
+													infoben.getClassificazione().add(clas);
+												} else {
+													clas = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
+													clas.setCodiceCgu(doc.getCdSiope());
+													clas.setImporto(doc.getImportoCge().setScale(2,
+															BigDecimal.ROUND_HALF_UP));
+													totAssSiope = doc.getImportoCge();
+													infoben.getClassificazione().add(clas);
+												}
+							oldDoc = doc;
+						}
+					 } // if(!salta){ -- 17/01/2018 per non indicare cup nel tag  
+					}	
+					// differenza ultimo
+					if (totAssSiope.subtract(totAssCup).compareTo(BigDecimal.ZERO) > 0) {
+						if (totAssCup.compareTo(BigDecimal.ZERO) != 0
+								&& totAssCup.compareTo(totAssSiope) != 0) {
+							clas = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione();
+							clas.setCodiceCgu(oldDoc.getCdSiope());
+							clas.setImporto((totAssSiope.subtract(totAssCup))
 									.setScale(2, BigDecimal.ROUND_HALF_UP));
-							infoben.getSospeso().add(sosp);
+							infoben.getClassificazione().add(clas);
 						}
 					}
-				}
-				// Fine sospeso
-
-				if (bulk.getIm_ritenute().compareTo(BigDecimal.ZERO) != 0) {
-					List list_rev = componentDistinta.findReversali(
-							userContext, bulk);
-					for (Iterator iRev = list_rev.iterator(); iRev.hasNext();) {
-						riten = new it.cnr.contab.doccont00.intcass.xmlbnl.Ritenute();
-						V_mandato_reversaleBulk rev = (V_mandato_reversaleBulk) iRev
-								.next();
-						riten.setImportoRitenute(rev.getIm_documento_cont()
-								.setScale(2, BigDecimal.ROUND_HALF_UP));
-						riten.setNumeroReversale(rev.getPg_documento_cont()
-								.intValue());
-						riten.setProgressivoVersante(1);// ???
-						infoben.getRitenute().add(riten);
+					bollo.setAssoggettamentoBollo(docContabile
+							.getAssoggettamentoBollo());
+					bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
+					infoben.setBollo(bollo);
+					benef.setAnagraficaBeneficiario(RemoveAccent
+							.convert(docContabile.getDenominazioneSede())
+							.replace('"', ' ').replace('°', ' '));
+					// benef.setStatoBeneficiario(docContabile.getCdIso());
+					if (obb_dati_beneficiario) {
+						benef.setIndirizzoBeneficiario(RemoveAccent
+								.convert(docContabile.getViaSede())
+								.replace('"', ' ').replace('°', ' '));
+						if (docContabile.getCapComuneSede() == null)
+							throw new ApplicationException(
+									"Impossibile generare il flusso, Cap benificiario non valorizzato per il terzo "
+											+ docContabile.getCdTerzo()
+											+ " cds "
+											+ docContabile.getCdCds()
+											+ " mandato "
+											+ docContabile.getPgDocumento());
+						benef.setCapBeneficiario(docContabile.getCapComuneSede());
+						benef.setLocalitaBeneficiario(RemoveAccent
+								.convert(docContabile.getDsComune())
+								.replace('"', ' ').replace('°', ' '));
+						benef.setProvinciaBeneficiario(docContabile
+								.getCdProvincia());
 					}
-				}
-				man.getInformazioniBeneficiario().add(infoben);
+					infoben.setBeneficiario(benef);
+					if (obb_iban && docContabile.getCdIso().compareTo("IT") == 0 && docContabile.getAbi()!=null) {
+						piazzatura.setAbiBeneficiario(docContabile.getAbi());
+						piazzatura.setCabBeneficiario(docContabile.getCab());
+						piazzatura.setNumeroContoCorrenteBeneficiario(docContabile
+								.getNumeroConto());
+						piazzatura.setCaratteriControllo(docContabile
+								.getCodiceIban().substring(2, 4));
+						piazzatura.setCodiceCin(docContabile.getCin());
+						piazzatura.setCodicePaese(docContabile.getCdIso());
+						infoben.setPiazzatura(piazzatura);
+						// 18/06/2014 BNL non gestisce sepa
+						/*
+						 * sepa.setIban(docContabile.getNumeroConto());
+						 * if(docContabile.getBic()!=null &&
+						 * docContabile.getNumeroConto()!=null &&
+						 * (docContabile.getBic().length()>=8 &&
+						 * docContabile.getBic().length()<=11 ))// &&
+						 * docContabile.getNumeroConto().substring(0,
+						 * 2).compareTo("IT")!=0 )
+						 * sepa.setBic(docContabile.getBic()); else throw new
+						 * ApplicationException
+						 * ("Formato del codice bic non valido.");
+						 * sepa.setIdentificativoEndToEnd
+						 * (docContabile.getEsercizio()
+						 * .toString()+"-"+docContabile.getCdUoOrigine
+						 * ()+"-"+docContabile.getPgDocumento().toString());
+						 * infoben.setSepaCreditTransfer(sepa);
+						 */
+					}
+					if (obb_conto) {
+						aggiuntive.setRiferimentoDocumentoEsterno(docContabile
+								.getNumeroConto().toString());
+						infoben.setInformazioniAggiuntive(aggiuntive);
+					}
+					if (obb_iban && (docContabile.getCdIso().compareTo("IT") != 0 || docContabile.getAbi()==null)) {
+						// 11/07/2015 BNL non gestisce sepa
+						sepa.setIban(docContabile.getCodiceIban());
+						if (docContabile.getBic() != null
+								&& docContabile.getCodiceIban() != null
+								&& (docContabile.getBic().length() == 8 || 
+								    docContabile.getBic().length() == 11) && 
+								    !docContabile.getBic().contains(" "))// &&
+							// docContabile.getNumeroConto().substring(0,
+							// 2).compareTo("IT")!=0
+							// )
+							sepa.setBic(docContabile.getBic());
+						else
+							throw new ApplicationException(
+									"Formato del codice bic non valido per il terzo "
+											+ docContabile.getCdTerzo()										
+									);
+						sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
+								.toString()
+								+ "-"
+								+ docContabile.getCdUoOrigine()
+								+ "-" + docContabile.getPgDocumento().toString());
+						infoben.setSepaCreditTransfer(sepa);
+					}
+					if (infoben.getCausale() != null
+							&& (infoben.getCausale() + docContabile
+							.getDsDocumento()).length() > 99)
+						infoben.setCausale((infoben.getCausale() + " " + docContabile
+								.getDsDocumento()).substring(0, 98));
+					else if (infoben.getCausale() != null)
+						infoben.setCausale(infoben.getCausale() + " "
+								+ docContabile.getDsDocumento());
+					else if (docContabile.getDsDocumento().length() > 99)
+						infoben.setCausale(docContabile.getDsDocumento().substring(
+								0, 98));
+					else
+						infoben.setCausale(docContabile.getDsDocumento());
+					infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
+							.replace('"', ' ').replace('°', ' '));
+					// SOSPESO
+					if (docContabile.getTiDocumento().compareTo(
+							MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0) {
+	
+						List listSosp = componentDistinta
+								.findDocumentiFlussoSospeso(userContext, bulk);
+						for (Iterator c = listSosp.iterator(); c.hasNext();) {
+							VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c
+									.next();
+							if (doc.getCdSospeso() != null) {
+								sosp = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
+								try {
+									sosp.setNumeroProvvisorio(new Long(
+											doc.getCdSospeso()
+													.substring(
+															0,
+															doc.getCdSospeso()
+																	.indexOf(".")).replace(" ", ""))
+											.longValue());
+								} catch (NumberFormatException e) {
+									throw new ApplicationException(
+											"Formato del codice del sospeso non compatibile.");
+								}
+								sosp.setImportoProvvisorio(doc.getImAssociato()
+										.setScale(2, BigDecimal.ROUND_HALF_UP));
+								infoben.getSospeso().add(sosp);
+							}
+						}
+					}
+					// Fine sospeso
+	
+					if (bulk.getIm_ritenute().compareTo(BigDecimal.ZERO) != 0) {
+						List list_rev = componentDistinta.findReversali(
+								userContext, bulk);
+						for (Iterator iRev = list_rev.iterator(); iRev.hasNext();) {
+							riten = new it.cnr.contab.doccont00.intcass.xmlbnl.Ritenute();
+							V_mandato_reversaleBulk rev = (V_mandato_reversaleBulk) iRev
+									.next();
+							riten.setImportoRitenute(rev.getIm_documento_cont()
+									.setScale(2, BigDecimal.ROUND_HALF_UP));
+							riten.setNumeroReversale(rev.getPg_documento_cont()
+									.intValue());
+							riten.setProgressivoVersante(1);// ???
+							infoben.getRitenute().add(riten);
+						}
+					}
+					man.getInformazioniBeneficiario().add(infoben);
+				} // end else di multibeneficiario
 			}
 			return man;
 		} catch (Exception e) {
