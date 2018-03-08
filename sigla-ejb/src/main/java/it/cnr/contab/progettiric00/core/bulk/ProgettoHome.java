@@ -7,7 +7,7 @@ import java.util.List;
 import javax.ejb.EJBException;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.config00.blob.bulk.PostItBulk;
+
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
@@ -116,20 +116,7 @@ public class ProgettoHome extends BulkHome {
 		sql.addClause("AND","pg_progetto",sql.EQUALS,testata.getPg_progetto());
 		return dettHome.fetchAll(sql);
 	}	
-	/**
-	 * Recupera tutti i dati nella tabella Postit relativi alla testata in uso.
-	 *
-	 * @param testata La testata in uso.
-	 *
-	 * @return java.util.Collection Collezione di oggetti <code>PostItBulk</code>
-	 */
-	
-	public java.util.Collection findDettagliPostIt(ProgettoBulk testata) throws IntrospectionException, PersistencyException {
-		PersistentHome dettHome = getHomeCache().getHome(PostItBulk.class);
-		SQLBuilder sql = dettHome.createSQLBuilder();
-		sql.addClause("AND","pg_progetto",sql.EQUALS,testata.getPg_progetto());
-		return dettHome.fetchAll(sql);
-	}	
+
 	/**
 	 * Insert the method's description here.
 	 * Creation date: (27/07/2004 11.23.36)

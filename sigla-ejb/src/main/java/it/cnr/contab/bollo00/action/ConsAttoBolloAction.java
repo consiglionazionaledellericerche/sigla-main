@@ -37,7 +37,7 @@ public class ConsAttoBolloAction extends ConsultazioniAction {
 			consultazioneBP.initVariabili(context, bp.getPathConsultazione(), livelloDestinazione);
 			if ((bp.getElementsCount()!=selectElements)||!(bp.getBaseclause().toString().equals(consultazioneBP.getBaseclause().toString()))||bp.getFindclause()!=null)
 				consultazioneBP.addToBaseclause(bp.getSelezione(context));
-			consultazioneBP.setIterator(context,Utility.createAttoBolloComponentSession().findConsultazioneDettaglio(context.getUserContext(),bp.getPathDestinazione(livelloDestinazione),livelloDestinazione,consultazioneBP.getBaseclause(),null));			
+			consultazioneBP.setIterator(context,Utility.createAttoBolloComponentSession().findConsultazioneDettaglio(context.getUserContext(),bp.getPathDestinazione(livelloDestinazione),livelloDestinazione,consultazioneBP.getBaseclause(),null,false));			
 			
 			return context.addBusinessProcess(consultazioneBP);
 		} catch(Throwable e) {

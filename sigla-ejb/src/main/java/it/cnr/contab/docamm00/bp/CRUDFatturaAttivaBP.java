@@ -1,8 +1,10 @@
 package it.cnr.contab.docamm00.bp;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -11,6 +13,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.ejb.EJBException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
@@ -27,6 +39,7 @@ import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Voidable;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.intrastat.bulk.Fattura_attiva_intraBulk;
 import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
@@ -39,6 +52,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.contab.spring.storage.StoreService;
 import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
@@ -52,6 +66,7 @@ import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
@@ -516,6 +531,11 @@ public boolean isVisualizzaDocumentoFatturaElettronicaButtonHidden() {
 
 	Fattura_attivaBulk fa = (Fattura_attivaBulk)getModel();
 	return (fa == null || fa.getPg_fattura_attiva() == null || !fa.isDocumentoFatturazioneElettronica());
+}
+public boolean isVisualizzaXmlFatturaElettronicaButtonHidden() {
+
+	Fattura_attivaBulk fa = (Fattura_attivaBulk)getModel();
+	return (fa == null || fa.getPg_fattura_attiva() == null || !fa.isDocumentoFatturazioneElettronica() || fa.isFatturaElettronicaAllaFirma() || fa.isNotaCreditoDaNonInviareASdi());
 }
 public boolean isRiportaIndietroButtonHidden() {
 
@@ -1193,6 +1213,37 @@ public boolean isROBank(UserContext context, Fattura_attivaBulk fattura) throws 
 	public String getAllegatiFormName() {
 		super.getAllegatiFormName();
 		return "fatturaAttiva";
+	}
+	public void scaricaFatturaAttivaHtml(ActionContext actioncontext) throws IOException, ServletException, TransformerException, ApplicationException {
+
+		Fattura_attivaBulk fattura = (Fattura_attivaBulk)getModel();
+		Source xmlDoc = new StreamSource(docCollService.getStreamXmlFatturaAttiva(fattura));
+		TransformerFactory tFactory = TransformerFactory.newInstance();
+		Source xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.xsl"));
+		HttpServletResponse response = ((HttpActionContext)actioncontext).getResponse();
+		OutputStream os = response.getOutputStream();
+		response.setContentType("text/html");
+		Transformer trasform = tFactory.newTransformer(xslDoc);
+		trasform.transform(xmlDoc, new StreamResult(os));
+		os.flush();
+	}
+
+	public void scaricaFatturaAttivaFirmata(ActionContext actioncontext) throws IOException, ServletException, TransformerException, ApplicationException {
+		Fattura_attivaBulk fattura = (Fattura_attivaBulk)getModel();
+		StorageObject storageObject = docCollService.getFileFirmatoFatturaAttiva(fattura);
+
+		InputStream is = SpringUtil.getBean("storeService", StoreService.class).getResource(storageObject);
+		((HttpActionContext)actioncontext).getResponse().setContentLength(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
+		((HttpActionContext)actioncontext).getResponse().setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+		int buflength;
+		while ((buflength = is.read(buffer)) > 0) {
+			os.write(buffer,0,buflength);
+		}
+		is.close();
+		os.flush();
 	}
 }
 

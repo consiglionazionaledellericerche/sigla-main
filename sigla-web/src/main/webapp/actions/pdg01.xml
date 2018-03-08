@@ -120,7 +120,7 @@
   </businessProcess> 
   
   <businessProcess
-      name="CRUDTipoVariazioneBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+      name="CRUDTipoVariazioneBP" className="it.cnr.contab.pdg01.bp.CRUDTipoVariazioneBP">
     <forward name="default" path="/pdg01/tipo_variazione.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>

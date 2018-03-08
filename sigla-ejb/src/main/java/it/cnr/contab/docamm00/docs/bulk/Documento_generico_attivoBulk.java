@@ -31,7 +31,7 @@ public String getManagerName() {
 	return "CRUDGenericoAttivoBP";
 }
 
-public String getTipoDocumentoGenerico() {
+public String getTipologiaDocumentoGenerico() {
 
 	if (getCd_tipo_documento_amm() == null) return "Sconosciuto";
 	//Tipo_documento_ammBulk tipo = new Tipo_documento_ammBulk(getCd_tipo_documento_amm());

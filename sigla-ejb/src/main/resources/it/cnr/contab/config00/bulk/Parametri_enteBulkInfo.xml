@@ -97,6 +97,13 @@
 		maxLength="1"
 		label="Gestione Piano Economico Progetto" />
 	<fieldProperty
+		name="fl_variazioni_trasferimento"
+		property="fl_variazioni_trasferimento"
+		inputType="CHECKBOX"
+		inputSize="1"
+		maxLength="1"
+		label="Gestione Variazioni Trasferimento Risorse Personale" />
+	<fieldProperty
 		name="abil_progetto_strorg"
 		property="abil_progetto_strorg"
         keysProperty="abilProgettoStrorgKeys"		
@@ -177,6 +184,8 @@
 		name="fl_prg_pianoeco" />
 	<formFieldProperty
 		name="abil_progetto_strorg" />
+	<formFieldProperty
+		name="fl_variazioni_trasferimento" />
 	
 	<columnFieldProperty
 		name="descrizione" />
@@ -203,7 +212,8 @@
 	<columnFieldProperty
 		name="dt_ldap_migrazione" />						
 	<columnFieldProperty
-		name="ldap_link_cambio_password" />						
+		name="ldap_link_cambio_password" />
+		
 	<findFieldProperty
 		name="descrizione" />			
 	<findFieldProperty

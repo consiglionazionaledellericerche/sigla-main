@@ -12,10 +12,9 @@ import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
-import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -58,8 +57,6 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 		ti_tipologia_finKeys.put(NaturaBulk.TIPO_NATURA_FONTI_ESTERNE,"Fonti Esterne");
 	}
 
-
-	
 	private CdsBulk centroDiSpesa;
 	private CdrBulk centroDiResponsabilita;
 	private BulkList associazioneCDR = new BulkList();
@@ -84,6 +81,12 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	private Accertamento_modificaBulk accMod;
 	private boolean approvazioneControllata = false;
 	
+	private String storageMatricola;
+	
+	// variabile utilizzata per gestire consentire l'inserimento di valori null in tiMotivazioneVariazione
+	// ma rendere allo stesso tempo obbligatorio l'indicazione del campo da parte dell'utente
+	private java.lang.String mapMotivazioneVariazione;
+
 	public Var_stanz_resBulk() {
 		super();
 	}
@@ -348,7 +351,15 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
         if (getEsercizio_res()== null) 
         	throw new ValidationException("Valorizzare l'esercizio residuo!");
 		super.validate();
+		
+		if (this.isMotivazioneVariazioneBando() && getIdBando()==null) 
+			throw new ValidationException("Occorre inserire i dettagli del bando per cui si effettua la variazione.");
+		if (this.isMotivazioneVariazioneProroga() && getIdMatricola()==null) 
+			throw new ValidationException("Occorre inserire la matricola del dipendente per cui si effettua la variazione di proroga contratto.");
+		if (this.isMotivazioneVariazioneAltreSpese() && getIdMatricola()==null) 
+			throw new ValidationException("Occorre inserire la matricola del dipendente per cui si effettua la variazione per altre spese del personale.");
 	}
+	
     /* (non-Javadoc)
 	 * @see it.cnr.contab.varstanz00.bulk.Var_stanz_resBase#setEsericizio_residuo(java.lang.Integer)
 	 */
@@ -456,5 +467,45 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	public OggettoBulk initializeForInsert(CRUDBP crudbp, ActionContext actioncontext) {
 		setFl_perenzione(Boolean.FALSE);
 		return super.initializeForInsert(crudbp, actioncontext);
+	}
+
+	public boolean isMotivazioneVariazioneBando() {
+		return Pdg_variazioneBulk.MOTIVAZIONE_BANDO.equals(this.getTiMotivazioneVariazione());
+	}
+
+	public boolean isMotivazioneVariazioneProroga() {
+		return Pdg_variazioneBulk.MOTIVAZIONE_PROROGA.equals(this.getTiMotivazioneVariazione());
+	}
+
+	public boolean isMotivazioneVariazioneAltreSpese() {
+		return Pdg_variazioneBulk.MOTIVAZIONE_ALTRE_SPESE.equals(this.getTiMotivazioneVariazione());
+	}
+
+	public boolean isMotivazioneGenerico() {
+		return this.getTiMotivazioneVariazione()==null;
+	}
+
+	public java.lang.String getMapMotivazioneVariazione() {
+		return mapMotivazioneVariazione;
+	}
+
+	// serve per consentire l'inserimento di valori null in tiMotivazioneVariazione
+	// ma rendere allo stesso tempo obbligatorio l'indicazione del campo da parte dell'utente
+	public void setMapMotivazioneVariazione(String mapMotivazioneVariazione) {
+		this.mapMotivazioneVariazione = mapMotivazioneVariazione; 
+	}
+	public final java.util.Dictionary getTiMotivazioneVariazioneKeys() {
+		return Pdg_variazioneBulk.tiMotivazioneVariazioneKeys;
+	}
+	public final java.util.Dictionary getTiMotivazioneVariazioneForSearchKeys() {
+		return Pdg_variazioneBulk.tiMotivazioneVariazioneForSearchKeys;
+	}
+	
+	public String getStorageMatricola() {
+		return storageMatricola;
+	}
+	
+	public void setStorageMatricola(String storageMatricola) {
+		this.storageMatricola = storageMatricola;
 	}
 }

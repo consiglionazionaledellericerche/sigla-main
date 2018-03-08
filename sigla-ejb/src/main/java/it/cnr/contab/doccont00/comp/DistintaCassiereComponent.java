@@ -85,6 +85,7 @@ import it.cnr.jada.persistency.sql.SQLQuery;
 import it.cnr.jada.persistency.sql.SQLUnion;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import org.apache.commons.io.IOUtils;
 
 public class DistintaCassiereComponent extends
 		it.cnr.jada.comp.CRUDDetailComponent implements IDistintaCassiereMgr,
@@ -4122,26 +4123,11 @@ public class DistintaCassiereComponent extends
 			BulkHome home = (BulkHome) getHome(userContext, Bframe_blobBulk.class);
 			bframe_blob.setUser(userContext.getUser());
 			home.insert(bframe_blob, userContext);
-			java.io.InputStream in = new java.io.BufferedInputStream(
-					new FileInputStream(file));
-			byte[] byteArr = new byte[1024];
-			oracle.sql.CLOB clob = (oracle.sql.CLOB) getHome(userContext,
-					Bframe_blobBulk.class).getSQLClob(bframe_blob, "CDATA");
-			java.io.OutputStream os = new java.io.BufferedOutputStream(clob
-					.getAsciiOutputStream());
-			int len;
-			while ((len = in.read(byteArr)) > 0) {
-				os.write(byteArr, 0, len);
-			}
-			os.close();
-			in.close();
+			home.setSQLLob(bframe_blob, "CDATA", IOUtils.toString(new FileInputStream(file), "UTF-8"));
 			home.update(bframe_blob, userContext);
-
 		} catch (Throwable e) {
 			throw handleException(e);
-		}
-
-		finally {
+		} finally {
 			file.delete();
 		}
 	}

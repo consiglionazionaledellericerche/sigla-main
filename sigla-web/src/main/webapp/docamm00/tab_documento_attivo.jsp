@@ -1,4 +1,4 @@
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,
 		it.cnr.jada.action.*,
 		java.util.*,
@@ -116,6 +116,14 @@
 	</table>
 </div>
  
+<div class="Group card p-3 m-1">
+	<div class="Group card p-3 m-1 w-100">
+		<table width="100%">
+			<tr><% bp.getController().writeFormField(out,"findTipoDocumentoGenerico"); %></tr>
+		</table>
+	</div>
+</div>
+
 <div class="Group card">
     <table>
        <tr>

@@ -645,6 +645,22 @@
 		nullable="true"
 		enabledOnSearch="true"
 		keysProperty="causaleKeys" />		
+	<fieldProperty
+		name="findTipoDocumentoGenerico"
+		property="tipoDocumentoGenerico"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Tipo Documento Generico"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		nullable="false"/>
+	<fieldProperty
+		name="cdTipoDocumentoGenerico"
+		property="tipoDocumentoGenerico.codice"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Tipo Documento Generico" />
 	
 	<formFieldProperty
 		name="esercizio_lettera" />
@@ -773,6 +789,8 @@
     	name="stato_liquidazione"/>		
 	<formFieldProperty 
 		name="causale"/>	
+	<formFieldProperty
+		name="findTipoDocumentoGenerico" />
 				
 	<columnFieldProperty
 		name="cd_tipo_documento_amm" />
@@ -800,6 +818,8 @@
     	name="stato_liquidazione"/>		
 	<columnFieldProperty 
 		name="causale"/>		
+	<columnFieldProperty 
+		name="cdTipoDocumentoGenerico"/>		
 			
 	<columnSet name="filtro_ricerca_documenti">	
 		<columnFieldProperty
@@ -845,6 +865,10 @@
 	<findFieldProperty name="cd_cds" /> 
 	<findFieldProperty name="stato_liquidazione"/>		
 	<findFieldProperty name="causale"/>	
+	<findFieldProperty
+		name="findTipoDocumentoGenerico" />
+	<findFieldProperty
+		name="cdTipoDocumentoGenerico" />
 	<findFieldProperty
 		name="esercizio_lettera"
 		inputType="TEXT"

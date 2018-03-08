@@ -4,11 +4,12 @@
  ?ResourceEdition "1.0"
 -->
 
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,
 		it.cnr.jada.action.*,
 		java.util.*,
-		it.cnr.jada.util.action.*"
+		it.cnr.jada.util.action.*,
+		it.cnr.contab.pdg01.bp.*"
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -16,7 +17,7 @@
 <html>
 <head>
 <% JSPUtils.printBaseUrl(pageContext); 
-   CRUDBP bp = (CRUDBP)BusinessProcess.getBusinessProcess(request);%>
+   CRUDTipoVariazioneBP bp = (CRUDTipoVariazioneBP)BusinessProcess.getBusinessProcess(request);%>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
 <title><%=bp.getBulkInfo().getShortDescription()%></title>
@@ -25,35 +26,17 @@
 
 <%bp.openFormWindow(pageContext); %>
 
-<table class="Panel">
-  <tr>
-	<td><% bp.getController().writeFormLabel(out,"cd_tipo_variazione"); %></td>
-	<td><% bp.getController().writeFormInput(out,"cd_tipo_variazione"); %></td>
-  </tr>
-  <tr>
-	<td><% bp.getController().writeFormLabel(out,"ds_tipo_variazione"); %>
-	<td><% bp.getController().writeFormInput(out,"ds_tipo_variazione"); %>
-  </tr>
-  <tr>
-	<td><% bp.getController().writeFormLabel(out,"ti_tipo_variazione"); %></td>
-	<td><% bp.getController().writeFormInput(out,"ti_tipo_variazione");%></td>
-  </tr>
-  <tr>
-	<td><% bp.getController().writeFormLabel(out,"fl_utilizzabile_ente"); %></td>
-	<td><% bp.getController().writeFormInput(out,"fl_utilizzabile_ente"); %></td>
-  </tr>
-  <tr>
-	<td><% bp.getController().writeFormLabel(out,"fl_utilizzabile_area"); %></td>
-	<td><% bp.getController().writeFormInput(out,"fl_utilizzabile_area"); %></td>
-  </tr>
-  <tr>
-	<td><% bp.getController().writeFormLabel(out,"fl_utilizzabile_cds"); %></td>
-	<td><% bp.getController().writeFormInput(out,"fl_utilizzabile_cds"); %></td>
-  </tr>
-  <tr>
-	<td><% bp.getController().writeFormLabel(out,"ti_approvazione"); %></td>
-	<td><% bp.getController().writeFormInput(out,"ti_approvazione"); %></td>
-  </tr>
+<table class="Panel card m-2 p-2">
+  <tr><% bp.getController().writeFormField(out,"cd_tipo_variazione"); %></tr>
+  <tr><% bp.getController().writeFormField(out,"ds_tipo_variazione"); %></tr>
+  <tr><% bp.getController().writeFormField(out,"ti_tipo_variazione"); %></tr>
+  <tr><% bp.getController().writeFormField(out,"fl_utilizzabile_ente"); %></tr>
+  <tr><% bp.getController().writeFormField(out,"fl_utilizzabile_area"); %></tr>
+  <tr><% bp.getController().writeFormField(out,"fl_utilizzabile_cds"); %></tr>
+  <% if (bp.isFlVariazioniTrasferimento()) { %>
+  <tr><% bp.getController().writeFormField(out,"fl_variazione_trasferimento"); %></tr>
+  <% } %>
+  <tr><% bp.getController().writeFormField(out,"ti_approvazione"); %></tr>
 </table>
 
 <% bp.closeFormWindow(pageContext); %>
