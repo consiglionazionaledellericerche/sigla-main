@@ -1,11 +1,10 @@
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*,it.cnr.jada.util.action.*"
 %>
 
 <%!	static final String[][] tabs = new String[][] {
 					{ "tabTestata","Testata","/config00/tab_linea_attivita_testata.jsp" },
-					{ "tabRisultati","Risultati","/config00/tab_linea_attivita_risultati.jsp" },
-					 { "tabDettagliPostIt","Post-It","/config00/dettagliPostIt.jsp" } };
+					{ "tabRisultati","Risultati","/config00/tab_linea_attivita_risultati.jsp" }};
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">

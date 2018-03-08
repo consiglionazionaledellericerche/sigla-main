@@ -190,6 +190,9 @@
 		enabledOnFreeSearch="true"
 		label="Data Cancellazione" />
 
+	<form name="searchtool">
+		<formFieldProperty name="cd_ti_pasto" />
+	</form>
 	<formFieldProperty name="cd_ti_pasto" />
 	<formFieldProperty name="ti_area_geografica" />
 	<formFieldProperty name="pg_nazione" />

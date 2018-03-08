@@ -413,6 +413,53 @@
 		formatName="date_short"
 		inputSize="8"
 		label="Data firma" />	
+
+	<fieldProperty
+		name="tiMotivazioneVariazione"
+		property="tiMotivazioneVariazione"
+		inputType="SELECT"		
+		keysProperty="tiMotivazioneVariazioneForSearchKeys"
+		maxLength="10"
+		enabledOnInsert="true"
+        enabledOnSearch="true"
+        enabledOnEdit="true"                
+		nullable="false"
+		label="Motivo Variazione" />
+	<fieldProperty
+		name="mapMotivazioneVariazione"
+		property="mapMotivazioneVariazione"
+		inputType="SELECT"		
+		keysProperty="tiMotivazioneVariazioneKeys"
+		maxLength="10"
+		command="doOnChangeMapMotivazioneVariazione"
+		enabledOnInsert="true"
+        enabledOnSearch="true"
+        enabledOnEdit="true"                
+		nullable="false"
+		label="Motivo Variazione" />
+	<fieldProperty
+		name="idMatricola"
+		property="idMatricola"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnInsert="true"
+        enabledOnSearch="true"
+        enabledOnEdit="true"                
+		nullable="false"
+		label="Matricola" />
+	<fieldProperty
+		name="idBando"
+		property="idBando"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnInsert="true"
+        enabledOnSearch="true"
+        enabledOnEdit="true"                
+		nullable="false"
+		label="Dettagli Bando" />
+
     <form
         name="searchtool">
 	 	<formFieldProperty
@@ -532,6 +579,15 @@
 		name="stato_invio" />	
 	<formFieldProperty
 		name="dt_firma" />	
+	<formFieldProperty
+		name="tiMotivazioneVariazione" />
+	<formFieldProperty
+		name="mapMotivazioneVariazione" />
+	<formFieldProperty
+		name="idMatricola" />
+	<formFieldProperty
+		name="idBando" />
+		
 							
 	<findFieldProperty
 		name="esercizio" />
@@ -574,7 +630,14 @@
 	<findFieldProperty
 		name="stato_invio" />
 	<findFieldProperty
-		name="dt_firma" />	
+		name="dt_firma" />
+	<findFieldProperty
+		name="tiMotivazioneVariazione" />
+	<findFieldProperty
+		name="idMatricola" />
+	<findFieldProperty
+		name="idBando" />
+
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty

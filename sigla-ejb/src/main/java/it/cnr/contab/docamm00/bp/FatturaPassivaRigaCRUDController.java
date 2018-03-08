@@ -129,14 +129,14 @@ public class FatturaPassivaRigaCRUDController extends it.cnr.jada.util.action.Si
             throw new it.cnr.jada.DetailedRuntimeException(e);
         }
     }
-
+    @Override
     public void writeHTMLToolbar(
             javax.servlet.jsp.PageContext context,
             boolean reset,
             boolean find,
-            boolean delete) throws java.io.IOException, javax.servlet.ServletException {
+            boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
 
-        super.writeHTMLToolbar(context, reset, find, delete);
+        super.writeHTMLToolbar(context, reset, find, delete, false);
         boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
         String command = null;
         if (getParentController() != null)
@@ -184,5 +184,6 @@ public class FatturaPassivaRigaCRUDController extends it.cnr.jada.util.action.Si
                         isFromBootstrap);
             }
         }
+        super.closeButtonGROUPToolbar(context);
     }
 }

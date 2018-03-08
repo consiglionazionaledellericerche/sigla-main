@@ -93,6 +93,7 @@
 		property="ds_missione"
 		maxLength="300"
 		inputSize="50"
+		inputCssClass=" w-100 "
 		inputType="TEXT"
 		label="Descrizione"
 		enabledOnSearch="true"
@@ -241,9 +242,12 @@
 		name="find_terzo"
 		property="v_terzo"
 		inputType="SEARCHTOOL"
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+		formName="searchtool"
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false"		
-		readonlyProperty="ROTerzoPerModifica"		
+		readonlyProperty="ROTerzoPerModifica"
+		label="Codice"
 		/>
 	<fieldProperty
 		name="crea_terzo"
@@ -399,6 +403,8 @@
 		inputType="BUTTON"
 		img="img/find16.gif"
 		readonlyProperty="abledToInsertBank"
+		iconClass="fa fa-fw fa-credit-card"
+		buttonClass="btn-outline-info btn-title"
 		label="Conto/i d'appoggio"
 		href="javascript:submitForm('doSearch(main.listabanche)')" 
 		/>
@@ -743,6 +749,7 @@
 		name="ds_scadenza_obbligazione"
 		property="obbligazione_scadenzario.ds_scadenza"
 		label="Descrizione"
+		inputCssClass="w-100"
 		inputSize="20"
 		inputType="ROTEXT" 
 		/>
@@ -819,6 +826,7 @@
 		name="find_anticipo"
 		property="anticipo"
 		label="N. anticipo"
+		formName="searchtool"
 		inputType="SEARCHTOOL"
 		/>
 	<fieldProperty

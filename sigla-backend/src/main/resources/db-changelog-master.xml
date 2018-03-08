@@ -5,6 +5,12 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
+	<property name="now" value="sysdate" dbms="oracle"/>
+	<property name="now" value="now()" dbms="postgresql"/>
+
+    <property name="date.type" value="DATE" dbms="oracle"/>
+    <property name="date.type" value="DATETIME" dbms="postgresql"/>
+
     <!-- Inizio schema iniziale-->
     <include file="liquibase/tables.xml"/>
     <include file="liquibase/data.xml"/>

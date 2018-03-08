@@ -13,6 +13,15 @@
 			sqlTypeName="DECIMAL"
 			columnSize="15"
 			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_CONTRATTO"
+			propertyName="contratto.esercizio"/>
+		<columnMapping
+			columnName="STATO_CONTRATTO"
+			propertyName="contratto.stato"/>			
+		<columnMapping
+			columnName="PG_CONTRATTO"
+			propertyName="contratto.pg_contratto"/>
 	</defaultColumnMap>
 
     <columnMap
@@ -30,4 +39,6 @@
 		name="unitaOrganizzativa" />	
 	<persistentProperty
 		name="tipoAttoBollo" />	
+	<persistentProperty
+		name="contratto" />
 </SQLPersistentInfo>

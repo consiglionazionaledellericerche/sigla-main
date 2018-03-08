@@ -6,7 +6,7 @@
 <%@page import="it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoBulk"%>
 <%@page import="it.cnr.contab.ordmag.magazzino.bp.ScaricoManualeMagazzinoBP"%>
 <%@page import="it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoRigaBulk"%>
-<%@ page 
+<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,
 			it.cnr.jada.action.*,
 			java.util.*,

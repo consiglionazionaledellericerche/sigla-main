@@ -7,8 +7,6 @@ import java.util.GregorianCalendar;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.InitializingBean;
-
-import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -47,7 +45,6 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	};
 	private SimpleDetailCRUDController crudDettagliFinanziatori = new SimpleDetailCRUDController( "DettagliFinanziatori", Progetto_finanziatoreBulk.class, "dettagliFinanziatori", this);
 	private SimpleDetailCRUDController crudDettagliPartner_esterni = new SimpleDetailCRUDController( "DettagliPartner_esterni", Progetto_partner_esternoBulk.class, "dettagliPartner_esterni", this);
-	private SimpleDetailCRUDController crudDettagliPostIt = new SimpleDetailCRUDController( "DettagliPostIt", PostItBulk.class, "dettagliPostIt", this);
 	private SimpleDetailCRUDController crudPianoEconomicoTotale = new ProgettoPianoEconomicoCRUDController( "PianoEconomicoTotale", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoTotale", this){
 		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
 			((Progetto_piano_economicoBulk)oggettobulk).setEsercizio_piano(Integer.valueOf(0));
@@ -123,13 +120,6 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			return crudDettagliPartner_esterni;
 		}
 		
-		 /**
-		 * Returns the crudDettagliPostIt.
-		 * @return SimpleDetailCRUDController
-		 */
-		public final it.cnr.jada.util.action.SimpleDetailCRUDController getCrudDettagliPostIt() {
-			return crudDettagliPostIt;
-		}		
 	protected void resetTabs(it.cnr.jada.action.ActionContext context) {
 		setTab("tab","tabTestata");
 		setTab("tabProgettoPianoEconomico","tabProgettoPianoEconomicoTotale");
@@ -284,26 +274,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			openForm(context,action,target,"multipart/form-data");
 		
 	}
-	
-	/*
-	 * Utilizzato per la gestione del bottone di attivazione del PostIt
-	 * Sovrascrive il metodo si SimpleCRUDBP
-	 * */
-	public boolean isActive(OggettoBulk bulk,int sel) {
-	  if (bulk instanceof ProgettoBulk)	
-	    try
-	    {
-	        return ((PostItBulk) ((ProgettoBulk)bulk).getDettagliPostIt().get(sel)).isROpostit();
-	    }
-	    catch (RuntimeException e)
-	    {
-	    	if (sel==0)
-			return false;
-	        else
-	        e.printStackTrace();
-	    }
-		return false;
-	}
+
 	/*
 	 * Utilizzato per la gestione del titolo
 	 * Sovrascrive il metodo si CRUDBP
@@ -418,12 +389,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	    	}
 	    } else {
 	  	   return new String[][] {
-	               { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_commesse.jsp" }};//,
-	               //{ "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" },
-	               //{ "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" },
-	               //{ "tabDettagliPostIt","Post-It","/config00/dettagliPostIt.jsp" },
-	               //{ "tabSpeseCostiFigurativi","Spese/Costi Figurativi","/progettiric00/spese_costi_figurativi.jsp" },
-	               //{ "tabRisorseResiduePresunte","Risorse Residue Presunte","/progettiric00/risorse_residue_presunte.jsp" }};
+	               { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_commesse.jsp" }};
 	    } 
 	}
 

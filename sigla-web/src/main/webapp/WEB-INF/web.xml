@@ -42,18 +42,9 @@
 		<load-on-startup>6</load-on-startup>
 	</servlet>
 	<servlet>
-		<servlet-name>DownloadBlobServlet</servlet-name>
-		<servlet-class>it.cnr.jada.blobs.servlet.DownloadBlobServlet</servlet-class>
-	</servlet>
-	<servlet>
 		<servlet-name>OfflineReportServlet</servlet-name>
 		<servlet-class>it.cnr.contab.reports.servlet.OfflineReportServlet</servlet-class>
 		<load-on-startup>-1</load-on-startup>
-	</servlet>
-	<servlet>
-		<servlet-name>DownloadBlobPostIt</servlet-name>
-		<servlet-class>it.cnr.contab.blobs.servlet.DownloadBlobPostIt</servlet-class>
-		<load-on-startup>6</load-on-startup>
 	</servlet>
 	<servlet>
 		<servlet-name>PingServlet</servlet-name>
@@ -64,10 +55,6 @@
 		<servlet-name>UtilServlet</servlet-name>
 		<servlet-class>it.cnr.contab.util.servlet.UtilServlet</servlet-class>
 		<load-on-startup>8</load-on-startup>
-	</servlet>
-	<servlet>
-		<servlet-name>DownloadBlobConsArchivioPDG</servlet-name>
-		<servlet-class>it.cnr.contab.blobs.servlet.DownloadBlobConsArchivioPDG</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>OfflineExcelServlet</servlet-name>
@@ -88,8 +75,8 @@
 		<servlet-class>it.cnr.contab.incarichi00.servlet.DownloadIncarichiServlet</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>DownloadFileServlet</servlet-name>
-		<servlet-class>it.cnr.jada.servlet.DownloadFileServlet</servlet-class>
+		<servlet-name>DownloadBlobServlet</servlet-name>
+		<servlet-class>it.cnr.contab.blobs.servlet.DownloadBlobServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ActionServlet</servlet-name>
@@ -104,6 +91,10 @@
 		<url-pattern>/help/</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>OfflineReportServlet</servlet-name>
+		<url-pattern>/offline_report/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>MessageCheckServlet</servlet-name>
 		<url-pattern>/messaggio01/checkmessage</url-pattern>
 	</servlet-mapping>
@@ -112,32 +103,8 @@
 		<url-pattern>/utenze00/messaggio01/checkmessage</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>DownloadBlobServlet</servlet-name>
-		<url-pattern>/download_blob/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>OfflineReportServlet</servlet-name>
-		<url-pattern>/offline_report/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>HelpServlet</servlet-name>
-		<url-pattern>/help/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DownloadBlobServlet</servlet-name>
-		<url-pattern>/download_blob/</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>OfflineReportServlet</servlet-name>
 		<url-pattern>/offline_report/</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DownloadBlobPostIt</servlet-name>
-		<url-pattern>/download_blobPostIt/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DownloadBlobPostIt</servlet-name>
-		<url-pattern>/download_blobPostIt/</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>PingServlet</servlet-name>
@@ -160,22 +127,6 @@
 		<url-pattern>/util</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>DownloadBlobServlet</servlet-name>
-		<url-pattern>/download_excel/</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DownloadBlobServlet</servlet-name>
-		<url-pattern>/download_excel/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DownloadBlobConsArchivioPDG</servlet-name>
-		<url-pattern>/download_consArchivioPDG/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DownloadBlobConsArchivioPDG</servlet-name>
-		<url-pattern>/download_consArchivioPDG/</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>OfflineExcelServlet</servlet-name>
 		<url-pattern>/offline_excel/</url-pattern>
 	</servlet-mapping>
@@ -196,16 +147,20 @@
 		<url-pattern>/download_incarichi/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>DownloadFileServlet</servlet-name>
-		<url-pattern>/download_file/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>GenericDownloadServlet</servlet-name>
 		<url-pattern>/genericdownload/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>GenericDownloadServlet</servlet-name>
 		<url-pattern>/genericdownload/</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DownloadBlobServlet</servlet-name>
+		<url-pattern>/download_blob/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DownloadBlobServlet</servlet-name>
+		<url-pattern>/download_blob/</url-pattern>
 	</servlet-mapping>
 	<mime-mapping>
 		<extension>TXT</extension>

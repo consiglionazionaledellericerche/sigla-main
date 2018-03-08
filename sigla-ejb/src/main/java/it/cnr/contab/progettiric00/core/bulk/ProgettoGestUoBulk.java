@@ -8,7 +8,6 @@ import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
-import it.cnr.contab.config00.blob.bulk.PostItBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
@@ -86,7 +85,6 @@ public class ProgettoGestUoBulk extends ProgettoGestUoBase {
 	private BulkList dettagli = new BulkList();
 	private BulkList dettagliFinanziatori = new BulkList();
 	private BulkList dettagliPartner_esterni = new BulkList();
-	private BulkList dettagliPostIt = new BulkList();
 	private BulkList speseEsercizio = new BulkList();
 	private Commessa_spesaBulk spese;
 	private Parametri_cdsBulk parametriCds;
@@ -125,14 +123,8 @@ public ProgettoGestUoBulk(java.lang.Integer esercizio,java.lang.Integer pg_proge
 		return dettagliPartner_esterni.size()-1;
 	}
 
-	public int addToDettagliPostIt(it.cnr.contab.config00.blob.bulk.PostItBulk dett) {
-		dett.setPg_progetto( getPg_progetto() );
-		dettagliPostIt.add(dett);
-		return dettagliPostIt.size()-1;
-	}
-
 	public it.cnr.jada.bulk.BulkCollection[] getBulkLists() {
-		return new it.cnr.jada.bulk.BulkCollection[] {dettagli,dettagliFinanziatori,dettagliPartner_esterni,dettagliPostIt};
+		return new it.cnr.jada.bulk.BulkCollection[] {dettagli,dettagliFinanziatori,dettagliPartner_esterni};
 	}
 
 public java.lang.String getCd_divisa() {
@@ -169,10 +161,6 @@ public it.cnr.jada.bulk.BulkList getDettagli() {
 }
 public it.cnr.jada.bulk.BulkList getDettagliFinanziatori() {
 	return dettagliFinanziatori;
-}
-
-public it.cnr.jada.bulk.BulkList getDettagliPostIt() {
-	return dettagliPostIt;
 }
 /**
  * Restituisce il valore della proprietà 'rOprogetto'
@@ -241,11 +229,6 @@ public Progetto_partner_esternoBulk removeFromDettagliPartner_esterni(int index)
 	return dett;
 }
 
-public PostItBulk removeFromDettagliPostIt(int index) {
-	PostItBulk dett = (PostItBulk)dettagliPostIt.remove(index);
-	return dett;
-}
-
 public void setCd_divisa(java.lang.String cd_divisa) {
 	this.getDivisa().setCd_divisa(cd_divisa);
 }
@@ -269,11 +252,6 @@ public void setDettagli(it.cnr.jada.bulk.BulkList newDettagli) {
 public void setDettagliFinanziatori(it.cnr.jada.bulk.BulkList newDettagliFinanziatori) {
 	dettagliFinanziatori = newDettagliFinanziatori;
 }
-
-public void setDettagliPostIt(it.cnr.jada.bulk.BulkList newDettagliPostIt) {
-	dettagliPostIt = newDettagliPostIt;
-}
-
 /**
  * Insert the method's description here.
  * Creation date: (17/12/2001 15.27.32)

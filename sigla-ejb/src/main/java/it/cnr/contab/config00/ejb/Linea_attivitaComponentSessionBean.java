@@ -159,23 +159,6 @@ public it.cnr.contab.config00.latt.bulk.WorkpackageBulk completaOggetto(it.cnr.j
 		throw uncaughtError(param0,componentObj,e);
 	}
 }
-public void Inserimento_BLOB(UserContext param0,it.cnr.jada.bulk.OggettoBulk param1,java.io.File param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException, PersistencyException,java.rmi.RemoteException  {
-	pre_component_invocation(param0,componentObj);
-	try {
-		((Linea_attivitaComponent)componentObj).Inserimento_BLOB(param0,param1,param2);
-		component_invocation_succes(param0,componentObj);
-	} catch(it.cnr.jada.comp.NoRollbackException e) {
-		component_invocation_succes(param0,componentObj);
-		throw e;
-	} catch(it.cnr.jada.comp.ComponentException e) {
-		component_invocation_failure(param0,componentObj);
-		throw e;
-	} catch(RuntimeException e) {
-		throw uncaughtRuntimeException(param0,componentObj,e);
-	} catch(Error e) {
-		throw uncaughtError(param0,componentObj,e);
-	}
-}
 public java.util.List findListaGAEFEWS(it.cnr.jada.UserContext param0,String param1,Integer param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 	pre_component_invocation(param0,componentObj);
 	try {
