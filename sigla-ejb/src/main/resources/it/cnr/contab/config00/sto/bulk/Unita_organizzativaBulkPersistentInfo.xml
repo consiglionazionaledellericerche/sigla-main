@@ -55,5 +55,9 @@
 		<include pattern="responsabile_amm" />
 		<include pattern="responsabile_amm.anagrafico" />
 	</fetchPolicy>
+	<fetchPolicy
+			name="it.cnr.contab.consultazioni.comp.ConsultazioniRestComponent.find">
+		<exclude pattern="*" />
+	</fetchPolicy>
 
 </SQLPersistentInfo>
