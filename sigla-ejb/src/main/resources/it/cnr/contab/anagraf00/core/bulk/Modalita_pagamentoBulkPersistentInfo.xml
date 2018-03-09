@@ -29,5 +29,9 @@
 	<persistentProperty
 		name="terzo_delegato"
 		/>
+	<fetchPolicy
+			name="it.cnr.contab.consultazioni.comp.ConsultazioniRestComponent.find">
+		<exclude pattern="*" />
+	</fetchPolicy>
 
 </SQLPersistentInfo>
