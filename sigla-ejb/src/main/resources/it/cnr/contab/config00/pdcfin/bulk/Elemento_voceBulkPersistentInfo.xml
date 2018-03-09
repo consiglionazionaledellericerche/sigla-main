@@ -87,5 +87,9 @@
 		name="it.cnr.contab.doccont00.comp.ObbligazioneComponent.find.elemento_voce">
 		<exclude pattern="*" />
 	</fetchPolicy>
+	<fetchPolicy
+			name="it.cnr.contab.consultazioni.comp.ConsultazioniRestComponent.find">
+		<exclude pattern="*" />
+	</fetchPolicy>
 	
 </SQLPersistentInfo>

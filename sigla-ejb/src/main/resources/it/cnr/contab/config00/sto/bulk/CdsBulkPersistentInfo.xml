@@ -22,5 +22,9 @@
 		name="responsabile" />
 	<persistentProperty
 		name="area_scientifica" />
+	<fetchPolicy
+			name="it.cnr.contab.consultazioni.comp.ConsultazioniRestComponent.find">
+		<exclude pattern="*" />
+	</fetchPolicy>
 
 </SQLPersistentInfo>
