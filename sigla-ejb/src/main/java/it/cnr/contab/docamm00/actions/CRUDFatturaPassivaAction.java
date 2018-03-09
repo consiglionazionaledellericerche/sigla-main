@@ -3887,9 +3887,13 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             java.util.Vector dettagliInventariatiEliminati = new java.util.Vector();
             for (it.cnr.jada.util.action.SelectionIterator i = bp.getDettaglio().getSelection().iterator(); i.hasNext(); ) {
                 Fattura_passiva_rigaBulk dett = (Fattura_passiva_rigaBulk) bp.getDettaglio().getDetails().get(i.nextIndex());
-                if (dett.getBene_servizio() != null && dett.getBene_servizio().getCrudStatus() != it.cnr.jada.bulk.OggettoBulk.UNDEFINED &&
-                        dett.getBene_servizio().getFl_gestione_inventario().booleanValue() &&
-                        dett.isInventariato()) {
+                if (Optional.ofNullable(dett)
+                        .filter(fattura_passiva_rigaBulk -> fattura_passiva_rigaBulk.isInventariato())
+                        .flatMap(fattura_passiva_rigaBulk-> Optional.ofNullable(fattura_passiva_rigaBulk.getBene_servizio()))
+                        .map(bene_servizioBulk ->
+                                Optional.ofNullable(bene_servizioBulk.getFl_gestione_inventario()).orElse(Boolean.FALSE) &&
+                                        Optional.ofNullable(bene_servizioBulk.getCrudStatus()).orElse(-1) != it.cnr.jada.bulk.OggettoBulk.UNDEFINED)
+                        .orElse(Boolean.FALSE)) {
                     dettagliInventariatiEliminati.add(dett);
                 }
             }
