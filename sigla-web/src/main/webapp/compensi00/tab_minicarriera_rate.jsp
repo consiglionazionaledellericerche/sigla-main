@@ -11,7 +11,7 @@
 <%	CRUDMinicarrieraBP bp = (CRUDMinicarrieraBP)BusinessProcess.getBusinessProcess(request);
 	MinicarrieraBulk carriera = (MinicarrieraBulk)bp.getModel(); %>
 
-<div class="Group">
+<div class="Group card p-2">
 	<table>	  	
 		<tr>
 		
@@ -39,8 +39,8 @@
 
 <%	bp.getRateCRUDController().writeHTMLTable(pageContext,null,true,false,true,"100%","200px"); %>
 
-<div class="Group">
-	<table>	  	
+<div class="Group card p-2">
+	<table class="w-100">
 		<tr>
 			<% bp.getRateCRUDController().writeFormField(out,"pg_rata");%>
 			<% bp.getRateCRUDController().writeFormField(out,"im_rata");%>
