@@ -125,34 +125,38 @@ public class MinicarrieraRataCRUDController extends it.cnr.jada.util.action.Simp
 
         MinicarrieraBulk carriera = (MinicarrieraBulk) getParentModel();
         CRUDMinicarrieraBP parentController = (CRUDMinicarrieraBP) getParentController();
+        super.openButtonGROUPToolbar(context);
         it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
                 context,
-                "img/history16.gif",
+                HttpActionContext.isFromBootstrap(context) ? "fa fa-plus-square": "img/history16.gif",
                 (!(isInputReadonly() ||
                         parentController.isSearching() ||
                         !(carriera.isNonAssociataACompenso() &&
                                 carriera.isAttiva())) ? "javascript:submitForm('doGeneraRate')" : null),
                 true,
                 "Crea rate",
+                "btn-title btn-outline-primary",
                 HttpActionContext.isFromBootstrap(context));
-        super.writeHTMLToolbar(context, reset, find, delete, false);
+        super.writeHTMLToolbar(context, reset, find, delete, false, false);
         it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
                 context,
-                "img/properties16.gif",
+                HttpActionContext.isFromBootstrap(context) ? "fa fa-plus-circle": "img/properties16.gif",
                 ((!(//isInputReadonly() ||
                         parentController.isSearching() ||
                                 !carriera.isAttiva())) ? "javascript:submitForm('doCreaCompenso')" : null),
                 true,
                 "Crea compenso",
+                "btn-title btn-outline-primary",
                 HttpActionContext.isFromBootstrap(context));
         it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
                 context,
-                "img/folderopen16.gif",
+                HttpActionContext.isFromBootstrap(context) ? "fa fa-external-link": "img/folderopen16.gif",
                 (!parentController.isSearching() &&
                         getModel() != null &&
                         ((Minicarriera_rataBulk) getModel()).isAssociataACompenso()) ? "javascript:submitForm('doVisualizzaCompenso')" : null,
                 false,
                 "Visualizza compenso",
+                "btn-title btn-outline-info",
                 HttpActionContext.isFromBootstrap(context));
         super.closeButtonGROUPToolbar(context);
     }
