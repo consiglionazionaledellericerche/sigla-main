@@ -5,6 +5,7 @@
 package it.cnr.contab.utenze00.bulk;
 
 import java.util.Dictionary;
+import java.util.Optional;
 
 import it.cnr.jada.bulk.annotation.BulkInfoAnnotation;
 import it.cnr.jada.bulk.annotation.ColumnSetAnnotation;
@@ -16,15 +17,24 @@ import it.cnr.jada.bulk.annotation.TypeProperty;
 @SuppressWarnings("unchecked")
 @BulkInfoAnnotation(shortDescription="Preferiti", 
 		longDescription="Preferiti",
-		form={@FormAnnotation(value = {
-				@FieldPropertyAnnotation(name="descrizione", type=TypeProperty.FormFieldProperty), 
-				@FieldPropertyAnnotation(name="url_icona", type=TypeProperty.FormFieldProperty)})},
-		columnSet=@ColumnSetAnnotation(value={
+		form={
+			@FormAnnotation(value = {
+				@FieldPropertyAnnotation(name="descrizione", type=TypeProperty.FormFieldProperty),
+				@FieldPropertyAnnotation(name="url_icona", type=TypeProperty.FormFieldProperty)}),
+                @FormAnnotation(name = "bootstrap", value=@FieldPropertyAnnotation(name="descrizione", type=TypeProperty.FormFieldProperty, inputCssClass = "w-100"))
+		},
+		columnSet={
+			@ColumnSetAnnotation(value={
 				@FieldPropertyAnnotation(name="descrizione", type=TypeProperty.ColumnFieldProperty),
 				@FieldPropertyAnnotation(name="url_icona", type=TypeProperty.ColumnFieldProperty)}),
-		freeSearchSet=@FreeSearchSetAnnotation(value={
-				@FieldPropertyAnnotation(name="descrizione", type=TypeProperty.FindFieldProperty),
-				@FieldPropertyAnnotation(name="url_icona", type=TypeProperty.FindFieldProperty)})		
+				@ColumnSetAnnotation(name = "bootstrap", value=@FieldPropertyAnnotation(name="descrizione", type=TypeProperty.ColumnFieldProperty))
+		},
+		freeSearchSet= {
+			@FreeSearchSetAnnotation(value = {
+				@FieldPropertyAnnotation(name = "descrizione", type = TypeProperty.FindFieldProperty),
+				@FieldPropertyAnnotation(name = "url_icona", type = TypeProperty.FindFieldProperty)}),
+				@FreeSearchSetAnnotation(name = "bootstrap", value=@FieldPropertyAnnotation(name = "descrizione", type = TypeProperty.FindFieldProperty))
+		}
 	)
 public class PreferitiBulk extends PreferitiBase {
 	public final static Dictionary iconeKeys;
@@ -42,7 +52,7 @@ public class PreferitiBulk extends PreferitiBase {
 		iconeKeys.put(LINK4, "<img src='"+LINK4+"'>");
 		iconeKeys.put(LINK5, "<img src='"+LINK5+"'>");	
 	}
-	
+
 	/**
 	 * Created by BulkGenerator 1.5 [30/07/2008]
 	 * Table name: PREFERITI
