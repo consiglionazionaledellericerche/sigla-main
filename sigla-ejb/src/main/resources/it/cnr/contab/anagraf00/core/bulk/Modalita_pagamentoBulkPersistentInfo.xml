@@ -32,6 +32,7 @@
 	<fetchPolicy
 			name="it.cnr.contab.consultazioni.comp.ConsultazioniRestComponent.find">
 		<exclude pattern="*" />
+		<include pattern="rif_modalita_pagamento"/>		
 	</fetchPolicy>
 
 </SQLPersistentInfo>
