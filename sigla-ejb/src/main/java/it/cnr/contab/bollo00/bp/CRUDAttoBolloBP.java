@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import it.cnr.contab.bollo00.bulk.Atto_bolloBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.spring.storage.SiglaStorageService;
@@ -86,10 +87,11 @@ public class CRUDAttoBolloBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Atto_b
 		super.validate(context);
 		if (Optional.ofNullable(getModel()).filter(Atto_bolloBulk.class::isInstance).isPresent()) {
 			Atto_bolloBulk atto = (Atto_bolloBulk)getModel();
-			atto.getArchivioAllegati().stream()
-					.map(AllegatoGenericoBulk.class::cast)
-					.findAny()
-					.orElseThrow(()->new ValidationException("Inserire almeno un allegato!"));
+			if (!Optional.ofNullable(atto.getContratto()).map(ContrattoBulk::getPg_contratto).isPresent()) 
+				atto.getArchivioAllegati().stream()
+						.map(AllegatoGenericoBulk.class::cast)
+						.findAny()
+						.orElseThrow(()->new ValidationException("Inserire almeno un allegato o indicare il contratto di riferimento!"));
 			
 			if (Optional.ofNullable(atto.getDt_provv())
 					.filter(el->el.after(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()))
