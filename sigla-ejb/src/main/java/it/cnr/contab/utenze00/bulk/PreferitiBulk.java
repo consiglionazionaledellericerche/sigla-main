@@ -7,27 +7,29 @@ package it.cnr.contab.utenze00.bulk;
 import java.util.Dictionary;
 import java.util.Optional;
 
-import it.cnr.jada.bulk.annotation.BulkInfoAnnotation;
-import it.cnr.jada.bulk.annotation.ColumnSetAnnotation;
-import it.cnr.jada.bulk.annotation.FieldPropertyAnnotation;
-import it.cnr.jada.bulk.annotation.FormAnnotation;
-import it.cnr.jada.bulk.annotation.FreeSearchSetAnnotation;
-import it.cnr.jada.bulk.annotation.Layout;
-import it.cnr.jada.bulk.annotation.TypeProperty;
+import it.cnr.jada.bulk.annotation.*;
+
 @SuppressWarnings("unchecked")
 @BulkInfoAnnotation(shortDescription="Preferiti", 
 		longDescription="Preferiti",
 		form={
 			@FormAnnotation(value = {
-				@FieldPropertyAnnotation(name="descrizione", type=TypeProperty.FormFieldProperty),
-				@FieldPropertyAnnotation(name="url_icona", type=TypeProperty.FormFieldProperty)}),
-                @FormAnnotation(name = "bootstrap", value=@FieldPropertyAnnotation(name="descrizione", type=TypeProperty.FormFieldProperty, inputCssClass = "w-100"))
+			        @FieldPropertyAnnotation(name="assBpAccesso", type=TypeProperty.FormFieldProperty),
+				    @FieldPropertyAnnotation(name="descrizione", type=TypeProperty.FormFieldProperty),
+				    @FieldPropertyAnnotation(name="url_icona", type=TypeProperty.FormFieldProperty)}),
+                @FormAnnotation(name = "bootstrap", value={
+                        @FieldPropertyAnnotation(name="assBpAccesso", type=TypeProperty.FormFieldProperty),
+                        @FieldPropertyAnnotation(name="descrizione", type=TypeProperty.FormFieldProperty, inputCssClass = "w-100")
+                })
 		},
 		columnSet={
 			@ColumnSetAnnotation(value={
-				@FieldPropertyAnnotation(name="descrizione", type=TypeProperty.ColumnFieldProperty),
-				@FieldPropertyAnnotation(name="url_icona", type=TypeProperty.ColumnFieldProperty)}),
-				@ColumnSetAnnotation(name = "bootstrap", value=@FieldPropertyAnnotation(name="descrizione", type=TypeProperty.ColumnFieldProperty))
+				    @FieldPropertyAnnotation(name="descrizione", type=TypeProperty.ColumnFieldProperty),
+                    @FieldPropertyAnnotation(name="url_icona", type=TypeProperty.ColumnFieldProperty)
+			}),
+			@ColumnSetAnnotation(name = "bootstrap", value={
+			        @FieldPropertyAnnotation(name="descrizione", type=TypeProperty.ColumnFieldProperty)
+			})
 		},
 		freeSearchSet= {
 			@FreeSearchSetAnnotation(value = {
@@ -52,7 +54,16 @@ public class PreferitiBulk extends PreferitiBase {
 		iconeKeys.put(LINK4, "<img src='"+LINK4+"'>");
 		iconeKeys.put(LINK5, "<img src='"+LINK5+"'>");	
 	}
-
+    @FieldPropertyAnnotation(
+            name="assBpAccesso",
+            inputType= InputType.SEARCHTOOL,
+            formName = "accesso",
+            columnSet = "accesso",
+            freeSearchSet = "accesso",
+            nullable=false,
+            enabledOnSearch=true,
+            label="Accesso")
+	private AssBpAccessoBulk assBpAccessoBulk;
 	/**
 	 * Created by BulkGenerator 1.5 [30/07/2008]
 	 * Table name: PREFERITI
@@ -70,4 +81,18 @@ public class PreferitiBulk extends PreferitiBase {
 	public static Dictionary getIconeKeys() {
 		return iconeKeys;
 	}
+
+	public AssBpAccessoBulk getAssBpAccessoBulk() {
+		return assBpAccessoBulk;
+	}
+
+	public void setAssBpAccessoBulk(AssBpAccessoBulk assBpAccessoBulk) {
+		this.assBpAccessoBulk = assBpAccessoBulk;
+		Optional.ofNullable(assBpAccessoBulk)
+				.ifPresent(assBpAccesso -> {
+					setTi_funzione(Optional.ofNullable(assBpAccesso.getTiFunzione()).orElse("C"));
+					setBusiness_process(assBpAccesso.getBusinessProcess());
+				});
+	}
+
 }
