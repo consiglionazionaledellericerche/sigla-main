@@ -1,88 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://contab.cnr.it/schema/SIGLA"
-	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
-	shortDescription="Associazione bisess process con accesso"
-	longDescription="Associazione bisess process con accesso">
-	<fieldProperty
-		name="cdAccesso"
-		property="cdAccesso"
-		inputType="TEXT"
-		inputSize="20"
-		maxLength="20"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="cdAccesso" />
-	<fieldProperty
-		name="businessProcess"
-		property="businessProcess"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="200"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="businessProcess" />
-	<fieldProperty
-		name="tiFunzione"
-		property="tiFunzione"
-		inputType="TEXT"
-		inputSize="1"
-		maxLength="1"
-		enabledOnEdit="false"
-		label="tiFunzione" />
-	<fieldProperty
-		name="esercizioInizioValidita"
-		property="esercizioInizioValidita"
-		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
-		enabledOnEdit="false"
-		label="esercizioInizioValidita" />
-	<fieldProperty
-		name="esercizioFineValidita"
-		property="esercizioFineValidita"
-		inputType="TEXT"
-		inputSize="4"
-		maxLength="4"
-		enabledOnEdit="false"
-		label="esercizioFineValidita" />
-	<form
-		name="searchtool">
-		<formFieldProperty
-			name="cdAccesso" />
-		<formFieldProperty
-			name="businessProcess" />
-	</form>
-	<formFieldProperty
-		name="businessProcess" />
-	<formFieldProperty
-		name="tiFunzione" />
-	<formFieldProperty
-		name="esercizioInizioValidita" />
-	<formFieldProperty
-		name="esercizioFineValidita" />
-	<findFieldProperty
-		name="cdAccesso" />
-	<findFieldProperty
-		name="businessProcess" />
-	<findFieldProperty
-		name="tiFunzione" />
-	<findFieldProperty
-		name="esercizioInizioValidita" />
-	<findFieldProperty
-		name="esercizioFineValidita" />
-	<columnFieldProperty
-		name="cdAccesso" />
-	<columnFieldProperty
-		name="businessProcess" />
-	<columnFieldProperty
-		name="tiFunzione" />
-	<columnFieldProperty
-		name="esercizioInizioValidita" />
-	<columnFieldProperty
-		name="esercizioFineValidita" />
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://contab.cnr.it/schema/SIGLA"
+        xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+        shortDescription="Associazione bisess process con accesso"
+        longDescription="Associazione bisess process con accesso">
+    <fieldProperty
+            name="cdAccesso"
+            property="cdAccesso"
+            inputType="TEXT"
+            inputSize="20"
+            maxLength="20"
+            enabledOnEdit="true"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="true"
+            nullable="false"
+            label="Codice"/>
+    <fieldProperty
+            name="dsAccesso"
+            property="accesso.ds_accesso"
+            inputType="TEXT"
+            inputSize="50"
+            maxLength="250"
+            enabledOnEdit="true"
+            enabledOnSearch="true"
+            nullable="false"
+            label="Descrizione"/>
+    <fieldProperty
+            name="businessProcess"
+            property="businessProcess"
+            inputType="TEXTAREA"
+            cols="60"
+            rows="5"
+            maxLength="200"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            nullable="false"
+            label="businessProcess"/>
+    <fieldProperty
+            name="tiFunzione"
+            property="tiFunzione"
+            inputType="TEXT"
+            inputSize="1"
+            maxLength="1"
+            enabledOnEdit="false"
+            label="tiFunzione"/>
+    <fieldProperty
+            name="esercizioInizioValidita"
+            property="esercizioInizioValidita"
+            inputType="TEXT"
+            inputSize="4"
+            maxLength="4"
+            enabledOnEdit="false"
+            label="esercizioInizioValidita"/>
+    <fieldProperty
+            name="esercizioFineValidita"
+            property="esercizioFineValidita"
+            inputType="TEXT"
+            inputSize="4"
+            maxLength="4"
+            enabledOnEdit="false"
+            label="esercizioFineValidita"/>
+    <form
+            name="searchtool">
+        <formFieldProperty
+                name="cdAccesso"/>
+        <formFieldProperty
+                name="businessProcess"/>
+    </form>
+    <form
+            name="accesso">
+        <formFieldProperty
+                name="cdAccesso"/>
+        <formFieldProperty
+                name="dsAccesso"/>
+    </form>
+    <formFieldProperty
+            name="cdAccesso"/>
+    <formFieldProperty
+            name="dsAccesso"/>
+    <formFieldProperty
+            name="businessProcess"/>
+    <formFieldProperty
+            name="tiFunzione"/>
+    <formFieldProperty
+            name="esercizioInizioValidita"/>
+    <formFieldProperty
+            name="esercizioFineValidita"/>
+    <findFieldProperty
+            name="cdAccesso"/>
+    <findFieldProperty
+            name="businessProcess"/>
+    <findFieldProperty
+            name="tiFunzione"/>
+    <findFieldProperty
+            name="esercizioInizioValidita"/>
+    <findFieldProperty
+            name="esercizioFineValidita"/>
+    <columnFieldProperty
+            name="cdAccesso"/>
+    <columnFieldProperty
+            name="businessProcess"/>
+    <columnFieldProperty
+            name="tiFunzione"/>
+    <columnFieldProperty
+            name="esercizioInizioValidita"/>
+    <columnFieldProperty
+            name="esercizioFineValidita"/>
+
+    <columnSet name="accesso">
+        <columnFieldProperty name="cdAccesso"/>
+        <columnFieldProperty name="dsAccesso"/>
+    </columnSet>
+    <freeSearchSet name="accesso">
+        <findFieldProperty name="cdAccesso"/>
+        <findFieldProperty name="dsAccesso"/>
+    </freeSearchSet>
 </bulkInfo>
