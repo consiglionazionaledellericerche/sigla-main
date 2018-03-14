@@ -4,7 +4,9 @@
  */
 package it.cnr.contab.utenze00.bulk;
 import java.sql.Connection;
+import java.util.Optional;
 
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.PersistencyException;
@@ -21,9 +23,41 @@ public class PreferitiHome extends BulkHome {
 	}
 	@Override
 	public SQLBuilder selectByClause(UserContext usercontext, CompoundFindClause compoundfindclause) throws PersistencyException {
-		SQLBuilder sql = super.selectByClause(usercontext, compoundfindclause);
-        sql.addClause(FindClause.AND, "cd_utente", SQLBuilder.EQUALS, usercontext.getUser());		
-		sql.addOrderBy("duva");
+	    SQLBuilder sql = super.selectByClause(usercontext, compoundfindclause);
+        sql.addClause(FindClause.AND, "cd_utente", SQLBuilder.EQUALS, usercontext.getUser());
+        sql.addOrderBy("DUVA");
 		return sql;
 	}
+
+    public SQLBuilder selectAssBpAccessoBulkByClause(UserContext usercontext,
+                                                     PreferitiBulk preferiti,
+                                                     AssBpAccessoHome assBpAccessoHome,
+                                                     AssBpAccessoBulk assBpAccessoBulk,
+                                                     CompoundFindClause compoundfindclause) {
+	    SQLBuilder sqlBuilder = getHomeCache().getHome(AssBpAccessoBulk.class, "PREFERITI").createSQLBuilder();
+        sqlBuilder.addClause(compoundfindclause);
+        sqlBuilder.addTableToHeader("V_UTENTE_ACCESSO");
+        sqlBuilder.addSQLJoin("ASS_BP_ACCESSO.CD_ACCESSO", "V_UTENTE_ACCESSO.CD_ACCESSO");
+        sqlBuilder.addSQLClause(FindClause.AND, "V_UTENTE_ACCESSO.CD_UTENTE", SQLBuilder.EQUALS,
+                CNRUserContext.getUser(usercontext));
+
+        sqlBuilder.openParenthesis(FindClause.AND);
+        sqlBuilder.addSQLClause(FindClause.OR,"V_UTENTE_ACCESSO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS,
+                CNRUserContext.getCd_unita_organizzativa(usercontext));
+        sqlBuilder.addSQLClause(FindClause.OR,"V_UTENTE_ACCESSO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS,
+                "*");
+        sqlBuilder.closeParenthesis();
+        sqlBuilder.openParenthesis(FindClause.AND);
+        sqlBuilder.addSQLClause(FindClause.OR,"V_UTENTE_ACCESSO.ESERCIZIO", SQLBuilder.EQUALS,
+                CNRUserContext.getEsercizio(usercontext));
+        sqlBuilder.addSQLClause(FindClause.OR,"V_UTENTE_ACCESSO.ESERCIZIO", SQLBuilder.EQUALS, 0);
+        sqlBuilder.closeParenthesis();
+        sqlBuilder.addTableToHeader("ACCESSO");
+        sqlBuilder.addSQLJoin("ASS_BP_ACCESSO.CD_ACCESSO", "ACCESSO.CD_ACCESSO");
+        Optional.ofNullable(assBpAccessoBulk)
+                .flatMap(assBpAccesso -> Optional.ofNullable(assBpAccesso.getAccesso()))
+                .flatMap(accessoBase -> Optional.ofNullable(accessoBase.getDs_accesso()))
+                .ifPresent(s -> sqlBuilder.addSQLClause(FindClause.AND, "ACCESSO.DS_ACCESSO", SQLBuilder.EQUALS, s));
+        return sqlBuilder;
+    }
 }
