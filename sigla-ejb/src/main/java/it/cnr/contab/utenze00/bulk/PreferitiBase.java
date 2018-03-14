@@ -25,7 +25,7 @@ public class PreferitiBase extends PreferitiKey implements Keyed {
 			keysProperty="iconeKeys",
 			layout=Layout.VERTICAL,
 			maxLength=50,
-			nullable=false,
+			nullable=true,
 			enabledOnSearch=true,
 			label="Icona")
 	private java.lang.String url_icona;

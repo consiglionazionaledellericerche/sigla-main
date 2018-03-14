@@ -20,8 +20,10 @@
 
 <body class="Form">
 <% bp.openFormWindow(pageContext);%>
-	<table class="Panel card p-2">
-      <% bp.getController().writeForm(out);%>
-   	</table>
+    <div class="card p-2 w-100">
+        <table class="Panel w-100">
+          <% bp.getController().writeForm(out);%>
+        </table>
+   	</div>
 <% bp.closeFormWindow(pageContext); %>
 </body>
