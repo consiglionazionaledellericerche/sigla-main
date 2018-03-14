@@ -16,7 +16,7 @@
 			propertyName="url_icona"
 			sqlTypeName="VARCHAR"
 			columnSize="50"
-			nullable="false" />
+			nullable="true" />
 		<columnMapping
 			columnName="DACR"
 			propertyName="dacr"
