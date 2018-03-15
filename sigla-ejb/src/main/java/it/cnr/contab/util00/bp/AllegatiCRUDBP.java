@@ -286,7 +286,9 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
         for (Iterator<AllegatoGenericoBulk> iterator = allegatoParentBulk.getArchivioAllegati().deleteIterator(); iterator.hasNext(); ) {
             AllegatoGenericoBulk allegato = iterator.next();
             if (allegato.isToBeDeleted()) {
-                storeService.delete(allegato.getStorageKey());
+                Optional.ofNullable(allegato)
+                        .flatMap(allegatoGenericoBulk -> Optional.ofNullable(allegatoGenericoBulk.getStorageKey()))
+                        .ifPresent(storageKey -> storeService.delete(storageKey));
                 allegato.setCrudStatus(OggettoBulk.NORMAL);
             }
         }
