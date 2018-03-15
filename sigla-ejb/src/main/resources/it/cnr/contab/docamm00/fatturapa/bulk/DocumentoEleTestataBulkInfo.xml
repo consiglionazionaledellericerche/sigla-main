@@ -1167,15 +1167,18 @@
 		name="anomalie" />
 	<findFieldProperty
 		name="codiceTerzo"
+		inputType="TEXT"
 		property="documentoEleTrasmissione.prestatore.cd_terzo"
 		label="Codice terzo" />
 	<findFieldProperty
 		name="cdUnitaOrganizzativa"
+		inputType="TEXT"
 		property="documentoEleTrasmissione.cdUnitaOrganizzativa" 
 		label="UO destinataria"/>
 	<findFieldProperty
 		name="cdUnitaCompetenza"
-		property="cdUnitaCompetenza" 
+		property="cdUnitaCompetenza"
+		inputType="TEXT"
 		label="UO di competenza"/>	
 	<findFieldProperty
 		name="codiceDestinatario"/>	
