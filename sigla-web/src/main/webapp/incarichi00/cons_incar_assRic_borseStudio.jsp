@@ -25,8 +25,8 @@
 	boolean isFieldReadOnly = true;
 %>
 
-	<div class="Group card" style="width:100%">
-	  <div class="Group card border-primary p-2 mb-2">
+	<div class="Group" style="width:100%">
+	  <div class="Group card p-2 mb-2">
 	    <table>    	  
 	  	  <tr><% bp.getController().writeFormField(out,"tipologiaAssegni"); %></tr>
 	  	  <tr><% bp.getController().writeFormField(out,"tipologiaBorsaDiStudio"); %></tr>
@@ -36,22 +36,18 @@
 	    </table>
 	  </div>
 	  
-	  <div class="p-2 mb-2">
+	  <div class="card p-2 mb-2">
 		<table width="100%">
 		    <tr>
 				<% bp.getController().writeFormField(out,"esercizioValidita");%>
 				<% bp.getController().writeFormField(out,"dt_validita");%>
 	  			<td><% bp.getController().writeFormLabel(out,"findUoForPrint"); %></td>
-				<td>
-					<% bp.getController().writeFormInput(out,null,"cdUoForPrint",(bulk!=null?!bulk.isUOForPrintEnabled():false),null,null); %>
-					<% bp.getController().writeFormInput(out,"dsUoForPrint"); %>
-					<% bp.getController().writeFormInput(out,null,"findUoForPrint",(bulk!=null?!bulk.isUOForPrintEnabled():false),null,null); %>
-				</td>
+				<td><% bp.getController().writeFormInput(out,null,"findUoForPrint",(bulk!=null?!bulk.isUOForPrintEnabled():false),null,null); %></td>
 			</tr> 
 		</table>
 	  </div>
 	  
-	  <div class="Group card border-primary p-2 mb-2" style="width:100%">
+	  <div class="Group card p-2 mb-2" style="width:100%">
 		<table class="w-100">
 			<tr><% bp.getController().writeFormField(out,"filtroSoggetto");%></tr>
 			<tr><% bp.getController().writeFormField(out,"cd_precedente");%></tr>
@@ -61,7 +57,7 @@
 		</table>	
 	  </div>
 
-	  <div class="Group card border-primary p-2 mb-2">
+	  <div class="Group card p-2 mb-2">
 	    <table>    	  
 	  	  <tr><% bp.getController().writeFormField(out,"statoProvvisorio"); %></tr>
 	  	  <tr><% bp.getController().writeFormField(out,"statoDefinitivo"); %></tr>
@@ -71,7 +67,7 @@
 	    </table>
 	  </div>
 
-	  <div class="Group card border-primary p-2 mb-2">
+	  <div class="Group card p-2 mb-2">
 	    <table class="w-50">    	  
 	      <tr>
 		    <td><% bp.getController().writeFormInput(out,"seleziona"); %></td>
