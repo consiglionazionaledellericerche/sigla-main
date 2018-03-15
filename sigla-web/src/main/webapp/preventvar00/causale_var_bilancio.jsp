@@ -16,7 +16,7 @@
 <%	CRUDBP bp = (CRUDBP)BusinessProcess.getBusinessProcess(request);
 	bp.openFormWindow(pageContext); %>
 
-<table class="Panel">
+<table class="Panel card p-2">
 	<% bp.getController().writeForm(out); %>
 </table>
 

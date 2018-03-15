@@ -390,6 +390,7 @@
 		name="findUoForPrint"
 		property="uoForPrint"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		columnSet="scrivania"
 		completeOnSave="true"
 		label="Unita Organizzativa" />

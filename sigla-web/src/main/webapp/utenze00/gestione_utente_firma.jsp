@@ -1,9 +1,3 @@
-<!-- 
- ?ResourceName ""
- ?ResourceTimestamp ""
- ?ResourceEdition ""
--->
-
 <%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,
 		it.cnr.jada.action.*,
@@ -27,7 +21,8 @@
 	CRUDUtenteFirmaBP bp = (CRUDUtenteFirmaBP)BusinessProcess.getBusinessProcess(request);
 	bp.openFormWindow(pageContext);
 %>
-	<table class="Form">
+<div class="card p-2 w-100">
+	<table class="w-100">
 		<tr><%bp.writeFormField( out, "utente"); %></tr>
 		<tr><%bp.writeFormField( out, "unitaOrganizzativa"); %></tr>
 		<tr><%bp.writeFormField( out, "titoloFirma"); %></tr>
@@ -36,7 +31,8 @@
 		<tr><%bp.writeFormField( out, "funzioniAbilitate"); %></tr>
 		<tr><%bp.writeFormField( out, "flDelegato"); %></tr>
 		<tr><%bp.writeFormField( out, "delegato"); %></tr>		
-	</table>	
+	</table>
+</div>
 <% bp.closeFormWindow(pageContext); %>
 </body>
 </html>

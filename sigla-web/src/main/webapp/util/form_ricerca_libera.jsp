@@ -36,17 +36,17 @@
 			<tr>
 				<td><span class="FormLabel">Condizione:</span></td>
 					<%	if (!condizioneRicerca.isPrimaCondizione()) { %>
-						<td><%condizioneRicerca.writeFormInput(out, null, "logicalOperator", false, 
-								bp.getParentRoot().isBootstrap() ? "form-control" : null, null, null, 
+						<td><%condizioneRicerca.writeFormInput(out, null, "logicalOperator", false,
+								bp.getParentRoot().isBootstrap() ? "form-control" : null, null, null,
 										FormController.EDIT,bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap());%>
 						</td>
 					<%	}
 						if (condizioneRicerca instanceof CondizioneSempliceBulk) {
 							CondizioneSempliceBulk condizione = (CondizioneSempliceBulk)condizioneRicerca;
-					%>			
+					%>
 									<td><% condizione.writeFormInput(bp.getParent(), out,"default","findFieldProperty",false,bp.getParentRoot().isBootstrap() ? "form-control" : null,"onchange=\"submitForm('doImpostaAttributo')\"",null,FormController.EDIT,bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap());%></td>
 									<td><% condizione.writeFormInput(out,"default","operator",condizione.getFindFieldProperty() == null,bp.getParentRoot().isBootstrap() ? "form-control" : null,"onchange=\"submitForm('doImpostaAttributo')\"",null,FormController.EDIT,bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap());%></td>
-									<td><% if (condizione.getOperator() != null && condizione.getOperator().intValue() != it.cnr.jada.persistency.sql.SQLBuilder.ISNULL && condizione.getOperator().intValue() != it.cnr.jada.persistency.sql.SQLBuilder.ISNOTNULL) 
+									<td><% if (condizione.getOperator() != null && condizione.getOperator().intValue() != it.cnr.jada.persistency.sql.SQLBuilder.ISNULL && condizione.getOperator().intValue() != it.cnr.jada.persistency.sql.SQLBuilder.ISNOTNULL)
 												condizione.getFindFieldProperty().writeInput(out,condizione.getPrototype(),condizione.getValue(),false,null,null,null,FormController.FREESEARCH,bp.getFieldValidationMap(), bp.getParentRoot().isBootstrap());%></td>
 					<%	}
 					%>
@@ -64,7 +64,7 @@
 						"fa fw fa-angle-double-right text-primary",
 						bp.getRigaSelezionata(),
 						bp.getRighe()); %>
-			</div>		
+			</div>
 		<%} else { %>
 		<div style="width:100%; height:100%; overflow:auto; background-color: white; border: thin inset; border-color:buttonface;">
 			<table bgcolor=white cellspacing="0" cellpadding="0" border=0>
@@ -82,7 +82,7 @@
 					bp.getRigaSelezionata(),
 					bp.getRighe(),
 					bp.getParentRoot().isBootstrap()); %>
-			</td></tr>		
+			</td></tr>
 			</table>
 		</div>
 		<% } %>
