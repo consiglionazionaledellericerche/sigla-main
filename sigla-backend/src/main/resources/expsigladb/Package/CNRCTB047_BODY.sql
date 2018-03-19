@@ -1180,7 +1180,7 @@ For disp_imp_da_ribaltare In (Select ESERCIZIO, ESERCIZIO_RES, CD_CENTRO_RESPONS
 					                    'N');
 			  End;
 		    Else
-              IBMERR001.RAISE_ERR_GENERICO('Ribaltamento disponibilit? improprie fallito: manca il progetto sulla gae '||disp_imp_da_ribaltare.cd_centro_responsabilita||'/'||disp_imp_da_ribaltare.cd_linea_attivita);
+              IBMERR001.RAISE_ERR_GENERICO('Ribaltamento disponibilità improprie fallito: manca il progetto sulla gae '||disp_imp_da_ribaltare.cd_centro_responsabilita||'/'||disp_imp_da_ribaltare.cd_linea_attivita);
  	        End if;
 		  End if;
 		End;

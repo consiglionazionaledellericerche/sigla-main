@@ -81,10 +81,10 @@
    and pg_obbligazione_scadenzario = aVSX.pg_obbligazione_scadenzario
      and pg_ver_rec = aVSX.pg_ver_rec_obb_scad;
    exception when NO_DATA_FOUND then
-    IBMERR001.RAISE_ERR_GENERICO('Risorsa non pi? valida x');
+    IBMERR001.RAISE_ERR_GENERICO('Risorsa non più valida x');
    end;
    if aObbScadN.im_scadenza < aObbScadN.im_associato_doc_amm + aVSX.im_riga then
-    IBMERR001.RAISE_ERR_GENERICO('Disponibilit? esaurita su impegno:'||CNRCTB035.getDesc(aObbN));
+    IBMERR001.RAISE_ERR_GENERICO('Disponibilità esaurita su impegno:'||CNRCTB035.getDesc(aObbN));
    end if;
   end loop;
 
@@ -598,7 +598,7 @@ End;
     and   cd_cds    = testa_mandato.cd_cds;
  -- trattamento errore
     scarto :=  nvl(gen_riga.im_DIsponibilita_cassa,0)
-   --17/03/2006 Raffaele Pagano: richiesta di eliminare l'aggiornamento della disponibilit? di cassa
+   --17/03/2006 Raffaele Pagano: richiesta di eliminare l'aggiornamento della disponibilità di cassa
    --all'atto dell'invio dei mandati di trasferimento
 --              +nvl(gen_riga.im_accreditamenti_ic,0)
         -- Computa nel calcolo il mandato in processo al netto delle sue ritenute
@@ -1791,7 +1791,7 @@ PIPE.SEND_MESSAGE('sTestaMandato_gen.pg_mandato = '||sTestaMandato_gen.pg_mandat
      and b.esercizio = aEsRev
      and b.pg_reversale = aPgRev) loop
     -- Verifica che la reversale non sia relativa al compenso di cui aPgMan ? il mandato principale
-    IBMERR001.RAISE_ERR_GENERICO('La reversale n. '||aPgRev||' non ? scollegabile dal mandato n.'||aPgMan||' cds:'||aCdCdsMan||' es.:'||aEsMan);
+    IBMERR001.RAISE_ERR_GENERICO('La reversale n. '||aPgRev||' non é scollegabile dal mandato n.'||aPgMan||' cds:'||aCdCdsMan||' es.:'||aEsMan);
    end loop;
   end loop;
   -- Se la reversale ? collegata a generico di versamento ENTRATA non pu? essere scollegata dal mandato
@@ -1804,7 +1804,7 @@ PIPE.SEND_MESSAGE('sTestaMandato_gen.pg_mandato = '||sTestaMandato_gen.pg_mandat
     and pg_reversale = aPgRev
      for update nowait;
     if aRRL.cd_tipo_documento_amm = CNRCTB100.TI_GEN_CORI_VER_ENTRATA then
-       IBMERR001.RAISE_ERR_GENERICO('La reversale n. '||aPgRev||' non ? scollegabile dal mandato n.'||aPgMan||' cds:'||aCdCdsMan||' es.:'||aEsMan);
+       IBMERR001.RAISE_ERR_GENERICO('La reversale n. '||aPgRev||' non é scollegabile dal mandato n.'||aPgMan||' cds:'||aCdCdsMan||' es.:'||aEsMan);
     end if;
   end;
  END;
@@ -1979,11 +1979,11 @@ procedure GENERADETT_ETR_SOSPESO(
     and cd_sospeso = aSospeso.cd_sospeso
      for update nowait;
   exception when NO_DATA_FOUND then
-   IBMERR001.RAISE_ERR_GENERICO('Il sospeso non ? stato trovato');
+   IBMERR001.RAISE_ERR_GENERICO('Il sospeso non é stato trovato');
   end;
 
   if (aSospeso.im_sospeso - aSospeso.im_associato) < aRev.im_reversale then
-     IBMERR001.RAISE_ERR_GENERICO('La disponibilit? del sospeso ? inferiore all''importo della reversale');
+     IBMERR001.RAISE_ERR_GENERICO('La disponibilità del sospeso é inferiore all''importo della reversale');
   end if;
 
    aSospesoDet.CD_CDS:=aSospeso.cd_cds;
@@ -2040,7 +2040,7 @@ procedure GENERADETT_ETR_SOSPESO(
    when NO_DATA_FOUND then
         IBMERR001.RAISE_ERR_GENERICO('Reversale non trovata');
    when TOO_MANY_ROWS then
-        IBMERR001.RAISE_ERR_GENERICO('La reversale provvisoria con pi? righe non ? modificabile');
+        IBMERR001.RAISE_ERR_GENERICO('La reversale provvisoria con più righe non é modificabile');
   end;
 
     begin
@@ -2156,7 +2156,7 @@ procedure GENERADETT_ETR_SOSPESO(
        IBMERR001.RAISE_ERR_GENERICO('Configurazione gestione tesoreria mancante');
     end;
     if aRev.cd_tipo_documento_cont is null or aRev.cd_tipo_documento_cont <> CNRCTB018.TI_DOC_REV_PROVV then
-     IBMERR001.RAISE_ERR_GENERICO('Il tipo di reversale non ? specificato o non ? il tipo provvisorio');
+     IBMERR001.RAISE_ERR_GENERICO('Il tipo di reversale non é specificato o non é il tipo provvisorio');
     end if;
     if(tesoreria_unica='N') then
            aRev.pg_reversale   := CNRCTB018.getNextNumDocCont(aRev.cd_tipo_documento_cont, aRev.esercizio, aRev.cd_cds, aRev.utcr);
@@ -2796,7 +2796,7 @@ Begin
           and cd_modalita_pag = aCdModPag;
      Exception
         when no_data_found then
-            IBMERR001.RAISE_ERR_GENERICO('Non ? possibile procedere. Nel rispetto della tracciabilit? dei pagamenti, per la tipologia di documento: '||aCdTipoDocAmm||', non ? ammissibile la modalit? di pagamento: '||aCdModPag);
+            IBMERR001.RAISE_ERR_GENERICO('Non é possibile procedere. Nel rispetto della tracciabilità dei pagamenti, per la tipologia di documento: '||aCdTipoDocAmm||', non é ammissibile la modalità di pagamento: '||aCdModPag);
      End;
 End;
 
