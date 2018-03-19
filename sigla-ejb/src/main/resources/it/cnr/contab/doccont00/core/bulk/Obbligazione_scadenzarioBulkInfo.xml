@@ -148,21 +148,21 @@
               name="esercizio_originale" 
               enabledOnSearch="true"
 			  inputSize="5"
-			  inputCssClass="w-15"/>
+			  inputCssClass="w-10"/>
         <formFieldProperty
               name="pg_obbligazione" 
               enabledOnSearch="true"
 			  inputSize="10"
-			  inputCssClass="w-15"/>
+			  inputCssClass="w-20"/>
         <formFieldProperty
               name="pg_obbligazione_scadenzario" 
               enabledOnSearch="true"
 			  inputSize="3"
-			  inputCssClass="w-15"/>
+			  inputCssClass="w-10"/>
         <formFieldProperty
               name="ds_scadenza"
 			  inputSize="20"
-			  inputCssClass="w-55"/> 
+			  inputCssClass="w-100"/>
     </form>
     	
 	<columnFieldProperty
