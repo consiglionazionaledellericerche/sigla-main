@@ -142,7 +142,7 @@
 --
 -- Date: 27/09/2002
 -- Version: 1.28
--- Controllo di disponibilit? di cassa non effettuato su righe di mandati di tipo partita di giro
+-- Controllo di disponibilità di cassa non effettuato su righe di mandati di tipo partita di giro
 --
 -- Date: 01/10/2002
 -- Version: 1.29
@@ -179,7 +179,7 @@
 -- Date: 04/02/2003
 -- Version: 1.37
 -- Controllo disassociabilit? mandato/reversale (bloccante se reversale collegata a compenso di cui il mandato e mandato principale)
--- Fix su calcolo della disponibilit? di cassa globale del cds (allineamento con on-line)
+-- Fix su calcolo della disponibilità di cassa globale del cds (allineamento con on-line)
 --
 -- Date: 04/02/2003
 -- Version: 1.38
@@ -258,7 +258,7 @@ cSKCONFIG CONSTANT VARCHAR2(100):='LIMITE1';
 
  -- Funzioni di Controllo
 
- -- Controllo di disponibilit? cassa del CDS
+ -- Controllo di disponibilità cassa del CDS
 
  function CheckCassaCds(testa_mandato mandato%rowtype) return boolean;
 

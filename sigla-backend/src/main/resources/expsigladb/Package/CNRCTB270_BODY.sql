@@ -1636,8 +1636,8 @@ aCDRUO.cd_centro_responsabilita||'/'||CNRCTB015.GETVAL01PERCHIAVE(LINEA_ATTIVITA
             aObbScadVoce.PG_VER_REC:=1;
             aObbScadVoce.ESERCIZIO_ORIGINALE:=aObb.esercizio_originale;
             aDettObbScad(1):=aObbScadVoce;
-            --modificato il primo parametro (che indica se effettuare i controlli bloccanti di disponibilit?Â ) a false
-            --poich?Â¨ i controlli sono stati spostati
+            --modificato il primo parametro (che indica se effettuare i controlli bloccanti di disponibilità ) a false
+            --poiché i controlli sono stati spostati
             If inTipoImpegno = 'R' Then
                CNRCTB030.creaObbligazioneResidua(False,aObb,aObbScad,aDettObbScad);
             Else
@@ -2164,7 +2164,7 @@ aCDRUO.cd_centro_responsabilita||'/'||CNRCTB015.GETVAL01PERCHIAVE(LINEA_ATTIVITA
 
               impLiqResiduo := Abs(aLiquidIva.iva_da_versare);
 
-              --trovo la disponibilit?Â  residua sulla GAE della SAC
+              --trovo la disponibilità  residua sulla GAE della SAC
               For rec in (Select * From v_assestato
                           Where esercizio = aEs
                           And   esercizio_res <= aEs
