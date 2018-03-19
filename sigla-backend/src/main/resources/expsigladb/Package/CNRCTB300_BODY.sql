@@ -882,7 +882,7 @@ PROCEDURE effCollAnnDocGen
           and l.esercizio_ori_obb_accentr = la.esercizio_ori_obbligazione
           and l.pg_obb_accentr = la.pg_obbligazione
      );
-    IBMERR001.RAISE_ERR_GENERICO('La Reversale di accantonamento CORI per versamento centralizzato non ? cancellabile');
+    IBMERR001.RAISE_ERR_GENERICO('La Reversale di accantonamento CORI per versamento centralizzato non é cancellabile');
    exception when NO_DATA_FOUND then
       null;
    end;
@@ -906,7 +906,7 @@ PROCEDURE effCollAnnDocGen
           and l.esercizio_ori_obb_accentr = la.esercizio_ori_obbligazione
           and l.pg_obb_accentr = la.pg_obbligazione
      );
-    IBMERR001.RAISE_ERR_GENERICO('La Reversale di accantonamento liquidazione IVA centro non ? cancellabile');
+    IBMERR001.RAISE_ERR_GENERICO('La Reversale di accantonamento liquidazione IVA centro non é cancellabile');
    exception when NO_DATA_FOUND then
       null;
    end;
@@ -936,7 +936,7 @@ begin
   if inAzione = 'A' then
    -- Non possibile annullare chiusura fondo economale
    if aRecManrev.cd_tipo_docamm = CNRCTB100.TI_GEN_CHIUSURA_FONDO then
-    IBMERR001.RAISE_ERR_GENERICO('Il mandato di chiusura del fondo economale non ? annullabile');
+    IBMERR001.RAISE_ERR_GENERICO('Il mandato di chiusura del fondo economale non é annullabile');
    end if;
   end if; -- Fine Annullamento
  end if; -- Fine Reversale
@@ -1137,7 +1137,7 @@ begin
               and cd_cds_mandato = inCDSManrev
               and pg_mandato = inPgManrev
   ) loop
-      IBMERR001.RAISE_ERR_GENERICO('Il mandato di liquidazione mensile degli stipendi non ? annullabile');
+      IBMERR001.RAISE_ERR_GENERICO('Il mandato di liquidazione mensile degli stipendi non é annullabile');
     end loop;
    end;
    -- Eliminazione liquidazione CORI (tranne che liquidazione accentrata)
@@ -1164,7 +1164,7 @@ begin
               and cd_cds_rev = inCDSManrev
               and pg_rev = inPgManrev
   ) loop
-     IBMERR001.RAISE_ERR_GENERICO('La reversale risulta collegata ad una liquidazione CORI del centro. Non ? possibile annullarla');
+     IBMERR001.RAISE_ERR_GENERICO('La reversale risulta collegata ad una liquidazione CORI del centro. Non é possibile annullarla');
     end loop;
    end;
   end if; -- Fine Annullamento
@@ -1208,7 +1208,7 @@ begin
              );
      -- Se il mandato ? di reintegro e di regolarizzazione non ? possibile annullarlo
    if aMan.ti_mandato = CNRCTB038.TI_MAN_REG then
-      IBMERR001.RAISE_ERR_GENERICO('Il mandato di reintegro generato in chiusura del fondo economale non ? annullabile');
+      IBMERR001.RAISE_ERR_GENERICO('Il mandato di reintegro generato in chiusura del fondo economale non é annullabile');
    end if;
    exception when NO_DATA_FOUND then
   null;
@@ -1221,7 +1221,7 @@ begin
               and cd_cds_mandato = aMan.cd_cds
               and pg_mandato = aMan.pg_mandato
   ) loop
-      IBMERR001.RAISE_ERR_GENERICO('Il mandato di liquidazione mensile degli stipendi non ? annullabile');
+      IBMERR001.RAISE_ERR_GENERICO('Il mandato di liquidazione mensile degli stipendi non é annullabile');
     end loop;
    end;
   end if; -- Fine Annullamento
