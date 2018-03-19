@@ -19,26 +19,21 @@
 
 <table class="Panel" width="100%">
 	<tr>
-		<% bp.getController().writeFormField( out, "pg_mandato"); %>
-		<td>
-			<% bp.getController().writeFormInput( out, "ds_mandato"); %>
-		</td>
-		<td>
-			<% bp.getController().writeFormInput( out, "mandato"); %>
-		</td>
+		<% bp.getController().writeFormField( out, "mandato"); %>
 	</tr>
 	<tr>
-		<% bp.getController().writeFormField( out, "pg_reversale"); %>
+	    <td><% bp.getController().writeFormLabel( out, "pg_reversale"); %></td>
 		<td>
+		    <% bp.getController().writeFormInput( out, "pg_reversale"); %>
 			<% bp.getController().writeFormInput( out, "ds_reversale"); %>
 		</td>
 	</tr>
 
 	<TR>
 		<TD colspan="4">
-			<DIV class="GroupLabel">Fondo</div>
-			<div class="Group">
-				<TABLE class="Panel">
+			<DIV class="GroupLabel text-primary h3">Fondo</div>
+			<div class="Group card p-2 w-100">
+				<TABLE class="Panel w-100">
 					<TR>
 						<% bp.getController().writeFormField(out,"im_ammontare_fondo");%>
 						<% bp.getController().writeFormField(out,"im_ammontare_iniziale");%>
@@ -60,12 +55,8 @@
 						<% bp.getController().writeFormField(out,"im_totale_netto_spese");%>
 					</TR>
 					<TR>
-				    </TR>
-					<TR>
-				    </TR>
-					<TR>
-				 		<TD colspan="2"><center><DIV class="GroupLabel">Spese Documentate</div></center></TD>
-				 		<TD colspan="2"><center><DIV class="GroupLabel">Spese non Documentate</div></center></TD>
+				 		<TD colspan="2"><center><DIV class="GroupLabel text-primary h3">Spese Documentate</div></center></TD>
+				 		<TD colspan="2"><center><DIV class="GroupLabel text-primary h3">Spese non Documentate</div></center></TD>
 				    </TR>
 					<TR>
 						<td>
