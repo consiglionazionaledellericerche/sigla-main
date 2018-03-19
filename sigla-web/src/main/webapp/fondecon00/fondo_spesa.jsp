@@ -24,8 +24,8 @@
 
 	bp.openFormWindow(pageContext);
 %>
-
-	<TABLE class="Panel">
+<div class="card p-2 w-100">
+	<table class="Panel">
 		<TR>
 			<% bp.getController().writeFormField(out,"pg_fondo_spesa"); %>
 		</TR>
@@ -206,7 +206,8 @@
 				</TD>
 			</TR>
 		<% } %>
-	</TABLE>
+	</table>
+</div>
 <%
 	bp.closeFormWindow(pageContext);
 %>

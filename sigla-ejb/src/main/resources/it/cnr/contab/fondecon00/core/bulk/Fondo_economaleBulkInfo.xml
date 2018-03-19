@@ -62,6 +62,15 @@
 		readonlyPropertyOnEdit="chiuso"
 		label="Fondo" />
 	<fieldProperty
+		name="unita_organizzativa"
+		property="unita_organizzativa"
+		formName="searchtool"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnFreeSearch="false"
+		label="Unità Organizzativa" />
+	<fieldProperty
 		name="cd_unita_organizzativa"
 		property="unita_organizzativa.cd_unita_organizzativa"
 		maxLength="10"
@@ -182,19 +191,14 @@
 		formatName="it.cnr.contab.util.EuroPositivoFormat"
 		nullable="false"
 		label="Limite minimo reintegro" />
-	<fieldProperty
-		name="unita_organizzativa"
-		property="unita_organizzativa"
-		inputType="ROTEXT"
-		formName="searchtool"
-		label="Unità Organizzativa" />
-
 
 	<!-- Economo -->
 	<fieldProperty
 		name="economo"
 		property="economo"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
+		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
 		readonlyPropertyOnInsert="ROEconomoSearchTool"
 		readonlyPropertyOnEdit="ROEconomoSearchTool"
 		enabledOnSearch="true"
@@ -276,6 +280,7 @@
 		property="mandato"
 		inputSize="10"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		readonlyPropertyOnInsert="ROMandatoSearchTool"
 		readonlyPropertyOnEdit="ROMandatoSearchTool"
 		enabledOnSearch="false"
@@ -436,6 +441,7 @@
 		property="scadenza_ricerca"
 		inputSize="10"
 		inputType="SEARCHTOOL"
+		formName="searchtool_ridotto"
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false"
 		enabledOnInsert="false"
@@ -506,6 +512,7 @@
 		property="scadenza_ricerca.obbligazione.creditore"
 		inputType="SEARCHTOOL"
 		readonlyProperty="ROcreditore_scadenzaSearchTool"
+		formName="searchtool"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false"
 		completeOnSave="false"

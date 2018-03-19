@@ -17,91 +17,106 @@
 	boolean roField = fondo.isOnlyForClose();
 %>
 
-<div class="Group">
-	<table class="Panel">
+<div class="Group w-100">
+	<table class="Panel w-100">
 		<tr>
 			<td>
-				<table class="Panel">
-					<tr>
-						<td>
-							<% bp.getController().writeFormLabel(out,"esercizio"); %>
-						</td>
-						<td colspan="2">
-							<% bp.getController().writeFormInput(out,"esercizio"); %>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<% bp.getController().writeFormLabel(out,"cd_unita_organizzativa"); %>
-						</td>
-						<td>
- 							<% bp.getController().writeFormInput(out,"cd_unita_organizzativa"); %>
-						</td>
-						<td>
-							<% bp.getController().writeFormInput(out,"ds_unita_organizzativa");%>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<% bp.getController().writeFormLabel(out,"cd_codice_fondo"); %>
-						</td>
-						<td>
-							<% bp.getController().writeFormInput(out,"cd_codice_fondo"); %>
-						</td>
-						<td>
-							<% bp.getController().writeFormInput(out, null, "ds_fondo", roField, null, ""); %>
-						</td>
-					</tr>
-					<tr>
-						<% bp.getController().writeFormField(out,"fl_aperto");%>
-					</tr>
-					<tr>
-						<td>
-							<% bp.getController().writeFormLabel(out,"cd_sospeso_di_chiusura"); %>
-						</td>
-						<td colspan="2">
-							<% bp.getController().writeFormInput(out,"cd_sospeso_di_chiusura"); %>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<% bp.getController().writeFormLabel(out,"pg_reversale"); %>
-						</td>
-						<td colspan="2">
-							<% bp.getController().writeFormInput(out,"pg_reversale"); %>
-							<% bp.getController().writeFormInput(out,"esercizio_reversale"); %>
-						</td>
-					</tr>
-				</table>
+			    <div class="card p-2 w-100">
+                    <table class="Panel w-100">
+                        <tr>
+                             <% bp.getController().writeFormField(out,"esercizio");%>
+                        </tr>
+                        <tr>
+                            <% bp.getController().writeFormField(out,"unita_organizzativa");%>
+                        </tr>
+                        <tr>
+                            <td>
+                                <% bp.getController().writeFormLabel(out,"cd_codice_fondo"); %>
+                            </td>
+                            <td>
+                                <% bp.getController().writeFormInput(out,"cd_codice_fondo"); %>
+                                <% bp.getController().writeFormInput(out, null, "ds_fondo", roField, null, ""); %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <% bp.getController().writeFormField(out,"fl_aperto");%>
+                        </tr>
+                        <tr>
+                            <td>
+                                <% bp.getController().writeFormLabel(out,"cd_sospeso_di_chiusura"); %>
+                            </td>
+                            <td>
+                                <% bp.getController().writeFormInput(out,"cd_sospeso_di_chiusura"); %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <% bp.getController().writeFormLabel(out,"pg_reversale"); %>
+                            </td>
+                            <td>
+                                <% bp.getController().writeFormInput(out,"pg_reversale"); %>
+                                <% bp.getController().writeFormInput(out,"esercizio_reversale"); %>
+                            </td>
+                        </tr>
+                    </table>
+				</div>
 			</td>
 			<td>
-				<div class="Group">
-					<table class="Panel">
+				<div class="Group p-2 w-100">
+					<table class="Panel w-100">
 						<tr>
 							<td>
 								<center>
-									<%JSPUtils.button(out, "img/preferences16.gif", "img/preferences16.gif", "Associa/Disassocia Spese", "if (disableDblClick()) javascript:submitForm('doApriRicercaObbScad')", null, bp.isEditing() && !fondo.isChiuso(), bp.getParentRoot().isBootstrap()); %>
+									<%JSPUtils.button(out,
+									    bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-fw fa-folder-open" : "img/preferences16.gif",
+									    bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-fw fa-folder-open" : "img/preferences16.gif",
+									    "Associa/Disassocia Spese",
+									    "if (disableDblClick()) javascript:submitForm('doApriRicercaObbScad')",
+									    "btn-block btn-outline-primary btn-title",
+									    bp.isEditing() && !fondo.isChiuso(),
+									    bp.getParentRoot().isBootstrap()); %>
 								</center>
 							</td>
 						</tr>
 						<tr>
 							<td>
 								<center>
-									<%JSPUtils.button(out, "img/import16.gif", "img/import16.gif", "Reintegro Spese Associate", "if (disableDblClick()) javascript:submitForm('doReintegro')", null, bp.isEditing() && !fondo.isChiuso() && !fondo.isOnlyForClose(), bp.getParentRoot().isBootstrap()); %>
+									<%JSPUtils.button(out,
+									    bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-fw fa-edit" : "img/import16.gif",
+									    bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-fw fa-edit" : "img/import16.gif",
+									    "Reintegro Spese Associate",
+									    "if (disableDblClick()) javascript:submitForm('doReintegro')",
+									    "btn-block btn-outline-primary btn-title",
+									    bp.isEditing() && !fondo.isChiuso() && !fondo.isOnlyForClose(),
+									    bp.getParentRoot().isBootstrap()); %>
 								</center>
 							</td>
 						</tr>
 						<tr>
 							<td>
 								<center>
-									<% JSPUtils.button(out, "img/refresh16.gif", "img/refresh16.gif", "Chiudi Spese", "if (disableDblClick()) javascript:submitForm('doChiudiSpese')", null, bp.isEditing() && !fondo.isChiuso(), bp.getParentRoot().isBootstrap()); %>
+									<% JSPUtils.button(out,
+									    bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-fw fa-lock" : "img/refresh16.gif",
+									    bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-fw fa-lock" : "img/refresh16.gif",
+									    "Chiudi Spese",
+									    "if (disableDblClick()) javascript:submitForm('doChiudiSpese')",
+									    "btn-block btn-outline-info btn-title",
+									    bp.isEditing() && !fondo.isChiuso(),
+									    bp.getParentRoot().isBootstrap()); %>
 								</center>
 							</td>
 						</tr>
 						<tr>
 							<td>
 								<center>
-									<% JSPUtils.button(out, "img/stop16.gif", "img/stop16.gif", "Chiudi Fondo", "if (disableDblClick()) javascript:submitForm('doChiudiFondo')", null, bp.isEditing() && fondo.isChiuso() && fondo.isReversaleNecessaria(), bp.getParentRoot().isBootstrap()); %>
+									<% JSPUtils.button(out,
+									    bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-fw fa-lock" :"img/stop16.gif",
+									    bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-fw fa-lock" :"img/stop16.gif",
+									    "Chiudi Fondo",
+									    "if (disableDblClick()) javascript:submitForm('doChiudiFondo')",
+									    "btn-block btn-outline-danger btn-title",
+									    bp.isEditing() && fondo.isChiuso() && fondo.isReversaleNecessaria(),
+									    bp.getParentRoot().isBootstrap()); %>
 								</center>
 							</td>
 						</tr>
