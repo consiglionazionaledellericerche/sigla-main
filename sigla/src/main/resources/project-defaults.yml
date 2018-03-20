@@ -8,8 +8,5 @@ swarm:
         password: dbform
         use-java-context: true
         jndi-name: java:/jdbc/CIR
-    # jdbc-drivers:
-    #   myoracle:
-    #     driver-class-name: oracle.jdbc.OracleDriver
-    #     xa-datasource-name: oracle.jdbc.OracleDriver
-    #     driver-module-name: oracle.jdbc.OracleDriver
+  transactions:
+    default-timeout: 3600
