@@ -39,6 +39,7 @@ import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletException;
 
@@ -213,20 +214,23 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 			else
 				archiviaStampaPdgVariazioneBulk.setTiSigned(ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED);
 			archiviaStampaPdgVariazioneBulk.getArchivioAllegati().clear();
-			List<StorageObject> allegati = pdgVariazioniService.getRelationship(
-					archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject().getKey(),
-					StoragePropertyNames.R_VARPIANOGEST_ALLEGATIVARBILANCIO.value());
-			for (StorageObject storageObject : allegati) {
-				if (pdgVariazioniService.hasAspect(storageObject, StoragePropertyNames.SYS_ARCHIVED.value()))
-					continue;
-				AllegatoPdGVariazioneDocumentBulk allegato = AllegatoPdGVariazioneDocumentBulk.construct(storageObject);
-				allegato.setContentType(storageObject.<String>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-				allegato.setNome(storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()));
-				allegato.setDescrizione(storageObject.<String>getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
-				allegato.setTitolo(storageObject.<String>getPropertyValue(StoragePropertyNames.TITLE.value()));
-				allegato.setCrudStatus(OggettoBulk.NORMAL);
-				archiviaStampaPdgVariazioneBulk.addToArchivioAllegati(allegato);
-			}
+
+			archiviaStampaPdgVariazioneBulk.getArchivioAllegati().addAll(
+                    Optional.ofNullable(getPath(archiviaStampaPdgVariazioneBulk))
+                            .map(path -> pdgVariazioniService.getStorageObjectByPath(path))
+                            .map(storageObject -> pdgVariazioniService.getChildren(storageObject.getKey()))
+                            .map(storageObjects -> storageObjects.stream())
+                            .orElse(Stream.empty())
+                            .filter(storageObject -> !pdgVariazioniService.hasAspect(storageObject, StoragePropertyNames.SYS_ARCHIVED.value()))
+                            .map(storageObject -> {
+                                AllegatoPdGVariazioneDocumentBulk allegato = AllegatoPdGVariazioneDocumentBulk.construct(storageObject);
+                                allegato.setContentType(storageObject.<String>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+                                allegato.setNome(storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()));
+                                allegato.setDescrizione(storageObject.<String>getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
+                                allegato.setTitolo(storageObject.<String>getPropertyValue(StoragePropertyNames.TITLE.value()));
+                                allegato.setCrudStatus(OggettoBulk.NORMAL);
+                                return allegato;
+                            }).collect(Collectors.toList()));
 		} catch (DetailedException e) {
 			handleException(e);
 		}
