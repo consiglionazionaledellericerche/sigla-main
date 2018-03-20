@@ -1,0 +1,68 @@
+<action-mappings>
+
+	<action
+		path="/StampaPdcFinSpeseAction" actionClass="it.cnr.contab.config00.action.StampaPdcFinSpeseAction">
+	</action>
+
+	<businessProcess name="StampaPdcFinSpeseBP" className="it.cnr.contab.config00.bp.StampaPdcFinSpeseBP">
+	    <forward name="default" path="/config00/stampa_pdc_fin_spese.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.config00.pdcfin.bulk.V_stampa_pdc_fin_speseBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaPdcFinSpeseAction" />
+	</businessProcess>
+
+  <businessProcess
+      name="StampaPdcFinEntrateBP" className="it.cnr.contab.config00.bp.StampaPdcFinEntrateBP">
+    <forward name="default" path="/breports/offline_print_report.jsp" />
+    <init-param name="defaultAction" value="OfflineReportPrintAction" />
+  </businessProcess>
+  
+  <businessProcess
+      name="StampaPdcEconomicoBP" className="it.cnr.contab.config00.bp.StampaPdcEconomicoBP">
+    <forward name="default" path="/breports/offline_print_report.jsp" />
+    <init-param name="defaultAction" value="OfflineReportPrintAction" />
+  </businessProcess>
+
+	<action
+		path="/Stampa_elenco_contrattiAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	
+	<businessProcess name="StampaElencoContrattiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/config00/stampa_elenco_contratti.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.config00.contratto.bulk.Stampa_elenco_contrattiBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="Stampa_elenco_contrattiAction" />
+	    <init-param name="componentSessionName" value="CNRCONFIG00_EJB_ContrattoComponentSession" />
+	    <init-param name="reportName" value="/cnrconfigurazione/contratti/ElencoContratti.jasper" />
+	</businessProcess>      
+	
+
+	<businessProcess
+      name="StampaAssVoceCodiciSiopeEntrateBP" className="it.cnr.contab.config00.bp.StampaAssVoceCodiciSiopeBP">
+		<forward name="default" path="/breports/offline_print_report.jsp" />
+		<init-param name="reportName" value="/cnrconfigurazione/pdc/stampa_ass_voce_codici_siope.jasper"/>
+		<init-param name="defaultAction" value="OfflineReportPrintAction"/>
+	    <init-param name="componentSessionName" value="BREPORTS_EJB_OfflineReportComponentSession" />
+    </businessProcess>
+	<businessProcess
+      name="StampaAssVoceCodiciSiopeSpeseBP" className="it.cnr.contab.config00.bp.StampaAssVoceCodiciSiopeBP">
+		<forward name="default" path="/breports/offline_print_report.jsp" />
+		<init-param name="reportName" value="/cnrconfigurazione/pdc/stampa_ass_voce_codici_siope.jasper"/>
+		<init-param name="defaultAction" value="OfflineReportPrintAction"/>
+	    <init-param name="componentSessionName" value="BREPORTS_EJB_OfflineReportComponentSession" />
+    </businessProcess>    
+    
+    <action
+		path="/StampaPdcFinEntSpeAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+
+	<businessProcess name="StampaPdcFinEntSpeBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+	    <forward name="default" path="/config00/stampa_pdc_fin_ent_spe.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.config00.pdcfin.bulk.V_stampa_pdc_fin_ent_speBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+		<init-param name="reportName" value="/cnrconfigurazione/pdc/piano_dei_conti_fin.jasper"/>
+		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_PDCFinComponentSession" />
+	    <init-param name="defaultAction" value="StampaPdcFinEntSpeAction" />
+	</businessProcess>
+	                    
+</action-mappings>

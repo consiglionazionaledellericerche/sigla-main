@@ -1,0 +1,120 @@
+<action-mappings>
+
+	<action
+		path="/StampaGiornaleMandatiAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	<action
+		path="/StampaGiornaleReversaliAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	<action
+		path="/StampaRegistroAnnotazioneEntratePGiroAction" actionClass="it.cnr.contab.doccont00.action.StampaRegistroAnnotazioneEntratePGiroAction">
+	</action>
+	<action
+		path="/StampaRegistroAnnotazioneSpesePGiroAction" actionClass="it.cnr.contab.doccont00.action.StampaRegistroAnnotazioneSpesePGiroAction">
+	</action>
+	<action
+		path="/StampaRegistroObbligazioniAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	<action
+		path="/StampaScadenzarioObbligazioniAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	<action
+		path="/StampaRegistroAccertamentiAction" actionClass="it.cnr.contab.doccont00.action.Stampa_registro_accertamentiAction">
+	</action>
+	<action
+		path="/StampaScadenzarioAccertamentiAction" actionClass="it.cnr.contab.doccont00.action.Stampa_scadenzario_accertamentiAction">
+	</action>
+
+	<businessProcess name="StampaGiornaleMandatiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+	    <forward name="default" path="/doccont00/stampa_giornale_mandati.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Stampa_giornale_mandatiBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaGiornaleMandatiAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/giornale_dei_mandati.jasper" />
+	</businessProcess>
+	
+	<businessProcess name="StampaGiornaleReversaliBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/doccont00/stampa_giornale_reversali.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Stampa_giornale_reversaliBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaGiornaleReversaliAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ReversaleComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/giornale_delle_reversali.jasper" />
+	</businessProcess>
+
+	<businessProcess name="StampaRegistroAnnotazioneEntratePGiroCDSBP" className="it.cnr.contab.doccont00.bp.StampaRegistroAnnotazioneEntratePGiroBP">
+		<forward name="default" path="/doccont00/stampa_registro_annotazione_entrate_pgiro.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Stampa_registro_annotazione_entrate_pgiroBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaRegistroAnnotazioneEntratePGiroAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/regannentratecds.jasper" />
+	    <init-param name="CDS_CNR" value="CDS" />
+	</businessProcess>
+
+	<businessProcess name="StampaRegistroAnnotazioneEntratePGiroCNRBP" className="it.cnr.contab.doccont00.bp.StampaRegistroAnnotazioneEntratePGiroBP">
+		<forward name="default" path="/doccont00/stampa_registro_annotazione_entrate_pgiro.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Stampa_registro_annotazione_entrate_pgiroBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaRegistroAnnotazioneEntratePGiroAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/regannentratecnr.jasper" />
+	    <init-param name="CDS_CNR" value="CNR" />
+	</businessProcess>
+	
+	<businessProcess name="StampaRegistroAnnotazioneSpesePGiroCDSBP" className="it.cnr.contab.doccont00.bp.StampaRegistroAnnotazioneSpesePGiroBP">
+		<forward name="default" path="/doccont00/stampa_registro_annotazione_spese_pgiro.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Stampa_registro_annotazione_spese_pgiroBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaRegistroAnnotazioneSpesePGiroAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/regannspesacds.jasper" />
+	    <init-param name="CDS_CNR" value="CDS" />
+	</businessProcess>
+	
+	<businessProcess name="StampaRegistroAnnotazioneSpesePGiroCNRBP" className="it.cnr.contab.doccont00.bp.StampaRegistroAnnotazioneSpesePGiroBP">
+		<forward name="default" path="/doccont00/stampa_registro_annotazione_spese_pgiro.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Stampa_registro_annotazione_spese_pgiroBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaRegistroAnnotazioneSpesePGiroAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/regannspesecnr.jasper" />
+	    <init-param name="CDS_CNR" value="CNR" />
+	</businessProcess>
+
+	<businessProcess name="StampaRegistroObbligazioniBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/doccont00/stampa_registro_obbligazioni.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Stampa_registro_obbligazioniBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaRegistroObbligazioniAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/regobblig.jasper" />
+	</businessProcess>
+	<businessProcess name="StampaScadenzarioObbligazioniBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/doccont00/stampa_scadenzario_obbligazioni.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Stampa_scadenzario_obbligazioniBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaScadenzarioObbligazioniAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/scadobblig.jasper" />
+	</businessProcess>
+	
+	<businessProcess name="StampaRegistroAccertamentiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/doccont00/stampa_registro_accertamenti.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Stampa_registro_accertamentiBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaRegistroAccertamentiAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/regaccert.jasper" />
+	</businessProcess>
+	<businessProcess name="StampaScadenzarioAccertamentiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/doccont00/stampa_scadenzario_accertamenti.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Stampa_scadenzario_accertamentiBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaScadenzarioAccertamentiAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/scadaccert.jasper" />
+	</businessProcess>
+
+</action-mappings>

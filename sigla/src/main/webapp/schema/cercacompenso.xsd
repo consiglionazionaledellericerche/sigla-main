@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- <xsd:schema targetNamespace="https://contab.cnr.it/SIGLA/schema/cercacompenso.xsd"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:cercacompenso="https://contab.cnr.it/SIGLA/schema/cercacompenso.xsd">
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="esercizio"  type="xsd:string" />
+  <xsd:element name="cds"  type="xsd:string" />
+  <xsd:element name="uo"  type="xsd:string" />
+  <xsd:element name="pg_compenso"  type="xsd:string" />
+  <xsd:element name="codiceterzo"  type="xsd:string" />
+  <xsd:element name="denominazioneterzo"  type="xsd:string" />
+  <xsd:element name="codicefiscale"  type="xsd:string" />
+  <xsd:element name="partitaiva"  type="xsd:string" />
+  <xsd:element name="tipo"  type="xsd:string" />
+  <xsd:element name="matricola"  type="xsd:string" />
+  <xsd:element name="descrizione"  type="xsd:string" />
+  <xsd:element name="mesi"  type="xsd:string" />
+  <xsd:element name="totalemensile"  type="xsd:string" />
+  <xsd:element name="totalecompenso"  type="xsd:string" />
+  <xsd:element name="codice"  type="xsd:string" />
+  <xsd:element name="errore">
+    <xsd:complexType mixed="true">
+      <xsd:attribute name="codice" type="xsd:string" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="root">
+    <xsd:complexType>
+      <xsd:choice>
+        <xsd:sequence>
+          <xsd:element name="numris"  type="xsd:string" />
+          <xsd:element ref="compenso" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:element ref="errore" />
+      </xsd:choice>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="compenso">
+    <xsd:complexType>
+        <xsd:sequence>
+          <xsd:element ref="esercizio" />
+          <xsd:element ref="cds" />
+          <xsd:element ref="uo" />
+          <xsd:element ref="pg_compenso" />
+          <xsd:element ref="codiceterzo" />
+          <xsd:element ref="denominazioneterzo" />
+          <xsd:element ref="codicefiscale" />
+          <xsd:element ref="partitaiva" />          
+          <xsd:element ref="tipo" />
+          <xsd:element ref="matricola" />
+          <xsd:element ref="descrizione" />
+          <xsd:element ref="mesi" />
+          <xsd:element ref="totalemensile" />
+          <xsd:element ref="totalecompenso" />
+        </xsd:sequence>  
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
+		
+		

@@ -1,0 +1,22 @@
+<action-mappings>
+  	<action 
+  		path="/CRUDOrdineAction" actionClass="it.cnr.contab.doccont00.action.CRUDOrdineAction">
+  	</action>
+  
+	<businessProcess name="CRUDOrdineBP" className="it.cnr.contab.doccont00.bp.CRUDOrdineBP">
+		<forward name="default" path="/doccont00/ordine.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.ordine.bulk.OrdineBulk" />
+		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_OrdineComponentSession"/>		
+		<init-param name="defaultAction" value="CRUDOrdineAction" />
+	</businessProcess>
+
+	<businessProcess
+		name="CRUDTipoConsegnaBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+		<forward name="default" path="/doccont00/tipo_consegna.jsp"/>
+			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.tabrif.bulk.Tipo_consegnaBulk" />
+			<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+			<init-param name="defaultAction" value="CRUDAction"/>
+	</businessProcess>
+ 
+    
+</action-mappings>

@@ -1,0 +1,161 @@
+<action-mappings>
+  <action 
+      path="CRUDAction" actionClass="it.cnr.jada.util.action.CRUDAction">
+  </action>
+  <action 
+      path="/IncarichiRichiestaAction" actionClass="it.cnr.contab.incarichi00.action.IncarichiRichiestaAction">
+  </action>
+  <action 
+      path="/IncarichiRepertorioAction" actionClass="it.cnr.contab.incarichi00.action.IncarichiRepertorioAction">
+  </action>
+  <action 
+      path="/RepertorioLimitiAction" actionClass="it.cnr.contab.incarichi00.action.RepertorioLimitiAction">
+  </action>
+  <action 
+      path="/RicercaIncarichiRichiesta" actionClass="it.cnr.contab.incarichi00.action.RicercaIncarichiRichiestaAction"
+      needExistingSession="false">
+  </action>
+  <action 
+      path="/IncarichiProceduraAction" actionClass="it.cnr.contab.incarichi00.action.IncarichiProceduraAction">
+  </action>
+  <action 
+      path="/ConsCdSDaCompletareAction" actionClass="it.cnr.contab.incarichi00.action.ConsCdSDaCompletareAction">
+  </action>
+  <action 
+      path="/IncarichiEstrazioneFpAction" actionClass="it.cnr.contab.incarichi00.action.IncarichiEstrazioneFpAction">
+  </action>
+  <action 
+      path="/ConsIncarichiEstrazioneFpAction" actionClass="it.cnr.contab.incarichi00.action.ConsIncarichiEstrazioneFpAction">
+  </action>
+
+  <businessProcess
+      name="CRUDConfigTipoAttivitaBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+    <forward name="default" path="/util/form.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivitaBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	<init-param name="defaultAction" value="CRUDAction"/>
+  </businessProcess>    	      	
+
+  <businessProcess
+      name="CRUDConfigTipoIncaricoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+    <forward name="default" path="/util/form.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	<init-param name="defaultAction" value="CRUDAction"/>
+  </businessProcess>    	      	
+
+  <businessProcess
+      name="CRUDConfigTipoLimiteBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+    <forward name="default" path="/util/form.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_limiteBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	<init-param name="defaultAction" value="CRUDAction"/>
+  </businessProcess>    	      	
+
+  <businessProcess
+      name="CRUDConfigAttivitaIncaricoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+    <forward name="default" path="/incarichi00/ass_incarico_attivita.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.tabrif.bulk.Ass_incarico_attivitaBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	<init-param name="defaultAction" value="CRUDAction"/>
+  </businessProcess>    	      	
+
+  <businessProcess
+      name="CRUDConfigRepertorioLimitiBP" className="it.cnr.contab.incarichi00.bp.CRUDConfigRepertorioLimitiBP">
+    <forward name="default" path="/incarichi00/repertorio_limiti.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_limiteBulk"/>
+    <init-param name="componentSessionName" value="CNRINCARICHI00_EJB_RepertorioLimitiComponentSession"/>
+	<init-param name="defaultAction" value="RepertorioLimitiAction"/>
+  </businessProcess>    	      	
+
+  <businessProcess
+      name="CRUDIncarichiRichiestaBP" className="it.cnr.contab.incarichi00.bp.CRUDIncarichiRichiestaBP">
+    <forward name="default" path="/incarichi00/incarichi_richiesta.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Incarichi_richiestaBulk"/>
+    <init-param name="componentSessionName" value="CNRINCARICHI00_EJB_IncarichiRichiestaComponentSession"/>
+	<init-param name="defaultAction" value="IncarichiRichiestaAction"/>
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDIncarichiRepertorioBP" className="it.cnr.contab.incarichi00.bp.CRUDIncarichiRepertorioBP">
+    <forward name="default" path="/incarichi00/incarichi_repertorio.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk"/>
+    <init-param name="componentSessionName" value="CNRINCARICHI00_EJB_IncarichiRepertorioComponentSession"/>
+	<init-param name="defaultAction" value="IncarichiRepertorioAction"/>
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDConfigTematicaAttivitaBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+    <forward name="default" path="/util/form.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.tabrif.bulk.Tematica_attivitaBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	<init-param name="defaultAction" value="CRUDAction"/>
+  </businessProcess>    	      	
+
+  <businessProcess
+      name="RicercaIncarichiRichiestaBP" className="it.cnr.contab.incarichi00.bp.RicercaIncarichiRichiestaBP">
+    	<forward name="default" path="/config00/responseXML.jsp"/>
+		<init-param name="componentSessionName" value="CNRINCARICHI00_EJB_IncarichiRichiestaComponentSession" />
+		<init-param name="defaultAction" value="RicercaIncarichiRichiesta" />
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDIncarichiProceduraBP" className="it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP">
+    <forward name="default" path="/incarichi00/incarichi_procedura.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk"/>
+    <init-param name="componentSessionName" value="CNRINCARICHI00_EJB_IncarichiProceduraComponentSession"/>
+	<init-param name="defaultAction" value="IncarichiProceduraAction"/>
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDBorseStudioProceduraBP" className="it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP">
+    <forward name="default" path="/incarichi00/incarichi_procedura.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk"/>
+    <init-param name="componentSessionName" value="CNRINCARICHI00_EJB_BorseStudioProceduraComponentSession"/>
+	<init-param name="defaultAction" value="IncarichiProceduraAction"/>
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDAssegniRicercaProceduraBP" className="it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP">
+    <forward name="default" path="/incarichi00/incarichi_procedura.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk"/>
+    <init-param name="componentSessionName" value="CNRINCARICHI00_EJB_AssegniRicercaProceduraComponentSession"/>
+	<init-param name="defaultAction" value="IncarichiProceduraAction"/>
+  </businessProcess>
+
+  <businessProcess
+      name="ConsCdSDaCompletareBP" className="it.cnr.contab.incarichi00.bp.ConsCdSDaCompletareBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.config00.sto.bulk.CdsBulk" />
+		<init-param name="componentSessionName" value="CNRINCARICHI00_EJB_CdSDaCompletareComponentSession" />
+	    <init-param name="defaultAction" value="ConsCdSDaCompletareAction" />
+	    <init-param name="searchResultColumnSet" value="basic" />
+	    <init-param name="multiSelezione" value="Y" />
+  </businessProcess>
+  <businessProcess
+      name="CRUDIncarichiEstrazioneFpBP" className="it.cnr.contab.incarichi00.bp.CRUDIncarichiEstrazioneFpBP">
+    	<forward name="default" path="/incarichi00/incarichi_estrazione_fp.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_archivio_xml_fpBulk"/>
+		<init-param name="componentSessionName" value="CNRINCARICHI00_EJB_IncarichiEstrazioneFpComponentSession" />
+		<init-param name="defaultAction" value="IncarichiEstrazioneFpAction" />
+  </businessProcess>
+  <businessProcess
+	  name="ConsIncarichiEstrazioneFpBP" className="it.cnr.contab.incarichi00.bp.ConsIncarichiEstrazioneFpBP">
+    	<forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk" />
+		<init-param name="componentSessionName" value="CNRINCARICHI00_EJB_IncarichiEstrazioneFpComponentSession" />
+	    <init-param name="defaultAction" value="ConsIncarichiEstrazioneFpAction" />
+	    <init-param name="searchResultColumnSet" value="basic" />
+	    <init-param name="multiSelezione" value="Y" />
+  </businessProcess>
+  <action 
+      path="/ConsIncarAssRicBorseStAction" actionClass="it.cnr.contab.incarichi00.action.ConsIncarAssRicBorseStAction">
+  </action>
+  <businessProcess
+	 name="ConsIncarAssRicBorseStBP" className="it.cnr.contab.incarichi00.bp.ConsIncarAssRicBorseStBP">
+        <forward name="default" path="/incarichi00/cons_incar_assRic_borseStudio.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.VIncarichiAssRicBorseStBulk"/>
+		<init-param name="componentSessionName" value="CNRINCARICHI00_EJB_ConsIncarAssRicBorseStComponentSession"/>								
+	    <init-param name="defaultAction" value="ConsIncarAssRicBorseStAction"/>	    
+  </businessProcess>
+</action-mappings>

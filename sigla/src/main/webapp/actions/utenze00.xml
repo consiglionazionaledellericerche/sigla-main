@@ -1,0 +1,67 @@
+<action-mappings>
+  <forward name="desktop" path="/utenze00/desktop.jsp"/>
+
+  <!-- Forward che gestisce le sessioni scadute -->
+  <forward name="logout" path="/utenze00/logout_loader.jsp"/>
+  <forward name="pageExpired" path="/util/page_expired.jsp"/>
+
+  <action 
+      path="/SelezionatoreUnitaOrganizzativa" actionClass="it.cnr.contab.utenze00.action.SelezionatoreUnitaOrganizzativaAction">
+  </action>
+ 
+  <action 
+      path="/SelezionatoreCdr" actionClass="it.cnr.contab.utenze00.action.SelezionatoreCdrAction">
+  </action>
+
+  <action 
+      path="/SelezionaCds" actionClass="it.cnr.contab.utenze00.action.SelezionaCdsAction">
+  </action>
+
+  <action 
+      path="/Login" actionClass="it.cnr.contab.utenze00.action.LoginAction"
+      needExistingSession="false">
+    <forward name="default" path="/utenze00/form_login.jsp"/>
+  	<forward name="primo_login" path="/utenze00/primo_login.jsp"/>
+  	<forward name="login_ldap" path="/utenze00/form_login_ldap.jsp"/>
+  	<forward name="login_multiplo" path="/utenze00/form_login_multiplo.jsp"/>
+  	<forward name="password_scaduta" path="/utenze00/cambio_password.jsp"/>
+  	<forward name="cambio_password" path="/utenze00/cambio_password.jsp"/>
+  	<forward name="password_scaduta_ldap" path="/utenze00/cambio_password_ldap.jsp"/>
+  	<forward name="cambio_password_ldap" path="/utenze00/cambio_password_ldap.jsp"/>
+  </action>
+  
+  <action 
+      path="/GestioneUtente" actionClass="it.cnr.contab.utenze00.action.GestioneUtenteAction">
+  </action>
+  
+  <action 
+      path="/GestioneMenu" actionClass="it.cnr.contab.utenze00.action.GestioneUtenteAction">
+  </action>
+  
+  <businessProcess
+		name="GestioneUtenteBP" className="it.cnr.contab.utenze00.bp.GestioneUtenteBP">
+	<forward name="menu_tree" path="/utenze00/menu_tree.jsp"/>
+	<init-param name="preferitiButtonHidden" value="false" />
+	<init-param name="defaultAction" value="GestioneUtente" />
+  </businessProcess>
+  
+  <businessProcess
+      name="SelezionatoreUnitaOrganizzativa" className="it.cnr.contab.utenze00.bp.SelezionatoreUnitaOrganizzativaBP">
+    <forward name="default" path="/utenze00/lista_unita_organizzative.jsp"/>
+	<init-param name="defaultAction" value="SelezionatoreUnitaOrganizzativa" />		
+  </businessProcess>
+  
+  <businessProcess
+      name="SelezionatoreCdr" className="it.cnr.contab.utenze00.bp.SelezionatoreCdrBP">
+    <forward name="default" path="/utenze00/lista_cdr.jsp"/>
+	<init-param name="defaultAction" value="SelezionatoreCdr" />		
+  </businessProcess>
+
+  <businessProcess
+      name="SelezionaCdsBP" className="it.cnr.contab.utenze00.bp.SelezionaCdsBP">
+    <forward name="default" path="/utenze00/form_cds.jsp"/>
+	<init-param name="bulkClassName" value="it.cnr.contab.utenze00.bulk.SelezionaCdsBulk" />
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	<init-param name="defaultAction" value="SelezionaCds" />		
+  </businessProcess>
+</action-mappings>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="codice" type="xs:string" />
+
+  <xs:element name="descrizione"  type="xs:string" />
+
+ 
+  <xs:element name="errore">
+    <xs:complexType mixed="true">
+      <xs:attribute name="codice" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="numris"  type="xs:string" />
+
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="numris" />
+          <xs:element ref="modalita" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:element ref="errore" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="modalita">
+    <xs:complexType>
+        <xs:sequence>
+          <xs:element ref="codice" />
+          <xs:element ref="descrizione" />
+        </xs:sequence>  
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

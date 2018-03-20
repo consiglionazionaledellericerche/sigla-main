@@ -1,0 +1,51 @@
+<action-mappings>  
+
+	<action
+		path="/CRUDLiquidazioneCORIAction"
+		actionClass="it.cnr.contab.cori00.actions.CRUDLiquidazioneCORIAction" />
+	
+
+	<businessProcess
+		name="CRUDLiquidazioneCORIBP" className="it.cnr.contab.cori00.bp.CRUDLiquidazioneCORIBP">
+		<forward name="default" path="/cori00/liquidazione_cori.jsp"/>
+			<init-param name="bulkClassName" value="it.cnr.contab.cori00.docs.bulk.Liquid_coriBulk" />
+			<init-param name="componentSessionName" value="CNRCORI00_EJB_Liquid_coriComponentSession"/>
+			<init-param name="defaultAction" value="CRUDLiquidazioneCORIAction"/>
+	</businessProcess>
+	
+	<action 
+        path="/LiquidazioneMassaCoriAction" actionClass="it.cnr.contab.cori00.actions.LiquidazioneMassaCoriAction">
+    </action>
+  
+    <businessProcess
+        name="LiquidazioneMassaCoriBP" className="it.cnr.contab.cori00.bp.LiquidazioneMassaCoriBP">
+    	<forward name="default" path="/cori00/liquidazione_massa_cori.jsp"/>
+    		<init-param name="bulkClassName" value="it.cnr.contab.cori00.docs.bulk.Liquidazione_massa_coriBulk" />
+    		<init-param name="componentSessionName" value="CNRCORI00_EJB_Liquid_coriComponentSession"/>
+    		<init-param name="defaultAction" value="LiquidazioneMassaCoriAction"/>
+  	</businessProcess>
+  
+	<action 
+        path="/LiquidGruppoCentroAction" actionClass="it.cnr.contab.cori00.actions.LiquidGruppoCentroAction">
+    </action>
+  
+    <businessProcess
+    	name="LiquidGruppoCentroBP" className="it.cnr.contab.cori00.bp.LiquidGruppoCentroBP">
+	    <forward name="default" path="/cori00/liquid_gruppo_centro.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.cori00.docs.bulk.Liquid_gruppo_centroBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
+	    <init-param name="defaultAction" value="LiquidGruppoCentroAction" />	    
+    </businessProcess> 
+    <action 
+        path="/LiquidazioneCoriF24EPAction" actionClass="it.cnr.contab.cori00.actions.LiquidazioneCoriF24EPAction">
+    </action>
+  
+    <businessProcess
+        name="LiquidazioneCoriF24EPBP" className="it.cnr.contab.cori00.bp.LiquidazioneCoriF24EPBP">
+    		<forward name="default" path="/util/form_lista.jsp"/>
+    		<init-param name="bulkClassName" value="it.cnr.contab.cori00.docs.bulk.Liquid_coriBulk" />
+    		<init-param name="componentSessionName" value="CNRCORI00_EJB_Liquid_coriComponentSession"/>
+    		<init-param name="defaultAction" value="LiquidazioneCoriF24EPAction"/>
+  	</businessProcess>
+  
+</action-mappings>

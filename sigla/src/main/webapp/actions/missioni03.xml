@@ -1,0 +1,15 @@
+<action-mappings>
+
+	<action 
+  		path="/CRUDAnticipoAction" actionClass="it.cnr.contab.missioni00.actions.CRUDAnticipoAction">
+  	</action>
+
+  	<businessProcess
+   	   	name="CRUDAnticipoBP" className="it.cnr.contab.missioni00.bp.CRUDAnticipoBP">
+      	<forward name="default" path="/missioni00/main_anticipo.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.missioni00.docs.bulk.AnticipoBulk"/>	
+      	<init-param name="componentSessionName" value="CNRMISSIONI00_EJB_AnticipoComponentSession"/>
+      	<init-param name="defaultAction" value="CRUDAnticipoAction"/>      	
+  	</businessProcess>
+
+</action-mappings>

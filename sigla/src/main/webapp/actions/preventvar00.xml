@@ -1,0 +1,78 @@
+<action-mappings>  
+
+	<action
+		path="/CRUDVarBilancioAction" actionClass="it.cnr.contab.preventvar00.action.CRUDVarBilancioAction">
+	</action>
+	
+	<action 
+      path="/ConsVarStanzCompetenzaAction" actionClass="it.cnr.contab.preventvar00.action.ConsVarStanzCompetenzaAction">
+   </action>
+   	
+  	<action 
+      path="/ConsAssCompPerDataAction" actionClass="it.cnr.contab.preventvar00.action.ConsAssCompPerDataAction">
+   </action>  
+   
+   <action 
+      path="/ConsAssCompPerDataDettagliAction" actionClass="it.cnr.contab.preventvar00.action.ConsAssCompPerDataDettagliAction">
+   </action>  
+   
+	<businessProcess
+		name="CRUDCausaleVarBilancioBP" className="it.cnr.contab.preventvar00.bp.CRUDCausaleVarBilancioBP">
+		<forward name="default" path="/preventvar00/causale_var_bilancio.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.preventvar00.tabrif.bulk.Causale_var_bilancioBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	</businessProcess>
+
+	<businessProcess
+		name="CRUDVarBilancioBP" className="it.cnr.contab.preventvar00.bp.CRUDVarBilancioBP">
+		<forward name="default" path="/preventvar00/var_bilancio.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.preventvar00.bulk.Var_bilancioBulk" />
+		<init-param name="componentSessionName" value="CNRPREVENTVAR00_EJB_VarBilancioComponentSession"/>
+		<init-param name="defaultAction" value="CRUDVarBilancioAction"/>
+	   <init-param name="printbp" value="OfflineReportPrintBP" />		
+	</businessProcess>
+	<businessProcess
+		name="CRUDVarBilancioCompetenzaBP" className="it.cnr.contab.preventvar00.bp.CRUDVarBilancioBP">
+		<forward name="default" path="/preventvar00/var_bilancio.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.preventvar00.bulk.Var_bilancioCompetenzaBulk" />
+		<init-param name="componentSessionName" value="CNRPREVENTVAR00_EJB_VarBilancioComponentSession"/>
+		<init-param name="defaultAction" value="CRUDVarBilancioAction"/>
+	    <init-param name="printbp" value="OfflineReportPrintBP" />		
+	    <init-param name="comp_res" value="C" />
+	</businessProcess>
+	<businessProcess
+		name="CRUDVarBilancioResiduiBP" className="it.cnr.contab.preventvar00.bp.CRUDVarBilancioBP">
+		<forward name="default" path="/preventvar00/var_bilancio.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.preventvar00.bulk.Var_bilancioResiduiBulk" />
+		<init-param name="componentSessionName" value="CNRPREVENTVAR00_EJB_VarBilancioComponentSession"/>
+		<init-param name="defaultAction" value="CRUDVarBilancioAction"/>
+	    <init-param name="printbp" value="OfflineReportPrintBP" />		
+	    <init-param name="comp_res" value="R" />
+	</businessProcess>
+	
+	<businessProcess
+		name="ConsVarStanzCompetenzaBP" className="it.cnr.contab.preventvar00.consultazioni.bp.ConsVarStanzCompetenzaBP">
+    <forward name="default" path="/preventvar00/var_stanz_comp.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_var_pdggBulk"/>
+		<init-param name="componentSessionName" value="CNRPREVENTVAR00_EJB_ConsVarStanzCompetenzaComponentSession"/>								
+	    <init-param name="defaultAction" value="ConsVarStanzCompetenzaAction"/>	    
+    </businessProcess>
+    
+   <businessProcess
+		name="ConsAssCompPerDataBP" className="it.cnr.contab.preventvar00.consultazioni.bp.ConsAssCompPerDataBP">
+    <forward name="default" path="/preventvar00/ass_comp_per_data.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_ass_comp_per_dataBulk"/>
+		<init-param name="componentSessionName" value="CNRPREVENTVAR00_EJB_ConsAssCompPerDataComponentSession"/>								
+	    <init-param name="defaultAction" value="ConsAssCompPerDataAction"/>	 
+    </businessProcess>  
+    
+     <businessProcess
+		name="ConsAssCompPerDataDettagliBP" className="it.cnr.contab.preventvar00.consultazioni.bp.ConsAssCompPerDataDettagliBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.preventvar00.consultazioni.bulk.V_cons_ass_comp_per_dataBulk"/>
+		<init-param name="componentSessionName" value="CNRPREVENTVAR00_EJB_ConsAssCompPerDataComponentSession"/>								
+	    <init-param name="defaultAction" value="ConsAssCompPerDataDettagliAction"/>	
+	    <init-param name="multiSelezione" value="Y" />    
+    </businessProcess>   
+   
+</action-mappings>

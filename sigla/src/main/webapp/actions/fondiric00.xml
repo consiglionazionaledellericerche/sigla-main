@@ -1,0 +1,22 @@
+<action-mappings>
+  <action 
+      path="/CRUDFondiRicercaAction" actionClass="it.cnr.jada.util.action.CRUDAction">
+  </action>
+
+  <businessProcess
+      name="TestataFondiRicercaBP" className="it.cnr.contab.fondiric00.bp.TestataFondiRicercaBP">
+    <forward name="default" path="/fondiric00/fondi_ricerca.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.fondiric00.core.bulk.Fondo_attivita_vincolataBulk"/>
+    <init-param name="componentSessionName" value="CNRFONDIRIC00_EJB_FondoRicercaComponentSession"/>
+	<init-param name="defaultAction" value="CRUDFondiRicercaAction"/>
+  </businessProcess>
+
+  <businessProcess
+      name="TipoFondiRicercaBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+    <forward name="default" path="/fondiric00/tipo_fondo_ricerca.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.fondiric00.tabrif.bulk.Tipo_fondoBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	<init-param name="defaultAction" value="CRUDAction"/>
+  </businessProcess>
+
+</action-mappings>

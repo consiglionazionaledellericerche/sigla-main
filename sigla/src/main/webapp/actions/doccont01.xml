@@ -1,0 +1,23 @@
+<action-mappings>
+  	<action 
+  		path="/CRUDAccertamentoAction" actionClass="it.cnr.contab.doccont00.action.CRUDAccertamentoAction">
+  	</action>
+  	<action 
+      	path="/ListaAccertamentiAction" actionClass="it.cnr.contab.doccont00.action.ListaAccertamentiAction">
+  	</action>
+  
+	<businessProcess name="CRUDAccertamentoBP" className="it.cnr.contab.doccont00.bp.CRUDAccertamentoBP">
+		<forward name="default" path="/doccont00/main_accertamento.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoOrdBulk" />
+		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoComponentSession"/>		
+		<init-param name="defaultAction" value="CRUDAccertamentoAction" />
+	</businessProcess>
+    
+	<businessProcess name="ListaAccertamentiBP" className="it.cnr.contab.doccont00.bp.ListaAccertamentiBP">
+	    <forward name="default" path="/doccont00/lista_accertamenti.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoOrdBulk" />
+		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoComponentSession" />
+		<init-param name="defaultAction" value="ListaAccertamentiAction" />				
+    </businessProcess>
+	
+</action-mappings>

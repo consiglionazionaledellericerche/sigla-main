@@ -1,0 +1,16 @@
+<action-mappings>
+
+	<action
+		path="/StampaVpgMissioneAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+
+	<businessProcess name="StampaVpgMissioneBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/missioni00/stampa_vpg_missione.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.missioni00.docs.bulk.Stampa_vpg_missioneBulk" />
+		<init-param name="printbp" value="it.cnr.contab.reports.bp.OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaVpgMissioneAction" />
+	    <init-param name="componentSessionName" value="CNRMISSIONI00_EJB_MissioneComponentSession" />
+	    <init-param name="reportName" value="/docamm/docamm/vpg_missione.jasper" />
+	</businessProcess>
+
+</action-mappings>

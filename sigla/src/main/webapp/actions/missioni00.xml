@@ -1,0 +1,47 @@
+<action-mappings>
+
+	<action 
+  		path="/CRUDMissioneTipoSpesaAction" actionClass="it.cnr.contab.missioni00.actions.CRUDMissioneTipoSpesaAction">
+  	</action>
+	<action 
+  		path="/CRUDMissioneTipoPastoAction" actionClass="it.cnr.contab.missioni00.actions.CRUDMissioneTipoPastoAction">
+  	</action>
+  	<action 
+  		path="/CRUDMissioneDiariaAction" actionClass="it.cnr.contab.missioni00.actions.CRUDMissioneDiariaAction">
+	</action>
+	  	<action 
+  		path="/CRUDMissioneQuotaRimborsoAction" actionClass="it.cnr.jada.util.action.CRUDAction">
+	</action>
+
+	<businessProcess
+		name="CRUDMissioneTipoSpesaBP" className="it.cnr.contab.missioni00.bp.CRUDMissioneTipoSpesaBP">
+		<forward name="default" path="/missioni00/missione_tipo_spesa.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk"/>	
+		<init-param name="componentSessionName" value="CNRMISSIONI00_EJB_MissioneTipoSpesaComponentSession"/>
+		<init-param name="defaultAction" value="CRUDMissioneTipoSpesaAction"/>
+	</businessProcess>
+
+	<businessProcess
+		name="CRUDMissioneTipoPastoBP" className="it.cnr.contab.missioni00.bp.CRUDMissioneTipoPastoBP">
+		<forward name="default" path="/missioni00/missione_tipo_pasto.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk"/>	
+		<init-param name="componentSessionName" value="CNRMISSIONI00_EJB_MissioneTipoPastoComponentSession"/>
+		<init-param name="defaultAction" value="CRUDMissioneTipoPastoAction"/>
+	</businessProcess>
+
+	<businessProcess
+		name="CRUDMissioneDiariaBP" className="it.cnr.contab.missioni00.bp.CRUDMissioneDiariaBP">
+	 	<forward name="default" path="/missioni00/missione_diaria.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.missioni00.tabrif.bulk.Missione_diariaBulk"/>	
+		<init-param name="componentSessionName" value="CNRMISSIONI00_EJB_MissioneDiariaComponentSession"/>
+		<init-param name="defaultAction" value="CRUDMissioneDiariaAction"/>
+	</businessProcess>    
+
+	<businessProcess
+		name="CRUDMissioneQuotaRimborsoBP" className="it.cnr.contab.missioni00.bp.CRUDMissioneQuotaRimborsoBP">
+	 	<forward name="default" path="/missioni00/missione_quota_rimborso.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.missioni00.tabrif.bulk.MissioneQuotaRimborsoBulk"/>	
+		<init-param name="componentSessionName" value="CNRMISSIONI00_EJB_MissioneQuotaRimborsoComponentSession"/>
+		<init-param name="defaultAction" value="CRUDMissioneQuotaRimborsoAction"/>
+	</businessProcess>
+</action-mappings>

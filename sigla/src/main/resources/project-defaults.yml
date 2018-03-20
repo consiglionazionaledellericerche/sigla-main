@@ -1,0 +1,13 @@
+swarm:
+  datasources:
+    data-sources:
+      MyDS:
+        driver-name: oracle
+        connection-url: jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF
+        user-name: PCIR009
+        password: dbform
+    # jdbc-drivers:
+    #   myoracle:
+    #     driver-class-name: oracle.jdbc.OracleDriver
+    #     xa-datasource-name: oracle.jdbc.OracleDriver
+    #     driver-module-name: oracle.jdbc.OracleDriver

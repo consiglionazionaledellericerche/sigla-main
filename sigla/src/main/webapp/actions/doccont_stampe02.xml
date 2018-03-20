@@ -1,0 +1,120 @@
+<action-mappings>
+
+	<action
+		path="/StampaRiscontriAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	
+	<action
+		path="/StampaSospesiAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	
+	<action
+		path="/StampaSospesiCNRAssocRevAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	
+	<action
+		path="/StampaSospesiCNRAssocCdsAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	
+	<action
+		path="/StampaSospesiCNRAssocManAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	
+	<action
+		path="/StampaObbligazioniRiportabiliAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	
+	<action
+		path="/StampaSospesiDaAssegnareAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	
+	<action
+		path="/StampaObbligazioniLAAction" actionClass="it.cnr.contab.doccont00.action.StampaObbligazioniLAAction">
+	</action>
+	
+	<action
+		path="/StampaSituazioneCassaAction" actionClass="it.cnr.contab.reports.action.ParametricPrintAction">
+	</action>
+	
+	<businessProcess name="StampaRiscontriBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+	    <forward name="default" path="/doccont00/stampa_riscontri.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Stampa_riscontriVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaRiscontriAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/stampariscontri.jasper" />
+	</businessProcess>
+	
+	<businessProcess name="StampaSospesiBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/doccont00/stampa_sospesi.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Stampa_sospesiVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaSospesiAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/stampasospesi.jasper" />
+	</businessProcess>
+	
+	<businessProcess name="StampaSospesiCNRAssocRevBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/doccont00/stampa_sospesi_assoc_rev.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Stampa_sospesi_cnr_assoc_revVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaSospesiCNRAssocRevAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/stampasospesiassreversali.jasper" />
+	</businessProcess>
+	
+	<businessProcess name="StampaSospesiCNRAssocCdsBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">									  
+		<forward name="default" path="/doccont00/stampa_sospesi_assoc_cds.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Stampa_sospesi_cnr_assoc_cdsVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaSospesiCNRAssocCdsAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/sospesiasscds.jasper" />
+	</businessProcess>
+	
+	<businessProcess name="StampaSospesiCNRAssocMandBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/doccont00/stampa_sospesi_assoc_man.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Stampa_sospesi_cnr_assoc_manVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaSospesiCNRAssocManAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/stampasospesiassmnd.jasper" />
+	</businessProcess>
+	
+	<businessProcess name="StampaObbligazioniRiportabiliBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/doccont00/stampa_obbligazioni_riportabili.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Stampa_obbligazioni_riportabiliVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaObbligazioniRiportabiliAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/obbligazioni_riportabili.jasper" />
+	</businessProcess>
+	
+	<businessProcess name="StampaSospesiDaAssegnareBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/doccont00/stampa_sospesi_assegnare.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Stampa_sospesi_da_assegnareVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaSospesiDaAssegnareAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/sospesidaassegnare.jasper" />
+	</businessProcess>
+	
+	<businessProcess name="StampaObbligazioniLABP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/doccont00/stampa_obbligazioni_LA.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Stampa_obbligazioni_LAVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaObbligazioniLAAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/obbligazioniperlineediattiv.jasper" />
+	</businessProcess>
+	
+	<businessProcess name="StampaSituazioneCassaBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/doccont00/stampa_situazione_cassa.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Stampa_vpg_situazione_cassaVBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaSituazioneCassaAction" />
+	    <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_OrdineComponentSession" />
+	    <init-param name="reportName" value="/cnrdoccont/doccont/situazionedicassa.jasper" />
+	</businessProcess>
+	
+</action-mappings>

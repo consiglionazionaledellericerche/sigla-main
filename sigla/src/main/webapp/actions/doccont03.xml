@@ -1,0 +1,56 @@
+<action-mappings>
+
+	<action
+		path="/CRUDAssManualeMandatoReversaleAction" actionClass="it.cnr.contab.doccont00.action.CRUDAssManualeMandatoReversaleAction">
+	</action>
+
+	<action
+		path="/CaricaFileCassiereAction" actionClass="it.cnr.contab.doccont00.action.CaricaFileCassiereAction">
+	</action>
+
+	<action
+		path="/DettaglioFileCassiereAction" actionClass="it.cnr.contab.doccont00.action.CaricaFileCassiereAction">
+	</action>
+	<action
+		path="/CRUDExtCassiereCdsAction" actionClass="it.cnr.jada.util.action.CRUDAction">
+	</action>
+	
+
+	<businessProcess name="CRUDAssManualeMandatoReversaleBP" className="it.cnr.contab.doccont00.bp.CRUDAssManualeMandatoReversaleBP">
+		<forward name="default" path="/doccont00/ass_manuale_mandato_reversale.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.MandatoIBulk" />
+		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AssManualeMandatoReversaleComponentSession"/>
+		<init-param name="defaultAction" value="CRUDAssManualeMandatoReversaleAction" />
+	</businessProcess>
+	
+	<businessProcess
+		name="CaricaFileCassiereBP" className="it.cnr.contab.doccont00.bp.CaricaFileCassiereBP">
+		<forward name="default" path="/doccont00/carica_file_cassiere.jsp"/>
+			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk" />
+			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>		
+			<init-param name="defaultAction" value="CaricaFileCassiereAction" />
+			<init-param name="caricaProcessaAction" value="C" />			
+	</businessProcess>
+	
+	<businessProcess
+		name="ProcessaFileCassiereBP" className="it.cnr.contab.doccont00.bp.CaricaFileCassiereBP">
+		<forward name="default" path="/doccont00/processa_file_cassiere.jsp"/>
+			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk" />
+			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>		
+			<init-param name="defaultAction" value="CaricaFileCassiereAction" />
+			<init-param name="caricaProcessaAction" value="P" />
+	</businessProcess>
+
+	<businessProcess
+		name="DettagliFileCassiereBP" className="it.cnr.contab.doccont00.bp.DettagliFileCassiereBP">
+		<forward name="default" path="/doccont00/dettagli_file_cassiere.jsp"/>
+			<init-param name="defaultAction" value="CaricaFileCassiereAction" />
+	</businessProcess>
+	<businessProcess name="CRUDExtCassiereCdsBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+		<forward name="default" path="/util/form.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.ExtCassiereCdsBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+		<init-param name="defaultAction" value="CRUDExtCassiereCdsAction" />
+	</businessProcess>
+	
+</action-mappings>

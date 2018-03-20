@@ -1,0 +1,12 @@
+<action-mappings>
+  <action 
+      path="/RequestTraceAction" actionClass="it.cnr.contab.devutil00.action.RequestTraceAction">
+  </action>
+
+  <businessProcess
+      name="RequestTraceBP" className="it.cnr.contab.devutil00.bp.RequestTraceBP">
+    <forward name="default" path="/util/requesttrace.jsp" />
+    <init-param name="defaultAction" value="RequestTraceAction" />
+  </businessProcess>
+  
+</action-mappings>

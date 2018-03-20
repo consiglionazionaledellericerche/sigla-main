@@ -1,0 +1,26 @@
+<action-mappings>
+
+	<action 
+  		path="/CRUDMissioneAction" actionClass="it.cnr.contab.missioni00.actions.CRUDMissioneAction">
+  	</action>
+         <action 
+              path="/RicercaMissioniAction" actionClass="it.cnr.contab.missioni00.actions.RicercaMissioniAction"
+             needExistingSession="false">
+         </action>
+
+  	<businessProcess
+   	   	name="CRUDMissioneBP" className="it.cnr.contab.missioni00.bp.CRUDMissioneBP">
+      	<forward name="default" path="/missioni00/main_missione.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.missioni00.docs.bulk.MissioneBulk"/>	
+      	<init-param name="componentSessionName" value="CNRMISSIONI00_EJB_MissioneComponentSession"/>
+      	<init-param name="defaultAction" value="CRUDMissioneAction"/>
+	    <init-param name="printbp" value="OfflineReportPrintBP" />		      	
+  	</businessProcess>
+  	<businessProcess
+                name="RicercaMissioniBP" className="it.cnr.contab.missioni00.bp.RicercaMissioniBP">
+    	        <forward name="default" path="/config00/responseXML.jsp"/>
+		<init-param name="componentSessionName" value="CNRMISSIONI00_EJB_MissioneComponentSession" />
+		<init-param name="defaultAction" value="RicercaMissioniAction" />
+  	</businessProcess>
+
+</action-mappings>

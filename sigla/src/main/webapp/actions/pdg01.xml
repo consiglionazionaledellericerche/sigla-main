@@ -1,0 +1,129 @@
+<action-mappings>
+  <action 
+      path="/CRUDAction" actionClass="it.cnr.jada.util.action.CRUDAction">
+  </action>
+  <action 
+      path="/ConsultazioniAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+  </action>
+  <action 
+      path="/ConsPdgpPdggEtrAction" actionClass="it.cnr.contab.pdg01.consultazioni.action.ConsPdgpPdggEtrAction">
+  </action>
+  <action 
+      path="/ConsPdgpPdggSpeAction" actionClass="it.cnr.contab.pdg01.consultazioni.action.ConsPdgpPdggSpeAction">
+  </action>
+  <action 
+      path="/CRUDPdgModuloEntrateGestAction" actionClass="it.cnr.contab.pdg01.action.CRUDPdgModuloEntrateGestAction">
+  </action>
+  <action 
+      path="/CRUDPdgModuloSpeseGestAction" actionClass="it.cnr.contab.pdg01.action.CRUDPdgModuloSpeseGestAction">
+  </action>
+  <action 
+      path="/CRUDPdgVariazioneRigaGestAction" actionClass="it.cnr.contab.pdg01.action.CRUDPdgVariazioneRigaGestAction">
+  </action>
+  <action 
+      path="/CRUDVar_stanz_resAction" actionClass="it.cnr.contab.varstanz00.action.CRUDVar_stanz_resAction">
+  </action>
+
+  <action 
+      path="/CRUDVar_stanz_resRigaAction" actionClass="it.cnr.contab.varstanz00.action.CRUDVar_stanz_resRigaAction">
+  </action>
+
+  <action 
+      path="/SelezionatoreAssestatoResiduoAction" actionClass="it.cnr.contab.varstanz00.action.SelezionatoreAssestatoResiduoAction">
+  </action>
+
+  <action 
+      path="/SelezionatoreAssestatoAction" actionClass="it.cnr.contab.pdg01.action.SelezionatoreAssestatoAction">
+  </action>
+
+  <action 
+      path="/CRUDTipoVariazioneAction" actionClass="it.cnr.jada.util.action.CRUDAction">
+  </action>
+
+  <businessProcess
+      name="ConsPdgpPdggEtrBP" className="it.cnr.contab.pdg01.consultazioni.bp.ConsPdgpPdggEtrBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_etrBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+	    <init-param name="defaultAction" value="ConsPdgpPdggEtrAction" />	    
+  </businessProcess>  
+
+  <businessProcess
+      name="ConsPdgpPdggSpeBP" className="it.cnr.contab.pdg01.consultazioni.bp.ConsPdgpPdggSpeBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.pdg01.consultazioni.bulk.V_cons_pdgp_pdgg_speBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+	    <init-param name="defaultAction" value="ConsPdgpPdggSpeAction" />	    
+  </businessProcess>  
+
+  <businessProcess
+      name="CRUDPdgModuloEntrateGestBP" className="it.cnr.contab.pdg01.bp.CRUDPdgModuloEntrateGestBP">
+    <forward name="default" path="/pdg01/pdg_modulo_entrate_gest.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk" />
+		<init-param name="componentSessionName" value="CNRPDG01_EJB_CRUDPdgModuloEntrateGestComponentSession" />								
+	    <init-param name="defaultAction" value="CRUDPdgModuloEntrateGestAction" />	    
+  </businessProcess>  
+
+  <businessProcess
+      name="CRUDPdgModuloSpeseGestBP" className="it.cnr.contab.pdg01.bp.CRUDPdgModuloSpeseGestBP">
+    <forward name="default" path="/pdg01/testata_pdg_modulo_spese_gest.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk" />
+		<init-param name="componentSessionName" value="CNRPDG01_EJB_CRUDPdgModuloSpeseGestComponentSession" />								
+	    <init-param name="defaultAction" value="CRUDPdgModuloSpeseGestAction" />	    
+  </businessProcess>  
+  
+  <businessProcess
+      name="CRUDPdgVariazioneGestionaleBP" className="it.cnr.contab.pdg01.bp.CRUDPdgVariazioneGestionaleBP">
+    <forward name="default" path="/pdg00/pdg_variazione.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk"/>
+    <init-param name="componentSessionName" value="CNRPDG01_EJB_CRUDPdgVariazioneGestionaleComponentSession"/>
+	<init-param name="defaultAction" value="PdGVariazioneAction"/>
+    <init-param name="searchResultColumnSet" value="vp_pdg_variazione"/> 
+  </businessProcess>
+
+  <businessProcess
+      name="CRUDPdgVariazioneRigaGestBP" className="it.cnr.contab.pdg01.bp.CRUDPdgVariazioneRigaGestBP">
+    <forward name="default" path="/pdg01/pdg_variazione_riga_gest.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk" />
+		<init-param name="componentSessionName" value="CNRPDG01_EJB_CRUDPdgVariazioneRigaGestComponentSession" />								
+	    <init-param name="defaultAction" value="CRUDPdgVariazioneRigaGestAction" />	    
+  </businessProcess>  
+
+  <businessProcess
+      name="CRUDVar_stanz_resBP" className="it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resBP">
+        <forward name="default" path="/pdg01/var_stanz_res.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk" />
+		<init-param name="componentSessionName" value="CNRVARSTANZ00_EJB_VariazioniStanziamentoResiduoComponentSession" />								
+	    <init-param name="defaultAction" value="CRUDVar_stanz_resAction" />
+  </businessProcess>  
+
+  <businessProcess
+      name="CRUDVar_stanz_resRigaBP" className="it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resRigaBP">
+    <forward name="default" path="/pdg01/var_stanz_res_riga.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk" />
+		<init-param name="componentSessionName" value="CNRVARSTANZ00_EJB_VariazioniStanziamentoResiduoComponentSession" />
+	    <init-param name="defaultAction" value="CRUDVar_stanz_resRigaAction" />	    
+  </businessProcess>  
+  <businessProcess
+      name="SelezionatoreAssestatoResiduoBP" className="it.cnr.contab.varstanz00.bp.SelezionatoreAssestatoResiduoBP">
+    <forward name="default" path="/util/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.prevent00.bulk.V_assestato_residuoBulk" />
+		<init-param name="componentSessionName" value="CNRVARSTANZ00_EJB_VariazioniStanziamentoResiduoComponentSession" />
+	    <init-param name="defaultAction" value="SelezionatoreAssestatoResiduoAction" />
+  </businessProcess> 
+  <businessProcess
+      name="SelezionatoreAssestatoBP" className="it.cnr.contab.pdg01.bp.SelezionatoreAssestatoBP">
+    <forward name="default" path="/util/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.prevent00.bulk.V_assestatoBulk" />
+		<init-param name="componentSessionName" value="CNRPDG01_EJB_CRUDPdgVariazioneGestionaleComponentSession" />
+	    <init-param name="defaultAction" value="SelezionatoreAssestatoAction" />
+  </businessProcess> 
+  
+  <businessProcess
+      name="CRUDTipoVariazioneBP" className="it.cnr.contab.pdg01.bp.CRUDTipoVariazioneBP">
+    <forward name="default" path="/pdg01/tipo_variazione.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+	<init-param name="defaultAction" value="CRUDTipoVariazioneAction"/>		
+  </businessProcess>
+</action-mappings>
