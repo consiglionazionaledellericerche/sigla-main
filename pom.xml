@@ -19,7 +19,7 @@
 		<module>sigla-ws</module>
 		<module>sigla-web</module>
 		<module>sigla-backend</module>
-		<module>SIGLA</module>
+		<module>sigla</module>
 	</modules>
 	<properties>
     	<sonar.skip>true</sonar.skip>
