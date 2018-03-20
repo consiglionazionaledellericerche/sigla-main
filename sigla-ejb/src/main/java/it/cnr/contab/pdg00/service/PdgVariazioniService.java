@@ -97,7 +97,7 @@ public class PdgVariazioniService extends StoreService {
 			query.append(" join cnr:signedDocument as sig on var.cmis:objectId = sig.cmis:objectId");
 			query.append(" where var.").append(StoragePropertyNames.VARPIANOGEST_ESERCIZIO.value()).append(" = ").append(esercizio);
 			if (cds != null)
-				query.append(" and cds.").append(StoragePropertyNames.STRORGCDS_CODICE.value()).append(" = ").append("'").append(cds).append("'");
+				query.append(" and cds.").append(StoragePropertyNames.STRORGCDS_CODICE.value()).append(" = ").append("'").append(cds.getCd_unita_organizzativa()).append("'");
 			if (uo != null)
 				query.append(" and uo.").append(StoragePropertyNames.STRORGUO_CODICE.value()).append(" = ").append("'").append(uo).append("'");
 			if (variazionePdg != null)
@@ -173,7 +173,7 @@ public class PdgVariazioniService extends StoreService {
 			if (variazionePdg != null)
 				query.append(" and var.").append(StoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()).append(" = ").append(variazionePdg);
 			if (cds != null)
-				query.append(" and cds.").append(StoragePropertyNames.STRORGCDS_CODICE.value()).append(" = ").append("'").append(cds).append("'");
+				query.append(" and cds.").append(StoragePropertyNames.STRORGCDS_CODICE.value()).append(" = ").append("'").append(cds.getCd_unita_organizzativa()).append("'");
 			if (uo != null)
 				query.append(" and uo.").append(StoragePropertyNames.STRORGUO_CODICE.value()).append(" = ").append("'").append(uo).append("'");
             query.append(" and IN_TREE(var, '").append(
