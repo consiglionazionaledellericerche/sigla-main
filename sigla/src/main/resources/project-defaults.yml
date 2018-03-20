@@ -1,7 +1,7 @@
 swarm:
   datasources:
     data-sources:
-      MyDS:
+      CIR:
         driver-name: oracle
         connection-url: jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF
         user-name: PCIR009
