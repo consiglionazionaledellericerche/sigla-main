@@ -19,7 +19,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>4.3.3.RELEASE</spring.version>
-        <jada.version>6.0.14</jada.version>
+        <jada.version>6.0.16</jada.version>
         <slf4j.version>1.7.21</slf4j.version>
         <pdfbox.version>2.0.0</pdfbox.version>
     </properties>
@@ -88,7 +88,6 @@
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>jaxrs</artifactId>
         </dependency>
-
         <!-- SIGLA -->
 
         <dependency>
