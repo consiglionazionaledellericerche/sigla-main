@@ -36,6 +36,7 @@ public enum StoragePropertyNames {
 
     // Document
     CNR_ENVELOPEDDOCUMENT("D:cnr:envelopedDocument"),
+    VARPIANOGEST_DOCUMENT("D:varpianogest:document"),
 
     //Aspect
     CNR_SIGNEDDOCUMENT("P:cnr:signedDocument"),
