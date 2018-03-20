@@ -1232,7 +1232,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 	 * 
 	 * Pre-post-conditions:
 	 * 
-	 * @param bulk
+	 * @param oggettobulk
 	 *            l'OggettoBulk da eliminare
 	 * @return void
 	 * 
@@ -2679,16 +2679,17 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		{
 			sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
 		}
-		
-		String cds = null, uo = null;
+
+		Unita_organizzativaBulk cdsBulk = null;
+		String uo = null;
 		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome(
 				userContext, Unita_organizzativa_enteBulk.class).findAll()
 				.get(0);
 		if (!((CNRUserContext) userContext).getCd_unita_organizzativa()
 				.equals(ente.getCd_unita_organizzativa())) {
-			cds = CNRUserContext.getCd_cds(userContext);
+			String cds = CNRUserContext.getCd_cds(userContext);
 			sql.addClause(FindClause.AND, "cd_centro_responsabilita", SQLBuilder.STARTSWITH, cds);
-			Unita_organizzativaBulk cdsBulk = (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).
+			cdsBulk = (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).
 				findByPrimaryKey(new Unita_organizzativaBulk(cds));
 			 if(Tipo_unita_organizzativaHome.TIPO_UO_SAC.equalsIgnoreCase(cdsBulk.getCd_tipo_unita()) && 
 					 bulk !=null && bulk instanceof Pdg_variazioneBulk  && ((Pdg_variazioneBulk)bulk).getPg_variazione_pdg()!=null){
@@ -2712,7 +2713,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		if (bulk != null && bulk instanceof Pdg_variazioneBulk ){
 			variazionePdg = ((Pdg_variazioneBulk)bulk).getPg_variazione_pdg();
 		}
-		List<Integer> variazioniPresentiSulDocumentale = variazioniPresentiSulDocumentale(userContext, tiSigned, cds, uo, variazionePdg);
+		List<Integer> variazioniPresentiSulDocumentale = variazioniPresentiSulDocumentale(userContext, tiSigned, cdsBulk, uo, variazionePdg);
 		if (clausolaIn && variazioniPresentiSulDocumentale.isEmpty())
 			sql.addClause(FindClause.AND, "pg_variazione_pdg", SQLBuilder.EQUALS, -1);
 		sql.openParenthesis(FindClause.AND);
@@ -2729,7 +2730,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 	}
 	}
 
-	private List<Integer> variazioniPresentiSulDocumentale(UserContext userContext, String tiSigned, String cds, String uo, Long variazionePdg) throws ComponentException, PersistencyException{
+	private List<Integer> variazioniPresentiSulDocumentale(UserContext userContext, String tiSigned, Unita_organizzativaBulk cds, String uo, Long variazionePdg) throws ComponentException, PersistencyException{
 		PdgVariazioniService pdgVariazioniService = SpringUtil.getBean("pdgVariazioniService",
 				PdgVariazioniService.class);
 		return pdgVariazioniService.findVariazioniPresenti(CNRUserContext.getEsercizio(userContext),tiSigned, cds, uo, variazionePdg);
