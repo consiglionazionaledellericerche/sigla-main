@@ -17,6 +17,7 @@ import it.cnr.contab.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedException;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
@@ -197,19 +198,28 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 	@Override
 	public OggettoBulk initializeModelForEdit(ActionContext actioncontext,
 			OggettoBulk oggettobulk) throws BusinessProcessException {
-		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = null;
-		if (oggettobulk instanceof ArchiviaStampaPdgVariazioneBulk){
-			archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk)oggettobulk;
-		}else{
-			archiviaStampaPdgVariazioneBulk = new ArchiviaStampaPdgVariazioneBulk();
-			archiviaStampaPdgVariazioneBulk.setToBeUpdated();
-			archiviaStampaPdgVariazioneBulk.setPdg_variazioneForPrint((Pdg_variazioneBulk) oggettobulk);
-		}
+	    final ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk =
+                Optional.ofNullable(oggettobulk)
+                    .filter(ArchiviaStampaPdgVariazioneBulk.class::isInstance)
+                    .map(ArchiviaStampaPdgVariazioneBulk.class::cast)
+                    .orElseGet(() -> {
+                        ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazione = new ArchiviaStampaPdgVariazioneBulk();
+                        archiviaStampaPdgVariazione.setToBeUpdated();
+                        archiviaStampaPdgVariazione.setPdg_variazioneForPrint((Pdg_variazioneBulk) oggettobulk);
+                        return archiviaStampaPdgVariazione;
+                    });
 		try {
-			if (archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument() == null)
-				archiviaStampaPdgVariazioneBulk.setPdgVariazioneDocument(
-						pdgVariazioniService.getPdgVariazioneDocument(archiviaStampaPdgVariazioneBulk));
-			if (archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().isSignedDocument())
+            final PdgVariazioneDocument pdgVariazioneDocument =
+                    Optional.ofNullable(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument())
+                        .orElseGet(() -> {
+                            try {
+                                return pdgVariazioniService.getPdgVariazioneDocument(archiviaStampaPdgVariazioneBulk);
+                            } catch (DetailedException e) {
+                               throw new DetailedRuntimeException(e);
+                            }
+                        });
+            archiviaStampaPdgVariazioneBulk.setPdgVariazioneDocument(pdgVariazioneDocument);
+            if (pdgVariazioneDocument.isSignedDocument())
 				archiviaStampaPdgVariazioneBulk.setTiSigned(ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED);
 			else
 				archiviaStampaPdgVariazioneBulk.setTiSigned(ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED);
@@ -222,6 +232,8 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
                             .map(storageObjects -> storageObjects.stream())
                             .orElse(Stream.empty())
                             .filter(storageObject -> !pdgVariazioniService.hasAspect(storageObject, StoragePropertyNames.SYS_ARCHIVED.value()))
+                            .filter(storageObject ->
+                                    !pdgVariazioneDocument.getStorageObject().getKey().equals(storageObject.getKey()))
                             .map(storageObject -> {
                                 AllegatoPdGVariazioneDocumentBulk allegato = AllegatoPdGVariazioneDocumentBulk.construct(storageObject);
                                 allegato.setContentType(storageObject.<String>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
