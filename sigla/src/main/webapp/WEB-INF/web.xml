@@ -5,8 +5,8 @@
 
 	<display-name>SIGLAWeb</display-name>
 	<context-param>
-		<param-name>jdbc/CIR</param-name>
-		<param-value>jdbc/CIR</param-value>
+		<param-name>java:jboss/datasources/CIR</param-name>
+		<param-value>java:jboss/datasources/CIR</param-value>
 	</context-param>
 	<listener>
 		<listener-class>it.cnr.contab.util.servlet.ExpireSessionServlet</listener-class>
