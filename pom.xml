@@ -17,7 +17,6 @@
 		<module>sigla-ejb</module>
 		<module>sigla-sdi</module>
 		<module>sigla-ws</module>
-		<module>sigla-web</module>
 		<module>sigla-backend</module>
 		<module>sigla</module>
 	</modules>
