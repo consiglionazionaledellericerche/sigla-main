@@ -15,10 +15,10 @@
 %>
 <% bp.getCrudDettagliSpese().writeHTMLTable(pageContext,(bp.isFlNuovoPdg()?"without_area":"default"),true,false,true,"100%","200px"); 
 %>
-<table border="0" cellspacing="0" cellpadding="2">	
+<table border="0" cellspacing="0" cellpadding="2" class="w-100">
 <tr>
- <td align=left>
-  <table border="0" cellspacing="0" cellpadding="2">	
+ <td align=left class="w-75">
+  <table border="0" cellspacing="0" cellpadding="2" class="w-100">
 	<tr>
 	<% if (bp.isFlPdgCodlast()) { 
 	  	  bp.getCrudDettagliSpese().writeFormField(out,"classificazione_codlast");
@@ -86,8 +86,8 @@
   </table>
  </td>
  
- <td align=middle valign=top>
-  <table style="border-style: inset;" border="1" cellspacing="0" cellpadding="2">	
+ <td align=middle valign=top class="w-25">
+  <table style="border-style: inset;" border="1" cellspacing="0" cellpadding="2" class="w-100 card">
 	<tr>
 	  <td colspan="3" align="center">&nbsp;</td>
 	</tr>	
