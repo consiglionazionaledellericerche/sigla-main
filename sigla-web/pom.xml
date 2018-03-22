@@ -110,7 +110,6 @@
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>transactions</artifactId>
         </dependency>
-        <!-- SIGLA -->
 
         <dependency>
             <groupId>org.bouncycastle</groupId>
@@ -119,7 +118,6 @@
         </dependency>
 
 
-        <!-- https://mvnrepository.com/artifact/javax.xml.ws/jaxws-api -->
         <dependency>
             <groupId>javax.xml.ws</groupId>
             <artifactId>jaxws-api</artifactId>
@@ -380,7 +378,6 @@
             <version>2.5</version>
         </dependency>
 
-        <!-- END SIGLA -->
 
     </dependencies>
 </project>
