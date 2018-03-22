@@ -28,6 +28,7 @@ script:{
 	}  
 	nodoDoc.createAssociation(docFirmato, "varpianogest:allegatiVarBilancio");
 	nodoDoc.addAspect("cnr:signedDocument");
+	nodoDoc.save();
 	docFirmato.createAssociation(nodoDoc, "cnr:signedDocumentAss");  
 	model.nodeRef = docFirmato.nodeRef.toString();
 }
