@@ -2,3 +2,5 @@ SIGLA/
 .git/
 sigla-*/
 !SIGLA/target/*.ear
+sigla/
+!sigla/target/*.jar
