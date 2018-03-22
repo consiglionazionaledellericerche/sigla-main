@@ -1845,13 +1845,43 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		}
 		public RemoteIterator findListaContrattiElenco(UserContext userContext,String query,String dominio,Integer anno,String cdCds,String order,String strRicerca) throws ComponentException {
 			ContrattoHome home = (ContrattoHome)getHome(userContext,ContrattoBulk.class);
-			SQLBuilder sql = home.createSQLBuilder();
+			SQLBuilder sql = home.createSQLBuilder(); 
+			sql.addTableToHeader("ANAGRAFICO,TERZO,UNITA_ORGANIZZATIVA,PROCEDURE_AMMINISTRATIVE");
+			sql.addSQLJoin("TERZO.CD_TERZO", "CONTRATTO.FIG_GIUR_EST");
+			sql.addSQLJoin("TERZO.CD_ANAG", "ANAGRAFICO.CD_ANAG");
+			sql.addSQLJoin("CONTRATTO.CD_UNITA_ORGANIZZATIVA", "UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+			sql.addSQLJoin("CONTRATTO.CD_PROC_AMM", "PROCEDURE_AMMINISTRATIVE.CD_PROC_AMM");
 			if (anno!=null)
 				//sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,anno);
-				sql.addSQLClause(FindClause.AND, "to_char(dt_stipula,'yyyy')", SQLBuilder.EQUALS, anno);
+				sql.addSQLClause(FindClause.AND, "to_char(contratto.dt_stipula,'yyyy')", SQLBuilder.EQUALS, anno);
 			sql.addClause(FindClause.AND, "fl_pubblica_contratto", SQLBuilder.EQUALS, Boolean.TRUE);
-			sql.addSQLClause(FindClause.AND, "to_char(dt_fine_validita,'yyyy-mm-dd')", SQLBuilder.GREATER_EQUALS, "2013-01-01");
-			sql.addOrderBy("ESERCIZIO DESC, PG_CONTRATTO DESC");
+			sql.addSQLClause(FindClause.AND, "to_char(contratto.dt_fine_validita,'yyyy-mm-dd')", SQLBuilder.GREATER_EQUALS, "2013-01-01");
+			if(strRicerca!=null){
+				sql.openParenthesis(FindClause.AND);
+				sql.addSQLClause(FindClause.AND,"instr(CONTRATTO.ESERCIZIO||'/'||CONTRATTO.PG_CONTRATTO,'"+strRicerca+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(UPPER(CONTRATTO.CD_CIG),'"+strRicerca.toUpperCase()+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(UPPER(CONTRATTO.OGGETTO),'"+strRicerca.toUpperCase()+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(to_char(CONTRATTO.DT_INIZIO_VALIDITA,'dd/mm/yyyy'),'"+strRicerca+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(CONTRATTO.DT_PROROGA, CONTRATTO.DT_FINE_VALIDITA),'dd/mm/yyyy'),'"+strRicerca+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(UPPER(ANAGRAFICO.PARTITA_IVA),'"+strRicerca.toUpperCase()+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(UPPER(ANAGRAFICO.CODICE_FISCALE),'"+strRicerca.toUpperCase()+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(UPPER(nvl(ANAGRAFICO.RAGIONE_SOCIALE, ANAGRAFICO.COGNOME)),'"+strRicerca+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(UPPER(nvl(ANAGRAFICO.RAGIONE_SOCIALE, ANAGRAFICO.NOME)),'"+strRicerca+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(UPPER(UNITA_ORGANIZZATIVA.DS_UNITA_ORGANIZZATIVA),'"+strRicerca+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(UPPER(PROCEDURE_AMMINISTRATIVE.CODICE_ANAC),'"+strRicerca+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999999999999999D99'),'"+strRicerca.toUpperCase()+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999G999G999G999G999D99'),'"+strRicerca.toUpperCase()+"')>0");
+				sql.closeParenthesis();
+			}		
+			if(order!=null) {
+				if (order.equals("chiave"))
+					sql.addOrderBy("CONTRATTO.ESERCIZIO DESC,CONTRATTO.PG_CONTRATTO DESC");
+				else if (order.equals("oggetto"))
+					sql.addOrderBy("CONTRATTO.OGGETTO");
+				else if (order.equals("datainizio"))
+					sql.addOrderBy("CONTRATTO.DT_INIZIO_VALIDITA DESC");
+			} else
+				sql.addOrderBy("CONTRATTO.DT_INIZIO_VALIDITA DESC");
 			return iterator(userContext, sql, ContrattoBulk.class, getFetchPolicyName("find"));
 		}
 		
