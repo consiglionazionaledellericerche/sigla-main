@@ -1,0 +1,12 @@
+swarm:
+  datasources:
+    data-sources:
+      SIGLA:
+        driver-name: oracle
+        connection-url: jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF
+        user-name: PCIR009
+        password: dbform
+        use-java-context: true
+        jndi-name: java:/jdbc/CIR
+  transactions:
+    default-timeout: 3600
