@@ -91,6 +91,10 @@
 		<url-pattern>/help/</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>HelpServlet</servlet-name>
+		<url-pattern>/help/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>OfflineReportServlet</servlet-name>
 		<url-pattern>/offline_report/*</url-pattern>
 	</servlet-mapping>
