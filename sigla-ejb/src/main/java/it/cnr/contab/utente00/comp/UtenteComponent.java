@@ -248,7 +248,7 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 	 * 		 primaria di quello specificato.
 	 * Post: Viene segnalato all'utente l'impossibilità di inserimento
 	 *
-	 * @param	uc	lo UserContext che ha generato la richiesta
+	 * @param	userContext	lo UserContext che ha generato la richiesta
 	 * @param	bulk	l'UtenteBulk che deve essere creato
 	 * @return	l'UtenteBulk risultante dopo l'operazione di creazione.
 	 */	
@@ -256,9 +256,12 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 		try 
 		{	
 			UtenteBulk ute = (UtenteBulk) bulk;
-			if (ute!=null && ute.getFl_autenticazione_ldap() && ute.getCd_utente_uid()==null) {
-				throw new ApplicationException("Il campo Codice Utente Ufficiale CNR è obbligatorio.");		
-			}
+			if (!Optional.ofNullable(ute)
+					.filter(UtenteTemplateBulk.class::isInstance).isPresent() &&
+					Optional.ofNullable(ute)
+						.filter(utente -> utente.getFl_autenticazione_ldap() && !Optional.ofNullable(utente.getCd_utente_uid()).isPresent()).isPresent())
+				throw new ApplicationException("Il campo Codice Utente Ufficiale CNR è obbligatorio.");
+
 			if (ute!=null && ute.getFl_autenticazione_ldap() && ute.getCd_utente_uid()!=null) {
 				// controlliamo se l'utente esiste su ldap e abilitiamolo a sigla
 				((GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession",GestioneLoginComponentSession.class)).cambiaAbilitazioneUtente(userContext, ute.getCd_utente_uid(), true);
