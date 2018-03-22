@@ -19,10 +19,7 @@ import org.apache.chemistry.opencmis.client.util.OperationContextUtils;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.SessionParameter;
 import org.apache.chemistry.opencmis.commons.data.PropertyData;
-import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
-import org.apache.chemistry.opencmis.commons.enums.RelationshipDirection;
-import org.apache.chemistry.opencmis.commons.enums.UnfileObject;
-import org.apache.chemistry.opencmis.commons.enums.VersioningState;
+import org.apache.chemistry.opencmis.commons.enums.*;
 import org.apache.chemistry.opencmis.commons.exceptions.*;
 import org.apache.chemistry.opencmis.commons.impl.UrlBuilder;
 import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
@@ -114,8 +111,12 @@ public class CMISSiglaStorageConfiguration {
                 sessionParameters.put(SessionParameter.LOCALE_VARIANT, Locale.ITALY.getVariant());
                 sessionParameters.put(SessionParameter.CACHE_PATH_OMIT,String.valueOf(Boolean.TRUE));
                 Session session = sessionFactory.createSession(sessionParameters);
-                OperationContext operationContext = OperationContextUtils.createMaximumOperationContext();
+                OperationContext operationContext = OperationContextUtils.createOperationContext();
                 operationContext.setMaxItemsPerPage(Integer.MAX_VALUE);
+                operationContext.setIncludeAcls(false);
+                operationContext.setIncludeAllowableActions(false);
+                operationContext.setIncludePolicies(false);
+                operationContext.setIncludePathSegments(false);
                 session.setDefaultContext(operationContext);
                 return session;
             }
