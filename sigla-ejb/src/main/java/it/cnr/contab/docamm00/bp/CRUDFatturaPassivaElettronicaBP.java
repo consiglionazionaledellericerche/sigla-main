@@ -305,24 +305,33 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 
 	public void scaricaFatturaFirmata(ActionContext actioncontext) throws IOException, ServletException, TransformerException, ApplicationException {
 		DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
-		StorageObject fatturaFolder = SpringUtil.getBean("storeService", StoreService.class).getStorageObjectBykey(documentoEleTestata.getDocumentoEleTrasmissione().getCmisNodeRef());
-		List<StorageObject> files = SpringUtil.getBean("storeService", StoreService.class).getChildren(fatturaFolder.getKey());
-		for (StorageObject storageObject : files) {
-			if (storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains("P:sigla_fatture_attachment:fattura_elettronica_xml_post_firma")){
-				InputStream is = SpringUtil.getBean("storeService", StoreService.class).getResource(storageObject);
-				((HttpActionContext)actioncontext).getResponse().setContentLength(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
-				((HttpActionContext)actioncontext).getResponse().setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-				OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
-				((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
-				byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
-				int buflength;
-				while ((buflength = is.read(buffer)) > 0) {
-					os.write(buffer,0,buflength);
-				}
-				is.close();
-				os.flush();
-			}
-		}
+        final StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
+        final StorageObject fattura = Optional.ofNullable(getModel())
+                .filter(DocumentoEleTestataBulk.class::isInstance)
+                .map(DocumentoEleTestataBulk.class::cast)
+                .map(DocumentoEleTestataBulk::getDocumentoEleTrasmissione)
+                .map(DocumentoEleTrasmissioneBulk::getCmisNodeRef)
+                .map(cmisNodeRef -> storeService.getStorageObjectBykey(cmisNodeRef))
+                .filter(storageObject -> Optional.ofNullable(storageObject).isPresent())
+                .map(fatturaFolder ->
+                    storeService.getChildren(fatturaFolder.getKey()).stream()
+                            .filter(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()
+                            ).contains(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_POST_FIRMA.value()) ||
+                                    storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()
+                                    ).contains(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_TRASMISSIONE_FATTURA.value()))
+                            .reduce((x, y) -> {
+                                return Optional.ofNullable(x)
+                                        .filter(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()
+                                        ).contains(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_POST_FIRMA.value()))
+                                        .orElse(y);
+                            }).get()).orElseThrow(() -> new RuntimeException("Fattura non trovata!"));
+        final HttpServletResponse response = ((HttpActionContext) actioncontext).getResponse();
+        InputStream is = storeService.getResource(fattura);
+        response.setContentLength(fattura.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
+        response.setContentType(fattura.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+        response.setDateHeader("Expires", 0);
+        IOUtils.copyLarge(is, response.getOutputStream());
+        response.getOutputStream().flush();
 	}
 
 	public String getNomeFileAllegato() {
