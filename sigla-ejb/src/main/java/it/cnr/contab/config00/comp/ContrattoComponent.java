@@ -1865,12 +1865,12 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(CONTRATTO.DT_PROROGA, CONTRATTO.DT_FINE_VALIDITA),'dd/mm/yyyy'),'"+strRicerca+"')>0");
 				sql.addSQLClause(FindClause.OR,"instr(UPPER(ANAGRAFICO.PARTITA_IVA),'"+strRicerca.toUpperCase()+"')>0");
 				sql.addSQLClause(FindClause.OR,"instr(UPPER(ANAGRAFICO.CODICE_FISCALE),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(nvl(ANAGRAFICO.RAGIONE_SOCIALE, ANAGRAFICO.COGNOME)),'"+strRicerca+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(nvl(ANAGRAFICO.RAGIONE_SOCIALE, ANAGRAFICO.NOME)),'"+strRicerca+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(UNITA_ORGANIZZATIVA.DS_UNITA_ORGANIZZATIVA),'"+strRicerca+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(UPPER(PROCEDURE_AMMINISTRATIVE.CODICE_ANAC),'"+strRicerca+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999999999999999D99'),'"+strRicerca.toUpperCase()+"')>0");
-				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999G999G999G999G999D99'),'"+strRicerca.toUpperCase()+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(UPPER(nvl(ANAGRAFICO.RAGIONE_SOCIALE, ANAGRAFICO.COGNOME)),'"+strRicerca.toUpperCase()+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(UPPER(nvl(ANAGRAFICO.RAGIONE_SOCIALE, ANAGRAFICO.NOME)),'"+strRicerca.toUpperCase()+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(UPPER(UNITA_ORGANIZZATIVA.DS_UNITA_ORGANIZZATIVA),'"+strRicerca.toUpperCase()+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(UPPER(PROCEDURE_AMMINISTRATIVE.CODICE_ANAC),'"+strRicerca.toUpperCase()+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999999999999999D99'),'"+strRicerca+"')>0");
+				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999G999G999G999G999D99'),'"+strRicerca +"')>0");
 				sql.closeParenthesis();
 			}		
 			if(order!=null) {
