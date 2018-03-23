@@ -137,6 +137,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="200"
 			nullable="true" />
+		<columnMapping
+			columnName="DT_DICHIARAZIONE"
+			propertyName="dt_dichiarazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -183,4 +189,6 @@
 		name="ds_tipo_norma" />
 	<persistentProperty
 		name="ds_proc_amm" />
+	<persistentProperty
+		name="dt_dichiarazione" />	
 </SQLPersistentInfo>

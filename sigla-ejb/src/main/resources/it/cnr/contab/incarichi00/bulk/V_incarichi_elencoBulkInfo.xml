@@ -173,7 +173,12 @@
 		inputSize="200"
 		maxLength="200"
 		label="Descrizione Procedura Amministrativa" />
-		
+	<fieldProperty
+		name="dt_dichiarazione"
+		property="dt_dichiarazione"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Dichiarazione" />	
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -222,7 +227,8 @@
 		name="ds_tipo_norma" />
 	<formFieldProperty
 		name="ds_proc_amm" />
-		
+	<formFieldProperty
+		name="dt_dichiarazione" />	
 
 	<findFieldProperty
 		name="esercizio" />
@@ -270,7 +276,8 @@
 		name="ds_tipo_norma" />
 	<findFieldProperty
 		name="ds_proc_amm" />
-
+	<findFieldProperty
+		name="dt_dichiarazione" />
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -317,6 +324,8 @@
 		name="ds_tipo_norma" />
 	<columnFieldProperty
 		name="ds_proc_amm" />
+	<columnFieldProperty
+		name="dt_dichiarazione" />
 
 	<columnSet
 		name="basic" >
