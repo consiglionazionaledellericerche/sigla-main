@@ -100,6 +100,8 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 //  non esiste su DB, contiene i dettagli degli altri rapporti avuto dal contraente con altre PA
 	private BulkList incarichi_repertorio_rapp_detColl = new BulkList();
 
+	private java.sql.Timestamp dt_dichiarazione;
+	
 	public java.lang.Integer getEsercizio() {
 		return esercizio;
 	}
@@ -287,5 +289,11 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 	}
 	public void setCd_tipo_attivita(java.lang.String cd_tipo_attivita) {
 		this.cd_tipo_attivita = cd_tipo_attivita;
+	}
+	public java.sql.Timestamp getDt_dichiarazione() {
+		return dt_dichiarazione;
+	}
+	public void setDt_dichiarazione(java.sql.Timestamp dt_dichiarazione) {
+		this.dt_dichiarazione = dt_dichiarazione;
 	}
 }
