@@ -741,6 +741,16 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		Node nodeProvvedimento = xmldoc.createCDATASection(dato!=null?dato:"");
 		elementProvvedimento.appendChild(nodeProvvedimento);
 		elementRichiesta.appendChild(elementProvvedimento);
+		
+		Element elementDataDichiarazione = xmldoc.createElement(getTagRadice()+":datadichiarazione");
+		datas=null;
+		if(incarico.getDt_dichiarazione()!=null)
+			datas = formatter.format(incarico.getDt_dichiarazione()).toString();
+		dato = datas; 
+		Node nodeDataDichiarazione= xmldoc.createTextNode(dato!=null?dato:"");
+		elementDataDichiarazione.appendChild(nodeDataDichiarazione);
+		elementRichiesta.appendChild(elementDataDichiarazione);
+
 
 		Incarichi_repertorio_archivioBulk curriculum = incarico.getIncaricoRepertorio().getCurriculumVincitore();
 		if (curriculum!=null && curriculum.getCms_node_ref()!=null && incarico.getDt_stipula()!=null) {
