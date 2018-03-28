@@ -29,11 +29,7 @@ import it.cnr.jada.util.action.SelezionatoreListaBP;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.jsp.PageContext;
@@ -48,6 +44,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -69,7 +67,8 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 	private String strRic;
 	private String cdCds;
 	private String tipoInc;
-	
+    private transient static final Logger logger = LoggerFactory.getLogger(RicercaIncarichiRichiestaBP.class);
+
 	public RicercaIncarichiRichiestaBP() {
 		super();
 	}
@@ -896,16 +895,19 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 				codiceErrore = Constants.ERRORE_INC_104;
 				return;
 			}
-		} 
-		if(getRows()!=null){
-			try{
-				this.setPageSize(new Integer(getRows()));
-			} catch(Exception e) {
-				codiceErrore = Constants.ERRORE_INC_104;
-				return;
-			}
 		}
+        try{
+            this.setPageSize(
+                    Optional.ofNullable(getRows())
+                        .map(s -> Integer.valueOf(s))
+                        .orElse(100)
+            );
+        } catch(Exception e) {
+            codiceErrore = Constants.ERRORE_INC_104;
+            return;
+        }
 
+        logger.info("query: {} dominio: {} anno:{} rows: {}", query, dominio, anno, getRows());
 		IncarichiRichiestaComponentSession componentSession = ((IncarichiRichiestaComponentSession)createComponentSession("CNRINCARICHI00_EJB_IncarichiRichiestaComponentSession",IncarichiRichiestaComponentSession.class));
 		ContrattoComponentSession contrattoComponentSession = ((ContrattoComponentSession)createComponentSession("CNRCONFIG00_EJB_ContrattoComponentSession",ContrattoComponentSession.class));
 		try {
@@ -921,11 +923,11 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 				this.setIterator(context, componentSession.findListaIncarichiElencoArt18(context.getUserContext(),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));			
 
 		} catch (ComponentException e) {
-			e.printStackTrace();
+            logger.error(Constants.erroriINC.get(Constants.ERRORE_INC_100), e);
 			codiceErrore = Constants.ERRORE_INC_100;
 			return;
 		} catch (RemoteException e) {
-			e.printStackTrace();
+            logger.error(Constants.erroriINC.get(Constants.ERRORE_INC_100), e);
 			codiceErrore = Constants.ERRORE_INC_100;
 			return;
 		}
@@ -944,38 +946,17 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 				codiceErrore = Constants.ERRORE_INC_104;
 				return;
 			}
-		} else
-			try {
-				setCurrentPage(0);
-			} catch (RemoteException e1) {
-				codiceErrore = Constants.ERRORE_INC_104;
-				return;
-			}
+		} else {
+            try {
+                setCurrentPage(0);
+            } catch (RemoteException e1) {
+                codiceErrore = Constants.ERRORE_INC_104;
+                return;
+            }
+        }
+        this.refetchPage(context);
+        List list = new BulkList(Arrays.asList(getPageContents()));
 
-		List list = new BulkList();
-		if (getRows()==null)
-			try {
-				this.getIterator().moveTo(0);
-				while(this.getIterator().hasMoreElements())
-					list.add(this.getIterator().nextElement());
-			} catch (RemoteException e1) {
-				codiceErrore = Constants.ERRORE_INC_100;
-				return;
-			}
-		else {
-			try {
-				setPageSize(new Integer(getRows()));
-			} catch (Exception e) {
-				codiceErrore = Constants.ERRORE_INC_104;
-				return;
-			}
-			this.refetchPage(context);
-			for (int i = 0; i < getPageContents().length; i++) {
-				list.add(this.getPageContents()[i]);
-			}
-			list=new BulkList(Arrays.asList(getPageContents()));
-		}
-			
 		try {
 			if (getTipofile().equals("1"))
 				setIncarichi(componentSession.completaListaIncarichiRichiesta(context.getUserContext(), list));
