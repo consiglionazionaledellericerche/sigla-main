@@ -455,7 +455,8 @@ public class IncarichiRichiestaComponent extends CRUDComponent {
 				sql.addOrderBy("DT_INIZIO_VALIDITA");
 			else if (order.equals("datafine"))
 				sql.addOrderBy("nvl(DT_FINE_VALIDITA_VARIAZIONE, DT_FINE_VALIDITA)");
-		}
+		} 
+			else sql.addOrderBy("DT_INIZIO_VALIDITA DESC");
 
 		return sql;
 	}
