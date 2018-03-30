@@ -894,7 +894,12 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 			dominio="data";
 		}
 		if(dominio.equalsIgnoreCase("data")){
-			if (query!=null&&(!query.equalsIgnoreCase(Constants.RICHIESTE_IN_CORSO)&&!query.equalsIgnoreCase(Constants.RICHIESTE_SCADUTE))) {
+			if (!getTipofile().equals("4")){
+				if (query!=null&&(!query.equalsIgnoreCase(Constants.RICHIESTE_IN_CORSO)&&!query.equalsIgnoreCase(Constants.RICHIESTE_SCADUTE))) {
+					codiceErrore = Constants.ERRORE_INC_104;
+					return;
+				}
+			}else if (query!=null&&(!query.equalsIgnoreCase("chiave"))) {
 				codiceErrore = Constants.ERRORE_INC_104;
 				return;
 			}
