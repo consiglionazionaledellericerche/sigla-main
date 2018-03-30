@@ -102,6 +102,7 @@
            procedure_amministrative procamm
      WHERE incarichi_repertorio.stato IN ('PD', 'CC')
        AND incarichi_repertorio.fl_pubblica_contratto = 'Y'
+       and incarichi_repertorio.dt_inizio_validita is not null
        AND incarichi_repertorio.esercizio_procedura =
                                                  incarichi_procedura.esercizio
        AND incarichi_repertorio.pg_procedura =
