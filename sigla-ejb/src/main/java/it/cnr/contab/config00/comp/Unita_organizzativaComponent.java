@@ -1543,8 +1543,8 @@ public class Unita_organizzativaComponent extends it.cnr.jada.comp.CRUDComponent
             SQLBuilder sql = (SQLBuilder) super.select(userContext, null, new Unita_organizzativaBulk());
             if (cds != null)
                 sql.addSQLClause("AND", "CD_UNITA_PADRE", sql.EQUALS, cds);
-            sql.addSQLClause("AND", "esercizio_inizio", sql.LESS_EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
-            sql.addSQLClause("AND", "esercizio_fine", sql.GREATER_EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext) userContext).getEsercizio());
+            sql.addSQLClause("AND", "esercizio_inizio", sql.LESS_EQUALS, CNRUserContext.getEsercizio(userContext));
+            sql.addSQLClause("AND", "esercizio_fine", sql.GREATER_EQUALS, CNRUserContext.getEsercizio(userContext));
             sql.addSQLClause("AND", "LIVELLO", sql.EQUALS, Constants.LIVELLO_UO);
             if (dominio.equalsIgnoreCase("codice"))
                 sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, query);
