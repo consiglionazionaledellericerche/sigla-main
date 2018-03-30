@@ -10,6 +10,8 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.util.Introspector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
@@ -17,6 +19,7 @@ import java.rmi.RemoteException;
 import java.text.ParseException;
 
 public class RicercaIncarichiRichiestaAction extends AbstractAction {
+    private transient static final Logger logger = LoggerFactory.getLogger(RicercaIncarichiRichiestaAction.class);
 
 	/* per testare si può usare:
 	 * 
@@ -70,22 +73,9 @@ public class RicercaIncarichiRichiestaAction extends AbstractAction {
 			valorizzaParametri(actioncontext,bp,"cdCds");
 			valorizzaParametri(actioncontext,bp,"tipoInc");
 			
-			if (bp.getUser()!= null)
-				user = bp.getUser();
-			else
-				user = "MACRO";	
-			
-			CNRUserInfo ui = new CNRUserInfo();
-			UtenteBulk utente = new UtenteBulk();
-			utente.setCd_utente(user);
-			ui.setUserid(utente.getCd_utente());
-			ui.setEsercizio(new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)));
-			ui.setUtente(utente);
-			actioncontext.setUserInfo(ui);			
-			actioncontext.setUserContext(new CNRUserContext(user,actioncontext.getSessionId(),new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null));
 			bp.eseguiRicerca(actioncontext);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("ERROR in RicercaIncarichiRichiestaAction ", e);
 			bp.setCodiceErrore(Constants.ERRORE_INC_100);
 		}
 		return actioncontext.findDefaultForward();
