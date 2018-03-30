@@ -90,7 +90,7 @@ public class UnitaOrganizzativaComponentWS {
 			} else {
 				try {
 					UO = unitaOrganizzativaComponentSession
-							.findListaUOWS(userContext, query, dominio, ricerca);
+							.findListaUOWS(userContext, query, dominio, ricerca, null);
 				} catch (ComponentException e) {
 					throw new SOAPFaultException(faultGenerico());
 				} catch (RemoteException e) {
