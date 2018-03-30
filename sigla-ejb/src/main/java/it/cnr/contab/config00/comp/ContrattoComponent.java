@@ -1872,7 +1872,12 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999999999999999D99'),'"+strRicerca+"')>0");
 				sql.addSQLClause(FindClause.OR,"instr(to_char(nvl(IM_CONTRATTO_PASSIVO_NETTO,IM_CONTRATTO_PASSIVO), '999G999G999G999G999D99'),'"+strRicerca +"')>0");
 				sql.closeParenthesis();
-			}		
+			} 
+			if (query!=null && query.equals("chiave")){
+				// per ricerca mirata per chiave per la visualizzazione dettaglio contratto
+				if(strRicerca!=null)
+					sql.addSQLClause(FindClause.AND,"CONTRATTO.ESERCIZIO||'/'||CONTRATTO.PG_CONTRATTO",SQLBuilder.EQUALS,strRicerca);
+			}
 			if(order!=null) {
 				if (order.equals("chiave"))
 					sql.addOrderBy("CONTRATTO.ESERCIZIO DESC,CONTRATTO.PG_CONTRATTO DESC");
