@@ -27,9 +27,8 @@ public class RicercaContrattoAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaContrattoBP bp = null;
 		try {
-			String user;
 			bp = (RicercaContrattoBP)actioncontext.createBusinessProcess("RicercaContrattoBP");
-			actioncontext.addBusinessProcess(bp);
+			actioncontext.setBusinessProcess(bp);
 			RicercaContrattoBulk bulk=new RicercaContrattoBulk();
 			valorizzaParametri(actioncontext,bp,"uo");
 			valorizzaParametri(actioncontext,bp,"oggetto");
@@ -42,22 +41,6 @@ public class RicercaContrattoAction extends AbstractAction {
 			valorizzaParametri(actioncontext,bp,"daNum");
 			valorizzaParametri(actioncontext,bp,"user");
 			valorizzaParametri(actioncontext,bp,"esercizio");
-			
-			if (bp.getUser()!= null)
-				user = bp.getUser();
-			else
-				user = "MACRO";	
-			
-			
-			CNRUserInfo ui = new CNRUserInfo();
-			UtenteBulk utente = new UtenteBulk();
-			utente.setCd_utente(user);
-			ui.setUserid(utente.getCd_utente());
-			ui.setEsercizio(new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)));
-			ui.setUtente(utente);
-			actioncontext.setUserInfo(ui);			
-			actioncontext.setUserContext(new CNRUserContext(user,actioncontext.getSessionId(),ui.getEsercizio(),null,null,null));
-			
 			bp.eseguiRicerca(actioncontext);
 		} catch (ParseException e) {
 			bp.setCodiceErrore(Constants.ERRORE_CON_202);	

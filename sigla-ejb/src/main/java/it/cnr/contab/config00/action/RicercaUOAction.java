@@ -24,33 +24,15 @@ public class RicercaUOAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaUOBP bp = null;
 		try {
-			String user;
 			bp = (RicercaUOBP)actioncontext.createBusinessProcess("RicercaUOBP");
-			actioncontext.addBusinessProcess(bp);
+			actioncontext.setBusinessProcess(bp);
 			valorizzaParametri(actioncontext,bp,"query");
 			valorizzaParametri(actioncontext,bp,"dominio");
 			valorizzaParametri(actioncontext,bp,"numMax");
 			valorizzaParametri(actioncontext,bp,"user");
 			valorizzaParametri(actioncontext,bp,"ricerca");
-			if (bp.getUser()!= null)
-				user = bp.getUser();
-			else
-				user = "MACRO";	
-			
-			CNRUserInfo ui = new CNRUserInfo();
-			UtenteBulk utente = new UtenteBulk();
-			utente.setCd_utente(user);
-			ui.setUserid(utente.getCd_utente());
-			ui.setEsercizio(new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)));
-			ui.setUtente(utente);
-			actioncontext.setUserInfo(ui);
-			String valore = ((HttpActionContext)actioncontext).getParameter("cds");
-			if (valore != null && !valore.trim().equals(""))
-				actioncontext.setUserContext(new CNRUserContext(user,actioncontext.getSessionId(),new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,valore,null));
-			else
-				actioncontext.setUserContext(new CNRUserContext(user,actioncontext.getSessionId(),new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null));
+			valorizzaParametri(actioncontext,bp,"cds");
 			bp.eseguiRicerca(actioncontext);
-			
 		} catch (Exception e) {
 			bp.setCodiceErrore(Constants.ERRORE_SIP_100);
 		}

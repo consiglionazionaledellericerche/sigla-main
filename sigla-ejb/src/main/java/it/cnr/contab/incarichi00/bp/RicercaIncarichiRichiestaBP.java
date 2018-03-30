@@ -922,15 +922,15 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		ContrattoComponentSession contrattoComponentSession = ((ContrattoComponentSession)createComponentSession("CNRCONFIG00_EJB_ContrattoComponentSession",ContrattoComponentSession.class));
 		try {
 			if (getTipofile().equals("1"))
-				this.setIterator(context, componentSession.findListaIncarichiRichiesta(context.getUserContext(),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));
+				this.setIterator(context, componentSession.findListaIncarichiRichiesta(context.getUserContext(false),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));
 			else if (getTipofile().equals("2"))
-				this.setIterator(context, componentSession.findListaIncarichiCollaborazione(context.getUserContext(),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));
+				this.setIterator(context, componentSession.findListaIncarichiCollaborazione(context.getUserContext(false),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));
 			else if (getTipofile().equals("3"))
-				this.setIterator(context, componentSession.findListaIncarichiElenco(context.getUserContext(),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic(),getTipoInc()));			
+				this.setIterator(context, componentSession.findListaIncarichiElenco(context.getUserContext(false),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic(),getTipoInc()));
 			else if (getTipofile().equals("4"))
-				this.setIterator(context, contrattoComponentSession.findListaContrattiElenco(context.getUserContext(),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));			
+				this.setIterator(context, contrattoComponentSession.findListaContrattiElenco(context.getUserContext(false),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));
 			else if (getTipofile().equals("5"))
-				this.setIterator(context, componentSession.findListaIncarichiElencoArt18(context.getUserContext(),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));			
+				this.setIterator(context, componentSession.findListaIncarichiElencoArt18(context.getUserContext(false),query,dominio,esercizio,getCdCds(),getOrder(),getStrRic()));
 
 		} catch (ComponentException e) {
             logger.error(Constants.erroriINC.get(Constants.ERRORE_INC_100), e);
@@ -969,14 +969,13 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 
 		try {
 			if (getTipofile().equals("1"))
-				setIncarichi(componentSession.completaListaIncarichiRichiesta(context.getUserContext(), list));
+				setIncarichi(componentSession.completaListaIncarichiRichiesta(context.getUserContext(false), list));
 			else if (getTipofile().equals("2"))
-				setIncarichi(componentSession.completaListaIncarichiCollaborazione(context.getUserContext(),list));
+				setIncarichi(componentSession.completaListaIncarichiCollaborazione(context.getUserContext(false),list));
 			else if (getTipofile().equals("3") || getTipofile().equals("5"))
-				setIncarichi(componentSession.completaListaIncarichiElenco(context.getUserContext(),list));
+				setIncarichi(componentSession.completaListaIncarichiElenco(context.getUserContext(false),list));
 			else if (getTipofile().equals("4"))
-				setIncarichi(completaListaContrattiElenco(context.getUserContext(),list));
-
+				setIncarichi(completaListaContrattiElenco(context.getUserContext(false),list));
 		} catch (ComponentException e) {
 			codiceErrore = Constants.ERRORE_INC_100;
 		} catch (RemoteException e) {
@@ -998,16 +997,8 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 				ContrattoComponentSession contrattoComponentSession= (ContrattoComponentSession)createComponentSession("CNRCONFIG00_EJB_ContrattoComponentSession",ContrattoComponentSession.class);
 				contratto=(ContrattoBulk)contrattoComponentSession.calcolaTotDocCont(userContext, contratto);
 				
-			} catch (BusinessProcessException e) {
-				e.printStackTrace();
-				codiceErrore = Constants.ERRORE_INC_100;
-				return null;
-			} catch (ComponentException e) {
-				e.printStackTrace();
-				codiceErrore = Constants.ERRORE_INC_100;
-				return null;
-			} catch (RemoteException e) {
-				e.printStackTrace();
+			} catch (BusinessProcessException|ComponentException|RemoteException e) {
+				logger.error("ERROR -> ", e);
 				codiceErrore = Constants.ERRORE_INC_100;
 				return null;
 			}

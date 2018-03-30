@@ -202,7 +202,8 @@ public class RicercaMissioniBP extends BusinessProcess implements ResponseXMLBP{
 			return;
 		}else{
 			try{	 	
-				setMissioni(((MissioneComponentSession)createComponentSession("CNRMISSIONI00_EJB_MissioneComponentSession",MissioneComponentSession.class)).findListaMissioniSIP(context.getUserContext(), getQuery(), getDominio(), getUo(), getTerzo(),getVoce(), getCdr(), getGae(), getRicerca(),new Timestamp(new SimpleDateFormat("dd/MM/yyyy").parse(getDt_inizio_rend()).getTime()),new Timestamp(new SimpleDateFormat("dd/MM/yyyy").parse(getDt_fine_rend()).getTime())));
+				setMissioni(((MissioneComponentSession)createComponentSession("CNRMISSIONI00_EJB_MissioneComponentSession",MissioneComponentSession.class))
+						.findListaMissioniSIP(context.getUserContext(false), getQuery(), getDominio(), getUo(), getTerzo(),getVoce(), getCdr(), getGae(), getRicerca(),new Timestamp(new SimpleDateFormat("dd/MM/yyyy").parse(getDt_inizio_rend()).getTime()),new Timestamp(new SimpleDateFormat("dd/MM/yyyy").parse(getDt_fine_rend()).getTime())));
 			} catch (ComponentException e) {
 				codiceErrore = Constants.ERRORE_SIP_100;
 			} catch (RemoteException e) {

@@ -528,7 +528,8 @@ try{
 			}
 		}
 		try {
-			setContratti(((ContrattoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_ContrattoComponentSession",ContrattoComponentSession.class)).findListaContrattiSIP(context.getUserContext(), bulk));
+			setContratti(((ContrattoComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_ContrattoComponentSession",ContrattoComponentSession.class))
+					.findListaContrattiSIP(context.getUserContext(false), bulk));
 		} catch (ComponentException e) {
 				codiceErrore = Constants.ERRORE_CON_200;
 		} catch (RemoteException e) {
