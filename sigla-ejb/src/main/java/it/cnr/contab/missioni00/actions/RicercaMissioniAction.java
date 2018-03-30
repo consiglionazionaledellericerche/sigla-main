@@ -24,9 +24,8 @@ public class RicercaMissioniAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaMissioniBP bp = null;
 		try {
-			String user;
 			bp = (RicercaMissioniBP)actioncontext.createBusinessProcess("RicercaMissioniBP");
-			actioncontext.addBusinessProcess(bp);
+			actioncontext.setBusinessProcess(bp);
 			valorizzaParametri(actioncontext,bp,"query");
 			valorizzaParametri(actioncontext,bp,"dominio");
 			valorizzaParametri(actioncontext,bp,"uo");
@@ -39,22 +38,7 @@ public class RicercaMissioniAction extends AbstractAction {
 			valorizzaParametri(actioncontext,bp,"ricerca");
 			valorizzaParametri(actioncontext,bp,"dt_inizio_rend");
 			valorizzaParametri(actioncontext,bp,"dt_fine_rend");
-
-			if (bp.getUser()!= null)
-				user = bp.getUser();
-			else
-				user = "MACRO";	
-			
-			CNRUserInfo ui = new CNRUserInfo();
-			UtenteBulk utente = new UtenteBulk();
-			utente.setCd_utente(user);
-			ui.setUserid(utente.getCd_utente());
-			ui.setEsercizio(new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)));
-			ui.setUtente(utente);
-			actioncontext.setUserInfo(ui);			
-			actioncontext.setUserContext(new CNRUserContext(user,actioncontext.getSessionId(),new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null));
 			bp.eseguiRicerca(actioncontext);
-			
 		} catch (Exception e) {
 			bp.setCodiceErrore(Constants.ERRORE_SIP_100);
 		}

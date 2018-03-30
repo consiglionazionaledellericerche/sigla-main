@@ -225,7 +225,8 @@ public class RicercaNaProComBP extends BusinessProcess implements ResponseXMLBP{
 	
 	public void caricaNazioni(ActionContext actioncontext) {
 		try {
-			RemoteIterator iterator =EJBCommonServices.openRemoteIterator(actioncontext, ((CRUDComponentSession)createComponentSession("JADAEJB_CRUDComponentSession",CRUDComponentSession.class)).cerca(actioncontext.getUserContext(), null, new NazioneBulk()));
+			RemoteIterator iterator =EJBCommonServices.openRemoteIterator(actioncontext, ((CRUDComponentSession)createComponentSession("JADAEJB_CRUDComponentSession",CRUDComponentSession.class))
+					.cerca(actioncontext.getUserContext(false), null, new NazioneBulk()));
 			((it.cnr.jada.util.RemoteOrderable)iterator).setOrderBy("ds_nazione", 1);
 			while(iterator.hasMoreElements())
 				getNazioni().add(iterator.nextElement());
@@ -239,7 +240,8 @@ public class RicercaNaProComBP extends BusinessProcess implements ResponseXMLBP{
 	}
 	public void caricaProvice(ActionContext actioncontext) {
 		try {
-			RemoteIterator iterator =EJBCommonServices.openRemoteIterator(actioncontext, ((CRUDComponentSession)createComponentSession("JADAEJB_CRUDComponentSession",CRUDComponentSession.class)).cerca(actioncontext.getUserContext(), null, new ProvinciaBulk()));			
+			RemoteIterator iterator =EJBCommonServices.openRemoteIterator(actioncontext, ((CRUDComponentSession)createComponentSession("JADAEJB_CRUDComponentSession",CRUDComponentSession.class))
+					.cerca(actioncontext.getUserContext(false), null, new ProvinciaBulk()));
 			((it.cnr.jada.util.RemoteOrderable)iterator).setOrderBy("ds_provincia", 1);
 			while(iterator.hasMoreElements())
 				getProvince().add(iterator.nextElement());
@@ -256,7 +258,8 @@ public class RicercaNaProComBP extends BusinessProcess implements ResponseXMLBP{
 			ComuneBulk comune = new ComuneBulk();
 			comune.setNazione(new NazioneBulk(getNazione()));
 			comune.setProvincia(new ProvinciaBulk(getProvincia()));			
-			RemoteIterator iterator =EJBCommonServices.openRemoteIterator(actioncontext, ((CRUDComponentSession)createComponentSession("JADAEJB_CRUDComponentSession",CRUDComponentSession.class)).cerca(actioncontext.getUserContext(), null, comune));			
+			RemoteIterator iterator =EJBCommonServices.openRemoteIterator(actioncontext, ((CRUDComponentSession)createComponentSession("JADAEJB_CRUDComponentSession",CRUDComponentSession.class))
+					.cerca(actioncontext.getUserContext(false), null, comune));
 			((it.cnr.jada.util.RemoteOrderable)iterator).setOrderBy("ds_comune", 1);
 			while(iterator.hasMoreElements())
 				getComuni().add(iterator.nextElement());
@@ -276,9 +279,12 @@ public class RicercaNaProComBP extends BusinessProcess implements ResponseXMLBP{
 			comune.setTi_italiano_estero(ComuneBulk.COMUNE_ESTERO);
 			comune.setCd_catastale(ComuneBulk.CODICE_CATASTALE_ESTERO);
 			comune.setToBeCreated();
-			comune = (ComuneBulk)((ComuneComponentSession)createComponentSession("CNRANAGRAF00_EJB_ComuneComponentSession",ComuneComponentSession.class)).inizializzaBulkPerInserimento(actioncontext.getUserContext(), comune);			
-			comune = (ComuneBulk)((ComuneComponentSession)createComponentSession("CNRANAGRAF00_EJB_ComuneComponentSession",ComuneComponentSession.class)).creaConBulk(actioncontext.getUserContext(), comune);
-			RemoteIterator iterator =EJBCommonServices.openRemoteIterator(actioncontext, ((CRUDComponentSession)createComponentSession("JADAEJB_CRUDComponentSession",CRUDComponentSession.class)).cerca(actioncontext.getUserContext(), null, comune));			
+			comune = (ComuneBulk)((ComuneComponentSession)createComponentSession("CNRANAGRAF00_EJB_ComuneComponentSession",ComuneComponentSession.class))
+					.inizializzaBulkPerInserimento(actioncontext.getUserContext(false), comune);
+			comune = (ComuneBulk)((ComuneComponentSession)createComponentSession("CNRANAGRAF00_EJB_ComuneComponentSession",ComuneComponentSession.class))
+					.creaConBulk(actioncontext.getUserContext(false), comune);
+			RemoteIterator iterator =EJBCommonServices.openRemoteIterator(actioncontext, ((CRUDComponentSession)createComponentSession("JADAEJB_CRUDComponentSession",CRUDComponentSession.class))
+					.cerca(actioncontext.getUserContext(false), null, comune));
 			while(iterator.hasMoreElements())
 				getComuni().add(iterator.nextElement());
 		} catch (ComponentException e) {

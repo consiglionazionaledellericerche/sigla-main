@@ -24,9 +24,9 @@ public class RicercaTerziAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaTerziBP bp = null;
 		try {
-			String user;
 			bp = (RicercaTerziBP)actioncontext.createBusinessProcess("RicercaTerziBP");
-			actioncontext.addBusinessProcess(bp);
+            actioncontext.setBusinessProcess(bp);
+			bp.setUser("MACRO");
 			valorizzaParametri(actioncontext,bp,"query");
 			valorizzaParametri(actioncontext,bp,"dominio");
 			valorizzaParametri(actioncontext,bp,"servizio");
@@ -54,23 +54,7 @@ public class RicercaTerziAction extends AbstractAction {
 			valorizzaParametri(actioncontext,bp,"dt_inizio_rend");
 			valorizzaParametri(actioncontext,bp,"dt_fine_rend");
 			valorizzaParametri(actioncontext,bp,"dip");
-			if (bp.getUser()!= null){
-				if(bp.getUser().length()>20)
-					user = bp.getUser().substring(0, 20);
-				else
-					user = bp.getUser();
-			}
-			else
-				user = "MACRO";	
-			
-			CNRUserInfo ui = new CNRUserInfo();
-			UtenteBulk utente = new UtenteBulk();
-			utente.setCd_utente(user);
-			ui.setUserid(utente.getCd_utente());
-			ui.setEsercizio(new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)));
-			ui.setUtente(utente);
-			actioncontext.setUserInfo(ui);			
-			actioncontext.setUserContext(new CNRUserContext(user,actioncontext.getSessionId(),new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null));
+
 			if (bp.getServizio()!= null && bp.getServizio().equalsIgnoreCase("cerca"))
 				bp.eseguiRicerca(actioncontext);
 			else if (bp.getServizio()!= null && bp.getServizio().equalsIgnoreCase("rendicontazione"))

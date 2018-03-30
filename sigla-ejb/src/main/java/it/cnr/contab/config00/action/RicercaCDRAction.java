@@ -26,31 +26,15 @@ public class RicercaCDRAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaCDRBP bp = null;
 		try {
-			String user;
 			bp = (RicercaCDRBP)actioncontext.createBusinessProcess("RicercaCDRBP");
-			actioncontext.addBusinessProcess(bp);
+			actioncontext.setBusinessProcess(bp);
 			valorizzaParametri(actioncontext,bp,"uo");
 			valorizzaParametri(actioncontext,bp,"query");
 			valorizzaParametri(actioncontext,bp,"dominio");
 			valorizzaParametri(actioncontext,bp,"numMax");
 			valorizzaParametri(actioncontext,bp,"user");
 			valorizzaParametri(actioncontext,bp,"ricerca");
-			if (bp.getUser()!= null)
-				user = bp.getUser();
-			else
-				user = "MACRO";	
-			
-			CNRUserInfo ui = new CNRUserInfo();
-			UtenteBulk utente = new UtenteBulk();
-			utente.setCd_utente(user);
-			ui.setUserid(utente.getCd_utente());
-			ui.setEsercizio(new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)));
-			ui.setUtente(utente);
-			actioncontext.setUserInfo(ui);			
-			actioncontext.setUserContext(new CNRUserContext(user,actioncontext.getSessionId(),new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null));
-			
 			bp.eseguiRicerca(actioncontext);
-			
 		} catch (Exception e) {
 			bp.setCodiceErrore(Constants.ERRORE_SIP_100);
 		}

@@ -26,9 +26,8 @@ public class RicercaGAEAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaGAEBP bp = null;
 		try {
-			String user;
 			bp = (RicercaGAEBP)actioncontext.createBusinessProcess("RicercaGAEBP");
-			actioncontext.addBusinessProcess(bp);
+			actioncontext.setBusinessProcess(bp);
 			valorizzaParametri(actioncontext,bp,"cdr");
 			valorizzaParametri(actioncontext,bp,"tipo");
 			valorizzaParametri(actioncontext,bp,"esercizio");
@@ -38,26 +37,7 @@ public class RicercaGAEAction extends AbstractAction {
 			valorizzaParametri(actioncontext,bp,"user");
 			valorizzaParametri(actioncontext,bp,"ricerca");
 			valorizzaParametri(actioncontext,bp,"filtro");
-			if (bp.getUser()!= null)
-				user = bp.getUser();
-			else
-				user = "MACRO";	
-			
-			CNRUserInfo ui = new CNRUserInfo();
-			UtenteBulk utente = new UtenteBulk();
-			utente.setCd_utente(user);
-			ui.setUserid(utente.getCd_utente());
-			if(bp.getEsercizio()!=null)
-				ui.setEsercizio(new Integer(bp.getEsercizio()));
-			else
-				ui.setEsercizio(new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)));
-
-			ui.setUtente(utente);
-			actioncontext.setUserInfo(ui);			
-			actioncontext.setUserContext(new CNRUserContext(user,actioncontext.getSessionId(),ui.getEsercizio(),null,null,null));
-			
 			bp.eseguiRicerca(actioncontext);
-			
 		} catch (Exception e) {
 			bp.setCodiceErrore(Constants.ERRORE_SIP_100);
 		}
