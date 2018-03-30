@@ -1,19 +1,5 @@
 package it.cnr.contab.config00.bp;
 
-import java.io.IOException;
-import java.rmi.RemoteException;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.servlet.ServletException;
-import javax.servlet.jsp.PageContext;
-
-import javax.xml.parsers.*;
-import javax.xml.transform.*;
-import javax.xml.transform.stream.*;
-import javax.xml.transform.dom.*;
-import org.w3c.dom.*;
-
 import it.cnr.contab.config00.ejb.PDCFinComponentSession;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
@@ -22,229 +8,250 @@ import it.cnr.contab.config00.util.Constants;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.comp.ComponentException;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
-public class RicercaVoceBP extends BusinessProcess implements ResponseXMLBP{
-	private String query;
-	private String dominio;
-	private Integer codiceErrore;
-	private Integer numMax;
-	private String user;
-	private String uo;
-	private String tipo;
-	private List Voci;
-	private String ricerca;
-	private String esercizio;
-	private String filtro;
-	public RicercaVoceBP() {
-		super();
-	}
+import javax.servlet.ServletException;
+import javax.servlet.jsp.PageContext;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.IOException;
+import java.rmi.RemoteException;
+import java.util.Iterator;
+import java.util.List;
 
-	public RicercaVoceBP(String s) {
-		super(s);
-	}
-	
-	private Element generaErrore(Document xmldoc){
-		Element e = xmldoc.createElement("errore");
-		e.setAttribute("codice",codiceErrore.toString());
-		Node n = xmldoc.createTextNode(Constants.erroriSIP.get(codiceErrore));
-		e.appendChild(n);
-		return e;
-	}
-	private Element generaNumeroVoci(Document xmldoc){
-		Element e = xmldoc.createElement("numris");
-		Node n = xmldoc.createTextNode(new Integer(getVoci().size()).toString());
-		e.appendChild(n);
-		return e;	
-	}
-	private Element generaDettaglioVoci(Document xmldoc, String tipo, String voce,String descrizione){
-	
-	Element element = xmldoc.createElement("voce");
+public class RicercaVoceBP extends BusinessProcess implements ResponseXMLBP {
+    private String query;
+    private String dominio;
+    private Integer codiceErrore;
+    private Integer numMax;
+    private String user;
+    private String uo;
+    private String tipo;
+    private List Voci;
+    private String ricerca;
+    private String esercizio;
+    private String filtro;
 
-	Element elementTipo = xmldoc.createElement("tipo");
-	Node nodeTipo = xmldoc.createTextNode(tipo.compareTo(Elemento_voceHome.GESTIONE_ENTRATE)==0?"Entrata":"Spesa");
-	elementTipo.appendChild(nodeTipo);
-	element.appendChild(elementTipo);
+    public RicercaVoceBP() {
+        super();
+    }
 
-	Element elementCodice = xmldoc.createElement("codice");
-	Node nodeCodice = xmldoc.createTextNode(voce);
-	elementCodice.appendChild(nodeCodice);
-	element.appendChild(elementCodice);
+    public RicercaVoceBP(String s) {
+        super(s);
+    }
 
-	
-	Element elementDenominazione = xmldoc.createElement("descrizione");
-	Node nodeDenominazione = xmldoc.createTextNode(descrizione==null?"":descrizione);
-	elementDenominazione.appendChild(nodeDenominazione);
-	element.appendChild(elementDenominazione);
-	
-	return element;
-}
+    private Element generaErrore(Document xmldoc) {
+        Element e = xmldoc.createElement("errore");
+        e.setAttribute("codice", codiceErrore.toString());
+        Node n = xmldoc.createTextNode(Constants.erroriSIP.get(codiceErrore));
+        e.appendChild(n);
+        return e;
+    }
 
+    private Element generaNumeroVoci(Document xmldoc) {
+        Element e = xmldoc.createElement("numris");
+        Node n = xmldoc.createTextNode(new Integer(getVoci().size()).toString());
+        e.appendChild(n);
+        return e;
+    }
 
+    private Element generaDettaglioVoci(Document xmldoc, String tipo, String voce, String descrizione) {
 
-	public void generaXML(PageContext pagecontext) throws IOException, ServletException{
-		try {
-			if (getNumMax()==null)
-				setNumMax(new Integer(20));
-	    	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-	    	DocumentBuilder builder = factory.newDocumentBuilder();
-	    	DOMImplementation impl = builder.getDOMImplementation();
-	    	//Document xmldoc = impl.createDocument("https://contab.cnr.it/SIGLA/schema/cercavoci.xsd","root", null);
-	    	//Element root = xmldoc.getDocumentElement();
-	    	Document xmldoc = impl.createDocument(null, "root", null);
-	    	Element root = xmldoc.getDocumentElement();
-	    	root.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:noNamespaceSchemaLocation", "https://contab.cnr.it/SIGLA/schema/cercavoci.xsd");
+        Element element = xmldoc.createElement("voce");
 
-	    	if (codiceErrore!= null){
-	    		root.appendChild(generaErrore(xmldoc));
-	    	}else{
-    		root.appendChild(generaNumeroVoci(xmldoc));
-    		int num = 0;
-    		if (getVoci() != null && !getVoci().isEmpty()){
-	    		for (Iterator i = getVoci().iterator();i.hasNext()&&num< new Integer(numMax).intValue();){
-	    			if(getTipo().compareTo(Elemento_voceHome.GESTIONE_ENTRATE)==0){
-	    				V_voce_f_partita_giroBulk voce = (V_voce_f_partita_giroBulk)i.next();
-	    				root.appendChild(generaDettaglioVoci( xmldoc,voce.getTi_gestione(),voce.getCd_voce(),voce.getDs_titolo_capitolo()));
-	    			}else{
-	    				Elemento_voceBulk voce = (Elemento_voceBulk)i.next();
-	    				root.appendChild(generaDettaglioVoci( xmldoc,voce.getTi_gestione(),voce.getCd_elemento_voce(),voce.getDs_elemento_voce()));
-	    			}
-	    			num++;
-	    		}
-    		}
-    		}
-	    	DOMSource domSource = new DOMSource(xmldoc);
-	    	StreamResult streamResult = new StreamResult(pagecontext.getOut());
-	    	TransformerFactory tf = TransformerFactory.newInstance();
-	    	Transformer serializer = tf.newTransformer();
-	    	serializer.setOutputProperty(OutputKeys.ENCODING,"UTF-8");
-	    	serializer.setOutputProperty(OutputKeys.INDENT,"yes");
-	    	serializer.setOutputProperty(OutputKeys.STANDALONE,"no");
-	    	serializer.transform(domSource, streamResult); 
-		} catch (ParserConfigurationException e) {
-		} catch (TransformerConfigurationException e) {
-		} catch (TransformerException e) {
-		}
-}
-	
-public void eseguiRicerca(it.cnr.jada.action.ActionContext context)throws BusinessProcessException{
-try {
+        Element elementTipo = xmldoc.createElement("tipo");
+        Node nodeTipo = xmldoc.createTextNode(tipo.compareTo(Elemento_voceHome.GESTIONE_ENTRATE) == 0 ? "Entrata" : "Spesa");
+        elementTipo.appendChild(nodeTipo);
+        element.appendChild(elementTipo);
 
-	if(esercizio== null){
-		codiceErrore = Constants.ERRORE_SIP_114;
-		return;
-	}else if(uo== null){
-		codiceErrore = Constants.ERRORE_SIP_113;
-		return;
-	}else if(tipo== null){
-		codiceErrore = Constants.ERRORE_SIP_118;
-		return;
-	}else if(getQuery()== null){
-		codiceErrore = Constants.ERRORE_SIP_101;
-		return;
-	}else if(getDominio()== null||(!getDominio().equalsIgnoreCase("codice")&&!getDominio().equalsIgnoreCase("descrizione"))){
-		codiceErrore = Constants.ERRORE_SIP_102;
-		return;
-	}else{
-		try {
-		setVoci(((PDCFinComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_PDCFinComponentSession",PDCFinComponentSession.class)).findListaVociWS(context.getUserContext(), getUo(),getTipo(),getQuery(), getDominio(), getRicerca(),getFiltro()));
-		} catch (ComponentException e) {
-			codiceErrore = Constants.ERRORE_SIP_100;
-		} catch (RemoteException e) {
-			codiceErrore = Constants.ERRORE_SIP_100;
-		}
-	}
-} catch (NumberFormatException e) {
-			codiceErrore = Constants.ERRORE_SIP_100;
-	} catch (Exception e) {
-		codiceErrore = Constants.ERRORE_SIP_100;
-	}
-}
-
-public String getDominio() {
-	return dominio;
-}
-
-public void setDominio(String dominio) {
-	this.dominio = dominio;
-}
-
-public String getQuery() {
-	return query;
-}
-
-public void setQuery(String query) {
-	this.query = query;
-}
-
-public Integer getNumMax() {
-	return numMax;
-}
-
-public void setNumMax(Integer numMax) {
-	this.numMax = numMax;
-}
-
-public Integer getCodiceErrore() {
-	return codiceErrore;
-}
-
-public void setCodiceErrore(Integer codiceErrore) {
-	this.codiceErrore = codiceErrore;
-}
+        Element elementCodice = xmldoc.createElement("codice");
+        Node nodeCodice = xmldoc.createTextNode(voce);
+        elementCodice.appendChild(nodeCodice);
+        element.appendChild(elementCodice);
 
 
-public String getUser() {
-	return user;
-}
+        Element elementDenominazione = xmldoc.createElement("descrizione");
+        Node nodeDenominazione = xmldoc.createTextNode(descrizione == null ? "" : descrizione);
+        elementDenominazione.appendChild(nodeDenominazione);
+        element.appendChild(elementDenominazione);
 
-public void setUser(String user) {
-	this.user = user;
-}
+        return element;
+    }
 
-public String getRicerca() {
-	return ricerca;
-}
 
-public void setRicerca(String ricerca) {
-	this.ricerca = ricerca;
-}
+    public void generaXML(PageContext pagecontext) throws IOException, ServletException {
+        try {
+            if (getNumMax() == null)
+                setNumMax(new Integer(20));
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            DOMImplementation impl = builder.getDOMImplementation();
+            //Document xmldoc = impl.createDocument("https://contab.cnr.it/SIGLA/schema/cercavoci.xsd","root", null);
+            //Element root = xmldoc.getDocumentElement();
+            Document xmldoc = impl.createDocument(null, "root", null);
+            Element root = xmldoc.getDocumentElement();
+            root.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:noNamespaceSchemaLocation", "https://contab.cnr.it/SIGLA/schema/cercavoci.xsd");
 
-public String getTipo() {
-	return tipo;
-}
+            if (codiceErrore != null) {
+                root.appendChild(generaErrore(xmldoc));
+            } else {
+                root.appendChild(generaNumeroVoci(xmldoc));
+                int num = 0;
+                if (getVoci() != null && !getVoci().isEmpty()) {
+                    for (Iterator i = getVoci().iterator(); i.hasNext() && num < new Integer(numMax).intValue(); ) {
+                        if (getTipo().compareTo(Elemento_voceHome.GESTIONE_ENTRATE) == 0) {
+                            V_voce_f_partita_giroBulk voce = (V_voce_f_partita_giroBulk) i.next();
+                            root.appendChild(generaDettaglioVoci(xmldoc, voce.getTi_gestione(), voce.getCd_voce(), voce.getDs_titolo_capitolo()));
+                        } else {
+                            Elemento_voceBulk voce = (Elemento_voceBulk) i.next();
+                            root.appendChild(generaDettaglioVoci(xmldoc, voce.getTi_gestione(), voce.getCd_elemento_voce(), voce.getDs_elemento_voce()));
+                        }
+                        num++;
+                    }
+                }
+            }
+            DOMSource domSource = new DOMSource(xmldoc);
+            StreamResult streamResult = new StreamResult(pagecontext.getOut());
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer serializer = tf.newTransformer();
+            serializer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            serializer.setOutputProperty(OutputKeys.INDENT, "yes");
+            serializer.setOutputProperty(OutputKeys.STANDALONE, "no");
+            serializer.transform(domSource, streamResult);
+        } catch (ParserConfigurationException e) {
+        } catch (TransformerConfigurationException e) {
+        } catch (TransformerException e) {
+        }
+    }
 
-public void setTipo(String tipo) {
-	this.tipo = tipo;
-}
+    public void eseguiRicerca(it.cnr.jada.action.ActionContext context) throws BusinessProcessException {
+        try {
 
-public List getVoci() {
-	return Voci;
-}
-public void setVoci(List voci) {
-	Voci = voci;
-}
+            if (esercizio == null) {
+                codiceErrore = Constants.ERRORE_SIP_114;
+                return;
+            } else if (uo == null) {
+                codiceErrore = Constants.ERRORE_SIP_113;
+                return;
+            } else if (tipo == null) {
+                codiceErrore = Constants.ERRORE_SIP_118;
+                return;
+            } else if (getQuery() == null) {
+                codiceErrore = Constants.ERRORE_SIP_101;
+                return;
+            } else if (getDominio() == null || (!getDominio().equalsIgnoreCase("codice") && !getDominio().equalsIgnoreCase("descrizione"))) {
+                codiceErrore = Constants.ERRORE_SIP_102;
+                return;
+            } else {
+                try {
+                    setVoci(((PDCFinComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_PDCFinComponentSession", PDCFinComponentSession.class))
+                            .findListaVociWS(context.getUserContext(false), getUo(), getTipo(), getQuery(), getDominio(), getRicerca(), getFiltro()));
+                } catch (ComponentException e) {
+                    codiceErrore = Constants.ERRORE_SIP_100;
+                } catch (RemoteException e) {
+                    codiceErrore = Constants.ERRORE_SIP_100;
+                }
+            }
+        } catch (NumberFormatException e) {
+            codiceErrore = Constants.ERRORE_SIP_100;
+        } catch (Exception e) {
+            codiceErrore = Constants.ERRORE_SIP_100;
+        }
+    }
 
-public String getUo() {
-	return uo;
-}
+    public String getDominio() {
+        return dominio;
+    }
 
-public void setUo(String uo) {
-	this.uo = uo;
-}
+    public void setDominio(String dominio) {
+        this.dominio = dominio;
+    }
 
-public String getEsercizio() {
-	return esercizio;
-}
+    public String getQuery() {
+        return query;
+    }
 
-public void setEsercizio(String esercizio) {
-	this.esercizio = esercizio;
-}
+    public void setQuery(String query) {
+        this.query = query;
+    }
 
-public String getFiltro() {
-	return filtro;
-}
+    public Integer getNumMax() {
+        return numMax;
+    }
 
-public void setFiltro(String filtro) {
-	this.filtro = filtro;
-}
+    public void setNumMax(Integer numMax) {
+        this.numMax = numMax;
+    }
+
+    public Integer getCodiceErrore() {
+        return codiceErrore;
+    }
+
+    public void setCodiceErrore(Integer codiceErrore) {
+        this.codiceErrore = codiceErrore;
+    }
+
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getRicerca() {
+        return ricerca;
+    }
+
+    public void setRicerca(String ricerca) {
+        this.ricerca = ricerca;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public List getVoci() {
+        return Voci;
+    }
+
+    public void setVoci(List voci) {
+        Voci = voci;
+    }
+
+    public String getUo() {
+        return uo;
+    }
+
+    public void setUo(String uo) {
+        this.uo = uo;
+    }
+
+    public String getEsercizio() {
+        return esercizio;
+    }
+
+    public void setEsercizio(String esercizio) {
+        this.esercizio = esercizio;
+    }
+
+    public String getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(String filtro) {
+        this.filtro = filtro;
+    }
 }

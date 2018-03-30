@@ -157,13 +157,16 @@ public void eseguiRicerca(it.cnr.jada.action.ActionContext context)throws Busine
 		return;
 	}else{
 		try {
-			GAE=(((Linea_attivitaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Linea_attivitaComponentSession",Linea_attivitaComponentSession.class)).findListaGAEFEWS(context.getUserContext(), getCdr(),getModulo()));
+			GAE=(((Linea_attivitaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Linea_attivitaComponentSession",Linea_attivitaComponentSession.class))
+					.findListaGAEFEWS(context.getUserContext(false), getCdr(),getModulo()));
 			int num=0;
 			for (Iterator i = GAE.iterator();i.hasNext();){
 				WorkpackageBulk linea =(WorkpackageBulk)i.next();
 				//linea=(((Linea_attivitaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Linea_attivitaComponentSession",Linea_attivitaComponentSession.class)).completaOggetto(context.getUserContext(), linea));
-				linea.setCentro_responsabilita((CdrBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(context.getUserContext(), linea.getCentro_responsabilita())));
-				linea.setNatura((NaturaBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class)).completaOggetto(context.getUserContext(), linea.getNatura())));
+				linea.setCentro_responsabilita((CdrBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class))
+						.completaOggetto(context.getUserContext(false), linea.getCentro_responsabilita())));
+				linea.setNatura((NaturaBulk)(((FatturaAttivaSingolaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",FatturaAttivaSingolaComponentSession.class))
+						.completaOggetto(context.getUserContext(false), linea.getNatura())));
 				getGAE().set(num,linea);
 				num++;
 			}

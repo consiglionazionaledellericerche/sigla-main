@@ -24,9 +24,8 @@ public class RicercaVoceAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaVoceBP bp = null;
 		try {
-			String user;
 			bp = (RicercaVoceBP)actioncontext.createBusinessProcess("RicercaVoceBP");
-			actioncontext.addBusinessProcess(bp);
+			actioncontext.setBusinessProcess(bp);
 			valorizzaParametri(actioncontext,bp,"esercizio");
 			valorizzaParametri(actioncontext,bp,"uo");
 			valorizzaParametri(actioncontext,bp,"tipo");
@@ -37,23 +36,6 @@ public class RicercaVoceAction extends AbstractAction {
 			valorizzaParametri(actioncontext,bp,"user");
 			valorizzaParametri(actioncontext,bp,"ricerca");
 			valorizzaParametri(actioncontext,bp,"filtro");
-			if (bp.getUser()!= null)
-				user = bp.getUser();
-			else
-				user = "MACRO";	
-			
-			CNRUserInfo ui = new CNRUserInfo();
-			UtenteBulk utente = new UtenteBulk();
-			utente.setCd_utente(user);
-			ui.setUserid(utente.getCd_utente());
-			if(bp.getEsercizio()!=null)
-				ui.setEsercizio(new Integer(bp.getEsercizio()));
-			else
-				ui.setEsercizio(new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)));
-			ui.setUtente(utente);
-			actioncontext.setUserInfo(ui);			
-			actioncontext.setUserContext(new CNRUserContext(user,actioncontext.getSessionId(),ui.getEsercizio(),null,null,null));
-			
 			bp.eseguiRicerca(actioncontext);
 			
 		} catch (Exception e) {
