@@ -30,9 +30,8 @@ public class RicercaNaProComAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaNaProComBP bp = null;
 		try {
-			String user;
 			bp = (RicercaNaProComBP)actioncontext.createBusinessProcess("RicercaNaProComBP");
-			actioncontext.addBusinessProcess(bp);
+			actioncontext.setBusinessProcess(bp);
 			valorizzaParametri(actioncontext,bp,"servizio");
 			valorizzaParametri(actioncontext,bp,"nazione");
 			valorizzaParametri(actioncontext,bp,"provincia");
@@ -40,22 +39,6 @@ public class RicercaNaProComAction extends AbstractAction {
 			valorizzaParametri(actioncontext,bp,"pg_nazione");
 			valorizzaParametri(actioncontext,bp,"numMax");
 			valorizzaParametri(actioncontext,bp,"user");
-			if (bp.getUser()!= null)
-				if(bp.getUser().length()>20)
-					user = bp.getUser().substring(0, 20);
-				else
-					user = bp.getUser();
-			else
-				user = "MACRO";	
-			
-			CNRUserInfo ui = new CNRUserInfo();
-			UtenteBulk utente = new UtenteBulk();
-			utente.setCd_utente(user);
-			ui.setUserid(utente.getCd_utente());
-			ui.setEsercizio(new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)));
-			ui.setUtente(utente);
-			actioncontext.setUserInfo(ui);			
-			actioncontext.setUserContext(new CNRUserContext(user,actioncontext.getSessionId(),new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),null,null,null));
 			if (bp.getServizio()!= null && bp.getServizio().equalsIgnoreCase("caricaNazioni"))
 				bp.caricaNazioni(actioncontext);
 			else if (bp.getServizio()!= null && bp.getServizio().equalsIgnoreCase("caricaProvince")){

@@ -188,7 +188,8 @@ public class RicercaFatturaPassivaBP extends BusinessProcess implements Response
 			return;
 		}else{
 			try {
-				setFatture(((FatturaPassivaComponentSession)createComponentSession("CNRDOCAMM00_EJB_FatturaPassivaComponentSession",FatturaPassivaComponentSession.class)).findListaFattureSIP(context.getUserContext(), getQuery(), getDominio(),getUo(), getTerzo(), getVoce(), getCdr(), getGae(), getRicerca(),new Timestamp(new SimpleDateFormat("dd/MM/yyyy").parse(getDt_inizio_rend()).getTime()),new Timestamp(new SimpleDateFormat("dd/MM/yyyy").parse(getDt_fine_rend()).getTime())));
+				setFatture(((FatturaPassivaComponentSession)createComponentSession("CNRDOCAMM00_EJB_FatturaPassivaComponentSession",FatturaPassivaComponentSession.class))
+						.findListaFattureSIP(context.getUserContext(false), getQuery(), getDominio(),getUo(), getTerzo(), getVoce(), getCdr(), getGae(), getRicerca(),new Timestamp(new SimpleDateFormat("dd/MM/yyyy").parse(getDt_inizio_rend()).getTime()),new Timestamp(new SimpleDateFormat("dd/MM/yyyy").parse(getDt_fine_rend()).getTime())));
 			} catch (ComponentException e) {
 				codiceErrore = Constants.ERRORE_SIP_100;
 			} catch (RemoteException e) {

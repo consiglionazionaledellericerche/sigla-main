@@ -24,32 +24,13 @@ public class RicercaGAEFEAction extends AbstractAction {
 	public Forward doDefault(ActionContext actioncontext) throws RemoteException {
 		RicercaGAEFEBP bp = null;
 		try {
-		String user;
 			bp = (RicercaGAEFEBP)actioncontext.createBusinessProcess("RicercaGAEFEBP");
-			actioncontext.addBusinessProcess(bp);
+			bp.setUser("MACRO");
+			actioncontext.setBusinessProcess(bp);
 			valorizzaParametri(actioncontext,bp,"cdr");
 			valorizzaParametri(actioncontext,bp,"modulo");
 			valorizzaParametri(actioncontext,bp,"user");
-			if (bp.getUser()!= null)
-				user = bp.getUser();
-			else
-				user = "MACRO";	
-			
-			CNRUserInfo ui = new CNRUserInfo();
-			UtenteBulk utente = new UtenteBulk();
-			utente.setCd_utente(user);
-			ui.setUserid(utente.getCd_utente());
-			if(bp.getEsercizio()!=null)
-				ui.setEsercizio(new Integer(bp.getEsercizio()));
-			else
-				ui.setEsercizio(new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)));
-
-			ui.setUtente(utente);
-			actioncontext.setUserInfo(ui);			
-			actioncontext.setUserContext(new CNRUserContext(user,actioncontext.getSessionId(),ui.getEsercizio(),null,null,null));
-			
 			bp.eseguiRicerca(actioncontext);
-			
 		} catch (Exception e) {
 			bp.setCodiceErrore(Constants.ERRORE_SIP_100);
 		}

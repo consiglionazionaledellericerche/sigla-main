@@ -409,7 +409,8 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 			return;
 		}else{
 			try {
-				setTerzi(((TerzoComponentSession)createComponentSession("CNRANAGRAF00_EJB_TerzoComponentSession",TerzoComponentSession.class)).findListaTerziSIP(context.getUserContext(),getQuery(),getDominio(),getTipoterzo(),getRicerca()));
+				setTerzi(((TerzoComponentSession)createComponentSession("CNRANAGRAF00_EJB_TerzoComponentSession",TerzoComponentSession.class)).
+                        findListaTerziSIP(context.getUserContext(false),getQuery(),getDominio(),getTipoterzo(),getRicerca()));
 			} catch (ComponentException e) {
 				codiceErrore = Constants.ERRORE_SIP_100;
 			} catch (RemoteException e) {
@@ -440,7 +441,8 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 				}
 			}
 			try {
-				setTerzi(((TerzoComponentSession)createComponentSession("CNRANAGRAF00_EJB_TerzoComponentSession",TerzoComponentSession.class)).findListaTerziSIP_rendicontazione(context.getUserContext(),getQuery(),getDominio(),getTipoterzo(),getRicerca(),new Timestamp(new SimpleDateFormat("dd/MM/yyyy").parse(getDt_inizio_rend()).getTime()),new Timestamp(new SimpleDateFormat("dd/MM/yyyy").parse(getDt_fine_rend()).getTime()),getDip()));
+				setTerzi(((TerzoComponentSession)createComponentSession("CNRANAGRAF00_EJB_TerzoComponentSession",TerzoComponentSession.class))
+                        .findListaTerziSIP_rendicontazione(context.getUserContext(false),getQuery(),getDominio(),getTipoterzo(),getRicerca(),new Timestamp(new SimpleDateFormat("dd/MM/yyyy").parse(getDt_inizio_rend()).getTime()),new Timestamp(new SimpleDateFormat("dd/MM/yyyy").parse(getDt_fine_rend()).getTime()),getDip()));
 			} catch (ComponentException e) {
 				codiceErrore = Constants.ERRORE_SIP_100;
 			} catch (RemoteException e) {
@@ -460,7 +462,8 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 			return;
 		}
 		try {
-			((AnagraficoComponentSession)createComponentSession("CNRANAGRAF00_EJB_AnagraficoComponentSession",AnagraficoComponentSession.class)).eliminaBulkForSIP(context.getUserContext(),getCd_terzo());
+			((AnagraficoComponentSession)createComponentSession("CNRANAGRAF00_EJB_AnagraficoComponentSession",AnagraficoComponentSession.class))
+                    .eliminaBulkForSIP(context.getUserContext(false),getCd_terzo());
 			setTerzi(new BulkList());
 		} catch (ComponentException e) {
 			if (e instanceof TerzoNonPresenteSIPException)
@@ -502,7 +505,9 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		}
 		AnagraficoBulk anagrafico = new AnagraficoBulk();
 		try {
-			anagrafico = (AnagraficoBulk)((AnagraficoComponentSession)createComponentSession("CNRANAGRAF00_EJB_AnagraficoComponentSession",AnagraficoComponentSession.class)).inizializzaBulkPerInserimento(context.getUserContext(),anagrafico);
+			anagrafico = (AnagraficoBulk)((AnagraficoComponentSession)createComponentSession(
+			        "CNRANAGRAF00_EJB_AnagraficoComponentSession",
+                    AnagraficoComponentSession.class)).inizializzaBulkPerInserimento(context.getUserContext(false), anagrafico);
 		} catch (ComponentException e1) {
 			codiceErrore = Constants.ERRORE_SIP_100;
 		} catch (RemoteException e1) {
@@ -532,9 +537,11 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 			anagrafico.setRagione_sociale(getRagione_sociale());
 			anagrafico.setPartita_iva(getPartita_iva());
 		}
+		anagrafico.setUser(getUser());
 		anagrafico.setToBeCreated();
 		try {
-			setTerzi(((AnagraficoComponentSession)createComponentSession("CNRANAGRAF00_EJB_AnagraficoComponentSession",AnagraficoComponentSession.class)).bulkForSIP(context.getUserContext(),anagrafico));
+			setTerzi(((AnagraficoComponentSession)createComponentSession("CNRANAGRAF00_EJB_AnagraficoComponentSession",AnagraficoComponentSession.class))
+                    .bulkForSIP(context.getUserContext(false),anagrafico));
 		} catch (ComponentException e) {
 			if (e.getDetail() instanceof DuplicateKeyException)
 				codiceErrore = Constants.ERRORE_SIP_106;
@@ -555,7 +562,8 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		}
 		TerzoBulk terzo = new TerzoBulk(new Integer(getCd_terzo()));
 		try {
-			RemoteIterator iterator = EJBCommonServices.openRemoteIterator(context, ((TerzoComponentSession)createComponentSession("CNRANAGRAF00_EJB_TerzoComponentSession",TerzoComponentSession.class)).cerca(context.getUserContext(),null,terzo));
+			RemoteIterator iterator = EJBCommonServices.openRemoteIterator(context, ((TerzoComponentSession)createComponentSession("CNRANAGRAF00_EJB_TerzoComponentSession",TerzoComponentSession.class))
+                    .cerca(context.getUserContext(false),null,terzo));
 			if (iterator == null ||iterator.countElements() != 1){
 				codiceErrore = Constants.ERRORE_SIP_108;
 				return;
@@ -587,7 +595,8 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		}
 		AnagraficoBulk anagrafico = terzo.getAnagrafico();
 		try {
-			anagrafico = (AnagraficoBulk)((AnagraficoComponentSession)createComponentSession("CNRANAGRAF00_EJB_AnagraficoComponentSession",AnagraficoComponentSession.class)).inizializzaBulkPerModifica(context.getUserContext(),anagrafico);
+			anagrafico = (AnagraficoBulk)((AnagraficoComponentSession)createComponentSession("CNRANAGRAF00_EJB_AnagraficoComponentSession",AnagraficoComponentSession.class))
+                    .inizializzaBulkPerModifica(context.getUserContext(false),anagrafico);
 		} catch (ComponentException e1) {
 			codiceErrore = Constants.ERRORE_SIP_100;
 		} catch (RemoteException e1) {
@@ -621,7 +630,8 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 		anagrafico.setToBeUpdated();
 		
 		try {
-			setTerzi(((AnagraficoComponentSession)createComponentSession("CNRANAGRAF00_EJB_AnagraficoComponentSession",AnagraficoComponentSession.class)).bulkForSIP(context.getUserContext(),anagrafico));
+			setTerzi(((AnagraficoComponentSession)createComponentSession("CNRANAGRAF00_EJB_AnagraficoComponentSession",AnagraficoComponentSession.class))
+                    .bulkForSIP(context.getUserContext(false),anagrafico));
 		} catch (ComponentException e) {
 			if (e.getDetail() instanceof DuplicateKeyException)
 				codiceErrore = Constants.ERRORE_SIP_106;
