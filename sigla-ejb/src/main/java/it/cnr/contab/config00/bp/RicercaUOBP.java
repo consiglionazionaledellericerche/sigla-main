@@ -191,4 +191,11 @@ public class RicercaUOBP extends BusinessProcess implements ResponseXMLBP {
         this.ricerca = ricerca;
     }
 
+    public String getCds() {
+        return cds;
+    }
+
+    public void setCds(String cds) {
+        this.cds = cds;
+    }
 }
