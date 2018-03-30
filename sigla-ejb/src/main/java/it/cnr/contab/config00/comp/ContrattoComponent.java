@@ -660,7 +660,6 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			   return calcolaTotDocContForPadre(userContext,contratto);
 			if(contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO_E_PASSIVO))
 			   return calcolaTotDocContForAttivoPassivo(userContext,contratto);			   
-			Integer esercizio = ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio();
 			ContrattoHome testataHome = (ContrattoHome)getHome(userContext, ContrattoBulk.class);
 			
 			contratto.setDitteInvitate(new it.cnr.jada.bulk.BulkList(testataHome.findDitteAssociate(userContext, contratto, Ass_contratto_ditteBulk.LISTA_INVITATE)));
