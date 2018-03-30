@@ -2,8 +2,10 @@ package it.cnr.contab.utenze00.bp;
 
 import java.io.Serializable;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.Optional;
 
 /**
  * Classe che definisce il conesto UTENTE in relazione alla configurazione di
@@ -106,7 +108,11 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	}
 	
 	public java.lang.Integer getEsercizio() {
-		return (Integer) attributes.get("esercizio");
+		return Optional.ofNullable(attributes)
+				.map(attr -> attr.get("esercizio"))
+				.filter(Integer.class::isInstance)
+				.map(Integer.class::cast)
+				.orElseGet(() -> LocalDate.now().getYear());
 	}
 
 	/**
@@ -118,7 +124,12 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	 */
 	public static java.lang.Integer getEsercizio(
 			it.cnr.jada.UserContext userContext) {
-		return (Integer) userContext.getAttributes().get("esercizio");
+        return Optional.ofNullable(userContext)
+                .flatMap(userContext1 -> Optional.ofNullable(userContext1.getAttributes()))
+                .map(attr -> attr.get("esercizio"))
+                .filter(Integer.class::isInstance)
+                .map(Integer.class::cast)
+                .orElseGet(() -> LocalDate.now().getYear());
 	}
 
 	public final java.lang.String getSessionId() {
