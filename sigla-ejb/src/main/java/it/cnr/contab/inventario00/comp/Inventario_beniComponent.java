@@ -1030,7 +1030,7 @@ public SQLBuilder selectCategoria_BeneByClause(UserContext userContext, Inventar
 	sql.addSQLClause("AND","LIVELLO",sql.GREATER, "0");
 	if ((bene.getDa_fattura()!=null && bene.getDa_fattura().booleanValue())||(bene.isContab()!=null && bene.isContab().booleanValue())
 			||bene.isMigrato()||bene.isBeneAccessorio()
-		||(!bene.getEsercizio_carico_bene().equals(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext)))){
+		||(bene.getEsercizio_carico_bene()!= null && !bene.getEsercizio_carico_bene().equals(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext)))){
 		sql.addSQLClause("AND","CD_CATEGORIA_GRUPPO",SQLBuilder.EQUALS,ori.getCd_categoria_gruppo());
     }
 	return sql;		
