@@ -34,75 +34,6 @@
 </div>
 
 <fieldset class="mt-2">
-    <legend ACCESSKEY=G TABINDEX=1 style="font-weight:bold; font-family:sans-serif; font-size:12px; color:blue"><span class="h4 text-info ml-2">Scadenza Impegno<span></legend>
-    <div class="Panel card p-2" style="width:100%">
-        <table width="100%">
-            <tr>
-                <td><% bp.getController().writeFormLabel( out, "esercizio_ori_obbligazione"); %></td>
-                <td><% bp.getController().writeFormInput( out, "esercizio_ori_obbligazione"); %></td>
-                <td><% bp.getController().writeFormLabel( out, "pg_obbligazione"); %></td>
-                <td><% bp.getController().writeFormInput( out, "pg_obbligazione"); %></td>
-            </tr>
-            <tr>
-                <td><% bp.getController().writeFormLabel(out, "pg_obbligazione_scadenzario");%></td>
-                <td><% bp.getController().writeFormInput(out, "pg_obbligazione_scadenzario");%></td>
-                <td><% bp.getController().writeFormLabel(out, "ds_scadenza_obbligazione");%></td>
-                <td><% bp.getController().writeFormInput(out, "ds_scadenza_obbligazione");%></td>
-                <td><% bp.getController().writeFormLabel(out, "im_scadenza");%></td>
-                <td><% bp.getController().writeFormInput(out, "im_scadenza");%></td>
-            </tr>
-
-            <tr>
-                <td><% bp.getController().writeFormLabel(out, "dt_scadenza");%></td>
-                <td><% bp.getController().writeFormInput(out, "dt_scadenza");%></td>
-                <td><% bp.getController().writeFormLabel(out, "esercizio_obbligazione");%></td>
-                <td><% bp.getController().writeFormInput(out, "esercizio_obbligazione");%></td>
-                <td><% bp.getController().writeFormLabel(out, "cd_cds_obbligazione");%></td>
-                <td><% bp.getController().writeFormInput(out, "cd_cds_obbligazione");%></td>
-            </tr>
-        </table>
-        <table width="100%" class="mt-2">
-            <tr>
-                <td ALIGN="CENTER">
-                    <% JSPUtils.button(out,
-                            bp.getParentRoot().isBootstrap()?"fa fa-fw fa-plus":"img/new24.gif",
-                            bp.getParentRoot().isBootstrap()?"fa fa-fw fa-plus":"img/new24.gif",
-                            bp.getParentRoot().isBootstrap()?"Crea/Ricerca impegno":"Crea/Ricerca<br>impegno",
-                            "if (disableDblClick()) submitForm('doRicercaScadenzaObbligazione')",
-                            "btn-outline-primary btn-title",
-                            bp.areBottoniObbligazioneAbilitati(),
-                            bp.getParentRoot().isBootstrap());%>
-                    <% JSPUtils.button(out,
-                            bp.getParentRoot().isBootstrap()?"fa fa-fw fa-trash":"img/remove24.gif",
-                            bp.getParentRoot().isBootstrap()?"fa fa-fw fa-trash":"img/remove24.gif",
-                            bp.getParentRoot().isBootstrap()?"Elimina impegno":"Elimina<br>impegno",
-                            "if (disableDblClick()) submitForm('doEliminaScadenzaObbligazione')",
-                            "btn-outline-danger btn-title",
-                            bp.areBottoniObbligazioneAbilitati(),
-                            bp.getParentRoot().isBootstrap());%>
-                    <% JSPUtils.button(out,
-                            bp.getParentRoot().isBootstrap()?"fa fa-fw fa-repeat":"img/redo24.gif",
-                            bp.getParentRoot().isBootstrap()?"fa fa-fw fa-repeat":"img/redo24.gif",
-                            bp.getParentRoot().isBootstrap()?"Aggiorna in manuale":"Aggiorna in<br>manuale",
-                            "if (disableDblClick()) submitForm('doOpenObbligazioniWindow')",
-                            "btn-outline-info btn-title",
-                            bp.isBottoneObbligazioneAggiornaManualeAbilitato(),
-                            bp.getParentRoot().isBootstrap());%>
-                    <% JSPUtils.button(out,
-                            bp.getParentRoot().isBootstrap()?"fa fa-fw fa-refresh":"img/refresh24.gif",
-                            bp.getParentRoot().isBootstrap()?"fa fa-fw fa-refresh":"img/refresh24.gif",
-                            bp.getParentRoot().isBootstrap()?"Aggiorna in automatico":"Aggiorna in<br>automatico",
-                            "if (disableDblClick()) submitForm('doModificaScadenzaInAutomatico')",
-                            "btn-outline-secondary btn-title",
-                            bp.areBottoniObbligazioneAbilitati(),
-                            bp.getParentRoot().isBootstrap());%>
-                </td>
-            </tr>
-        </table>
-    </div>
-</fieldset>
-
-<fieldset class="mt-2">
     <legend ACCESSKEY=G TABINDEX=1 style="font-weight:bold; font-family:sans-serif; font-size:12px; color:blue"><span class="h4 text-info ml-2">Compenso</span></legend>
     <div class="Panel card p-2" style="width:100%">
         <table width="100%">
@@ -171,4 +102,78 @@
             </tr>
         </table>
     </div>
+</fieldset>
+
+<fieldset class="mt-2">
+    <legend ACCESSKEY=G TABINDEX=1 style="font-weight:bold; font-family:sans-serif; font-size:12px; color:blue"><span class="h4 text-info ml-2">Scadenze Impegno<span></legend>
+	<div class="Group card">
+	<% bp.getMissioneRigheController().writeHTMLTable(pageContext,"default",true,false,true,"100%","150px",true); %>
+	<table width="100%">
+	  <tr><td width="70%">
+		<div class="card">
+			<fieldset class="fieldset mb-2">
+			<legend class="GroupLabel card-header text-primary">Scadenza</legend>
+			<table class="m-2 p-2">
+			  <tr>
+				<% bp.getMissioneRigheController().writeFormField(out,"cd_cds_obbligazione"); %>
+			  </tr>
+			  <tr>
+				<% bp.getMissioneRigheController().writeFormField(out,"esercizio_ori_obbligazione"); %>
+			  </tr>
+			  <tr>
+				<% bp.getMissioneRigheController().writeFormField(out,"pg_obbligazione"); %>
+			  </tr>
+			  <tr>
+				<% bp.getMissioneRigheController().writeFormField(out,"pg_obbligazione_scadenzario"); %>
+			  </tr>
+			  <tr>
+				<% bp.getMissioneRigheController().writeFormField(out,"scadenza_dt_scadenza"); %>
+			  </tr>
+			  <tr>
+				<% bp.getMissioneRigheController().writeFormField(out,"scadenza_im_scadenza"); %>
+			  </tr>
+			  <tr>
+				<% bp.getMissioneRigheController().writeFormField(out,"im_totale_riga_missione"); %>
+			  </tr>
+			  <tr>
+				<% bp.getMissioneRigheController().writeFormField(out,"scadenza_ds_scadenza"); %>
+			  </tr>
+			  <tr>
+				<% bp.getMissioneRigheController().writeFormField(out,"cig"); %>
+			  </tr>
+			</table>
+			</fieldset>
+		</div>
+	  </td>
+	  <td>
+		<div class="card">
+			<fieldset class="fieldset mb-2">
+			<legend class="GroupLabel card-header text-primary">Riepilogo</legend>
+			<table class="m-2 p-2">
+			  <tr>         
+			    <td><span class="FormLabel">Missione</span></td>
+			    <td><% bp.getController().writeFormInput(out,"im_totale_missione");%></td>
+				<td>-</td>
+			  </tr>                     	
+			  <tr>         
+			    <td><span class="FormLabel">Anticipi</span></td>
+			    <td><% bp.getController().writeFormInput(out,"im_anticipo");%></td>
+				<td>-</td>
+			  </tr>                     	
+			  <tr>         
+			    <td><span class="FormLabel">Impegnato</span></td>
+			    <td><% bp.getController().writeFormInput(out,"im_totale_impegnato");%></td>
+				<td>=</td>
+			  </tr>                     	
+			  <tr>         
+			    <td><span class="FormLabel" style="color:red">da Impegnare</span></td>
+			    <td><% bp.getController().writeFormInput(out,"im_totale_da_impegnare");%></td>
+			    <td colspan=4>&nbsp;</td>
+			  </tr>                     	
+			</table>
+			</fieldset>
+		</div>
+	  </td></tr>
+	</table>	
+	</div>
 </fieldset>

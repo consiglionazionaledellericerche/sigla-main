@@ -155,18 +155,6 @@
 		<% bp.getController().writeFormInput(out,"fl_accantona_add_terr"); %>
 	</td>		
 </tr>  
-      <tr>
-		<%	if (compenso != null && compenso.isCollegatoCapitoloPerTrovato()) { %>
-			  	  <td>
-				  	<% bp.getController().writeFormLabel(out,"pg_trovato");%>
-				  </td>
-				  <td colspan="3">	
-				  <% bp.getController().writeFormInput(out,null,"pg_trovato",false,null,"");%>
-				  	<% bp.getController().writeFormField(out,"titoloTrovato");%>
-				  	<% bp.getController().writeFormField(out,"inventoreTrovato");%>
-			  	</td>
-		<%	}  %>
- 	  </tr>
 </table>
 </div>
 

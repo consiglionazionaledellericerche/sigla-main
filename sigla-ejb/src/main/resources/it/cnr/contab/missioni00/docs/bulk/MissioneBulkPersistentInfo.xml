@@ -38,26 +38,6 @@
 			propertyName="rif_inquadramento.pg_rif_inquadramento"/>						
 
 		<columnMapping
-			columnName="CD_CDS_OBBLIGAZIONE"
-			propertyName="obbligazione_scadenzario.obbligazione.cds.cd_unita_organizzativa" />
-		<columnMapping
-			columnName="ESERCIZIO_OBBLIGAZIONE"
-			propertyName="obbligazione_scadenzario.obbligazione.cds.esercizio"
-			fetchOnly="true" />				
-		<columnMapping
-			columnName="ESERCIZIO_OBBLIGAZIONE"
-			propertyName="obbligazione_scadenzario.obbligazione.esercizio" />
-		<columnMapping
-			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
-			propertyName="obbligazione_scadenzario.obbligazione.esercizio_originale" />
-		<columnMapping
-			columnName="PG_OBBLIGAZIONE"
-			propertyName="obbligazione_scadenzario.obbligazione.pg_obbligazione" />
-		<columnMapping
-			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
-			propertyName="obbligazione_scadenzario.pg_obbligazione_scadenzario" />
-
-		<columnMapping
 			columnName="CD_CDS_ANTICIPO"
 			propertyName="anticipo.cd_cds" />
 		<columnMapping
@@ -83,8 +63,6 @@
 		name="tipo_rapporto" />
 	<persistentProperty
 		name="rif_inquadramento" />	
-	<persistentProperty
-		name="obbligazione_scadenzario" />
 	<persistentProperty
 		name="anticipo" />			
 	

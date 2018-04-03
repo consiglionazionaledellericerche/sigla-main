@@ -27,22 +27,6 @@
 			propertyName="tipoTrattamento.cd_trattamento" />
 
 		<columnMapping
-			columnName="CD_CDS_OBBLIGAZIONE"
-			propertyName="obbligazioneScadenzario.obbligazione.cds.cd_unita_organizzativa" />
-		<columnMapping
-			columnName="ESERCIZIO_OBBLIGAZIONE"
-			propertyName="obbligazioneScadenzario.obbligazione.esercizio" />
-		<columnMapping
-			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
-			propertyName="obbligazioneScadenzario.obbligazione.esercizio_originale" />
-		<columnMapping
-			columnName="PG_OBBLIGAZIONE"
-			propertyName="obbligazioneScadenzario.obbligazione.pg_obbligazione" />
-		<columnMapping
-			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
-			propertyName="obbligazioneScadenzario.pg_obbligazione_scadenzario" />
-
-		<columnMapping
 			columnName="CD_REGIONE_IRAP"
 			propertyName="regioneIrap.cd_regione" />
 		<columnMapping
@@ -115,8 +99,6 @@
 			columnName="TI_PRESTAZIONE"
 			propertyName="tipoPrestazioneCompenso.cd_ti_prestazione" />
 					
-		<columnMapping	columnName="PG_TROVATO" propertyName="trovato.pg_trovato" />
-
 	</defaultColumnMap>		
 
 	<persistentProperty
@@ -127,8 +109,6 @@
 		name="banca" />
 	<persistentProperty
 		name="tipoRapporto" />
-	<persistentProperty
-		name="obbligazioneScadenzario" />
 	<persistentProperty
 		name="missione" />
 	<persistentProperty
@@ -193,5 +173,4 @@
 		name="cd_unita_organizzativa" />	
 	<persistentProperty
 		name="pg_compenso" />
-	<persistentProperty name="trovato" />
 </SQLPersistentInfo>

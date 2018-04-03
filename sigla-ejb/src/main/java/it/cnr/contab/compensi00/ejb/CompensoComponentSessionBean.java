@@ -1,14 +1,5 @@
 package it.cnr.contab.compensi00.ejb;
 
-import it.cnr.contab.compensi00.comp.CompensoComponent;
-import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriBulk;
-import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.PersistencyException;
-
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
@@ -18,10 +9,16 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
+import it.cnr.contab.compensi00.comp.CompensoComponent;
+import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+
 @Stateless(name = "CNRCOMPENSI00_EJB_CompensoComponentSession")
-public class CompensoComponentSessionBean extends
-		it.cnr.jada.ejb.CRUDComponentSessionBean implements
-		CompensoComponentSession {
+public class CompensoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements CompensoComponentSession {
 	@PostConstruct
 	public void ejbCreate() {
 		componentObj = new it.cnr.contab.compensi00.comp.CompensoComponent();
@@ -286,18 +283,12 @@ public class CompensoComponentSessionBean extends
 		}
 	}
 
-	public it.cnr.contab.compensi00.docs.bulk.CompensoBulk elaboraScadenze(
-			it.cnr.jada.UserContext param0,
-			it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1,
-			it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param2,
-			it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param3)
+	public void lockScadenza(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param1)
 			throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
 		pre_component_invocation(param0, componentObj);
 		try {
-			it.cnr.contab.compensi00.docs.bulk.CompensoBulk result = ((CompensoComponent) componentObj)
-					.elaboraScadenze(param0, param1, param2, param3);
+			((CompensoComponent) componentObj).lockScadenza(param0, param1);
 			component_invocation_succes(param0, componentObj);
-			return result;
 		} catch (it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(param0, componentObj);
 			throw e;
@@ -320,29 +311,6 @@ public class CompensoComponentSessionBean extends
 			((CompensoComponent) componentObj).eliminaCompensoTemporaneo(
 					param0, param1, param2);
 			component_invocation_succes(param0, componentObj);
-		} catch (it.cnr.jada.comp.NoRollbackException e) {
-			component_invocation_succes(param0, componentObj);
-			throw e;
-		} catch (it.cnr.jada.comp.ComponentException e) {
-			component_invocation_failure(param0, componentObj);
-			throw e;
-		} catch (RuntimeException e) {
-			throw uncaughtRuntimeException(param0, componentObj, e);
-		} catch (Error e) {
-			throw uncaughtError(param0, componentObj, e);
-		}
-	}
-
-	public it.cnr.contab.compensi00.docs.bulk.CompensoBulk eliminaObbligazione(
-			it.cnr.jada.UserContext param0,
-			it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1)
-			throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
-		pre_component_invocation(param0, componentObj);
-		try {
-			it.cnr.contab.compensi00.docs.bulk.CompensoBulk result = ((CompensoComponent) componentObj)
-					.eliminaObbligazione(param0, param1);
-			component_invocation_succes(param0, componentObj);
-			return result;
 		} catch (it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(param0, componentObj);
 			throw e;
@@ -876,15 +844,28 @@ public class CompensoComponentSessionBean extends
 		}
 	}
 
-	public void validaObbligazione(
-			it.cnr.jada.UserContext param0,
-			it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param1,
-			it.cnr.jada.bulk.OggettoBulk param2)
-			throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
+	public void validaObbligazione(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param1, it.cnr.contab.compensi00.docs.bulk.CompensoBulk param2) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
 		pre_component_invocation(param0, componentObj);
 		try {
-			((CompensoComponent) componentObj).validaObbligazione(param0,
-					param1, param2);
+			((CompensoComponent) componentObj).validaObbligazione(param0, param1, param2);
+			component_invocation_succes(param0, componentObj);
+		} catch (it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0, componentObj);
+			throw e;
+		} catch (it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0, componentObj);
+			throw e;
+		} catch (RuntimeException e) {
+			throw uncaughtRuntimeException(param0, componentObj, e);
+		} catch (Error e) {
+			throw uncaughtError(param0, componentObj, e);
+		}
+	}
+
+	public void validaObbligazioni(it.cnr.jada.UserContext param0, it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1) throws it.cnr.jada.comp.ComponentException, javax.ejb.EJBException {
+		pre_component_invocation(param0, componentObj);
+		try {
+			((CompensoComponent) componentObj).validaObbligazioni(param0, param1);
 			component_invocation_succes(param0, componentObj);
 		} catch (it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(param0, componentObj);

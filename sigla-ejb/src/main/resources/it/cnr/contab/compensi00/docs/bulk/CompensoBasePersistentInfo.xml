@@ -188,16 +188,6 @@
 			sqlTypeName="VARCHAR"
 			columnSize="30" />
 		<columnMapping
-			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
-			propertyName="esercizio_ori_accertamento"
-			sqlTypeName="DECIMAL"
-			columnSize="4" />
-		<columnMapping
-			columnName="PG_ACCERTAMENTO"
-			propertyName="pg_accertamento"
-			sqlTypeName="DECIMAL"
-			columnSize="10" />
-		<columnMapping
 			columnName="DT_A_COMPETENZA_COGE"
 			propertyName="dt_a_competenza_coge"
 			sqlTypeName="TIMESTAMP"
@@ -252,22 +242,12 @@
 			columnSize="1"
 			nullable="false" />
 		<columnMapping
-			columnName="CD_CDS_ACCERTAMENTO"
-			propertyName="cd_cds_accertamento"
-			sqlTypeName="VARCHAR"
-			columnSize="30" />
-		<columnMapping
 			columnName="FL_ACCANTONA_ADD_TERR"
 			propertyName="fl_accantona_add_terr"
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="ESERCIZIO_ACCERTAMENTO"
-			propertyName="esercizio_accertamento"
-			sqlTypeName="DECIMAL"
-			columnSize="4" />
 		<columnMapping
 			columnName="DETRAZIONI_LA"
 			propertyName="detrazioni_la"
@@ -312,11 +292,6 @@
 			columnScale="6"
 			nullable="false" />
 		<columnMapping
-			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
-			propertyName="pg_obbligazione_scadenzario"
-			sqlTypeName="DECIMAL"
-			columnSize="10" />
-		<columnMapping
 			columnName="NOME"
 			propertyName="nome"
 			sqlTypeName="VARCHAR"
@@ -335,11 +310,6 @@
 		<columnMapping
 			columnName="PG_MISSIONE"
 			propertyName="pg_missione"
-			sqlTypeName="DECIMAL"
-			columnSize="10" />
-		<columnMapping
-			columnName="PG_ACCERTAMENTO_SCADENZARIO"
-			propertyName="pg_accertamento_scadenzario"
 			sqlTypeName="DECIMAL"
 			columnSize="10" />
 		<columnMapping
@@ -370,16 +340,6 @@
 			columnName="CD_VOCE_IVA"
 			propertyName="cd_voce_iva"
 			sqlTypeName="VARCHAR"
-			columnSize="10" />
-		<columnMapping
-			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
-			propertyName="esercizio_ori_obbligazione"
-			sqlTypeName="DECIMAL"
-			columnSize="4" />
-		<columnMapping
-			columnName="PG_OBBLIGAZIONE"
-			propertyName="pg_obbligazione"
-			sqlTypeName="DECIMAL"
 			columnSize="10" />
 		<columnMapping
 			columnName="FL_DIARIA"
@@ -538,16 +498,6 @@
 			sqlTypeName="DECIMAL"
 			columnSize="15"
 			columnScale="2" />
-		<columnMapping
-			columnName="CD_CDS_OBBLIGAZIONE"
-			propertyName="cd_cds_obbligazione"
-			sqlTypeName="VARCHAR"
-			columnSize="30" />
-		<columnMapping
-			columnName="ESERCIZIO_OBBLIGAZIONE"
-			propertyName="esercizio_obbligazione"
-			sqlTypeName="DECIMAL"
-			columnSize="4" />
 		<columnMapping
 			columnName="CD_REGIONE_ADD"
 			propertyName="cd_regione_add"
@@ -749,11 +699,6 @@
 			sqlTypeName="VARCHAR"
 			columnSize="1" />
 		<columnMapping
-			columnName="PG_TROVATO"
-			propertyName="pg_trovato"
-			sqlTypeName="DECIMAL"
-			columnSize="10" />
-		<columnMapping
 			columnName="IM_TOT_REDDITO_COMPLESSIVO"
 			propertyName="im_tot_reddito_complessivo"
 			sqlTypeName="DECIMAL"
@@ -799,7 +744,31 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-					
+		<columnMapping
+			columnName="CD_CDS_ACCERTAMENTO"
+			propertyName="cd_cds_accertamento"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ESERCIZIO_ACCERTAMENTO"
+			propertyName="esercizio_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_ACCERTAMENTO"
+			propertyName="esercizio_ori_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO"
+			propertyName="pg_accertamento"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_ACCERTAMENTO_SCADENZARIO"
+			propertyName="pg_accertamento_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="cognome" />
@@ -862,10 +831,6 @@
 	<persistentProperty
 		name="cd_uo_missione" />
 	<persistentProperty
-		name="esercizio_ori_accertamento" />
-	<persistentProperty
-		name="pg_accertamento" />
-	<persistentProperty
 		name="dt_a_competenza_coge" />
 	<persistentProperty
 		name="esercizio_fattura_fornitore" />
@@ -886,10 +851,6 @@
 	<persistentProperty
 		name="stato_cofi" />
 	<persistentProperty
-		name="cd_cds_accertamento" />
-	<persistentProperty
-		name="esercizio_accertamento" />
-	<persistentProperty
 		name="fl_accantona_add_terr" />
 	<persistentProperty
 		name="detrazioni_la" />
@@ -906,8 +867,6 @@
 	<persistentProperty
 		name="aliquota_irpef_da_missione" />
 	<persistentProperty
-		name="pg_obbligazione_scadenzario" />
-	<persistentProperty
 		name="nome" />
 	<persistentProperty
 		name="cd_uo_origine" />
@@ -916,8 +875,6 @@
 	<persistentProperty
 		name="pg_missione" />
 	<persistentProperty
-		name="pg_accertamento_scadenzario" />
-	<persistentProperty
 		name="cd_tipologia_rischio" />
 	<persistentProperty
 		name="detrazione_coniuge" />
@@ -925,10 +882,6 @@
 		name="pg_doc_genrc" />
 	<persistentProperty
 		name="im_cr_ente" />
-	<persistentProperty
-		name="esercizio_ori_obbligazione" />
-	<persistentProperty
-		name="pg_obbligazione" />
 	<persistentProperty
 		name="cd_voce_iva" />
 	<persistentProperty
@@ -982,11 +935,7 @@
 	<persistentProperty
 		name="imponibile_iva" />
 	<persistentProperty
-		name="cd_cds_obbligazione" />
-	<persistentProperty
 		name="cd_regione_add" />
-	<persistentProperty
-		name="esercizio_obbligazione" />
 	<persistentProperty
 		name="dt_fattura_fornitore" />
 	<persistentProperty
@@ -1056,8 +1005,6 @@
 	<persistentProperty
 		name="im_tot_reddito_complessivo" />				
 	<persistentProperty
-		name="pg_trovato" />	
-	<persistentProperty
 		name="data_protocollo" />	
 	<persistentProperty
 		name="numero_protocollo" />	
@@ -1068,9 +1015,18 @@
 	<persistentProperty
 		name="causale" />								
 	<persistentProperty
-		name="pg_trovato" />
-	<persistentProperty
 		name="fl_documento_ele" />		
 	<persistentProperty
-		name="fl_split_payment" />			
+		name="fl_split_payment" />
+		
+	<persistentProperty
+		name="cd_cds_accertamento" />
+	<persistentProperty
+		name="esercizio_accertamento" />
+	<persistentProperty
+		name="esercizio_ori_accertamento" />
+	<persistentProperty
+		name="pg_accertamento" />
+	<persistentProperty
+		name="pg_accertamento_scadenzario" />
 </SQLPersistentInfo>

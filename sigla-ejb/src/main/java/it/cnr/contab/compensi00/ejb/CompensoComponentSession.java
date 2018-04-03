@@ -1,17 +1,17 @@
 package it.cnr.contab.compensi00.ejb;
-import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
-import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriBulk;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.PersistencyException;
-
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.ejb.Remote;
+
+import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Acconto_classific_coriBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 @Remote
 public interface CompensoComponentSession extends it.cnr.jada.ejb.CRUDComponentSession, it.cnr.jada.ejb.PrintComponentSession {
 void aggiornaMontanti(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
@@ -24,9 +24,8 @@ it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk conguaglioAssociatoACompenso(i
 it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1,it.cnr.contab.doccont00.core.bulk.OptionRequestParameter param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.compensi00.docs.bulk.CompensoBulk doContabilizzaCompensoCofi(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.compensi00.docs.bulk.EstrazioneCUDVBulk doElaboraCUD(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.EstrazioneCUDVBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-it.cnr.contab.compensi00.docs.bulk.CompensoBulk elaboraScadenze(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1,it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param2,it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+void lockScadenza(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void eliminaCompensoTemporaneo(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1,java.lang.Long param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-it.cnr.contab.compensi00.docs.bulk.CompensoBulk eliminaObbligazione(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.compensi00.docs.bulk.CompensoBulk eseguiCalcolo(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.util.List findListaBanche(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.util.Collection findModalita(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
@@ -49,7 +48,8 @@ it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk riportaAvanti(it.c
 void rollbackToSavePoint(it.cnr.jada.UserContext param0,java.lang.String param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void setSavePoint(it.cnr.jada.UserContext param0,java.lang.String param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk updateImportoAssociatoDocAmm(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-void validaObbligazione(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param1,it.cnr.jada.bulk.OggettoBulk param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+void validaObbligazione(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param2,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+void validaObbligazioni(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void validaTerzo(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 int validaTerzo(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param1,boolean param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.compensi00.docs.bulk.Estrazione770Bulk doElabora770(it.cnr.jada.UserContext param0,it.cnr.contab.compensi00.docs.bulk.Estrazione770Bulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;

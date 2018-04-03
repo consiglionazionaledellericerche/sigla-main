@@ -3,6 +3,8 @@ package it.cnr.contab.missioni00.docs.bulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.Compenso_rigaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaHome;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
@@ -24,7 +26,9 @@ import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
@@ -153,6 +157,43 @@ public class MissioneHome extends BulkHome implements
 					new String[][] { { "PG_MISSIONE", "?" } }).toString());
 			pw.write(" FROM " + EJBCommonServices.getDefaultSchema()
 					+ dettaglioHome.getColumnMap().getTableName());
+			pw.write(condition);
+			pw.flush();
+			ps = new LoggableStatement(getConnection(), sql.toString(), true,
+					this.getClass());
+			pw.close();
+			ps.setLong(1, pg.longValue());
+			ps.setInt(2, missioneTemp.getEsercizio().intValue());
+			ps.setString(3, missioneTemp.getCd_cds());
+			ps.setString(4, missioneTemp.getCd_unita_organizzativa());
+			ps.setLong(5, missioneTemp.getPg_missione().longValue());
+
+			ps.execute();
+		} catch (java.sql.SQLException e) {
+			throw new PersistencyException(e);
+		} finally {
+			try {
+				ps.close();
+			} catch (java.sql.SQLException e) {
+			}
+			;
+		}
+
+		/***************** CONFERMO LE RIGHE DELLA MISSIONE ***************************/
+		try {
+			sql = new java.io.StringWriter();
+			pw = new java.io.PrintWriter(sql);
+			Missione_rigaHome rigaHome = (Missione_rigaHome) getHomeCache()
+					.getHome(Missione_rigaBulk.class);
+			pw.write("INSERT INTO " + EJBCommonServices.getDefaultSchema()
+					+ rigaHome.getColumnMap().getTableName() + " (");
+			pw.write(getPersistenColumnNamesReplacingWith(rigaHome, null)
+					.toString());
+			pw.write(") SELECT ");
+			pw.write(getPersistenColumnNamesReplacingWith(rigaHome,
+					new String[][] { { "PG_MISSIONE", "?" } }).toString());
+			pw.write(" FROM " + EJBCommonServices.getDefaultSchema()
+					+ rigaHome.getColumnMap().getTableName());
 			pw.write(condition);
 			pw.flush();
 			ps = new LoggableStatement(getConnection(), sql.toString(), true,
@@ -438,5 +479,16 @@ public class MissioneHome extends BulkHome implements
 				}
 			}
 		}
+	}
+	public java.util.List<Missione_rigaBulk> findMissione_rigaList( MissioneBulk missione ) throws IntrospectionException,PersistencyException 
+	{
+		PersistentHome home = getHomeCache().getHome(Missione_rigaBulk.class);
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(FindClause.AND,"cd_cds",SQLBuilder.EQUALS, missione.getCd_cds());
+		sql.addClause(FindClause.AND,"cd_unita_organizzativa",SQLBuilder.EQUALS, missione.getCd_unita_organizzativa());
+		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS, missione.getEsercizio());
+		sql.addClause(FindClause.AND,"pg_missione",SQLBuilder.EQUALS, missione.getPg_missione());
+		sql.addOrderBy("progressivo_riga");
+		return home.fetchAll(sql);
 	}
 }

@@ -1,22 +1,5 @@
 package it.cnr.contab.web.rest;
 
-import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
-import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
-import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
-import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
-import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.web.rest.exception.RestException;
-import it.cnr.contab.web.rest.model.MassimaleSpesaBulk;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.ejb.CRUDComponentSession;
-import it.cnr.jada.persistency.PersistencyException;
-
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
@@ -38,6 +21,24 @@ import javax.ws.rs.core.SecurityContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_rigaBulk;
+import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.web.rest.exception.RestException;
+import it.cnr.contab.web.rest.model.MassimaleSpesaBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.ejb.CRUDComponentSession;
+import it.cnr.jada.persistency.PersistencyException;
 
 @Stateless
 public class MissioneResource implements MissioneLocal{
@@ -113,7 +114,12 @@ public class MissioneResource implements MissioneLocal{
 		}
 
     	Calendar cal = Calendar.getInstance();
-		missioneBulk.setObbligazione_scadenzario(Optional.ofNullable(missioneComponentSession.recuperoObbligazioneDaGemis(userContext, missioneBulk)).orElse(null));
+		Optional.ofNullable(missioneComponentSession.recuperoObbligazioneDaGemis(userContext, missioneBulk))
+			.ifPresent(scadenza->{
+				Missione_rigaBulk missioneRiga = new Missione_rigaBulk();
+				missioneRiga.setObbligazioneScadenzario(scadenza);
+				missioneBulk.addToMissioneRigaColl(missioneRiga);
+			});
 		missioneBulk.setAnticipo(Optional.ofNullable(missioneComponentSession.recuperoAnticipoDaGemis(userContext, missioneBulk)).orElse(null));
 		cal.setTime(missioneBulk.getDt_inizio_missione());
 		cal.set(Calendar.SECOND,0);
@@ -159,8 +165,6 @@ public class MissioneResource implements MissioneLocal{
     	missioneCreated.setToBeUpdated();
     	missioneCreated.setMissioneIniziale(missioneCreated);
     	missioneCreated = (MissioneBulk) missioneComponentSession.creaConBulk(userContext, missioneCreated);
-    	missioneCreated.setObbligazione_scadenzario(null);
-    	missioneCreated.setObbligazione_scadenzarioClone(null);
     	return Response.status(Status.CREATED).entity(missioneCreated).build();
     }
 

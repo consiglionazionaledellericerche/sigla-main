@@ -11,80 +11,74 @@
 	CompensoBulk compenso = (CompensoBulk)bp.getModel(); %>
 
 <div class="Group card">
-<table>
-
-  <tr>
-	<% bp.getController().writeFormField(out,"esercizio_ori_obbligazione"); %>
-  </tr>
-  <tr>
-	<% bp.getController().writeFormField(out,"pg_obbligazione"); %>
-  </tr>
-  <tr>
-	<% bp.getController().writeFormField(out,"pg_obbligazione_scadenzario"); %>
-  </tr>
-  <tr>
-	<% bp.getController().writeFormField(out,"cd_cds_obbligazione"); %>
-  </tr>
-  <tr>
-	<% bp.getController().writeFormField(out,"esercizio_obbligazione"); %>
-  </tr>
-
-  <tr>
-	<% bp.getController().writeFormField(out,"scadenza_dt_scadenza"); %>
-  </tr>
-  <tr>
-	<% bp.getController().writeFormField(out,"scadenza_im_scadenza"); %>
-  </tr>
-  <tr>
-	<% bp.getController().writeFormField(out,"scadenza_ds_scadenza"); %>
-  </tr>
-  <tr>
-	<% bp.getController().writeFormField(out,"cig"); %>
-  </tr>
-  <tr>
-	<td colspan="2">
-		<% if (compenso.isStatoCompensoEseguiCalcolo()) { %>
-			<span class="FormLabel" style="color:red">E' necessario eseguire il calcolo prima di continuare</span>
-		<% } %>
-	</td>
-  </tr>
-</table>
-<table>
-  <tr>
-	<td>
-		<% JSPUtils.button(out,
-				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-plus text-info":"img/new24.gif",
-				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-plus text-info":"img/new24.gif",
-				bp.getParentRoot().isBootstrap()?"Crea/Ricerca impegno":"Crea/Ricerca<br>impegno",
-				"if (disableDblClick()) submitForm('doRicercaObbligazione')",
-				"btn-secondary btn-outline-secondary btn-title text-primary",
-				bp.isBottoneCreaObbligazioneEnabled(), 
-				bp.getParentRoot().isBootstrap());%>
-		<% JSPUtils.button(out,
-				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-trash text-danger":"img/remove24.gif",
-				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-trash text-danger":"img/remove24.gif",
-				bp.getParentRoot().isBootstrap()?"Elimina impegno":"Elimina<br>impegno",
-				"if (disableDblClick()) submitForm('doEliminaObbligazione')",
-				"btn-secondary btn-outline-secondary btn-title text-primary",
-				bp.isBottoneEliminaObbligazioneEnabled(), 
-				bp.getParentRoot().isBootstrap());%>
-		<% JSPUtils.button(out,
-				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-repeat text-info":"img/redo24.gif",
-				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-repeat text-info":"img/redo24.gif",
-				bp.getParentRoot().isBootstrap()?"Aggiorna in manuale":"Aggiorna in<br>manuale",
-				"if (disableDblClick()) submitForm('doModificaManualeObbligazione')",
-				"btn-secondary btn-outline-secondary btn-title text-primary",
-				bp.isBottoneModificaManualeObbligazioneEnabled(), 
-				bp.getParentRoot().isBootstrap());%>
-		<% JSPUtils.button(out,
-				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-refresh text-info":"img/refresh24.gif",
-				bp.getParentRoot().isBootstrap()?"fa fa-fw fa-refresh text-info":"img/refresh24.gif",
-				bp.getParentRoot().isBootstrap()?"Aggiorna in automatico":"Aggiorna in<br>automatico",
-				"if (disableDblClick()) submitForm('doModificaAutomaticaObbligazione')",
-				"btn-secondary btn-outline-secondary btn-title text-primary",
-				bp.isBottoneModificaAutomaticaObbligazioneEnabled(), 
-				bp.getParentRoot().isBootstrap());%>
-	</td>
-  </tr>
-</table>
+<% bp.getCompensoRigheController().writeHTMLTable(pageContext,"default",true,false,true,"100%","150px",true); %>
+<table width="100%">
+  <tr><td width="70%">
+	<div class="card">
+		<fieldset class="fieldset mb-2">
+		<legend class="GroupLabel card-header text-primary">Impegno</legend>
+		<table class="m-2 p-2">
+		  <tr>
+			<% bp.getCompensoRigheController().writeFormField(out,"cd_cds_obbligazione"); %>
+		  </tr>
+		  <tr>
+			<% bp.getCompensoRigheController().writeFormField(out,"esercizio_ori_obbligazione"); %>
+		  </tr>
+		  <tr>
+			<% bp.getCompensoRigheController().writeFormField(out,"pg_obbligazione"); %>
+		  </tr>
+		  <tr>
+			<% bp.getCompensoRigheController().writeFormField(out,"pg_obbligazione_scadenzario"); %>
+		  </tr>
+		  <tr>
+			<% bp.getCompensoRigheController().writeFormField(out,"scadenza_dt_scadenza"); %>
+		  </tr>
+		  <tr>
+			<% bp.getCompensoRigheController().writeFormField(out,"scadenza_im_scadenza"); %>
+		  </tr>
+		  <tr>
+			<% bp.getCompensoRigheController().writeFormField(out,"im_totale_riga_compenso"); %>
+		  </tr>
+		  <tr>
+			<% bp.getCompensoRigheController().writeFormField(out,"scadenza_ds_scadenza"); %>
+		  </tr>
+		  <tr>
+			<% bp.getCompensoRigheController().writeFormField(out,"cig"); %>
+		  </tr>
+		  <tr>
+			<td colspan="2">
+				<% if (compenso.isStatoCompensoEseguiCalcolo()) { %>
+					<span class="FormLabel" style="color:red">E' necessario eseguire il calcolo prima di continuare</span>
+				<% } %>
+			</td>
+		  </tr>
+		</table>
+		</fieldset>
+	</div>
+  </td>
+  <td>
+	<div class="card">
+		<fieldset class="fieldset mb-2">
+		<legend class="GroupLabel card-header text-primary">Riepilogo</legend>
+		<table class="m-2 p-2">
+		  <tr>         
+		    <td><span class="FormLabel">Compenso</span></td>
+		    <td><% bp.getController().writeFormInput(out,"im_totale_compenso");%></td>
+			<td>-</td>
+		  </tr>                     	
+		  <tr>         
+		    <td><span class="FormLabel">Impegnato</span></td>
+		    <td><% bp.getController().writeFormInput(out,"im_totale_impegnato");%></td>
+			<td>=</td>
+		  </tr>                     	
+		  <tr>         
+		    <td><span class="FormLabel" style="color:red">da Impegnare</span></td>
+		    <td><% bp.getController().writeFormInput(out,"im_totale_da_impegnare");%></td>
+		    <td colspan=4>&nbsp;</td>
+		  </tr>                     	
+		</table>
+		</fieldset>
+	</div>
+  </td></tr>
+</table>	
 </div>

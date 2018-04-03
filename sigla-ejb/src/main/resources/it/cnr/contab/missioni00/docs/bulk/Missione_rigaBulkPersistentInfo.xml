@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.docs.bulk.Missione_rigaBulk"
+	keyClassName="it.cnr.contab.missioni00.docs.bulk.Missione_rigaKey"
+	homeClassName="it.cnr.contab.missioni00.docs.bulk.Missione_rigaHome" >
+
+	<defaultColumnMap tableName="MISSIONE_RIGA" >
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.pg_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="obbligazioneScadenzario.pg_obbligazione_scadenzario" />
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="obbligazioneScadenzario" />
+</SQLPersistentInfo>

@@ -5,6 +5,8 @@ import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
@@ -24,6 +26,7 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -334,5 +337,17 @@ public class CompensoHome extends BulkHome implements
 				}
 			}
 		}
+	}
+
+	public java.util.List findCompenso_rigaList( CompensoBulk compenso ) throws IntrospectionException,PersistencyException 
+	{
+		PersistentHome home = getHomeCache().getHome(Compenso_rigaBulk.class);
+		SQLBuilder sql = home.createSQLBuilder();
+		sql.addClause(FindClause.AND,"cd_cds",SQLBuilder.EQUALS, compenso.getCd_cds());
+		sql.addClause(FindClause.AND,"cd_unita_organizzativa",SQLBuilder.EQUALS, compenso.getCd_unita_organizzativa());
+		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS, compenso.getEsercizio());
+		sql.addClause(FindClause.AND,"pg_compenso",SQLBuilder.EQUALS, compenso.getPg_compenso());
+		sql.addOrderBy("progressivo_riga");
+		return home.fetchAll(sql);
 	}
 }

@@ -1,5 +1,7 @@
 package it.cnr.contab.compensi00.docs.bulk;
 
+import java.util.Optional;
+
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.persistency.*;
@@ -364,16 +366,13 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	public java.lang.Integer esercizio_contratto;
 	
 	// STATO_CONTRATTO CHAR(1) NULL
-		private java.lang.String stato_contratto;		
+	private java.lang.String stato_contratto;		
 	
 	// PG_CONTRATTO DECIMAL(10,0)
-		public java.lang.Long pg_contratto;	
+	public java.lang.Long pg_contratto;	
 		
 	// IM_TOT_REDDITO_COMPLESSIVO(15,2) NOT NULL
 	private java.math.BigDecimal im_tot_reddito_complessivo;		
-	
-		// PG_TROVATO DECIMAL(10,0)
-	private java.lang.Long pg_trovato;
 	
 	private java.sql.Timestamp dt_scadenza;
 	
@@ -1769,12 +1768,6 @@ public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 	}
 	public void setPg_contratto(java.lang.Long pg_contratto) {
 		this.pg_contratto = pg_contratto;
-	}
-	public java.lang.Long getPg_trovato() {
-		return pg_trovato;
-	}
-	public void setPg_trovato(java.lang.Long pg_trovato) {
-		this.pg_trovato = pg_trovato;
 	}
 	
 	public java.math.BigDecimal getIm_tot_reddito_complessivo() {

@@ -1,5 +1,22 @@
 package it.cnr.contab.compensi00.comp;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.StringTokenizer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.Anagrafico_terzoBulk;
@@ -11,7 +28,6 @@ import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
 import it.cnr.contab.anagraf00.core.bulk.RapportoHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
@@ -26,6 +42,7 @@ import it.cnr.contab.compensi00.docs.bulk.BonusBulk;
 import it.cnr.contab.compensi00.docs.bulk.BonusHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
+import it.cnr.contab.compensi00.docs.bulk.Compenso_rigaBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioHome;
 import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBulk;
@@ -74,7 +91,6 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.client.RicercaTrovato;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
@@ -98,7 +114,6 @@ import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contHome;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
@@ -111,10 +126,12 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
 import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.EuroFormat;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
@@ -132,21 +149,6 @@ import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SQLExceptionHandler;
 import it.cnr.jada.util.RemoteIterator;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.Vector;
 
 /**
  * Insert the type's description here. Creation date: (21/02/2002 16.13.52)
@@ -358,38 +360,41 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 *            l'OggettoBulk che ha scatenato la richiesta di aggiornamento
 	 * 
 	 **/
-	public CompensoBulk aggiornaObbligazione(UserContext userContext,
-			CompensoBulk compenso, OptionRequestParameter status)
-			throws ComponentException {
+	public CompensoBulk aggiornaObbligazione(UserContext userContext, CompensoBulk compenso, OptionRequestParameter status) throws ComponentException {
+		try {
+			// gestisco le obbligazioni precedentemente scollegate
+			gestisciObbligazioniScollegate(userContext, compenso, status);
+	
+			Optional.ofNullable(compenso.getCompensoRigaColl())
+					.ifPresent(el->el.stream().forEach(compensoRiga->{
+						try {
+							Obbligazione_scadenzarioBulk scadenza = compensoRiga.getObbligazioneScadenzario();
 
-		// gestisco le obbligazioni precedentemente scollegate
-		gestisciObbligazioniScollegate(userContext, compenso, status);
+							if (scadenza.getObbligazione().getCrudStatus()==OggettoBulk.UNDEFINED)
+								scadenza.setObbligazione((ObbligazioneBulk)((ObbligazioneHome)getHomeCache(userContext).getHome(ObbligazioneBulk.class)).findByPrimaryKey(scadenza.getObbligazione()));
+							ObbligazioneBulk obbligazione = compensoRiga.getObbligazioneScadenzario().getObbligazione();
 
-		Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk) compenso
-				.getObbligazioneScadenzario();
-		// la scadenza puè essere NULL poichè il compenso puè avere importo
-		// lordo <= 0
-		if (scadenza != null) {
-			aggiornaSaldi(userContext, compenso, scadenza.getObbligazione(),
-					status);
-
-			Long pgTemp = scadenza.getPg_obbligazione();
-
-			if (scadenza.getObbligazione().isTemporaneo()
-					&& !compenso.isApertoDaMinicarriera()) {
-				scollegaObbligazioneDaCompenso(userContext, compenso);
-				aggiornaObbligazioneTemporanea(userContext, scadenza
-						.getObbligazione());
-			}
-
-			scadenza.setIm_associato_doc_amm(compenso.getImportoObbligazione());
-			updateImportoAssociatoDocAmm(userContext, scadenza);
-
-			compenso.addToRelationsDocContForSaldi(scadenza.getObbligazione(),
-					pgTemp);
+							aggiornaSaldi(userContext, compenso, obbligazione, status);
+	
+							Long pgTemp = compensoRiga.getPg_obbligazione();
+		
+							if (obbligazione.isTemporaneo() && !compenso.isApertoDaMinicarriera()) {
+								scollegaObbligazioneDaCompenso(userContext, compenso);
+								aggiornaObbligazioneTemporanea(userContext, obbligazione);
+							}
+		
+							scadenza.setIm_associato_doc_amm(compensoRiga.getIm_totale_riga_compenso());
+							updateImportoAssociatoDocAmm(userContext, scadenza);
+		
+							compenso.addToRelationsDocContForSaldi(obbligazione,pgTemp);
+						} catch (ComponentException|PersistencyException e) {
+							throw new DetailedRuntimeException(e);
+						}
+					}));
+			return compenso;
+		} catch (DetailedRuntimeException e) {
+			throw new ApplicationException(e.getMessage());
 		}
-
-		return compenso;
 	}
 
 	/**
@@ -410,32 +415,33 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 *            l'OggettoBulk che ha scatenato la richiesta di eliminazione
 	 * 
 	 **/
-	private void aggiornaObbligazioneSuCancellazione(UserContext userContext,
-			CompensoBulk compenso,
-			Obbligazione_scadenzarioBulk scadenzaScollegata,
-			ObbligazioneBulk obbligAssociata, OptionRequestParameter status)
-			throws ComponentException {
-
-		if (obbligAssociata == null
-				|| !scadenzaScollegata.getObbligazione().equalsByPrimaryKey(
-						obbligAssociata))
-			aggiornaSaldi(userContext, compenso, scadenzaScollegata
-					.getObbligazione(), status);
-
-		Long pgTemp = scadenzaScollegata.getPg_obbligazione();
-
-		if (scadenzaScollegata.getObbligazione().isTemporaneo()
-				&& !scadenzaScollegata.getObbligazione().equalsByPrimaryKey(
-						obbligAssociata)) {
-			aggiornaObbligazioneTemporanea(userContext, scadenzaScollegata
-					.getObbligazione());
+	private void aggiornaObbligazioneSuCancellazione(UserContext userContext, CompensoBulk compenso, 
+			Obbligazione_scadenzarioBulk scadenzaScollegata, OptionRequestParameter status) throws ComponentException {
+		try  {
+			if (scadenzaScollegata.getObbligazione().getCrudStatus()==OggettoBulk.UNDEFINED)
+				scadenzaScollegata.setObbligazione((ObbligazioneBulk)((ObbligazioneHome)getHomeCache(userContext).getHome(ObbligazioneBulk.class)).findByPrimaryKey(scadenzaScollegata.getObbligazione()));
+	
+			boolean isObbligAssociata = Optional.ofNullable(compenso.getObbligazione_scadenzarioColl())
+												.map(BulkList::stream)
+												.orElse(Stream.empty())
+												.map(Obbligazione_scadenzarioBulk::getObbligazione)
+												.anyMatch(el->el.equalsByPrimaryKey(scadenzaScollegata.getObbligazione()));
+	
+			if (!isObbligAssociata)
+				aggiornaSaldi(userContext, compenso, scadenzaScollegata.getObbligazione(), status);
+	
+			Long pgTemp = scadenzaScollegata.getPg_obbligazione();
+	
+			if (scadenzaScollegata.getObbligazione().isTemporaneo() && !isObbligAssociata)
+				aggiornaObbligazioneTemporanea(userContext, scadenzaScollegata.getObbligazione());
+	
+			scadenzaScollegata.setIm_associato_doc_amm(BigDecimal.ZERO);
+			updateImportoAssociatoDocAmm(userContext, scadenzaScollegata);
+	
+			compenso.addToRelationsDocContForSaldi(scadenzaScollegata.getObbligazione(), pgTemp);
+		} catch (ComponentException|PersistencyException e) {
+			throw new DetailedRuntimeException(e);
 		}
-		scadenzaScollegata.setIm_associato_doc_amm(new java.math.BigDecimal(0)
-				.setScale(2, java.math.BigDecimal.ROUND_HALF_EVEN));
-		updateImportoAssociatoDocAmm(userContext, scadenzaScollegata);
-
-		compenso.addToRelationsDocContForSaldi(scadenzaScollegata
-				.getObbligazione(), pgTemp);
 	}
 
 	/**
@@ -962,6 +968,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			loadDatiLiquidazione(userContext, compenso);
 			loadContributiERitenute(userContext, compenso);
 			loadMinicarriera(userContext, compenso);
+			loadCompensoRighe(userContext, compenso);
 			compenso.setBonus(loadBonus(userContext, compenso));
 			getHomeCache(userContext).fetchAll(userContext);
 
@@ -1326,9 +1333,11 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				throw new it.cnr.jada.comp.ApplicationException(
 						"Impossibile salvare un documento per un esercizio non aperto!");
 
-			validaIncarico(userContext, compenso.getObbligazioneScadenzario(),
-					compenso);
-			
+			if (Optional.ofNullable(compenso.getObbligazione_scadenzarioColl()).isPresent()) {
+				for (Obbligazione_scadenzarioBulk scadenza : compenso.getObbligazione_scadenzarioColl())
+					validaIncarico(userContext, scadenza, compenso);
+			}			
+
 			validaContratto(userContext, compenso);
 			
 			return compenso;
@@ -1540,58 +1549,15 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
 	}
 
-	public CompensoBulk elaboraScadenze(UserContext userContext,
-			CompensoBulk compenso, Obbligazione_scadenzarioBulk oldScad,
-			Obbligazione_scadenzarioBulk newScad) throws ComponentException {
-
+	public void lockScadenza(UserContext userContext, Obbligazione_scadenzarioBulk newScad) throws ComponentException {
 		try {
-			if (oldScad != null)
-				oldScad = resyncScadenza(userContext, oldScad);
-
-			validaScadenze(compenso, newScad);
-
-			compenso.addToDocumentiContabiliCancellati(oldScad);
-			compenso.sincronizzaScadenzeCancellate(newScad);
-			compenso.setObbligazioneScadenzario(newScad);
-			compenso.removeFromDocumentiContabiliCancellati(newScad);
-			compenso.setStato_cofi(CompensoBulk.STATO_CONTABILIZZATO);
-
 			lockBulk(userContext, newScad);
-			return compenso;
 		} catch (it.cnr.jada.persistency.PersistencyException ex) {
 			throw handleException(ex);
 		} catch (it.cnr.jada.bulk.OutdatedResourceException ex) {
 			throw handleException(ex);
 		} catch (it.cnr.jada.bulk.BusyResourceException ex) {
 			throw handleException(ex);
-		}
-	}
-
-	private void validaScadenze(CompensoBulk compenso,
-			Obbligazione_scadenzarioBulk newScad) throws ComponentException {
-
-		Vector scadCanc = compenso.getDocumentiContabiliCancellati();
-		if (scadCanc != null) {
-			Iterator it = scadCanc.iterator();
-
-			while (it.hasNext()) {
-				Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk) it
-						.next();
-				if (scad.getObbligazione() instanceof ObbligazioneResBulk) {
-					if (scad.getObbligazione().equalsByPrimaryKey(
-							newScad.getObbligazione())
-							&& ((ObbligazioneResBulk) scad.getObbligazione())
-									.getObbligazione_modifica() != null
-							&& ((ObbligazioneResBulk) scad.getObbligazione())
-									.getObbligazione_modifica()
-									.getPg_modifica() != null) {
-						throw new it.cnr.jada.comp.ApplicationException(
-								"Impossibile collegare una scadenza dell'impegno residuo "
-										+ scad.getPg_obbligazione()
-										+ " poiché è stata effettuata una modifica in questo documento amministrativo!");
-					}
-				}
-			}
 		}
 	}
 
@@ -1687,10 +1653,9 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				aTempDiffSaldi = (PrimaryKeyHashMap) compenso
 						.getDefferredSaldi().clone();
 
-			Obbligazione_scadenzarioBulk scadenzaAssociata = compenso
-					.getObbligazioneScadenzario();
-			if (scadenzaAssociata != null)
+			for (Obbligazione_scadenzarioBulk scadenzaAssociata : compenso.getObbligazione_scadenzarioColl())
 				compenso.addToDocumentiContabiliCancellati(scadenzaAssociata);
+			
 			gestisciObbligazioniScollegate(userContext, compenso, null);
 
 			if (risp == compenso.CANCELLAZIONE_FISICA)
@@ -1760,32 +1725,6 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			throw handleException(bulk, ex);
 		} catch (java.text.ParseException e) {
 			throw handleException(bulk, e);
-		}
-	}
-
-	/**
-	 * Scollega una obbligazione dal compenso relativo
-	 * 
-	 * Pre-post-conditions
-	 * 
-	 * Nome: Scollego obbligazione da compenso Pre: Viene richiesto di
-	 * scollegare una obbligazione da compenso Post: L'obbligazione viene
-	 * scollegata e il compenso aggiornato
-	 * 
-	 **/
-	public CompensoBulk eliminaObbligazione(UserContext userContext,
-			CompensoBulk compenso) throws it.cnr.jada.comp.ComponentException {
-
-		try {
-			compenso.addToDocumentiContabiliCancellati(compenso
-					.getObbligazioneScadenzario());
-			compenso.setObbligazioneScadenzario(null);
-			compenso.setStato_cofi(CompensoBulk.STATO_INIZIALE);
-			updateBulk(userContext, compenso);
-
-			return compenso;
-		} catch (it.cnr.jada.persistency.PersistencyException ex) {
-			throw handleException(ex);
 		}
 	}
 
@@ -2242,21 +2181,11 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 *            l'OggettoBulk che ha scatenato la richiesta di aggiornamento
 	 * 
 	 **/
-	private void gestisciObbligazioniScollegate(UserContext userContext,
-			CompensoBulk compenso, OptionRequestParameter status)
+	private void gestisciObbligazioniScollegate(UserContext userContext, CompensoBulk compenso, OptionRequestParameter status)
 			throws it.cnr.jada.comp.ComponentException {
-		for (java.util.Iterator i = compenso.getDocumentiContabiliCancellati()
-				.iterator(); i.hasNext();) {
-			Obbligazione_scadenzarioBulk scadenzaScollegata = (Obbligazione_scadenzarioBulk) i
-					.next();
-			Obbligazione_scadenzarioBulk scadenzaAssociata = compenso
-					.getObbligazioneScadenzario();
-			ObbligazioneBulk obblig = null;
-			if (scadenzaAssociata != null)
-				obblig = scadenzaAssociata.getObbligazione();
-
-			aggiornaObbligazioneSuCancellazione(userContext, compenso,
-					scadenzaScollegata, obblig, status);
+		for (java.util.Iterator i = compenso.getDocumentiContabiliCancellati().iterator(); i.hasNext();) {
+			Obbligazione_scadenzarioBulk scadenzaScollegata = (Obbligazione_scadenzarioBulk) i.next();
+			aggiornaObbligazioneSuCancellazione(userContext, compenso, scadenzaScollegata, status);
 		}
 	}
 
@@ -2624,11 +2553,9 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			throw new it.cnr.jada.comp.ApplicationException(
 					"Il documento deve appartenere o all'esercizio di scrivania o ad esercizi precedenti per essere aperto in modifica!");
 
-		it.cnr.jada.bulk.PrimaryKeyHashMap relazioniObbligazione = compenso
-				.getRelationsDocContForSaldi();
+		it.cnr.jada.bulk.PrimaryKeyHashMap relazioniObbligazione = compenso.getRelationsDocContForSaldi();
 
-		compenso = (CompensoBulk) super.inizializzaBulkPerModifica(userContext,
-				compenso);
+		compenso = (CompensoBulk) super.inizializzaBulkPerModifica(userContext,	compenso);
 		completaCompenso(userContext, compenso);
 
 		compenso.setStatoCompensoToContabilizzaCofi();
@@ -2647,12 +2574,14 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		if (compenso.isDaMissione())
 			compenso.setDocumentiContabiliCancellati(docContCancellati);
 
-		try {
-			compenso.setTrovato(ricercaDatiTrovato(userContext, compenso.getPg_trovato()));
-		} catch (RemoteException e) {
-			throw handleException(e);
-		} catch (PersistencyException e) {
-			throw handleException(e);
+		for (Compenso_rigaBulk compensoRiga : compenso.getCompensoRigaColl()) {
+			try {
+				compensoRiga.setTrovato(ricercaDatiTrovato(userContext, compensoRiga.getPg_trovato()));
+			} catch (RemoteException e) {
+				throw handleException(e);
+			} catch (PersistencyException e) {
+				throw handleException(e);
+			}
 		}
 		
 		return compenso;
@@ -3157,10 +3086,24 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			compenso.setUser(userContext.getUser());
 
 			insertBulk(userContext, compenso);
+			
+			Optional.ofNullable(compenso.getCompensoRigaColl())
+				.ifPresent(el->el.stream().forEach(compensoRiga->{
+					try {
+						compensoRiga.setPg_compenso(pg);
+						super.modificaConBulk(userContext, compensoRiga);
+					} catch (ComponentException e) {
+						throw new DetailedRuntimeException(e);
+					}
+				}));
+			
+
 			inserisciContributiERitenute(userContext, compenso, pgTmp);
 			inserisciContributiERitenuteDett(userContext, compenso, pgTmp);
 
 			return compenso;
+		} catch (DetailedRuntimeException e) {
+			throw new ApplicationException(e.getMessage());
 		} catch (it.cnr.jada.persistency.PersistencyException ex) {
 			throw handleException(compenso, ex);
 		}
@@ -3991,8 +3934,8 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			throw new it.cnr.jada.comp.ApplicationException(
 					"Impossibile salvare un documento per un esercizio non aperto!");
 
-		validaIncarico(userContext, compenso.getObbligazioneScadenzario(),
-				compenso);
+		for (Obbligazione_scadenzarioBulk scadenzaAssociata : compenso.getObbligazione_scadenzarioColl())
+			validaIncarico(userContext, scadenzaAssociata, compenso);
 
 		validaContratto(userContext, compenso);
 		
@@ -4947,7 +4890,6 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			}
 		}
 		try {
-	
 			compenso.setDataInizioObbligoRegistroUnico(Utility.createConfigurazioneCnrComponentSession().
 				getDt01(userContext, new Integer(0), null,"REGISTRO_UNICO_FATPAS", "DATA_INIZIO"));
 			compenso.validaTestata();
@@ -5030,22 +4972,25 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 					   compenso.getIm_totale_compenso().compareTo(compenso.getFatturaPassiva().getIm_totale_imponibile())!=0)
 						throw new it.cnr.jada.comp.ApplicationException("Importo totale del compenso calcolato: " + compenso.getIm_totale_compenso() + " diverso da quello della fattura: "+ compenso.getFatturaPassiva().getIm_totale_imponibile());
 			
-		validaObbligazione(userContext, compenso.getObbligazioneScadenzario(),
-				compenso);
+		validaObbligazioni(userContext, compenso);
 
 		validaCompensoPerContabilizzazione(userContext, compenso);
-		if (compenso.getObbligazioneScadenzario() == null){
-			compenso.setPg_trovato(null);
-		} else {
-			Elemento_voceBulk voce = compenso.getObbligazioneScadenzario().getObbligazione().getElemento_voce();
-		    if (compenso.getPg_trovato()!=null && compenso.getObbligazioneScadenzario()!=null && isInibitaIndicazioneTrovato(voce))
-		    	compenso.setPg_trovato(null);
-		    if (isObbligatoriaIndicazioneTrovato(voce) && compenso.getPg_trovato()==null )
-		        throw new it.cnr.jada.comp.ApplicationException(
-		            "Attenzione! Non è stato inserito il Brevetto/Trovato mentre la voce di bilancio utilizzata per la contabilizzazione del dettaglio collegato ne prevede l'indicazione obbligatoria");
+
+		for (Compenso_rigaBulk compensoRiga : compenso.getCompensoRigaColl()) {
+			if (compensoRiga.getObbligazioneScadenzario()!=null) {
+				Elemento_voceBulk voce = compensoRiga.getObbligazioneScadenzario().getObbligazione().getElemento_voce();
+			    if (compensoRiga.getPg_trovato()!=null && compensoRiga.getObbligazioneScadenzario()!=null && isInibitaIndicazioneTrovato(voce))
+			    	compensoRiga.setPg_trovato(null);
+			    if (isObbligatoriaIndicazioneTrovato(voce) && compensoRiga.getPg_trovato()==null )
+			        throw new it.cnr.jada.comp.ApplicationException(
+			            "Attenzione! Non è stato inserito il Brevetto/Trovato per la riga con impegno "+
+			            		compensoRiga.getObbligazioneScadenzario().getEsercizio_originale()+"/"+
+			            		compensoRiga.getObbligazioneScadenzario().getPg_obbligazione()+
+			            		" mentre la voce di bilancio utilizzata per la contabilizzazione del dettaglio collegato ne prevede l'indicazione obbligatoria");
+			}
 		}
 	}
-
+	
 	private boolean isObbligatoriaIndicazioneTrovato(Elemento_voceBulk voce) throws ComponentException {
 		if (voce == null)
 			return false;
@@ -5378,56 +5323,63 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 *            il compenso contenente la scadenza
 	 * 
 	 **/
-	public void validaObbligazione(UserContext userContext,
-			Obbligazione_scadenzarioBulk scadenza, OggettoBulk bulk)
-			throws ComponentException {
+	public void validaObbligazione(UserContext userContext, it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk scadenza, CompensoBulk compenso) throws ComponentException {
+		if (Optional.ofNullable(compenso).isPresent()) {
+			if (compenso.getImportoObbligazione().compareTo(BigDecimal.ZERO) <= 0)
+				throw new it.cnr.jada.comp.ApplicationException("E' stata collegato un'impegno ad un compenso con importo lordo minore o uguale a zero.\nEliminare l'impegno!");
+			else {
+				if (scadenza.getIm_scadenza().compareTo(compenso.getImportoObbligazione()) > 0)
+					throw new it.cnr.jada.comp.ApplicationException("L'importo della scadenza non può essere superiore all'importo del compenso");
 
-		CompensoBulk compenso = (CompensoBulk) bulk;
-		if (compenso.getImportoObbligazione().compareTo(
-				new java.math.BigDecimal(0)) <= 0
-				&& scadenza != null)
-			throw new it.cnr.jada.comp.ApplicationException(
-					"E' stata collegato un'impegno ad un compenso con importo lordo minore o uguale a zero.\nEliminare l'impegno!");
-		else if (compenso.getImportoObbligazione().compareTo(
-				new java.math.BigDecimal(0)) > 0) {
-
-			// Controllo esistenza Obbligazione
-			if (scadenza == null)
-				throw new it.cnr.jada.comp.ApplicationException(
-						"Nessun impegno associato!!!");
-
-			ObbligazioneBulk obblig = scadenza.getObbligazione();
-
-			if (obblig.getIm_obbligazione() == null)
-				throw new it.cnr.jada.comp.ApplicationException(
-						"L'Importo dell'impegno è un dato obbligatorio");
-			if (scadenza.getIm_scadenza() == null)
-				throw new it.cnr.jada.comp.ApplicationException(
-						"L'Importo della scadenza è un dato obbligatorio");
-
-			// Importo della scadenza diverso da quello del compenso
-			if (scadenza.getIm_scadenza().compareTo(
-					compenso.getImportoObbligazione()) != 0)
-				throw new it.cnr.jada.comp.ApplicationException(
-						"L'importo della scadenza deve corrispondere all'importo del compenso");
-
-			if (compenso.getIncarichi_repertorio_anno() != null
-					&& compenso.getIncarichi_repertorio_anno().getCrudStatus() == OggettoBulk.NORMAL
-					&& compenso.getIncarichi_repertorio_anno()
-							.getEsercizio_limite().compareTo(
-									obblig.getEsercizio_originale()) != 0)
-				throw new it.cnr.jada.comp.ApplicationException(
-						"La tipologia dell'impegno (competenza/residuo) non è coerente con la riga del contratto prescelta.");
-
-			validaTerzoObbligazione(userContext, compenso, obblig);
+				ObbligazioneBulk obblig = scadenza.getObbligazione();
+		
+				if (obblig.getIm_obbligazione() == null)
+					throw new it.cnr.jada.comp.ApplicationException("L'Importo dell'impegno è un dato obbligatorio");
+				if (scadenza.getIm_scadenza() == null)
+					throw new it.cnr.jada.comp.ApplicationException("L'Importo della scadenza è un dato obbligatorio");
+	
+				if (compenso.getIncarichi_repertorio_anno() != null
+						&& compenso.getIncarichi_repertorio_anno().getCrudStatus() == OggettoBulk.NORMAL
+						&& compenso.getIncarichi_repertorio_anno().getEsercizio_limite().compareTo(obblig.getEsercizio_originale()) != 0)
+					throw new it.cnr.jada.comp.ApplicationException("La tipologia dell'impegno (competenza/residuo) non è coerente con la riga del contratto prescelta.");
+	
+				validaTerzoObbligazione(userContext, compenso, obblig);
+			}
 		}
+	}
+
+	public void validaObbligazioni(UserContext userContext, CompensoBulk compenso) throws ComponentException {
+		if (Optional.ofNullable(compenso)
+				.map(CompensoBulk::getObbligazione_scadenzarioColl)
+				.filter(list->!list.isEmpty())
+				.isPresent()) {
+			for (Obbligazione_scadenzarioBulk scadenza : compenso.getObbligazione_scadenzarioColl())
+				validaObbligazione(userContext, scadenza, compenso);
+
+			Optional.ofNullable(compenso.getCompensoRigaColl())
+					   .map(BulkList::stream)
+					   .orElse(Stream.empty())
+					   .filter(el->el.getIm_totale_riga_compenso()!=null && 
+					   			   el.getIm_totale_riga_compenso().compareTo(el.getObbligazioneScadenzario().getIm_scadenza())==0)
+					   .findAny()
+					   .orElseThrow(()->new it.cnr.jada.comp.ApplicationException("Esistono righe di compenso senza indicazione "
+					   		+ "dell'importo del compenso da associare o con importo di associazione diverso dell'importo "
+					   		+ "della scadenza associata! Inserire l'importo o aggiornare la scadenza!"));
+
+			// Importo della somma delle scadenze diverso da quello del compenso
+			BigDecimal totObbligazioniAssociate = compenso.getIm_totale_impegnato();
+			if (totObbligazioniAssociate.compareTo(compenso.getImportoObbligazione()) != 0)
+				throw new it.cnr.jada.comp.ApplicationException("La somma degli importi delle scadenze degli impegni associati ("
+						+new EuroFormat().format(totObbligazioniAssociate)+") deve corrispondere all'importo del compenso ("
+						+new EuroFormat().format(compenso.getImportoObbligazione())+")!");
+		} else if (compenso.getImportoObbligazione().compareTo(BigDecimal.ZERO) > 0)
+			throw new it.cnr.jada.comp.ApplicationException("Nessun impegno associato!!!");
 	}
 
 	/**
 	 * Validazione dell'oggetto in fase di stampa
 	 * 
 	 */
-
 	private void validateBulkForPrint(it.cnr.jada.UserContext userContext,
 			StampaCertificazioneVBulk stampa) throws ComponentException {
 
@@ -6535,10 +6487,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		return compenso;
 	}
 
-	private void validaIncarico(UserContext userContext,
-			Obbligazione_scadenzarioBulk scadenza, OggettoBulk bulk)
-			throws ComponentException {
-
+	private void validaIncarico(UserContext userContext, Obbligazione_scadenzarioBulk scadenza, OggettoBulk bulk) throws ComponentException {
 		CompensoBulk compenso = (CompensoBulk) bulk;
 
 		if (!isGestitiIncarichi(userContext, compenso))
@@ -6578,8 +6527,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		        (compenso.getDt_a_competenza_coge().compareTo(compenso.getIncarichi_repertorio_anno().getIncarichi_repertorio().getDt_proroga()) > 0))
 		      )
 		    )
-			throw new it.cnr.jada.comp.ApplicationException(
-					"La competenza del compenso non è interna alle date di validità del contratto. ");
+			throw new it.cnr.jada.comp.ApplicationException("La competenza del compenso non è interna alle date di validità del contratto. ");
 
 		//le borse e gli assegni possono andare su piè fondi
 		if (compenso.getTipoPrestazioneCompenso().getFl_controllo_fondi())
@@ -6854,41 +6802,27 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		}
 	}
 
-	public boolean existARowToBeInventoried(UserContext context,
-			CompensoBulk compenso) throws ComponentException {
-		if (compenso.getObbligazioneScadenzario() != null
-				&& compenso.getObbligazioneScadenzario().getObbligazione() != null
-				&& compenso.getObbligazioneScadenzario().getObbligazione()
-						.getElemento_voce() != null
-				&& compenso.getObbligazioneScadenzario().getObbligazione()
-						.getElemento_voce().getFl_inv_beni_patr()
-						.booleanValue()
-				&& !compenso.getObbligazioneScadenzario().getObbligazione()
-						.getElemento_voce().getFl_inv_beni_comp()
-						.booleanValue())
-			throw new ApplicationException(
-					"Il titolo capitolo selezionato non è utilizzabile dai Compensi! ");
-		else if (compenso.getObbligazioneScadenzario() != null
-				&& compenso.getObbligazioneScadenzario().getObbligazione() != null
-				&& compenso.getObbligazioneScadenzario().getObbligazione()
-						.getElemento_voce() != null
-				&& compenso.getObbligazioneScadenzario().getObbligazione()
-						.getElemento_voce().getFl_inv_beni_comp()
-						.booleanValue()
-				&& compenso.hasCompetenzaCOGEInAnnoPrecedente())
-			throw new ApplicationException(
-					"Non è possibile utilizzare questo titolo capitolo con queste date competenza! ");
-		else if (compenso.getObbligazioneScadenzario() != null
-				&& compenso.getObbligazioneScadenzario().getObbligazione() != null
-				&& compenso.getObbligazioneScadenzario().getObbligazione()
-						.getElemento_voce() != null
-				&& compenso.getObbligazioneScadenzario().getObbligazione()
-						.getElemento_voce().getFl_inv_beni_patr()
-						.booleanValue()
-				&& compenso.getObbligazioneScadenzario().getObbligazione()
-						.getElemento_voce().getFl_inv_beni_comp()
-						.booleanValue()) {
-			return true;
+	public boolean existARowToBeInventoried(UserContext context, CompensoBulk compenso) throws ComponentException {
+		for (Compenso_rigaBulk compensoRiga : compenso.getCompensoRigaColl()) {
+			Obbligazione_scadenzarioBulk scadenza = compensoRiga.getObbligazioneScadenzario();
+			if (scadenza != null
+				&& scadenza.getObbligazione() != null
+				&& scadenza.getObbligazione().getElemento_voce() != null
+				&& scadenza.getObbligazione().getElemento_voce().getFl_inv_beni_patr().booleanValue()
+				&& !scadenza.getObbligazione().getElemento_voce().getFl_inv_beni_comp().booleanValue())
+				throw new ApplicationException("Il titolo capitolo selezionato non è utilizzabile dai Compensi! ");
+			else if (scadenza != null
+					&& scadenza.getObbligazione() != null
+					&& scadenza.getObbligazione().getElemento_voce() != null
+					&& scadenza.getObbligazione().getElemento_voce().getFl_inv_beni_comp().booleanValue()
+					&& compenso.hasCompetenzaCOGEInAnnoPrecedente())
+				throw new ApplicationException("Non è possibile utilizzare questo titolo capitolo con queste date competenza! ");
+			else if (scadenza != null
+					&& scadenza.getObbligazione() != null
+					&& scadenza.getObbligazione().getElemento_voce() != null
+					&& scadenza.getObbligazione().getElemento_voce().getFl_inv_beni_patr().booleanValue()
+					&& scadenza.getObbligazione().getElemento_voce().getFl_inv_beni_comp().booleanValue())
+				return true;
 		}
 		return false;
 	}
@@ -7140,25 +7074,13 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		return ricercaCompensoTrovato(userContext, esercizio, cd_cds, cd_unita_organizzativa, pg_compenso, true);
 	}
 
-	public List<CompensoBulk> ricercaCompensiTrovato(
-			UserContext userContext,
-			Long trovato) throws PersistencyException, ComponentException {
-		CompensoBulk compenso = new CompensoBulk();
-		compenso.setPg_trovato(trovato);
-		List compensiList =(getHome(userContext, CompensoBulk.class).find(compenso));
-		for (Iterator<CompensoBulk> i = compensiList.iterator(); i.hasNext(); ) {
-			CompensoBulk comp = (CompensoBulk) i.next();
-//			List listaDocContAssociati = loadDocContAssociati(userContext, comp);
-//			if (listaDocContAssociati!=null && !listaDocContAssociati.isEmpty()) {
-//				for (Iterator<V_doc_cont_compBulk> iterator = listaDocContAssociati.iterator(); iterator.hasNext(); ) {
-//					V_doc_cont_compBulk docContComp = (V_doc_cont_compBulk) iterator.next();
-//
-//					if (V_doc_cont_compBulk.TIPO_DOC_CONT_MANDATO.equals(docContComp.getTipo_doc_cont())){
-						recuperoInfoAggiuntiveCompensoPerBrevetto(userContext, comp);
-//					}
-//				}
-//			}
-		}
+	public List<CompensoBulk> ricercaCompensiTrovato(UserContext userContext, Long trovato) throws PersistencyException, ComponentException {
+		Compenso_rigaBulk compensoRiga = new Compenso_rigaBulk();
+		compensoRiga.setPg_trovato(trovato);
+		List<Compenso_rigaBulk> compensiRigaList =getHome(userContext, Compenso_rigaBulk.class).find(compensoRiga);
+		List<CompensoBulk> compensiList = compensiRigaList.stream().map(Compenso_rigaBulk::getCompenso).distinct().collect(Collectors.toList());
+		for (CompensoBulk compensoBulk : compensiList)
+			recuperoInfoAggiuntiveCompensoPerBrevetto(userContext, compensoBulk);
 		return compensiList;
 	}
 
@@ -7243,4 +7165,13 @@ public CompensoBulk valorizzaInfoDocEle(UserContext userContext, CompensoBulk co
 		}
 	}
 
+private void loadCompensoRighe(UserContext userContext, CompensoBulk compenso)
+		throws ComponentException {
+	try {
+		CompensoHome home = (CompensoHome) getHome(userContext, CompensoBulk.class);
+		compenso.setCompensoRigaColl(new BulkList(home.findCompenso_rigaList(compenso)));
+	} catch (it.cnr.jada.persistency.PersistencyException | IntrospectionException ex) {
+		throw handleException(ex);
+	}
+}
 }

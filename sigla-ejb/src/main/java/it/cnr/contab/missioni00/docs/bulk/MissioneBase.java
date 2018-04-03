@@ -8,9 +8,6 @@ public class MissioneBase extends MissioneKey implements Keyed {
 	// CD_CDS_ANTICIPO VARCHAR(30)
 	private java.lang.String cd_cds_anticipo;
 
-	// CD_CDS_OBBLIGAZIONE VARCHAR(30)
-	private java.lang.String cd_cds_obbligazione;
-
 	// CD_MODALITA_PAG VARCHAR(10) NOT NULL
 	private java.lang.String cd_modalita_pag;
 
@@ -72,9 +69,6 @@ public class MissioneBase extends MissioneKey implements Keyed {
 	// ESERCIZIO_ANTICIPO DECIMAL(4,0)
 	private java.lang.Integer esercizio_anticipo;
 
-	// ESERCIZIO_OBBLIGAZIONE DECIMAL(4,0)
-	private java.lang.Integer esercizio_obbligazione;
-
 	// FL_ASSOCIATO_COMPENSO CHAR(1) NOT NULL
 	private java.lang.Boolean fl_associato_compenso;
 
@@ -123,15 +117,6 @@ public class MissioneBase extends MissioneKey implements Keyed {
 
 	// PG_BANCA DECIMAL(10,0) NOT NULL
 	private java.lang.Long pg_banca;
-
-    // ESERCIZIO_ORI_OBBLIGAZIONE DECIMAL(4,0)
-	private java.lang.Integer esercizio_ori_obbligazione;
-
-	// PG_OBBLIGAZIONE DECIMAL(10,0)
-	private java.lang.Long pg_obbligazione;
-
-	// PG_OBBLIGAZIONE_SCADENZARIO DECIMAL(10,0)
-	private java.lang.Long pg_obbligazione_scadenzario;
 
 	// PG_RIF_INQUADRAMENTO DECIMAL(10,0) NOT NULL
 	private java.lang.Long pg_rif_inquadramento;
@@ -197,12 +182,6 @@ public MissioneBase(java.lang.String cd_cds,java.lang.String cd_unita_organizzat
  */
 public java.lang.String getCd_cds_anticipo() {
 	return cd_cds_anticipo;
-}
-/* 
- * Getter dell'attributo cd_cds_obbligazione
- */
-public java.lang.String getCd_cds_obbligazione() {
-	return cd_cds_obbligazione;
 }
 /* 
  * Getter dell'attributo cd_modalita_pag
@@ -319,12 +298,6 @@ public java.lang.Integer getEsercizio_anticipo() {
 	return esercizio_anticipo;
 }
 /* 
- * Getter dell'attributo esercizio_obbligazione
- */
-public java.lang.Integer getEsercizio_obbligazione() {
-	return esercizio_obbligazione;
-}
-/* 
  * Getter dell'attributo fl_associato_compenso
  */
 public java.lang.Boolean getFl_associato_compenso() {
@@ -421,24 +394,6 @@ public java.lang.Long getPg_banca() {
 	return pg_banca;
 }
 /* 
- * Getter dell'attributo esercizio_ori_obbligazione
- */
-public java.lang.Integer getEsercizio_ori_obbligazione() {
-	return esercizio_ori_obbligazione;
-}
-/* 
- * Getter dell'attributo pg_obbligazione
- */
-public java.lang.Long getPg_obbligazione() {
-	return pg_obbligazione;
-}
-/* 
- * Getter dell'attributo pg_obbligazione_scadenzario
- */
-public java.lang.Long getPg_obbligazione_scadenzario() {
-	return pg_obbligazione_scadenzario;
-}
-/* 
  * Getter dell'attributo pg_rif_inquadramento
  */
 public java.lang.Long getPg_rif_inquadramento() {
@@ -503,12 +458,6 @@ public java.lang.String getTi_provvisorio_definitivo() {
  */
 public void setCd_cds_anticipo(java.lang.String cd_cds_anticipo) {
 	this.cd_cds_anticipo = cd_cds_anticipo;
-}
-/* 
- * Setter dell'attributo cd_cds_obbligazione
- */
-public void setCd_cds_obbligazione(java.lang.String cd_cds_obbligazione) {
-	this.cd_cds_obbligazione = cd_cds_obbligazione;
 }
 /* 
  * Setter dell'attributo cd_modalita_pag
@@ -625,12 +574,6 @@ public void setEsercizio_anticipo(java.lang.Integer esercizio_anticipo) {
 	this.esercizio_anticipo = esercizio_anticipo;
 }
 /* 
- * Setter dell'attributo esercizio_obbligazione
- */
-public void setEsercizio_obbligazione(java.lang.Integer esercizio_obbligazione) {
-	this.esercizio_obbligazione = esercizio_obbligazione;
-}
-/* 
  * Setter dell'attributo fl_associato_compenso
  */
 public void setFl_associato_compenso(java.lang.Boolean fl_associato_compenso) {
@@ -725,24 +668,6 @@ public void setPg_anticipo(java.lang.Long pg_anticipo) {
  */
 public void setPg_banca(java.lang.Long pg_banca) {
 	this.pg_banca = pg_banca;
-}
-/* 
- * Setter dell'attributo esercizio_ori_obbligazione
- */
-public void setEsercizio_ori_obbligazione(java.lang.Integer esercizio_ori_obbligazione) {
-	this.esercizio_ori_obbligazione = esercizio_ori_obbligazione;
-}
-/* 
- * Setter dell'attributo pg_obbligazione
- */
-public void setPg_obbligazione(java.lang.Long pg_obbligazione) {
-	this.pg_obbligazione = pg_obbligazione;
-}
-/* 
- * Setter dell'attributo pg_obbligazione_scadenzario
- */
-public void setPg_obbligazione_scadenzario(java.lang.Long pg_obbligazione_scadenzario) {
-	this.pg_obbligazione_scadenzario = pg_obbligazione_scadenzario;
 }
 /* 
  * Setter dell'attributo pg_rif_inquadramento

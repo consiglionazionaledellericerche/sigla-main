@@ -1,10 +1,11 @@
 package it.cnr.contab.compensi00.comp;
 
-import it.cnr.contab.doccont00.core.bulk.*;
-import it.cnr.contab.compensi00.docs.bulk.*;
-import it.cnr.contab.compensi00.tabrif.bulk.*;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
+import it.cnr.contab.compensi00.docs.bulk.EstrazioneCUDVBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
 
@@ -274,7 +275,7 @@ public abstract it.cnr.contab.compensi00.docs.bulk.CompensoBulk doContabilizzaCo
 **/
 
 public abstract EstrazioneCUDVBulk doElaboraCUD(it.cnr.jada.UserContext param0, EstrazioneCUDVBulk param1) throws it.cnr.jada.comp.ComponentException;
-public CompensoBulk elaboraScadenze(UserContext userContext, CompensoBulk compenso, Obbligazione_scadenzarioBulk oldScad, Obbligazione_scadenzarioBulk newScad) throws ComponentException;
+public void lockScadenza(UserContext userContext, Obbligazione_scadenzarioBulk newScad) throws ComponentException;
 /**
   * Viene richiesta la cancellazione del Compenso Temporaneo
   * generato da un'operazione di inserimento o modifica (nel caso di clone)
@@ -323,17 +324,6 @@ public void eliminaCompensoTemporaneo(UserContext userContext, CompensoBulk comp
 **/
 
 public abstract void eliminaConBulk(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException;
-/**
- * Scollega una obbligazione dal compenso relativo
- *
- * Pre-post-conditions
- *
- * Nome: Scollego obbligazione da compenso
- * Pre: Viene richiesto di scollegare una obbligazione da compenso
- * Post: L'obbligazione viene scollegata e il compenso aggiornato
- *
-**/ 
-public abstract CompensoBulk eliminaObbligazione(UserContext userContext, CompensoBulk compenso) throws it.cnr.jada.comp.ComponentException;
 /**
   * Viene richiesta l'esecuzione della procedura Oracle CNRCTB550.ELABORACOMPENSO
   *
@@ -782,8 +772,7 @@ public abstract it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBul
   * @param	scadenza		la scadenza da validare
   *
  **/
-
-public abstract void validaObbligazione(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param1,it.cnr.jada.bulk.OggettoBulk param2) throws ComponentException;
+public abstract void validaObbligazione(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk param1,it.cnr.contab.compensi00.docs.bulk.CompensoBulk param2) throws ComponentException;
 /**
   * Viene richiesta la validazione del terzo selezionato
   *	Ritorna una ApplicationException con la descrizione 

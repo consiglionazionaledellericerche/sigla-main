@@ -105,27 +105,6 @@
 		enabledOnFreeSearch = "true"
 		label="Rateizzazione addizionali irpef"/>
 	<fieldProperty
-		name="pg_trovato"
-		property="trovato.pg_trovato"
-		inputType="TEXT"
-		inputSize="10"
-		label="Identificativo del Trovato"
-        enabledOnEdit="true" />	
-	<fieldProperty
-		name="titoloTrovato"
-		property="trovato.titolo"
-		maxLength="500"
-		inputSize="48"
-		inputType="ROTEXT"
-		label="Titolo del Trovato"/>
-	<fieldProperty
-		name="inventoreTrovato"
-		property="trovato.inventore"
-		maxLength="500"
-		inputSize="48"
-		inputType="ROTEXT"
-		label="Inventore del Trovato"/>
-	<fieldProperty
 		name="fl_recupero_rate"
 		property="fl_recupero_rate"
 		inputType="CHECKBOX"
@@ -904,6 +883,28 @@
 		nullable="false"
 		label="Importo" />
 	<fieldProperty
+		name="im_totale_impegnato"
+		property="im_totale_impegnato"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Importo Impegnato" />
+	<fieldProperty
+		name="im_totale_da_impegnare"
+		property="im_totale_da_impegnare"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Importo Residuo da Impegnare" />
+	<fieldProperty
 		name="im_lordo_percipiente"
 		property="im_lordo_percipiente"
 		formatName="it.cnr.contab.util.EuroFormat"
@@ -1010,66 +1011,6 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		inputType="TEXT"
 		label="Imponibile iva" />
-/*****************************************/
-/************ OBBLIGAZIONE ***************/
-	<fieldProperty
-		name="cd_cds_obbligazione"
-		property="cd_cds_obbligazione"
-		inputSize="10"
-		inputType="ROTEXT"
-		label="CDS Impegno" />
-	<fieldProperty
-		name="esercizio_obbligazione"
-		property="esercizio_obbligazione"
-		inputSize="10"
-		inputType="ROTEXT"
-		label="Esercizio Impegno" />
-	<fieldProperty
-		name="esercizio_ori_obbligazione"
-		property="esercizio_ori_obbligazione"
-		inputSize="10"
-		inputType="ROTEXT"
-		label="Es. Impegno" />
-	<fieldProperty
-		name="pg_obbligazione"
-		property="pg_obbligazione"
-		inputSize="10"
-		inputType="ROTEXT"
-		label="Pg. Impegno" />
-	<fieldProperty
-		name="pgObbligazionePos"
-		property="pgObbligazionePos"
-		inputSize="10"
-		inputType="ROTEXT"
-		label="Pg. Impegno" />
-	<fieldProperty
-		name="pg_obbligazione_scadenzario"
-		property="pg_obbligazione_scadenzario"
-		inputSize="10"
-		inputType="ROTEXT"
-		label="Pg. Scadenza Impegno" />
-	<fieldProperty
-		name="scadenza_dt_scadenza"
-		property="obbligazioneScadenzario.dt_scadenza"
-		formatName="date_short"
-		inputType="ROTEXT"
-		label="Data scadenza" />
-	<fieldProperty
-		name="scadenza_im_scadenza"
-		property="obbligazioneScadenzario.im_scadenza"
-		inputType="ROTEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
-		label="Importo scadenza" />
-	<fieldProperty
-		name="scadenza_ds_scadenza"
-		property="obbligazioneScadenzario.ds_scadenza"
-		inputType="ROTEXT"
-		label="Descrizione scadenza" />
-	<fieldProperty
-		name="cig"
-		property="obbligazioneScadenzario.obbligazione.contratto.cig.cdCig"
-		inputType="ROTEXT"
-		label="Cig" />	
 /*********************************************/
 /******** SEARCH TOOL AGGIUNTIVI *************/
 /*********** DATI LIQUIDAZIONE ***************/
@@ -1548,6 +1489,8 @@
 	<formFieldProperty name="dt_a_competenza_cogeForSearch" />
 	<formFieldProperty name="dt_pagamento_fondo_eco" />
 	<formFieldProperty name="im_totale_compenso" />
+	<formFieldProperty name="im_totale_impegnato" />
+	<formFieldProperty name="im_totale_da_impegnare" />
 	<formFieldProperty
 		name="im_lordo_percipiente"
 		command="doOnImLordoPercipienteChange" />
@@ -1570,16 +1513,6 @@
 	<formFieldProperty name="dt_pagamento_mandato" />
 	<formFieldProperty name="imponibile_fiscale" />
 	<formFieldProperty name="imponibile_iva" />
-	<formFieldProperty name="cd_cds_obbligazione" />
-	<formFieldProperty name="esercizio_obbligazione" />
-	<formFieldProperty name="esercizio_ori_obbligazione" />
-	<formFieldProperty name="pg_obbligazione" />
-	<formFieldProperty name="pgObbligazionePos" />
-	<formFieldProperty name="pg_obbligazione_scadenzario" />
-	<formFieldProperty name="scadenza_dt_scadenza" />
-	<formFieldProperty name="scadenza_im_scadenza" />
-	<formFieldProperty name="scadenza_ds_scadenza" />
-	<formFieldProperty name="cig" />
 	<formFieldProperty name="ti_associato_manrev" />
 	<formFieldProperty name="ti_associato_manrevForSearch" />
 	<formFieldProperty name="cd_regione_irap" />
@@ -1640,10 +1573,6 @@
 	<formFieldProperty name="fl_escludi_qvaria_deduzione" />
 	<formFieldProperty name="im_detrazione_personale_anag" />
 	<formFieldProperty name="fl_accantona_add_terr" />	
-	<formFieldProperty name="pg_trovato"
-		command="doVerificaEsistenzaTrovato" />
-	<formFieldProperty 	name="titoloTrovato" />
-	<formFieldProperty 	name="inventoreTrovato" />
 	<formFieldProperty name="esercizio_rep"/>			
 	<formFieldProperty name="pg_repertorio"/>			
 	<formFieldProperty name="esercizio_limite_rep"/>
@@ -1674,7 +1603,6 @@
 	<columnFieldProperty name="stato_cofi" />
 	<columnFieldProperty name="ti_associato_manrev" />
 	<columnFieldProperty name="stato_pagamento_fondo_eco" />
-	<columnFieldProperty name="pg_trovato" />
 	<columnFieldProperty name="ti_anagrafico" />
 	<columnFieldProperty name="cd_terzo" />
 	<columnFieldProperty name="cognome" />

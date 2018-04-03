@@ -29,6 +29,11 @@ import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.Tipo_bolloBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.Tipo_bolloHome;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneHome;
+import it.cnr.contab.missioni00.docs.bulk.MissioneKey;
+import it.cnr.contab.missioni00.docs.bulk.Missione_rigaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioHome;
@@ -39,6 +44,7 @@ import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.ejb.ProcedureComponentSession;
+import it.cnr.jada.DetailedException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
@@ -62,6 +68,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
@@ -738,32 +747,23 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 mandato.setMandato_terzo(null);
 
             if (mandato.getMandato_terzo() == null) {
-                cd_terzo = ((V_doc_passivo_obbligazioneBulk) docPassivi.get(0))
-                        .getCodice_terzo_o_cessionario();
-                ti_pagamento = ((V_doc_passivo_obbligazioneBulk) docPassivi
-                        .get(0)).getTi_pagamento();
-                pGiro = ((V_doc_passivo_obbligazioneBulk) docPassivi.get(0))
-                        .getFl_pgiro();
-                ti_competenza_residuo = ((V_doc_passivo_obbligazioneBulk) docPassivi
-                        .get(0)).getTi_competenza_residuo();
-
+                cd_terzo = ((V_doc_passivo_obbligazioneBulk) docPassivi.get(0)).getCodice_terzo_o_cessionario();
+                ti_pagamento = ((V_doc_passivo_obbligazioneBulk) docPassivi.get(0)).getTi_pagamento();
+                pGiro = ((V_doc_passivo_obbligazioneBulk) docPassivi.get(0)).getFl_pgiro();
+                ti_competenza_residuo = ((V_doc_passivo_obbligazioneBulk) docPassivi.get(0)).getTi_competenza_residuo();
             } else {
                 cd_terzo = mandato.getMandato_terzo().getCd_terzo();
-                ti_pagamento = ((Mandato_rigaIBulk) mandato
-                        .getMandato_rigaColl().get(0)).getBanca()
-                        .getTi_pagamento();
-                pGiro = ((Mandato_rigaIBulk) mandato.getMandato_rigaColl().get(
-                        0)).getFl_pgiro();
+                ti_pagamento = ((Mandato_rigaIBulk) mandato.getMandato_rigaColl().get(0)).getBanca().getTi_pagamento();
+                pGiro = ((Mandato_rigaIBulk) mandato.getMandato_rigaColl().get(0)).getFl_pgiro();
                 ti_competenza_residuo = mandato.getTi_competenza_residuo();
             }
+            
             for (Iterator i = docPassivi.iterator(); i.hasNext(); ) {
                 docPassivo = (V_doc_passivo_obbligazioneBulk) i.next();
-                if (!cd_terzo
-                        .equals(docPassivo.getCodice_terzo_o_cessionario()))
+                if (!cd_terzo.equals(docPassivo.getCodice_terzo_o_cessionario()))
                     throw new ApplicationException(
                             "E' possibile selezionare solo doc passivi relativi ad un unico beneficiario");
-                if (!MandatoBulk.TIPO_REGOLARIZZAZIONE.equals(mandato
-                        .getTi_mandato())
+                if (!MandatoBulk.TIPO_REGOLARIZZAZIONE.equals(mandato.getTi_mandato())
                         && !ti_pagamento.equals(docPassivo.getTi_pagamento()))
                     throw new ApplicationException(
                             "E' possibile selezionare solo doc passivi relativi ad una stessa classe di pagamento");
@@ -775,8 +775,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                  * "Per il mandato di regolarizzaione non e' possibile selezionare doc passivi su partite di giro e doc passivi su capitoli di bilancio"
                  * );
                  */
-                if (!ti_competenza_residuo.equals(docPassivo
-                        .getTi_competenza_residuo()))
+                if (!ti_competenza_residuo.equals(docPassivo.getTi_competenza_residuo()))
                     throw new ApplicationException(
                             "E' possibile selezionare solo doc passivi dello stesso tipo COMPETENZA/RESIDUO.");
                 // creo mandato_riga
@@ -5160,6 +5159,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         if (mandato.getTi_mandato().equals(mandato.TIPO_REGOLARIZZAZIONE))
             verificaMandatoDiRegolarizzazione(aUC, (MandatoIBulk) mandato);
 
+        verificaLegameMissioneIntera(aUC, (MandatoIBulk) mandato);
+
         try {
             // in caso di INSERT: verifica la data di contabilizzazione
             if (mandato.isToBeCreated()) {
@@ -6379,5 +6380,46 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 .map(Mandato_rigaHome.class::cast)
                 .map(mandatoRigaHome -> mandatoRigaHome.getDocumentoAmministrativoSpesaBulk(userContext, mandatoRiga))
                 .orElse(null);
+    }
+    
+
+    private void verificaLegameMissioneIntera(UserContext userContext, MandatoIBulk mandato) throws ComponentException {
+    	try {
+			MissioneHome missHome = (MissioneHome)getHome(userContext, MissioneBulk.class);
+	    	List<Mandato_rigaBulk> mandatoRighe = mandato.getMandato_rigaColl();
+	
+	        final Supplier<Stream<Mandato_rigaBulk>> righeMandatoMissione = () ->
+		        Optional.ofNullable(mandatoRighe)
+		        .filter(list -> !list.isEmpty())
+		        .map(list ->
+		                list.stream()
+		                        .filter(Mandato_rigaBulk.class::isInstance)
+		                        .map(Mandato_rigaBulk.class::cast)
+		                        .filter(el->Numerazione_doc_ammBulk.TIPO_MISSIONE.equals(el.getCd_tipo_documento_amm()))
+		        ).orElse(Stream.empty());
+	        
+		    final Map<Integer,List<MissioneBulk>> selectedElements =
+	   		        righeMandatoMissione.get()
+	           			.map(el->new MissioneBulk(el.getCd_cds_doc_amm(), el.getCd_uo_doc_amm(), el.getEsercizio_doc_amm(), el.getPg_doc_amm()))
+	                    .collect(Collectors.groupingBy(el->el.primaryKeyHashCode()));
+		                
+	        for (Integer key : selectedElements.keySet()) {
+	           	MissioneBulk firstMissione = selectedElements.get(key).get(0);
+	   			for (Missione_rigaBulk missRiga : missHome.findMissione_rigaList(firstMissione)) {
+					righeMandatoMissione.get()
+						.filter(el->el.getEsercizio_obbligazione().equals(missRiga.getEsercizio_obbligazione())&&
+								    el.getEsercizio_ori_obbligazione().equals(missRiga.getEsercizio_ori_obbligazione())&&
+								    el.getCd_cds().equals(missRiga.getCd_cds_obbligazione())&&
+								    el.getPg_obbligazione().equals(missRiga.getPg_obbligazione())&&
+								    el.getPg_obbligazione_scadenzario().equals(missRiga.getPg_obbligazione_scadenzario()))
+						.findAny()
+						.orElseThrow(()-> new ApplicationException("Attenzione! La missione "+
+	   							firstMissione.getEsercizio()+"/"+firstMissione.getCd_cds()+"/"+firstMissione.getPg_missione()+
+								" non risulta collegata interamente al mandato!"));
+	   			}
+	   		}
+        } catch (Exception e) {
+            throw handleException(e);
+        }
     }
 }

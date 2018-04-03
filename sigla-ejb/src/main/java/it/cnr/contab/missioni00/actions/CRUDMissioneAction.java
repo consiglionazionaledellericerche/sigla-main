@@ -9,6 +9,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.Compenso_rigaBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
@@ -21,6 +22,7 @@ import it.cnr.contab.missioni00.bp.CRUDMissioneBP;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_rigaBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_tappaBulk;
 import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmBulk;
@@ -37,7 +39,9 @@ import it.cnr.jada.util.action.FormBP;
 import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 
+import java.math.BigDecimal;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.Optional;
 
 /**
@@ -63,23 +67,20 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
      * (Validazione terzo, sincronizzazione delle scadenze e lock alla scadenza)
      */
 
-    public Forward basicDoBringBackOpenObbligazioniWindow(ActionContext context, Obbligazione_scadenzarioBulk scadenza) throws BusinessProcessException {
+    public Forward basicDoBringBackOpenObbligazioniWindow(ActionContext context, Obbligazione_scadenzarioBulk scadenza, boolean isModifica) throws BusinessProcessException {
         CRUDMissioneBP bp = (CRUDMissioneBP) getBusinessProcess(context);
-        MissioneBulk missione = (MissioneBulk) bp.getModel();
 
         try {
-            try {
-                TerzoBulk creditore = scadenza.getObbligazione().getCreditore();
-                if (!missione.getTerzo().equalsByPrimaryKey(creditore) &&
-                        !AnagraficoBulk.DIVERSI.equalsIgnoreCase(creditore.getAnagrafico().getTi_entita()))
-                    throw new it.cnr.jada.comp.ApplicationException("La scadenza selezionata deve appartenere ad un'obbligazione che ha come creditore il terzo della missione!");
+    		if (scadenza==null)
+    			return context.findDefaultForward();
 
-                it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession h = it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP.getVirtualComponentSession(context, true);
-                h.lockScadenza(context.getUserContext(), scadenza);
-            } catch (Exception e) {
-                throw new BusinessProcessException(e);
-            }
-            missione.gestisciCambioSelezioneScadenza(scadenza);
+            MissioneBulk missione = (MissioneBulk) bp.getModel();
+            TerzoBulk creditore = scadenza.getObbligazione().getCreditore();
+            if (!missione.getTerzo().equalsByPrimaryKey(creditore) &&
+                !AnagraficoBulk.DIVERSI.equalsIgnoreCase(creditore.getAnagrafico().getTi_entita()))
+                throw new it.cnr.jada.comp.ApplicationException("La scadenza selezionata deve appartenere ad un'obbligazione che ha come creditore il terzo della missione!");
+
+            bp.elaboraScadenza(context, scadenza, isModifica);
         } catch (Throwable t) {
             it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi defSaldiBulk = bp.getDefferedUpdateSaldiParentBP().getDefferedUpdateSaldiBulk();
             if (scadenza.getObbligazione().getPg_ver_rec().equals((Long) scadenza.getObbligazione().getSaldiInfo().get("pg_ver_rec")))
@@ -247,8 +248,8 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
         missione.setIm_lordo_percepiente(missione.getCompenso().getIm_lordo_percipiente());
         missione.setIm_totale_missione(missione.getCompenso().getIm_totale_compenso());
 
-        missione.setStato_coge(missione.STATO_COGE_NON_PROCESSARE);
-        missione.setStato_coan(missione.STATO_COAN_NON_PROCESSARE);
+        missione.setStato_coge(MissioneBulk.STATO_COGE_NON_PROCESSARE);
+        missione.setStato_coan(MissioneBulk.STATO_COAN_NON_PROCESSARE);
 
         bp.update(context);
 
@@ -275,8 +276,8 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
             if (missione.isMissioneConObbligazione()) {
                 missione.calcolaConsuntivi();
 
-                if (missione.getImporto_scadenza_obbligazione().compareTo(missione.getObbligazione_scadenzario().getIm_scadenza()) != 0)
-                    setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "L'importo della scadenza deve essere " + missione.getImporto_scadenza_obbligazione().toString());
+                if (missione.getImporto_scadenza_obbligazione().compareTo(missione.getIm_totale_impegnato())!= 0)
+                    setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Il totale delle scadenze di impegno associate deve essere di " + missione.getImporto_scadenza_obbligazione().toString());
             }
 
             return context.findDefaultForward();
@@ -420,18 +421,8 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
             HookForward caller = (HookForward) context.getCaller();
             Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk) caller.getParameter("bringback");
 
-            if (scadenza == null)
-                return context.findDefaultForward();
-
-            CRUDMissioneBP bp = (CRUDMissioneBP) getBusinessProcess(context);
-            MissioneBulk missione = (MissioneBulk) bp.getModel();
-
-            basicDoBringBackOpenObbligazioniWindow(context, scadenza);
-
-            missione.setObbligazione_scadenzario(scadenza);
-            bp.setDirty(true);
-            bp.setModel(context, missione);
-
+            if (scadenza != null)
+                return basicDoBringBackOpenObbligazioniWindow(context, scadenza, false);
             return context.findDefaultForward();
         } catch (Throwable ex) {
             return handleException(context, ex);
@@ -441,35 +432,17 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
     /**
      * Il metodo gestisce il rientro dalla finestra di ricerca con filtri o creazione di obbligazioni.
      */
-
     public Forward doBringBackRicercaObbligazioniWindow(ActionContext context) {
-        try {
-            HookForward caller = (HookForward) context.getCaller();
-            Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk) caller.getParameter("obbligazioneSelezionata");
 
-            if (scadenza == null)
-                return context.findDefaultForward();
+    	try {
+    		HookForward caller = (HookForward)context.getCaller();
+    		Obbligazione_scadenzarioBulk obblig = (Obbligazione_scadenzarioBulk)caller.getParameter("obbligazioneSelezionata");
 
-            CRUDMissioneBP bp = (CRUDMissioneBP) getBusinessProcess(context);
-            MissioneBulk missione = (MissioneBulk) bp.getModel();
+    		return basicDoBringBackOpenObbligazioniWindow(context, obblig, false);
 
-            basicDoBringBackOpenObbligazioniWindow(context, scadenza);
-
-            missione.setObbligazione_scadenzario(scadenza);
-
-            //	verifico se la scadenza appena associata l'avevo precedentemente slegata
-            if (missione.isScadenzaDaRimuovereDaiCancellati()) {
-                //  la rimuovo dalla collection altrimenti l'aggiornamento del suo
-                //	im_associato_doc_amm a zero mi cambierebbe il pg_ver_rec
-                missione.removeFromDocumentiContabiliCancellati(scadenza);
-            }
-            bp.setDirty(true);
-            bp.setModel(context, missione);
-
-            return context.findDefaultForward();
-        } catch (Exception e) {
-            return handleException(context, e);
-        }
+    	} catch(Throwable ex) {
+    		return handleException(context, ex);
+    	}
     }
 
     /**
@@ -484,18 +457,24 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
             if (anticipo == null)
                 return context.findDefaultForward();
 
+            CRUDMissioneBP bp = (CRUDMissioneBP) getBusinessProcess(context);
             missione.setAnticipo(anticipo);
             missione.calcolaConsuntivi();
 
             if (missione.isMissioneConObbligazione()) {
                 if (missione.isImportoAnticipoMaggioreDiMissione()) {
-                    setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Associazione con la scadenza di impegno rimossa! L'anticipo ha importo maggiore della missione");
-                    missione.addToDocumentiContabiliCancellati(missione.getObbligazione_scadenzario());
-                    missione.setObbligazione_scadenzario(new Obbligazione_scadenzarioBulk());
+                    setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Associazione con le scadenze di impegno rimosse! L'anticipo ha importo maggiore della missione");
+                    
+                    for (Iterator iterator = bp.getMissioneRigheController().getDetails().iterator(); iterator.hasNext();) {
+                    	Missione_rigaBulk missioneRiga = (Missione_rigaBulk) iterator.next();
+                        missione.addToDocumentiContabiliCancellati(missioneRiga.getObbligazioneScadenzario());
+					}
+                    bp.getMissioneRigheController().removeAll(context);
+                    
                     if (missione.getStato_pagamento_fondo_eco().compareTo(MissioneBulk.FONDO_ECO) == 0)
                         missione.setStato_pagamento_fondo_eco(MissioneBulk.NO_FONDO_ECO);
-                } else if (missione.getImporto_scadenza_obbligazione().compareTo(missione.getObbligazione_scadenzario().getIm_scadenza()) != 0)
-                    setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "L'importo della scadenza deve essere " + missione.getImporto_scadenza_obbligazione().toString());
+                } else if (missione.getImporto_scadenza_obbligazione().compareTo(missione.getIm_totale_impegnato())!= 0)
+                    setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Il totale delle scadenze di impegno associate deve essere di " + missione.getImporto_scadenza_obbligazione().toString());
             }
 
             return context.findDefaultForward();
@@ -1129,15 +1108,23 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
      */
 
     public void doControlliPerCompenso(ActionContext context, MissioneBulk missione) throws BusinessProcessException {
-        if (missione.isCompensoObbligatorio() && missione.isMissioneConObbligazione()) {
-            setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "L'associazione della missione con la scadenza di impegno e' stata rimossa!");
-            missione.addToDocumentiContabiliCancellati(missione.getObbligazione_scadenzario());
-            missione.setObbligazione_scadenzario(new Obbligazione_scadenzarioBulk());
-        }
-        if (!missione.isCompensoObbligatorio() && missione.isMissioneConCompenso()) {
-            CRUDMissioneBP bp = (CRUDMissioneBP) getBusinessProcess(context);
-            bp.cancellaCompensoPhisically(context);
-        }
+    	try {
+	    	if (missione.isCompensoObbligatorio() && missione.isMissioneConObbligazione()) {
+	            setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "L'associazione della missione con la scadenza di impegno e' stata rimossa!");
+	            CRUDMissioneBP bp = (CRUDMissioneBP) getBusinessProcess(context);
+	            for (Iterator iterator = bp.getMissioneRigheController().getDetails().iterator(); iterator.hasNext();) {
+	            	Missione_rigaBulk missioneRiga = (Missione_rigaBulk) iterator.next();
+	                missione.addToDocumentiContabiliCancellati(missioneRiga.getObbligazioneScadenzario());
+				}
+	            bp.getMissioneRigheController().removeAll(context);
+	        }
+	        if (!missione.isCompensoObbligatorio() && missione.isMissioneConCompenso()) {
+	            CRUDMissioneBP bp = (CRUDMissioneBP) getBusinessProcess(context);
+	            bp.cancellaCompensoPhisically(context);
+	        }
+	    } catch (Exception e) {
+	    	throw new BusinessProcessException(e);
+	    }
     }
 
     /**
@@ -1148,11 +1135,19 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
      */
 
     public void doControlliPerFineSpese(ActionContext context, MissioneBulk missione) throws BusinessProcessException {
-        if (missione.isMissioneConObbligazione() && missione.isImportoAnticipoMaggioreDiMissione()) {
-            setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "L'associazione della missione con la scadenza di impegno e' stata rimossa!");
-            missione.addToDocumentiContabiliCancellati(missione.getObbligazione_scadenzario());
-            missione.setObbligazione_scadenzario(new Obbligazione_scadenzarioBulk());
-        }
+    	try {
+	        if (missione.isMissioneConObbligazione() && missione.isImportoAnticipoMaggioreDiMissione()) {
+	            setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "L'associazione della missione con la scadenza di impegno e' stata rimossa!");
+	            CRUDMissioneBP bp = (CRUDMissioneBP) getBusinessProcess(context);
+	            for (Iterator iterator = bp.getMissioneRigheController().getDetails().iterator(); iterator.hasNext();) {
+	            	Missione_rigaBulk missioneRiga = (Missione_rigaBulk) iterator.next();
+	                missione.addToDocumentiContabiliCancellati(missioneRiga.getObbligazioneScadenzario());
+				}
+	            bp.getMissioneRigheController().removeAll(context);
+	        }
+	    } catch (Exception e) {
+	    	throw new BusinessProcessException(e);
+	    }
     }
 
     /**
@@ -1266,36 +1261,6 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
             return context.findDefaultForward();
 
         } catch (Throwable e) {
-            return handleException(context, e);
-        }
-    }
-
-    /**
-     * Il metodo gestisce l'eliminazione dell'associazione missione-scadenza.
-     * Se tolgo la relazione tra la missione e una scadenza devo prevedere
-     * l'aggiornamento/inserimento a db di tale scadenza con im_associato_doc_amm=0
-     * e se la missione usa il fondo economale devo eliminare questa associazione
-     */
-
-    public Forward doEliminaScadenzaObbligazione(ActionContext context) {
-        try {
-            fillModel(context);
-            CRUDMissioneBP bp = (CRUDMissioneBP) getBusinessProcess(context);
-            MissioneBulk missione = (MissioneBulk) bp.getModel();
-
-            if (!missione.isMissioneConObbligazione()) {
-                missione.setObbligazione_scadenzario(new Obbligazione_scadenzarioBulk());
-                throw new it.cnr.jada.comp.ApplicationException("Non esiste alcuna scadenza da eliminare!");
-            }
-
-            missione.addToDocumentiContabiliCancellati(missione.getObbligazione_scadenzario());
-            missione.setObbligazione_scadenzario(new Obbligazione_scadenzarioBulk());
-            if (missione.getStato_pagamento_fondo_eco().compareTo(MissioneBulk.FONDO_ECO) == 0)
-                missione.setStato_pagamento_fondo_eco(MissioneBulk.NO_FONDO_ECO);
-            bp.setDirty(true);
-
-            return context.findDefaultForward();
-        } catch (Exception e) {
             return handleException(context, e);
         }
     }
@@ -1505,26 +1470,26 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
 
             boolean viewMode = bp.isViewing();
 
-            if (!missione.isMissioneConObbligazione())
+    		Missione_rigaBulk missioneRiga = (Missione_rigaBulk)bp.getMissioneRigheController().getModel();
+    		Obbligazione_scadenzarioBulk scadenza = missioneRiga.getObbligazioneScadenzario();
+
+            if (scadenza==null)
                 throw new it.cnr.jada.comp.ApplicationException("Selezionare la scadenza di impegno da modificare!");
 
             if ((missione.getImporto_scadenza_obbligazione() == null) || (missione.getImporto_scadenza_obbligazione().compareTo(new java.math.BigDecimal(0)) == 0))
                 throw new it.cnr.jada.comp.ApplicationException("L'mporto della missione e' nullo!");
 
-            Obbligazione_scadenzarioBulk scadenza = missione.getObbligazione_scadenzario();
             it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession h = it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP.getVirtualComponentSession(context, true);
-
             try {
                 scadenza = (Obbligazione_scadenzarioBulk) h.modificaScadenzaInAutomatico(
                         context.getUserContext(),
                         scadenza,
-                        missione.getImporto_scadenza_obbligazione(),
+                        missioneRiga.getIm_totale_riga_missione(),
                         false);
 
                 h.lockScadenza(context.getUserContext(), scadenza);
                 missione.addToDefferredSaldi(scadenza.getObbligazione(), scadenza.getObbligazione().getSaldiInfo());
-                missione.gestisciCambioSelezioneScadenza(scadenza);
-                missione.setObbligazione_scadenzario(scadenza);
+                missioneRiga.setObbligazioneScadenzario(scadenza);
                 bp.setDirty(true);
                 bp.setModel(context, missione);
 
@@ -2468,8 +2433,12 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
         try {
             fillModel(context);
             CRUDMissioneBP bp = (CRUDMissioneBP) getBusinessProcess(context);
+
             MissioneBulk missione = (MissioneBulk) bp.getModel();
             missione.calcolaConsuntivi();
+
+    		Missione_rigaBulk missioneRiga = (Missione_rigaBulk)bp.getMissioneRigheController().getModel();
+    		Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)missioneRiga.getObbligazioneScadenzario();
 
             boolean viewMode = bp.isViewing();
 
@@ -2478,16 +2447,16 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
             if (!missione.isEditable())
                 viewMode = true;
 
-            if (!missione.isMissioneConObbligazione())
+            if (scadenza!=null)
                 throw new it.cnr.jada.comp.ApplicationException("Selezionare l'impegno da " + (viewMode ? "visualizzare" : "modificare") + " in manuale!");
 
             if (!viewMode && bp instanceof IDocumentoAmministrativoBP)
                 viewMode = !((IDocumentoAmministrativoBP) bp).getDocumentoAmministrativoCorrente().isEditable();
 
-            String status = viewMode ? "V" : "M";
-            it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP nbp = it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP.getBusinessProcessFor(context, missione.getObbligazione_scadenzario().getObbligazione(), status + "RSWTh");
-            nbp.edit(context, missione.getObbligazione_scadenzario().getObbligazione());
-            nbp.selezionaScadenza(missione.getObbligazione_scadenzario(), context);
+    		String status = viewMode ? "V" : "M";
+            it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP nbp = it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP.getBusinessProcessFor(context, scadenza.getObbligazione(), status + "RSWTh");
+            nbp.edit(context, scadenza);
+            nbp.selezionaScadenza(scadenza, context);
 
             context.addHookForward("bringback", this, "doBringBackOpenObbligazioniWindow");
             HookForward hook = (HookForward) context.findForward("bringback");
@@ -2596,7 +2565,7 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
 
             Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
             filtro.setFornitore(missione.getTerzo());
-            filtro.setIm_importo(missione.getImporto_scadenza_obbligazione());
+            filtro.setIm_importo(missione.getIm_totale_da_impegnare());
             filtro.setCd_unita_organizzativa(missione.getCd_unita_organizzativa());
             filtro.setFl_importo(Boolean.TRUE);
             filtro.setData_scadenziario(null);
@@ -3092,4 +3061,11 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
         }
     }
 
+    /**
+     * Gestisce il comando di aggiunta di un nuovo dettaglio su un CRUDController
+     * figlio del ricevente
+     */
+    public Forward doAddToCRUDMain_MissioneRighe(ActionContext context) {
+    	return doRicercaScadenzaObbligazione(context);
+    }
 }

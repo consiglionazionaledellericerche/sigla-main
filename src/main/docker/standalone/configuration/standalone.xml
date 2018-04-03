@@ -171,7 +171,7 @@
                     </timeout>
                 </datasource>
                 <datasource jndi-name="java:/jdbc/CIR" pool-name="OracleDSSIGLAPool" enabled="${env.SIGLA_ORACLE_ENABLE:true}" use-java-context="true" statistics-enabled="true">
-                    <connection-url>${env.SIGLA_CONNECTION_URL:jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF}</connection-url>
+                    <connection-url>${env.SIGLA_CONNECTION_URL:jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAT}</connection-url>
                     <driver>ojdbc</driver>
                     <pool>
                         <min-pool-size>5</min-pool-size>
@@ -179,7 +179,7 @@
                     </pool>
                     <security>
                         <user-name>${env.SIGLA_CONNECTION_USERNAME:PCIR009}</user-name>
-                        <password>${env.SIGLA_CONNECTION_PASSWORD:dbform}</password>
+                        <password>${env.SIGLA_CONNECTION_PASSWORD:dbtest}</password>
                     </security>
                     <validation>
                         <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.oracle.OracleValidConnectionChecker"/>

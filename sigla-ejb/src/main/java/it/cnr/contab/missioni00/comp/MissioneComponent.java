@@ -1,6 +1,33 @@
 package it.cnr.contab.missioni00.comp;
 
-import it.cnr.contab.anagraf00.core.bulk.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.StringTokenizer;
+import java.util.Vector;
+import java.util.stream.Stream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
+import it.cnr.contab.anagraf00.core.bulk.Ass_rapp_impiegoBulk;
+import it.cnr.contab.anagraf00.core.bulk.Ass_rapp_impiegoHome;
+import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.core.bulk.BancaHome;
+import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
+import it.cnr.contab.anagraf00.core.bulk.RapportoHome;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_inquadramentoHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
@@ -31,15 +58,54 @@ import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaHome;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
 import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
-import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileHome;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaHome;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contHome;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceHome;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
+import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
 import it.cnr.contab.doccont00.ejb.AccertamentoAbstractComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
-import it.cnr.contab.missioni00.docs.bulk.*;
-import it.cnr.contab.missioni00.tabrif.bulk.*;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoHome;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoKey;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneHome;
+import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioHome;
+import it.cnr.contab.missioni00.docs.bulk.Missione_tappaBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_tappaHome;
+import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
+import it.cnr.contab.missioni00.docs.bulk.Stampa_vpg_missioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.VMissioneSIPBulk;
+import it.cnr.contab.missioni00.docs.bulk.VMissioneSIPHome;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_diariaBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_diariaHome;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_rimborso_kmHome;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoHome;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaHome;
+import it.cnr.contab.missioni00.tabrif.bulk.Tipo_missioneBulk;
+import it.cnr.contab.missioni00.tabrif.bulk.Tipo_missioneHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.EuroFormat;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
@@ -50,16 +116,13 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBroker;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.Timestamp;
-import java.util.*;
 
 public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cloneable, Serializable, IPrintMgr {
     private transient final static Logger logger = LoggerFactory.getLogger(MissioneComponent.class);
@@ -241,45 +304,56 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
      */
 
     private void aggiornaObbligazione(UserContext userContext, MissioneBulk missione, it.cnr.contab.doccont00.core.bulk.OptionRequestParameter status) throws ComponentException {
-        Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk) missione.getObbligazione_scadenzario();
-
-        // Ciclo sulle scadenze precedentementi associate alla missione.
-        // Se nuove le inserisco comunque in tabella con "im_associato_doc_amm" nullo e ne aggiorno i saldi
-        // Se non nuove le aggiorno azzerando il loro "im_associato_doc_amm"
-        Obbligazione_scadenzarioBulk aScadenzaNonAssociata;
-        if (missione.getDocumentiContabiliCancellati() != null) {
-            for (Iterator i = missione.getDocumentiContabiliCancellati().iterator(); i.hasNext(); ) {
-                aScadenzaNonAssociata = (Obbligazione_scadenzarioBulk) i.next();
-                if (scadenza == null || !aScadenzaNonAssociata.getObbligazione().equalsByPrimaryKey(scadenza.getObbligazione())) {
-                    // se la scadenza appartiene alla stessa obbligazione della scadenza associata alla missione
-                    // non aggiornare i saldi altrimenti lo faresti due volte (l'aggiornamento dei saldi va per
-                    // obbligazione e non per scadenze)
-                    aggiornaSaldi(userContext, missione, aScadenzaNonAssociata.getObbligazione(), status);
-
-                    if (aScadenzaNonAssociata.getObbligazione().isTemporaneo())
-                        aggiornaObbligazioneTemporanea(userContext, aScadenzaNonAssociata.getObbligazione());
-                }
-
-                aScadenzaNonAssociata.setIm_associato_doc_amm((new BigDecimal(0)));
-                updateImportoAssociatoDocAmm(userContext, aScadenzaNonAssociata);
-            }
-        }
-
-        if (missione.isMissioneConObbligazione()) {
-            // Se la scadenza era gia' stata creata e non e' stata modificata
-            // il metodo non aggiornera' alcun saldo
-            aggiornaSaldi(userContext, missione, scadenza.getObbligazione(), status);
-
-            if (scadenza.getObbligazione().isTemporaneo())
-                aggiornaObbligazioneTemporanea(userContext, scadenza.getObbligazione());
-
-            scadenza.setIm_associato_doc_amm(missione.getImporto_scadenza_obbligazione());
-            updateImportoAssociatoDocAmm(userContext, scadenza);
-        }
-
-        //	Aggiorno i saldi dell'obbligazione del compenso
-        if (missione.isMissioneConCompenso())
-            aggiornaSaldiPerCompenso(userContext, missione, status);
+		try {
+			Optional.ofNullable(missione.getMissioneRigaColl())
+			.ifPresent(el->el.stream().forEach(missioneRiga->{
+				try {
+					Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk) missioneRiga.getObbligazioneScadenzario();
+	
+			        // Ciclo sulle scadenze precedentementi associate alla missione.
+			        // Se nuove le inserisco comunque in tabella con "im_associato_doc_amm" nullo e ne aggiorno i saldi
+			        // Se non nuove le aggiorno azzerando il loro "im_associato_doc_amm"
+			        Obbligazione_scadenzarioBulk aScadenzaNonAssociata;
+			        if (missione.getDocumentiContabiliCancellati() != null) {
+			            for (Iterator i = missione.getDocumentiContabiliCancellati().iterator(); i.hasNext(); ) {
+			                aScadenzaNonAssociata = (Obbligazione_scadenzarioBulk) i.next();
+			                if (scadenza == null || !aScadenzaNonAssociata.getObbligazione().equalsByPrimaryKey(scadenza.getObbligazione())) {
+			                    // se la scadenza appartiene alla stessa obbligazione della scadenza associata alla missione
+			                    // non aggiornare i saldi altrimenti lo faresti due volte (l'aggiornamento dei saldi va per
+			                    // obbligazione e non per scadenze)
+			                    aggiornaSaldi(userContext, missione, aScadenzaNonAssociata.getObbligazione(), status);
+			
+			                    if (aScadenzaNonAssociata.getObbligazione().isTemporaneo())
+			                        aggiornaObbligazioneTemporanea(userContext, aScadenzaNonAssociata.getObbligazione());
+			                }
+			
+			                aScadenzaNonAssociata.setIm_associato_doc_amm((new BigDecimal(0)));
+			                updateImportoAssociatoDocAmm(userContext, aScadenzaNonAssociata);
+			            }
+			        }
+			
+			        if (missione.isMissioneConObbligazione()) {
+			            // Se la scadenza era gia' stata creata e non e' stata modificata
+			            // il metodo non aggiornera' alcun saldo
+			            aggiornaSaldi(userContext, missione, scadenza.getObbligazione(), status);
+			
+			            if (scadenza.getObbligazione().isTemporaneo())
+			                aggiornaObbligazioneTemporanea(userContext, scadenza.getObbligazione());
+			
+			            scadenza.setIm_associato_doc_amm(missione.getImporto_scadenza_obbligazione());
+			            updateImportoAssociatoDocAmm(userContext, scadenza);
+			        }
+				} catch (ComponentException e) {
+					throw new DetailedRuntimeException(e);
+				}		        
+			}));
+	
+	        //	Aggiorno i saldi dell'obbligazione del compenso
+	        if (missione.isMissioneConCompenso())
+	            aggiornaSaldiPerCompenso(userContext, missione, status);
+	    } catch (DetailedRuntimeException e) {
+	    	throw new ApplicationException(e.getMessage());
+	   	}
     }
 
     /**
@@ -381,24 +455,42 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
      */
 
     private void aggiornaSaldiPerCompenso(it.cnr.jada.UserContext userContext, MissioneBulk missione, it.cnr.contab.doccont00.core.bulk.OptionRequestParameter status) throws ComponentException {
-        Obbligazione_scadenzarioBulk aScadenzaNonAssociataCompenso;
-        Obbligazione_scadenzarioBulk aScadenzaAssociataCompenso = missione.getCompenso().getObbligazioneScadenzario();
+        try {
+	        if (missione.getCompenso().getDocumentiContabiliCancellati() != null &&
+	             !missione.getCompenso().getDocumentiContabiliCancellati().isEmpty()) {
+	        	List<Obbligazione_scadenzarioBulk> docCancellati = missione.getCompenso().getDocumentiContabiliCancellati();
+	        	docCancellati.stream()
+	        			.map(Obbligazione_scadenzarioBulk::getObbligazione)
+	        			.distinct()
+	        			.forEach(obbNonAssociata->{
+		    				try {
+		                        if (!missione.getCompenso().getObbligazione_scadenzarioColl().stream()
+		                    			.map(Obbligazione_scadenzarioBulk::getObbligazione).distinct()
+		                    			.filter(obbAssociata->obbAssociata.equalsByPrimaryKey(obbNonAssociata))
+		                    			.findAny().isPresent()) {
+			                        //	Aggiorno i saldi per le scadenze di obbligazione elaborate dal compenso
+			                        //	ma non piu' associate
+			                        aggiornaSaldi(userContext, missione, obbNonAssociata, status);
+		                        }
+							} catch (ComponentException e) {
+								throw new DetailedRuntimeException(e);
+							}
+	        			});
+	        }
 
-        if (missione.getCompenso().getDocumentiContabiliCancellati() != null &&
-                !missione.getCompenso().getDocumentiContabiliCancellati().isEmpty()) {
-            for (Iterator i = missione.getCompenso().getDocumentiContabiliCancellati().iterator(); i.hasNext(); ) {
-                aScadenzaNonAssociataCompenso = (Obbligazione_scadenzarioBulk) i.next();
-                if (aScadenzaAssociataCompenso == null || !aScadenzaNonAssociataCompenso.getObbligazione().equalsByPrimaryKey(aScadenzaAssociataCompenso.getObbligazione())) {
-                    //	Aggiorno i saldi per le scadenze di obbligazione elaborate dal compenso
-                    //	ma non piu' associate
-                    aggiornaSaldi(userContext, missione, aScadenzaNonAssociataCompenso.getObbligazione(), status);
-                }
-            }
-        }
-
-        //	Aggiorno i saldi per la scadenza di obbligazione attualmente associata al compenso
-        if (aScadenzaAssociataCompenso != null)
-            aggiornaSaldi(userContext, missione, aScadenzaAssociataCompenso.getObbligazione(), status);
+	        missione.getCompenso().getObbligazione_scadenzarioColl().stream()
+	    			.map(Obbligazione_scadenzarioBulk::getObbligazione).distinct()
+	    			.forEach(obbl->{
+	    				try {
+		    		        //	Aggiorno i saldi per la scadenza di obbligazione attualmente associata al compenso
+		   		            aggiornaSaldi(userContext, missione, obbl, status);
+						} catch (ComponentException e) {
+							throw new DetailedRuntimeException(e);
+						}
+					});
+		} catch (DetailedRuntimeException e) {
+			throw new ApplicationException(e.getMessage());
+		}
     }
 
     /**
@@ -430,11 +522,18 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
             //	Se esiste, scollego la scadenza dal compenso.
             // 	Ricorda che tale scadenza puo' non esistere se la missione ha associato
             //  un anticipo di importo maggiore
-            Obbligazione_scadenzarioBulk scadenza = missione.getCompenso().getObbligazioneScadenzario();
-            if (scadenza != null) {
-                scadenza.setIm_associato_doc_amm(new BigDecimal(0));
-                updateImportoAssociatoDocAmm(userContext, scadenza);
-            }
+            Optional.ofNullable(missione.getCompenso().getObbligazione_scadenzarioColl())
+            		.map(BulkList::stream)
+            		.orElse(Stream.empty())
+            		.forEach(scadenza->{
+            			try {
+	                        scadenza.setIm_associato_doc_amm(new BigDecimal(0));
+	                        updateImportoAssociatoDocAmm(userContext, scadenza);
+	            		} catch (ComponentException e) {
+	            			throw new DetailedRuntimeException(e);
+	            		}
+            		});
+            
             //	Inizializzo i campi della missione relativi al compenso
             missione.setCompenso(new CompensoBulk());
             missione.setFl_associato_compenso(new Boolean(false));
@@ -442,6 +541,8 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
             missione.setStato_coan(MissioneBulk.STATO_INIZIALE_COAN);
 
             return missione;
+		} catch (DetailedRuntimeException e) {
+			throw new ApplicationException(e.getMessage());
         } catch (Throwable e) {
             throw handleException(e);
         }
@@ -1003,7 +1104,7 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
                         missioneTemp.isObbligazioneObbligatoria()) {
                     if (!missioneTemp.isMissioneConObbligazione())
                         throw new it.cnr.jada.comp.ApplicationException("Associare una Obbligazione !");
-                    validaObbligazione(userContext, missioneTemp.getObbligazione_scadenzario(), missioneTemp);
+                    validaObbligazioni(userContext, missioneTemp);
                 }
 
                 //	Verifico che l'anticipo associato alla missione sia ancora eleggibile
@@ -1183,16 +1284,27 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
             if (missione.getDefferredSaldi() != null)
                 aTempDiffSaldi = (PrimaryKeyHashMap) missione.getDefferredSaldi().clone();
 
-            Obbligazione_scadenzarioBulk scadenza = null;
-
             //	Scollego l'eventuale scadenza dalla missione o del compenso
-            if (missione.isMissioneConObbligazione())
-                scadenza = missione.getObbligazione_scadenzario();
-            if (missione.isMissioneConCompenso())
-                scadenza = missione.getCompenso().getObbligazioneScadenzario();
-            if (scadenza != null) {
-                scadenza.setIm_associato_doc_amm(new BigDecimal(0));
-                updateImportoAssociatoDocAmm(aUC, scadenza);
+            if (missione.isMissioneConObbligazione()) {
+    			for (Obbligazione_scadenzarioBulk scadenzaAssociata : missione.getObbligazione_scadenzarioColl()) {
+	                if (scadenzaAssociata != null) {
+	                	scadenzaAssociata.setIm_associato_doc_amm(BigDecimal.ZERO);
+	                    updateImportoAssociatoDocAmm(aUC, scadenzaAssociata);
+	                }
+            	}
+            }
+            if (missione.isMissioneConCompenso()) {
+                Optional.ofNullable(missione.getCompenso().getObbligazione_scadenzarioColl())
+        		.map(BulkList::stream)
+        		.orElse(Stream.empty())
+        		.forEach(scadenza->{
+        			try {
+                        scadenza.setIm_associato_doc_amm(BigDecimal.ZERO);
+                        updateImportoAssociatoDocAmm(aUC, scadenza);
+            		} catch (ComponentException e) {
+            			throw new DetailedRuntimeException(e);
+            		}
+        		});
             }
             if (rc == missione.CANCELLAZIONE_FISICA)
                 super.eliminaConBulk(aUC, missione);
@@ -2135,6 +2247,8 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
             missione.riempiElencoGiorniCollPerModifica();
             missione.ordinaCollectionGiorni();
 
+            loadMissioneRighe(userContext,missione);
+
             // Riempi gli oggetti complessi persistenti
             getHomeCache(userContext).fetchAll(userContext);
 
@@ -2144,18 +2258,6 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
 
             if (missione.getAnticipo() != null)
                 missione.setAnticipoClone((AnticipoBulk) missione.getAnticipo().clone());
-
-            // 	Serve nella lettura delle scadenze eleggibili (per poter riselezionare la scadenza
-            //	associata alla missione che si sta modificando)
-            if (missione.getObbligazione_scadenzario() != null) {
-                missione.setObbligazione_scadenzarioClone(new Obbligazione_scadenzarioBulk());
-                missione.getObbligazione_scadenzarioClone().setEsercizio_originale(missione.getEsercizio_ori_obbligazione());
-                missione.getObbligazione_scadenzarioClone().setPg_obbligazione(missione.getPg_obbligazione());
-                missione.getObbligazione_scadenzarioClone().setPg_obbligazione_scadenzario(missione.getPg_obbligazione_scadenzario());
-                missione.getObbligazione_scadenzarioClone().setEsercizio(missione.getObbligazione_scadenzario().getEsercizio());
-                missione.getObbligazione_scadenzarioClone().setCd_cds(missione.getObbligazione_scadenzario().getCd_cds());
-
-            }
 
             //	In base allo stato di riporto dell'obbligazione della missione (o del relativo compenso)
             //	inizializzo la variabile 'riportata' della missione
@@ -2572,7 +2674,7 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
                     missione.isObbligazioneObbligatoria()) {
                 if (!missione.isMissioneConObbligazione())
                     throw new it.cnr.jada.comp.ApplicationException("Associare una Obbligazione !");
-                validaObbligazione(userContext, missione.getObbligazione_scadenzario(), missione);
+                validaObbligazioni(userContext, missione);
             }
 
             //	Verifico che l'anticipo associato alla missione sia ancora eleggibile
@@ -3877,7 +3979,35 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
         return missione;
     }
 
-    /**
+	public void validaObbligazioni(UserContext userContext, MissioneBulk missione) throws ComponentException {
+		if (Optional.ofNullable(missione)
+				.map(MissioneBulk::getObbligazione_scadenzarioColl)
+				.filter(list->!list.isEmpty())
+				.isPresent()) {
+			for (Obbligazione_scadenzarioBulk scadenza : missione.getObbligazione_scadenzarioColl())
+				validaObbligazione(userContext, scadenza, missione);
+
+			Optional.ofNullable(missione.getMissioneRigaColl())
+					   .map(BulkList::stream)
+					   .orElse(Stream.empty())
+					   .filter(el->el.getIm_totale_riga_missione()!=null && 
+					   			   el.getIm_totale_riga_missione().compareTo(el.getObbligazioneScadenzario().getIm_scadenza())==0)
+					   .findAny()
+					   .orElseThrow(()->new it.cnr.jada.comp.ApplicationException("Esistono righe di missione senza indicazione "
+					   		+ "dell'importo della missione da associare o con importo di associazione diverso dell'importo "
+					   		+ "della scadenza associata! Inserire l'importo o aggiornare la scadenza!"));
+
+			// Importo della somma delle scadenze diverso da quello del compenso
+			BigDecimal totObbligazioniAssociate = missione.getIm_totale_impegnato();
+			if (totObbligazioniAssociate.compareTo(missione.getImporto_scadenza_obbligazione()) != 0)
+				throw new it.cnr.jada.comp.ApplicationException("La somma degli importi delle scadenze degli impegni associati ("
+						+new EuroFormat().format(totObbligazioniAssociate)+") deve corrispondere all'importo della missione ("
+						+new EuroFormat().format(missione.getImporto_scadenza_obbligazione())+")!");
+		} else if (missione.getImporto_scadenza_obbligazione().compareTo(BigDecimal.ZERO) > 0)
+			throw new it.cnr.jada.comp.ApplicationException("Nessun impegno associato!!!");
+	}
+
+	/**
      * Viene richiesta la validazione dell'obbligazione associata alla missione
      * <p>
      * Pre-post-conditions
@@ -3932,8 +4062,8 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
         if (scadenza.getIm_scadenza() == null)
             throw new it.cnr.jada.comp.ApplicationException("L'importo della scadenza è un dato obbligatorio");
 
-        if (scadenza.getIm_scadenza().compareTo(missione.getImporto_scadenza_obbligazione()) != 0)
-            throw new it.cnr.jada.comp.ApplicationException("L'importo della scadenza di impegno deve essere " + missione.getImporto_scadenza_obbligazione().toString());
+        if (scadenza.getIm_scadenza().compareTo(missione.getImporto_scadenza_obbligazione()) > 0)
+            throw new it.cnr.jada.comp.ApplicationException("L'importo della scadenza dell'impegno non può essere superiore a " + missione.getImporto_scadenza_obbligazione().toString());
 
         GregorianCalendar gcRegistrazione = (GregorianCalendar) missione.getGregorianCalendar(missione.getDt_registrazione()).clone();
         gcRegistrazione.set(java.util.GregorianCalendar.HOUR_OF_DAY, 0);
@@ -4486,4 +4616,13 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
         }
     }
 
+    private void loadMissioneRighe(UserContext userContext, MissioneBulk missione)
+    		throws ComponentException {
+    	try {
+    		MissioneHome home = (MissioneHome) getHome(userContext, MissioneBulk.class);
+    		missione.setMissioneRigaColl(new BulkList(home.findMissione_rigaList(missione)));
+    	} catch (it.cnr.jada.persistency.PersistencyException | IntrospectionException ex) {
+    		throw handleException(ex);
+    	}
+    }
 }

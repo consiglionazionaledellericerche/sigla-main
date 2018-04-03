@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.compensi00.docs.bulk.Compenso_rigaBulk"
+	keyClassName="it.cnr.contab.compensi00.docs.bulk.Compenso_rigaKey"
+	homeClassName="it.cnr.contab.compensi00.docs.bulk.Compenso_rigaHome" >
+
+	<defaultColumnMap tableName="COMPENSO_RIGA" >
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.cds.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.esercizio" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.esercizio_originale" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="obbligazioneScadenzario.obbligazione.pg_obbligazione" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="obbligazioneScadenzario.pg_obbligazione_scadenzario" />
+		<columnMapping	
+			columnName="PG_TROVATO" 
+			propertyName="trovato.pg_trovato" />
+	</defaultColumnMap>		
+
+	<persistentProperty
+		name="obbligazioneScadenzario" />
+	<persistentProperty 
+		name="trovato" />
+</SQLPersistentInfo>

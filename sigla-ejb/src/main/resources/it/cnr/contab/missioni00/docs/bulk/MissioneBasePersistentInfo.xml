@@ -11,16 +11,6 @@
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />
 		<columnMapping
-			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
-			propertyName="esercizio_ori_obbligazione"
-			sqlTypeName="DECIMAL"
-			columnSize="4" />
-		<columnMapping
-			columnName="PG_OBBLIGAZIONE"
-			propertyName="pg_obbligazione"
-			sqlTypeName="DECIMAL"
-			columnSize="10" />
-		<columnMapping
 			columnName="PG_BANCA"
 			propertyName="pg_banca"
 			sqlTypeName="DECIMAL"
@@ -227,20 +217,10 @@
 			columnScale="2"
 			nullable="false" />
 		<columnMapping
-			columnName="CD_CDS_OBBLIGAZIONE"
-			propertyName="cd_cds_obbligazione"
-			sqlTypeName="VARCHAR"
-			columnSize="30" />
-		<columnMapping
 			columnName="DT_TRASMISSIONE_MANDATO"
 			propertyName="dt_trasmissione_mandato"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />
-		<columnMapping
-			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
-			propertyName="pg_obbligazione_scadenzario"
-			sqlTypeName="DECIMAL"
-			columnSize="10" />
 		<columnMapping
 			columnName="TI_ANAGRAFICO"
 			propertyName="ti_anagrafico"
@@ -322,11 +302,6 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
-			columnName="ESERCIZIO_OBBLIGAZIONE"
-			propertyName="esercizio_obbligazione"
-			sqlTypeName="DECIMAL"
-			columnSize="4" />
-		<columnMapping
 			columnName="CD_TIPO_RAPPORTO"
 			propertyName="cd_tipo_rapporto"
 			sqlTypeName="VARCHAR"
@@ -381,10 +356,6 @@
 		name="dt_cancellazione" />
 	<persistentProperty
 		name="pg_banca" />
-	<persistentProperty
-		name="esercizio_ori_obbligazione" />
-	<persistentProperty
-		name="pg_obbligazione" />
 	<persistentProperty
 		name="ti_provvisorio_definitivo" />
 	<persistentProperty
@@ -454,11 +425,7 @@
 	<persistentProperty
 		name="im_diaria_lorda" />
 	<persistentProperty
-		name="cd_cds_obbligazione" />
-	<persistentProperty
 		name="dt_trasmissione_mandato" />
-	<persistentProperty
-		name="pg_obbligazione_scadenzario" />
 	<persistentProperty
 		name="ti_anagrafico" />
 	<persistentProperty
@@ -487,8 +454,6 @@
 		name="im_quota_esente" />
 	<persistentProperty
 		name="fl_comune_proprio" />
-	<persistentProperty
-		name="esercizio_obbligazione" />
 	<persistentProperty
 		name="cd_tipo_rapporto" />
 	<persistentProperty

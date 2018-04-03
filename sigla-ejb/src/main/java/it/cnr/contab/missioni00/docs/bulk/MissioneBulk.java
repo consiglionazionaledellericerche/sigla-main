@@ -2,8 +2,18 @@ package it.cnr.contab.missioni00.docs.bulk;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Vector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -30,8 +40,6 @@ import it.cnr.contab.missioni00.service.MissioniCMISService;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Tipo_missioneBulk;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.service.StorePath;
-import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
@@ -46,7 +54,6 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
@@ -114,6 +121,9 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	//Unità Organizzativa
 	private Unita_organizzativaBulk unitaOrganizzativa;
 
+	//righe missione
+	private BulkList<Missione_rigaBulk> missioneRigaColl = new BulkList();
+
 	// Anagrafico
 	private V_terzo_per_compensoBulk v_terzo;
 	protected Rif_inquadramentoBulk rif_inquadramento;
@@ -149,8 +159,6 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	// Obbligazione
 	private Vector documentiContabiliCancellati = null;
 	private Vector dettagliCancellati = null;
-	private Obbligazione_scadenzarioBulk obbligazione_scadenzario = new Obbligazione_scadenzarioBulk();;
-	private Obbligazione_scadenzarioBulk obbligazione_scadenzarioClone = new Obbligazione_scadenzarioBulk();	
 	private it.cnr.jada.bulk.PrimaryKeyHashMap deferredSaldi = new PrimaryKeyHashMap();
 	private java.lang.String riportata = NON_RIPORTATO;
 	private java.lang.String riportataInScrivania = NON_RIPORTATO;
@@ -804,80 +812,10 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 			}
 		}
 	}
-	/**
-	 * Il metodo gestisce la sincronizzazione delle scadenze elaborate dalla missione.
-	 * La scadenza precedentemente selezionata (che ho slegato):
-	 * - se appartiene alla stessa obligazione della nuova scadenza che si sta associando potrebbe 
-	 *	  essere stata modificata dall'utente in fase di aggiornamento manuale. Ecco perche' occorre
-	 *   risincronizzarla
-	 * - se creata da missione ma mai salvata dovra' comunque essere inserita in tabella
-	 *   con "im_associato_doc_amm" = 0
-	 * - se precedentemente associata alla missione salvata devo aggiornarne "im_associato_doc_amm" = 0
-	 *	- se sganciata perche' cancellata non devo aggiornarne l'"im_associato_doc_amm"
-	 */
-
-	public void gestisciCambioSelezioneScadenza(Obbligazione_scadenzarioBulk newScadenza)
-	{
-		//	Sincronizzo le scadenze che ho tra le cancellate perche' l'utente
-		//	potrebbe averle modificate
-		sincronizzaScadenzeCancellate(newScadenza);
-
-		// La missione non aveva associato alcuna scadenza
-		if(!isMissioneConObbligazione())		
-			return;
-
-		// La scadenza associata alla missione e' sempre la stessa
-		if(newScadenza.equalsByPrimaryKey(getObbligazione_scadenzario()))
-			return;
-
-		// 	Se scopro, che la scadenza da sostituire appartiene alla stessa obbligazione
-		//	della nuova scadenza, devo sincronizzarla perchè l'utente prima di riportare
-		//	quella nuova potrebbe avermi modificato quella da sostituire (cioe' quella attulamente 
-		//	associata).
-		if(newScadenza.getObbligazione().equalsByPrimaryKey(getObbligazione_scadenzario().getObbligazione()))
-		{	
-			boolean trovata=false;
-			BulkList coll = newScadenza.getObbligazione().getObbligazione_scadenzarioColl();
-			if(coll != null && !coll.isEmpty())	// 	Se coll e' vuota significa che non arrivo da obbligazione
-			{									//	ma dal filtro di ricerca delle obbligazioni
-				for ( Iterator i = coll.iterator(); i.hasNext(); )
-				{
-					Obbligazione_scadenzarioBulk aScadenza = (Obbligazione_scadenzarioBulk)i.next();
-					if(aScadenza.equalsByPrimaryKey(getObbligazione_scadenzario()))
-					{
-						setObbligazione_scadenzario(aScadenza);
-						trovata = true;
-					}	
-				}
-				if(!trovata)
-					return;		//	significa che la scadenza che sto sostituendo
-				//	e' stata cancellata
-			}
-		}	
-
-		addToDocumentiContabiliCancellati(getObbligazione_scadenzario());
-
-		if(getDocumentiContabiliCancellati() == null || getDocumentiContabiliCancellati().isEmpty())
-			return;
-
-		//	Se la scadenza appena associata alla missione l'avevo precedente sganciata dalla
-		//	missione e quindi inserita nella collection dei Cancellati, devo rimuoverla da
-		//	tale collection.
-		for ( Iterator i = ((Vector)getDocumentiContabiliCancellati().clone()).iterator(); i.hasNext(); )	
-		{
-			Obbligazione_scadenzarioBulk aScadDaSganciare = (Obbligazione_scadenzarioBulk)i.next();
-			if(aScadDaSganciare.equalsByPrimaryKey(newScadenza))
-			{
-				getDocumentiContabiliCancellati().remove(aScadDaSganciare);
-				break;
-			}	
-		}	
-	}
 
 	/**
 	 * Metodo richiesto dall' interfaccia IDocumentoAmministrativoBulk
 	 */
-
 	public it.cnr.contab.docamm00.docs.bulk.AccertamentiTable getAccertamentiHash() 
 	{
 		return null;
@@ -919,7 +857,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	{
 		// Metti solo le liste di oggetti che devono essere resi persistenti
 
-		return new it.cnr.jada.bulk.BulkCollection[] { tappeMissioneColl, speseMissioneColl, diariaMissioneColl, rimborsoMissioneColl };
+		return new it.cnr.jada.bulk.BulkCollection[] { tappeMissioneColl, speseMissioneColl, diariaMissioneColl, rimborsoMissioneColl, getMissioneRigaColl() };
 	}
 	/**
 	 * Il metodo restituisce il valore dell'attributo 'cd_cds_anticipo'
@@ -929,21 +867,6 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		if (anticipo == null)
 			return null;
 		return anticipo.getCd_cds();
-	}
-	/**
-	 * Il metodo restituisce il valore dell'attributo 'cd_cds_obbligazione'
-	 */
-	public java.lang.String getCd_cds_obbligazione() {
-		it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazione_scadenzario = this.getObbligazione_scadenzario();
-		if (obbligazione_scadenzario == null)
-			return null;
-		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazione_scadenzario.getObbligazione();
-		if (obbligazione == null)
-			return null;
-		it.cnr.contab.config00.sto.bulk.CdsBulk cds = obbligazione.getCds();
-		if (cds == null)
-			return null;
-		return cds.getCd_unita_organizzativa();
 	}
 	/**
 	 * Il metodo restituisce il valore dell'attributo 'cd_modalita_pag'
@@ -1200,18 +1123,6 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		return anticipo.getEsercizio();
 	}
 	/**
-	 * Il metodo ritorna il valore dell'attributo 'esercizio_obbligazione'
-	 */
-	public java.lang.Integer getEsercizio_obbligazione() {
-		it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazione_scadenzario = this.getObbligazione_scadenzario();
-		if (obbligazione_scadenzario == null)
-			return null;
-		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazione_scadenzario.getObbligazione();
-		if (obbligazione == null)
-			return null;
-		return obbligazione.getEsercizio();
-	}
-	/**
 	 * Il metodo ritorna il valore dell'attributo 'esercizioScrivania'
 	 */
 	public int getEsercizioScrivania() {
@@ -1330,26 +1241,15 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		return modalita_pagamento;
 	}
 	/**
-	 * Il metodo ritorna il valore dell'attributo 'obbligazione_scadenzario'
-	 */
-	public it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk getObbligazione_scadenzario() {
-		return obbligazione_scadenzario;
-	}
-	/**
-	 * Il metodo ritorna il valore dell'attributo 'obbligazione_scadenzarioClone'
-	 */
-	public it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk getObbligazione_scadenzarioClone() {
-		return obbligazione_scadenzarioClone;
-	}
-	/**
 	 * Metodo richiesto dall' interfaccia IDocumentoAmministrativoBulk
 	 */
-	public ObbligazioniTable getObbligazioniHash() 
-	{
-		ObbligazioniTable ot = new ObbligazioniTable();
-		if (getObbligazione_scadenzario() != null)
-			ot.put(getObbligazione_scadenzario(), new Vector());
-		return ot;
+	public ObbligazioniTable getObbligazioniHash() {
+		it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable table = new it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable();
+		Optional.ofNullable(getMissioneRigaColl())
+				.map(BulkList::stream)
+				.orElse(Stream.empty())
+				.forEach(riga->table.put(riga.getObbligazioneScadenzario(), riga));
+		return table;
 	}
 	/**
 	 * Il metodo ritorna il valore dell'attributo 'pg_anticipo'
@@ -1377,39 +1277,6 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	public java.lang.Long getPg_doc_amm() 
 	{
 		return getPg_missione();
-	}
-	/**
-	 * Il metodo ritorna l'esercizio originale dell'obbligazione la cui scadenza e' associata alla missione
-	 */
-	public Integer getEsercizio_ori_obbligazione() {
-		it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazione_scadenzario = this.getObbligazione_scadenzario();
-		if (obbligazione_scadenzario == null)
-			return null;
-		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazione_scadenzario.getObbligazione();
-		if (obbligazione == null)
-			return null;
-		return obbligazione.getEsercizio_originale();
-	}
-	/**
-	 * Il metodo ritorna il progressivo dell'obbligazione la cui scadenza e' associata alla missione
-	 */
-	public java.lang.Long getPg_obbligazione() {
-		it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazione_scadenzario = this.getObbligazione_scadenzario();
-		if (obbligazione_scadenzario == null)
-			return null;
-		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazione_scadenzario.getObbligazione();
-		if (obbligazione == null)
-			return null;
-		return obbligazione.getPg_obbligazione();
-	}
-	/**
-	 * Il metodo ritorna il progressivo della scadenza e' associata alla missione
-	 */
-	public java.lang.Long getPg_obbligazione_scadenzario() {
-		it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazione_scadenzario = this.getObbligazione_scadenzario();
-		if (obbligazione_scadenzario == null)
-			return null;
-		return obbligazione_scadenzario.getPg_obbligazione_scadenzario();
 	}
 	/**
 	 * Il metodo ritorna il valore dell'attributo 'pg_rif_inquadramento'
@@ -2102,10 +1969,9 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 
 	public boolean isMissioneConObbligazione()
 	{
-		return (getObbligazione_scadenzario() != null && 
-				getEsercizio_ori_obbligazione() != null &&
-				getPg_obbligazione() != null &&
-				getPg_obbligazione_scadenzario() != null);
+		return Optional.ofNullable(getMissioneRigaColl())
+					.filter(el->!el.isEmpty())
+					.isPresent();
 	}
 	/**
 	 * Il  metodo ritorna TRUE se la missione e' stata salvata in modo definitivo
@@ -2265,31 +2131,6 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	 */
 	public boolean isSalvataggioTemporaneo() {
 		return salvataggioTemporaneo;
-	}
-	/**
-	 * Il metodo stabilisce se la scadenza appena associata era stata messa precedentemente tra quelle da
-	 * da cancellare.
-	 * Cio' succede quando scollego e ricollego una stessa scadenza o la scadenza che gia' 
-	 * avevo salvato con la missione (clone) o una scadenza appena creata ma non ancora
-	 * salvata con la missione (numerazione negativa)
-	 */
-
-	public boolean isScadenzaDaRimuovereDaiCancellati() 
-	{
-		if(getDocumentiContabiliCancellati()==null || getDocumentiContabiliCancellati().isEmpty())
-			return false;
-
-		if(getObbligazione_scadenzarioClone()!=null && getObbligazione_scadenzario().equalsByPrimaryKey(getObbligazione_scadenzarioClone()))
-			return true;
-
-		Obbligazione_scadenzarioBulk scadenza=null;	
-		for ( Iterator i = getDocumentiContabiliCancellati().iterator(); i.hasNext(); )
-		{
-			scadenza = (Obbligazione_scadenzarioBulk) i.next();
-			if(scadenza.equalsByPrimaryKey(getObbligazione_scadenzario()))
-				return true;
-		}			
-		return false;
 	}
 	/**
 	 * Il metodo ritorna TRUE se l'utente ha selezionato piu' di un giorno di spesa
@@ -2667,12 +2508,6 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		this.getAnticipo().setCd_cds(cd_cds_anticipo);
 	}
 	/**
-	 * Il metodo imposta il valore dell'attributo 'cd_ds_obbligazione'
-	 */ 
-	public void setCd_cds_obbligazione(java.lang.String cd_cds_obbligazione) {
-		this.getObbligazione_scadenzario().getObbligazione().getCds().setCd_unita_organizzativa(cd_cds_obbligazione);
-	}
-	/**
 	 * Il metodo imposta il valore dell'attributo 'cd_modalita_pag'
 	 */ 
 	public void setCd_modalita_pag(java.lang.String cd_modalita_pag) {
@@ -2774,12 +2609,6 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	 */
 	public void setEsercizio_anticipo(java.lang.Integer esercizio_anticipo) {
 		this.getAnticipo().setEsercizio(esercizio_anticipo);
-	}
-	/**
-	 * Il metodo imposta il valore dell'attributo 'esercizioObbligazione'
-	 */
-	public void setEsercizio_obbligazione(java.lang.Integer esercizio_obbligazione) {
-		this.getObbligazione_scadenzario().getObbligazione().setEsercizio(esercizio_obbligazione);
 	}
 	/**
 	 * Il metodo imposta il valore dell'attributo 'esercizioScrivania'
@@ -3011,18 +2840,6 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		modalita_pagamento = newModalita_pagamento;
 	}
 	/**
-	 * Il metodo imposta il valore dell'attributo 'obbligazione_scadenzario'
-	 */
-	public void setObbligazione_scadenzario(it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk newObbligazione_scadenzario) {
-		obbligazione_scadenzario = newObbligazione_scadenzario;
-	}
-	/**
-	 * Il metodo imposta il valore dell'attributo 'obbligazione_scadenzarioClone'
-	 */
-	public void setObbligazione_scadenzarioClone(it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk newObbligazione_scadenzarioClone) {
-		obbligazione_scadenzarioClone = newObbligazione_scadenzarioClone;
-	}
-	/**
 	 * Il metodo imposta il valore dell'attributo 'pg_anticipo'
 	 */
 	public void setPg_anticipo(java.lang.Long pg_anticipo) {
@@ -3041,24 +2858,6 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	public void setPg_doc_amm(java.lang.Long newPg) 
 	{
 		setPg_missione(newPg);
-	}
-	/**
-	 * Il metodo imposta il valore dell'attributo 'esercizio_ori_obbligazione'
-	 */
-	public void setEsercizio_ori_obbligazione(Integer esercizio_ori_obbligazione) {
-		this.getObbligazione_scadenzario().getObbligazione().setEsercizio_originale(esercizio_ori_obbligazione);
-	}
-	/**
-	 * Il metodo imposta il valore dell'attributo 'pg_obbligazione'
-	 */
-	public void setPg_obbligazione(java.lang.Long pg_obbligazione) {
-		this.getObbligazione_scadenzario().getObbligazione().setPg_obbligazione(pg_obbligazione);
-	}
-	/**
-	 * Il metodo imposta il valore dell'attributo 'pg_obbligazione_scadenzario'
-	 */
-	public void setPg_obbligazione_scadenzario(java.lang.Long pg_obbligazione_scadenzario) {
-		this.getObbligazione_scadenzario().setPg_obbligazione_scadenzario(pg_obbligazione_scadenzario);
 	}
 	/**
 	 * Il metodo imposta il valore dell'attributo 'pg_rif_inquadramento'
@@ -3228,35 +3027,38 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	 */
 	public void sincronizzaObbligazioneCompenso(it.cnr.jada.UserContext uc) 
 	{
-		if(getCompenso().getObbligazioneScadenzario()==null)
+		if (getCompenso().getObbligazione_scadenzarioColl()==null||getCompenso().getObbligazione_scadenzarioColl().isEmpty())
 			return;
 
-		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = getCompenso().getObbligazioneScadenzario().getObbligazione();
 		PrimaryKeyHashMap relazioni = getCompenso().getRelationsDocContForSaldi();
 		if (relazioni != null) 
 		{
-			Long temporaneo = (Long)relazioni.get(obbligazione);
-			if (temporaneo != null && temporaneo.longValue()<0 && relazioni != null && !relazioni.isEmpty()) 
-			{
-				it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obblTemporanea = (it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk)obbligazione.clone();
-				obblTemporanea.setPg_obbligazione(temporaneo);
-				if (getDefferredSaldi() != null) 
-				{
-					java.util.Map data = (java.util.Map) getDefferredSaldi().get(obblTemporanea);
-					removeFromDefferredSaldi(obblTemporanea);
-					addToDefferredSaldi(obbligazione, data);
-
-					//	Imposto la seguente Flag in modo che l'aggiornamento dei saldi riconosca
-					//	che sto aggiornando i saldi per una obbligazione con numerazione
-					//	positiva ma che non e' mai stata salvata fuori dalla transazione
-					//	corrente
-					java.util.Map values = (java.util.Map)getDefferredSaldi().get(obbligazione);
-					if (values == null)
-						values = new java.util.HashMap();
-
-					values.put("isObbTemp", Boolean.TRUE);
-				}
-			}
+			getCompenso().getObbligazione_scadenzarioColl().stream()
+				.map(Obbligazione_scadenzarioBulk::getObbligazione).distinct()
+				.forEach(obbligazione->{
+					Long temporaneo = (Long)relazioni.get(obbligazione);
+					if (temporaneo != null && temporaneo.longValue()<0 && relazioni != null && !relazioni.isEmpty()) 
+					{
+						it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obblTemporanea = (it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk)obbligazione.clone();
+						obblTemporanea.setPg_obbligazione(temporaneo);
+						if (getDefferredSaldi() != null) 
+						{
+							java.util.Map data = (java.util.Map) getDefferredSaldi().get(obblTemporanea);
+							removeFromDefferredSaldi(obblTemporanea);
+							addToDefferredSaldi(obbligazione, data);
+			
+							//	Imposto la seguente Flag in modo che l'aggiornamento dei saldi riconosca
+							//	che sto aggiornando i saldi per una obbligazione con numerazione
+							//	positiva ma che non e' mai stata salvata fuori dalla transazione
+							//	corrente
+							java.util.Map values = (java.util.Map)getDefferredSaldi().get(obbligazione);
+							if (values == null)
+								values = new java.util.HashMap();
+		
+							values.put("isObbTemp", Boolean.TRUE);
+						}
+					}
+				});
 		}
 	}
 	/**
@@ -3312,37 +3114,30 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	 * Se non dovessi trovare una delle scadenze elaborate dalla missione e appartenente alla stessa obbligazione 
 	 * di quella appena aggiornata significa che l'utente l'ha eliminata fisicamente.
 	 */
-	public void sincronizzaScadenzeCancellate(Obbligazione_scadenzarioBulk newScadenza)
-	{
-		if(getDocumentiContabiliCancellati()==null || getDocumentiContabiliCancellati().isEmpty())
+	public void sincronizzaScadenzeCancellate(Obbligazione_scadenzarioBulk newScadenza) {
+		if (getDocumentiContabiliCancellati()==null || getDocumentiContabiliCancellati().isEmpty())
 			return;
 
-		if(!newScadenza.getObbligazione().equalsByPrimaryKey(getObbligazione_scadenzario().getObbligazione()))
-			return;
-
-		boolean trovata=false;
+		boolean trovata = false;
 		BulkList coll = newScadenza.getObbligazione().getObbligazione_scadenzarioColl();
-		if(coll == null)
+		if (coll == null)
 			return;
 
-		for ( Iterator c = ((Vector)getDocumentiContabiliCancellati().clone()).iterator(); c.hasNext(); )
-		{
-			Obbligazione_scadenzarioBulk aScadCanc = (Obbligazione_scadenzarioBulk)c.next();		
+		for (Iterator c = ((Vector) getDocumentiContabiliCancellati().clone()).iterator(); c.hasNext();) {
+			Obbligazione_scadenzarioBulk aScadCanc = (Obbligazione_scadenzarioBulk) c.next();
 			trovata = false;
 
-			for ( Iterator i = coll.iterator(); i.hasNext(); )
-			{
-				Obbligazione_scadenzarioBulk aScadenza = (Obbligazione_scadenzarioBulk)i.next();
+			for (Iterator i = coll.iterator(); i.hasNext();) {
+				Obbligazione_scadenzarioBulk aScadenza = (Obbligazione_scadenzarioBulk) i.next();
 
-				if(aScadenza.equalsByPrimaryKey(aScadCanc))
-				{
+				if (aScadenza.equalsByPrimaryKey(aScadCanc)) {
 					getDocumentiContabiliCancellati().remove(aScadCanc);
 					getDocumentiContabiliCancellati().add(aScadenza);
 					trovata = true;
-				}	
+				}
 			}
-			if(!trovata && aScadCanc.getObbligazione().equalsByPrimaryKey(newScadenza.getObbligazione()))
-				getDocumentiContabiliCancellati().remove(aScadCanc);		
+			if (!trovata && aScadCanc.getObbligazione().equalsByPrimaryKey(newScadenza.getObbligazione()))
+				getDocumentiContabiliCancellati().remove(aScadCanc);
 		}
 	}
 
@@ -3683,5 +3478,46 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 			}
 		}
 		return paths;
+	}
+
+	public BulkList<Missione_rigaBulk> getMissioneRigaColl() {
+		return missioneRigaColl;
+	}
+	
+	public void setMissioneRigaColl(BulkList<Missione_rigaBulk> missioneRigaColl) {
+		this.missioneRigaColl = missioneRigaColl;
+	}
+	
+	public int addToMissioneRigaColl( Missione_rigaBulk riga ) 
+	{
+		this.missioneRigaColl.add(riga);
+		riga.setMissione(this);
+		riga.setToBeCreated();
+		return this.missioneRigaColl.size()-1;
+	}
+
+	public Missione_rigaBulk removeFromMissioneRigaColl(int index) {
+		return (Missione_rigaBulk)this.missioneRigaColl.remove(index);
+	}
+	
+	public BulkList<Obbligazione_scadenzarioBulk> getObbligazione_scadenzarioColl() {
+		return new BulkList<Obbligazione_scadenzarioBulk>(
+				Optional.ofNullable(this.getMissioneRigaColl())
+										.map(BulkList::stream)
+										.orElse(Stream.empty())
+										.map(Missione_rigaBulk::getObbligazioneScadenzario)
+										.collect(Collectors.toList()));
+	}
+
+	public java.math.BigDecimal getIm_totale_impegnato() {
+		return Optional.ofNullable(this.getMissioneRigaColl())
+					   .map(BulkList::stream)
+					   .orElse(Stream.empty())
+					   .map(Missione_rigaBulk::getIm_totale_riga_missione)
+					   .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+	}
+
+	public java.math.BigDecimal getIm_totale_da_impegnare() {
+		return getImporto_scadenza_obbligazione().subtract(getIm_totale_impegnato());
 	}
 }

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+/*****************************************/
+/************ OBBLIGAZIONE ***************/
+	<fieldProperty
+		name="cd_cds_obbligazione"
+		property="cd_cds_obbligazione"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="CDS" />
+	<fieldProperty
+		name="esercizio_obbligazione"
+		property="esercizio_obbligazione"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="esercizio_ori_obbligazione"
+		property="esercizio_ori_obbligazione"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_obbligazione"
+		property="pg_obbligazione"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Numero" />
+	<fieldProperty
+		name="pgObbligazionePos"
+		property="pgObbligazionePos"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Pg. Impegno" />
+	<fieldProperty
+		name="pg_obbligazione_scadenzario"
+		property="pg_obbligazione_scadenzario"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Nr. Scadenza" />
+	<fieldProperty
+		name="scadenza_dt_scadenza"
+		property="obbligazioneScadenzario.dt_scadenza"
+		formatName="date_short"
+		inputType="ROTEXT"
+		label="Data scadenza" />
+	<fieldProperty
+		name="scadenza_im_scadenza"
+		property="obbligazioneScadenzario.im_scadenza"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo scadenza" />
+	<fieldProperty
+		name="scadenza_ds_scadenza"
+		property="obbligazioneScadenzario.ds_scadenza"
+		inputType="ROTEXT"
+		inputSize="80"
+		label="Descrizione scadenza" />
+	<fieldProperty
+		name="cig"
+		property="obbligazioneScadenzario.obbligazione.contratto.cig.cdCig"
+		inputType="ROTEXT"
+		label="Cig" />	
+
+/*********************************************/
+
+	<fieldProperty
+		name="im_totale_riga_missione"
+		property="im_totale_riga_missione"
+		formatName="it.cnr.contab.util.EuroFormat"
+		maxLength="20"
+		inputSize="20"
+		inputType="TEXT"
+		nullable="true"
+		label="Importo riga" />		
+
+	<formFieldProperty name="cd_cds_obbligazione" />
+	<formFieldProperty name="esercizio_obbligazione" />
+	<formFieldProperty name="esercizio_ori_obbligazione" />
+	<formFieldProperty name="pg_obbligazione" />
+	<formFieldProperty name="pgObbligazionePos" />
+	<formFieldProperty name="pg_obbligazione_scadenzario" />
+	<formFieldProperty name="scadenza_dt_scadenza" />
+	<formFieldProperty name="scadenza_im_scadenza" />
+	<formFieldProperty name="scadenza_ds_scadenza" />
+	<formFieldProperty name="cig" />
+
+	<formFieldProperty name="im_totale_riga_missione" />
+                       	
+	<columnFieldProperty name="cd_cds_obbligazione" />
+	<columnFieldProperty name="esercizio_obbligazione" />
+	<columnFieldProperty name="esercizio_ori_obbligazione" />
+	<columnFieldProperty name="pg_obbligazione" />
+	<columnFieldProperty name="pg_obbligazione_scadenzario" />
+	<columnFieldProperty name="scadenza_dt_scadenza" />
+	<columnFieldProperty name="scadenza_im_scadenza" />
+	<columnFieldProperty name="scadenza_ds_scadenza" />
+	<columnFieldProperty name="cig" />
+
+	<columnFieldProperty name="im_totale_riga_missione" />
+
+	<findFieldProperty name="cd_cds_obbligazione" />
+	<findFieldProperty name="esercizio_obbligazione" />
+	<findFieldProperty name="esercizio_ori_obbligazione" />
+	<findFieldProperty name="pg_obbligazione" />
+	<findFieldProperty name="pgObbligazionePos" />
+	<findFieldProperty name="pg_obbligazione_scadenzario" />
+	<findFieldProperty name="scadenza_dt_scadenza" />
+	<findFieldProperty name="scadenza_im_scadenza" />
+	<findFieldProperty name="scadenza_ds_scadenza" />
+	<findFieldProperty name="cig" />
+
+	<findFieldProperty name="im_totale_riga_missione" />
+</bulkInfo>

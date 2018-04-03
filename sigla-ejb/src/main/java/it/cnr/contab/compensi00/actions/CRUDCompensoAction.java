@@ -6,13 +6,16 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.RegioneBulk;
 import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.Compenso_rigaBulk;
 import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBulk;
 import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenuta_detBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_doc_cont_compBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk;
+import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.bp.CRUDMandatoBP;
@@ -40,6 +43,8 @@ import it.cnr.jada.util.action.OptionBP;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.GregorianCalendar;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Insert the type's description here.
@@ -53,7 +58,7 @@ public class CRUDCompensoAction extends it.cnr.jada.util.action.CRUDAction {
 public CRUDCompensoAction() {
 	super();
 }
-public Forward basicDoBringBackOpenObbligazioniWindow(ActionContext context, Obbligazione_scadenzarioBulk scadenza) 
+public Forward basicDoBringBackOpenObbligazioniWindow(ActionContext context, Obbligazione_scadenzarioBulk scadenza, boolean isModifica) 
 {
 	CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);	
 	try
@@ -61,16 +66,13 @@ public Forward basicDoBringBackOpenObbligazioniWindow(ActionContext context, Obb
 		if (scadenza==null)
 			return context.findDefaultForward();
 
-
 		CompensoBulk compenso = (CompensoBulk)bp.getModel();
 		TerzoBulk creditore = scadenza.getObbligazione().getCreditore();
-//        compenso.setCollegatoCapitoloPerTrovato(scadenza.getObbligazione().getElemento_voce().isVocePerTrovati());
 		if (!compenso.getTerzo().equalsByPrimaryKey(creditore) &&
 			!AnagraficoBulk.DIVERSI.equalsIgnoreCase(creditore.getAnagrafico().getTi_entita()))
 			setMessage(context, FormBP.ERROR_MESSAGE, "La scadenza selezionata deve appartenere ad un'obbligazione che ha come creditore il fornitore del compenso!");
 
-		Obbligazione_scadenzarioBulk oldScad = compenso.getObbligazioneScadenzario();
-		bp.elaboraScadenze(context, oldScad, scadenza);
+		bp.elaboraScadenza(context, scadenza, isModifica);
 
 		return context.findDefaultForward();
 
@@ -399,7 +401,22 @@ public Forward doBringBackOpenObbligazioniWindow(ActionContext context) {
 		Obbligazione_scadenzarioBulk obblig = (Obbligazione_scadenzarioBulk)caller.getParameter("bringback");
 
 		if (obblig!=null)
-			return basicDoBringBackOpenObbligazioniWindow(context, obblig);
+			return basicDoBringBackOpenObbligazioniWindow(context, obblig, false);
+
+		return context.findDefaultForward();
+
+	} catch(Throwable ex) {
+		return handleException(context, ex);
+	}
+}
+public Forward doBringBackOpenModificaObbligazioniWindow(ActionContext context) {
+
+	try {
+		HookForward caller = (HookForward)context.getCaller();
+		Obbligazione_scadenzarioBulk obblig = (Obbligazione_scadenzarioBulk)caller.getParameter("bringback");
+
+		if (obblig!=null)
+			return basicDoBringBackOpenObbligazioniWindow(context, obblig, true);
 
 		return context.findDefaultForward();
 
@@ -413,7 +430,7 @@ public Forward doBringBackRicercaObbligazioniWindow(ActionContext context) {
 		HookForward caller = (HookForward)context.getCaller();
 		Obbligazione_scadenzarioBulk obblig = (Obbligazione_scadenzarioBulk)caller.getParameter("obbligazioneSelezionata");
 
-		return basicDoBringBackOpenObbligazioniWindow(context, obblig);
+		return basicDoBringBackOpenObbligazioniWindow(context, obblig, false);
 
 	} catch(Throwable ex) {
 		return handleException(context, ex);
@@ -740,26 +757,6 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException 
 	CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
 	return basicDoEliminaCompenso(context);
 }
-public Forward doEliminaObbligazione(ActionContext context){
-
-	try {
-
-		fillModel(context);
-		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
-		CompensoBulk compenso = bp.doEliminaObbligazione(context);
-
-		if (compenso.getImportoObbligazione().compareTo(new java.math.BigDecimal(0))<=0)
-			compenso.setStatoCompensoToObbligazioneSincronizzata();
-		else
-			compenso.setStatoCompensoToSincronizzaObbligazione();
-
-		setMessage(context, it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Impegno scollegato.");
-		return context.findDefaultForward();
-
-	} catch(Throwable ex) {
-		return handleException(context, ex);
-	}
-}
 /**
  * Azione che si scatena al clicked del bottone ESEGUI CALCOLO
  *
@@ -801,16 +798,16 @@ public Forward doLoadDocContAssociati(ActionContext context) {
 	}
 }
 public Forward doModificaAutomaticaObbligazione(ActionContext context) {
-
 	try {
 		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
 		fillModel(context);
 		CompensoBulk compenso = (CompensoBulk)bp.getModel();
 
-		Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)compenso.getObbligazioneScadenzario();
+		Compenso_rigaBulk compensoRiga = (Compenso_rigaBulk)bp.getCompensoRigheController().getModel();
+		Obbligazione_scadenzarioBulk scadenza = compensoRiga.getObbligazioneScadenzario();
 
 		if (scadenza == null)
-			throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita! Obbligazione inesistente");
+			throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita! Obbligazione inesistente.");
 
 		it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession h = it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP.getVirtualComponentSession(context, true);
 
@@ -818,14 +815,11 @@ public Forward doModificaAutomaticaObbligazione(ActionContext context) {
 			if ( scadenza.getIm_scadenza().compareTo(compenso.getImportoObbligazione()) == 0 )
 				compenso.setStatoCompensoToObbligazioneSincronizzata();
 
-			scadenza = (Obbligazione_scadenzarioBulk)h.modificaScadenzaInAutomatico(context.getUserContext(), scadenza, compenso.getImportoObbligazione(), false);
-			bp.getDefferedUpdateSaldiParentBP().getDefferedUpdateSaldiBulk().addToDefferredSaldi(
-				scadenza.getObbligazione(), 
-				scadenza.getObbligazione().getSaldiInfo());
-			compenso.setObbligazioneScadenzario(scadenza);
+			scadenza = (Obbligazione_scadenzarioBulk)h.modificaScadenzaInAutomatico(context.getUserContext(), scadenza, compensoRiga.getIm_totale_riga_compenso(), false);
+			bp.getDefferedUpdateSaldiParentBP().getDefferedUpdateSaldiBulk().addToDefferredSaldi(scadenza.getObbligazione(), scadenza.getObbligazione().getSaldiInfo());
+			compensoRiga.setObbligazioneScadenzario(scadenza);
 			compenso.setStatoCompensoToObbligazioneSincronizzata();
 			compenso.setStato_cofi(compenso.STATO_CONTABILIZZATO);
-
 		} catch (it.cnr.jada.comp.ComponentException e) {
 			if (e.getDetail() instanceof it.cnr.contab.doccont00.comp.CheckDisponibilitaCassaFailed)
 				throw new it.cnr.jada.comp.ApplicationException(e.getDetail().getMessage());
@@ -850,7 +844,8 @@ public Forward doModificaManualeObbligazione(ActionContext context){
 		if (compenso.isStatoCompensoEseguiCalcolo())
 			throw new it.cnr.jada.comp.ApplicationException("E' necessario eseguire il calcolo prima di continuare.");
 
-		Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)compenso.getObbligazioneScadenzario();
+		Compenso_rigaBulk compensoRiga = (Compenso_rigaBulk)bp.getCompensoRigheController().getModel();
+		Obbligazione_scadenzarioBulk scadenza = (Obbligazione_scadenzarioBulk)compensoRiga.getObbligazioneScadenzario();
 		boolean viewMode = bp.isViewing();
 		if (scadenza == null)
 			throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Obbligazione inesistente.");
@@ -863,7 +858,7 @@ public Forward doModificaManualeObbligazione(ActionContext context){
 		nbp.edit(context,scadenza.getObbligazione());
 		nbp.selezionaScadenza(scadenza, context);
 
-		context.addHookForward("bringback",this,"doBringBackOpenObbligazioniWindow");
+		context.addHookForward("bringback",this,"doBringBackOpenModificaObbligazioniWindow");
 		context.addHookForward("close",this,"doBringBackRicercaObbligazioniWindow");
 
 		HookForward hook = (HookForward)context.findForward("bringback");
@@ -1748,11 +1743,14 @@ private void impostaStatoCompenso(ActionContext context) throws BusinessProcessE
 	CompensoBulk compenso = (CompensoBulk)bp.getModel();
 	
 	if (compenso.getImportoObbligazione().compareTo(new java.math.BigDecimal(0))<=0){
-		if (compenso.getObbligazioneScadenzario()!=null)
-			compenso = bp.doEliminaObbligazione(context);
+		if (Optional.ofNullable(compenso.getObbligazione_scadenzarioColl()).filter(el->!el.isEmpty()).isPresent())
+			compenso = bp.doEliminaObbligazioni(context);
 		compenso.setStato_cofi(compenso.STATO_CONTABILIZZATO);
 		compenso.setStatoCompensoToObbligazioneSincronizzata();
- 	} else if (compenso.getObbligazioneScadenzario()!=null && compenso.getImportoObbligazione().compareTo(compenso.getObbligazioneScadenzario().getIm_scadenza())==0)
+ 	} else if (compenso.getImportoObbligazione().compareTo(
+ 					Optional.ofNullable(compenso.getObbligazione_scadenzarioColl())
+ 							.map(el->el.stream().map(Obbligazione_scadenzarioBulk::getIm_scadenza).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO))
+ 							.orElse(BigDecimal.ZERO))==0)
 		compenso.setStatoCompensoToObbligazioneSincronizzata();
  	else{
 		compenso.setStatoCompensoToSincronizzaObbligazione();
@@ -1940,5 +1938,12 @@ public Forward doOnCausaleChange(ActionContext context) {
 	      return handleException(context, t);
 	  }
 	 return context.findDefaultForward();
+}
+/**
+ * Gestisce il comando di aggiunta di un nuovo dettaglio su un CRUDController
+ * figlio del ricevente
+ */
+public Forward doAddToCRUDMain_CompensoRighe(ActionContext context) {
+	return doRicercaObbligazione(context);
 }
 }

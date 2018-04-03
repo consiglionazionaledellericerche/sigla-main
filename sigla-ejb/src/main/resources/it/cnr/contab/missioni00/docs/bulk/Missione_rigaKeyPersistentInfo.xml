@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.docs.bulk.Missione_rigaKey" >
+	<defaultColumnMap
+		tableName="MISSIONE_RIGA" >
+		<columnMapping
+			columnName="PG_MISSIONE"
+			propertyName="pg_missione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CDS"
+			propertyName="cd_cds"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PROGRESSIVO_RIGA"
+			propertyName="progressivo_riga"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_missione"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_unita_organizzativa"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_cds"
+		partOfOid="true" />
+	<persistentProperty
+		name="progressivo_riga"
+		partOfOid="true" />
+</SQLPersistentInfo>

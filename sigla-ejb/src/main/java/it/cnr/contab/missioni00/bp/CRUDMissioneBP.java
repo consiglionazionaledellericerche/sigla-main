@@ -1,5 +1,25 @@
 package it.cnr.contab.missioni00.bp;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.rmi.RemoteException;
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Vector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.servlet.ServletException;
+
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -13,9 +33,15 @@ import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.bp.IValidaDocContBP;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.missioni00.docs.bulk.*;
+import it.cnr.contab.missioni00.docs.bulk.AllegatoMissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.AllegatoMissioneDettaglioSpesaBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_rigaBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_tappaBulk;
 import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
 import it.cnr.contab.missioni00.service.MissioniCMISService;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
@@ -31,7 +57,11 @@ import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
+import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -42,16 +72,6 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.jada.util.upload.UploadedFile;
 
-import javax.servlet.ServletException;
-import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.rmi.RemoteException;
-import java.text.ParseException;
-import java.util.*;
-import java.util.stream.Collectors;
-
         /*
          * Insert the type's description here.
          * Creation date: (07/02/2002 13.21.21)
@@ -60,7 +80,65 @@ import java.util.stream.Collectors;
 
 public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, MissioneBulk>
         implements IDefferedUpdateSaldiBP, IDocumentoAmministrativoSpesaBP, IValidaDocContBP {
-    private final SimpleDetailCRUDController tappaController = new SimpleDetailCRUDController("Tappa", Missione_tappaBulk.class, "tappeMissioneColl", this) {
+	private final SimpleDetailCRUDController missioneRigheController = new SimpleDetailCRUDController("MissioneRighe",Missione_rigaBulk.class,"missioneRigaColl",this) {
+	    @Override
+	    public void writeHTMLToolbar(
+	            javax.servlet.jsp.PageContext context,
+	            boolean reset,
+	            boolean find,
+	            boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
+
+	        super.writeHTMLToolbar(context, areBottoniObbligazioneAbilitati(), find, areBottoniObbligazioneAbilitati(), false);
+
+			boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
+	        it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+	                context,
+	                HttpActionContext.isFromBootstrap(context) ? "fa fa-fw fa-edit" : "img/redo16.gif",
+	                areBottoniObbligazioneAbilitati() ? "javascript:submitForm('doOpenObbligazioniWindow')" : null,
+	                true,
+	                "Aggiorna in manuale",
+	                "btn btn-outline-primary  btn-sm btn-title",
+	                isFromBootstrap);
+	        it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+	                context,
+	                HttpActionContext.isFromBootstrap(context) ? "fa fa-fw fa-pencil" : "img/refresh16.gif",
+	                areBottoniObbligazioneAbilitati() ? "javascript:submitForm('doModificaScadenzaInAutomatico')" : null,
+	                false,
+	                "Aggiorna in automatico",
+	                "btn btn-outline-info btn-sm btn-title",
+	                isFromBootstrap);
+	        super.closeButtonGROUPToolbar(context);
+	    }
+	    
+	    public OggettoBulk removeDetail(OggettoBulk oggettobulk, int i) {
+	    	Missione_rigaBulk missioneRiga=(Missione_rigaBulk)oggettobulk;
+	    	missioneRiga.setToBeDeleted();
+			if (missioneRiga.getObbligazioneScadenzario()!=null) {
+				MissioneBulk missione = (MissioneBulk)this.getParentModel();
+				missione.addToDocumentiContabiliCancellati(missioneRiga.getObbligazioneScadenzario());
+			}
+			return removeDetail(i);
+	    };
+	    /**
+	     * Il metodo gestisce l'eliminazione dell'associazione missione-scadenza.
+	     * Se tolgo la relazione tra la missione e una scadenza devo prevedere
+	     * l'aggiornamento/inserimento a db di tale scadenza con im_associato_doc_amm=0
+	     * e se la missione usa il fondo economale devo eliminare questa associazione
+	     */
+	    public void remove(ActionContext actioncontext) throws ValidationException ,BusinessProcessException {
+			super.remove(actioncontext);
+			MissioneBulk missione = (MissioneBulk)this.getParentModel();
+			if (this.getDetails().isEmpty()) {
+				missione.setStato_cofi(MissioneBulk.STATO_INIZIALE_COFI);
+	            if (missione.getStato_pagamento_fondo_eco().compareTo(MissioneBulk.FONDO_ECO) == 0)
+	                missione.setStato_pagamento_fondo_eco(MissioneBulk.NO_FONDO_ECO);
+			}
+
+			((CRUDMissioneBP)this.getParentController()).setMessage(it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Impegni scollegati.");
+	    };
+	};
+
+	private final SimpleDetailCRUDController tappaController = new SimpleDetailCRUDController("Tappa", Missione_tappaBulk.class, "tappeMissioneColl", this) {
         @Override
         public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
             super.writeHTMLToolbar(context, reset, find, delete, false);
@@ -1152,7 +1230,12 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
      */
 
     public Obbligazione_scadenzarioBulk getObbligazione_scadenziario_corrente() {
-        return ((MissioneBulk) getModel()).getObbligazione_scadenzario();
+    	return Optional.ofNullable(this.getMissioneRigheController())
+				.map(SimpleDetailCRUDController::getModel)
+				.filter(Missione_rigaBulk.class::isInstance)
+				.map(Missione_rigaBulk.class::cast)
+				.map(Missione_rigaBulk::getObbligazioneScadenzario)
+				.orElse(null);
     }
 
     /**
@@ -2846,5 +2929,80 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
         if (!missione.isSalvataggioTemporaneo()) {
             super.gestioneCancellazioneAllegati(allegatoParentBulk);
         }
+    }
+
+    public SimpleDetailCRUDController getMissioneRigheController() {
+		return missioneRigheController;
+	}
+
+    public void elaboraScadenza(ActionContext context, Obbligazione_scadenzarioBulk newScad, boolean isModifica) throws BusinessProcessException{
+    	try{
+    		MissioneBulk missione = (MissioneBulk)getModel();
+
+    		if (newScad.getObbligazione().getObbligazione_scadenzarioColl().isEmpty()) {
+    			ObbligazioneBulk obb = (ObbligazioneBulk)createComponentSession().findByPrimaryKey(context.getUserContext(), newScad.getObbligazione());
+    			newScad.setObbligazione(obb);
+    			newScad.getObbligazione().setObbligazione_scadenzarioColl(
+    					new BulkList(((MissioneComponentSession)createComponentSession()).find(context.getUserContext(), 
+    							ObbligazioneBulk.class, "findObbligazione_scadenzarioList", newScad.getObbligazione())));
+    		}
+    		
+    		validaScadenze(missione, newScad, isModifica);
+    		missione.sincronizzaScadenzeCancellate(newScad);
+
+    		if (isModifica) {
+    			Missione_rigaBulk riga = (Missione_rigaBulk)this.getMissioneRigheController().getModel();
+    			if (!riga.getObbligazioneScadenzario().equalsByPrimaryKey(newScad))
+    				missione.addToDocumentiContabiliCancellati(riga.getObbligazioneScadenzario());
+    			riga.setObbligazioneScadenzario(newScad);
+    			riga.setToBeUpdated();
+    		} else {
+    			Missione_rigaBulk riga = new Missione_rigaBulk();
+    			riga.setObbligazioneScadenzario(newScad);
+    			riga.setIm_totale_riga_missione(missione.getIm_totale_da_impegnare());
+    			this.getMissioneRigheController().add(context,riga);
+    		}
+    		
+    		missione.removeFromDocumentiContabiliCancellati(newScad);
+
+            it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession h = it.cnr.contab.doccont00.bp.CRUDVirtualObbligazioneBP.getVirtualComponentSession(context, true);
+    		h.lockScadenza(context.getUserContext(), newScad);
+
+    		setModel(context, missione);
+    		setDirty(true);
+
+    	}catch(it.cnr.jada.comp.ComponentException ex){
+    		throw handleException(ex);
+    	}catch(java.rmi.RemoteException ex){
+    		throw handleException(ex);
+    	}
+    }
+
+    private void validaScadenze(MissioneBulk missione, Obbligazione_scadenzarioBulk newScad, boolean isModifica) throws ComponentException {
+        if (!isModifica && Stream.of(this.getMissioneRigheController().getDetails().stream().toArray())
+                .filter(Missione_rigaBulk.class::isInstance)
+                .map(Missione_rigaBulk.class::cast)
+                .map(Missione_rigaBulk::getObbligazioneScadenzario)
+                .anyMatch(s -> s.equalsByPrimaryKey(newScad))) {
+    		throw new it.cnr.jada.comp.ApplicationException("Scadenza Impegno già associata alla missione. Nuova associazione non possibile.");
+        }
+
+    	Vector scadCanc = missione.getDocumentiContabiliCancellati();
+    	if (scadCanc != null) {
+    		Iterator it = scadCanc.iterator();
+
+    		while (it.hasNext()) {
+    			Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk) it.next();
+    			if (scad.getObbligazione() instanceof ObbligazioneResBulk) {
+    				if (scad.getObbligazione().equalsByPrimaryKey(newScad.getObbligazione())
+    						&& ((ObbligazioneResBulk) scad.getObbligazione()).getObbligazione_modifica() != null
+    						&& ((ObbligazioneResBulk) scad.getObbligazione()).getObbligazione_modifica().getPg_modifica() != null) {
+    					throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'impegno residuo "
+    											+ scad.getPg_obbligazione()
+    											+ " poiché è stata effettuata una modifica in questo documento amministrativo!");
+    				}
+    			}
+    		}
+    	}
     }
 }

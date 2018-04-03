@@ -612,6 +612,28 @@
 		enabledOnFreeSearch="true"										
 		/>
 	<fieldProperty
+		name="im_totale_impegnato"
+		property="im_totale_impegnato"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Importo Impegnato" />
+	<fieldProperty
+		name="im_totale_da_impegnare"
+		property="im_totale_da_impegnare"
+		formatName="it.cnr.contab.util.EuroFormat"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Importo Residuo da Impegnare" />
+	<fieldProperty
 		name="im_lordo_percepiente"
 		property="im_lordo_percepiente"
 		formatName = "it.cnr.contab.util.EuroFormat"		
@@ -667,7 +689,7 @@
 		/>													
 /******************** fine TAB. CONSUNTIVO **********************/
 
-/******************** inizio TAB. FONDO + OBBLIGAZIONE + COMPENSO + ANTICIPO ***********/
+/******************** inizio TAB. FONDO + COMPENSO + ANTICIPO ***********/
 	<fieldProperty
 		name="stato_pagamento_fondo_eco"
 		property="stato_pagamento_fondo_eco"
@@ -712,82 +734,6 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true" 				
 		/>		
-	<fieldProperty
-		name="esercizio_ori_obbligazione"
-		property="esercizio_ori_obbligazione"
-		inputType="TEXT"
-		inputSize="10"
-		label="Es. Impegno"
-		nullable="false"
-		enabledOnInsert="false"
-		enabledOnEdit="false"				
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		/>				
-	<fieldProperty
-		name="pg_obbligazione"
-		property="pg_obbligazione"
-		inputType="TEXT"
-		label="N. Impegno"
-		nullable="false"
-		enabledOnInsert="false"
-		enabledOnEdit="false"				
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		/>				
-	<fieldProperty
-		name="pg_obbligazione_scadenzario"
-		property="pg_obbligazione_scadenzario"
-		label="N. scadenza"
-		inputType="TEXT"
-		enabledOnInsert="false"
-		enabledOnEdit="false"				
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"										
-		/>
-	<fieldProperty
-		name="ds_scadenza_obbligazione"
-		property="obbligazione_scadenzario.ds_scadenza"
-		label="Descrizione"
-		inputCssClass="w-100"
-		inputSize="20"
-		inputType="ROTEXT" 
-		/>
-	<fieldProperty
-		name="dt_scadenza"
-		property="obbligazione_scadenzario.dt_scadenza"
-		inputType="ROTEXT"
-		formatName="date_short"				
-		label="Data"
-		/>
-	<fieldProperty
-		name="im_scadenza"
-		property="obbligazione_scadenzario.im_scadenza"
-		inputType="ROTEXT"
-		formatName="it.cnr.contab.util.EuroFormat"				
-		label="Importo"
-		/>								
-	<fieldProperty
-		name="esercizio_obbligazione"
-		property="esercizio_obbligazione"
-		inputType="TEXT"
-		label="Esercizio"
-		enabledOnInsert="false"
-		enabledOnEdit="false"				
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"										
-		/>		
-	<fieldProperty
-		name="cd_cds_obbligazione"
-		property="cd_cds_obbligazione"
-		inputType="TEXT"
-		label="Cds"
-		enabledOnInsert="false"
-		enabledOnEdit="false"				
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"										
-		/>
-
 	<fieldProperty
 		name="cd_cds_compenso"
 		property="compenso.cd_cds"
@@ -867,7 +813,7 @@
 		formatName = "it.cnr.contab.util.EuroFormat"						
 		label="Importo"
 		/>		
-/******************** fine TAB. FONDO + OBBLIGAZIONE + COMPENSO + ANTICIPO ***********/
+/******************** fine TAB. FONDO + COMPENSO + ANTICIPO ***********/
 
 	<fieldProperty
 		name="dt_emissione_mandato"
@@ -997,22 +943,18 @@
 	<formFieldProperty name="im_netto_pecepiente" />
 	<formFieldProperty name="im_lordo_percepiente" />
 	<formFieldProperty name="im_totale_missione" />
+	<formFieldProperty name="im_totale_impegnato" />
+	<formFieldProperty name="im_totale_da_impegnare" />
 	<formFieldProperty name="totale_spese_del_giorno" />
 	<formFieldProperty name="totale_netto_diaria_del_giorno" />
 	<formFieldProperty name="totale_esente_diaria_del_giorno" />
 	<formFieldProperty name="im_rimborso" />
-/******************** TAB. FONDO + OBBLIGAZIONE + ANTICIPO + COMPENSO**********************/
+/******************** TAB. FONDO + ANTICIPO + COMPENSO**********************/
 	<formFieldProperty name="dt_pagamento_fondo_eco" />	
 	<formFieldProperty name="stato_pagamento_fondo_eco" />
 	<formFieldProperty name="stato_pagamento_fondo_ecoForSearch" />	
-	<formFieldProperty name="pg_obbligazione_scadenzario" />
-	<formFieldProperty name="ds_scadenza_obbligazione" />
 	<formFieldProperty name="dt_scadenza" />
 	<formFieldProperty name="im_scadenza" />	
-	<formFieldProperty name="esercizio_ori_obbligazione" />	
-	<formFieldProperty name="pg_obbligazione" />	
-	<formFieldProperty name="esercizio_obbligazione" />
-	<formFieldProperty name="cd_cds_obbligazione" />
 	<formFieldProperty name="cd_cds_compenso" />
 	<formFieldProperty name="cd_uo_compenso" />
 	<formFieldProperty name="esercizio_compenso" />
@@ -1079,9 +1021,6 @@
 	<findFieldProperty name="ti_associato_manrevForSearch" />
 	<findFieldProperty name="stato_pagamento_fondo_ecoForSearch" />
 	<findFieldProperty name="dt_pagamento_fondo_eco" />				
-	<findFieldProperty name="esercizio_ori_obbligazione" />
-	<findFieldProperty name="pg_obbligazione" />
-	<findFieldProperty name="pg_obbligazione_scadenzario" />
 	<findFieldProperty name="pg_anticipo" />
 	<findFieldProperty name="fl_associato_compenso" />	
 	<findFieldProperty name="stato_liquidazione"/>					

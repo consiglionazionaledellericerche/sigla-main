@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.missioni00.docs.bulk.Missione_rigaBase"
+	keyClassName="it.cnr.contab.missioni00.docs.bulk.Missione_rigaKey"
+	homeClassName="it.cnr.contab.missioni00.docs.bulk.Missione_rigaHome" >
+	<defaultColumnMap
+		tableName="COMPENSO_RIGA" >
+		<columnMapping
+			columnName="CD_CDS_OBBLIGAZIONE"
+			propertyName="cd_cds_obbligazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="ESERCIZIO_OBBLIGAZIONE"
+			propertyName="esercizio_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="ESERCIZIO_ORI_OBBLIGAZIONE"
+			propertyName="esercizio_ori_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="4" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE"
+			propertyName="pg_obbligazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="PG_OBBLIGAZIONE_SCADENZARIO"
+			propertyName="pg_obbligazione_scadenzario"
+			sqlTypeName="DECIMAL"
+			columnSize="10" />
+		<columnMapping
+			columnName="IM_TOTALE_RIGA_MISSIONE"
+			propertyName="im_totale_riga_missione"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	</defaultColumnMap>
+
+	<persistentProperty
+		name="cd_cds_obbligazione" />
+	<persistentProperty
+		name="esercizio_obbligazione" />
+	<persistentProperty
+		name="esercizio_ori_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione" />
+	<persistentProperty
+		name="pg_obbligazione_scadenzario" />
+
+	<persistentProperty
+		name="im_totale_riga_missione" />
+
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

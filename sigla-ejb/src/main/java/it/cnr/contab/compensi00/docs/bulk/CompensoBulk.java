@@ -1,5 +1,17 @@
 package it.cnr.contab.compensi00.docs.bulk;
 
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Dictionary;
+import java.util.Iterator;
+import java.util.Optional;
+import java.util.Vector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_altra_forma_ass_inpsBulk;
@@ -38,16 +50,6 @@ import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Dictionary;
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.Vector;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 @StorageType(name = "D:emppay:compenso", parentName = "D:emppay:document")
 @JsonInclude(value=Include.NON_NULL)
 public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk {
@@ -69,9 +71,10 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	private Codici_altra_forma_ass_inpsBulk codici_altra_forma_ass_inps;
 	private boolean visualizzaCodici_altra_forma_ass_inps = false;
 	private java.util.Collection contributi;
-	private it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazioneScadenzario;
+
 	// Unità Organizzativa
 	private Unita_organizzativaBulk unitaOrganizzativa;
+	private BulkList<Compenso_rigaBulk> compensoRigaColl = new BulkList();
 
 	private ComuneBulk comune_inps;
 	private Incarichi_repertorio_annoBulk incarichi_repertorio_anno;
@@ -85,9 +88,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 
 	private PrimaryKeyHashMap deferredSaldi = new PrimaryKeyHashMap();
 	private PrimaryKeyHashMap relationsDocContForSaldi = null;
-	private TrovatoBulk trovato = new TrovatoBulk(); // inizializzazione
-														// necessaria per i bulk
-														// non persistenti
 
 	private java.sql.Timestamp dataInizioFatturaElettronica;
 
@@ -290,7 +290,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 		// che pero' devo essere inserite op aggiornate in tabella
 		if ((scadenza != null) && (((OggettoBulk) scadenza).getCrudStatus() == OggettoBulk.NORMAL)
 				&& (!BulkCollections.containsByPrimaryKey(getDocumentiContabiliCancellati(), (OggettoBulk) scadenza))) {
-			// scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0));
+			// scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0));	
 			getDocumentiContabiliCancellati().addElement(scadenza);
 		}
 	}
@@ -376,7 +376,7 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	 * @return it.cnr.contab.anagraf00.core.bulk.BancaBulk
 	 */
 	public BulkCollection[] getBulkLists() {
-		return new it.cnr.jada.bulk.BulkCollection[] { new BulkList(contributi) };
+		return new it.cnr.jada.bulk.BulkCollection[] { new BulkList(contributi), getCompensoRigaColl() };
 	}
 
 	public java.lang.String getCd_cdr_genrc() {
@@ -394,20 +394,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 		if (missione == null)
 			return null;
 		return missione.getCd_cds();
-	}
-
-	public java.lang.String getCd_cds_obbligazione() {
-		it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazioneScadenzario = this
-				.getObbligazioneScadenzario();
-		if (obbligazioneScadenzario == null)
-			return null;
-		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazioneScadenzario.getObbligazione();
-		if (obbligazione == null)
-			return null;
-		it.cnr.contab.config00.sto.bulk.CdsBulk cds = obbligazione.getCds();
-		if (cds == null)
-			return null;
-		return cds.getCd_unita_organizzativa();
 	}
 
 	public java.lang.String getCd_linea_attivita_genrc() {
@@ -689,17 +675,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 		return missione.getEsercizio();
 	}
 
-	public java.lang.Integer getEsercizio_obbligazione() {
-		it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazioneScadenzario = this
-				.getObbligazioneScadenzario();
-		if (obbligazioneScadenzario == null)
-			return null;
-		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazioneScadenzario.getObbligazione();
-		if (obbligazione == null)
-			return null;
-		return obbligazione.getEsercizio();
-	}
-
 	/**
 	 * Insert the method's description here. Creation date: (14/07/2003
 	 * 11.14.16)
@@ -857,26 +832,17 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	}
 
 	/**
-	 * Insert the method's description here. Creation date: (14/05/2002
-	 * 12.35.18)
-	 * 
-	 * @return it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk
-	 */
-	public it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk getObbligazioneScadenzario() {
-		return obbligazioneScadenzario;
-	}
-
-	/**
 	 * Insert the method's description here. Creation date: (27/05/2002
 	 * 12.54.21)
 	 * 
 	 * @return it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable
 	 */
 	public it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable getObbligazioniHash() {
-
 		it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable table = new it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable();
-		if (getObbligazioneScadenzario() != null)
-			table.put(getObbligazioneScadenzario(), new java.util.Vector());
+		Optional.ofNullable(getCompensoRigaColl())
+				.map(BulkList::stream)
+				.orElse(Stream.empty())
+				.forEach(riga->table.put(riga.getObbligazioneScadenzario(), riga));
 		return table;
 	}
 
@@ -903,36 +869,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 		if (missione == null)
 			return null;
 		return missione.getPg_missione();
-	}
-
-	public Integer getEsercizio_ori_obbligazione() {
-		it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazioneScadenzario = this
-				.getObbligazioneScadenzario();
-		if (obbligazioneScadenzario == null)
-			return null;
-		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazioneScadenzario.getObbligazione();
-		if (obbligazione == null)
-			return null;
-		return obbligazione.getEsercizio_originale();
-	}
-
-	public java.lang.Long getPg_obbligazione() {
-		it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazioneScadenzario = this
-				.getObbligazioneScadenzario();
-		if (obbligazioneScadenzario == null)
-			return null;
-		it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk obbligazione = obbligazioneScadenzario.getObbligazione();
-		if (obbligazione == null)
-			return null;
-		return obbligazione.getPg_obbligazione();
-	}
-
-	public java.lang.Long getPg_obbligazione_scadenzario() {
-		it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazioneScadenzario = this
-				.getObbligazioneScadenzario();
-		if (obbligazioneScadenzario == null)
-			return null;
-		return obbligazioneScadenzario.getPg_obbligazione_scadenzario();
 	}
 
 	/**
@@ -2150,10 +2086,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 		this.getMissione().setCd_cds(cd_cds_missione);
 	}
 
-	public void setCd_cds_obbligazione(java.lang.String cd_cds_obbligazione) {
-		this.getObbligazioneScadenzario().getObbligazione().getCds().setCd_unita_organizzativa(cd_cds_obbligazione);
-	}
-
 	public void setCd_linea_attivita_genrc(java.lang.String cd_linea_attivita_genrc) {
 		this.getLineaAttivita().setCd_linea_attivita(cd_linea_attivita_genrc);
 	}
@@ -2294,10 +2226,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 		this.getMissione().setEsercizio(esercizio_missione);
 	}
 
-	public void setEsercizio_obbligazione(java.lang.Integer esercizio_obbligazione) {
-		this.getObbligazioneScadenzario().getObbligazione().setEsercizio(esercizio_obbligazione);
-	}
-
 	/**
 	 * Insert the method's description here. Creation date: (14/07/2003
 	 * 11.14.16)
@@ -2370,18 +2298,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 		modalitaPagamento = newModalitaPagamento;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (14/05/2002
-	 * 12.35.18)
-	 * 
-	 * @param newObbligazioneScadenzario
-	 *            it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk
-	 */
-	public void setObbligazioneScadenzario(
-			it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk newObbligazioneScadenzario) {
-		obbligazioneScadenzario = newObbligazioneScadenzario;
-	}
-
 	public void setPg_banca(java.lang.Long pg_banca) {
 		this.getBanca().setPg_banca(pg_banca);
 	}
@@ -2399,18 +2315,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 
 	public void setPg_missione(java.lang.Long pg_missione) {
 		this.getMissione().setPg_missione(pg_missione);
-	}
-
-	public void setEsercizio_ori_obbligazione(Integer esercizio_ori_obbligazione) {
-		this.getObbligazioneScadenzario().getObbligazione().setEsercizio_originale(esercizio_ori_obbligazione);
-	}
-
-	public void setPg_obbligazione(java.lang.Long pg_obbligazione) {
-		this.getObbligazioneScadenzario().getObbligazione().setPg_obbligazione(pg_obbligazione);
-	}
-
-	public void setPg_obbligazione_scadenzario(java.lang.Long pg_obbligazione_scadenzario) {
-		this.getObbligazioneScadenzario().setPg_obbligazione_scadenzario(pg_obbligazione_scadenzario);
 	}
 
 	/**
@@ -2673,12 +2577,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	 */
 	public void sincronizzaScadenzeCancellate(Obbligazione_scadenzarioBulk newScadenza) {
 		if (getDocumentiContabiliCancellati() == null || getDocumentiContabiliCancellati().isEmpty())
-			return;
-
-		if (getObbligazioneScadenzario() == null)
-			return;
-
-		if (!newScadenza.getObbligazione().equalsByPrimaryKey(getObbligazioneScadenzario().getObbligazione()))
 			return;
 
 		boolean trovata = false;
@@ -3271,31 +3169,6 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 		// this.getContratto().setOggetto(oggetto_contratto);
 	}
 
-	public TrovatoBulk getTrovato() {
-		return trovato;
-	}
-
-	public void setTrovato(TrovatoBulk trovato) {
-		this.trovato = trovato;
-	}
-
-	public java.lang.Long getPg_trovato() {
-		if (this.getTrovato() == null)
-			return null;
-		return this.getTrovato().getPg_trovato();
-	}
-	public void setPg_trovato(java.lang.Long pg_trovato) {
-		if (this.getTrovato() != null)
-			this.getTrovato().setPg_trovato(pg_trovato);
-	}
-	
-	public Boolean isCollegatoCapitoloPerTrovato() {
-		// return collegatoCapitoloPerTrovato;
-		if (getObbligazioneScadenzario() == null || getObbligazioneScadenzario().getObbligazione() == null)
-			return false;
-		return getObbligazioneScadenzario().getObbligazione().getElemento_voce().isVocePerTrovati();
-	}
-
 	public java.sql.Timestamp getDataInizioObbligoRegistroUnico() {
 		return dataInizioObbligoRegistroUnico;
 	}
@@ -3406,5 +3279,46 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 
 	public boolean isUserAbilitatoSenzaCalcolo() {
 		return userAbilitatoSenzaCalcolo;
+	}
+	
+	public BulkList<Compenso_rigaBulk> getCompensoRigaColl() {
+		return compensoRigaColl;
+	}
+	
+	public void setCompensoRigaColl(BulkList<Compenso_rigaBulk> compensoRigaColl) {
+		this.compensoRigaColl = compensoRigaColl;
+	}
+	
+	public int addToCompensoRigaColl( Compenso_rigaBulk riga ) 
+	{
+		this.compensoRigaColl.add(riga);
+		riga.setCompenso(this);
+		riga.setToBeCreated();
+		return this.compensoRigaColl.size()-1;
+	}
+
+	public Compenso_rigaBulk removeFromCompensoRigaColl(int index) {
+		return (Compenso_rigaBulk)this.compensoRigaColl.remove(index);
+	}
+	
+	public BulkList<Obbligazione_scadenzarioBulk> getObbligazione_scadenzarioColl() {
+		return new BulkList<Obbligazione_scadenzarioBulk>(
+				Optional.ofNullable(this.getCompensoRigaColl())
+										.map(BulkList::stream)
+										.orElse(Stream.empty())
+										.map(Compenso_rigaBulk::getObbligazioneScadenzario)
+										.collect(Collectors.toList()));
+	}
+
+	public java.math.BigDecimal getIm_totale_impegnato() {
+		return Optional.ofNullable(this.getCompensoRigaColl())
+					   .map(BulkList::stream)
+					   .orElse(Stream.empty())
+					   .map(Compenso_rigaBulk::getIm_totale_riga_compenso)
+					   .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+	}
+
+	public java.math.BigDecimal getIm_totale_da_impegnare() {
+		return getIm_totale_compenso().subtract(getIm_totale_impegnato());
 	}
 }

@@ -3,25 +3,36 @@ package it.cnr.contab.compensi00.bp;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.Compenso_rigaBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
 import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_doc_cont_compBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
+import it.cnr.contab.compensi00.tabrif.bulk.AddizionaliBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
+import it.cnr.contab.docamm00.bp.VoidableBP;
+import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.bp.IValidaDocContBP;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
+import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineBulk;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -32,6 +43,8 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.AbstractPrintBP;
@@ -39,6 +52,10 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.util.Iterator;
+import java.util.Optional;
+import java.util.Vector;
+import java.util.stream.Stream;
 
 /**
  * Insert the type's description here.
@@ -47,6 +64,66 @@ import java.rmi.RemoteException;
  */
 public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IDefferedUpdateSaldiBP, IDocumentoAmministrativoSpesaBP, IValidaDocContBP
 {
+	private final SimpleDetailCRUDController compensoRigheController = new SimpleDetailCRUDController("CompensoRighe",Compenso_rigaBulk.class,"compensoRigaColl",this) {
+	    @Override
+	    public void writeHTMLToolbar(
+	            javax.servlet.jsp.PageContext context,
+	            boolean reset,
+	            boolean find,
+	            boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException {
+
+	        super.writeHTMLToolbar(context, isBottoneCreaObbligazioneEnabled(), find, isBottoneEliminaObbligazioneEnabled(), false);
+
+			boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
+	        it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+	                context,
+	                HttpActionContext.isFromBootstrap(context) ? "fa fa-fw fa-edit" : "img/redo16.gif",
+	                isBottoneModificaManualeObbligazioneEnabled() ? "javascript:submitForm('doModificaManualeObbligazione')" : null,
+	                true,
+	                "Aggiorna in manuale",
+	                "btn btn-outline-primary  btn-sm btn-title",
+	                isFromBootstrap);
+	        it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+	                context,
+	                HttpActionContext.isFromBootstrap(context) ? "fa fa-fw fa-pencil" : "img/refresh16.gif",
+	                isBottoneModificaAutomaticaObbligazioneEnabled() ? "javascript:submitForm('doModificaAutomaticaObbligazione')" : null,
+	                false,
+	                "Aggiorna in automatico",
+	                "btn btn-outline-info btn-sm btn-title",
+	                isFromBootstrap);
+	        super.closeButtonGROUPToolbar(context);
+	    }
+	    
+		public void validateForDelete(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
+			CompensoBulk compenso = (CompensoBulk)this.getParentModel();
+			if (compenso.isStatoCompensoEseguiCalcolo())
+				throw new ValidationException("E' necessario eseguire il calcolo prima di eliminare l'impegno");
+	    };
+
+	    public OggettoBulk removeDetail(OggettoBulk oggettobulk, int i) {
+			Compenso_rigaBulk compensoRiga=(Compenso_rigaBulk)oggettobulk;
+			compensoRiga.setToBeDeleted();
+			if (compensoRiga.getObbligazioneScadenzario()!=null) {
+				CompensoBulk compenso = (CompensoBulk)this.getParentModel();
+				compenso.addToDocumentiContabiliCancellati(compensoRiga.getObbligazioneScadenzario());
+			}
+			return removeDetail(i);
+	    };
+
+	    public void remove(ActionContext actioncontext) throws ValidationException ,BusinessProcessException {
+			super.remove(actioncontext);
+			CompensoBulk compenso = (CompensoBulk)this.getParentModel();
+			if (this.getDetails().isEmpty())
+				compenso.setStato_cofi(CompensoBulk.STATO_INIZIALE);
+			if (compenso.getImportoObbligazione().compareTo(new java.math.BigDecimal(0))<=0)
+				compenso.setStatoCompensoToObbligazioneSincronizzata();
+			else
+				compenso.setStatoCompensoToSincronizzaObbligazione();
+
+			((CRUDCompensoBP)this.getParentController()).setMessage(it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Impegni scollegati.");
+	    };
+	};
+	
 	private final SimpleDetailCRUDController contributiCRUDController = new SimpleDetailCRUDController("contributiCRUDController",Contributo_ritenutaBulk.class,"contributi",this, false){
 		@Override
 		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context,	boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException, javax.servlet.ServletException
@@ -289,21 +366,12 @@ public void doConfermaModificaCORI(ActionContext context) throws BusinessProcess
 /**
   *	Gestisce la richiesta di eliminazione dell'associazione compenso/scadenza obbligazione
  */
-public CompensoBulk doEliminaObbligazione(ActionContext context) throws BusinessProcessException {
-
+public CompensoBulk doEliminaObbligazioni(ActionContext context) throws BusinessProcessException {
 	try{
 		CompensoBulk compenso = (CompensoBulk)getModel();
-		if (compenso.isStatoCompensoEseguiCalcolo())
-			throw new it.cnr.jada.comp.ApplicationException("E' necessario eseguire il calcolo prima di eliminare l'impegno");
-
-		CompensoComponentSession sess = (CompensoComponentSession)createComponentSession();
-		compenso = sess.eliminaObbligazione(context.getUserContext(), compenso);
-		setModel(context, compenso);
-		setDirty(true);
+		this.getCompensoRigheController().removeAll(context);
 		return compenso;
-	}catch(it.cnr.jada.comp.ComponentException ex){
-		throw handleException(ex);
-	}catch(java.rmi.RemoteException ex){
+	}catch(ValidationException ex){
 		throw handleException(ex);
 	}
 }
@@ -312,13 +380,38 @@ public void edit(ActionContext context, it.cnr.jada.bulk.OggettoBulk bulk, boole
 	setCarryingThrough(false);
 	super.edit(context, bulk, doInitializeForEdit);
 }
-public void elaboraScadenze(ActionContext context, Obbligazione_scadenzarioBulk oldScad, Obbligazione_scadenzarioBulk newScad) throws BusinessProcessException{
-
+public void elaboraScadenza(ActionContext context, Obbligazione_scadenzarioBulk newScad, boolean isModifica) throws BusinessProcessException{
 	try{
 		CompensoBulk compenso = (CompensoBulk)getModel();
 
-		CompensoComponentSession session = (CompensoComponentSession)createComponentSession();
-		compenso = session.elaboraScadenze(context.getUserContext(), compenso, oldScad, newScad);
+		if (newScad.getObbligazione().getObbligazione_scadenzarioColl().isEmpty()) {
+			ObbligazioneBulk obb = (ObbligazioneBulk)createComponentSession().findByPrimaryKey(context.getUserContext(), newScad.getObbligazione());
+			newScad.setObbligazione(obb);
+			newScad.getObbligazione().setObbligazione_scadenzarioColl(
+					new BulkList(((CompensoComponentSession)createComponentSession()).find(context.getUserContext(), 
+							ObbligazioneBulk.class, "findObbligazione_scadenzarioList", newScad.getObbligazione())));
+		}
+		
+		validaScadenze(compenso, newScad, isModifica);
+		compenso.sincronizzaScadenzeCancellate(newScad);
+
+		if (isModifica) {
+			Compenso_rigaBulk riga = (Compenso_rigaBulk)this.getCompensoRigheController().getModel();
+			if (!riga.getObbligazioneScadenzario().equalsByPrimaryKey(newScad))
+				compenso.addToDocumentiContabiliCancellati(riga.getObbligazioneScadenzario());
+			riga.setObbligazioneScadenzario(newScad);
+			riga.setToBeUpdated();
+		} else {
+			Compenso_rigaBulk riga = new Compenso_rigaBulk();
+			riga.setObbligazioneScadenzario(newScad);
+			riga.setIm_totale_riga_compenso(compenso.getIm_totale_da_impegnare());
+			this.getCompensoRigheController().add(context,riga);
+		}
+		
+		compenso.removeFromDocumentiContabiliCancellati(newScad);
+		compenso.setStato_cofi(CompensoBulk.STATO_CONTABILIZZATO);
+
+		((CompensoComponentSession)createComponentSession()).lockScadenza(context.getUserContext(), newScad);
 
 		if (!isObbligazioneValida(context, newScad))
 			compenso.setStatoCompensoToSincronizzaObbligazione();
@@ -594,7 +687,12 @@ public IDocumentoAmministrativoBulk getDocumentoAmministrativoCorrente() {
  * @return it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk
  */
 public it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk getObbligazione_scadenziario_corrente() {
-	return ((CompensoBulk)getModel()).getObbligazioneScadenzario();
+	return Optional.ofNullable(this.getCompensoRigheController())
+				.map(SimpleDetailCRUDController::getModel)
+				.filter(Compenso_rigaBulk.class::isInstance)
+				.map(Compenso_rigaBulk.class::cast)
+				.map(Compenso_rigaBulk::getObbligazioneScadenzario)
+				.orElse(null);
 }
 /**
  * Insert the method's description here.
@@ -763,7 +861,7 @@ public boolean isAnnoSolareInScrivania() {
 public boolean isAutoGenerated() {
 	return false;
 }
-public boolean isBottoneAnnullaModificaCORIEnabled() throws BusinessProcessException{
+public boolean isBottoneAnnullaModificaCORIEnabled() {
 
 	if (this.isViewing() || this.isSearching())
 		return false;
@@ -771,7 +869,7 @@ public boolean isBottoneAnnullaModificaCORIEnabled() throws BusinessProcessExcep
 	return (getContributiCRUDController().getModelIndex()!=-1||
 		!getContributiCRUDController().getSelection().isEmpty());
 }
-public boolean isBottoneConfermaModificaCORIEnabled() throws BusinessProcessException{
+public boolean isBottoneConfermaModificaCORIEnabled() {
 
 	if (this.isViewing() || this.isSearching())
 		return false;
@@ -779,18 +877,17 @@ public boolean isBottoneConfermaModificaCORIEnabled() throws BusinessProcessExce
 	return (getContributiCRUDController().getModelIndex()!=-1||
 		!getContributiCRUDController().getSelection().isEmpty());
 }
-public boolean isBottoneCreaObbligazioneEnabled() throws BusinessProcessException{
+public boolean isBottoneCreaObbligazioneEnabled() {
 
 	if (this.isViewing() || this.isSearching())
 		return false;
 
 	CompensoBulk compenso = (CompensoBulk)getModel();
 	return (compenso!=null &&
-			compenso.getObbligazioneScadenzario()==null &&
 			compenso.isStatoCompensoSincronizzaObbligazione() &&
 			!compenso.isROPerChiusura());
 }
-public boolean isBottoneEliminaObbligazioneEnabled() throws BusinessProcessException{
+public boolean isBottoneEliminaObbligazioneEnabled() {
 
 	if (this.isViewing() || this.isSearching())
 		return false;
@@ -803,9 +900,12 @@ public boolean isBottoneEliminaObbligazioneEnabled() throws BusinessProcessExcep
 	if(compenso!=null && compenso.isStatoCompensoEseguiCalcolo())
 		return false;
 
-	return (compenso!=null && compenso.getObbligazioneScadenzario()!=null);
+	return Optional.ofNullable(compenso)
+			   .map(CompensoBulk::getObbligazione_scadenzarioColl)
+			   .map(list->!list.isEmpty())
+			   .orElse(Boolean.FALSE);
 }
-public boolean isBottoneEseguiCalcoloEnabled() throws BusinessProcessException{
+public boolean isBottoneEseguiCalcoloEnabled() {
 
 	if (this.isViewing() || this.isSearching())
 		return false;
@@ -814,7 +914,7 @@ public boolean isBottoneEseguiCalcoloEnabled() throws BusinessProcessException{
 
 	return compenso!=null && compenso.isStatoCompensoEseguiCalcolo() && !compenso.isROPerChiusura();
 }
-public boolean isBottoneModificaAutomaticaObbligazioneEnabled() throws BusinessProcessException{
+public boolean isBottoneModificaAutomaticaObbligazioneEnabled() {
 
 	if (this.isViewing() || this.isSearching())
 		return false;
@@ -822,11 +922,12 @@ public boolean isBottoneModificaAutomaticaObbligazioneEnabled() throws BusinessP
 	CompensoBulk compenso = (CompensoBulk)getModel();
 
 	return (compenso!=null &&
-			compenso.getObbligazioneScadenzario()!=null &&
+			compenso.getObbligazione_scadenzarioColl()!=null && 
+			!compenso.getObbligazione_scadenzarioColl().isEmpty() &&
 			compenso.isStatoCompensoSincronizzaObbligazione() &&
 			!compenso.isROPerChiusura());
 }
-public boolean isBottoneModificaManualeObbligazioneEnabled() throws BusinessProcessException{
+public boolean isBottoneModificaManualeObbligazioneEnabled() {
 
 	if (this.isSearching())
 		return false;
@@ -835,10 +936,12 @@ public boolean isBottoneModificaManualeObbligazioneEnabled() throws BusinessProc
 	if(compenso!=null && compenso.isStatoCompensoEseguiCalcolo())
 		return false;
 
-	return (compenso!=null &&
-			compenso.getObbligazioneScadenzario()!=null);
+	return Optional.ofNullable(compenso)
+			   .map(CompensoBulk::getObbligazione_scadenzarioColl)
+			   .map(list->!list.isEmpty())
+			   .orElse(Boolean.FALSE);
 }
-public boolean isBottoneVisualizzaDocContPrincipaleEnabled() throws BusinessProcessException{
+public boolean isBottoneVisualizzaDocContPrincipaleEnabled() {
 
 	return ((CompensoBulk)getModel()).getDocContPrincipale()!=null;
 }
@@ -850,7 +953,7 @@ public boolean isBottoneVisualizzaDocContPrincipaleEnabled() throws BusinessProc
 public boolean isCarryingThrough() {
 	return carryingThrough;
 }
-public boolean isContabilizzaButtonEnabled() throws BusinessProcessException
+public boolean isContabilizzaButtonEnabled() 
 {
 	if (isSearching() || isInputReadonly())
 		return false;
@@ -956,7 +1059,6 @@ public boolean isManualModify() {
  * @return boolean
  */
 public boolean isObbligazioneValida(ActionContext context, it.cnr.jada.bulk.OggettoBulk bulk) throws BusinessProcessException {
-
 	try{
 		try{
 			CompensoComponentSession sess = (CompensoComponentSession)createComponentSession();
@@ -1606,7 +1708,7 @@ public boolean isSospensioneIrpefOkPerContabil(UserContext userContext, Compenso
 
 public void ricercaDatiTrovato(ActionContext context)  throws Exception {
 	FatturaPassivaComponentSession h;
-	CompensoBulk riga = (CompensoBulk)getModel();
+	Compenso_rigaBulk riga = (Compenso_rigaBulk)getCompensoRigheController().getModel();
 	try {
 		h = (FatturaPassivaComponentSession)createComponentSession("CNRDOCAMM00_EJB_FatturaPassivaComponentSession", FatturaPassivaComponentSession.class) ;
 		TrovatoBulk trovato = h.ricercaDatiTrovatoValido(context.getUserContext(), riga.getPg_trovato());
@@ -1645,5 +1747,34 @@ public void valorizzaInfoDocEle(ActionContext context, CompensoBulk compenso) th
 		throw handleException(ex);
 	}
 }
+public SimpleDetailCRUDController getCompensoRigheController() {
+	return compensoRigheController;
+}
+private void validaScadenze(CompensoBulk compenso, Obbligazione_scadenzarioBulk newScad, boolean isModifica) throws ComponentException {
+    if (!isModifica && Stream.of(this.getCompensoRigheController().getDetails().stream().toArray())
+            .filter(Compenso_rigaBulk.class::isInstance)
+            .map(Compenso_rigaBulk.class::cast)
+            .map(Compenso_rigaBulk::getObbligazioneScadenzario)
+            .anyMatch(s -> s.equalsByPrimaryKey(newScad))) {
+		throw new it.cnr.jada.comp.ApplicationException("Scadenza Impegno già associata al compenso. Nuova associazione non possibile.");
+    }
 
+	Vector scadCanc = compenso.getDocumentiContabiliCancellati();
+	if (scadCanc != null) {
+		Iterator it = scadCanc.iterator();
+
+		while (it.hasNext()) {
+			Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk) it.next();
+			if (scad.getObbligazione() instanceof ObbligazioneResBulk) {
+				if (scad.getObbligazione().equalsByPrimaryKey(newScad.getObbligazione())
+						&& ((ObbligazioneResBulk) scad.getObbligazione()).getObbligazione_modifica() != null
+						&& ((ObbligazioneResBulk) scad.getObbligazione()).getObbligazione_modifica().getPg_modifica() != null) {
+					throw new it.cnr.jada.comp.ApplicationException("Impossibile collegare una scadenza dell'impegno residuo "
+											+ scad.getPg_obbligazione()
+											+ " poiché è stata effettuata una modifica in questo documento amministrativo!");
+				}
+			}
+		}
+	}
+}
 }
