@@ -34,6 +34,8 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.DetailedException;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -45,6 +47,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
 import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.RemoteIterator;
 
@@ -125,60 +128,69 @@ private void aggiornaObbligazioneTemporanea(
 	PrimaryKeyHashMap processed) throws ComponentException {
 
 	if (compenso != null) {
-		Optional.ofNullable(compenso.getObbligazione_scadenzarioColl())
-			.map(BulkList::stream)
-			.orElse(Stream.empty())
-			.map(Obbligazione_scadenzarioBulk::getObbligazione)
-			.filter(ObbligazioneBulk::isTemporaneo)
-			.distinct()
-			.forEach(obbligazioneTemporanea->{
-				if (processed.get(obbligazioneTemporanea) == null) {
+		try {
+			Optional.ofNullable(compenso.getObbligazione_scadenzarioColl())
+				.map(BulkList::stream)
+				.orElse(Stream.empty())
+				.map(Obbligazione_scadenzarioBulk::getObbligazione)
+				.filter(ObbligazioneBulk::isTemporaneo)
+				.distinct()
+				.forEach(obbligazioneTemporanea->{
 					try {
-						Numerazione_doc_contHome numHome = (Numerazione_doc_contHome) getHomeCache(userContext).getHome(it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.class);
-						Long pg = null;
-						pg = numHome.getNextPg(userContext,
-										obbligazioneTemporanea.getEsercizio(), 
-										obbligazioneTemporanea.getCd_cds(), 
-										obbligazioneTemporanea.getCd_tipo_documento_cont(), 
-										obbligazioneTemporanea.getUser());
-		
-						ObbligazioneHome home = (ObbligazioneHome)getHome(userContext, obbligazioneTemporanea);
-						ObbligazioneBulk obbligazioneTemporaneaOriginale = (ObbligazioneBulk)obbligazioneTemporanea.clone();
-						home.confirmObbligazioneTemporanea(userContext,obbligazioneTemporanea, pg, false);
-						
-						obbligazioneTemporanea.setPg_obbligazione(pg);
-						updateBulk(userContext, compenso);
-						try {
-							deleteBulk(userContext, obbligazioneTemporaneaOriginale);
-						} catch (ReferentialIntegrityException ex) {
-							//Ignorato di proposito: esistono altre scadenze associate
-							//ancora da processare --> demando all'ultimo processo il
-							//compito di cancellare
+						if (processed.get(obbligazioneTemporanea) == null) {
+							try {
+								Numerazione_doc_contHome numHome = (Numerazione_doc_contHome) getHomeCache(userContext).getHome(it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.class);
+								Long pg = null;
+								pg = numHome.getNextPg(userContext,
+												obbligazioneTemporanea.getEsercizio(), 
+												obbligazioneTemporanea.getCd_cds(), 
+												obbligazioneTemporanea.getCd_tipo_documento_cont(), 
+												obbligazioneTemporanea.getUser());
+				
+								ObbligazioneHome home = (ObbligazioneHome)getHome(userContext, obbligazioneTemporanea);
+								ObbligazioneBulk obbligazioneTemporaneaOriginale = (ObbligazioneBulk)obbligazioneTemporanea.clone();
+								home.confirmObbligazioneTemporanea(userContext,obbligazioneTemporanea, pg, false);
+								
+								obbligazioneTemporanea.setPg_obbligazione(pg);
+								updateBulk(userContext, compenso);
+								try {
+									deleteBulk(userContext, obbligazioneTemporaneaOriginale);
+								} catch (ReferentialIntegrityException ex) {
+									//Ignorato di proposito: esistono altre scadenze associate
+									//ancora da processare --> demando all'ultimo processo il
+									//compito di cancellare
+								}
+								compenso.addToRelationsDocContForSaldi(obbligazioneTemporanea, obbligazioneTemporaneaOriginale.getPg_obbligazione());
+								processed.put(obbligazioneTemporaneaOriginale, compenso);
+							} catch (it.cnr.jada.persistency.PersistencyException e) {
+								throw handleException(obbligazioneTemporanea, e);
+							} catch (it.cnr.jada.persistency.IntrospectionException e) {
+								throw handleException(obbligazioneTemporanea, e);
+							}
+						} else {
+							//TODO LELLO DA VERIFICARE
+							Long pgAssegnato = ((CompensoBulk)processed.get(obbligazioneTemporanea)).getObbligazione_scadenzarioColl().get(0).getPg_obbligazione();
+							ObbligazioneBulk obbligazioneTemporaneaOriginale = (ObbligazioneBulk)obbligazioneTemporanea.clone();
+							obbligazioneTemporanea.setPg_obbligazione(pgAssegnato);
+							try { 
+								updateBulk(userContext, compenso);
+								deleteBulk(userContext, obbligazioneTemporaneaOriginale);
+							} catch (ReferentialIntegrityException ex) {
+								//Ignorato di proposito: esistono altre scadenze associate
+								//ancora da processare --> demando all'ultimo processo il
+								//compito di cancellare
+							} catch (it.cnr.jada.persistency.PersistencyException e) {
+								throw handleException(compenso, e);
+							}
+							//compenso.addToRelationsDocContForSaldi(obbligazioneTemporanea, obbligazioneTemporaneaOriginale.getPg_obbligazione());
 						}
-						compenso.addToRelationsDocContForSaldi(obbligazioneTemporanea, obbligazioneTemporaneaOriginale.getPg_obbligazione());
-						processed.put(obbligazioneTemporaneaOriginale, compenso);
-					} catch (it.cnr.jada.persistency.PersistencyException e) {
-						throw handleException(obbligazioneTemporanea, e);
-					} catch (it.cnr.jada.persistency.IntrospectionException e) {
-						throw handleException(obbligazioneTemporanea, e);
+					} catch (Exception e) {
+						throw new DetailedRuntimeException(e);
 					}
-				} else {
-					Long pgAssegnato = ((CompensoBulk)processed.get(obbligazioneTemporanea)).getObbligazioneScadenzario().getPg_obbligazione();
-					ObbligazioneBulk obbligazioneTemporaneaOriginale = (ObbligazioneBulk)obbligazioneTemporanea.clone();
-					obbligazioneTemporanea.setPg_obbligazione(pgAssegnato);
-					try { 
-						updateBulk(userContext, compenso);
-						deleteBulk(userContext, obbligazioneTemporaneaOriginale);
-					} catch (ReferentialIntegrityException ex) {
-						//Ignorato di proposito: esistono altre scadenze associate
-						//ancora da processare --> demando all'ultimo processo il
-						//compito di cancellare
-					} catch (it.cnr.jada.persistency.PersistencyException e) {
-						throw handleException(compenso, e);
-					}
-					//compenso.addToRelationsDocContForSaldi(obbligazioneTemporanea, obbligazioneTemporaneaOriginale.getPg_obbligazione());
-				}
-			});
+				});
+		} catch (DetailedRuntimeException e) {
+			throw new ApplicationException(e.getMessage());
+		}
 	}
 }
 private PrimaryKeyHashMap aggiornaRate(
@@ -257,28 +269,35 @@ private void aggiornaSaldiPer(
  	throws ComponentException{
 
 	if (carriera != null && carriera.getMinicarriera_rate() != null) {
-
-		//Costruisco il vettore per prendere una sola volta il compenso (che puo' essere associato
-		//a più rate) in maniera da aggiornare una volta sola i saldi dell'obbligazione
-		java.util.Vector compensi = new java.util.Vector();
-		for (java.util.Iterator i = carriera.getMinicarriera_rate().iterator(); i.hasNext();) {
-			Minicarriera_rataBulk rata = (Minicarriera_rataBulk)i.next();
-			if (rata.isAssociataACompenso() && 
-				!it.cnr.jada.bulk.BulkCollections.containsByPrimaryKey(compensi, rata.getCompenso()))
-				compensi.add(rata.getCompenso());
-		}
-		for (java.util.Iterator i = compensi.iterator(); i.hasNext();) {
-			CompensoBulk compenso = (CompensoBulk)i.next();
-			synchronizeCarriera(uc, carriera, compenso);
-			Optional.ofNullable(compenso.getObbligazione_scadenzarioColl())
-				.map(BulkList::stream)
-				.orElse(Stream.empty())
-				.map(Obbligazione_scadenzarioBulk::getObbligazione)
-				.distinct()
-				.forEach(obbligazione->{
-					aggiornaSaldi(uc, carriera, obbligazione, status);
-				});
-		}
+		try {
+			//Costruisco il vettore per prendere una sola volta il compenso (che puo' essere associato
+			//a più rate) in maniera da aggiornare una volta sola i saldi dell'obbligazione
+			java.util.Vector compensi = new java.util.Vector();
+			for (java.util.Iterator i = carriera.getMinicarriera_rate().iterator(); i.hasNext();) {
+				Minicarriera_rataBulk rata = (Minicarriera_rataBulk)i.next();
+				if (rata.isAssociataACompenso() && 
+					!it.cnr.jada.bulk.BulkCollections.containsByPrimaryKey(compensi, rata.getCompenso()))
+					compensi.add(rata.getCompenso());
+			}
+			for (java.util.Iterator i = compensi.iterator(); i.hasNext();) {
+				CompensoBulk compenso = (CompensoBulk)i.next();
+				synchronizeCarriera(uc, carriera, compenso);
+				Optional.ofNullable(compenso.getObbligazione_scadenzarioColl())
+					.map(BulkList::stream)
+					.orElse(Stream.empty())
+					.map(Obbligazione_scadenzarioBulk::getObbligazione)
+					.distinct()
+					.forEach(obbligazione->{
+						try {
+							aggiornaSaldi(uc, carriera, obbligazione, status);
+						} catch (ComponentException e) {
+							throw new DetailedRuntimeException(e);
+						}						
+					});
+			}
+		} catch (DetailedRuntimeException e) {
+			throw new ApplicationException(e.getMessage());
+		}			
 	}
 }
 private Long assegnaProgressivo(
