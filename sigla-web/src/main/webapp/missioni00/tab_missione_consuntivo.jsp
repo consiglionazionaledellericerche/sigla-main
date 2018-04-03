@@ -27,7 +27,7 @@
     </table>
     <table width="100%">
         <tr>
-            <td><% bp.getConsuntivoController().writeHTMLTable(pageContext, "dettaglioSpesaSet",false,false,false,"700px","100px");%></td>
+            <td><% bp.getConsuntivoController().writeHTMLTable(pageContext, "dettaglioSpesaSet",false,false,false,"100%","100px");%></td>
         </tr>
     </table>
 </div>
