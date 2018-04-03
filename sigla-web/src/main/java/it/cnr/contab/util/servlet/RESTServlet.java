@@ -53,9 +53,10 @@ import java.rmi.RemoteException;
 import java.util.*;
 
 public class RESTServlet extends HttpServlet{
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 	private static final Integer MAX_ITEMS_PER_PAGE = 5000;
-	private List<String> restExtension;
+    public static final String AUTHORIZATION = "Authorization";
+    private List<String> restExtension;
     private File actionDirFile;    
     private ActionMappings mappings;
     private String COMMAND_POST = "doRestResponse", COMMAND_GET = "doRestInfo", ACTION_INFO = "/info";
@@ -77,31 +78,31 @@ public class RESTServlet extends HttpServlet{
 			throws ServletException, IOException {
 		
 		resp.setContentType("application/json");
-        String s = req.getServletPath();
-        String authorization = req.getHeader("Authorization");
-        logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". RemoteAddr: "+req.getRemoteAddr() + ". RemoteHost: "+req.getRemoteHost()+ ". RemotePort: "+req.getRemotePort());
-        logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". Action: "+s + ". Command: "+command + ". Authorization: "+authorization);
-        logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". ContentType: "+req.getContentType() + ". Encoding: "+req.getCharacterEncoding()+ ". QueryString: "+req.getQueryString());
-        logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". ServerName: "+req.getServerName()+". ServerPort: "+req.getServerPort()+". URI: "+req.getRequestURI());
-        String extension = s.substring(s.lastIndexOf("."));
+        String action = req.getServletPath();
+        String authorization = req.getHeader(AUTHORIZATION);
+        logger.info("RemoteAddr:{} RemoteHost:{} RemotePort:{}",req.getRemoteAddr(),req.getRemoteHost(),req.getRemotePort());
+        logger.info("Action:{} Command:{} Authorization:{}",action,command,authorization);
+        logger.info("ContentType:{} Encoding:{} QueryString:{}",req.getContentType(),req.getCharacterEncoding(),req.getQueryString());
+        logger.info("ServerName:{} ServerPort:{} URI:{}",req.getServerName(),req.getServerPort(),req.getRequestURI());
+        String extension = action.substring(action.lastIndexOf("."));
         if(!restExtension.contains(extension))
             throw new ServletException("Le actions devono terminare con \""+ restExtension +"\"");
         
-        s = s.substring(0, s.length() - extension.length());
-        if (s.equals(ACTION_INFO)){
+        action = action.substring(0, action.length() - extension.length());
+        if (action.equals(ACTION_INFO)){
         	if (command.equals(COMMAND_GET)) {
                 searchForInfo(req, resp); 
         	} else {
                 throw new ServletException("Non è possibile avere le informazioni sui servizi con il comando POST");
         	}
         } else {
-            ActionMapping actionmapping = mappings.findActionMapping(s);
+            ActionMapping actionmapping = mappings.findActionMapping(action);
             if(actionmapping == null)
-                throw new ServletException("Action not found ["+s+"]");
+                throw new ServletException("Action not found ["+action+"]");
             UtenteBulk utente = null;
     		try {
     			if (actionmapping.needExistingSession())
-    				utente = BasicAuthentication.authenticate(req.getHeader("Authorization"));
+    				utente = BasicAuthentication.authenticate(req.getHeader(AUTHORIZATION));
     			if (utente != null || !actionmapping.needExistingSession()) {
     				JSONRequest jsonRequest = null;
     	            HttpActionContext httpactioncontext = new HttpActionContext(this, req, resp);
@@ -109,12 +110,18 @@ public class RESTServlet extends HttpServlet{
     	            if (command.equals(COMMAND_POST)) {
     	            	jsonRequest = new Gson().fromJson(new JsonParser().parse(req.getReader()), JSONRequest.class);
     	            	if (actionmapping.needExistingSession()) {
-    			            httpactioncontext.setUserContext(BasicAuthentication.getContextFromRequest(jsonRequest, utente.getCd_utente(), httpactioncontext.getSessionId()));
-    	                    logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". Context: Anno:" + jsonRequest.getContext().getEsercizio() + ", CDS:"+ jsonRequest.getContext().getCd_cds() + ", UO:"+ jsonRequest.getContext().getCd_unita_organizzativa() + ", CDR:"+ jsonRequest.getContext().getCd_cdr());
-    			            httpactioncontext.setUserInfo(getUserInfo(utente, (CNRUserContext) httpactioncontext.getUserContext()));	            		            		
+    			            httpactioncontext.setUserContext(
+    			            		BasicAuthentication.getContextFromRequest(jsonRequest, utente.getCd_utente(), httpactioncontext.getSessionId()),
+									false);
+    	                    logger.info("Context: Anno:{} CDS:{} UO:{} CDR:{}",
+									jsonRequest.getContext().getEsercizio(),
+									jsonRequest.getContext().getCd_cds(),
+									jsonRequest.getContext().getCd_unita_organizzativa(),
+									jsonRequest.getContext().getCd_cdr());
+    			            httpactioncontext.setUserInfo(getUserInfo(utente, (CNRUserContext) httpactioncontext.getUserContext()), false);
     	            	} else {
-    	            		httpactioncontext.setUserContext(new RESTUserContext());
-    			            httpactioncontext.setUserInfo(getUserInfo(utente, (CNRUserContext) httpactioncontext.getUserContext()));
+    	            		httpactioncontext.setUserContext(new RESTUserContext(), false);
+    			            httpactioncontext.setUserInfo(getUserInfo(utente, (CNRUserContext) httpactioncontext.getUserContext()), false);
     	            	}
     	            }
     	            try{
@@ -125,7 +132,7 @@ public class RESTServlet extends HttpServlet{
     	            	else
     	            		businessProcess = mappings.createBusinessProcess(actionmapping, httpactioncontext);
 
-    	                logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". Business Process: "+businessProcess.getName());
+    	                logger.info("Business Process: {} ", businessProcess.getName());
 						RemoteIterator iterator = null;
     	            	if (command.equals(COMMAND_POST)) {
     	            		Boolean isEnableBP = false;
@@ -141,7 +148,7 @@ public class RESTServlet extends HttpServlet{
     		        		if (jsonRequest != null && jsonRequest.getClauses() != null) {
     		        			CompoundFindClause compoundFindClause = new CompoundFindClause();
     		        			for (Clause clause : jsonRequest.getClauses()) {
-    		    	                logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". Clause. Condition: "+clause.getCondition()+", fieldName: "+clause.getFieldName()+", Operator: "+clause.getOperator()+", fieldValue: "+clause.getFieldValue());
+    		    	                logger.info("Condition:{} FieldName:{} Operator:{} fieldValue:{}", clause.getCondition(), clause.getFieldName(), clause.getOperator(), clause.getFieldValue());
                                     clause.validate();
     		    	                compoundFindClause.addClause(
                                             clause.getCondition(),
@@ -158,6 +165,7 @@ public class RESTServlet extends HttpServlet{
 									iterator);
     		            	parseRequestParameter(req, httpactioncontext, jsonRequest, consBP);
     	            	}
+                        BusinessProcess.setBusinessProcessRoot(req, businessProcess);
     	            	httpactioncontext.setBusinessProcess(businessProcess);
     	                req.setAttribute(it.cnr.jada.action.BusinessProcess.class.getName(), businessProcess);
     	            	httpactioncontext.perform(null, actionmapping, command);
@@ -180,8 +188,6 @@ public class RESTServlet extends HttpServlet{
     	            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     	            resp.setHeader("WWW-Authenticate", "Basic realm=\"SIGLA\"");   
     			}
-    	        logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". End");
-                req.getSession().invalidate();
     		} catch (ComponentException e) {
     			logger.error("ComponentException", e);
     			resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);			
@@ -356,18 +362,18 @@ public class RESTServlet extends HttpServlet{
 			Integer maxItemsPerPage = Optional.ofNullable(jsonRequest.getMaxItemsPerPage())
 					.filter(maxItems -> maxItems.compareTo(0) > 0 && maxItems.compareTo(MAX_ITEMS_PER_PAGE) < 0)
 					.orElse(10);
-			logger.info("RequestedSessionId: {}. MaxItemsPerPage: {}", req.getRequestedSessionId(), maxItemsPerPage);
+			logger.info("MaxItemsPerPage: {}", maxItemsPerPage);
 			consBP.setPageSize(maxItemsPerPage);
 			consBP.refresh(actioncontext);
 
 			if (jsonRequest.getActivePage() != null && jsonRequest.getActivePage().compareTo(0) > 0){
-                logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". ActivePage: "+jsonRequest.getActivePage());
+                logger.info("ActivePage:{}", jsonRequest.getActivePage());
 	    		consBP.goToPage(actioncontext, jsonRequest.getActivePage());
 			}
 			if (jsonRequest.getOrderBy() != null) {
 				for (OrderBy orderBy : jsonRequest.getOrderBy()) {
 	                int orderType = orderBy.getType() == null || orderBy.getType().equalsIgnoreCase("ASC")?OrderConstants.ORDER_ASC: OrderConstants.ORDER_DESC; 
-	                logger.info("RequestedSessionId: "+req.getRequestedSessionId() + ". OrderBy: "+orderBy.name+" "+orderBy.getType());
+	                logger.info(". OrderBy:{} {}", orderBy.name, orderBy.getType());
 					consBP.setOrderBy(actioncontext, orderBy.name, orderType);
 				}
 			}			
