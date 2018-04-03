@@ -280,60 +280,99 @@
           a.stato_cofi, a.stato_pagamento_fondo_eco, a.dt_pagamento_fondo_eco,
           a.dt_fattura_fornitore, a.nr_fattura_fornitore,c.cd_anag, a.cd_terzo,
           TO_NUMBER (NULL), a.cognome, a.nome, a.ragione_sociale,
-          a.cd_modalita_pag, a.im_totale_compenso, c.codice_fiscale,
+          a.cd_modalita_pag, sum(cr.im_totale_riga_compenso), c.codice_fiscale,
           c.partita_iva, a.ds_compenso, mandato_riga.esercizio,
           mandato_riga.cd_cds, mandato_riga.pg_mandato
-     FROM compenso a, anagrafico c, terzo t, mandato_riga
+     FROM compenso a, compenso_riga cr, anagrafico c, terzo t, mandato_riga
     WHERE t.cd_terzo = a.cd_terzo
       AND t.cd_anag = c.cd_anag
-      AND a.cd_cds_obbligazione IS NOT NULL
-      AND a.esercizio_obbligazione IS NOT NULL
-      AND a.esercizio_ori_obbligazione IS NOT NULL
-      AND a.pg_obbligazione IS NOT NULL
-      AND a.pg_obbligazione_scadenzario IS NOT NULL
+      AND a.cd_cds = cr.cd_cds
+      AND a.cd_unita_organizzativa = cr.cd_unita_organizzativa
+      AND a.esercizio = cr.esercizio
+      AND a.pg_compenso = cr.pg_compenso
       AND a.dt_cancellazione IS NULL
       AND a.pg_compenso > 0
-      AND a.cd_cds_obbligazione = mandato_riga.cd_cds(+)
-      AND a.esercizio_obbligazione = mandato_riga.esercizio_obbligazione(+)
-      AND a.pg_obbligazione = mandato_riga.pg_obbligazione(+)
-      AND a.pg_obbligazione_scadenzario = mandato_riga.pg_obbligazione_scadenzario(+)
-      AND a.esercizio_ori_obbligazione = mandato_riga.esercizio_ori_obbligazione(+)
-      AND a.pg_compenso = mandato_riga.pg_doc_amm(+)
-      AND a.esercizio = mandato_riga.esercizio_doc_amm(+)
-      AND a.cd_unita_organizzativa = mandato_riga.cd_uo_doc_amm(+)
-      AND a.cd_cds = mandato_riga.cd_cds_doc_amm(+)
+      AND cr.cd_cds_obbligazione = mandato_riga.cd_cds(+)
+      AND cr.esercizio_obbligazione = mandato_riga.esercizio_obbligazione(+)
+      AND cr.pg_obbligazione = mandato_riga.pg_obbligazione(+)
+      AND cr.pg_obbligazione_scadenzario = mandato_riga.pg_obbligazione_scadenzario(+)
+      AND cr.esercizio_ori_obbligazione = mandato_riga.esercizio_ori_obbligazione(+)
+      AND cr.pg_compenso = mandato_riga.pg_doc_amm(+)
+      AND cr.esercizio = mandato_riga.esercizio_doc_amm(+)
+      AND cr.cd_unita_organizzativa = mandato_riga.cd_uo_doc_amm(+)
+      AND cr.cd_cds = mandato_riga.cd_cds_doc_amm(+)
       AND mandato_riga.cd_tipo_documento_amm(+) = 'COMPENSO'
       AND mandato_riga.stato(+) != 'A'
+   GROUP BY a.dt_registrazione, 
+            a.cd_cds, 
+            a.cd_unita_organizzativa, 
+            a.esercizio,
+            a.pg_compenso, 
+            a.cd_cds_origine, 
+            a.cd_uo_origine,
+            a.stato_cofi, 
+            a.stato_pagamento_fondo_eco, 
+            a.dt_pagamento_fondo_eco,
+            a.dt_fattura_fornitore, 
+            a.nr_fattura_fornitore,
+            c.cd_anag, 
+            a.cd_terzo,
+            a.cognome, 
+            a.nome, 
+            a.ragione_sociale,
+            a.cd_modalita_pag, 
+            c.codice_fiscale,
+            c.partita_iva, 
+            a.ds_compenso, 
+            mandato_riga.esercizio,
+            mandato_riga.cd_cds, mandato_riga.pg_mandato
    UNION ALL
    SELECT a.dt_registrazione, a.cd_cds, a.cd_unita_organizzativa, a.esercizio,
           'MISSIONE', a.pg_missione, a.cd_cds, a.cd_unita_organizzativa, NULL,
           a.stato_cofi, a.stato_pagamento_fondo_eco, a.dt_pagamento_fondo_eco,
           TO_DATE (NULL), NULL, c.cd_anag,a.cd_terzo, TO_NUMBER (NULL), a.cognome,
           a.nome, a.ragione_sociale, a.cd_modalita_pag,
-          a.im_totale_missione - NVL (b.im_anticipo, 0), c.codice_fiscale,
+          sum(mr.im_totale_riga_missione), c.codice_fiscale,
           c.partita_iva, a.ds_missione, mandato_riga.esercizio,
           mandato_riga.cd_cds, mandato_riga.pg_mandato
-     FROM missione a, anticipo b, anagrafico c, terzo t, mandato_riga
+     FROM missione a, missione_riga mr, anagrafico c, terzo t, mandato_riga
     WHERE t.cd_terzo = a.cd_terzo
       AND t.cd_anag = c.cd_anag
-      AND a.cd_cds_obbligazione IS NOT NULL
-      AND a.esercizio_obbligazione IS NOT NULL
-      AND a.esercizio_ori_obbligazione IS NOT NULL
-      AND a.pg_obbligazione IS NOT NULL
-      AND a.pg_obbligazione_scadenzario IS NOT NULL
+      AND a.cd_cds = mr.cd_cds
+      AND a.cd_unita_organizzativa = mr.cd_unita_organizzativa
+      AND a.esercizio = mr.esercizio
+      AND a.pg_missione = mr.pg_missione
       AND a.dt_cancellazione IS NULL
-      AND b.esercizio(+) = a.esercizio_anticipo
-      AND b.cd_cds(+) = a.cd_cds_anticipo
-      AND b.cd_unita_organizzativa(+) = a.cd_uo_anticipo
-      AND b.pg_anticipo(+) = a.pg_anticipo
-      AND a.cd_cds_obbligazione = mandato_riga.cd_cds(+)
-      AND a.esercizio_obbligazione = mandato_riga.esercizio_obbligazione(+)
-      AND a.pg_obbligazione = mandato_riga.pg_obbligazione(+)
-      AND a.pg_obbligazione_scadenzario = mandato_riga.pg_obbligazione_scadenzario(+)
-      AND a.esercizio_ori_obbligazione = mandato_riga.esercizio_ori_obbligazione(+)
-      AND a.pg_missione = mandato_riga.pg_doc_amm(+)
-      AND a.esercizio = mandato_riga.esercizio_doc_amm(+)
-      AND a.cd_unita_organizzativa = mandato_riga.cd_uo_doc_amm(+)
-      AND a.cd_cds = mandato_riga.cd_cds_doc_amm(+)
+      AND mr.cd_cds_obbligazione = mandato_riga.cd_cds(+)
+      AND mr.esercizio_obbligazione = mandato_riga.esercizio_obbligazione(+)
+      AND mr.pg_obbligazione = mandato_riga.pg_obbligazione(+)
+      AND mr.pg_obbligazione_scadenzario = mandato_riga.pg_obbligazione_scadenzario(+)
+      AND mr.esercizio_ori_obbligazione = mandato_riga.esercizio_ori_obbligazione(+)
+      AND mr.pg_missione = mandato_riga.pg_doc_amm(+)
+      AND mr.esercizio = mandato_riga.esercizio_doc_amm(+)
+      AND mr.cd_unita_organizzativa = mandato_riga.cd_uo_doc_amm(+)
+      AND mr.cd_cds = mandato_riga.cd_cds_doc_amm(+)
       AND mandato_riga.cd_tipo_documento_amm(+) = 'MISSIONE'
-      AND mandato_riga.stato(+) != 'A';
+      AND mandato_riga.stato(+) != 'A'
+   GROUP BY a.dt_registrazione, 
+            a.cd_cds, 
+            a.cd_unita_organizzativa, 
+            a.esercizio,
+            a.pg_missione, 
+            a.cd_cds, 
+            a.cd_unita_organizzativa,
+            a.stato_cofi, 
+            a.stato_pagamento_fondo_eco, 
+            a.dt_pagamento_fondo_eco,
+            c.cd_anag,
+            a.cd_terzo, 
+            a.cognome,
+            a.nome, 
+            a.ragione_sociale, 
+            a.cd_modalita_pag,
+            c.codice_fiscale,
+            c.partita_iva, 
+            a.ds_missione, 
+            mandato_riga.esercizio,
+            mandato_riga.cd_cds, 
+            mandato_riga.pg_mandato;

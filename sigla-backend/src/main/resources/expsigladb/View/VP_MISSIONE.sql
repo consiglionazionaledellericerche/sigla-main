@@ -71,9 +71,9 @@
 ,decode(m.TI_ANAGRAFICO,'D',rap.MATRICOLA_DIPENDENTE,m.CD_TERZO)  -- matricola
 ,rif.DS_INQUADRAMENTO											  -- qualifica
 ,null 															  -- ti_competenza_residuo
-,m.ESERCIZIO_ORI_OBBLIGAZIONE
-,m.PG_OBBLIGAZIONE
-,m.PG_OBBLIGAZIONE_SCADENZARIO
+,mr.ESERCIZIO_ORI_OBBLIGAZIONE
+,mr.PG_OBBLIGAZIONE
+,mr.PG_OBBLIGAZIONE_SCADENZARIO
 ,to_date(null) 				  -- obbs.DT_SCADENZA
 ,0							  -- comp.PG_COMPENSO
 ,mriga.PG_MANDATO
@@ -137,7 +137,8 @@
 ,0						   -- comp.DETRAZIONI_LA_NETTO
 ,0						   -- comp.DETRAZIONI_PERSONALI_NETTO
 from missione m
-	,mandato_riga mriga
+	,missione_riga mr
+  ,mandato_riga mriga
 	,unita_organizzativa uo
 	,terzo ter
 	,comune com
@@ -145,6 +146,10 @@ from missione m
 	,rapporto rap
 	,anticipo ant
 where m.FL_ASSOCIATO_COMPENSO 	      = 'N'
+  and m.cd_cds = mr.cd_cds (+)
+  and m.cd_unita_organizzativa = mr.cd_unita_organizzativa (+)
+  and m.esercizio = mr.esercizio (+)
+  and m.pg_missione = mr.pg_missione (+)
   and mriga.CD_CDS_DOC_AMM	  	  (+) = m.CD_CDS
   and mriga.CD_UO_DOC_AMM	  	  (+) = m.CD_UNITA_ORGANIZZATIVA
   and mriga.ESERCIZIO_DOC_AMM 	  (+) = m.ESERCIZIO
@@ -186,9 +191,9 @@ select   				  -- testata missioni associate a compenso
 ,decode(m.TI_ANAGRAFICO,'D',rap.MATRICOLA_DIPENDENTE,m.CD_TERZO)  -- matricola
 ,rif.DS_INQUADRAMENTO											  -- qualifica
 ,null 															  -- ti_competenza_residuo
-,comp.ESERCIZIO_ORI_OBBLIGAZIONE
-,comp.PG_OBBLIGAZIONE
-,comp.PG_OBBLIGAZIONE_SCADENZARIO
+,criga.ESERCIZIO_ORI_OBBLIGAZIONE
+,criga.PG_OBBLIGAZIONE
+,criga.PG_OBBLIGAZIONE_SCADENZARIO
 ,to_date(null)					 -- obbs.DT_SCADENZA
 ,comp.PG_COMPENSO
 ,mriga.PG_MANDATO
@@ -253,6 +258,7 @@ select   				  -- testata missioni associate a compenso
 ,0						   -- comp.DETRAZIONI_PERSONALI_NETTO
 from missione m
  	,compenso comp
+  ,compenso_riga criga
 	,mandato_riga mriga
 	,unita_organizzativa uo
 	,terzo ter
@@ -266,6 +272,10 @@ where m.FL_ASSOCIATO_COMPENSO 	  = 'Y'
   and comp.PG_MISSIONE			  = m.PG_MISSIONE
   and comp.CD_UO_MISSIONE		  = m.CD_UNITA_ORGANIZZATIVA
   and comp.STATO_COFI			  <> 'A'
+  and comp.cd_cds = criga.cd_cds (+)
+  and comp.cd_unita_organizzativa = criga.cd_unita_organizzativa (+)
+  and comp.esercizio = criga.esercizio (+)
+  and comp.pg_compenso = criga.pg_compenso (+)
   and mriga.CD_CDS_DOC_AMM	  	  (+) = comp.CD_CDS
   and mriga.CD_UO_DOC_AMM	  	  (+) = comp.CD_UNITA_ORGANIZZATIVA
   and mriga.ESERCIZIO_DOC_AMM 	  (+) = comp.ESERCIZIO
@@ -307,22 +317,22 @@ select distinct 		   -- capitoli missioni non associate a compenso, con anticipo
 ,0					   	   -- decode(m.TI_ANAGRAFICO,'D',rap.MATRICOLA_DIPENDENTE,m.CD_TERZO) matricola
 ,null					   -- rif.DS_INQUADRAMENTO
 ,decode(obb.ESERCIZIO_ORI_RIPORTO,null,'C','R') -- ti_competenza_residuo
-,m.ESERCIZIO_ORI_OBBLIGAZIONE
-,m.PG_OBBLIGAZIONE
-,m.PG_OBBLIGAZIONE_SCADENZARIO
+,mr.ESERCIZIO_ORI_OBBLIGAZIONE
+,mr.PG_OBBLIGAZIONE
+,mr.PG_OBBLIGAZIONE_SCADENZARIO
 ,obbs.DT_SCADENZA
 ,0						   -- comp.PG_COMPENSO
 ,mriga.PG_MANDATO
-,m.IM_TOTALE_MISSIONE
-,m.IM_DIARIA_LORDA
-,m.IM_QUOTA_ESENTE
-,m.IM_DIARIA_NETTO
-,m.IM_SPESE
+,mr.IM_TOTALE_RIGA_MISSIONE
+,round(m.IM_DIARIA_LORDA*mr.IM_TOTALE_RIGA_MISSIONE/m.IM_TOTALE_MISSIONE,2) IM_DIARIA_LORDA
+,round(m.IM_QUOTA_ESENTE*mr.IM_TOTALE_RIGA_MISSIONE/m.IM_TOTALE_MISSIONE,2) IM_QUOTA_ESENTE
+,round(m.IM_DIARIA_NETTO*mr.IM_TOTALE_RIGA_MISSIONE/m.IM_TOTALE_MISSIONE,2) IM_DIARIA_NETTO
+,round(m.IM_SPESE*mr.IM_TOTALE_RIGA_MISSIONE/m.IM_TOTALE_MISSIONE,2) IM_SPESE
 ,ant.IM_ANTICIPO
 ,0				   	  	   -- rim.IM_RIMBORSO
 ,0				  		   -- comp.IM_CR_ENTE
-,m.IM_LORDO_PERCEPIENTE
-,m.IM_NETTO_PECEPIENTE
+,round(m.IM_LORDO_PERCEPIENTE*mr.IM_TOTALE_RIGA_MISSIONE/m.IM_TOTALE_MISSIONE,2) IM_LORDO_PERCEPIENTE
+,round(m.IM_NETTO_PECEPIENTE*mr.IM_TOTALE_RIGA_MISSIONE/m.IM_TOTALE_MISSIONE,2) IM_NETTO_PERCEPIENTE
 ,m.DS_MISSIONE
 ,m.DT_INIZIO_MISSIONE
 ,m.DT_FINE_MISSIONE
@@ -373,6 +383,7 @@ select distinct 		   -- capitoli missioni non associate a compenso, con anticipo
 ,0						   -- comp.DETRAZIONI_LA_NETTO
 ,0						   -- comp.DETRAZIONI_PERSONALI_NETTO
 from missione m
+  ,missione_riga mr
 	,obbligazione obb
 	,obbligazione_scadenzario obbs
 	,mandato_riga mriga
@@ -383,16 +394,19 @@ from missione m
 	,comune com
 	,obbligazione_scad_voce obbv
 where m.FL_ASSOCIATO_COMPENSO 	  	   = 'N'
-  and m.PG_OBBLIGAZIONE is not null
-  and obb.CD_CDS					   = m.CD_CDS_OBBLIGAZIONE
-  and obb.ESERCIZIO					   = m.ESERCIZIO_OBBLIGAZIONE
-  and obb.ESERCIZIO_ORIGINALE			   = m.ESERCIZIO_ORI_OBBLIGAZIONE
-  and obb.PG_OBBLIGAZIONE			   = m.PG_OBBLIGAZIONE
-  and obbs.CD_CDS				  	   = m.CD_CDS_OBBLIGAZIONE
-  and obbs.ESERCIZIO			  	   = m.ESERCIZIO_OBBLIGAZIONE
-  and obbs.ESERCIZIO_ORIGINALE			   = m.ESERCIZIO_ORI_OBBLIGAZIONE
-  and obbs.PG_OBBLIGAZIONE		  	   = m.PG_OBBLIGAZIONE
-  and obbs.PG_OBBLIGAZIONE_SCADENZARIO = m.PG_OBBLIGAZIONE_SCADENZARIO
+  and m.cd_cds = mr.cd_cds
+  and m.cd_unita_organizzativa = mr.cd_unita_organizzativa
+  and m.esercizio = mr.esercizio
+  and m.pg_missione = mr.pg_missione
+  and obb.CD_CDS					   = mr.CD_CDS_OBBLIGAZIONE
+  and obb.ESERCIZIO					   = mr.ESERCIZIO_OBBLIGAZIONE
+  and obb.ESERCIZIO_ORIGINALE			   = mr.ESERCIZIO_ORI_OBBLIGAZIONE
+  and obb.PG_OBBLIGAZIONE			   = mr.PG_OBBLIGAZIONE
+  and obbs.CD_CDS				  	   = mr.CD_CDS_OBBLIGAZIONE
+  and obbs.ESERCIZIO			  	   = mr.ESERCIZIO_OBBLIGAZIONE
+  and obbs.ESERCIZIO_ORIGINALE			   = mr.ESERCIZIO_ORI_OBBLIGAZIONE
+  and obbs.PG_OBBLIGAZIONE		  	   = mr.PG_OBBLIGAZIONE
+  and obbs.PG_OBBLIGAZIONE_SCADENZARIO = mr.PG_OBBLIGAZIONE_SCADENZARIO
   and mriga.CD_CDS_DOC_AMM	  	  	   (+) = m.CD_CDS
   and mriga.CD_UO_DOC_AMM	  	  	   (+) = m.CD_UNITA_ORGANIZZATIVA
   and mriga.ESERCIZIO_DOC_AMM 	  	   (+) = m.ESERCIZIO
@@ -409,11 +423,11 @@ where m.FL_ASSOCIATO_COMPENSO 	  	   = 'N'
   and abi.ABI					   (+) = ban.ABI
   and abi.CAB					   (+) = ban.CAB
   and com.PG_COMUNE			   	   (+) = abi.PG_COMUNE
-  and obbv.CD_CDS				  	   = m.CD_CDS_OBBLIGAZIONE
-  and obbv.ESERCIZIO				   = m.ESERCIZIO_OBBLIGAZIONE
-  and obbv.ESERCIZIO_ORIGINALE			   = m.ESERCIZIO_ORI_OBBLIGAZIONE
-  and obbv.PG_OBBLIGAZIONE		  	   = m.PG_OBBLIGAZIONE
-  and obbv.PG_OBBLIGAZIONE_SCADENZARIO = m.PG_OBBLIGAZIONE_SCADENZARIO
+  and obbv.CD_CDS				  	   = mr.CD_CDS_OBBLIGAZIONE
+  and obbv.ESERCIZIO				   = mr.ESERCIZIO_OBBLIGAZIONE
+  and obbv.ESERCIZIO_ORIGINALE			   = mr.ESERCIZIO_ORI_OBBLIGAZIONE
+  and obbv.PG_OBBLIGAZIONE		  	   = mr.PG_OBBLIGAZIONE
+  and obbv.PG_OBBLIGAZIONE_SCADENZARIO = mr.PG_OBBLIGAZIONE_SCADENZARIO
 union all
 select distinct 		   -- capitoli missioni non associate a compenso, con anticipo maggiore della missione
  m.CD_CDS
@@ -515,7 +529,11 @@ from missione m
 	,abicab abi
 	,comune com
 where m.FL_ASSOCIATO_COMPENSO 	  	   = 'N'
-  and m.PG_OBBLIGAZIONE is null
+  and not exists(select '1' from missione_riga mr
+                 where m.cd_cds = mr.cd_cds
+                 and   m.cd_unita_organizzativa = mr.cd_unita_organizzativa
+                 and   m.esercizio = mr.esercizio
+                 and   m.pg_missione = mr.pg_missione)
   and ant.CD_CDS				   (+) = m.CD_CDS_ANTICIPO
   and ant.CD_UNITA_ORGANIZZATIVA   (+) = m.CD_UO_ANTICIPO
   and ant.ESERCIZIO				   (+) = m.ESERCIZIO_ANTICIPO
@@ -570,22 +588,22 @@ select distinct 		   -- capitoli missioni associate a compenso, con anticipo min
 ,0					   	   -- decode(m.TI_ANAGRAFICO,'D',rap.MATRICOLA_DIPENDENTE,m.CD_TERZO) matricola
 ,null					   -- rif.DS_INQUADRAMENTO
 ,decode(obb.ESERCIZIO_ORI_RIPORTO,null,'C','R') -- ti_competenza_residuo
-,comp.ESERCIZIO_ORI_OBBLIGAZIONE
-,comp.PG_OBBLIGAZIONE
-,comp.PG_OBBLIGAZIONE_SCADENZARIO
+,criga.ESERCIZIO_ORI_OBBLIGAZIONE
+,criga.PG_OBBLIGAZIONE
+,criga.PG_OBBLIGAZIONE_SCADENZARIO
 ,obbs.DT_SCADENZA
 ,comp.PG_COMPENSO
 ,mriga.PG_MANDATO
-,m.IM_TOTALE_MISSIONE
-,m.IM_DIARIA_LORDA
-,m.IM_QUOTA_ESENTE
-,m.IM_DIARIA_NETTO
-,m.IM_SPESE
+,ROUND(m.IM_TOTALE_MISSIONE*criga.IM_TOTALE_RIGA_COMPENSO/comp.IM_TOTALE_COMPENSO,2) IM_TOTALE_MISSIONE
+,ROUND(m.IM_DIARIA_LORDA*criga.IM_TOTALE_RIGA_COMPENSO/comp.IM_TOTALE_COMPENSO,2) IM_DIARIA_LORDA
+,ROUND(m.IM_QUOTA_ESENTE*criga.IM_TOTALE_RIGA_COMPENSO/comp.IM_TOTALE_COMPENSO,2) IM_QUOTA_ESENTE
+,ROUND(m.IM_DIARIA_NETTO*criga.IM_TOTALE_RIGA_COMPENSO/comp.IM_TOTALE_COMPENSO,2) IM_DIARIA_NETTO
+,ROUND(m.IM_SPESE*criga.IM_TOTALE_RIGA_COMPENSO/comp.IM_TOTALE_COMPENSO,2) IM_SPESE
 ,ant.IM_ANTICIPO
 ,0				   	  	   -- rim.IM_RIMBORSO
-,comp.IM_CR_ENTE
-,m.IM_LORDO_PERCEPIENTE
-,m.IM_NETTO_PECEPIENTE
+,ROUND(comp.IM_CR_ENTE*criga.IM_TOTALE_RIGA_COMPENSO/comp.IM_TOTALE_COMPENSO,2) IM_CR_ENTE
+,ROUND(m.IM_LORDO_PERCEPIENTE*criga.IM_TOTALE_RIGA_COMPENSO/comp.IM_TOTALE_COMPENSO,2) IM_LORDO_PERCEPIENTE
+,ROUND(m.IM_NETTO_PECEPIENTE*criga.IM_TOTALE_RIGA_COMPENSO/comp.IM_TOTALE_COMPENSO,2) IM_NETTO_PECEPIENTE
 ,m.DS_MISSIONE
 ,m.DT_INIZIO_MISSIONE
 ,m.DT_FINE_MISSIONE
@@ -637,6 +655,7 @@ select distinct 		   -- capitoli missioni associate a compenso, con anticipo min
 ,0						   -- comp.DETRAZIONI_PERSONALI_NETTO
 from missione m
  	,compenso comp
+  ,compenso_riga criga
 	,obbligazione obb
 	,obbligazione_scadenzario obbs
 	,mandato_riga mriga
@@ -652,16 +671,19 @@ where m.FL_ASSOCIATO_COMPENSO 	  	   = 'Y'
   and comp.PG_MISSIONE			  	   = m.PG_MISSIONE
   and comp.CD_UO_MISSIONE		  	   = m.CD_UNITA_ORGANIZZATIVA
   and comp.STATO_COFI			  	   <> 'A'
-  and comp.PG_OBBLIGAZIONE is not null
-  and obb.CD_CDS					   = comp.CD_CDS_OBBLIGAZIONE
-  and obb.ESERCIZIO					   = comp.ESERCIZIO_OBBLIGAZIONE
-  and obb.ESERCIZIO_ORIGINALE			= comp.ESERCIZIO_ORI_OBBLIGAZIONE
-  and obb.PG_OBBLIGAZIONE			   = comp.PG_OBBLIGAZIONE
-  and obbs.CD_CDS				  	   = comp.CD_CDS_OBBLIGAZIONE
-  and obbs.ESERCIZIO			  	   = comp.ESERCIZIO_OBBLIGAZIONE
-  and obbs.ESERCIZIO_ORIGINALE			= comp.ESERCIZIO_ORI_OBBLIGAZIONE
-  and obbs.PG_OBBLIGAZIONE		  	   = comp.PG_OBBLIGAZIONE
-  and obbs.PG_OBBLIGAZIONE_SCADENZARIO = comp.PG_OBBLIGAZIONE_SCADENZARIO
+  and comp.CD_CDS = criga.CD_CDS
+  and comp.CD_UNITA_ORGANIZZATIVA = criga.CD_UNITA_ORGANIZZATIVA
+  and comp.ESERCIZIO = criga.ESERCIZIO
+  and comp.PG_COMPENSO = criga.PG_COMPENSO
+  and obb.CD_CDS					   = criga.CD_CDS_OBBLIGAZIONE
+  and obb.ESERCIZIO					   = criga.ESERCIZIO_OBBLIGAZIONE
+  and obb.ESERCIZIO_ORIGINALE			= criga.ESERCIZIO_ORI_OBBLIGAZIONE
+  and obb.PG_OBBLIGAZIONE			   = criga.PG_OBBLIGAZIONE
+  and obbs.CD_CDS				  	   = criga.CD_CDS_OBBLIGAZIONE
+  and obbs.ESERCIZIO			  	   = criga.ESERCIZIO_OBBLIGAZIONE
+  and obbs.ESERCIZIO_ORIGINALE			= criga.ESERCIZIO_ORI_OBBLIGAZIONE
+  and obbs.PG_OBBLIGAZIONE		  	   = criga.PG_OBBLIGAZIONE
+  and obbs.PG_OBBLIGAZIONE_SCADENZARIO = criga.PG_OBBLIGAZIONE_SCADENZARIO
   and mriga.CD_CDS_DOC_AMM	  	  	   (+) = comp.CD_CDS
   and mriga.CD_UO_DOC_AMM	  	  	   (+) = comp.CD_UNITA_ORGANIZZATIVA
   and mriga.ESERCIZIO_DOC_AMM 	  	   (+) = comp.ESERCIZIO
@@ -678,11 +700,11 @@ where m.FL_ASSOCIATO_COMPENSO 	  	   = 'Y'
   and abi.ABI					   (+) = ban.ABI
   and abi.CAB					   (+) = ban.CAB
   and com.PG_COMUNE			   	   (+) = abi.PG_COMUNE
-  and obbv.CD_CDS				  	   = comp.CD_CDS_OBBLIGAZIONE
-  and obbv.ESERCIZIO				   = comp.ESERCIZIO_OBBLIGAZIONE
-  and obbv.ESERCIZIO_ORIGINALE			= comp.ESERCIZIO_ORI_OBBLIGAZIONE
-  and obbv.PG_OBBLIGAZIONE		  	   = comp.PG_OBBLIGAZIONE
-  and obbv.PG_OBBLIGAZIONE_SCADENZARIO = comp.PG_OBBLIGAZIONE_SCADENZARIO
+  and obbv.CD_CDS				  	   = criga.CD_CDS_OBBLIGAZIONE
+  and obbv.ESERCIZIO				   = criga.ESERCIZIO_OBBLIGAZIONE
+  and obbv.ESERCIZIO_ORIGINALE			= criga.ESERCIZIO_ORI_OBBLIGAZIONE
+  and obbv.PG_OBBLIGAZIONE		  	   = criga.PG_OBBLIGAZIONE
+  and obbv.PG_OBBLIGAZIONE_SCADENZARIO = criga.PG_OBBLIGAZIONE_SCADENZARIO
 union all
 select distinct 		   -- capitoli missioni associate a compenso, con anticipo maggiore della missione
  m.CD_CDS
@@ -790,7 +812,11 @@ where m.FL_ASSOCIATO_COMPENSO 	  	   = 'Y'
   and comp.PG_MISSIONE			  	   = m.PG_MISSIONE
   and comp.CD_UO_MISSIONE		  	   = m.CD_UNITA_ORGANIZZATIVA
   and comp.STATO_COFI			  	   <> 'A'
-  and comp.PG_OBBLIGAZIONE is null
+  and not exists(select '1' from compenso_riga cr
+                 where comp.cd_cds = cr.cd_cds
+                 and   comp.cd_unita_organizzativa = cr.cd_unita_organizzativa
+                 and   comp.esercizio = cr.esercizio
+                 and   comp.pg_compenso = cr.pg_compenso)
   and ant.CD_CDS				   (+) = m.CD_CDS_ANTICIPO
   and ant.CD_UNITA_ORGANIZZATIVA   (+) = m.CD_UO_ANTICIPO
   and ant.ESERCIZIO				   (+) = m.ESERCIZIO_ANTICIPO
@@ -845,9 +871,9 @@ select distinct 		   -- CORI del compenso per missioni associate a compenso
 ,0					   	   -- decode(m.TI_ANAGRAFICO,'D',rap.MATRICOLA_DIPENDENTE,m.CD_TERZO) matricola
 ,null					   -- decode(obb.ESERCIZIO_ORI_RIPORTO,null,'C','R') ti_competenza_residuo
 ,null					   -- rif.DS_INQUADRAMENTO
-,comp.ESERCIZIO_ORI_OBBLIGAZIONE
-,comp.PG_OBBLIGAZIONE
-,comp.PG_OBBLIGAZIONE_SCADENZARIO
+,criga.ESERCIZIO_ORI_OBBLIGAZIONE
+,criga.PG_OBBLIGAZIONE
+,criga.PG_OBBLIGAZIONE_SCADENZARIO
 ,to_date(null)			   -- obbs.DT_SCADENZA
 ,comp.PG_COMPENSO
 ,0				 		   -- mriga.PG_MANDATO
@@ -912,6 +938,7 @@ select distinct 		   -- CORI del compenso per missioni associate a compenso
 ,0						   -- comp.DETRAZIONI_PERSONALI_NETTO
 from missione m
  	,compenso comp
+  ,compenso_riga criga
 	,rif_modalita_pagamento rif
 	,banca ban
 	,abicab abi
@@ -923,6 +950,10 @@ where m.FL_ASSOCIATO_COMPENSO 	  	   = 'Y'
   and comp.PG_MISSIONE			  	   = m.PG_MISSIONE
   and comp.CD_UO_MISSIONE		  	   = m.CD_UNITA_ORGANIZZATIVA
   and comp.STATO_COFI			  	   <> 'A'
+  and comp.cd_cds = criga.cd_cds (+)
+  and comp.cd_unita_organizzativa = criga.cd_unita_organizzativa (+)
+  and comp.esercizio = criga.esercizio (+)
+  and comp.pg_compenso = criga.pg_compenso (+)
   and rif.CD_MODALITA_PAG		   	   = m.CD_MODALITA_PAG
   and ban.CD_TERZO				   	   = m.CD_TERZO
   and ban.PG_BANCA				   	   = m.PG_BANCA

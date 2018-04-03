@@ -919,8 +919,6 @@ procedure gestioneNoCori(
   aVoceF voce_f%rowtype;
   aEvEntrata elemento_voce%rowtype;
   aTSNow date;
-  aObb obbligazione%rowtype;
-  aObbScad obbligazione_scadenzario%rowtype;
   aManPRiga mandato_riga%rowtype;
   aListRigheManP CNRCTB038.righeMandatoList;
   aAcc1 accertamento%rowtype;
@@ -1061,29 +1059,37 @@ procedure gestioneNoCori(
   end if;
 
   -- Se il compenso �enza obbligazione non carico le informazioni relative all'obbligazione e scadenza
-  if aCompenso.pg_obbligazione is not null then
-   begin
-       select * into aObb from obbligazione where
-             cd_cds = aCompenso.cd_cds
-     	and esercizio = aCompenso.esercizio_obbligazione
-     	and esercizio_originale = aCompenso.esercizio_ori_obbligazione
- 		and pg_obbligazione = aCompenso.pg_obbligazione
-       for update nowait;
-   exception when NO_DATA_FOUND then
-    IBMERR001.RAISE_ERR_GENERICO(cnrutil.getLabelObbligazione()||' n.'||aCompenso.pg_obbligazione||' associata a Compenso n.'||inCDSCompenso||' non trovata');
-   end;
-   begin
-       select * into aObbScad from obbligazione_scadenzario where
-             cd_cds = aCompenso.cd_cds
-     	 and esercizio = aCompenso.esercizio_obbligazione
-     	 and esercizio_originale = aCompenso.esercizio_ori_obbligazione
-		 and pg_obbligazione = aCompenso.pg_obbligazione
-		 and pg_obbligazione_scadenzario = aCompenso.pg_obbligazione_scadenzario
-       for update nowait;
-   exception when NO_DATA_FOUND then
-    IBMERR001.RAISE_ERR_GENERICO('Scadenza di '||cnrutil.getLabelObbligazioneMin()||' n.'||aCompenso.pg_obbligazione||' associata a Compenso n.'||inCDSCompenso||' non trovata');
-   end;
-  end if;
+  for aCompensoRiga in (select * from compenso_riga cr
+                        where cr.cd_cds = aCompenso.cd_cds
+                        and   cr.cd_unita_organizzativa = aCompenso.cd_unita_organizzativa
+                        and   cr.esercizio = aCompenso.esercizio
+                        and   cr.pg_compenso = aCompenso.pg_compenso) Loop
+    declare
+      aObb obbligazione%rowtype;
+    begin
+      select * into aObb from obbligazione 
+      where cd_cds = aCompensoRiga.cd_cds
+      and   esercizio = aCompensoRiga.esercizio_obbligazione
+   	  and   esercizio_originale = aCompensoRiga.esercizio_ori_obbligazione
+    	and   pg_obbligazione = aCompensoRiga.pg_obbligazione
+      for update nowait;
+    exception when NO_DATA_FOUND then
+      IBMERR001.RAISE_ERR_GENERICO(cnrutil.getLabelObbligazione()||' n.'||aCompensoRiga.pg_obbligazione||' associata a Compenso n.'||inCDSCompenso||' non trovata');
+    end;
+    declare
+      aObbScad obbligazione_scadenzario%rowtype;
+    begin
+      select * into aObbScad from obbligazione_scadenzario
+      where cd_cds = aCompensoRiga.cd_cds
+ 	    and   esercizio = aCompensoRiga.esercizio_obbligazione
+ 	    and   esercizio_originale = aCompensoRiga.esercizio_ori_obbligazione
+      and   pg_obbligazione = aCompensoRiga.pg_obbligazione
+      and   pg_obbligazione_scadenzario = aCompensoRiga.pg_obbligazione_scadenzario
+      for update nowait;
+    exception when NO_DATA_FOUND then
+      IBMERR001.RAISE_ERR_GENERICO('Scadenza di '||cnrutil.getLabelObbligazioneMin()||' n.'||aCompensoRiga.pg_obbligazione||' associata a Compenso n.'||inCDSCompenso||' non trovata');
+    end;
+  end loop;
 
   i:=0;
   aTotCori:=0;
@@ -1478,31 +1484,53 @@ procedure gestioneNoCori(
     aManP.PG_VER_REC:=1;
     aManP.STATO_TRASMISSIONE:=CNRCTB038.STATO_MAN_TRASCAS_NODIST;
     aManP.im_ritenute:=aTotCoriPositivi+Nvl(aCompenso.im_netto_da_trattenere,0);
-    aManPRiga.CD_CDS:=aManP.cd_cds;
-    aManPRiga.ESERCIZIO:=aManP.esercizio;
-    aManPRiga.ESERCIZIO_OBBLIGAZIONE:=aCompenso.esercizio_obbligazione;
-    aManPRiga.ESERCIZIO_ORI_OBBLIGAZIONE:=aCompenso.esercizio_ori_obbligazione;
-    aManPRiga.PG_OBBLIGAZIONE:=aCompenso.pg_obbligazione;
-    aManPRiga.PG_OBBLIGAZIONE_SCADENZARIO:=aCompenso.pg_obbligazione_scadenzario;
-    aManPRiga.CD_CDS_DOC_AMM:=aCompenso.cd_cds;
-    aManPRiga.CD_UO_DOC_AMM:=aCompenso.cd_unita_organizzativa;
-    aManPRiga.ESERCIZIO_DOC_AMM:=aCompenso.esercizio;
-    aManPRiga.CD_TIPO_DOCUMENTO_AMM:=CNRCTB100.TI_COMPENSO;
-    aManPRiga.PG_DOC_AMM:=aCompenso.PG_COMPENSO;
-    aManPRiga.DS_MANDATO_RIGA:=aManP.ds_mandato;
-    aManPRiga.STATO:=aManP.stato;
-    aManPRiga.CD_TERZO:=aCompenso.cd_terzo;
-    aManPRiga.PG_BANCA:=aCompenso.pg_banca;
-    aManPRiga.CD_MODALITA_PAG:=aCompenso.cd_modalita_pag;
-    aManPRiga.IM_MANDATO_RIGA:=aManP.im_mandato;
-    aManPRiga.FL_PGIRO:='N';
-    aManPRiga.im_ritenute_riga:=aTotCoriPositivi+Nvl(aCompenso.im_netto_da_trattenere,0);
-    aManPRiga.UTCR:=aUser;
-    aManPRiga.DACR:=aTSNow;
-    aManPRiga.UTUV:=aUser;
-    aManPRiga.DUVA:=aTSNow;
-    aManPRiga.PG_VER_REC:=1;
-    aListRigheManP(1):=aManPRiga;
+    declare 
+      resImpMandato number:=aManP.im_mandato;
+      resRitenute   number:=aManP.im_ritenute;
+      myindex       number:=0;
+    begin
+      for recCompensoRiga in (select * from Compenso_Riga
+                              where cd_cds = aCompenso.cd_cds
+                              and   cd_unita_organizzativa = aCompenso.cd_unita_organizzativa
+                              and   esercizio = aCompenso.esercizio
+                              and   pg_compenso = aCompenso.pg_compenso) Loop
+        aManPRiga.CD_CDS:=aManP.cd_cds;
+        aManPRiga.ESERCIZIO:=aManP.esercizio;
+        aManPRiga.ESERCIZIO_OBBLIGAZIONE:=recCompensoRiga.esercizio_obbligazione;
+        aManPRiga.ESERCIZIO_ORI_OBBLIGAZIONE:=recCompensoRiga.esercizio_ori_obbligazione;
+        aManPRiga.PG_OBBLIGAZIONE:=recCompensoRiga.pg_obbligazione;
+        aManPRiga.PG_OBBLIGAZIONE_SCADENZARIO:=recCompensoRiga.pg_obbligazione_scadenzario;
+        aManPRiga.CD_CDS_DOC_AMM:=aCompenso.cd_cds;
+        aManPRiga.CD_UO_DOC_AMM:=aCompenso.cd_unita_organizzativa;
+        aManPRiga.ESERCIZIO_DOC_AMM:=aCompenso.esercizio;
+        aManPRiga.CD_TIPO_DOCUMENTO_AMM:=CNRCTB100.TI_COMPENSO;
+        aManPRiga.PG_DOC_AMM:=aCompenso.PG_COMPENSO;
+        aManPRiga.DS_MANDATO_RIGA:=aManP.ds_mandato;
+        aManPRiga.STATO:=aManP.stato;
+        aManPRiga.CD_TERZO:=aCompenso.cd_terzo;
+        aManPRiga.PG_BANCA:=aCompenso.pg_banca;
+        aManPRiga.CD_MODALITA_PAG:=aCompenso.cd_modalita_pag;
+
+        aManPRiga.IM_MANDATO_RIGA:=ROUND(aManP.im_mandato*recCompensoRiga.im_totale_riga_compenso/aCompenso.im_totale_compenso,2);
+        aManPRiga.im_ritenute_riga:=ROUND(aManP.im_ritenute*recCompensoRiga.im_totale_riga_compenso/aCompenso.im_totale_compenso,2);
+        resImpMandato := resImpMandato-aManPRiga.IM_MANDATO_RIGA;
+        resRitenute := resRitenute-aManPRiga.im_ritenute_riga;
+
+        aManPRiga.FL_PGIRO:='N';
+        aManPRiga.UTCR:=aUser;
+        aManPRiga.DACR:=aTSNow;
+        aManPRiga.UTUV:=aUser;
+        aManPRiga.DUVA:=aTSNow;
+        aManPRiga.PG_VER_REC:=1;
+        myindex := myindex + 1;
+        aListRigheManP(myindex):=aManPRiga;
+      end loop;
+
+      if resImpMandato>0 or resRitenute>0 Then
+         aListRigheManP(myindex).IM_MANDATO_RIGA := aListRigheManP(myindex).IM_MANDATO_RIGA+resImpMandato;
+         aListRigheManP(myindex).im_ritenute_riga := aListRigheManP(myindex).im_ritenute_riga+resRitenute;
+      end if;
+    end;
    end if;
   end if;
   -- Aggiorno lo stato del documento

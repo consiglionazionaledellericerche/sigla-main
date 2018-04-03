@@ -825,19 +825,31 @@ END aggiornaMinicarriera;
 PROCEDURE aggiornaCompensoObbligazione
     (
 	    aRecCompenso COMPENSO%ROWTYPE,
-		aRecScadenzaObbligazione OBBLIGAZIONE_SCADENZARIO%ROWTYPE
-	) IS
+		  aRecScadenzaObbligazione OBBLIGAZIONE_SCADENZARIO%ROWTYPE
+	  ) IS
+   aRecCompensoRiga COMPENSO_RIGA%ROWTYPE;
 BEGIN
-   UPDATE COMPENSO
-   SET    cd_cds_obbligazione = aRecScadenzaObbligazione.cd_cds,
-          esercizio_obbligazione = aRecScadenzaObbligazione.ESERCIZIO,
-          esercizio_ori_obbligazione = aRecScadenzaObbligazione.ESERCIZIO_ORIGINALE,
-          pg_obbligazione = aRecScadenzaObbligazione.pg_obbligazione,
-          pg_obbligazione_scadenzario = aRecScadenzaObbligazione.pg_obbligazione_scadenzario
-   WHERE  cd_cds = aRecCompenso.cd_cds AND
-          cd_unita_organizzativa = aRecCompenso.cd_unita_organizzativa AND
-          esercizio = aRecCompenso.esercizio AND
-          pg_compenso = aRecCompenso.pg_compenso;
+   aRecCompensoRiga:=NULL;
+
+   aRecCompensoRiga.cd_cds := aRecCompenso.cd_cds;
+   aRecCompensoRiga.cd_unita_organizzativa := aRecCompenso.cd_unita_organizzativa;
+   aRecCompensoRiga.esercizio := aRecCompenso.esercizio;
+   aRecCompensoRiga.pg_compenso := aRecCompenso.pg_compenso;
+   aRecCompensoRiga.progressivo_riga := 1;
+   aRecCompensoRiga.cd_cds_obbligazione := aRecScadenzaObbligazione.cd_cds;
+   aRecCompensoRiga.esercizio_obbligazione := aRecScadenzaObbligazione.ESERCIZIO;
+   aRecCompensoRiga.esercizio_ori_obbligazione := aRecScadenzaObbligazione.ESERCIZIO_ORIGINALE;
+   aRecCompensoRiga.pg_obbligazione := aRecScadenzaObbligazione.pg_obbligazione;
+   aRecCompensoRiga.pg_obbligazione_scadenzario := aRecScadenzaObbligazione.pg_obbligazione_scadenzario;
+   aRecCompensoRiga.im_totale_riga_compenso := aRecCompenso.im_totale_compenso;
+   aRecCompensoRiga.dacr:=aRecCompenso.dacr;
+   aRecCompensoRiga.utcr:=aRecCompenso.utcr;
+   aRecCompensoRiga.duva:=aRecCompenso.duva;
+   aRecCompensoRiga.utuv:=aRecCompenso.utuv;
+   aRecCompensoRiga.pg_ver_rec:=1;
+
+   CNRCTB545.insCompensoRiga(aRecCompensoRiga);
+
 END	aggiornaCompensoObbligazione;
 
 --

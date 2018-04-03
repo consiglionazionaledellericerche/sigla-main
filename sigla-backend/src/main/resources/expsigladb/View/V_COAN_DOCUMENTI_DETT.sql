@@ -175,22 +175,22 @@ and fat.PG_DOCUMENTO_GENERICO    = riga.PG_DOCUMENTO_GENERICO
 UNION ALL
 select
  'COMPENSO'
-,riga.CD_TERZO
-,riga.CD_CDS
-,riga.CD_UNITA_ORGANIZZATIVA
-,riga.ESERCIZIO
-,riga.PG_COMPENSO
+,comp.CD_TERZO
+,comp.CD_CDS
+,comp.CD_UNITA_ORGANIZZATIVA
+,comp.ESERCIZIO
+,comp.PG_COMPENSO
 ,null
 ,0
 ,'C'
-,NVL(riga.CD_CDS_OBBLIGAZIONE, riga.CD_CDS_ACCERTAMENTO)
-,NVL(riga.ESERCIZIO_OBBLIGAZIONE, riga.ESERCIZIO_ACCERTAMENTO)
-,Nvl(riga.ESERCIZIO_ORI_OBBLIGAZIONE, riga.ESERCIZIO_ORI_ACCERTAMENTO)
-,NVL(riga.PG_OBBLIGAZIONE, riga.PG_ACCERTAMENTO)
-,NVL(riga.PG_OBBLIGAZIONE_SCADENZARIO, riga.PG_ACCERTAMENTO_SCADENZARIO)
+,NVL(riga.CD_CDS_OBBLIGAZIONE, comp.CD_CDS_ACCERTAMENTO)
+,NVL(riga.ESERCIZIO_OBBLIGAZIONE, comp.ESERCIZIO_ACCERTAMENTO)
+,Nvl(riga.ESERCIZIO_ORI_OBBLIGAZIONE, comp.ESERCIZIO_ORI_ACCERTAMENTO)
+,NVL(riga.PG_OBBLIGAZIONE, comp.PG_ACCERTAMENTO)
+,NVL(riga.PG_OBBLIGAZIONE_SCADENZARIO, comp.PG_ACCERTAMENTO_SCADENZARIO)
 ,null
 ,0
-,abs(riga.IM_TOTALE_COMPENSO)
+,abs(nvl(comp.IM_TOTALE_COMPENSO, riga.IM_TOTALE_RIGA_COMPENSO))
 ,0
 ,0
 ,0
@@ -201,22 +201,24 @@ select
 ,to_number(NULL)
 ,to_number(NULL)
 from
-    compenso riga
-where (
-    cd_cds_obbligazione is not null
- or cd_cds_accertamento is not null
-)
+    compenso comp, compenso_riga riga
+where comp.cd_cds = riga.cd_cds (+)
+and   comp.cd_unita_organizzativa = riga.cd_unita_organizzativa (+)
+and   comp.esercizio = riga.esercizio (+)
+and   comp.pg_compenso = riga.pg_compenso (+)
+and  (riga.cd_cds_obbligazione is not null or 
+      comp.cd_cds_accertamento is not null)
 UNION ALL
 select
  'MISSIONE'
-,riga.CD_TERZO
-,riga.CD_CDS
-,riga.CD_UNITA_ORGANIZZATIVA
-,riga.ESERCIZIO
-,riga.PG_MISSIONE
+,miss.CD_TERZO
+,miss.CD_CDS
+,miss.CD_UNITA_ORGANIZZATIVA
+,miss.ESERCIZIO
+,miss.PG_MISSIONE
 ,null
 ,0
-,riga.TI_ISTITUZ_COMMERC
+,miss.TI_ISTITUZ_COMMERC
 ,riga.CD_CDS_OBBLIGAZIONE
 ,riga.ESERCIZIO_OBBLIGAZIONE
 ,riga.ESERCIZIO_ORI_OBBLIGAZIONE
@@ -224,7 +226,7 @@ select
 ,riga.PG_OBBLIGAZIONE_SCADENZARIO
 ,NULL
 ,0
-,riga.IM_TOTALE_MISSIONE
+,riga.IM_TOTALE_RIGA_MISSIONE
 ,0
 ,0
 ,0
@@ -235,9 +237,11 @@ select
 ,to_number(NULL)
 ,to_number(NULL)
 from
- missione riga
-where
- cd_cds_obbligazione is not null
+ missione miss, missione_riga riga
+where miss.cd_cds = riga.cd_cds
+and   miss.cd_unita_organizzativa = riga.cd_unita_organizzativa
+and   miss.esercizio = riga.esercizio
+and   miss.pg_missione = riga.pg_missione
 UNION ALL
 -- Gestione missioni collegate ad anticipo con importo maggiore o uguale a quello della missione
 select
@@ -257,7 +261,7 @@ select
 ,b.PG_OBBLIGAZIONE_SCADENZARIO
 ,NULL
 ,0
-,a.IM_TOTALE_MISSIONE
+,b.IM_ANTICIPO
 ,0
 ,0
 ,0
@@ -269,12 +273,10 @@ select
 ,to_number(NULL)
 from
  missione a, anticipo b
-where
-     a.pg_obbligazione is null
- and b.cd_cds = a.cd_cds_anticipo
- and b.cd_unita_organizzativa = a.cd_uo_anticipo
- and b.esercizio = a.esercizio_anticipo
- and b.pg_anticipo = a.pg_anticipo
+where b.cd_cds = a.cd_cds_anticipo
+  and b.cd_unita_organizzativa = a.cd_uo_anticipo
+  and b.esercizio = a.esercizio_anticipo
+  and b.pg_anticipo = a.pg_anticipo
 UNION ALL
 -- Gestione dei compensi collegati ad anticipo con importo maggiore o uguale al compenso
 select
@@ -308,8 +310,12 @@ from
     compenso a, missione b, anticipo c
 where
      a.pg_missione is not null
- and a.pg_obbligazione is null
  and a.pg_accertamento is null
+ and not exists(select 1 from compenso_riga cr
+                where cr.cd_cds = a.cd_cds
+                AND   cr.cd_unita_organizzativa = a.cd_unita_organizzativa
+                AND   cr.esercizio = a.esercizio
+                AND   cr.pg_compenso = a.pg_compenso)
  and b.cd_cds = a.cd_cds_missione
  and b.cd_unita_organizzativa = a.cd_uo_missione
  and b.esercizio = a.esercizio_missione

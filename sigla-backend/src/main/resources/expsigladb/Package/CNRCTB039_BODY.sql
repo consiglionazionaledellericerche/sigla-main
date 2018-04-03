@@ -230,7 +230,7 @@
            ) loop
               IBMERR001.RAISE_ERR_GENERICO('Il mandato non è annullabile! Include delle fatture passive differite per le quali è stato già stampato il registro iva definitivo');
            end loop;
-           for differite in (select 1 from mandato_riga m_riga,fattura_passiva a,mandato,COMPENSO c
+           for differite in (select 1 from mandato_riga m_riga,fattura_passiva a,mandato,COMPENSO c, COMPENSO_RIGA cr
                                                  Where
                                                         mandato.esercizio = aEs         And
                                                         mandato.cd_cds    = aCdCds      And
@@ -238,19 +238,23 @@
                                                         mandato.esercizio = m_riga.esercizio   And
                                                         mandato.cd_cds    = m_riga.cd_cds      And
                                                         mandato.pg_mandato= m_riga.pg_mandato  And
-        	                                        mandato.stato_trasmissione ='T'           And
-        	                                        c.fl_liquidazione_differita ='Y' And
-                                                        c.cd_cds_obbligazione   = m_riga.cd_cds And
-                                                        c.esercizio_obbligazione =m_riga.ESERCIZIO_OBBLIGAZIONE And
-                                                        c.esercizio_ori_obbligazione =m_riga.ESERCIZIO_ORI_OBBLIGAZIONE And
-                                                        c.pg_obbligazione=m_riga.PG_OBBLIGAZIONE  And
-                                                        c.pg_obbligazione_scadenzario=m_riga.PG_OBBLIGAZIONE_SCADENZARIO And
+        	                                              mandato.stato_trasmissione ='T'           And
+        	                                              c.fl_liquidazione_differita ='Y' And
+                                                        cr.cd_cds_obbligazione   = m_riga.cd_cds And
+                                                        cr.esercizio_obbligazione =m_riga.ESERCIZIO_OBBLIGAZIONE And
+                                                        cr.esercizio_ori_obbligazione =m_riga.ESERCIZIO_ORI_OBBLIGAZIONE And
+                                                        cr.pg_obbligazione=m_riga.PG_OBBLIGAZIONE  And
+                                                        cr.pg_obbligazione_scadenzario=m_riga.PG_OBBLIGAZIONE_SCADENZARIO And
+                                                        cr.cd_cds = c.cd_cds and
+                                                        cr.cd_unita_organizzativa = c.cd_unita_organizzativa and
+                                                        cr.esercizio = c.esercizio and
+                                                        cr.pg_compenso = c.pg_compenso and
                                                         a.ESERCIZIO_FATTURA_FORNITORE=C.ESERCIZIO_FATTURA_FORNITORE And
-                                                	a.DT_FATTURA_FORNITORE=C.DT_FATTURA_FORNITORE And
-                                                	a.NR_FATTURA_FORNITORE=C.NR_FATTURA_FORNITORE And
-                                                	a.DT_REGISTRAZIONE=C.DT_REGISTRAZIONE And
-			    			        a.fl_liquidazione_differita ='Y' And
-        	                                        a.protocollo_iva Is Not Null)Loop
+                                                	      a.DT_FATTURA_FORNITORE=C.DT_FATTURA_FORNITORE And
+                                                	      a.NR_FATTURA_FORNITORE=C.NR_FATTURA_FORNITORE And
+                                                	      a.DT_REGISTRAZIONE=C.DT_REGISTRAZIONE And
+			    			                                        a.fl_liquidazione_differita ='Y' And
+        	                                              a.protocollo_iva Is Not Null)Loop
               IBMERR001.RAISE_ERR_GENERICO('Il mandato non è annullabile! Include delle fatture passive differite per le quali è stato già stampato il registro iva definitivo');
            end loop;
     End;
@@ -261,18 +265,22 @@
     -- Compenso con mandato principale
     -- Rospuc 16/12/2016 Modificato controllo nuova logica liquidazione cori
     Begin
-       for pgiros in (select 1 from mandato m, mandato_riga mr,compenso c,contributo_ritenuta cr, ass_obb_acr_pgiro ass, liquid_gruppo_cori_det
-                     Where m.esercizio = aEs
+       for pgiros in (select 1 from mandato m, mandato_riga mr,compenso c,compenso_riga criga,contributo_ritenuta cr, ass_obb_acr_pgiro ass, liquid_gruppo_cori_det
+                      Where m.esercizio = aEs
                        And m.cd_cds    = aCdCds
                        And m.pg_mandato= aPgDoc
                        And m.esercizio = mr.esercizio
                        And m.cd_cds    = mr.cd_cds
                        And m.pg_mandato= mr.pg_mandato
-                       And c.cd_cds_obbligazione    = mr.cd_cds
-                       And c.esercizio_obbligazione = mr.ESERCIZIO_OBBLIGAZIONE
-                       And c.esercizio_ori_obbligazione = mr.ESERCIZIO_ORI_OBBLIGAZIONE
-                       And c.pg_obbligazione = mr.PG_OBBLIGAZIONE
-                       And c.pg_obbligazione_scadenzario = mr.PG_OBBLIGAZIONE_SCADENZARIO
+                       And criga.cd_cds_obbligazione    = mr.cd_cds
+                       And criga.esercizio_obbligazione = mr.ESERCIZIO_OBBLIGAZIONE
+                       And criga.esercizio_ori_obbligazione = mr.ESERCIZIO_ORI_OBBLIGAZIONE
+                       And criga.pg_obbligazione = mr.PG_OBBLIGAZIONE
+                       And criga.pg_obbligazione_scadenzario = mr.PG_OBBLIGAZIONE_SCADENZARIO
+                       And criga.cd_cds = c.cd_cds 
+                       And criga.cd_unita_organizzativa = c.cd_unita_organizzativa
+                       And criga.esercizio = c.esercizio
+                       And criga.pg_compenso = c.pg_compenso
                        And cr.cd_cds = c.cd_cds
                        And cr.cd_unita_organizzativa = c.cd_unita_organizzativa
                        And cr.esercizio = c.esercizio

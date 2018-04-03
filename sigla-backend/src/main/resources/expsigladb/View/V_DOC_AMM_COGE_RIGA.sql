@@ -424,14 +424,14 @@ union all
     ,a.DT_INIZIO_MISSIONE --DT_DA_COMPETENZA_COGE
     ,a.DT_FINE_MISSIONE --DT_A_COMPETENZA_COGE
     ,'I'
-    ,a.IM_TOTALE_MISSIONE
-    ,a.IM_TOTALE_MISSIONE
+    ,mr.IM_TOTALE_RIGA_MISSIONE
+    ,mr.IM_TOTALE_RIGA_MISSIONE
     ,0
     ,0
-    ,a.esercizio_obbligazione
-    ,a.cd_cds_obbligazione
-    ,a.esercizio_ori_obbligazione
-    ,a.pg_obbligazione
+    ,mr.esercizio_obbligazione
+    ,mr.cd_cds_obbligazione
+    ,mr.esercizio_ori_obbligazione
+    ,mr.pg_obbligazione
     ,c.fl_pgiro
     ,c.esercizio
     ,c.TI_APPARTENENZA
@@ -444,13 +444,16 @@ union all
     ,c.pg_obbligazione_ori_riporto
     ,c.stato_coge_docamm
     ,c.stato_coge_doccont
- from MISSIONE a, OBBLIGAZIONE c
+ from MISSIONE a, MISSIONE_RIGA mr, OBBLIGAZIONE c
  where
-     a.pg_obbligazione is not null
- and c.cd_cds = a.cd_cds_obbligazione
- and c.esercizio = a.esercizio_obbligazione
- and c.esercizio_originale = a.esercizio_ori_obbligazione
- and c.pg_obbligazione = a.pg_obbligazione
+     a.cd_cds = mr.cd_cds
+ and a.cd_unita_organizzativa = mr.cd_unita_organizzativa
+ and a.esercizio = mr.esercizio
+ and a.pg_missione = mr.pg_missione
+ and c.cd_cds = mr.cd_cds_obbligazione
+ and c.esercizio = mr.esercizio_obbligazione
+ and c.esercizio_originale = mr.esercizio_ori_obbligazione
+ and c.pg_obbligazione = mr.pg_obbligazione
  and a.fl_associato_compenso = 'N'
  and a.ti_provvisorio_definitivo = 'D'
 union all
@@ -467,8 +470,8 @@ union all
     ,a.DT_INIZIO_MISSIONE --DT_DA_COMPETENZA_COGE
     ,a.DT_FINE_MISSIONE --DT_A_COMPETENZA_COGE
     ,'I'
-    ,a.IM_TOTALE_MISSIONE
-    ,a.IM_TOTALE_MISSIONE
+    ,b.IM_ANTICIPO
+    ,b.IM_ANTICIPO
     ,0
     ,0
     ,b.esercizio_obbligazione
@@ -488,9 +491,7 @@ union all
     ,c.stato_coge_docamm
     ,c.stato_coge_doccont
  from MISSIONE a, ANTICIPO b, OBBLIGAZIONE c
- where
-     a.pg_obbligazione is null
- and b.cd_cds = a.cd_cds_anticipo
+ where b.cd_cds = a.cd_cds_anticipo
  and b.cd_unita_organizzativa = a.cd_uo_anticipo
  and b.esercizio = a.esercizio_anticipo
  and b.pg_anticipo = a.pg_anticipo
@@ -515,39 +516,44 @@ union all
     ,a.DT_A_COMPETENZA_COGE
     ,a.ti_istituz_commerc
     ,0
-    ,a.IM_LORDO_PERCIPIENTE
+    ,DECODE(cr.pg_obbligazione,null,a.IM_LORDO_PERCIPIENTE,
+     round(a.IM_LORDO_PERCIPIENTE*cr.IM_TOTALE_RIGA_COMPENSO/a.IM_TOTALE_COMPENSO,2))  IM_LORDO_PERCIPIENTE
     ,0
     ,0
-    ,decode(a.pg_obbligazione,null,a.esercizio_accertamento,a.esercizio_obbligazione)
-    ,decode(a.pg_obbligazione,null,a.cd_cds_accertamento,a.cd_cds_obbligazione)
-    ,decode(a.pg_obbligazione,null,a.esercizio_ori_accertamento,a.esercizio_ori_obbligazione)
-    ,decode(a.pg_obbligazione,null,a.pg_accertamento,a.pg_obbligazione)
-    ,decode(a.pg_obbligazione,null,d.fl_pgiro,c.fl_pgiro)
-    ,decode(a.pg_obbligazione,null,d.ESERCIZIO,c.esercizio)
-    ,decode(a.pg_obbligazione,null,d.TI_APPARTENENZA,c.TI_APPARTENENZA)
-    ,decode(a.pg_obbligazione,null,d.TI_GESTIONE,c.TI_GESTIONE)
-    ,decode(a.pg_obbligazione,null,d.CD_ELEMENTO_VOCE,c.CD_ELEMENTO_VOCE)
-    ,decode(a.pg_obbligazione,null,'N','Y')
-    ,decode(a.pg_obbligazione,null,d.esercizio_ori_riporto,c.esercizio_ori_riporto)
-    ,decode(a.pg_obbligazione,null,d.cd_cds_ori_riporto,c.cd_cds_ori_riporto)
-    ,decode(a.pg_obbligazione,null,d.esercizio_ori_ori_riporto,c.esercizio_ori_ori_riporto)
-    ,decode(a.pg_obbligazione,null,d.pg_accertamento_ori_riporto,c.pg_obbligazione_ori_riporto)
-    ,DECODE(a.pg_obbligazione,null,d.STATO_COGE_DOCAMM,c.STATO_COGE_DOCAMM)
-    ,DECODE(a.pg_obbligazione,null,d.STATO_COGE_DOCCONT,c.STATO_COGE_DOCCONT)
- from COMPENSO a, OBBLIGAZIONE c, ACCERTAMENTO d
+    ,decode(cr.pg_obbligazione,null,a.esercizio_accertamento,cr.esercizio_obbligazione)
+    ,decode(cr.pg_obbligazione,null,a.cd_cds_accertamento,cr.cd_cds_obbligazione)
+    ,decode(cr.pg_obbligazione,null,a.esercizio_ori_accertamento,cr.esercizio_ori_obbligazione)
+    ,decode(cr.pg_obbligazione,null,a.pg_accertamento,cr.pg_obbligazione)
+    ,decode(cr.pg_obbligazione,null,d.fl_pgiro,c.fl_pgiro)
+    ,decode(cr.pg_obbligazione,null,d.ESERCIZIO,c.esercizio)
+    ,decode(cr.pg_obbligazione,null,d.TI_APPARTENENZA,c.TI_APPARTENENZA)
+    ,decode(cr.pg_obbligazione,null,d.TI_GESTIONE,c.TI_GESTIONE)
+    ,decode(cr.pg_obbligazione,null,d.CD_ELEMENTO_VOCE,c.CD_ELEMENTO_VOCE)
+    ,decode(cr.pg_obbligazione,null,'N','Y')
+    ,decode(cr.pg_obbligazione,null,d.esercizio_ori_riporto,c.esercizio_ori_riporto)
+    ,decode(cr.pg_obbligazione,null,d.cd_cds_ori_riporto,c.cd_cds_ori_riporto)
+    ,decode(cr.pg_obbligazione,null,d.esercizio_ori_ori_riporto,c.esercizio_ori_ori_riporto)
+    ,decode(cr.pg_obbligazione,null,d.pg_accertamento_ori_riporto,c.pg_obbligazione_ori_riporto)
+    ,DECODE(cr.pg_obbligazione,null,d.STATO_COGE_DOCAMM,c.STATO_COGE_DOCAMM)
+    ,DECODE(cr.pg_obbligazione,null,d.STATO_COGE_DOCCONT,c.STATO_COGE_DOCCONT)
+ from COMPENSO a, COMPENSO_RIGA cr, OBBLIGAZIONE c, ACCERTAMENTO d
  where
  (
         a.pg_missione is null
-	 or a.pg_missione is not null and a.pg_obbligazione is not null
+	 or a.pg_missione is not null and cr.pg_obbligazione is not null
  )
- and c.cd_cds (+)= a.cd_cds_obbligazione
- and c.esercizio (+)= a.esercizio_obbligazione
- and c.esercizio_originale (+)= a.esercizio_ori_obbligazione
- and c.pg_obbligazione (+)= a.pg_obbligazione
- and d.cd_cds (+)= a.cd_cds_accertamento
- and d.esercizio (+)= a.esercizio_accertamento
- and d.esercizio_originale (+)= a.esercizio_ori_accertamento
- and d.pg_accertamento (+)= a.pg_accertamento
+ and a.cd_cds = cr.cd_cds (+)
+ and a.cd_unita_organizzativa = cr.cd_unita_organizzativa (+)
+ and a.esercizio = cr.esercizio (+)
+ and a.pg_compenso = cr.pg_compenso (+)
+ and cr.cd_cds_obbligazione = c.cd_cds (+)
+ and cr.esercizio_obbligazione = c.esercizio (+)
+ and cr.esercizio_ori_obbligazione = c.esercizio_originale (+)
+ and cr.pg_obbligazione = c.pg_obbligazione (+)
+ and a.cd_cds_accertamento = d.cd_cds (+)
+ and a.esercizio_accertamento = d.esercizio (+)
+ and a.esercizio_ori_accertamento = d.esercizio_originale (+)
+ and a.pg_accertamento = d.pg_accertamento (+)
  union all
  select -- Estrazione compenso associato a missione e senza obbligazione (anticipo >= totale missione)
      'COMPENSO'
@@ -585,7 +591,11 @@ union all
  from COMPENSO a, MISSIONE b, ANTICIPO c, OBBLIGAZIONE d
  where
      a.pg_missione is not null
- and a.pg_obbligazione is null
+ and not exists(select 1 from compenso_riga cr
+                where a.cd_cds = cr.cd_cds
+                and   a.cd_unita_organizzativa = cr.cd_unita_organizzativa
+                and   a.esercizio = cr.esercizio
+                and   a.pg_compenso = cr.pg_compenso)
  and b.cd_cds = a.cd_cds_missione
  and b.cd_unita_organizzativa = a.cd_uo_missione
  and b.esercizio = a.esercizio_missione
@@ -597,7 +607,7 @@ union all
  and d.cd_cds = c.cd_cds_obbligazione
  and d.esercizio = c.esercizio_obbligazione
  and d.esercizio_originale = c.esercizio_ori_obbligazione
- and d.pg_obbligazione 			= c.pg_obbligazione
+ and d.pg_obbligazione = c.pg_obbligazione
  );
 
    COMMENT ON TABLE "V_DOC_AMM_COGE_RIGA"  IS 'Vista di estrazione dei dettagli di documento amministrativo con valorizzazioni a fini COGE';

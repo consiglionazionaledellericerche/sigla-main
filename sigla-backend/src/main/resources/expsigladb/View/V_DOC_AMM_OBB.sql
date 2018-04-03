@@ -198,26 +198,25 @@ SELECT
        'COMPENSO',
        null,
        null,
-	   'Y',
+	'Y',
        A.pg_compenso,
-	   to_number(null),
+	to_number(null),
        A.ti_associato_manrev,
        A.stato_pagamento_fondo_eco,
        0,
        A.stato_cofi,
-	   A.STATO_COGE,
-	   A.STATO_COAN,
-       A.cd_cds_obbligazione,
-       A.esercizio_obbligazione,
-       A.esercizio_ori_obbligazione,
-       A.pg_obbligazione,
-       A.pg_obbligazione_scadenzario
-FROM   COMPENSO A
-WHERE  A.cd_cds_obbligazione IS NOT NULL AND
-       A.esercizio_obbligazione IS NOT NULL AND
-       A.esercizio_ori_obbligazione IS NOT NULL AND
-       A.pg_obbligazione IS NOT NULL AND
-       A.pg_obbligazione_scadenzario IS NOT NULL AND
+       A.STATO_COGE,
+	A.STATO_COAN,
+       B.cd_cds_obbligazione,
+       B.esercizio_obbligazione,
+       B.esercizio_ori_obbligazione,
+       B.pg_obbligazione,
+       B.pg_obbligazione_scadenzario
+FROM   COMPENSO A, COMPENSO_RIGA B
+WHERE  A.CD_CDS = B.CD_CDS AND 
+       A.CD_UNITA_ORGANIZZATIVA = B.CD_UNITA_ORGANIZZATIVA AND 
+       A.ESERCIZIO = B.ESERCIZIO AND
+       A.PG_COMPENSO = B.PG_COMPENSO AND
        A.dt_cancellazione IS NULL AND
        A.pg_compenso > 0
 UNION ALL
@@ -239,17 +238,16 @@ SELECT
        A.stato_cofi,
 	   A.STATO_COGE,
 	   A.STATO_COAN,
-       A.cd_cds_obbligazione,
-       A.esercizio_obbligazione,
-       A.esercizio_ori_obbligazione,
-       A.pg_obbligazione,
-       A.pg_obbligazione_scadenzario
-FROM   MISSIONE A
-WHERE  A.cd_cds_obbligazione IS NOT NULL AND
-       A.esercizio_obbligazione IS NOT NULL AND
-       A.esercizio_ori_obbligazione IS NOT NULL AND
-       A.pg_obbligazione IS NOT NULL AND
-       A.pg_obbligazione_scadenzario IS NOT NULL AND
+       B.cd_cds_obbligazione,
+       B.esercizio_obbligazione,
+       B.esercizio_ori_obbligazione,
+       B.pg_obbligazione,
+       B.pg_obbligazione_scadenzario
+FROM   MISSIONE A, MISSIONE_RIGA B
+WHERE  A.CD_CDS = B.CD_CDS AND 
+       A.CD_UNITA_ORGANIZZATIVA = B.CD_UNITA_ORGANIZZATIVA AND 
+       A.ESERCIZIO = B.ESERCIZIO AND
+       A.PG_MISSIONE = B.PG_MISSIONE AND
        A.dt_cancellazione IS NULL;
 
    COMMENT ON TABLE "V_DOC_AMM_OBB"  IS 'Vista per estrazione per ogni scadenza di obbligazione tutti i dettagli di doc. amm. associati';

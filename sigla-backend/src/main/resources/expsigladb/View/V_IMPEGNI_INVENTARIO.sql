@@ -41,9 +41,13 @@ FROM
 	    	riga.pg_obbligazione 		= OBBLIGAZIONE.pg_obbligazione	    AND
 	    	riga.pg_obbligazione_scadenzario= OBBLIGAZIONE_SCADENZARIO.pg_obbligazione_scadenzario )
 Or
-   Exists (Select 1 From compenso riga
+   Exists (Select 1 From compenso, compenso_riga riga
    Where
-                riga.stato_Cofi!='A' And
+            compenso.CD_CDS = riga.CD_CDS AND 
+            compenso.CD_UNITA_ORGANIZZATIVA = riga.CD_UNITA_ORGANIZZATIVA AND 
+            compenso.ESERCIZIO = riga.ESERCIZIO AND
+            compenso.PG_COMPENSO = riga.PG_COMPENSO AND
+            compenso.stato_Cofi!='A' And
   	        riga.esercizio_obbligazione 	= OBBLIGAZIONE.ESERCIZIO And
 	    	riga.esercizio_ori_obbligazione = OBBLIGAZIONE.esercizio_originale  And
 	    	riga.cd_cds_obbligazione        = OBBLIGAZIONE.cd_cds  AND

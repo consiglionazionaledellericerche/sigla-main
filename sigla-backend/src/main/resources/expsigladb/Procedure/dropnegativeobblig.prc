@@ -40,7 +40,7 @@ begin
 		 if lNumDoc = 0 then
 			 -- Missione
 			 lTipoDocAmm :='Missione' ;
-			 select count(*) into lNumDoc from MISSIONE
+			 select count(*) into lNumDoc from MISSIONE_RIGA
 			 where CD_CDS_OBBLIGAZIONE      = lObb.cd_cds
 			 and   ESERCIZIO_OBBLIGAZIONE 	= lObb.esercizio
 			 and   ESERCIZIO_ORI_OBBLIGAZIONE = lObb.esercizio_originale
@@ -91,7 +91,7 @@ begin
 		 if lNumDoc = 0 then
 			 -- Compenso
 			 lTipoDocAmm :='Compenso' ;
-			 select count(*) into lNumDoc from compenso
+			 select count(*) into lNumDoc from compenso_riga
 			 where CD_CDS_OBBLIGAZIONE 		= lObb.cd_cds
 			 and   ESERCIZIO_OBBLIGAZIONE 	= lObb.esercizio
 			 and   ESERCIZIO_ORI_OBBLIGAZIONE = lObb.esercizio_originale

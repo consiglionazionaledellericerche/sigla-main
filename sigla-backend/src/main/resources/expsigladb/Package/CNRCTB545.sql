@@ -596,6 +596,13 @@
        aRecCompenso COMPENSO%ROWTYPE
       );
 
+-- Inserimento in COMPENSO_RIGA
+
+   PROCEDURE insCompensoRiga
+      (
+       aRecCompensoRiga COMPENSO_RIGA%ROWTYPE
+      );
+
 -- Inserimento in CONTRIBUTO_RITENUTA
 
    PROCEDURE insContributoRitenuta

@@ -424,19 +424,18 @@
           a.pg_compenso, 'GEN' cd_numeratore, a.pg_ver_rec,
           a.cd_cds_origine, a.cd_uo_origine,
           NULL, a.stato_cofi, a.stato_pagamento_fondo_eco,
-          a.dt_pagamento_fondo_eco, a.cd_cds_obbligazione,
-          a.esercizio_obbligazione, a.esercizio_ori_obbligazione,
-          a.pg_obbligazione, a.pg_obbligazione_scadenzario, TO_DATE (NULL),
+          a.dt_pagamento_fondo_eco, b.cd_cds_obbligazione,
+          b.esercizio_obbligazione, b.esercizio_ori_obbligazione,
+          b.pg_obbligazione, b.pg_obbligazione_scadenzario, TO_DATE (NULL),
           NULL, a.cd_terzo, TO_NUMBER (NULL), a.cognome, a.nome,
           a.ragione_sociale, a.pg_banca, a.cd_modalita_pag, 0, 0,
           a.im_totale_compenso, TO_NUMBER (NULL), NULL, NULL, NULL,
           'N', 'N', 'N'
-     FROM compenso a
-    WHERE a.cd_cds_obbligazione IS NOT NULL
-      AND a.esercizio_obbligazione IS NOT NULL
-      AND a.esercizio_ori_obbligazione IS NOT NULL
-      AND a.pg_obbligazione IS NOT NULL
-      AND a.pg_obbligazione_scadenzario IS NOT NULL
+     FROM compenso a, compenso_riga b
+    WHERE a.cd_cds = b.cd_cds
+      AND a.cd_unita_organizzativa = b.cd_unita_organizzativa
+      AND a.esercizio = b.esercizio
+      AND a.pg_compenso = b.pg_compenso
       AND a.dt_cancellazione IS NULL
       AND a.pg_compenso > 0
    UNION ALL
@@ -444,12 +443,12 @@
           a.pg_missione, 'GEN' cd_numeratore, a.pg_ver_rec,
           a.cd_cds, a.cd_unita_organizzativa,
           NULL, a.stato_cofi, a.stato_pagamento_fondo_eco,
-          a.dt_pagamento_fondo_eco, a.cd_cds_obbligazione,
-          a.esercizio_obbligazione, a.esercizio_ori_obbligazione,
-          a.pg_obbligazione, a.pg_obbligazione_scadenzario, TO_DATE (NULL),
+          a.dt_pagamento_fondo_eco, c.cd_cds_obbligazione,
+          c.esercizio_obbligazione, c.esercizio_ori_obbligazione,
+          c.pg_obbligazione, c.pg_obbligazione_scadenzario, TO_DATE (NULL),
           NULL, a.cd_terzo, TO_NUMBER (NULL), a.cognome, a.nome,
           a.ragione_sociale, a.pg_banca, a.cd_modalita_pag, 0, 0,
-          a.im_totale_missione - NVL (b.im_anticipo, 0), TO_NUMBER (NULL),
+          c.im_totale_riga_missione, TO_NUMBER (NULL),
           NULL, NULL, NULL, 'N',
           SUBSTR (getflselezione ('MISSIONE',
                                   a.stato_pagamento_fondo_eco,
@@ -467,12 +466,11 @@
                   1
                  ),
           'N'
-     FROM missione a, anticipo b
-    WHERE a.cd_cds_obbligazione IS NOT NULL
-      AND a.esercizio_obbligazione IS NOT NULL
-      AND a.esercizio_ori_obbligazione IS NOT NULL
-      AND a.pg_obbligazione IS NOT NULL
-      AND a.pg_obbligazione_scadenzario IS NOT NULL
+     FROM missione a, missione_riga c, anticipo b
+    WHERE a.cd_cds = c.cd_cds
+      AND a.cd_unita_organizzativa = c.cd_unita_organizzativa
+      AND a.esercizio = c.esercizio
+      AND a.pg_missione = c.pg_missione
       AND a.dt_cancellazione IS NULL
       AND b.esercizio(+) = a.esercizio_anticipo
       AND b.cd_cds(+) = a.cd_cds_anticipo

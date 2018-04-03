@@ -50,19 +50,23 @@ SELECT --MISSIONE
 	mis.pg_missione,
 	0,
 	'MISSIONE',
-	mis.cd_cds_obbligazione,
-	mis.esercizio_obbligazione,
-	mis.esercizio_ori_obbligazione,
-	mis.pg_obbligazione,
-	mis.pg_obbligazione_scadenzario,
+	riga.cd_cds_obbligazione,
+	riga.esercizio_obbligazione,
+	riga.esercizio_ori_obbligazione,
+	riga.pg_obbligazione,
+	riga.pg_obbligazione_scadenzario,
 	obb_scad.CD_VOCE,
 	obb_scad.IM_VOCE
-FROM   MISSIONE mis, OBBLIGAZIONE_SCAD_VOCE obb_scad
-WHERE mis.CD_CDS_OBBLIGAZIONE 	 = obb_scad.CD_CDS(+)
-and   mis.ESERCIZIO_OBBLIGAZIONE = obb_scad.ESERCIZIO(+)
-and   mis.ESERCIZIO_ORI_OBBLIGAZIONE = obb_scad.ESERCIZIO_ORIGINALE(+)
-and   mis.PG_OBBLIGAZIONE 		 = obb_scad.PG_OBBLIGAZIONE(+)
-and   mis.PG_OBBLIGAZIONE_SCADENZARIO   = obb_scad.PG_OBBLIGAZIONE_SCADENZARIO(+)
+FROM   MISSIONE mis, MISSIONE_RIGA riga, OBBLIGAZIONE_SCAD_VOCE obb_scad
+WHERE mis.CD_CDS = riga.CD_CDS (+)
+and   mis.CD_UNITA_ORGANIZZATIVA = riga.CD_UNITA_ORGANIZZATIVA (+)
+and   mis.ESERCIZIO = riga.ESERCIZIO (+)
+and   mis.PG_MISSIONE = riga.PG_MISSIONE (+)
+and   riga.CD_CDS_OBBLIGAZIONE 	 = obb_scad.CD_CDS(+)
+and   riga.ESERCIZIO_OBBLIGAZIONE = obb_scad.ESERCIZIO(+)
+and   riga.ESERCIZIO_ORI_OBBLIGAZIONE = obb_scad.ESERCIZIO_ORIGINALE(+)
+and   riga.PG_OBBLIGAZIONE 		 = obb_scad.PG_OBBLIGAZIONE(+)
+and   riga.PG_OBBLIGAZIONE_SCADENZARIO   = obb_scad.PG_OBBLIGAZIONE_SCADENZARIO(+)
 union all
 SELECT --COMPENSO
 	comp.cd_cds,
@@ -71,19 +75,23 @@ SELECT --COMPENSO
 	comp.PG_COMPENSO,
 	0,
 	'COMPENSO',
-	comp.cd_cds_obbligazione,
-	comp.esercizio_obbligazione,
-	comp.esercizio_ori_obbligazione,
-	comp.pg_obbligazione,
-	comp.pg_obbligazione_scadenzario,
+	riga.cd_cds_obbligazione,
+	riga.esercizio_obbligazione,
+	riga.esercizio_ori_obbligazione,
+	riga.pg_obbligazione,
+	riga.pg_obbligazione_scadenzario,
 	obb_scad.CD_VOCE,
 	obb_scad.IM_VOCE
-FROM   COMPENSO comp, OBBLIGAZIONE_SCAD_VOCE obb_scad
-WHERE comp.CD_CDS_OBBLIGAZIONE 	  = obb_scad.CD_CDS(+)
-and   comp.ESERCIZIO_OBBLIGAZIONE = obb_scad.ESERCIZIO(+)
-and   comp.ESERCIZIO_ORI_OBBLIGAZIONE = obb_scad.ESERCIZIO_ORIGINALE(+)
-and   comp.PG_OBBLIGAZIONE 		  = obb_scad.PG_OBBLIGAZIONE(+)
-and   comp.PG_OBBLIGAZIONE_SCADENZARIO   = obb_scad.PG_OBBLIGAZIONE_SCADENZARIO(+)
+FROM   COMPENSO comp, COMPENSO_RIGA riga, OBBLIGAZIONE_SCAD_VOCE obb_scad
+WHERE comp.CD_CDS = riga.CD_CDS (+)
+and   comp.CD_UNITA_ORGANIZZATIVA = riga.CD_UNITA_ORGANIZZATIVA (+)
+and   comp.ESERCIZIO = riga.ESERCIZIO (+)
+and   comp.PG_COMPENSO = riga.PG_COMPENSO (+)
+and   riga.CD_CDS_OBBLIGAZIONE 	  = obb_scad.CD_CDS(+)
+and   riga.ESERCIZIO_OBBLIGAZIONE = obb_scad.ESERCIZIO(+)
+and   riga.ESERCIZIO_ORI_OBBLIGAZIONE = obb_scad.ESERCIZIO_ORIGINALE(+)
+and   riga.PG_OBBLIGAZIONE 		  = obb_scad.PG_OBBLIGAZIONE(+)
+and   riga.PG_OBBLIGAZIONE_SCADENZARIO   = obb_scad.PG_OBBLIGAZIONE_SCADENZARIO(+)
 union all
 SELECT --FATTURA_PASSIVA
 	fat_p.cd_cds,

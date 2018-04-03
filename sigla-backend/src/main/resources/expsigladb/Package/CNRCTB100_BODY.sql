@@ -441,11 +441,14 @@
   IF isInTabellaGenerico(aTipoDocAmm) = 'Y' THEN
    RETURN 'DOCUMENTO_GENERICO_RIGA';
   END IF;
-  IF
-      isInTabellaCompenso(aTipoDocAmm) = 'Y'
-   OR isInTabellaAnticipo(aTipoDocAmm) = 'Y'
+  IF isInTabellaCompenso(aTipoDocAmm) = 'Y' THEN
+   RETURN 'COMPENSO_RIGA';
+  END IF;
+  IF isInTabellaMissione(aTipoDocAmm) = 'Y' THEN
+   RETURN 'MISSIONE_RIGA';
+  END IF;
+  IF isInTabellaAnticipo(aTipoDocAmm) = 'Y'
    OR isInTabellaRimborso(aTipoDocAmm) = 'Y'
-   OR isInTabellaMissione(aTipoDocAmm) = 'Y'
    OR isInTabellaAutofattura(aTipoDocAmm) = 'Y'
   THEN
    RETURN NULL;
@@ -512,13 +515,14 @@
   IF
         isInTabellaFatturaPassiva(aTipoDocAmm) = 'Y'
      OR isInTabellaFatturaAttiva(aTipoDocAmm) = 'Y'
-	 OR isInTabellaGenerico(aTipoDocAmm) = 'Y'
+  	 OR isInTabellaGenerico(aTipoDocAmm) = 'Y'
+     OR isInTabellaCompenso(aTipoDocAmm) = 'Y'
+     OR isInTabellaMissione(aTipoDocAmm) = 'Y'
   THEN
    RETURN 'PROGRESSIVO_RIGA';
   END IF;
   IF
-       isInTabellaCompenso(aTipoDocAmm) = 'Y'
-	OR isInTabellaAnticipo(aTipoDocAmm) = 'Y'
+       isInTabellaAnticipo(aTipoDocAmm) = 'Y'
 	OR isInTabellaRimborso(aTipoDocAmm) = 'Y'
 	OR isInTabellaMissione(aTipoDocAmm) = 'Y'
 	OR isInTabellaAutofattura(aTipoDocAmm) = 'Y'

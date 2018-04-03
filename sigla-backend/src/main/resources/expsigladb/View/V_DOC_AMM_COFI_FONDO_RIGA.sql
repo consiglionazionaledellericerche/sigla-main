@@ -123,7 +123,7 @@ union all
     ,a.PG_OBBLIGAZIONE
     ,a.PG_OBBLIGAZIONE_SCADENZARIO
     ,c.IM_SCADENZA
-from MISSIONE a, OBBLIGAZIONE_SCADENZARIO c
+from MISSIONE_RIGA a, OBBLIGAZIONE_SCADENZARIO c
 where
      c.cd_cds = a.cd_cds_obbligazione
  and c.esercizio = a.esercizio_obbligazione

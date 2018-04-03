@@ -233,12 +233,13 @@ SELECT
   ,comp.PG_COMPENSO
   ,comp.DS_COMPENSO
   ,comp.STATO_COFI
-  ,comp.CD_CDS_OBBLIGAZIONE
-  ,comp.ESERCIZIO_OBBLIGAZIONE
-  ,comp.ESERCIZIO_ORI_OBBLIGAZIONE
-  ,comp.PG_OBBLIGAZIONE
-  ,comp.PG_OBBLIGAZIONE_SCADENZARIO
-  ,comp.IM_LORDO_PERCIPIENTE
+  ,comp_riga.CD_CDS_OBBLIGAZIONE
+  ,comp_riga.ESERCIZIO_OBBLIGAZIONE
+  ,comp_riga.ESERCIZIO_ORI_OBBLIGAZIONE
+  ,comp_riga.PG_OBBLIGAZIONE
+  ,comp_riga.PG_OBBLIGAZIONE_SCADENZARIO
+  ,DECODE(comp.IM_LORDO_PERCIPIENTE,null,0,
+    round(comp.IM_LORDO_PERCIPIENTE*comp_riga.IM_TOTALE_RIGA_COMPENSO/comp.IM_TOTALE_COMPENSO,2))  IM_LORDO_PERCIPIENTE
   ,to_char(null)   -- delta_rate
   ,uo1.ds_unita_organizzativa
   ,uo2.ds_unita_organizzativa
@@ -247,11 +248,16 @@ SELECT
   ,To_Char(Null) -- iban
 FROM TERZO t
  ,COMPENSO comp
+ ,COMPENSO_RIGA comp_riga
  ,TIPO_TRATTAMENTO ti_trat
  ,unita_organizzativa uo1
  ,unita_organizzativa uo2
-WHERE t.CD_TERZO       = comp.CD_TERZO
-AND   ti_trat.CD_TRATTAMENTO = comp.CD_TRATTAMENTO
+WHERE t.CD_TERZO = comp.CD_TERZO
+AND comp.CD_CDS = comp_riga.CD_CDS 
+AND comp.CD_UNITA_ORGANIZZATIVA = comp_riga.CD_UNITA_ORGANIZZATIVA
+AND comp.ESERCIZIO = comp_riga.ESERCIZIO
+AND comp.PG_COMPENSO = comp_riga.PG_COMPENSO
+AND ti_trat.CD_TRATTAMENTO = comp.CD_TRATTAMENTO
 AND ti_trat.DT_INI_VALIDITA <= comp.DT_DA_COMPETENZA_COGE
 AND ti_trat.DT_FIN_VALIDITA >= comp.DT_DA_COMPETENZA_COGE
 and not exists ( select 1 from minicarriera_rata mrata
@@ -314,12 +320,13 @@ SELECT DISTINCT
   ,comp.PG_COMPENSO
   ,comp.DS_COMPENSO
   ,comp.STATO_COFI
-  ,comp.CD_CDS_OBBLIGAZIONE
-  ,comp.ESERCIZIO_OBBLIGAZIONE
-  ,comp.ESERCIZIO_ORI_OBBLIGAZIONE
-  ,comp.PG_OBBLIGAZIONE
-  ,comp.PG_OBBLIGAZIONE_SCADENZARIO
-  ,comp.IM_LORDO_PERCIPIENTE
+  ,comp_riga.CD_CDS_OBBLIGAZIONE
+  ,comp_riga.ESERCIZIO_OBBLIGAZIONE
+  ,comp_riga.ESERCIZIO_ORI_OBBLIGAZIONE
+  ,comp_riga.PG_OBBLIGAZIONE
+  ,comp_riga.PG_OBBLIGAZIONE_SCADENZARIO
+  ,DECODE(comp.IM_LORDO_PERCIPIENTE,null,0,
+    round(comp.IM_LORDO_PERCIPIENTE*comp_riga.IM_TOTALE_RIGA_COMPENSO/comp.IM_TOTALE_COMPENSO,2))  IM_LORDO_PERCIPIENTE
   ,substr((SELECT lpad(MIN(mrata.PG_RATA),3,'0') || ' - ' || lpad(MAX(mrata.PG_RATA),3,'0')
      FROM MINICARRIERA_RATA mrata
      where mrata.CD_CDS_COMPENSO   = comp.CD_CDS
@@ -339,6 +346,7 @@ FROM TERZO t
  ,MINICARRIERA carr
  ,MINICARRIERA_RATA rata
  ,COMPENSO comp
+ ,COMPENSO_RIGA comp_riga
  ,TIPO_TRATTAMENTO ti_trat
  ,unita_organizzativa uo1
  ,unita_organizzativa uo2
@@ -351,6 +359,10 @@ AND   rata.CD_CDS_COMPENSO   = comp.CD_CDS(+)
 AND   rata.CD_UO_COMPENSO   = comp.CD_UNITA_ORGANIZZATIVA(+)
 AND   rata.ESERCIZIO_COMPENSO = comp.ESERCIZIO(+)
 AND   rata.PG_COMPENSO    = comp.PG_COMPENSO(+)
+AND   comp.CD_CDS = comp_riga.CD_CDS (+)
+AND   comp.CD_UNITA_ORGANIZZATIVA = comp_riga.CD_UNITA_ORGANIZZATIVA (+)
+AND   comp.ESERCIZIO = comp_riga.ESERCIZIO (+)
+AND   comp.PG_COMPENSO = comp_riga.PG_COMPENSO (+)
 AND   ti_trat.CD_TRATTAMENTO  = carr.CD_TRATTAMENTO
 AND   ti_trat.DT_INI_VALIDITA <= carr.DT_INIZIO_MINICARRIERA
 AND   ti_trat.DT_FIN_VALIDITA >= carr.DT_INIZIO_MINICARRIERA

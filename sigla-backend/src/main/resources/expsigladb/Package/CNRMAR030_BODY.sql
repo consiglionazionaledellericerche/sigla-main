@@ -270,13 +270,17 @@
  lAnticipo anticipo%rowtype;
  begin
 	  lSaldo := 0;
- 	  for lMissione in (select * from MISSIONE
-	  	  			   	   	  where CD_CDS_OBBLIGAZIONE         = aObbScad.cd_cds
-						   	  and	ESERCIZIO_OBBLIGAZIONE 		= aObbScad.esercizio
-						   	  and	ESERCIZIO_ORI_OBBLIGAZIONE 	= aObbScad.esercizio_originale
-						   	  and   PG_OBBLIGAZIONE 	    	= aObbScad.pg_obbligazione
-						   	  and   PG_OBBLIGAZIONE_SCADENZARIO = aObbScad.pg_obbligazione_scadenzario
-							  and   STATO_COFI <> STATO_ANNULLATO
+ 	  for lMissione in (select missione.* from MISSIONE, MISSIONE_RIGA
+	  	  			   	   	  where MISSIONE_RIGA.CD_CDS_OBBLIGAZIONE        = aObbScad.cd_cds
+						   	  and	MISSIONE_RIGA.ESERCIZIO_OBBLIGAZIONE 	 = aObbScad.esercizio
+						   	  and	MISSIONE_RIGA.ESERCIZIO_ORI_OBBLIGAZIONE = aObbScad.esercizio_originale
+						   	  and   MISSIONE_RIGA.PG_OBBLIGAZIONE 	    	 = aObbScad.pg_obbligazione
+						   	  and   MISSIONE_RIGA.PG_OBBLIGAZIONE_SCADENZARIO = aObbScad.pg_obbligazione_scadenzario
+						   	  and   MISSIONE.CD_CDS = MISSIONE_RIGA.CD_CDS
+						   	  and   MISSIONE.CD_UNITA_ORGANIZZATIVA = MISSIONE_RIGA.CD_UNITA_ORGANIZZATIVA
+						   	  and   MISSIONE.ESERCIZIO = MISSIONE_RIGA.ESERCIZIO
+						   	  and   MISSIONE.PG_MISSIONE = MISSIONE_RIGA.PG_MISSIONE
+							  and   MISSIONE.STATO_COFI <> STATO_ANNULLATO
 							  for update nowait)
 	  loop
 	  	  begin
@@ -649,13 +653,22 @@
  lAnticipo Anticipo%rowtype;
  begin
 	  lSaldo := 0;
- 	  for lCompenso in (select * from compenso
-	  	  			    where CD_CDS_OBBLIGAZIONE 		  = aObbScad.cd_cds
-						and   ESERCIZIO_OBBLIGAZIONE 	  = aObbScad.esercizio
-					   	and   ESERCIZIO_ORI_OBBLIGAZIONE  = aObbScad.esercizio_originale
-						and   PG_OBBLIGAZIONE 		  = aObbScad.pg_obbligazione
-						and   PG_OBBLIGAZIONE_SCADENZARIO = aObbScad.pg_obbligazione_scadenzario
-						and   STATO_COFI <> STATO_ANNULLATO
+ 	  for lCompenso in (select compenso.cd_cds_missione, compenso.cd_uo_missione, 
+ 	  	                       compenso.esercizio, compenso.pg_missione,
+ 	  	                       compenso.im_netto_percipiente,
+ 	  	                       compenso.im_totale_compenso,
+                               compenso_riga.im_totale_riga_compenso
+ 	                    from compenso_riga, compenso
+	  	  			    where compenso_riga.CD_CDS_OBBLIGAZIONE = aObbScad.cd_cds
+						and   compenso_riga.ESERCIZIO_OBBLIGAZIONE = aObbScad.esercizio
+					   	and   compenso_riga.ESERCIZIO_ORI_OBBLIGAZIONE = aObbScad.esercizio_originale
+						and   compenso_riga.PG_OBBLIGAZIONE = aObbScad.pg_obbligazione
+						and   compenso_riga.PG_OBBLIGAZIONE_SCADENZARIO = aObbScad.pg_obbligazione_scadenzario
+						and   compenso_riga.cd_cds = compenso.cd_cds
+						and   compenso_riga.cd_unita_organizzativa = compenso.cd_unita_organizzativa
+						and   compenso_riga.esercizio = compenso.esercizio
+						and   compenso_riga.pg_compenso = compenso.pg_compenso
+						and   compenso.STATO_COFI <> STATO_ANNULLATO
 						for update nowait)
 	  loop
 	  	  begin
@@ -670,16 +683,21 @@
 			   and   mis.cd_uo_anticipo 		= ant.cd_unita_organizzativa
 			   and   mis.esercizio_anticipo 	= ant.esercizio
 			   and   mis.pg_anticipo 			= ant.pg_anticipo
+			   and   ant.cd_cds_obbligazione    = aObbScad.cd_cds
+			   and   ant.esercizio_obbligazione	= aObbScad.esercizio
+			   and   ant.esercizio_ori_obbligazione = aObbScad.esercizio_originale
+			   and   ant.pg_obbligazione 		= aObbScad.pg_obbligazione
+			   and   ant.pg_obbligazione_scadenzario = aObbScad.pg_obbligazione_scadenzario
 			   for update nowait;
 
 			   if lAnticipo.im_anticipo <= lCompenso.IM_NETTO_PERCIPIENTE then
-			   	  lSaldo := lSaldo + lCompenso.im_totale_compenso - lAnticipo.im_anticipo;
+			   	  lSaldo := lSaldo + lCompenso.im_totale_riga_compenso - lAnticipo.im_anticipo;
 			   else
-			   	  lSaldo := lSaldo + lCompenso.im_totale_compenso - lCompenso.im_netto_percipiente;
+			   	  lSaldo := lSaldo + lCompenso.im_totale_riga_compenso - lCompenso.im_netto_percipiente;
 			   end if;
 
 		  exception when no_data_found then
-		  			lSaldo := lSaldo + lCompenso.im_totale_compenso;
+		  			lSaldo := lSaldo + lCompenso.im_totale_riga_compenso;
 		  end;
 	  end loop;
 	  return lSaldo;

@@ -257,14 +257,12 @@ statoRiportato char(1);
 aEsObblig number;
 aComp compenso%rowtype;
 begin
-	select * into aComp
-	from compenso
+	select max(esercizio_obbligazione) into aEsObblig
+	from compenso_riga
 	where cd_cds 				 = aCdCds
 	  and cd_unita_organizzativa = aCdUo
 	  and esercizio 			 = aEs
 	  and pg_compenso			 = aPg;
-
-	aEsObblig:= aComp.esercizio_obbligazione;
 
 	if aEsObblig is null then
 		return NON_RIPORTATO;  -- non ha obbligazioni associate, ma LdA
@@ -292,7 +290,13 @@ begin
 	  and esercizio 			 = aEs
 	  and pg_missione			 = aPg;
 
-	aEsObblig := aMissione.esercizio_obbligazione;
+	select max(esercizio_obbligazione) 
+	into aEsObblig
+	from missione_riga
+	where cd_cds 				 = aCdCds
+	  and cd_unita_organizzativa = aCdUo
+	  and esercizio 			 = aEs
+	  and pg_missione			 = aPg;
 
 	if aMissione.fl_associato_compenso = 'N'
 	   or aMissione.ti_provvisorio_definitivo = 'P'
@@ -420,14 +424,18 @@ end;
 		end;
 	elsif aCdTipoDocAmm = CNRCTB100.TI_COMPENSO then
 	    begin
-	     select distinct 1 into aNum from compenso where
-					     cd_cds = aCdCds
-					 and cd_unita_organizzativa = aCdUo
-					 and pg_compenso = aPg
-					 and esercizio = aEs
+	     select distinct 1 into aNum from compenso c, compenso_riga cr where
+					     c.cd_cds = aCdCds
+					 and c.cd_unita_organizzativa = aCdUo
+					 and c.pg_compenso = aPg
+					 and c.esercizio = aEs
+					 and c.cd_cds = cr.cd_cds (+)
+					 and c.cd_unita_organizzativa = cr.cd_unita_organizzativa (+)
+					 and c.pg_compenso = cr.pg_compenso (+)
+					 and c.esercizio = cr.esercizio (+)
 					 and (
-					     esercizio_accertamento is not null  and esercizio <> esercizio_accertamento
-					  or esercizio_obbligazione is not null and esercizio <> esercizio_obbligazione
+					     c.esercizio_accertamento is not null  and c.esercizio <> c.esercizio_accertamento
+					  or cr.esercizio_obbligazione is not null and c.esercizio <> cr.esercizio_obbligazione
 					 );
  	   	 return 'Y';
 		exception when NO_DATA_FOUND then
@@ -435,7 +443,7 @@ end;
 		end;
 	elsif aCdTipoDocAmm = CNRCTB100.TI_MISSIONE then
 	    begin
-	     select distinct 1 into aNum from missione where
+	     select distinct 1 into aNum from missione_riga where
 					     cd_cds = aCdCds
 					 and cd_unita_organizzativa = aCdUo
 					 and pg_missione = aPg

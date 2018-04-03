@@ -504,4 +504,184 @@
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="create-table-missione-riga">
+        <createTable remarks="Tabella contenente i dettagli delle obbligazioni associate a missioni." tableName="missione_riga">
+            <column name="cd_cds" remarks="Codice identificativo del centro di spesa; livello 1 della tabella UNITA_ORGANIZZATIVA." type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_unita_organizzativa" remarks="Codice identificativo dell'unità organizzativa. La codifica è organizzata in una struttura ad albero  su più livelli.&#10;Livello 1 = rappresenta il centro di spesa&#10;Livello 2 = rappresenta l'unità organizzativa.&#10;La codifica del livello unità organizzativa è ottenuta per concatenzione del codice del CdS di afferenza con il  proprio codice" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio" remarks="Esercizio di riferimento" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_missione" remarks="Progressivo identificativo della missione." type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="progressivo_riga" remarks="Progressivo numerazione righe all'interno di una missione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_cds_obbligazione" remarks="Codice identificativo del centro di spesa; livello 1 della tabella UNITA_ORGANIZZATIVA." type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_obbligazione" remarks="Esercizio di riferimento dell'obbligazione." type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_ori_obbligazione" remarks="Esercizio originario dell'obbligazione differente dall'esercizio di competenza (ESERCIZIO)." type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_obbligazione" remarks="Progressivo identificativo dell'obbligazione; univoco per CdS ed esercizio." type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_obbligazione_scadenzario" remarks="Progressivo identificativo della scadenza all'interno di una obbligazione." type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_totale_riga_missione" remarks="Importo rriga di missione" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="cd_cds, cd_unita_organizzativa, esercizio, pg_missione, progressivo_riga" constraintName="missione_riga_pkey" tableName="missione_riga"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_cds,cd_unita_organizzativa,esercizio,pg_missione" baseTableName="missione_riga" constraintName="fk_missione_riga01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cds,cd_unita_organizzativa,esercizio,pg_missione" referencedTableName="missione"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_cds_obbligazione,esercizio_obbligazione,esercizio_ori_obbligazione,pg_obbligazione,pg_obbligazione_scadenzario" baseTableName="missione_riga" constraintName="fk_missione_riga02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cds,esercizio,esercizio_originale,pg_obbligazione,pg_obbligazione_scadenzario" referencedTableName="obbligazione_scadenzario"/>
+
+        <createIndex indexName="FX_MISSIONE_RIGA01" tableName="MISSIONE_RIGA">
+            <column name="CD_CDS"/>
+            <column name="CD_UNITA_ORGANIZZATIVA"/>
+            <column name="ESERCIZIO"/>
+            <column name="PG_MISSIONE"/>
+        </createIndex>
+
+        <createIndex indexName="FX_MISSIONE_RIGA02" tableName="MISSIONE_RIGA">
+            <column name="CD_CDS_OBBLIGAZIONE"/>
+            <column name="ESERCIZIO_OBBLIGAZIONE"/>
+            <column name="ESERCIZIO_ORI_OBBLIGAZIONE"/>
+            <column name="PG_OBBLIGAZIONE"/>
+            <column name="PG_OBBLIGAZIONE_SCADENZARIO"/>
+        </createIndex>
+
+        <sql dbms="oracle">
+            insert into missione_riga(cd_cds,cd_unita_organizzativa,esercizio,pg_missione,progressivo_riga,cd_cds_obbligazione,esercizio_obbligazione,esercizio_ori_obbligazione,pg_obbligazione,pg_obbligazione_scadenzario,im_totale_riga_missione,utcr,dacr,utuv,duva,pg_ver_rec) select cd_cds,cd_unita_organizzativa,esercizio,pg_missione,1,cd_cds_obbligazione,esercizio_obbligazione,esercizio_ori_obbligazione,pg_obbligazione,pg_obbligazione_scadenzario,im_totale_missione,utcr,dacr,utuv,duva,1 from missione where esercizio_obbligazione is not null
+            <comment>Riempimento tabella missione_riga con dati proveniente da tabella missione</comment>
+        </sql>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="drop-column-obbligazione-table-missione">
+        <dropIndex indexName="fx_missione09" tableName="missione"/>
+        <dropForeignKeyConstraint baseTableName="missione" constraintName="fk_missione06"/>
+        <dropColumn columnName="cd_cds_obbligazione" tableName="missione"/>
+        <dropColumn columnName="esercizio_obbligazione" tableName="missione"/>
+        <dropColumn columnName="esercizio_ori_obbligazione" tableName="missione"/>
+        <dropColumn columnName="pg_obbligazione" tableName="missione"/>
+        <dropColumn columnName="pg_obbligazione_scadenzario" tableName="missione"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="create-table-compenso-riga">
+        <createTable remarks="Tabella contenente i dettagli delle obbligazioni associate a compenso." tableName="compenso_riga">
+            <column name="cd_cds" remarks="Codice identificativo del centro di spesa; livello 1 della tabella UNITA_ORGANIZZATIVA." type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_unita_organizzativa" remarks="Codice identificativo dell'unità organizzativa su cui è registrato il documento; livello 2 della tabella UNITA_ORGANIZZATIVA.&#10;La codifica del livello unità organizzativa è ottenuta per concatenzione del codice del CdS di afferenza con il  proprio codice.&#10;Rappresenta la UO di riferimento alla registrazione del documento" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio" remarks="Esercizio di riferimento" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_compenso" remarks="Protocollo interno di numerazione dei compensi.&#10;Si ricava, per CdS, UO, esercizio e  tipo documento, da NUMERAZIONE_DOC_AMM con cd_tipo_documento = COMPENSO" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="progressivo_riga" remarks="Progressivo numerazione righe all'interno di una missione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_cds_obbligazione" remarks="Codice identificativo del centro di spesa; livello 1 della tabella UNITA_ORGANIZZATIVA." type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_obbligazione" remarks="Esercizio di riferimento dell'obbligazione." type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_ori_obbligazione" remarks="Esercizio originario dell'obbligazione differente dall'esercizio di competenza (ESERCIZIO)." type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_obbligazione" remarks="Progressivo identificativo dell'obbligazione; univoco per CdS ed esercizio." type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_obbligazione_scadenzario" remarks="Progressivo identificativo della scadenza all'interno di una obbligazione." type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_trovato" remarks="Riferimento all'identificativo del Trovato per l'integrazione con GESTRO" type="BIGINT"/>
+            <column name="im_totale_riga_compenso" remarks="Importo riga di compenso" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="cd_cds, cd_unita_organizzativa, esercizio, pg_compenso, progressivo_riga" constraintName="compenso_riga_pkey" tableName="compenso_riga"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_cds,cd_unita_organizzativa,esercizio,pg_compenso" baseTableName="compenso_riga" constraintName="fk_compenso_riga01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cds,cd_unita_organizzativa,esercizio,pg_compenso" referencedTableName="compenso"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_cds_obbligazione,esercizio_obbligazione,esercizio_ori_obbligazione,pg_obbligazione,pg_obbligazione_scadenzario" baseTableName="compenso_riga" constraintName="fk_compenso_riga02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cds,esercizio,esercizio_originale,pg_obbligazione,pg_obbligazione_scadenzario" referencedTableName="obbligazione_scadenzario"/>
+
+        <createIndex indexName="FX_COMPENSO_RIGA01" tableName="COMPENSO_RIGA">
+            <column name="CD_CDS"/>
+            <column name="CD_UNITA_ORGANIZZATIVA"/>
+            <column name="ESERCIZIO"/>
+            <column name="PG_COMPENSO"/>
+        </createIndex>
+
+        <createIndex indexName="FX_COMPENSO_RIGA02" tableName="COMPENSO_RIGA">
+            <column name="CD_CDS_OBBLIGAZIONE"/>
+            <column name="ESERCIZIO_OBBLIGAZIONE"/>
+            <column name="ESERCIZIO_ORI_OBBLIGAZIONE"/>
+            <column name="PG_OBBLIGAZIONE"/>
+            <column name="PG_OBBLIGAZIONE_SCADENZARIO"/>
+        </createIndex>
+
+        <sql dbms="oracle">
+            insert into compenso_riga(cd_cds,cd_unita_organizzativa,esercizio,pg_compenso,progressivo_riga,cd_cds_obbligazione,esercizio_obbligazione,esercizio_ori_obbligazione,pg_obbligazione,pg_obbligazione_scadenzario,pg_trovato,im_totale_riga_compenso,utcr,dacr,utuv,duva,pg_ver_rec) select cd_cds,cd_unita_organizzativa,esercizio,pg_compenso,1,cd_cds_obbligazione,esercizio_obbligazione,esercizio_ori_obbligazione,pg_obbligazione,pg_obbligazione_scadenzario,pg_trovato,im_totale_compenso,utcr,dacr,utuv,duva,1 from compenso where esercizio_obbligazione is not null
+            <comment>Riempimento tabella compenso_riga con dati proveniente da tabella compenso</comment>
+        </sql>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="drop-column-obbligazione-table-compenso">
+        <dropIndex indexName="fx_compenso26" tableName="compenso"/>
+        <dropForeignKeyConstraint baseTableName="compenso" constraintName="fk_compenso14"/>
+        <dropColumn columnName="cd_cds_obbligazione" tableName="compenso"/>
+        <dropColumn columnName="esercizio_obbligazione" tableName="compenso"/>
+        <dropColumn columnName="esercizio_ori_obbligazione" tableName="compenso"/>
+        <dropColumn columnName="pg_obbligazione" tableName="compenso"/>
+        <dropColumn columnName="pg_obbligazione_scadenzario" tableName="compenso"/>
+        <dropColumn columnName="pg_trovato" tableName="compenso"/>
+    </changeSet>
 </databaseChangeLog>

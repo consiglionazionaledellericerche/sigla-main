@@ -233,7 +233,9 @@ BEGIN
             ----------------------------------------------------------------------------------------
             -- Aggiornamento righe del documento amministrativo solo per i documenti che hanno RIGHE
 
-            IF CNRCTB100.GETTABELLADETT(cv_tipo_docamm) IS NOT NULL THEN
+            IF CNRCTB100.GETTABELLADETT(cv_tipo_docamm) IS NOT NULL and
+               CNRCTB100.isInTabellaCompenso(aRecManrev.cd_tipo_docamm)='N' and
+               CNRCTB100.isInTabellaMissione(aRecManrev.cd_tipo_docamm)='N' THEN
                IF inAzione = 'I' THEN
                   aUpdateClause:='stato_cofi = ''P'',  ti_associato_manrev = ''T''';
                ELSE
@@ -415,8 +417,13 @@ BEGIN
 
    ELSE
 
-      dettString:=aRiga || '.' || CNRCTB100.GETNOMEPGDETT(aRecManrev.cd_tipo_docamm) || ',' ||
-                  aRiga || '.stato_cofi';
+      dettString:=aRiga || '.' || CNRCTB100.GETNOMEPGDETT(aRecManrev.cd_tipo_docamm);
+      if (CNRCTB100.isInTabellaCompenso(aRecManrev.cd_tipo_docamm)='Y' or
+          CNRCTB100.isInTabellaMissione(aRecManrev.cd_tipo_docamm)='Y') Then
+        dettString:=dettString|| ',' || aTestata || '.stato_cofi';
+      else
+        dettString:=dettString|| ',' || aRiga || '.stato_cofi';
+      end if;
       aTabPrimiDoc:=aRiga;
       aJoinForKey:=CNRCTB100.getTstaRigaFromCondForKey(aRecManrev.cd_tipo_docamm,
                                                        aRecManrev.cd_cds_docamm,
@@ -592,7 +599,9 @@ BEGIN
    -- Composizione dello statement di SELECT di lettura dei valori di stato_cofi assunti dalle righe
    -- di dettaglio del documento amministrativo in elaborazione
 
-   IF aRiga IS NOT NULL THEN
+   IF aRiga IS NOT NULL and
+      CNRCTB100.isInTabellaCompenso(aRecManrev.cd_tipo_docamm)='N' and
+      CNRCTB100.isInTabellaMissione(aRecManrev.cd_tipo_docamm)='N' THEN
       aStatement:='SELECT DISTINCT stato_cofi, ti_associato_manrev FROM ' ||
                    aRiga || ' ';
       aBaseStatement:=CNRCTB100.getRigaWhereCondForKey(mem_tipo_docamm,
@@ -644,7 +653,9 @@ BEGIN
             IF cv_ti_associato_manrev_in = 'T' THEN
                isAssociatoManrev:=TRUE;
             ELSE
-               IF aRiga IS NULL THEN
+               IF aRiga IS NULL or
+                  CNRCTB100.isInTabellaCompenso(aRecManrev.cd_tipo_docamm)='Y' or
+                  CNRCTB100.isInTabellaMissione(aRecManrev.cd_tipo_docamm)='Y' THEN
                   isAssociatoManrev:=TRUE;
                ELSE
                   isNotAssociatoManrev:=TRUE;
@@ -671,7 +682,9 @@ BEGIN
       -- non conta; se la gestione ? per annullamento lo stato di cancellato conta solo
       -- se ? l'unico estratto
 
-      IF aRiga IS NULL THEN
+      IF aRiga IS NULL or
+         CNRCTB100.isInTabellaCompenso(aRecManrev.cd_tipo_docamm)='Y' or
+         CNRCTB100.isInTabellaMissione(aRecManrev.cd_tipo_docamm)='Y' THEN
          IF inAzione = 'I' THEN
             cv_stato_cofi_out:='P';
          ELSE

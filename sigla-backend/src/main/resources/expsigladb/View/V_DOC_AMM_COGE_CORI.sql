@@ -199,35 +199,41 @@ union all
     ,a.ESERCIZIO
     ,a.PG_COMPENSO
     ,a.CD_TERZO
-    ,decode(b.pg_obbligazione,null,d.cd_terzo,c.cd_terzo)
+    ,decode(cr.pg_obbligazione,null,d.cd_terzo,c.cd_terzo)
     ,a.DT_DA_COMPETENZA_COGE
     ,a.DT_A_COMPETENZA_COGE
     ,b.cd_contributo_ritenuta
     ,b.ti_ente_percipiente
     ,a.TI_ISTITUZ_COMMERC
-    ,sum(b.ammontare)
+    ,sum(
+      DECODE(cr.pg_obbligazione,null,b.ammontare,
+         round(b.ammontare*cr.IM_TOTALE_RIGA_COMPENSO/a.IM_TOTALE_COMPENSO,2))) AMMONTARE
     ,'N' -- Nono esiste una gestione speciale economica per i CORI del compenso relativamente alle partite di giro
-    ,decode(b.pg_obbligazione,null,d.ESERCIZIO,c.esercizio)
-    ,decode(b.pg_obbligazione,null,d.TI_APPARTENENZA,c.TI_APPARTENENZA)
-    ,decode(b.pg_obbligazione,null,d.TI_GESTIONE,c.TI_GESTIONE)
-    ,decode(b.pg_obbligazione,null,d.CD_ELEMENTO_VOCE,c.CD_ELEMENTO_VOCE)
-    ,DECODE(a.pg_obbligazione,null,null,obb_comp.STATO_COGE_DOCAMM)
-    ,DECODE(a.pg_obbligazione,null,null,obb_comp.STATO_COGE_DOCCONT)
- from COMPENSO a, CONTRIBUTO_RITENUTA b, OBBLIGAZIONE c, ACCERTAMENTO d, OBBLIGAZIONE obb_comp
+    ,decode(cr.pg_obbligazione,null,d.ESERCIZIO,c.esercizio)
+    ,decode(cr.pg_obbligazione,null,d.TI_APPARTENENZA,c.TI_APPARTENENZA)
+    ,decode(cr.pg_obbligazione,null,d.TI_GESTIONE,c.TI_GESTIONE)
+    ,decode(cr.pg_obbligazione,null,d.CD_ELEMENTO_VOCE,c.CD_ELEMENTO_VOCE)
+    ,DECODE(cr.pg_obbligazione,null,null,obb_comp.STATO_COGE_DOCAMM)
+    ,DECODE(cr.pg_obbligazione,null,null,obb_comp.STATO_COGE_DOCCONT)
+ from COMPENSO a, COMPENSO_RIGA cr, CONTRIBUTO_RITENUTA b, OBBLIGAZIONE c, ACCERTAMENTO d, OBBLIGAZIONE obb_comp
   where
      b.cd_cds = a.cd_cds
  and b.cd_unita_organizzativa = a.cd_unita_organizzativa
  and b.esercizio = a.esercizio
  and b.pg_compenso = a.pg_compenso
+ and b.cd_cds = cr.cd_cds (+)
+ and b.cd_unita_organizzativa = cr.cd_unita_organizzativa (+)
+ and b.esercizio = cr.esercizio (+)
+ and b.pg_compenso = cr.pg_compenso (+)
  and b.ammontare <> 0
  and c.cd_cds (+)= b.cd_cds
  and c.esercizio (+)= b.esercizio
  and c.esercizio_originale (+)= b.esercizio_ori_obbligazione
  and c.pg_obbligazione (+)= b.pg_obbligazione
- and obb_comp.cd_cds (+)= a.CD_CDS_OBBLIGAZIONE
- and obb_comp.esercizio (+)= a.esercizio_obbligazione
- and obb_comp.esercizio_originale (+)= a.esercizio_ori_obbligazione
- and obb_comp.pg_obbligazione (+)= a.pg_obbligazione
+ and obb_comp.cd_cds (+)= cr.CD_CDS_OBBLIGAZIONE
+ and obb_comp.esercizio (+)= cr.esercizio_obbligazione
+ and obb_comp.esercizio_originale (+)= cr.esercizio_ori_obbligazione
+ and obb_comp.pg_obbligazione (+)= cr.pg_obbligazione
  and d.cd_cds (+)= b.cd_cds
  and d.esercizio (+)= b.esercizio
  and d.esercizio_originale (+)= b.esercizio_ori_accertamento
@@ -238,18 +244,18 @@ union all
     ,a.ESERCIZIO
     ,a.pg_compenso
     ,a.CD_TERZO
-    ,decode(b.pg_obbligazione,null,d.cd_terzo,c.cd_terzo)
+    ,decode(cr.pg_obbligazione,null,d.cd_terzo,c.cd_terzo)
     ,a.DT_DA_COMPETENZA_COGE
     ,a.DT_A_COMPETENZA_COGE
     ,b.cd_contributo_ritenuta
     ,b.ti_ente_percipiente
     ,a.TI_ISTITUZ_COMMERC
-    ,decode(b.pg_obbligazione,null,d.ESERCIZIO,c.esercizio)
-    ,decode(b.pg_obbligazione,null,d.TI_APPARTENENZA,c.TI_APPARTENENZA)
-    ,decode(b.pg_obbligazione,null,d.TI_GESTIONE,c.TI_GESTIONE)
-    ,decode(b.pg_obbligazione,null,d.CD_ELEMENTO_VOCE,c.CD_ELEMENTO_VOCE)
-    ,DECODE(a.pg_obbligazione,null,null,obb_comp.STATO_COGE_DOCAMM)
-    ,DECODE(a.pg_obbligazione,null,null,obb_comp.STATO_COGE_DOCCONT)
+    ,decode(cr.pg_obbligazione,null,d.ESERCIZIO,c.esercizio)
+    ,decode(cr.pg_obbligazione,null,d.TI_APPARTENENZA,c.TI_APPARTENENZA)
+    ,decode(cr.pg_obbligazione,null,d.TI_GESTIONE,c.TI_GESTIONE)
+    ,decode(cr.pg_obbligazione,null,d.CD_ELEMENTO_VOCE,c.CD_ELEMENTO_VOCE)
+    ,DECODE(cr.pg_obbligazione,null,null,obb_comp.STATO_COGE_DOCAMM)
+    ,DECODE(cr.pg_obbligazione,null,null,obb_comp.STATO_COGE_DOCCONT)
 );
 
    COMMENT ON TABLE "V_DOC_AMM_COGE_CORI"  IS 'Vista di estrazione dei dettagli cori di documento amministrativo con valorizzazioni a fini COGE';

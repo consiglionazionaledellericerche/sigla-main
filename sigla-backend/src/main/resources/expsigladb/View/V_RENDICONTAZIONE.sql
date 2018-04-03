@@ -166,6 +166,7 @@
           obb_scad_voce.cd_centro_responsabilita cd_centro_responsabilita,
           obb_scad_voce.cd_linea_attivita gae, linea_attivita.ds_linea_attivita, m.dt_pagamento,m.pg_mandato nr_mandato
      FROM missione v,
+          missione_riga mr,
           obbligazione obb,
           obbligazione_scadenzario obb_scad,
           obbligazione_scad_voce obb_scad_voce,
@@ -176,20 +177,24 @@
     WHERE m_riga.esercizio = m.esercizio
       AND m_riga.cd_cds = m.cd_cds
       AND m_riga.pg_mandato = m.pg_mandato
-      AND m_riga.esercizio_obbligazione = v.esercizio_obbligazione
-      AND m_riga.esercizio_ori_obbligazione = v.esercizio_ori_obbligazione
-      AND m_riga.cd_cds = v.cd_cds_obbligazione
-      AND m_riga.pg_obbligazione = v.pg_obbligazione
-      AND m_riga.pg_obbligazione_scadenzario = v.pg_obbligazione_scadenzario
+      AND m_riga.esercizio_obbligazione = mr.esercizio_obbligazione
+      AND m_riga.esercizio_ori_obbligazione = mr.esercizio_ori_obbligazione
+      AND m_riga.cd_cds = mr.cd_cds_obbligazione
+      AND m_riga.pg_obbligazione = mr.pg_obbligazione
+      AND m_riga.pg_obbligazione_scadenzario = mr.pg_obbligazione_scadenzario
+      AND v.cd_cds = mr.cd_cds
+      AND v.cd_unita_organizzativa = mr.cd_unita_organizzativa
+      AND v.esercizio = mr.esercizio
+      AND v.pg_missione = mr.pg_missione
       AND m_riga.esercizio_doc_amm = v.esercizio
       AND m_riga.cd_cds_doc_amm = v.cd_cds
       AND m_riga.cd_uo_doc_amm = v.cd_unita_organizzativa
       AND m_riga.pg_doc_amm = v.pg_missione
-      AND v.esercizio_obbligazione = obb_scad.esercizio
-      AND v.cd_cds_obbligazione = obb_scad.cd_cds
-      AND v.pg_obbligazione = obb_scad.pg_obbligazione
-      AND v.pg_obbligazione_scadenzario = obb_scad.pg_obbligazione_scadenzario
-      AND v.esercizio_ori_obbligazione = obb_scad.esercizio_originale
+      AND mr.esercizio_obbligazione = obb_scad.esercizio
+      AND mr.cd_cds_obbligazione = obb_scad.cd_cds
+      AND mr.pg_obbligazione = obb_scad.pg_obbligazione
+      AND mr.pg_obbligazione_scadenzario = obb_scad.pg_obbligazione_scadenzario
+      AND mr.esercizio_ori_obbligazione = obb_scad.esercizio_originale
       AND obb_scad.esercizio = obb.esercizio
       AND obb_scad.cd_cds = obb.cd_cds
       AND obb_scad.pg_obbligazione = obb.pg_obbligazione
@@ -228,6 +233,7 @@
           obb_scad_voce.cd_centro_responsabilita cd_centro_responsabilita,
           obb_scad_voce.cd_linea_attivita gae, linea_attivita.ds_linea_attivita, m.dt_pagamento,m.pg_mandato nr_mandato
      FROM compenso v,
+          compenso_riga cr,
           obbligazione obb,
           obbligazione_scadenzario obb_scad,
           obbligazione_scad_voce obb_scad_voce,
@@ -238,20 +244,24 @@
     WHERE m_riga.esercizio = m.esercizio
       AND m_riga.cd_cds = m.cd_cds
       AND m_riga.pg_mandato = m.pg_mandato
-      AND m_riga.esercizio_obbligazione = v.esercizio_obbligazione
-      AND m_riga.esercizio_ori_obbligazione = v.esercizio_ori_obbligazione
-      AND m_riga.cd_cds = v.cd_cds_obbligazione
-      AND m_riga.pg_obbligazione = v.pg_obbligazione
-      AND m_riga.pg_obbligazione_scadenzario = v.pg_obbligazione_scadenzario
+      AND m_riga.esercizio_obbligazione = cr.esercizio_obbligazione
+      AND m_riga.esercizio_ori_obbligazione = cr.esercizio_ori_obbligazione
+      AND m_riga.cd_cds = cr.cd_cds_obbligazione
+      AND m_riga.pg_obbligazione = cr.pg_obbligazione
+      AND m_riga.pg_obbligazione_scadenzario = cr.pg_obbligazione_scadenzario
+      AND v.cd_cds = cr.cd_cds
+      AND v.cd_unita_organizzativa = cr.cd_unita_organizzativa
+      AND v.esercizio = cr.esercizio
+      AND v.pg_compenso = cr.pg_compenso
       AND m_riga.esercizio_doc_amm = v.esercizio
       AND m_riga.cd_cds_doc_amm = v.cd_cds
       AND m_riga.cd_uo_doc_amm = v.cd_unita_organizzativa
       AND m_riga.pg_doc_amm = v.pg_compenso
-      AND v.esercizio_obbligazione = obb_scad.esercizio
-      AND v.cd_cds_obbligazione = obb_scad.cd_cds
-      AND v.pg_obbligazione = obb_scad.pg_obbligazione
-      AND v.pg_obbligazione_scadenzario = obb_scad.pg_obbligazione_scadenzario
-      AND v.esercizio_ori_obbligazione = obb_scad.esercizio_originale
+      AND cr.esercizio_obbligazione = obb_scad.esercizio
+      AND cr.cd_cds_obbligazione = obb_scad.cd_cds
+      AND cr.pg_obbligazione = obb_scad.pg_obbligazione
+      AND cr.pg_obbligazione_scadenzario = obb_scad.pg_obbligazione_scadenzario
+      AND cr.esercizio_ori_obbligazione = obb_scad.esercizio_originale
       AND obb_scad.esercizio = obb.esercizio
       AND obb_scad.cd_cds = obb.cd_cds
       AND obb_scad.pg_obbligazione = obb.pg_obbligazione

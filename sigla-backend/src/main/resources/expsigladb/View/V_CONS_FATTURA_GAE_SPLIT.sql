@@ -80,14 +80,15 @@ select
 	FATTURA_PASSIVA.CD_TERZO,
 	OBBLIGAZIONE_SCAD_VOCE.CD_CENTRO_RESPONSABILITA,
 	OBBLIGAZIONE_SCAD_VOCE.CD_LINEA_ATTIVITA,
-	round((FATTURA_PASSIVA_RIGA.IM_IMPONIBILE *OBBLIGAZIONE_SCAD_VOCE.IM_VOCE)/OBBLIGAZIONE_SCADENZARIO.im_scadenza,2) im_voce,
-	decode (FATTURA_PASSIVA.TI_FATTURA,'C',- round(((FATTURA_PASSIVA_RIGA.IM_IMPONIBILE *OBBLIGAZIONE_SCAD_VOCE.IM_VOCE)/OBBLIGAZIONE_SCADENZARIO.im_scadenza /FATTURA_PASSIVA_RIGA.IM_IMPONIBILE) * IM_IVA*(100-percentuale)/100,2),
-	round(((FATTURA_PASSIVA_RIGA.IM_IMPONIBILE *OBBLIGAZIONE_SCAD_VOCE.IM_VOCE)/OBBLIGAZIONE_SCADENZARIO.im_scadenza /FATTURA_PASSIVA_RIGA.IM_IMPONIBILE) * IM_IVA*(100-percentuale)/100,2)) im_quota
+	round((FATTURA_PASSIVA_RIGA.IM_IMPONIBILE *OBBLIGAZIONE_SCAD_VOCE.IM_VOCE)/COMPENSO.im_totale_compenso,2) im_voce,
+	decode(FATTURA_PASSIVA.TI_FATTURA,'C',
+        -round((FATTURA_PASSIVA_RIGA.IM_IVA*OBBLIGAZIONE_SCAD_VOCE.IM_VOCE)/COMPENSO.im_totale_compenso*(100-percentuale)/100,2),
+         round((FATTURA_PASSIVA_RIGA.IM_IVA*OBBLIGAZIONE_SCAD_VOCE.IM_VOCE)/COMPENSO.im_totale_compenso*(100-percentuale)/100,2)) im_quota
 FROM
-    FATTURA_PASSIVA ,
-    FATTURA_PASSIVA_RIGA ,
+    FATTURA_PASSIVA,
+    FATTURA_PASSIVA_RIGA,
     OBBLIGAZIONE_SCADENZARIO,
-    OBBLIGAZIONE , OBBLIGAZIONE_SCAD_VOCE ,pro_rata,compenso
+    OBBLIGAZIONE , OBBLIGAZIONE_SCAD_VOCE ,pro_rata,compenso,compenso_riga
 WHERE
     pro_rata.esercizio = fattura_passiva.esercizio -1 and
     FATTURA_PASSIVA_RIGA.TI_ISTITUZ_COMMERC ='C' and
@@ -96,19 +97,23 @@ WHERE
     NVL(FATTURA_PASSIVA_RIGA.IM_IVA,0) !=0 AND
     NVL(OBBLIGAZIONE_SCAD_VOCE.IM_VOCE,0) !=0 AND
     OBBLIGAZIONE_SCADENZARIO.im_scadenza !=0 and
-	  FATTURA_PASSIVA.CD_CDS = FATTURA_PASSIVA_RIGA.CD_CDS AND
+	FATTURA_PASSIVA.CD_CDS = FATTURA_PASSIVA_RIGA.CD_CDS AND
     FATTURA_PASSIVA.CD_UNITA_ORGANIZZATIVA = FATTURA_PASSIVA_RIGA.CD_UNITA_ORGANIZZATIVA AND
     FATTURA_PASSIVA.ESERCIZIO = FATTURA_PASSIVA_RIGA.ESERCIZIO AND
     FATTURA_PASSIVA.PG_FATTURA_PASSIVA = FATTURA_PASSIVA_RIGA.PG_FATTURA_PASSIVA AND
     fattura_passiva.ESERCIZIO_COMPENSO = compenso.esercizio and
    	fattura_passiva.CDS_COMPENSO       = compenso.cd_cds and
-   	fattura_passiva.UO_COMPENSO				= compenso.cd_unita_organizzativa and
-   	fattura_passiva.PG_COMPENSO			  = compenso.pg_compenso and
-    OBBLIGAZIONE_SCADENZARIO.esercizio = compenso.esercizio_obbligazione	and
-    OBBLIGAZIONE_SCADENZARIO.esercizio_originale = compenso.esercizio_ori_obbligazione	and
-    OBBLIGAZIONE_SCADENZARIO.cd_cds = compenso.cd_cds_obbligazione		and
-    OBBLIGAZIONE_SCADENZARIO.pg_obbligazione = compenso.pg_obbligazione		and
-    OBBLIGAZIONE_SCADENZARIO.pg_obbligazione_scadenzario= compenso.pg_obbligazione_scadenzario	and
+   	fattura_passiva.UO_COMPENSO	       = compenso.cd_unita_organizzativa and
+   	fattura_passiva.pg_compenso        = compenso.pg_compenso and
+    compenso.cd_cds = compenso_riga.cd_cds and
+    compenso.cd_unita_organizzativa = compenso_riga.cd_unita_organizzativa and
+    compenso.esercizio = compenso_riga.esercizio and
+    compenso.pg_compenso = compenso_riga.pg_compenso and
+    OBBLIGAZIONE_SCADENZARIO.esercizio = compenso_riga.esercizio_obbligazione	and
+    OBBLIGAZIONE_SCADENZARIO.esercizio_originale = compenso_riga.esercizio_ori_obbligazione	and
+    OBBLIGAZIONE_SCADENZARIO.cd_cds = compenso_riga.cd_cds_obbligazione		and
+    OBBLIGAZIONE_SCADENZARIO.pg_obbligazione = compenso_riga.pg_obbligazione		and
+    OBBLIGAZIONE_SCADENZARIO.pg_obbligazione_scadenzario= compenso_riga.pg_obbligazione_scadenzario	and
     OBBLIGAZIONE_SCADENZARIO.CD_CDS = OBBLIGAZIONE.CD_CDS AND
     OBBLIGAZIONE_SCADENZARIO.ESERCIZIO = OBBLIGAZIONE.ESERCIZIO AND
     OBBLIGAZIONE_SCADENZARIO.ESERCIZIO_ORIGINALE = OBBLIGAZIONE.ESERCIZIO_ORIGINALE AND

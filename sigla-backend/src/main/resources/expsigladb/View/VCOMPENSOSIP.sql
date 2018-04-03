@@ -11,26 +11,30 @@ V.DS_compenso,V.IM_TOTALE_compenso,V.PG_compenso,v.DT_da_competenza_coge,v.DT_a_
 obb.cd_elemento_voce  cd_elemento_voce,
 obb_scad_voce.cd_centro_responsabilita cd_centro_responsabilita,
 obb_scad_voce.cd_linea_attivita gae,m.dt_pagamento
- FROM compenso V,
+ FROM compenso V, compenso_riga cr,
  obbligazione obb,obbligazione_scadenzario obb_scad,obbligazione_scad_voce obb_scad_voce,mandato m ,mandato_riga m_riga
 Where
 m_riga.esercizio                        = m.esercizio                                   And
 m_riga.cd_cds                           = m.cd_cds                                      And
 m_riga.pg_mandato                       = m.pg_mandato                                  And
-m_riga.ESERCIZIO_OBBLIGAZIONE           = V.esercizio_obbligazione                      And
-m_riga.ESERCIZIO_ORI_OBBLIGAZIONE       = V.esercizio_ori_obbligazione                  And
-m_riga.cd_cds                           = V.cd_cds_obbligazione                         And
-m_riga.PG_OBBLIGAZIONE                  = V.pg_obbligazione                             And
-m_riga.PG_OBBLIGAZIONE_SCADENZARIO      = V.PG_OBBLIGAZIONE_SCADENZARIO                 And
+m_riga.ESERCIZIO_OBBLIGAZIONE           = cr.esercizio_obbligazione                      And
+m_riga.ESERCIZIO_ORI_OBBLIGAZIONE       = cr.esercizio_ori_obbligazione                  And
+m_riga.cd_cds                           = cr.cd_cds_obbligazione                         And
+m_riga.PG_OBBLIGAZIONE                  = cr.pg_obbligazione                             And
+m_riga.PG_OBBLIGAZIONE_SCADENZARIO      = cr.PG_OBBLIGAZIONE_SCADENZARIO                 And
+v.cd_cds 								= cr.cd_cds                                      And
+v.cd_unita_organizzativa 				= cr.cd_unita_organizzativa                      And
+v.esercizio 							= cr.esercizio                                   And
+v.pg_compenso 							= cr.pg_compenso                                And
 m_riga.esercizio_DOC_AMM                = V.esercizio                                   And
 m_riga.CD_CDS_DOC_AMM                   = V.cd_cds                                      And
 m_riga.CD_UO_DOC_AMM                    = V.cd_unita_organizzativa                      And
 m_riga.pg_doc_amm                       = V.pg_compenso                                 And
-v.esercizio_obbligazione                = obb_scad.esercizio 		                and
-v.cd_cds_obbligazione	                = obb_scad.cd_cds    		                and
-v.pg_obbligazione 			= obb_scad.pg_obbligazione 		        And
-v.pg_obbligazione_scadenzario		= obb_scad.pg_obbligazione_scadenzario          and
-v.esercizio_ori_obbligazione 		= obb_scad.esercizio_originale	                And
+cr.esercizio_obbligazione                = obb_scad.esercizio 		                and
+cr.cd_cds_obbligazione	                = obb_scad.cd_cds    		                and
+cr.pg_obbligazione 			= obb_scad.pg_obbligazione 		        And
+cr.pg_obbligazione_scadenzario		= obb_scad.pg_obbligazione_scadenzario          and
+cr.esercizio_ori_obbligazione 		= obb_scad.esercizio_originale	                And
 obb_scad.esercizio        	        = obb.esercizio			                and
 obb_scad.cd_cds 			= obb.cd_cds 				        And
 obb_scad.pg_obbligazione 		= obb.pg_obbligazione 		                and

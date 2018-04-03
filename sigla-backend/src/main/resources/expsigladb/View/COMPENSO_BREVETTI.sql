@@ -15,31 +15,25 @@
                     c.nr_fattura_fornitore, c.im_totale_compenso,
                     c.im_lordo_percipiente, c.im_netto_percipiente,
                     c.imponibile_fiscale, c.imponibile_iva, c.cd_voce_iva,
-                    c.pg_trovato
+                    cr.pg_trovato
                FROM compenso c,
+                    compenso_riga cr,
                     obbligazione o,
                     obbligazione_scadenzario os,
                     unita_organizzativa u
-              WHERE c.cd_unita_organizzativa = u.cd_unita_organizzativa
---And f.cd_terzo = t.cd_terzo
---And t.cd_anag = a.cd_anag
-                AND c.cd_cds_obbligazione = os.cd_cds
-                AND c.esercizio_obbligazione = os.esercizio
-                AND c.esercizio_ori_obbligazione = os.esercizio_originale
-                AND c.pg_obbligazione = os.pg_obbligazione
-                AND c.pg_obbligazione_scadenzario =
-                                                os.pg_obbligazione_scadenzario
+              WHERE c.cd_cds = cr.cd_cds
+                AND c.cd_unita_organizzativa = cr.cd_unita_organizzativa
+                AND c.esercizio = cr.esercizio
+                AND c.pg_compenso = cr.pg_compenso
+                AND c.cd_unita_organizzativa = u.cd_unita_organizzativa
+                AND cr.cd_cds_obbligazione = os.cd_cds
+                AND cr.esercizio_obbligazione = os.esercizio
+                AND cr.esercizio_ori_obbligazione = os.esercizio_originale
+                AND cr.pg_obbligazione = os.pg_obbligazione
+                AND cr.pg_obbligazione_scadenzario = os.pg_obbligazione_scadenzario
                 AND os.esercizio = o.esercizio
                 AND os.cd_cds = o.cd_cds
                 AND os.esercizio_originale = o.esercizio_originale
                 AND os.pg_obbligazione = o.pg_obbligazione
-/*And mr.cd_cds (+)= os.cd_cds
-and mr.esercizio(+)  = os.esercizio
-And mr.esercizio_ori_obbligazione(+) = os.esercizio_originale
-And mr.pg_obbligazione(+) = os.pg_obbligazione
-and mr.pg_obbligazione_scadenzario(+) = os.pg_obbligazione_scadenzario*/
-/*and mr.ESERCIZIO(+) = m.ESERCIZIO (+)
-and mr.CD_CDS(+) = m.CD_CDS (+)
-and mr.PG_MANDATO(+) = m.PG_MANDATO(+)*/
-                AND (o.cd_elemento_voce = '1.01.132' or c.pg_trovato is not null)
+                AND (o.cd_elemento_voce = '1.01.132' or cr.pg_trovato is not null)
                 AND c.stato_cofi != 'A') ;

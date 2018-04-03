@@ -118,11 +118,11 @@ select   -- dettagli (della testata) dei compensi associati alla minicarriera
 ,cmin.PG_COMPENSO
 ,cmin.ESERCIZIO_COMPENSO
 ,0				 -- com.IM_NETTO_PERCIPIENTE
-,com.CD_CDS_OBBLIGAZIONE
-,com.ESERCIZIO_OBBLIGAZIONE
-,com.ESERCIZIO_ORI_OBBLIGAZIONE
-,com.PG_OBBLIGAZIONE
-,com.PG_OBBLIGAZIONE_SCADENZARIO
+,comriga.CD_CDS_OBBLIGAZIONE
+,comriga.ESERCIZIO_OBBLIGAZIONE
+,comriga.ESERCIZIO_ORI_OBBLIGAZIONE
+,comriga.PG_OBBLIGAZIONE
+,comriga.PG_OBBLIGAZIONE_SCADENZARIO
 ,obbs.DT_SCADENZA
 ,decode(obb.ESERCIZIO_ORI_RIPORTO,null,'C','R')
 ,null			    -- obbv.CD_VOCE
@@ -157,6 +157,7 @@ from minicarriera min
 			,mrata.ESERCIZIO_COMPENSO
 			,mrata.PG_COMPENSO) cmin
 	,compenso com
+  ,compenso_riga comriga
 	,obbligazione_scadenzario obbs
 	,obbligazione obb
 where cmin.CD_CDS 				  = min.CD_CDS
@@ -167,15 +168,19 @@ where cmin.CD_CDS 				  = min.CD_CDS
   and com.CD_UNITA_ORGANIZZATIVA  = cmin.CD_UO_COMPENSO
   and com.ESERCIZIO				  = cmin.ESERCIZIO_COMPENSO
   and com.PG_COMPENSO			  = cmin.PG_COMPENSO
-  and obbs.CD_CDS				  = com.CD_CDS_OBBLIGAZIONE
-  and obbs.ESERCIZIO			  = com.ESERCIZIO_OBBLIGAZIONE
-  and obbs.ESERCIZIO_ORIGINALE		  = com.ESERCIZIO_ORI_OBBLIGAZIONE
-  and obbs.PG_OBBLIGAZIONE		  = com.PG_OBBLIGAZIONE
-  and obbs.PG_OBBLIGAZIONE_SCADENZARIO = com.PG_OBBLIGAZIONE_SCADENZARIO
-  and obb.CD_CDS			  = com.CD_CDS
-  and obb.ESERCIZIO			  = com.ESERCIZIO
-  and obb.ESERCIZIO_ORIGINALE		  = com.ESERCIZIO_ORI_OBBLIGAZIONE
-  and obb.PG_OBBLIGAZIONE		  = com.PG_OBBLIGAZIONE
+  and comriga.CD_CDS          = com.CD_CDS
+  and comriga.CD_UNITA_ORGANIZZATIVA  = com.CD_UNITA_ORGANIZZATIVA
+  and comriga.ESERCIZIO         = com.ESERCIZIO
+  and comriga.PG_COMPENSO       = com.PG_COMPENSO
+  and obbs.CD_CDS				  = comriga.CD_CDS_OBBLIGAZIONE
+  and obbs.ESERCIZIO			  = comriga.ESERCIZIO_OBBLIGAZIONE
+  and obbs.ESERCIZIO_ORIGINALE		  = comriga.ESERCIZIO_ORI_OBBLIGAZIONE
+  and obbs.PG_OBBLIGAZIONE		  = comriga.PG_OBBLIGAZIONE
+  and obbs.PG_OBBLIGAZIONE_SCADENZARIO = comriga.PG_OBBLIGAZIONE_SCADENZARIO
+  and obb.CD_CDS			  = obbs.CD_CDS
+  and obb.ESERCIZIO			  = obbs.ESERCIZIO
+  and obb.ESERCIZIO_ORIGINALE		  = obbs.ESERCIZIO_ORIGINALE
+  and obb.PG_OBBLIGAZIONE		  = obbs.PG_OBBLIGAZIONE
 union all
 select distinct -- dettagli (dei compensi) dei capitoli legati alle obbligazioni
  min.CD_CDS
@@ -246,6 +251,7 @@ from minicarriera min
 			,mrata.ESERCIZIO_COMPENSO
 			,mrata.PG_COMPENSO) cmin
 	,compenso com
+  ,compenso_riga comriga
 	,obbligazione_scad_voce obbv
 where cmin.CD_CDS 				  = min.CD_CDS
   and cmin.CD_UNITA_ORGANIZZATIVA = min.CD_UNITA_ORGANIZZATIVA
@@ -255,11 +261,15 @@ where cmin.CD_CDS 				  = min.CD_CDS
   and com.CD_UNITA_ORGANIZZATIVA  = cmin.CD_UO_COMPENSO
   and com.ESERCIZIO				  = cmin.ESERCIZIO_COMPENSO
   and com.PG_COMPENSO			  = cmin.PG_COMPENSO
-  and obbv.CD_CDS				  = com.CD_CDS_OBBLIGAZIONE
-  and obbv.ESERCIZIO			  = com.ESERCIZIO_OBBLIGAZIONE
-  and obbv.ESERCIZIO_ORIGINALE		  = com.ESERCIZIO_ORI_OBBLIGAZIONE
-  and obbv.PG_OBBLIGAZIONE		  = com.PG_OBBLIGAZIONE
-  and obbv.PG_OBBLIGAZIONE_SCADENZARIO = com.PG_OBBLIGAZIONE_SCADENZARIO
+  and comriga.CD_CDS          = com.CD_CDS
+  and comriga.CD_UNITA_ORGANIZZATIVA  = com.CD_UNITA_ORGANIZZATIVA
+  and comriga.ESERCIZIO         = com.ESERCIZIO
+  and comriga.PG_COMPENSO       = com.PG_COMPENSO
+  and obbv.CD_CDS				  = comriga.CD_CDS_OBBLIGAZIONE
+  and obbv.ESERCIZIO			  = comriga.ESERCIZIO_OBBLIGAZIONE
+  and obbv.ESERCIZIO_ORIGINALE		  = comriga.ESERCIZIO_ORI_OBBLIGAZIONE
+  and obbv.PG_OBBLIGAZIONE		  = comriga.PG_OBBLIGAZIONE
+  and obbv.PG_OBBLIGAZIONE_SCADENZARIO = comriga.PG_OBBLIGAZIONE_SCADENZARIO
 union all
 select   -- rate della minicarriera, raggruppate per compenso
  mrata.CD_CDS

@@ -138,7 +138,7 @@ begin
                                  ,c.esercizio,c.pg_contratto,null,null
          union all
          -- fatture legati a compensi pagate nel periodo sia con contratto che con incarico
-          select comp.esercizio,comp.CD_unita_organizzativa uo,comp.pg_compenso pg_doc,'COMPENSO'  tipo_doc,sum(comp.im_totale_compenso) tot,
+          select comp.esercizio,comp.CD_unita_organizzativa uo,comp.pg_compenso pg_doc,'COMPENSO'  tipo_doc,sum(comp_riga.im_totale_riga_compenso) tot,
           comp.dt_scadenza,trunc(m.dt_trasmissione) dt_trasmissione,
            (mr.im_mandato_riga) tot_pagato, ((TRUNC (m.dt_trasmissione) - comp.dt_scadenza)* mr.im_mandato_riga) tot_pesato,
            	a.cd_anag,f.cd_terzo,os.esercizio esercizio_obb,os.cd_cds,os.pg_obbligazione,os.pg_obbligazione_scadenzario,os.esercizio_originale
@@ -150,7 +150,8 @@ begin
                       mandato_riga mr,
                       mandato m,anagrafico a, terzo t,
                       INCARICHI_REPERTORIO I,
-                      compenso comp
+                      compenso comp,
+                      compenso_riga comp_riga
                 WHERE a.cd_anag = t.cd_anag and t.cd_terzo= f.cd_terzo and
                       c.esercizio(+) = o.esercizio_contratto
                   AND c.stato(+) = o.stato_contratto
@@ -169,11 +170,15 @@ begin
                   AND o.cd_cds = os.cd_cds
                   AND o.pg_obbligazione = os.pg_obbligazione
                   and comp.fl_generata_fattura = 'Y'
-                  AND os.esercizio = comp.esercizio_obbligazione
-                  AND os.esercizio_originale = comp.esercizio_ori_obbligazione
-                  AND os.cd_cds = comp.cd_cds_obbligazione
-                  AND os.pg_obbligazione = comp.pg_obbligazione
-                  AND os.pg_obbligazione_scadenzario = comp.pg_obbligazione_scadenzario
+                  AND comp.cd_cds = comp_riga.cd_cds
+                  AND comp.cd_unita_organizzativa = comp_riga.cd_unita_organizzativa
+                  AND comp.esercizio = comp_riga.esercizio
+                  AND comp.pg_compenso = comp_riga.pg_compenso
+                  AND os.esercizio = comp_riga.esercizio_obbligazione
+                  AND os.esercizio_originale = comp_riga.esercizio_ori_obbligazione
+                  AND os.cd_cds = comp_riga.cd_cds_obbligazione
+                  AND os.pg_obbligazione = comp_riga.pg_obbligazione
+                  AND os.pg_obbligazione_scadenzario = comp_riga.pg_obbligazione_scadenzario
                   AND comp.esercizio = f.esercizio_compenso
                   AND comp.cd_cds = f.cds_compenso
                   AND comp.cd_unita_organizzativa = f.uo_compenso
@@ -209,9 +214,9 @@ begin
                   union all
            -- compensi pagati nel periodo sia con contratto che con incarico non da fattura
                    select comp.esercizio,comp.CD_unita_organizzativa uo,comp.pg_compenso pg_doc,'COMPENSO'  tipo_doc,
-                   sum(comp.im_totale_compenso) tot,nvl(comp.dt_scadenza,trunc(comp.dt_registrazione)+30),trunc(dt_trasmissione) dt_trasmissione,
-                       (mr.im_mandato_riga) tot_pagato,
-                        ((TRUNC (m.dt_trasmissione) -nvl(comp.dt_scadenza,trunc(comp.dt_registrazione)+30))* mr.im_mandato_riga) tot_pesato,
+                   sum(comp_riga.im_totale_riga_compenso) tot,nvl(comp.dt_scadenza,trunc(comp.dt_registrazione)+30),trunc(dt_trasmissione) dt_trasmissione,
+                       sum(mr.im_mandato_riga) tot_pagato,
+                       sum(((TRUNC (m.dt_trasmissione) -nvl(comp.dt_scadenza,trunc(comp.dt_registrazione)+30))* mr.im_mandato_riga)) tot_pesato,
                        a.cd_anag,comp.cd_terzo,os.esercizio esercizio_obb,os.cd_cds,os.pg_obbligazione,os.pg_obbligazione_scadenzario,os.esercizio_originale
                     ,c.esercizio esercizio_contratto,c.pg_contratto,i.esercizio esercizio_inc,i.pg_repertorio pg_incarico
                  FROM contratto c,
@@ -220,7 +225,9 @@ begin
                       mandato_riga mr,
                       mandato m,
                       INCARICHI_REPERTORIO I,
-                      compenso comp,anagrafico a, terzo t
+                      compenso comp,
+                      compenso_riga comp_riga,
+                      anagrafico a, terzo t
                 WHERE a.cd_anag = t.cd_anag and t.cd_terzo= comp.cd_terzo and
                         c.esercizio(+) = o.esercizio_contratto
                   AND c.stato(+) = o.stato_contratto
@@ -235,15 +242,19 @@ begin
                   AND O.PG_REPERTORIO  =I.PG_REPERTORIO(+)
                   AND comp.CD_TIPO_RAPPORTO IN('OCCA','PROF'))
                   and comp.fl_generata_fattura = 'N'
+                  AND comp.cd_cds = comp_riga.cd_cds
+                  AND comp.cd_unita_organizzativa = comp_riga.cd_unita_organizzativa
+                  AND comp.esercizio = comp_riga.esercizio
+                  AND comp.pg_compenso = comp_riga.pg_compenso
                   AND o.esercizio = os.esercizio
                   AND o.esercizio_originale = os.esercizio_originale
                   AND o.cd_cds = os.cd_cds
                   AND o.pg_obbligazione = os.pg_obbligazione
-                  AND os.esercizio = comp.esercizio_obbligazione
-                  AND os.esercizio_originale = comp.esercizio_ori_obbligazione
-                  AND os.cd_cds = comp.cd_cds_obbligazione
-                  AND os.pg_obbligazione = comp.pg_obbligazione
-                  AND os.pg_obbligazione_scadenzario= comp.pg_obbligazione_scadenzario
+                  AND os.esercizio = comp_riga.esercizio_obbligazione
+                  AND os.esercizio_originale = comp_riga.esercizio_ori_obbligazione
+                  AND os.cd_cds = comp_riga.cd_cds_obbligazione
+                  AND os.pg_obbligazione = comp_riga.pg_obbligazione
+                  AND os.pg_obbligazione_scadenzario= comp_riga.pg_obbligazione_scadenzario
                   AND os.esercizio = mr.esercizio_obbligazione
                   AND os.cd_cds = mr.cd_cds
                   AND os.esercizio_originale = mr.esercizio_ori_obbligazione
@@ -267,19 +278,21 @@ begin
                   AND NVL (comp.stato_liquidazione, 'LIQ') = 'LIQ'
                     group by
                     comp.esercizio,comp.CD_unita_organizzativa,comp.pg_compenso,'COMPENSO',nvl(comp.dt_scadenza,trunc(comp.dt_registrazione)+30),trunc(dt_trasmissione),
-                  mr.im_mandato_riga,a.cd_anag,comp.cd_terzo,os.esercizio,os.cd_cds,os.pg_obbligazione,os.pg_obbligazione_scadenzario,os.esercizio_originale
-                  ,c.esercizio ,c.pg_contratto,i.esercizio ,i.pg_repertorio ,comp.dt_registrazione
+                    a.cd_anag,comp.cd_terzo,os.esercizio,os.cd_cds,os.pg_obbligazione,os.pg_obbligazione_scadenzario,os.esercizio_originale,
+                    c.esercizio ,c.pg_contratto,i.esercizio ,i.pg_repertorio ,comp.dt_registrazione
            union all
           -- compensi non pagati sia con contratto che con incarico non da fattura
                    select comp.esercizio,comp.CD_unita_organizzativa uo,comp.pg_compenso pg_doc,'COMPENSO'  tipo_doc,
-						sum(comp.im_totale_compenso) tot,nvl(comp.dt_scadenza,trunc(comp.dt_registrazione)+30),null dt_trasmissione,
+						sum(comp_riga.im_totale_riga_compenso) tot,nvl(comp.dt_scadenza,trunc(comp.dt_registrazione)+30),null dt_trasmissione,
                       0 tot_pagato,0 tot_pesato,a.cd_anag,comp.cd_terzo,os.esercizio esercizio_obb,os.cd_cds,os.pg_obbligazione,os.pg_obbligazione_scadenzario,os.esercizio_originale
                       ,c.esercizio esercizio_contratto,c.pg_contratto,i.esercizio esercizio_inc,i.pg_repertorio pg_incarico
                  FROM contratto c,
                       obbligazione o,
                       obbligazione_scadenzario os,
                       INCARICHI_REPERTORIO I,
-                      compenso comp,anagrafico a,terzo t
+                      compenso comp,
+                      compenso_riga comp_riga,
+                      anagrafico a,terzo t
                 WHERE a.cd_anag = t.cd_anag and t.cd_terzo= comp.cd_terzo and
                         c.esercizio(+) = o.esercizio_contratto
                   AND c.stato(+) = o.stato_contratto
@@ -294,15 +307,19 @@ begin
                   AND O.PG_REPERTORIO  =I.PG_REPERTORIO(+)
                   AND comp.CD_TIPO_RAPPORTO IN('OCCA','PROF'))
                   and comp.fl_generata_fattura = 'N'
+                  AND comp.cd_cds = comp_riga.cd_cds
+                  AND comp.cd_unita_organizzativa = comp_riga.cd_unita_organizzativa
+                  AND comp.esercizio = comp_riga.esercizio
+                  AND comp.pg_compenso = comp_riga.pg_compenso
                   AND o.esercizio = os.esercizio
                   AND o.esercizio_originale = os.esercizio_originale
                   AND o.cd_cds = os.cd_cds
                   AND o.pg_obbligazione = os.pg_obbligazione
-                  AND os.esercizio = comp.esercizio_obbligazione
-                  AND os.esercizio_originale = comp.esercizio_ori_obbligazione
-                  AND os.cd_cds = comp.cd_cds_obbligazione
-                  AND os.pg_obbligazione = comp.pg_obbligazione
-                  AND os.pg_obbligazione_scadenzario= comp.pg_obbligazione_scadenzario
+                  AND os.esercizio = comp_riga.esercizio_obbligazione
+                  AND os.esercizio_originale = comp_riga.esercizio_ori_obbligazione
+                  AND os.cd_cds = comp_riga.cd_cds_obbligazione
+                  AND os.pg_obbligazione = comp_riga.pg_obbligazione
+                  AND os.pg_obbligazione_scadenzario= comp_riga.pg_obbligazione_scadenzario
                   and not exists(
                   select 1 from mandato m , mandato_riga mr
                       where

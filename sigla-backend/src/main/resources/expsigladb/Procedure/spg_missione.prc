@@ -110,7 +110,9 @@ begin
 	--	inizio inserimento record (A,A) testata
 
 		begin
-			 select mriga.ESERCIZIO, mriga.PG_MANDATO into aNum1, aNum2
+		     --Il mandato su missione è unico anche in presenza di più impegni sulla missione
+		     --per cui la select deve riportare un'unica riga
+			 select distinct mriga.ESERCIZIO, mriga.PG_MANDATO into aNum1, aNum2
 			 from mandato_riga mriga
 			 where mriga.CD_CDS_DOC_AMM	  	   = aMiss.CD_CDS
 	  		   and mriga.CD_UO_DOC_AMM	  	   = aMiss.CD_UNITA_ORGANIZZATIVA
@@ -231,11 +233,15 @@ begin
 
 	-- inizio inserimento record (A,B2) capitoli della missione
 
-	if aMiss.PG_OBBLIGAZIONE is not null then
+    -- ciclo sulle obbligazioni associate alla missione
+	for aObblig in (select * from missione_riga missriga
+	                where missriga.cd_cds = aMiss.cd_cds
+	                and   missriga.cd_unita_organizzativa = aMiss.cd_unita_organizzativa
+	                and   missriga.esercizio = aMiss.esercizio
+	                and   missriga.pg_missione = aMiss.pg_missione) Loop
 	-- missioni con anticipo < missione => no rimborso
-
 		begin
-			 select mriga.ESERCIZIO, mriga.PG_MANDATO into aNum1, aNum2
+			 select distinct mriga.ESERCIZIO, mriga.PG_MANDATO into aNum1, aNum2
 			 from mandato_riga mriga
 			 where mriga.CD_CDS_DOC_AMM	  	   = aMiss.CD_CDS
 	  		   and mriga.CD_UO_DOC_AMM	  	   = aMiss.CD_UNITA_ORGANIZZATIVA
@@ -261,11 +267,11 @@ begin
 
 	   -- ciclo sui capitoli associati alla missione
 	    for aVoce in (select * from obbligazione_scad_voce obbv
-	   	   		 	  where obbv.CD_CDS				  	     = aMiss.CD_CDS_OBBLIGAZIONE
-  					    and obbv.ESERCIZIO				     = aMiss.ESERCIZIO_OBBLIGAZIONE
-  					    and obbv.ESERCIZIO_ORIGINALE		     = aMiss.ESERCIZIO_ORI_OBBLIGAZIONE
-  					    and obbv.PG_OBBLIGAZIONE		  	 = aMiss.PG_OBBLIGAZIONE
-  					    and obbv.PG_OBBLIGAZIONE_SCADENZARIO = aMiss.PG_OBBLIGAZIONE_SCADENZARIO) loop
+	   	   		 	  where obbv.CD_CDS				  	     = aObblig.CD_CDS_OBBLIGAZIONE
+  					    and obbv.ESERCIZIO				     = aObblig.ESERCIZIO_OBBLIGAZIONE
+  					    and obbv.ESERCIZIO_ORIGINALE		 = aObblig.ESERCIZIO_ORI_OBBLIGAZIONE
+  					    and obbv.PG_OBBLIGAZIONE		  	 = aObblig.PG_OBBLIGAZIONE
+  					    and obbv.PG_OBBLIGAZIONE_SCADENZARIO = aObblig.PG_OBBLIGAZIONE_SCADENZARIO) loop
 	    -- inizio loop 3
 
 	   	  i := i+1;
@@ -321,9 +327,9 @@ begin
 	 			   'N',
 	 			   aMiss.TI_PROVVISORIO_DEFINITIVO,
 	 			   aMiss.FL_ASSOCIATO_COMPENSO,
-	 			   aMiss.ESERCIZIO_ORI_OBBLIGAZIONE,
-	 			   aMiss.PG_OBBLIGAZIONE,
-	 			   aMiss.PG_OBBLIGAZIONE_SCADENZARIO,
+	 			   aObblig.ESERCIZIO_ORI_OBBLIGAZIONE,
+	 			   aObblig.PG_OBBLIGAZIONE,
+	 			   aObblig.PG_OBBLIGAZIONE_SCADENZARIO,
 	 			   decode(obb.ESERCIZIO_ORI_RIPORTO,null,'C','R'),
 	 			   obbs.DT_SCADENZA,
 	 			   aNum3,
@@ -350,15 +356,15 @@ begin
 			  ,obbligazione_scadenzario obbs
 			  ,rif_modalita_pagamento rif
 			  ,banca ban
-		  where obb.CD_CDS			                 = aMiss.CD_CDS_OBBLIGAZIONE
-			and obb.ESERCIZIO		   	   	 = aMiss.ESERCIZIO_OBBLIGAZIONE
-			and obb.ESERCIZIO_ORIGINALE	   	   	 = aMiss.ESERCIZIO_ORI_OBBLIGAZIONE
-  			and obb.PG_OBBLIGAZIONE	   		   	 = aMiss.PG_OBBLIGAZIONE
-			and obbs.CD_CDS				   	 = aMiss.CD_CDS_OBBLIGAZIONE
-			and obbs.ESERCIZIO		 	   	 = aMiss.ESERCIZIO_OBBLIGAZIONE
-			and obbs.ESERCIZIO_ORIGINALE	  	   	 = aMiss.ESERCIZIO_ORI_OBBLIGAZIONE
-			and obbs.PG_OBBLIGAZIONE		  	 = aMiss.PG_OBBLIGAZIONE
-			and obbs.PG_OBBLIGAZIONE_SCADENZARIO = aMiss.PG_OBBLIGAZIONE_SCADENZARIO
+		  where obb.CD_CDS			             = aObblig.CD_CDS_OBBLIGAZIONE
+			and obb.ESERCIZIO		   	   	     = aObblig.ESERCIZIO_OBBLIGAZIONE
+			and obb.ESERCIZIO_ORIGINALE	   	   	 = aObblig.ESERCIZIO_ORI_OBBLIGAZIONE
+  			and obb.PG_OBBLIGAZIONE	   		   	 = aObblig.PG_OBBLIGAZIONE
+			and obbs.CD_CDS				   	     = aObblig.CD_CDS_OBBLIGAZIONE
+			and obbs.ESERCIZIO		 	   	     = aObblig.ESERCIZIO_OBBLIGAZIONE
+			and obbs.ESERCIZIO_ORIGINALE	  	 = aObblig.ESERCIZIO_ORI_OBBLIGAZIONE
+			and obbs.PG_OBBLIGAZIONE		  	 = aObblig.PG_OBBLIGAZIONE
+			and obbs.PG_OBBLIGAZIONE_SCADENZARIO = aObblig.PG_OBBLIGAZIONE_SCADENZARIO
 			and rif.CD_MODALITA_PAG			   	 = aMiss.CD_MODALITA_PAG
 			and ban.CD_TERZO					 = aMiss.CD_TERZO
 			and ban.PG_BANCA					 = aMiss.PG_BANCA;

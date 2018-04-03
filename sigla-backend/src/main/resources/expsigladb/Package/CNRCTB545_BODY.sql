@@ -613,11 +613,6 @@ BEGIN
            ESERCIZIO_MISSIONE,
            PG_MISSIONE,
            CD_UO_MISSIONE,
-           CD_CDS_OBBLIGAZIONE,
-           ESERCIZIO_OBBLIGAZIONE,
-           ESERCIZIO_ORI_OBBLIGAZIONE,
-           PG_OBBLIGAZIONE,
-           PG_OBBLIGAZIONE_SCADENZARIO,
            CD_CDS_ACCERTAMENTO,
            ESERCIZIO_ACCERTAMENTO,
            ESERCIZIO_ORI_ACCERTAMENTO,
@@ -724,11 +719,6 @@ BEGIN
            aRecCompenso.esercizio_missione,
            aRecCompenso.pg_missione,
            aRecCompenso.cd_uo_missione,
-           aRecCompenso.cd_cds_obbligazione,
-           aRecCompenso.esercizio_obbligazione,
-           aRecCompenso.esercizio_ori_obbligazione,
-           aRecCompenso.pg_obbligazione,
-           aRecCompenso.pg_obbligazione_scadenzario,
            aRecCompenso.cd_cds_accertamento,
            aRecCompenso.esercizio_accertamento,
            aRecCompenso.esercizio_ori_accertamento,
@@ -780,6 +770,51 @@ BEGIN
            aRecCompenso.fl_accantona_add_terr);
 
 END insCompenso;
+
+PROCEDURE insCompensoRiga
+   (
+    aRecCompensoRiga COMPENSO_RIGA%ROWTYPE
+   ) IS
+
+BEGIN
+
+   INSERT INTO COMPENSO_RIGA
+          (CD_CDS,
+           CD_UNITA_ORGANIZZATIVA,
+           ESERCIZIO,
+           PG_COMPENSO,
+           PROGRESSIVO_RIGA,
+           CD_CDS_OBBLIGAZIONE,
+           ESERCIZIO_OBBLIGAZIONE,
+           ESERCIZIO_ORI_OBBLIGAZIONE,
+           PG_OBBLIGAZIONE,
+           PG_OBBLIGAZIONE_SCADENZARIO,
+           PG_TROVATO,
+           IM_TOTALE_RIGA_COMPENSO,
+           DACR,
+           UTCR,
+           DUVA,
+           UTUV,
+           PG_VER_REC)
+   VALUES (aRecCompensoRiga.cd_cds,
+           aRecCompensoRiga.cd_unita_organizzativa,
+           aRecCompensoRiga.esercizio,
+           aRecCompensoRiga.pg_compenso,
+           aRecCompensoRiga.progressivo_riga,
+           aRecCompensoRiga.cd_cds_obbligazione,
+           aRecCompensoRiga.esercizio_obbligazione,
+           aRecCompensoRiga.esercizio_ori_obbligazione,
+           aRecCompensoRiga.pg_obbligazione,
+           aRecCompensoRiga.pg_obbligazione_scadenzario,
+           aRecCompensoRiga.pg_trovato,
+           aRecCompensoRiga.im_totale_riga_compenso,
+           aRecCompensoRiga.dacr,
+           aRecCompensoRiga.utcr,
+           aRecCompensoRiga.duva,
+           aRecCompensoRiga.utuv,
+           aRecCompensoRiga.pg_ver_rec);
+
+END insCompensoRiga;
 
 
 --==================================================================================================
@@ -992,11 +1027,6 @@ BEGIN
               esercizio_missione,
               cd_uo_missione,
               pg_missione,
-              cd_cds_obbligazione,
-              esercizio_obbligazione,
-              esercizio_ori_obbligazione,
-              pg_obbligazione,
-              pg_obbligazione_scadenzario,
               cd_cds_accertamento,
               esercizio_accertamento,
               esercizio_ori_accertamento,
@@ -1066,7 +1096,6 @@ BEGIN
               stato_contratto,
               pg_contratto,
               im_tot_reddito_complessivo,
-							PG_TROVATO,
 							DATA_PROTOCOLLO,
 							NUMERO_PROTOCOLLO,
 							DT_SCADENZA,
@@ -1130,11 +1159,6 @@ BEGIN
               A.esercizio_missione,
               A.cd_uo_missione,
               A.pg_missione,
-              A.cd_cds_obbligazione,
-              A.esercizio_obbligazione,
-              A.esercizio_ori_obbligazione,
-              A.pg_obbligazione,
-              A.pg_obbligazione_scadenzario,
               A.cd_cds_accertamento,
               A.esercizio_accertamento,
               A.esercizio_ori_accertamento,
@@ -1204,7 +1228,6 @@ BEGIN
               A.stato_contratto,
               A.pg_contratto,
               A.im_tot_reddito_complessivo,
-              A.pg_trovato,
 							A.data_protocollo,
 							A.numero_protocollo,
 							A.dt_scadenza,
@@ -1217,6 +1240,46 @@ BEGIN
               A.cd_unita_organizzativa = aCdUnitaOrganizzativa AND
               A.pg_compenso = aPgCompenso;
 
+      INSERT INTO COMPENSO_RIGA
+             (cd_cds,
+              cd_unita_organizzativa,
+              esercizio,
+              pg_compenso,
+              progressivo_riga,
+              cd_cds_obbligazione,
+              esercizio_obbligazione,
+              esercizio_ori_obbligazione,
+              pg_obbligazione,
+              pg_obbligazione_scadenzario,
+              pg_trovato,
+              im_totale_riga_compenso,
+              duva,
+              utcr,
+              dacr,
+              utuv,
+              pg_ver_rec)
+       SELECT aCdCdsCopia,
+              aCdUnitaOrganizzativaCopia,
+              aEsercizioCopia,
+              aPgCompensoCopia,
+              A.progressivo_riga,
+              A.cd_cds_obbligazione,
+              A.esercizio_obbligazione,
+              A.esercizio_ori_obbligazione,
+              A.pg_obbligazione,
+              A.pg_obbligazione_scadenzario,
+              A.pg_trovato,
+              A.im_totale_riga_compenso,
+              A.duva,
+              A.utcr,
+              A.dacr,
+              A.utuv,
+              A.pg_ver_rec
+       FROM   COMPENSO_RIGA A
+       WHERE  A.cd_cds = aCdCds AND
+              A.esercizio = aEsercizio AND
+              A.cd_unita_organizzativa = aCdUnitaOrganizzativa AND
+              A.pg_compenso = aPgCompenso;
    END;
 
    BEGIN
