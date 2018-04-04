@@ -56,9 +56,9 @@
 		</fieldset>
 	</div>
   </td>
-  <td>
+  <td class="align-top">
 	<div class="card">
-		<fieldset class="fieldset mb-2">
+		<fieldset class="fieldset mb-2 ">
 		<legend class="GroupLabel card-header text-primary">Riepilogo</legend>
 		<table class="m-2 p-2">
 		  <tr>         

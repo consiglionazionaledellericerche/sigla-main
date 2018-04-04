@@ -216,7 +216,10 @@ public class MissioneHome extends BulkHome implements
 			;
 		}
 
+		Missione_rigaHome rigaHome = (Missione_rigaHome)getHomeCache().getHome(Missione_rigaBulk.class);
 		// Cancello la missione, spese e tappe con numerazione temporanea
+		for (Missione_rigaBulk missRigaTemp : missioneTemp.getMissioneRigaColl())
+			rigaHome.delete(missRigaTemp, userContext);
 		delete(missioneTemp, userContext);
 
 		missioneTemp.setPg_missione(pg);

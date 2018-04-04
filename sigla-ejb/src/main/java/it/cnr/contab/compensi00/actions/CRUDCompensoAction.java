@@ -1523,7 +1523,7 @@ public Forward doRicercaObbligazione(ActionContext context) {
 
 		Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
 		filtro.setFornitore(compenso.getTerzo());
-		filtro.setIm_importo(compenso.getImportoObbligazione());
+		filtro.setIm_importo(compenso.getIm_totale_da_impegnare());
 		filtro.setCd_unita_organizzativa(compenso.getCd_unita_organizzativa());
 		filtro.setFl_importo(Boolean.TRUE);
 		filtro.setData_scadenziario(null);

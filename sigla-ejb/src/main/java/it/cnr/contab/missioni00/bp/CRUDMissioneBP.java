@@ -2880,14 +2880,16 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     }
 
     private Boolean isDocumentoProvenienteDaGemis(AllegatoGenericoBulk allegato) {
-        return Optional.ofNullable(allegato.getStorageKey())
+        return Optional.ofNullable(allegato)
+                .flatMap(allegatoGenericoBulk -> Optional.ofNullable(allegatoGenericoBulk.getStorageKey()))
                 .map(key -> missioniCMISService.getStorageObjectBykey(key))
                 .map(storageObject -> missioniCMISService.hasAspect(storageObject, MissioniCMISService.ASPECT_ALLEGATI_MISSIONE_SIGLA))
                 .orElse(false);
     }
 
     private Boolean isDocumentoDettaglioProvenienteDaGemis(AllegatoGenericoBulk allegato) {
-        return Optional.ofNullable(allegato.getStorageKey())
+        return Optional.ofNullable(allegato)
+                .flatMap(allegatoGenericoBulk -> Optional.ofNullable(allegatoGenericoBulk.getStorageKey()))
                 .map(key -> missioniCMISService.getStorageObjectBykey(key))
                 .map(storageObject -> missioniCMISService.hasAspect(storageObject, MissioniCMISService.ASPECT_MISSIONE_RIMOBORSO_DETTAGLIO_SCONTRINI))
                 .orElse(false);
@@ -2959,7 +2961,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     		} else {
     			Missione_rigaBulk riga = new Missione_rigaBulk();
     			riga.setObbligazioneScadenzario(newScad);
-    			riga.setIm_totale_riga_missione(missione.getIm_totale_da_impegnare());
+    			riga.setIm_totale_riga_missione(newScad.getIm_scadenza());
     			this.getMissioneRigheController().add(context,riga);
     		}
     		

@@ -145,7 +145,7 @@
 			</fieldset>
 		</div>
 	  </td>
-	  <td>
+	  <td class="align-top">
 		<div class="card">
 			<fieldset class="fieldset mb-2">
 			<legend class="GroupLabel card-header text-primary">Riepilogo</legend>

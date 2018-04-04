@@ -404,7 +404,7 @@ public void elaboraScadenza(ActionContext context, Obbligazione_scadenzarioBulk 
 		} else {
 			Compenso_rigaBulk riga = new Compenso_rigaBulk();
 			riga.setObbligazioneScadenzario(newScad);
-			riga.setIm_totale_riga_compenso(compenso.getIm_totale_da_impegnare());
+			riga.setIm_totale_riga_compenso(newScad.getIm_scadenza());
 			this.getCompensoRigheController().add(context,riga);
 		}
 		
@@ -884,7 +884,6 @@ public boolean isBottoneCreaObbligazioneEnabled() {
 
 	CompensoBulk compenso = (CompensoBulk)getModel();
 	return (compenso!=null &&
-			compenso.isStatoCompensoSincronizzaObbligazione() &&
 			!compenso.isROPerChiusura());
 }
 public boolean isBottoneEliminaObbligazioneEnabled() {

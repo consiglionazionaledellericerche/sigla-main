@@ -3520,4 +3520,10 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	public java.math.BigDecimal getIm_totale_da_impegnare() {
 		return getImporto_scadenza_obbligazione().subtract(getIm_totale_impegnato());
 	}
+
+	public java.math.BigDecimal getIm_anticipo() {
+		return Optional.ofNullable(getAnticipo())
+				.map(AnticipoBulk::getIm_anticipo)
+				.orElse(BigDecimal.ZERO);
+	}
 }

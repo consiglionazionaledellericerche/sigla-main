@@ -808,7 +808,7 @@
 		/>
 	<fieldProperty
 		name="im_anticipo"
-		property="anticipo.im_anticipo"
+		property="im_anticipo"
 		inputType="ROTEXT"
 		formatName = "it.cnr.contab.util.EuroFormat"						
 		label="Importo"

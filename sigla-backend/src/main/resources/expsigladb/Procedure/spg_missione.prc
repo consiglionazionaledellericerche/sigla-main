@@ -195,9 +195,9 @@ begin
 			   ter.NUMERO_CIVICO_SEDE,
 			   ter.CAP_COMUNE_SEDE,
 			   aMiss.TI_ANAGRAFICO,
-			   aMiss.ESERCIZIO_ORI_OBBLIGAZIONE,
-			   aMiss.PG_OBBLIGAZIONE,
-			   aMiss.PG_OBBLIGAZIONE_SCADENZARIO,
+			   null,
+			   null,
+			   null,
 			   aNum2,
 			   decode(aMiss.TI_ANAGRAFICO,'D',rap.MATRICOLA_DIPENDENTE,aMiss.CD_TERZO),
 			   aVar2,
@@ -229,487 +229,491 @@ begin
 		  and vpg.TI_RECORD_L2			 = 'A'
 		  and vpg.SEQUENZA				 = i+Rownum;
 
-	-- fine inserimento record (A,A) testata
+	    -- fine inserimento record (A,A) testata
 
-	-- inizio inserimento record (A,B2) capitoli della missione
+	    -- inizio inserimento record (A,B2) capitoli della missione
 
-    -- ciclo sulle obbligazioni associate alla missione
-	for aObblig in (select * from missione_riga missriga
-	                where missriga.cd_cds = aMiss.cd_cds
-	                and   missriga.cd_unita_organizzativa = aMiss.cd_unita_organizzativa
-	                and   missriga.esercizio = aMiss.esercizio
-	                and   missriga.pg_missione = aMiss.pg_missione) Loop
-	-- missioni con anticipo < missione => no rimborso
-		begin
-			 select distinct mriga.ESERCIZIO, mriga.PG_MANDATO into aNum1, aNum2
-			 from mandato_riga mriga
-			 where mriga.CD_CDS_DOC_AMM	  	   = aMiss.CD_CDS
-	  		   and mriga.CD_UO_DOC_AMM	  	   = aMiss.CD_UNITA_ORGANIZZATIVA
-	  		   and mriga.ESERCIZIO_DOC_AMM 	   = aMiss.ESERCIZIO
-	  		   and mriga.PG_DOC_AMM		  	   = aMiss.PG_MISSIONE
-	  		   and mriga.CD_TIPO_DOCUMENTO_AMM = 'MISSIONE'
-	  		   and mriga.STATO				   <> 'A' ;
-		exception when NO_DATA_FOUND then
-			  aNum1 := 0;
-			  aNum2 := 0;
-		end;
+        -- ciclo sulle obbligazioni associate alla missione
+        declare
+            contaObblig number := 0;
+        begin
+            for aObblig in (select * from missione_riga missriga
+	   	                    where missriga.cd_cds = aMiss.cd_cds
+		                    and   missriga.cd_unita_organizzativa = aMiss.cd_unita_organizzativa
+		                    and   missriga.esercizio = aMiss.esercizio
+		                    and   missriga.pg_missione = aMiss.pg_missione) Loop
+              contaObblig := contaObblig + 1;
+		      -- inizio loop obblig
+              -- missioni con anticipo < missione => no rimborso
+			  begin
+				 select distinct mriga.ESERCIZIO, mriga.PG_MANDATO into aNum1, aNum2
+				 from mandato_riga mriga
+				 where mriga.CD_CDS_DOC_AMM	  	   = aMiss.CD_CDS
+		  		   and mriga.CD_UO_DOC_AMM	  	   = aMiss.CD_UNITA_ORGANIZZATIVA
+		  		   and mriga.ESERCIZIO_DOC_AMM 	   = aMiss.ESERCIZIO
+		  		   and mriga.PG_DOC_AMM		  	   = aMiss.PG_MISSIONE
+		  		   and mriga.CD_TIPO_DOCUMENTO_AMM = 'MISSIONE'
+		  		   and mriga.STATO				   <> 'A' ;
+			  exception when NO_DATA_FOUND then
+				  aNum1 := 0;
+				  aNum2 := 0;
+		      end;
 
-		begin
-			 select ant.IM_ANTICIPO into aNum3
-			 from anticipo ant
-			 where ant.CD_CDS				   = aMiss.CD_CDS_ANTICIPO
-  			   and ant.CD_UNITA_ORGANIZZATIVA  = aMiss.CD_UO_ANTICIPO
-  			   and ant.ESERCIZIO			   = aMiss.ESERCIZIO_ANTICIPO
-  			   and ant.PG_ANTICIPO			   = aMiss.PG_ANTICIPO;
-		exception when NO_DATA_FOUND then
-			 aNum3 := 0;
-		end;
-
-	   -- ciclo sui capitoli associati alla missione
-	    for aVoce in (select * from obbligazione_scad_voce obbv
-	   	   		 	  where obbv.CD_CDS				  	     = aObblig.CD_CDS_OBBLIGAZIONE
-  					    and obbv.ESERCIZIO				     = aObblig.ESERCIZIO_OBBLIGAZIONE
-  					    and obbv.ESERCIZIO_ORIGINALE		 = aObblig.ESERCIZIO_ORI_OBBLIGAZIONE
-  					    and obbv.PG_OBBLIGAZIONE		  	 = aObblig.PG_OBBLIGAZIONE
-  					    and obbv.PG_OBBLIGAZIONE_SCADENZARIO = aObblig.PG_OBBLIGAZIONE_SCADENZARIO) loop
-	    -- inizio loop 3
-
-	   	  i := i+1;
-
-		  insert into VPG_MISSIONE (ID,
-									CHIAVE,
-									SEQUENZA,
-									DESCRIZIONE,
-									CD_CDS,
-									CD_UNITA_ORGANIZZATIVA,
-									ESERCIZIO,
-									PG_MISSIONE,
-									TI_RECORD_L1,
-									TI_RECORD_L2,
-									FL_RIMBORSO,
-									TI_PROVVISORIO_DEFINITIVO,
-									FL_ASSOCIATO_COMPENSO,
-									ESERCIZIO_ORI_OBBL_ACC,
-									PG_OBBL_ACC,
-									PG_OBBL_ACC_SCADENZARIO,
-									TI_COMPETENZA_RESIDUO,
-									DT_SCADENZA,
-									IM_ANTICIPO,
-									CD_VOCE,
-									PG_MAN_REV,
-									DS_MODALITA_PAG,
-									INTESTAZIONE,
-									NUMERO_CONTO,
-									CIN,
-									ABI,
-									CAB,
-									IM_TOTALE_MISSIONE,
-									IM_DIARIA_LORDA,
-									IM_QUOTA_ESENTE,
-									IM_DIARIA_NETTO,
-									IM_SPESE,
-									IM_LORDO_PERCEPIENTE,
-									IM_NETTO_PECEPIENTE,
-									DS_MISSIONE,
-									DT_INIZIO_MISSIONE,
-									DT_FINE_MISSIONE,
-									IBAN)
-		  select   aId,
-	 			   'AB2:missione,capitoli',
-	 			   i,
-	 			   'Stampa RPT',
-	 			   aMiss.CD_CDS,
-	 			   aMiss.CD_UNITA_ORGANIZZATIVA,
-	 			   aMiss.ESERCIZIO,
-	 			   aMiss.PG_MISSIONE,
-	 			   'A',
-	 			   'B2',
-	 			   'N',
-	 			   aMiss.TI_PROVVISORIO_DEFINITIVO,
-	 			   aMiss.FL_ASSOCIATO_COMPENSO,
-	 			   aObblig.ESERCIZIO_ORI_OBBLIGAZIONE,
-	 			   aObblig.PG_OBBLIGAZIONE,
-	 			   aObblig.PG_OBBLIGAZIONE_SCADENZARIO,
-	 			   decode(obb.ESERCIZIO_ORI_RIPORTO,null,'C','R'),
-	 			   obbs.DT_SCADENZA,
-	 			   aNum3,
-	 			   aVoce.CD_VOCE,
-	 			   aNum2,
-	 			   rif.DS_MODALITA_PAG,
-	 			   ban.INTESTAZIONE,
-	 			   ban.NUMERO_CONTO,
-				   nvl(ban.CIN,' '),
-	 			   ban.ABI,
-	 			   ban.CAB,
-	 			   aMiss.IM_TOTALE_MISSIONE,
-	 			   aMiss.IM_DIARIA_LORDA,
-	 			   aMiss.IM_QUOTA_ESENTE,
-	 			   aMiss.IM_DIARIA_NETTO,
-	 			   aMiss.IM_SPESE,
-	 			   aMiss.IM_LORDO_PERCEPIENTE,
-	 			   aMiss.IM_NETTO_PECEPIENTE,
-	 			   aMiss.DS_MISSIONE,
-	 			   aMiss.DT_INIZIO_MISSIONE,
-	 			   aMiss.DT_FINE_MISSIONE,
-	 			   ban.codice_iban
-		  from obbligazione obb
-			  ,obbligazione_scadenzario obbs
-			  ,rif_modalita_pagamento rif
-			  ,banca ban
-		  where obb.CD_CDS			             = aObblig.CD_CDS_OBBLIGAZIONE
-			and obb.ESERCIZIO		   	   	     = aObblig.ESERCIZIO_OBBLIGAZIONE
-			and obb.ESERCIZIO_ORIGINALE	   	   	 = aObblig.ESERCIZIO_ORI_OBBLIGAZIONE
-  			and obb.PG_OBBLIGAZIONE	   		   	 = aObblig.PG_OBBLIGAZIONE
-			and obbs.CD_CDS				   	     = aObblig.CD_CDS_OBBLIGAZIONE
-			and obbs.ESERCIZIO		 	   	     = aObblig.ESERCIZIO_OBBLIGAZIONE
-			and obbs.ESERCIZIO_ORIGINALE	  	 = aObblig.ESERCIZIO_ORI_OBBLIGAZIONE
-			and obbs.PG_OBBLIGAZIONE		  	 = aObblig.PG_OBBLIGAZIONE
-			and obbs.PG_OBBLIGAZIONE_SCADENZARIO = aObblig.PG_OBBLIGAZIONE_SCADENZARIO
-			and rif.CD_MODALITA_PAG			   	 = aMiss.CD_MODALITA_PAG
-			and ban.CD_TERZO					 = aMiss.CD_TERZO
-			and ban.PG_BANCA					 = aMiss.PG_BANCA;
-
-		  begin
-			  update VPG_MISSIONE vpg
-			  set (DS_ABICAB,
-				   VIA_BANCA,
-				   CAP_BANCA,
-				   DS_COMUNE_BANCA,
-				   CD_PROVINCIA_BANCA)
-			  = (select   abi.DS_ABICAB,
-				  		  abi.VIA,
-						  abi.CAP,
-						  com.DS_COMUNE,
-						  com.CD_PROVINCIA
-				 from abicab abi
-				   	 ,comune com
-				 where abi.ABI       = vpg.ABI
-				   and abi.CAB	     = vpg.CAB
-				   and com.PG_COMUNE = abi.PG_COMUNE)
-			  where vpg.CD_CDS 	   	 	       = aMiss.CD_CDS
-				and vpg.CD_UNITA_ORGANIZZATIVA = aMiss.CD_UNITA_ORGANIZZATIVA
-				and vpg.ESERCIZIO			   = aMiss.ESERCIZIO
-				and vpg.PG_MISSIONE			   = aMiss.PG_MISSIONE
-				and vpg.TI_RECORD_L1		   = 'A'
-				and vpg.TI_RECORD_L2		   = 'B2'
-				and vpg.SEQUENZA			   = i;
-		  exception when NO_DATA_FOUND then
-		  			null;
-		  end;
-
-	    end loop; -- fine loop 3
-	else
-	-- missioni con anticipo >= missione
-	   	 declare
-		 	esisteAnticipo boolean;
-		 begin
-		 	 begin
-				 select * into aAnt
+			  begin
+			     select ant.IM_ANTICIPO into aNum3
 				 from anticipo ant
-				 where ant.CD_CDS	              = aMiss.CD_CDS_ANTICIPO
-	  			   and ant.CD_UNITA_ORGANIZZATIVA = aMiss.CD_UO_ANTICIPO
-	  			   and ant.ESERCIZIO			  = aMiss.ESERCIZIO_ANTICIPO
-	  			   and ant.PG_ANTICIPO			  = aMiss.PG_ANTICIPO;
-				 esisteAnticipo := true;
-			 exception when NO_DATA_FOUND then
-			 	 esisteAnticipo := false;
-			 end;
+				 where ant.CD_CDS				   = aMiss.CD_CDS_ANTICIPO
+	  			   and ant.CD_UNITA_ORGANIZZATIVA  = aMiss.CD_UO_ANTICIPO
+	  			   and ant.ESERCIZIO			   = aMiss.ESERCIZIO_ANTICIPO
+	  			   and ant.PG_ANTICIPO			   = aMiss.PG_ANTICIPO;
+			  exception when NO_DATA_FOUND then
+				 aNum3 := 0;
+			  end;
 
-			 if esisteAnticipo then
+		      -- ciclo sui capitoli associati alla missione
+		      for aVoce in (select * from obbligazione_scad_voce obbv
+		   	     		 	where obbv.CD_CDS				  	     = aObblig.CD_CDS_OBBLIGAZIONE
+	  					    and obbv.ESERCIZIO				     = aObblig.ESERCIZIO_OBBLIGAZIONE
+	  					    and obbv.ESERCIZIO_ORIGINALE		 = aObblig.ESERCIZIO_ORI_OBBLIGAZIONE
+	  					    and obbv.PG_OBBLIGAZIONE		  	 = aObblig.PG_OBBLIGAZIONE
+	  					    and obbv.PG_OBBLIGAZIONE_SCADENZARIO = aObblig.PG_OBBLIGAZIONE_SCADENZARIO) loop
+		        -- inizio loop 3
+
+		   	    i := i+1;
+
+			    insert into VPG_MISSIONE (ID,
+										CHIAVE,
+										SEQUENZA,
+										DESCRIZIONE,
+										CD_CDS,
+										CD_UNITA_ORGANIZZATIVA,
+										ESERCIZIO,
+										PG_MISSIONE,
+										TI_RECORD_L1,
+										TI_RECORD_L2,
+										FL_RIMBORSO,
+										TI_PROVVISORIO_DEFINITIVO,
+										FL_ASSOCIATO_COMPENSO,
+										ESERCIZIO_ORI_OBBL_ACC,
+										PG_OBBL_ACC,
+										PG_OBBL_ACC_SCADENZARIO,
+										TI_COMPETENZA_RESIDUO,
+										DT_SCADENZA,
+										IM_ANTICIPO,
+										CD_VOCE,
+										PG_MAN_REV,
+										DS_MODALITA_PAG,
+										INTESTAZIONE,
+										NUMERO_CONTO,
+										CIN,
+										ABI,
+										CAB,
+										IM_TOTALE_MISSIONE,
+										IM_DIARIA_LORDA,
+										IM_QUOTA_ESENTE,
+										IM_DIARIA_NETTO,
+										IM_SPESE,
+										IM_LORDO_PERCEPIENTE,
+										IM_NETTO_PECEPIENTE,
+										DS_MISSIONE,
+										DT_INIZIO_MISSIONE,
+										DT_FINE_MISSIONE,
+										IBAN)
+			    select   aId,
+		 			   'AB2:missione,capitoli',
+		 			   i,
+		 			   'Stampa RPT',
+		 			   aMiss.CD_CDS,
+		 			   aMiss.CD_UNITA_ORGANIZZATIVA,
+		 			   aMiss.ESERCIZIO,
+		 			   aMiss.PG_MISSIONE,
+		 			   'A',
+		 			   'B2',
+		 			   'N',
+		 			   aMiss.TI_PROVVISORIO_DEFINITIVO,
+		 			   aMiss.FL_ASSOCIATO_COMPENSO,
+		 			   aObblig.ESERCIZIO_ORI_OBBLIGAZIONE,
+		 			   aObblig.PG_OBBLIGAZIONE,
+		 			   aObblig.PG_OBBLIGAZIONE_SCADENZARIO,
+		 			   decode(obb.ESERCIZIO_ORI_RIPORTO,null,'C','R'),
+		 			   obbs.DT_SCADENZA,
+		 			   aNum3,
+		 			   aVoce.CD_VOCE,
+		 			   aNum2,
+		 			   rif.DS_MODALITA_PAG,
+		 			   ban.INTESTAZIONE,
+		 			   ban.NUMERO_CONTO,
+					   nvl(ban.CIN,' '),
+		 			   ban.ABI,
+		 			   ban.CAB,
+		 			   aMiss.IM_TOTALE_MISSIONE,
+		 			   aMiss.IM_DIARIA_LORDA,
+		 			   aMiss.IM_QUOTA_ESENTE,
+		 			   aMiss.IM_DIARIA_NETTO,
+		 			   aMiss.IM_SPESE,
+		 			   aMiss.IM_LORDO_PERCEPIENTE,
+		 			   aMiss.IM_NETTO_PECEPIENTE,
+		 			   aMiss.DS_MISSIONE,
+		 			   aMiss.DT_INIZIO_MISSIONE,
+		 			   aMiss.DT_FINE_MISSIONE,
+		 			   ban.codice_iban
+			    from obbligazione obb
+				  ,obbligazione_scadenzario obbs
+				  ,rif_modalita_pagamento rif
+				  ,banca ban
+			    where obb.CD_CDS			         = aObblig.CD_CDS_OBBLIGAZIONE
+				and obb.ESERCIZIO		   	   	     = aObblig.ESERCIZIO_OBBLIGAZIONE
+				and obb.ESERCIZIO_ORIGINALE	   	   	 = aObblig.ESERCIZIO_ORI_OBBLIGAZIONE
+	  			and obb.PG_OBBLIGAZIONE	   		   	 = aObblig.PG_OBBLIGAZIONE
+				and obbs.CD_CDS				   	     = aObblig.CD_CDS_OBBLIGAZIONE
+				and obbs.ESERCIZIO		 	   	     = aObblig.ESERCIZIO_OBBLIGAZIONE
+				and obbs.ESERCIZIO_ORIGINALE	  	 = aObblig.ESERCIZIO_ORI_OBBLIGAZIONE
+				and obbs.PG_OBBLIGAZIONE		  	 = aObblig.PG_OBBLIGAZIONE
+				and obbs.PG_OBBLIGAZIONE_SCADENZARIO = aObblig.PG_OBBLIGAZIONE_SCADENZARIO
+				and rif.CD_MODALITA_PAG			   	 = aMiss.CD_MODALITA_PAG
+				and ban.CD_TERZO					 = aMiss.CD_TERZO
+				and ban.PG_BANCA					 = aMiss.PG_BANCA;
+
+			    begin
+				  update VPG_MISSIONE vpg
+				  set (DS_ABICAB,
+					   VIA_BANCA,
+					   CAP_BANCA,
+					   DS_COMUNE_BANCA,
+					   CD_PROVINCIA_BANCA)
+				  = (select   abi.DS_ABICAB,
+					  		  abi.VIA,
+							  abi.CAP,
+							  com.DS_COMUNE,
+							  com.CD_PROVINCIA
+					 from abicab abi
+					   	 ,comune com
+					 where abi.ABI       = vpg.ABI
+					   and abi.CAB	     = vpg.CAB
+					   and com.PG_COMUNE = abi.PG_COMUNE)
+				  where vpg.CD_CDS 	   	 	       = aMiss.CD_CDS
+					and vpg.CD_UNITA_ORGANIZZATIVA = aMiss.CD_UNITA_ORGANIZZATIVA
+					and vpg.ESERCIZIO			   = aMiss.ESERCIZIO
+					and vpg.PG_MISSIONE			   = aMiss.PG_MISSIONE
+					and vpg.TI_RECORD_L1		   = 'A'
+					and vpg.TI_RECORD_L2		   = 'B2'
+					and vpg.SEQUENZA			   = i;
+			    exception when NO_DATA_FOUND then
+			  			null;
+			    end;
+		      end loop; -- fine loop 3
+		    end loop; -- fine loop obblig
+
+		    if contaObblig=0 Then
+				-- missioni con anticipo >= missione
+			   	 declare
+				 	esisteAnticipo boolean;
 				 begin
-				 	  select * into aRim
-					  from rimborso rim
-					  where rim.CD_CDS_ANTICIPO	   = aAnt.CD_CDS
-  				   		and rim.CD_UO_ANTICIPO	   = aAnt.CD_UNITA_ORGANIZZATIVA
-  				   		and rim.ESERCIZIO_ANTICIPO = aAnt.ESERCIZIO
-  				   		and rim.PG_ANTICIPO	       = aAnt.PG_ANTICIPO;
-				  	  insert into VPG_MISSIONE vpg (ID,
-													CHIAVE,
-													SEQUENZA,
-													DESCRIZIONE,
-													CD_CDS,
-													CD_UNITA_ORGANIZZATIVA,
-													ESERCIZIO,
-													PG_MISSIONE,
-													TI_RECORD_L1,
-													TI_RECORD_L2,
-													FL_RIMBORSO,
-													TI_PROVVISORIO_DEFINITIVO,
-													FL_ASSOCIATO_COMPENSO,
-													ESERCIZIO_ORI_OBBL_ACC,
-													PG_OBBL_ACC,
-													PG_OBBL_ACC_SCADENZARIO,
-													TI_COMPETENZA_RESIDUO,
-													DT_SCADENZA,
-													IM_ANTICIPO,
-													IM_RIMBORSO,
-													CD_VOCE,
-													DS_MODALITA_PAG,
-													INTESTAZIONE,
-													NUMERO_CONTO,
-													CIN,
-													ABI,
-													CAB,
-													IM_TOTALE_MISSIONE,
-													IM_DIARIA_LORDA,
-													IM_QUOTA_ESENTE,
-													IM_DIARIA_NETTO,
-													IM_SPESE,
-													IM_LORDO_PERCEPIENTE,
-													IM_NETTO_PECEPIENTE,
-													DS_MISSIONE,
-													DT_INIZIO_MISSIONE,
-													DT_FINE_MISSIONE,
-													IBAN)
-			  	     select    aId,
-				 			   'AB2:missione,capitoli',
-				 			   i,
-				 			   'Stampa RPT',
-				 			   aMiss.CD_CDS,
-				 			   aMiss.CD_UNITA_ORGANIZZATIVA,
-				 			   aMiss.ESERCIZIO,
-				 			   aMiss.PG_MISSIONE,
-				 			   'A',
-				 			   'B2',
-				 			   'Y',
-				 			   aMiss.TI_PROVVISORIO_DEFINITIVO,
-				 			   aMiss.FL_ASSOCIATO_COMPENSO,
-				 			   aRim.ESERCIZIO_ORI_ACCERTAMENTO,
-				 			   aRim.PG_ACCERTAMENTO,
-				 			   aRim.PG_ACCERTAMENTO_SCADENZARIO,
-				 			   decode(acc.ESERCIZIO_ORI_RIPORTO,null,'C','R'),
-				 			   accs.DT_SCADENZA_INCASSO,
-				 			   aAnt.IM_ANTICIPO,
-							   aRim.IM_RIMBORSO,
-				 			   acc.CD_VOCE,
-				 			   rif.DS_MODALITA_PAG,
-				 			   ban.INTESTAZIONE,
-				 			   ban.NUMERO_CONTO,
-							   nvl(ban.CIN,' '),
-				 			   ban.ABI,
-				 			   ban.CAB,
-				 			   aMiss.IM_TOTALE_MISSIONE,
-				 			   aMiss.IM_DIARIA_LORDA,
-				 			   aMiss.IM_QUOTA_ESENTE,
-				 			   aMiss.IM_DIARIA_NETTO,
-				 			   aMiss.IM_SPESE,
-				 			   aMiss.IM_LORDO_PERCEPIENTE,
-				 			   aMiss.IM_NETTO_PECEPIENTE,
-				 			   aMiss.DS_MISSIONE,
-				 			   aMiss.DT_INIZIO_MISSIONE,
-				 			   aMiss.DT_FINE_MISSIONE,
-	 			                          ban.codice_iban
-			         from accertamento acc
-				 	 	 ,accertamento_scadenzario accs
-					 	 ,rif_modalita_pagamento rif
-					 	 ,banca ban
-     		 		 where acc.CD_CDS	  	   = aRim.CD_CDS_ACCERTAMENTO
-	  			       and acc.ESERCIZIO	   = aRim.ESERCIZIO_ACCERTAMENTO
-	  			       and acc.ESERCIZIO_ORIGINALE = aRim.ESERCIZIO_ORI_ACCERTAMENTO
-	  			   	   and acc.PG_ACCERTAMENTO = aRim.PG_ACCERTAMENTO
-				   	   and accs.CD_CDS 				        = aRim.CD_CDS_ACCERTAMENTO
-	  			   	   and accs.ESERCIZIO			        = aRim.ESERCIZIO_ACCERTAMENTO
-	  			   	   and accs.ESERCIZIO_ORIGINALE = aRim.ESERCIZIO_ORI_ACCERTAMENTO
-	  			   	   and accs.PG_ACCERTAMENTO		        = aRim.PG_ACCERTAMENTO
-	  			   	   and accs.PG_ACCERTAMENTO_SCADENZARIO = aRim.PG_ACCERTAMENTO_SCADENZARIO
-				   	   and rif.CD_MODALITA_PAG				= aMiss.CD_MODALITA_PAG
-				   	   and ban.CD_TERZO						= aMiss.CD_TERZO
-				   	   and ban.PG_BANCA						= aMiss.PG_BANCA;
+				 	 begin
+						 select * into aAnt
+						 from anticipo ant
+						 where ant.CD_CDS	              = aMiss.CD_CDS_ANTICIPO
+			  			   and ant.CD_UNITA_ORGANIZZATIVA = aMiss.CD_UO_ANTICIPO
+			  			   and ant.ESERCIZIO			  = aMiss.ESERCIZIO_ANTICIPO
+			  			   and ant.PG_ANTICIPO			  = aMiss.PG_ANTICIPO;
+						 esisteAnticipo := true;
+					 exception when NO_DATA_FOUND then
+					 	 esisteAnticipo := false;
+					 end;
 
-					 begin
-						  update VPG_MISSIONE vpg
-						  set (PG_MAN_REV)
-						  = (select   rriga.PG_REVERSALE
-							 from reversale_riga rriga
-							 where rriga.CD_CDS_DOC_AMM	  	  	    = aRim.CD_CDS
-		  			   		   and rriga.CD_UO_DOC_AMM	  	  	    = aRim.CD_UNITA_ORGANIZZATIVA
-		  			   		   and rriga.ESERCIZIO_DOC_AMM 	  	    = aRim.ESERCIZIO
-		  			   		   and rriga.PG_DOC_AMM		  	  	    = aRim.PG_RIMBORSO
-		  			   		   and rriga.CD_TIPO_DOCUMENTO_AMM 	    = 'RIMBORSO'
-		  			   		   and rriga.STATO				  	    <> 'A')
-						  where vpg.CD_CDS 	   	 	       = aMiss.CD_CDS
-							and vpg.CD_UNITA_ORGANIZZATIVA = aMiss.CD_UNITA_ORGANIZZATIVA
-							and vpg.ESERCIZIO			   = aMiss.ESERCIZIO
-							and vpg.PG_MISSIONE			   = aMiss.PG_MISSIONE
-							and vpg.TI_RECORD_L1		   = 'A'
-							and vpg.TI_RECORD_L2		   = 'B2'
-							and vpg.SEQUENZA			   = i;
-					  exception when NO_DATA_FOUND then
-					  			null;
-					  end;
+					 if esisteAnticipo then
+						 begin
+						 	  select * into aRim
+							  from rimborso rim
+							  where rim.CD_CDS_ANTICIPO	   = aAnt.CD_CDS
+		  				   		and rim.CD_UO_ANTICIPO	   = aAnt.CD_UNITA_ORGANIZZATIVA
+		  				   		and rim.ESERCIZIO_ANTICIPO = aAnt.ESERCIZIO
+		  				   		and rim.PG_ANTICIPO	       = aAnt.PG_ANTICIPO;
+						  	  insert into VPG_MISSIONE vpg (ID,
+															CHIAVE,
+															SEQUENZA,
+															DESCRIZIONE,
+															CD_CDS,
+															CD_UNITA_ORGANIZZATIVA,
+															ESERCIZIO,
+															PG_MISSIONE,
+															TI_RECORD_L1,
+															TI_RECORD_L2,
+															FL_RIMBORSO,
+															TI_PROVVISORIO_DEFINITIVO,
+															FL_ASSOCIATO_COMPENSO,
+															ESERCIZIO_ORI_OBBL_ACC,
+															PG_OBBL_ACC,
+															PG_OBBL_ACC_SCADENZARIO,
+															TI_COMPETENZA_RESIDUO,
+															DT_SCADENZA,
+															IM_ANTICIPO,
+															IM_RIMBORSO,
+															CD_VOCE,
+															DS_MODALITA_PAG,
+															INTESTAZIONE,
+															NUMERO_CONTO,
+															CIN,
+															ABI,
+															CAB,
+															IM_TOTALE_MISSIONE,
+															IM_DIARIA_LORDA,
+															IM_QUOTA_ESENTE,
+															IM_DIARIA_NETTO,
+															IM_SPESE,
+															IM_LORDO_PERCEPIENTE,
+															IM_NETTO_PECEPIENTE,
+															DS_MISSIONE,
+															DT_INIZIO_MISSIONE,
+															DT_FINE_MISSIONE,
+															IBAN)
+					  	     select    aId,
+						 			   'AB2:missione,capitoli',
+						 			   i,
+						 			   'Stampa RPT',
+						 			   aMiss.CD_CDS,
+						 			   aMiss.CD_UNITA_ORGANIZZATIVA,
+						 			   aMiss.ESERCIZIO,
+						 			   aMiss.PG_MISSIONE,
+						 			   'A',
+						 			   'B2',
+						 			   'Y',
+						 			   aMiss.TI_PROVVISORIO_DEFINITIVO,
+						 			   aMiss.FL_ASSOCIATO_COMPENSO,
+						 			   aRim.ESERCIZIO_ORI_ACCERTAMENTO,
+						 			   aRim.PG_ACCERTAMENTO,
+						 			   aRim.PG_ACCERTAMENTO_SCADENZARIO,
+						 			   decode(acc.ESERCIZIO_ORI_RIPORTO,null,'C','R'),
+						 			   accs.DT_SCADENZA_INCASSO,
+						 			   aAnt.IM_ANTICIPO,
+									   aRim.IM_RIMBORSO,
+						 			   acc.CD_VOCE,
+						 			   rif.DS_MODALITA_PAG,
+						 			   ban.INTESTAZIONE,
+						 			   ban.NUMERO_CONTO,
+									   nvl(ban.CIN,' '),
+						 			   ban.ABI,
+						 			   ban.CAB,
+						 			   aMiss.IM_TOTALE_MISSIONE,
+						 			   aMiss.IM_DIARIA_LORDA,
+						 			   aMiss.IM_QUOTA_ESENTE,
+						 			   aMiss.IM_DIARIA_NETTO,
+						 			   aMiss.IM_SPESE,
+						 			   aMiss.IM_LORDO_PERCEPIENTE,
+						 			   aMiss.IM_NETTO_PECEPIENTE,
+						 			   aMiss.DS_MISSIONE,
+						 			   aMiss.DT_INIZIO_MISSIONE,
+						 			   aMiss.DT_FINE_MISSIONE,
+			 			                          ban.codice_iban
+					         from accertamento acc
+						 	 	 ,accertamento_scadenzario accs
+							 	 ,rif_modalita_pagamento rif
+							 	 ,banca ban
+		     		 		 where acc.CD_CDS	  	   = aRim.CD_CDS_ACCERTAMENTO
+			  			       and acc.ESERCIZIO	   = aRim.ESERCIZIO_ACCERTAMENTO
+			  			       and acc.ESERCIZIO_ORIGINALE = aRim.ESERCIZIO_ORI_ACCERTAMENTO
+			  			   	   and acc.PG_ACCERTAMENTO = aRim.PG_ACCERTAMENTO
+						   	   and accs.CD_CDS 				        = aRim.CD_CDS_ACCERTAMENTO
+			  			   	   and accs.ESERCIZIO			        = aRim.ESERCIZIO_ACCERTAMENTO
+			  			   	   and accs.ESERCIZIO_ORIGINALE = aRim.ESERCIZIO_ORI_ACCERTAMENTO
+			  			   	   and accs.PG_ACCERTAMENTO		        = aRim.PG_ACCERTAMENTO
+			  			   	   and accs.PG_ACCERTAMENTO_SCADENZARIO = aRim.PG_ACCERTAMENTO_SCADENZARIO
+						   	   and rif.CD_MODALITA_PAG				= aMiss.CD_MODALITA_PAG
+						   	   and ban.CD_TERZO						= aMiss.CD_TERZO
+						   	   and ban.PG_BANCA						= aMiss.PG_BANCA;
 
-				 exception when NO_DATA_FOUND then  -- non esiste rimborso
-			    	 insert into VPG_MISSIONE vpg  (ID,
-													CHIAVE,
-													SEQUENZA,
-													DESCRIZIONE,
-													CD_CDS,
-													CD_UNITA_ORGANIZZATIVA,
-													ESERCIZIO,
-													PG_MISSIONE,
-													TI_RECORD_L1,
-													TI_RECORD_L2,
-													FL_RIMBORSO,
-													TI_PROVVISORIO_DEFINITIVO,
-													FL_ASSOCIATO_COMPENSO,
-													IM_ANTICIPO,
-													DS_MODALITA_PAG,
-													INTESTAZIONE,
-													NUMERO_CONTO,
-													CIN,
-													ABI,
-													CAB,
-													IM_TOTALE_MISSIONE,
-													IM_DIARIA_LORDA,
-													IM_QUOTA_ESENTE,
-													IM_DIARIA_NETTO,
-													IM_SPESE,
-													IM_LORDO_PERCEPIENTE,
-													IM_NETTO_PECEPIENTE,
-													DS_MISSIONE,
-													DT_INIZIO_MISSIONE,
-													DT_FINE_MISSIONE,
-													IBAN)
-				  	 select    aId,
-				 			   'AB2:missione,capitoli',
-				 			   i,
-				 			   'Stampa RPT',
-				 			   aMiss.CD_CDS,
-				 			   aMiss.CD_UNITA_ORGANIZZATIVA,
-				 			   aMiss.ESERCIZIO,
-				 			   aMiss.PG_MISSIONE,
-				 			   'A',
-				 			   'B2',
-				 			   'Y',
-				 			   aMiss.TI_PROVVISORIO_DEFINITIVO,
-				 			   aMiss.FL_ASSOCIATO_COMPENSO,
-				 			   aAnt.IM_ANTICIPO,
-				 			   rif.DS_MODALITA_PAG,
-				 			   ban.INTESTAZIONE,
-				 			   ban.NUMERO_CONTO,
-							   nvl(ban.CIN,' '),
-				 			   ban.ABI,
-				 			   ban.CAB,
-				 			   aMiss.IM_TOTALE_MISSIONE,
-				 			   aMiss.IM_DIARIA_LORDA,
-				 			   aMiss.IM_QUOTA_ESENTE,
-				 			   aMiss.IM_DIARIA_NETTO,
-				 			   aMiss.IM_SPESE,
-				 			   aMiss.IM_LORDO_PERCEPIENTE,
-				 			   aMiss.IM_NETTO_PECEPIENTE,
-				 			   aMiss.DS_MISSIONE,
-				 			   aMiss.DT_INIZIO_MISSIONE,
-				 			   aMiss.DT_FINE_MISSIONE,
-	 			                          ban.codice_iban
-				     from rif_modalita_pagamento rif
-						 ,banca ban
-				     where rif.CD_MODALITA_PAG				= aMiss.CD_MODALITA_PAG
-					   and ban.CD_TERZO						= aMiss.CD_TERZO
-					   and ban.PG_BANCA						= aMiss.PG_BANCA;
+							 begin
+								  update VPG_MISSIONE vpg
+								  set (PG_MAN_REV)
+								  = (select   rriga.PG_REVERSALE
+									 from reversale_riga rriga
+									 where rriga.CD_CDS_DOC_AMM	  	  	    = aRim.CD_CDS
+				  			   		   and rriga.CD_UO_DOC_AMM	  	  	    = aRim.CD_UNITA_ORGANIZZATIVA
+				  			   		   and rriga.ESERCIZIO_DOC_AMM 	  	    = aRim.ESERCIZIO
+				  			   		   and rriga.PG_DOC_AMM		  	  	    = aRim.PG_RIMBORSO
+				  			   		   and rriga.CD_TIPO_DOCUMENTO_AMM 	    = 'RIMBORSO'
+				  			   		   and rriga.STATO				  	    <> 'A')
+								  where vpg.CD_CDS 	   	 	       = aMiss.CD_CDS
+									and vpg.CD_UNITA_ORGANIZZATIVA = aMiss.CD_UNITA_ORGANIZZATIVA
+									and vpg.ESERCIZIO			   = aMiss.ESERCIZIO
+									and vpg.PG_MISSIONE			   = aMiss.PG_MISSIONE
+									and vpg.TI_RECORD_L1		   = 'A'
+									and vpg.TI_RECORD_L2		   = 'B2'
+									and vpg.SEQUENZA			   = i;
+							  exception when NO_DATA_FOUND then
+							  			null;
+							  end;
 
-				 end;
-			 else -- non esiste anticipo
-		    	 insert into VPG_MISSIONE vpg  (ID,
-												CHIAVE,
-												SEQUENZA,
-												DESCRIZIONE,
-												CD_CDS,
-												CD_UNITA_ORGANIZZATIVA,
-												ESERCIZIO,
-												PG_MISSIONE,
-												TI_RECORD_L1,
-												TI_RECORD_L2,
-												FL_RIMBORSO,
-												TI_PROVVISORIO_DEFINITIVO,
-												FL_ASSOCIATO_COMPENSO,
-												DS_MODALITA_PAG,
-												INTESTAZIONE,
-												NUMERO_CONTO,
-												CIN,
-												ABI,
-												CAB,
-												IM_TOTALE_MISSIONE,
-												IM_DIARIA_LORDA,
-												IM_QUOTA_ESENTE,
-												IM_DIARIA_NETTO,
-												IM_SPESE,
-												IM_LORDO_PERCEPIENTE,
-												IM_NETTO_PECEPIENTE,
-												DS_MISSIONE,
-												DT_INIZIO_MISSIONE,
-												DT_FINE_MISSIONE,
-												IBAN)
-			  	 select    aId,
-			 			   'AB2:missione,capitoli',
-			 			   i,
-			 			   'Stampa RPT',
-			 			   aMiss.CD_CDS,
-			 			   aMiss.CD_UNITA_ORGANIZZATIVA,
-			 			   aMiss.ESERCIZIO,
-			 			   aMiss.PG_MISSIONE,
-			 			   'A',
-			 			   'B2',
-			 			   'Y',
-			 			   aMiss.TI_PROVVISORIO_DEFINITIVO,
-			 			   aMiss.FL_ASSOCIATO_COMPENSO,
-			 			   rif.DS_MODALITA_PAG,
-			 			   ban.INTESTAZIONE,
-			 			   ban.NUMERO_CONTO,
-						   nvl(ban.CIN,' '),
-			 			   ban.ABI,
-			 			   ban.CAB,
-			 			   aMiss.IM_TOTALE_MISSIONE,
-			 			   aMiss.IM_DIARIA_LORDA,
-			 			   aMiss.IM_QUOTA_ESENTE,
-			 			   aMiss.IM_DIARIA_NETTO,
-			 			   aMiss.IM_SPESE,
-			 			   aMiss.IM_LORDO_PERCEPIENTE,
-			 			   aMiss.IM_NETTO_PECEPIENTE,
-			 			   aMiss.DS_MISSIONE,
-			 			   aMiss.DT_INIZIO_MISSIONE,
-			 			   aMiss.DT_FINE_MISSIONE,
-	 			                   ban.codice_iban
-			     from rif_modalita_pagamento rif
-					 ,banca ban
-			     where rif.CD_MODALITA_PAG				= aMiss.CD_MODALITA_PAG
-				   and ban.CD_TERZO						= aMiss.CD_TERZO
-				   and ban.PG_BANCA						= aMiss.PG_BANCA;
+						 exception when NO_DATA_FOUND then  -- non esiste rimborso
+					    	 insert into VPG_MISSIONE vpg  (ID,
+															CHIAVE,
+															SEQUENZA,
+															DESCRIZIONE,
+															CD_CDS,
+															CD_UNITA_ORGANIZZATIVA,
+															ESERCIZIO,
+															PG_MISSIONE,
+															TI_RECORD_L1,
+															TI_RECORD_L2,
+															FL_RIMBORSO,
+															TI_PROVVISORIO_DEFINITIVO,
+															FL_ASSOCIATO_COMPENSO,
+															IM_ANTICIPO,
+															DS_MODALITA_PAG,
+															INTESTAZIONE,
+															NUMERO_CONTO,
+															CIN,
+															ABI,
+															CAB,
+															IM_TOTALE_MISSIONE,
+															IM_DIARIA_LORDA,
+															IM_QUOTA_ESENTE,
+															IM_DIARIA_NETTO,
+															IM_SPESE,
+															IM_LORDO_PERCEPIENTE,
+															IM_NETTO_PECEPIENTE,
+															DS_MISSIONE,
+															DT_INIZIO_MISSIONE,
+															DT_FINE_MISSIONE,
+															IBAN)
+						  	 select    aId,
+						 			   'AB2:missione,capitoli',
+						 			   i,
+						 			   'Stampa RPT',
+						 			   aMiss.CD_CDS,
+						 			   aMiss.CD_UNITA_ORGANIZZATIVA,
+						 			   aMiss.ESERCIZIO,
+						 			   aMiss.PG_MISSIONE,
+						 			   'A',
+						 			   'B2',
+						 			   'Y',
+						 			   aMiss.TI_PROVVISORIO_DEFINITIVO,
+						 			   aMiss.FL_ASSOCIATO_COMPENSO,
+						 			   aAnt.IM_ANTICIPO,
+						 			   rif.DS_MODALITA_PAG,
+						 			   ban.INTESTAZIONE,
+						 			   ban.NUMERO_CONTO,
+									   nvl(ban.CIN,' '),
+						 			   ban.ABI,
+						 			   ban.CAB,
+						 			   aMiss.IM_TOTALE_MISSIONE,
+						 			   aMiss.IM_DIARIA_LORDA,
+						 			   aMiss.IM_QUOTA_ESENTE,
+						 			   aMiss.IM_DIARIA_NETTO,
+						 			   aMiss.IM_SPESE,
+						 			   aMiss.IM_LORDO_PERCEPIENTE,
+						 			   aMiss.IM_NETTO_PECEPIENTE,
+						 			   aMiss.DS_MISSIONE,
+						 			   aMiss.DT_INIZIO_MISSIONE,
+						 			   aMiss.DT_FINE_MISSIONE,
+			 			                          ban.codice_iban
+						     from rif_modalita_pagamento rif
+								 ,banca ban
+						     where rif.CD_MODALITA_PAG				= aMiss.CD_MODALITA_PAG
+							   and ban.CD_TERZO						= aMiss.CD_TERZO
+							   and ban.PG_BANCA						= aMiss.PG_BANCA;
 
-			end if;
+						 end;
+					 else -- non esiste anticipo
+				    	 insert into VPG_MISSIONE vpg  (ID,
+														CHIAVE,
+														SEQUENZA,
+														DESCRIZIONE,
+														CD_CDS,
+														CD_UNITA_ORGANIZZATIVA,
+														ESERCIZIO,
+														PG_MISSIONE,
+														TI_RECORD_L1,
+														TI_RECORD_L2,
+														FL_RIMBORSO,
+														TI_PROVVISORIO_DEFINITIVO,
+														FL_ASSOCIATO_COMPENSO,
+														DS_MODALITA_PAG,
+														INTESTAZIONE,
+														NUMERO_CONTO,
+														CIN,
+														ABI,
+														CAB,
+														IM_TOTALE_MISSIONE,
+														IM_DIARIA_LORDA,
+														IM_QUOTA_ESENTE,
+														IM_DIARIA_NETTO,
+														IM_SPESE,
+														IM_LORDO_PERCEPIENTE,
+														IM_NETTO_PECEPIENTE,
+														DS_MISSIONE,
+														DT_INIZIO_MISSIONE,
+														DT_FINE_MISSIONE,
+														IBAN)
+					  	 select    aId,
+					 			   'AB2:missione,capitoli',
+					 			   i,
+					 			   'Stampa RPT',
+					 			   aMiss.CD_CDS,
+					 			   aMiss.CD_UNITA_ORGANIZZATIVA,
+					 			   aMiss.ESERCIZIO,
+					 			   aMiss.PG_MISSIONE,
+					 			   'A',
+					 			   'B2',
+					 			   'Y',
+					 			   aMiss.TI_PROVVISORIO_DEFINITIVO,
+					 			   aMiss.FL_ASSOCIATO_COMPENSO,
+					 			   rif.DS_MODALITA_PAG,
+					 			   ban.INTESTAZIONE,
+					 			   ban.NUMERO_CONTO,
+								   nvl(ban.CIN,' '),
+					 			   ban.ABI,
+					 			   ban.CAB,
+					 			   aMiss.IM_TOTALE_MISSIONE,
+					 			   aMiss.IM_DIARIA_LORDA,
+					 			   aMiss.IM_QUOTA_ESENTE,
+					 			   aMiss.IM_DIARIA_NETTO,
+					 			   aMiss.IM_SPESE,
+					 			   aMiss.IM_LORDO_PERCEPIENTE,
+					 			   aMiss.IM_NETTO_PECEPIENTE,
+					 			   aMiss.DS_MISSIONE,
+					 			   aMiss.DT_INIZIO_MISSIONE,
+					 			   aMiss.DT_FINE_MISSIONE,
+			 			                   ban.codice_iban
+					     from rif_modalita_pagamento rif
+							 ,banca ban
+					     where rif.CD_MODALITA_PAG				= aMiss.CD_MODALITA_PAG
+						   and ban.CD_TERZO						= aMiss.CD_TERZO
+						   and ban.PG_BANCA						= aMiss.PG_BANCA;
 
-		    begin
-			     update VPG_MISSIONE vpg
-			     set (DS_ABICAB,
-				      VIA_BANCA,
-				      CAP_BANCA,
-				      DS_COMUNE_BANCA,
-				      CD_PROVINCIA_BANCA)
-			     = (select   abi.DS_ABICAB,
-				    	     abi.VIA,
-						  	 abi.CAP,
-						  	 com.DS_COMUNE,
-						  	 com.CD_PROVINCIA
-				    from abicab abi
-				   	    ,comune com
-				 	where abi.ABI       = vpg.ABI
-				      and abi.CAB	     = vpg.CAB
-				   	  and com.PG_COMUNE = abi.PG_COMUNE)
-			     where vpg.CD_CDS 	   	 	       = aMiss.CD_CDS
-				   and vpg.CD_UNITA_ORGANIZZATIVA = aMiss.CD_UNITA_ORGANIZZATIVA
-				   and vpg.ESERCIZIO			   = aMiss.ESERCIZIO
-				   and vpg.PG_MISSIONE			   = aMiss.PG_MISSIONE
-				   and vpg.TI_RECORD_L1		   = 'A'
-				   and vpg.TI_RECORD_L2		   = 'B2'
-				   and vpg.SEQUENZA			   = i;
-		    exception when NO_DATA_FOUND then
-		  			null;
-		  	end;
+					end if;
 
-		end; -- fine blocco locale
+				    begin
+					     update VPG_MISSIONE vpg
+					     set (DS_ABICAB,
+						      VIA_BANCA,
+						      CAP_BANCA,
+						      DS_COMUNE_BANCA,
+						      CD_PROVINCIA_BANCA)
+					     = (select   abi.DS_ABICAB,
+						    	     abi.VIA,
+								  	 abi.CAP,
+								  	 com.DS_COMUNE,
+								  	 com.CD_PROVINCIA
+						    from abicab abi
+						   	    ,comune com
+						 	where abi.ABI       = vpg.ABI
+						      and abi.CAB	     = vpg.CAB
+						   	  and com.PG_COMUNE = abi.PG_COMUNE)
+					     where vpg.CD_CDS 	   	 	       = aMiss.CD_CDS
+						   and vpg.CD_UNITA_ORGANIZZATIVA = aMiss.CD_UNITA_ORGANIZZATIVA
+						   and vpg.ESERCIZIO			   = aMiss.ESERCIZIO
+						   and vpg.PG_MISSIONE			   = aMiss.PG_MISSIONE
+						   and vpg.TI_RECORD_L1		   = 'A'
+						   and vpg.TI_RECORD_L2		   = 'B2'
+						   and vpg.SEQUENZA			   = i;
+				    exception when NO_DATA_FOUND then
+				  			null;
+				  	end;
 
-
-	end if; -- fine distinzione missioni con/senza rimborso
-
+				end; -- fine blocco locale
+			end if; -- fine distinzione missioni con/senza rimborso
+		end;
 	-- fine inserimento record (A,B2) capitoli della missione
 
  	else
@@ -724,7 +728,7 @@ begin
  			   and comp.STATO_COFI			  <> 'A' ;
 
 		 begin
-		 	  select mriga.ESERCIZIO, mriga.PG_MANDATO into aNum1, aNum2
+		 	  select distinct mriga.ESERCIZIO, mriga.PG_MANDATO into aNum1, aNum2
 			  from mandato_riga mriga
 			  where mriga.CD_CDS_DOC_AMM	  	= aComp.CD_CDS
   		   	    and mriga.CD_UO_DOC_AMM	  	    = aComp.CD_UNITA_ORGANIZZATIVA
@@ -800,9 +804,9 @@ begin
 			    ter.NUMERO_CIVICO_SEDE,
 			    ter.CAP_COMUNE_SEDE,
 			    aMiss.TI_ANAGRAFICO,
-			    aComp.ESERCIZIO_ORI_OBBLIGAZIONE,
-			    aComp.PG_OBBLIGAZIONE,
-			    aComp.PG_OBBLIGAZIONE_SCADENZARIO,
+			    null,
+			    null,
+			    null,
 			    aNum2,
 			    decode(aMiss.TI_ANAGRAFICO,'D',rap.MATRICOLA_DIPENDENTE,aMiss.CD_TERZO),
 			    rif.DS_INQUADRAMENTO,
@@ -843,21 +847,30 @@ begin
 
 	-- inizio inserimento record (A,B2) missione + capitoli
 
-	   	 if aComp.PG_OBBLIGAZIONE is not null then
-		 -- missioni con anticipo < missione => no rimborso
+        declare
+            contaObblig number := 0;
+        begin
+            for aObblig in (select * from compenso_riga compriga
+	   	                    where compriga.cd_cds = aComp.cd_cds
+		                    and   compriga.cd_unita_organizzativa = aComp.cd_unita_organizzativa
+		                    and   compriga.esercizio = aComp.esercizio
+		                    and   compriga.pg_compenso = aComp.pg_compenso) Loop
+              contaObblig := contaObblig + 1;
+		      -- inizio loop obblig
+		      -- missioni con anticipo < missione => no rimborso
 
-			-- ciclo sui capitoli
-			for aVoce in (select * from obbligazione_scad_voce obbv
-					  	  where obbv.CD_CDS		     = aComp.CD_CDS_OBBLIGAZIONE
-						    and obbv.ESERCIZIO		     = aComp.ESERCIZIO_OBBLIGAZIONE
-						    and obbv.ESERCIZIO_ORIGINALE     = aComp.ESERCIZIO_ORI_OBBLIGAZIONE
-							and obbv.PG_OBBLIGAZIONE     = aComp.PG_OBBLIGAZIONE
-  							and obbv.PG_OBBLIGAZIONE_SCADENZARIO = aComp.PG_OBBLIGAZIONE_SCADENZARIO) loop
-			-- inizio loop 4
+  			  -- ciclo sui capitoli
+			  for aVoce in (select * from obbligazione_scad_voce obbv
+			  		  	    where obbv.CD_CDS		     = aObblig.CD_CDS_OBBLIGAZIONE
+						    and obbv.ESERCIZIO		     = aObblig.ESERCIZIO_OBBLIGAZIONE
+						    and obbv.ESERCIZIO_ORIGINALE     = aObblig.ESERCIZIO_ORI_OBBLIGAZIONE
+							and obbv.PG_OBBLIGAZIONE     = aObblig.PG_OBBLIGAZIONE
+  							and obbv.PG_OBBLIGAZIONE_SCADENZARIO = aObblig.PG_OBBLIGAZIONE_SCADENZARIO) loop
+			    -- inizio loop 4
 
-			   i := i+1;
+			    i := i+1;
 
-		  	   insert into VPG_MISSIONE (ID,
+		  	    insert into VPG_MISSIONE (ID,
 										CHIAVE,
 										SEQUENZA,
 										DESCRIZIONE,
@@ -897,7 +910,7 @@ begin
 										DT_INIZIO_MISSIONE,
 										DT_FINE_MISSIONE,
 										IBAN)
-			   select  aId,
+			    select  aId,
 		 			   'AB2:missione,capitoli',
 		 			   i,
 		 			   'Stampa RPT',
@@ -910,9 +923,9 @@ begin
 		 			   'N',
 		 			   aMiss.TI_PROVVISORIO_DEFINITIVO,
 		 			   aMiss.FL_ASSOCIATO_COMPENSO,
-		 			   aComp.ESERCIZIO_ORI_OBBLIGAZIONE,
-		 			   aComp.PG_OBBLIGAZIONE,
-		 			   aComp.PG_OBBLIGAZIONE_SCADENZARIO,
+		 			   aObblig.ESERCIZIO_ORI_OBBLIGAZIONE,
+		 			   aObblig.PG_OBBLIGAZIONE,
+		 			   aObblig.PG_OBBLIGAZIONE_SCADENZARIO,
 		 			   decode(obb.ESERCIZIO_ORI_RIPORTO,null,'C','R'),
 		 			   obbs.DT_SCADENZA,
 					   aComp.PG_COMPENSO,
@@ -941,15 +954,15 @@ begin
 				   ,obbligazione_scadenzario obbs
 				   ,rif_modalita_pagamento rif
 				   ,banca ban
-			   where obb.CD_CDS			          = aComp.CD_CDS_OBBLIGAZIONE
-				 and obb.ESERCIZIO		   	  = aComp.ESERCIZIO_OBBLIGAZIONE
-				 and obb.ESERCIZIO_ORIGINALE  	   	  = aComp.ESERCIZIO_ORI_OBBLIGAZIONE
-	  			 and obb.PG_OBBLIGAZIONE		  = aComp.PG_OBBLIGAZIONE
-				 and obbs.CD_CDS			  = aComp.CD_CDS_OBBLIGAZIONE
-				 and obbs.ESERCIZIO		   	  = aComp.ESERCIZIO_OBBLIGAZIONE
-				 and obbs.ESERCIZIO_ORIGINALE	   	  = aComp.ESERCIZIO_ORI_OBBLIGAZIONE
-				 and obbs.PG_OBBLIGAZIONE         	  = aComp.PG_OBBLIGAZIONE
-				 and obbs.PG_OBBLIGAZIONE_SCADENZARIO = aComp.PG_OBBLIGAZIONE_SCADENZARIO
+			   where obb.CD_CDS			          = aObblig.CD_CDS_OBBLIGAZIONE
+				 and obb.ESERCIZIO		   	  = aObblig.ESERCIZIO_OBBLIGAZIONE
+				 and obb.ESERCIZIO_ORIGINALE  	   	  = aObblig.ESERCIZIO_ORI_OBBLIGAZIONE
+	  			 and obb.PG_OBBLIGAZIONE		  = aObblig.PG_OBBLIGAZIONE
+				 and obbs.CD_CDS			  = aObblig.CD_CDS_OBBLIGAZIONE
+				 and obbs.ESERCIZIO		   	  = aObblig.ESERCIZIO_OBBLIGAZIONE
+				 and obbs.ESERCIZIO_ORIGINALE	   	  = aObblig.ESERCIZIO_ORI_OBBLIGAZIONE
+				 and obbs.PG_OBBLIGAZIONE         	  = aObblig.PG_OBBLIGAZIONE
+				 and obbs.PG_OBBLIGAZIONE_SCADENZARIO = aObblig.PG_OBBLIGAZIONE_SCADENZARIO
 				 and rif.CD_MODALITA_PAG			  = aMiss.CD_MODALITA_PAG
 				 and ban.CD_TERZO					  = aMiss.CD_TERZO
 				 and ban.PG_BANCA					  = aMiss.PG_BANCA;
@@ -983,8 +996,9 @@ begin
 			   end;
 
 			end loop; -- fine loop 4
+		 end loop;
 
-		 else
+         if contaObblig=0 Then
 		 -- missioni con anticipo > missione => rimborso
 
 	 		declare
@@ -1232,6 +1246,7 @@ begin
 	 		end; -- fine blocco locale
 
 		 end if; -- fine distinzione con/senza rimborso
+	  end;
 
 	-- fine inserimento record (A,B2) missione + capitoli
 
@@ -1294,9 +1309,9 @@ begin
 		 			   'C',
 		 			   aMiss.TI_PROVVISORIO_DEFINITIVO,
 		 			   aMiss.FL_ASSOCIATO_COMPENSO,
-		 			   aComp.ESERCIZIO_ORI_OBBLIGAZIONE,
-		 			   aComp.PG_OBBLIGAZIONE,
-		 			   aComp.PG_OBBLIGAZIONE_SCADENZARIO,
+		 			   null,
+		 			   null,
+		 			   null,
 					   aComp.PG_COMPENSO,
 		 			   rif.DS_MODALITA_PAG,
 		 			   ban.INTESTAZIONE,
