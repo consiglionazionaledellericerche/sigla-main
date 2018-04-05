@@ -3757,7 +3757,7 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
 
         // CONFRONTO IMPORTO SPESA CON MASSIMALE TIPO PASTO
         if (massimalePastoEuro.compareTo(spesa.getIm_spesa_euro()) == -1)
-            throw new it.cnr.jada.bulk.ValidationException("L'importo della spesa supera il massimale del Tipo Pasto selezionato (" + massimalePastoEuro + ")");
+            throw new it.cnr.jada.bulk.ValidationException("L'importo della spesa supera il massimale del Tipo Pasto selezionato (€" + massimalePastoEuro + ")");
 
         return spesa;
     }
@@ -3791,7 +3791,7 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
 
         // CONFRONTO IMPORTO SPESA CON MASSIMALE TIPO SPESA
         if (massimaleSpesaEuro.compareTo(spesa.getIm_spesa_euro()) == -1)
-            throw new it.cnr.jada.bulk.ValidationException("L'importo della spesa supera il massimale del Tipo Spesa selezionato (" + massimaleSpesaEuro + ")");
+            throw new it.cnr.jada.bulk.ValidationException("L'importo della spesa supera il massimale del Tipo Spesa selezionato (€" + massimaleSpesaEuro + ")");
 
         spesa.setIm_spesa_max(massimaleSpesaEuro);
         spesa.setIm_spesa_max(spesa.getIm_spesa_max().setScale(2, BigDecimal.ROUND_HALF_UP));

@@ -15,6 +15,8 @@ import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
 import javax.xml.transform.dom.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.*;
 
 import it.cnr.contab.anagraf00.core.bulk.V_anagrafico_terzoBulk;
@@ -35,6 +37,8 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class RicercaContrattoBP extends BusinessProcess implements ResponseXMLBP{
+	private transient static final Logger logger = LoggerFactory.getLogger(RicercaContrattoBP.class);
+
 	private String[] uo;
 	private String oggetto;
 	private String giuridica;
@@ -331,11 +335,11 @@ public void generaXML(PageContext pagecontext) throws IOException, ServletExcept
 	    	serializer.setOutputProperty(OutputKeys.ENCODING,"UTF-8");
 	    	serializer.setOutputProperty(OutputKeys.INDENT,"yes");
 	    	serializer.setOutputProperty(OutputKeys.STANDALONE,"no");
-	    	serializer.transform(domSource, streamResult); 
-		} catch (ParserConfigurationException e) {
-		} catch (TransformerConfigurationException e) {
-		} catch (TransformerException e) {
-		} 
+	    	serializer.transform(domSource, streamResult);
+	    	closed();
+	} catch (ParserConfigurationException|TransformerException|BusinessProcessException e) {
+		logger.error("GeneraXML error -> ", e);
+	}
 }
 	
 private Node generaRichiesta(Document xmldoc) {

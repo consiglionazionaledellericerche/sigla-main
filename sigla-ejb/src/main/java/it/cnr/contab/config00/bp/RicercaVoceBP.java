@@ -8,6 +8,8 @@ import it.cnr.contab.config00.util.Constants;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.comp.ComponentException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -27,6 +29,8 @@ import java.util.Iterator;
 import java.util.List;
 
 public class RicercaVoceBP extends BusinessProcess implements ResponseXMLBP {
+    private transient static final Logger logger = LoggerFactory.getLogger(RicercaVoceBP.class);
+
     private String query;
     private String dominio;
     private Integer codiceErrore;
@@ -125,9 +129,9 @@ public class RicercaVoceBP extends BusinessProcess implements ResponseXMLBP {
             serializer.setOutputProperty(OutputKeys.INDENT, "yes");
             serializer.setOutputProperty(OutputKeys.STANDALONE, "no");
             serializer.transform(domSource, streamResult);
-        } catch (ParserConfigurationException e) {
-        } catch (TransformerConfigurationException e) {
-        } catch (TransformerException e) {
+            closed();
+        } catch (ParserConfigurationException | TransformerException | BusinessProcessException e) {
+            logger.error("GeneraXML error -> ", e);
         }
     }
 
