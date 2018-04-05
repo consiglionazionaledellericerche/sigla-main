@@ -14,6 +14,9 @@ import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
 import javax.xml.transform.dom.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.*;
 
 import it.cnr.contab.config00.bp.ResponseXMLBP;
@@ -25,6 +28,8 @@ import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.comp.ComponentException;
 
 public class RicercaFatturaPassivaBP extends BusinessProcess implements ResponseXMLBP{
+	private transient static final Logger logger = LoggerFactory.getLogger(RicercaFatturaPassivaBP.class);
+
 	private String query;
 	private String dominio;
 	private Integer codiceErrore;
@@ -94,10 +99,10 @@ public class RicercaFatturaPassivaBP extends BusinessProcess implements Response
 	    	serializer.setOutputProperty(OutputKeys.ENCODING,"UTF-8");
 	    	serializer.setOutputProperty(OutputKeys.INDENT,"yes");
 	    	serializer.setOutputProperty(OutputKeys.STANDALONE,"no");
-	    	serializer.transform(domSource, streamResult); 
-		} catch (ParserConfigurationException e) {
-		} catch (TransformerConfigurationException e) {
-		} catch (TransformerException e) {
+	    	serializer.transform(domSource, streamResult);
+			closed();
+		} catch (ParserConfigurationException | TransformerException | BusinessProcessException e) {
+			logger.error("GeneraXML error -> ", e);
 		}
     }
 	private Node generaDettaglio(Document xmldoc, VFatturaPassivaSIPBulk fatt) {

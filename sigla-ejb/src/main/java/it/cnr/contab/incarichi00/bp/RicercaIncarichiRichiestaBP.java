@@ -871,8 +871,8 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 	    	serializer.setOutputProperty(OutputKeys.INDENT,"yes");
 	    	serializer.setOutputProperty(OutputKeys.STANDALONE,"no");
 	    	//serializer.setOutputProperty(OutputKeys.MEDIA_TYPE,"text/xml");
-	    	serializer.transform(domSource, streamResult); 
-			closed(pagecontext.getSession());
+	    	serializer.transform(domSource, streamResult);
+	    	closed();
 		} catch (ParserConfigurationException e) {
 		} catch (TransformerConfigurationException e) {
 		} catch (TransformerException e) {
