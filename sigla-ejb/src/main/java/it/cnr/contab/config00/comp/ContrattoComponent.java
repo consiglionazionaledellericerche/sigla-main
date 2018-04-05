@@ -660,7 +660,6 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			   return calcolaTotDocContForPadre(userContext,contratto);
 			if(contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO_E_PASSIVO))
 			   return calcolaTotDocContForAttivoPassivo(userContext,contratto);			   
-			Integer esercizio = ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio();
 			ContrattoHome testataHome = (ContrattoHome)getHome(userContext, ContrattoBulk.class);
 			
 			contratto.setDitteInvitate(new it.cnr.jada.bulk.BulkList(testataHome.findDitteAssociate(userContext, contratto, Ass_contratto_ditteBulk.LISTA_INVITATE)));
@@ -1857,6 +1856,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			sql.addClause(FindClause.AND, "fl_pubblica_contratto", SQLBuilder.EQUALS, Boolean.TRUE);
 			sql.addSQLClause(FindClause.AND, "to_char(contratto.dt_fine_validita,'yyyy-mm-dd')", SQLBuilder.GREATER_EQUALS, "2013-01-01");
 			if(strRicerca!=null){
+				strRicerca=strRicerca.replace("'", "''");
 				sql.openParenthesis(FindClause.AND);
 				sql.addSQLClause(FindClause.AND,"instr(CONTRATTO.ESERCIZIO||'/'||CONTRATTO.PG_CONTRATTO,'"+strRicerca+"')>0");
 				sql.addSQLClause(FindClause.OR,"instr(UPPER(CONTRATTO.CD_CIG),'"+strRicerca.toUpperCase()+"')>0");
