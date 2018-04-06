@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ejb.EJB;
@@ -27,15 +28,17 @@ import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
-import it.cnr.contab.missioni00.docs.bulk.Missione_rigaBulk;
 import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.contab.web.rest.model.MassimaleSpesaBulk;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.PersistencyException;
@@ -114,13 +117,29 @@ public class MissioneResource implements MissioneLocal{
 		}
 
     	Calendar cal = Calendar.getInstance();
-		Optional.ofNullable(missioneComponentSession.recuperoObbligazioneDaGemis(userContext, missioneBulk))
-			.ifPresent(scadenza->{
-				Missione_rigaBulk missioneRiga = new Missione_rigaBulk();
-				missioneRiga.setObbligazioneScadenzario(scadenza);
-				missioneBulk.addToMissioneRigaColl(missioneRiga);
-			});
-		missioneBulk.setAnticipo(Optional.ofNullable(missioneComponentSession.recuperoAnticipoDaGemis(userContext, missioneBulk)).orElse(null));
+    	try {
+    		missioneBulk.setMissioneRigaColl(new BulkList(
+	    		Optional.ofNullable(missioneBulk.getMissioneRigaColl())
+						.map(BulkList::stream)
+						.orElse(Stream.empty())
+						.map(missRiga->{
+							try {
+						    	Optional.ofNullable(missioneComponentSession.recuperoObbligazioneDaGemis(userContext, missRiga))
+								.ifPresent(scadenza->{
+									missRiga.setObbligazioneScadenzario(scadenza);
+								});
+							} catch (ComponentException|RemoteException e){
+								throw new DetailedRuntimeException(e);
+							}
+							return missRiga;
+						})
+						.filter(missRiga->{return missRiga.getObbligazioneScadenzario()!=null;})
+						.collect(Collectors.toList())));
+		} catch (DetailedRuntimeException e) {
+			throw new ApplicationException(e.getMessage());
+		}		
+
+    	missioneBulk.setAnticipo(Optional.ofNullable(missioneComponentSession.recuperoAnticipoDaGemis(userContext, missioneBulk)).orElse(null));
 		cal.setTime(missioneBulk.getDt_inizio_missione());
 		cal.set(Calendar.SECOND,0);
 		cal.set(Calendar.MILLISECOND,0);

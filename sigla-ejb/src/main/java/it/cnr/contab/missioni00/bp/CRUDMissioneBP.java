@@ -2961,7 +2961,9 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     		} else {
     			Missione_rigaBulk riga = new Missione_rigaBulk();
     			riga.setObbligazioneScadenzario(newScad);
-    			riga.setIm_totale_riga_missione(newScad.getIm_scadenza());
+    			riga.setIm_totale_riga_missione(newScad.getIm_scadenza().compareTo(missione.getIm_totale_da_impegnare())<0?
+    					newScad.getIm_scadenza():
+    						missione.getIm_totale_da_impegnare());
     			this.getMissioneRigheController().add(context,riga);
     		}
     		

@@ -1,5 +1,6 @@
 package it.cnr.contab.missioni00.docs.bulk;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
@@ -11,6 +12,14 @@ public class Missione_rigaBulk extends Missione_rigaBase {
 
 	private MissioneBulk missione = new MissioneBulk();
 	private it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk obbligazioneScadenzario = new Obbligazione_scadenzarioBulk();
+
+	// Dati da Rimborso Missione (GeMis)
+	private Integer esercizioObblGeMis;
+	private Integer esercizioOriObblGeMis;
+	private String cdsObblGeMis;
+	private Long pgObblGeMis;
+	private String gaeGeMis;
+    private BigDecimal importoDaRimborsare;
 
 	public Missione_rigaBulk() {
 		super();
@@ -140,5 +149,53 @@ public class Missione_rigaBulk extends Missione_rigaBase {
 
 	public void setPg_obbligazione_scadenzario(java.lang.Long pg_obbligazione_scadenzario) {
 		this.getObbligazioneScadenzario().setPg_obbligazione_scadenzario(pg_obbligazione_scadenzario);
+	}
+
+	public Integer getEsercizioObblGeMis() {
+		return esercizioObblGeMis;
+	}
+	
+	public void setEsercizioObblGeMis(Integer esercizioObblGeMis) {
+		this.esercizioObblGeMis = esercizioObblGeMis;
+	}
+	
+	public Integer getEsercizioOriObblGeMis() {
+		return esercizioOriObblGeMis;
+	}
+	
+	public void setEsercizioOriObblGeMis(Integer esercizioOriObblGeMis) {
+		this.esercizioOriObblGeMis = esercizioOriObblGeMis;
+	}
+	
+	public String getCdsObblGeMis() {
+		return cdsObblGeMis;
+	}
+	
+	public void setCdsObblGeMis(String cdsObblGeMis) {
+		this.cdsObblGeMis = cdsObblGeMis;
+	}
+	
+	public Long getPgObblGeMis() {
+		return pgObblGeMis;
+	}
+	
+	public void setPgObblGeMis(Long pgObblGeMis) {
+		this.pgObblGeMis = pgObblGeMis;
+	}
+	
+	public String getGaeGeMis() {
+		return gaeGeMis;
+	}
+	
+	public void setGaeGeMis(String gaeGeMis) {
+		this.gaeGeMis = gaeGeMis;
+	}
+
+	public BigDecimal getImportoDaRimborsare() {
+		return importoDaRimborsare;
+	}
+
+	public void setImportoDaRimborsare(BigDecimal importoDaRimborsare) {
+		this.importoDaRimborsare = importoDaRimborsare;
 	}
 }

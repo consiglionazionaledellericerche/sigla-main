@@ -11,6 +11,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_rigaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -63,7 +64,7 @@ public SQLBuilder selectTipo_autoByClause(UserContext aUC,Timestamp dataTappa, N
 public DivisaBulk recuperoDivisa(UserContext userContext, Long nazione, String gruppoInquadramento, Timestamp dataInizioMissione) throws ComponentException,java.rmi.RemoteException;
 public BigDecimal recuperoCambio(UserContext userContext, String divisa, Timestamp dataInizioMissione) throws ComponentException,java.rmi.RemoteException;
 public DivisaBulk getDivisaDefault(UserContext userContext) throws ComponentException,java.rmi.RemoteException, it.cnr.jada.persistency.PersistencyException;
-public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException;
+public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC, Missione_rigaBulk missioneRiga) throws ComponentException,java.rmi.RemoteException;
 public AnticipoBulk recuperoAnticipoDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException;
 public MissioneBulk caricaTerzoInModificaMissione(UserContext userContext, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException;
 }

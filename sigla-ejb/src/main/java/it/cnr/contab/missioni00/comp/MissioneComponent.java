@@ -83,6 +83,7 @@ import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneHome;
 import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioHome;
+import it.cnr.contab.missioni00.docs.bulk.Missione_rigaBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_tappaBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_tappaHome;
 import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
@@ -2824,26 +2825,26 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
         }
     }
 
-    public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException {
+    public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC, Missione_rigaBulk missioneRiga) throws ComponentException {
         Obbligazione_scadenzarioBulk obblScad = null;
         try {
-            if (missione.getEsercizioObblGeMis() != null && missione.getEsercizioOriObblGeMis() != null && missione.getCdsObblGeMis() != null && missione.getPgObblGeMis() != null) {
+            if (missioneRiga.getEsercizioObblGeMis() != null && missioneRiga.getEsercizioOriObblGeMis() != null && missioneRiga.getCdsObblGeMis() != null && missioneRiga.getPgObblGeMis() != null) {
 
-                if (missione.getGaeGeMis() != null) {
+                if (missioneRiga.getGaeGeMis() != null) {
                     Obbligazione_scad_voceHome scadenzaHome = (Obbligazione_scad_voceHome) getHome(aUC, Obbligazione_scad_voceBulk.class);
                     SQLBuilder sql = scadenzaHome.createSQLBuilder();
 
-                    sql.addSQLClause("AND", "OBBLIGAZIONE_SCAD_VOCE.CD_LINEA_ATTIVITA", sql.EQUALS, missione.getGaeGeMis());
-                    sql.addSQLClause("AND", "OBBLIGAZIONE_SCAD_VOCE.IM_VOCE", sql.GREATER_EQUALS, missione.getImportoDaRimborsare());
+                    sql.addSQLClause(FindClause.AND, "OBBLIGAZIONE_SCAD_VOCE.CD_LINEA_ATTIVITA", SQLBuilder.EQUALS, missioneRiga.getGaeGeMis());
+                    sql.addSQLClause(FindClause.AND, "OBBLIGAZIONE_SCAD_VOCE.IM_VOCE", SQLBuilder.GREATER_EQUALS, missioneRiga.getImportoDaRimborsare());
 
-                    SQLBuilder sqlExists = impostaFiltroQueryObbligazioniFromGemis(aUC, missione);
+                    SQLBuilder sqlExists = impostaFiltroQueryObbligazioniFromGemis(aUC, missioneRiga);
 
                     sqlExists.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.CD_CDS", "OBBLIGAZIONE_SCAD_VOCE.CD_CDS");
                     sqlExists.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO", "OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO");
                     sqlExists.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.ESERCIZIO_ORIGINALE", "OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO_ORIGINALE");
                     sqlExists.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE", "OBBLIGAZIONE_SCAD_VOCE.PG_OBBLIGAZIONE");
                     sqlExists.addSQLJoin("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE_SCADENZARIO", "OBBLIGAZIONE_SCAD_VOCE.PG_OBBLIGAZIONE_SCADENZARIO");
-                    sql.addSQLExistsClause("AND", sqlExists);
+                    sql.addSQLExistsClause(FindClause.AND, sqlExists);
 
                     sql.addOrderBy("OBBLIGAZIONE_SCAD_VOCE.PG_OBBLIGAZIONE_SCADENZARIO");
 
@@ -2859,7 +2860,7 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
                     }
                 } else {
                     Obbligazione_scadenzarioHome scadenzaHome = (Obbligazione_scadenzarioHome) getHome(aUC, Obbligazione_scadenzarioBulk.class);
-                    SQLBuilder sql = impostaFiltroQueryObbligazioniFromGemis(aUC, missione);
+                    SQLBuilder sql = impostaFiltroQueryObbligazioniFromGemis(aUC, missioneRiga);
                     sql.addOrderBy("OBBLIGAZIONE_SCADENZARIO.PG_OBBLIGAZIONE_SCADENZARIO");
 
                     it.cnr.jada.bulk.BulkList scadenzario = new it.cnr.jada.bulk.BulkList(scadenzaHome.fetchAll(sql));
@@ -2874,21 +2875,21 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
                 return null;
             }
             if (obblScad != null) {
-                return gestioneScadenzaObbligazioneDaGemis(aUC, missione, obblScad);
+                return gestioneScadenzaObbligazioneDaGemis(aUC, missioneRiga, obblScad);
             }
         } catch (Throwable e) {
-            throw handleException(missione, e);
+            throw handleException(missioneRiga.getMissione(), e);
         }
         return obblScad;
     }
 
-    private Obbligazione_scadenzarioBulk gestioneScadenzaObbligazioneDaGemis(UserContext aUC, MissioneBulk missione, Obbligazione_scadenzarioBulk obblScad)
+    private Obbligazione_scadenzarioBulk gestioneScadenzaObbligazioneDaGemis(UserContext aUC, Missione_rigaBulk missioneRiga, Obbligazione_scadenzarioBulk obblScad)
             throws ComponentException {
         try {
             Obbligazione_scadenzarioBulk scadenzaNuova = null;
-            BigDecimal importoResiduo = obblScad.getImportoDisponibile().subtract(missione.getImportoDaRimborsare());
+            BigDecimal importoResiduo = obblScad.getImportoDisponibile().subtract(missioneRiga.getImportoDaRimborsare());
             if (obblScad != null && importoResiduo.compareTo(BigDecimal.ZERO) > 0) {
-                return sdoppiaObbligazioneScadenzario(aUC, missione, obblScad, importoResiduo);
+                return sdoppiaObbligazioneScadenzario(aUC, missioneRiga, obblScad, importoResiduo);
             } else if (obblScad != null && importoResiduo.compareTo(BigDecimal.ZERO) == 0) {
                 return obblScad;
             } else {
@@ -2899,21 +2900,21 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
         }
     }
 
-    private Obbligazione_scadenzarioBulk sdoppiaObbligazioneScadenzario(UserContext aUC, MissioneBulk missione,
+    private Obbligazione_scadenzarioBulk sdoppiaObbligazioneScadenzario(UserContext aUC, Missione_rigaBulk missioneRiga,
                                                                         Obbligazione_scadenzarioBulk obblScad, BigDecimal importoResiduo)
             throws ComponentException, RemoteException, PersistencyException, ValidationException {
         Obbligazione_scadenzarioBulk scadenzaNuova;
         ObbligazioneAbstractComponentSession sess = (ObbligazioneAbstractComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ObbligazioneAbstractComponentSession");
-        java.sql.Timestamp ts = getDataRegistrazione(aUC, missione);
+        java.sql.Timestamp ts = getDataRegistrazione(aUC, missioneRiga.getMissione());
         Calendar cal = Calendar.getInstance();
         cal.setTime(ts);
         cal.add(Calendar.DAY_OF_WEEK, 1);
         ts = new Timestamp(cal.getTime().getTime());
         DatiFinanziariScadenzeDTO datiScadenze = new DatiFinanziariScadenzeDTO();
-        datiScadenze.setCdCentroResponsabilita(missione.getCdrGeMis());
-        datiScadenze.setCdLineaAttivita(missione.getGaeGeMis());
-        datiScadenze.setCdVoce(missione.getVoceGeMis());
-        datiScadenze.setNuovaDescrizione(missione.getDs_missione());
+        datiScadenze.setCdCentroResponsabilita(missioneRiga.getMissione().getCdrGeMis());
+        datiScadenze.setCdLineaAttivita(missioneRiga.getGaeGeMis());
+        datiScadenze.setCdVoce(missioneRiga.getMissione().getVoceGeMis());
+        datiScadenze.setNuovaDescrizione(missioneRiga.getMissione().getDs_missione());
         datiScadenze.setNuovaScadenza(ts);
         datiScadenze.setNuovoImportoScadenzaVecchia(importoResiduo);
         scadenzaNuova = (Obbligazione_scadenzarioBulk) sess
@@ -2943,20 +2944,20 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
         return scadenzaNuova;
     }
 
-    private SQLBuilder impostaFiltroQueryObbligazioniFromGemis(UserContext aUC, MissioneBulk missione) throws PersistencyException, ComponentException, ApplicationException {
+    private SQLBuilder impostaFiltroQueryObbligazioniFromGemis(UserContext aUC, Missione_rigaBulk missioneRiga) throws PersistencyException, ComponentException, ApplicationException {
         Filtro_ricerca_obbligazioniVBulk filtro = new Filtro_ricerca_obbligazioniVBulk();
 
-        filtro.setCd_unita_organizzativa(missione.getCd_unita_organizzativa());
+        filtro.setCd_unita_organizzativa(missioneRiga.getCd_unita_organizzativa());
         filtro.setFl_data_scadenziario(false);
-        filtro.setIm_importo(missione.getImportoDaRimborsare());
+        filtro.setIm_importo(missioneRiga.getImportoDaRimborsare());
         filtro.setFl_fornitore(false);
         filtro.setFl_importo(true);
         filtro.setFl_nr_obbligazione(true);
         TerzoBulk terzo = new TerzoBulk();
-        terzo.setCd_terzo(missione.getCd_terzo());
+        terzo.setCd_terzo(missioneRiga.getMissione().getCd_terzo());
         filtro.setFornitore(terzo);
-        filtro.setEsercizio_ori_obbligazione(missione.getEsercizioOriObblGeMis());
-        filtro.setNr_obbligazione(missione.getPgObblGeMis());
+        filtro.setEsercizio_ori_obbligazione(missioneRiga.getEsercizioOriObblGeMis());
+        filtro.setNr_obbligazione(missioneRiga.getPgObblGeMis());
 
         SQLBuilder sql = prepareQueryObbligazioni(aUC, filtro);
 

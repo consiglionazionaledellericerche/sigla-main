@@ -164,18 +164,12 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	private java.lang.String riportataInScrivania = NON_RIPORTATO;
 
 	// Dati da Rimborso Missione (GeMis)
-	private Integer esercizioObblGeMis;
-	private Integer esercizioOriObblGeMis;
-	private String cdsObblGeMis;
-	private Long pgObblGeMis;
 	private Integer esercizioAnticipoGeMis;
 	private String cdsAnticipoGeMis;
 	private Long pgAnticipoGeMis;
-	private String gaeGeMis;
 	private String cdrGeMis;
 	private String voceGeMis;
 	private Long pgMissioneFromGeMis;
-    private BigDecimal importoDaRimborsare;
 
 	// Fondo Economale
 	public final static Dictionary STATO_FONDO_ECO;
@@ -3364,36 +3358,6 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 			java.sql.Timestamp dataInizioObbligoRegistroUnico) {
 		this.dataInizioObbligoRegistroUnico = dataInizioObbligoRegistroUnico;
 	}
-	public Integer getEsercizioObblGeMis() {
-		return esercizioObblGeMis;
-	}
-	public void setEsercizioObblGeMis(Integer esercizioObblGeMis) {
-		this.esercizioObblGeMis = esercizioObblGeMis;
-	}
-	public Integer getEsercizioOriObblGeMis() {
-		return esercizioOriObblGeMis;
-	}
-	public void setEsercizioOriObblGeMis(Integer esercizioOriObblGeMis) {
-		this.esercizioOriObblGeMis = esercizioOriObblGeMis;
-	}
-	public String getCdsObblGeMis() {
-		return cdsObblGeMis;
-	}
-	public void setCdsObblGeMis(String cdsObblGeMis) {
-		this.cdsObblGeMis = cdsObblGeMis;
-	}
-	public Long getPgObblGeMis() {
-		return pgObblGeMis;
-	}
-	public void setPgObblGeMis(Long pgObblGeMis) {
-		this.pgObblGeMis = pgObblGeMis;
-	}
-	public String getGaeGeMis() {
-		return gaeGeMis;
-	}
-	public void setGaeGeMis(String gaeGeMis) {
-		this.gaeGeMis = gaeGeMis;
-	}
 	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
 		return getArchivioAllegati().remove(index);
 	}
@@ -3446,12 +3410,6 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		StringBuffer nomeFile = new StringBuffer();
 		nomeFile = nomeFile.append(StrServ.lpad(this.getPg_missione().toString(),9,"0"));
 		return nomeFile.toString();
-	}
-	public BigDecimal getImportoDaRimborsare() {
-		return importoDaRimborsare;
-	}
-	public void setImportoDaRimborsare(BigDecimal importoDaRimborsare) {
-		this.importoDaRimborsare = importoDaRimborsare;
 	}
 	public String getCdrGeMis() {
 		return cdrGeMis;

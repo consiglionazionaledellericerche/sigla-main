@@ -43,6 +43,7 @@ import it.cnr.contab.compensi00.docs.bulk.BonusHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.docs.bulk.Compenso_rigaBulk;
+import it.cnr.contab.compensi00.docs.bulk.Compenso_rigaHome;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioHome;
 import it.cnr.contab.compensi00.docs.bulk.Contributo_ritenutaBulk;
@@ -125,6 +126,8 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
 import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
+import it.cnr.contab.missioni00.docs.bulk.Missione_rigaBulk;
+import it.cnr.contab.missioni00.docs.bulk.Missione_rigaHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.EuroFormat;
 import it.cnr.contab.util.RemoveAccent;
@@ -1583,10 +1586,14 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			CompensoBulk compenso, Long tmp) throws ComponentException {
 
 		try {
-
 			compenso.setPg_compenso(tmp);
-			deleteBulk(userContext, compenso);
+			// Cancello le righe del compenso
+			for (Compenso_rigaBulk compRigaTemp : compenso.getCompensoRigaColl()) {
+				compRigaTemp.setPg_compenso(tmp);
+				deleteBulk(userContext, compRigaTemp);
+			}
 
+			deleteBulk(userContext, compenso);
 		} catch (it.cnr.jada.persistency.PersistencyException ex) {
 			throw handleException(ex);
 		}
@@ -3883,6 +3890,8 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		if (tmp != null) {
 			eliminaCompensoTemporaneo(userContext, compenso, tmp);
 			compenso.setPg_compenso(current);
+			for (Compenso_rigaBulk compRigaTemp : compenso.getCompensoRigaColl())
+				compRigaTemp.setPg_compenso(current);
 		}
 
 		// Restore dell'hash map dei saldi

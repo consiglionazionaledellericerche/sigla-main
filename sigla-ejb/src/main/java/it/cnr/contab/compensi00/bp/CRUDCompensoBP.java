@@ -404,7 +404,9 @@ public void elaboraScadenza(ActionContext context, Obbligazione_scadenzarioBulk 
 		} else {
 			Compenso_rigaBulk riga = new Compenso_rigaBulk();
 			riga.setObbligazioneScadenzario(newScad);
-			riga.setIm_totale_riga_compenso(newScad.getIm_scadenza());
+			riga.setIm_totale_riga_compenso(newScad.getIm_scadenza().compareTo(compenso.getIm_totale_da_impegnare())<0?
+					newScad.getIm_scadenza():
+					compenso.getIm_totale_da_impegnare());
 			this.getCompensoRigheController().add(context,riga);
 		}
 		
@@ -923,7 +925,6 @@ public boolean isBottoneModificaAutomaticaObbligazioneEnabled() {
 	return (compenso!=null &&
 			compenso.getObbligazione_scadenzarioColl()!=null && 
 			!compenso.getObbligazione_scadenzarioColl().isEmpty() &&
-			compenso.isStatoCompensoSincronizzaObbligazione() &&
 			!compenso.isROPerChiusura());
 }
 public boolean isBottoneModificaManualeObbligazioneEnabled() {
