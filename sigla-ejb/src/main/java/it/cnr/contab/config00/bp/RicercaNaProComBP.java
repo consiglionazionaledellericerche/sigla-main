@@ -250,6 +250,7 @@ public class RicercaNaProComBP extends BusinessProcess implements ResponseXMLBP 
             ((it.cnr.jada.util.RemoteOrderable) iterator).setOrderBy("ds_nazione", 1);
             while (iterator.hasMoreElements())
                 getNazioni().add(iterator.nextElement());
+            EJBCommonServices.closeRemoteIterator(actioncontext, iterator);
         } catch (ComponentException e) {
             codiceErrore = Constants.ERRORE_SIP_100;
         } catch (RemoteException e) {
@@ -266,6 +267,7 @@ public class RicercaNaProComBP extends BusinessProcess implements ResponseXMLBP 
             ((it.cnr.jada.util.RemoteOrderable) iterator).setOrderBy("ds_provincia", 1);
             while (iterator.hasMoreElements())
                 getProvince().add(iterator.nextElement());
+            EJBCommonServices.closeRemoteIterator(actioncontext, iterator);
         } catch (ComponentException e) {
             codiceErrore = Constants.ERRORE_SIP_100;
         } catch (RemoteException e) {
@@ -285,6 +287,7 @@ public class RicercaNaProComBP extends BusinessProcess implements ResponseXMLBP 
             ((it.cnr.jada.util.RemoteOrderable) iterator).setOrderBy("ds_comune", 1);
             while (iterator.hasMoreElements())
                 getComuni().add(iterator.nextElement());
+            EJBCommonServices.closeRemoteIterator(actioncontext, iterator);
         } catch (ComponentException e) {
             codiceErrore = Constants.ERRORE_SIP_100;
         } catch (RemoteException e) {
@@ -310,6 +313,7 @@ public class RicercaNaProComBP extends BusinessProcess implements ResponseXMLBP 
                     .cerca(actioncontext.getUserContext(false), null, comune));
             while (iterator.hasMoreElements())
                 getComuni().add(iterator.nextElement());
+            EJBCommonServices.closeRemoteIterator(actioncontext, iterator);
         } catch (ComponentException e) {
             codiceErrore = Constants.ERRORE_SIP_100;
         } catch (RemoteException e) {
