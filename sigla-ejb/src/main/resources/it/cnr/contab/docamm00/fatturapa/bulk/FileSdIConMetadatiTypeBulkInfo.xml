@@ -65,7 +65,15 @@
 		caseSensitiveSearch="false"
 		nullable="false"
 		label="File fatture ricevute" />
-
+	<fieldProperty
+		name="identificativoSDI"
+		property="identificativoSDI"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="400"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="SCAN pec cond identificativo SDI" />
 	<fieldProperty
 		name="daysBefore"
 		property="daysBefore"
@@ -81,7 +89,9 @@
 	<formFieldProperty
 		name="metadati" />
 	<formFieldProperty
-		name="fileFattureRicevute" />	
+		name="fileFattureRicevute" />
+	<formFieldProperty
+			name="identificativoSDI" />
 	<formFieldProperty
 		name="daysBefore" />	
 			

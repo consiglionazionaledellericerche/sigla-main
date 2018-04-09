@@ -2466,10 +2466,12 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
 		throw handleException( new ApplicationException( "L'importo della scadenza deve essere maggiore di 0" ));	
 	try
 	{
-		// Inizializzo l'accertamento con la linea di attivita', le sue scadenze
-		// e i suoi dettagli
-//		AccertamentoBulk accertamento = (AccertamentoBulk) inizializzaBulkPerModificaDaFatturaAttiva (userContext, scadenzaDaFattura);
-		AccertamentoBulk accertamento = (AccertamentoBulk) scadenzaDaFattura.getAccertamento();
+		// Inizializzo l'accertamento con la linea di attivita', le sue scadenze e i suoi dettagli
+		AccertamentoBulk accertamento = (AccertamentoBulk) inizializzaBulkPerModifica(userContext, scadenzaDaFattura.getAccertamento());
+        scadenzaDaFattura = accertamento.getAccertamento_scadenzarioColl().stream()
+                    .filter(accertamentoScadenzario -> accertamentoScadenzario.equalsByPrimaryKey(scad))
+                    .findAny()
+                    .orElse(scadenzaDaFattura);
 
 		if ( accertamento.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_ACR_RES) &&
 				!modificaScadenzaSuccessiva)
