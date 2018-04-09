@@ -28,12 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -214,6 +209,10 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	}
 	
 	public void caricaFatture(Integer daysBefore) {
+		caricaFatture(daysBefore, null);
+	}
+
+	public void caricaFatture(Integer daysBefore, String filterOggetto) {
 		try{
 			if (pecScanDisable){
 				logger.info("PEC scan is disabled");
@@ -221,21 +220,21 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 				logger.info("PEC SCAN for ricevi Fatture started at: "+new Date());
 				Configurazione_cnrBulk email = fatturaElettronicaPassivaComponentSession.getEmailPecSdi(userContext);
 				if (email == null) {
-					logger.info("PEC SCAN for ricevi Fatture alredy started in another server.");									
+					logger.info("PEC SCAN for ricevi Fatture alredy started in another server.");
 				} else {
 					try {
-						pecScan(email.getVal01(), email.getVal02(), daysBefore);						
+						pecScan(email.getVal01(), email.getVal02(), daysBefore, filterOggetto);
 					} finally {
-						fatturaElettronicaPassivaComponentSession.unlockEmailPEC(userContext);						
+						fatturaElettronicaPassivaComponentSession.unlockEmailPEC(userContext);
 					}
 				}
-				logger.info("PEC SCAN for ricevi Fatture finished at: "+new Date());				
+				logger.info("PEC SCAN for ricevi Fatture finished at: "+new Date());
 			}
 		} catch(Throwable _ex){
 			logger.error("ScheduleExecutor error", _ex);
 		}
 	}
-	
+
 	public void allineaNotificheExecute() {
 		try{
 			if (pecScanDisable){
@@ -354,7 +353,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		}
 	}
 
-	public void pecScan(String userName, String password, Integer daysBefore) throws ComponentException {
+	public void pecScan(String userName, String password, Integer daysBefore, String filterOggetto) throws ComponentException {
 		logger.info("PEC SCAN for ricevi Fatture email: "+userName + "pwd :" +password);
 		Properties props = System.getProperties();
 		props.putAll(pecMailConf);
@@ -368,9 +367,9 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			URLName urlName = new URLName(pecURLName);
 			Store store = session.getStore(urlName);
 			store.connect(userName, password);
-			searchMailFromPec(userName, password, store, daysBefore);
-			searchMailFromSdi(userName, store, daysBefore);
-			searchMailFromReturn(userName, store, daysBefore);
+			searchMailFromPec(userName, password, store, daysBefore, filterOggetto);
+			searchMailFromSdi(userName, store, daysBefore, filterOggetto);
+			searchMailFromReturn(userName, store, daysBefore, filterOggetto);
 			store.close();
 		} catch (AuthenticationFailedException e) {
 			logger.error("Error while scan PEC email:" +userName + " - password:"+password);
@@ -380,7 +379,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			logger.error("Error while scan PEC email:" +userName, e);
 		}				
 	}
-	private void searchMailFromPec(String userName, String password, final Store store, Integer daysBefore)
+	private void searchMailFromPec(String userName, String password, final Store store, Integer daysBefore, String filterOggetto)
 			throws MessagingException {
 		List<Folder> folders = new ArrayList<Folder>();
 		for (String folderName : pecScanReceiptFolderName) {
@@ -390,13 +389,13 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		    if (folder.exists()) {
 		    	if (!folder.isOpen())
 					folder.open(Folder.READ_ONLY);
-				processingMailFromHostPec(folder, userName, password, daysBefore);
+				processingMailFromHostPec(folder, userName, password, daysBefore, filterOggetto);
 				if (folder.isOpen())
 					folder.close(true);
 		    } 
 		}
 	}
-	private void searchMailFromSdi(String userName, final Store store, Integer daysBefore)
+	private void searchMailFromSdi(String userName, final Store store, Integer daysBefore, String filterOggetto)
 			throws MessagingException {
 		List<Folder> folders = new ArrayList<Folder>();
 		for (String folderName : pecScanFolderName) {
@@ -406,14 +405,14 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		    if (folder.exists()) {
 				if (!folder.isOpen())
 					folder.open(Folder.READ_ONLY);
-				processingMailFromSdi(folder, userName, daysBefore);
+				processingMailFromSdi(folder, userName, daysBefore, filterOggetto);
 				if (folder.isOpen())
 					folder.close(true);
 			}
 		}
 	}
 
-	private void searchMailFromReturn(String userName, final Store store, Integer daysBefore)
+	private void searchMailFromReturn(String userName, final Store store, Integer daysBefore, String filterOggetto)
 			throws MessagingException {
 		List<Folder> folders = new ArrayList<Folder>();
 		for (String folderName : pecScanFolderName) {
@@ -423,14 +422,14 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		    if (folder.exists()) {
 				if (!folder.isOpen())
 					folder.open(Folder.READ_ONLY);
-				processingMailFromReturn(folder, userName, daysBefore);
+				processingMailFromReturn(folder, userName, daysBefore, filterOggetto);
 				if (folder.isOpen())
 					folder.close(true);
 			}
 		}
 	}
 	
-	private void processingMailFromSdi(Folder folder, String userName, Integer daysBefore) throws MessagingException{
+	private void processingMailFromSdi(Folder folder, String userName, Integer daysBefore, String filterOggetto) throws MessagingException{
 	    if (isDateForRecoveryNotifier()){
 			List<SearchTerm> newTerms = createTermsForSearchSdi(true, daysBefore);
 	    	Message newMessages[] = folder.search(new AndTerm(newTerms.toArray(new SearchTerm[newTerms.size()])));
@@ -438,7 +437,17 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		    for (int i = 0; i < newMessages.length; i++) {
 		    	try {
 		    		Message message = newMessages[i];
-					if (message.getSubject() != null){
+		    		if (message.getSubject() != null){
+                        if (!Optional.ofNullable(filterOggetto)
+                                .map(oggetto -> {
+                                    try {
+                                        return message.getSubject().contains(oggetto);
+                                    } catch (MessagingException e) {
+                                        return true;
+                                    }
+                                }).orElse(Boolean.TRUE)){
+                            continue;
+                        }
 						if (message.getSubject().contains(pecSDISubjectNotificaEsitoTerm)){
 							notificaFatturaAttivaEsito(message);
 						} else if (message.getSubject().contains(pecSDISubjectFatturaAttivaNotificaScartoTerm)){
@@ -462,6 +471,16 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	    	try {
 	    		Message message = messages[i];
 	    		if (message.getSubject() != null){
+                    if (!Optional.ofNullable(filterOggetto)
+                            .map(oggetto -> {
+                                try {
+                                    return message.getSubject().contains(oggetto);
+                                } catch (MessagingException e) {
+                                    return true;
+                                }
+                            }).orElse(Boolean.TRUE)){
+                        continue;
+                    }
 	    			if (message.getSubject().contains(pecSDISubjectRiceviFattureTerm)){
 	    				riceviFattura(message, userName);
 	    			} else if (message.getSubject().contains(pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm)){
@@ -501,7 +520,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	    return false;
 	}
 	    
-	private void processingMailFromReturn(Folder folder, String userName, Integer daysBefore) throws MessagingException{
+	private void processingMailFromReturn(Folder folder, String userName, Integer daysBefore, String filterOggetto) throws MessagingException{
     	List<SearchTerm> terms = createTermsForSearchReturn(daysBefore);
     	Message messages[] = folder.search(new AndTerm(terms.toArray(new SearchTerm[terms.size()])));
     	logger.info("Recuperati " + messages.length +" messaggi di mail non recapitate dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
@@ -509,6 +528,16 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	    	try {
 	    		Message message = messages[i];
 				if (message.getSubject() != null){
+                    if (!Optional.ofNullable(filterOggetto)
+                            .map(oggetto -> {
+                                try {
+                                    return message.getSubject().contains(oggetto);
+                                } catch (MessagingException e) {
+                                    return true;
+                                }
+                            }).orElse(Boolean.TRUE)){
+                        continue;
+                    }
 					try{
 						String[] headerMessage = getMessageID(message);
 						if (headerMessage != null){
@@ -554,14 +583,24 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		return terms;
 	}
 	
-	private void processingMailFromHostPec(Folder folder, String userName, String password, Integer daysBefore) throws MessagingException{
+	private void processingMailFromHostPec(Folder folder, String userName, String password, Integer daysBefore, String filterOggetto) throws MessagingException{
 		List<SearchTerm> terms = createTermsForSearchPec(daysBefore);
     	Message messages[] = folder.search(new AndTerm(terms.toArray(new SearchTerm[terms.size()])));
     	logger.info("Recuperati " + messages.length +" messaggi PEC dalla casella PEC:" + userName + " nella folder:" + folder.getFullName());
 	    for (int i = 0; i < messages.length; i++) {
 	    	try {
 	    		Message message = messages[i];
-	    		
+                if (!Optional.ofNullable(filterOggetto)
+                        .map(oggetto -> {
+                            try {
+                                return message.getSubject().contains(oggetto);
+                            } catch (MessagingException e) {
+                                return true;
+                            }
+                        }).orElse(Boolean.TRUE)){
+                    continue;
+                }
+
 	    		if (message.getSubject().contains(getSubjectTermForMancataConsegnaFatturaAttivaPec())){
 		    		String nomeFile = message.getSubject().substring(getSubjectTermForMancataConsegnaFatturaAttivaPec().length() + 1 );
 		    		if (nomeFile != null){
