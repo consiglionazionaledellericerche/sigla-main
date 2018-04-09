@@ -23,6 +23,7 @@ import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
+import it.cnr.contab.utente00.ejb.RuoloComponentSession;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.varstanz00.ejb.VariazioniStanziamentoResiduoComponentSession;
 
@@ -485,5 +486,8 @@ public final class Utility {
 	}
     public static TipoAttoBolloComponentSession createTipoAttoBolloComponentSession() throws javax.ejb.EJBException{
 	    return (TipoAttoBolloComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRBOLLO00_EJB_TipoAttoBolloComponentSession", TipoAttoBolloComponentSession.class);
+	}
+	public static RuoloComponentSession getRuoloComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException {
+		return (RuoloComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_EJB_RuoloComponentSession",RuoloComponentSession.class);
 	}
 }
