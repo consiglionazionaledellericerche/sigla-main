@@ -474,6 +474,23 @@ public boolean isAbilitatoFirmaFatturazioneElettronica(UserContext param0)
 		}
 	}
 }
+public boolean isAbilitatoCancellazioneMissioneGemis(UserContext param0)
+		throws ComponentException, RemoteException {
+	try {
+		return ((Boolean)invoke("isAbilitatoCancellazioneMissioneGemis",new Object[] {
+			param0})).booleanValue();
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 public boolean isAbilitatoAutorizzareDiaria(it.cnr.jada.UserContext param0) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return ((Boolean)invoke("isAbilitatoAutorizzareDiaria",new Object[] {
