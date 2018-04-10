@@ -108,6 +108,9 @@
             <logger category="sun.rmi">
                 <level name="WARN"/>
             </logger>
+            <logger category="org.jboss.as.ejb3.invocation" use-parent-handlers="false">
+                <level name="SEVERE"/>
+            </logger>
             <root-logger>
                 <level name="INFO"/>
                 <handlers>

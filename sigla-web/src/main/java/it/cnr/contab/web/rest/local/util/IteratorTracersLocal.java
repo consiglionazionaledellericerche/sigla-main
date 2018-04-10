@@ -1,4 +1,4 @@
-package it.cnr.contab.web.rest;
+package it.cnr.contab.web.rest.local.util;
 
 import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;
