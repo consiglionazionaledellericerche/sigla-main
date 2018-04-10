@@ -1,4 +1,4 @@
-package it.cnr.contab.web.rest;
+package it.cnr.contab.web.rest.resource.docamm;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
@@ -48,6 +48,7 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.ejb.AccertamentoComponentSession;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.web.rest.local.docamm.FatturaAttivaLocal;
 import it.cnr.contab.web.rest.config.FatturaAttivaCodiciEnum;
 import it.cnr.contab.web.rest.exception.FatturaAttivaException;
 import it.cnr.contab.web.rest.exception.RestException;
@@ -82,7 +83,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Stateless
-public class FatturaAttivaResource implements FatturaAttivaLocal{
+public class FatturaAttivaResource implements FatturaAttivaLocal {
 	private static final String ENTE = "ENTE";
 	private static final String CONTO_CORRENTE_SPECIALE = "CONTO_CORRENTE_SPECIALE";
 	private static final String FATTURA_AUTOMATICA = "Fattura_automatica";
