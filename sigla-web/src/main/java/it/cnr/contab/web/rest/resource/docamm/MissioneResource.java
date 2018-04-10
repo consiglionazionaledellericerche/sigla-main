@@ -1,4 +1,4 @@
-package it.cnr.contab.web.rest;
+package it.cnr.contab.web.rest.resource.docamm;
 
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
@@ -9,6 +9,7 @@ import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_pastoBulk;
 import it.cnr.contab.missioni00.tabrif.bulk.Missione_tipo_spesaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.web.rest.local.docamm.MissioneLocal;
 import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.contab.web.rest.model.MassimaleSpesaBulk;
 import it.cnr.jada.UserContext;
@@ -40,7 +41,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Stateless
-public class MissioneResource implements MissioneLocal{
+public class MissioneResource implements MissioneLocal {
     private final Logger LOGGER = LoggerFactory.getLogger(MissioneResource.class);
 	@Context SecurityContext securityContext;
 	@EJB CRUDComponentSession crudComponentSession;
