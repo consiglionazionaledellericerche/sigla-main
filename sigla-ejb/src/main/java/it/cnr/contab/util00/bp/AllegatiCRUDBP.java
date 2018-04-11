@@ -227,7 +227,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
             throws BusinessProcessException {
         AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk) getModel();
         for (AllegatoGenericoBulk allegato : allegatoParentBulk.getArchivioAllegati()) {
-        	if (!allegato.isToBeDeleted()){
+        	if (!allegato.getDaNonEliminare()){
                 storeService.delete(allegato.getStorageKey());
         	}
         }
