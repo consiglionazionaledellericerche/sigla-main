@@ -23,6 +23,8 @@ import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
@@ -30,6 +32,8 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SimpleFindClause;
 import it.cnr.jada.util.DateUtils;
+import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.action.CondizioneComplessaBulk;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.ByteArrayInputStream;
@@ -38,13 +42,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 /**
@@ -66,76 +64,40 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 	}
 
 	@Override
+	protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
+		super.init(config, actioncontext);
+		openIterator(actioncontext);
+	}
+
+	public RemoteIterator search(
+			ActionContext actioncontext,
+			CompoundFindClause compoundfindclause,
+			OggettoBulk oggettobulk)
+			throws BusinessProcessException {
+        V_mandato_reversaleBulk v_mandato_reversaleBulk = (V_mandato_reversaleBulk) oggettobulk;
+        try {
+            return getComponentSession().cerca(
+                    actioncontext.getUserContext(),
+                    compoundfindclause,
+                    v_mandato_reversaleBulk.getStato_trasmissione().equalsIgnoreCase(StatoTrasmissione.ALL) ? new V_mandato_reversaleBulk() : v_mandato_reversaleBulk,
+                    "selectByClauseForFirmaMandati");
+        } catch (ComponentException|RemoteException e) {
+            throw handleException(e);
+        }
+	}
+
 	public void openIterator(ActionContext actioncontext)
 			throws BusinessProcessException {
 		try {
-			Unita_organizzativaBulk uoScrivania = CNRUserInfo.getUnita_organizzativa(actioncontext);
-			CompoundFindClause compoundfindclause = new CompoundFindClause();
-			compoundfindclause.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS,
-					((CNRUserContext) actioncontext.getUserContext()).getEsercizio());
-			if (uoScrivania.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)!=0) {
-				SimpleFindClause cdsFindClause = new SimpleFindClause();
-				cdsFindClause.setLogicalOperator(FindClause.AND);
-				cdsFindClause.setSqlClause("cd_cds = '" + ((CNRUserContext) actioncontext.getUserContext()).getCd_cds() + "'");
-
-				SimpleFindClause incassoReversaliFindClause = new SimpleFindClause();
-				incassoReversaliFindClause.setLogicalOperator(FindClause.AND);
-				incassoReversaliFindClause.setSqlClause("cd_cds_origine = '" + ((CNRUserContext) actioncontext.getUserContext()).getCd_cds() + "'" +
-						" AND ti_documento_cont = 'S' AND cd_tipo_documento_cont = 'REV'");
-
-				compoundfindclause = CompoundFindClause.and(compoundfindclause, CompoundFindClause.or(cdsFindClause, incassoReversaliFindClause));
-
-				if (!uoScrivania.isUoCds()) {
-					SimpleFindClause uoFindClause = new SimpleFindClause();
-					uoFindClause.setLogicalOperator(FindClause.AND);
-					uoFindClause.setSqlClause("cd_unita_organizzativa = '" + ((CNRUserContext) actioncontext.getUserContext()).getCd_unita_organizzativa() + "'");
-
-					SimpleFindClause incassoReversaliUOFindClause = new SimpleFindClause();
-					incassoReversaliUOFindClause.setLogicalOperator(FindClause.AND);
-					incassoReversaliUOFindClause.setSqlClause("cd_uo_origine = '" + ((CNRUserContext) actioncontext.getUserContext()).getCd_unita_organizzativa() + "'" +
-							" AND ti_documento_cont = 'S' AND cd_tipo_documento_cont = 'REV'");
-
-					compoundfindclause = CompoundFindClause.and(compoundfindclause, CompoundFindClause.or(uoFindClause, incassoReversaliUOFindClause));
-				}
-			}
-			compoundfindclause.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.NOT_EQUALS,
-					MandatoBulk.TIPO_REGOLARIZZAZIONE);
-			compoundfindclause.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.NOT_EQUALS,
-					ReversaleIBulk.TIPO_INCASSO);
-
-			SimpleFindClause statoFindClause = new SimpleFindClause();
-			statoFindClause.setLogicalOperator(FindClause.AND);
-			statoFindClause.setSqlClause("stato != 'A'");
-
-			SimpleFindClause statoRitrasmFindClause = new SimpleFindClause();
-			statoRitrasmFindClause.setLogicalOperator(FindClause.AND);
-			statoRitrasmFindClause.setSqlClause("stato = 'A' and dt_trasmissione is not null ");
-
-			compoundfindclause = CompoundFindClause.and(compoundfindclause, CompoundFindClause.or(statoFindClause, statoRitrasmFindClause));
-
-			SimpleFindClause simpleFindClause = new SimpleFindClause();
-			simpleFindClause.setLogicalOperator(FindClause.AND);
-			simpleFindClause.setSqlClause("pg_documento_cont = pg_documento_cont_padre");
-
-			SimpleFindClause collegatiFindClause = new SimpleFindClause();
-			collegatiFindClause.setLogicalOperator(FindClause.AND);
-			collegatiFindClause.setSqlClause("pg_documento_cont != pg_documento_cont_padre" +
-					" and (cd_tipo_documento_cont = 'MAN' and cd_tipo_documento_cont_padre = 'MAN' )");
-			/*SimpleFindClause collegatiFindClauseAnn = new SimpleFindClause();
-			collegatiFindClauseAnn.setLogicalOperator(FindClause.AND);
-			collegatiFindClauseAnn.setSqlClause("pg_documento_cont != pg_documento_cont_padre" +
-					" and (cd_tipo_documento_cont = 'REV' and cd_tipo_documento_cont_padre = 'REV' and stato ='A' )");
-			CompoundFindClause compoundfindclauseor = new CompoundFindClause();
-			compoundfindclauseor = CompoundFindClause.or(compoundfindclauseor, CompoundFindClause.or(simpleFindClause, collegatiFindClause));
-
-			compoundfindclause = CompoundFindClause.and(compoundfindclause, CompoundFindClause.or(compoundfindclauseor,  collegatiFindClauseAnn));
-			*/
-
-			compoundfindclause = CompoundFindClause.and(compoundfindclause, CompoundFindClause.or(simpleFindClause, collegatiFindClause));
-			setBaseclause(compoundfindclause);
-
-			V_mandato_reversaleBulk v_mandato_reversaleBulk = (V_mandato_reversaleBulk) getModel();
-			setIterator(actioncontext, find(actioncontext, compoundfindclause, v_mandato_reversaleBulk.getStato_trasmissione().equalsIgnoreCase(StatoTrasmissione.ALL) ? new V_mandato_reversaleBulk() : v_mandato_reversaleBulk));
+			setIterator(actioncontext, search(
+			        actioncontext,
+                    Optional.ofNullable(getCondizioneCorrente())
+                            .map(CondizioneComplessaBulk::creaFindClause)
+                            .filter(CompoundFindClause.class::isInstance)
+                            .map(CompoundFindClause.class::cast)
+                            .orElseGet(() -> new CompoundFindClause()),
+                    getModel())
+            );
 		} catch (RemoteException e) {
 			throw new BusinessProcessException(e);
 		}
