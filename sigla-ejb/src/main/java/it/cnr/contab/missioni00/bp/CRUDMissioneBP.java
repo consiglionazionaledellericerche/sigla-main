@@ -2505,7 +2505,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
         MissioneBulk missioneBulk = (MissioneBulk)getModel(); 
         if (missioneBulk.isMissioneFromGemis()){
             for (AllegatoGenericoBulk allegato : missioneBulk.getArchivioAllegati()) {
-            	allegato.setToBeDeleted();
+            	allegato.setDaNonEliminare(true);
             }
         }
 
