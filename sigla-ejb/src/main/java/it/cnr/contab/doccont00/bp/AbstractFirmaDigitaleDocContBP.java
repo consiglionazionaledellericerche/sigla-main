@@ -40,6 +40,8 @@ import it.cnr.jada.util.Log;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.ConsultazioniBP;
+import it.cnr.jada.util.action.SearchProvider;
+import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 
@@ -58,7 +60,7 @@ import org.apache.pdfbox.multipdf.PDFMergerUtility;
 
 import javax.servlet.http.HttpServletResponse;
 
-public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
+public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaBP implements SearchProvider{
 	private static final long serialVersionUID = 1L;
 	private UtenteFirmaDettaglioBulk firmatario;
 	protected String controlloCodiceFiscale;
@@ -104,11 +106,17 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	
 	public it.cnr.jada.util.jsp.Button[] createToolbar() {
 		Button[] baseToolbar = super.createToolbar();
-		Button[] toolbar = new Button[baseToolbar.length + 8];
+
+		Button[] toolbar = new Button[baseToolbar.length + 10];
 		int i = 0;
 		for (Button button : baseToolbar) {
 			toolbar[i++] = button;
-		}		
+		}
+        Button button = new Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.freeSearchFilter");
+        button.setSeparator(true);
+        toolbar[i++] = button;
+        toolbar[i++] = new Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.freeSearchRemoveFilter");
+
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.refresh");
 		toolbar[i-1].setSeparator(true);
@@ -136,7 +144,8 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	protected void init(Config config, ActionContext actioncontext)
 			throws BusinessProcessException {
 		try {
-			setBulkClassName(config.getInitParameter("bulkClassName"));
+			setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(getClass().getClassLoader().loadClass(config.getInitParameter("bulkClassName"))));
+			setMultiSelection(true);
 			OggettoBulk model = (OggettoBulk)getBulkInfo().getBulkClass().newInstance();
 			((StatoTrasmissione)model).setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
 			setModel(actioncontext, model);
@@ -161,30 +170,10 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	}
 
 	protected abstract AbilitatoFirma getAbilitatoFirma();
-	
-	@Override
+
 	public abstract void openIterator(ActionContext actioncontext)
-			throws BusinessProcessException;
-	
-	public it.cnr.jada.util.RemoteIterator find(ActionContext context, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws it.cnr.jada.action.BusinessProcessException {
-		try {
-			if (getFindclause() != null)
-				compoundfindclause.addChild(getFindclause());
-			return EJBCommonServices.openRemoteIterator(context, 
-					getComponentSession().cerca(context.getUserContext(), compoundfindclause, oggettobulk));
-		} catch(Exception e) {
-			throw handleException(e);
-		}
-	}
-	
-	@Override
-	public OggettoBulk createEmptyModelForFreeSearch(ActionContext context)
-			throws BusinessProcessException {
-		OggettoBulk bulk = super.createEmptyModelForFreeSearch(context);
-		((StatoTrasmissione)bulk).setStato_trasmissione(((StatoTrasmissione)getModel()).getStato_trasmissione());
-		return bulk;
-	}
-	
+            throws BusinessProcessException;
+
 	protected CRUDComponentSession getComponentSession() {
 		return (CRUDComponentSession) EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession");
 	}
@@ -315,7 +304,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
                                 });
                         if (statoTrasmissione.getCd_tipo_documento_cont().equals(Numerazione_doc_contBulk.TIPO_MAN)) {
                             try {
-                                MandatoBulk mandatoBulk = (MandatoBulk) createComponentSession().findByPrimaryKey(actioncontext.getUserContext(),
+                                MandatoBulk mandatoBulk = (MandatoBulk) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(),
                                         new MandatoIBulk(statoTrasmissione.getCd_cds(), statoTrasmissione.getEsercizio(), statoTrasmissione.getPg_documento_cont()));
                                 Tipo_documento_ammBulk tipo_documento_ammBulk = new Tipo_documento_ammBulk();
                                 tipo_documento_ammBulk.setTi_entrata_spesa("S");
@@ -352,7 +341,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
                                             }
                                         });
 
-                                createComponentSession().find(actioncontext.getUserContext(), MandatoIBulk.class,
+								getComponentSession().find(actioncontext.getUserContext(), MandatoIBulk.class,
                                         "findMandato_riga", actioncontext.getUserContext(), mandatoBulk)
                                         .stream()
                                         .filter(Mandato_rigaBulk.class::isInstance)
@@ -401,7 +390,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
                                                         }
                                                     });
                                         });
-                            } catch (ComponentException|RemoteException|BusinessProcessException e) {
+                            } catch (ComponentException|RemoteException e) {
                                 throw new DetailedRuntimeException(e);
                             }
                         }
@@ -500,12 +489,4 @@ public abstract class AbstractFirmaDigitaleDocContBP extends ConsultazioniBP {
 	public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Exception {
 		
 	}
-	@Override
-	public RemoteIterator search(ActionContext actioncontext, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws BusinessProcessException {
-		setFindclause(compoundfindclause);
-		StatoTrasmissione statoTrasmissione = (StatoTrasmissione)oggettobulk.clone();
-		if (statoTrasmissione.getStato_trasmissione().equalsIgnoreCase(StatoTrasmissione.ALL))
-			statoTrasmissione.setStato_trasmissione(null);
-		return findFreeSearch(actioncontext, compoundfindclause, (OggettoBulk) statoTrasmissione);
-	}	
 }
