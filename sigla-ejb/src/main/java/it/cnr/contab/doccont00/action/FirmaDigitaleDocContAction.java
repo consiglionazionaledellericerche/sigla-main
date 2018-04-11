@@ -15,6 +15,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.ConsultazioniAction;
+import it.cnr.jada.util.action.SelezionatoreListaAction;
 
 import java.util.List;
 
@@ -24,19 +25,13 @@ import java.util.List;
  * @date 30-11-2015
  * 
  */
-public class FirmaDigitaleDocContAction extends ConsultazioniAction {
+public class FirmaDigitaleDocContAction extends SelezionatoreListaAction {
 	private static final long serialVersionUID = 1L;
 
 	public FirmaDigitaleDocContAction() {
 		super();
 	}
-	
-	public Forward doCancellaFiltro(ActionContext context) {
-		AbstractFirmaDigitaleDocContBP bp = (AbstractFirmaDigitaleDocContBP)context.getBusinessProcess();
-		bp.setFindclause(null);
-		return doRefresh(context);
-	}
-	
+
 	public Forward doCambiaVisibilita(ActionContext context) {
 		AbstractFirmaDigitaleDocContBP bp = (AbstractFirmaDigitaleDocContBP)context.getBusinessProcess();
 		OggettoBulk bulk = bp.getModel();
