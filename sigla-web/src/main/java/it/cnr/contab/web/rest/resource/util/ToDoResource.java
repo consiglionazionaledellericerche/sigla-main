@@ -7,6 +7,8 @@ import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
@@ -44,6 +46,7 @@ public class ToDoResource implements ToDoLocal {
     public static final String FIRMA_DIGITALE_MANDATI_BP = "FirmaDigitaleMandatiBP";
     public static final String FIRMA_DIGITALE_DOC_1210_BP = "FirmaDigitaleDOC1210BP";
     public static final String CRUD_FATTURA_PASSIVA_ELETTRONICA_BP = "CRUDFatturaPassivaElettronicaBP";
+    public static final String CRUD_MISSIONE_BP = "CRUDMissioneBP";
     private final Logger LOGGER = LoggerFactory.getLogger(ToDoResource.class);
     @Context
     SecurityContext securityContext;
@@ -58,34 +61,49 @@ public class ToDoResource implements ToDoLocal {
     CRUDComponentSession crudComponentSession;
     @EJB
     UtenteComponentSession utenteComponentSession;
+    @EJB
+    MissioneComponentSession missioneComponentSession;
 
-    public Response map(@Context HttpServletRequest request) {
-        UserContext userContext = Optional.ofNullable(securityContext.getUserPrincipal())
-                .filter(UserContext.class::isInstance)
-                .map(UserContext.class::cast)
-                .orElseGet(() -> {
-                    return Optional.ofNullable(request.getSession(false))
-                            .flatMap(httpSession -> Optional.ofNullable(httpSession.getAttribute(HttpActionContext.USER_CONTEXT)))
-                            .filter(UserContext.class::isInstance)
-                            .map(UserContext.class::cast)
-                            .orElse(null);
-                });
-        if (Optional.ofNullable(userContext).isPresent()) {
-            UtenteBulk utente = new UtenteBulk();
-            utente.setCd_utente(userContext.getUser());
-            utente.setFl_attiva_blocco(Boolean.FALSE);
-            List<ToDoDetail> result = new ArrayList<ToDoDetail>();
-            try {
-                if (Optional.ofNullable(crudComponentSession.findByPrimaryKey(
-                        userContext,
-                        new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext))))
-                        .filter(Unita_organizzativaBulk.class::isInstance)
-                        .map(Unita_organizzativaBulk.class::cast)
-                        .filter(Unita_organizzativaBulk::isUoEnte).isPresent())
-                    return Response.ok(Collections.emptyList()).build();
-                // Variazioni al PdG
-                if (gestioneLoginComponentSession.isBPEnableForUser(userContext, utente,
-                        CNRUserContext.getCd_unita_organizzativa(userContext), FIRMA_DIGITALE_PDG_VARIAZIONI_BP)) {
+    public Response all(@Context HttpServletRequest request) {
+        return Response.ok(
+                Optional.ofNullable(getUserContext(request))
+                        .filter(userContext -> {
+                            try {
+                                return !Optional.ofNullable(crudComponentSession.findByPrimaryKey(
+                                        userContext,
+                                        new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext))))
+                                        .filter(Unita_organizzativaBulk.class::isInstance)
+                                        .map(Unita_organizzativaBulk.class::cast)
+                                        .filter(Unita_organizzativaBulk::isUoEnte).isPresent();
+                            } catch (ComponentException|RemoteException e) {
+                                return false;
+                            }
+                        })
+                        .map(userContext -> {
+                            return Arrays.asList(ToDoBP.values()).stream()
+                                    .filter(toDoBP -> {
+                                        UtenteBulk utente = new UtenteBulk();
+                                        utente.setCd_utente(userContext.getUser());
+                                        utente.setFl_attiva_blocco(Boolean.FALSE);
+                                        try {
+                                            return gestioneLoginComponentSession.isBPEnableForUser(userContext, utente,
+                                                    CNRUserContext.getCd_unita_organizzativa(userContext), toDoBP.name());
+                                        } catch (ComponentException|RemoteException e) {
+                                            return Boolean.FALSE;
+                                        }
+                                    }).collect(Collectors.toList());
+                        })
+                        .orElseGet(() -> Collections.emptyList())
+        ).build();
+    }
+
+    public Response single(@Context HttpServletRequest request, ToDoBP toDoBP) {
+        UserContext userContext = getUserContext(request);
+        final List<ToDoDetail> result = new ArrayList<ToDoDetail>();
+        try {
+            final String cdNodo = getCdNodo(userContext, toDoBP.name(), toDoBP.getCdAccesso());
+            switch (toDoBP) {
+                case FirmaDigitalePdgVariazioniBP: {
                     BulkLoaderIterator remoteIterator =
                             Optional.ofNullable(pdGVariazioniComponentSession.cercaVariazioniForDocumentale(userContext, null, new Pdg_variazioneBulk(),
                                     ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED, Boolean.TRUE))
@@ -96,12 +114,14 @@ public class ToDoResource implements ToDoLocal {
                             .ifPresent(iterator -> {
                                 try {
                                     iterator.open(userContext);
-                                    if (iterator.countElements() > 0) {
+                                    final int i = iterator.countElements();
+                                    if (i > 0) {
                                         result.add(new ToDoDetail(
-                                                getCdNodo(userContext, FIRMA_DIGITALE_PDG_VARIAZIONI_BP, "PRVFIRMAVARIAZIONE"),
+                                                cdNodo,
                                                 "fa fa-fw fa-clipboard text-primary",
                                                 "Varizioni al PdG",
-                                                detailLabel(iterator.countElements(), "Variazione", "Variazioni", "in attesa di firma digitale.")
+                                                firstLabel(i),
+                                                detailLabel(i, "Variazione", "Variazioni", "in attesa di firma digitale.")
                                         ));
                                     }
                                 } catch (ComponentException | RemoteException e) {
@@ -110,13 +130,11 @@ public class ToDoResource implements ToDoLocal {
                                     iterator.ejbRemove();
                                 }
                             });
+                    break;
                 }
-                // Firma Mandati/Reversali
-                if (gestioneLoginComponentSession.isBPEnableForUser(userContext, utente,
-                        CNRUserContext.getCd_unita_organizzativa(userContext), FIRMA_DIGITALE_MANDATI_BP)) {
+                case FirmaDigitaleMandatiBP: {
                     V_mandato_reversaleBulk v_mandato_reversaleBulk = new V_mandato_reversaleBulk();
                     v_mandato_reversaleBulk.setStato_trasmissione("N");
-                    final String docintcasfirmamanre = getCdNodo(userContext, FIRMA_DIGITALE_MANDATI_BP, "DOCINTCASFIRMAMANRE");
                     BulkLoaderIterator remoteIterator =
                             Optional.ofNullable(crudComponentSession.cerca(
                                     userContext,
@@ -130,12 +148,14 @@ public class ToDoResource implements ToDoLocal {
                             .ifPresent(iterator -> {
                                 try {
                                     iterator.open(userContext);
-                                    if (iterator.countElements() > 0) {
+                                    final int i = iterator.countElements();
+                                    if (i > 0) {
                                         result.add(new ToDoDetail(
-                                                docintcasfirmamanre,
+                                                cdNodo,
                                                 "fa fa-fw fa-money text-primary",
                                                 "Mandati/Reversali",
-                                                detailLabel(iterator.countElements(), "Mandato/Reversale", "Mandati/Reversali", "in attesa di predisposizione.")
+                                                firstLabel(i),
+                                                detailLabel(i, "Mandato/Reversale", "Mandati/Reversali", "in attesa di predisposizione.")
                                         ));
                                     }
                                 } catch (ComponentException | RemoteException e) {
@@ -159,12 +179,14 @@ public class ToDoResource implements ToDoLocal {
                                 .ifPresent(iterator -> {
                                     try {
                                         iterator.open(userContext);
-                                        if (iterator.countElements() > 0) {
+                                        final int i = iterator.countElements();
+                                        if (i > 0) {
                                             result.add(new ToDoDetail(
-                                                    docintcasfirmamanre,
+                                                    cdNodo,
                                                     "fa fa-fw fa-money text-info",
                                                     "Mandati/Reversali",
-                                                    detailLabel(iterator.countElements(), "Mandato/Reversale", "Mandati/Reversali", "da firmare.")
+                                                    firstLabel(i),
+                                                    detailLabel(i, "Mandato/Reversale", "Mandati/Reversali", "da firmare.")
                                             ));
                                         }
                                     } catch (ComponentException | RemoteException e) {
@@ -174,13 +196,11 @@ public class ToDoResource implements ToDoLocal {
                                     }
                                 });
                     }
+                    break;
                 }
-                // Firma documenti 1210
-                if (gestioneLoginComponentSession.isBPEnableForUser(userContext, utente,
-                        CNRUserContext.getCd_unita_organizzativa(userContext), FIRMA_DIGITALE_DOC_1210_BP)) {
+                case FirmaDigitaleDOC1210BP: {
                     Lettera_pagam_esteroBulk letteraPagamEsteroBulk = new Lettera_pagam_esteroBulk();
                     letteraPagamEsteroBulk.setStato_trasmissione("N");
-                    final String docintcasfirmad1210 = getCdNodo(userContext, FIRMA_DIGITALE_DOC_1210_BP, "DOCINTCASFIRMAD1210");
                     BulkLoaderIterator remoteIterator =
                             Optional.ofNullable(crudComponentSession.cerca(
                                     userContext,
@@ -194,12 +214,14 @@ public class ToDoResource implements ToDoLocal {
                             .ifPresent(iterator -> {
                                 try {
                                     iterator.open(userContext);
-                                    if (iterator.countElements() > 0) {
+                                    final int i = iterator.countElements();
+                                    if (i > 0) {
                                         result.add(new ToDoDetail(
-                                                docintcasfirmad1210,
+                                                cdNodo,
                                                 "fa fa-fw fa-usd text-primary",
                                                 "Lettera Pagamento Estero",
-                                                detailLabel(iterator.countElements(), "Documento", "Documenti", "1210 in attesa di predisposizione.")
+                                                firstLabel(i),
+                                                detailLabel(i, "Documento", "Documenti", "1210 in attesa di predisposizione.")
                                         ));
                                     }
                                 } catch (ComponentException | RemoteException e) {
@@ -223,12 +245,14 @@ public class ToDoResource implements ToDoLocal {
                                 .ifPresent(iterator -> {
                                     try {
                                         iterator.open(userContext);
-                                        if (iterator.countElements() > 0) {
+                                        final int i = iterator.countElements();
+                                        if (i > 0) {
                                             result.add(new ToDoDetail(
-                                                    docintcasfirmad1210,
+                                                    cdNodo,
                                                     "fa fa-fw fa-usd text-info",
                                                     "Lettera Pagamento Estero",
-                                                    detailLabel(iterator.countElements(), "Documento", "Documenti", "1210 da firmare.")
+                                                    firstLabel(i),
+                                                    detailLabel(i, "Documento", "Documenti", "1210 da firmare.")
                                             ));
                                         }
                                     } catch (ComponentException | RemoteException e) {
@@ -238,11 +262,9 @@ public class ToDoResource implements ToDoLocal {
                                     }
                                 });
                     }
+                    break;
                 }
-                //Fatture Elettroniche
-                if (gestioneLoginComponentSession.isBPEnableForUser(userContext, utente,
-                        CNRUserContext.getCd_unita_organizzativa(userContext), CRUD_FATTURA_PASSIVA_ELETTRONICA_BP)) {
-                    final String ammfatturdocelepass = getCdNodo(userContext, CRUD_FATTURA_PASSIVA_ELETTRONICA_BP, "AMMFATTURDOCELEPASS");
+                case CRUDFatturaPassivaElettronicaBP: {
                     DocumentoEleTestataBulk documentoEleTestata = new DocumentoEleTestataBulk();
                     documentoEleTestata.setStatoDocumento(StatoDocumentoEleEnum.AGGIORNATO.name());
                     documentoEleTestata.setFlIrregistrabile("N");
@@ -259,12 +281,14 @@ public class ToDoResource implements ToDoLocal {
                             .ifPresent(iterator -> {
                                 try {
                                     iterator.open(userContext);
-                                    if (iterator.countElements() > 0) {
+                                    final int i = iterator.countElements();
+                                    if (i > 0) {
                                         result.add(new ToDoDetail(
-                                                ammfatturdocelepass,
+                                                cdNodo,
                                                 "fa fa-fw fa-cloud text-warning",
                                                 "Fatture Elettroniche",
-                                                detailLabel(iterator.countElements(), "Fattura", "Fatture", "da completare.")
+                                                firstLabel(i),
+                                                detailLabel(i, "Fattura", "Fatture", "da completare.")
                                         ));
                                     }
                                 } catch (ComponentException | RemoteException e) {
@@ -286,12 +310,14 @@ public class ToDoResource implements ToDoLocal {
                             .ifPresent(iterator -> {
                                 try {
                                     iterator.open(userContext);
-                                    if (iterator.countElements() > 0) {
+                                    final int i = iterator.countElements();
+                                    if (i > 0) {
                                         result.add(new ToDoDetail(
-                                                ammfatturdocelepass,
+                                                cdNodo,
                                                 "fa fa-fw fa-cloud text-danger",
                                                 "Fatture Elettroniche",
-                                                detailLabel(iterator.countElements(), "Fattura", "Fatture", "da registrare.")
+                                                firstLabel(i),
+                                                detailLabel(i, "Fattura", "Fatture", "da registrare.")
                                         ));
                                     }
                                 } catch (ComponentException | RemoteException e) {
@@ -300,20 +326,69 @@ public class ToDoResource implements ToDoLocal {
                                     iterator.ejbRemove();
                                 }
                             });
-
+                    break;
                 }
-            } catch (ComponentException | RemoteException e) {
-                LOGGER.error("ERROR in todo method", e);
-                throw new RestException(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage());
+                case CRUDMissioneBP: {
+                    MissioneBulk missioneBulk = new MissioneBulk();
+                    missioneBulk.setEsercizio(CNRUserContext.getEsercizio(userContext));
+                    missioneBulk.setTi_provvisorio_definitivo(MissioneBulk.SALVA_PROVVISORIO);
+                    BulkLoaderIterator remoteIterator =
+                            Optional.ofNullable(missioneComponentSession.cerca(
+                                    userContext,
+                                    null,
+                                    missioneBulk))
+                                    .filter(BulkLoaderIterator.class::isInstance)
+                                    .map(BulkLoaderIterator.class::cast)
+                                    .orElseThrow(() -> new RestException(Response.Status.INTERNAL_SERVER_ERROR, "Cannot create remote iterator"));
+                    Optional.ofNullable(remoteIterator)
+                            .ifPresent(iterator -> {
+                                try {
+                                    iterator.open(userContext);
+                                    final int i = iterator.countElements();
+                                    if (i > 0) {
+                                        result.add(new ToDoDetail(
+                                                cdNodo,
+                                                "fa fa-fw fa-briefcase text-primary",
+                                                "Missioni",
+                                                firstLabel(i),
+                                                detailLabel(i, "Missione", "Missioni", "da confermare.")
+                                        ));
+                                    }
+                                } catch (ComponentException | RemoteException e) {
+                                    throw new RestException(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage());
+                                } finally {
+                                    iterator.ejbRemove();
+                                }
+                            });
+                    break;
+                }
             }
-            return Response.ok(result).build();
+
+        } catch (ComponentException | RemoteException e) {
+            LOGGER.error("ERROR in todo method for: {}", toDoBP, e);
         }
-        return Response.ok(Collections.emptyList()).build();
+        return Response.ok(result).build();
+    };
+
+    private UserContext getUserContext(HttpServletRequest request) {
+        return Optional.ofNullable(securityContext.getUserPrincipal())
+                .filter(UserContext.class::isInstance)
+                .map(UserContext.class::cast)
+                .orElseGet(() -> {
+                    return Optional.ofNullable(request.getSession(false))
+                            .flatMap(httpSession -> Optional.ofNullable(httpSession.getAttribute(HttpActionContext.USER_CONTEXT)))
+                            .filter(UserContext.class::isInstance)
+                            .map(UserContext.class::cast)
+                            .orElse(null);
+                });
+    }
+
+    private String firstLabel(int count) {
+        return (count == 1) ? "È presente " : "Sono presenti ";
     }
 
     private String detailLabel(int count, String singolare, String plurale, String end) {
         return Arrays.asList(
-                (count == 1) ? "È presente" : "Sono presenti",
                 String.valueOf(count),
                 (count == 1) ? singolare : plurale,
                 end)
@@ -333,15 +408,20 @@ public class ToDoResource implements ToDoLocal {
     }
 
     public class ToDoDetail {
-        private final String cdNodo;
-        private final String faClass;
-        private final String headerLabel;
-        private final String label;
+        private String cdNodo;
+        private String faClass;
+        private String headerLabel;
+        private String firstLabel;
+        private String label;
 
-        public ToDoDetail(String cdNodo, String faClass, String headerLabel, String label) {
+        public ToDoDetail() {
+        }
+
+        public ToDoDetail(String cdNodo, String faClass, String headerLabel, String firstLabel, String label) {
             this.cdNodo = cdNodo;
             this.faClass = faClass;
             this.headerLabel = headerLabel;
+            this.firstLabel = firstLabel;
             this.label = label;
         }
 
@@ -359,6 +439,10 @@ public class ToDoResource implements ToDoLocal {
 
         public String getLabel() {
             return label;
+        }
+
+        public String getFirstLabel() {
+            return firstLabel;
         }
     }
 }
