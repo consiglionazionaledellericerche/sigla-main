@@ -9,6 +9,7 @@ import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -196,5 +197,10 @@ public class FirmaDigitaleDocContAction extends SelezionatoreListaAction {
 			return handleException(context,e);
 		}
 		return context.findDefaultForward();
+	}
+
+	@Override
+	public Forward basicDoBringBack(ActionContext actioncontext) throws BusinessProcessException {
+		return actioncontext.findDefaultForward();
 	}
 }
