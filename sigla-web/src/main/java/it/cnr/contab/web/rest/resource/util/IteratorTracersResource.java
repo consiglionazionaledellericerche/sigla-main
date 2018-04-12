@@ -23,7 +23,7 @@ public class IteratorTracersResource implements IteratorTracersLocal {
                 .values();
         return Response.ok(Collections.singletonMap(values.size(),
                 values
-                .stream()
+                .parallelStream()
                 .sorted((iteratorTracer, t1) -> iteratorTracer.getCreationDate().compareTo(t1.getCreationDate()))
                 .collect(Collectors.toList()))
         ).build();
