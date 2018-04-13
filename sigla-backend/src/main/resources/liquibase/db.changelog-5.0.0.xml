@@ -525,6 +525,7 @@
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
+    <changeSet author="rosangela.pucciarelli" id="modifiche-detraibilità-iva"> 
     <addColumn tableName="tipo_sezionale">
             <column name="fl_reg_tardiva" type="CHAR(1)" defaultValue="N" remarks="Tipo sezionale su cui registrare le fatture ancora detraibili ma tardive - Dominio: Y = Yes; N = No;.">
                <constraints nullable="false"/>
@@ -602,6 +603,7 @@
             <column name="fl_split_payment"  type="CHAR(1)" value="N"/>
             <column name="fl_reg_tardiva" type="CHAR(1)" value="Y"/>
      </insert>
+     <changeSet/>
     <changeSet author="rosangela.pucciarelli" runOnChange="true" id="modify-view-V_INCARICHI_ELENCO">
         <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_ELENCO.sql" replaceIfExists="true" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
     </changeSet>
