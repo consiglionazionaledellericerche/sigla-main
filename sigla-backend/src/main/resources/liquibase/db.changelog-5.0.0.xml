@@ -536,7 +536,7 @@
             <column name="ds_tipo_sezionale" type="VARCHAR(50)" value="REGISTRO IVA ORDINARIO ACQUISTI Reg.Tardiva"/>
             <column name="ti_acquisti_vendite" type="CHAR(1)" value="A"/>
             <column name="ti_istituz_commerc" type="CHAR(1)" value="C"/>
-            <column name="cd_attivita_commerciale"  type="VARCHAR(10) value="1"/>
+            <column name="cd_attivita_commerciale"  type="VARCHAR(10)" value="1"/>
             <column name="fl_ordinario" type="CHAR(1)" value="Y"/>
             <column name="fl_san_marino_con_iva" type="CHAR(1)" value="Y"/>
             <column name="fl_san_marino_senza_iva" type="CHAR(1)" value="Y"/>
@@ -560,7 +560,7 @@
             <column name="ds_tipo_sezionale" type="VARCHAR(50)" value=REGISTRO IVA VENDITE PER ACQUISTI UE Reg.Tardiva"/>
             <column name="ti_acquisti_vendite" type="CHAR(1)" value="V"/>
             <column name="ti_istituz_commerc" type="CHAR(1)" value="C"/>
-            <column name="cd_attivita_commerciale"  type="VARCHAR(10) value="1"/>
+            <column name="cd_attivita_commerciale"  type="VARCHAR(10)" value="1"/>
             <column name="fl_ordinario" type="CHAR(1)" value="N"/>
             <column name="fl_san_marino_con_iva" type="CHAR(1)" value="N"/>
             <column name="fl_san_marino_senza_iva" type="CHAR(1)" value="N"/>
@@ -584,7 +584,7 @@
             <column name="ds_tipo_sezionale" type="VARCHAR(50)" value="REGISTRO IVA VENDITE DELLE AUTOFATTURE Reg.Tardiva"/>
             <column name="ti_acquisti_vendite" type="CHAR(1)" value="V"/>
             <column name="ti_istituz_commerc" type="CHAR(1)" value="C"/>
-            <column name="cd_attivita_commerciale"  type="VARCHAR(10) value="1"/>
+            <column name="cd_attivita_commerciale"  type="VARCHAR(10)" value="1"/>
             <column name="fl_ordinario" type="CHAR(1)" value="N"/>
             <column name="fl_san_marino_con_iva" type="CHAR(1)" value="N"/>
             <column name="fl_san_marino_senza_iva" type="CHAR(1)" value="Y"/>
