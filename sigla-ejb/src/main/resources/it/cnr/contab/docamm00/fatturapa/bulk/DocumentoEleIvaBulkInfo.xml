@@ -120,7 +120,8 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
+		readonlyProperty="documentoEleTestata.RODocumento"
+		enabledOnEdit="true"
 		label="Esigibilità Iva" />
 	<fieldProperty
 		name="riferimentoNormativo"

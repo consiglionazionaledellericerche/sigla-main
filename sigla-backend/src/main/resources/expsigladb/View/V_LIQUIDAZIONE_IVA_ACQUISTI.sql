@@ -33,11 +33,8 @@
           (a.iva_dettaglio * ((100 - a.percentuale_iva_detraibile) / 100)),
           a.esigibilita_diff, a.tipo_documento_ft_pas, a.tipo_autofattura,
           a.fl_split_payment
-     FROM v_liquid_iva_acquisti_pre a,FATTURA_PASSIVA B
+     FROM v_liquid_iva_acquisti_pre a,tipo_sezionale
       where
-         b.cd_cds = a.cd_cds
-        AND b.cd_unita_organizzativa = a.cd_unita_organizzativa
-        AND b.esercizio = a.esercizio
-        AND b.pg_fattura_passiva = a.numero_progressivo
-        AND (to_char(B.DT_FATTURA_FORNITORE,'yyyy') = a.esercizio OR
-             a.ti_istituz_commerc!='C' OR A.fl_split_payment!='N'  or b.im_totale_iva=0 or nvl(to_char(B.Data_protocollo,'yyyy'),b.esercizio) = B.esercizio);
+        tipo_sezionale.cd_tipo_sezionale = a.cd_tipo_sezionale   
+        and tipo_sezionale.fl_reg_tardiva = 'N'; 
+          

@@ -195,7 +195,13 @@
 		enabledOnEdit="false"
 		nullable="false"
 		label="Split Payment" />
-
+	<fieldProperty
+		name="fl_reg_tardiva"
+		property="fl_reg_tardiva"
+		inputType="CHECKBOX"
+		enabledOnEdit="false"
+		nullable="false"
+		label="reg. Tardiva" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -250,6 +256,8 @@
 		name="ordina" />		
 	<formFieldProperty
 		name="fl_split_payment" />
+	<formFieldProperty
+		name="fl_reg_tardiva" />	
 				
 	<columnFieldProperty
 		name="cd_tipo_sezionale" />

@@ -2075,6 +2075,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
             Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
             java.sql.Timestamp dataEmissione = fattura.getDt_fattura_fornitore();
+            boolean hasAccesso = ((it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")).controllaAccesso(context.getUserContext(), "AMMFATTURDOCSFATPASA");
             try {
                 fillModel(context);
                 if (!bp.isSearching())
@@ -2084,11 +2085,11 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                             !fattura.isEstera() &&
                             !fattura.isSanMarinoSenzaIVA() &&
                             !fattura.isSanMarinoConIVA() &&
-                            !fattura.isBollaDoganale()) {
+                            !fattura.isBollaDoganale() &&
+                            !hasAccesso) {
                         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
                         throw new it.cnr.jada.comp.ApplicationException("Non è possibile registrare una fattura che non sia elettronica, che non sia estera e che abbia data di emissione uguale o successiva al " + sdf.format(fattura.getDataInizioFatturaElettronica()) + "!");
                     }
-
                 fattura.validateDate();
                 //NON ELIMINARE QUESTO COMMENTO: POSSIBILE VARIAZIONE IN FUTURO
                 //java.sql.Timestamp dataFatturaFornitore = fattura.getDt_fattura_fornitore();
@@ -2176,6 +2177,8 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             try {
                 fillModel(context);
                 if (!bp.isSearching()) {
+               	  	basicDoOnIstituzionaleCommercialeChange(context, fattura);
+               	  	bp.setModel(context, fattura);
                     fattura.validateDate();
                     java.util.Calendar cal = Calendar.getInstance();
                     if (fattura.getData_protocollo() != null)
@@ -4406,8 +4409,21 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             if ("tabFatturaPassiva".equalsIgnoreCase(bp.getTab(tabName))) {
                 fillModel(context);
 //			try {
-                if (!bp.isSearching() && !bp.isViewing() && !fattura.isRODateCompetenzaCOGE())
+                if (!bp.isSearching() && !bp.isViewing() && !fattura.isRODateCompetenzaCOGE()){
                     fattura.validaDateCompetenza();
+                }
+                if (!bp.isSearching() && !bp.isViewing()){
+                	if ((((FatturaPassivaComponentSession) bp.createComponentSession()).estraeSezionali(context.getUserContext(), fattura)!= null) && ! (((FatturaPassivaComponentSession) bp.createComponentSession()).estraeSezionali(context.getUserContext(), fattura).isEmpty())){ 
+            			boolean trovato=false;
+            			for (java.util.Iterator i = ((FatturaPassivaComponentSession) bp.createComponentSession()).estraeSezionali(context.getUserContext(), fattura).iterator(); i.hasNext(); ) {
+            				Tipo_sezionaleBulk tipo=(Tipo_sezionaleBulk)i.next();
+            				if (tipo.getCd_tipo_sezionale().compareTo(fattura.getCd_tipo_sezionale())==0)
+            	 					trovato=true;
+            			}
+            			if(!trovato)
+            	  				throw new it.cnr.jada.comp.ApplicationException("Attenzione: verificare il sezionale selezionato.");
+                	}
+                }
                 //} catch (ValidationException e) {
                 //bp.setErrorMessage(e.getMessage());
                 //}
