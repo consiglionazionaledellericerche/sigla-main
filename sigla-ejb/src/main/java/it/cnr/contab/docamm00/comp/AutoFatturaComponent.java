@@ -1,16 +1,25 @@
 package it.cnr.contab.docamm00.comp;
 
-import java.sql.CallableStatement;
+import java.rmi.RemoteException;
+import java.util.GregorianCalendar;
+
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileHome;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.SezionaleBulk;
+
 import java.io.Serializable;
+
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.AutofatturaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
@@ -338,6 +347,22 @@ public java.util.Collection findSezionali(UserContext aUC, AutofatturaBulk autof
 						{ "TIPO_SEZIONALE.TI_BENE_SERVIZIO", "*", "AND" } //,
 //						{ "TIPO_SEZIONALE.TI_BENE_SERVIZIO", autofattura.getTi_bene_servizio(), "OR" }
 					});
+	  Fattura_passivaBulk fatturaPassiva=(Fattura_passivaBulk) findByPrimaryKey(aUC, autofattura.getFattura_passiva());
+	
+	  if ((fatturaPassiva.isCommerciale()) && 
+          	(fatturaPassiva.getFl_split_payment()==null ||
+          	(fatturaPassiva.getFl_split_payment()!=null && !fatturaPassiva.getFl_split_payment().booleanValue())) && 
+          	fatturaPassiva.getData_protocollo()!=null ){
+         		Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(aUC, fatturaPassiva);
+           		if(fatturaPassiva.getDt_registrazione().after(conf.getDt01()) && fatturaPassiva.getDt_registrazione().before(conf.getDt02()))
+           			options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "Y", "AND"}});
+           		else
+                	options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "N", "AND"}});
+
+      }else{
+      		options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "N", "AND"}});
+      }
+	  
 	//********************************
 	//java.util.Collection result = 
 	return ((it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleHome)getHome(aUC,it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk.class)).findTipiSezionali(
@@ -540,5 +565,27 @@ private boolean verificaEsistenzaSezionalePer(
  */
 public boolean verificaStatoEsercizio(it.cnr.jada.UserContext userContext, it.cnr.contab.config00.esercizio.bulk.EsercizioBulk anEsercizio) throws it.cnr.jada.comp.ComponentException {
 	return false;
+}
+public Configurazione_cnrBulk getLimitiRitardoDetraibile(UserContext userContext, Fattura_passivaBulk fattura) throws ComponentException {
+
+    try {
+
+        Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+                .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+        GregorianCalendar tsGregorian = (GregorianCalendar) GregorianCalendar.getInstance();
+       	tsGregorian.setTime(fattura.getData_protocollo());
+        
+       	Configurazione_cnrBulk conf =sess.getConfigurazione(userContext, tsGregorian.get(GregorianCalendar.YEAR), null,
+                Configurazione_cnrBulk.PK_FATTURA_PASSIVA, Configurazione_cnrBulk.SK_LIMITE_REG_TARDIVA);
+       	if (conf !=null && conf.getDt01()!=null && conf.getDt02()!=null)
+       		return conf;
+       	else
+       		throw new ApplicationException("Configurazione registrazione tardiva mancante.");
+      
+    } catch (javax.ejb.EJBException ex) {
+        throw handleException(ex);
+    } catch (RemoteException ex) {
+        throw handleException(ex);
+    }
 }
 }

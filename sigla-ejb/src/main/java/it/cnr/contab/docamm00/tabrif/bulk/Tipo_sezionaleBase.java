@@ -46,6 +46,8 @@ public class Tipo_sezionaleBase extends Tipo_sezionaleKey implements Keyed {
 	// FL_SPLIT_PAYMENT CHAR(1) NOT NULL
 	private java.lang.Boolean fl_split_payment;
 	
+	
+	private java.lang.Boolean fl_reg_tardiva;
 public Tipo_sezionaleBase() {
 	super();
 }
@@ -205,6 +207,12 @@ public void setFl_servizi_non_residenti(
 }
 public Integer getOrdina() {
 	return ordina;
+}
+public java.lang.Boolean getFl_reg_tardiva() {
+	return fl_reg_tardiva;
+}
+public void setFl_reg_tardiva(java.lang.Boolean fl_reg_tardiva) {
+	this.fl_reg_tardiva = fl_reg_tardiva;
 }
 public void setOrdina(Integer ordina) {
 	this.ordina = ordina;
