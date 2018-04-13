@@ -51,8 +51,9 @@
 		inputType="SELECT"
 		keysProperty="tiTipoDocumentoKeys"
 		inputSize="10"
+		readonlyProperty="RODocumento"
 		enabledOnSearch="true"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
 		label="Tipo documento" />
 	<fieldProperty
 		name="divisa"
