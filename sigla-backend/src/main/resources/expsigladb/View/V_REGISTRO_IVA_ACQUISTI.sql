@@ -45,11 +45,4 @@
           a.spedizioniere, a.codice_valuta, a.importo_valuta,
           a.esigibilita_diff, a.data_esigibilita_diff, TO_CHAR (NULL),
           a.extra_ue, a.fl_split_payment
-     FROM v_registro_iva_acquisti_pre a,FATTURA_PASSIVA B
-      where
-         b.cd_cds = a.cd_cds
-        AND b.cd_unita_organizzativa = a.cd_unita_organizzativa
-        AND b.esercizio = a.esercizio
-        AND b.pg_fattura_passiva = a.numero_PROGRESSIVO  and
-         (to_char(a.data_emissione,'yyyy') = a.esercizio OR
-             a.comm_ist_testata!='C' OR a.fl_split_payment!='N'  or b.im_totale_iva=0 or nvl(to_char(B.Data_protocollo,'yyyy'),b.esercizio) = B.esercizio);
+     FROM v_registro_iva_acquisti_pre a;

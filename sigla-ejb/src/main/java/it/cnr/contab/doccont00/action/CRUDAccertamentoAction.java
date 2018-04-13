@@ -1144,4 +1144,39 @@ public Forward doSelectLineeDiAttivita(ActionContext context)
             return handleException(context, ex);
         }
     }
+    public Forward doCopiaAccertamento(ActionContext context) 
+    {
+    	try {
+    		fillModel( context );
+    		CRUDAccertamentoBP bp = (CRUDAccertamentoBP) context.getBusinessProcess();
+            
+		    bp.getModel().validate();
+            if (((AccertamentoBulk) bp.getModel()).getCapitolo().getCrudStatus() != bp.getModel().NORMAL)
+                doSearch(context, "main.find_capitolo");
+            if (bp.getMessage() != null) {
+                bp.setMessage("La ricerca del Capitolo non ha fornito alcun risultato.");
+                return context.findDefaultForward();
+            }
+        	if(bp.isDirty())
+           		return openContinuePrompt(context, "doConfirmCopiaAccertamento");
+           	else
+           		return doConfirmCopiaAccertamento(context, 4);
+            
+        } catch(Throwable e) {
+    		return handleException(context,e);
+    	}
+    }
+    public Forward doConfirmCopiaAccertamento(ActionContext context, int option) 
+    {
+    	try {
+    		if (option == OptionBP.YES_BUTTON) {
+    			CRUDAccertamentoBP bp = (CRUDAccertamentoBP)getBusinessProcess(context);
+    			bp.copiaAccertamento( context );
+    		}
+    		return context.findDefaultForward();
+    	} catch(Throwable e) {
+    		return handleException(context,e);
+    	}
+    }
+
 }
