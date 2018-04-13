@@ -603,7 +603,7 @@
             <column name="fl_split_payment"  type="CHAR(1)" value="N"/>
             <column name="fl_reg_tardiva" type="CHAR(1)" value="Y"/>
      </insert>
-     <changeSet/>
+    </changeSet>
     <changeSet author="rosangela.pucciarelli" runOnChange="true" id="modify-view-V_INCARICHI_ELENCO">
         <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_ELENCO.sql" replaceIfExists="true" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
     </changeSet>
