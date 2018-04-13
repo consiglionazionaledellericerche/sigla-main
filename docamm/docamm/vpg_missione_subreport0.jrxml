@@ -2,9 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vpg_missione_subreport0" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="24da6c44-b0c6-4155-ae28-148ae11bac7a">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="89"/>
+	<property name="ireport.y" value="85"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -194,9 +194,6 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 	<group name="PK_MISSIONE" isStartNewPage="true" isResetPageNumber="true">
 		<groupExpression><![CDATA[$F{CD_CDS}+ $F{CD_UNITA_ORGANIZZATIVA}+
 $F{ESERCIZIO}+ $F{PG_MISSIONE}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch"/>
-		</groupHeader>
 		<groupFooter>
 			<band splitType="Stretch"/>
 		</groupFooter>
@@ -204,18 +201,12 @@ $F{ESERCIZIO}+ $F{PG_MISSIONE}]]></groupExpression>
 	<group name="TI_RECORD_L1_PAGE" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{TI_RECORD_L1}.equals("A")?
 $F{TI_RECORD_L1}:""]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch"/>
-		</groupHeader>
 		<groupFooter>
 			<band splitType="Stretch"/>
 		</groupFooter>
 	</group>
 	<group name="TI_RECORD_L1f">
 		<groupExpression><![CDATA[$F{TI_RECORD_L1}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch"/>
-		</groupHeader>
 		<groupFooter>
 			<band height="66" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("B"))]]></printWhenExpression>
@@ -338,9 +329,6 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 	</group>
 	<group name="TI_RECORD_L1e">
 		<groupExpression><![CDATA[$F{TI_RECORD_L1}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch"/>
-		</groupHeader>
 		<groupFooter>
 			<band height="120" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A"))]]></printWhenExpression>
@@ -396,9 +384,6 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 	</group>
 	<group name="TI_RECORD_L1d">
 		<groupExpression><![CDATA[$F{TI_RECORD_L1}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch"/>
-		</groupHeader>
 		<groupFooter>
 			<band height="42" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A"))]]></printWhenExpression>
@@ -474,9 +459,6 @@ $F{TI_RECORD_L1}:""]]></groupExpression>
 	</group>
 	<group name="TI_RECORD_L1c">
 		<groupExpression><![CDATA[$F{TI_RECORD_L1}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch"/>
-		</groupHeader>
 		<groupFooter>
 			<band height="40" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A"))]]></printWhenExpression>
@@ -548,9 +530,6 @@ PAGAMENTO]]></text>
 	</group>
 	<group name="TI_RECORD_L1b">
 		<groupExpression><![CDATA[$F{TI_RECORD_L1}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch"/>
-		</groupHeader>
 		<groupFooter>
 			<band height="5" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A"))]]></printWhenExpression>
@@ -565,9 +544,6 @@ PAGAMENTO]]></text>
 	</group>
 	<group name="TI_RECORD_L1">
 		<groupExpression><![CDATA[$F{TI_RECORD_L1}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch"/>
-		</groupHeader>
 		<groupFooter>
 			<band height="49" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A"))]]></printWhenExpression>
@@ -692,22 +668,12 @@ PAGAMENTO]]></text>
 	</group>
 	<group name="TI_RECORD_L2b">
 		<groupExpression><![CDATA[$F{TI_RECORD_L2}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch">
-				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A") && $F{TI_RECORD_L2}.equals("B1"))]]></printWhenExpression>
-			</band>
-		</groupHeader>
 		<groupFooter>
 			<band splitType="Stretch"/>
 		</groupFooter>
 	</group>
 	<group name="TI_RECORD_L2c">
 		<groupExpression><![CDATA[$F{TI_RECORD_L2}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch">
-				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A") && $F{TI_RECORD_L2}.equals("B2"))]]></printWhenExpression>
-			</band>
-		</groupHeader>
 		<groupFooter>
 			<band height="27" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("E") && $F{TI_RECORD_L2}.equals("A"))]]></printWhenExpression>
@@ -794,11 +760,6 @@ CARICO ENTE
 	</group>
 	<group name="TI_RECORD_L2d">
 		<groupExpression><![CDATA[$F{TI_RECORD_L2}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch">
-				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A") && $F{TI_RECORD_L2}.equals("C"))]]></printWhenExpression>
-			</band>
-		</groupHeader>
 		<groupFooter>
 			<band height="27" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("C") && $F{TI_RECORD_L2}.equals("A"))]]></printWhenExpression>
@@ -925,11 +886,6 @@ CARICO ENTE
 	</group>
 	<group name="TI_RECORD_L2e">
 		<groupExpression><![CDATA[$F{TI_RECORD_L2}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch">
-				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("B"))]]></printWhenExpression>
-			</band>
-		</groupHeader>
 		<groupFooter>
 			<band height="28" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("B") && $F{TI_RECORD_L2}.equals("B"))]]></printWhenExpression>
@@ -997,11 +953,6 @@ CARICO ENTE
 	</group>
 	<group name="TI_RECORD_L2f">
 		<groupExpression><![CDATA[$F{TI_RECORD_L2}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch">
-				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("B") && $F{TI_RECORD_L2}.equals("A"))]]></printWhenExpression>
-			</band>
-		</groupHeader>
 		<groupFooter>
 			<band height="5" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("B") && $F{TI_RECORD_L2}.equals("A"))]]></printWhenExpression>
@@ -1088,11 +1039,6 @@ CARICO ENTE
 	</group>
 	<group name="TI_RECORD_L2I">
 		<groupExpression><![CDATA[$F{TI_RECORD_L2}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Prevent">
-				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("D") && $F{TI_RECORD_L2}.equals("A"))]]></printWhenExpression>
-			</band>
-		</groupHeader>
 		<groupFooter>
 			<band height="20" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("D") && $F{TI_RECORD_L2}.equals("A"))]]></printWhenExpression>
@@ -1184,11 +1130,6 @@ CARICO ENTE
 	</group>
 	<group name="TI_RECORD_L2g">
 		<groupExpression><![CDATA[$F{TI_RECORD_L2}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch">
-				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("C") && $F{TI_RECORD_L2}.equals("A"))]]></printWhenExpression>
-			</band>
-		</groupHeader>
 		<groupFooter>
 			<band height="23" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A") && $F{TI_RECORD_L2}.equals("C"))]]></printWhenExpression>
@@ -1257,11 +1198,6 @@ CARICO ENTE
 	</group>
 	<group name="TI_RECORD_L2h">
 		<groupExpression><![CDATA[$F{TI_RECORD_L2}]]></groupExpression>
-		<groupHeader>
-			<band splitType="Stretch">
-				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("B") && $F{TI_RECORD_L2}.equals("B"))]]></printWhenExpression>
-			</band>
-		</groupHeader>
 		<groupFooter>
 			<band height="51" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.equals("A") && $F{TI_RECORD_L2}.equals("B2"))]]></printWhenExpression>
