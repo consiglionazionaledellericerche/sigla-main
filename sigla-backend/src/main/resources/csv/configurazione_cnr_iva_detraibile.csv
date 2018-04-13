@@ -1,5 +1,5 @@
-"ESERCIZIO,"CD_UNITA_FUNZIONALE","CD_CHIAVE_PRIMARIA","CD_CHIAVE_SECONDARIA","VAL01","VAL02","VAL03","VAL04","IM01","IM02","DT01","DT02","DACR","UTCR","DUVA","UTUV","PG_VER_REC"
-2015,"*","FATTURA_PASSIVA","LIMITE_REG_TARDIVA",null,null,null,null,null,null,"31/12/2017","10/04/2018","21/03/2018 14:19:58","CED","21/03/2018 14:20:09","CED",1
-2016,"*","FATTURA_PASSIVA","LIMITE_REG_TARDIVA",null,null,null,null,null,null,"31/12/2018","10/04/2019","21/03/2018 14:19:58","CED","21/03/2018 14:20:09","CED",1
-2017,"*","FATTURA_PASSIVA","LIMITE_REG_TARDIVA",null,null,null,null,null,null,"31/12/2017","10/04/2018","21/03/2018 14:19:58","CED","21/03/2018 14:20:09","CED",1
-2018,"*","FATTURA_PASSIVA","LIMITE_REG_TARDIVA",null,null,null,null,null,null,"31/12/2018","10/04/2019","21/03/2018 14:19:58","CED","21/03/2018 14:20:09","CED",1
+"esercizio,"cd_unita_funzionale","cd_chiave_primaria","cd_chiave_secondaria","val01","val02","val03","val04","im01","im02","dt01","dt02","dacr","utcr","duva","utuv","pg_ver_rec"
+"2015,"*","FATTURA_PASSIVA","LIMITE_REG_TARDIVA","null","null","null","null","null","null","2017-12-31","2018-04-20","2018-03-31","CED","2018-03-31","CED","1"
+"2016,"*","FATTURA_PASSIVA","LIMITE_REG_TARDIVA","null","null","null","null","null","null","2018-12-31","2019-04-20","2018-03-31","CED","2018-03-31","CED","1"
+"2017,"*","FATTURA_PASSIVA","LIMITE_REG_TARDIVA","null","null","null","null","null","null","2017-12-31","2018-04-20","2018-03-31","CED","2018-03-31","CED","1"
+"2018,"*","FATTURA_PASSIVA","LIMITE_REG_TARDIVA","null","null","null","null","null","null","2018-12-31","2019-04-20","2018-03-31","CED","2018-03-31","CED","1"
