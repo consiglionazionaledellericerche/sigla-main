@@ -3184,7 +3184,7 @@ public void verificaAccertamento (UserContext aUC,AccertamentoBulk accertamento)
 	} catch (PersistencyException e) {
 		throw new ComponentException(e);
 	}
-	if(elemento_voce.getFl_recon().booleanValue()){
+	if(elemento_voce!=null && elemento_voce.getFl_recon().booleanValue()){
 		Parametri_cdsHome paramHome = (Parametri_cdsHome)getHome(aUC, Parametri_cdsBulk.class);
 		Parametri_cdsBulk param_cds;
 		try {
