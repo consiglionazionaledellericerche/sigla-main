@@ -283,17 +283,6 @@ $P{TI_PROVVISORIO_DEFINITIVO}.equals("P"))?
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
-				<staticText>
-					<reportElement key="staticText-9" style="TNR8BOLD" x="331" y="8" width="80" height="12" uuid="7cc9bb83-512e-437a-bd2d-d288c0472a3c"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[N. COMPENSO]]></text>
-				</staticText>
 				<line>
 					<reportElement key="line-17" x="412" y="6" width="1" height="20" uuid="eca0ee92-a03b-450f-8d72-8aaabc734eb4"/>
 					<graphicElement>
@@ -314,7 +303,7 @@ $P{TI_PROVVISORIO_DEFINITIVO}.equals("P"))?
 					</textElement>
 					<textFieldExpression><![CDATA[(($P{FL_RIMBORSO}.equals("N") || $P{FL_RIMBORSO} ==null) ||
 $P{TI_PROVVISORIO_DEFINITIVO}.equals("P"))?
-"N. MANDATO":
+"N. COMPENSO":
 "N. REVERSALE"]]></textFieldExpression>
 				</textField>
 				<line>
@@ -323,23 +312,47 @@ $P{TI_PROVVISORIO_DEFINITIVO}.equals("P"))?
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
-				<staticText>
-					<reportElement key="staticText-10" style="TNR8BOLD" x="495" y="8" width="80" height="12" uuid="332d1b20-18fb-4a81-9a2e-378dcb1c97e1"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<text><![CDATA[RIMBORSO]]></text>
-				</staticText>
 				<line>
 					<reportElement key="line-19" x="576" y="6" width="1" height="20" uuid="4516a018-2aaa-4cf5-ba9a-a5e45e650f70"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-2" style="TNR8BOLD" x="331" y="8" width="80" height="12" uuid="f754c69d-6a63-4b90-ae11-a7f8e32d95f1"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Times New Roman" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1252"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(($P{FL_RIMBORSO}.equals("N") || $P{FL_RIMBORSO} ==null) ||
+$P{TI_PROVVISORIO_DEFINITIVO}.equals("P"))?
+"IMPORTO":
+"N. COMPENSO"
+]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-2" style="TNR8BOLD" x="495" y="8" width="80" height="12" uuid="d2a74f20-1a92-462c-a39e-fa6b10eb1e17"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Times New Roman" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1252"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(($P{FL_RIMBORSO}.equals("N") || $P{FL_RIMBORSO} ==null) ||
+$P{TI_PROVVISORIO_DEFINITIVO}.equals("P"))?
+"N. MANDATO":
+"RIMBORSO"]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 	</group>

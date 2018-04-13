@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="85"/>
+	<property name="ireport.y" value="144"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -124,6 +124,7 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 	<field name="TOT_QUOTA_RIMBORSO" class="java.math.BigDecimal"/>
 	<field name="IM_TABELL_RIMB" class="java.math.BigDecimal"/>
 	<field name="QUOTA_RIMBORSO" class="java.math.BigDecimal"/>
+	<field name="IM_TOTALE_RIGA_MISSIONE" class="java.math.BigDecimal"/>
 	<variable name="SUM_AMMONTARE_1" class="java.math.BigDecimal" resetType="Group" resetGroup="TI_RECORD_L2g" calculation="Sum">
 		<variableExpression><![CDATA[$F{AMMONTARE}]]></variableExpression>
 	</variable>
@@ -2061,7 +2062,10 @@ $F{TI_RECORD_L2}.equals("B2")
 					<textFieldExpression><![CDATA[$F{CD_VOCE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-					<reportElement key="textField-21" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="331" y="0" width="82" height="12" uuid="42cbfb28-0fb4-45ff-88a2-6b352ee50a79"/>
+					<reportElement key="textField-21" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="331" y="0" width="82" height="12" uuid="42cbfb28-0fb4-45ff-88a2-6b352ee50a79">
+						<printWhenExpression><![CDATA[!(($F{FL_RIMBORSO}.equals("N") || $F{FL_RIMBORSO} ==null) ||
+$F{TI_PROVVISORIO_DEFINITIVO}.equals("P"))]]></printWhenExpression>
+					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2070,6 +2074,19 @@ $F{TI_RECORD_L2}.equals("B2")
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{PG_COMPENSO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-25" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="331" y="0" width="82" height="12" uuid="90d878ad-d0c6-4343-bfbf-9bf9438d7424">
+						<printWhenExpression><![CDATA[(($F{FL_RIMBORSO}.equals("N") || $F{FL_RIMBORSO} ==null) || $F{TI_PROVVISORIO_DEFINITIVO}.equals("P"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{IM_TOTALE_RIGA_MISSIONE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 					<reportElement key="textField-23" style="TNR8" mode="Opaque" x="413" y="0" width="82" height="12" uuid="c2a63eb7-e79c-45d5-9ca8-a5e46fb35c8e"/>
@@ -2080,11 +2097,17 @@ $F{TI_RECORD_L2}.equals("B2")
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[(!$F{PG_MAN_REV}.equals(new BigDecimal(0)))?
+					<textFieldExpression><![CDATA[(($F{FL_RIMBORSO}.equals("N") || $F{FL_RIMBORSO} ==null) ||
+$F{TI_PROVVISORIO_DEFINITIVO}.equals("P"))?
+$F{PG_COMPENSO}.toString():
+(!$F{PG_MAN_REV}.equals(new BigDecimal(0)))?
 $F{PG_MAN_REV}.toString():""]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-25" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="495" y="0" width="82" height="12" uuid="0b6de3c2-2e11-4c36-b702-3d0dde1c8de3"/>
+					<reportElement key="textField-25" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="495" y="0" width="82" height="12" uuid="0b6de3c2-2e11-4c36-b702-3d0dde1c8de3">
+						<printWhenExpression><![CDATA[!(($F{FL_RIMBORSO}.equals("N") || $F{FL_RIMBORSO} ==null) ||
+ $F{TI_PROVVISORIO_DEFINITIVO}.equals("P"))]]></printWhenExpression>
+					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2093,6 +2116,21 @@ $F{PG_MAN_REV}.toString():""]]></textFieldExpression>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{IM_RIMBORSO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement key="textField-23" style="TNR8" mode="Opaque" x="495" y="0" width="82" height="12" uuid="1f00b4cd-5868-4cb5-983c-68e7c5697826">
+						<printWhenExpression><![CDATA[(($F{FL_RIMBORSO}.equals("N") || $F{FL_RIMBORSO} ==null) ||
+ $F{TI_PROVVISORIO_DEFINITIVO}.equals("P"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[(!$F{PG_MAN_REV}.equals(new BigDecimal(0)))?
+$F{PG_MAN_REV}.toString():""]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
