@@ -129,6 +129,13 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />		
+		<columnMapping
+			columnName="FL_REG_TARDIVA"
+			propertyName="fl_reg_tardiva"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
 	</defaultColumnMap>
 	<persistentProperty
@@ -171,4 +178,6 @@
 		name="ordina" />		
 	<persistentProperty
 		name="fl_split_payment" />
+	<persistentProperty
+		name="fl_reg_tardiva" />	
 </SQLPersistentInfo>
