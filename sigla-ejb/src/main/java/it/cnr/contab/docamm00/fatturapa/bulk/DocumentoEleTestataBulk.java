@@ -115,6 +115,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	private boolean attivoSplitPayment=false;
 	private boolean abilitato=false;
+	private boolean RODocumento=true;
 
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -640,4 +641,11 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	public void setAbilitato(boolean abilitato) {
 		this.abilitato = abilitato;
 	}
+	public boolean isRODocumento() {
+		return (!isAbilitato() ||!isEditabile());
+	}
+	public void setRODocumento(boolean rODocumento) {
+		RODocumento = rODocumento;
+	}
+	
 }

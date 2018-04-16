@@ -51,7 +51,6 @@ import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.ejb.EJBException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -3664,7 +3663,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         Vector options = new Vector();
         Vector options_all = new Vector();
         Vector options_bs = new Vector();
-
+ 
         if (fatturaPassiva.getFl_intra_ue() != null && fatturaPassiva.getFl_intra_ue().booleanValue()) {
             options.add(new String[][]{{"TIPO_SEZIONALE.FL_INTRA_UE", "Y", "AND"}});
         } else if (fatturaPassiva.getFl_extra_ue() != null && fatturaPassiva.getFl_extra_ue().booleanValue()) {
@@ -3701,7 +3700,20 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         else if (fatturaPassiva.getFl_split_payment() != null && fatturaPassiva.getFl_split_payment().booleanValue())
             options.add(new String[][]{{"TIPO_SEZIONALE.FL_SPLIT_PAYMENT", "Y", "AND"}});
 
-
+        if ((fatturaPassiva.isCommerciale()) && 
+            	(fatturaPassiva.getFl_split_payment()==null ||
+            	(fatturaPassiva.getFl_split_payment()!=null && !fatturaPassiva.getFl_split_payment().booleanValue())) && 
+            	fatturaPassiva.getData_protocollo()!=null ){
+           		Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(aUC, fatturaPassiva);
+           		if(fatturaPassiva.getDt_registrazione().after(conf.getDt01()) && fatturaPassiva.getDt_registrazione().before(conf.getDt02()))
+           			options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "Y", "AND"}});
+           		else
+                	options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "N", "AND"}});
+        }else{
+        	options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "N", "AND"}});
+        }
+            			
+        
         options.add(new String[][]{
                 {"TIPO_SEZIONALE.TI_BENE_SERVIZIO", "*", "AND"},
                 {"TIPO_SEZIONALE.TI_BENE_SERVIZIO", fatturaPassiva.getTi_bene_servizio(), "OR"}
@@ -5638,7 +5650,19 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             sql.addSQLClause("OR", "TI_BENE_SERVIZIO", sql.EQUALS, dettaglio.getBene_servizio().getTi_bene_servizio());
             sql.closeParenthesis();
         }
-
+        
+        if ((dettaglio.getFattura_passiva().isCommerciale()) && 
+        	(dettaglio.getFattura_passiva().getFl_split_payment()==null ||
+        	(dettaglio.getFattura_passiva().getFl_split_payment()!=null && !dettaglio.getFattura_passiva().getFl_split_payment().booleanValue())) && 
+        	dettaglio.getFattura_passiva().getData_protocollo()!=null ){
+        		Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(userContext, dettaglio.getFattura_passiva());
+        		if (dettaglio.getFattura_passiva().getDt_registrazione().after(conf.getDt02())){
+        			sql.addSQLClause("AND", "FL_DETRAIBILE", sql.EQUALS, "N");
+        			if(voceIva!=null && voceIva.getCd_voce_iva()!=null)
+        				sql.addSQLClause("AND", "CD_VOCE_IVA", sql.EQUALS, voceIva.getCd_voce_iva());
+        		}
+        }
+        		 
         sql.addClause(clauses);
         return sql;
     }
@@ -6226,7 +6250,31 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (isBeneSconto && (riga.getIm_imponibile().add(riga.getIm_iva())).abs().compareTo(BigDecimal.ONE) > 0) //??
             throw new it.cnr.jada.comp.ApplicationException(
                     "Attenzione! Non è possibile inserire per questo bene/servizio questo importo.");
-
+        SQLBuilder sql=selectVoce_ivaByClause(aUC, riga, riga.getVoce_iva(), null);
+        
+        try {
+			if (sql.executeCountQuery(getConnection(aUC)) == 0)
+				if ((riga.getFattura_passiva().isCommerciale()) &&   
+			        	(riga.getFattura_passiva().getFl_split_payment()==null ||
+			        	(riga.getFattura_passiva().getFl_split_payment()!=null && !riga.getFattura_passiva().getFl_split_payment().booleanValue())) && 
+			        	riga.getFattura_passiva().getData_protocollo()!=null ){
+			        		Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(aUC, riga.getFattura_passiva());
+			        		if (riga.getFattura_passiva().getDt_registrazione().after(conf.getDt02())){
+			        			 throw new it.cnr.jada.comp.ApplicationException(
+			 			  	            	"Attenzione! Selezione un codice iva non detraibile " + ((riga.getDs_riga_fattura()!=null)?"sul dettaglio " + riga.getDs_riga_fattura():"su un dettaglio")+".");
+			        		}
+				}
+			     else
+				 throw new it.cnr.jada.comp.ApplicationException(
+			  	            "Attenzione! Il codice iva " + ((riga.getDs_riga_fattura()!=null)?"sul dettaglio " + riga.getDs_riga_fattura():"su un dettaglio")+" non è valido");
+			} catch (SQLException e) {
+				throw handleException(e);
+	     }
+        if(riga.getFattura_passiva().isCommerciale() && riga.getVoce_iva().getPercentuale().compareTo(BigDecimal.ZERO)==0 & riga.getIm_iva().compareTo(BigDecimal.ZERO)!=0  ){
+        	throw new it.cnr.jada.comp.ApplicationException(
+	  	            "Attenzione! L'importo dell'iva " + ((riga.getDs_riga_fattura()!=null)?"sul dettaglio " + riga.getDs_riga_fattura():"su un dettaglio")+" non è valido");
+        }
+       	
         //28/08/2014 Rospuc - Gestione importo righe negativo
 //	if (riga.getPrezzo_unitario().compareTo(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP)) < 0 && !isBeneSconto)
 //		throw new it.cnr.jada.comp.ApplicationException("L'importo del prezzo unitario specificato NON è valido.");
@@ -6349,11 +6397,10 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
     }
 
     private void validazioneComune(UserContext aUC, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
-
         if (!verificaEsistenzaSezionalePer(aUC, fatturaPassiva))
             throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è stato definito un sezionale per le " + fatturaPassiva.getDescrizioneEntitaPlurale() + " e il tipo sezionale \"" + fatturaPassiva.getTipo_sezionale().getDs_tipo_sezionale() + "\"!");
 
-        try {
+        try{
             fatturaPassiva.validateDate();
 
             //Se è una fattura differita, la data di emissione non deve superare
@@ -7529,7 +7576,17 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         }
         try {
             boolean hasAccesso = ((it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")).controllaAccesso(aUC, "AMMFATTURDOCSFATPASA");
-            if (!hasAccesso) {
+            boolean checkRiepilogativo=true;
+            if ((fatturaPassiva.isCommerciale()) && 
+            		(fatturaPassiva.getFl_split_payment()==null ||
+                	(fatturaPassiva.getFl_split_payment()!=null && !fatturaPassiva.getFl_split_payment().booleanValue())) && 
+                	 fatturaPassiva.getData_protocollo()!=null ){
+            			Configurazione_cnrBulk conf=getLimitiRitardoDetraibile(aUC, fatturaPassiva);
+                		if (fatturaPassiva.getDt_registrazione().after(conf.getDt02()))
+                			checkRiepilogativo=false;
+                }
+
+            if (!hasAccesso && checkRiepilogativo) {
                 Hashtable<String, BigDecimal> mapNatura = new Hashtable<String, BigDecimal>(), mapIva = new Hashtable<String, BigDecimal>();
                 for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
                     Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
@@ -7867,5 +7924,27 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         sqlBuilder.addSQLClause(FindClause.AND, "PG_FATTURA_PASSIVA", SQLBuilder.EQUALS, fattura_passiva_rigaBulk.getPg_fattura_passiva());
         sqlBuilder.addSQLClause(FindClause.AND, "PROGRESSIVO_RIGA", SQLBuilder.EQUALS, fattura_passiva_rigaBulk.getProgressivo_riga());
         return fatturaOrdineHome.fetchAll(sqlBuilder);
+    }
+    public Configurazione_cnrBulk getLimitiRitardoDetraibile(UserContext userContext, Fattura_passivaBulk fattura) throws ComponentException {
+
+        try {
+
+            Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+                    .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+            GregorianCalendar tsGregorian = (GregorianCalendar) GregorianCalendar.getInstance();
+	       	tsGregorian.setTime(fattura.getData_protocollo());
+	        
+	       	Configurazione_cnrBulk conf =sess.getConfigurazione(userContext, tsGregorian.get(GregorianCalendar.YEAR), null,
+                    Configurazione_cnrBulk.PK_FATTURA_PASSIVA, Configurazione_cnrBulk.SK_LIMITE_REG_TARDIVA);
+	       	if (conf !=null && conf.getDt01()!=null && conf.getDt02()!=null)
+	       		return conf;
+	       	else
+	       		throw new ApplicationException("Configurazione registrazione tardiva mancante.");
+	      
+        } catch (javax.ejb.EJBException ex) {
+            throw handleException(ex);
+        } catch (RemoteException ex) {
+            throw handleException(ex);
+        }
     }
 }

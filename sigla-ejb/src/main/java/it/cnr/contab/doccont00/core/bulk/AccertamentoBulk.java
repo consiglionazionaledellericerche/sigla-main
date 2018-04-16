@@ -19,6 +19,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 
 
 
+
 import java.util.*;
 
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
@@ -1345,5 +1346,44 @@ public void setCd_cds(java.lang.String cd_cds) {
 
 	public BigDecimal getImportoNonIncassato() {
 		return this.getAccertamento_scadenzarioColl().stream().map(e->e.getImportoNonIncassato()).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
+	}
+	public Object clona(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+		AccertamentoBulk nuovo = null;
+		try {
+			nuovo = (AccertamentoBulk)getClass().newInstance();
+		} catch (InstantiationException e) {
+			return null;
+		} catch (IllegalAccessException e) {
+			return null;
+		}
+
+		nuovo.initializeForInsert(bp, context);
+		nuovo.setEsercizio_originale( getEsercizio_originale() );
+		nuovo.setEsercizio_competenza( getEsercizio_competenza() );
+		nuovo.setDs_accertamento(getDs_accertamento());
+		nuovo.setNote_accertamento(getNote_accertamento());
+		nuovo.setIm_accertamento( getIm_accertamento());
+		nuovo.setCd_riferimento_contratto( getCd_riferimento_contratto());
+		nuovo.setDt_scadenza_contratto( getDt_scadenza_contratto());
+		nuovo.setFl_calcolo_automatico( getFl_calcolo_automatico());
+		nuovo.setUnita_organizzativa( getUnita_organizzativa());
+		nuovo.setCds( getCds());
+		nuovo.setCapitolo( getCapitolo());
+		if(getCapitolo()!=null && getCapitolo().getCd_titolo_capitolo()!=null)
+			nuovo.setCd_elemento_voce(getCapitolo().getCd_titolo_capitolo());
+        nuovo.setDebitore(getDebitore());
+		nuovo.setCapitoliDiEntrataCdsColl(getCapitoliDiEntrataCdsColl());
+		nuovo.setCapitoliDiEntrataCdsSelezionatiColl(getCapitoliDiEntrataCdsSelezionatiColl());
+		//nuovo.setCdrColl( getCdrColl());
+		nuovo.setCdrSelezionatiColl( getCdrSelezionatiColl());
+		nuovo.setLineeAttivitaColl( getLineeAttivitaColl());
+		nuovo.setLineeAttivitaSelezionateColl( getLineeAttivitaSelezionateColl());
+		nuovo.setNuoveLineeAttivitaColl(getNuoveLineeAttivitaColl());
+		nuovo.setCd_tipo_documento_cont( getCd_tipo_documento_cont());
+		nuovo.setFl_pgiro(getFl_pgiro());
+		nuovo.setCd_uo_origine( getCd_uo_origine());
+		nuovo.setCd_cds_origine( getCd_cds_origine());
+		nuovo.setFl_netto_sospeso( getFl_netto_sospeso());
+		return nuovo;
 	}
 }
