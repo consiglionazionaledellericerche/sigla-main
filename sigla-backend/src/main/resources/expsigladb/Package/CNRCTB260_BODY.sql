@@ -1,7 +1,6 @@
 --------------------------------------------------------
 --  DDL for Package Body CNRCTB260
 --------------------------------------------------------
-
   CREATE OR REPLACE PACKAGE BODY "CNRCTB260" AS
 --==================================================================================================
 -- Inserimento record per titolo report (comune a tutte le stampe IVA)
@@ -5372,4 +5371,3 @@ BEGIN
 End InsDataDiffFatturePassAuto;
 
 END Cnrctb260; -- PACKAGE END;
-/
