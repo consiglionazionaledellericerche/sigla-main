@@ -604,24 +604,6 @@
             <column name="fl_reg_tardiva" type="CHAR(1)" value="Y"/>
      </insert>
     </changeSet>
-    <changeSet author="rosangela.pucciarelli" runOnChange="true" id="modify-view-V_INCARICHI_ELENCO">
-        <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_ELENCO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
-    </changeSet>
-    <changeSet author="rosangela.pucciarelli" runOnChange="true" id="modify-view-V_REGISTRO_IVA_VENDITE">
-        <sqlFile dbms="oracle" path="../expsigladb/View/V_REGISTRO_IVA_VENDITE.sql"  relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
-    </changeSet>
-    	<changeSet author="rosangela.pucciarelli" runOnChange="true" id="modify-view-V_REGISTRO_IVA_ACQUISTI">
-        <sqlFile dbms="oracle" path="../expsigladb/View/V_REGISTRO_IVA_ACQUISTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
-    </changeSet>
-    	<changeSet author="rosangela.pucciarelli" runOnChange="true" id="modify-view-V_LIQUIDAZIONE_IVA_ACQUISTI">
-        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUIDAZIONE_IVA_ACQUISTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
-    </changeSet>
-    <changeSet author="rosangela.pucciarelli" runOnChange="true" id="modify-view-V_LIQUIDAZIONE_IVA_VENDITE">
-        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUIDAZIONE_IVA_VENDITE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
-    </changeSet>   
-    <changeSet author="rosangela.pucciarelli" runOnChange="true" id="modify-package-CNRCTB260_BODY.sql">
-        <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB260_BODY.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
-    </changeSet>
 </databaseChangeLog>
 
 
