@@ -1,8 +1,6 @@
 package it.cnr.contab.utente00.ejb;
 
 import javax.ejb.Remote;
-
-import it.cnr.jada.UserContext;
 @Remote
 public interface RuoloComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
 boolean isCapoCommessa(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
@@ -21,6 +19,7 @@ boolean isAbilitatoSospensioneCori(it.cnr.jada.UserContext param0) throws it.cnr
 boolean isAbilitatoModificaDescVariazioni(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isAbilitatoAllTrattamenti(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException,it.cnr.jada.persistency.IntrospectionException;
 boolean isAbilitatoFirmaFatturazioneElettronica(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+boolean isAbilitatoCancellazioneMissioneGemis(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isAbilitatoAutorizzareDiaria(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 
 }

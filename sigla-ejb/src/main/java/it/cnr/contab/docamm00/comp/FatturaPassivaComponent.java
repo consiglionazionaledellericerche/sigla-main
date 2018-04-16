@@ -5438,17 +5438,16 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
     public it.cnr.jada.persistency.sql.SQLBuilder selectFornitoreByClause(UserContext aUC, Fattura_passivaBulk fatturaPassiva, TerzoBulk fornitore, CompoundFindClause clauses)
             throws ComponentException {
 
-        //if (fatturaPassiva.getDt_fattura_fornitore() == null)
-        //throw new it.cnr.jada.comp.ApplicationException("Impostare una data fattura fornitore");
-
         it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC, fornitore, "V_TERZO_CF_PI").createSQLBuilder();
         sql.addTableToHeader("ANAGRAFICO");
         sql.addSQLJoin("ANAGRAFICO.CD_ANAG", "V_TERZO_CF_PI.CD_ANAG");
         sql.addSQLClause("AND", "V_TERZO_CF_PI.CD_TERZO", sql.EQUALS, fornitore.getCd_terzo());
         sql.addSQLClause("AND", "V_TERZO_CF_PI.DENOMINAZIONE_SEDE", sql.STARTSWITH, fornitore.getDenominazione_sede());
 
-        sql.addSQLClause("AND", "((V_TERZO_CF_PI.DT_FINE_RAPPORTO IS NULL) OR (V_TERZO_CF_PI.DT_FINE_RAPPORTO >= ?))");
-        sql.addParameter(fatturaPassiva.getDt_fattura_fornitore(), java.sql.Types.TIMESTAMP, 0);
+        sql.openParenthesis(FindClause.AND);
+        sql.addSQLClause(FindClause.AND, "V_TERZO_CF_PI.DT_FINE_RAPPORTO", SQLBuilder.ISNULL, null);
+        sql.addSQLClause(FindClause.OR, "V_TERZO_CF_PI.DT_FINE_RAPPORTO", SQLBuilder.GREATER_EQUALS, fatturaPassiva.getDt_fattura_fornitore());
+        sql.closeParenthesis();
 
         sql.addSQLClause("AND", "V_TERZO_CF_PI.TI_TERZO", sql.NOT_EQUALS, TerzoBulk.DEBITORE);
         sql.addSQLClause("AND", "V_TERZO_CF_PI.CD_PRECEDENTE", sql.EQUALS, fornitore.getCd_precedente());
