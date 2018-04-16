@@ -5,6 +5,7 @@
 package it.cnr.contab.utenze00.bulk;
 public class PrivilegioBulk extends PrivilegioBase {
 	final public static String ABILITA_FIRMA_FATTURA_ELETTRONICA = "FIFAEL";
+	final public static String ABILITA_CANCELLAZIONE_MISSIONE_GEMIS = "CANCMI";
 	final public static String ABILITA_APPROVA_BILANCIO = "APPBIL";
 	final public static String ABILITA_AGGIORNA_INVENTARIO = "AGGINV";
 	final public static String ABILITA_INVENTARIO_UFFICIALE = "INVUFF";

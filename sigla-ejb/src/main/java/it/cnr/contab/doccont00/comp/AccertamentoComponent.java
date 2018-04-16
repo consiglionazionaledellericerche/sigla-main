@@ -137,12 +137,12 @@ import it.perla.accenture.com.anagrafeprestazioni_variazioneincarichi.Comunicazi
 	ACR_RES con fl_pgiro = 'N'- bilancio Ente
 	ACR_SIST - bilancio Cds
 	ACR_PLUR - bilancio Ente
-*/	
- 
+*/
+
 public class AccertamentoComponent  extends CRUDComponent implements IDocumentoContabileMgr,ICRUDMgr,IAccertamentoMgr, IPrintMgr, Cloneable,Serializable
 {
 	private final static int INSERIMENTO = 1;
-	private final static int MODIFICA    = 2;	
+	private final static int MODIFICA    = 2;
 
 
 
@@ -153,9 +153,9 @@ public class AccertamentoComponent  extends CRUDComponent implements IDocumentoC
 
 
     }
-/** 
-/** 
-  *  creazione 
+/**
+/**
+  *  creazione
   *    PreCondition:
   *      Un accertamento e' stato creato
   *      L'esercizio dell'accertamento e' uguale all'esercizio di scrivania
@@ -166,7 +166,7 @@ public class AccertamentoComponent  extends CRUDComponent implements IDocumentoC
   *  modifica/eliminazione accertamento
   *    PreCondition:
   *      Un accertamento e' stato modificato/eliminato
-  *      L'esercizio dell'accertamento e' uguale all'esercizio di scrivania  
+  *      L'esercizio dell'accertamento e' uguale all'esercizio di scrivania
   *    PostCondition:
   *      Viene chiamato il metodo 'aggiornaSaldiInModifica' che, per la voce del piano utilizzata nell'accertamento calcola
   *      l'importo dell'aggiornamento da apportare ai saldi e richiama il metodo sulla Component di Gestione Saldi (SaldoComponent) che
@@ -188,11 +188,11 @@ private void aggiornaCapitoloSaldoAccertamento (UserContext userContext,Accertam
 		if ( azione == INSERIMENTO )
 			aggiornaSaldiInInserimento( userContext, accertamento );
 		else if ( azione == MODIFICA )
-			aggiornaSaldiInModifica( userContext, 
-											 accertamento, 
+			aggiornaSaldiInModifica( userContext,
+											 accertamento,
 //											 new Long( accertamento.getPg_ver_rec().longValue() - 1),
-											 accertamento.getPg_ver_rec());		
-			
+											 accertamento.getPg_ver_rec());
+
 /*
 		SaldoComponentSession session = createSaldoComponentSession();
 		AccertamentoBulk accDaDB;
@@ -215,13 +215,13 @@ private void aggiornaCapitoloSaldoAccertamento (UserContext userContext,Accertam
 				break;
 
 		}
-				*/	
+				*/
 	}
 	catch ( Exception e )
 	{
 		throw handleException( e );
-	}	
-	
+	}
+
 }
 /**
  * aggiornaCogeCoanInDifferita method comment.
@@ -237,7 +237,7 @@ public void aggiornaCogeCoanInDifferita(it.cnr.jada.UserContext userContext, it.
 			if ( pg_ver_rec == null )
 				throw new ApplicationException( "Aggiornamento in differita dello stato coge/coan dei documenti contabili impossibile (pg_ver_rec nullo)");
 			if ( accertamento.getPg_accertamento().longValue() >= 0 ) //accertamento non temporaneo
-				callDoRiprocAcc( userContext, accertamento, pg_ver_rec );			
+				callDoRiprocAcc( userContext, accertamento, pg_ver_rec );
 		}
 	}
 	catch ( Exception e )
@@ -247,7 +247,7 @@ public void aggiornaCogeCoanInDifferita(it.cnr.jada.UserContext userContext, it.
 }
 /**
  * Aggiornamento in differita dei saldi dell'accertamento
- * Un documento amministrativo di entrata che agisce in modalità transazionale ha creato/modificato gli importi 
+ * Un documento amministrativo di entrata che agisce in modalità transazionale ha creato/modificato gli importi
  * relativi ad un accertamento; i saldi di tale accertamento non possono essere aggiornati subito in quanto
  * tale operazione genererebbe dei lock sulle voci del piano che non ne consentirebbero l'utilizzo ad altri utenti;
  * pertanto l'aggiornamento dei saldi dell'accertamento viene differito al momento del salvataggio
@@ -287,28 +287,28 @@ public void aggiornaSaldiInDifferita( UserContext userContext, IDocumentoContabi
 			if ( accertamento.getPg_accertamento().longValue() < 0 ) //accertamento appena inserita
 				aggiornaSaldiInInserimento( userContext, accertamento );
 			else
-				aggiornaSaldiInModifica( userContext, accertamento, pg_ver_rec );			
+				aggiornaSaldiInModifica( userContext, accertamento, pg_ver_rec );
 		}
 	}
 	catch ( Exception e )
 	{
 		throw handleException(e);
-	}		
+	}
 
-}		
+}
 /**
  *
  * Pre-post-conditions:
  *
- * Nome: Aggiorna saldi 
+ * Nome: Aggiorna saldi
  * Pre:  Un accertamento e' stato creato
  * Post: Per la Voce del piano presente nell'accertamento viene richiamato il metodo sulla Component di gestione dei Saldi (SaldoComponent) per incrementare
  *       il saldo del capitolo corrispondente
  *
  * @param	userContext	lo UserContext che ha generato la richiesta
- * @param	accertamento	l'AccertamentoBulk per cui aggiornare i saldi 
+ * @param	accertamento	l'AccertamentoBulk per cui aggiornare i saldi
  */
- 
+
 private void aggiornaSaldiInInserimento( UserContext userContext, AccertamentoBulk accertamento) throws ComponentException, java.rmi.RemoteException, it.cnr.jada.persistency.PersistencyException
 {
 	SaldoComponentSession session = createSaldoComponentSession();
@@ -344,12 +344,12 @@ private void aggiornaSaldiInInserimento( UserContext userContext, AccertamentoBu
  * @param	userContext	lo UserContext che ha generato la richiesta
  * @param	accertamento	l'AccertamentoBulk per cui aggiornare i saldi
  * @param	pg_ver_rec	il pg_ver_rec iniziale dell'accertamento
- * 
+ *
  */
 private void aggiornaSaldiInModifica( UserContext userContext, AccertamentoBulk accertamento, Long pg_ver_rec  ) throws it.cnr.jada.persistency.PersistencyException, ComponentException, java.rmi.RemoteException
 {
 	SaldoComponentSession session = createSaldoComponentSession();
-	
+
 	String ti_competenza_residuo;
 	if ( accertamento.isResiduo() )
 		ti_competenza_residuo = ReversaleBulk.TIPO_RESIDUO;
@@ -377,9 +377,9 @@ private void aggiornaSaldiInModifica( UserContext userContext, AccertamentoBulk 
 
 			if ( modSaldo.getIm_delta_inc_voce().compareTo( new BigDecimal(0) ) != 0 )
 				session.aggiornaPagamentiIncassi( userContext, voce, accertamento.getCd_cds(), modSaldo.getIm_delta_inc_voce(), ti_competenza_residuo);
-		}		
-		
-	}	
+		}
+
+	}
 	/*
 	* Aggiorno i Saldi per CDR/Linea
 	*/
@@ -422,7 +422,7 @@ private void aggiornaSaldiInModifica( UserContext userContext, AccertamentoBulk 
 		}
 	}
 	annullaRigheDocAmm(userContext,accertamento);
-				
+
 }
 private void annullaRigheDocAmm(UserContext userContext, AccertamentoBulk accertamento) throws ComponentException {
 	if (accertamento.isAccertamentoResiduo()) {
@@ -430,15 +430,15 @@ private void annullaRigheDocAmm(UserContext userContext, AccertamentoBulk accert
 		if (obbRes.getPg_accertamento()!=null) {
 			try
 			{
-				for ( Iterator i = accertamento.getAccertamento_scadenzarioColl().iterator(); i.hasNext(); ) 
+				for ( Iterator i = accertamento.getAccertamento_scadenzarioColl().iterator(); i.hasNext(); )
 				{
 					Accertamento_scadenzarioBulk scadenza = (Accertamento_scadenzarioBulk) i.next();
 					Accertamento_scadenzarioHome scadenzaHome = (Accertamento_scadenzarioHome) getHome( userContext, scadenza.getClass());
-	
+
 					if (scadenza.getPg_doc_attivo()!=null &&
 						scadenza.getPg_reversale()==null &&
 						scadenza.getIm_scadenza().compareTo(Utility.ZERO)==0) {
-						
+
 						List listaDocAttivi = null;
 						boolean bFound = false;
 						if (scadenza.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_E)) {
@@ -454,18 +454,18 @@ private void annullaRigheDocAmm(UserContext userContext, AccertamentoBulk accert
 									docAttivo.setStato_cofi(Documento_generico_rigaBulk.STATO_ANNULLATO);
 
 									//	Se l'esercizio di scrivania e' diverso da quello solare
-							        //	inizializzo la data di cancellazione al 31/12/esercizio	
+							        //	inizializzo la data di cancellazione al 31/12/esercizio
 							        java.sql.Timestamp tsOdierno = ((Documento_generico_rigaHome) getHome(userContext, docAttivo)).getServerDate();
 							       	GregorianCalendar tsOdiernoGregorian = (GregorianCalendar) GregorianCalendar.getInstance();
 							       	tsOdiernoGregorian.setTime(tsOdierno);
-							        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");		
-							        
+							        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+
 									if(tsOdiernoGregorian.get(GregorianCalendar.YEAR) != CNRUserContext.getEsercizio(userContext).intValue())
 										docAttivo.setDt_cancellazione(new java.sql.Timestamp(sdf.parse("31/12/"+docAttivo.getEsercizio().intValue()).getTime()));
 									else
 									{
-										String currentDate = Integer.toString(tsOdiernoGregorian.get(GregorianCalendar.DAY_OF_MONTH)) + "/" + 
-															Integer.toString(tsOdiernoGregorian.get(GregorianCalendar.MONTH)) + "/" + 
+										String currentDate = Integer.toString(tsOdiernoGregorian.get(GregorianCalendar.DAY_OF_MONTH)) + "/" +
+															Integer.toString(tsOdiernoGregorian.get(GregorianCalendar.MONTH)) + "/" +
 															Integer.toString(tsOdiernoGregorian.get(GregorianCalendar.YEAR));
 										docAttivo.setDt_cancellazione(new java.sql.Timestamp(sdf.parse(currentDate).getTime()));
 									}
@@ -536,7 +536,7 @@ private void aggiornaSaldiAccertamentiResiduiPropri (UserContext uc,Accertamento
 
 		//aggiornaCapitoloSaldoAccertamento( uc, accertamento, MODIFICA );
 		//aggiornaStatoCOAN_COGEDocAmm( uc, accertamento );
-		
+
 		if (accertamento.isAccertamentoResiduo()) {
 			AccertamentoResiduoBulk obbRes = (AccertamentoResiduoBulk) accertamento;
 			Accertamento_modificaBulk obbMod = obbRes.getAccertamento_modifica();
@@ -544,10 +544,10 @@ private void aggiornaSaldiAccertamentiResiduiPropri (UserContext uc,Accertamento
 				SaldoComponentSession session = createSaldoComponentSession();
 				try
 				{
-					for ( Iterator i = obbMod.getAccertamento_mod_voceColl().iterator(); i.hasNext(); ) 
+					for ( Iterator i = obbMod.getAccertamento_mod_voceColl().iterator(); i.hasNext(); )
 					{
 						Accertamento_mod_voceBulk obbModVoce = (Accertamento_mod_voceBulk) i.next();
-						
+
 						session.aggiornaAccertamentiResiduiPropri(
 							uc,
 							obbModVoce.getCd_centro_responsabilita(),
@@ -567,13 +567,13 @@ private void aggiornaSaldiAccertamentiResiduiPropri (UserContext uc,Accertamento
 	}
 }
 //^^@@
-/** 
+/**
   *  Tutti controlli superati
   *    PreCondition:
   *      scadenza(n+1) esiste
   *      scadenza(n+1).importo > differenza in scadenza(n).importo
   *    PostCondition:
-  *      Il sistema eseguirà l'aggiornamento dell'importo della scadenza successiva (n+1) dell'accertamento aggiungendo la differenza fra il nuovo e vecchio importo della scadenza in aggiornamento. 
+  *      Il sistema eseguirà l'aggiornamento dell'importo della scadenza successiva (n+1) dell'accertamento aggiungendo la differenza fra il nuovo e vecchio importo della scadenza in aggiornamento.
   *      La differenza è espressa come (scadenzario(n).importo_nuovo - scadenzario(n).importo_vecchio)
   *  scadenza(n+1).importo <= differenza in scadenza(n).importo
   *    PreCondition:
@@ -598,20 +598,20 @@ public AccertamentoBulk aggiornaScadenzarioSuccessivoAccertamento (UserContext a
    	Accertamento_scadenzarioBulk scadSuccessivaNew;
 
    	// verifico se l'utente ha impostato l'aggiornamento automatico dell'importo della successiva scadenza
-	if((scadenza.getFl_aggiorna_scad_successiva() == null) || (!scadenza.getFl_aggiorna_scad_successiva().booleanValue()))  {return accertamento;}   	
-   		
+	if((scadenza.getFl_aggiorna_scad_successiva() == null) || (!scadenza.getFl_aggiorna_scad_successiva().booleanValue()))  {return accertamento;}
+
    	// se non ho scadenze oppure ne ho solo una non faccio niente
-	if (scadenza.getScadenza_iniziale() == null)  {return accertamento;}   
+	if (scadenza.getScadenza_iniziale() == null)  {return accertamento;}
 
 	// Calcolo quanto aggiungere/togliere alla scadenza successiva
 	java.math.BigDecimal delta = scadenza.getScadenza_iniziale().getIm_scadenza().subtract(scadenza.getIm_scadenza());
 
 	/*
 	if((accertamento.getAccertamento_scadenzarioColl().size() == 0) || (accertamento.getAccertamento_scadenzarioColl().size() == 1))
-	{	
+	{
 		throw handleException( new it.cnr.jada.comp.ApplicationException( "Non esiste una scadenza successiva da aggiornare automaticamente !"));
-	}	
-	*/	
+	}
+	*/
 
 	// ricerco l'indice della scadenza selezionata
 	int indice=0;
@@ -620,16 +620,16 @@ public AccertamentoBulk aggiornaScadenzarioSuccessivoAccertamento (UserContext a
 		if(scadenza == (Accertamento_scadenzarioBulk) i.next())
 		{
 			break;
-		}		
+		}
 		indice=indice+1;
 	}
 	indice = indice + 1;						// indice della scadenza successiva
-	
+
 	//non esiste scadenza successiva
 	//se residuo proprio e il delta è positivo (è stata diminuito l'importo della scadenza precedente)
-	//inserisco una nuova scadenza		
+	//inserisco una nuova scadenza
 	if ( indice == accertamento.getAccertamento_scadenzarioColl().size()) {
-		if (delta.doubleValue() < 0)			
+		if (delta.doubleValue() < 0)
 			throw handleException( new ApplicationException( "Non esiste una scadenza successiva da aggiornare" ));
 		else {
 			scadSuccessivaNew = new Accertamento_scadenzarioBulk();
@@ -640,13 +640,13 @@ public AccertamentoBulk aggiornaScadenzarioSuccessivoAccertamento (UserContext a
 			indice = accertamento.addToAccertamento_scadenzarioColl(scadSuccessivaNew);
 		}
 	}
-	
+
 	// Cerco la scadenza successiva da modificare
 	Accertamento_scadenzarioBulk scadenzaSuccessiva = (Accertamento_scadenzarioBulk) accertamento.getAccertamento_scadenzarioColl().get( indice );
 
 	// Se la scadenza successiva e' collegata a fattura attiva non posso modificarla
 	if ( scadenzaSuccessiva.getPg_doc_attivo() != null )
-			throw new ApplicationException( "Modifica impossibile: la scadenza successiva e' associata a doc. amministrativi");	
+			throw new ApplicationException( "Modifica impossibile: la scadenza successiva e' associata a doc. amministrativi");
 
 
 	if(delta.doubleValue() == 0) return accertamento;
@@ -663,9 +663,9 @@ public AccertamentoBulk aggiornaScadenzarioSuccessivoAccertamento (UserContext a
 	if (!scadenzaSuccessiva.isToBeCreated())
 		scadenzaSuccessiva.setToBeUpdated();
 	scadenza.setToBeUpdated();
-		
-	// Rigenero i relativi dettagli	
-	generaDettagliScadenzaAccertamento(aUC, accertamento, scadenzaSuccessiva, accertamento.isAccertamentoResiduo()?false:true);	
+
+	// Rigenero i relativi dettagli
+	generaDettagliScadenzaAccertamento(aUC, accertamento, scadenzaSuccessiva, accertamento.isAccertamentoResiduo()?false:true);
 
     return accertamento;
 }
@@ -680,7 +680,7 @@ public AccertamentoBulk aggiornaScadenzarioSuccessivoAccertamento (UserContext a
  *
  * @param	uc	lo UserContext che ha generato la richiesta
  * @param	docContabile l' AccertamentoBulk che e' stato modificato/annullato
- * 
+ *
 */
 
 private void aggiornaStatoCOAN_COGEDocAmm( UserContext userContext, AccertamentoBulk docContabile  )  throws  ComponentException
@@ -694,14 +694,14 @@ private void aggiornaStatoCOAN_COGEDocAmm( UserContext userContext, Accertamento
  * Nome: Annullamento logico accertamento
  * Pre:  Una richiesta di annullamento di un accertamento e' stata generata
  *       L'accertamento non ha documenti amministartivi associati
- * Post: Viene impostata la data di cancellazione dell'accertamento, viene azzerato il suo importo e gli importi di tutte 
+ * Post: Viene impostata la data di cancellazione dell'accertamento, viene azzerato il suo importo e gli importi di tutte
  *       le scadenze e di tutti dettagli di scadenza. Viene aggiornato il saldo relativo al capitolo dell'accertamento.
  *
  *
  * Nome: Errore doc. amm.
  * Pre:  Una richiesta di annullamento di un accertamento e' stata generata
  *       L'accertamento ha documenti amministartivi associati
- * Post: Una segnalazione di errore viene restituita per comunicare all'utente l'impossibilità di eseguire l'operazione 
+ * Post: Una segnalazione di errore viene restituita per comunicare all'utente l'impossibilità di eseguire l'operazione
  *       di annullamento
  *
  * @param	aUC	lo UserContext che ha generato la richiesta
@@ -711,47 +711,47 @@ private void aggiornaStatoCOAN_COGEDocAmm( UserContext userContext, Accertamento
 
 //
 // L'accertamento prevede solo una cancellazione logica.
-// Se l'accertamento non risulta associato ad alcun 
-// documento amministrativo, tale cancellazione avverra' 
+// Se l'accertamento non risulta associato ad alcun
+// documento amministrativo, tale cancellazione avverra'
 // azzerando tutti gli importi dell'accertamento
 //
 
-public AccertamentoBulk annullaAccertamento( UserContext aUC, AccertamentoBulk accertamento ) throws ComponentException 
+public AccertamentoBulk annullaAccertamento( UserContext aUC, AccertamentoBulk accertamento ) throws ComponentException
 {
 
 	accertamento.setCrudStatus(OggettoBulk.NORMAL);
-	
+
 	try
 	{
         if (accertamento.isAssociataADocAmm())
-            throw new ApplicationException("Impossibile annullare un accertamento con documenti amministrativi collegati");		
+            throw new ApplicationException("Impossibile annullare un accertamento con documenti amministrativi collegati");
 
-            /* simona 
+            /* simona
         accertamento.setDt_cancellazione(new java.sql.Timestamp(System.currentTimeMillis())); */
         accertamento.setDt_cancellazione( DateServices.getDt_valida(aUC));
-		
-		// azzero tutti gli importi	
+
+		// azzero tutti gli importi
 		accertamento.storna();
 		// aggiornamento accertamento + scadenze + dettagli
 		makeBulkPersistent( aUC, accertamento);
 
 		//aggiorno i saldi
 		aggiornaCapitoloSaldoAccertamento( aUC, accertamento, MODIFICA );
-		
+
 
 		/*
-	    if ( !aUC.isTransactional() )	
+	    if ( !aUC.isTransactional() )
 			aggiornaStatoCOAN_COGEDocAmm( aUC, accertamento );
-		*/	
+		*/
 
         return accertamento;
-        
+
     } catch (Exception e) {
         throw handleException(e);
     }
 
 }
-/** 
+/**
   *  riprocessa lo stato coge/coan di documenti associati al doc. contabile
   *    PreCondition:
   *      E' stata inoltrata una richiesta di riprocessare lo stato coge/coan di doc. amm. associati al documento contabile
@@ -772,14 +772,14 @@ public void callDoRiprocAcc(
 {
 	try
 	{
-		LoggableStatement cs = new LoggableStatement(getConnection( userContext ), 
+		LoggableStatement cs = new LoggableStatement(getConnection( userContext ),
 			"call " +
-			it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +			
+			it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
 			"CNRCTB215.doRiprocAcc(?, ?, ?, ?, ?)",false,this.getClass());
 		try
 		{
 			cs.setInt( 1, doc.getEsercizio().intValue());
-			cs.setString( 2, doc.getCd_cds());			
+			cs.setString( 2, doc.getCd_cds());
 			cs.setInt( 3, doc.getEsercizio_originale().intValue());
 			cs.setLong( 4, doc.getPg_doc_contabile().longValue());
 			if (pg_ver_rec == null)
@@ -787,12 +787,12 @@ public void callDoRiprocAcc(
 			else
 				cs.setLong( 5, pg_ver_rec.longValue());
 			cs.executeQuery();
-			
+
 		}
 		catch ( SQLException e )
 		{
 			throw handleException( e );
-		}	
+		}
 		finally
 		{
 			cs.close();
@@ -801,14 +801,14 @@ public void callDoRiprocAcc(
 	catch ( SQLException e )
 	{
 		throw handleException( e );
-	}	
+	}
 }
-/** 
+/**
   *  riporta all'esercizio successivo di doc.contabile
   *    PreCondition:
   *      E' stata inoltrata una richiesta di riportare all'esercizio successivo un documento contabile
   *	 PostCondition:
-  *		Il doc.contabile è stato riportato all'esercizio successivo richiamando 
+  *		Il doc.contabile è stato riportato all'esercizio successivo richiamando
   *      la stored procedure CNRCTB046.riportoEsNextDocCont
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -820,29 +820,29 @@ public void callRiportaAvanti (UserContext userContext,IDocumentoContabileBulk d
 {
 	try
 	{
-		LoggableStatement cs = new LoggableStatement(getConnection( userContext ), 
+		LoggableStatement cs = new LoggableStatement(getConnection( userContext ),
 			"call " +
-			it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +			
+			it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
 			"CNRCTB046.riportoEsNextDocCont(?, ?, ?, ?, ?, ?)",false,this.getClass());
 		try
 		{
-			cs.setString( 1, doc.getCd_cds());			
+			cs.setString( 1, doc.getCd_cds());
 			cs.setObject( 2, doc.getEsercizio());
 			cs.setObject( 3, doc.getEsercizio_originale());
 			cs.setObject( 4, doc.getPg_doc_contabile());
-			cs.setString( 5, doc.getTi_entrata_spesa());					
+			cs.setString( 5, doc.getTi_entrata_spesa());
 			cs.setString( 6, ((CNRUserContext)userContext).getUser() );
 			cs.executeQuery();
-			
+
 		}
 		catch ( SQLException e )
 		{
 			throw handleException( e );
-		}	
+		}
 		catch ( Exception e )
 		{
 			throw handleException( e );
-		}	
+		}
 		finally
 		{
 			cs.close();
@@ -851,14 +851,14 @@ public void callRiportaAvanti (UserContext userContext,IDocumentoContabileBulk d
 	catch ( SQLException e )
 	{
 		throw handleException( e );
-	}	
+	}
 }
-/** 
+/**
   *  riporta indietro dall'esercizio successivo di un doc.contabile
   *    PreCondition:
   *      E' stata inoltrata una richiesta di riportare indietro dall'esercizio successivo un documento contabile
   *	 PostCondition:
-  *		Il doc.contabile è stato riportato all'esercizio successivo richiamando 
+  *		Il doc.contabile è stato riportato all'esercizio successivo richiamando
   *      la stored procedure CNRCTB046.deriportoEsNextDocCont
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
@@ -870,25 +870,25 @@ public void callRiportaIndietro (UserContext userContext,IDocumentoContabileBulk
 {
 	try
 	{
-		LoggableStatement cs = new LoggableStatement(getConnection( userContext ), 
+		LoggableStatement cs = new LoggableStatement(getConnection( userContext ),
 			"call " +
-			it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +			
+			it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
 			"CNRCTB046.deriportoEsNextDocCont(?, ?, ?, ?, ?, ?)",false,this.getClass());
 		try
 		{
-			cs.setString( 1, doc.getCd_cds());			
+			cs.setString( 1, doc.getCd_cds());
 			cs.setObject( 2, doc.getEsercizio());
 			cs.setObject( 3, doc.getEsercizio_originale());
 			cs.setObject( 4, doc.getPg_doc_contabile());
-			cs.setString( 5, doc.getTi_entrata_spesa());					
+			cs.setString( 5, doc.getTi_entrata_spesa());
 			cs.setString( 6, ((CNRUserContext)userContext).getUser() );
 			cs.executeQuery();
-			
+
 		}
 		catch ( SQLException e )
 		{
 			throw handleException( e );
-		}	
+		}
 		finally
 		{
 			cs.close();
@@ -897,14 +897,14 @@ public void callRiportaIndietro (UserContext userContext,IDocumentoContabileBulk
 	catch ( SQLException e )
 	{
 		throw handleException( e );
-	}	
+	}
 }
 /**
  *
  * Pre-post-conditions:
  *
  * Nome: Cancella i dettagli della scadenza
- * Pre:  L'utente ha modificato la selezione della linea di attività dell'accertamento 
+ * Pre:  L'utente ha modificato la selezione della linea di attività dell'accertamento
  * Post: Sono stati eliminati i dettagli della scadenza in quanto si riferivano alla precedente linea di attività
  *
  * @param	aUC	lo UserContext che ha generato la richiesta
@@ -916,14 +916,14 @@ public void callRiportaIndietro (UserContext userContext,IDocumentoContabileBulk
 public Accertamento_scadenzarioBulk cancellaDettagliScadenze (UserContext aUC,AccertamentoBulk accertamento, Accertamento_scadenzarioBulk scadenzario) throws ComponentException
 {
 	Accertamento_scad_voceBulk osv;
-	Accertamento_scadenzarioBulk os;	
+	Accertamento_scadenzarioBulk os;
 	V_pdg_accertamento_etrBulk ppsd;
 	Linea_attivitaBulk la;
 	boolean found;
 	int index = 0;
-	
+
 	BulkList listaLAComuni = dettagliScadenzaLAComuni(aUC, accertamento, scadenzario);
-	
+
 	//cancello i dettagli scadenze per le linee di attività che non esistono piu'
 
 	for ( Iterator scadIterator = scadenzario.getAccertamento_scad_voceColl().iterator(); scadIterator.hasNext(); index++)
@@ -938,7 +938,7 @@ public Accertamento_scadenzarioBulk cancellaDettagliScadenze (UserContext aUC,Ac
 			{
 				found = true;
 				break;
-			}	
+			}
 		}
 		if ( !found )
 			for ( Iterator lattIterator = accertamento.getNuoveLineeAttivitaColl().iterator(); lattIterator.hasNext(); )
@@ -949,7 +949,7 @@ public Accertamento_scadenzarioBulk cancellaDettagliScadenze (UserContext aUC,Ac
 				{
 					found = true;
 					break;
-				}	
+				}
 			}
 
 		if ( !found )
@@ -960,11 +960,11 @@ public Accertamento_scadenzarioBulk cancellaDettagliScadenze (UserContext aUC,Ac
 				osv.setToBeDeleted();
 				scadIterator.remove();
 			}
-		}	
+		}
 	}
 	return scadenzario;
 }
-/** 
+/**
   *  creazione dettaglio di scadenza di accertamento di sistema
   *    PreCondition:
   *      E' stata generata la richiesta di creazione di un dettaglio per una scadenza di un accertamento di sistema
@@ -993,31 +993,31 @@ private Accertamento_scad_voceBulk creaAccertamento_scad_voce (UserContext uc,Ac
 
 		it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = createConfigurazioneCnrComponentSession().getConfigurazione( uc, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_LINEA_ATTIVITA_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_LINEA_ATTIVITA_ENTRATA_ENTE );
 		if ( config == null  )
-			throw new ApplicationException("Configurazione CNR: manca la definizione del GAE ENTRATA ENTE");	
+			throw new ApplicationException("Configurazione CNR: manca la definizione del GAE ENTRATA ENTE");
 		if ( config.getVal01() == null || config.getVal02() == null )
-			throw new ApplicationException("Configurazione CNR: non sono stati impostati i valori per GAE SPECIALE - GAE ENTRATA ENTE");			
+			throw new ApplicationException("Configurazione CNR: non sono stati impostati i valori per GAE SPECIALE - GAE ENTRATA ENTE");
 		WorkpackageHome wphome = (WorkpackageHome) getHome(uc, WorkpackageBulk.class);
 		WorkpackageBulk wp = (WorkpackageBulk) wphome.findByPrimaryKey(new WorkpackageBulk(config.getVal01(),config.getVal02()));
 		//accert_scad_voce.setCd_linea_attivita( config.getVal02() );
 		//accert_scad_voce.setCd_centro_responsabilita(config.getVal01() );
-		accert_scad_voce.setLinea_attivita(wp);		
+		accert_scad_voce.setLinea_attivita(wp);
 
 		accert_scad_voce.setIm_voce( accert_scad.getAccertamento().getIm_accertamento() );
 		accert_scad.getAccertamento_scad_voceColl().add( accert_scad_voce );
 		return accert_scad_voce;
-		
+
 	}
 	catch ( Exception e )
 	{
 		throw handleException( accert_scad.getAccertamento(), e );
 	}
 }
-/** 
+/**
   *  creazione scadenza di accertamento di sistema
   *    PreCondition:
   *      E' stata generata la richiesta di creazione di una scadenza di un accertamento di sistema
   *    PostCondition:
-  *      Una scadenza per un accertamento di sistema e' stato creata con data scadenza la data di 
+  *      Una scadenza per un accertamento di sistema e' stato creata con data scadenza la data di
   *      registrazione dell'accertamento e importo scadenza uguale all'importo dell'accertamento
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
@@ -1034,12 +1034,12 @@ private Accertamento_scadenzarioBulk creaAccertamento_scadenzario (UserContext u
 
 		// campi chiave
 		accert_scad.setAccertamento( accertamento );
- 
+
 		// altri campi
 		accert_scad.setDt_scadenza_incasso( accertamento.getDt_registrazione() );
 
 		accert_scad.setDs_scadenza( accertamento.getDs_accertamento() );
-		
+
 //		accert_scad.setDt_scadenza_emissione_fattura( accertamento.getDt_registrazione() );
 
 		/*
@@ -1051,11 +1051,11 @@ private Accertamento_scadenzarioBulk creaAccertamento_scadenzario (UserContext u
 		//L'IMPORTO ASS. A DOC CONTABILE VIENE MESSO A 0 PERCHE' E' AGGIORNATO DALLA ReversaleComponent.creaConBulk()
 		accert_scad.setIm_associato_doc_contabile( new BigDecimal(0) );
 //		accert_scad.setIm_associato_doc_contabile( accertamento.getIm_accertamento() );
-		
+
 
 		return accert_scad;
 }
-/** 
+/**
   *  creazione accertamento di sistema
   *    PreCondition:
   *      E' stata generata la richiesta di creazione di un accertamento di sistema di appartenenza di un Cds per completare
@@ -1068,7 +1068,7 @@ private Accertamento_scadenzarioBulk creaAccertamento_scadenzario (UserContext u
   *      e un dettaglio di tale scadenza (metodo creaAccertamento_scad_voce)
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
-  * @param mandatoRiga <code>MandatoAccreditamento_rigaBulk</code> la riga del mandato di accreditamento per la quale e' 
+  * @param mandatoRiga <code>MandatoAccreditamento_rigaBulk</code> la riga del mandato di accreditamento per la quale e'
   *        necessario creare una riga della reversale di trasferimento associata all'accertamento di sistema da creare
   * @param uo <code>Unita_organizzativaBulk</code> l'unità organizzativa beneficiaria del mandato di accreditamento
   * @return <code>AccertamentoBulk</code> L'accertamento di sistema creato
@@ -1107,27 +1107,27 @@ public AccertamentoBulk creaAccertamentoDiSistema (UserContext userContext, Mand
 		accertamento.setCd_elemento_voce( ass.getCd_elemento_voce_coll() );
 		accertamento.setCd_voce( ass.getCd_elemento_voce_coll() );
 		accertamento.getCapitolo().setEsercizio( accertamento.getEsercizio());
-		
+
 
 		Accertamento_scadenzarioBulk accert_scad = creaAccertamento_scadenzario( userContext, accertamento );
 		creaAccertamento_scad_voce( userContext, accert_scad );
-		
-		//aggiorna i saldi e inserisce l'accertamento		
+
+		//aggiorna i saldi e inserisce l'accertamento
 		return (AccertamentoBulk) creaConBulk( userContext, accertamento );
 
 	}
 	catch ( Exception e )
 	{
 		throw handleException( e )	;
-	}	
-	
+	}
+
 
 }
-/** 
+/**
   *  Tutti i controlli superati - contesto non transazionale
   *    PreCondition:
   *      Una richiesta di creazione di un accertamento e' stata generata
-  *      L'accertamento ha superato i controlli eseguiti dal metodo 'verificaAccertamento' 
+  *      L'accertamento ha superato i controlli eseguiti dal metodo 'verificaAccertamento'
   *      L'accertamento non e' stato creato in un contesto transazionale
   *    PostCondition:
   *      L'accertamento viene creato, il suo tipo documento viene impostato in base all'esercizio di competenza
@@ -1136,11 +1136,11 @@ public AccertamentoBulk creaAccertamentoDiSistema (UserContext userContext, Mand
   *  Tutti i controlli superati - contesto transazionale
   *    PreCondition:
   *      Una richiesta di creazione di un accertamento e' stata generata
-  *      L'accertamento ha superato i controlli eseguiti dal metodo 'verificaAccertamento' 
+  *      L'accertamento ha superato i controlli eseguiti dal metodo 'verificaAccertamento'
   *      L'accertamento e' stato creato in un contesto transazionale
   *    PostCondition:
   *      L'accertamento viene creato e il suo tipo documento viene impostato in base all'esercizio di competenza
-  *      ( se esercizio competenza = esercizio di creazione il tipo e' ACR, altrimenti e' ACR_PLUR) 
+  *      ( se esercizio competenza = esercizio di creazione il tipo e' ACR, altrimenti e' ACR_PLUR)
   *  Errore di verifica accertamento
   *    PreCondition:
   *      Una richiesta di creazione di un accertamento e' stata generata e l'accertamento non ha superato i
@@ -1151,7 +1151,7 @@ public AccertamentoBulk creaAccertamentoDiSistema (UserContext userContext, Mand
   * @param uc lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>AccertamentoBulk</code> l'accertamento da creare
   * @return <code>AccertamentoBulk</code> l'accertamento  creato
-  *   
+  *
  */
 
 public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws ComponentException
@@ -1167,23 +1167,23 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	catch (Exception e )
 	{
 		throw handleException( e );
-	}		
+	}
 
 	if ( accertamento.getCd_tipo_documento_cont() == null )
 	{
 		if ( accertamento.getEsercizio().equals( accertamento.getEsercizio_competenza()))
 			accertamento.setCd_tipo_documento_cont( Numerazione_doc_contBulk.TIPO_ACR );
 		else
-			accertamento.setCd_tipo_documento_cont( Numerazione_doc_contBulk.TIPO_ACR_PLUR );		
-	}	
+			accertamento.setCd_tipo_documento_cont( Numerazione_doc_contBulk.TIPO_ACR_PLUR );
+	}
 	// MITODO - sull'obbligazione cè la seguente riga, verificare
-	//generaDettagliScadenzaObbligazione( uc, obbligazione, null );	
+	//generaDettagliScadenzaObbligazione( uc, obbligazione, null );
 	verificaAccertamento( uc, (AccertamentoBulk) bulk );
 
 	bulk = super.creaConBulk( uc, bulk );
-	
+
 	verificaCoperturaContratto( uc, (AccertamentoBulk) bulk );
-	
+
 	if ( !uc.isTransactional() )
 		aggiornaCapitoloSaldoAccertamento( uc, (AccertamentoBulk) bulk, INSERIMENTO );
 
@@ -1191,25 +1191,25 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 		accertamento = validaCreaModificaElementoVoceNext(uc, accertamento);
 	} catch ( Exception e ) {
 		throw handleException( e )	;
-	}	
-	
-	return bulk;	
-	
+	}
+
+	return bulk;
+
 }
 /**
  *
  * Pre-post-conditions:
  *
  * Nome: Linea attività non comune
- * Pre:  L'utente ha selezionato una linea di attività non comune per l'accertamento 
+ * Pre:  L'utente ha selezionato una linea di attività non comune per l'accertamento
  * Post: E' stato generato un dettaglio (Accertamento_scad_voceBulk) per la scadenza con importo pari alla scadenza stessa
  *
  * Nome: Linea attività comune
- * Pre:  L'utente ha selezionato una linea di attività comune per l'accertamento 
+ * Pre:  L'utente ha selezionato una linea di attività comune per l'accertamento
  * Post: Per ogni linea di attività collegata a quella selezionata dall'utente e' stato generato un dettaglio (Accertamento_scad_voceBulk) per la scadenza;
  *       tutti i dettagli hanno importo uguale a 0 tranne il dettaglio che esattamente corrisponde alla linea di attività selezionata
  *       dall'utente che ha importo pari alla scadenza stessa
- 
+
  * @param	aUC	lo UserContext che ha generato la richiesta
  * @param	accertamento l' AccertamentoBulk da cui recuperare lalinea di attività
  * @param	scadenza l'Accertamento_scadenzarioBulk per cui generare i dettagli
@@ -1218,7 +1218,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 private void creaDettagliScadenza(UserContext aUC,AccertamentoBulk accertamento, Accertamento_scadenzarioBulk scadenza) throws ComponentException
 {
 	Accertamento_scad_voceBulk dettaglio;
-	
+
 	try
 	{
 		//	Linea attività non comune
@@ -1227,17 +1227,17 @@ private void creaDettagliScadenza(UserContext aUC,AccertamentoBulk accertamento,
 			//	Creo un solo dettaglio (Accertamento_scad_voceBulk) della scadenza
 			dettaglio = new Accertamento_scad_voceBulk();
 			dettaglio.setToBeCreated();
-			dettaglio.setLinea_attivita(accertamento.getLinea_attivita());			
+			dettaglio.setLinea_attivita(accertamento.getLinea_attivita());
 			dettaglio.setCd_linea_attivita( accertamento.getLinea_attivita().getCd_linea_attivita());
 			dettaglio.setCd_centro_responsabilita( accertamento.getLinea_attivita().getCd_centro_responsabilita());
 			dettaglio.setUser( aUC.getUser());
 			dettaglio.setAccertamento_scadenzario( scadenza );
-			dettaglio.setIm_voce( scadenza.getIm_scadenza());			
+			dettaglio.setIm_voce( scadenza.getIm_scadenza());
 			scadenza.getAccertamento_scad_voceColl().add(  dettaglio );
 
 		}
-		// Linea di attivita' comune		
-    	else 
+		// Linea di attivita' comune
+    	else
     	{
 	    	// Cerco le Linee di Attivita' comuni a quella selezionata
 	  	  	List lineeAttComuni = ((AccertamentoHome)getHome( aUC, AccertamentoBulk.class )).findLineeAttivitaComuni( accertamento.getLinea_attivita(), ((it.cnr.contab.utenze00.bp.CNRUserContext) aUC).getEsercizio() );
@@ -1257,12 +1257,12 @@ private void creaDettagliScadenza(UserContext aUC,AccertamentoBulk accertamento,
 				if ( accertamento.getLinea_attivita().getCd_centro_responsabilita().equals( dettaglio.getCd_centro_responsabilita()))
 					dettaglio.setIm_voce( scadenza.getIm_scadenza());
 				else
-					dettaglio.setIm_voce( new java.math.BigDecimal(0));	
+					dettaglio.setIm_voce( new java.math.BigDecimal(0));
 				scadenza.getAccertamento_scad_voceColl().add(  dettaglio );
-			    dettaglio.ordinaPerCdr(scadenza.getAccertamento_scad_voceColl());				
+			    dettaglio.ordinaPerCdr(scadenza.getAccertamento_scad_voceColl());
 		    }
 	    }
-	} 
+	}
 	catch ( Exception e )
 	{
 		throw handleException( e );
@@ -1272,11 +1272,11 @@ private void creaDettagliScadenza(UserContext aUC,AccertamentoBulk accertamento,
 
 protected void creaDettagliScadenzaLAComuni(UserContext aUC, AccertamentoBulk accertamento, Accertamento_scadenzarioBulk scadenza) throws ComponentException
 {
-	
+
 	//aggiungiamo i dettagli per le linea attività comuni
 	Accertamento_scad_voceBulk dettaglio;
 	it.cnr.contab.config00.latt.bulk.WorkpackageBulk lineaAtt;
-	BulkList listaFinale = dettagliScadenzaLAComuni(aUC, accertamento, scadenza); 
+	BulkList listaFinale = dettagliScadenzaLAComuni(aUC, accertamento, scadenza);
 	for ( Iterator i = listaFinale.iterator(); i.hasNext(); )
 	{
 		lineaAtt = (it.cnr.contab.config00.latt.bulk.WorkpackageBulk) i.next();
@@ -1287,8 +1287,8 @@ protected void creaDettagliScadenzaLAComuni(UserContext aUC, AccertamentoBulk ac
 		dettaglio.setCd_centro_responsabilita( lineaAtt.getCd_centro_responsabilita());
 		dettaglio.setUser( aUC.getUser());
 		dettaglio.setAccertamento_scadenzario( scadenza );
-		dettaglio.setPrc( new java.math.BigDecimal(0));	
-		dettaglio.setIm_voce( new java.math.BigDecimal(0));	
+		dettaglio.setPrc( new java.math.BigDecimal(0));
+		dettaglio.setIm_voce( new java.math.BigDecimal(0));
 		if (!scadenza.getAccertamento_scad_voceColl().containsByPrimaryKey(dettaglio)) {
 			scadenza.getAccertamento_scad_voceColl().add(  dettaglio );
 			dettaglio.ordinaPerCdr(scadenza.getAccertamento_scad_voceColl());
@@ -1304,7 +1304,7 @@ private BulkList dettagliScadenzaLAComuni(UserContext aUC, AccertamentoBulk acce
 		//aggiungiamo i dettagli per le linea attività comuni
 		V_pdg_accertamento_etrBulk lineav;
 		WorkpackageBulk linea;
-		//Collection lineeColl = accertamento.getLineeAttivitaSelezionateColl(); 
+		//Collection lineeColl = accertamento.getLineeAttivitaSelezionateColl();
 		Iterator it = accertamento.getLineeAttivitaSelezionateColl().iterator();
 		while (it.hasNext()) {
 			lineav = (V_pdg_accertamento_etrBulk) it.next();
@@ -1315,7 +1315,7 @@ private BulkList dettagliScadenzaLAComuni(UserContext aUC, AccertamentoBulk acce
 				// Cerco le Linee di Attivita' comuni a quella selezionata
 				List lineeAttComuni = ((AccertamentoHome)getHome( aUC, AccertamentoBulk.class )).findLineeAttivitaComuni( linea, ((it.cnr.contab.utenze00.bp.CNRUserContext) aUC).getEsercizio() );
 				it.cnr.contab.config00.latt.bulk.WorkpackageBulk lineaAtt;
-	
+
 				// per ogni Linea di Attivita' creo	un nuovo dettaglio (Accertamento_scad_voceBulk) della scadenza
 				for ( Iterator i = lineeAttComuni.iterator(); i.hasNext(); )
 				{
@@ -1327,7 +1327,7 @@ private BulkList dettagliScadenzaLAComuni(UserContext aUC, AccertamentoBulk acce
 				}
 			}
 		}
-	} 
+	}
 	catch ( Exception e )
 	{
 		throw handleException( e );
@@ -1339,7 +1339,7 @@ private BulkList dettagliScadenzaLAComuni(UserContext aUC, AccertamentoBulk acce
  *
  * @return Configurazione_cnrComponentSession l'istanza di <code>Configurazione_cnrComponentSession</code> che serve per leggere i parametri di configurazione del CNR
  */
-private Configurazione_cnrComponentSession createConfigurazioneCnrComponentSession() throws ComponentException 
+private Configurazione_cnrComponentSession createConfigurazioneCnrComponentSession() throws ComponentException
 {
 	try
 	{
@@ -1348,14 +1348,14 @@ private Configurazione_cnrComponentSession createConfigurazioneCnrComponentSessi
 	catch ( Exception e )
 	{
 		throw handleException( e )	;
-	}	
+	}
 }
 /**
  * Crea la CRUDComponentSession da usare per effettuare le operazioni di aggiornamento Saldi delle voci del piano
  *
   * @return <code>SaldoComponentSession</code> La component dei Saldi delle voci del piano
  */
-private it.cnr.contab.doccont00.ejb.SaldoComponentSession createSaldoComponentSession() throws ComponentException 
+private it.cnr.contab.doccont00.ejb.SaldoComponentSession createSaldoComponentSession() throws ComponentException
 {
 	try
 	{
@@ -1364,16 +1364,16 @@ private it.cnr.contab.doccont00.ejb.SaldoComponentSession createSaldoComponentSe
 	catch ( Exception e )
 	{
 		throw handleException( e )	;
-	}	
+	}
 }
-/** 
+/**
   *  ricerca associazione fra capitolo di spesa CNR e capitolo di entrata Cds
   *    PreCondition:
   *      E' stata generata la richiesta di ricerca del capitolo di entrata Cds dato un capitolo di spesa CNR
   *    PostCondition:
   *      Viene restituita l'assoziazione fra capitolo spesa CNR e capitolo di entrata Cds che soddisfa le seguenti condizioni:
   *      - capitolo di spesa CNR = capitolo specificato nell'impegno associato alla riga del mandato
-  *      - natura = natura del capitolo di spesa CNR 
+  *      - natura = natura del capitolo di spesa CNR
   *      - cd_cds = tipo del cds beneficiario del mandato di accreditamento
   *  ricerca associazione fra capitolo di spesa CNR e capitolo di entrata Cds - errore
   *    PreCondition:
@@ -1385,7 +1385,7 @@ private it.cnr.contab.doccont00.ejb.SaldoComponentSession createSaldoComponentSe
   *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param mandatoRiga <code>MandatoAccreditamento_rigaBulk</code> la riga del mandato di accreditamento associata all'impegno
-  *        da cui ricavare il capitolo di spesa CNRper la quale e' 
+  *        da cui ricavare il capitolo di spesa CNRper la quale e'
   * @param uo <code>Unita_organizzativaBulk</code> l'unità organizzativa beneficiaria del mandato di accreditamento da
   *        cui ricavare il tipo del Cds da cui dipende
   * @return <code>Ass_ev_evBulk</code> L'associazione identificata oppure null se l'associazione non esiste
@@ -1395,10 +1395,10 @@ private Ass_ev_evBulk findAssociazioneCapSpesaCNRCapEntrataCdS (UserContext user
 {
 	try
 	{
-		Voce_fBulk impegno = (Voce_fBulk) getHome( userContext, Voce_fBulk.class ).findByPrimaryKey( 
-			new Voce_fBulk( mandatoRiga.getImpegno().getCd_voce(), 
-							mandatoRiga.getEsercizio(), 
-							mandatoRiga.getImpegno().getTi_appartenenza(), 
+		Voce_fBulk impegno = (Voce_fBulk) getHome( userContext, Voce_fBulk.class ).findByPrimaryKey(
+			new Voce_fBulk( mandatoRiga.getImpegno().getCd_voce(),
+							mandatoRiga.getEsercizio(),
+							mandatoRiga.getImpegno().getTi_appartenenza(),
 							mandatoRiga.getImpegno().getTi_gestione()));
 		SQLBuilder sql = getHome( userContext, Ass_ev_evBulk.class ).createSQLBuilder();
 		sql.addClause( "AND", "ti_appartenenza", sql.EQUALS, Elemento_voceHome.APPARTENENZA_CNR );
@@ -1406,7 +1406,7 @@ private Ass_ev_evBulk findAssociazioneCapSpesaCNRCapEntrataCdS (UserContext user
 		sql.addClause( "AND", "ti_elemento_voce", sql.EQUALS, Elemento_voceHome.TIPO_TITOLO );
 		sql.addClause( "AND", "ti_appartenenza_coll", sql.EQUALS, Elemento_voceHome.APPARTENENZA_CDS );
 		sql.addClause( "AND", "ti_gestione_coll", sql.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE );
-		sql.addClause( "AND", "ti_elemento_voce_coll", sql.EQUALS, Elemento_voceHome.TIPO_CAPITOLO );		
+		sql.addClause( "AND", "ti_elemento_voce_coll", sql.EQUALS, Elemento_voceHome.TIPO_CAPITOLO );
 		sql.addClause( "AND", "cd_natura", sql.EQUALS, impegno.getCd_natura() );
 		/* tipo cds */
 		sql.addClause( "AND", "cd_cds", sql.EQUALS, uo.getUnita_padre().getCd_tipo_unita() );
@@ -1415,16 +1415,16 @@ private Ass_ev_evBulk findAssociazioneCapSpesaCNRCapEntrataCdS (UserContext user
 		List result = getHome( userContext, Ass_ev_evBulk.class ).fetchAll( sql );
 		if ( result.size() == 0 )
 			throw new ApplicationException( "Non esiste la relazione fra il capitolo di spesa CNR e il capitolo di entrata CDS");
-		return (Ass_ev_evBulk) result.get(0);	
+		return (Ass_ev_evBulk) result.get(0);
 
 	}
 	catch( Exception e )
 	{
 		throw handleException( e );
-	}		
+	}
 
 }
-/** 
+/**
   *  ricerca anagrafica per UO
   *    PreCondition:
   *      E' stata generata la richiesta di ricercare la codifica in anagrafica di una unità organizzativa
@@ -1452,20 +1452,20 @@ private TerzoBulk findTerzoUO (UserContext userContext, String cd_unita_organizz
 		if ( result.size() == 0)
 			throw new ApplicationException("Non e' stato definito in anagrafico il terzo per l'unità organizzativa " + cd_unita_organizzativa);
 		return (TerzoBulk) result.get(0);
-	}	
+	}
 	catch( Exception e )
 	{
 		throw handleException( e );
-	}		
+	}
 
 }
-/** 
+/**
   *  Inizializzazione di scadenze e dettagli scadenza
   *    PreCondition:
   *      La richiesta di inizializzare un accertamento e' stata generata
   *    PostCondition:
   *      Tutti le scadenze dell'accertamento e i relativi dettagli sono state inizializzati
-  *  
+  *
   * @param accertamento <code>AccertamentoBulk</code> l'istanza di AccertamentoBulk o AccertamentoCdsBulk per cui inizializzare scadenze e dettagli
   * @param dettagliScadenze la lista con tutti i dettagli di tutte le scadenze dell'accertamento
   * @param scadenzaDaFattura  <code>Accertamento_scadenzarioBulk</code> nel caso in cui l'inizializzazione e' stata richiesta
@@ -1483,7 +1483,7 @@ private AccertamentoBulk fineInizializzazioneScadenzeEDettagli(AccertamentoBulk 
 {
 	Accertamento_scadenzarioBulk scadenza;
 	Accertamento_scad_voceBulk dettaglio;
-	
+
 	for (ListIterator i = accertamento.getAccertamento_scadenzarioColl().listIterator(); i.hasNext();)
 	{
 		scadenza = (Accertamento_scadenzarioBulk) i.next();
@@ -1494,24 +1494,24 @@ private AccertamentoBulk fineInizializzazioneScadenzeEDettagli(AccertamentoBulk 
 		{
 			i.set(scadenza = scadenzaDaFattura);	// stessa istanza
 
-			// Il doc. amm. ha gia' popolato i dettagli della scadenza e siccome 
+			// Il doc. amm. ha gia' popolato i dettagli della scadenza e siccome
 			// io vado in aggiunta ripulisco la collection
-			scadenza.setAccertamento_scad_voceColl(new BulkList());  
+			scadenza.setAccertamento_scad_voceColl(new BulkList());
 		}
-		*/	
+		*/
 /*
 		for (Iterator j = dettagliScadenze.iterator(); j.hasNext();)
 		{
 			dettaglio = (Accertamento_scad_voceBulk) j.next();
 			if(dettaglio.getPg_accertamento_scadenzario().longValue() == scadenza.getPg_accertamento_scadenzario().longValue())
 			{
-				scadenza.getAccertamento_scad_voceColl().add(  dettaglio );				
-				dettaglio.setLinea_attivita(accertamento.getLinea_attivita());			
+				scadenza.getAccertamento_scad_voceColl().add(  dettaglio );
+				dettaglio.setLinea_attivita(accertamento.getLinea_attivita());
 				dettaglio.setAccertamento_scadenzario( scadenza );
-			}	
-		}	
+			}
+		}
 	}
-	
+
 	return accertamento;
 }
 */
@@ -1544,19 +1544,19 @@ public AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,Acce
 	Accertamento_scad_voceBulk dettaglio;
 
 	// CREAZIONE / MODIFICA scadenza
-	if ( scadenzaSelezionata != null ) 
+	if ( scadenzaSelezionata != null )
 	{
-		// Modifico i dettagli della scadenza appena creata		
+		// Modifico i dettagli della scadenza appena creata
 		if(scadenzaSelezionata.getAccertamento_scad_voceColl().size() > 0)
 		{
 			modificoDettagliScadenza(aUC, accertamento, scadenzaSelezionata);
 
 		}
-		// Creo i dettagli della scadenza appena creata	
+		// Creo i dettagli della scadenza appena creata
 		else
-		{		
+		{
 			creaDettagliScadenza( aUC, accertamento, scadenzaSelezionata );
-		}	
+		}
 	}
 	// Cambio selezione Linea di Attivita'
 	else
@@ -1565,7 +1565,7 @@ public AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,Acce
 		for ( Iterator scadIterator = accertamento.getAccertamento_scadenzarioColl().iterator(); scadIterator.hasNext(); )
 		{
 			scadenza = (Accertamento_scadenzarioBulk) scadIterator.next();
-			
+
 			// Cancello i dettagli della scadenza
 			cancellaDettagliScadenze( aUC, accertamento, scadenza );
 
@@ -1573,7 +1573,7 @@ public AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,Acce
 			creaDettagliScadenza( aUC, accertamento, scadenza );
 		}
 	}
-	
+
 	return accertamento;
 }
 */
@@ -1592,7 +1592,7 @@ private Timestamp getDataOdierna(it.cnr.jada.UserContext userContext) throws Com
 		throw handleException(ex);
 	}
 }
-/** 
+/**
   *  inizializzazione Accertamento di Sistema per modifica
   *    PreCondition:
   *      E' stata generata la richiesta di modificare un accertamento di sistema ed e' pertanto
@@ -1606,52 +1606,52 @@ private Timestamp getDataOdierna(it.cnr.jada.UserContext userContext) throws Com
  */
 private OggettoBulk inizializzaAccertamentoCdsPerModifica (UserContext aUC,OggettoBulk bulk) throws ComponentException
 {
-	try 
+	try
 	{
 		AccertamentoBulk accertamento = (AccertamentoBulk) super.inizializzaBulkPerModifica( aUC, bulk);
 		AccertamentoHome accertHome = (AccertamentoHome) getHome( aUC, accertamento.getClass());
 		Accertamento_scad_voceHome dettaglioHome = (Accertamento_scad_voceHome) getHome( aUC, Accertamento_scad_voceBulk.class );
 		// Carico i Cdr con Codice Unita' Organizzativa uguale al Codice Unita Organizzativa dell'accertamento
 //		accertamento.getCdrColl().addAll( accertHome.findCdr( accertamento ));
-		
+
 		// Carico la scadenza
 		accertamento.setAccertamento_scadenzarioColl( new BulkList( accertHome.findAccertamento_scadenzarioList( accertamento ) ));
 		for (Iterator i = accertamento.getAccertamento_scadenzarioColl().iterator(); i.hasNext();)
 		{
 			Accertamento_scadenzarioBulk scadenza = (Accertamento_scadenzarioBulk) i.next();
-			
+
 			scadenza.setAccertamento_scad_voceColl(new BulkList( dettaglioHome.findDettagli_scadenze( accertamento )));
-			
+
 			scadenza.setStatus( Accertamento_scadenzarioBulk.STATUS_CONFIRMED);
 			scadenza.setAccertamento(accertamento);
-//			inizializzaScadenzaConDocumenti(aUC, scadenza);			
+//			inizializzaScadenzaConDocumenti(aUC, scadenza);
 		}
-		
+
 		// Lettura dei dettagli delle singole scadenze
-				
+
 		BulkList dettagliScadenze = new BulkList();
 		dettagliScadenze =  new BulkList( dettaglioHome.findDettagli_scadenze( accertamento ));
-		String cdLA = ((Accertamento_scad_voceBulk)dettagliScadenze.get(0)).getCd_linea_attivita();		
+		String cdLA = ((Accertamento_scad_voceBulk)dettagliScadenze.get(0)).getCd_linea_attivita();
 
-		// Inizializzazione delle lista di tutte le linee di attivita eleggibili e di quella selezionata 
+		// Inizializzazione delle lista di tutte le linee di attivita eleggibili e di quella selezionata
 		// per l'accertamento
 //		accertamento = (AccertamentoOrdBulk) inizializzoLineeAttivita(aUC, accertamento, cdLA);
 
 		// MITODO - verificare se serve
 		// Inizializzo le scadenze con i relativi dettagli
-		// Inizializzo i dettagli con le relative scadenze e la linea di attivita		
+		// Inizializzo i dettagli con le relative scadenze e la linea di attivita
 		//accertamento =  fineInizializzazioneScadenzeEDettagli(accertamento, dettagliScadenze, null);
 
 //		accertamento.setCd_terzo_iniziale( accertamento.getCd_terzo());
-		
+
 		return accertamento;
 	}
 	catch( Exception e )
 	{
 		throw handleException( e );
-	}		
+	}
 }
-/** 
+/**
   *  Esercizio non aperto
   *    PreCondition:
   *      L'esercizio di scrivania e' in uno stato diverso da APERTO
@@ -1677,20 +1677,20 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 	{
 		AccertamentoHome accertamentoHome = (AccertamentoHome) getHome( aUC, accertamento.getClass());
 
-		// Inizializzo il Cd_unita_organizzativa/cd_cds con l'Unita Organizzativa Ente e 
+		// Inizializzo il Cd_unita_organizzativa/cd_cds con l'Unita Organizzativa Ente e
 		Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome( aUC, Unita_organizzativa_enteBulk.class ).findAll().get(0);
-		
+
 		if (!accertamento.isAccertamentoResiduo())
 			if ( ((CNRUserContext)aUC).getCd_unita_organizzativa().equals ( uoEnte.getCd_unita_organizzativa() ))
 				throw new ApplicationException( "Funzione non consentita per Unità Organizzativa " + uoEnte.getCd_unita_organizzativa());
-		
+
 		accertamento.setUnita_organizzativa(uoEnte);
 		accertamento.setCd_unita_organizzativa(uoEnte.getCd_unita_organizzativa());
 		//accertamento.setCd_cds( uoEnte.getCd_unita_padre());
 		accertamento.setCds( (CdsBulk) getHome( aUC, CdsBulk.class).findByPrimaryKey( accertamento.getUnita_organizzativa().getUnita_padre() ));
 
 		Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk)getHome( aUC, Unita_organizzativaBulk.class ).findByPrimaryKey( new Unita_organizzativaBulk( ((CNRUserContext)aUC).getCd_unita_organizzativa()));
-		accertamento.setCd_uo_origine( uoScrivania.getCd_unita_organizzativa());		
+		accertamento.setCd_uo_origine( uoScrivania.getCd_unita_organizzativa());
 		accertamento.setCd_cds_origine( uoScrivania.getCd_unita_padre());
 
 		// Imposto la data di registrazione con time zero
@@ -1707,8 +1707,8 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 
 		// Verifico che l'esercizio del Cds sia stato aperto
 		if (!accertamentoHome.verificaStatoEsercizio(accertamento))
-			throw handleException( new ApplicationException( "Non e' possibile creare accertamenti: esercizio del Cds non ancora aperto!") );		
-			
+			throw handleException( new ApplicationException( "Non e' possibile creare accertamenti: esercizio del Cds non ancora aperto!") );
+
 
 		// Carico i Cdr con Codice Unita' Organizzativa uguale al Cd_uo_origine
 		// dell'accertamento
@@ -1718,10 +1718,10 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 	{
 		throw handleException(e);
 	}
-	
+
 	return accertamento;
 }
-/** 
+/**
   *  Inizializzazione di un accertamento
   *    PreCondition:
   *      La richiesta di inizializzare un accertamento e' stata generata
@@ -1734,7 +1734,7 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
   *      La richiesta di inizializzare un accertamento di sistema e' stata generata
   *    PostCondition:
   *      L'accertamento e' stato inizializzato (metodo inizializzaAccertamentoCdsPerModifica)
-  *  
+  *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> l'istanza di AccertamentoBulk o AccertamentoCdsBulk da inizializzare
   * @return <code>OggettoBulk</code> l'istanza di AccertamentoBulk o AccertamentoCdsBulk inizializzata
@@ -1743,7 +1743,7 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
 
 public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk) throws ComponentException
 {
-	try 
+	try
 	{
 		if ( bulk instanceof AccertamentoCdsBulk )
 			return inizializzaAccertamentoCdsPerModifica( aUC, bulk );
@@ -1755,7 +1755,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 
 		// Carico i Cdr con Codice Unita' Organizzativa uguale al Codice Unita Organizzativa dell'accertamento
 		accertamento.getCdrColl().addAll( accertHome.findCdr( accertamento ));
-		
+
 		// Carico le scadenze
 		accertamento.setAccertamento_scadenzarioColl( new BulkList( accertHome.findAccertamento_scadenzarioList( accertamento ) ));
 		for (Iterator i = accertamento.getAccertamento_scadenzarioColl().iterator(); i.hasNext();)
@@ -1764,11 +1764,11 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 			initializeKeysAndOptionsInto( aUC, scadenza );
 			scadenza.setStatus( Accertamento_scadenzarioBulk.STATUS_CONFIRMED);
 			scadenza.setAccertamento(accertamento);
-			inizializzaScadenzaConDocumenti(aUC, scadenza);			
+			inizializzaScadenzaConDocumenti(aUC, scadenza);
 		}
-		
+
 		// Lettura dei dettagli delle singole scadenze
-		Accertamento_scad_voceHome dettaglioHome = (Accertamento_scad_voceHome) getHome( aUC, Accertamento_scad_voceBulk.class );		
+		Accertamento_scad_voceHome dettaglioHome = (Accertamento_scad_voceHome) getHome( aUC, Accertamento_scad_voceBulk.class );
 		BulkList dettagliScadenze = new BulkList();
 		dettagliScadenze =  new BulkList( dettaglioHome.findDettagli_scadenze( accertamento ));
 		String cdLA = ((Accertamento_scad_voceBulk)dettagliScadenze.get(0)).getCd_linea_attivita();
@@ -1778,12 +1778,12 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 		// carica lo scadenzario e i suoi dettagli
 		AccertamentoHome accertHome = (AccertamentoHome) getHome( aUC, accertamento.getClass());
 		Accertamento_scadenzarioHome osHome = (Accertamento_scadenzarioHome) getHome( aUC, Accertamento_scadenzarioBulk.class );
-		
+
 		accertamento.setPdgVincoliColl( new BulkList( accertHome.findPdgVincoloList( accertamento ) ));
 		accertamento.setAccertamentoVincoliPerentiColl( new BulkList( accertHome.findAccertamentoVincoloPerenteList( accertamento ) ));
-		if (accertamento instanceof AccertamentoResiduoBulk) 
+		if (accertamento instanceof AccertamentoResiduoBulk)
 			((AccertamentoResiduoBulk)bulk).setIm_quota_inesigibile(((AccertamentoResiduoBulk)bulk).getIm_quota_inesigibile_ripartita());
-		
+
 		accertamento.setAccertamento_scadenzarioColl( new BulkList( accertHome.findAccertamento_scadenzarioList( accertamento ) ));
 		for ( Iterator i = accertamento.getAccertamento_scadenzarioColl().iterator(); i.hasNext(); )
 		{
@@ -1792,7 +1792,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 			os.setAccertamento( accertamento );
 			os.setStatus( os.STATUS_CONFIRMED);
 			os.setAccertamento_scad_voceColl( new BulkList( osHome.findAccertamento_scad_voceList(aUC, os )));
-					
+
 			//per ogni scadenza carico l'eventuale doc.attivo
 			V_doc_attivo_accertamentoBulk docPassivo = osHome.findDoc_attivo( os );
 			if ( docPassivo != null)
@@ -1800,8 +1800,8 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 				os.setEsercizio_doc_attivo( docPassivo.getEsercizio());
 				os.setPg_doc_attivo( docPassivo.getPg_documento_amm());
 				os.setCd_tipo_documento_amm(docPassivo.getCd_tipo_documento_amm());
-			}	
-		
+			}
+
 			//per ogni scadenza carico l'eventuale reversale
 			Reversale_rigaBulk reversale = osHome.findReversale( os );
 			if ( reversale != null )
@@ -1811,7 +1811,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 				if (accertamento.getIm_reversali()==null)
 					accertamento.setIm_reversali(new BigDecimal(0));
 				accertamento.setIm_reversali( accertamento.getIm_reversali().add( reversale.getIm_reversale_riga()));
-			}				
+			}
 			// per ogni dettaglio imposto la percentuale
 			for ( Iterator j = os.getAccertamento_scad_voceColl().iterator(); j.hasNext(); )
 			{
@@ -1821,21 +1821,21 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 					osv.setPrc( (osv.getIm_voce().multiply( new BigDecimal(100)).divide( os.getIm_scadenza(), 2, BigDecimal.ROUND_HALF_UP)));
 				else
 					osv.setPrc( new BigDecimal(0))	;
-			}	
-		}	
+			}
+		}
 
 		// carica i capitoli di spesa del CDS
 		accertamento = listaCapitoliPerCdsVoce( aUC, accertamento );
 		accertamento.refreshCapitoliDiEntrataCdsSelezionatiColl();
 
 		// MITODO - verificare se serve
-		// Inizializzazione delle lista di tutte le linee di attivita eleggibili e di quella selezionata 
+		// Inizializzazione delle lista di tutte le linee di attivita eleggibili e di quella selezionata
 		// per l'accertamento
 		//accertamento = (AccertamentoBulk) inizializzoLineeAttivita(aUC, accertamento, cdLA, cdCdr);
 
 		// MITODO - verificare se serve
 		// Inizializzo le scadenze con i relativi dettagli
-		// Inizializzo i dettagli con le relative scadenze e la linea di attivita		
+		// Inizializzo i dettagli con le relative scadenze e la linea di attivita
 		//accertamento = (AccertamentoBulk) fineInizializzazioneScadenzeEDettagli(accertamento, dettagliScadenze, null);
 
 
@@ -1857,8 +1857,8 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 		accertamento.setCd_terzo_iniziale( accertamento.getCd_terzo());
 
 		// MITODO serve questa ??? sembra che serva per calcolare la massa spendibile legata all'obbligazione, ha senso per l'accertamento???
-		//accertamento = calcolaDispCassaPerCds( aUC, accertamento );	
-		
+		//accertamento = calcolaDispCassaPerCds( aUC, accertamento );
+
 		// SETTO IL FLAG CHE SERVE PER CAPIRE SE OCCORRE RICHIEDERE L'INSERIMENTO DELLA VOCE NUOVA DA UTILIZZARE PER IL RIBALTAMENTO
 		// LA VOCE VIENE RICHIESTA SOLO SE NON PRESENTE L'ASSOCIAZIONE NELLA TABELLA ASS_EVOLD_EVNEWBULK
 		accertamento.setEnableVoceNext(!existAssElementoVoceNew(aUC,(AccertamentoBulk)accertamento));
@@ -1868,9 +1868,9 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 	catch( Exception e )
 	{
 		throw handleException( e );
-	}		
+	}
 }
-/** 
+/**
   *  Inizializzazione di un accertamento per ricerca - cds non ente
   *    PreCondition:
   *      La richiesta di inizializzare un accertamento per ricerca e' stata generata
@@ -1885,7 +1885,7 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
   *    PostCondition:
   *      L'accertamento e' stato inizializzato e il cds e l'uo di origine non vengono valorizzati
   *
-  *  
+  *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> l'istanza di AccertamentoBulk da inizializzare
   * @return <code>OggettoBulk</code> l'istanza di AccertamentoBulk inizializzata
@@ -1894,26 +1894,26 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk bulk)
 
 public OggettoBulk inizializzaBulkPerRicerca (UserContext userContext,OggettoBulk bulk) throws ComponentException
 {
-	try 
+	try
 	{
 		AccertamentoBulk accertamento = (AccertamentoBulk) bulk;
-		Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class ).findAll().get(0); 
+		Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class ).findAll().get(0);
 		//accertamento.setCds( (CdsBulk) getHome( userContext, CdsBulk.class).findByPrimaryKey( new CdsBulk(((CNRUserContext) userContext).getCd_cds())));
 		//imposto cds e uo origine
 		if ( !uoEnte.getCd_unita_organizzativa().equals(((CNRUserContext)userContext).getCd_unita_organizzativa()))
 		{
 			Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk)getHome( userContext, Unita_organizzativaBulk.class ).findByPrimaryKey( new Unita_organizzativaBulk( ((CNRUserContext)userContext).getCd_unita_organizzativa()));
-			accertamento.setCd_uo_origine( uoScrivania.getCd_unita_organizzativa());		
+			accertamento.setCd_uo_origine( uoScrivania.getCd_unita_organizzativa());
 			accertamento.setCd_cds_origine( uoScrivania.getCd_unita_padre());
-		}	
+		}
 		return accertamento;
 	}
 	catch( Exception e )
 	{
 		throw handleException( e );
-	}		
+	}
 }
-/** 
+/**
   *  Inizializzazione di un accertamento per ricerca - cds non ente
   *    PreCondition:
   *      La richiesta di inizializzare un accertamento per ricerca e' stata generata
@@ -1928,7 +1928,7 @@ public OggettoBulk inizializzaBulkPerRicerca (UserContext userContext,OggettoBul
   *    PostCondition:
   *      L'accertamento e' stato inizializzato e il cds e l'uo di origine non vengono valorizzati
   *
-  *  
+  *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>OggettoBulk</code> l'istanza di AccertamentoBulk da inizializzare
   * @return <code>OggettoBulk</code> l'istanza di AccertamentoBulk inizializzata
@@ -1947,7 +1947,7 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_registro_a
 	stampa.setEsercizio(CNRUserContext.getEsercizio(userContext));
 	stampa.setCd_cds(CNRUserContext.getCd_cds(userContext));
 	//stampa.setUoForPrint(new Unita_organizzativaBulk());
-    
+
 	stampa.setDataInizio(DateServices.getFirstDayOfYear(CNRUserContext.getEsercizio(userContext).intValue()));
 	stampa.setDataFine(getDataOdierna(userContext));
 	stampa.setPgInizio(new Long(0));
@@ -1962,7 +1962,7 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_registro_a
 		String cd_uo_scrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext);
 		CdsHome cds_home = (CdsHome)getHome(userContext, CdsBulk.class);
 		CdsBulk	cds_scrivania = (CdsBulk)cds_home.findByPrimaryKey(new CdsBulk(cd_cds_scrivania));
-		
+
 		if (cds_scrivania.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_ENTE)){
 			stampa.setCds_origine(new CdsBulk());
 			stampa.setIsCdsForPrintEnabled(true);
@@ -1985,7 +1985,7 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_registro_a
 
 		}
 
-			
+
 	} catch (it.cnr.jada.persistency.PersistencyException pe){
 		throw new ComponentException(pe);
 	}
@@ -2006,20 +2006,20 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_registro_a
 	stampa.setPgInizio(new Integer(0));
 	stampa.setPgFine(new Integer(999999999));
 
-	try{		
+	try{
 		String cd_uo_scrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext);
 		Unita_organizzativaHome uoHome = (Unita_organizzativaHome)getHome(userContext, Unita_organizzativaBulk.class);
 		Unita_organizzativaBulk uo = (Unita_organizzativaBulk)uoHome.findByPrimaryKey(new Unita_organizzativaBulk(cd_uo_scrivania));
 
-		String cd_cds_scrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext);			
+		String cd_cds_scrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cds(userContext);
 		CdsHome cds_home = (CdsHome)getHome(userContext, CdsBulk.class);
 		CdsBulk	cds_scrivania = (CdsBulk)cds_home.findByPrimaryKey(new CdsBulk(cd_cds_scrivania));
-		
-		if (stampa.isStampa_cnr()){				
+
+		if (stampa.isStampa_cnr()){
 			if (cds_scrivania.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_ENTE)){
 				stampa.setCdsOrigineForPrint(new CdsBulk());
 				stampa.setIsCdsForPrintEnabled(true);
-				
+
 				//stampa.setUoForPrint(new Unita_organizzativaBulk());
 				//stampa.setIsUOForPrintEnabled(true);
 			} else {
@@ -2027,9 +2027,9 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_registro_a
 				stampa.setIsCdsForPrintEnabled(false);
 			}
 		} else {
-			stampa.setCdsOrigineForPrint(cds_scrivania);			
+			stampa.setCdsOrigineForPrint(cds_scrivania);
 		}
-	
+
 		if (!uo.isUoCds()){
 			stampa.setUoForPrint(uo);
 			stampa.setIsUOForPrintEnabled(false);
@@ -2037,7 +2037,7 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_registro_a
 			stampa.setUoForPrint(new Unita_organizzativaBulk());
 			stampa.setIsUOForPrintEnabled(true);
 		}
-			
+
 	} catch (it.cnr.jada.persistency.PersistencyException pe){
 		throw new ComponentException(pe);
 	}
@@ -2064,11 +2064,11 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_scadenzari
 		String cd_uo_scrivania = it.cnr.contab.utenze00.bp.CNRUserContext.getCd_unita_organizzativa(userContext);
 		CdsHome cds_home = (CdsHome)getHome(userContext, CdsBulk.class);
 		CdsBulk	cds_scrivania = (CdsBulk)cds_home.findByPrimaryKey(new CdsBulk(cd_cds_scrivania));
-		
+
 		if (cds_scrivania.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_ENTE)){
 			stampa.setCdsOrigineForPrint(new CdsBulk());
 			stampa.setIsCdsForPrintEnabled(true);
-			
+
 			stampa.setUoForPrint(new Unita_organizzativaBulk());
 			stampa.setIsUOForPrintEnabled(true);
 		} else {
@@ -2088,7 +2088,7 @@ private void inizializzaBulkPerStampa(UserContext userContext, Stampa_scadenzari
 
 		}
 
-			
+
 	} catch (it.cnr.jada.persistency.PersistencyException pe){
 		throw new ComponentException(pe);
 	}
@@ -2111,7 +2111,7 @@ public it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerStampa(UserContext userCon
 		throw new ComponentException(pe);
 	}
 }
-/** 
+/**
   *  Inizializzazione di una scadenza
   *    PreCondition:
   *      La richiesta di inzializzazione di una scadenza e' stata generata
@@ -2123,7 +2123,7 @@ public it.cnr.jada.bulk.OggettoBulk inizializzaBulkPerStampa(UserContext userCon
   * @param scadenzaAccertamento <code>Accertamento_scadenzarioBulk</code> da inizializzare
   *
  */
- 
+
 
 private void inizializzaScadenzaConDocumenti(UserContext aUC,OggettoBulk scadenzaAccertamento) throws ComponentException
 {
@@ -2139,33 +2139,33 @@ private void inizializzaScadenzaConDocumenti(UserContext aUC,OggettoBulk scadenz
 			scadenza.setCd_tipo_documento_amm(docAttivo.getCd_tipo_documento_amm());
 			scadenza.setEsercizio_doc_attivo( docAttivo.getEsercizio());
 			scadenza.setPg_doc_attivo( docAttivo.getPg_documento_amm());
-		}	
+		}
 
 		// Per ogni scadenza carico l'eventuale Reversale
 
 		Reversale_rigaBulk reversale = scadenzaHome.findReversale( scadenza );
 		if ( reversale != null )
 		{
-			scadenza.setCd_tipo_documento_amm(reversale.getCd_tipo_documento_amm());			
+			scadenza.setCd_tipo_documento_amm(reversale.getCd_tipo_documento_amm());
 			scadenza.setEsercizio_reversale( reversale.getEsercizio());
 			scadenza.setPg_reversale( reversale.getPg_reversale());
 //			scadenza.getAccertamento().setIm_reversali( scadenza.getAccertamento().getIm_reversali().add( reversale.getIm_reversale_riga()));
-		}				
-		
-		
+		}
+
+
 		return;
 	}
 	catch( Exception e )
 	{
 		throw handleException( e );
-	}		
+	}
 }
-/** 
+/**
   *  Inizializzazione linee di attività
   *    PreCondition:
   *      La richiesta di inizializzare un accertamento e' stata generata
   *    PostCondition:
-  *      Le linee di attività eleggibili per l'accertamento sono state caricate (metodo 'listaLineeAttivitaPerCapitolo') 
+  *      Le linee di attività eleggibili per l'accertamento sono state caricate (metodo 'listaLineeAttivitaPerCapitolo')
   *      e la linea di attività che era stata selezionata per l'accertamento e' stata caricata
   *
   *  Inizializzazione linee di attività - errore
@@ -2174,11 +2174,11 @@ private void inizializzaScadenzaConDocumenti(UserContext aUC,OggettoBulk scadenz
   *      precedentemente selezionata per l'accertamento non e' più valida
   *    PostCondition:
   *      Una segnalazione di errore viene ritornata
-  *  
+  *
   * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param accertamento l'istanza di AccertamentoBulk da inizializzare
   * @param cdLA il codice della linea di attività selezionata per l'accertamento
-  * @param cdCdr il codice del Cdr della la linea di attività selezionata per l'accertamento  
+  * @param cdCdr il codice del Cdr della la linea di attività selezionata per l'accertamento
   * @return <code>AccertamentoBulk</code> con le linee di attività caricate
   *
  */
@@ -2202,7 +2202,7 @@ private AccertamentoBulk inizializzoLineeAttivita(UserContext aUC, AccertamentoB
 		it.cnr.contab.config00.latt.bulk.WorkpackageBulk lattSistema = new it.cnr.contab.config00.latt.bulk.WorkpackageBulk( config.getVal01(), config.getVal02());
 		lattSistema = (it.cnr.contab.config00.latt.bulk.WorkpackageBulk ) getHome(  aUC, lattSistema.getClass() ).findByPrimaryKey( lattSistema );
 		if ( lattSistema == null )
-			throw new ApplicationException("Attenzione! Il GAE di sistema Cdr: " + lattSistema.getCd_centro_responsabilita() + " Codice: " + lattSistema.getCd_linea_attivita() + " non e' stato definito");		
+			throw new ApplicationException("Attenzione! Il GAE di sistema Cdr: " + lattSistema.getCd_centro_responsabilita() + " Codice: " + lattSistema.getCd_linea_attivita() + " non e' stato definito");
 
 		if ( cdLA.equals( lattSistema.getCd_linea_attivita() ) &&
 			  cdCdr.equals( lattSistema.getCd_centro_responsabilita()))
@@ -2210,33 +2210,33 @@ private AccertamentoBulk inizializzoLineeAttivita(UserContext aUC, AccertamentoB
 			accertamento.setLinea_attivita( lattSistema );
 			accertamento.getLinee_attivitaColl().add( lattSistema );
 			return accertamento;
-		}	
+		}
 
 
 		// Inizializzo la variabile Linea_attivita dell'accertamento
 		WorkpackageBulk lineaAtt;
 		boolean found=true;
 		int c=0;
-		while (found && (c < accertamento.getLinee_attivitaColl().size())) 
+		while (found && (c < accertamento.getLinee_attivitaColl().size()))
 		{
 			lineaAtt = (WorkpackageBulk)accertamento.getLinee_attivitaColl().get(c);
 			if(lineaAtt.getCd_linea_attivita().equals(cdLA))
 			{
 				accertamento.setLinea_attivita(lineaAtt);
 				found = false;
-			}	
+			}
 			c++;
 		}
-		
+
 		if((accertamento.getLinea_attivita() == null) || (accertamento.getLinea_attivita().getCd_linea_attivita() == null))
 			throw handleException( new ApplicationException( "Il GAE '" + cdLA + "' associato all'accertamento non esiste piu'!"));
-			
-		return accertamento;		
+
+		return accertamento;
 	}
 	catch ( Exception e )
 	{
 		throw handleException( e );
-	}	
+	}
 }
 */
 /* normale
@@ -2264,8 +2264,8 @@ public Vector listaCodiciNaturaPerCapitolo (UserContext aUC,AccertamentoBulk acc
 	catch ( Exception e )
 	{
 		throw handleException( e );
-	}	
-		
+	}
+
 }
 /* normale
  *		PreCondition :
@@ -2294,10 +2294,10 @@ public Vector listaLineeAttivitaPerCapitolo (UserContext aUC,AccertamentoBulk ac
 	catch ( Exception e )
 	{
 		throw handleException( e );
-	}	
-		
+	}
+
 }
-/** 
+/**
   *  Lock scadenza
   *		PreCondition:
   *			E' stato richiesto l'inserimento di un lock sulla scadenza di un accertamento
@@ -2319,13 +2319,13 @@ public void lockScadenza( UserContext userContext,IScadenzaDocumentoContabileBul
 	catch ( Exception e )
 	{
 		throw handleException( e )	;
-	}	
-}	
-/** 
+	}
+}
+/**
   *  Tutti i controlli superati - contesto non transazionale
   *    PreCondition:
   *      Una richiesta di modifica di un accertamento e' stata generata
-  *      L'accertamento ha superato i controlli eseguiti dal metodo 'verificaAccertamento' 
+  *      L'accertamento ha superato i controlli eseguiti dal metodo 'verificaAccertamento'
   *      L'accertamento non e' stato creato in un contesto transazionale
   *    PostCondition:
   *      L'accertamento viene modificato
@@ -2335,7 +2335,7 @@ public void lockScadenza( UserContext userContext,IScadenzaDocumentoContabileBul
   *  Tutti i controlli superati - contesto transazionale
   *    PreCondition:
   *      Una richiesta di modifica di un accertamento e' stata generata
-  *      L'accertamento ha superato i controlli eseguiti dal metodo 'verificaAccertamento' 
+  *      L'accertamento ha superato i controlli eseguiti dal metodo 'verificaAccertamento'
   *      L'accertamento e' stato modifica in un contesto transazionale
   *    PostCondition:
   *      L'accertamento viene modificato
@@ -2349,7 +2349,7 @@ public void lockScadenza( UserContext userContext,IScadenzaDocumentoContabileBul
   * @param uc lo <code>UserContext</code> che ha generato la richiesta
   * @param bulk <code>AccertamentoBulk</code> l'accertamento da modificare
   * @return <code>AccertamentoBulk</code> l'accertamento  modificato
-  *   
+  *
  */
 public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws ComponentException
 {
@@ -2359,7 +2359,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 /*
  * Raffaele Pagano: controllo eliminato a seguito di nuova gestione residui che prevede la non possibilità
  * 					di modificare sia l'importo che la voce dei residui
- */ 
+ */
 /*	try
 	{
 		//	segnalo impossibilità di modificare un residuo se l'esercizio precedente è ancora aperto
@@ -2369,17 +2369,17 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 	catch (Exception e )
 	{
 		throw handleException( e );
-	}		
+	}
 */
 
 	bulk =  super.modificaConBulk( aUC, bulk );
-	
-	verificaCoperturaContratto( aUC, (AccertamentoBulk) bulk );	
+
+	verificaCoperturaContratto( aUC, (AccertamentoBulk) bulk );
    if ( !aUC.isTransactional() )
    {
   		aggiornaCapitoloSaldoAccertamento( aUC, (AccertamentoBulk) bulk, MODIFICA );
 		aggiornaStatoCOAN_COGEDocAmm( aUC, (AccertamentoBulk) bulk );
-   }		
+   }
    AccertamentoBulk accertamento = (AccertamentoBulk) bulk;
 	if (accertamento.isAccertamentoResiduo()) {
 		if (((AccertamentoResiduoBulk)accertamento).isSaldiDaAggiornare()) {
@@ -2409,19 +2409,19 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 	catch (Exception e )
 	{
 		throw handleException( e );
-	}		
+	}
 
-	return bulk;		
+	return bulk;
 
 }
 /*
  * Modifica l'importo di una scadenza e aggiunge la differenza alla scadenza successiva oppure modifica l'importo di una
  * scadenza e l'importo della testata dell'accertamento
- *	
+ *
  * Pre-post-conditions:
  *
- * Nome: Modifica Scadenza 
- * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza 
+ * Nome: Modifica Scadenza
+ * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza
  * Post: L'importo della scadenza e della testata dell'accertamento sono stati modificati dal metodo 'modificaScadenzaNonInAutomatico'
  *
  * Nome: Modifica Scadenza successiva
@@ -2442,9 +2442,9 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
  * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e (im_scadenza_successisva -
  *       nuovo_im_scadenza + im_scadenza) e' minore di 0
  * Post: Viene generata un'ApplicationException per segnalare l'impossibilità di aggiornamento della scadenza
- * 
+ *
  * Nome: Scadenza successiva -  Errore doc amministrativi associati
- * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e la scadenza successiva ha 
+ * Pre:  E' stata generata la richiesta di modifica dell'importo di una scadenza e la scadenza successiva ha
  *       già dei documenti amministrativi associati
  * Post: Viene generata un'ApplicationException per segnalare l'impossibilità di aggiornamento della scadenza
  *
@@ -2457,23 +2457,25 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
  */
 
 
-public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext userContext, IScadenzaDocumentoContabileBulk scad, java.math.BigDecimal nuovoImporto, boolean modificaScadenzaSuccessiva) throws ComponentException 
+public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext userContext, IScadenzaDocumentoContabileBulk scad, java.math.BigDecimal nuovoImporto, boolean modificaScadenzaSuccessiva) throws ComponentException
 {
 	Accertamento_scadenzarioBulk scadenzaDaFattura = (Accertamento_scadenzarioBulk)scad;
 	if (  nuovoImporto.compareTo( scad.getIm_scadenza()) == 0  )
-		throw handleException( new ApplicationException( "Aggiornamento in automatico non necessario!" ));			
+		throw handleException( new ApplicationException( "Aggiornamento in automatico non necessario!" ));
 	if (  nuovoImporto.compareTo( new BigDecimal(0)) < 0  )
-		throw handleException( new ApplicationException( "L'importo della scadenza deve essere maggiore di 0" ));	
+		throw handleException( new ApplicationException( "L'importo della scadenza deve essere maggiore di 0" ));
 	try
 	{
-		// Inizializzo l'accertamento con la linea di attivita', le sue scadenze
-		// e i suoi dettagli
-//		AccertamentoBulk accertamento = (AccertamentoBulk) inizializzaBulkPerModificaDaFatturaAttiva (userContext, scadenzaDaFattura);
-		AccertamentoBulk accertamento = (AccertamentoBulk) scadenzaDaFattura.getAccertamento();
+		// Inizializzo l'accertamento con la linea di attivita', le sue scadenze e i suoi dettagli
+		AccertamentoBulk accertamento = (AccertamentoBulk) inizializzaBulkPerModifica(userContext, scadenzaDaFattura.getAccertamento());
+        scadenzaDaFattura = accertamento.getAccertamento_scadenzarioColl().stream()
+                    .filter(accertamentoScadenzario -> accertamentoScadenzario.equalsByPrimaryKey(scad))
+                    .findAny()
+                    .orElse(scadenzaDaFattura);
 
 		if ( accertamento.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_ACR_RES) &&
 				!modificaScadenzaSuccessiva)
-			throw handleException( new ApplicationException( "Non è consentita la modifica dell'importo di testata di un accertamento residuo." ));					
+			throw handleException( new ApplicationException( "Non è consentita la modifica dell'importo di testata di un accertamento residuo." ));
 
 		// Se la scadenza (e quindi tutte le scadenze) hanno piu' di un dettaglio, non consento l'aggiornamento
 		// automatico.
@@ -2481,9 +2483,9 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
 		// dettagli)
 		if(	nuovoImporto.compareTo(BigDecimal.ZERO)!=0 && scadenzaDaFattura.getAccertamento_scad_voceColl() != null &&
 			scadenzaDaFattura.getAccertamento_scad_voceColl().size() > 1)
-			throw new ApplicationException( "Impossibile aggiornare automaticamente la scadenza perche' i suoi dettagli sono stati imputati manualmente !");		
-		
-		// aggiorno solo l'importo della scadenza (+ dettagli) modificata dalla 
+			throw new ApplicationException( "Impossibile aggiornare automaticamente la scadenza perche' i suoi dettagli sono stati imputati manualmente !");
+
+		// aggiorno solo l'importo della scadenza (+ dettagli) modificata dalla
 		// fattura e l'importo del relativo accertamento
 		if(!modificaScadenzaSuccessiva)
 			return modificaScadenzaNonInAutomatico(userContext, scadenzaDaFattura, nuovoImporto);
@@ -2498,17 +2500,17 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
 
 			//imposto il nuovo importo
 			scadenzaDaFattura.setIm_scadenza(nuovoImporto);
-			scadenzaDaFattura.setToBeUpdated();	
+			scadenzaDaFattura.setToBeUpdated();
 
 			// aggiorno l'importo della scadenza successiva ed i suoi dettagli
 			accertamento = aggiornaScadenzarioSuccessivoAccertamento (userContext, scadenzaDaFattura);
 
-			// all modifica di una scadenza rigenero i relativi dettagli	
-			generaDettagliScadenzaAccertamento(userContext, accertamento, scadenzaDaFattura);		
-			
+			// all modifica di una scadenza rigenero i relativi dettagli
+			generaDettagliScadenzaAccertamento(userContext, accertamento, scadenzaDaFattura);
+
 			scadenzaDaFattura.setAccertamento((AccertamentoBulk)modificaConBulk(userContext, accertamento));
 			return scadenzaDaFattura;
-		}	
+		}
 	}
 	catch ( Exception e )
 	{
@@ -2517,28 +2519,28 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
 }
 /*
  * Pre-post-conditions:
- * 
+ *
  * Nome: Sdoppiamento scadenza in automatico
- * 
- * Pre:  E' stata generata la richiesta di sdoppiare in automatico l'importo di una scadenza, aggiornando 
- * 	     l'importo della prima scadenza e scaricando al differenza su una nuova scadenza 
+ *
+ * Pre:  E' stata generata la richiesta di sdoppiare in automatico l'importo di una scadenza, aggiornando
+ * 	     l'importo della prima scadenza e scaricando al differenza su una nuova scadenza
  * Post: L'importo della scadenza viene aggiornato al nuovo valore e i suoi dettagli rigenerati
- * 		 Viene creata una nuova scadenza su cui vengono scaricati gli importi sottratti alla scadenza precedente      
+ * 		 Viene creata una nuova scadenza su cui vengono scaricati gli importi sottratti alla scadenza precedente
  *
  * @param userContext lo userContext che ha generato la richiesta
  * @param scad l'istanza di Accertamento_scadenzarioBulk il cui importo deve essere sdoppiato
  * @param nuovoImportoScadenzaVecchia il valore del nuovo importo che la scadenza indicata dovrà assumere
  * @return l'istanza di Accertamento_scadenzarioBulk nuova creata in seguito allo sdoppiamento
  */
-public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext,	IScadenzaDocumentoContabileBulk scad,	BigDecimal nuovoImportoScadenzaVecchia) throws ComponentException 
+public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext userContext,	IScadenzaDocumentoContabileBulk scad,	BigDecimal nuovoImportoScadenzaVecchia) throws ComponentException
 {
 	Accertamento_scadenzarioBulk scadenzaVecchia = (Accertamento_scadenzarioBulk)scad;
 	if (  nuovoImportoScadenzaVecchia.compareTo( scad.getIm_scadenza()) == 0  && (nuovoImportoScadenzaVecchia.compareTo(Utility.ZERO)!=0))
-		throw handleException( new ApplicationException( "Sdoppiamento in automatico non necessario!" ));			
+		throw handleException( new ApplicationException( "Sdoppiamento in automatico non necessario!" ));
 	if (  nuovoImportoScadenzaVecchia.compareTo( new BigDecimal(0)) < 0  )
-		throw handleException( new ApplicationException( "L'importo della scadenza deve essere maggiore di 0" ));	
+		throw handleException( new ApplicationException( "L'importo della scadenza deve essere maggiore di 0" ));
 	if (  nuovoImportoScadenzaVecchia.compareTo( scad.getIm_scadenza()) == 1 )
-		throw new ApplicationException("L'importo nuovo da assegnare alla scadenza dell'accertamento deve essere inferiore al valore originario!");	
+		throw new ApplicationException("L'importo nuovo da assegnare alla scadenza dell'accertamento deve essere inferiore al valore originario!");
 
 	try {
 		java.math.BigDecimal vecchioImportoScadenzaVecchia = scadenzaVecchia.getIm_scadenza();
@@ -2548,7 +2550,7 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
 		AccertamentoHome accertamentoHome = (AccertamentoHome) getHome( userContext, AccertamentoBulk.class );
 		AccertamentoBulk accertamento = (AccertamentoBulk)accertamentoHome.findByPrimaryKey(scadenzaVecchia.getAccertamento());
 		accertamento = (AccertamentoBulk)inizializzaBulkPerModifica(userContext, (OggettoBulk)accertamento);
-		
+
 		//cerco nell'accertamento riletto la scadenza indicata
 		for (Iterator s = accertamento.getAccertamento_scadenzarioColl().iterator(); s.hasNext(); ) {
 			Accertamento_scadenzarioBulk as = (Accertamento_scadenzarioBulk)s.next();
@@ -2558,21 +2560,21 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
 			}
 		}
 
-		if (scadenzaVecchia == null) 
-			throw new ApplicationException("Scadenza da sdoppiare non trovata nell'accertamento indicato!");	
+		if (scadenzaVecchia == null)
+			throw new ApplicationException("Scadenza da sdoppiare non trovata nell'accertamento indicato!");
 
 		Accertamento_scadenzarioBulk scadenzaNuova = new Accertamento_scadenzarioBulk();
 		accertamento.addToAccertamento_scadenzarioColl(scadenzaNuova);
 		scadenzaNuova.setDt_scadenza_incasso(scadenzaVecchia.getDt_scadenza_incasso());
 		scadenzaNuova.setDs_scadenza(scadenzaVecchia.getDs_scadenza());
-	
-		// Rigenero i relativi dettagli	
-		generaDettagliScadenzaAccertamento(userContext, accertamento, scadenzaNuova, false);	
+
+		// Rigenero i relativi dettagli
+		generaDettagliScadenzaAccertamento(userContext, accertamento, scadenzaNuova, false);
 	if(vecchioImportoScadenzaVecchia.compareTo(Utility.ZERO)!=0){
 		for (Iterator s = scadenzaVecchia.getAccertamento_scad_voceColl().iterator(); s.hasNext(); ) {
 			Accertamento_scad_voceBulk asvOld = (Accertamento_scad_voceBulk)s.next();
-			newImportoAsv = nuovoImportoScadenzaVecchia.multiply(asvOld.getIm_voce()).divide(vecchioImportoScadenzaVecchia, 2, BigDecimal.ROUND_HALF_UP); 
-			
+			newImportoAsv = nuovoImportoScadenzaVecchia.multiply(asvOld.getIm_voce()).divide(vecchioImportoScadenzaVecchia, 2, BigDecimal.ROUND_HALF_UP);
+
 			for (Iterator n = scadenzaNuova.getAccertamento_scad_voceColl().iterator(); n.hasNext(); ) {
 				Accertamento_scad_voceBulk asvNew = (Accertamento_scad_voceBulk)n.next();
 				if (asvNew.getCd_centro_responsabilita().equals(asvOld.getCd_centro_responsabilita()) &&
@@ -2580,15 +2582,15 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
 					asvNew.getCd_voce().equals(asvOld.getCd_voce()))
 					asvNew.setIm_voce(asvOld.getIm_voce().subtract(newImportoAsv));
 			}
-				
+
 			asvOld.setIm_voce(newImportoAsv);
 			asvOld.setToBeUpdated();
-		}		
+		}
 	}
 		//Quadro la sommatoria sulla vecchia scadenza
 		for (Iterator s = scadenzaVecchia.getAccertamento_scad_voceColl().iterator(); s.hasNext(); )
-			totImporto = totImporto.add(((Accertamento_scad_voceBulk)s.next()).getIm_voce()); 
-	
+			totImporto = totImporto.add(((Accertamento_scad_voceBulk)s.next()).getIm_voce());
+
 		if (totImporto.compareTo(nuovoImportoScadenzaVecchia)!=0) {
 			//recupero il primo dettaglio e lo aggiorno per quadrare
 			for (Iterator s = scadenzaVecchia.getAccertamento_scad_voceColl().iterator(); s.hasNext(); ) {
@@ -2600,12 +2602,12 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
 			}
 		}
 
-		totImporto = Utility.ZERO;	
+		totImporto = Utility.ZERO;
 
 		//Quadro la sommatoria sulla nuova scadenza
 		for (Iterator s = scadenzaNuova.getAccertamento_scad_voceColl().iterator(); s.hasNext(); )
-			totImporto = totImporto.add(((Accertamento_scad_voceBulk)s.next()).getIm_voce()); 
-	
+			totImporto = totImporto.add(((Accertamento_scad_voceBulk)s.next()).getIm_voce());
+
 		if (totImporto.compareTo(importoScadenzaNuova)!=0) {
 			//recupero il primo dettaglio e lo aggiorno per quadrare
 			for (Iterator s = scadenzaNuova.getAccertamento_scad_voceColl().iterator(); s.hasNext(); ) {
@@ -2616,7 +2618,7 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
 				}
 			}
 		}
-	
+
 		scadenzaVecchia.setIm_scadenza(nuovoImportoScadenzaVecchia);
 		scadenzaVecchia.setToBeUpdated();
 		scadenzaNuova.setIm_scadenza(importoScadenzaNuova);
@@ -2626,7 +2628,7 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
 		 * Viene posto il campo che verifica se il controllo della disponibilità
 		 * è stato effettuato a TRUE, in quanto, l'accertamento è in modifica
 		 * e lo sdoppiamento delle righe non cambia il valore complessivo
-		 * dell'accertamento  
+		 * dell'accertamento
 		 */
 		accertamento.setCheckDisponibilitaContrattoEseguito(true);
 		modificaConBulk(userContext, accertamento);
@@ -2644,7 +2646,7 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
  * Post: L'importo della scadenza viene aggiornato al nuovo valore e i suoi dettagli rigenerati
  *       L'importo della testata dell'accertamento viene aggiornato nel modo seguente:
  *     		im_nuovo_testata = im_precedente_testata - im_precedente_scadenza + im_nuovo_scadenza
- *      
+ *
  *
  * @param userContext lo userContext che ha generato la richiesta
  * @param scad l'istanza di Accertamento_scadenzarioBulk il cui importo deve essere modificato
@@ -2653,7 +2655,7 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
  */
 
 
-private Accertamento_scadenzarioBulk modificaScadenzaNonInAutomatico( UserContext userContext, Accertamento_scadenzarioBulk scadenza, java.math.BigDecimal nuovoImporto) throws ComponentException 
+private Accertamento_scadenzarioBulk modificaScadenzaNonInAutomatico( UserContext userContext, Accertamento_scadenzarioBulk scadenza, java.math.BigDecimal nuovoImporto) throws ComponentException
 {
 	// aggiorno importo accertamento : importo accertamento = importo accertamento - importo vecchia scadenza + importo nuovo scadenza
 	java.math.BigDecimal vecchioImportoAccertamento = scadenza.getAccertamento().getIm_accertamento();
@@ -2663,8 +2665,8 @@ private Accertamento_scadenzarioBulk modificaScadenzaNonInAutomatico( UserContex
 
 	// aggiorno importo scadenza corrente
 	scadenza.setIm_scadenza( nuovoImporto );
-	scadenza.setToBeUpdated();	
-				
+	scadenza.setToBeUpdated();
+
 	// aggiorno dettagli scadenza
 	// MITODO - remmo per ora
 	//modificoDettagliScadenza(userContext, scadenza.getAccertamento(), scadenza);
@@ -2675,12 +2677,12 @@ private Accertamento_scadenzarioBulk modificaScadenzaNonInAutomatico( UserContex
  * Pre-post-conditions:
  *
  * Nome: Linea attività non comune
- * Pre:  E' stata generata la richiesta di modifica di una scadenza 
+ * Pre:  E' stata generata la richiesta di modifica di una scadenza
  *       La linea di attività dell'accertamento non e' comune
  * Post: L'importo dell'unico dettaglio della scadenza viene aggiornato con l'importo della scadenza
  *
  * Nome: Linea attività comune
- * Pre:  E' stata generata la richiesta di modifica di una scadenza 
+ * Pre:  E' stata generata la richiesta di modifica di una scadenza
  *       La linea di attività dell'accertamento e' comune
  * Post: L'importo del dettaglio della scadenza che corrisponde alla linea di attività dell'accertamneto
  *       viene aggiornato con l'importo della scadenza
@@ -2704,25 +2706,25 @@ private void modificoDettagliScadenza(UserContext aUC,AccertamentoBulk accertame
 			dettaglio = (Accertamento_scad_voceBulk) dettagliScadenze.get(0);
 			dettaglio.setAccertamento_scadenzario( scadenza );
 			dettaglio.setIm_voce( scadenza.getIm_scadenza());
-			dettaglio.setToBeUpdated();			
+			dettaglio.setToBeUpdated();
 		}
-		// Linea di attivita' comune		
-    	else 
+		// Linea di attivita' comune
+    	else
     	{
 	 	   	for ( Iterator i = dettagliScadenze.iterator(); i.hasNext(); )
 		    {
 				dettaglio = (Accertamento_scad_voceBulk) i.next();
 				dettaglio.setAccertamento_scadenzario( scadenza );
-				
+
 				if ( accertamento.getLinea_attivita().getCd_centro_responsabilita().equals( dettaglio.getCd_centro_responsabilita()))
 					dettaglio.setIm_voce( scadenza.getIm_scadenza());
 				else
 					dettaglio.setIm_voce( new java.math.BigDecimal(0) );
-					
+
 				dettaglio.setToBeUpdated();
-		    }	
+		    }
 	    }
-	} 
+	}
 	catch ( Exception e )
 	{
 		throw handleException( e );
@@ -2757,7 +2759,7 @@ public SQLBuilder selectUo_cds_origineByClause(UserContext userContext, Stampa_r
 
 }
 /**
- * 
+ *
  * @param userContext
  * @param accertamento
  * @param contratto
@@ -2766,7 +2768,7 @@ public SQLBuilder selectUo_cds_origineByClause(UserContext userContext, Stampa_r
  * @throws ComponentException
  * @throws it.cnr.jada.persistency.PersistencyException
  */
-public SQLBuilder selectContrattoByClause(UserContext userContext, AccertamentoBulk accertamento, ContrattoBulk contratto, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+public SQLBuilder selectContrattoByClause(UserContext userContext, AccertamentoBulk accertamento, ContrattoBulk contratto, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException
 {
 	Parametri_cdsHome paramHome = (Parametri_cdsHome)getHome(userContext, Parametri_cdsBulk.class);
 	Parametri_cdsBulk param_cds;
@@ -2779,50 +2781,50 @@ public SQLBuilder selectContrattoByClause(UserContext userContext, AccertamentoB
 	} catch (PersistencyException e) {
 		throw new ComponentException(e);
 	}
-	
+
 	SQLBuilder sql = getHome(userContext,ContrattoBulk.class).createSQLBuilder();
-	if (clauses != null) 
+	if (clauses != null)
 	  sql.addClause(clauses);
-	sql.openParenthesis("AND");  
+	sql.openParenthesis("AND");
 	  sql.addSQLClause("AND","NATURA_CONTABILE",SQLBuilder.EQUALS, ContrattoBulk.NATURA_CONTABILE_ATTIVO);
 	  sql.addSQLClause("OR","NATURA_CONTABILE",SQLBuilder.EQUALS, ContrattoBulk.NATURA_CONTABILE_ATTIVO_E_PASSIVO);
 	sql.closeParenthesis();
 	if(param_cds != null && param_cds.getFl_contratto_cessato().booleanValue()){
-		sql.openParenthesis("AND");  
+		sql.openParenthesis("AND");
 		  sql.addSQLClause("AND","STATO",SQLBuilder.EQUALS, ContrattoBulk.STATO_DEFINITIVO);
 		  sql.addSQLClause("OR","STATO",SQLBuilder.EQUALS, ContrattoBulk.STATO_CESSSATO);
-		sql.closeParenthesis();		
-	}	
-	else  
+		sql.closeParenthesis();
+	}
+	else
 	  sql.addSQLClause("AND", "STATO", sql.EQUALS, ContrattoBulk.STATO_DEFINITIVO);
 	// Se uo 999.000 in scrivania: visualizza tutti i contratti
 	Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 	if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
 	  sql.openParenthesis("AND");
 		sql.addSQLClause("AND","CONTRATTO.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,CNRUserContext.getCd_unita_organizzativa(userContext));
-		SQLBuilder sqlAssUo = getHome(userContext,Ass_contratto_uoBulk.class).createSQLBuilder();		   
+		SQLBuilder sqlAssUo = getHome(userContext,Ass_contratto_uoBulk.class).createSQLBuilder();
 		sqlAssUo.addSQLJoin("CONTRATTO.ESERCIZIO","ASS_CONTRATTO_UO.ESERCIZIO");
 		sqlAssUo.addSQLJoin("CONTRATTO.PG_CONTRATTO","ASS_CONTRATTO_UO.PG_CONTRATTO");
 		sqlAssUo.addSQLClause("AND","ASS_CONTRATTO_UO.CD_UNITA_ORGANIZZATIVA",sql.EQUALS,CNRUserContext.getCd_unita_organizzativa(userContext));
 		sql.addSQLExistsClause("OR",sqlAssUo);
-	  sql.closeParenthesis();  		 
+	  sql.closeParenthesis();
 	}
 	sql.addTableToHeader("TERZO");
 	sql.addSQLJoin("CONTRATTO.FIG_GIUR_EST", SQLBuilder.EQUALS,"TERZO.CD_TERZO");
 	sql.addSQLClause("AND","TERZO.DT_FINE_RAPPORTO",SQLBuilder.ISNULL,null);
-	
+
 	if((accertamento.getDebitore() != null && accertamento.getDebitore().getCd_terzo()!=null)){
-		sql.addClause("AND", "figura_giuridica_esterna.cd_terzo",SQLBuilder.EQUALS,accertamento.getDebitore().getCd_terzo());	
+		sql.addClause("AND", "figura_giuridica_esterna.cd_terzo",SQLBuilder.EQUALS,accertamento.getDebitore().getCd_terzo());
 	}
-	
-	/*sql.openParenthesis("AND");	   
+
+	/*sql.openParenthesis("AND");
 	  sql.addSQLClause("AND","TRUNC(NVL(DT_FINE_VALIDITA,SYSDATE)) >= TRUNC(SYSDATE)");
 	  sql.addSQLClause("OR","(DT_PROROGA IS NOT NULL AND TRUNC(DT_PROROGA) >= TRUNC(SYSDATE))");
-	sql.closeParenthesis();*/  
+	sql.closeParenthesis();*/
 	return sql;
 }
 /**
- * 
+ *
  * @param userContext
  * @param accertamento
  * @param contratto
@@ -2831,11 +2833,11 @@ public SQLBuilder selectContrattoByClause(UserContext userContext, AccertamentoB
  * @throws ComponentException
  * @throws it.cnr.jada.persistency.PersistencyException
  */
-public void validaContratto(UserContext userContext, AccertamentoBulk accertamento, ContrattoBulk contratto, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+public void validaContratto(UserContext userContext, AccertamentoBulk accertamento, ContrattoBulk contratto, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException
 {
 	SQLBuilder sql = selectContrattoByClause(userContext, accertamento, contratto, clauses);
 	sql.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS, contratto.getEsercizio());
-	sql.addSQLClause("AND","STATO",SQLBuilder.EQUALS, contratto.getStato());	
+	sql.addSQLClause("AND","STATO",SQLBuilder.EQUALS, contratto.getStato());
 	sql.addSQLClause("AND","PG_CONTRATTO",SQLBuilder.EQUALS, contratto.getPg_contratto());
 	ContrattoHome home = (ContrattoHome)getHome(userContext,ContrattoBulk.class);
 	it.cnr.jada.persistency.Broker broker = home.createBroker(sql);
@@ -2943,7 +2945,7 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_re
 
 	try{
 		Timestamp dataOdierna = getDataOdierna(userContext);
-	
+
 		//if (stampa.getEsercizio()==null)
 			//throw new ValidationException("Il campo ESERCIZIO e' obbligatorio");
 		//if (stampa.getCd_cds()==null)
@@ -2958,14 +2960,14 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_re
 		if (stampa.getDataFine()==null)
 			throw new ValidationException("Il campo DATA FINE PERIODO è obbligatorio");
 
-  		
+
 		java.sql.Timestamp firstDayOfYear = DateServices.getFirstDayOfYear(stampa.getEsercizio().intValue());
 		java.sql.Timestamp lastDayOfYear = DateServices.getLastDayOfYear(stampa.getEsercizio().intValue());
-		
+
 		// La Data di Inizio Periodo è superiore alla data di Fine Periodo
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
 			throw new ValidationException("La DATA di INIZIO PERIODO non può essere superiore alla DATA di FINE PERIODO");
-			
+
 		// La Data di Inizio Periodo è ANTECEDENTE al 1 Gennaio dell'Esercizio di scrivania
 		if (stampa.getDataInizio().compareTo(firstDayOfYear)<0){
 			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd/MM/yyyy");
@@ -2997,7 +2999,7 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_re
 
 	try{
 		Timestamp dataOdierna = getDataOdierna(userContext);
-	
+
 		//if (stampa.getEsercizio()==null)
 			//throw new ValidationException("Il campo ESERCIZIO e' obbligatorio");
 		//if (stampa.getCd_cds()==null)
@@ -3053,7 +3055,7 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_sc
 	try{
 		Timestamp dataOdierna = getDataOdierna(userContext);
 		Timestamp lastDayOfYear = DateServices.getLastDayOfYear(CNRUserContext.getEsercizio(userContext).intValue());
-	
+
 		//if (stampa.getEsercizio()==null)
 			//throw new ValidationException("Il campo ESERCIZIO e' obbligatorio");
 		//if (stampa.getCd_cds()==null)
@@ -3068,12 +3070,12 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_sc
 			throw new ValidationException("Il campo DATA FINE PERIODO è obbligatorio");
 		if (stampa.getDataInizio().compareTo(stampa.getDataFine())>0)
 			throw new ValidationException("La DATA di INIZIO PERIODO non può essere superiore alla DATA di FINE PERIODO");
-	
+
 	}catch(ValidationException ex){
 		throw new ApplicationException(ex);
 	}
 }
-/** 
+/**
   *  Tutti controlli superati
   *    PreCondition:
   *      L'accertamento ha almeno una scadenza
@@ -3081,32 +3083,32 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_sc
   *      La somma degli importi dei dettagli di ogni scadenza e' uguale all'importo della scadenza
   *    PostCondition:
   *      L'accertamento supera la validazione ed il sistema può pertanto proseguire con il suo salvataggio
-  *  
+  *
   *  sum(scadenzario.importo) not = accertamento.importo
   *    PreCondition:
   *      La somma degli importi delle scadenze dell'accertamento non è uguale all'importo dell'accertamento in elaborazione.
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non è consentito 
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non è consentito
   *      se l'importo non è uguale alla somma degli importi delle scadenze dell'accertamento.
   *
   *  sum(scad_voce.importo) not = scadenzario.importo
   *    PreCondition:
-  *      La somma degli importi 
+  *      La somma degli importi
   *      dei dettagli di una scadenza dell' accertamento non è uguale all'importo della scadenza
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non è consentito 
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non è consentito
   *      se l'importo della scadenza non è uguale alla somma degli importi dei dettagli della scadenza dell'accertamento.
   *
   *  scadenze non definite
   *    PreCondition:
-  *      Non sono state definite scadenze per l'accertamento 
+  *      Non sono state definite scadenze per l'accertamento
   *    PostCondition:
-  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non è consentito 
+  *      Il metodo utilizza un Throw Exception per comunicare che il salvataggio dell'accertamento non è consentito
   *      se non viene definita almento una scadenza
   *
-  * @param aUC lo user context 
+  * @param aUC lo user context
   * @param accertamento l'istanza di  <code>AccertamentoBulk</code> da verificare
-  *  
+  *
   *
  */
 
@@ -3114,7 +3116,7 @@ public void verificaAccertamento (UserContext aUC,AccertamentoBulk accertamento)
 {
 	Accertamento_scadenzarioBulk scadenza;
 	java.math.BigDecimal total = new java.math.BigDecimal(0);
-	java.math.BigDecimal totScadenza;	
+	java.math.BigDecimal totScadenza;
 	java.math.BigDecimal importoScadenza = new java.math.BigDecimal(0);
 
 	if ( accertamento.isToBeCreated() )
@@ -3128,13 +3130,13 @@ public void verificaAccertamento (UserContext aUC,AccertamentoBulk accertamento)
 		if ( getDataOdierna( aUC).after(lastDayOfTheYear ) &&
 			  accertamento.getDt_registrazione().compareTo( lastDayOfTheYear) != 0 )
 			throw  new ApplicationException( "La data di registrazione deve essere " +
-		   									java.text.DateFormat.getDateInstance().format( lastDayOfTheYear ));					
+		   									java.text.DateFormat.getDateInstance().format( lastDayOfTheYear ));
 	}
-	if((accertamento.getAccertamento_scadenzarioColl() == null) || 
+	if((accertamento.getAccertamento_scadenzarioColl() == null) ||
 	   (accertamento.getAccertamento_scadenzarioColl().size() == 0))
-		throw handleException( new it.cnr.jada.comp.ApplicationException( "L'accertamento non ha alcuna SCADENZA associata !"))	;			
-				
-	// La somma degli importi delle scadenze dell'accertamento non è uguale all'importo dell'accertamento 
+		throw handleException( new it.cnr.jada.comp.ApplicationException( "L'accertamento non ha alcuna SCADENZA associata !"))	;
+
+	// La somma degli importi delle scadenze dell'accertamento non è uguale all'importo dell'accertamento
 	// in elaborazione.
 
 	for ( Iterator i = accertamento.getAccertamento_scadenzarioColl().iterator(); i.hasNext(); )
@@ -3143,31 +3145,31 @@ public void verificaAccertamento (UserContext aUC,AccertamentoBulk accertamento)
 		total = total.add(scadenza.getIm_scadenza());
 		totScadenza = new java.math.BigDecimal(0);
 
-		if((scadenza.getAccertamento_scad_voceColl() == null) || 
+		if((scadenza.getAccertamento_scad_voceColl() == null) ||
 		   (scadenza.getAccertamento_scad_voceColl().size() == 0))
-			throw handleException( new it.cnr.jada.comp.ApplicationException( "Esistono scadenze senza DETTAGLI associati !"))	;			
-				
+			throw handleException( new it.cnr.jada.comp.ApplicationException( "Esistono scadenze senza DETTAGLI associati !"))	;
+
 		for ( Iterator j = scadenza.getAccertamento_scad_voceColl().iterator(); j.hasNext(); )
 		{
 			importoScadenza = ((Accertamento_scad_voceBulk) j.next()).getIm_voce();
 			if(importoScadenza == null)
 				importoScadenza = new java.math.BigDecimal(0);
 			totScadenza = totScadenza.add(importoScadenza);
-		}	
+		}
 		if ( totScadenza.compareTo( scadenza.getIm_scadenza()) != 0 )
-			throw handleException( new it.cnr.jada.comp.ApplicationException( "La somma degli importi dei dettagli di una scadenza differisce dall'importo di scadenza"))	;			
+			throw handleException( new it.cnr.jada.comp.ApplicationException( "La somma degli importi dei dettagli di una scadenza differisce dall'importo di scadenza"))	;
 
 	}
-	
+
 	if(total.compareTo(accertamento.getIm_accertamento()) == 1)
 		throw handleException( new it.cnr.jada.comp.ApplicationException( "La somma degli importi delle scadenze supera l'importo complessivo dell'accertamento"))	;
 
 	if(total.compareTo(accertamento.getIm_accertamento()) == -1)
 		throw handleException( new it.cnr.jada.comp.ApplicationException( "La somma degli importi delle scadenze e' inferiore all'importo complessivo dell'accertamento"))	;
-	if(accertamento.getContratto() != null && accertamento.getContratto().getFigura_giuridica_esterna()!= null && 
+	if(accertamento.getContratto() != null && accertamento.getContratto().getFigura_giuridica_esterna()!= null &&
 	   !accertamento.getDebitore().equalsByPrimaryKey(accertamento.getContratto().getFigura_giuridica_esterna()))
 	  throw new it.cnr.jada.comp.ApplicationException( "Il Debitore (Codice Terzo:"+accertamento.getDebitore().getCd_terzo()+") \n"+"non è congruente con quello del contratto (Codice Terzo:"+accertamento.getContratto().getFigura_giuridica_esterna().getCd_terzo()+")");
-		
+
 	/*
 	 * Controllo l'eventuale obbligatorietà del Contratto
 	 */
@@ -3198,10 +3200,10 @@ public void verificaAccertamento (UserContext aUC,AccertamentoBulk accertamento)
 		}
 		if(param_cds != null && param_cds.getIm_soglia_contratto_e()!= null &&
 		   accertamento.getIm_accertamento().compareTo(param_cds.getIm_soglia_contratto_e())!=-1){
-		  if(accertamento.getPg_contratto() == null) 	
+		  if(accertamento.getPg_contratto() == null)
 		    throw new it.cnr.jada.comp.ApplicationException( "Il campo contratto non può essere nullo. Importo dell'Accertamento superiore al limite stabilito!");
 		}
-		  		
+
 	}
 	verificaGestioneTrovato(aUC, accertamento, elemento_voce);
 }
@@ -3227,7 +3229,7 @@ private void controlliGestioneTrovatoNonAttiva(UserContext aUC,
 		ApplicationException {
 	SQLBuilder sql = condizioneRigheFatturaConTrovatoValorizzato(aUC,accertamento);
 	if (sql.executeCountQuery(getConnection(aUC)) > 0){
-		throw new it.cnr.jada.comp.ApplicationException("Attenzione! La voce del piano indicata non ha attiva la gestione dei brevetti ma sono state trovate fatture con l'indicazione del trovato.");		
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione! La voce del piano indicata non ha attiva la gestione dei brevetti ma sono state trovate fatture con l'indicazione del trovato.");
 	}
 }
 private void controlliGestioneTrovatoAttiva(UserContext aUC,
@@ -3235,7 +3237,7 @@ private void controlliGestioneTrovatoAttiva(UserContext aUC,
 		ApplicationException {
 	SQLBuilder sql = condizioneRigheFatturaConTrovatoNonValorizzato(aUC, accertamento);
 	if (sql.executeCountQuery(getConnection(aUC)) > 0){
-		throw new it.cnr.jada.comp.ApplicationException("Attenzione! La voce del piano indicata ha attiva la gestione dei brevetti ma sono state trovate fatture senza l'indicazione del trovato.");		
+		throw new it.cnr.jada.comp.ApplicationException("Attenzione! La voce del piano indicata ha attiva la gestione dei brevetti ma sono state trovate fatture senza l'indicazione del trovato.");
 	}
 }
 private SQLBuilder condizioneRigheFatturaConTrovatoNonValorizzato(
@@ -3273,12 +3275,12 @@ public void verificaCoperturaContratto (UserContext aUC,AccertamentoBulk accerta
 {
 	//	Controllo che l'accertamento non abbia sfondato il contratto
 	if (accertamento.isCheckDisponibilitaContrattoEseguito())
-	  return;	
+	  return;
 	if (accertamento.getContratto() != null && accertamento.getContratto().getPg_contratto() != null){
-	  try {	
+	  try {
 		  ContrattoHome contrattoHome = (ContrattoHome)getHome(aUC, ContrattoBulk.class);
 		  SQLBuilder sql = contrattoHome.calcolaTotAccertamenti(aUC,accertamento.getContratto());
-		  BigDecimal totale = null; 
+		  BigDecimal totale = null;
 			try {
 				java.sql.ResultSet rs = null;
 				LoggableStatement ps = null;
@@ -3298,7 +3300,7 @@ public void verificaCoperturaContratto (UserContext aUC,AccertamentoBulk accerta
 				}
 			} catch (java.sql.SQLException ex) {
 				throw handleException(ex);
-			}		  
+			}
 		  if (totale != null ){
 			  if (totale.compareTo(accertamento.getContratto().getIm_contratto_attivo()) > 0){
 				  throw handleException( new CheckDisponibilitaContrattoFailed("La somma degli accertamenti associati supera l'importo definito nel contratto."));
@@ -3309,10 +3311,10 @@ public void verificaCoperturaContratto (UserContext aUC,AccertamentoBulk accerta
 	  } catch (PersistencyException e1) {
 		  throw new it.cnr.jada.comp.ComponentException(e1);
 	  }
-  }		
+  }
 }
 
-/** 
+/**
   *  Tutti controlli superati - creazione
   *    PreCondition:
   *      Non esiste già una scadenza per la data.
@@ -3325,27 +3327,27 @@ public void verificaCoperturaContratto (UserContext aUC,AccertamentoBulk accerta
   *      Attività = aggiornamento
   *      L'utente ha scelto l'aggiornamento in automatico della scadenza successiva.
   *    PostCondition:
-  *      Alla scrittura dell'accertamento il sistema aggiornerà questo scadenzario. 
-  *      In più, il metodo aggiornaScadenzaSuccessivaAccertamento viene utilizzato per aggiornare la scadenza successiva 
-  *      a quella in aggiornamento. 
+  *      Alla scrittura dell'accertamento il sistema aggiornerà questo scadenzario.
+  *      In più, il metodo aggiornaScadenzaSuccessivaAccertamento viene utilizzato per aggiornare la scadenza successiva
+  *      a quella in aggiornamento.
   *  Tutti controlli superati - aggiornamento senza agg. auto. scad. succ.
   *    PreCondition:
   *      Attività = aggiornamento
   *      L'utente NON ha scelto l'aggiornamento in automatico della scadenza successiva.
   *    PostCondition:
-  *      Alla scrittura dell'accertamento il sistema aggiornerà questo scadenzario. 
-  *      Sarà il compito dell'utente aggiornare una delle scadenze per garantire che la somma degli importi 
+  *      Alla scrittura dell'accertamento il sistema aggiornerà questo scadenzario.
+  *      Sarà il compito dell'utente aggiornare una delle scadenze per garantire che la somma degli importi
   *      delle scadenze sia uguale all'importo dell'accertamento.
   *  creazione/modifica - esiste già una scadenza per la data
   *    PreCondition:
-  *      L'utente richiede la creazione di una scadenza o modifica la data di una scadenza. 
+  *      L'utente richiede la creazione di una scadenza o modifica la data di una scadenza.
   *      Per la data scadenza specificata esiste già una scadenza per l'accertamento.
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che la data della scadenza non è valida.
   *  modifica - la scadenza ha doc amministrativi associati e non proviene da documenti amministrativi
   *    PreCondition:
   *      L'utente richiede la modifica dell'importo di una scadenza che ha documenti amministrativi associati
-  *      e la richiesta non proviene dal BusinessProcess che gestisce i documenti amministrativi  
+  *      e la richiesta non proviene dal BusinessProcess che gestisce i documenti amministrativi
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare che la modifica della scadenza non è valida.
   *  modifica - la scadenza ha doc amministrativi associati e proviene da documenti amministrativi
@@ -3356,13 +3358,13 @@ public void verificaCoperturaContratto (UserContext aUC,AccertamentoBulk accerta
   *      L'aggiornamento dell'importo della scadenza e' consentito
   *  modifica - la scadenza ha reversali associate
   *    PreCondition:
-  *      L'utente richiede la modifica dell'importo di una scadenza 
+  *      L'utente richiede la modifica dell'importo di una scadenza
   *      La scadenza ha reversali associate
   *      La richiesta di modifica proviene dal BusinessProcess che gestisce i documenti amministrativi
   *    PostCondition:
   *      L'aggiornamento dell'importo della scadenza non e' consentito
-  *  
-  * @param aUC lo user context 
+  *
+  * @param aUC lo user context
   * @param scadenza l'istanza di  <code>Accertamento_scadenzarioBulk</code> da verificare
   * @return l' AccertamentoBulk a cui appartiene la scadenza
   *
@@ -3391,35 +3393,35 @@ public AccertamentoBulk verificaScadenzarioAccertamento (UserContext aUC, Accert
 	// se non è stato associato a reversali
 	// quindi il controllo non viene fatto
 	if (effettuaControlliDocAmm) {
-		if(	!scadenza.isFromDocAmm() && 
-			scadenza.getScadenza_iniziale() != null && 
+		if(	!scadenza.isFromDocAmm() &&
+			scadenza.getScadenza_iniziale() != null &&
 			scadenza.getIm_scadenza().compareTo(scadenza.getScadenza_iniziale().getIm_scadenza()) != 0 &&
 			scadenza.getPg_doc_attivo() != null)
 			throw new ApplicationException( "Impossibile variare importo di una scadenza con doc. amministrativi associati");
 	}
-	
-	if(	scadenza.isFromDocAmm() && 
-		scadenza.getScadenza_iniziale() != null && 
+
+	if(	scadenza.isFromDocAmm() &&
+		scadenza.getScadenza_iniziale() != null &&
 		scadenza.getIm_scadenza().compareTo(scadenza.getScadenza_iniziale().getIm_scadenza()) != 0 &&
-		scadenza.getPg_reversale() != null) 
+		scadenza.getPg_reversale() != null)
 		throw new ApplicationException( "Impossibile variare importo di una scadenza con reversale associata");
 
 
 	// Gestisco l'eventuale aggiornamento dell'importo della scadenza successiva a quella appena modificata
 	aggiornaScadenzarioSuccessivoAccertamento(aUC, scadenza);
 
-	// Alla conferma (inserimento/modifica) di una scadenza creo/rigenero i relativi dettagli	
+	// Alla conferma (inserimento/modifica) di una scadenza creo/rigenero i relativi dettagli
 	generaDettagliScadenzaAccertamento(aUC, accertamento, scadenza);
 
 	scadenza.setStatus( Accertamento_scadenzarioBulk.STATUS_CONFIRMED);
-	scadenza.setScadenza_iniziale( null );	
-	
+	scadenza.setScadenza_iniziale( null );
+
     return accertamento;
 }
 /**
  * Verifica dello stato dell'esercizio precedenet per residui
  *
- * @param userContext <code>UserContext</code> 
+ * @param userContext <code>UserContext</code>
  *
  * @return FALSE se per il cds interessato l'esercizio precedente non è in stato di "chiuso"
  *		   TRUE in tutti gli altri casi
@@ -3428,13 +3430,13 @@ public AccertamentoBulk verificaScadenzarioAccertamento (UserContext aUC, Accert
 
 void verificaStatoEsercizioEsPrecedente( UserContext userContext, Integer es, String cd_cds ) throws ComponentException, it.cnr.jada.persistency.PersistencyException
 {
-	EsercizioBulk esPrec = (EsercizioBulk) getHome(userContext, EsercizioBulk.class).findByPrimaryKey( 
+	EsercizioBulk esPrec = (EsercizioBulk) getHome(userContext, EsercizioBulk.class).findByPrimaryKey(
 																									new EsercizioBulk( cd_cds, new Integer( es.intValue() - 1 )));
 	if (esPrec != null && !esPrec.STATO_CHIUSO_DEF.equals(esPrec.getSt_apertura_chiusura()))
 			throw handleException( new ApplicationException( "Operazione impossibile: esercizio precedente non chiuso!") );
-			
-}			
-			
+
+}
+
 public Vector listaCdrPerCapitoli (UserContext aUC,AccertamentoBulk accertamento) throws ComponentException
 {
 	try
@@ -3444,20 +3446,20 @@ public Vector listaCdrPerCapitoli (UserContext aUC,AccertamentoBulk accertamento
 		if (accertamento.getCds().getCd_tipo_unita() != null){
 			if (!accertamento.getCds().getCd_tipo_unita().equalsIgnoreCase( it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC ) )
 			{
-		
+
 				cdr.addAll( accertamentoHome.findCdr( (List) accertamento.getCapitoliDiEntrataCdsSelezionatiColl(), accertamento ));
 				//if (accertamento.isSpesePerCostiAltrui() )
 				//	cdr.addAll( accertamentoHome.findCdrPerSpesePerCostiAltrui( (List) accertamento.getCapitoliDiSpesaCdsSelezionatiColl() ));
-			}		
+			}
 			else
 			{
 				cdr.addAll( accertamentoHome.findCdrPerSAC( (List) accertamento.getCapitoliDiEntrataCdsSelezionatiColl(), accertamento ));
 			/*
 				if (accertamento.isSpesePerCostiAltrui() )
 					cdr.addAll( accertamentoHome.findCdrPerSpesePerCostiAltruiPerSAC( (List) accertamento.getCapitoliDiSpesaCdsSelezionatiColl() ));
-			*/	
+			*/
 			}
-			
+
 		}
 		return cdr;
 		}
@@ -3466,15 +3468,15 @@ public Vector listaCdrPerCapitoli (UserContext aUC,AccertamentoBulk accertamento
 		throw handleException( e );
 	}
 }
-/** 
+/**
   *  creazione scadenza/modifica importo - imputazione automatica
   *    PreCondition:
   *      L'utente ha richiesto l'imputazione automatica dell'accertamento e ha creato una scadenza o ha modificato l'importo
   *      di una scadenza esistente
   *    PostCondition:
-  *      Per ogni linea di attività selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni linea di attività selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di
   *      scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni linea di attività selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni linea di attività selezionata dall'utente e non presente nel piano di gestione viene creato
   *      un dettaglio di scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *      il metodo calcolaPercentualeImputazioneAccertamento viene utilizzato per determinare le percentuali
   *      assegnate ad ogni linea d'attività/capitolo e per riaprtire l'importo della scadenza sui vari dettagli
@@ -3484,18 +3486,18 @@ public Vector listaCdrPerCapitoli (UserContext aUC,AccertamentoBulk accertamento
   *      L'utente ha specificato l'imputazione manuale dell'accertamento e ha creato una scadenza o ha modificato l'importo
   *      di una scadenza esistente
   *    PostCondition:
-  *      Per ogni linea di attività selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni linea di attività selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di
   *      scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni linea di attività selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni linea di attività selezionata dall'utente e non presente nel piano di gestione viene creato
   *      un dettaglio di scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *  conferma imputazione finanziaria - imputazione automatica
   *    PreCondition:
   *      L' utente ha completato l'imputazione finanziaria, confermando le linee di attività selezionate, e ha richiesto la ripartizione automatica degli importi
   *      delle scadenze
   *    PostCondition:
-  *      Per ogni scadenza dell'accertamento e per ogni linea di attività selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'accertamento e per ogni linea di attività selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di
   *      scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'accertamento e per ogni linea di attività selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'accertamento e per ogni linea di attività selezionata dall'utente e non presente nel piano di gestione viene creato
   *      un dettaglio di scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *      il metodo calcolaPercentualeImputazioneAccertamento viene utilizzato per determinare le percentuali
   *      assegnate ad ogni linea d'attività/capitolo e per ripartire l'importo della scadenza sui vari dettagli
@@ -3505,9 +3507,9 @@ public Vector listaCdrPerCapitoli (UserContext aUC,AccertamentoBulk accertamento
   *      L' utente ha completato l'imputazione finanziaria, confermando le linee di attività selezionate, e ha selezionato la ripartizione manuale degli importi
   *      delle scadenze
   *    PostCondition:
-  *      Per ogni scadenza dell'accertamento e per ogni linea di attività selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'accertamento e per ogni linea di attività selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di
   *      scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'accertamento e per ogni linea di attività selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'accertamento e per ogni linea di attività selezionata dall'utente e non presente nel piano di gestione viene creato
   *      un dettaglio di scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *  modifica imputazione finanziaria - imputazione automatica
   *    PreCondition:
@@ -3516,9 +3518,9 @@ public Vector listaCdrPerCapitoli (UserContext aUC,AccertamentoBulk accertamento
   *    PostCondition:
   *      Tutti i dettagli delle scadenze dell'accertamento che facevano riferimento a linee di attività non più selezionate
   *      vengono cancellati
-  *      Per ogni scadenza dell'accertamento e per ogni nuova linea di attività selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'accertamento e per ogni nuova linea di attività selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di
   *      scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'accertamento e per ogni nuova linea di attività selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'accertamento e per ogni nuova linea di attività selezionata dall'utente e non presente nel piano di gestione viene creato
   *      un dettaglio di scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *      il metodo calcolaPercentualeImputazioneAccertamento viene utilizzato per determinare le percentuali
   *      assegnate ad ogni linea d'attività/capitolo e per ripartire l'importo della scadenza sui vari dettagli
@@ -3530,20 +3532,20 @@ public Vector listaCdrPerCapitoli (UserContext aUC,AccertamentoBulk accertamento
   *    PostCondition:
   *      Tutti i dettagli delle scadenze dell'accertamento che facevano riferimento a linee di attività non più selezionate
   *      vengono cancellati
-  *      Per ogni scadenza dell'accertamento e per ogni nuova linea di attività selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di 
+  *      Per ogni scadenza dell'accertamento e per ogni nuova linea di attività selezionata dall'utente e presente nel piano di gestione viene creato un dettaglio di
   *      scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerLineeAttivitaDaPdG);
-  *      Analogamente, per ogni scadenza dell'accertamento e per ogni nuova linea di attività selezionata dall'utente e non presente nel piano di gestione viene creato 
+  *      Analogamente, per ogni scadenza dell'accertamento e per ogni nuova linea di attività selezionata dall'utente e non presente nel piano di gestione viene creato
   *      un dettaglio di scadenza Accertamento_scad_vocebulk (metodo creaDettagliScadenzaPerNuoveLineeAttivita);
   *  Errore - imputazione automatica per linea att SINGOLA
   *    PreCondition:
-  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attività dal piano di gestione 
+  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attività dal piano di gestione
   *      con categoria di dettaglio = SINGOLA e per le quali la somma delle colonne I,K,Q,S,U e' nullo
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare all'utente l'impossibilità di effettuare in automatico la
   *      ripartizione dell'importo della scadenza sulle linee di attività scelte
   *  Errore - imputazione automatica per linea att SCARICO
   *    PreCondition:
-  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attività dal piano di gestione 
+  *      L'utente ha richiesto l'imputazione automatica, ha inoltre selezionato delle linee di attività dal piano di gestione
   *      con categoria di dettaglio = SCARICO e per le quali la somma delle colonne J,L,R,T e' nullo
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare all'utente l'impossibilità di effettuare in automatico la
@@ -3557,7 +3559,7 @@ public Vector listaCdrPerCapitoli (UserContext aUC,AccertamentoBulk accertamento
   *      Il metodo utilizza un Throw Exception per comunicare l'errore all'utente
   *  Errore - percentuali per nuove linee att. > 100
   *    PreCondition:
-  *      L'utente ha specificato per le linee di attività che non sono presenti nel piano di gestione 
+  *      L'utente ha specificato per le linee di attività che non sono presenti nel piano di gestione
   *      delle percentuali  da utilizzare nella ripartizione dell'importo di ogni scadenza e la loro somma e'
   *      maggiore di 100
   *    PostCondition:
@@ -3567,12 +3569,12 @@ public Vector listaCdrPerCapitoli (UserContext aUC,AccertamentoBulk accertamento
   * @param accertamento <code>AccertamentoBulk</code> l'accertamento per cui creare i dettagli scadenza
   * @param scadenzario <code>Accertamento_scadenzarioBulk</code> la scadenza dell'accertamento per cui creare i dettagli oppure
   *        <code>null</code> se e' necessario generare i dettagli per tutte le scadenze
-  *  
-  *      
+  *
+  *
  */
 public AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,AccertamentoBulk accertamento,Accertamento_scadenzarioBulk scadenzario) throws ComponentException {
 	return generaDettagliScadenzaAccertamento(aUC, accertamento, scadenzario, true);
-}	
+}
 protected AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,AccertamentoBulk accertamento,Accertamento_scadenzarioBulk scadenzario, boolean allineaImputazioneFinanziaria) throws ComponentException
 {
 	Accertamento_scadenzarioBulk os;
@@ -3590,8 +3592,8 @@ protected AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,A
 		for ( Iterator i = accertamento.getNuoveLineeAttivitaColl().iterator(); i.hasNext(); )
 			tot = tot.add( ((Linea_attivitaBulk)i.next()).getPrcImputazioneFin());
 		if ( tot.compareTo( new BigDecimal(100)) != 0 )
-			throw new ApplicationException( "La somma delle percentuali dei nuovi GAE e' diversa da 100");			
-			
+			throw new ApplicationException( "La somma delle percentuali dei nuovi GAE e' diversa da 100");
+
 	}
 	// la somma delle percentuali delle nuove linee di attività e' maggiore di 100
 	else if ( accertamento.getNuoveLineeAttivitaColl().size() > 0)
@@ -3600,9 +3602,9 @@ protected AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,A
 		for ( Iterator i = accertamento.getNuoveLineeAttivitaColl().iterator(); i.hasNext(); )
 			tot = tot.add( ((Linea_attivitaBulk)i.next()).getPrcImputazioneFin());
 		if ( tot.compareTo( new BigDecimal(100)) > 0 )
-			throw new ApplicationException( "La somma delle percentuali dei nuovi GAE e' maggiore di 100");			
-			
-	}		
+			throw new ApplicationException( "La somma delle percentuali dei nuovi GAE e' maggiore di 100");
+
+	}
 
 	//imputazione automatica impossibile
 	if ( accertamento.getFl_calcolo_automatico().booleanValue() )
@@ -3612,31 +3614,31 @@ protected AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,A
 			totaleLattDaPdg = totaleLattDaPdg.add(((V_pdg_accertamento_etrBulk) i.next()).getImporto());
 		if ( accertamento.getLineeAttivitaSelezionateColl().size() > 0 && totaleLattDaPdg.doubleValue() == 0 )
 			throw new ApplicationException( "Workpackages da PdG con ricavi/entrate nulle. Imputazione automatica impossibile!");
-	}		
-		
+	}
+
 
 	// non sono ancora state inserite le scadenze
 	if (accertamento.getAccertamento_scadenzarioColl().size() == 0 )
 		return accertamento;
 
-	
+
 	if ( scadenzario != null ) // una sola scadenza e' stata modificata
 	{
 		//creo i dettagli della scadenza per le linee attivita da PDG
 		creaDettagliScadenzaPerLineeAttivitaDaPdG( aUC, accertamento, scadenzario );
 
-		//creo i dettagli della scadenza per le nuove linee attivita 		
+		//creo i dettagli della scadenza per le nuove linee attivita
 		creaDettagliScadenzaPerNuoveLineeAttivita( aUC, accertamento, scadenzario );
 
 		// aggiunta delle linee di attività comuni nelle scadenze con importo nullo
 		/*
-		 * 21/04/2006 Gestione ripartizione dei ricavi utilizzata fino al 2005. 
-		 *            Eliminata solo a partire dal 2006 
+		 * 21/04/2006 Gestione ripartizione dei ricavi utilizzata fino al 2005.
+		 *            Eliminata solo a partire dal 2006
 		 */
 		try {
 			if (!((Parametri_cnrBulk)getHome(aUC,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(aUC)))).getFl_regolamento_2006().booleanValue())
-				creaDettagliScadenzaLAComuni(aUC, accertamento, scadenzario); 
-		}	
+				creaDettagliScadenzaLAComuni(aUC, accertamento, scadenzario);
+		}
 		catch ( Exception e )
 		{
 			throw handleException( e );
@@ -3645,81 +3647,81 @@ protected AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,A
 	}	// imputazione finanziaria e' stata modificata, quindi rigenero i dettagli per tutte le scadenze
 	else
 	{
-			
+
 		// per ogni scadenza aggiorno i suoi dettagli in base alle linee di attività specificate dall'utente
 		for ( Iterator scadIterator = accertamento.getAccertamento_scadenzarioColl().iterator(); scadIterator.hasNext(); )
 		{
-				os = (Accertamento_scadenzarioBulk) scadIterator.next();		
+				os = (Accertamento_scadenzarioBulk) scadIterator.next();
 				//cancello i dettagli della scadenza per le linee attivita che non esistono piu'
 				cancellaDettagliScadenze( aUC, accertamento, os );
 
 				//creo i dettagli della scadenza per le linee attivita da PDG
 				creaDettagliScadenzaPerLineeAttivitaDaPdG( aUC, accertamento, os );
 
-				//creo i dettagli della scadenza per le nuove linee attivita 		
+				//creo i dettagli della scadenza per le nuove linee attivita
 				creaDettagliScadenzaPerNuoveLineeAttivita( aUC, accertamento, os );
 
 				// aggiunta delle linee di attività comuni nelle scadenze con importo nullo
 				/*
-				 * 21/04/2006 Gestione ripartizione dei ricavi utilizzata fino al 2005. 
-				 *            Eliminata solo a partire dal 2006 
+				 * 21/04/2006 Gestione ripartizione dei ricavi utilizzata fino al 2005.
+				 *            Eliminata solo a partire dal 2006
 				 */
 				try {
 					if (!((Parametri_cnrBulk)getHome(aUC,Parametri_cnrBulk.class).findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(aUC)))).getFl_regolamento_2006().booleanValue())
-						creaDettagliScadenzaLAComuni(aUC, accertamento, os); 
-				}	
+						creaDettagliScadenzaLAComuni(aUC, accertamento, os);
+				}
 				catch ( Exception e )
 				{
 					throw handleException( e );
 				}
 		}
 	}
-	
+
 	if ( accertamento.getFl_calcolo_automatico().booleanValue() && allineaImputazioneFinanziaria)
 		accertamento = calcolaPercentualeImputazioneAccertamento( aUC, accertamento );
 
 	return accertamento;
 }
 
-/** 
+/**
   *  CDS SAC - non scarico
   *    PreCondition:
-  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attività da piano di gestione 
+  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attività da piano di gestione
   *      ad una accertamento di appartenenza del Cds SAC. La linea di attività non e' di scarico.
   *    PostCondition:
   *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attività e viene
-  *      impostata come voce del piano dei conti del dettaglio della scadenza l'articolo selezionato 
+  *      impostata come voce del piano dei conti del dettaglio della scadenza l'articolo selezionato
   *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attività
   *  CDS SAC - scarico
   *    PreCondition:
-  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attività da piano di gestione 
+  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attività da piano di gestione
   *      ad una accertamento di appartenenza del Cds SAC. La linea di attività e' di scarico.
   *    PostCondition:
   *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attività e viene
-  *      impostata come voce del piano dei conti del dettaglio della scadenza l'articolo selezionato 
-  *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attività collegata nel 
+  *      impostata come voce del piano dei conti del dettaglio della scadenza l'articolo selezionato
+  *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attività collegata nel
   *      piano di gestione alla linea di attività selezionata
-  *  CDS diverso da SAC 
+  *  CDS diverso da SAC
   *    PreCondition:
-  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attività da piano di gestione 
-  *      ad una accertamento di appartenenza di un Cds con tipologia diversa da SAC. 
+  *      E' stata modificato l'imputazione finanziaria aggiungendo una nuova linea di attività da piano di gestione
+  *      ad una accertamento di appartenenza di un Cds con tipologia diversa da SAC.
   *      La linea di attività non e' di scarico.
   *    PostCondition:
   *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attività e viene
-  *      impostata come voce del piano dei conti del dettaglio della scadenza il capitolo selezionato 
+  *      impostata come voce del piano dei conti del dettaglio della scadenza il capitolo selezionato
   *      in imputazione finanziaria avente funzione uguale a quello della linea di attività
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param accertamento <code>AccertamentoBulk</code> l'accertamento per cui creare i dettagli scadenza
   * @param scadenzario <code>Accertamento_scadenzarioBulk</code> la scadenza dell'accertamento per cui creare i dettagli
-  *  
+  *
   */
 
 protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,AccertamentoBulk accertamento, Accertamento_scadenzarioBulk scadenzario) throws ComponentException
 {
-	
+
 	Accertamento_scad_voceBulk osv;
-	Accertamento_scadenzarioBulk os;	
+	Accertamento_scadenzarioBulk os;
 	V_pdg_accertamento_etrBulk ppsd;
 	Linea_attivitaBulk la;
 	boolean found;
@@ -3738,9 +3740,9 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Accerta
 			{
 					found = true;
 					break;
-			}		
+			}
 		}
-		
+
 		if ( !found )
 		{
 			//creo	nuovo Accertamento_scad_voceBulk
@@ -3754,11 +3756,11 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Accerta
 				if ( ppsd.getCategoria_dettaglio().equals( it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk.CAT_SINGOLO))
 					articolo = accertamento.getArticolo( ppsd.getCd_funzione(), ppsd.getCd_centro_responsabilita());
 				else
-					articolo = accertamento.getArticolo( ppsd.getCd_funzione(), ppsd.getCd_centro_responsabilita_clgs());				
+					articolo = accertamento.getArticolo( ppsd.getCd_funzione(), ppsd.getCd_centro_responsabilita_clgs());
 				osv.setTi_appartenenza( articolo.getTi_appartenenza());
 				osv.setTi_gestione( articolo.getTi_gestione());
 				osv.setCd_voce( articolo.getCd_voce() );
-				
+
 			}
 			else
 			{
@@ -3767,7 +3769,7 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Accerta
 				osv.setTi_gestione( capitolo.getTi_gestione());
 				osv.setCd_voce( capitolo.getCd_voce() );
 			}
-			*/			
+			*/
 			//linea attivita'
 			CdrBulk cdr = new CdrBulk();
 			cdr.setCd_centro_responsabilita( ppsd.getCd_centro_responsabilita());
@@ -3779,10 +3781,10 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Accerta
 			NaturaBulk natura = new NaturaBulk();
 			osv.getLinea_attivita().setNatura( natura );
 			osv.getLinea_attivita().setCd_natura( ppsd.getCd_natura());
-			osv.setCd_linea_attivita( ppsd.getCd_linea_attivita() );			
+			osv.setCd_linea_attivita( ppsd.getCd_linea_attivita() );
 			osv.setCd_centro_responsabilita( ppsd.getCd_centro_responsabilita());
-			
-			osv.setIm_voce( new java.math.BigDecimal(0));			
+
+			osv.setIm_voce( new java.math.BigDecimal(0));
 			// MITODO - verificare come mai ho dovuto anticipare la valorizzazione rispetto all'obbligazione
 			osv.setAccertamento_scadenzario( scadenzario );
 			osv.setCd_fondo_ricerca( accertamento.getCd_fondo_ricerca() );
@@ -3790,38 +3792,38 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Accerta
 			osv.setUser( scadenzario.getAccertamento().getUser() );
 			//osv.setAccertamento_scadenzario( scadenzario );
 			((BulkList) scadenzario.getAccertamento_scad_voceColl()).add( osv );
-		}	
+		}
 	}
 }
-/** 
-  *  CDS SAC 
+/**
+  *  CDS SAC
   *    PreCondition:
   *      E' stata modificato l'imputazione finanziaria aggiungendo ad una accertamento di appartenenza del Cds SAC
-  *      una nuova linea di attività che non e' presente nel piano di gestione   
+  *      una nuova linea di attività che non e' presente nel piano di gestione
   *    PostCondition:
   *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attività e viene
-  *      impostata come voce del piano dei conti del dettaglio della scadenza l'articolo selezionato 
+  *      impostata come voce del piano dei conti del dettaglio della scadenza l'articolo selezionato
   *      in imputazione finanziaria avente funzione e codice CdR uguale a quello della linea di attività
-  *  CDS diverso da SAC 
+  *  CDS diverso da SAC
   *    PreCondition:
   *      E' stata modificato l'imputazione finanziaria aggiungendo ad una accertamento di appartenenza ad un Cds diverso da SAC
-  *      una nuova linea di attività che non e' presente nel piano di gestione   
+  *      una nuova linea di attività che non e' presente nel piano di gestione
   *    PostCondition:
   *      Viene creato un nuovo dettaglio di scadenza dell'accertamento riferito alla nuova linea di attività e viene
-  *      impostata come voce del piano dei conti del dettaglio della scadenza il capitolo selezionato 
+  *      impostata come voce del piano dei conti del dettaglio della scadenza il capitolo selezionato
   *      in imputazione finanziaria avente funzione uguale a quello della linea di attività
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param accertamento <code>AccertamentoBulk</code> l'accertamento per cui creare i dettagli scadenza
   * @param scadenzario <code>Accertamento_scadenzarioBulk</code> la scadenza dell'accertamento per cui creare i dettagli
-  *  
+  *
  */
 
 protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,AccertamentoBulk accertamento, Accertamento_scadenzarioBulk scadenzario) throws ComponentException
 {
-	
+
 	Accertamento_scad_voceBulk osv;
-	Accertamento_scadenzarioBulk os;	
+	Accertamento_scadenzarioBulk os;
 	Linea_attivitaBulk la;
 	boolean found;
 
@@ -3837,8 +3839,8 @@ protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,Accert
 		catch ( ValidationException e)
 		{
 			throw handleException( new ApplicationException( e.getMessage()));
-		}	
-		found = false;		
+		}
+		found = false;
 		for ( Iterator i = scadenzario.getAccertamento_scad_voceColl().iterator(); i.hasNext(); )
 		{
 			osv = (Accertamento_scad_voceBulk) i.next();
@@ -3848,7 +3850,7 @@ protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,Accert
 		}
 		if ( !found )
 		{
-			//creo	nuovo Accertamento_scad_voceBulk			
+			//creo	nuovo Accertamento_scad_voceBulk
 			osv = new Accertamento_scad_voceBulk();
 			osv.setToBeCreated();
 			// MITODO - che devo fare di questo???
@@ -3868,21 +3870,21 @@ protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,Accert
 				osv.setCd_voce( capitolo.getCd_voce() );
 			}
 			*/
-			osv.setLinea_attivita( la.getLinea_att() );			
+			osv.setLinea_attivita( la.getLinea_att() );
 			osv.setCd_linea_attivita( la.getLinea_att().getCd_linea_attivita() );
 			osv.setCd_centro_responsabilita( la.getLinea_att().getCd_centro_responsabilita());
-			osv.setIm_voce( new java.math.BigDecimal(0));						
+			osv.setIm_voce( new java.math.BigDecimal(0));
 			osv.setCd_fondo_ricerca( accertamento.getCd_fondo_ricerca() );
 			// osv.setUser( scadenzario.getUser())		;
 			osv.setUser( scadenzario.getAccertamento().getUser() );
 			osv.setAccertamento_scadenzario( scadenzario );
 			((BulkList) scadenzario.getAccertamento_scad_voceColl()).add( osv );
-			
-		}	
+
+		}
 	}
 }
 
-/** 
+/**
   *  normale
   *    PreCondition:
   *      Viene richiesto il calcolo delle percentuali d'imputazione per l'accertamento e la ripartizione dell'importo
@@ -3890,10 +3892,10 @@ protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,Accert
   *    PostCondition:
   *      Il sistema calcola la percentuale di ripartizione delle linee di attività nel modo seguente:
   *      - Per le linee di attività non presenti nel Piano di Gestione la percentuale e' inserita dall'utente
-  *      - Per le linee di attività presenti nel Piano di Gestione e con categoria di dettaglio = SINGOLO viene 
+  *      - Per le linee di attività presenti nel Piano di Gestione e con categoria di dettaglio = SINGOLO viene
   *        calcolata la somma delle colonne I,K,Q,S,U e viene calcolata la percentuale di questo importo rispetto alla
   *        somma di tutti questi importi per tutte le linee attività selezionate
-  *      - Per le linee di attività presenti nel Piano di Gestione e con categoria di dettaglio = SCARICO viene 
+  *      - Per le linee di attività presenti nel Piano di Gestione e con categoria di dettaglio = SCARICO viene
   *        calcolata la somma delle colonne J,L,R,T e viene calcolata la percentuale di questo importo rispetto alla
   *        somma di tutti questi importi per tutte le linee attività selezionate
   *      Esempio di imputazione finanziaria:
@@ -3911,15 +3913,15 @@ protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,Accert
   *
   *  errore - manca percentuale per nuova linea attività
   *    PreCondition:
-  *      Nell'imputazione finanziaria dell'accertamento e' stata specificata una linea di attività non presente nel 
-  *      Piano di Gestione e per tale linea non e' stata specificata la percentuale da usare nella ripartizione 
+  *      Nell'imputazione finanziaria dell'accertamento e' stata specificata una linea di attività non presente nel
+  *      Piano di Gestione e per tale linea non e' stata specificata la percentuale da usare nella ripartizione
   *      dell'importo delle scadenze sui dettagli
   *    PostCondition:
   *      Una segnalazione di errore viene restituita all'utente per comunicare il problema
   *
   *  errore - non esistono spese e costi nel piano di gestione per linea attivita SINGOLA
   *    PreCondition:
-  *      Nell'imputazione finanziaria dell'accertamento e' stata specificata una linea di attività presente nel 
+  *      Nell'imputazione finanziaria dell'accertamento e' stata specificata una linea di attività presente nel
   *      Piano di Gestione con categoria di dettaglio SINGOLA e per la quale la somma delle colonne I,K,Q,S,U risulta
   *      essere 0
   *    PostCondition:
@@ -3927,13 +3929,13 @@ protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,Accert
   *
   *  errore - non esistono spese e costi nel piano di gestione per linea attivita SCARICO
   *    PreCondition:
-  *      Nell'imputazione finanziaria dell'accertamento e' stata specificata una linea di attività presente nel 
+  *      Nell'imputazione finanziaria dell'accertamento e' stata specificata una linea di attività presente nel
   *      Piano di Gestione con categoria di dettaglio SCARICO e per la quale la somma delle colonne J,L,R,T risulta
   *      essere 0
   *    PostCondition:
   *      Una segnalazione di errore viene restituita all'utente per comunicare che i costi/spese relativi ad altra UO della linea di attività sono nulli
   *
-  * @param aUC lo user context 
+  * @param aUC lo user context
   * @param accertamento l'istanza di  <code>AccertamentoBulk</code> per la quale devono essere calcolati gli importi e le percentuali dei suoi
   *        dettagli di scadenza
   * @return l'accertamento con le percentuali e gli importi dei dettagli delle scadenze aggiornati
@@ -3943,7 +3945,7 @@ protected AccertamentoBulk calcolaPercentualeImputazioneAccertamento (UserContex
 {
 	BigDecimal percentuale = new BigDecimal( 100);
 	BigDecimal totaleLattDaPdg = new BigDecimal( 0 );
-	BigDecimal totalePerScadenza;	
+	BigDecimal totalePerScadenza;
 	V_pdg_accertamento_etrBulk lattDaPdg;
 	Linea_attivitaBulk latt;
 	Accertamento_scad_voceBulk osv;
@@ -3956,7 +3958,7 @@ protected AccertamentoBulk calcolaPercentualeImputazioneAccertamento (UserContex
 		percentuale = percentuale.subtract( ((Linea_attivitaBulk) i.next()).getPrcImputazioneFin());
 	if ( accertamento.getNuoveLineeAttivitaColl().size() > 0 && percentuale.compareTo( new BigDecimal(100)) == 0
 		&& accertamento.getLineeAttivitaSelezionateColl().size() == 0 )
-		throw new ApplicationException( "Non sono state specificate le percentuali per i nuovi GAE!");	
+		throw new ApplicationException( "Non sono state specificate le percentuali per i nuovi GAE!");
 	for ( Iterator i = accertamento.getLineeAttivitaSelezionateColl().iterator(); i.hasNext(); )
 		totaleLattDaPdg = totaleLattDaPdg.add(((V_pdg_accertamento_etrBulk) i.next()).getImporto());
 	if ( accertamento.getLineeAttivitaSelezionateColl().size() > 0 && totaleLattDaPdg.doubleValue() == 0 )
@@ -3965,7 +3967,7 @@ protected AccertamentoBulk calcolaPercentualeImputazioneAccertamento (UserContex
 	{
 		lattDaPdg = (V_pdg_accertamento_etrBulk) i.next();
 		lattDaPdg.setPrcImputazioneFin( lattDaPdg.getImporto().multiply(percentuale).divide(totaleLattDaPdg, 2, BigDecimal.ROUND_HALF_UP) );
-	}	
+	}
 
 	// calcolo gli importi e le percentuali per i dettagli delle scadenze
 
@@ -3973,7 +3975,7 @@ protected AccertamentoBulk calcolaPercentualeImputazioneAccertamento (UserContex
 	{
 		os = (Accertamento_scadenzarioBulk) i.next();
 		totalePerScadenza = new BigDecimal( 0 );
-		
+
 		for ( Iterator j = os.getAccertamento_scad_voceColl().iterator(); j.hasNext(); )
 		{
 			osv = (Accertamento_scad_voceBulk) j.next();
@@ -3988,7 +3990,7 @@ protected AccertamentoBulk calcolaPercentualeImputazioneAccertamento (UserContex
 					if ( os.getIm_scadenza().doubleValue() != 0 )
 						osv.setPrc( lattDaPdg.getPrcImputazioneFin() );
 					else
-						osv.setPrc( new BigDecimal(0) );					
+						osv.setPrc( new BigDecimal(0) );
 					osv.setToBeUpdated();
 					break;
 				}
@@ -4000,16 +4002,16 @@ protected AccertamentoBulk calcolaPercentualeImputazioneAccertamento (UserContex
 					 latt.getLinea_att().getCd_linea_attivita().equals( osv.getCd_linea_attivita()))
 				{
 					osv.setIm_voce( os.getIm_scadenza().multiply(latt.getPrcImputazioneFin()).divide( new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP));
-					totalePerScadenza = totalePerScadenza.add( osv.getIm_voce() );					
+					totalePerScadenza = totalePerScadenza.add( osv.getIm_voce() );
 					if ( os.getIm_scadenza().doubleValue() != 0 )
 						osv.setPrc( latt.getPrcImputazioneFin() );
 					else
-						osv.setPrc( new BigDecimal(0) );					
-					osv.setToBeUpdated();					
+						osv.setPrc( new BigDecimal(0) );
+					osv.setToBeUpdated();
 					break;
 				}
 			}
-	
+
 		}
 		// quadro il totale della scadenza con la somma dei dettagli
 		if (  os.getAccertamento_scad_voceColl().size() > 0 && totalePerScadenza.compareTo( os.getIm_scadenza()) != 0 )
@@ -4023,48 +4025,48 @@ protected AccertamentoBulk calcolaPercentualeImputazioneAccertamento (UserContex
 					break;
 				}
 			}
-		}		
-	}	
-		
+		}
+	}
+
 	return accertamento;
 }
-public SQLBuilder selectLinea_attByClause(UserContext userContext, it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk context, it.cnr.contab.config00.latt.bulk.WorkpackageBulk bulk, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+public SQLBuilder selectLinea_attByClause(UserContext userContext, it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk context, it.cnr.contab.config00.latt.bulk.WorkpackageBulk bulk, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException
 {
 	return selectLinea_attByClause( userContext, context.getAccertamento(), clauses );
 }
 /*
  * Aggiunge alcune clausole a tutte le operazioni di ricerca delle Linee di Attività non da PDG
- *	
+ *
  * Pre-post-conditions:
  *
  * Nome: Richiesta di ricerca di una linea di attività
  * Pre:  E' stata generata la richiesta di ricerca di una linea di attività non presente nel PDG
  * Post: Viene restituito il SQLBuilder con l'elenco delle clausole selezionate dall'utente e, in aggiunta, le
- *       clausole che la Linea Attività sia valida per l'esercizio di scrivania, che il suo CDR appartenga 
- *       all'UO di scrivania, che la Linea di Attività non sia presente nel PDG e che la sua funzione 
+ *       clausole che la Linea Attività sia valida per l'esercizio di scrivania, che il suo CDR appartenga
+ *       all'UO di scrivania, che la Linea di Attività non sia presente nel PDG e che la sua funzione
  *       sia uguale a quella di uno dei capitoli di spesa selezionati dall'utente
  * @param userContext lo userContext che ha generato la richiesta
  * @param uo istanza di Unita_organizzativaBulk
- * @param cds istanza di CdsBulk che deve essere utilizzata per la ricerca 
+ * @param cds istanza di CdsBulk che deve essere utilizzata per la ricerca
  * @param clauses clausole di ricerca gia' specificate dall'utente
- * @return il SQLBuilder con la clausola aggiuntive 
+ * @return il SQLBuilder con la clausola aggiuntive
  */
-public SQLBuilder selectLinea_attByClause(UserContext userContext, AccertamentoBulk accertamento, CompoundFindClause clauses ) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+public SQLBuilder selectLinea_attByClause(UserContext userContext, AccertamentoBulk accertamento, CompoundFindClause clauses ) throws ComponentException, it.cnr.jada.persistency.PersistencyException
 {
 
 	SQLBuilder sql = getHome(userContext, it.cnr.contab.config00.latt.bulk.WorkpackageBulk.class, "V_LINEA_ATT_NOT_IN_PDG_ETR").createSQLBuilder();
 	sql.setHeader( "SELECT DISTINCT " + sql.getColumnMap().getDefaultSelectHeaderSQL() );
 	sql.addClause( clauses );
 	sql.addSQLClause( "AND", "ESERCIZIO",  sql.EQUALS, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getEsercizio() );
-	//sql.addSQLClause( "AND", "CD_CENTRO_RESPONSABILITA",  sql.LIKE, accertamento.getCd_unita_organizzativa() + ".%" );	
+	//sql.addSQLClause( "AND", "CD_CENTRO_RESPONSABILITA",  sql.LIKE, accertamento.getCd_unita_organizzativa() + ".%" );
 	sql.addSQLClause( "AND", "CD_CENTRO_RESPONSABILITA",  sql.LIKE, ((it.cnr.contab.utenze00.bp.CNRUserContext)userContext).getCd_unita_organizzativa()+ ".%");
-	//condizioni sulla funzione 	
+	//condizioni sulla funzione
 	Iterator i = accertamento.getCapitoliDiEntrataCdsSelezionatiColl().iterator();
 	if ( i.hasNext() )
 	{
 		sql.openParenthesis( "AND" );
 		sql.addClause("AND", "cd_funzione", SQLBuilder.EQUALS, ((Voce_fBulk)i.next()).getCd_funzione());
-		while ( i.hasNext() )	
+		while ( i.hasNext() )
 			sql.addClause( "OR", "cd_funzione", SQLBuilder.EQUALS, ((Voce_fBulk)i.next()).getCd_funzione());
 		sql.closeParenthesis();
 	}
@@ -4074,7 +4076,7 @@ public SQLBuilder selectLinea_attByClause(UserContext userContext, AccertamentoB
 	{
 		sql.openParenthesis( "AND" );
 		sql.addClause("AND", "cd_centro_responsabilita", SQLBuilder.EQUALS, ((CdrBulk)k.next()).getCd_centro_responsabilita());
-		while ( k.hasNext() )	
+		while ( k.hasNext() )
 			sql.addClause( "OR", "cd_centro_responsabilita", SQLBuilder.EQUALS, ((CdrBulk)k.next()).getCd_centro_responsabilita());
 		sql.closeParenthesis();
 	}
@@ -4087,63 +4089,63 @@ public SQLBuilder selectLinea_attByClause(UserContext userContext, AccertamentoB
 	sql2.addSQLClause("AND", "cd_elemento_voce", SQLBuilder.EQUALS, accertamento.getCd_elemento_voce());
 	sql2.addSQLClause("AND", "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
 	sql2.addSQLClause("AND", "ti_appartenenza", SQLBuilder.EQUALS, Elemento_voceHome.APPARTENENZA_CNR);
-	
+
 	sql.openParenthesis("AND");
 	sql.addSQLINClause("AND", "cd_natura", sql2);
 	sql.closeParenthesis();
 //	fine blocco da testare
-	
-	
+
+
 	sql.openParenthesis( "AND");
 	sql.addSQLClause( "AND",  "cd_elemento_voce", sql.ISNULL, null );
 	sql.openParenthesis( "OR");
 	sql.addSQLClause( "AND", "cd_elemento_voce", sql.NOT_EQUALS, accertamento.getCd_elemento_voce() );
-	
+
 	String condizione = "not exists ( select 1 from " +
-										it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + 					
+										it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
 									   "pdg_preventivo_etr_det " +
 									   "where pdg_preventivo_etr_det.categoria_dettaglio = '" + Pdg_preventivo_etr_detBulk.CAT_SINGOLO +"' " +
 									   "and pdg_preventivo_etr_det.stato = '" + Pdg_preventivo_etr_detBulk.ST_CONFERMA +"' " +
-									   "and pdg_preventivo_etr_det.ti_appartenenza = '" + Elemento_voceHome.APPARTENENZA_CNR +"' " +					 					 					 					 
-									   "and pdg_preventivo_etr_det.ti_gestione = '" + Elemento_voceHome.GESTIONE_ENTRATE +"' " +					 					 					 					 
+									   "and pdg_preventivo_etr_det.ti_appartenenza = '" + Elemento_voceHome.APPARTENENZA_CNR +"' " +
+									   "and pdg_preventivo_etr_det.ti_gestione = '" + Elemento_voceHome.GESTIONE_ENTRATE +"' " +
 									   "and pdg_preventivo_etr_det.esercizio = V_LINEA_ATT_NOT_IN_PDG_ETR.ESERCIZIO " +
 									   "and pdg_preventivo_etr_det.cd_centro_responsabilita = V_LINEA_ATT_NOT_IN_PDG_ETR.cd_centro_responsabilita " +
 									   "and pdg_preventivo_etr_det.cd_linea_attivita = V_LINEA_ATT_NOT_IN_PDG_ETR.cd_linea_attivita "  +
 									   "and pdg_preventivo_etr_det.cd_elemento_voce = '" + accertamento.getCd_elemento_voce() + "' ";
-	
+
 	if (accertamento.isResiduo())
-		condizione = condizione + 
+		condizione = condizione +
 					   "union " +
 					   "select 1 from " +
-						it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + 					
+						it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
 					   "voce_f_saldi_cdr_linea " +
 					   "where voce_f_saldi_cdr_linea.esercizio > voce_f_saldi_cdr_linea.esercizio_res " +
-					   "and voce_f_saldi_cdr_linea.ti_appartenenza = '" + Elemento_voceHome.APPARTENENZA_CNR + "' " +					 					 					 					 
-					   "and voce_f_saldi_cdr_linea.ti_gestione = '" + Elemento_voceHome.GESTIONE_ENTRATE +"' " +					 					 					 					 
+					   "and voce_f_saldi_cdr_linea.ti_appartenenza = '" + Elemento_voceHome.APPARTENENZA_CNR + "' " +
+					   "and voce_f_saldi_cdr_linea.ti_gestione = '" + Elemento_voceHome.GESTIONE_ENTRATE +"' " +
 					   "and voce_f_saldi_cdr_linea.esercizio = V_LINEA_ATT_NOT_IN_PDG_ETR.ESERCIZIO " +
 					   "and voce_f_saldi_cdr_linea.cd_centro_responsabilita = V_LINEA_ATT_NOT_IN_PDG_ETR.cd_centro_responsabilita " +
 					   "and voce_f_saldi_cdr_linea.cd_linea_attivita = V_LINEA_ATT_NOT_IN_PDG_ETR.cd_linea_attivita "  +
 					   "and voce_f_saldi_cdr_linea.cd_elemento_voce = '" + accertamento.getCd_elemento_voce() + "' ";
 	else
-		condizione = condizione + 
+		condizione = condizione +
 					   "union " +
 					   "select 1 from " +
-					    it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() + 					
+					    it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
 					   "pdg_modulo_entrate_gest " +
 					   "where pdg_modulo_entrate_gest.categoria_dettaglio = '" + Pdg_modulo_entrate_gestBulk.CAT_DIRETTA +"' " +
-					   "and pdg_modulo_entrate_gest.ti_appartenenza = '" + Elemento_voceHome.APPARTENENZA_CNR + "' " +					 					 					 					 
-					   "and pdg_modulo_entrate_gest.ti_gestione = '" + Elemento_voceHome.GESTIONE_ENTRATE +"' " +					 					 					 					 
+					   "and pdg_modulo_entrate_gest.ti_appartenenza = '" + Elemento_voceHome.APPARTENENZA_CNR + "' " +
+					   "and pdg_modulo_entrate_gest.ti_gestione = '" + Elemento_voceHome.GESTIONE_ENTRATE +"' " +
 					   "and pdg_modulo_entrate_gest.esercizio = V_LINEA_ATT_NOT_IN_PDG_ETR.ESERCIZIO " +
 					   "and pdg_modulo_entrate_gest.cd_centro_responsabilita = V_LINEA_ATT_NOT_IN_PDG_ETR.cd_centro_responsabilita " +
 					   "and pdg_modulo_entrate_gest.cd_linea_attivita = V_LINEA_ATT_NOT_IN_PDG_ETR.cd_linea_attivita "  +
-					   "and pdg_modulo_entrate_gest.cd_elemento_voce = '" + accertamento.getCd_elemento_voce() + "' "; 
-	
+					   "and pdg_modulo_entrate_gest.cd_elemento_voce = '" + accertamento.getCd_elemento_voce() + "' ";
+
 	condizione = condizione + ") ";
 	sql.addSQLClause( "AND", condizione);
 
 	sql.closeParenthesis();
 	sql.closeParenthesis();
-	
+
 	return sql;
 }
 
@@ -4155,7 +4157,7 @@ public Vector listaLineeAttivitaPerCapitoliCdr (UserContext aUC,AccertamentoBulk
 		List cdrDiScrivaniaColl = (List) accertamento.getCdrDiScrivaniaSelezionatiColl( ((CNRUserContext)aUC).getCd_unita_organizzativa());
 		AccertamentoHome accertamentoHome = (AccertamentoHome) getHome( aUC, accertamento );
 		if ( !accertamento.getCds().getCd_tipo_unita().equalsIgnoreCase( it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC ) )
-		{	
+		{
 			lineeAttivita.addAll( accertamentoHome.findLineeAttivita( cdrDiScrivaniaColl, (List)accertamento.getCapitoliDiEntrataCdsSelezionatiColl(), accertamento ));
 		}
 		else //SAC
@@ -4170,10 +4172,10 @@ public Vector listaLineeAttivitaPerCapitoliCdr (UserContext aUC,AccertamentoBulk
 						capitoli.add( voce );
 			}
 			lineeAttivita.addAll( accertamentoHome.findLineeAttivitaSAC( capitoli, accertamento ));
-		}	
+		}
 
 		return lineeAttivita;
-			
+
 	}
 	catch ( Exception e )
 	{
@@ -4199,8 +4201,8 @@ public PrimaryKeyHashtable getOldRipartizioneCdrVoceLinea(UserContext userContex
 	Accertamento_scad_voceBulk asv;
 	Accertamento_scadenzarioBulk as;
 	Accertamento_scad_voceBulk key = new Accertamento_scad_voceBulk();
-	PrimaryKeyHashtable prcImputazioneFinanziariaTable = new PrimaryKeyHashtable();	
-	
+	PrimaryKeyHashtable prcImputazioneFinanziariaTable = new PrimaryKeyHashtable();
+
 	try {
 		AccertamentoHome accertHome = (AccertamentoHome)getTempHome(userContext, AccertamentoBulk.class);
 		Accertamento_scadenzarioHome accertScadHome = (Accertamento_scadenzarioHome)getTempHome(userContext, Accertamento_scadenzarioBulk.class);
@@ -4216,7 +4218,7 @@ public PrimaryKeyHashtable getOldRipartizioneCdrVoceLinea(UserContext userContex
 		{
 			Accertamento_scadenzarioBulk accertScadDB = (Accertamento_scadenzarioBulk) i.next();
 			accertScadDB.setAccertamento_scad_voceColl( new BulkList( accertScadHome.findAccertamento_scad_voceList( userContext,accertScadDB )));
-		}							    	
+		}
 		getHomeCache(userContext).fetchAll(userContext);
 
 		for ( Iterator s = accertDB.getAccertamento_scadenzarioColl().iterator(); s.hasNext(); )
@@ -4225,7 +4227,7 @@ public PrimaryKeyHashtable getOldRipartizioneCdrVoceLinea(UserContext userContex
 			for ( Iterator d = as.getAccertamento_scad_voceColl().iterator(); d.hasNext(); )
 			{
 				asv = (Accertamento_scad_voceBulk) d.next();
-				// totale per Cdr e per scadenza				
+				// totale per Cdr e per scadenza
 				key = new Accertamento_scad_voceBulk(asv.getCd_cds(),
 													 asv.getCd_centro_responsabilita(),
 													 asv.getCd_linea_attivita(),
@@ -4234,14 +4236,14 @@ public PrimaryKeyHashtable getOldRipartizioneCdrVoceLinea(UserContext userContex
 													 asv.getPg_accertamento(),
 													 new Long(1));
 
-				totaleScad = (BigDecimal) prcImputazioneFinanziariaTable.get( key );			
+				totaleScad = (BigDecimal) prcImputazioneFinanziariaTable.get( key );
 				if ( totaleScad == null || totaleScad.compareTo(new BigDecimal(0)) == 0)
-					prcImputazioneFinanziariaTable.put( key, asv.getIm_voce());				
+					prcImputazioneFinanziariaTable.put( key, asv.getIm_voce());
 				else
 				{
 					totaleScad = totaleScad.add( asv.getIm_voce());
 					prcImputazioneFinanziariaTable.put( key, totaleScad );
-				}			
+				}
 			}
 		}
 		return prcImputazioneFinanziariaTable;
@@ -4260,12 +4262,12 @@ private void aggiornaAccertamentoModificaTemporanea(UserContext userContext,Acce
 				it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_TABNUM_EJB_Numerazione_baseComponentSession",
 																it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession.class);
 		Long pgVar = numerazione.creaNuovoProgressivo(userContext,CNRUserContext.getEsercizio(userContext), "VAR_STANZ_RES", "PG_VARIAZIONE", CNRUserContext.getUser(userContext));
-		Var_stanz_resBulk varDaCanc = confirmVarStanzResTemporanea(userContext, var_stanz_res, pgVar);		
-		
+		Var_stanz_resBulk varDaCanc = confirmVarStanzResTemporanea(userContext, var_stanz_res, pgVar);
+
 		Numerazione_doc_contHome numHome = (Numerazione_doc_contHome) getHomeCache(userContext).getHome(Numerazione_doc_contBulk.class);
 		Long pg = numHome.getNextPg(userContext,
-				accertamentoModTemporanea.getEsercizio(), 
-				accertamentoModTemporanea.getCd_cds(), 
+				accertamentoModTemporanea.getEsercizio(),
+				accertamentoModTemporanea.getCd_cds(),
 				accertamentoModTemporanea.getCd_tipo_documento_cont(),
 				accertamentoModTemporanea.getUser()!=null?accertamentoModTemporanea.getUser():((CNRUserContext)userContext).getUser());
 		confirmAccertamentoModTemporanea(userContext, accertamentoModTemporanea, pg, varDaCanc);
@@ -4275,9 +4277,9 @@ private void aggiornaAccertamentoModificaTemporanea(UserContext userContext,Acce
 		throw handleException(accertamentoModTemporanea, e);
 	} catch (Throwable e) {
 		throw handleException(accertamentoModTemporanea, e);
-	}	
+	}
 }
-private void confirmAccertamentoModTemporanea( 
+private void confirmAccertamentoModTemporanea(
 	UserContext userContext,
 	Accertamento_modificaBulk accertamentoModTemporanea,
 	Long pg,
@@ -4286,14 +4288,14 @@ private void confirmAccertamentoModTemporanea(
 
 	confirmAccertamentoModTemporanea(userContext,accertamentoModTemporanea, pg, varDaCanc, true);
 }
-private void confirmAccertamentoModTemporanea( 
+private void confirmAccertamentoModTemporanea(
 	UserContext userContext,
 	Accertamento_modificaBulk accertamentoModTemporanea,
 	Long pg,
 	Var_stanz_resBulk varDaCanc,
 	boolean deleteTemp)
 	throws IntrospectionException,PersistencyException, ComponentException {
-	
+
 	if (pg == null)
 		throw new PersistencyException("Impossibile ottenere un progressivo definitivo per la modifica dell'accertamento inserito!");
 
@@ -4321,7 +4323,7 @@ private void confirmAccertamentoModTemporanea(
 	insertBulk(userContext, accertamentoModTemporanea);
 
 	BulkList dett = accertamentoModTemporanea.getAccertamento_mod_voceColl();
-	
+
 	for(Iterator it=dett.iterator();it.hasNext();) {
 		Accertamento_mod_voceBulk acrModVoceTemp = (Accertamento_mod_voceBulk) it.next();
 
@@ -4350,7 +4352,7 @@ private void confirmAccertamentoModTemporanea(
 		insertBulk(userContext, acrModVoceTemp);
 	}
 }
-private Var_stanz_resBulk confirmVarStanzResTemporanea( 
+private Var_stanz_resBulk confirmVarStanzResTemporanea(
 		UserContext userContext,
 		Var_stanz_resBulk varTemporanea,
 		Long pg)
@@ -4358,13 +4360,13 @@ private Var_stanz_resBulk confirmVarStanzResTemporanea(
 
 		return confirmVarStanzResTemporanea(userContext,varTemporanea, pg, true);
 	}
-private Var_stanz_resBulk confirmVarStanzResTemporanea( 
+private Var_stanz_resBulk confirmVarStanzResTemporanea(
 	UserContext userContext,
 	Var_stanz_resBulk varTemporanea,
 	Long pg,
 	boolean deleteTemp)
 	throws IntrospectionException,PersistencyException, ComponentException {
-	
+
 	Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class ).findAll().get(0);
 	// in tal caso non esiste la variazione allo stanziamento residuo perchè non viene creata
 	if (((CNRUserContext)userContext).getCd_unita_organizzativa().equals(uoEnte.getCd_unita_organizzativa()))
@@ -4391,7 +4393,7 @@ private Var_stanz_resBulk confirmVarStanzResTemporanea(
 	List dett = assVarCdrHome.fetchAll( sql );
 	if (dett.isEmpty())
 		throw new ApplicationException("Dettagli della ass. variazione allo stanziamento residuo temporaneo non trovati. Impossibile procedere.");
-	
+
 	// solo inserimento
 	for(Iterator it=dett.iterator();it.hasNext();) {
 		Ass_var_stanz_res_cdrBulk assVarCdrTemp = (Ass_var_stanz_res_cdrBulk) it.next();
@@ -4409,7 +4411,7 @@ private Var_stanz_resBulk confirmVarStanzResTemporanea(
 	dett = varRigaHome.fetchAll( sql );
 	if (dett.isEmpty())
 		throw new ApplicationException("Dettagli della variazione allo stanziamento residuo temporaneo non trovati. Impossibile procedere.");
-	
+
 	for(Iterator it=dett.iterator();it.hasNext();) {
 		Var_stanz_res_rigaBulk varRigaTemp = (Var_stanz_res_rigaBulk) it.next();
 
@@ -4420,7 +4422,7 @@ private Var_stanz_resBulk confirmVarStanzResTemporanea(
 		varRigaDaCanc.setPg_variazione(tempPg);
 		if (deleteTemp)
 			deleteBulk(userContext, varRigaDaCanc);
- 
+
 		Var_stanz_res_rigaKey varRigakey = (Var_stanz_res_rigaKey) varRigaTemp.getKey();
 		varRigakey.setPg_variazione(pg);
 		varRigaTemp.setPg_variazione(pg);
@@ -4434,7 +4436,7 @@ private Var_stanz_resBulk confirmVarStanzResTemporanea(
 	dett = assVarCdrHome.fetchAll( sql );
 	if (dett.isEmpty())
 		throw new ApplicationException("Dettagli della ass. variazione allo stanziamento residuo temporaneo non trovati. Impossibile procedere.");
-	
+
 	// solo cancellazione
 	for(Iterator it=dett.iterator();it.hasNext();) {
 		Ass_var_stanz_res_cdrBulk assVarCdrTemp = (Ass_var_stanz_res_cdrBulk) it.next();
@@ -4448,14 +4450,14 @@ private Var_stanz_resBulk confirmVarStanzResTemporanea(
 			deleteBulk(userContext, assVarCdrDaCanc);
 
 	}
-	
+
 	// update su VAR_BILANCIO
 	Var_bilancioHome varBilHome = (Var_bilancioHome) getHome(userContext, Var_bilancioBulk.class);
 	sql = varBilHome.createSQLBuilder();
 	sql.addSQLClause( "AND", "esercizio_var_stanz_res", sql.EQUALS, varTemporanea.getEsercizio());
 	sql.addSQLClause( "AND", "pg_var_stanz_res", sql.EQUALS, tempPg);
 	dett = varBilHome.fetchAll( sql );
-	
+
 	for(Iterator it=dett.iterator();it.hasNext();) {
 		Var_bilancioBulk varBil = (Var_bilancioBulk) it.next();
 
@@ -4489,14 +4491,14 @@ private void approvaVarStanzRes(
 }
 
 
-public SQLBuilder selectElemento_voce_nextByClause(UserContext userContext, AccertamentoBulk accertamento, Elemento_voceBulk elemento_voce, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException { 
+public SQLBuilder selectElemento_voce_nextByClause(UserContext userContext, AccertamentoBulk accertamento, Elemento_voceBulk elemento_voce, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
 	SQLBuilder sql = getHome(userContext,Elemento_voceBulk.class).createSQLBuilder();
-	if (clauses != null) 
+	if (clauses != null)
 	  sql.addClause(clauses);
 
-	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, accertamento.getEsercizio()+1 );		
+	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, accertamento.getEsercizio()+1 );
 	sql.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE );
-    sql.addClause(FindClause.AND, "fl_solo_competenza", SQLBuilder.EQUALS, Boolean.FALSE );		 
+    sql.addClause(FindClause.AND, "fl_solo_competenza", SQLBuilder.EQUALS, Boolean.FALSE );
 	sql.addClause(FindClause.AND, "fl_azzera_residui", SQLBuilder.EQUALS, new Boolean( false) );
 
 	sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL", "CLASSVOCENEW");
@@ -4507,9 +4509,9 @@ public SQLBuilder selectElemento_voce_nextByClause(UserContext userContext, Acce
 
 	if (accertamento!=null && accertamento.getCapitolo()!=null) {
 		Elemento_voceBulk evAccertamento = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
-								new Elemento_voceBulk(accertamento.getCapitolo().getCd_elemento_voce(), accertamento.getCapitolo().getEsercizio(), 
+								new Elemento_voceBulk(accertamento.getCapitolo().getCd_elemento_voce(), accertamento.getCapitolo().getEsercizio(),
 													  accertamento.getCapitolo().getTi_appartenenza(), accertamento.getCapitolo().getTi_gestione()));
-		
+
 		if (evAccertamento!=null && evAccertamento.getV_classificazione_voci().getId_classificazione()!=null) {
 			SQLBuilder sqlExists = getHome(userContext,Classificazione_vociBulk.class).createSQLBuilder();
 			sqlExists.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL", "CLASSVOCEOLD");
@@ -4525,14 +4527,14 @@ public SQLBuilder selectElemento_voce_nextByClause(UserContext userContext, Acce
 		sql.addSQLClause(FindClause.AND, "1!=1"); //Condizione inserita per far fallire la query
 	}
 
-	return sql; 
+	return sql;
 }
 
 public boolean existAssElementoVoceNew(UserContext userContext, AccertamentoBulk accertamento) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		Ass_evold_evnewHome ass_evold_evnewHome = (Ass_evold_evnewHome) getHome( userContext, Ass_evold_evnewBulk.class);
 		Elemento_voceBulk evAccertamento = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
-				new Elemento_voceBulk(accertamento.getCapitolo().getCd_elemento_voce(), accertamento.getCapitolo().getEsercizio(), 
+				new Elemento_voceBulk(accertamento.getCapitolo().getCd_elemento_voce(), accertamento.getCapitolo().getEsercizio(),
 									  accertamento.getCapitolo().getTi_appartenenza(), accertamento.getCapitolo().getTi_gestione()));
 		if (!ass_evold_evnewHome.findAssElementoVoceNewList(evAccertamento).isEmpty())
 			return Boolean.TRUE;
@@ -4552,7 +4554,7 @@ protected AccertamentoBulk validaCreaModificaElementoVoceNext(UserContext userCo
 				accertamento.setToBeUpdated();
 			} else {
 				Elemento_voceBulk evAccertamento = (Elemento_voceBulk)getHome(userContext,Elemento_voceBulk.class).findByPrimaryKey(
-						new Elemento_voceBulk(accertamento.getCapitolo().getCd_elemento_voce(), accertamento.getCapitolo().getEsercizio(), 
+						new Elemento_voceBulk(accertamento.getCapitolo().getCd_elemento_voce(), accertamento.getCapitolo().getEsercizio(),
 											  accertamento.getCapitolo().getTi_appartenenza(), accertamento.getCapitolo().getTi_gestione()));
 
 				Elemento_voceHome home = (Elemento_voceHome)getHome(userContext,Elemento_voceBulk.class);
@@ -4561,17 +4563,17 @@ protected AccertamentoBulk validaCreaModificaElementoVoceNext(UserContext userCo
 				sql.addSQLClause(FindClause.AND, "ELEMENTO_VOCE.TI_APPARTENENZA", SQLBuilder.EQUALS, accertamento.getElemento_voce_next().getTi_appartenenza());
 				sql.addSQLClause(FindClause.AND, "ELEMENTO_VOCE.TI_GESTIONE", SQLBuilder.EQUALS, accertamento.getElemento_voce_next().getTi_gestione());
 				sql.addSQLClause(FindClause.AND, "ELEMENTO_VOCE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, accertamento.getElemento_voce_next().getCd_elemento_voce());
-				
+
 				List listEv = home.fetchAll(sql);
 				if (listEv.isEmpty())
 					throw new ApplicationException("Attenzione! Non esiste congruenza tra la voce dell''impegno e quella di ribaltamento. Modificare la voce di ribaltamento!");
-				
+
 				if (evAccertamento.getFl_recon().equals(Boolean.FALSE) && accertamento.getElemento_voce_next().getFl_recon().equals(Boolean.TRUE) &&
-						(accertamento.getContratto()==null || accertamento.getContratto().getPg_contratto()==null))  
+						(accertamento.getContratto()==null || accertamento.getContratto().getPg_contratto()==null))
 					throw new ApplicationException("Attenzione! Non esiste congruenza tra la voce dell''accertamento che non richiede l'indicazione "+
 							"del contratto e quella di ribaltamento che ne richiede l'inserimento. Modificare la voce di ribaltamento "+
 							"o inserire i dati relativi al contratto!");
-				
+
 				try {
 					verificaGestioneTrovato(userContext, accertamento, accertamento.getElemento_voce_next());
 				} catch (ApplicationException e) {
@@ -4587,8 +4589,8 @@ protected AccertamentoBulk validaCreaModificaElementoVoceNext(UserContext userCo
 		handleException(e);
 	}
 	return accertamento;
-}	
-public SQLBuilder selectLineaAttivita_centro_responsabilitaByClause(UserContext userContext, Pdg_vincoloBulk pdgVincolo, CdrBulk cdr, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+}
+public SQLBuilder selectLineaAttivita_centro_responsabilitaByClause(UserContext userContext, Pdg_vincoloBulk pdgVincolo, CdrBulk cdr, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException
 {
 	SQLBuilder sql = getHome(userContext, cdr, "V_CDR_VALIDO").createSQLBuilder();
 
@@ -4605,12 +4607,12 @@ public SQLBuilder selectLineaAttivita_centro_responsabilitaByClause(UserContext 
 
 	if (clauses != null) sql.addClause(clauses);
 
-	return sql; 
+	return sql;
 }
-public SQLBuilder selectLineaAttivitaByClause(UserContext userContext, Pdg_vincoloBulk pdgVincolo, WorkpackageBulk linea, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
+public SQLBuilder selectLineaAttivitaByClause(UserContext userContext, Pdg_vincoloBulk pdgVincolo, WorkpackageBulk linea, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException
 {
 	SQLBuilder sql = getHome(userContext, linea, "V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
-	 
+
 	sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
 	sql.addClause("AND","ti_gestione",sql.EQUALS,Elemento_voceHome.GESTIONE_SPESE);
 
@@ -4628,7 +4630,7 @@ public SQLBuilder selectLineaAttivitaByClause(UserContext userContext, Pdg_vinco
 		}
 		sql.closeParenthesis();
 	}
-	
+
 	/**
 	 * Escludo la linea di attività dell'IVA C20
 	 */
@@ -4645,24 +4647,24 @@ public SQLBuilder selectLineaAttivitaByClause(UserContext userContext, Pdg_vinco
 	}
 
 	if (clauses != null) sql.addClause(clauses);
-	
-	return sql; 
+
+	return sql;
 }
 public SQLBuilder selectElementoVoceByClause (UserContext userContext, Pdg_vincoloBulk pdgVincolo, Elemento_voceBulk elementoVoce, CompoundFindClause clause) throws ComponentException, PersistencyException {
 	Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
 	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
-	
+
 	SQLBuilder sql = getHome(userContext, elementoVoce,"V_ELEMENTO_VOCE_PDG_SPE").createSQLBuilder();
 
 	sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
-	
+
 	sql.openParenthesis(FindClause.AND);
-	sql.addSQLClause(FindClause.OR, "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", SQLBuilder.ISNULL, null);	
-	sql.addSQLClause(FindClause.OR, "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", SQLBuilder.EQUALS, "N");	
+	sql.addSQLClause(FindClause.OR, "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", SQLBuilder.ISNULL, null);
+	sql.addSQLClause(FindClause.OR, "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", SQLBuilder.EQUALS, "N");
 	sql.closeParenthesis();
-	
+
 	if (clause != null) sql.addClause(clause);
-	
+
 	return sql;
 }
 public SQLBuilder selectAssestatoRisorseCoperturaByClause (UserContext userContext, Pdg_vincoloBulk pdgVincolo, V_assestatoBulk assestato, CompoundFindClause clause) throws ComponentException, PersistencyException {
@@ -4673,7 +4675,7 @@ public SQLBuilder selectAssestatoRisorseCoperturaByClause (UserContext userConte
 	sql.addClause(FindClause.AND, "ti_appartenenza", sql.EQUALS, Elemento_voceHome.APPARTENENZA_CDS );
 	sql.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
 	sql.addSQLClause(FindClause.AND, "IMPORTO_DISPONIBILE+IMPORTO_VINCOLI", SQLBuilder.GREATER, BigDecimal.ZERO);
-	
+
 	V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(userContext, V_struttura_organizzativaBulk.class);
 	sql.openParenthesis(FindClause.AND);
 	for (java.util.Iterator j = strHome.findUoCollegateCDS(new Unita_organizzativaBulk(CNRUserContext.getCd_cds(userContext)), CNRUserContext.getEsercizio( userContext )).iterator(); j.hasNext();) {
@@ -4686,7 +4688,7 @@ public SQLBuilder selectAssestatoRisorseCoperturaByClause (UserContext userConte
 	sql.closeParenthesis();
 
 	if (clause != null) sql.addClause(clause);
-	
+
 	return sql;
 }
 
@@ -4696,26 +4698,26 @@ public void verificaDisponibilitaVincoliSpese(UserContext aUC,AccertamentoResidu
 		if (accertamento.isInesigibile() || accertamento.isParzialmenteInesigibile()) {
 			if (accertamento.getIm_quota_inesigibile_da_ripartire().compareTo(BigDecimal.ZERO)!=0)
 				throw new ApplicationException("Attenzione! Non risulta correttamente coperta con spese vincolate la quota inesigibile dell'accertamento residuo. Operazione non possibile!");
-	
+
 			SaldoComponentSession session = createSaldoComponentSession();
 			for (Pdg_vincoloBulk vincolo : accertamento.getPdgVincoliColl()) {
 				if (vincolo.getIm_vincolo().compareTo(BigDecimal.ZERO)<=0)
 					throw new ApplicationException("L'importo di vincolo relativo al CDR "+vincolo.getCd_centro_responsabilita()+
-							" G.A.E. "+vincolo.getCd_linea_attivita()+" Voce "+vincolo.getElementoVoce().getCd_voce()+ 
+							" G.A.E. "+vincolo.getCd_linea_attivita()+" Voce "+vincolo.getElementoVoce().getCd_voce()+
 							" non può essere negativo.");
 
-				String error = session.checkDispObbligazioniAccertamenti(aUC, vincolo.getCd_centro_responsabilita(), 
-															   vincolo.getCd_linea_attivita(), 
-															   vincolo.getElementoVoce(), 
-															   vincolo.getEsercizio_res(), 
+				String error = session.checkDispObbligazioniAccertamenti(aUC, vincolo.getCd_centro_responsabilita(),
+															   vincolo.getCd_linea_attivita(),
+															   vincolo.getElementoVoce(),
+															   vincolo.getEsercizio_res(),
 															   vincolo.getEsercizio().equals(vincolo.getEsercizio_res())?
 																	   Voce_f_saldi_cdr_lineaBulk.TIPO_COMPETENZA:
-																	   Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_IMPROPRIO, 
+																	   Voce_f_saldi_cdr_lineaBulk.TIPO_RESIDUO_IMPROPRIO,
 															   Parametri_cdsBulk.BLOCCO_IMPEGNI_ERROR);
 				if (error!=null)
 					throw new ApplicationException(error);
 			}
-			
+
 			//verifico che le variazioni non siano completamente coperte da accertamenti
 			Accertamento_vincolo_perenteHome home = (Accertamento_vincolo_perenteHome)getHome(aUC, Accertamento_vincolo_perenteBulk.class);
 			VariazioniStanziamentoResiduoComponentSession session2 = Utility.createVariazioniStanziamentoResiduoComponentSession();
@@ -4727,7 +4729,7 @@ public void verificaDisponibilitaVincoliSpese(UserContext aUC,AccertamentoResidu
 
 				List<Accertamento_vincolo_perenteBulk> listVincoli = home.cercaDettagliVincolati(vincolo.getVariazioneResidua());
 				BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).get();
-			    
+
 				//EFFETTUO LA SOMMA DEGLI IMPORTI MOVIMENTATI SOLO DALLE UO DI CUI DEVO RITIRARE LA SOMMA
 				Var_stanz_resHome varHome = (Var_stanz_resHome)getHome(aUC, Var_stanz_resBulk.class);
 				Collection<Var_stanz_res_rigaBulk> righeVar = varHome.findVariazioniRiga(vincolo.getVariazioneResidua());
@@ -4746,7 +4748,7 @@ public void verificaDisponibilitaVincoliSpese(UserContext aUC,AccertamentoResidu
 					}
 				}
 
-				//recupero 
+				//recupero
 				BigDecimal diff = totVariazioneCDS.abs().subtract(impVincolo);
 				if (diff.compareTo(BigDecimal.ZERO)<0)
 					throw new ApplicationException("La variazione residua "+vincolo.getVariazioneResidua().getEsercizio()+"/"+
@@ -4769,7 +4771,7 @@ public SQLBuilder selectVariazioneResiduaByClause (UserContext userContext, Acce
 	sql.addClause(FindClause.AND, "tipologia", SQLBuilder.EQUALS, Var_stanz_resBulk.TIPOLOGIA_STO );
 	sql.addClause(FindClause.AND, "fl_perenzione", SQLBuilder.EQUALS, Boolean.TRUE );
 	sql.addClause(FindClause.AND, "tipologia_fin", SQLBuilder.EQUALS, NaturaBulk.TIPO_NATURA_FONTI_ESTERNE );
-	
+
 	V_struttura_organizzativaHome strHome = (V_struttura_organizzativaHome) getHome(userContext, V_struttura_organizzativaBulk.class);
 	sql.openParenthesis(FindClause.AND);
 	for (java.util.Iterator j = strHome.findUoCollegateCDS(new Unita_organizzativaBulk(CNRUserContext.getCd_cds(userContext)), CNRUserContext.getEsercizio( userContext )).iterator(); j.hasNext();) {
