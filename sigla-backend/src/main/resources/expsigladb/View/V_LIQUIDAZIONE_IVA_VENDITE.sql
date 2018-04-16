@@ -134,7 +134,7 @@
         FROM autofattura a,
              fattura_passiva b,
              fattura_passiva_riga c,
-             voce_iva
+             voce_iva, tipo_sezionale
        WHERE b.cd_cds = a.cd_cds_ft_passiva
          AND b.cd_unita_organizzativa = a.cd_uo_ft_passiva
          AND b.esercizio = a.esercizio
@@ -150,8 +150,8 @@
               OR b.fl_san_marino_senza_iva = 'Y'
               OR a.fl_split_payment = 'Y'
              )
-          AND (to_char(B.DT_FATTURA_FORNITORE,'yyyy') = B.esercizio OR
-             B.ti_istituz_commerc!='C' OR B.fl_split_payment!='N' or b.im_totale_iva =0 or nvl(to_char(B.Data_protocollo,'yyyy'),b.esercizio) = B.esercizio )
+          and tipo_sezionale.cd_tipo_sezionale = a.cd_tipo_sezionale   
+          and tipo_sezionale.fl_reg_tardiva = 'N' 
     GROUP BY a.cd_cds,
              a.cd_unita_organizzativa,
              a.esercizio,

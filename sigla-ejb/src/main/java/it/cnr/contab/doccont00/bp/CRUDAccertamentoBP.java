@@ -42,6 +42,7 @@ import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import it.cnr.jada.util.jsp.Button;
 
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Accertamento
@@ -965,5 +966,39 @@ public SimpleDetailCRUDController getPdgVincoli() {
 }
 public SimpleDetailCRUDController getPdgVincoliPerenti() {
 	return pdgVincoliPerenti;
+}
+public void copiaAccertamento(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
+{
+	try {
+		AccertamentoBulk nuovo = (AccertamentoBulk)((AccertamentoBulk)getModel()).clona(this, context);
+		nuovo= (AccertamentoBulk)createComponentSession().inizializzaBulkPerInserimento(context.getUserContext(), nuovo);
+		nuovo.setUser( context.getUserInfo().getUserid());
+		setModel( context, nuovo);
+		((AccertamentoBulk)nuovo).setInternalStatus( AccertamentoBulk.INT_STATO_LATT_CONFERMATE );
+		setStatus( INSERT );
+		resyncChildren( context );
+		setTab("tab","tabAccertamento");
+		setTab("tabScadenzario","tabScadenzario");
+	} catch(Exception e) {
+		throw handleException(e);
+	}
+}
+protected it.cnr.jada.util.jsp.Button[] createToolbar() 
+{
+		
+	Button[] toolbar = super.createToolbar();
+	Button[] newToolbar = new Button[ toolbar.length + 1 ];
+	for ( int i = 0; i< toolbar.length; i++ )
+		newToolbar[ i ] = toolbar[ i ];
+	newToolbar[ toolbar.length ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.copia");
+	return newToolbar;
+}
+public boolean isCopiaAccertamentoButtonEnabled() {
+	return isEditable() && isEditing() && !isEditingScadenza() ;
+}
+
+public boolean isCopiaAccertamentoButtonHidden() {
+	
+	return isEditOnly();
 }
 }
