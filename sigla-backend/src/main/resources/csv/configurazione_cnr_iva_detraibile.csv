@@ -1,0 +1,5 @@
+"esercizio","cd_unita_funzionale","cd_chiave_primaria","cd_chiave_secondaria","val01","val02","val03","val04","im01","im02","dt01","dt02","dacr","utcr","duva","utuv","pg_ver_rec"
+"2015","*","FATTURA_PASSIVA","LIMITE_REG_TARDIVA","null","null","null","null","null","null","2017-12-31","2018-04-20","2018-03-31","CED","2018-03-31","CED","1"
+"2016","*","FATTURA_PASSIVA","LIMITE_REG_TARDIVA","null","null","null","null","null","null","2018-12-31","2019-04-20","2018-03-31","CED","2018-03-31","CED","1"
+"2017","*","FATTURA_PASSIVA","LIMITE_REG_TARDIVA","null","null","null","null","null","null","2017-12-31","2018-04-20","2018-03-31","CED","2018-03-31","CED","1"
+"2018","*","FATTURA_PASSIVA","LIMITE_REG_TARDIVA","null","null","null","null","null","null","2018-12-31","2019-04-20","2018-03-31","CED","2018-03-31","CED","1"

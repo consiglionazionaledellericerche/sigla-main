@@ -504,4 +504,124 @@
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="rosangela.pucciarelli" id="configurazione_cnr-add-configurazione-iva-detra">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/configurazione_cnr_iva_detraibile.csv" quotchar="&quot;" separator="," tableName="configurazione_cnr">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_unita_funzionale" name="cd_unita_funzionale" type="STRING"/>
+            <column header="cd_chiave_primaria" name="cd_chiave_primaria" type="STRING"/>
+            <column header="cd_chiave_secondaria" name="cd_chiave_secondaria" type="STRING"/>
+            <column header="val01" name="val01" type="STRING"/>
+            <column header="val02" name="val02" type="STRING"/>
+            <column header="val03" name="val03" type="STRING"/>
+            <column header="val04" name="val04" type="STRING"/>
+            <column header="im01" name="im01" type="NUMERIC"/>
+            <column header="im02" name="im02" type="NUMERIC"/>
+            <column header="dt01" name="dt01" type="${date.type}"/>
+            <column header="dt02" name="dt02" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="rosangela.pucciarelli" id="modifiche-detraibilità-iva"> 
+    <addColumn tableName="tipo_sezionale">
+            <column name="fl_reg_tardiva" type="CHAR(1)" defaultValue="N" remarks="Tipo sezionale su cui registrare le fatture ancora detraibili ma tardive - Dominio: Y = Yes; N = No;.">
+               <constraints nullable="false"/>
+            </column>
+    </addColumn>
+    <insert tableName="tipo_sezionale">
+            <column name="cd_tipo_sezionale" type="VARCHAR(10)" value="a/comrt"/>
+            <column name="ds_tipo_sezionale" type="VARCHAR(50)" value="REGISTRO IVA ORDINARIO ACQUISTI Reg.Tardiva"/>
+            <column name="ti_acquisti_vendite" type="CHAR(1)" value="A"/>
+            <column name="ti_istituz_commerc" type="CHAR(1)" value="C"/>
+            <column name="cd_attivita_commerciale"  type="VARCHAR(10)" value="1"/>
+            <column name="fl_ordinario" type="CHAR(1)" value="Y"/>
+            <column name="fl_san_marino_con_iva" type="CHAR(1)" value="Y"/>
+            <column name="fl_san_marino_senza_iva" type="CHAR(1)" value="Y"/>
+            <column name="fl_intra_ue" type="CHAR(1)" value="Y"/>
+            <column name="fl_extra_ue" type="CHAR(1)" value="Y"/>
+            <column name="fl_autofattura" type="CHAR(1)" value="N"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="pg_ver_rec" type="BIGINT" value="1"/>
+            <column name="sezionale_ven_liquidazione" type="VARCHAR(10)" value=""/>
+            <column name="ti_bene_servizio" type="CHAR(1)" value="*"/>
+            <column name="fl_servizi_non_residenti"  type="CHAR(1)" value="N"/>
+            <column name="ordina" type="BIGINT" value="4"/>
+            <column name="fl_split_payment"  type="CHAR(1)" value="N"/>
+            <column name="fl_reg_tardiva" type="CHAR(1)" value="Y"/>
+     </insert>
+    <insert tableName="tipo_sezionale">
+            <column name="cd_tipo_sezionale" type="VARCHAR(10)" value="v/cuert"/>
+            <column name="ds_tipo_sezionale" type="VARCHAR(50)" value="REGISTRO IVA VENDITE PER ACQUISTI UE Reg.Tardiva"/>
+            <column name="ti_acquisti_vendite" type="CHAR(1)" value="V"/>
+            <column name="ti_istituz_commerc" type="CHAR(1)" value="C"/>
+            <column name="cd_attivita_commerciale"  type="VARCHAR(10)" value="1"/>
+            <column name="fl_ordinario" type="CHAR(1)" value="N"/>
+            <column name="fl_san_marino_con_iva" type="CHAR(1)" value="N"/>
+            <column name="fl_san_marino_senza_iva" type="CHAR(1)" value="N"/>
+            <column name="fl_intra_ue" type="CHAR(1)" value="Y"/>
+            <column name="fl_extra_ue" type="CHAR(1)" value="N"/>
+            <column name="fl_autofattura" type="CHAR(1)" value="Y"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="pg_ver_rec" type="BIGINT" value="1"/>
+            <column name="sezionale_ven_liquidazione" type="VARCHAR(10)" value=""/>
+            <column name="ti_bene_servizio" type="CHAR(1)" value="B"/>
+            <column name="fl_servizi_non_residenti"  type="CHAR(1)" value="N"/>
+            <column name="ordina" type="BIGINT" value="2"/>
+            <column name="fl_split_payment"  type="CHAR(1)" value="N"/>
+            <column name="fl_reg_tardiva" type="CHAR(1)" value="Y"/>
+     </insert>
+     <insert tableName="tipo_sezionale">
+            <column name="cd_tipo_sezionale" type="VARCHAR(10)" value="v/cautrt"/>
+            <column name="ds_tipo_sezionale" type="VARCHAR(50)" value="REGISTRO IVA VENDITE DELLE AUTOFATTURE Reg.Tardiva"/>
+            <column name="ti_acquisti_vendite" type="CHAR(1)" value="V"/>
+            <column name="ti_istituz_commerc" type="CHAR(1)" value="C"/>
+            <column name="cd_attivita_commerciale"  type="VARCHAR(10)" value="1"/>
+            <column name="fl_ordinario" type="CHAR(1)" value="N"/>
+            <column name="fl_san_marino_con_iva" type="CHAR(1)" value="N"/>
+            <column name="fl_san_marino_senza_iva" type="CHAR(1)" value="Y"/>
+            <column name="fl_intra_ue" type="CHAR(1)" value="Y"/>
+            <column name="fl_extra_ue" type="CHAR(1)" value="Y"/>
+            <column name="fl_autofattura" type="CHAR(1)" value="Y"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="pg_ver_rec" type="BIGINT" value="1"/>
+            <column name="sezionale_ven_liquidazione" type="VARCHAR(10)" value=""/>
+            <column name="ti_bene_servizio" type="CHAR(1)" value="*"/>
+            <column name="fl_servizi_non_residenti"  type="CHAR(1)" value="N"/>
+            <column name="ordina" type="BIGINT" value="3"/>
+            <column name="fl_split_payment"  type="CHAR(1)" value="N"/>
+            <column name="fl_reg_tardiva" type="CHAR(1)" value="Y"/>
+     </insert>
+    </changeSet>
+    <changeSet author="rosangela.pucciarelli" runOnChange="true" id="modify-view-V_INCARICHI_ELENCO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_INCARICHI_ELENCO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
+    <changeSet author="rosangela.pucciarelli" runOnChange="true" id="modify-view-V_REGISTRO_IVA_VENDITE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_REGISTRO_IVA_VENDITE.sql"  relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
+    	<changeSet author="rosangela.pucciarelli" runOnChange="true" id="modify-view-V_REGISTRO_IVA_ACQUISTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_REGISTRO_IVA_ACQUISTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
+    	<changeSet author="rosangela.pucciarelli" runOnChange="true" id="modify-view-V_LIQUIDAZIONE_IVA_ACQUISTI">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUIDAZIONE_IVA_ACQUISTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
+    <changeSet author="rosangela.pucciarelli" runOnChange="true" id="modify-view-V_LIQUIDAZIONE_IVA_VENDITE">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_LIQUIDAZIONE_IVA_VENDITE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>   
+    <changeSet author="rosangela.pucciarelli" runOnChange="true" id="modify-package-CNRCTB260_BODY.sql">
+        <sqlFile dbms="oracle" path="../expsigladb/Package/CNRCTB260_BODY.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
 </databaseChangeLog>
+
+
