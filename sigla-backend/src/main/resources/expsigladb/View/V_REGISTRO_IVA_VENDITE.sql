@@ -184,8 +184,6 @@
              OR b.fl_san_marino_senza_iva = 'Y'
              OR a.fl_split_payment = 'Y'
             )
-        AND (to_char(B.DT_FATTURA_FORNITORE,'yyyy') = B.esercizio OR
-             B.ti_istituz_commerc!='C' OR B.fl_split_payment!='N' or b.im_totale_iva=0 or nvl(to_char(B.Data_protocollo,'yyyy'),b.esercizio) = B.esercizio)
    GROUP BY a.cd_cds,
             a.cd_unita_organizzativa,
             a.esercizio,
