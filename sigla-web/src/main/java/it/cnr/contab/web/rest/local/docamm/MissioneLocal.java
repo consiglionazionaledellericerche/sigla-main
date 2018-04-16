@@ -1,4 +1,4 @@
-package it.cnr.contab.web.rest;
+package it.cnr.contab.web.rest.local.docamm;
 
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.web.rest.config.SIGLARoles;
