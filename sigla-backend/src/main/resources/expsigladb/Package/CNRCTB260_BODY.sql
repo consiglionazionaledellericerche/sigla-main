@@ -1,7 +1,7 @@
 --------------------------------------------------------
 --  DDL for Package Body CNRCTB260
 --------------------------------------------------------
-  CREATE OR REPLACE PACKAGE BODY CNRCTB260 AS
+  CREATE OR REPLACE PACKAGE BODY "CNRCTB260" AS
 --==================================================================================================
 -- Inserimento record per titolo report (comune a tutte le stampe IVA)
 --==================================================================================================
@@ -807,14 +807,6 @@ BEGIN
          ELSE
             aStatement:=aStatement || 'A.ti_istituz_commerc = ' ||  '''I''';
          END IF;
-
-         /*aStatement:=aStatement || ' ' || ' AND EXISTS(SELECT 1 FROM FATTURA_PASSIVA B WHERE A.ESERCIZIO = B.ESERCIZIO AND '||
-         ' A.cd_cds_origine= B.cd_cds_origine  AND A.cd_uo_origine= B.cd_uo_origine AND A.PG_FATTURA_PASSIVA=B.PG_FATTURA_PASSIVA AND '||
-            '(B.ti_istituz_commerc != ' ||  '''C''' || ' OR ' ||
-            ' B.im_totale_iva = 0  OR ' ||
-             ' NVL(TO_CHAR(B.DATA_PROTOCOLLO,' ||'''YYYY''' || ')'||',B.ESERCIZIO) = B.ESERCIZIO OR '||
-            ' TO_CHAR(B.DT_FATTURA_FORNITORE,' ||'''YYYY''' || ')'||' = B.ESERCIZIO OR '||
-            ' B.fl_split_payment != ' ||  '''N''' || '))';*/
 
          aStatement:=aStatement || ' ' || 'ORDER BY 1, 2, 3, 5, 4';
 
