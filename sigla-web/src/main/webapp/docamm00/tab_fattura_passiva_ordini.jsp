@@ -15,26 +15,30 @@
 %>
 
 <% bp.getCrudDocEleAcquistoColl().writeHTMLTable(pageContext,"default",false,false,false,"100%","200px"); %>
-<fieldset class="card fieldset mt-1 mb-1">
-    <legend class="GroupLabel card-header text-primary p-0 pl-2">Righe di fattura</legend>
-    <table width="100%">
-        <tr>
-            <td>
-                <% bp.getDettaglio().writeHTMLTable(pageContext,"righiSet",false,false,false,"100%","200px"); %>
-            </td>
-        </tr>
-    </table>
-</fieldset>
-<fieldset class="card fieldset mb-1">
-    <legend class="GroupLabel card-header text-primary p-0 pl-2">Righe di consegna</legend>
-    <table width="100%">
-        <tr>
-            <td>
-                <% bp.getFattureRigaOrdiniController().writeHTMLTable(pageContext,"default",true,false,true,"100%","100%"); %>
-            </td>
-        </tr>
-    </table>
-</fieldset>
+<div class="card">
+    <fieldset class="fieldset mt-1 mb-1">
+        <legend class="GroupLabel card-header text-primary p-0 pl-2">Righe di fattura</legend>
+        <table width="100%">
+            <tr>
+                <td>
+                    <% bp.getDettaglio().writeHTMLTable(pageContext,"righiSet",false,false,false,"100%","200px"); %>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+<div class="card">
+    <fieldset class="fieldset mb-1">
+        <legend class="GroupLabel card-header text-primary p-0 pl-2">Righe di consegna</legend>
+        <table width="100%">
+            <tr>
+                <td>
+                    <% bp.getFattureRigaOrdiniController().writeHTMLTable(pageContext,"default",true,false,true,"100%","100%"); %>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
 <div class="card border-primary">
     <div class="card-header">
         <h5 class="mb-0">
