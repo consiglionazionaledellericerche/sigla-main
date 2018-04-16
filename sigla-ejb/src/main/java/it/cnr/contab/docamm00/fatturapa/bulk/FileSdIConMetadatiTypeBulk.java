@@ -14,6 +14,7 @@ public class FileSdIConMetadatiTypeBulk extends OggettoBulk {
 	private String nomeFileMetadati;
 	private File metadati;
 	private File fileFattureRicevute;
+	private String identificativoSDI;
 	private Integer daysBefore;
 	
 	public FileSdIConMetadatiTypeBulk() {
@@ -74,5 +75,13 @@ public class FileSdIConMetadatiTypeBulk extends OggettoBulk {
 
 	public void setDaysBefore(Integer daysBefore) {
 		this.daysBefore = daysBefore;
-	}		
+	}
+
+	public String getIdentificativoSDI() {
+		return identificativoSDI;
+	}
+
+	public void setIdentificativoSDI(String identificativoSDI) {
+		this.identificativoSDI = identificativoSDI;
+	}
 }

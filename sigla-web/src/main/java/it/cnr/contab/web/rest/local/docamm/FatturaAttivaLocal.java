@@ -1,4 +1,4 @@
-package it.cnr.contab.web.rest;
+package it.cnr.contab.web.rest.local.docamm;
 
 import it.cnr.contab.client.docamm.FatturaAttiva;
 import it.cnr.contab.web.rest.config.AccessoAllowed;

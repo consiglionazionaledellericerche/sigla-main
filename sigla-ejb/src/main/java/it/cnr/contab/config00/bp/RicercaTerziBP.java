@@ -18,6 +18,9 @@ import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
 import javax.xml.transform.dom.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.*;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
@@ -42,6 +45,8 @@ import it.cnr.jada.util.XmlWriter;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
+	private transient static final Logger logger = LoggerFactory.getLogger(RicercaTerziBP.class);
+
 	private String query;
 	private String dominio;
 	private String servizio;
@@ -253,10 +258,10 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 			    }
 		    	serializer.setOutputProperty(OutputKeys.INDENT,"yes");
 		    	serializer.setOutputProperty(OutputKeys.STANDALONE,"no");
-		    	serializer.transform(domSource, streamResult); 
-		} catch (ParserConfigurationException e) {
-		} catch (TransformerConfigurationException e) {
-		} catch (TransformerException e) {
+		    	serializer.transform(domSource, streamResult);
+		    	closed();
+		} catch (ParserConfigurationException|TransformerException|BusinessProcessException e) {
+			logger.error("GeneraXML error -> ", e);
 		}
     }
 	
