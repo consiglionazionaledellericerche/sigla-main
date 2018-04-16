@@ -21,6 +21,7 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 	private String nome;
 	private String titolo;
 	private String descrizione;
+	private Boolean daNonEliminare = false;
 	
 	public AllegatoGenericoBulk() {
 		super();
@@ -120,5 +121,13 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 	@Override
 	public int hashCode() {
 		return Objects.hash(storageKey);
+	}
+
+	public Boolean getDaNonEliminare() {
+		return daNonEliminare;
+	}
+
+	public void setDaNonEliminare(Boolean daNonEliminare) {
+		this.daNonEliminare = daNonEliminare;
 	}
 }

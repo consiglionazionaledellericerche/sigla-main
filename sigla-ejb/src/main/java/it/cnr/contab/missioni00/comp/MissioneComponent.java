@@ -2936,14 +2936,24 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
     public Query select(UserContext userContext, it.cnr.jada.persistency.sql.CompoundFindClause clauses, OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
         SQLBuilder sql = (SQLBuilder) super.select(userContext, clauses, bulk);
         MissioneBulk missione = (MissioneBulk) bulk;
-
-        sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, missione.getCd_cds());
-        sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, missione.getCd_unita_organizzativa());
-
+        sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS,
+                Optional.ofNullable(missione)
+                    .flatMap(missioneBulk -> Optional.ofNullable(missioneBulk.getCd_cds()))
+                    .orElseGet(() -> CNRUserContext.getCd_cds(userContext))
+        );
+        sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS,
+                Optional.ofNullable(missione)
+                        .flatMap(missioneBulk -> Optional.ofNullable(missioneBulk.getCd_unita_organizzativa()))
+                        .orElseGet(() -> CNRUserContext.getCd_unita_organizzativa(userContext))
+        );
         sql.addTableToHeader("TERZO");
         sql.addSQLJoin("MISSIONE.CD_TERZO", "TERZO.CD_TERZO");
-        sql.addSQLClause("AND", "TERZO.CD_PRECEDENTE", SQLBuilder.EQUALS, missione.getV_terzo().getCd_terzo_precedente());
-
+        sql.addSQLClause("AND", "TERZO.CD_PRECEDENTE", SQLBuilder.EQUALS,
+                Optional.ofNullable(missione)
+                    .flatMap(missioneBulk -> Optional.ofNullable(missioneBulk.getV_terzo()))
+                    .flatMap(v_terzo_per_compensoBulk -> Optional.ofNullable(v_terzo_per_compensoBulk.getCd_terzo_precedente()))
+                    .orElse(null)
+        );
         return sql;
     }
 
@@ -3757,7 +3767,7 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
 
         // CONFRONTO IMPORTO SPESA CON MASSIMALE TIPO PASTO
         if (massimalePastoEuro.compareTo(spesa.getIm_spesa_euro()) == -1)
-            throw new it.cnr.jada.bulk.ValidationException("L'importo della spesa supera il massimale del Tipo Pasto selezionato (" + massimalePastoEuro + ")");
+            throw new it.cnr.jada.bulk.ValidationException("L'importo della spesa supera il massimale del Tipo Pasto selezionato (€" + massimalePastoEuro + ")");
 
         return spesa;
     }
@@ -3791,7 +3801,7 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
 
         // CONFRONTO IMPORTO SPESA CON MASSIMALE TIPO SPESA
         if (massimaleSpesaEuro.compareTo(spesa.getIm_spesa_euro()) == -1)
-            throw new it.cnr.jada.bulk.ValidationException("L'importo della spesa supera il massimale del Tipo Spesa selezionato (" + massimaleSpesaEuro + ")");
+            throw new it.cnr.jada.bulk.ValidationException("L'importo della spesa supera il massimale del Tipo Spesa selezionato (€" + massimaleSpesaEuro + ")");
 
         spesa.setIm_spesa_max(massimaleSpesaEuro);
         spesa.setIm_spesa_max(spesa.getIm_spesa_max().setScale(2, BigDecimal.ROUND_HALF_UP));

@@ -12,11 +12,15 @@ import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.action.CondizioneComplessaBulk;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.ByteArrayInputStream;
@@ -55,26 +59,41 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 	}
 
 	@Override
+	protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
+		super.init(config, actioncontext);
+		openIterator(actioncontext);
+	}
+
+	public RemoteIterator search(
+			ActionContext actioncontext,
+			CompoundFindClause compoundfindclause,
+			OggettoBulk oggettobulk)
+			throws BusinessProcessException {
+		Lettera_pagam_esteroBulk lettera = (Lettera_pagam_esteroBulk) oggettobulk;
+		Lettera_pagam_esteroBulk letteraAll = new Lettera_pagam_esteroBulk();
+		letteraAll.setStato_trasmissione(null);
+		try {
+			return getComponentSession().cerca(actioncontext.getUserContext(),
+					compoundfindclause,
+					lettera.getStato_trasmissione().equalsIgnoreCase(StatoTrasmissione.ALL) ? letteraAll : lettera,
+                    "selectByClauseForFirma1210");
+		} catch (ComponentException|RemoteException e) {
+			throw handleException(e);
+		}
+	}
+
 	public void openIterator(ActionContext actioncontext)
 			throws BusinessProcessException {
 		try {
-			Unita_organizzativaBulk uoScrivania = CNRUserInfo.getUnita_organizzativa(actioncontext);
-			CompoundFindClause compoundfindclause = new CompoundFindClause();
-			compoundfindclause.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS,
-					((CNRUserContext) actioncontext.getUserContext()).getEsercizio());
-			if (uoScrivania.getCd_tipo_unita().compareTo(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE)!=0) {
-				compoundfindclause.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS,
-						((CNRUserContext) actioncontext.getUserContext()).getCd_cds());
-				if (!uoScrivania.isUoCds())
-					compoundfindclause.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS,
-							((CNRUserContext) actioncontext.getUserContext()).getCd_unita_organizzativa());
-			}
-			setBaseclause(compoundfindclause);
-			Lettera_pagam_esteroBulk lettera = (Lettera_pagam_esteroBulk) getModel();
-			Lettera_pagam_esteroBulk letteraAll = new Lettera_pagam_esteroBulk();
-			letteraAll.setStato_trasmissione(null);
-
-			setIterator(actioncontext, find(actioncontext, compoundfindclause, lettera.getStato_trasmissione().equalsIgnoreCase(StatoTrasmissione.ALL) ? letteraAll : lettera));
+			setIterator(actioncontext, search(
+			        actioncontext,
+                    Optional.ofNullable(getCondizioneCorrente())
+                        .map(CondizioneComplessaBulk::creaFindClause)
+                        .filter(CompoundFindClause.class::isInstance)
+                        .map(CompoundFindClause.class::cast)
+                        .orElseGet(() -> new CompoundFindClause()),
+                    getModel())
+            );
 		} catch (RemoteException e) {
 			throw new BusinessProcessException(e);
 		}

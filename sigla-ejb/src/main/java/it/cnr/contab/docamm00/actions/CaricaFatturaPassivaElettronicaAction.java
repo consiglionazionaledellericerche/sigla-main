@@ -218,7 +218,7 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 		CaricaFatturaElettronicaBP caricaFatturaElettronicaBP = (CaricaFatturaElettronicaBP)actioncontext.getBusinessProcess();
 		caricaFatturaElettronicaBP.fillModel(actioncontext);
 		FileSdIConMetadatiTypeBulk model = (FileSdIConMetadatiTypeBulk) caricaFatturaElettronicaBP.getModel();
-		fatturaPassivaElettronicaService.caricaFatture(model.getDaysBefore());
+		fatturaPassivaElettronicaService.caricaFatture(model.getDaysBefore(), model.getIdentificativoSDI());
 		return actioncontext.findDefaultForward();
 	}	
 	

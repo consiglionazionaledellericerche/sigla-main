@@ -1,6 +1,7 @@
 package it.cnr.contab.missioni00.docs.bulk;
 
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,6 +36,7 @@ import it.cnr.contab.spring.storage.SiglaStorageService;
 import it.cnr.contab.spring.storage.annotation.StoragePolicy;
 import it.cnr.contab.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.spring.storage.annotation.StorageType;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoStorePath;
@@ -47,6 +49,7 @@ import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
@@ -3683,5 +3686,8 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 			}
 		}
 		return paths;
+	}
+	public static boolean isAbilitatoCancellazioneMissioneFromGemis(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException{
+		return Utility.getRuoloComponentSession().isAbilitatoCancellazioneMissioneGemis(param0);
 	}
 }

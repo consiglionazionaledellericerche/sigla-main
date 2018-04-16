@@ -30,6 +30,7 @@ import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.DetailedException;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.BulkList;
@@ -2488,12 +2489,26 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 
     @Override
     public void delete(ActionContext actioncontext) throws BusinessProcessException {
+    	
         if (Optional.ofNullable(getModel())
                 .filter(MissioneBulk.class::isInstance)
                 .map(MissioneBulk.class::cast)
-                .map(MissioneBulk::isMissioneFromGemis)
+                .map(el -> {
+                	try {
+                		return el.isMissioneFromGemis() &&  !el.isAbilitatoCancellazioneMissioneFromGemis(actioncontext.getUserContext());
+					} catch (Exception e) {
+						throw new DetailedRuntimeException(e);
+					}
+                })
                 .orElse(Boolean.FALSE))
             throw handleException(new ApplicationException("Missione non eliminabile in quanto proveniente da un flusso approvato."));
+        MissioneBulk missioneBulk = (MissioneBulk)getModel(); 
+        if (missioneBulk.isMissioneFromGemis()){
+            for (AllegatoGenericoBulk allegato : missioneBulk.getArchivioAllegati()) {
+            	allegato.setDaNonEliminare(true);
+            }
+        }
+
         super.delete(actioncontext);
     }
 

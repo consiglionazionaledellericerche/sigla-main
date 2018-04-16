@@ -492,7 +492,14 @@ public boolean isInventarioUfficiale(UserContext userContext)throws it.cnr.jada.
 return (false);
 }
 
+public boolean isAbilitatoCancellazioneMissioneGemis(UserContext userContext)throws it.cnr.jada.comp.ComponentException{
+	return controlloAbilitazione(userContext, PrivilegioBulk.ABILITA_CANCELLAZIONE_MISSIONE_GEMIS);
+}
+
 public boolean isAbilitatoFirmaFatturazioneElettronica(UserContext userContext)throws it.cnr.jada.comp.ComponentException{
+	return controlloAbilitazione(userContext, PrivilegioBulk.ABILITA_FIRMA_FATTURA_ELETTRONICA);
+}
+public boolean controlloAbilitazione(UserContext userContext, String tipoAbilitazione) throws ComponentException {
 	try {
 		SQLBuilder sql = null; 
 		SQLBroker broker = null;
@@ -508,7 +515,7 @@ public boolean isAbilitatoFirmaFatturazioneElettronica(UserContext userContext)t
 				sql2.addTableToHeader("ASS_TIPO_RUOLO_PRIVILEGIO");
 				sql2.addSQLJoin("TIPO_RUOLO.TIPO", "ASS_TIPO_RUOLO_PRIVILEGIO.TIPO");
 
-				sql2.addSQLClause("AND","ASS_TIPO_RUOLO_PRIVILEGIO.CD_PRIVILEGIO",SQLBuilder.EQUALS,PrivilegioBulk.ABILITA_FIRMA_FATTURA_ELETTRONICA);
+				sql2.addSQLClause("AND","ASS_TIPO_RUOLO_PRIVILEGIO.CD_PRIVILEGIO",SQLBuilder.EQUALS,tipoAbilitazione);
 			
 				if (sql2.executeExistsQuery(getConnection(userContext)))
 					return true;
@@ -533,7 +540,7 @@ public boolean isAbilitatoFirmaFatturazioneElettronica(UserContext userContext)t
 					sql2.addTableToHeader("ASS_TIPO_RUOLO_PRIVILEGIO");
 					sql2.addSQLJoin("TIPO_RUOLO.TIPO", "ASS_TIPO_RUOLO_PRIVILEGIO.TIPO");
 	
-					sql2.addSQLClause("AND","ASS_TIPO_RUOLO_PRIVILEGIO.CD_PRIVILEGIO",SQLBuilder.EQUALS,PrivilegioBulk.ABILITA_FIRMA_FATTURA_ELETTRONICA);
+					sql2.addSQLClause("AND","ASS_TIPO_RUOLO_PRIVILEGIO.CD_PRIVILEGIO",SQLBuilder.EQUALS,tipoAbilitazione);
 				
 					if (sql2.executeExistsQuery(getConnection(userContext))) {
 						
