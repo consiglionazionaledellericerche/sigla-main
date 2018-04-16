@@ -259,9 +259,12 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 					return context.findDefaultForward();
 				}
 			}
-			if (bulk.isAttivoSplitPayment()) {
+			boolean hasAccesso = ((it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")).controllaAccesso(context.getUserContext(), "AMMFATTURDOCSFATPASA");
+	        if (bulk.isAttivoSplitPayment()) {
 				if (!bulk.isDocumentoSplitPayment() && !Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO.equals(bulk.getTipoDocumentoSIGLA()) &&
-					!bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_04.name())) {
+					!bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_12.name()) &&	
+					!bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_04.name())
+					&&   !hasAccesso ) {
 					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 					fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA deve essere di tipo 'Split Payment'"
 			    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
@@ -372,10 +375,11 @@ public Forward doOnCambiaImportoDocumento(ActionContext context) throws Componen
 		DocumentoEleTestataBulk DocumentoEleTestataBulkDB =(DocumentoEleTestataBulk) bp.createComponentSession().findByPrimaryKey(context.getUserContext(),bp.getModel());
 		try{
 			fillModel(context);	
-			if(DocumentoEleTestataBulkDB.getImportoDocumento()!=null && DocumentoEleTestataBulkDB.getImportoDocumento().compareTo(BigDecimal.ZERO)!=0 && bulk.getImportoDocumento()!=null &&
-					DocumentoEleTestataBulkDB.getImportoDocumento().compareTo(bulk.getImportoDocumento())!=0){
-					throw new it.cnr.jada.comp.ApplicationException("Importo documento non modificabile se già indicato!");
-			}
+			if (!bulk.isAbilitato())
+				if(DocumentoEleTestataBulkDB.getImportoDocumento()!=null && DocumentoEleTestataBulkDB.getImportoDocumento().compareTo(BigDecimal.ZERO)!=0 && bulk.getImportoDocumento()!=null &&
+						DocumentoEleTestataBulkDB.getImportoDocumento().compareTo(bulk.getImportoDocumento())!=0){
+						throw new it.cnr.jada.comp.ApplicationException("Importo documento non modificabile se già indicato!");
+				}
 		}catch (Throwable e){
 				bulk.setImportoDocumento(DocumentoEleTestataBulkDB.getImportoDocumento());
 				return handleException(context,e);

@@ -30,6 +30,7 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 	public final static String SERVIZIO = Bene_servizioBulk.SERVIZIO;
 	public final static String BENE = Bene_servizioBulk.BENE;
 
+	
 	static{
 		ACQUISTI_VENDITE = new it.cnr.jada.util.OrderedHashtable();
 		ACQUISTI_VENDITE.put(ACQUISTI,"Acquisti");
@@ -131,6 +132,8 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 			setFl_san_marino_senza_iva(FALSE);
 		if(getFl_servizi_non_residenti()==null)
 			setFl_servizi_non_residenti(FALSE);
+		if(getFl_reg_tardiva()==null)
+			setFl_reg_tardiva(FALSE);
 		return this;
 	}
 
@@ -153,7 +156,7 @@ public class Tipo_sezionaleBulk extends Tipo_sezionaleBase {
 		setFl_san_marino_senza_iva(Boolean.FALSE);
 		setFl_servizi_non_residenti(Boolean.FALSE);
 		setFl_split_payment(Boolean.FALSE);
-
+		setFl_reg_tardiva(Boolean.FALSE);
 		return tSez;
 	}
 
