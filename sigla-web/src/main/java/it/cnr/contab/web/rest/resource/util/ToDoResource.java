@@ -287,7 +287,7 @@ public class ToDoResource implements ToDoLocal {
                                         result.add(new ToDoDetail(
                                                 cdNodo,
                                                 "fa fa-fw fa-cloud text-warning",
-                                                "Fatture Elettroniche",
+                                                "Fatture Elettroniche Passive",
                                                 firstLabel(i),
                                                 detailLabel(i, "Fattura", "Fatture", "da completare.")
                                         ));
@@ -316,7 +316,7 @@ public class ToDoResource implements ToDoLocal {
                                         result.add(new ToDoDetail(
                                                 cdNodo,
                                                 "fa fa-fw fa-cloud text-danger",
-                                                "Fatture Elettroniche",
+                                                "Fatture Elettroniche Passive",
                                                 firstLabel(i),
                                                 detailLabel(i, "Fattura", "Fatture", "da registrare.")
                                         ));
