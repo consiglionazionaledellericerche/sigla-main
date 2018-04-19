@@ -34,6 +34,14 @@
 		caseSensitiveSearch="false" />
 
 	<fieldProperty
+		name="soggettowithformname"
+		property="soggetto"
+		inputType="SEARCHTOOL"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		formName="searchtool"
+		label="Soggetto"/>
+	<fieldProperty
 		name="soggetto"
 		property="soggetto"
 		inputType="SEARCHTOOL"
@@ -125,6 +133,7 @@
 	<formFieldProperty name="optionRadioGroup" />
 	
 	<formFieldProperty name="soggetto" />
+	<formFieldProperty name="soggettowithformname" />
 	<formFieldProperty name="cd_soggetto" />
 	<formFieldProperty name="cd_precedente" />
 	<formFieldProperty name="ds_soggetto" />
