@@ -2514,9 +2514,9 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 
     @Override
     protected String getStorePath(MissioneBulk missioneBulk, boolean create) throws BusinessProcessException {
-//        if (missioneBulk.isMissioneFromGemis() && missioneBulk.getIdFolderRimborsoMissione() != null) {
-//            return missioniCMISService.getCMISPathFromFolderRimborso(missioneBulk);
-//        } else {
+        if (missioneBulk.isMissioneFromGemis() && missioneBulk.getIdFolderRimborsoMissione() != null) {
+            return missioniCMISService.getCMISPathFromFolderRimborso(missioneBulk);
+        } else {
             if (create) {
                 final String primaryPath = Arrays.asList(
                         SpringUtil.getBean(StorePath.class).getPathMissioni(),
@@ -2529,7 +2529,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
                         Collectors.joining(SiglaStorageService.SUFFIX)
                 );
                 return missioniCMISService.createFolderMissioneSiglaIfNotPresent(primaryPath, missioneBulk);
-//            }
+            }
         }
         return null;
     }
