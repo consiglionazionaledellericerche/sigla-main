@@ -26,347 +26,238 @@ import it.cnr.jada.util.action.SelezionatoreListaBP;
 /**
  * Insert the type's description here.
  * Creation date: (6/17/2002 12:39:49 PM)
+ *
  * @author: Roberto Peli
  */
 public class DocumentiAmministrativiFatturazioneElettronicaAction extends ListaDocumentiAmministrativiAction {
-/**
- * DocumentiAmministrativiProtocollabiliAction constructor comment.
- */
-public DocumentiAmministrativiFatturazioneElettronicaAction() {
-	super();
-}
-/**
- * Gestisce una richiesta di ricerca.
- *
- * L'implementazione di default utilizza il metodo astratto <code>read</code>
- * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
- * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
- * Al business process viene anche chiesto l'elenco delle colonne da
- * visualizzare.
- */
-public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,InstantiationException,javax.ejb.RemoveException {
+    /**
+     * DocumentiAmministrativiProtocollabiliAction constructor comment.
+     */
+    public DocumentiAmministrativiFatturazioneElettronicaAction() {
+        super();
+    }
 
-	DocumentiAmministrativiFatturazioneElettronicaBP bp = (DocumentiAmministrativiFatturazioneElettronicaBP)context.getBusinessProcess();
-	try {
-		fillModel(context);
-		completaSoggetto(context);
-		Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk filtro = (Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk)bp.getModel();
-//		filtro.setPgStampa(null);
-//		filtro.setPgProtocollazioneIVA(null);
-		
-		OggettoBulk instance = (OggettoBulk)filtro.getInstance();
-		Unita_organizzativaBulk unita_organizzativa = CNRUserInfo.getUnita_organizzativa(context);
-		CompoundFindClause clauses = new CompoundFindClause();
-		clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()));
-		clauses.addClause("AND", "cd_cds_origine", SQLBuilder.EQUALS, unita_organizzativa.getUnita_padre().getCd_unita_organizzativa());
-		clauses.addClause("AND", "cd_uo_origine", SQLBuilder.EQUALS, unita_organizzativa.getCd_unita_organizzativa());
-		clauses.addClause("AND", "protocollo_iva", SQLBuilder.ISNULL, null);
-		clauses.addClause("AND", "protocollo_iva_generale", SQLBuilder.ISNULL, null);
-		clauses.addClause("AND", "codiceUnivocoUfficioIpa", SQLBuilder.ISNOTNULL, null);
-		if (filtro.isDaFirmare()){
-			clauses.addClause("AND", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
-		} else if (filtro.isFirmata()){
-			clauses.addClause("AND", "statoInvioSdi", SQLBuilder.NOT_EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
-		}
-		if (filtro.getCodiceUnivocoUfficioIpa() != null){
-			clauses.addClause("AND", "codiceUnivocoUfficioIpa", SQLBuilder.EQUALS, filtro.getCodiceUnivocoUfficioIpa());
-		}
-		clauses.addClause("AND", "dt_emissione", SQLBuilder.ISNULL, null);
-		clauses.addClause("AND", "stato_cofi", SQLBuilder.NOT_EQUALS, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk.STATO_ANNULLATO);
+    /**
+     * Gestisce una richiesta di ricerca.
+     * <p>
+     * L'implementazione di default utilizza il metodo astratto <code>read</code>
+     * di <code>CRUDBusinessProcess</code>.
+     * Se la ricerca fornisce più di un risultato viene creato un
+     * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
+     * Al business process viene anche chiesto l'elenco delle colonne da
+     * visualizzare.
+     */
+    public Forward doCerca(ActionContext context) throws java.rmi.RemoteException, InstantiationException, javax.ejb.RemoveException {
 
-		filtro.setSQLClauses(clauses);
-		
-		it.cnr.jada.util.RemoteIterator ri = bp.find(context, clauses, instance);
-		if (ri == null || ri.countElements() == 0) {
-			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
-			bp.setMessage("La ricerca non ha fornito alcun risultato.");
-			return context.findDefaultForward();
-		} else {
-			bp.setModel(context,filtro);
+        DocumentiAmministrativiFatturazioneElettronicaBP bp = (DocumentiAmministrativiFatturazioneElettronicaBP) context.getBusinessProcess();
+        try {
+            fillModel(context);
+            completaSoggetto(context);
+            Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk filtro = (Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk) bp.getModel();
 
-			IDocumentoAmministrativoBP docAmmBP = getBusinessProcessForDocAmm(context, (IDocumentoAmministrativoBulk)instance);
-			SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("Selezionatore", new Object[] { "Tn" });
-			nbp.setMultiSelection(true);
-			
-//			nbp.setSelectionListener(
-//					context,
-//					getSelectionListener(
-//								context, 
-//								(it.cnr.contab.docamm00.bp.CRUDFatturaAttivaBP)docAmmBP, 
-//								(FatturaAttivaSingolaComponentSession)docAmmBP.createComponentSession(),
-//								filtro));
-			
-			nbp.setIterator(context,ri);
-			BulkInfo bulkInfo = BulkInfo.getBulkInfo(instance.getClass());
-			nbp.setBulkInfo(bulkInfo);
-			
-			if (docAmmBP instanceof IGenericSearchDocAmmBP) {
-				String columnsetName = ((IGenericSearchDocAmmBP)docAmmBP).getColumnsetForGenericSearch();
-				if (columnsetName != null)
-					nbp.setColumns(bulkInfo.getColumnFieldPropertyDictionary(columnsetName));
-			}
-			context.addHookForward("seleziona",this,"doRiportaSelezione");
-			return context.addBusinessProcess(nbp);
-		}
-	} catch(Throwable e) {
-		try {
-			((BusinessProcess)bp).rollbackUserTransaction();
-		} catch (BusinessProcessException ex) {
-			return handleException(context, ex);
-		}
-		return handleException(context,e);
-	}
-}
-/**
- * Gestisce la selezione dopo una richiesta di ricerca.
- *
- * L'implementazione di default utilizza il metodo astratto <code>read</code>
- * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
- * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
- * Al business process viene anche chiesto l'elenco delle colonne da
- * visualizzare.
- */
-public Forward doRiportaSelezione(ActionContext context) {
+            OggettoBulk instance = (OggettoBulk) filtro.getInstance();
+            Unita_organizzativaBulk unita_organizzativa = CNRUserInfo.getUnita_organizzativa(context);
+            CompoundFindClause clauses = new CompoundFindClause();
+            clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()));
+            clauses.addClause("AND", "cd_cds_origine", SQLBuilder.EQUALS, unita_organizzativa.getUnita_padre().getCd_unita_organizzativa());
+            clauses.addClause("AND", "cd_uo_origine", SQLBuilder.EQUALS, unita_organizzativa.getCd_unita_organizzativa());
+            clauses.addClause("AND", "protocollo_iva", SQLBuilder.ISNULL, null);
+            clauses.addClause("AND", "protocollo_iva_generale", SQLBuilder.ISNULL, null);
+            clauses.addClause("AND", "codiceUnivocoUfficioIpa", SQLBuilder.ISNOTNULL, null);
+            if (filtro.isDaFirmare()) {
+                clauses.addClause("AND", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
+            } else if (filtro.isFirmata()) {
+                clauses.addClause("AND", "statoInvioSdi", SQLBuilder.NOT_EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
+            }
+            if (filtro.getCodiceUnivocoUfficioIpa() != null) {
+                clauses.addClause("AND", "codiceUnivocoUfficioIpa", SQLBuilder.EQUALS, filtro.getCodiceUnivocoUfficioIpa());
+            }
+            clauses.addClause("AND", "dt_emissione", SQLBuilder.ISNULL, null);
+            clauses.addClause("AND", "stato_cofi", SQLBuilder.NOT_EQUALS, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk.STATO_ANNULLATO);
 
-	DocumentiAmministrativiFatturazioneElettronicaBP bp = (DocumentiAmministrativiFatturazioneElettronicaBP)context.getBusinessProcess();
-	try {
-		Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk filtro = (Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk)bp.getModel();
-		IDocumentoAmministrativoBulk docAmm = (IDocumentoAmministrativoBulk)filtro.getInstance();
-		if (docAmm instanceof Fattura_attivaBulk) {
-			Fattura_attivaBulk fa = (Fattura_attivaBulk)docAmm;
-			IDocumentoAmministrativoBP docAmmBP = getBusinessProcessForDocAmm(context, docAmm);
-			FatturaAttivaSingolaComponentSession session = (FatturaAttivaSingolaComponentSession)docAmmBP.createComponentSession();
+            filtro.setSQLClauses(clauses);
 
-//			if (session.esistonoDatiPerProtocollazioneIva(context.getUserContext(), filtro.getPgProtocollazioneIVA())) {
-//				session.protocolla(
-//							context.getUserContext(), 
-//							filtro.getDt_stampa(),
-//							filtro.getPgProtocollazioneIVA());
-//			
-//				return doStampaProtocollati(context, filtro);
-//			}
-		} else
-			throw new it.cnr.jada.comp.ApplicationException("Documento amministrativo selezionato NON valido!");
-	} catch(Exception e) {
-		try {
-			((BusinessProcess)bp).rollbackUserTransaction();
-		} catch (BusinessProcessException ex) {
-			return handleException(context, ex);
-		}
-		return handleException(context,e);
-	}
+            it.cnr.jada.util.RemoteIterator ri = bp.find(context, clauses, instance);
+            if (ri == null || ri.countElements() == 0) {
+                it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
+                bp.setMessage("La ricerca non ha fornito alcun risultato.");
+                return context.findDefaultForward();
+            } else {
+                bp.setModel(context, filtro);
 
-	return context.findDefaultForward();
-}
-/**
- * Gestisce la selezione dopo una richiesta di ricerca.
- *
- * L'implementazione di default utilizza il metodo astratto <code>read</code>
- * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
- * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
- * Al business process viene anche chiesto l'elenco delle colonne da
- * visualizzare.
- */
-public Forward doStampaAnnullata(ActionContext context) {
+                IDocumentoAmministrativoBP docAmmBP = getBusinessProcessForDocAmm(context, (IDocumentoAmministrativoBulk) instance);
+                SelezionatoreListaBP nbp = (SelezionatoreListaBP) context.createBusinessProcess("Selezionatore", new Object[]{"Tn"});
+                nbp.setMultiSelection(true);
+                nbp.setIterator(context, ri);
+                BulkInfo bulkInfo = BulkInfo.getBulkInfo(instance.getClass());
+                nbp.setBulkInfo(bulkInfo);
 
-	try {
-		context.getBusinessProcess().rollbackUserTransaction();
-		return context.findDefaultForward();
-	} catch(Exception e) {
-		return handleException(context,e);
-	}
-}
+                if (docAmmBP instanceof IGenericSearchDocAmmBP) {
+                    String columnsetName = ((IGenericSearchDocAmmBP) docAmmBP).getColumnsetForGenericSearch();
+                    if (columnsetName != null)
+                        nbp.setColumns(bulkInfo.getColumnFieldPropertyDictionary(columnsetName));
+                }
+                context.addHookForward("seleziona", this, "doRiportaSelezione");
+                return context.addBusinessProcess(nbp);
+            }
+        } catch (Throwable e) {
+            try {
+                ((BusinessProcess) bp).rollbackUserTransaction();
+            } catch (BusinessProcessException ex) {
+                return handleException(context, ex);
+            }
+            return handleException(context, e);
+        }
+    }
 
-public Forward doSearchSoggetto(ActionContext context) {
-	try {
-		DocumentiAmministrativiFatturazioneElettronicaBP bp = (DocumentiAmministrativiFatturazioneElettronicaBP)context.getBusinessProcess();
-		Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk filtro = (Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk)bp.getModel();
-		IDocumentoAmministrativoBulk docAmm = filtro.getInstance();
-		IDocumentoAmministrativoBP docAmmBP = getBusinessProcessForDocAmm(context, docAmm);
-		
-		if (!(docAmmBP instanceof IGenericSearchDocAmmBP) || ((IGenericSearchDocAmmBP)docAmmBP).getPropertyForGenericSearch() == null) {
-			filtro.setSoggetto(null);
-			throw new it.cnr.jada.comp.ApplicationException("Il soggetto non è una clausola valida per il gruppo selezionato!");
-		}
+    /**
+     * Gestisce la selezione dopo una richiesta di ricerca.
+     * <p>
+     * L'implementazione di default utilizza il metodo astratto <code>read</code>
+     * di <code>CRUDBusinessProcess</code>.
+     * Se la ricerca fornisce più di un risultato viene creato un
+     * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
+     * Al business process viene anche chiesto l'elenco delle colonne da
+     * visualizzare.
+     */
+    public Forward doRiportaSelezione(ActionContext context) {
 
-		IGenericSearchDocAmmBP docAmmGenericSearchBP = (IGenericSearchDocAmmBP)docAmmBP;
-		String property = docAmmGenericSearchBP.getPropertyForGenericSearch();
-		it.cnr.contab.anagraf00.core.bulk.TerzoBulk soggetto = filtro.getSoggetto();
-		if (soggetto == null)
-			soggetto = basicDoBlankSearchSoggetto(context);
-		return selectFromSearchResult(
-							context,
-							getFormField(context,"main.soggetto"),
-							bp.find(
-								context,
-								null,
-								soggetto,
-								bp.getModel(),
-								property),
-							"default");
-	} catch(Exception e) {
-		return handleException(context,e);
-	}
-}
+        DocumentiAmministrativiFatturazioneElettronicaBP bp = (DocumentiAmministrativiFatturazioneElettronicaBP) context.getBusinessProcess();
+        try {
+            Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk filtro = (Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk) bp.getModel();
+            IDocumentoAmministrativoBulk docAmm = (IDocumentoAmministrativoBulk) filtro.getInstance();
+            if (docAmm instanceof Fattura_attivaBulk) {
+                Fattura_attivaBulk fa = (Fattura_attivaBulk) docAmm;
+                IDocumentoAmministrativoBP docAmmBP = getBusinessProcessForDocAmm(context, docAmm);
+                FatturaAttivaSingolaComponentSession session = (FatturaAttivaSingolaComponentSession) docAmmBP.createComponentSession();
+            } else
+                throw new it.cnr.jada.comp.ApplicationException("Documento amministrativo selezionato NON valido!");
+        } catch (Exception e) {
+            try {
+                ((BusinessProcess) bp).rollbackUserTransaction();
+            } catch (BusinessProcessException ex) {
+                return handleException(context, ex);
+            }
+            return handleException(context, e);
+        }
 
-public Forward doBringBackSearchSoggetto(ActionContext context,
-		Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk filtro,
-		TerzoBulk soggettoTrovato) 
-		throws java.rmi.RemoteException {
+        return context.findDefaultForward();
+    }
 
-		filtro.setSoggetto(soggettoTrovato);
-		IDocumentoAmministrativoBulk docAmm = filtro.getInstance();
-		if (docAmm !=null) {
-			try {
-				IDocumentoAmministrativoBP docAmmBP = getBusinessProcessForDocAmm(context, docAmm);
-				if (docAmmBP instanceof IGenericSearchDocAmmBP && ((IGenericSearchDocAmmBP)docAmmBP).getPropertyForGenericSearch() != null) {
-					IGenericSearchDocAmmBP genericSearchBP = (IGenericSearchDocAmmBP)docAmmBP;
-					Introspector.invoke(
-									docAmm,
-									Introspector.buildMetodName("set", genericSearchBP.getPropertyForGenericSearch()),
-									soggettoTrovato);
-				}
-			} catch (Throwable e) {
-				return handleException(context, e);
-			}
-		} 
-		return context.findDefaultForward();
-	}
-		
+    /**
+     * Gestisce la selezione dopo una richiesta di ricerca.
+     * <p>
+     * L'implementazione di default utilizza il metodo astratto <code>read</code>
+     * di <code>CRUDBusinessProcess</code>.
+     * Se la ricerca fornisce più di un risultato viene creato un
+     * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
+     * Al business process viene anche chiesto l'elenco delle colonne da
+     * visualizzare.
+     */
+    public Forward doStampaAnnullata(ActionContext context) {
 
-/**
- * Gestisce la selezione dopo una richiesta di ricerca.
- *
- * L'implementazione di default utilizza il metodo astratto <code>read</code>
- * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
- * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
- * Al business process viene anche chiesto l'elenco delle colonne da
- * visualizzare.
- */
+        try {
+            context.getBusinessProcess().rollbackUserTransaction();
+            return context.findDefaultForward();
+        } catch (Exception e) {
+            return handleException(context, e);
+        }
+    }
 
-private Forward doStampaProtocollati(
-	ActionContext context,
-	Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk filtro)
-	throws BusinessProcessException {
+    public Forward doSearchSoggetto(ActionContext context) {
+        try {
+            DocumentiAmministrativiFatturazioneElettronicaBP bp = (DocumentiAmministrativiFatturazioneElettronicaBP) context.getBusinessProcess();
+            Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk filtro = (Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk) bp.getModel();
+            IDocumentoAmministrativoBulk docAmm = filtro.getInstance();
+            IDocumentoAmministrativoBP docAmmBP = getBusinessProcessForDocAmm(context, docAmm);
 
-	DocumentiAmministrativiFatturazioneElettronicaBP bp = (DocumentiAmministrativiFatturazioneElettronicaBP)context.getBusinessProcess();
-	OfflineReportPrintBP printbp = (OfflineReportPrintBP)context.createBusinessProcess(bp.getPrintbp(), new Object[] { "Th" });
-	printbp.setReportName("/docamm/docamm/fatturaattiva_ncd.jasper");
-	Print_spooler_paramBulk param;
-	param = new Print_spooler_paramBulk();
-	param.setNomeParam("Ti_stampa");
-	param.setValoreParam("S");
-	param.setParamType("java.lang.String");
-	printbp.addToPrintSpoolerParam(param);
-	
-	param = new Print_spooler_paramBulk();
-	param.setNomeParam("id_report");
-	param.setValoreParam(filtro.getPgStampa().toString());
-	param.setParamType("java.lang.Long");
-	printbp.addToPrintSpoolerParam(param);
-	
-	context.addHookForward("close", this, "doStampaAnnullata");
-	printbp.setMessage(
-		it.cnr.jada.util.action.OptionBP.MESSAGE,
-		"Il protocollo IVA è stato assegnato correttamente. Per confermare eseguire la stampa.");
+            if (!(docAmmBP instanceof IGenericSearchDocAmmBP) || ((IGenericSearchDocAmmBP) docAmmBP).getPropertyForGenericSearch() == null) {
+                filtro.setSoggetto(null);
+                throw new it.cnr.jada.comp.ApplicationException("Il soggetto non è una clausola valida per il gruppo selezionato!");
+            }
 
-	return context.addBusinessProcess(printbp);
-}
-/**
- * Gestisce la selezione dopo una richiesta di ricerca.
- *
- * L'implementazione di default utilizza il metodo astratto <code>read</code>
- * di <code>CRUDBusinessProcess</code>.
- * Se la ricerca fornisce più di un risultato viene creato un
- * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
- * Al business process viene anche chiesto l'elenco delle colonne da
- * visualizzare.
- */
-//private it.cnr.jada.util.action.SelectionListener getSelectionListener(
-//		ActionContext context,
-//		it.cnr.contab.docamm00.bp.CRUDFatturaAttivaBP aDocAmmBP,
-//		FatturaAttivaSingolaComponentSession faSession,
-//		Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk aFiltro) {
-//
-//	final DocumentiAmministrativiFatturazioneElettronicaBP docAmmFattEleBP = (DocumentiAmministrativiFatturazioneElettronicaBP)context.getBusinessProcess();
-//	final it.cnr.contab.docamm00.bp.CRUDFatturaAttivaBP docAmmBP = aDocAmmBP;
-//	final FatturaAttivaSingolaComponentSession session = faSession;
-//	final Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk filtro = aFiltro;
-//	final Fattura_attivaBulk instance = (Fattura_attivaBulk)filtro.getInstance();
-	
-//	return new it.cnr.jada.util.action.SelectionListener() {
-//
-//		Integer counter = null;
-//		
-//		public void clearSelection(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
-//			try {
-//				session.annullaSelezionePerStampa(
-//					context.getUserContext(),
-//					instance);
-//			} catch(it.cnr.jada.comp.ComponentException e) {
-//				throw docAmmBP.handleException(e);
-//			} catch(java.rmi.RemoteException e) {
-//				throw docAmmBP.handleException(e);
-//			}
-//		}
-//		public void deselectAll(it.cnr.jada.action.ActionContext context) {
-//				//Non deve fare nulla
-//		}
-//		public java.util.BitSet getSelection(it.cnr.jada.action.ActionContext context, it.cnr.jada.bulk.OggettoBulk[] bulks, java.util.BitSet currentSelection) {
-//
-//			return currentSelection;
-//		}
-//		public void initializeSelection(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
-//			try {
-//				session.inizializzaSelezionePerStampa(
-//					context.getUserContext(),
-//					instance);
-//			} catch(it.cnr.jada.comp.ComponentException e) {
-//				throw docAmmBP.handleException(e);
-//			} catch(java.rmi.RemoteException e) {
-//				throw docAmmBP.handleException(e);
-//			}
-//		}
-//		public void selectAll(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
-//			try {
-//				Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk nuovoFiltro = session.selezionaTuttiPerStampa(
-//					context.getUserContext(),
-//					filtro);
-//				docAmmFattEleBP.setModel(context, nuovoFiltro);
-//			} catch(it.cnr.jada.comp.ComponentException e) {
-//				throw docAmmBP.handleException(e);
-//			} catch(java.rmi.RemoteException e) {
-//				throw docAmmBP.handleException(e);
-//			}
-//		}
-//		public java.util.BitSet setSelection(it.cnr.jada.action.ActionContext context, it.cnr.jada.bulk.OggettoBulk[] bulks, java.util.BitSet oldSelection, java.util.BitSet newSelection) throws it.cnr.jada.action.BusinessProcessException {
-//			try {
-//				if (counter == null) {
-//					counter = new Integer(0);
-//					filtro.setPgProtocollazioneIVA(session.callGetPgPerProtocolloIVA(context.getUserContext()));
-//					filtro.setPgStampa(session.callGetPgPerStampa(context.getUserContext()));
-//				}
-//				counter = session.modificaSelezionePerStampa(
-//					context.getUserContext(),
-//					instance,
-//					bulks,
-//					oldSelection,
-//					newSelection,
-//					filtro.getPgProtocollazioneIVA(),
-//					counter,
-//					filtro.getPgStampa(),
-//					filtro.getDt_stampa());
-//				return newSelection;
-//			} catch(it.cnr.jada.comp.ComponentException e) {
-//				throw docAmmBP.handleException(e);
-//			} catch(java.rmi.RemoteException e) {
-//				throw docAmmBP.handleException(e);
-//			}
-//		}
-//	};
-//}
+            IGenericSearchDocAmmBP docAmmGenericSearchBP = (IGenericSearchDocAmmBP) docAmmBP;
+            String property = docAmmGenericSearchBP.getPropertyForGenericSearch();
+            it.cnr.contab.anagraf00.core.bulk.TerzoBulk soggetto = filtro.getSoggetto();
+            if (soggetto == null)
+                soggetto = basicDoBlankSearchSoggetto(context);
+            return selectFromSearchResult(
+                    context,
+                    getFormField(context, "main.soggetto"),
+                    bp.find(
+                            context,
+                            null,
+                            soggetto,
+                            bp.getModel(),
+                            property),
+                    "default");
+        } catch (Exception e) {
+            return handleException(context, e);
+        }
+    }
+
+    public Forward doBringBackSearchSoggetto(ActionContext context,
+                                             Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk filtro,
+                                             TerzoBulk soggettoTrovato)
+            throws java.rmi.RemoteException {
+
+        filtro.setSoggetto(soggettoTrovato);
+        IDocumentoAmministrativoBulk docAmm = filtro.getInstance();
+        if (docAmm != null) {
+            try {
+                IDocumentoAmministrativoBP docAmmBP = getBusinessProcessForDocAmm(context, docAmm);
+                if (docAmmBP instanceof IGenericSearchDocAmmBP && ((IGenericSearchDocAmmBP) docAmmBP).getPropertyForGenericSearch() != null) {
+                    IGenericSearchDocAmmBP genericSearchBP = (IGenericSearchDocAmmBP) docAmmBP;
+                    Introspector.invoke(
+                            docAmm,
+                            Introspector.buildMetodName("set", genericSearchBP.getPropertyForGenericSearch()),
+                            soggettoTrovato);
+                }
+            } catch (Throwable e) {
+                return handleException(context, e);
+            }
+        }
+        return context.findDefaultForward();
+    }
+
+
+    /**
+     * Gestisce la selezione dopo una richiesta di ricerca.
+     * <p>
+     * L'implementazione di default utilizza il metodo astratto <code>read</code>
+     * di <code>CRUDBusinessProcess</code>.
+     * Se la ricerca fornisce più di un risultato viene creato un
+     * nuovo <code>SelezionatoreListaBP</code> per la selezione di un elemento.
+     * Al business process viene anche chiesto l'elenco delle colonne da
+     * visualizzare.
+     */
+
+    private Forward doStampaProtocollati(
+            ActionContext context,
+            Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk filtro)
+            throws BusinessProcessException {
+
+        DocumentiAmministrativiFatturazioneElettronicaBP bp = (DocumentiAmministrativiFatturazioneElettronicaBP) context.getBusinessProcess();
+        OfflineReportPrintBP printbp = (OfflineReportPrintBP) context.createBusinessProcess(bp.getPrintbp(), new Object[]{"Th"});
+        printbp.setReportName("/docamm/docamm/fatturaattiva_ncd.jasper");
+        Print_spooler_paramBulk param;
+        param = new Print_spooler_paramBulk();
+        param.setNomeParam("Ti_stampa");
+        param.setValoreParam("S");
+        param.setParamType("java.lang.String");
+        printbp.addToPrintSpoolerParam(param);
+
+        param = new Print_spooler_paramBulk();
+        param.setNomeParam("id_report");
+        param.setValoreParam(filtro.getPgStampa().toString());
+        param.setParamType("java.lang.Long");
+        printbp.addToPrintSpoolerParam(param);
+
+        context.addHookForward("close", this, "doStampaAnnullata");
+        printbp.setMessage(
+                it.cnr.jada.util.action.OptionBP.MESSAGE,
+                "Il protocollo IVA è stato assegnato correttamente. Per confermare eseguire la stampa.");
+
+        return context.addBusinessProcess(printbp);
+    }
 }

@@ -24,8 +24,8 @@
 	it.cnr.contab.anagraf00.core.bulk.TerzoBulk soggetto = filtro.getSoggetto();
 	bp.openFormWindow(pageContext); %>
 
-	<div class="Group" style="width:100%">
-		<table width="100%">
+	<div class="Group card p-2" style="width:100%">
+		<table>
 			<tr>
 				<td>
 					<% bp.getController().writeFormLabel(out,"group");%>
@@ -36,16 +36,10 @@
 			</tr>
 		</table>
 		<br>
-		<div class="Group" style="width:100%">
+		<div class="Group p-2" style="width:100%">
 			<table width="100%">
 				<tr>
-					<td>
-						<% bp.getController().writeFormLabel(out,"cd_soggetto");%>
-					</td>
-					<td colspan="3">
-						<% bp.getController().writeFormInput(out,"cd_soggetto");%>
-						<% bp.getController().writeFormInput(out,"soggetto");%>
-					</td>
+					<% bp.getController().writeFormField(out,"soggettowithformname");%>
 				</tr>
 				<tr>
 					<td>
@@ -105,8 +99,8 @@
 			</table>	
 		</div>
 	</div>
-	<div class="Group" style="width:100%">
-		<table width="100%">
+	<div class="Group card p-2 mt-2" style="width:100%">
+		<table>
 			<tr>
 				<td>
 					<% bp.getController().writeFormLabel(out,"optionRadioGroup");%>
