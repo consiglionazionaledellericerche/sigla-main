@@ -1,6 +1,7 @@
 package it.cnr.contab.web.rest.resource.util;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
@@ -286,7 +287,7 @@ public class ToDoResource implements ToDoLocal {
                                         result.add(new ToDoDetail(
                                                 cdNodo,
                                                 "fa fa-fw fa-cloud text-warning",
-                                                "Fatture Elettroniche",
+                                                "Fatture Elettroniche Passive",
                                                 firstLabel(i),
                                                 detailLabel(i, "Fattura", "Fatture", "da completare.")
                                         ));
@@ -315,7 +316,7 @@ public class ToDoResource implements ToDoLocal {
                                         result.add(new ToDoDetail(
                                                 cdNodo,
                                                 "fa fa-fw fa-cloud text-danger",
-                                                "Fatture Elettroniche",
+                                                "Fatture Elettroniche Passive",
                                                 firstLabel(i),
                                                 detailLabel(i, "Fattura", "Fatture", "da registrare.")
                                         ));
@@ -360,6 +361,40 @@ public class ToDoResource implements ToDoLocal {
                                     iterator.ejbRemove();
                                 }
                             });
+                    break;
+                }
+                case DocumentiAmministrativiFatturazioneElettronicaBP: {
+                    if (UtenteBulk.isAbilitatoFirmaFatturazioneElettronica(userContext)) {
+                        BulkLoaderIterator remoteIterator =
+                                Optional.ofNullable(crudComponentSession.cerca(
+                                        userContext,
+                                        new CompoundFindClause(),
+                                        new Documento_amministrativo_attivoBulk(),
+                                        "selectByClauseForFattureAttiveDaFirmare"))
+                                        .filter(BulkLoaderIterator.class::isInstance)
+                                        .map(BulkLoaderIterator.class::cast)
+                                        .orElseThrow(() -> new RestException(Response.Status.INTERNAL_SERVER_ERROR, "Cannot create remote iterator"));
+                        Optional.ofNullable(remoteIterator)
+                                .ifPresent(iterator -> {
+                                    try {
+                                        iterator.open(userContext);
+                                        final int i = iterator.countElements();
+                                        if (i > 0) {
+                                            result.add(new ToDoDetail(
+                                                    cdNodo,
+                                                    "fa fa-fw fa-pencil text-info",
+                                                    "Fatture Elettroniche Attive",
+                                                    firstLabel(i),
+                                                    detailLabel(i, "Fattrura", "Fatture", "da firmare.")
+                                            ));
+                                        }
+                                    } catch (ComponentException | RemoteException e) {
+                                        throw new RestException(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage());
+                                    } finally {
+                                        iterator.ejbRemove();
+                                    }
+                                });
+                    }
                     break;
                 }
             }
