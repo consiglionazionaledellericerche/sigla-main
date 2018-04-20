@@ -97,7 +97,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
             List list = getDetails();
             Missione_dettaglioBulk dettaglio = (Missione_dettaglioBulk) list.get(i);
             if (dettaglio.isDettaglioMissioneFromGemis()) {
-                throw new it.cnr.jada.action.MessageToUser("Dettaglio non eliminabile in quanto proveniente da dalla Gestione automatica delle Missioni");
+                throw new it.cnr.jada.action.MessageToUser("Dettaglio non eliminabile in quanto proveniente dalla Gestione automatica delle Missioni");
             } else {
                 BulkList<AllegatoMissioneDettaglioSpesaBulk> listaDettagliAllegati = dettaglio.getDettaglioSpesaAllegati();
                 if (listaDettagliAllegati != null && !listaDettagliAllegati.isEmpty()) {
@@ -2514,9 +2514,9 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 
     @Override
     protected String getStorePath(MissioneBulk missioneBulk, boolean create) throws BusinessProcessException {
-        if (missioneBulk.isMissioneFromGemis() && missioneBulk.getIdFolderRimborsoMissione() != null) {
-            return missioniCMISService.getCMISPathFromFolderRimborso(missioneBulk);
-        } else {
+//        if (missioneBulk.isMissioneFromGemis() && missioneBulk.getIdFolderRimborsoMissione() != null) {
+//            return missioniCMISService.getCMISPathFromFolderRimborso(missioneBulk);
+//        } else {
             if (create) {
                 final String primaryPath = Arrays.asList(
                         SpringUtil.getBean(StorePath.class).getPathMissioni(),
@@ -2529,7 +2529,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
                         Collectors.joining(SiglaStorageService.SUFFIX)
                 );
                 return missioniCMISService.createFolderMissioneSiglaIfNotPresent(primaryPath, missioneBulk);
-            }
+//            }
         }
         return null;
     }
@@ -2815,7 +2815,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
         return Optional.ofNullable(allegato)
                 .flatMap(allegatoGenericoBulk -> Optional.ofNullable(allegatoGenericoBulk.getStorageKey()))
                 .map(key -> missioniCMISService.getStorageObjectBykey(key))
-                .map(storageObject -> missioniCMISService.hasAspect(storageObject, MissioniCMISService.ASPECT_ALLEGATI_MISSIONE_SIGLA))
+                .map(storageObject -> !missioniCMISService.hasAspect(storageObject, MissioniCMISService.ASPECT_ALLEGATI_MISSIONE_SIGLA))
                 .orElse(false);
     }
 
