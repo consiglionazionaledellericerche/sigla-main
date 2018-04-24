@@ -38,6 +38,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
@@ -477,7 +478,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 						}
 						if (numeroCaratteri < numeroCaratteriFinali){
 							String causale = descrizione.substring(numeroCaratteri,numeroCaratteriFinali);
-							listaCausali.add(causale);
+							listaCausali.add(RemoveAccent.convert(causale));
 						}
 					}
 
@@ -497,7 +498,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 							DettaglioLineeType rigaFattura = factory.createDettaglioLineeType();
 							rigaFattura.setNumeroLinea(riga.getProgressivo_riga().intValue());
 							if (riga.getDs_riga_fattura() != null){
-								rigaFattura.setDescrizione(riga.getDs_riga_fattura().replaceAll("\\u20AC", "E"));
+								rigaFattura.setDescrizione(RemoveAccent.convert(riga.getDs_riga_fattura().replaceAll("\\u20AC", "E")));
 							} else {
 								rigaFattura.setDescrizione("Descrizione");
 							}
