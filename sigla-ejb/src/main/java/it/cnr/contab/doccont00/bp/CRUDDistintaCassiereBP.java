@@ -937,26 +937,39 @@ public class CRUDDistintaCassiereBP extends
 
 						List listSosp = componentDistinta
 								.findDocumentiFlussoSospeso(userContext, bulk);
+						
 						for (Iterator c = listSosp.iterator(); c.hasNext();) {
+							boolean sospesoTrovato=false;
 							VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c
 									.next();
 							if (doc.getCdSospeso() != null) {
-								sosp = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
-								try {
-									sosp.setNumeroProvvisorio(new Long(
-											doc.getCdSospeso()
-													.substring(
-															0,
-															doc.getCdSospeso()
-																	.indexOf(".")).replace(" ", ""))
-											.longValue());
-								} catch (NumberFormatException e) {
-									throw new ApplicationException(
-											"Formato del codice del sospeso non compatibile.");
+								for (Iterator it=infoben.getSospeso().iterator();it.hasNext();){
+									it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso presente= (it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso)it.next();
+									Long l= new Long(doc.getCdSospeso().substring(0,doc.getCdSospeso().indexOf(".")).replace(" ", "")).longValue();
+									if (l.compareTo(presente.getNumeroProvvisorio())==0){
+										presente.setImportoProvvisorio(presente.getImportoProvvisorio().add(doc.getImAssociato()));
+										sospesoTrovato=true;
+										break;
+									}							
+								}	
+								if (!sospesoTrovato){
+									sosp = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
+									try {
+										sosp.setNumeroProvvisorio(new Long(
+												doc.getCdSospeso()
+														.substring(
+																0,
+																doc.getCdSospeso()
+																		.indexOf(".")).replace(" ", ""))
+												.longValue());
+									} catch (NumberFormatException e) {
+										throw new ApplicationException(
+												"Formato del codice del sospeso non compatibile.");
+									}
+									sosp.setImportoProvvisorio(doc.getImAssociato()
+											.setScale(2, BigDecimal.ROUND_HALF_UP));
+									infoben.getSospeso().add(sosp);
 								}
-								sosp.setImportoProvvisorio(doc.getImAssociato()
-										.setScale(2, BigDecimal.ROUND_HALF_UP));
-								infoben.getSospeso().add(sosp);
 							}
 						}
 					}
@@ -1447,31 +1460,44 @@ public class CRUDDistintaCassiereBP extends
 					infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
 						.replace('"', ' ').replace('\u00b0', ' '));
 					// SOSPESO
+					
 					if (docContabile.getTiDocumento().compareTo(
 							MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0) {
 	
 						List listSosp = componentDistinta
 								.findDocumentiFlussoSospeso(userContext, bulk);
 						for (Iterator c = listSosp.iterator(); c.hasNext();) {
+							boolean sospesoTrovato=false;
 							VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c
 									.next();
 							if (doc.getCdSospeso() != null) {
-								sosp = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
-								try {
-									sosp.setNumeroProvvisorio(new Long(
-											doc.getCdSospeso()
-													.substring(
-															0,
-															doc.getCdSospeso()
-																	.indexOf(".")).replace(" ", ""))
-											.longValue());
-								} catch (NumberFormatException e) {
-									throw new ApplicationException(
-											"Formato del codice del sospeso non compatibile.");
+								for (Iterator it=infoben.getSospeso().iterator();it.hasNext();){
+									it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso presente= (it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso)it.next();
+									Long l= new Long(doc.getCdSospeso().substring(0,doc.getCdSospeso().indexOf(".")).replace(" ", "")).longValue();
+									if (l.compareTo(presente.getNumeroProvvisorio())==0){
+										presente.setImportoProvvisorio(presente.getImportoProvvisorio().add(doc.getImAssociato()));
+										sospesoTrovato=true;
+										break;
+									}							
+								}	
+								if (!sospesoTrovato){
+									sosp = new it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Sospeso();
+									try {
+										sosp.setNumeroProvvisorio(new Long(
+												doc.getCdSospeso()
+														.substring(
+																0,
+																doc.getCdSospeso()
+																		.indexOf(".")).replace(" ", ""))
+												.longValue());
+									} catch (NumberFormatException e) {
+										throw new ApplicationException(
+												"Formato del codice del sospeso non compatibile.");
+									}
+									sosp.setImportoProvvisorio(doc.getImAssociato()
+											.setScale(2, BigDecimal.ROUND_HALF_UP));
+									infoben.getSospeso().add(sosp);
 								}
-								sosp.setImportoProvvisorio(doc.getImAssociato()
-										.setScale(2, BigDecimal.ROUND_HALF_UP));
-								infoben.getSospeso().add(sosp);
 							}
 						}
 					}
@@ -1627,28 +1653,43 @@ public class CRUDDistintaCassiereBP extends
 						ReversaleBulk.TIPO_REGOLAM_SOSPESO) == 0) {
 					List listSosp = componentDistinta
 							.findDocumentiFlussoSospeso(userContext, bulk);
+					
 					for (Iterator c = listSosp.iterator(); c.hasNext();) {
+						boolean sospesoTrovato=false;
 						VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c
 								.next();
 						if (doc.getCdSospeso() != null) {
-							sosp = new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Sospeso();
-							try {
-								sosp.setNumeroProvvisorio(new Long(doc
-										.getCdSospeso().substring(
-												0,
-												doc.getCdSospeso().lastIndexOf(
-														"."))).longValue());
-							} catch (NumberFormatException e) {
-								throw new ApplicationException(
-										"Formato del codice del sospeso non compatibile.");
+							for (Iterator it=infover.getSospeso().iterator();it.hasNext();){
+								it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Sospeso presente= (it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Sospeso)it.next();
+								Long l= new Long(doc.getCdSospeso().substring(0,doc.getCdSospeso().indexOf(".")).replace(" ", "")).longValue();
+								if (l.compareTo(presente.getNumeroProvvisorio())==0){
+									presente.setImportoProvvisorio(presente.getImportoProvvisorio().add(doc.getImAssociato()));
+									sospesoTrovato=true;
+									break;
+								}							
+							}	
+							if (!sospesoTrovato){
+								sosp = new it.cnr.contab.doccont00.intcass.xmlbnl.Reversale.InformazioniVersante.Sospeso();
+								try {
+									sosp.setNumeroProvvisorio(new Long(
+											doc.getCdSospeso()
+													.substring(
+															0,
+															doc.getCdSospeso()
+																	.indexOf(".")).replace(" ", ""))
+											.longValue());
+								} catch (NumberFormatException e) {
+									throw new ApplicationException(
+											"Formato del codice del sospeso non compatibile.");
+								}
+								sosp.setImportoProvvisorio(doc.getImAssociato()
+										.setScale(2, BigDecimal.ROUND_HALF_UP));
+								infover.getSospeso().add(sosp);
 							}
-							sosp.setImportoProvvisorio(doc.getImAssociato()
-									.setScale(2, BigDecimal.ROUND_HALF_UP));
-							infover.getSospeso().add(sosp);
 						}
 					}
-					// Fine sospeso
 				}
+				
 				rev.getInformazioniVersante().add(infover);
 			}
 			return rev;
