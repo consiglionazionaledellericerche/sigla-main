@@ -3703,9 +3703,13 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if ((fatturaPassiva.isCommerciale()) && 
             	(fatturaPassiva.getFl_split_payment()==null ||
             	(fatturaPassiva.getFl_split_payment()!=null && !fatturaPassiva.getFl_split_payment().booleanValue())) && 
-            	fatturaPassiva.getData_protocollo()!=null ){
+            	fatturaPassiva.getData_protocollo()!=null && 
+            	!fatturaPassiva.isEstera() &&
+                !fatturaPassiva.isSanMarinoSenzaIVA() &&
+                !fatturaPassiva.isSanMarinoConIVA()){
            		Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(aUC, fatturaPassiva);
-           		if(fatturaPassiva.getDt_registrazione().after(conf.getDt01()) && fatturaPassiva.getDt_registrazione().before(conf.getDt02()))
+           		if(fatturaPassiva.getDt_registrazione() != null && fatturaPassiva.getDt_registrazione().after(conf.getDt01()) && 
+           		  (fatturaPassiva.getDt_registrazione().before(conf.getDt02())|| fatturaPassiva.getDt_registrazione().equals(conf.getDt02())))
            			options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "Y", "AND"}});
            		else
                 	options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "N", "AND"}});
@@ -4349,7 +4353,6 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                                 throw new DetailedRuntimeException(e);
                             }
                         }))));
-
             completeWithCondizioneConsegna(aUC, fattura_passiva);
             completeWithModalitaTrasporto(aUC, fattura_passiva);
             completeWithModalitaIncasso(aUC, fattura_passiva);
@@ -5650,12 +5653,15 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             sql.closeParenthesis();
         }
         
-        if ((dettaglio.getFattura_passiva().isCommerciale()) && 
+        if ((dettaglio.getFattura_passiva().isCommerciale()) &&
         	(dettaglio.getFattura_passiva().getFl_split_payment()==null ||
         	(dettaglio.getFattura_passiva().getFl_split_payment()!=null && !dettaglio.getFattura_passiva().getFl_split_payment().booleanValue())) && 
-        	dettaglio.getFattura_passiva().getData_protocollo()!=null ){
+        	dettaglio.getFattura_passiva().getData_protocollo()!=null  &&
+         	!dettaglio.getFattura_passiva().isEstera() &&
+            !dettaglio.getFattura_passiva().isSanMarinoSenzaIVA() &&
+            !dettaglio.getFattura_passiva().isSanMarinoConIVA()){
         		Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(userContext, dettaglio.getFattura_passiva());
-        		if (dettaglio.getFattura_passiva().getDt_registrazione().after(conf.getDt02())){
+        		if (dettaglio.getFattura_passiva().getDt_registrazione()!=null && dettaglio.getFattura_passiva().getDt_registrazione().after(conf.getDt02())){             		
         			sql.addSQLClause("AND", "FL_DETRAIBILE", sql.EQUALS, "N");
         			if(voceIva!=null && voceIva.getCd_voce_iva()!=null)
         				sql.addSQLClause("AND", "CD_VOCE_IVA", sql.EQUALS, voceIva.getCd_voce_iva());
@@ -6253,15 +6259,19 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         
         try {
 			if (sql.executeCountQuery(getConnection(aUC)) == 0)
-				if ((riga.getFattura_passiva().isCommerciale()) &&   
+				
+			    if ((riga.getFattura_passiva().isCommerciale()) &&
 			        	(riga.getFattura_passiva().getFl_split_payment()==null ||
 			        	(riga.getFattura_passiva().getFl_split_payment()!=null && !riga.getFattura_passiva().getFl_split_payment().booleanValue())) && 
-			        	riga.getFattura_passiva().getData_protocollo()!=null ){
-			        		Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(aUC, riga.getFattura_passiva());
-			        		if (riga.getFattura_passiva().getDt_registrazione().after(conf.getDt02())){
-			        			 throw new it.cnr.jada.comp.ApplicationException(
-			 			  	            	"Attenzione! Selezione un codice iva non detraibile " + ((riga.getDs_riga_fattura()!=null)?"sul dettaglio " + riga.getDs_riga_fattura():"su un dettaglio")+".");
-			        		}
+			        	riga.getFattura_passiva().getData_protocollo()!=null  &&
+			         	!riga.getFattura_passiva().isEstera() &&
+			            !riga.getFattura_passiva().isSanMarinoSenzaIVA() &&
+			            !riga.getFattura_passiva().isSanMarinoConIVA() ){
+			    		Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(aUC, riga.getFattura_passiva());
+			    		if (riga.getFattura_passiva().getDt_registrazione()!=null && riga.getFattura_passiva().getDt_registrazione().after(conf.getDt02())){             		
+			        		 throw new it.cnr.jada.comp.ApplicationException(
+		 			  	            	"Attenzione! Selezione un codice iva non detraibile " + ((riga.getDs_riga_fattura()!=null)?"sul dettaglio " + riga.getDs_riga_fattura():"su un dettaglio")+".");
+		        		}
 				}
 			     else
 				 throw new it.cnr.jada.comp.ApplicationException(
@@ -7579,9 +7589,13 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             if ((fatturaPassiva.isCommerciale()) && 
             		(fatturaPassiva.getFl_split_payment()==null ||
                 	(fatturaPassiva.getFl_split_payment()!=null && !fatturaPassiva.getFl_split_payment().booleanValue())) && 
-                	 fatturaPassiva.getData_protocollo()!=null ){
+                	 fatturaPassiva.getData_protocollo()!=null && 
+                 	!fatturaPassiva.isEstera() &&
+                    !fatturaPassiva.isSanMarinoSenzaIVA() &&
+                    !fatturaPassiva.isSanMarinoConIVA()){
+            	
             			Configurazione_cnrBulk conf=getLimitiRitardoDetraibile(aUC, fatturaPassiva);
-                		if (fatturaPassiva.getDt_registrazione().after(conf.getDt02()))
+                		if (fatturaPassiva.getDt_registrazione()!=null && fatturaPassiva.getDt_registrazione().after(conf.getDt02()))
                 			checkRiepilogativo=false;
                 }
 
