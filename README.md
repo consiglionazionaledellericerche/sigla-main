@@ -21,7 +21,7 @@ sudo docker run --name sigla-postgres -p 5432:5432 -v $PWD/sigla-backend/init-us
        export SIGLA_POSTGRES_ENABLE=true
        export SIGLA_CONNECTION_URL=jdbc:postgresql://localhost:5432/sigladb?schema=public
        ```
-       * windows
+      * windows
        ```
        set SIGLA_ORACLE_ENABLE=false
        set SIGLA_POSTGRES_ENABLE=true
