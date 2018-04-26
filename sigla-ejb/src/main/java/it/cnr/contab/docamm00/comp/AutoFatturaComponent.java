@@ -349,13 +349,17 @@ public java.util.Collection findSezionali(UserContext aUC, AutofatturaBulk autof
 					});
 	  Fattura_passivaBulk fatturaPassiva=(Fattura_passivaBulk) findByPrimaryKey(aUC, autofattura.getFattura_passiva());
 	
-	  if ((fatturaPassiva.isCommerciale()) && 
+	    if ((fatturaPassiva.isCommerciale()) && 
           	(fatturaPassiva.getFl_split_payment()==null ||
           	(fatturaPassiva.getFl_split_payment()!=null && !fatturaPassiva.getFl_split_payment().booleanValue())) && 
-          	fatturaPassiva.getData_protocollo()!=null ){
+          	fatturaPassiva.getData_protocollo()!=null && 
+          	!fatturaPassiva.isEstera() &&
+              !fatturaPassiva.isSanMarinoSenzaIVA() &&
+              !fatturaPassiva.isSanMarinoConIVA()){
          		Configurazione_cnrBulk conf = getLimitiRitardoDetraibile(aUC, fatturaPassiva);
-           		if(fatturaPassiva.getDt_registrazione().after(conf.getDt01()) && fatturaPassiva.getDt_registrazione().before(conf.getDt02()))
-           			options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "Y", "AND"}});
+         		if(fatturaPassiva.getDt_registrazione() != null && fatturaPassiva.getDt_registrazione().after(conf.getDt01()) && 
+                 		  (fatturaPassiva.getDt_registrazione().before(conf.getDt02())|| fatturaPassiva.getDt_registrazione().equals(conf.getDt02())))
+                	options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "Y", "AND"}});
            		else
                 	options.add(new String[][]{{"TIPO_SEZIONALE.FL_REG_TARDIVA", "N", "AND"}});
 
