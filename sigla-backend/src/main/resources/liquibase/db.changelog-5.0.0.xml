@@ -555,30 +555,6 @@
             <column name="fl_split_payment"  type="CHAR(1)" value="N"/>
             <column name="fl_reg_tardiva" type="CHAR(1)" value="Y"/>
      </insert>
-    <insert tableName="tipo_sezionale">
-            <column name="cd_tipo_sezionale" type="VARCHAR(10)" value="v/cuert"/>
-            <column name="ds_tipo_sezionale" type="VARCHAR(50)" value="REGISTRO IVA VENDITE PER ACQUISTI UE Reg.Tardiva"/>
-            <column name="ti_acquisti_vendite" type="CHAR(1)" value="V"/>
-            <column name="ti_istituz_commerc" type="CHAR(1)" value="C"/>
-            <column name="cd_attivita_commerciale"  type="VARCHAR(10)" value="1"/>
-            <column name="fl_ordinario" type="CHAR(1)" value="N"/>
-            <column name="fl_san_marino_con_iva" type="CHAR(1)" value="N"/>
-            <column name="fl_san_marino_senza_iva" type="CHAR(1)" value="N"/>
-            <column name="fl_intra_ue" type="CHAR(1)" value="Y"/>
-            <column name="fl_extra_ue" type="CHAR(1)" value="N"/>
-            <column name="fl_autofattura" type="CHAR(1)" value="Y"/>
-            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="pg_ver_rec" type="BIGINT" value="1"/>
-            <column name="sezionale_ven_liquidazione" type="VARCHAR(10)" value=""/>
-            <column name="ti_bene_servizio" type="CHAR(1)" value="B"/>
-            <column name="fl_servizi_non_residenti"  type="CHAR(1)" value="N"/>
-            <column name="ordina" type="BIGINT" value="2"/>
-            <column name="fl_split_payment"  type="CHAR(1)" value="N"/>
-            <column name="fl_reg_tardiva" type="CHAR(1)" value="Y"/>
-     </insert>
      <insert tableName="tipo_sezionale">
             <column name="cd_tipo_sezionale" type="VARCHAR(10)" value="v/cautrt"/>
             <column name="ds_tipo_sezionale" type="VARCHAR(50)" value="REGISTRO IVA VENDITE DELLE AUTOFATTURE Reg.Tardiva"/>
