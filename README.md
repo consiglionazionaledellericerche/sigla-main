@@ -15,10 +15,17 @@ sudo docker run --name sigla-postgres -p 5432:5432 -v $PWD/sigla-backend/init-us
         export SIGLA_CONNECTION_URL=jdbc:oracle:thin:@localhost:1521:xe
         ```
    * postgres
+      * linux 
        ```
        export SIGLA_ORACLE_ENABLE=false
        export SIGLA_POSTGRES_ENABLE=true
        export SIGLA_CONNECTION_URL=jdbc:postgresql://localhost:5432/sigladb?schema=public
+       ```
+       * windows
+       ```
+       set SIGLA_ORACLE_ENABLE=false
+       set SIGLA_POSTGRES_ENABLE=true
+       set SIGLA_CONNECTION_URL=jdbc:postgresql://localhost:5432/sigladb?schema=public
        ```
     
 #### _Dalla directory sigla-ear lanciare il comando_
