@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<display-name>SIGEP</display-name>
+	<context-param>
+		<param-name>java:jboss/datasources/CIR</param-name>
+		<param-value>java:jboss/datasources/CIR</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:it/cnr/sigep/service/sigep-service-context.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>ActionServlet</servlet-name>
+		<servlet-class>it.cnr.jada.action.ActionServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ActionServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	<mime-mapping>
+		<extension>TXT</extension>
+		<mime-type>www/unknown</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>ecf</extension>
+		<mime-type>text/text</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>T24</extension>
+		<mime-type>text/text</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>rbs</extension>
+		<mime-type>text/text</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>cee</extension>
+		<mime-type>text/text</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>ivl</extension>
+		<mime-type>text/text</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>ccf</extension>
+		<mime-type>text/text</mime-type>
+	</mime-mapping>
+	
+	<mime-mapping>
+		<extension>I01</extension>
+		<mime-type>text/text</mime-type>
+	</mime-mapping>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

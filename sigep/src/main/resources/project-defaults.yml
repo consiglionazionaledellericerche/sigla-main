@@ -1,0 +1,12 @@
+swarm:
+  datasources:
+    data-sources:
+      SIGEP:
+        driver-name: postgresql
+        connection-url: jdbc:postgresql://localhost:5432/sigep
+        user-name: sigep
+        password: sigeppw
+        use-java-context: true
+        jndi-name: java:/jdbc/CIR
+  transactions:
+      default-timeout: 3600

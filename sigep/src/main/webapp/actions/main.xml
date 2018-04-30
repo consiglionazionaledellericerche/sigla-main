@@ -1,0 +1,88 @@
+<action-mappings>
+	<forward name="serviceUnavailable"
+		path="/util/service_unavailable.jsp" />
+	<!-- Default forward quando una Action restituisce null -->
+	<forward name="default" 
+		path="/util/workspace.jsp" />
+	<!-- Forward che gestisce le "uncaughtException" -->
+	<forward name="uncaughtException"
+		path="/util/uncaught_exception.jsp" />
+	<!-- Forward che gestisce i business process busy -->
+	<forward name="businessProcessBusy"
+		path="/util/business_process_busy.jsp" />
+	<forward name="sessionExpired"
+		path="/utenze00/sessione_scaduta_loader.jsp" />
+	<forward name="home" 
+		path="/util/home.jsp" />
+	<forward name="workinprogress" 
+		path="/workinprogress.html" />
+		
+	<action path="/CRUDAction"
+		actionClass="it.cnr.jada.util.action.CRUDAction">
+	</action>
+	<action path="/Seleziona"
+		actionClass="it.cnr.jada.util.action.SelezionatoreAction">
+	</action>
+	<action path="/SelezionaLista"
+		actionClass="it.cnr.jada.util.action.SelezionatoreListaAction">
+	</action>
+	<action path="/SelezionatoreListaAlberoAction"
+		actionClass="it.cnr.jada.util.action.SelezionatoreListaAlberoAction">
+	</action>
+	<action path="/CRUDListaAction"
+		actionClass="it.cnr.jada.util.action.CRUDListaAction">
+	</action>
+	<action path="/RicercaLibera"
+		actionClass="it.cnr.jada.util.action.RicercaLiberaAction">
+	</action>
+	<action path="/Option"
+		actionClass="it.cnr.jada.util.action.OptionAction">
+	</action>
+	<action path="/FormAction"
+		actionClass="it.cnr.jada.util.action.FormAction">
+	</action>
+	<action path="/BulkListPrintAction"
+		actionClass="it.cnr.jada.util.action.BulkListPrintAction">
+	</action>
+	<businessProcess name="SelezionatoreListaAlbero"
+		className="it.cnr.jada.util.action.SelezionatoreListaAlberoBP">
+		<forward name="default" path="/util/form_lista.jsp" />
+		<init-param name="defaultAction"
+			value="SelezionatoreListaAlberoAction" />
+	</businessProcess>
+	<businessProcess name="Selezionatore"
+		className="it.cnr.jada.util.action.SelezionatoreListaBP">
+		<forward name="default" path="/util/form_lista.jsp" />
+		<init-param name="defaultAction" value="SelezionaLista" />
+	</businessProcess>
+	<businessProcess name="SelezionatoreAlbero"
+		className="it.cnr.jada.util.action.SelezionatoreAlberoBP">
+		<forward name="default" path="/util/form_albero.jsp" />
+	</businessProcess>
+	<businessProcess name="RicercaLibera"
+		className="it.cnr.jada.util.action.RicercaLiberaBP">
+		<forward name="default" path="/util/form_ricerca_libera.jsp" />
+		<init-param name="defaultAction" value="RicercaLibera" />
+	</businessProcess>
+	<businessProcess name="OptionBP"
+		className="it.cnr.jada.util.action.OptionBP">
+		<forward name="default" path="/util/form_option.jsp" />
+	</businessProcess>
+	<businessProcess name="ResetBulkInfos"
+		className="it.cnr.jada.util.action.ResetBulkInfos">
+		<forward name="default" path="Login.do" />
+	</businessProcess>
+	<businessProcess name="PrintBP"
+		className="it.cnr.jada.util.action.PrintBP">
+		<forward name="default" path="/util/print_frameset.jsp" />
+		<forward name="printBody" path="/util/generic_print.jsp" />
+		<init-param name="defaultAction" value="BulkListPrintAction" />
+	</businessProcess>
+	<businessProcess name="BulkListPrintBP"
+		className="it.cnr.jada.util.action.BulkListPrintBP">
+		<forward name="default" path="/util/print_frameset.jsp" />
+		<forward name="export" path="/util/print_excel.jsp" />
+		<forward name="printBody" path="/util/generic_print.jsp" />
+		<init-param name="defaultAction" value="BulkListPrintAction" />
+	</businessProcess>
+</action-mappings>
