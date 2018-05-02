@@ -12,6 +12,7 @@
     <property name="date.type" value="DATETIME" dbms="postgresql"/>
 
     <!-- Inizio schema iniziale-->
+    <include file="sigep/liquibase/tables-menu.xml"/>
 
     <!-- Fine schema iniziale-->
 

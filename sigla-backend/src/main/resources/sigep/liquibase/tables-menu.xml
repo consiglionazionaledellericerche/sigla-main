@@ -1,0 +1,593 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="sigep" id="create-table-translock-master">
+        <createTable tableName="translock_master">
+            <column name="sid" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="sid" constraintName="translock_master_pkey" tableName="translock_master"/>
+    </changeSet>
+
+    <changeSet author="sigep" id="create-table-translock">
+        <createTable tableName="translock">
+            <column autoIncrement="true" name="key" type="INT">
+                <constraints primaryKey="true" primaryKeyName="translock_pkey"/>
+            </column>
+            <column name="sid" type="VARCHAR2(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="CHAR(1)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="sid" baseTableName="translock" constraintName="fk_translock" deferrable="true" initiallyDeferred="true" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="sid" referencedTableName="translock_master"/>        
+    </changeSet>
+
+    <changeSet author="sigep" id="create-table-accesso">
+        <createTable remarks="Contiene gli accessi definiti per l&quot;applicazione; si tratta di dati di configurazione cablati." tableName="accesso">
+            <column name="cd_accesso" remarks="Codice accesso" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ti_accesso" remarks="Tipo di accesso.&#10;&#10;Dominio:&#10;C = Accesso riservato CNR (assegnabile solo da utenti amministratori con CDS di influenza = *)&#10;D = Accesso pubblico&#10;S = Accesso attribuito di default al superutente: non attribuibile ad altri tipi di utenza&#10;A = Unico tipo di accesso attribuibile ad amministratore di utenze: non attribuibile ad altri tipi di utenza" type="CHAR(1)"/>
+            <column name="ds_accesso" remarks="Descrizione del tipo di accesso" type="VARCHAR(200)"/>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="cd_accesso" constraintName="accesso_pkey" tableName="accesso"/>
+    </changeSet>
+
+    <changeSet author="sigep" id="create-table-ass-bp-accesso">
+        <createTable remarks="Associazione business process con accesso" tableName="ass_bp_accesso">
+            <column autoIncrement="true" name="id" type="INT" remarks="Identificativo record">
+                <constraints primaryKey="true" primaryKeyName="ass_bp_accesso_pkey"/>
+            </column>
+            <column name="cd_accesso" remarks="Codice accesso" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="business_process" remarks="Nome del business process associato" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ti_funzione" remarks="Tipo di funzione:&#10;&#10;Dominio:&#10;M = Modifica&#10;V = Visualizzazione" type="CHAR(1)"/>
+            <column name="esercizio_inizio_validita" type="SMALLINT"/>
+            <column name="esercizio_fine_validita" type="SMALLINT"/>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint columnNames="cd_accesso, business_process" constraintName="ass_bp_accesso_ukey" tableName="ass_bp_accesso"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_accesso" baseTableName="ass_bp_accesso" constraintName="fk_ass_bp_accesso00" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_accesso" referencedTableName="accesso"/>
+
+        <createIndex indexName="FX_ASS_BP_ACCESSO00" tableName="ASS_BP_ACCESSO">
+            <column name="CD_ACCESSO"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="sigep" id="create-table-albero-main">
+        <createTable remarks="Contenente l'intero albero del main applicativo.&#10;Ogni riga specifica un nodo dell'albero del main e può essere terminale o non terminale.&#10;I nodi terminali danno diretto accesso a funzioni applicative." tableName="albero_main">
+            <column name="cd_nodo" remarks="Codice completo del nodo" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ds_nodo" remarks="Descrizione visualizzata sull'albero del main" type="VARCHAR(200)"/>
+            <column name="pg_ordinamento" remarks="Numero progressivo di ordinamento dei nodi all'interno di un dato nodo padre" type="BIGINT"/>
+            <column name="livello" remarks="Numero di livello del nodo nell'albero.&#10;Valori validi da 01 a 99." type="SMALLINT"/>
+            <column name="fl_terminale" remarks="Indicatore di nodo terminale.&#10;&#10;Dominio:&#10;Y = Ultimo livello&#10;N = Livello intermedio" type="CHAR(1)"/>
+            <column name="cd_nodo_padre" remarks="Codice completo del nodo padre" type="VARCHAR(100)"/>
+            <column name="cd_proprio_nodo" remarks="Codice proprio del nodo (codice di livello)" type="VARCHAR(100)"/>
+            <column name="id_ass_bp_accesso" remarks="Identificatvo Associazione Accesso/BP" type="INT"/>
+            <column name="url_icona" remarks="Url dell&quot;immagine visualizzata per questo nodo." type="VARCHAR(200)"/>
+            <column name="url_icona_open" remarks="Url dell&quot;immagine aperta visualizzata per questo nodo." type="VARCHAR(200)"/>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="cd_nodo" constraintName="albero_main_pkey" tableName="albero_main"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_ass_bp_accesso" baseTableName="albero_main" constraintName="fk_albero_main00" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="ass_bp_accesso"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_nodo_padre" baseTableName="albero_main" constraintName="rx_albero_main00" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="cd_nodo" referencedTableName="albero_main"/>
+
+        <createIndex indexName="FX_ALBERO_MAIN00" tableName="ALBERO_MAIN">
+            <column name="ID_ASS_BP_ACCESSO"/>
+        </createIndex>
+
+        <createIndex indexName="RX_ALBERO_MAIN00" tableName="ALBERO_MAIN">
+            <column name="CD_NODO_PADRE"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="sigep" id="create-table-struttura-organizzativa">
+        <createTable remarks="Struttura Organizzativa dell'Ente." tableName="struttura_organizzativa">
+            <column autoIncrement="true" name="id" type="INT" startWith="2" remarks="Identificativo record">
+                <constraints primaryKey="true" primaryKeyName="struttura_organizzativa_pkey"/>
+            </column>
+            <column name="codice" remarks="Codice Struttura Organizzativa" type="VARCHAR2(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descrizione" remarks="Descrizione Struttura Organizzativa" type="VARCHAR2(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_strorg_parent" remarks="Identificativo Struttura Organizzativa Padre" type="INT"/>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="id_strorg_parent" baseTableName="struttura_organizzativa" constraintName="fk_struttura_organizzativa00" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="struttura_organizzativa"/>
+
+        <createIndex indexName="FX_STRUTTURA_ORGANIZZATIVA00" tableName="STRUTTURA_ORGANIZZATIVA">
+            <column name="ID_STRORG_PARENT"/>
+        </createIndex>
+
+        <loadData encoding="UTF-8"
+                file="sigep/csv/struttura_organizzativa.csv"
+                separator=";"
+                tableName="struttura_organizzativa">
+            <column name="dacr" type="${date.type}"/>
+            <column name="duva" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="struttura_organizzativa" columnName="dacr" columnDataType="${date.type}"/>
+        <dropDefaultValue tableName="struttura_organizzativa" columnName="duva" columnDataType="${date.type}"/>
+    </changeSet>
+
+    <changeSet author="sigep" id="create-table-tipo-ruolo">
+        <createTable remarks="Contiene i tipi ruoli definiti per l'applicazione." tableName="tipo_ruolo">
+            <column name="tipo" remarks="Tipo di ruolo" type="VARCHAR(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ds_tipo" remarks="Descrizione del tipo ruolo" type="VARCHAR(50)"/>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="tipo" constraintName="tipo_ruolo_pkey" tableName="tipo_ruolo"/>
+
+        <loadData encoding="UTF-8"
+                file="sigep/csv/tipo_ruolo.csv"
+                separator=";"
+                tableName="tipo_ruolo">
+            <column name="dacr" type="${date.type}"/>
+            <column name="duva" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="tipo_ruolo" columnName="dacr" columnDataType="${date.type}"/>
+        <dropDefaultValue tableName="tipo_ruolo" columnName="duva" columnDataType="${date.type}"/>
+    </changeSet>
+
+    <changeSet author="sigep" id="create-table-ruolo">
+        <createTable remarks="Contiene i ruoli definiti per l'applicazione." tableName="ruolo">
+            <column name="cd_ruolo" remarks="Codice del ruolov" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ds_ruolo" remarks="Descrizione del ruolo" type="VARCHAR(200)"/>
+            <column name="id_strorg" remarks="Codice identificativo della struttura organizzativa." type="INT"/>
+            <column name="tipo" remarks="Tipo di ruolo, puo assumere i valori 'DIRIST' (Direttore di istituto), 'CAPCOM'(Capo Commessa),'AMMINV'(Amministratore Inventario)" type="VARCHAR(6)"/>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="cd_ruolo" constraintName="ruolo_pkey" tableName="ruolo"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_strorg" baseTableName="ruolo" constraintName="fk_ruolo00" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="struttura_organizzativa"/>
+
+        <addForeignKeyConstraint baseColumnNames="tipo" baseTableName="ruolo" constraintName="fk_ruolo01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="tipo" referencedTableName="tipo_ruolo"/>
+
+        <createIndex indexName="FX_RUOLO00" tableName="RUOLO">
+            <column name="ID_STRORG"/>
+        </createIndex>
+
+        <createIndex indexName="FX_RUOLO01" tableName="RUOLO">
+            <column name="TIPO"/>
+        </createIndex>
+
+        <loadData encoding="UTF-8"
+                file="sigep/csv/ruolo.csv"
+                separator=";"
+                tableName="ruolo">
+            <column name="dacr" type="${date.type}"/>
+            <column name="duva" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="ruolo" columnName="dacr" columnDataType="${date.type}"/>
+        <dropDefaultValue tableName="ruolo" columnName="duva" columnDataType="${date.type}"/>
+    </changeSet>
+
+    <changeSet author="sigep" id="create-table-ruolo-accesso">
+        <createTable remarks="Contiene il legame tra ruolo ed accessi collegati al ruolo" tableName="ruolo_accesso">
+            <column autoIncrement="true" name="id" type="INT" remarks="Identificativo record">
+                <constraints primaryKey="true" primaryKeyName="ruolo_accesso_pkey"/>
+            </column>
+            <column name="cd_ruolo" remarks="Codice del ruolo" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_accesso" remarks="Codice accesso" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint columnNames="cd_ruolo, cd_accesso" constraintName="ruolo_accesso_ukey" tableName="ruolo_accesso"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_ruolo" baseTableName="ruolo_accesso" constraintName="fk_ruolo_accesso00" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="cd_ruolo" referencedTableName="ruolo"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_accesso" baseTableName="ruolo_accesso" constraintName="fk_ruolo_accesso01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_accesso" referencedTableName="accesso"/>
+
+        <createIndex indexName="FX_RUOLO_ACCESSO00" tableName="RUOLO_ACCESSO">
+            <column name="CD_RUOLO"/>
+        </createIndex>
+
+        <createIndex indexName="FX_RUOLO_ACCESSO01" tableName="RUOLO_ACCESSO">
+            <column name="CD_ACCESSO"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="sigep" id="create-table-utente">
+        <createTable remarks="Contiene gli utenti dell'applicazione." tableName="utente">
+            <column name="cd_utente" remarks="Codice identificativo dell'utente" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ds_utente" remarks="Descrizione utente" type="VARCHAR(200)"/>
+            <column name="cognome" remarks="Cognome utente" type="VARCHAR(100)"/>
+            <column name="nome" remarks="Nome utente" type="VARCHAR(100)"/>
+            <column name="indirizzo" remarks="Indirizzo dell&quot;utente" type="VARCHAR(200)"/>
+            <column name="cd_gestore" remarks="Codice dell&quot;utenza che gestisce questa utenza" type="VARCHAR(20)"/>
+            <column name="cd_utente_templ" remarks="Codice dell'utente template da cui l'utente eredita accessi e ruoli oltre a quelli definiti per l'utente stesso." type="VARCHAR(20)"/>
+            <column name="ti_utente" remarks="Tipo di utente.&#10;&#10;Dominio:&#10;A = Gestore di utenti.&#10;S = Superutente.&#10;U = Utente comune." type="CHAR(1)"/>
+            <column name="password" remarks="Password utente" type="VARCHAR(20)"/>
+            <column name="fl_password_change" remarks="Indicatore di forzatura al cambiamento della password.&#10;Dominio:&#10;N = Nessuna forzatura&#10;Y = Viene forzato il cambiamento della password ogni 6 mesi" type="CHAR(1)"/>
+            <column name="dt_ultima_var_password" remarks="Data di ultima variazione della password&#10;per una nuova utenza = NULL in modo da forzare il cambiamento della password al primo login" type="${date.type}"/>
+            <column name="id_strorg_configuratore" remarks="Codice identificativo del CDS su cui l'utente di tipo A può dare accessi.&#10;&#10;Se vale * allora gli accessi possono essere dati su qualsiasi CdS." type="INT"/>
+            <column name="dt_inizio_validita" remarks="Data di inizio validità dell'utenza" type="${date.type}"/>
+            <column name="dt_fine_validita" remarks="Data di fine validità dell'utenza" type="${date.type}"/>
+            <column name="dt_ultimo_accesso" remarks="Data in cui è stato effettuato l'ultimo accesso." type="${date.type}"/>
+            <column name="fl_utente_templ" remarks="Identificativo utente template&#10;&#10;Dominio:&#10;Y = Utente template&#10;N = Utente comune" type="CHAR(1)"/>
+            <column name="fl_altra_proc" remarks="Utente gestito da procedure esterne" type="CHAR(1)"/>
+            <column defaultValue="N" name="fl_autenticazione_ldap" remarks="Rappresenta il tipo di autenticazione che viene richiesta per l'utente.&#10;-&gt;&#9;N: Autenticazione in SIGLA&#10;-&gt;&#9;Y: Autenticazione attraverso LDAP" type="VARCHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_utente_uid" remarks="Codice identificativo utente per autenticazione su server LDAP (User ID)" type="VARCHAR(200)"/>
+            <column defaultValue="N" name="fl_supervisore" remarks="Utente di tipo supervisore. Se impostato abilita l'accesso a tutti i CDS" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_ruolo_supervisore" remarks="Codice ruolo per utente di tipo supervisore." type="VARCHAR(20)"/>
+            <column defaultValue="Y" name="fl_attiva_blocco" remarks="Indica se deve essere impedito l'accesso alle funzioni presenti in RUOLO_BLOCCO." type="VARCHAR(1)"/>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="cd_utente" constraintName="utente_pkey" tableName="utente"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_gestore" baseTableName="utente" constraintName="fk_utente00" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="cd_utente" referencedTableName="utente"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_utente_templ" baseTableName="utente" constraintName="fk_utente01" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="cd_utente" referencedTableName="utente"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_strorg_configuratore" baseTableName="utente" constraintName="fk_utente02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="struttura_organizzativa"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_ruolo_supervisore" baseTableName="utente" constraintName="fk_utente03" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="cd_ruolo" referencedTableName="ruolo"/>
+
+        <createIndex indexName="FX_UTENTE00" tableName="UTENTE">
+            <column name="cd_gestore"/>
+        </createIndex>
+
+        <createIndex indexName="FX_UTENTE01" tableName="UTENTE">
+            <column name="cd_utente_templ"/>
+        </createIndex>
+
+        <createIndex indexName="FX_UTENTE02" tableName="UTENTE">
+            <column name="id_strorg_configuratore"/>
+        </createIndex>
+
+        <createIndex indexName="FX_UTENTE03" tableName="UTENTE">
+            <column name="cd_ruolo_supervisore"/>
+        </createIndex>
+
+        <loadData encoding="UTF-8"
+                file="sigep/csv/utente.csv"
+                separator=";"
+                tableName="utente">
+            <column name="dacr" type="${date.type}"/>
+            <column name="duva" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="utente" columnName="dacr" columnDataType="${date.type}"/>
+        <dropDefaultValue tableName="utente" columnName="duva" columnDataType="${date.type}"/>
+    </changeSet>
+
+    <changeSet author="sigep" id="create-table-utente-gestore">
+        <createTable remarks="Contiene il legame tra utente ed gestori collegati all'utente" tableName="utente_gestore">
+            <column autoIncrement="true" name="id" type="INT" remarks="Identificativo record">
+                <constraints primaryKey="true" primaryKeyName="utente_gestore_pkey"/>
+            </column>
+            <column name="cd_utente" remarks="Codice dell'utente" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_gestore" remarks="Codice gestore" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint columnNames="cd_utente, cd_gestore" constraintName="utente_gestore_ukey" tableName="utente_gestore"/>
+        
+        <addForeignKeyConstraint baseColumnNames="cd_utente" baseTableName="utente_gestore" constraintName="fk_utente_gestore00" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="cd_utente" referencedTableName="utente"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_gestore" baseTableName="utente_gestore" constraintName="fk_utente_gestore01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_utente" referencedTableName="utente"/>
+
+        <createIndex indexName="FX_UTENTE_GESTORE00" tableName="UTENTE_GESTORE">
+            <column name="CD_UTENTE"/>
+        </createIndex>
+
+        <createIndex indexName="FX_UTENTE_GESTORE01" tableName="UTENTE_GESTORE">
+            <column name="CD_GESTORE"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="sigep" id="create-table-utente-indirizzi-mail">
+        <createTable remarks="Contiene gli indirizzi Mail degli utenti applicativi" tableName="utente_indirizzi_mail">
+            <column autoIncrement="true" name="id" type="INT" remarks="Identificativo record">
+                <constraints primaryKey="true" primaryKeyName="utente_indirizzi_mail_pkey"/>
+            </column>
+            <column name="cd_utente" remarks="Codice dell'utente" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="indirizzo_mail" remarks="Indirizzo Mail dell'Utente" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="N" name="fl_esito_pos_fatt_elettr" remarks="Comunicazione Via Mail dell'esito positivo della Fatturazione Elettronica attiva" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="N" name="fl_esito_neg_fatt_elettr" remarks="Comunicazione Via Mail dell'esito negativo della Fatturazione Elettronica attiva" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_fep_notifica_ricezione" type="VARCHAR(1)"/>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint columnNames="cd_utente, indirizzo_mail" constraintName="utente_indirizzi_mail_ukey" tableName="utente_indirizzi_mail"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_utente" baseTableName="utente_indirizzi_mail" constraintName="fk_utente_indirizzi_mail01" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="cd_utente" referencedTableName="utente"/>
+
+        <createIndex indexName="FX_UTENTE_INDIRIZZI_MAIL00" tableName="UTENTE_INDIRIZZI_MAIL">
+            <column name="CD_UTENTE"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="sigep" id="create-table-utente-strorg-accesso">
+        <createTable remarks="Contiene gli accessi assegnati ad un utente su di una data struttura organizzativa" tableName="utente_strorg_accesso">
+            <column autoIncrement="true" name="id" type="INT" remarks="Identificativo record">
+                <constraints primaryKey="true" primaryKeyName="utente_strorg_accesso_pkey"/>
+            </column>
+            <column name="cd_utente" remarks="Codice identificativo dell'utente." type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_strorg" remarks="Identificativo della struttura organizzativa di accesso. Puo essere presente il default *" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_accesso" remarks="Codice dell'accesso" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint columnNames="cd_utente, id_strorg, cd_accesso" constraintName="utente_strorg_accesso_ukey" tableName="utente_strorg_accesso"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_utente" baseTableName="utente_strorg_accesso" constraintName="fk_utente_strorg_accesso00" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="cd_utente" referencedTableName="utente"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_strorg" baseTableName="utente_strorg_accesso" constraintName="fk_utente_strorg_accesso01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="struttura_organizzativa"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_accesso" baseTableName="utente_strorg_accesso" constraintName="fk_utente_strorg_accesso02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_accesso" referencedTableName="accesso"/>
+
+        <createIndex indexName="FX_UTENTE_STRORG_ACCESSO00" tableName="UTENTE_STRORG_ACCESSO">
+            <column name="CD_UTENTE"/>
+        </createIndex>
+
+        <createIndex indexName="FX_UTENTE_STRORG_ACCESSO01" tableName="UTENTE_STRORG_ACCESSO">
+            <column name="ID_STRORG"/>
+        </createIndex>
+
+        <createIndex indexName="FX_UTENTE_STRORG_ACCESSO02" tableName="UTENTE_STRORG_ACCESSO">
+            <column name="CD_ACCESSO"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="sigep" id="create-table-utente-strorg-ruolo">
+        <createTable remarks="Contiene i ruoli assegnati ad un utente su una data struttura organizzativa." tableName="utente_strorg_ruolo">
+            <column autoIncrement="true" name="id" type="INT" remarks="Identificativo record">
+                <constraints primaryKey="true" primaryKeyName="utente_strorg_ruolo_pkey"/>
+            </column>
+            <column name="cd_utente" remarks="Codice dell'utente" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_strorg" remarks="Identificativo della struttura organizzativa." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_ruolo" remarks="Codice del ruolo" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint columnNames="cd_utente, id_strorg, cd_ruolo" constraintName="utente_strorg_ruolo_ukey" tableName="utente_strorg_ruolo"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_utente" baseTableName="utente_strorg_ruolo" constraintName="fk_utente_strorg_ruolo00" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="cd_utente" referencedTableName="utente"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_strorg" baseTableName="utente_strorg_ruolo" constraintName="fk_utente_strorg_ruolo01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="struttura_organizzativa"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_ruolo" baseTableName="utente_strorg_ruolo" constraintName="fk_utente_strorg_ruolo02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_accesso" referencedTableName="accesso"/>
+
+        <createIndex indexName="FX_UTENTE_STRORG_RUOLO00" tableName="UTENTE_STRORG_RUOLO">
+            <column name="CD_UTENTE"/>
+        </createIndex>
+
+        <createIndex indexName="FX_UTENTE_STRORG_RUOLO01" tableName="UTENTE_STRORG_RUOLO">
+            <column name="ID_STRORG"/>
+        </createIndex>
+
+        <createIndex indexName="FX_UTENTE_STRORG_RUOLO02" tableName="UTENTE_STRORG_RUOLO">
+            <column name="CD_RUOLO"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>
