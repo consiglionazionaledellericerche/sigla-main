@@ -812,7 +812,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             fattura.setSezionali(sezionali);
             if (!getBusinessProcess(context).isSearching() &&
                     sezionali != null && !sezionali.isEmpty())
-                fattura.setTipo_sezionale((Tipo_sezionaleBulk) sezionali.firstElement());
+            	fattura.setTipo_sezionale((Tipo_sezionaleBulk) sezionali.firstElement());
             else
                 fattura.setTipo_sezionale(null);
 
@@ -2169,7 +2169,6 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
      * Richiesta la validazione delle date
      */
     public Forward doCambiaDataScadenzaFatturaFornitore(ActionContext context) {
-// viene richiamato anche la cambiamento della data protocollo indicato come command
         try {
             CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
             Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
@@ -2177,7 +2176,6 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             try {
                 fillModel(context);
                 if (!bp.isSearching()) {
-               	  	basicDoOnIstituzionaleCommercialeChange(context, fattura);
                	  	bp.setModel(context, fattura);
                     fattura.validateDate();
                     java.util.Calendar cal = Calendar.getInstance();
@@ -2204,7 +2202,38 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
 
 
     }
+    public Forward doCambiaDataProtocollo(ActionContext context) {
+        try {
+            CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
+            Fattura_passivaBulk fattura = (Fattura_passivaBulk) bp.getModel();
+            java.sql.Timestamp dataprotocollo= fattura.getData_protocollo();
+            try {
+                fillModel(context);
+                if (!bp.isSearching()) {
+                	if(fattura.getTi_fattura().compareTo(Fattura_passivaBulk.TIPO_FATTURA_PASSIVA)==0)
+               	  		basicDoOnIstituzionaleCommercialeChange(context, fattura);
+               	  	bp.setModel(context, fattura);
+                    fattura.validateDate();
+                    java.util.Calendar cal = Calendar.getInstance();
+                    if (fattura.getData_protocollo() != null)
+                        cal.setTime(fattura.getData_protocollo());
+                    else
+                        throw new ValidationException("La data di protocollo/ricezione non può essere nulla!");
+                    cal.add(Calendar.DAY_OF_MONTH, 45);
 
+                }
+                return context.findDefaultForward();
+            } catch (Throwable e) {
+                fattura.setData_protocollo(dataprotocollo);
+                bp.setModel(context, fattura);
+                throw e;
+            }
+        } catch (Throwable e) {
+            return handleException(context, e);
+        }
+
+
+    }
     /**
      * Crea e imposta la lettera di pagamento estero
      */
