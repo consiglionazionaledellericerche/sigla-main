@@ -1056,7 +1056,7 @@
 		formatName="date_short"
 		enabledOnSearch="true"
 		label="Data protocollo/ricezione"
-		command="doCambiaDataScadenzaFatturaFornitore"/>
+		command="doCambiaDataProtocollo"/>
 	<fieldProperty
 		name="progr_univoco"
 		property="progr_univoco"
