@@ -994,7 +994,8 @@ protected it.cnr.jada.util.jsp.Button[] createToolbar()
 	return newToolbar;
 }
 public boolean isCopiaAccertamentoButtonEnabled() {
-	return isEditable() && isEditing() && !isEditingScadenza() ;
+	AccertamentoBulk accertamento = (AccertamentoBulk)getModel();
+	return isEditable() && isEditing() && !isEditingScadenza() && !accertamento.isAccertamentoResiduo() ;
 }
 
 public boolean isCopiaAccertamentoButtonHidden() {
