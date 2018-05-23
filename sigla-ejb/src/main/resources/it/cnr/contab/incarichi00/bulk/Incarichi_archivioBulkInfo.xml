@@ -96,6 +96,8 @@
 		inputType="BUTTON"
 		enabledOnView="true"
 		img="img/import24.gif"
+		buttonClass="btn-outline-primary btn-title w-100"
+		iconClass="fa fa-fw fa-cloud-download"
 		href="javascript:doScaricaFile()"
 		label="Apri File" />
 
