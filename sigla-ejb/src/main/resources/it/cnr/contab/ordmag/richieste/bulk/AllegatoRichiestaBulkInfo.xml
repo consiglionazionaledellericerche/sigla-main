@@ -62,6 +62,8 @@
 		enabledOnInsert="false"
 		enabledOnView="true"
 		readonlyProperty="nodeNotPresent"
+		buttonClass="btn-outline-primary btn-title w-100"
+		iconClass="fa fa-fw fa-cloud-download"
 		img="img/import24.gif"
 		href="javascript:doScaricaAllegato()"
 		label="Apri File" />
