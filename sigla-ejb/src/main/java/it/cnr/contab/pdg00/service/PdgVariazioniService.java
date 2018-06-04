@@ -102,8 +102,11 @@ public class PdgVariazioniService extends StoreService {
 				query.append(" and uo.").append(StoragePropertyNames.STRORGUO_CODICE.value()).append(" = ").append("'").append(uo).append("'");
 			if (variazionePdg != null)
 				query.append(" and var.").append(StoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()).append(" = ").append(variazionePdg);
-            query.append(" and IN_TREE(var, '").append(
-                    getStorageObjectByPath(SpringUtil.getBean(StorePath.class).getPathVariazioniPianoDiGestione()).getKey()).append("')");
+
+            final StorageObject storageObjectByPath1 = getStorageObjectByPath(SpringUtil.getBean(StorePath.class).getPathVariazioniPianoDiGestione());
+            if (Optional.ofNullable(storageObjectByPath1).isPresent()) {
+                query.append(" and IN_TREE(var, '").append(storageObjectByPath1.getKey()).append("')");
+            }
 			return search(query.toString()).stream()
 					.map(storageObject -> storageObject.<List<BigInteger>>getPropertyValue(StoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()))
 					.map(list -> list.get(0))
@@ -176,8 +179,11 @@ public class PdgVariazioniService extends StoreService {
 				query.append(" and cds.").append(StoragePropertyNames.STRORGCDS_CODICE.value()).append(" = ").append("'").append(cds.getCd_unita_organizzativa()).append("'");
 			if (uo != null)
 				query.append(" and uo.").append(StoragePropertyNames.STRORGUO_CODICE.value()).append(" = ").append("'").append(uo).append("'");
-            query.append(" and IN_TREE(var, '").append(
-                    getStorageObjectByPath(SpringUtil.getBean(StorePath.class).getPathVariazioniPianoDiGestione()).getKey()).append("')");
+			final StorageObject storageObjectByPath1 = getStorageObjectByPath(SpringUtil.getBean(StorePath.class).getPathVariazioniPianoDiGestione());
+			if (Optional.ofNullable(storageObjectByPath1).isPresent()) {
+				query.append(" and IN_TREE(var, '").append(
+						storageObjectByPath1.getKey()).append("')");
+			}
 			List<Integer> variazioniSigned = new ArrayList<Integer>();
 			if (tiSigned != null &&
 					tiSigned.equals(ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED)){
