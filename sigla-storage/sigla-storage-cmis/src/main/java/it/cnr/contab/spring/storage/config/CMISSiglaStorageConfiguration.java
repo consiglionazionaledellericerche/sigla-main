@@ -83,7 +83,7 @@ public class CMISSiglaStorageConfiguration {
                 try {
                     this.siglaSession = createSession();
                     createBindingSession();
-                } catch (CmisConnectionException _ex) {
+                } catch (CmisConnectionException|CmisUnauthorizedException _ex) {
                     logger.error("Cannot access to CMIS repository", _ex);
                 }
 
