@@ -215,7 +215,8 @@ public class CMISSiglaStorageConfiguration {
 
             @Override
             public StorageObject createFolder(String path, String name, Map<String, Object> metadata) {
-                return Optional.ofNullable(siglaSession.getObjectByPath(path))
+                return Optional.ofNullable(siglaSession)
+                        .flatMap(session -> Optional.ofNullable(session.getObjectByPath(path)))
                     .map(Folder.class::cast)
                     .map(folder -> siglaSession.createFolder(metadata, folder))
                     .map(objectId -> siglaSession.getObject(objectId))
@@ -259,7 +260,8 @@ public class CMISSiglaStorageConfiguration {
 
             @Override
             public void updateProperties(StorageObject storageObject, Map<String, Object> metadataProperties) {
-                CmisObject cmisobject = Optional.ofNullable(siglaSession.getObject(storageObject.getKey()))
+                CmisObject cmisobject = Optional.ofNullable(siglaSession)
+                        .flatMap(session -> Optional.ofNullable(session.getObject(storageObject.getKey())))
                         .filter(cmisObject -> cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT))
                         .map(Document.class::cast)
                         .map(document -> siglaSession.getObject(document.<String>getPropertyValue("cmis:versionSeriesId")))
@@ -288,7 +290,8 @@ public class CMISSiglaStorageConfiguration {
 
             @Override
             public StorageObject updateStream(String key, InputStream inputStream, String contentType) {
-                CmisObject cmisobject = Optional.ofNullable(siglaSession.getObject(key))
+                CmisObject cmisobject = Optional.ofNullable(siglaSession)
+                        .flatMap(session -> Optional.ofNullable(session.getObject(key)))
                         .filter(cmisObject -> cmisObject.getBaseTypeId().equals(BaseTypeId.CMIS_DOCUMENT))
                         .map(Document.class::cast)
                         .map(document -> siglaSession.getObject(document.<String>getPropertyValue("cmis:versionSeriesId")))
@@ -312,14 +315,16 @@ public class CMISSiglaStorageConfiguration {
 
             @Override
             public InputStream getInputStream(String key) {
-                return Optional.ofNullable(siglaSession.getObject(key))
+                return Optional.ofNullable(siglaSession)
+                        .flatMap(session -> Optional.ofNullable(session.getObject(key)))
                         .map(Document.class::cast)
                         .map(document -> document.getContentStream().getStream())
                         .orElseThrow(() -> new StorageException(StorageException.Type.INVALID_ARGUMENTS, "You must specify key for get input stream"));
             }
 
             public InputStream getInputStream(String key, Boolean majorVersion) {
-                return Optional.ofNullable(siglaSession.getObject(key))
+                return Optional.ofNullable(siglaSession)
+                        .flatMap(session -> Optional.ofNullable(session.getObject(key)))
                         .map(Document.class::cast)
                         .map(document -> document.getObjectOfLatestVersion(majorVersion))
                         .map(document -> document.getContentStream().getStream())
@@ -327,7 +332,8 @@ public class CMISSiglaStorageConfiguration {
             }
 
             public InputStream getInputStream(String key, String versionId) {
-                return Optional.ofNullable(siglaSession.getObject(key))
+                return Optional.ofNullable(siglaSession)
+                        .flatMap(session -> Optional.ofNullable(session.getObject(key)))
                         .map(Document.class::cast)
                         .map(document ->
                                 document.getAllVersions().stream()
@@ -361,7 +367,8 @@ public class CMISSiglaStorageConfiguration {
             @Override
             public StorageObject getObject(String id) {
                 try {
-                    return Optional.ofNullable(siglaSession.getObject(id))
+                    return Optional.ofNullable(siglaSession)
+                            .flatMap(session -> Optional.ofNullable(session.getObject(id)))
                             .map(cmisObject -> new StorageObject(cmisObject.getId(), getPath(cmisObject), convertProperties(cmisObject.getProperties())))
                             .orElse(null);
                 } catch (CmisObjectNotFoundException _ex) {
@@ -383,7 +390,8 @@ public class CMISSiglaStorageConfiguration {
             @Override
             public StorageObject getObjectByPath(String path, boolean isFolder) {
                 try {
-                    return Optional.ofNullable(siglaSession.getObjectByPath(path))
+                    return Optional.ofNullable(siglaSession)
+                            .flatMap(session -> Optional.ofNullable(session.getObjectByPath(path)))
                             .map(cmisObject -> new StorageObject(cmisObject.getId(), getPath(cmisObject), convertProperties(cmisObject.getProperties())))
                             .orElse(null);
                 } catch (CmisObjectNotFoundException _ex) {
@@ -396,7 +404,8 @@ public class CMISSiglaStorageConfiguration {
 
             @Override
             public List<StorageObject> getChildren(String key) {
-                return Optional.ofNullable(siglaSession.getObject(key))
+                return Optional.ofNullable(siglaSession)
+                        .flatMap(session -> Optional.ofNullable(session.getObject(key)))
                     .map(Folder.class::cast)
                     .map(folder -> folder.getChildren())
                     .map(cmisObjects -> {
@@ -412,7 +421,8 @@ public class CMISSiglaStorageConfiguration {
 
             @Override
             public List<StorageObject> getChildren(String key, int depth) {
-                return Optional.ofNullable(siglaSession.getObject(key))
+                return Optional.ofNullable(siglaSession)
+                        .flatMap(session -> Optional.ofNullable(session.getObject(key)))
                         .map(Folder.class::cast)
                         .map(folder -> folder.getDescendants(depth))
                         .map(cmisObjects -> {
@@ -434,8 +444,8 @@ public class CMISSiglaStorageConfiguration {
 
             @Override
             public List<StorageObject> search(String query) {
-                return Optional.ofNullable(query)
-                        .map(statement -> siglaSession.query(statement, false))
+                return Optional.ofNullable(siglaSession)
+                        .map(session -> siglaSession.query(query, false))
                         .map(queryResults -> {
                             List<StorageObject> list = new ArrayList<StorageObject>();
                             if (queryResults.getTotalNumItems() > 0) {
