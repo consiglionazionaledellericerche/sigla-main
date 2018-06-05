@@ -1,6 +1,6 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.persistency.Keyed;
 
 public class Lettera_pagam_esteroBase extends Lettera_pagam_esteroKey implements Keyed {

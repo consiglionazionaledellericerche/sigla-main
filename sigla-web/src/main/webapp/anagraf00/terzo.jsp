@@ -24,7 +24,7 @@
 	bp.openFormWindow(pageContext);
 %>
 
-<table>
+<table class="card w-100 p-2 mb-2">
 	<tr>
 		<td>
 			<%bp.writeFormLabel(out,"cd_anag");%>

@@ -8,9 +8,9 @@
 		The located property files are parsed and their values can then be used within
 		application context files in the form of ${propertyKey}. -->
 
-    <bean id="storage.converter.defaultConverter" class="it.cnr.contab.spring.storage.converter.DefaultConverter"/>
-    <bean id="storage.converter.timestampToCalendarConverter" class="it.cnr.contab.spring.storage.converter.TimestampToCalendarConverter"/>
-    <bean id="storage.converter.longToIntegerConverter" class="it.cnr.contab.spring.storage.converter.LongToIntegerConverter"/>
+    <bean id="storage.converter.defaultConverter" class="it.cnr.si.spring.storage.converter.DefaultConverter"/>
+    <bean id="storage.converter.timestampToCalendarConverter" class="it.cnr.si.spring.storage.converter.TimestampToCalendarConverter"/>
+    <bean id="storage.converter.longToIntegerConverter" class="it.cnr.si.spring.storage.converter.LongToIntegerConverter"/>
 
     <bean id="pdgVariazioniService" class="it.cnr.contab.pdg00.service.PdgVariazioniService" />
     <bean id="contrattiService" class="it.cnr.contab.incarichi00.service.ContrattiService" />

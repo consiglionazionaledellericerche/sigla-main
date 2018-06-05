@@ -5,7 +5,7 @@ import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.si.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;

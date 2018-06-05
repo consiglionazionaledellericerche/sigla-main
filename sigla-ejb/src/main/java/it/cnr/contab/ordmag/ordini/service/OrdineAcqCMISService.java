@@ -4,12 +4,12 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.contab.spring.storage.SiglaStorageService;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -67,7 +67,7 @@ public class OrdineAcqCMISService extends StoreService {
                             .map(esercizio -> "Anno ".concat(String.valueOf(esercizio)))
                             .orElse("0")
             ).stream().collect(
-                    Collectors.joining(SiglaStorageService.SUFFIX)
+                    Collectors.joining(StorageService.SUFFIX)
             );
             return createFolderRichiestaIfNotPresent(path, allegatoParentBulk);
 		} catch (ComponentException e) {

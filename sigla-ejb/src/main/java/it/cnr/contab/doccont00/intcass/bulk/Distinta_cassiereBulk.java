@@ -1,8 +1,8 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
-import it.cnr.contab.spring.storage.SiglaStorageService;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
-import it.cnr.contab.spring.storage.annotation.StorageType;
+import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StorageType;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP;
@@ -628,7 +628,7 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase{
 						.orElse("0"),
 				getCMISFolderName()
 		).stream().collect(
-				Collectors.joining(SiglaStorageService.SUFFIX)
+				Collectors.joining(StorageService.SUFFIX)
 		);
 	}
 

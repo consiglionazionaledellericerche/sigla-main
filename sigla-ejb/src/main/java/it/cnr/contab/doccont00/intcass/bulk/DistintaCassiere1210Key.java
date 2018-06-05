@@ -3,7 +3,7 @@
  * Date 24/12/2015
  */
 package it.cnr.contab.doccont00.intcass.bulk;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.KeyedPersistent;
 public class DistintaCassiere1210Key extends OggettoBulk implements KeyedPersistent {

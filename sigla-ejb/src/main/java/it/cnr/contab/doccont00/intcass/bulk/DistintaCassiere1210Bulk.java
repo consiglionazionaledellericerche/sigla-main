@@ -4,9 +4,9 @@
  */
 package it.cnr.contab.doccont00.intcass.bulk;
 
-import it.cnr.contab.spring.storage.SiglaStorageService;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
-import it.cnr.contab.spring.storage.annotation.StorageType;
+import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StorageType;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -53,7 +53,7 @@ public class DistintaCassiere1210Bulk extends DistintaCassiere1210Base {
 						.orElse("0"),
 				getCMISFolderName()
 		).stream().collect(
-				Collectors.joining(SiglaStorageService.SUFFIX)
+				Collectors.joining(StorageService.SUFFIX)
 		);
 	}
 

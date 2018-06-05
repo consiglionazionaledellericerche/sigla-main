@@ -4,13 +4,13 @@ package it.cnr.contab.pdg00.bulk.storage;
 import java.io.File;
 import java.util.StringTokenizer;
 
-import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StorageObject;
 
-import it.cnr.contab.spring.storage.annotation.StoragePolicy;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
-import it.cnr.contab.spring.storage.annotation.StorageType;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StorageType;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.si.spring.storage.StoreService;
 import it.cnr.jada.bulk.OggettoBulk;
 @StorageType(name="cmis:document")
 public class AllegatoPdGVariazioneDocumentBulk extends OggettoBulk{

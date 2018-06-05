@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
-import it.cnr.contab.spring.storage.annotation.StoragePolicy;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.OggettoBulk;
 

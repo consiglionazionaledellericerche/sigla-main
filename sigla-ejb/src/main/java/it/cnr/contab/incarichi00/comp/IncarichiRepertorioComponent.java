@@ -16,7 +16,7 @@ import it.cnr.contab.incarichi00.service.ContrattiService;
 import it.cnr.contab.incarichi00.storage.StorageContrattiAspect;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
