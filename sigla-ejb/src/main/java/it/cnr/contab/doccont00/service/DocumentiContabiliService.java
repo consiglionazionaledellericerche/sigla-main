@@ -1,15 +1,19 @@
 package it.cnr.contab.doccont00.service;
 
+import com.google.gson.GsonBuilder;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
-import it.cnr.contab.spring.storage.SiglaStorageService;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
-import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.contab.util.PdfSignApparence;
+import it.cnr.contab.util.SIGLAStoragePropertyNames;
+import it.cnr.contab.util.SignP7M;
+import it.cnr.jada.firma.arss.ArubaSignServiceException;
+import it.cnr.si.spring.storage.*;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.firma.arss.ArubaSignServiceClient;
 import it.cnr.jada.util.mail.SimplePECMail;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,13 +23,22 @@ import java.util.stream.Collectors;
 
 import javax.activation.DataSource;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 public class DocumentiContabiliService extends StoreService {
+	@Autowired
+	private StorageService storageService;
+
+	@Value("${sign.document.png.url}")
+	private String signDocumentURL;
+
 	private transient static final Logger logger = LoggerFactory.getLogger(DocumentiContabiliService.class);
 	private ArubaSignServiceClient arubaSignServiceClient;
 	private String pecHostName,pecMailFromBanca,pecMailFromBancaPassword,pecMailToBancaNoEuroSepa,pecMailToBancaItaliaF23F24;
@@ -86,7 +99,7 @@ public class DocumentiContabiliService extends StoreService {
 	public String getDocumentKey(StatoTrasmissione bulk, boolean fullNodeRef) {
 		return Optional.ofNullable(bulk)
 				.map(statoTrasmissione -> Optional.ofNullable(getStorageObjectByPath(statoTrasmissione.getStorePath()
-						.concat(SiglaStorageService.SUFFIX)
+						.concat(StorageService.SUFFIX)
 						.concat(statoTrasmissione.getCMISName())))
 				.map(storageObject ->
 						fullNodeRef ? Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()))
@@ -96,7 +109,7 @@ public class DocumentiContabiliService extends StoreService {
 	}
 
 	public InputStream getStreamDocumento(StatoTrasmissione bulk) {
-		return Optional.ofNullable(getStorageObjectByPath(bulk.getStorePath().concat(SiglaStorageService.SUFFIX).concat(bulk.getCMISName())))
+		return Optional.ofNullable(getStorageObjectByPath(bulk.getStorePath().concat(StorageService.SUFFIX).concat(bulk.getCMISName())))
 				.map(StorageObject::getKey)
 				.map(key -> getResource(key))
 				.orElse(null);
@@ -249,5 +262,95 @@ public class DocumentiContabiliService extends StoreService {
 					.orElse(null);
 		}
 	}
+
+	public String signDocuments(PdfSignApparence pdfSignApparence, String url) throws StorageException {
+		if (storageService.getStoreType().equals(StorageService.StoreType.CMIS)) {
+			return signDocuments(new GsonBuilder().create().toJson(pdfSignApparence), url);
+		} else {
+			List<byte[]> bytes = Optional.ofNullable(pdfSignApparence)
+					.map(pdfSignApparence1 -> pdfSignApparence1.getNodes())
+					.map(list ->
+							list.stream()
+									.map(s -> storageService.getInputStream(s))
+									.map(inputStream -> {
+										try {
+											return IOUtils.toByteArray(inputStream);
+										} catch (IOException e) {
+											throw new StorageException(StorageException.Type.GENERIC, e);
+										}
+									})
+									.collect(Collectors.toList()))
+					.orElse(Collections.emptyList());
+			try {
+				it.cnr.jada.firma.arss.stub.PdfSignApparence apparence = new it.cnr.jada.firma.arss.stub.PdfSignApparence();
+				apparence.setImage(signDocumentURL);
+				apparence.setLeftx(pdfSignApparence.getApparence().getLeftx());
+				apparence.setLefty(pdfSignApparence.getApparence().getLefty());
+				apparence.setLocation(pdfSignApparence.getApparence().getLocation());
+				apparence.setPage(pdfSignApparence.getApparence().getPage());
+				apparence.setReason(pdfSignApparence.getApparence().getReason());
+				apparence.setRightx(pdfSignApparence.getApparence().getRightx());
+				apparence.setRighty(pdfSignApparence.getApparence().getRighty());
+				apparence.setTesto(pdfSignApparence.getApparence().getTesto());
+
+				List<byte[]> bytesSigned = arubaSignServiceClient.pdfsignatureV2Multiple(
+						pdfSignApparence.getUsername(),
+						pdfSignApparence.getPassword(),
+						pdfSignApparence.getOtp(),
+						bytes,
+						apparence
+				);
+				for (int i = 0; i < pdfSignApparence.getNodes().size(); i++) {
+					storageService.updateStream(
+							pdfSignApparence.getNodes().get(i),
+							new ByteArrayInputStream(bytesSigned.get(i)),
+							MimeTypes.PDF.mimetype()
+					);
+				}
+
+			} catch (ArubaSignServiceException e) {
+				throw new StorageException(StorageException.Type.GENERIC, e);
+			}
+			return null;
+		}
+	}
+
+		public String signDocuments(SignP7M signP7M, String url) throws StorageException{
+		if (storageService.getStoreType().equals(StorageService.StoreType.CMIS)) {
+			return signDocuments(new GsonBuilder().create().toJson(signP7M), url);
+		} else {
+			StorageObject storageObject = storageService.getObject(signP7M.getNodeRefSource());
+			try {
+				final byte[] bytes = arubaSignServiceClient.pkcs7SignV2(
+						signP7M.getUsername(),
+						signP7M.getPassword(),
+						signP7M.getOtp(),
+						IOUtils.toByteArray(storageService.getInputStream(signP7M.getNodeRefSource())));
+				Map<String, Object> metadataProperties = new HashMap<>();
+				metadataProperties.put(StoragePropertyNames.NAME.value(), signP7M.getNomeFile());
+				metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(),SIGLAStoragePropertyNames.CNR_ENVELOPEDDOCUMENT.value());
+
+				return storeSimpleDocument(
+						new ByteArrayInputStream(bytes),
+						MimeTypes.P7M.mimetype(),
+						storageObject.getPath().substring(0, storageObject.getPath().lastIndexOf(StorageService.SUFFIX) + 1),
+						metadataProperties).getKey();
+			} catch (ArubaSignServiceException|IOException e) {
+				throw new StorageException(StorageException.Type.GENERIC, e);
+			} finally {
+				List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
+				aspects.add("P:cnr:signedDocument");
+				updateProperties(Collections.singletonMap(
+						StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+						aspects
+				), storageObject);
+			}
+		}
+	}
+
+	private String signDocuments(String json, String url) throws StorageException{
+		return storageService.signDocuments(json, url);
+	}
+
 
 }

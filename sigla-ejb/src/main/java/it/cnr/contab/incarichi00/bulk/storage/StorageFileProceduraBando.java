@@ -1,10 +1,10 @@
 package it.cnr.contab.incarichi00.bulk.storage;
 
-import it.cnr.contab.spring.storage.bulk.StorageTypeName;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.bulk.StorageTypeName;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
 import it.cnr.contab.incarichi00.storage.StorageContrattiAttachment;
-import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StorageObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

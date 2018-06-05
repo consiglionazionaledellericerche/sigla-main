@@ -7,14 +7,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.contab.spring.storage.SiglaStorageService;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
 import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaDettaglioBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopRigaBulk;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -58,7 +58,7 @@ public class RichiesteCMISService extends StoreService {
                             .map(esercizio -> "Anno ".concat(String.valueOf(esercizio)))
                             .orElse("0")
             ).stream().collect(
-                    Collectors.joining(SiglaStorageService.SUFFIX)
+                    Collectors.joining(StorageService.SUFFIX)
             );
             path = createFolderRichiestaIfNotPresent(path, richiestaUop);
             return path;

@@ -2,8 +2,9 @@ package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.doccont00.intcass.bulk.*;
-import it.cnr.contab.spring.storage.SiglaStorageService;
-import it.cnr.contab.spring.storage.bulk.StorageFile;
+import it.cnr.contab.util.*;
+import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -26,9 +27,9 @@ import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
-import it.cnr.contab.spring.storage.StorageException;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
+import it.cnr.si.spring.storage.StorageException;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
@@ -36,9 +37,6 @@ import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBulk;
-import it.cnr.contab.util.RemoveAccent;
-import it.cnr.contab.util.SignP7M;
-import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -1836,11 +1834,11 @@ public class CRUDDistintaCassiereBP extends
 
 	public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk)
 			throws Exception {
-		Map<String, String> subjectDN = Optional.ofNullable(SpringUtil.getBean(DocumentiContabiliService.class).getCertSubjectDN(firmaOTPBulk.getUserName(),
+		Map<String, String> subjectDN = Optional.ofNullable(SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class).getCertSubjectDN(firmaOTPBulk.getUserName(),
 				firmaOTPBulk.getPassword()))
 				.orElseThrow(() -> new ApplicationException("Errore nella lettura dei certificati!\nVerificare Nome Utente e Password!"));
 		if (Optional.ofNullable(controlloCodiceFiscale).filter(s -> s.equalsIgnoreCase("Y")).isPresent()) {
-			SpringUtil.getBean(DocumentiContabiliService.class).controllaCodiceFiscale(
+			SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class).controllaCodiceFiscale(
 					subjectDN,
 					((CNRUserInfo)context.getUserInfo()).getUtente()
 			);
@@ -1850,7 +1848,7 @@ public class CRUDDistintaCassiereBP extends
 			// spostato nel salva definitivo anche in questo caso
 			StorageObject distintaStorageObject = Optional.ofNullable(distintaProvvisoria.getPg_distinta_def())
 					.map(paDistintaDef -> documentiContabiliService.getStorageObjectByPath(
-                            distintaProvvisoria.getStorePath().concat(SiglaStorageService.SUFFIX).concat(distintaProvvisoria.getCMISName())
+                            distintaProvvisoria.getStorePath().concat(StorageService.SUFFIX).concat(distintaProvvisoria.getCMISName())
 					)).orElse(inviaDistinta(context, distintaProvvisoria));
             Distinta_cassiereBulk distinta = (Distinta_cassiereBulk) getModel();
 			List<String> nodes = new ArrayList<String>();
@@ -1941,7 +1939,7 @@ public class CRUDDistintaCassiereBP extends
 				if (storageFile.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0) {
 					Optional.ofNullable(documentiContabiliService
 							.getStorageObjectByPath(distinta
-									.getStorePath().concat(SiglaStorageService.SUFFIX)
+									.getStorePath().concat(StorageService.SUFFIX)
 									.concat(String.valueOf(distinta.getEsercizio()))
 									.concat("-").concat(distinta.getCd_unita_organizzativa())
 									.concat("-").concat(String.valueOf(distinta.getPg_distinta_def()))
@@ -2011,7 +2009,7 @@ public class CRUDDistintaCassiereBP extends
 				.ifPresent(tesoreriaUnica -> {
 					Optional.ofNullable(documentiContabiliService.getStorageObjectByPath(
 							distinta.getStorePath()
-									.concat(SiglaStorageService.SUFFIX)
+									.concat(StorageService.SUFFIX)
 									.concat(String.valueOf(distinta.getEsercizio()))
 									.concat("-")
 									.concat(distinta.getCd_unita_organizzativa())
@@ -2044,7 +2042,7 @@ public class CRUDDistintaCassiereBP extends
 			String path;
 			if (isFlusso()) {
 				path = distinta.getStorePath()
-						.concat(SiglaStorageService.SUFFIX)
+						.concat(StorageService.SUFFIX)
 						.concat(String.valueOf(distinta.getEsercizio()))
 						.concat("-")
 						.concat(distinta.getCd_unita_organizzativa())
@@ -2054,7 +2052,7 @@ public class CRUDDistintaCassiereBP extends
 								.concat("-I.").concat(formatoflusso).concat(".p7m");
 			} else {
 				path = distinta.getStorePath()
-						.concat(SiglaStorageService.SUFFIX)
+						.concat(StorageService.SUFFIX)
 						.concat("Distinta n. ")
 						.concat(String.valueOf(distinta
 								.getPg_distinta_def())).concat(".pdf");
@@ -2091,7 +2089,7 @@ public class CRUDDistintaCassiereBP extends
 			if (firmata) {
 				if (isFlusso()) {
 					path = distinta.getStorePath()
-							.concat(SiglaStorageService.SUFFIX)
+							.concat(StorageService.SUFFIX)
 							.concat(String.valueOf(distinta
 									.getEsercizio()))
 							.concat("-")
@@ -2101,14 +2099,14 @@ public class CRUDDistintaCassiereBP extends
 							.concat("-I.").concat(formatoflusso).concat(".p7m");
 				} else {
 					path = distinta.getStorePath()
-							.concat(SiglaStorageService.SUFFIX)
+							.concat(StorageService.SUFFIX)
 							.concat("Distinta n. ")
 							.concat(String.valueOf(distinta.getPg_distinta_def()))
 							.concat(".pdf");
 				}
 			} else {
 				path = distinta.getStorePath()
-						.concat(SiglaStorageService.SUFFIX)
+						.concat(StorageService.SUFFIX)
 						.concat(String.valueOf(distinta
 								.getEsercizio()))
 						.concat("-")

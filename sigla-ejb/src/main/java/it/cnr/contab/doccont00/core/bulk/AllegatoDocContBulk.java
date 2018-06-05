@@ -1,7 +1,7 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import it.cnr.contab.spring.storage.annotation.StoragePolicy;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.util.OrderedHashtable;
 

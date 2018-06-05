@@ -1,18 +1,18 @@
 package it.cnr.contab.incarichi00.bulk.storage;
 
-import it.cnr.contab.spring.storage.SiglaStorageService;
-import it.cnr.contab.spring.storage.bulk.StorageTypeName;
-import it.cnr.contab.spring.storage.annotation.StoragePolicy;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
-import it.cnr.contab.spring.storage.bulk.StorageFile;
+import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.bulk.StorageTypeName;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rappBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
 import it.cnr.contab.incarichi00.storage.StorageContrattiAttachment;
 import it.cnr.contab.incarichi00.storage.StorageContrattiProperty;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
 import java.io.File;
 import java.io.IOException;
@@ -216,7 +216,7 @@ public class StorageFileIncarichi extends StorageFile implements StorageTypeName
        			((Incarichi_repertorio_varBulk)getIncaricoArchivio()).getIncarichi_repertorio()!=null)
     			cmisPath = ((Incarichi_repertorio_varBulk)getIncaricoArchivio()).getIncarichi_repertorio().getIncarichi_procedura().getCMISFolder().getCMISPrincipalPath();
     		if (cmisPath!=null)
-    			cmisPath = cmisPath.concat(SiglaStorageService.SUFFIX).concat((String)Incarichi_archivioBulk.getTipo_archivioKeys().get(getIncaricoArchivio().getTipo_archivio()));
+    			cmisPath = cmisPath.concat(StorageService.SUFFIX).concat((String)Incarichi_archivioBulk.getTipo_archivioKeys().get(getIncaricoArchivio().getTipo_archivio()));
     	}
 		return cmisPath;
 	}

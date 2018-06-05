@@ -324,11 +324,11 @@
 		/>
 	<formFieldProperty
 		name="cd_terzo"
-		inputSize="4"
+		inputSize="10"
 		/>
 	<formFieldProperty
 		name="cd_anag"
-		inputSize="4"
+		inputSize="10"
 		/>
 	<formFieldProperty
 		name="cd_precedente"
