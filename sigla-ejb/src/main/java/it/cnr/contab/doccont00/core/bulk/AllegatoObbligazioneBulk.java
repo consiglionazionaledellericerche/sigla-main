@@ -1,6 +1,6 @@
 package it.cnr.contab.doccont00.core.bulk;
 
-import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 
 public class AllegatoObbligazioneBulk extends AllegatoGenericoBulk {

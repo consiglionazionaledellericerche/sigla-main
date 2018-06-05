@@ -8,9 +8,9 @@ package it.cnr.contab.pdg00.bulk;
 
 import java.sql.Timestamp;
 
-import it.cnr.contab.spring.storage.annotation.StoragePolicy;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
-import it.cnr.contab.spring.storage.annotation.StorageType;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StorageType;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.pdg00.bulk.storage.AllegatoPdGVariazioneDocumentBulk;
 import it.cnr.contab.pdg00.bulk.storage.PdgVariazioneDocument;

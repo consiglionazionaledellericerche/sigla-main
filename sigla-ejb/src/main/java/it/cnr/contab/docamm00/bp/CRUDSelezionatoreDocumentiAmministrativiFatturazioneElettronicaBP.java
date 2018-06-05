@@ -10,10 +10,11 @@ import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageException;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.bulk.StorageFile;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.contab.util.SIGLAStoragePropertyNames;
+import it.cnr.si.spring.storage.StorageException;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.bulk.StorageFile;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.SignP7M;
 import it.cnr.contab.util.StringEncrypter;
@@ -249,7 +250,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                                                 logger.error("Errore nell'invio del file " + ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()) : ex.getMessage());
 
                                                 List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
-                                                aspects.remove(StoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
+                                                aspects.remove(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
                                                 documentiCollegatiDocAmmService.updateProperties(
                                                         Collections.singletonMap(
                                                                 StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),

@@ -1,7 +1,7 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
 import it.cnr.jada.persistency.*;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
 public class Distinta_cassiereBase extends Distinta_cassiereKey implements Keyed {
 
 	// DT_EMISSIONE TIMESTAMP

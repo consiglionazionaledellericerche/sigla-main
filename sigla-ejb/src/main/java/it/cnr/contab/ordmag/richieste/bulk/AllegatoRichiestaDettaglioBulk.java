@@ -3,8 +3,8 @@ package it.cnr.contab.ordmag.richieste.bulk;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
-import it.cnr.contab.spring.storage.annotation.StorageType;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StorageType;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 
 @StorageType(name="cmis:document")
