@@ -1,9 +1,9 @@
 package it.cnr.contab.incarichi00.service;
 
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
 
-import it.cnr.contab.spring.storage.bulk.StorageDocument;
+import it.cnr.si.spring.storage.bulk.StorageDocument;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
 import it.cnr.contab.incarichi00.storage.StorageContrattiProperty;

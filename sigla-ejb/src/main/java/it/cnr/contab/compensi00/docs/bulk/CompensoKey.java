@@ -1,7 +1,7 @@
 package it.cnr.contab.compensi00.docs.bulk;
 
-import it.cnr.contab.spring.storage.annotation.StoragePolicy;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
 

@@ -1,9 +1,9 @@
 package it.cnr.contab.util.servlet;
 
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.StoreService;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.util.Introspector;

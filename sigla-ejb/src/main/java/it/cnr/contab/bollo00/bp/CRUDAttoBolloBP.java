@@ -8,7 +8,7 @@ import it.cnr.contab.bollo00.bulk.Atto_bolloBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.contab.spring.storage.SiglaStorageService;
+import it.cnr.si.spring.storage.StorageService;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.action.ActionContext;
@@ -54,7 +54,7 @@ public class CRUDAttoBolloBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Atto_b
 						.orElse("0"),
 				String.valueOf(allegatoParentBulk.getId())
 		).stream().collect(
-				Collectors.joining(SiglaStorageService.SUFFIX)
+				Collectors.joining(StorageService.SUFFIX)
 		);
 	}
 

@@ -3,7 +3,7 @@ package it.cnr.contab.docamm00.fatturapa.bulk;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;

@@ -3,8 +3,8 @@
 * Date 09/04/2005
 */
 package it.cnr.contab.config00.contratto.bulk;
-import it.cnr.contab.spring.storage.annotation.StoragePolicy;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.KeyedPersistent;
 public class ContrattoKey extends OggettoBulk implements KeyedPersistent {
