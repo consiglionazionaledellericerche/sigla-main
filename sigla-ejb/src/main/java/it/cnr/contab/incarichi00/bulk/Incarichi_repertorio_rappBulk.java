@@ -1,10 +1,10 @@
 package it.cnr.contab.incarichi00.bulk;
 
-import it.cnr.contab.spring.storage.bulk.StorageFile;
+import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.contab.incarichi00.bulk.storage.StorageFileAssegniRicerca;
 import it.cnr.contab.incarichi00.bulk.storage.StorageFileBorseStudio;
 import it.cnr.contab.incarichi00.bulk.storage.StorageFileIncarichi;
-import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.contab.util.Utility;
 
 import java.io.IOException;

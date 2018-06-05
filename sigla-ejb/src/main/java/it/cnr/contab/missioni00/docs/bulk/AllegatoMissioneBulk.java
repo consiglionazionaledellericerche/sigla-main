@@ -1,8 +1,8 @@
 package it.cnr.contab.missioni00.docs.bulk;
 
 import it.cnr.contab.missioni00.service.MissioniCMISService;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;

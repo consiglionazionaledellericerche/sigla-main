@@ -1,9 +1,6 @@
-package it.cnr.contab.spring.storage.config;
+package it.cnr.contab.util;
 
-/**
- * Created by mspasiano on 6/15/17.
- */
-public enum StoragePropertyNames {
+public enum SIGLAStoragePropertyNames {
 
     //Struttura Organizzativa
     STRORGCDS_CODICE("strorgcds:codice"),
@@ -39,32 +36,15 @@ public enum StoragePropertyNames {
     VARPIANOGEST_DOCUMENT("D:varpianogest:document"),
 
     //Aspect
-    CNR_SIGNEDDOCUMENT("P:cnr:signedDocument"),
-    SYS_ARCHIVED("P:sys:archived"),
-
-    NAME("cmis:name"),
-    TITLE("cm:title"),
-    DESCRIPTION("cm:description"),
-    AUTHOR("cm:author"),
-    ASPECT_TITLED("P:cm:titled"),
-    OBJECT_TYPE_ID("cmis:objectTypeId"),
-    BASE_TYPE_ID("cmis:baseTypeId"),
-    ID("cmis:objectId"),
-    PATH("cmis:path"),
-    CMIS_FOLDER("cmis:folder"),
-    CMIS_DOCUMENT("cmis:document"),
-    ALFCMIS_NODEREF ("alfcmis:nodeRef"),
-    CONTENT_STREAM_LENGTH ("cmis:contentStreamLength"),
-    CONTENT_STREAM_MIME_TYPE ("cmis:contentStreamMimeType"),
-    SECONDARY_OBJECT_TYPE_IDS("cmis:secondaryObjectTypeIds");
-
+    CNR_SIGNEDDOCUMENT("P:cnr:signedDocument");
     private String value;
 
-    StoragePropertyNames (String value) {
+    SIGLAStoragePropertyNames(String value) {
         this.value = value;
     }
 
     public String value() {
         return this.value;
     }
+
 }

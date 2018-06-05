@@ -27,9 +27,9 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamResult;
 
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
-import it.cnr.contab.spring.storage.StorageException;
-import it.cnr.contab.spring.storage.StoreService;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.si.spring.storage.StorageException;
+import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

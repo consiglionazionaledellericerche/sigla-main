@@ -1,10 +1,10 @@
 package it.cnr.contab.util00.bp;
 
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageException;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.StoreService;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.si.spring.storage.StorageException;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.action.ActionContext;

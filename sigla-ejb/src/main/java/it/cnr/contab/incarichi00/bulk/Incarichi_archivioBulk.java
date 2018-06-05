@@ -4,8 +4,8 @@
  */
 package it.cnr.contab.incarichi00.bulk;
 
-import it.cnr.contab.spring.storage.bulk.StorageFile;
-import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.bulk.StorageFile;
+import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.persistency.Persister;
 

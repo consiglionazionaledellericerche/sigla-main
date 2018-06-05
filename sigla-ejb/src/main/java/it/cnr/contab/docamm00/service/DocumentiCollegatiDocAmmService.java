@@ -9,15 +9,16 @@ import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
 import it.cnr.contab.docamm00.storage.StorageFolderFatturaAttiva;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
+import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageException;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.StoreService;
-import it.cnr.contab.spring.storage.bulk.StorageFile;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.si.spring.storage.StorageException;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.spring.storage.bulk.StorageFile;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoStorePath;
@@ -45,7 +46,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class DocumentiCollegatiDocAmmService extends StoreService {
+public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
 
     private transient static final Logger logger = LoggerFactory.getLogger(DocumentiCollegatiDocAmmService.class);
     private final static String TIPO_ALLEGATO_NON_INVIATO_SDI = "allegati_non_inviati_sdi";
