@@ -2,8 +2,8 @@ package it.cnr.contab.incarichi00.servlet;
 
 import it.cnr.contab.incarichi00.service.ContrattiService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.jada.action.HttpActionContext;
 
 import javax.servlet.ServletException;

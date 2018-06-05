@@ -423,19 +423,9 @@
             <version>20160810</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>sigla-storage-cmis</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>sigla-storage-azure</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>sigla-storage-s3</artifactId>
-            <version>${project.version}</version>
+            <groupId>it.cnr.si</groupId>
+            <artifactId>storage-cloud-cmis</artifactId>
+            <version>${storage-cloud.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -13,7 +13,6 @@
   	</parent>
 	<modules>
 		<module>sigla-ws-client</module>
-		<module>sigla-storage</module>
 		<module>sigla-ejb</module>
 		<module>sigla-sdi</module>
 		<module>sigla-ws</module>
@@ -32,8 +31,10 @@
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<liquibase.version>3.5.3</liquibase.version>
 		<pdfbox.version>2.0.0</pdfbox.version>
+		<storage-cloud.version>0.0.4</storage-cloud.version>
 	</properties>
 	<build>
+
 		<pluginManagement>
 			<plugins>
 				<plugin>

@@ -5,10 +5,10 @@ import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.Missione_dettaglioBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.contab.spring.storage.SiglaStorageService;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.StoreService;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -105,10 +105,10 @@ public class MissioniCMISService extends StoreService {
 		);
 		return Optional.ofNullable(missione)
                 .map(missioneBulk -> Stream.concat(path.stream(), Stream.of(missione.constructCMISNomeFile()))
-                        .collect(Collectors.joining(SiglaStorageService.SUFFIX)))
+                        .collect(Collectors.joining(StorageService.SUFFIX)))
                 .flatMap(pathRimborso -> Optional.ofNullable(getStorageObjectByPath(pathRimborso)))
                 .orElseGet(() ->  getStorageObjectByPath(
-                        createFolderMissioneSiglaIfNotPresent(path.stream().collect(Collectors.joining(SiglaStorageService.SUFFIX)), missione))
+                        createFolderMissioneSiglaIfNotPresent(path.stream().collect(Collectors.joining(StorageService.SUFFIX)), missione))
                 );
 	}
 

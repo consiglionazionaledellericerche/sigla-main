@@ -10,10 +10,11 @@ import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.SiglaStorageService;
-import it.cnr.contab.spring.storage.StorageException;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.contab.util.SIGLAStoragePropertyNames;
+import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageException;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedException;
@@ -138,7 +139,8 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 				archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument() == null)
 			return false;
 		return archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument().getStorageObject().
-				<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains(StoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
+				<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value())
+				.contains(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
 	}
 	
 	@Override
@@ -300,7 +302,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 				"CdR "+archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita()+
 						" Variazione "+ Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0')
 		).stream().collect(
-				Collectors.joining(SiglaStorageService.SUFFIX)
+				Collectors.joining(StorageService.SUFFIX)
 		);
 	}
 	
@@ -327,7 +329,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 							allegato.getContentType(),
 							allegato.getNome(), cmisPath);
 					pdgVariazioniService.createRelationship(pdgVariazioneDocumentNode.getKey(),
-							node.getKey(), StoragePropertyNames.R_VARPIANOGEST_ALLEGATIVARBILANCIO.value());
+							node.getKey(), SIGLAStoragePropertyNames.R_VARPIANOGEST_ALLEGATIVARBILANCIO.value());
 					allegato.setCrudStatus(OggettoBulk.NORMAL);
 				} catch (FileNotFoundException e) {
 					handleException(e);

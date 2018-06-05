@@ -1,15 +1,15 @@
 package it.cnr.contab.incarichi00.bulk.storage;
 
-import it.cnr.contab.spring.storage.SiglaStorageService;
-import it.cnr.contab.spring.storage.StoreService;
-import it.cnr.contab.spring.storage.annotation.StoragePolicy;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
-import it.cnr.contab.spring.storage.annotation.StorageType;
-import it.cnr.contab.spring.storage.converter.Converter;
+import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StorageType;
+import it.cnr.si.spring.storage.converter.Converter;
 import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
 import it.cnr.contab.incarichi00.storage.StorageContrattiProperty;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -127,7 +127,7 @@ public class StorageFolderProcedura extends OggettoBulk {
                 this.getIncaricoProcedura().getCd_unita_organizzativa(),
                 path
         ).stream().collect(
-                Collectors.joining(SiglaStorageService.SUFFIX)
+                Collectors.joining(StorageService.SUFFIX)
         );
 	}
 
@@ -140,7 +140,7 @@ public class StorageFolderProcedura extends OggettoBulk {
                                         .map(esercizio -> String.valueOf(esercizio))
                                         .orElse("0")
                         ).stream().collect(
-                                Collectors.joining(SiglaStorageService.SUFFIX)
+                                Collectors.joining(StorageService.SUFFIX)
                         ),
 						"Procedura "+this.getEsercizio().toString()+Utility.lpad(this.getPg_procedura().toString(),10,'0'),
 						null, null, this);

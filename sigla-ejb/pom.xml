@@ -239,11 +239,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>it.cnr</groupId>
-            <artifactId>sigla-storage-commons</artifactId>
-            <version>${project.version}</version>
+            <groupId>it.cnr.si</groupId>
+            <artifactId>storage-cloud-commons</artifactId>
+            <version>${storage-cloud.version}</version>
+            <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

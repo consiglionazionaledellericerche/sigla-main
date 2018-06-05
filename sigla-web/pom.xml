@@ -143,6 +143,11 @@
             <version>${slf4j.version}</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>it.cnr.si</groupId>
+            <artifactId>storage-cloud-commons</artifactId>
+            <version>${storage-cloud.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

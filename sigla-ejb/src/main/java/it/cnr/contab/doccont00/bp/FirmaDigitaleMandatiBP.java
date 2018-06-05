@@ -15,8 +15,8 @@ import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.SiglaStorageService;
-import it.cnr.contab.spring.storage.StoreService;
+import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
@@ -322,8 +322,8 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 							(V_mandato_reversaleBulk) statoTrasmissione);
 					Set<String> childs = new HashSet<String>();
 					for (Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk : result) {
-						Set<String> allegati = SpringUtil.getBean(DocumentiContabiliService.class).getAllegatoForModPag(
-								SpringUtil.getBean(DocumentiContabiliService.class).getStorageObjectByPath(statoTrasmissione.getStorePath()).getKey(),
+						Set<String> allegati = SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class).getAllegatoForModPag(
+								SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class).getStorageObjectByPath(statoTrasmissione.getStorePath()).getKey(),
 								rif_modalita_pagamentoBulk.getCd_modalita_pag());
 						if (allegati.isEmpty())
 							throw new ApplicationException("\nAl mandato n."+ statoTrasmissione.getPg_documento_cont()+ " non risulta allegato il documento con tipologia [" +
@@ -336,12 +336,12 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						PDFMergerUtility ut = new PDFMergerUtility();
 						ByteArrayOutputStream out = new ByteArrayOutputStream();
 						ut.setDestinationStream(out);
-						ut.addSource(SpringUtil.getBean(DocumentiContabiliService.class).getResource(
-								SpringUtil.getBean(DocumentiContabiliService.class).getStorageObjectByPath(
-										statoTrasmissione.getStorePath().concat(SiglaStorageService.SUFFIX).concat(statoTrasmissione.getCMISName())
+						ut.addSource(SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class).getResource(
+								SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class).getStorageObjectByPath(
+										statoTrasmissione.getStorePath().concat(StorageService.SUFFIX).concat(statoTrasmissione.getCMISName())
 								).getKey(), true));
 						for (String documentId : childs) {
-							ut.addSource(SpringUtil.getBean(DocumentiContabiliService.class).getResource(documentId));
+							ut.addSource(SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class).getResource(documentId));
 						}
 						try {
 							ut.mergeDocuments();

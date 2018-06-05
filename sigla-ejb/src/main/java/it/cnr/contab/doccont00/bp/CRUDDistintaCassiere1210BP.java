@@ -4,9 +4,9 @@ import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession;
 import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.doccont00.intcass.bulk.Apparence;
+import it.cnr.contab.util.Apparence;
 import it.cnr.contab.doccont00.intcass.bulk.DistintaCassiere1210Bulk;
-import it.cnr.contab.doccont00.intcass.bulk.PdfSignApparence;
+import it.cnr.contab.util.PdfSignApparence;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
@@ -15,9 +15,9 @@ import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.spring.storage.SiglaStorageService;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.StorageException;
+import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StorageException;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
@@ -250,7 +250,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 		InputStream is = documentiContabiliService.getResource(
 				documentiContabiliService.getStorageObjectByPath(
 						distintaCassiere1210Bulk.getStorePath()
-								.concat(SiglaStorageService.SUFFIX)
+								.concat(StorageService.SUFFIX)
 								.concat("Distinta 1210 n. "
 										+ distintaCassiere1210Bulk.getPgDistinta() + ".pdf")
 				)
@@ -365,11 +365,11 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
 	}
 
 	public void signDocuments(ActionContext context, FirmaOTPBulk firmaOTPBulk, List<String> nodes, Apparence apparence) throws Exception {
-		Map<String, String> subjectDN = Optional.ofNullable(SpringUtil.getBean(DocumentiContabiliService.class).getCertSubjectDN(firmaOTPBulk.getUserName(),
+		Map<String, String> subjectDN = Optional.ofNullable(SpringUtil.getBean("documentiContabiliService",DocumentiContabiliService.class).getCertSubjectDN(firmaOTPBulk.getUserName(),
 				firmaOTPBulk.getPassword()))
 				.orElseThrow(() -> new ApplicationException("Errore nella lettura dei certificati!\nVerificare Nome Utente e Password!"));
 		if (Optional.ofNullable(controlloCodiceFiscale).filter(s -> s.equalsIgnoreCase("Y")).isPresent()) {
-			SpringUtil.getBean(DocumentiContabiliService.class).controllaCodiceFiscale(
+			SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class).controllaCodiceFiscale(
 					subjectDN,
 					((CNRUserInfo)context.getUserInfo()).getUtente()
 			);

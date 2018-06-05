@@ -1,7 +1,7 @@
 package it.cnr.contab.missioni00.docs.bulk;
 
-import it.cnr.contab.spring.storage.annotation.StoragePolicy;
-import it.cnr.contab.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.persistency.Keyed;
 
 public class MissioneBase extends MissioneKey implements Keyed {

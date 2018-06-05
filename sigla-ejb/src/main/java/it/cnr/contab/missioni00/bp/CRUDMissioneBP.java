@@ -21,10 +21,10 @@ import it.cnr.contab.missioni00.service.MissioniCMISService;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.contab.spring.storage.SiglaStorageService;
-import it.cnr.contab.spring.storage.StorageException;
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageException;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
@@ -2526,7 +2526,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
                                 .map(esercizio -> "Anno ".concat(String.valueOf(esercizio)))
                                 .orElse("0")
                 ).stream().collect(
-                        Collectors.joining(SiglaStorageService.SUFFIX)
+                        Collectors.joining(StorageService.SUFFIX)
                 );
                 return missioniCMISService.createFolderMissioneSiglaIfNotPresent(primaryPath, missioneBulk);
             }
@@ -2547,7 +2547,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
                                 .map(esercizio -> "Anno ".concat(String.valueOf(esercizio)))
                                 .orElse("0")
                 ).stream().collect(
-                        Collectors.joining(SiglaStorageService.SUFFIX)
+                        Collectors.joining(StorageService.SUFFIX)
                 );
                 try {
                     String path = null;

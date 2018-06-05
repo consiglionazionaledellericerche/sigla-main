@@ -329,7 +329,7 @@
 		name="pg_trovato"
 		property="trovato.pg_trovato"
 		inputType="TEXT"
-		inputSize="10"
+		inputSize="20"
 		label="Identificativo del Trovato"
         enabledOnEdit="true" />	
 	<fieldProperty

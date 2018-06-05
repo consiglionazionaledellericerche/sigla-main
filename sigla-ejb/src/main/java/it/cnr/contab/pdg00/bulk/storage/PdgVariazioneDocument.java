@@ -1,7 +1,8 @@
 package it.cnr.contab.pdg00.bulk.storage;
 
-import it.cnr.contab.spring.storage.StorageObject;
-import it.cnr.contab.spring.storage.config.StoragePropertyNames;
+import it.cnr.contab.util.SIGLAStoragePropertyNames;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -24,14 +25,14 @@ public class PdgVariazioneDocument implements Serializable{
 	}
 
 	public Integer getEsercizio(){
-		return ((BigInteger) storageObject.getPropertyValue(StoragePropertyNames.VARPIANOGEST_ESERCIZIO.value())).intValue();
+		return ((BigInteger) storageObject.getPropertyValue(SIGLAStoragePropertyNames.VARPIANOGEST_ESERCIZIO.value())).intValue();
 	}
 	
 	public Integer getNumeroVariazione(){
-		return ((BigInteger) storageObject.getPropertyValue(StoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value())).intValue();
+		return ((BigInteger) storageObject.getPropertyValue(SIGLAStoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value())).intValue();
 	}
 	
 	public Boolean isSignedDocument(){
-		return storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains(StoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
+		return storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
 	}
 }
