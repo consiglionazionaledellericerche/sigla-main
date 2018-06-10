@@ -45,6 +45,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -388,6 +389,7 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
             		lineNumber++;
             		//salto la prima riga che è l'intestazione
             		if (lineNumber>1 && !csvLine[1].replace(" ","").equals("") && (csvLine.length==20 || csvLine.length==21)){
+            			System.out.println("lineNumber: "+lineNumber);
 	            		incaricoComunicato = new Incarichi_comunicati_fpBulk();
 	            		incaricoComunicato.setTipo_record(Incarichi_comunicati_fpBulk.TIPO_RECORD_AGGIORNATO);
 	            		incaricoComunicato.setToBeCreated();
@@ -608,10 +610,11 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 	public File getFile(UserContext usercontext, Incarichi_archivio_xml_fpBulk allegato, String tipoBlob, String pathFile, String nomeFile) throws ComponentException {
 		try{
 			Incarichi_archivio_xml_fpHome home = (Incarichi_archivio_xml_fpHome)getHome(usercontext,Incarichi_archivio_xml_fpBulk.class);
-			File outputBinaryFile   = new File(pathFile, nomeFile);
-			home.setSQLLob(allegato, tipoBlob, IOUtils.toByteArray(new FileInputStream(outputBinaryFile)));
+			File outputBinaryFile = new File(pathFile, nomeFile);
+			Blob blob = home.getSQLBlob(allegato, tipoBlob);
+			IOUtils.copyLarge(blob.getBinaryStream(), new FileOutputStream(outputBinaryFile));
 			return outputBinaryFile;
-		} catch (PersistencyException e) {
+		} catch (PersistencyException|SQLException e) {
 			throw new ComponentException(e);
 		} catch (FileNotFoundException e) {
 			throw new ComponentException(e);
