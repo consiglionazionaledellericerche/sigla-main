@@ -22,4 +22,22 @@
     oEsVar Out NUMBER,
     oPgVar Out NUMBER
     );
+
+Procedure generaPerenzioneDaRiaccResPass
+   (aEs NUMBER,
+    aDsVar Varchar2,
+    aUser VARCHAR2,
+    oNumVarCreate Out NUMBER);
+
+Procedure generaStornoResidui
+   (aEs NUMBER,
+    aDsVar Varchar2,
+    aCdCdrPiu In VARCHAR2,
+    aTiAppVocePiu elemento_voce.ti_appartenenza%type,
+    aCdVocePiu elemento_voce.cd_elemento_voce%type,
+    aCdGaeFinPiu linea_attivita.cd_linea_attivita%type,
+    aCdGaeFesPiu linea_attivita.cd_linea_attivita%type,
+    aUser VARCHAR2,
+    oNumVarCreate Out NUMBER); 
 End UTIL_VARIAZIONI;
+/
