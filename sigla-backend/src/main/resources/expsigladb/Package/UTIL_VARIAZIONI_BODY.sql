@@ -730,7 +730,7 @@ aTiAppartenenza||'/'||aTiGestione||'/'||aCdElementoVoce||') per l''esercizio '||
  Begin
    Dbms_Output.put_line('generaStornoTraCds');
 
-   aDtVar := to_date('31/12/'||aEs, 'dd/mm/yyyy');
+   aDtVar := sysdate;
    aTSNow := sysdate;
    oNumVarCreate := 0;
 
@@ -747,33 +747,48 @@ aTiAppartenenza||'/'||aTiGestione||'/'||aCdElementoVoce||') per l''esercizio '||
        ibmerr001.RAISE_ERR_GENERICO('Manca la configurazione dei numeratori per la tabella VAR_STANZ_RES.');
    End;
 
-   For esenat in (Select dati.esercizio_res, nat.tipo, nvl(sum(nvl(dati.importo,0)),0) aImportoVar
-                  from GENERA_VAR_AUTO dati, linea_attivita latt, natura nat
-                  where dati.tipologia = 'STO_S_TOT'
-                  and   dati.esercizio=aEs
-                  and   dati.esercizio_res<dati.esercizio
-                  and   dati.ti_gestione='S'
-                  and   dati.cdr = latt.cd_centro_responsabilita
-                  and   dati.cd_linea_attivita = latt.cd_linea_attivita
-                  and   latt.cd_natura = nat.cd_natura
-                  group by dati.esercizio_res, nat.tipo
-                  order by dati.esercizio_res, nat.tipo desc) Loop
+   For grpcds in (select cdr, esercizio_res, tipo, sum(aImportoVar) aImportoVar
+                  from (Select dati.cdr, dati.esercizio_res, nat.tipo, nvl(dati.importo,0) aImportoVar
+                        from GENERA_VAR_AUTO dati, linea_attivita latt, natura nat
+                        where dati.tipologia = 'STO_S_TOT'
+                        and   dati.esercizio=aEs
+                        and   dati.esercizio_res<dati.esercizio
+                        and   dati.ti_gestione='S'
+                        and   dati.cdr = latt.cd_centro_responsabilita
+                        and   dati.cd_linea_attivita = latt.cd_linea_attivita
+                        and   latt.cd_natura = nat.cd_natura
+                        and   substr(dati.cdr,1,3) = '000'
+                        union all
+                        Select nvl(cdr.cd_cdr_afferenza, cdr.CD_CENTRO_RESPONSABILITA) cdr, 
+                               dati.esercizio_res, nat.tipo, nvl(dati.importo,0) aImportoVar
+                        from GENERA_VAR_AUTO dati, linea_attivita latt, natura nat, cdr
+                        where dati.tipologia = 'STO_S_TOT'
+                        and   dati.esercizio=aEs
+                        and   dati.esercizio_res<dati.esercizio
+                        and   dati.ti_gestione='S'
+                        and   dati.cdr = cdr.cd_centro_responsabilita
+                        and   dati.cdr = latt.cd_centro_responsabilita
+                        and   dati.cd_linea_attivita = latt.cd_linea_attivita
+                        and   latt.cd_natura = nat.cd_natura
+                        and   substr(dati.cdr,1,3) != '000')
+                  group by cdr, esercizio_res, tipo
+                  order by cdr, esercizio_res, tipo desc) Loop
 
       lPgVariazione := lPgVariazione + 1;
 
       aVarStanzRes.ESERCIZIO:=aEs;
       aVarStanzRes.PG_VARIAZIONE := lPgVariazione;
-      aVarStanzRes.CD_CDS:=CNRUTL001.GETCDSFROMCDR(aCdCdrPiu);
-      aVarStanzRes.CD_CENTRO_RESPONSABILITA:=aCdCdrPiu;
-      aVarStanzRes.ESERCIZIO_RES:=esenat.esercizio_res;
+      aVarStanzRes.CD_CDS:=CNRUTL001.GETCDSFROMCDR(grpcds.cdr);
+      aVarStanzRes.CD_CENTRO_RESPONSABILITA:=grpcds.cdr;
+      aVarStanzRes.ESERCIZIO_RES:=grpcds.esercizio_res;
       aVarStanzRes.DT_APERTURA:=trunc(aDtVar);
       aVarStanzRes.DT_CHIUSURA:=null;
       aVarStanzRes.DT_APPROVAZIONE:=null;
       aVarStanzRes.DS_VARIAZIONE:=aDsVar;
       aVarStanzRes.DS_DELIBERA:=null;
       aVarStanzRes.STATO:='PRP';
-      aVarStanzRes.TIPOLOGIA:='STO_S_TOT';
-      aVarStanzRes.TIPOLOGIA_FIN:=esenat.tipo;
+      aVarStanzRes.TIPOLOGIA:='STO';
+      aVarStanzRes.TIPOLOGIA_FIN:=grpcds.tipo;
       aVarStanzRes.DACR:=aTSNow;
       aVarStanzRes.UTCR:=aUser;
       aVarStanzRes.DUVA:=aTSNow;
@@ -786,8 +801,8 @@ aTiAppartenenza||'/'||aTiGestione||'/'||aCdElementoVoce||') per l''esercizio '||
       --Riga 1 del CDR a cui dare
       aAssVarStanzResCdr1.ESERCIZIO:=aVarStanzRes.ESERCIZIO;
       aAssVarStanzResCdr1.PG_VARIAZIONE := aVarStanzRes.PG_VARIAZIONE;
-      aAssVarStanzResCdr1.CD_CENTRO_RESPONSABILITA:=aVarStanzRes.CD_CENTRO_RESPONSABILITA;
-      aAssVarStanzResCdr1.IM_SPESA := abs(esenat.aImportoVar);
+      aAssVarStanzResCdr1.CD_CENTRO_RESPONSABILITA:=aCdCdrPiu;
+      aAssVarStanzResCdr1.IM_SPESA := abs(grpcds.aImportoVar);
       aAssVarStanzResCdr1.DACR:=aTSNow;
       aAssVarStanzResCdr1.UTCR:=aUser;
       aAssVarStanzResCdr1.DUVA:=aTSNow;
@@ -804,7 +819,7 @@ aTiAppartenenza||'/'||aTiGestione||'/'||aCdElementoVoce||') per l''esercizio '||
       aVarStanzResRiga1.ESERCIZIO_VOCE := aVarStanzRes.ESERCIZIO;
       aVarStanzResRiga1.ESERCIZIO_RES := aVarStanzRes.ESERCIZIO_RES;
       aVarStanzResRiga1.CD_CDR := aAssVarStanzResCdr1.CD_CENTRO_RESPONSABILITA;
-      If esenat.tipo = 'FIN' Then
+      If grpcds.tipo = 'FIN' Then
         aVarStanzResRiga1.CD_LINEA_ATTIVITA := aCdGaeFinPiu;
       Else
         aVarStanzResRiga1.CD_LINEA_ATTIVITA := aCdGaeFesPiu;
@@ -822,19 +837,38 @@ aTiAppartenenza||'/'||aTiGestione||'/'||aCdElementoVoce||') per l''esercizio '||
 
       CNRCTB051.ins_VAR_STANZ_RES_RIGA(aVarStanzResRiga1);
 
-      For grpcdr in (Select dati.cdr, nvl(sum(nvl(dati.importo,0)),0) aImportoVar
-                     from GENERA_VAR_AUTO dati, linea_attivita latt, natura nat
-                     where dati.tipologia = 'STO_S_TOT'
-                     and   dati.esercizio=aEs
-                     and   dati.esercizio_res<dati.esercizio
-                     and   dati.ti_gestione='S'
-                     and   dati.cdr = latt.cd_centro_responsabilita
-                     and   dati.cd_linea_attivita = latt.cd_linea_attivita
-                     and   latt.cd_natura = nat.cd_natura
-                     and   dati.esercizio_res = esenat.esercizio_res
-                     and   nat.tipo = esenat.tipo
-                     group by dati.cdr
-                     order by dati.cdr) Loop
+      For grpcdr in (select cdr, sum(aImportoVar) aImportoVar
+                     from (Select dati.cdr, nvl(dati.importo,0) aImportoVar
+                           from GENERA_VAR_AUTO dati, linea_attivita latt, natura nat
+                           where dati.tipologia = 'STO_S_TOT'
+                           and   dati.esercizio=aEs
+                           and   dati.esercizio_res<dati.esercizio
+                           and   dati.ti_gestione='S'
+                           and   dati.cdr = latt.cd_centro_responsabilita
+                           and   dati.cd_linea_attivita = latt.cd_linea_attivita
+                           and   latt.cd_natura = nat.cd_natura
+                           and   substr(dati.cdr,1,3) = '000'
+                           and   dati.cdr = grpcds.cdr
+                           and   dati.esercizio_res = grpcds.esercizio_res
+                           and   nat.tipo = grpcds.tipo
+                           union all
+                           Select dati.cdr, nvl(dati.importo,0) aImportoVar
+                           from GENERA_VAR_AUTO dati, linea_attivita latt, natura nat, cdr
+                           where dati.tipologia = 'STO_S_TOT'
+                           and   dati.esercizio=aEs
+                           and   dati.esercizio_res<dati.esercizio
+                           and   dati.ti_gestione='S'
+                           and   dati.cdr = cdr.cd_centro_responsabilita
+                           and   dati.cdr = latt.cd_centro_responsabilita
+                           and   dati.cd_linea_attivita = latt.cd_linea_attivita
+                           and   latt.cd_natura = nat.cd_natura
+                           and   substr(dati.cdr,1,3) != '000'
+                           and   nvl(cdr.cd_cdr_afferenza, cdr.CD_CENTRO_RESPONSABILITA) = grpcds.cdr
+                           and   dati.esercizio_res = grpcds.esercizio_res
+                           and   nat.tipo = grpcds.tipo)
+                     group by cdr
+                     order by cdr desc) Loop
+
         --Riga 2 del CDR a cui togliere
         aAssVarStanzResCdr2.ESERCIZIO:=aVarStanzRes.ESERCIZIO;
         aAssVarStanzResCdr2.PG_VARIAZIONE := aVarStanzRes.PG_VARIAZIONE;
@@ -858,8 +892,8 @@ aTiAppartenenza||'/'||aTiGestione||'/'||aCdElementoVoce||') per l''esercizio '||
                     and   dati.cdr = latt.cd_centro_responsabilita
                     and   dati.cd_linea_attivita = latt.cd_linea_attivita
                     and   latt.cd_natura = nat.cd_natura
-                    and   dati.esercizio_res = esenat.esercizio_res
-                    and   nat.tipo = esenat.tipo
+                    and   dati.esercizio_res = grpcds.esercizio_res
+                    and   nat.tipo = grpcds.tipo
                     and   dati.cdr = grpcdr.cdr
                     group by dati.CD_LINEA_ATTIVITA, dati.TI_APPARTENENZA, dati.CD_ELEMENTO_VOCE
                     order by dati.CD_LINEA_ATTIVITA, dati.TI_APPARTENENZA, dati.CD_ELEMENTO_VOCE) Loop
@@ -885,7 +919,7 @@ aTiAppartenenza||'/'||aTiGestione||'/'||aCdElementoVoce||') per l''esercizio '||
 
           CNRCTB051.ins_VAR_STANZ_RES_RIGA(aVarStanzResRiga2);
         End Loop;
-     End Loop;
+      End Loop;
    End Loop;
 
    Update numerazione_base
