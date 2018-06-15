@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
-	shortDescription="Consutazione Incarichi, Assegni di ricerca, Borse di Studio"
-	longDescription="Consutazione Incarichi, Assegni di ricerca, Borse di Studio"
+	shortDescription="Consutazione Incarichi - Assegni di ricerca - Borse di Studio"
+	longDescription="Consutazione Incarichi - Assegni di ricerca - Borse di Studio"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
 	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
