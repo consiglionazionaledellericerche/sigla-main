@@ -18,7 +18,7 @@
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="JavaScript">
 function doScarica() {
-	window.open("<%= bp.getDownloadUrl() %>","DOWNLOAD",null)
+	window.open("<%= bp.getDownloadUrl(pageContext) %>","DOWNLOAD",null)
 }
 </script>
 <script language="javascript" src="scripts/css.js"></script>

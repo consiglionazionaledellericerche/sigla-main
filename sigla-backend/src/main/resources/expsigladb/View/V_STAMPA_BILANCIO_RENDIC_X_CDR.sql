@@ -151,13 +151,14 @@
                  AND a.esercizio + 1 = b.esercizio
                  AND a.ti_gestione = b.ti_gestione
                  AND ((a.esercizio = 2015
-                 AND NVL (getcurrentcdelementovoce (a.esercizio + 1,
-                                                    a.esercizio,
-                                                    a.ti_gestione,
-                                                    a.cd_elemento_voce
-                                                   ),
-                          a.cd_elemento_voce
-                         ) = b.cd_elemento_voce) OR (a.esercizio != 2015 AND a.cd_elemento_voce = b.cd_elemento_voce))
+                       AND NVL(getcurrentcdelementovoce (a.esercizio + 1,
+                                                         a.esercizio,
+                                                         a.ti_gestione,
+                                                         a.cd_elemento_voce),
+                               a.cd_elemento_voce) = b.cd_elemento_voce)
+                      OR
+                      (a.esercizio != 2015
+                       AND a.cd_elemento_voce = b.cd_elemento_voce))
                  AND a.cd_centro_responsabilita = d.cd_centro_responsabilita
                  AND a.cd_linea_attivita = d.cd_linea_attivita
                  AND b.id_classificazione = c.id_classificazione
@@ -367,13 +368,14 @@
                WHERE a.esercizio + 1 = b.esercizio
                  AND a.ti_gestione = b.ti_gestione
                  AND ((a.esercizio = 2015
-                 AND NVL (getcurrentcdelementovoce (a.esercizio + 1,
-                                                    a.esercizio,
-                                                    a.ti_gestione,
-                                                    a.cd_elemento_voce
-                                                   ),
-                          a.cd_elemento_voce
-                         ) = b.cd_elemento_voce) OR (a.esercizio != 2015 AND a.cd_elemento_voce = b.cd_elemento_voce))
+                       AND NVL(getcurrentcdelementovoce (a.esercizio + 1,
+                                                         a.esercizio,
+                                                         a.ti_gestione,
+                                                         a.cd_elemento_voce),
+                               a.cd_elemento_voce) = b.cd_elemento_voce)
+                      OR
+                      (a.esercizio != 2015
+                       AND a.cd_elemento_voce = b.cd_elemento_voce))
                  AND b.id_classificazione = c.id_classificazione) e
     GROUP BY e.fonte,
              e.esercizio,
