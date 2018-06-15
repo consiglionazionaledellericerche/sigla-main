@@ -156,7 +156,7 @@
                                                          a.ti_gestione,
                                                          a.cd_elemento_voce),
                                a.cd_elemento_voce) = b.cd_elemento_voce)
-                      OR 
+                      OR
                       (a.esercizio != 2015
                        AND a.cd_elemento_voce = b.cd_elemento_voce))
                  AND a.cd_centro_responsabilita = d.cd_centro_responsabilita
@@ -373,7 +373,7 @@
                                                          a.ti_gestione,
                                                          a.cd_elemento_voce),
                                a.cd_elemento_voce) = b.cd_elemento_voce)
-                      OR 
+                      OR
                       (a.esercizio != 2015
                        AND a.cd_elemento_voce = b.cd_elemento_voce))
                  AND b.id_classificazione = c.id_classificazione) e
