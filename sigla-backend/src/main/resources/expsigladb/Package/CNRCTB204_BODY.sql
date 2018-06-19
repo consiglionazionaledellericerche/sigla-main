@@ -882,6 +882,7 @@ Dbms_Output.PUT_LINE ('B2 '||aContoEp.CD_VOCE_EP);
       aMovimento.DT_DA_COMPETENZA_COGE:=aDaCompCoge;
       aMovimento.DT_A_COMPETENZA_COGE:=aACompCoge;
       aMovimento.STATO:=CNRCTB200.STATO_DEFINITIVO;
+      dbms_output.put_line('mov '||aContoEp.cd_voce_ep);
       aListaMovimenti(aListaMovimenti.COUNT+1):=aMovimento;
  end;
 
@@ -1194,6 +1195,11 @@ else
 
   if aDoc.stato_pagamento_fondo_eco in (CNRCTB100.STATO_ASS_PFONDOECO, CNRCTB100.STATO_REG_PFONDOECO) then
    return CNRCTB002.getVoceEpCassa(aDocTst.esercizio);
+  end if;
+   if aDocTst.cd_tipo_documento_cont = CNRCTB018.TI_DOC_MAN and aDocTst.ti_man_rev = CNRCTB038.TI_MAN_REG Then
+    if (aDoc.CD_ELEMENTO_VOCE is not null) then 
+      RETURN trovaContoContrEp(aDocTst.esercizio,NULL,'S',aDoc.cd_elemento_voce,null);
+    end if;
   end if;
   if aDocTst.ti_appartenenza = CNRCTB001.APPARTENENZA_CNR then
    return CNRCTB002.getVoceEpBanca(aDocTst.esercizio);
