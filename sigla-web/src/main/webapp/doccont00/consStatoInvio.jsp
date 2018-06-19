@@ -5,15 +5,6 @@
 			it.cnr.jada.util.action.*,
 			it.cnr.contab.doccont00.consultazioni.bp.*"
 %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-
-<!-- 
- ?ResourceName "risultato_ricerca.jsp"
- ?ResourceTimestamp "13/12/00 19.48.42"
- ?ResourceEdition "1.0"
--->
-
 <html>
 <head>
 <% 
