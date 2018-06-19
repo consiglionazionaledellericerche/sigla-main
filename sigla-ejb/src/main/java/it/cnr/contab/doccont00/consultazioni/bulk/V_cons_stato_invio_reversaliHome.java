@@ -53,11 +53,18 @@ public class V_cons_stato_invio_reversaliHome extends BulkHome {
 		List<String> nodeRefs;
 		try {
 			nodeRefs = contabiliService.getNodeRefContabile(cons.getEsercizio().intValue(), cons.getCd_cds(), cons.getPg_reversale(), Numerazione_doc_contBulk.TIPO_REV);
-			if (nodeRefs != null && !nodeRefs.isEmpty())
-				cons.setContabile("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
-					"doVisualizzaSingolaContabile("+cons.getEsercizio()+",\""+cons.getCd_cds()+"\","+cons.getPg_reversale()+"); return false' "+
-					"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
-					"title='Visualizza Contabile'><img align='middle' class='Button' src='img/application-pdf.png'></button>");
+			if (nodeRefs != null && !nodeRefs.isEmpty()){
+				if (((CNRUserContext) userContext).isFromBootstrap()) {
+					cons.setContabile("<a class='btn btn-link' onclick='" +
+							"doVisualizzaSingolaContabile("+cons.getEsercizio()+",\""+cons.getCd_cds()+"\","+cons.getPg_reversale()+"); return false' " +
+							"title='Visualizza Contabile'><i class='fa fa-fw fa-2x fa-file-pdf-o text-danger' aria-hidden='true'></i></a>");
+				} else {
+					cons.setContabile("<button class='Button' style='width:60px;' onclick='cancelBubble(event); if (disableDblClick()) "+
+							"doVisualizzaSingolaContabile("+cons.getEsercizio()+",\""+cons.getCd_cds()+"\","+cons.getPg_reversale()+"); return false' "+
+							"onMouseOver='mouseOver(this)' onMouseOut='mouseOut(this)' onMouseDown='mouseDown(this)' onMouseUp='mouseUp(this)' "+
+							"title='Visualizza Contabile'><img align='middle' class='Button' src='img/application-pdf.png'></button>");
+				}
+			}
 		} catch (ApplicationException e) {			
 		}
 		return super.completeBulkRowByRow(userContext, persistent);		
