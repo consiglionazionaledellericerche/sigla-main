@@ -96,22 +96,18 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
                 columns.putFirst("cd_cds", getBulkInfo().getColumnFieldProperty("cds_uo", "cd_cds"));
             setColumns(columns);
             table.setColumns(columns);
+
         }
     }
 
     public it.cnr.jada.util.jsp.Button[] createToolbar() {
         Button[] baseToolbar = super.createToolbar();
 
-        Button[] toolbar = new Button[baseToolbar.length + 10];
+        Button[] toolbar = new Button[baseToolbar.length + 8];
         int i = 0;
         for (Button button : baseToolbar) {
             toolbar[i++] = button;
         }
-        Button button = new Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.freeSearchFilter");
-        button.setSeparator(true);
-        toolbar[i++] = button;
-        toolbar[i++] = new Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.freeSearchRemoveFilter");
-
         toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
                 .getHandler().getProperties(getClass()), "Toolbar.refresh");
         toolbar[i - 1].setSeparator(true);
