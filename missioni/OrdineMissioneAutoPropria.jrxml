@@ -9,7 +9,7 @@
 		</box>
 	</style>
 	<style name="bold" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
-	<parameter name="DIR_IMAGE" class="java.lang.string" isForPrompting="false">
+	<parameter name="DIR_IMAGE" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DIR_SUBREPORT" class="java.lang.String" isForPrompting="false">
