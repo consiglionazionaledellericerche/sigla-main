@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RimborsoMissione" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table" mode="Transparent" isBold="true">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="bold" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
+	<parameter name="DIR_IMAGE" class="java.io.InputStream">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DETTAGLI" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["C:\\workspace\\missioni\\sprint-missioni\\src\\main\\resources\\it\\cnr\\missioni\\print\\rimborso_missione_dettagli_sub.jasper"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[numero]]></fieldDescription>
+	</field>
+	<field name="dataInserimento" class="java.lang.String">
+		<fieldDescription><![CDATA[dataInserimento]]></fieldDescription>
+	</field>
+	<field name="cognomeRich" class="java.lang.String">
+		<fieldDescription><![CDATA[cognomeRich]]></fieldDescription>
+	</field>
+	<field name="nomeRich" class="java.lang.String">
+		<fieldDescription><![CDATA[nomeRich]]></fieldDescription>
+	</field>
+	<field name="codiceFiscaleRich" class="java.lang.String">
+		<fieldDescription><![CDATA[codiceFiscaleRich]]></fieldDescription>
+	</field>
+	<field name="printDettagliSpeseRimborsoMissione" class="java.lang.Object">
+		<fieldDescription><![CDATA[printDettagliSpeseRimborsoMissione]]]></fieldDescription>
+	</field>
+	<field name="matricolaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[matricolaRich]]></fieldDescription>
+	</field>
+	<field name="cdTerzo" class="java.lang.String">
+		<fieldDescription><![CDATA[cdTerzo]]></fieldDescription>
+	</field>
+	<field name="luogoDiNascitaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[luogoDiNascitaRich]]></fieldDescription>
+	</field>
+	<field name="dataDiNascitaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[dataDiNascitaRich]]></fieldDescription>
+	</field>
+	<field name="comuneResidenzaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[comuneResidenzaRich]]></fieldDescription>
+	</field>
+	<field name="indirizzoResidenzaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[indirizzoResidenzaRich]]></fieldDescription>
+	</field>
+	<field name="domicilioFiscaleRich" class="java.lang.String"/>
+	<field name="datoreLavoroRich" class="java.lang.String">
+		<fieldDescription><![CDATA[datoreLavoroRich]]></fieldDescription>
+	</field>
+	<field name="qualificaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[qualificaRich]]></fieldDescription>
+	</field>
+	<field name="livelloRich" class="java.lang.String">
+		<fieldDescription><![CDATA[livelloRich]]></fieldDescription>
+	</field>
+	<field name="oggetto" class="java.lang.String">
+		<fieldDescription><![CDATA[oggetto]]></fieldDescription>
+	</field>
+	<field name="nazione" class="java.lang.String">
+		<fieldDescription><![CDATA[nazione]]></fieldDescription>
+	</field>
+	<field name="tipoMissione" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoMissione]]></fieldDescription>
+	</field>
+	<field name="trattamento" class="java.lang.String">
+		<fieldDescription><![CDATA[trattamento]]></fieldDescription>
+	</field>
+	<field name="italiaEstero" class="java.lang.String">
+		<fieldDescription><![CDATA[italiaEstero]]></fieldDescription>
+	</field>
+	<field name="dataInizioMissione" class="java.lang.String">
+		<fieldDescription><![CDATA[dataInizioMissione]]></fieldDescription>
+	</field>
+	<field name="dataFineMissione" class="java.lang.String">
+		<fieldDescription><![CDATA[dataFineMissione]]></fieldDescription>
+	</field>
+	<field name="dataInizioEstero" class="java.lang.String">
+		<fieldDescription><![CDATA[dataInizioEstero]]></fieldDescription>
+	</field>
+	<field name="dataFineEstero" class="java.lang.String">
+		<fieldDescription><![CDATA[dataFineEstero]]></fieldDescription>
+	</field>
+	<field name="note" class="java.lang.String">
+		<fieldDescription><![CDATA[note]]></fieldDescription>
+	</field>
+	<field name="voce" class="java.lang.String">
+		<fieldDescription><![CDATA[voce]]></fieldDescription>
+	</field>
+	<field name="gae" class="java.lang.String">
+		<fieldDescription><![CDATA[gae]]></fieldDescription>
+	</field>
+	<field name="impegni" class="java.lang.String">
+		<fieldDescription><![CDATA[impegni]]></fieldDescription>
+	</field>
+	<field name="cdrSpesa" class="java.lang.String">
+		<fieldDescription><![CDATA[cdrSpesa]]></fieldDescription>
+	</field>
+	<field name="uoSpesa" class="java.lang.String">
+		<fieldDescription><![CDATA[uoSpesa]]></fieldDescription>
+	</field>
+	<field name="pgObbligazione" class="java.lang.String">
+		<fieldDescription><![CDATA[pgObbligazione]]></fieldDescription>
+	</field>
+	<field name="esercizioOriginaleObbligazione" class="java.lang.String">
+		<fieldDescription><![CDATA[esercizioOriginaleObbligazione]]></fieldDescription>
+	</field>
+	<field name="modulo" class="java.lang.String">
+		<fieldDescription><![CDATA[modulo]]></fieldDescription>
+	</field>
+	<field name="anticipo" class="java.lang.String">
+		<fieldDescription><![CDATA[anticipo]]></fieldDescription>
+	</field>
+	<field name="importoMandato" class="java.lang.String">
+		<fieldDescription><![CDATA[importoMandato]]></fieldDescription>
+	</field>
+	<field name="altreSpese" class="java.lang.String">
+		<fieldDescription><![CDATA[altreSpese]]></fieldDescription>
+	</field>
+	<field name="altreSpeseImporto" class="java.lang.String">
+		<fieldDescription><![CDATA[altreSpeseImporto]]></fieldDescription>
+	</field>
+	<field name="speseTerzi" class="java.lang.String">
+		<fieldDescription><![CDATA[speseTerzi]]></fieldDescription>
+	</field>
+	<field name="speseTerziImporto" class="java.lang.String">
+		<fieldDescription><![CDATA[speseTerziImporto]]></fieldDescription>
+	</field>
+	<field name="numeroMandato" class="java.lang.String">
+		<fieldDescription><![CDATA[numeroMandato]]></fieldDescription>
+	</field>
+	<field name="cdrRich" class="java.lang.String">
+		<fieldDescription><![CDATA[cdrRich]]></fieldDescription>
+	</field>
+	<field name="uoRich" class="java.lang.String">
+		<fieldDescription><![CDATA[uoRich]]></fieldDescription>
+	</field>
+	<field name="cdsRich" class="java.lang.String">
+		<fieldDescription><![CDATA[cdsRich]]></fieldDescription>
+	</field>
+	<field name="destinazione" class="java.lang.String">
+		<fieldDescription><![CDATA[destinazione]]></fieldDescription>
+	</field>
+	<field name="iban" class="java.lang.String">
+		<fieldDescription><![CDATA[iban]]></fieldDescription>
+	</field>
+	<field name="totMissione" class="java.lang.String">
+		<fieldDescription><![CDATA[totMissione]]></fieldDescription>
+	</field>
+	<field name="cup" class="java.lang.String">
+		<fieldDescription><![CDATA[cup]]></fieldDescription>
+	</field>
+	<field name="utilizzoTaxi" class="java.lang.String">
+		<fieldDescription><![CDATA[utilizzoTaxi]]></fieldDescription>
+	</field>
+	<field name="utilizzoAutoNoleggio" class="java.lang.String">
+		<fieldDescription><![CDATA[utilizzoAutoNoleggio]]></fieldDescription>
+	</field>
+	<field name="noteUtilizzoTaxiNoleggio" class="java.lang.String">
+		<fieldDescription><![CDATA[noteUtilizzoTaxiNoleggio]]></fieldDescription>
+	</field>
+	<field name="utilizzoAutoServizio" class="java.lang.String">
+		<fieldDescription><![CDATA[utilizzoAutoServizio]]></fieldDescription>
+	</field>
+	<field name="personaleAlSeguito" class="java.lang.String">
+		<fieldDescription><![CDATA[personaleAlSeguito]]></fieldDescription>
+	</field>
+	<field name="importo0" class="java.lang.String">
+		<fieldDescription><![CDATA[importo0]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="71" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement x="21" y="38" width="521" height="33" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RICHIESTA RIMBORSO SPESE DI MISSIONE N. " + $F{numero} + "  DEL "+$F{dataInserimento}]]></textFieldExpression>
+			</textField>
+			<image isUsingCache="true">
+				<reportElement x="177" y="0" width="202" height="38" uuid="31f592d2-33e1-4e62-88ef-8840a03001b5"/>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="273" splitType="Stretch">
+			<frame>
+				<reportElement positionType="Float" x="0" y="0" width="554" height="192" uuid="876a504c-3872-4c37-b85b-7ef67fe7a609"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<staticText>
+					<reportElement style="bold" x="12" y="130" width="105" height="20" uuid="7fb18725-5712-4cb6-a4e5-8a0ff222d7a4"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Oggetto della Missione:]]></text>
+				</staticText>
+			</frame>
+			<textField isBlankWhenNull="false">
+				<reportElement x="12" y="5" width="310" height="20" uuid="e8951b51-1e9e-4770-a242-d48813a2f6a1"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Richiedente (cognome e nome)   </style>"+$F{cognomeRich} + " "+$F{nomeRich}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="325" y="5" width="117" height="20" uuid="fe4dc609-8651-443f-a3ff-ab1bbb971cc2"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Matricola  </style>"+$F{matricolaRich}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="442" y="5" width="110" height="20" uuid="90b6be47-45d8-4ebc-a4ba-1e7f9f653324"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Cod. Terzo  </style>"+$F{cdTerzo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="25" width="350" height="20" uuid="e5521656-fe6b-481e-bd2f-1d3ec9c3296d"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Data e Luogo di Nascita  </style>"+ $F{dataDiNascitaRich} + "  " + $F{luogoDiNascitaRich}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="372" y="25" width="182" height="20" uuid="0c32ab10-e6f1-4ff8-badf-e893fd8ae509"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Codice Fiscale  </style>"+$F{codiceFiscaleRich}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="46" width="542" height="20" uuid="893e8e38-c0a8-474e-a94d-ff3cd6f3ad94"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Residenza  </style>"+$F{comuneResidenzaRich} + "  "+$F{indirizzoResidenzaRich}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="12" y="66" width="542" height="20" isRemoveLineWhenBlank="true" uuid="360a74e4-4a3b-4db1-a4cb-ac5248167e6c"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Domicilio Fiscale (se diverso da residenza)  </style>"+ $F{domicilioFiscaleRich}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="87" width="542" height="20" uuid="c346885b-b192-412c-98b5-2aa29f10e4f2"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Datore di Lavoro  </style>"+ $F{datoreLavoroRich}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="108" width="542" height="20" uuid="e0b05bd9-8294-49d6-a45b-8593bc65b808"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Qualifica    </style>"+$F{qualificaRich} + "     <style pdfFontName='Times-Bold' isBold='true'>Livello   </style>"+$F{livelloRich}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="117" y="130" width="438" height="20" uuid="0322eadf-5829-48d7-882d-c7d4aab2fcb2"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" isUnderline="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oggetto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="12" y="152" width="427" height="20" uuid="58e62936-d5a8-4781-84c2-723a6231930c"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Località   </style>"+ $F{destinazione} + "  " + $F{nazione}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="439" y="152" width="115" height="20" uuid="7a104199-acf8-4c16-b7c8-f53b05eecb48"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Missione  </style>"+$F{italiaEstero}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="12" y="172" width="542" height="20" uuid="9a458775-ff21-464f-99c2-3a22ebd72fed">
+					<printWhenExpression><![CDATA[$F{tipoMissione}.equalsIgnoreCase( "ESTERO" )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Trattamento Richiesto  </style>"+ $F{trattamento}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="14" y="205" width="525" height="67" uuid="28826837-4920-47cb-af85-8bcb33c0ebed"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+			</frame>
+			<staticText>
+				<reportElement style="bold" mode="Transparent" x="14" y="205" width="113" height="17" uuid="cd4d45ff-809b-4a24-9b3c-033e1fbf5acb"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Andata]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bold" mode="Transparent" x="127" y="205" width="151" height="17" uuid="66714210-bf32-4e32-9325-ad296cefbd96"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Data e Ora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bold" mode="Transparent" x="14" y="222" width="113" height="25" uuid="b9239062-64bd-4f19-b160-4f68ed977258"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[  Inizio Missione]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bold" mode="Transparent" x="14" y="247" width="113" height="25" uuid="e9b9500d-b481-40ae-a2ab-939ca1d30e33"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[  Sbarco Estero]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="127" y="222" width="151" height="25" uuid="cf1f599d-01f3-4a66-89ef-e940e28ffbaa"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataInizioMissione}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="387" y="222" width="152" height="25" uuid="1ce17d49-eda6-43b4-abac-8998ae398bca"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataFineEstero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold" mode="Transparent" x="278" y="205" width="109" height="17" uuid="add8bbd9-6c44-4e76-979e-7f7ed9af5f0d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Ritorno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bold" mode="Transparent" x="387" y="205" width="152" height="17" uuid="f6a5b4ce-57c9-42ba-aaa6-2a651a2aedc4"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Data e Ora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bold" mode="Transparent" x="278" y="247" width="109" height="25" uuid="3dc414b3-fe95-44e6-a9d2-f64abc30c631"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[  Fine Missione]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bold" mode="Transparent" x="278" y="222" width="109" height="25" uuid="eedda5a9-4db1-4c7c-a80a-8f2f1bab8950"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[  Imbarco Estero]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="387" y="247" width="152" height="25" uuid="c5a776ad-5e74-4724-9903-b7b89fce1596"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataFineMissione}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="127" y="247" width="151" height="25" uuid="2306432c-6a92-41e7-8d4e-d54a87867692"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataInizioEstero}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="9" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="59" splitType="Stretch">
+			<frame>
+				<reportElement stretchType="RelativeToBandHeight" x="14" y="0" width="525" height="57" uuid="72a1d452-0a74-4a47-9aeb-7d8c207e229e"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+			</frame>
+			<staticText>
+				<reportElement style="bold" mode="Transparent" x="14" y="0" width="77" height="25" uuid="f4fe3674-8ac6-44de-a086-f1cf9bd4142c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bold" mode="Transparent" x="91" y="0" width="318" height="25" uuid="4a0cc56b-7151-47eb-88df-dc015f836bed"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Tipologia di Spesa
+(Dettaglio Percorrenza con Mezzo Proprio)
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bold" mode="Transparent" x="409" y="0" width="66" height="25" uuid="d3d5ae0c-9107-47f6-afaa-bf0dffaebfcf"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Importo Euro]]></text>
+			</staticText>
+			<subreport runToBottom="false">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="14" y="25" width="524" height="13" uuid="fec37bc5-13be-478f-b309-bee6a232b109"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("printDettagliSpeseRimborsoMissione")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DETTAGLI}]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement style="bold" mode="Transparent" x="475" y="0" width="64" height="25" uuid="f16475be-c442-4f0b-89b4-87aedfa8ecfa"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Km. Percorsi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="bold" positionType="Float" mode="Transparent" x="91" y="38" width="318" height="19" uuid="d1630ffb-e811-4a53-9688-f185a55d02cc"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single" rightIndent="10"/>
+				</textElement>
+				<text><![CDATA[Totale Missione]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="409" y="38" width="66" height="19" uuid="ace2e811-e5af-4de0-a1d1-ee9dc0398572"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+					<paragraph leftIndent="5" rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totMissione}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="109" splitType="Stretch">
+			<frame>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="95" uuid="d8e6cd85-6c80-425d-91b8-f4792bd36167"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="13" y="0" width="531" height="20" uuid="f6dcd297-2c20-4f09-9201-d101b4849acf"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Modalità di pagamento:  IBAN   </style>"+ $F{iban}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="13" y="25" width="531" height="20" uuid="da037474-bd7c-410d-8801-e113016bf498">
+					<printWhenExpression><![CDATA[$F{numeroMandato}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Anticipazioni Monetarie ricevute dal CNR:     Nessuna </style>"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="13" y="25" width="531" height="20" uuid="969331d2-d729-49e3-9754-f255045ba94a">
+					<printWhenExpression><![CDATA[!$F{numeroMandato}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Anticipazioni Monetarie ricevute dal CNR con mandato nr.     </style>"+$F{numeroMandato}+"<style pdfFontName='Times-Bold' isBold='true'>    di €    </style>"+$F{importoMandato}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="13" y="50" width="531" height="20" uuid="84170ccc-f552-465d-8c2b-84fb1a34228a">
+					<printWhenExpression><![CDATA[!$F{altreSpese}.equalsIgnoreCase( "" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Altre Spese di Missione anticipate dal Agenzia Viaggi (es. Albergo, Biglietti Aerei / Ferroviari):  </style>"+ $F{altreSpese}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="13" y="75" width="529" height="20" uuid="eb5f4ef1-a6ad-4c2b-9989-a345752ed486">
+					<printWhenExpression><![CDATA[$F{speseTerzi}.equalsIgnoreCase( "N" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Dichiaro di non aver ricevuto rimborso o concorso spese da terzi </style>"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="13" y="75" width="531" height="20" uuid="4d12c550-861e-4f1c-9905-761cc6b9d2d9">
+					<printWhenExpression><![CDATA[$F{speseTerzi}.equalsIgnoreCase( "S" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Dichiaro di aver ricevuto rimborso o concorso spese da terzi per un importo di €        </style>"+$F{speseTerziImporto}+"<style pdfFontName='Times-Bold' isBold='true'>.</style>"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="7" y="3" width="543" height="61" uuid="652342d0-aafd-4859-8f3f-cf140fa43b98"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Dichiaro sotto la mia responsabilità che la documentazione allegata è conforme all'originale, di averne sostenuto la spesa e che non è stato e non sarà richiesto a terzi ulteriore rimborso. Si dichiara inoltre che i dati sopra indicati corrispondono a verità e  di essere a conoscenza della responsabilità penale prevista, dall’art. 76 del D.P.R. 445/2000, per le ipotesi di falsità in atti e dichiarazioni mendaci ivi indicate in merito alla presente richiesta di rimborso spese di missione.]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="329" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="1" y="3" width="554" height="146" uuid="4b431bd0-bd9a-477a-a9ed-128b398a4c8f"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="bold" x="203" y="6" width="160" height="19" uuid="563e5ced-acfb-4ec1-9d65-120a00897a1b">
+					<printWhenExpression><![CDATA[!$F{importo0}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[LA SPESA GRAVERA':]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="11" y="25" width="542" height="20" uuid="dba5b066-e0bb-4ede-83d1-294080f26f69">
+					<printWhenExpression><![CDATA[!$F{importo0}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>UO   </style>"+ $F{uoSpesa}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="11" y="46" width="542" height="20" uuid="49f97cce-3020-487a-a07b-e4b24d8a17e6">
+					<printWhenExpression><![CDATA[!$F{importo0}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Voce di Bilancio   </style>" + $F{voce}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="11" y="72" width="323" height="20" uuid="3cec5ae6-e18a-41f2-841e-8a4563e908c8">
+					<printWhenExpression><![CDATA[!$F{importo0}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>G.A.E.  </style>"+$F{gae}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="11" y="94" width="323" height="20" uuid="b14d8cc2-f1d7-4da6-b8ca-9aa83c79af48">
+					<printWhenExpression><![CDATA[!$F{importo0}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Progetto  </style>"+$F{modulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="11" y="114" width="542" height="20" uuid="292e80cb-1f86-425c-ac9d-fd1d3cd8136f">
+					<printWhenExpression><![CDATA[!$F{importo0}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>C.D.R.  </style>"+$F{cdrSpesa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="360" y="72" width="192" height="20" uuid="5a62fe9c-15fd-4f25-9318-9971699fc72a">
+					<printWhenExpression><![CDATA[!$F{importo0}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Impegno  </style>"+$F{esercizioOriginaleObbligazione}+"  "+$F{pgObbligazione}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="360" y="94" width="192" height="20" uuid="5ff3be92-f272-4e96-8a9f-32469dec1286">
+					<printWhenExpression><![CDATA[!$F{importo0}.equals("S") && !$F{cup}.equals("")]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>CUP  </style>"+$F{cup}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="1" y="160" width="554" height="102" uuid="4a29cbaf-53a2-482a-84b6-171601d26a2a"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="bold" x="190" y="160" width="182" height="19" uuid="5800db1e-3827-47c4-ae91-4d3a745d76ad"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[AUTORIZZAZIONI AGGIUNTIVE:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="10" y="209" width="165" height="20" uuid="3be7c957-86d3-4984-88db-da5cf9ac2dec"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Utilizzo Auto di Servizio  </style>"+ $F{utilizzoAutoServizio}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="177" y="209" width="162" height="20" uuid="58c0ad94-d0e2-455a-80a5-9f2f003ca3f0"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Personale al Seguito  </style>"+ $F{personaleAlSeguito}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="177" y="183" width="165" height="20" uuid="ca799b33-2a47-4474-b93a-f0109c9882e4"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Utilizzo Auto a Noleggio  </style>"+ $F{utilizzoAutoNoleggio}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="11" y="236" width="542" height="20" uuid="7cf49600-7f74-43b3-90bb-2301891e7790">
+					<printWhenExpression><![CDATA[$F{utilizzoTaxi}.equalsIgnoreCase( "Sì" ) || $F{utilizzoAutoNoleggio}.equalsIgnoreCase( "Sì" )|| $F{personaleAlSeguito}.equalsIgnoreCase( "Sì" )|| $F{utilizzoAutoServizio}.equalsIgnoreCase( "Sì" )]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Motivazione per l'Utilizzo del Taxi/Auto a Noleggio-Servizio/Personale al Seguito  </style>"+ $F{noteUtilizzoTaxiNoleggio}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="11" y="183" width="162" height="20" uuid="e6c6ee2c-5a7a-40e2-9806-277628e64a16"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Utilizzo Taxi  </style>"+ $F{utilizzoTaxi}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="1" y="289" width="554" height="40" uuid="96df4d3b-e12a-43b2-8d38-006f75ffd939"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="12" y="293" width="542" height="18" uuid="5778a61d-420c-45de-b910-6c73a92103e8"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Note  </style>"+ $F{note}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold" x="203" y="6" width="160" height="19" uuid="a6c5aaf6-1b4a-4172-9fd5-a546b38c5ad9">
+					<printWhenExpression><![CDATA[$F{importo0}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[MISSIONE A IMPORTO 0]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="12" y="134" width="538" height="20" uuid="8d537fa9-bab0-4310-b599-2261e21b0d24">
+					<printWhenExpression><![CDATA[!$F{importo0}.equals("S") && !$F{impegni}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Impegni  </style>"+$F{impegni}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
