@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OrdineMissioneAnticipo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table" mode="Transparent" isBold="true">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="bold" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
+	<parameter name="DIR_IMAGE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[numero]]></fieldDescription>
+	</field>
+	<field name="dataInserimento" class="java.lang.String">
+		<fieldDescription><![CDATA[dataInserimento]]></fieldDescription>
+	</field>
+	<field name="cognomeRich" class="java.lang.String">
+		<fieldDescription><![CDATA[cognomeRich]]></fieldDescription>
+	</field>
+	<field name="nomeRich" class="java.lang.String">
+		<fieldDescription><![CDATA[nomeRich]]></fieldDescription>
+	</field>
+	<field name="codiceFiscaleRich" class="java.lang.String">
+		<fieldDescription><![CDATA[codiceFiscaleRich]]></fieldDescription>
+	</field>
+	<field name="matricolaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[matricolaRich]]></fieldDescription>
+	</field>
+	<field name="luogoDiNascitaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[luogoDiNascitaRich]]></fieldDescription>
+	</field>
+	<field name="dataDiNascitaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[dataDiNascitaRich]]></fieldDescription>
+	</field>
+	<field name="comuneResidenzaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[comuneResidenzaRich]]></fieldDescription>
+	</field>
+	<field name="indirizzoResidenzaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[indirizzoResidenzaRich]]></fieldDescription>
+	</field>
+	<field name="domicilioFiscaleRich" class="java.lang.String"/>
+	<field name="datoreLavoroRich" class="java.lang.String">
+		<fieldDescription><![CDATA[datoreLavoroRich]]></fieldDescription>
+	</field>
+	<field name="qualificaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[qualificaRich]]></fieldDescription>
+	</field>
+	<field name="livelloRich" class="java.lang.String">
+		<fieldDescription><![CDATA[livelloRich]]></fieldDescription>
+	</field>
+	<field name="oggetto" class="java.lang.String">
+		<fieldDescription><![CDATA[oggetto]]></fieldDescription>
+	</field>
+	<field name="dataInizioMissione" class="java.lang.String">
+		<fieldDescription><![CDATA[dataInizioMissione]]></fieldDescription>
+	</field>
+	<field name="dataFineMissione" class="java.lang.String">
+		<fieldDescription><![CDATA[dataFineMissione]]></fieldDescription>
+	</field>
+	<field name="note" class="java.lang.String">
+		<fieldDescription><![CDATA[note]]></fieldDescription>
+	</field>
+	<field name="cdrRich" class="java.lang.String">
+		<fieldDescription><![CDATA[cdrRich]]></fieldDescription>
+	</field>
+	<field name="uoRich" class="java.lang.String">
+		<fieldDescription><![CDATA[uoRich]]></fieldDescription>
+	</field>
+	<field name="cdsRich" class="java.lang.String">
+		<fieldDescription><![CDATA[cdsRich]]></fieldDescription>
+	</field>
+	<field name="importoPresunto" class="java.lang.String">
+		<fieldDescription><![CDATA[importoPresunto]]></fieldDescription>
+	</field>
+	<field name="importoAnticipo" class="java.lang.String">
+		<fieldDescription><![CDATA[importoAnticipo]]></fieldDescription>
+	</field>
+	<field name="dataAnticipo" class="java.lang.String"/>
+	<field name="stato" class="java.lang.String">
+		<fieldDescription><![CDATA[stato]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="71" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement x="0" y="38" width="554" height="27" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Dashed"/>
+					<topPen lineWidth="1.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="1.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RICHIESTA ANTICIPO ORDINE DI MISSIONE N. " + $F{numero} + "  DEL "+$F{dataInserimento}]]></textFieldExpression>
+			</textField>
+			<image isUsingCache="true">
+				<reportElement x="177" y="0" width="202" height="38" uuid="31f592d2-33e1-4e62-88ef-8840a03001b5"/>
+				<imageExpression><![CDATA[$P{DIR_IMAGE} + "CNR.JPG"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="130" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="1" width="554" height="129" uuid="36243807-5214-4328-91de-1684de820b5d"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<textField isBlankWhenNull="false">
+				<reportElement x="12" y="5" width="427" height="20" uuid="e8951b51-1e9e-4770-a242-d48813a2f6a1"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Richiedente (cognome e nome)   </style>"+$F{cognomeRich} + " "+$F{nomeRich}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="439" y="5" width="115" height="20" uuid="fe4dc609-8651-443f-a3ff-ab1bbb971cc2"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Matricola  </style>"+$F{matricolaRich}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="25" width="350" height="20" uuid="e5521656-fe6b-481e-bd2f-1d3ec9c3296d"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Data e Luogo di Nascita  </style>"+ $F{dataDiNascitaRich} + "  " + $F{luogoDiNascitaRich}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="372" y="25" width="182" height="20" uuid="0c32ab10-e6f1-4ff8-badf-e893fd8ae509"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Codice Fiscale  </style>"+$F{codiceFiscaleRich}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="46" width="542" height="20" uuid="893e8e38-c0a8-474e-a94d-ff3cd6f3ad94"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Residenza  </style>"+$F{comuneResidenzaRich} + "  "+$F{indirizzoResidenzaRich}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="12" y="66" width="542" height="20" isRemoveLineWhenBlank="true" uuid="360a74e4-4a3b-4db1-a4cb-ac5248167e6c"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Domicilio Fiscale (se diverso da residenza)  </style>"+ $F{domicilioFiscaleRich}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="87" width="542" height="20" uuid="c346885b-b192-412c-98b5-2aa29f10e4f2"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Datore di Lavoro  </style>"+ $F{datoreLavoroRich}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="108" width="542" height="20" uuid="e0b05bd9-8294-49d6-a45b-8593bc65b808"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Qualifica    </style>"+$F{qualificaRich} + "     <style pdfFontName='Times-Bold' isBold='true'>Livello   </style>"+$F{livelloRich}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="402" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="6" width="554" height="139" uuid="e5584a27-bedc-4ba1-87ae-9b7c6cf73a51"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="bold" positionType="Float" x="180" y="17" width="182" height="20" uuid="620474b6-1aa0-43ec-81d8-31d33c24b565"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Importo Anticipo €  </style>"+ $F{importoAnticipo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="11" y="49" width="542" height="20" uuid="38c47c71-b600-4496-ba44-5e6d1372a73c"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Annotazioni   </style>"+ $F{note}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="1" y="229" width="554" height="97" uuid="47bb9ae0-dd67-413c-a2fb-fdaf2195bd29"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="bold" x="200" y="237" width="161" height="17" uuid="0f1c2a64-f520-4bc7-8282-edbdd34c9233"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DATI ORDINE DI MISSIONE]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="10" y="254" width="543" height="20" uuid="ab6edefc-339a-4161-989a-1b243a126789"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="Times New Roman" isUnderline="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Oggetto della Missione   </style>"+ $F{oggetto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="11" y="278" width="350" height="20" uuid="6688f5cd-6cd4-4b71-8a77-95aa536fb7b8"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Inizio Missione  </style>"+ $F{dataInizioMissione} + "       <style pdfFontName='Times-Bold' isBold='true'>Fine Missione  </style>"+  $F{dataFineMissione}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="371" y="278" width="182" height="20" uuid="1b50070c-cf85-43ca-bcfc-6af1290a4cf0"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Importo Presunto €  </style>"+ $F{importoPresunto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="12" y="17" width="165" height="20" uuid="f6dcd297-2c20-4f09-9201-d101b4849acf"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Data  </style>"+ $F{dataAnticipo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="379" y="17" width="165" height="20" uuid="4eddc249-b14d-4452-8885-95ae690e34d5"/>
+				<textElement textAlignment="Right" markup="styled">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Stato  </style>"+ $F{stato}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="14" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="5" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="11" splitType="Stretch"/>
+	</summary>
+</jasperReport>
