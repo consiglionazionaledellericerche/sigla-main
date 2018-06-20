@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RimborsoMissione" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="772"/>
+	<property name="ireport.y" value="436"/>
 	<style name="table" mode="Transparent" isBold="true">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -12,12 +12,9 @@
 	<parameter name="DIR_IMAGE" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="SUBREPORT_DETTAGLI" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false">
+	<parameter name="DIR_SUBREPORT" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[]]></parameterDescription>
-		<defaultValueExpression><![CDATA["C:\\workspace\\missioni\\sprint-missioni\\src\\main\\resources\\it\\cnr\\missioni\\print\\rimborso_missione_dettagli_sub.jasper"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString language="json">
 		<![CDATA[]]>
@@ -560,7 +557,7 @@
 			<subreport runToBottom="false">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="14" y="25" width="524" height="13" uuid="fec37bc5-13be-478f-b309-bee6a232b109"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("printDettagliSpeseRimborsoMissione")]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DETTAGLI}]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "rimborso_missione_dettagli_sub.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement style="bold" mode="Transparent" x="475" y="0" width="64" height="25" uuid="f16475be-c442-4f0b-89b4-87aedfa8ecfa"/>
