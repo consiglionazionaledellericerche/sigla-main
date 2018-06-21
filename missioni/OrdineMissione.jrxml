@@ -12,9 +12,6 @@
 	<parameter name="DIR_IMAGE" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="ANN_IMAGE" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<queryString language="json">
 		<![CDATA[]]>
 	</queryString>
@@ -178,7 +175,7 @@
 				<reportElement x="14" y="0" width="581" height="500" uuid="ce8c9109-119d-41e8-8fb5-ec4636774748">
 					<printWhenExpression><![CDATA[$F{tipo}.compareTo( "A" )==0]]></printWhenExpression>
 				</reportElement>
-				<imageExpression><![CDATA[$P{ANN_IMAGE} + "Annullato.gif"]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_IMAGE} + "Annullato.gif"]]></imageExpression>
 			</image>
 		</band>
 	</background>
