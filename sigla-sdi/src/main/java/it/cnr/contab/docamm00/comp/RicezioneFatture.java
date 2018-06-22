@@ -78,7 +78,8 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
             if (Base64.isArrayByteBase64(bytesMetadata))
                 bytesMetadata = Base64.decodeBase64(bytesMetadata);
 
-            boolean isp7m = parametersIn.getFile().getContentType().toLowerCase().endsWith("p7m");
+            boolean isp7m = parametersIn.getFile().getContentType().toLowerCase().endsWith("p7m") ||
+                    parametersIn.getNomeFile().toLowerCase().endsWith("p7m");
             ByteArrayOutputStream bStream = new ByteArrayOutputStream();
             if (isp7m)
                 bStream = estraiFirma(parametersIn.getFile().getInputStream(), jc);
