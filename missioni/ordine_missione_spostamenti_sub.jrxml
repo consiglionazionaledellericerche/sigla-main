@@ -25,7 +25,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="50">
+		<band height="25">
 			<textField>
 				<reportElement mode="Transparent" x="0" y="0" width="270" height="22" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1"/>
 				<box>
