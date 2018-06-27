@@ -2628,7 +2628,9 @@ BEGIN
          IF inPgInventarioOri = aPgInventarioDest THEN
 
            if(beniDaTrasf_tab(i).tCategoriaNew is not null) Then
-              aRecBuonoCaricoDett.nr_inventario:=getNewNrInventario(aRecBuonoCaricoDett.pg_inventario);
+              if (beniDaTrasf_tab(i).tProgressivo=0 ) then
+              		aRecBuonoCaricoDett.nr_inventario:=getNewNrInventario(aRecBuonoCaricoDett.pg_inventario);
+              end if;		
               aRecBuonoCaricoDett.progressivo:=beniDaTrasf_tab(i).tProgressivo;
            else
             IF esisteBenePrincipale = 'Y' THEN
