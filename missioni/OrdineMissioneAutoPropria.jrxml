@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OrdineMissioneAutoPropria" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
-	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="30"/>
-	<property name="ireport.y" value="1072"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="164"/>
+	<property name="ireport.y" value="10"/>
 	<style name="table" mode="Transparent" isBold="true">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -132,10 +132,10 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="71" splitType="Stretch">
+	<pageHeader>
+		<band height="202" splitType="Stretch">
 			<textField isBlankWhenNull="false">
-				<reportElement x="80" y="38" width="395" height="33" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+				<reportElement x="93" y="38" width="368" height="33" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -153,72 +153,82 @@
 				<reportElement x="177" y="0" width="202" height="38" uuid="31f592d2-33e1-4e62-88ef-8840a03001b5"/>
 				<imageExpression><![CDATA[$P{DIR_IMAGE} + "CNR.JPG"]]></imageExpression>
 			</image>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="130" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="1" width="554" height="129" uuid="36243807-5214-4328-91de-1684de820b5d"/>
+				<reportElement x="0" y="72" width="554" height="129" uuid="36243807-5214-4328-91de-1684de820b5d"/>
 				<graphicElement>
 					<pen lineStyle="Solid"/>
 				</graphicElement>
 			</rectangle>
 			<textField isBlankWhenNull="false">
-				<reportElement x="12" y="5" width="427" height="20" uuid="e8951b51-1e9e-4770-a242-d48813a2f6a1"/>
+				<reportElement x="152" y="76" width="309" height="20" uuid="e8951b51-1e9e-4770-a242-d48813a2f6a1"/>
 				<textElement markup="styled">
 					<font fontName="Times New Roman" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Richiedente (cognome e nome)   </style>"+$F{cognomeRich} + " "+$F{nomeRich}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cognomeRich} + " "+$F{nomeRich}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="439" y="5" width="115" height="20" uuid="fe4dc609-8651-443f-a3ff-ab1bbb971cc2"/>
+				<reportElement x="517" y="76" width="37" height="20" uuid="fe4dc609-8651-443f-a3ff-ab1bbb971cc2"/>
 				<textElement markup="styled">
 					<font fontName="Times New Roman"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Matricola  </style>"+$F{matricolaRich}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{matricolaRich}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="12" y="25" width="350" height="20" uuid="e5521656-fe6b-481e-bd2f-1d3ec9c3296d"/>
+				<reportElement x="12" y="96" width="350" height="20" uuid="e5521656-fe6b-481e-bd2f-1d3ec9c3296d"/>
 				<textElement markup="styled">
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Data e Luogo di Nascita  </style>"+ $F{dataDiNascitaRich} + "  " + $F{luogoDiNascitaRich}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement x="372" y="25" width="182" height="20" uuid="0c32ab10-e6f1-4ff8-badf-e893fd8ae509"/>
+				<reportElement x="372" y="96" width="182" height="20" uuid="0c32ab10-e6f1-4ff8-badf-e893fd8ae509"/>
 				<textElement markup="styled">
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Codice Fiscale  </style>"+$F{codiceFiscaleRich}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="12" y="46" width="542" height="20" uuid="893e8e38-c0a8-474e-a94d-ff3cd6f3ad94"/>
+				<reportElement x="12" y="117" width="542" height="20" uuid="893e8e38-c0a8-474e-a94d-ff3cd6f3ad94"/>
 				<textElement markup="styled">
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Residenza  </style>"+$F{comuneResidenzaRich} + "  "+$F{indirizzoResidenzaRich}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="12" y="66" width="542" height="20" isRemoveLineWhenBlank="true" uuid="360a74e4-4a3b-4db1-a4cb-ac5248167e6c"/>
+				<reportElement x="12" y="137" width="542" height="20" isRemoveLineWhenBlank="true" uuid="360a74e4-4a3b-4db1-a4cb-ac5248167e6c"/>
 				<textElement markup="styled">
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Domicilio Fiscale (se diverso da residenza)  </style>"+ $F{domicilioFiscaleRich}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="12" y="87" width="542" height="20" uuid="c346885b-b192-412c-98b5-2aa29f10e4f2"/>
+				<reportElement x="12" y="158" width="542" height="20" uuid="c346885b-b192-412c-98b5-2aa29f10e4f2"/>
 				<textElement markup="styled">
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Datore di Lavoro  </style>"+ $F{datoreLavoroRich}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="12" y="108" width="542" height="20" uuid="e0b05bd9-8294-49d6-a45b-8593bc65b808"/>
+				<reportElement x="12" y="179" width="542" height="20" uuid="e0b05bd9-8294-49d6-a45b-8593bc65b808"/>
 				<textElement markup="styled">
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Qualifica    </style>"+$F{qualificaRich} + "     <style pdfFontName='Times-Bold' isBold='true'>Livello   </style>"+$F{livelloRich}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="13" y="76" width="139" height="20" uuid="809ffb66-e8f4-4999-9787-8fce972f5eeb"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Richiedente (cognome e nome)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="76" width="45" height="20" uuid="633005d7-ab96-4a9b-8014-3793332ebf65"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Matricola]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<detail>
@@ -393,7 +403,7 @@
 				<textFieldExpression><![CDATA[" - Per Attività che richiede necessariamente il trasporto di materiale, o attrezzature ingombranti, pesanti, o fragili in dotazione"]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="21">
+		<band height="21" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement x="0" y="0" width="549" height="17" isRemoveLineWhenBlank="true" uuid="27e4463e-e73f-4839-a33d-a826e34a1452"/>
 				<textElement verticalAlignment="Middle" markup="styled">
