@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OrdineMissioneAutoPropria" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
-	<property name="ireport.zoom" value="1.5026296018031553"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="30"/>
+	<property name="ireport.y" value="1072"/>
 	<style name="table" mode="Transparent" isBold="true">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -12,7 +12,7 @@
 	<parameter name="DIR_IMAGE" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="DIR_SUBREPORT" class="java.lang.String" isForPrompting="false">
+	<parameter name="DIR_SUBREPORT" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -224,7 +224,7 @@
 	<detail>
 		<band height="104">
 			<rectangle>
-				<reportElement x="0" y="4" width="554" height="98" uuid="a77eb553-d3ff-4e04-bf9d-0ba5e1b34d92"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="4" width="554" height="98" uuid="a77eb553-d3ff-4e04-bf9d-0ba5e1b34d92"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="222" y="9" width="100" height="20" uuid="f8d618c2-dd11-488e-8b22-756324211cb2"/>
@@ -246,65 +246,20 @@
 				<text><![CDATA[di essere autorizzato ad utilizzare il mezzo proprio per effettuare i percorsi:]]></text>
 			</staticText>
 		</band>
-		<band height="135" splitType="Stretch">
-			<rectangle>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="3" width="555" height="131" uuid="e5584a27-bedc-4ba1-87ae-9b7c6cf73a51"/>
-			</rectangle>
+		<band height="51" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="13" y="29" width="409" height="20" uuid="f6dcd297-2c20-4f09-9201-d101b4849acf"/>
+				<reportElement positionType="Float" x="2" y="29" width="400" height="20" uuid="f6dcd297-2c20-4f09-9201-d101b4849acf"/>
 				<textElement textAlignment="Left" markup="styled">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Tipo    </style>"+ $F{marca} + " "+$F{modello}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="13" y="54" width="263" height="20" uuid="da037474-bd7c-410d-8801-e113016bf498"/>
-				<textElement textAlignment="Left" markup="styled">
-					<font fontName="Times New Roman" size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Carta di Circolazione    </style>"+ $F{cartaCircolazione}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="13" y="79" width="409" height="20" uuid="84170ccc-f552-465d-8c2b-84fb1a34228a"/>
-				<textElement textAlignment="Left" markup="styled">
-					<font fontName="Times New Roman" size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Patente n.   </style>"+ $F{numeroPatente}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="422" y="29" width="122" height="20" uuid="a8df0941-f2a5-4437-b760-4a9e66824537"/>
+				<reportElement positionType="Float" x="409" y="29" width="122" height="20" uuid="a8df0941-f2a5-4437-b760-4a9e66824537"/>
 				<textElement textAlignment="Left" markup="styled">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Targa   </style>"+ $F{targa}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="276" y="54" width="268" height="20" uuid="24cef83c-46e8-4574-a42f-1ea684536e5b"/>
-				<textElement textAlignment="Left" markup="styled">
-					<font fontName="Times New Roman" size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Polizza Assicurativa n.   </style>"+ $F{polizzaAssicurativa}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="422" y="79" width="122" height="20" uuid="066039e4-af4f-46b1-bae8-55e938455ef4"/>
-				<textElement textAlignment="Left" markup="styled">
-					<font fontName="Times New Roman" size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Rilasciata il </style>"+ $F{dataRilascioPatente}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="13" y="104" width="409" height="20" uuid="eb5f4ef1-a6ad-4c2b-9989-a345752ed486"/>
-				<textElement textAlignment="Left" markup="styled">
-					<font fontName="Times New Roman" size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Rilasciata da   </style>"+ $F{entePatente}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="422" y="104" width="122" height="20" uuid="7668f19f-5a79-4608-b5b9-06a4a0578613"/>
-				<textElement textAlignment="Left" markup="styled">
-					<font fontName="Times New Roman" size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Valida fino al  </style>"+ $F{dataScadenzaPatente}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="227" y="7" width="100" height="20" uuid="6658cbab-7b80-4bf8-ac67-588807a3b13f"/>
@@ -313,70 +268,145 @@
 				</textElement>
 				<text><![CDATA[ESTREMI AUTO]]></text>
 			</staticText>
+			<line>
+				<reportElement key="line-182" x="0" y="0" width="554" height="1" uuid="49211f3c-41f5-4434-8136-bdc6def210ba"/>
+			</line>
+			<line>
+				<reportElement key="line-184" positionType="Float" stretchType="RelativeToBandHeight" x="-1" y="0" width="1" height="51" uuid="c4cffb29-8b4e-4e1b-9dbd-4129b78bbbcf"/>
+			</line>
+			<line>
+				<reportElement key="line-188" positionType="Float" stretchType="RelativeToBandHeight" x="554" y="1" width="1" height="50" uuid="892730ed-4c9f-4525-a9de-f60a53bca3db"/>
+			</line>
 		</band>
-	</detail>
-	<columnFooter>
-		<band height="193" splitType="Stretch">
-			<rectangle>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="110" width="554" height="50" uuid="ad06b655-b284-4f45-9705-a2386ccb3fa4"/>
-				<graphicElement>
-					<pen lineWidth="0.0" lineColor="#FFFFFF"/>
-				</graphicElement>
-			</rectangle>
+		<band height="22">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="2" y="0" width="261" height="20" uuid="da037474-bd7c-410d-8801-e113016bf498"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Carta di Circolazione    </style>"+ $F{cartaCircolazione}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="263" y="0" width="268" height="20" uuid="24cef83c-46e8-4574-a42f-1ea684536e5b"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Polizza Assicurativa n.   </style>"+ $F{polizzaAssicurativa}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-184" positionType="Float" stretchType="RelativeToBandHeight" x="-1" y="0" width="1" height="22" uuid="d269a5ae-02ec-49a4-b2e5-2be0515d3d3a"/>
+			</line>
+			<line>
+				<reportElement key="line-188" positionType="Float" stretchType="RelativeToBandHeight" x="554" y="0" width="1" height="22" uuid="6b0a1e29-f8ad-4b03-a4ed-cbf8a7cffd9e"/>
+			</line>
+		</band>
+		<band height="22">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="2" y="0" width="407" height="20" uuid="84170ccc-f552-465d-8c2b-84fb1a34228a"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Patente n.   </style>"+ $F{numeroPatente}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="409" y="0" width="122" height="20" uuid="066039e4-af4f-46b1-bae8-55e938455ef4"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Rilasciata il </style>"+ $F{dataRilascioPatente}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-184" positionType="Float" stretchType="RelativeToBandHeight" x="-1" y="0" width="1" height="22" uuid="d8c211ec-0834-4043-b6cb-345d82cd2204"/>
+			</line>
+			<line>
+				<reportElement key="line-188" positionType="Float" stretchType="RelativeToBandHeight" x="554" y="0" width="1" height="22" uuid="64671c84-6835-4177-a97b-7edb34e69246"/>
+			</line>
+		</band>
+		<band height="29">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="2" y="0" width="407" height="20" uuid="eb5f4ef1-a6ad-4c2b-9989-a345752ed486"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Rilasciata da   </style>"+ $F{entePatente}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="409" y="0" width="122" height="20" uuid="7668f19f-5a79-4608-b5b9-06a4a0578613"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Valida fino al  </style>"+ $F{dataScadenzaPatente}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-182" positionType="FixRelativeToBottom" x="0" y="28" width="554" height="1" uuid="a37fefb2-3106-4cd5-9089-5c5d9b08fb04"/>
+			</line>
+			<line>
+				<reportElement key="line-184" positionType="Float" stretchType="RelativeToBandHeight" x="-1" y="0" width="1" height="29" uuid="cd130e08-b17c-44ab-98f0-f7c65ca9cd34"/>
+			</line>
+			<line>
+				<reportElement key="line-188" positionType="Float" stretchType="RelativeToBandHeight" x="554" y="0" width="1" height="29" uuid="7937e9a5-5ab1-42b9-a89d-84d8d515e8cf"/>
+			</line>
+		</band>
+		<band height="101">
 			<staticText>
-				<reportElement positionType="Float" x="3" y="1" width="552" height="39" uuid="652342d0-aafd-4859-8f3f-cf140fa43b98"/>
+				<reportElement positionType="Float" x="0" y="11" width="552" height="39" uuid="652342d0-aafd-4859-8f3f-cf140fa43b98"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="9" isBold="true" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[Ai sensi di quanto disposto dall’art. 6 c. 12 del D.L. 78/2010, dalla circolare n. 36 del 22/10/2010 del Ministero dell’Economia e delle Finanze – Dipartimento della Ragioneria Generale dello Stato e della delibera della Corte dei Conti a Sezioni Riunite n. 8/CONTR/11 del 7 febbraio 2011, si allega alla  presente la copia dei tariffari forniti dagli esercenti dei trasporti pubblici per le tratte sopra indicate.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="3" y="55" width="552" height="34" uuid="10d39fca-e610-4c42-9d3b-a7fd0a82673c"/>
+				<reportElement positionType="Float" x="0" y="57" width="552" height="34" uuid="10d39fca-e610-4c42-9d3b-a7fd0a82673c"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="9" isBold="true" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[Nel rispetto delle disposizioni normative in materia (Art. 6 c. 12 del D.L. 78/2010, Circ. 36 del 22/10/2010 del M.E.F. – Dip.tp della Ragioneria Generale dello Stato e delibera della Corte dei Conti a Sezioni riunite n. 8/CONTR/11 del 7 febbraio 2011)  e trattandosi di una circostanza eccezionale e non ricorrente, si autorizza l’uso del mezzo proprio per le seguenti motivazioni:]]></text>
+				<text><![CDATA[Nel rispetto delle disposizioni normative in materia (Art. 6 c. 12 del D.L. 78/2010, Circ. 36 del 22/10/2010 del M.E.F. – Dip.to della Ragioneria Generale dello Stato e delibera della Corte dei Conti a Sezioni riunite n. 8/CONTR/11 del 7 febbraio 2011)  e trattandosi di una circostanza eccezionale e non ricorrente, si autorizza l’uso del mezzo proprio per le seguenti motivazioni:]]></text>
 			</staticText>
+		</band>
+		<band height="19">
+			<printWhenExpression><![CDATA[$F{motiviIspettivi}.equals( "S" )]]></printWhenExpression>
 			<textField isBlankWhenNull="false">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="3" y="98" width="549" height="14" isRemoveLineWhenBlank="true" uuid="00504e92-6afa-477f-8143-cd4b40e37c2b">
-					<printWhenExpression><![CDATA[$F{motiviIspettivi}.equals( "S" )]]></printWhenExpression>
-				</reportElement>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="549" height="14" isRemoveLineWhenBlank="true" uuid="00504e92-6afa-477f-8143-cd4b40e37c2b"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Times New Roman" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" - Per lo svolgimento di funzioni istituzionali relativi a compiti ispettivi, di verifica e di controllo"]]></textFieldExpression>
 			</textField>
+		</band>
+		<band height="23">
+			<printWhenExpression><![CDATA[$F{motiviUrgenza}.equals( "S" )]]></printWhenExpression>
 			<textField isBlankWhenNull="false">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="3" y="113" width="549" height="17" isRemoveLineWhenBlank="true" uuid="33d90e21-a453-4b31-a291-09df3f29ed2f">
-					<printWhenExpression><![CDATA[$F{motiviUrgenza}.equals( "S" )]]></printWhenExpression>
-				</reportElement>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="549" height="17" isRemoveLineWhenBlank="true" uuid="33d90e21-a453-4b31-a291-09df3f29ed2f"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Times New Roman" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" - Per Attività caratterizzata da emergenza, urgenza, indifferibilità"]]></textFieldExpression>
 			</textField>
+		</band>
+		<band height="22">
+			<printWhenExpression><![CDATA[$F{motiviTrasporto}.equals( "S" )]]></printWhenExpression>
 			<textField isBlankWhenNull="false">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="3" y="131" width="549" height="17" isRemoveLineWhenBlank="true" uuid="99c34b20-86a5-49f1-a21a-30c81021fc6b">
-					<printWhenExpression><![CDATA[$F{motiviTrasporto}.equals( "S" )]]></printWhenExpression>
-				</reportElement>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="549" height="17" isRemoveLineWhenBlank="true" uuid="99c34b20-86a5-49f1-a21a-30c81021fc6b"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Times New Roman" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" - Per Attività che richiede necessariamente il trasporto di materiale, o attrezzature ingombranti, pesanti, o fragili in dotazione"]]></textFieldExpression>
 			</textField>
+		</band>
+		<band height="21">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement x="3" y="149" width="549" height="17" isRemoveLineWhenBlank="true" uuid="27e4463e-e73f-4839-a33d-a826e34a1452"/>
+				<reportElement x="0" y="0" width="549" height="17" isRemoveLineWhenBlank="true" uuid="27e4463e-e73f-4839-a33d-a826e34a1452"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Times New Roman" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{altriMotivi}]]></textFieldExpression>
 			</textField>
 		</band>
-	</columnFooter>
+	</detail>
 	<pageFooter>
-		<band height="126" splitType="Stretch">
+		<band height="113" splitType="Stretch">
 			<rectangle radius="10">
-				<reportElement positionType="Float" x="0" y="3" width="554" height="123" uuid="47bb9ae0-dd67-413c-a2fb-fdaf2195bd29"/>
+				<reportElement positionType="Float" x="0" y="3" width="554" height="107" uuid="47bb9ae0-dd67-413c-a2fb-fdaf2195bd29"/>
 			</rectangle>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement positionType="Float" x="9" y="45" width="543" height="16" uuid="1b50070c-cf85-43ca-bcfc-6af1290a4cf0"/>
