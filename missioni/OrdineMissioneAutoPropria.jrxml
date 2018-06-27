@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OrdineMissioneAutoPropria" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
 	<property name="ireport.zoom" value="1.5026296018031553"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="18"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table" mode="Transparent" isBold="true">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -221,8 +221,8 @@
 			</textField>
 		</band>
 	</pageHeader>
-	<columnHeader>
-		<band height="104" splitType="Stretch">
+	<detail>
+		<band height="104">
 			<rectangle>
 				<reportElement x="0" y="4" width="554" height="98" uuid="a77eb553-d3ff-4e04-bf9d-0ba5e1b34d92"/>
 			</rectangle>
@@ -246,8 +246,6 @@
 				<text><![CDATA[di essere autorizzato ad utilizzare il mezzo proprio per effettuare i percorsi:]]></text>
 			</staticText>
 		</band>
-	</columnHeader>
-	<detail>
 		<band height="135" splitType="Stretch">
 			<rectangle>
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="3" width="555" height="131" uuid="e5584a27-bedc-4ba1-87ae-9b7c6cf73a51"/>
