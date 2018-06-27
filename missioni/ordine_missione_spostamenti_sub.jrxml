@@ -21,47 +21,41 @@
 	<field name="percorsoA" class="java.lang.String">
 		<fieldDescription><![CDATA[percorsoA]]></fieldDescription>
 	</field>
-	<group name="Spostamento">
-		<groupExpression><![CDATA[$F{percorsoDa}]]></groupExpression>
-		<groupHeader>
-			<band height="25">
-				<textField>
-					<reportElement mode="Transparent" x="0" y="0" width="270" height="22" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1"/>
-					<box>
-						<pen lineWidth="0.0"/>
-						<topPen lineWidth="0.0"/>
-						<leftPen lineWidth="0.0"/>
-						<bottomPen lineWidth="0.0"/>
-						<rightPen lineWidth="0.0"/>
-					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-						<font fontName="Times New Roman" isBold="false"/>
-						<paragraph lineSpacing="Single" leftIndent="5"/>
-					</textElement>
-					<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Da   </style>"+ $F{percorsoDa}]]></textFieldExpression>
-				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement mode="Opaque" x="271" y="0" width="242" height="22" backcolor="#FFFFFF" uuid="1092c234-69f7-4b43-9837-f9926fd6defa"/>
-					<box>
-						<pen lineWidth="0.0"/>
-						<topPen lineWidth="0.0"/>
-						<leftPen lineWidth="0.0"/>
-						<bottomPen lineWidth="0.0"/>
-						<rightPen lineWidth="0.0"/>
-					</box>
-					<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-						<font fontName="Times New Roman"/>
-						<paragraph leftIndent="5"/>
-					</textElement>
-					<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>A    </style>"+ $F{percorsoA}]]></textFieldExpression>
-				</textField>
-			</band>
-		</groupHeader>
-		<groupFooter>
-			<band/>
-		</groupFooter>
-	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
+	<detail>
+		<band height="50">
+			<textField>
+				<reportElement mode="Transparent" x="0" y="0" width="270" height="22" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>Da   </style>"+ $F{percorsoDa}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="271" y="0" width="242" height="22" backcolor="#FFFFFF" uuid="1092c234-69f7-4b43-9837-f9926fd6defa"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style pdfFontName='Times-Bold' isBold='true'>A    </style>"+ $F{percorsoA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
 </jasperReport>
