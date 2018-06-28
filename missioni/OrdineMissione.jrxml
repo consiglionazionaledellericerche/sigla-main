@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OrdineMissione" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="577"/>
+	<property name="ireport.y" value="67"/>
 	<style name="table" mode="Transparent" isBold="true">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -200,7 +200,7 @@
 				<imageExpression><![CDATA[$P{DIR_IMAGE} + "CNR.JPG"]]></imageExpression>
 			</image>
 			<rectangle>
-				<reportElement x="1" y="67" width="554" height="129" uuid="a5479289-cd2b-4a86-b1bb-a2b5108e6789"/>
+				<reportElement mode="Transparent" x="1" y="67" width="554" height="129" uuid="a5479289-cd2b-4a86-b1bb-a2b5108e6789"/>
 				<graphicElement>
 					<pen lineStyle="Solid"/>
 				</graphicElement>
