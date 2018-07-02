@@ -98,13 +98,13 @@ where
                                and cd_uo_ft_passiva=a.cd_unita_organizzativa
                                and pg_fattura_passiva=a.pg_fattura_passiva)
      or
-      exists (select 1 from autofattura where
+      (exists (select 1 from autofattura where
                                    esercizio=a.esercizio
                                and cd_cds_ft_passiva=a.cd_cds
                                and cd_uo_ft_passiva=a.cd_unita_organizzativa
                                and pg_fattura_passiva=a.pg_fattura_passiva)
        and voce_iva.fl_autofattura='N' and
-       a.fl_intra_ue='N' and a.fl_extra_ue = 'N'  and a.fl_san_marino_senza_iva = 'N')
+       a.fl_intra_ue='N' and a.fl_extra_ue = 'N'  and a.fl_san_marino_senza_iva = 'N' and a.fl_split_payment ='N' ))
  and c.cd_cds (+)= b.cd_cds_obbligazione
  and c.esercizio (+)= b.esercizio_obbligazione
  and c.esercizio_originale (+)= b.esercizio_ori_obbligazione
