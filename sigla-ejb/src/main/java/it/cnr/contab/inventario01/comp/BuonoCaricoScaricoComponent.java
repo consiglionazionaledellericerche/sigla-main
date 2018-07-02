@@ -2933,7 +2933,10 @@ public Buono_carico_scaricoBulk scaricaBeniAccessoriFor(UserContext userContext,
 					}
 					bene_apg.setVariazione_meno(inv.getValoreBene());
 				}
-				bene_apg.setFl_visibile(new Boolean(false));
+				if((buonoS instanceof Trasferimento_inventarioBulk) && (((Trasferimento_inventarioBulk)buonoS).isFl_cambio_categoria()))
+					bene_apg.setFl_visibile(new Boolean(true));
+				else
+					bene_apg.setFl_visibile(new Boolean(false));
 				bene_apg.setFl_totalmente_scaricato(new Boolean(true));
 				bene_apg.setLocal_transaction_id(buonoS.getLocal_transactionID());
 				bene_apg.setPg_inventario(inv.getPg_inventario());
@@ -5767,7 +5770,7 @@ private void validaDettagliTrasferiti (UserContext userContext, Trasferimento_in
 			SQLBuilder sql_cat = home.createSQLBuilder();
 			sql_cat.addSQLClause("AND","INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID",SQLBuilder.EQUALS,buonoT.getLocal_transactionID());
 			sql_cat.addSQLClause("AND","INVENTARIO_BENI_APG.CD_CATEGORIA_GRUPPO_NEW",SQLBuilder.ISNOTNULL,"null");
-		
+			
 			SQLBuilder sql_count = home.createSQLBuilder();
 			sql_count.addSQLClause("AND","INVENTARIO_BENI_APG.LOCAL_TRANSACTION_ID",SQLBuilder.EQUALS,buonoT.getLocal_transactionID());
 			if (((Trasferimento_inventarioBulk)buonoT).isFl_cambio_categoria() &&

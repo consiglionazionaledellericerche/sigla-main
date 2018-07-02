@@ -344,8 +344,9 @@ declare
   aRimb.IM_RIMBORSO:=aImporto;
   aRimb.STATO_COFI:=CNRCTB100.STATO_GEN_COFI_CONT;
 
-  if aAnticipo.fl_associato_missione = 'Y' then
-    aRimb.STATO_COGE:=CNRCTB100.STATO_COEP_EXC;
+	if aAnticipo.fl_associato_missione = 'Y' then
+    --aRimb.STATO_COGE:=CNRCTB100.STATO_COEP_EXC;
+    aRimb.STATO_COGE:=CNRCTB100.STATO_COEP_INI;
     aRimb.STATO_COAN:=CNRCTB100.STATO_COEP_EXC;
   else
     aRimb.STATO_COGE:=CNRCTB100.STATO_COEP_INI;
