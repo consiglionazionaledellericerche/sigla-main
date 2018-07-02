@@ -536,6 +536,7 @@ Begin
                    AND   b.pg_progetto=P_PG_PROGLIV2
                    AND   b.cd_linea_attivita = NVL(decode(P_GAE,'*',null,P_GAE), b.cd_linea_attivita)
                    AND   (P_RESPONSABILE_GAE IS NULL OR b.cd_responsabile_terzo=P_RESPONSABILE_GAE)) a
+             WHERE a.esercizio <= P_ESERCIZIO
              GROUP BY a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_unita_piano, a.cd_voce_piano, a.cd_elemento_voce) P
              WHERE (p.stanziamento != 0 OR p.variazioni != 0 OR p.impacc != 0 OR p.pagris != 0 or p.nummov!=0)
              AND (P_SOLO_GAE_ATTIVE='N' OR
