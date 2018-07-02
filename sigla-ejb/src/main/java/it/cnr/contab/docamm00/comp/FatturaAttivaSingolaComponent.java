@@ -2146,8 +2146,9 @@ public class FatturaAttivaSingolaComponent
     public Tipo_atto_bolloBulk getTipoAttoBollo(UserContext aUC, Fattura_attivaBulk fatt) throws ComponentException {
         try {
             Configurazione_cnrBulk config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(aUC, fatt.getEsercizio(), null, Configurazione_cnrBulk.PK_BOLLO_VIRTUALE, Configurazione_cnrBulk.SK_BOLLO_VIRTUALE_CODICE_FATTURA_ATTIVA);
+             
             return Optional.ofNullable(config)
-                    .map(Configurazione_cnrBulk::getVal01)
+                    .map(el -> fatt.isDocumentoFatturazioneElettronica() ? el.getVal02() : el.getVal01())
                     .map(v -> {
                         Tipo_atto_bolloBulk tipoAtto;
                         try {
@@ -2163,7 +2164,6 @@ public class FatturaAttivaSingolaComponent
         }
     }
 
-//^^@@
 
     private BigDecimal getImportoLimiteBolloVirtuale(UserContext aUC) throws ComponentException {
         BigDecimal importoLimite;
