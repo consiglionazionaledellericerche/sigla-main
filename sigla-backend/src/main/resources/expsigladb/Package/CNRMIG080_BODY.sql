@@ -1217,7 +1217,7 @@ procedure MODIFICABANCA(aAnaDip cnr_anadip%rowtype,aAnagrafico anagrafico%rowtyp
 												utuv = 'CED',
 												origine = 'S',
 												intestazione = aAnaDip.nominativo,
-												numero_conto = aAnaDip.nrc_pag,
+												numero_conto = lpad(aAnaDip.nrc_pag,12,'0'),
 												abi = aAnaDip.abi_pag,
 												cab = aAnaDip.cab_pag,
 												cin = aAnaDip.cin_pag

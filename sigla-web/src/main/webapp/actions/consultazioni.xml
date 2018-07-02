@@ -731,6 +731,7 @@
 		<forward name="default" path="/doccont00/consStatoInvio.jsp" />
 		<init-param name="bulkClassName"
 			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_mandatiBulk" />
+		<init-param name="tipo" value="MAN" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsStatoInvioAction" />
 		<init-param name="multiSelezione" value="Y" />
@@ -741,6 +742,7 @@
 		<forward name="default" path="/doccont00/consStatoInvio.jsp" />
 		<init-param name="bulkClassName"
 			value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_reversaliBulk" />
+		<init-param name="tipo" value="REV" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 		<init-param name="defaultAction" value="ConsStatoInvioAction" />
 		<init-param name="multiSelezione" value="Y" />

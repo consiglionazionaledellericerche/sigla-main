@@ -478,6 +478,52 @@ begin
 	 END IF;
        End If;
  END;
+	Procedure buildMovPEPIVAIstSplit(aListaMovimenti IN OUT CNRCTB200.movimentiList, aDocTst V_DOC_AMM_COGE_TSTA%rowtype, aDoc V_DOC_AMM_COGE_RIGA%rowtype, aUser varchar2, aTSnow date) is
+	  aEffCori ass_tipo_cori_voce_ep%rowtype;
+	  aContoEp voce_ep%rowtype;
+	  aSezione CHAR(1);
+	  Fl_split CHAR(1);
+	Begin
+
+	Dbms_Output.PUT_LINE ('IN buildMovPEPIVAIstSplit');
+	If  aDocTst.cd_tipo_documento = CNRCTB100.TI_FATTURA_PASSIVA  and
+	  aDocTst.TI_ISTITUZ_COMMERC = CNRCTB100.TI_ISTITUZIONALE Then
+
+    select fl_split_payment into Fl_split
+    from fattura_passiva
+    where
+    fattura_passiva.esercizio = aDocTst.esercizio and
+    fattura_passiva.cd_cds = aDocTst.cd_cds and
+    fattura_passiva.cd_unita_organizzativa = aDocTst.cd_unita_organizzativa and
+    fattura_passiva.pg_fattura_passiva = aDocTst.PG_NUMERO_DOCUMENTO;
+
+  -- Se la fattura è istituzionale con Split, apro il debito verso l'erario
+	  If Fl_split = 'Y'  then
+		    aEffCori := CNRCTB204.getAssCoriEp(aDocTst.esercizio, 'IVA', CNRCTB001.GESTIONE_ENTRATE, CNRCTB100.IS_DARE);
+
+		    Begin
+			aContoEp:=CNRCTB002.getVoceEp(aEffCori.esercizio, aEffCori.cd_voce_ep_contr);
+		    Exception when OTHERS then
+		        IBMERR001.RAISE_ERR_GENERICO('Conto economico di contr.: '||aEffCori.cd_voce_ep_contr||' associato a CORI IVA non trovato');
+		    End;
+
+		-- modifica del 14/06/2006 per le note l'iva va in Dare, prima metteva l'iva sempre in Avere e per le note sfetecchiava
+		-- tutta la scrittura per il fatto che l'ultimo importo lo mette per quadrare la scrittura
+
+		    If aDocTst.ti_fattura = 'C' Then
+		        aSezione := CNRCTB100.IS_DARE;
+		    Else
+		        aSezione := CNRCTB100.IS_AVERE;
+		    End If;
+
+				Dbms_Output.PUT_LINE ('CARICA RIGA CON '||aContoEp.CD_VOCE_EP);
+		    CNRCTB204.buildMovPrinc(aDocTst.cd_cds_origine, aDocTst.esercizio, aDocTst.cd_uo_origine, aContoEp, abs(aDoc.im_iva),
+		                            aSezione,
+		                            aDoc.dt_da_competenza_coge, aDoc.dt_a_competenza_coge, aDocTst.cd_terzo,
+		                            aListaMovimenti, aUser, aTSnow);
+    End if;
+	End if;
+	End;
 
  procedure buildMovPEP(aListaMovimenti IN OUT CNRCTB200.movimentiList, aDocTst V_DOC_AMM_COGE_TSTA%rowtype,
                        aDoc V_DOC_AMM_COGE_RIGA%rowtype, aUser varchar2, aTSnow date) is
@@ -566,6 +612,9 @@ Dbms_Output.put_line ('lcount 2a '||aListaMovimenti.Count);
 -- fatture istituz. di servizi su sezionale fl_servizi_non_residenti = si
 Dbms_Output.put_line ('lcount 2c '||aListaMovimenti.Count);
       buildMovPEPIVAServIstNR(aListaMovimenti, aDocTst, aDoc, aUser, aTSnow);
+
+Dbms_Output.put_line ('split '||aListaMovimenti.Count);
+			buildMovPEPIVAIstSplit(aListaMovimenti, aDocTst, aDoc, aUser, aTSnow);
 
 Dbms_Output.put_line ('lcount 3 '||aListaMovimenti.Count);
 -- Generazione movimento di costo
@@ -1354,6 +1403,7 @@ Procedure regAnnullaDocEsChiusoCOGE(aEs number, aDocTst V_DOC_AMM_COGE_TSTA%rowt
        aImMovimento:=aListaMovimenti(i).im_movimento;
        aSezMovimento:=aListaMovimenti(i).sezione;
        aTiIstituzCommerc:=aListaMovimenti(i).ti_istituz_commerc;
+       aCdElementoVoce:=aListaMovimenti(i).cd_voce_ep;
      End if;
    End Loop;
 
@@ -1387,11 +1437,12 @@ Procedure regAnnullaDocEsChiusoCOGE(aEs number, aDocTst V_DOC_AMM_COGE_TSTA%rowt
    end if;
 
    aCdTerzo:=aScrittura.cd_terzo;
-
-
-
-   aVoceAnag:=CNRCTB204.TROVACONTOANAG(aEs,aCdTerzo,aDocTst.cd_tipo_documento,aDocTst.ti_fattura,aCdElementoVoce);
-
+  recParametriCNR := CNRUTL001.getRecParametriCnr(aDocTst.esercizio);
+	if(recParametriCnr.fl_nuovo_pdg='Y' ) then
+    	aVoceAnag :=CNRCTB002.getVoceEp(aDocTst.esercizio, ACdElementoVoce);       
+	else
+   	  aVoceAnag:=CNRCTB204.TROVACONTOANAG(aEs,aCdTerzo,aDocTst.cd_tipo_documento,aDocTst.ti_fattura,aCdElementoVoce);
+	end if;
    CNRCTB204.buildMovPrinc(aScrittura.cd_cds,aEs,aScrittura.cd_unita_organizzativa,aVoceAnag,
                            aImMovimento,CNRCTB200.GETSEZIONEOPPOSTA(aSezMovimento),trunc(aTSnow),
                            trunc(aTSNow),0,aTiIstituzCommerc,aNewListaMovimenti,aUser,aTSnow);
@@ -3092,7 +3143,7 @@ Dbms_Output.PUT_LINE ('DOCUMENTO CON COMP. ECON. IN ESERCIZIO O ESERCIZIO PRECED
 
       conto_insuss_attive       voce_ep%Rowtype;
       conto_insuss_passive      voce_ep%Rowtype;
-
+      
   Begin
 
    If CNRCTB204.getCompetenzaFuoriEsercizio(aDocTst) Then
@@ -3222,9 +3273,23 @@ Dbms_Output.PUT_LINE ('K '||aListaMovimenti.COUNT);
     buildMovPEP(aListaMovimenti, aDocTst, aDoc, aUser, aTSNow);
 
    end loop;
-
-Dbms_Output.PUT_LINE ('K esco ');
-Dbms_Output.PUT_LINE ('giro su cori '||aCDoc.cd_elemento_voce_ev||' ENTE ');
+   Dbms_Output.PUT_LINE ('K esco ');
+	declare
+	fl_split  char(1):='N';
+	begin	
+   If  aDocTst.cd_tipo_documento = CNRCTB100.TI_FATTURA_ATTIVA Then
+		select FL_LIQUIDAZIONE_DIFFERITA into fl_split
+		from fattura_attiva
+		where  
+    fattura_attiva.esercizio = aDocTst.ESERCIZIO and
+    fattura_attiva.cd_cds_origine = aDocTst.CD_CDS_ORIGINE and
+    fattura_attiva.cd_uo_origine = aDocTst.CD_UO_ORIGINE and
+    fattura_attiva.pg_fattura_attiva = aDocTst.PG_NUMERO_DOCUMENTO;
+	else 
+	  fl_split:='N';
+	end if;
+	if  (fl_split = 'N')  then 
+	 Dbms_Output.PUT_LINE ('giro su cori '||aCDoc.cd_elemento_voce_ev||' ENTE ');
    for aDocCori in (select * from V_DOC_AMM_COGE_CORI
                     Where cd_cds = aDocTst.cd_cds
  		      and cd_unita_organizzativa = aDocTst.cd_unita_organizzativa
@@ -3235,11 +3300,14 @@ Dbms_Output.PUT_LINE ('giro su cori '||aCDoc.cd_elemento_voce_ev||' ENTE ');
  	             -- and cd_elemento_voce_ev = aCDoc.cd_elemento_voce_ev
 		      --and ti_ente_percepiente = TI_CORI_ENTE
  		   ) loop
-Dbms_Output.PUT_LINE ('giro su cori '||aDocCori.AMMONTARE||' righe '||aListaMovimenti.count);
+		Dbms_Output.PUT_LINE ('giro su cori '||aDocCori.AMMONTARE||' righe '||aListaMovimenti.count);
+		
     buildMovPEP(aListaNuoveScritture, aListaMovimenti,aDocTst, aDocCori, aUser, aTSNow);
-Dbms_Output.PUT_LINE ('dopo giro su cori '||aDocCori.AMMONTARE||' righe '||aListaMovimenti.count);
+    
+		Dbms_Output.PUT_LINE ('dopo giro su cori '||aDocCori.AMMONTARE||' righe '||aListaMovimenti.count);
    end loop;
-
+	end if;
+	end;
 -- NEW !!!! 14/06/2006
 -- Solo per documenti COMMERCIALI:
 -- Generazione del movimento contemporaneo di alimentazione dell'IVA a Credito e
@@ -3554,7 +3622,9 @@ Dbms_Output.PUT_LINE ('rollback to savepoint CNRCTB205_SP_001');
   aDocTstPrimo V_DOC_AMM_COGE_TSTA%rowtype;
   aDocTstPrimoBis V_DOC_AMM_COGE_TSTA%rowtype;
   aImportoMov number;
+  netto_da_trattenere number;
   fl_merce_intra  CHAR(1);
+  fl_split  CHAR(1);
   fl_snr  CHAR(1);
  begin
 --Dbms_Output.PUT_LINE ('A1');
@@ -3692,6 +3762,21 @@ Dbms_Output.PUT_LINE ('D1 '||aVoceEp.CD_VOCE_EP);
   -- San Marino o intra ue che siano anche istituzionali di beni, bisogna
   -- utilizzare il netto invece del lordo del mandato
 
+
+if aDoc.cd_tipo_doc = CNRCTB100.TI_COMPENSO then
+   select nvl(IM_NETTO_DA_TRATTENERE ,0)
+   into netto_da_trattenere
+   from COMPENSO
+   Where   
+	    	 CD_CDS=aDoc.cd_cds_doc
+	   and CD_UNITA_ORGANIZZATIVA=aDoc.cd_uo_doc
+	   and ESERCIZIO=aDoc.esercizio_doc
+	   and PG_compenso=aDoc.pg_numero_doc;
+  if (netto_da_trattenere!=0 ) then
+     aImportoMov:=aDoc.im_lordo_doc - netto_da_trattenere;
+	end if;	    
+end if;
+
   If aDoc.cd_tipo_doc = CNRCTB100.TI_FATTURA_PASSIVA Then
    select *
    into aDocTstPrimoBis
@@ -3702,7 +3787,7 @@ Dbms_Output.PUT_LINE ('D1 '||aVoceEp.CD_VOCE_EP);
 	   and ESERCIZIO=aDoc.esercizio_doc
 	   and PG_NUMERO_DOCUMENTO=aDoc.pg_numero_doc;
 
-	select fl_servizi_non_residenti,fl_merce_intra_ue into fl_snr,fl_merce_intra
+	select fl_servizi_non_residenti,fl_merce_intra_ue,fattura_passiva.fl_split_payment into fl_snr,fl_merce_intra,fl_split
 	from fattura_passiva, tipo_sezionale
     where
     fattura_passiva.cd_tipo_sezionale = tipo_sezionale.cd_tipo_sezionale and
@@ -3722,6 +3807,12 @@ Dbms_Output.PUT_LINE ('D1 '||aVoceEp.CD_VOCE_EP);
 		If  fl_snr ='Y'  And
 		    aDocTstPrimoBis.TI_ISTITUZ_COMMERC = CNRCTB100.TI_ISTITUZIONALE And
 		    aDocTstPrimoBis.TI_BENE_SERVIZIO = CNRCTB100.TI_FT_ACQ_SERVIZI Then
+		  aImportoMov:=aDoc.im_doc;
+		End if;
+		
+		
+		If  fl_split ='Y'  And
+		    aDocTstPrimoBis.TI_ISTITUZ_COMMERC = CNRCTB100.TI_ISTITUZIONALE Then
 		  aImportoMov:=aDoc.im_doc;
 		End if;
   end if;
@@ -3847,7 +3938,7 @@ dbms_output.put_line('Ros 6');
       end;
 	  -- Se la tipologia di contributo ritenuta è IVA o RIVALSA, non vengono esposte nell'ultima scrittura (per l'IVA indipendentemente dal fatto che sia commerciale o istituzionale)
       aCdClassificazioneCori:=CNRCTB545.getTipoCoriDaRigaCompenso(aCoriLoc);
-      if (   aCdClassificazioneCori = CNRCTB545.isCoriIva
+      if (( aCdClassificazioneCori = CNRCTB545.isCoriIva and aCori.TI_ENTE_PERCEPIENTE ='E' )  
 	          or aCdClassificazioneCori = CNRCTB545.isCoriRivalsa
 		 ) then
 	   isEscluso:=true;
@@ -3864,10 +3955,13 @@ dbms_output.put_line('Ros 6');
 				   	end if;
 
 				   	 	aContoEp:=CNRCTB002.getVoceEp(aEffCori.esercizio, aEffCori.cd_voce_ep_contr);
+    				dbms_output.put_line('aContoEp '||aEffCori.cd_voce_ep_contr);
 
 				 exception when OTHERS then
 			      IBMERR001.RAISE_ERR_GENERICO('Conto economico di contr.: '||aEffCori.cd_voce_ep_contr||' associato a CORI IVA non trovato in esercizio '||aEffCori.esercizio);
 				 end;
+				 
+		if (abs(aCori.ammontare) = aCori.ammontare) then
      CNRCTB204.buildMovPrinc(
       aDocTst.cd_cds_origine,aDocTst.esercizio,aDocTst.cd_uo_origine,
       aContoEp,
@@ -3883,6 +3977,24 @@ dbms_output.put_line('Ros 6');
  	  aUser,
  	  aTSnow
      );
+     else
+     CNRCTB204.buildMovPrinc(
+      aDocTst.cd_cds_origine,aDocTst.esercizio,aDocTst.cd_uo_origine,
+      aContoEp,
+      abs(aCori.ammontare),
+      CNRCTB200.getSezioneOpposta(CNRCTB100.IS_AVERE),
+      null,
+      null,
+      aDocRiga.cd_terzo,
+      ACORI.TI_ISTITUZ_COMMERC, /* STANI 04.11 AGGIUNTO PER AVERE SCRITTURE COMMERCIALI PER COMPENSI
+                                   COMMERCIALI. NON PASSANDO NULLA ERA AUTOMATICAMENTE
+                                   ISTITUZIONALE */
+      aListaMovimenti,
+ 	  	aUser,
+ 	  	aTSnow
+     );
+     end if;
+     
       begin
 						   select distinct cd_elemento_voce_ev into Ev
 						       From V_DOC_AMM_COGE_RIGA
@@ -4147,7 +4259,7 @@ end;
 Elsif aGenRiga.pg_accertamento is not null then
    -- Carico l'obbligazione collegato all'accertamento su partita di giro
   Begin
-Dbms_Output.PUT_LINE ('OBB '||aGenRiga.esercizio_obbligazione||' '||aGenRiga.cd_cds_obbligazione||' '||aGenRiga.pg_obbligazione);
+Dbms_Output.PUT_LINE ('ACC '||aGenRiga.esercizio_accertamento||' '||aGenRiga.cd_cds_accertamento||' '||aGenRiga.pg_accertamento);
         Select *
         Into  aObbScad
         From  obbligazione_scadenzario
@@ -4257,8 +4369,8 @@ Dbms_Output.PUT_LINE ('OBB '||aGenRiga.esercizio_obbligazione||' '||aGenRiga.cd_
 					    		and esercizio_ori_obbligazione = ES_ORI_PREC
 					    		and pg_obbligazione = PG_OBB_ES_PREC
 					    		and pg_obbligazione_scadenzario = 1;
-								  --exception when NO_DATA_FOUND Then
-									  --       Dbms_Output.PUT_LINE ('NO DATA 999');
+								  exception when NO_DATA_FOUND Then
+									         Dbms_Output.PUT_LINE ('NO DATA 999');
 									    --     return;
 								  end;
 			      end;
@@ -4269,6 +4381,7 @@ Else
    IBMERR001.RAISE_ERR_GENERICO('Il documento generico di versamento non risulta collegato a '||cnrutil.getLabelObbligazioneMin()||' o accertamento:'||aDoc.pg_numero_doc||' tipo:'||aDoc.cd_tipo_doc);
 End if;
 	IF(aCoriLoc.cd_contributo_ritenuta IS NULL and aDoc.cd_elemento_voce is not null) then
+	dbms_output.put_line('no coriloc ' || aDoc.CD_TIPO_DOC );
 		if  (aDoc.CD_TIPO_DOC in (CNRCTB100.TI_GEN_CORI_VER_ENTRATA)) then
 		CNRCTB204.buildMovPrinc(
    aDocTst.cd_cds_origine,aDocTst.esercizio,aDocTst.cd_uo_origine,
@@ -4693,7 +4806,11 @@ End;
 
  procedure regDocPagDefaultCOGE(aDocTst V_DOC_ULT_COGE_TSTA%rowtype, aCdTerzo number, aUser varchar2, aTSNow date) is
   aScrittura scrittura_partita_doppia%rowtype;
+  aListaScritture CNRCTB200.scrittureList;
+  aListaNuoveScritture	CNRCTB200.scrittureList;
+  aListaVecchieScritture	CNRCTB200.scrittureList;
   aListaMovimenti CNRCTB200.movimentiList;
+  aListaMovimentiOld CNRCTB200.movimentiList;
   aTDoc V_DOC_ULT_COGE_RIGA%rowtype;
   aTipoScrittura char(1);
   aNumIst number;
@@ -4707,6 +4824,21 @@ End;
   aNumIst:=0;
   aNumComm:=0;
   aNumProm:=0;
+
+	if aDocTst.stato_coge = CNRCTB100.STATO_COEP_DA_RIP then
+		savepoint CNRCTB205_SP_001;
+   		aListaMovimentiOld.delete;
+   -- cerca eventuali scritture gia registrate per il documento
+   CNRCTB204.getScrittureUEPLock(aDocTst,aListaScritture);
+   -- Per ogni scrittura crea uno storno per poi riemettere la scrittura aggiornata
+   if aListaScritture.count > 0 then
+    for i in 1 .. aListaScritture.count loop
+     CNRCTB200.getScritturaEPLOCK(aListaScritture(i),aListaMovimentiOld);
+     aListaVecchieScritture(i):=aListaScritture(i);
+     CNRCTB200.creaScrittStornoCoge(aListaScritture(i),aListaMovimentiOld, aUser, aTSNow);
+    end loop;
+   end if;
+  end if;
 
   aTiIstituzCommerc:=CNRCTB100.TI_ISTITUZIONALE;
   for aDoc in (select * from V_DOC_ULT_COGE_RIGA where
@@ -4863,6 +4995,18 @@ End;
   aScrittura:=CNRCTB204.buildScrUEP(aDocTst, aCdTerzo, aTipoScrittura, aUser,aTSNow);
   CNRCTB200.CREASCRITTCOGE(aScrittura,aListaMovimenti);
 
+-- Verifica di effettiva modifica della scrittura
+  
+   if aListaMovimenti.count > 0 then
+    aListaNuoveScritture(aListaNuoveScritture.count+1):=aScrittura;
+   end if;
+
+  if not CNRCTB200.isModificata(aListaVecchieScritture, aListaNuoveScritture) then
+   Dbms_Output.PUT_LINE ('DOCCONT rollback to savepoint CNRCTB205_SP_001');
+   rollback to savepoint CNRCTB205_SP_001;
+  end if;
+
+
   regDocPag1210COGE(aDocTst, aCdTerzo, aTiIstituzCommerc, aUser, aTSNow);
 
  End;
@@ -4990,7 +5134,8 @@ Dbms_Output.put_line ('NO CONT DOC B');
    end if;
    goto fine;
   end if;
-Dbms_Output.put_line ('d');
+  
+	Dbms_Output.put_line ('d');
   -- Filtro e aggiorno a stato COGE ESCLUSO LE REVERSALI PER
   -- IVA (intraue/san marino istituzionale per beni)
 
@@ -5030,6 +5175,18 @@ Dbms_Output.put_line ('NO CONT DOC D');
     return;
    end if;
   end if;
+  /*
+  if aDocTst.cd_tipo_documento_cont = CNRCTB018.TI_DOC_REV and aDocTst.cd_tipo_documento= CNRCTB100.TI_GEN_REC_CRED_DA_TERZI Then
+    update reversale set
+	      stato_coge = CNRCTB100.STATO_COEP_EXC,
+		  pg_ver_rec=pg_ver_rec+1
+    Where     esercizio = aDocTst.esercizio
+	   and cd_cds = aDocTst.cd_cds
+	   and pg_reversale = aDocTst.pg_documento_cont;
+		Dbms_Output.put_line ('NO CONT DOC REV');
+    return;
+   end if;
+   */
 Dbms_Output.put_line ('f');
   begin
    select distinct stato_pagamento_fondo_eco into aStatoPFEco from V_DOC_ULT_COGE_RIGA where
@@ -5089,3 +5246,4 @@ Dbms_Output.put_line ('h');
  end;
 
 End;
+/
