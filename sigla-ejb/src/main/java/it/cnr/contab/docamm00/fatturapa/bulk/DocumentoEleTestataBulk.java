@@ -642,7 +642,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 		this.abilitato = abilitato;
 	}
 	public boolean isRODocumento() {
-		return (!isAbilitato() ||!isEditabile());
+		return (!isAbilitato() ||!isEditabile() )&& this.getCrudStatus() != OggettoBulk.UNDEFINED;
 	}
 	public void setRODocumento(boolean rODocumento) {
 		RODocumento = rODocumento;
