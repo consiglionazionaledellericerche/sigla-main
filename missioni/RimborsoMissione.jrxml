@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RimborsoMissione" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="872"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="418"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table" mode="Transparent" isBold="true">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -197,14 +197,14 @@
 				<imageExpression><![CDATA[$P{DIR_IMAGE} + "CNR.JPG"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="false">
-				<reportElement x="149" y="86" width="309" height="20" uuid="1ddf9e43-7d19-45ec-9c0e-cf428307e166"/>
+				<reportElement x="70" y="86" width="306" height="20" uuid="1ddf9e43-7d19-45ec-9c0e-cf428307e166"/>
 				<textElement markup="styled">
 					<font fontName="Times New Roman" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cognomeRich} + " "+$F{nomeRich}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="514" y="86" width="37" height="20" uuid="c8937252-fac3-430a-bc39-315c9ac24217"/>
+				<reportElement x="423" y="86" width="37" height="20" uuid="c8937252-fac3-430a-bc39-315c9ac24217"/>
 				<textElement markup="styled">
 					<font fontName="Times New Roman"/>
 				</textElement>
@@ -253,14 +253,14 @@
 				<textFieldExpression><![CDATA[$F{qualificaRich}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="86" width="139" height="20" uuid="c273423d-77f1-47ef-b81d-2b167bdcca95"/>
+				<reportElement x="10" y="86" width="60" height="20" uuid="c273423d-77f1-47ef-b81d-2b167bdcca95"/>
 				<textElement>
 					<font fontName="Times New Roman" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Richiedente (cognome e nome)]]></text>
+				<text><![CDATA[Richiedente]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="469" y="86" width="45" height="20" uuid="bacce106-3173-4723-913f-9ed0f1a90b91"/>
+				<reportElement x="378" y="86" width="45" height="20" uuid="bacce106-3173-4723-913f-9ed0f1a90b91"/>
 				<textElement>
 					<font fontName="Times New Roman" isBold="true"/>
 				</textElement>
@@ -274,14 +274,14 @@
 				<text><![CDATA[Data e Luogo di Nascita]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="174" y="106" width="195" height="20" uuid="7c2ccad9-1de7-40a1-831b-0bb83fab15e8"/>
+				<reportElement x="174" y="106" width="202" height="20" uuid="7c2ccad9-1de7-40a1-831b-0bb83fab15e8"/>
 				<textElement markup="styled">
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{luogoDiNascitaRich}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="369" y="106" width="65" height="20" uuid="d4ac7c20-eee2-4a61-9954-b993e63e56b0"/>
+				<reportElement x="378" y="106" width="65" height="20" uuid="d4ac7c20-eee2-4a61-9954-b993e63e56b0"/>
 				<textElement>
 					<font fontName="Times New Roman" isBold="true"/>
 				</textElement>
@@ -357,6 +357,20 @@
 			<line>
 				<reportElement key="line-188" positionType="Float" stretchType="RelativeToBandHeight" x="554" y="82" width="1" height="153" uuid="8b461e38-0e16-4fd5-9704-7ce70ddc4341"/>
 			</line>
+			<staticText>
+				<reportElement x="463" y="86" width="51" height="20" uuid="bba240d7-fc8d-44b9-93cd-734bcb60fb49"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cod. Terzo]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="514" y="86" width="37" height="20" uuid="1a4cd072-8278-48fb-a566-7dbf21353e0a"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cdTerzo}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
