@@ -883,7 +883,7 @@
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="409" y="72" width="143" height="20" uuid="5a62fe9c-15fd-4f25-9318-9971699fc72a">
-					<printWhenExpression><![CDATA[!$F{importo0}.equals("S")]]></printWhenExpression>
+					<printWhenExpression><![CDATA[!$F{importo0}.equals("S") && ($F{impegni} == null || $F{impegni}.isEmpty())]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
 					<font fontName="Times New Roman"/>
@@ -990,7 +990,7 @@
 			</staticText>
 			<staticText>
 				<reportElement x="360" y="72" width="40" height="20" uuid="2751b731-1a5c-4e65-95fc-f9cb03ef6be2">
-					<printWhenExpression><![CDATA[!$F{importo0}.equals("S")]]></printWhenExpression>
+					<printWhenExpression><![CDATA[!$F{importo0}.equals("S") && ($F{impegni} == null || $F{impegni}.isEmpty())]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Top">
 					<font fontName="Times New Roman" isBold="true"/>
