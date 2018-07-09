@@ -25,7 +25,7 @@ mr.pg_banca = b.pg_banca and
 ((b.codice_iban is not null and
 ((substr(b.codice_iban,1,2)= 'IT' and substr(codice_iban,6,5)!='01000')) or -- Abi banca d'italia
 ((substr(b.codice_iban,1,2)!= 'IT' and substr(b.codice_iban,1,2)= n.cd_iso  and n.fl_sepa='Y')))
-or (b.codice_iban is null and b.ti_pagamento not in ('B','N')))))
+or (b.codice_iban is null and b.ti_pagamento not in ('B','N','I')))))
 or
 (ti_documento_cont='S'  --and IM_RITENUTE=0
 and TI_CC_BI!='B'
@@ -56,7 +56,7 @@ rr.pg_banca = b.pg_banca and
 ((b.codice_iban is not null and
 ((substr(b.codice_iban,1,2)= 'IT' and substr(codice_iban,6,5)!='01000')) or -- Abi banca d'italia
 ((substr(b.codice_iban,1,2)!= 'IT' and substr(b.codice_iban,1,2)= n.cd_iso  and n.fl_sepa='Y')))
-or (b.codice_iban is null and b.ti_pagamento not in ('B','N')))))
+or (b.codice_iban is null and b.ti_pagamento not in ('B','N','I')))))
 or
 (ti_documento_cont='S'  --and IM_RITENUTE=0 
 and TI_CC_BI!='B'))
@@ -88,7 +88,7 @@ mr.pg_banca = b.pg_banca and
 ((b.codice_iban is not null and
 ((substr(b.codice_iban,1,2)= 'IT' and substr(codice_iban,6,5)!='01000')) or -- Abi banca d'italia
 ((substr(b.codice_iban,1,2)!= 'IT' and substr(b.codice_iban,1,2)= n.cd_iso  and n.fl_sepa='Y')))
-or (b.codice_iban is null and b.ti_pagamento not in ('B','N')))))
+or (b.codice_iban is null and b.ti_pagamento not in ('B','N','I')))))
 or (ti_documento_cont='S'  -- and IM_RITENUTE=0
 and TI_CC_BI!='B'
 ))and not exists(select 1 from mandato where
@@ -118,7 +118,7 @@ rr.pg_banca = b.pg_banca and
 ((b.codice_iban is not null and
 ((substr(b.codice_iban,1,2)= 'IT' and substr(codice_iban,6,5)!='01000')) or -- Abi banca d'italia
 ((substr(b.codice_iban,1,2)!= 'IT' and substr(b.codice_iban,1,2)= n.cd_iso  and n.fl_sepa='Y')))
-or (b.codice_iban is null and b.ti_pagamento not in ('B','N')))))
+or (b.codice_iban is null and b.ti_pagamento not in ('B','N','I')))))
 or (ti_documento_cont='S'  --and IM_RITENUTE=0 
 and TI_CC_BI!='B'))
 and not exists(select 1 from reversale where
