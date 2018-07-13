@@ -19,6 +19,7 @@ import it.cnr.jada.util.action.ConsultazioniAction;
 import it.cnr.jada.util.action.SelezionatoreListaAction;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 
@@ -202,5 +203,21 @@ public class FirmaDigitaleDocContAction extends SelezionatoreListaAction {
 	@Override
 	public Forward basicDoBringBack(ActionContext actioncontext) throws BusinessProcessException {
 		return actioncontext.findDefaultForward();
+	}
+
+	public Forward doRicercaLibera(ActionContext context) {
+		AbstractFirmaDigitaleDocContBP bp = (AbstractFirmaDigitaleDocContBP)context.getBusinessProcess();
+		try {
+			bp.setModel(context, Optional.ofNullable(bp.getModel())
+					.filter(StatoTrasmissione.class::isInstance)
+					.map(StatoTrasmissione.class::cast)
+					.map(statoTrasmissione -> {
+						statoTrasmissione.setStato_trasmissione(StatoTrasmissione.ALL);
+						return statoTrasmissione;
+					}).map(OggettoBulk.class::cast).orElse(null));
+		} catch (BusinessProcessException e) {
+			return handleException(context, e);
+		}
+		return super.doRicercaLibera(context);
 	}
 }
