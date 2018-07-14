@@ -208,14 +208,18 @@ public class FirmaDigitaleDocContAction extends SelezionatoreListaAction {
 	public Forward doRicercaLibera(ActionContext context) {
 		AbstractFirmaDigitaleDocContBP bp = (AbstractFirmaDigitaleDocContBP)context.getBusinessProcess();
 		try {
-			bp.setModel(context, Optional.ofNullable(bp.getModel())
-					.filter(StatoTrasmissione.class::isInstance)
-					.map(StatoTrasmissione.class::cast)
-					.map(statoTrasmissione -> {
-						statoTrasmissione.setStato_trasmissione(StatoTrasmissione.ALL);
-						return statoTrasmissione;
-					}).map(OggettoBulk.class::cast).orElse(null));
-		} catch (BusinessProcessException e) {
+            Optional<StatoTrasmissione> statoTrasmissione = Optional.ofNullable(bp.getModel())
+                    .filter(StatoTrasmissione.class::isInstance)
+                    .map(StatoTrasmissione.class::cast);
+            if (statoTrasmissione.isPresent()) {
+                bp.setModel(context, statoTrasmissione
+                        .map(stato -> {
+                            stato.setStato_trasmissione(StatoTrasmissione.ALL);
+                            return statoTrasmissione;
+                        }).map(OggettoBulk.class::cast).orElse(null));
+                bp.setColumnSet(context, statoTrasmissione.get().getStato_trasmissione());
+            }
+        } catch (BusinessProcessException e) {
 			return handleException(context, e);
 		}
 		return super.doRicercaLibera(context);
