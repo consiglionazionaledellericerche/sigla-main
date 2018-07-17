@@ -161,7 +161,6 @@ public class LiquidazioneCoriF24EPBP extends it.cnr.jada.util.action.Selezionato
             // estrarli per popolare la tabella definitiva
             AnagraficoBulk ente = ((Liquid_coriComponentSession) createComponentSession()).getAnagraficoEnte(context.getUserContext());
             java.util.List lista = null;
-            context.getUserContext().setTransactional(true);
             it.cnr.contab.cori00.docs.bulk.Liquid_coriBulk liquidazione = null;
             ((Liquid_coriComponentSession) createComponentSession()).eliminaPendenti_f24Tot(context.getUserContext());
             for (Iterator i = getSelectedElements(context).iterator(); i.hasNext(); ) {
