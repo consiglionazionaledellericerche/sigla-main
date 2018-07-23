@@ -114,6 +114,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	private BulkList<DocumentoEleDdtBulk> docEleDdtColl = new BulkList<DocumentoEleDdtBulk>();
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	private boolean attivoSplitPayment=false;
+	private boolean attivoSplitPaymentProf=false;
 	private boolean abilitato=false;
 	private boolean RODocumento=true;
 
@@ -647,5 +648,22 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	public void setRODocumento(boolean rODocumento) {
 		RODocumento = rODocumento;
 	}
+	public void setAttivoSplitPaymentProf(boolean attivoSplitPayment) {
+		this.attivoSplitPaymentProf = attivoSplitPayment;
+	}
 	
+	public boolean isAttivoSplitPaymentProf() {
+		return attivoSplitPaymentProf;
+	}
+	public boolean isDocumentoSplitPaymentProf() {
+		if (isAttivoSplitPaymentProf() && getDocEleIVAColl()!=null && !getDocEleIVAColl().isEmpty())
+			if(isAbilitato())
+			//se presente almeno una riga IVA con imposta valorizzata  esigibilita != 'S' (Split) ritorno false
+				return getDocEleIVAColl().stream().filter(e->e.getImposta()!=null && (e.getImposta().compareTo(BigDecimal.ZERO)!=0 ||e.getImposta().compareTo(BigDecimal.ZERO) <0)  && 
+													  (e.getEsigibilitaIva()==null || !e.getEsigibilitaIva().equals("S"))).count()==0;
+			else
+				return getDocEleIVAColl().stream().filter(e->e.getImposta()!=null && e.getImposta().compareTo(BigDecimal.ZERO)!=0 && 
+				  (e.getEsigibilitaIva()==null || !e.getEsigibilitaIva().equals("S"))).count()==0;
+		return false;
+	}
 }
