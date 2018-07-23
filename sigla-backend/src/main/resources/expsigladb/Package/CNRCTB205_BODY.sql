@@ -3281,6 +3281,7 @@ Dbms_Output.PUT_LINE ('K '||aListaMovimenti.COUNT);
 		select FL_LIQUIDAZIONE_DIFFERITA into fl_split
 		from fattura_attiva
 		where  
+		fattura_attiva.ti_fattura =  aDocTst.ti_fattura and
     fattura_attiva.esercizio = aDocTst.ESERCIZIO and
     fattura_attiva.cd_cds_origine = aDocTst.CD_CDS_ORIGINE and
     fattura_attiva.cd_uo_origine = aDocTst.CD_UO_ORIGINE and

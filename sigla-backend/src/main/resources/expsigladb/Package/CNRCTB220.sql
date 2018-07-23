@@ -185,8 +185,8 @@
 -- next_date -> Periodo di esecuzione
 -- aEs -> Esercizio
 -- aCdCds -> Cds da processare * = tutti cds
-
- procedure job_registraCogeCoan(job number, pg_exec number, next_date date, aEs number, aCdCds varchar2);
+-- aData Documenti presenti alla data
+ procedure job_registraCogeCoan(job number, pg_exec number, next_date date, aEs number, aCdCds varchar2, aData VARCHAR2);
 
 -- Job di registrazione COGE annullamento documenti di esercizi precedenti chiusi economiicamente
 -- definitivamente
