@@ -195,7 +195,7 @@
 	end if;
  end;
 
- procedure job_registraCogeCoan(job number, pg_exec number, next_date date, aEs number, aCdCds varchar2) is
+ procedure job_registraCogeCoan(job number, pg_exec number, next_date date, aEs number, aCdCds varchar2, aData VARCHAR2) is
   aStringa varchar2(4000);
   aTSNow date;
   aUser varchar2(20);
@@ -242,6 +242,7 @@
     ) loop
      for aTsta in (select * from V_DOC_AMM_COGE_TSTA where
            esercizio = aEs
+           and dt_registrazione <= nvl(to_date(aData,'dd/mm/yyyy'),dt_registrazione) 
    	   and cd_cds_origine = aCDS.cd_unita_organizzativa
 	   and cd_uo_origine = aUO.cd_unita_organizzativa
        and
@@ -302,7 +303,7 @@
                             sum(valore_iniziale) valore_iniziale,
                             sum(valore_ammortizzato) valore_ammortizzato,
                             stato_coge
-                     FROM   INVENTARIO_BENI inv,buono_carico_Scarico_Dett dett
+                     FROM   INVENTARIO_BENI inv,buono_carico_Scarico_Dett dett,buono_carico_scarico
                      WHERE  cd_cds 		  = aCDS.cd_unita_organizzativa AND
                             esercizio_carico_bene = aEs And
                             fl_migrato 		  = 'Y'  and
@@ -310,6 +311,11 @@
                             inv.nr_inventario 	  = dett.nr_inventario and
                             inv.progressivo   	  = dett.progressivo   and
                             inv.dacr             like dett.dacr        and
+                            buono_carico_scarico.pg_inventario = dett.pg_inventario  and
+        										buono_carico_scarico.ti_documento = dett.ti_documento and
+        										buono_carico_scarico.esercizio = dett.esercizio and
+        										buono_carico_scarico.pg_buono_c_s = dett.pg_buono_c_s  and
+                            buono_carico_scarico.data_registrazione <= nvl(to_date(aData,'dd/mm/yyyy'),buono_carico_scarico.data_registrazione)  and
                             Stato_coge in(CNRCTB100.STATO_COEP_DA_RIP,CNRCTB100.STATO_COEP_INI)
                      GROUP BY cd_unita_organizzativa, cd_categoria_gruppo,stato_coge
                      ORDER BY cd_unita_organizzativa, cd_categoria_gruppo,stato_coge
@@ -362,7 +368,12 @@
      for aBS in (select * from buono_carico_scarico_dett bcs where
                      esercizio = aEs
 				 and pg_inventario = aInv.pg_inventario
-				 and ti_documento = 'S'
+				 and ti_documento = 'S' and
+				 ( bcs.pg_inventario,bcs.ti_documento,bcs.esercizio,bcs.pg_buono_c_s) in
+				 (select buono_carico_scarico.pg_inventario ,buono_carico_scarico.ti_documento ,buono_carico_scarico.esercizio,buono_carico_scarico.pg_buono_c_s 
+				 from buono_carico_scarico
+          where 
+             buono_carico_scarico.data_registrazione <= nvl(to_date(aData,'dd/mm/yyyy'),buono_carico_scarico.data_registrazione))
 				 and (stato_coge in (CNRCTB100.STATO_COEP_INI,CNRCTB100.STATO_COEP_DA_RIP) Or
 				      stato_coge_quote in (CNRCTB100.STATO_COEP_INI,CNRCTB100.STATO_COEP_DA_RIP))
      ) loop
@@ -399,7 +410,12 @@
      for aBS in (select * from buono_carico_scarico_dett bcs where
                      esercizio = aEs
 				 and pg_inventario = aInv.pg_inventario
-				 and ti_documento = 'C'
+				 and ti_documento = 'C' and
+				  ( bcs.pg_inventario,bcs.ti_documento,bcs.esercizio,bcs.pg_buono_c_s) in
+				 (select buono_carico_scarico.pg_inventario ,buono_carico_scarico.ti_documento ,buono_carico_scarico.esercizio,buono_carico_scarico.pg_buono_c_s 
+				 from buono_carico_scarico
+          where 
+             buono_carico_scarico.data_registrazione <= nvl(to_date(aData,'dd/mm/yyyy'),buono_carico_scarico.data_registrazione))
 				 and stato_coge in (CNRCTB100.STATO_COEP_INI,CNRCTB100.STATO_COEP_DA_RIP)
      ) loop
       BEGIN
@@ -436,9 +452,10 @@
     for aTstaUlt in (select * from V_DOC_ULT_COGE_TSTA where
          esercizio = aEs
      and cd_cds_origine = aCDS.cd_unita_organizzativa
-     and stato in (CNRCTB038.STATO_AUT_ESI,CNRCTB038.STATO_AUT_ANN)
+     and ((stato in (CNRCTB038.STATO_AUT_ANN) and DT_EMISSIONE_DOCUMENTO_CONT <= nvl(to_date(aData,'dd/mm/yyyy'),DT_EMISSIONE_DOCUMENTO_CONT))     
+     or   (stato in (CNRCTB038.STATO_AUT_ESI) and DT_ESITO_DOCUMENTO_CONT <= nvl(to_date(aData,'dd/mm/yyyy'),DT_ESITO_DOCUMENTO_CONT))) 
      and stato_coge in (CNRCTB100.STATO_COEP_INI, CNRCTB100.STATO_COEP_DA_RIP)
-	 and cd_tipo_documento_cont in (CNRCTB018.TI_DOC_MAN,CNRCTB018.TI_DOC_REV)
+	   and cd_tipo_documento_cont in (CNRCTB018.TI_DOC_MAN,CNRCTB018.TI_DOC_REV)
     ) loop
      BEGIN
    	  CNRCTB205.regDocPagCoge(aTstaUlt, aUser, sysdate);
