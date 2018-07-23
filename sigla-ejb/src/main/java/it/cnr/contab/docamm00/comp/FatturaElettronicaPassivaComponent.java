@@ -50,6 +50,7 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.SendMail;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.SoggettoEmittenteType;
 
 import java.io.IOException;
@@ -82,6 +83,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 			boolean hasAccesso = ((it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")).controllaAccesso(usercontext, "AMMFATTURDOCSFATPASA");
 			documentoEleTestata.setAbilitato(hasAccesso);
 			documentoEleTestata.setAttivoSplitPayment(Utility.createFatturaPassivaComponentSession().isAttivoSplitPayment(usercontext, documentoEleTestata.getDataDocumento()));
+			
 			documentoEleTestata.setDocEleLineaColl(new BulkList<DocumentoEleLineaBulk>(
 					getHome(usercontext, DocumentoEleLineaBulk.class).find(new DocumentoEleLineaBulk(documentoEleTestata))));
 			documentoEleTestata.setDocEleIVAColl(new BulkList<DocumentoEleIvaBulk>(
@@ -96,6 +98,13 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 					getHome(usercontext, DocumentoEleAcquistoBulk.class).find(new DocumentoEleAcquistoBulk(documentoEleTestata))));
 			documentoEleTestata.setDocEleDdtColl(new BulkList<DocumentoEleDdtBulk>(
 					getHome(usercontext, DocumentoEleDdtBulk.class).find(new DocumentoEleDdtBulk(documentoEleTestata))));
+			if ((documentoEleTestata.getDocEleTributiColl()!=null && !documentoEleTestata.getDocEleTributiColl().isEmpty()) 
+					||(documentoEleTestata.getDocumentoEleTrasmissione().getRegimefiscale()!= null && 
+					(documentoEleTestata.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_02.name()) ||
+							documentoEleTestata.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_19.name()))))
+					{
+						documentoEleTestata.setAttivoSplitPaymentProf(Utility.createFatturaPassivaComponentSession().isAttivoSplitPaymentProf(usercontext, documentoEleTestata.getDataDocumento()));
+					}	
 			getHomeCache(usercontext).fetchAll(usercontext);
 		} catch (RemoteException | PersistencyException e) {
 			throw handleException(e);

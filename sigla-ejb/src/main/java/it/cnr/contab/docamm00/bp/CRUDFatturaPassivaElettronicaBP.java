@@ -75,7 +75,10 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	private Unita_organizzativaBulk uoScrivania;
 	private boolean esercizioAperto;
 	private Date dataAttivazioneSplit;
-
+	private Date dataDisattivazioneSplit;
+	private Date dataAttivazioneSplitProf;
+	private Date dataDisattivazioneSplitProf;
+	
 	public CRUDFatturaPassivaElettronicaBP() {
 		super();
 	}
@@ -176,6 +179,10 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				tipoIntegrazioneSDI = TipoIntegrazioneSDI.valueOf(integrazioneSDI); 
 			setEsercizioAperto(((it.cnr.contab.config00.ejb.EsercizioComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_EsercizioComponentSession",	EsercizioComponentSession.class)).isEsercizioAperto(actioncontext.getUserContext()));
 			dataAttivazioneSplit = Utility.createConfigurazioneCnrComponentSession().getDt01(actioncontext.getUserContext(), new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA);
+			dataDisattivazioneSplit = Utility.createConfigurazioneCnrComponentSession().getDt02(actioncontext.getUserContext(), new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA);
+			dataAttivazioneSplitProf = Utility.createConfigurazioneCnrComponentSession().getDt01(actioncontext.getUserContext(), new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA_PROF);
+			dataDisattivazioneSplitProf = Utility.createConfigurazioneCnrComponentSession().getDt02(actioncontext.getUserContext(), new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA_PROF);
+			
 		} catch (ComponentException e) {
 			throw handleException(e);
 		} catch (RemoteException e) {
@@ -654,5 +661,29 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	
 	public Date getDataAttivazioneSplit() {
 		return dataAttivazioneSplit;
+	}
+
+	public Date getDataDisattivazioneSplit() {
+		return dataDisattivazioneSplit;
+	}
+
+	public void setDataDisattivazioneSplit(Date dataDisattivazioneSplit) {
+		this.dataDisattivazioneSplit = dataDisattivazioneSplit;
+	}
+
+	public Date getDataAttivazioneSplitProf() {
+		return dataAttivazioneSplitProf;
+	}
+
+	public void setDataAttivazioneSplitProf(Date dataAttivazioneSplitProf) {
+		this.dataAttivazioneSplitProf = dataAttivazioneSplitProf;
+	}
+
+	public Date getDataDisattivazioneSplitProf() {
+		return dataDisattivazioneSplitProf;
+	}
+
+	public void setDataDisattivazioneSplitProf(Date dataDisattivazioneSplitProf) {
+		this.dataDisattivazioneSplitProf = dataDisattivazioneSplitProf;
 	}
 }

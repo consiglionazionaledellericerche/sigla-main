@@ -236,18 +236,40 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 				fatturaPassivaElettronicaBP.setMessage("Prima di procedere verificare il totale del documento!");
 				return context.findDefaultForward();
 			} else if (!bulk.getDocEleIVAColl().isEmpty()){
+				
 				for(Iterator i=bulk.getDocEleIVAColl().iterator();i.hasNext();)
 			    {
 			      DocumentoEleIvaBulk rigaEle=(DocumentoEleIvaBulk)i.next();
-			      if (!bulk.isAttivoSplitPayment() && rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0) {
-			    	  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-			    	  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA non deve essere di tipo 'Differita' "
+			      // prof
+				  if ((bulk.getDocEleTributiColl()!=null && !bulk.getDocEleTributiColl().isEmpty()) 
+							||(bulk.getDocumentoEleTrasmissione().getRegimefiscale()!= null && 
+							(bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_02.name()) ||
+									bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_19.name())))) {
+					  if (!bulk.isAttivoSplitPaymentProf() && (rigaEle.getImposta()!=null && rigaEle.getImposta().compareTo(BigDecimal.ZERO)!=0) && 
+						   rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0) {
+				    	  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+				    	  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA non deve essere di tipo 'Differita' "
+				    	  		+ "o 'Split Payment'"
+				    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplitProf()!=null?
+				    	  			" per documenti con data emissione antecedente al "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplitProf()):"")
+				    	  		+(fatturaPassivaElettronicaBP.getDataDisattivazioneSplitProf()!=null? 
+				    	  			" o successiva al "+sdf.format(fatturaPassivaElettronicaBP.getDataDisattivazioneSplitProf()):"")
+				    	  		+ ". Il documento deve essere rifiutato!");	
+				    	  return context.findDefaultForward();			    	  
+				      }
+				  }else{
+					if (!bulk.isAttivoSplitPayment() && rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0) {
+						  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+						  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA non deve essere di tipo 'Differita' "
 			    	  		+ "o 'Split Payment'"
 			    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
 			    	  			" per documenti con data emissione antecedente al "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"")
+			    	  		+(fatturaPassivaElettronicaBP.getDataDisattivazioneSplit()!=null? 
+			    	  			" o successiva al "+sdf.format(fatturaPassivaElettronicaBP.getDataDisattivazioneSplit()):"")
 			    	  		+ ". Il documento deve essere rifiutato!");	
 			    	  return context.findDefaultForward();			    	  
-			      }
+					  }
+				  }
 			      if (rigaEle.getImponibileImporto()!=null) 
 			    	  tot_riepilogo=tot_riepilogo.add(rigaEle.getImponibileImporto());
 			      if (rigaEle.getImposta()!=null)
@@ -260,27 +282,46 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 				}
 			}
 			boolean hasAccesso = ((it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")).controllaAccesso(context.getUserContext(), "AMMFATTURDOCSFATPASA");
-	        if (bulk.isAttivoSplitPayment()) {
-				if (!bulk.isDocumentoSplitPayment() && !Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO.equals(bulk.getTipoDocumentoSIGLA()) &&
-					!bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_12.name()) &&	
-					!bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_04.name())
-					&&   !hasAccesso ) {
-					java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-					fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA deve essere di tipo 'Split Payment'"
-			    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
-			    	  			" per documenti con data emissione dal "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"")
-							+ ". Il documento deve essere rifiutato!");	
-					return context.findDefaultForward();
+	      
+			if ((bulk.getDocEleTributiColl()!=null && !bulk.getDocEleTributiColl().isEmpty()) 
+					||(bulk.getDocumentoEleTrasmissione().getRegimefiscale()!= null && 
+					(bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_02.name()) ||
+							bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_19.name()))))
+					{
+					if (bulk.isAttivoSplitPaymentProf()) {
+						if (!bulk.isDocumentoSplitPaymentProf() && !Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO.equals(bulk.getTipoDocumentoSIGLA()) &&
+								!bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_12.name()) &&	
+								!bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_04.name())
+								&&   !hasAccesso 
+								) {
+							java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+							fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA deve essere di tipo 'Split Payment'"
+					    	  		+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplitProf()!=null?
+					    	  			" per documenti con data emissione dal "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplitProf()):"") 
+					    	  		+ (fatturaPassivaElettronicaBP.getDataDisattivazioneSplitProf()!=null?
+					    	  			" per documenti con data emissione al "+sdf.format(fatturaPassivaElettronicaBP.getDataDisattivazioneSplitProf()):"") 
+					    	  		+ ". Il documento deve essere rifiutato!");	
+							return context.findDefaultForward();
+						}
+					}
 				}
-//				else if ((bulk.getDocEleTributiColl()!=null && !bulk.getDocEleTributiColl().isEmpty()) 
-//						||(bulk.getDocumentoEleTrasmissione().getRegimefiscale()!= null && 
-//						(bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_02.name()) ||
-//								bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_19.name()))))
-//						{
-//						fatturaPassivaElettronicaBP.setMessage("La registrazione di documenti Split Payment legati a compensi è al momento sospesa "
-//								+ "in attesa di adeguamento alla relativa normativa!");	
-//						return context.findDefaultForward(); 
-//				}
+			else{		
+					if (bulk.isAttivoSplitPayment()) {
+							if (!bulk.isDocumentoSplitPayment() && !Fattura_passivaBulk.TIPO_NOTA_DI_CREDITO.equals(bulk.getTipoDocumentoSIGLA()) &&
+								!bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_12.name()) &&	
+								!bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_04.name())
+								&&   !hasAccesso 
+								) {
+								java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+								fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA deve essere di tipo 'Split Payment'"
+										+ (fatturaPassivaElettronicaBP.getDataAttivazioneSplit()!=null?
+							    	  			" per documenti con data emissione dal "+sdf.format(fatturaPassivaElettronicaBP.getDataAttivazioneSplit()):"") 
+							    	  		+ (fatturaPassivaElettronicaBP.getDataDisattivazioneSplit()!=null?
+							    	  			" per documenti con data emissione al "+sdf.format(fatturaPassivaElettronicaBP.getDataDisattivazioneSplit()):"") 
+							    	  		+ ". Il documento deve essere rifiutato!");	
+								return context.findDefaultForward();
+							}
+					}				
 			}
 			String message = "La compilazione della Fattura e il suo successivo salvataggio, ";
 			message += "comporta l'accettazione del documento elettronico.<br>Si desidera procedere?";
