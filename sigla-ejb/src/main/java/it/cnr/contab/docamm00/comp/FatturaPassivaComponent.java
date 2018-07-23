@@ -7399,6 +7399,23 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         }
 
     }
+    private Timestamp getDataFineSplitPayment(UserContext userContext) throws ComponentException {
+
+        try {
+
+            Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+                    .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+            return sess.getDt02(userContext, 0, null,
+                    Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA);
+
+        } catch (javax.ejb.EJBException ex) {
+            throw handleException(ex);
+        } catch (RemoteException ex) {
+            throw handleException(ex);
+        }
+
+    }
+
 
     public Fattura_passivaBulk valorizzaInfoDocEle(UserContext aUC, Fattura_passivaBulk fattura_passiva)
             throws ComponentException {
@@ -7821,8 +7838,11 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
     public boolean isAttivoSplitPayment(UserContext aUC, Timestamp dataFattura) throws ComponentException {
         Date dataInizio;
+        Date dataFine;
         try {
             dataInizio = Utility.createConfigurazioneCnrComponentSession().getDt01(aUC, new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA);
+            dataFine = Utility.createConfigurazioneCnrComponentSession().getDt02(aUC, new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA);
+            
         } catch (ComponentException e) {
             throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
         } catch (RemoteException e) {
@@ -7833,6 +7853,10 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (dataFattura == null || dataInizio == null || dataFattura.before(dataInizio)) {
             return false;
         }
+        if (dataFattura == null || ((dataFine != null) && dataFattura.after(dataFine))) {
+            return false;
+        }
+       
         return true;
     }
 
@@ -7960,4 +7984,60 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             throw handleException(ex);
         }
     }
+    public boolean isAttivoSplitPaymentProf(UserContext aUC, Timestamp dataFattura) throws ComponentException {
+        Date dataInizio;
+        Date dataFine;
+        try {
+            dataInizio = Utility.createConfigurazioneCnrComponentSession().getDt01(aUC, new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA_PROF);
+            dataFine = Utility.createConfigurazioneCnrComponentSession().getDt02(aUC, new Integer(0), null, Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA_PROF);
+            
+        } catch (ComponentException e) {
+            throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+        } catch (RemoteException e) {
+            throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+        } catch (EJBException e) {
+            throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
+        }
+        if (dataFattura == null || dataInizio == null || dataFattura.before(dataInizio)) {
+            return false;
+        }
+        if (dataFattura == null || ((dataFine != null) && dataFattura.after(dataFine))) {
+            return false;
+        }
+       
+        return true;
+    }
+    private Timestamp getDataInizioSplitPaymentProf(UserContext userContext) throws ComponentException {
+
+        try {
+
+            Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+                    .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+            return sess.getDt01(userContext, 0, null,
+                    Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA_PROF);
+
+        } catch (javax.ejb.EJBException ex) {
+            throw handleException(ex);
+        } catch (RemoteException ex) {
+            throw handleException(ex);
+        }
+
+    }
+    private Timestamp getDataFineSplitPaymentProf(UserContext userContext) throws ComponentException {
+
+        try {
+
+            Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+                    .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+            return sess.getDt02(userContext, 0, null,
+                    Configurazione_cnrBulk.PK_SPLIT_PAYMENT, Configurazione_cnrBulk.SK_PASSIVA_PROF);
+
+        } catch (javax.ejb.EJBException ex) {
+            throw handleException(ex);
+        } catch (RemoteException ex) {
+            throw handleException(ex);
+        }
+
+    }
+
 }

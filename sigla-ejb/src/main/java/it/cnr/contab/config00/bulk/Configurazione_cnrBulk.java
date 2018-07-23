@@ -57,6 +57,8 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String SK_TELEFONO_REFERENTE_TECNICO = "TELEFONO_REFERENTE_TECNICO";
 	public final static String SK_ATTIVA = "ATTIVA";
 	public final static String SK_PASSIVA = "PASSIVA";
+	public final static String SK_PASSIVA_PROF = "PASSIVA_PROF";
+	
 
 	public final static String PK_CODICE_SIOPE_DEFAULT = "CODICE_SIOPE_DEFAULT";
 	public final static String SK_MANDATO_ACCREDITAMENTO = "MANDATO_ACCREDITAMENTO";
