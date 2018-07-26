@@ -65,9 +65,16 @@ public class OfflineReportComponent extends GenericComponent implements
 					if (!rs.next())
 						throw new ApplicationException(
 								"La stampa non è stata configurata correttamente. Avvisare il supporto tecnico.");
-					print_spooler.setPrioritaServer(new Integer(rs.getInt(1)));
-					print_spooler.setUser(userContext.getUser());
-					print_spooler.setPriorita(new Integer(0));
+					if (print_spooler.getIntervallo() != null && print_spooler.getTiIntervallo() != null) {
+                        /**
+                         * Per le stampe schedulate viene impostata un priorità fissa a 4
+                         */
+                        print_spooler.setPrioritaServer(4);
+                    } else {
+                        print_spooler.setPrioritaServer(new Integer(rs.getInt(1)));
+                    }
+                    print_spooler.setUser(userContext.getUser());
+                    print_spooler.setPriorita(new Integer(0));
 					print_spooler.setDsStampa(rs.getString(2));
 					print_spooler.setStato(print_spooler.STATO_IN_CODA);
 					print_spooler.setDtProssimaEsecuzione(print_spooler
