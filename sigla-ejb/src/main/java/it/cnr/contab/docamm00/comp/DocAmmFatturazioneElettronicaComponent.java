@@ -494,7 +494,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					HashMap<Fattura_attivaBulk, HashMap<ContrattoBulk, List<Integer>>> mappaDocumentiCollegati = new HashMap<Fattura_attivaBulk, HashMap<ContrattoBulk, List<Integer>>>();
 					for (Iterator<Fattura_attiva_rigaBulk> i= dettaglio.iterator(); i.hasNext();) {
 						Fattura_attiva_rigaBulk riga= (Fattura_attiva_rigaBulk) i.next();
-						if (!esisteBollo || !isRigaFatturaConBollo(userContext, riga)){
+//						if (!esisteBollo || !isRigaFatturaConBollo(userContext, riga)){
 							DettaglioLineeType rigaFattura = factory.createDettaglioLineeType();
 							rigaFattura.setNumeroLinea(riga.getProgressivo_riga().intValue());
 							if (riga.getDs_riga_fattura() != null){
@@ -522,7 +522,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 							}
 							preparaDatiContratto(userContext, mappaContratti, riga);
 							impostaDatiPerRiepilogoDatiIva(listaRiepilogo, riga);
-						}
+//						}
 					}
 					datiBeniServizi.getDettaglioLinee().addAll(listaDettagli);
 
