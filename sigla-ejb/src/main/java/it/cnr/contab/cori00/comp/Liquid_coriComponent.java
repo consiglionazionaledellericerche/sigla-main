@@ -947,7 +947,7 @@ public class Liquid_coriComponent extends it.cnr.jada.comp.CRUDDetailComponent
                 for (Iterator i = lista.iterator(); i.hasNext(); ) {
                     F24ep_tempTotBulk F24ep_temp = (F24ep_tempTotBulk) i.next();
                     F24ep_temp.setToBeDeleted();
-                    home.delete(F24ep_temp, userContext);
+                	((CRUDComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession",it.cnr.jada.ejb.CRUDComponentSession.class)).eliminaConBulk(userContext,F24ep_temp);
                 }
             }
 
@@ -980,13 +980,17 @@ public class Liquid_coriComponent extends it.cnr.jada.comp.CRUDDetailComponent
                 new_F24ep_temp.setPeriodo_da(F24ep_temp.getPeriodo_da());
                 new_F24ep_temp.setPeriodo_a(F24ep_temp.getPeriodo_a());
                 new_F24ep_temp.setToBeCreated();
-                home.insert(new_F24ep_temp, userContext);
+            	((CRUDComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession",it.cnr.jada.ejb.CRUDComponentSession.class)).creaConBulk(userContext,new_F24ep_temp);	
+            	
             }
         } catch (PersistencyException e) {
             handleException(e);
         } catch (EJBException e) {
             handleException(e);
-        }
+        } catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public String getSedeInpsF24(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
