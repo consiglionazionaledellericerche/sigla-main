@@ -728,7 +728,8 @@ public Forward doCalcolaTotalePerAccertamento(ActionContext context, Accertament
 				ndC.setImportoTotalePerAccertamenti(
 						calcolaTotaleSelezionati(
 							(java.util.List)ndC.getAccertamentiHash().get(accertamento),
-							ndC.quadraturaInDeroga()));
+							(ndC.quadraturaInDeroga()||(ndC.getFl_split_payment() != null && ndC.getFl_split_payment()))));
+				
 			} catch (it.cnr.jada.comp.ApplicationException e) {
 				ndC.setImportoTotalePerAccertamenti(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
 			}
@@ -1913,7 +1914,7 @@ private Forward basicDoRicercaAccertamento(
 	            new Filtro_ricerca_accertamentiVBulk();
 	        filtro.setData_scadenziario(nc.getDt_scadenza());
 	        filtro.setCliente(nc.getFornitore());
-	        filtro.setIm_importo(calcolaTotaleSelezionati(models,nc.quadraturaInDeroga()));
+	        filtro.setIm_importo(calcolaTotaleSelezionati(models,(nc.quadraturaInDeroga()||(nc.getFl_split_payment() != null && nc.getFl_split_payment()))));
 	        //filtro.setCd_unita_organizzativa(nc.getCd_unita_organizzativa());
 	        filtro.setCd_uo_origine(nc.getCd_uo_origine());
 	        filtro.setHasDocumentoCompetenzaCOGEInAnnoPrecedente(nc.hasCompetenzaCOGEInAnnoPrecedente());
