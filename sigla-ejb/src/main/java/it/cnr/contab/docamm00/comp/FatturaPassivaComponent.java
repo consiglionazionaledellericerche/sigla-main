@@ -156,7 +156,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                     scadenza.setIm_associato_doc_amm(
                             calcolaTotalePer(
                                     (java.util.List) newAccertamentiHash.get(scadenza),
-                                    notaDiCredito.quadraturaInDeroga()));
+                                    (notaDiCredito.quadraturaInDeroga()||(notaDiCredito.getFl_split_payment() != null && notaDiCredito.getFl_split_payment()))));
                     updateImportoAssociatoDocAmm(userContext, scadenza);
                 }
             }
@@ -1495,7 +1495,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
             throws it.cnr.jada.comp.ComponentException {
 
         Vector dettagli = (Vector) notaDiCredito.getAccertamentiHash().get(scadenza);
-        return calcolaTotalePer(dettagli, notaDiCredito.quadraturaInDeroga());
+        return calcolaTotalePer(dettagli,(notaDiCredito.quadraturaInDeroga()||(notaDiCredito.getFl_split_payment() != null && notaDiCredito.getFl_split_payment())));
     }
 //^^@@
 
@@ -5019,7 +5019,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                         scadenza,
                         calcolaTotalePer(
                                 (Vector) notaDiCredito.getAccertamenti_scadenzarioHash().get(scadenza),
-                                notaDiCredito.quadraturaInDeroga()));
+                                (notaDiCredito.quadraturaInDeroga()||(notaDiCredito.getFl_split_payment() != null && notaDiCredito.getFl_split_payment()))));
             }
         }
 
