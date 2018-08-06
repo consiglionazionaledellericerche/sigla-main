@@ -1881,10 +1881,11 @@ public class CRUDDistintaCassiereBP extends
 			Apparence apparence = new Apparence(null, "Rome", "Firma ",
 					"per invio all'Istituto cassiere\nFirmato dal "
 							+ getTitolo() + "\n" + subjectDN.get("GIVENNAME")
-							+ " " + subjectDN.get("SURNAME"), 300, 40, 1, 550,
-					80);
+							+ " " + subjectDN.get("SURNAME"),
+							400, 120, 1, 550,80);  
+							//300, 40,  1, 550, 80);
 			pdfSignApparence.setApparence(apparence);
-			try {
+			try { 
 				documentiContabiliService.signDocuments(pdfSignApparence, "service/sigla/firma/doccont");
 			} catch (StorageException _ex) {
 				throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
