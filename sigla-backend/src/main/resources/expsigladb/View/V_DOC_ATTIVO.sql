@@ -182,7 +182,7 @@ SELECT A.cd_cds,
        A.cd_modalita_pag_uo_cds,
        B.im_imponibile,
        B.im_iva,
-       (B.im_imponibile + B.im_iva),
+       decode(a.fl_split_payment,'Y',B.im_imponibile,(B.im_imponibile + B.im_iva)),
        DECODE(A.FL_CONGELATA, 'Y', 'N', 'Y') --'Y'
 FROM   FATTURA_PASSIVA A,
        FATTURA_PASSIVA_RIGA B
