@@ -4338,7 +4338,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         try {
             BulkList<Fattura_passiva_rigaBulk> dettagli = new BulkList(findDettagli(aUC, fattura_passiva));
             fattura_passiva.setFattura_passiva_dettColl(dettagli);
-            fattura_passiva.setFatturaRigaOrdiniHash(new FatturaRigaOrdiniTable(
+            /*fattura_passiva.setFatturaRigaOrdiniHash(new FatturaRigaOrdiniTable(
                     dettagli.stream().collect(Collectors.toMap(fattura_passiva_rigaBulk -> fattura_passiva_rigaBulk,
                         fattura_passiva_rigaBulk -> {
                             try {
@@ -4352,7 +4352,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                             } catch (ComponentException | PersistencyException | IntrospectionException e) {
                                 throw new DetailedRuntimeException(e);
                             }
-                        }))));
+                        }))));*/
             completeWithCondizioneConsegna(aUC, fattura_passiva);
             completeWithModalitaTrasporto(aUC, fattura_passiva);
             completeWithModalitaIncasso(aUC, fattura_passiva);
