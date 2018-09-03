@@ -637,7 +637,7 @@ Dbms_Output.put_line ('buildMovPrinc '||Nvl(aContoEp.CD_VOCE_EP, 'NULLO'));
 --                 ECONOMICA DEVONO APPARTENERE ALL'ESERCIZIO
 
 If (CNRCTB204.getCompetenzaFuoriEsercizio(aDocTst) Or CNRCTB204.getCompetenzaacavalloconEsPrec(aDocTst)) And
-    Not CNRCTB008.ISESERCIZIOAPERTOSenzaBlocco(aDocTst.esercizio - 1, aDocTst.cd_cds_origine) Then
+	  Not CNRCTB008.ISESERCIZIOAPERTOSenzaBlocco(aDocTst.esercizio - 1, aDocTst.cd_cds_origine) Then
 
     If To_Char(aDoc.dt_da_competenza_coge, 'YYYY') < aDocTst.esercizio Then
         DA_COMP := To_Date('0101'||aDocTst.esercizio, 'DDMMYYYY');
@@ -3073,6 +3073,7 @@ Savepoint CNRCTB205_SP_001;
 -- SE LA COMPETENZA E' COMPLETAMENTE FUORI ESERCIZIO/A CAVALLO ED IN PIU' L'ESERCIZIO PRECEDENTE E' APERTO
 
 If (CNRCTB204.getCompetenzaFuoriEsercizio(aDocTst) Or  CNRCTB204.getCompetenzaacavalloconEsPrec(aDocTst)) And
+	  NOT (CNRCTB200.ISCHIUSURACOEPDEF(aDocTst.esercizio - 1, aDocTst.cd_cds_origine)='Y')    AND
     CNRCTB008.ISESERCIZIOAPERTOSenzaBlocco(aDocTst.esercizio - 1, aDocTst.cd_cds_origine) Then
 
   Dbms_Output.PUT_LINE ('fuori o a cavallo');
@@ -3424,6 +3425,7 @@ aScrittura := CNRCTB204.buildScrPEP(aDocTst, aCDoc.cd_terzo, aUser, aTSNow);
   -- la scrittura appena fatta in es. precedente (la relativa frazione) ed emette la scrittura
 
 If (CNRCTB204.getCompetenzaFuoriEsercizio(aDocTst) Or CNRCTB204.getCompetenzaacavalloconEsPrec(aDocTst)) And
+		NOT (CNRCTB200.ISCHIUSURACOEPDEF(aDocTst.esercizio - 1, aDocTst.cd_cds_origine)='Y')    AND
     CNRCTB008.ISESERCIZIOAPERTOSenzaBlocco(aDocTst.esercizio - 1, aDocTst.cd_cds_origine) Then
 
    -- prima di chiamare la procedura che inserisce devo modificare gli importi del cursore
