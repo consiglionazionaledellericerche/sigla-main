@@ -171,9 +171,9 @@ public class EvasioneOrdineComponent extends it.cnr.jada.comp.CRUDComponent impl
 					throw new DetailedRuntimeException("Per la consegna "+obj.getConsegnaOrdineString()+" è necessario indicare se sdoppiare la riga o evaderla forzatamente");
 			});
 	
-	        final Map<OrdineAcqBulk, Map<OrdineAcqRigaBulk, List<OrdineAcqConsegnaBulk>>> mapOrdine =
-	       		selectedElements.get().collect(Collectors.groupingBy(o -> o.getOrdineAcqRiga().getOrdineAcq(),
-		        					Collectors.groupingBy(o -> o.getOrdineAcqRiga())));
+	        final Map<OrdineAcqBulk, Map<OrdineAcqRigaBulk, List<OrdineAcqConsegnaBulk>>> mapOrdine =null;
+	       		//selectedElements.get().collect(Collectors.groupingBy(o -> o.getOrdineAcqRiga().getOrdineAcq(),
+		        	//				Collectors.groupingBy(o -> o.getOrdineAcqRiga())));
 	
 	        mapOrdine.keySet().stream().forEach(ordine->{
 				try {
