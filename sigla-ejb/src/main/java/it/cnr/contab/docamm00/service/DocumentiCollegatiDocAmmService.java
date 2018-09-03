@@ -294,7 +294,7 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
     }
 
     public List<AllegatoGenericoBulk> getAllegatiDocumentiAmministrativi(Mandato_rigaBulk mandato_rigaBulk) {
-        return Optional.ofNullable(mandato_rigaBulk)
+        return null;/*Optional.ofNullable(mandato_rigaBulk)
                 .filter(Mandato_rigaIBulk.class::isInstance)
                 .map(Mandato_rigaIBulk.class::cast)
                 .map(mandato_rigaIBulk -> {
@@ -353,7 +353,7 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
                     } catch (ComponentException | RemoteException e) {
                         return new ArrayList<AllegatoGenericoBulk>();
                     }
-                }).orElseGet(() -> new ArrayList<AllegatoGenericoBulk>());
+                }).orElseGet(() -> new ArrayList<AllegatoGenericoBulk>());*/
     }
 
     private StorageObject caricaFatturaPDF(AllegatoStorePath allegatoStorePath, String storePath, StorageObject storageObject) {
