@@ -2,7 +2,10 @@ package it.cnr.contab.anagraf00.core.bulk;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.action.CRUDBP;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,7 @@ public class TerzoBulk extends TerzoBase {
 	private BulkList telefoni           = new BulkList();
 	private BulkList fax                = new BulkList();
 	private BulkList email              = new BulkList();
+	private BulkList pec                = new BulkList();
 	private BulkList contatti           = new BulkList();
 	private BulkList banche             = new BulkList();
 	private BulkList modalita_pagamento = new BulkList();
@@ -78,7 +82,7 @@ public TerzoBulk(java.lang.Integer cd_terzo) {
  * Metodo per l'aggiunta di un elemento <code>BancaBulk</code> alla <code>BulkList</code>
  * delle banche relative al terzo.
  *
- * @param banca Banca da aggiungere.
+ * @param banca Banca da aggiungere. 
  *
  * @return la posizione nella lista
  *
@@ -147,9 +151,71 @@ public int addToBanche(BancaBulk banca) {
 
 	public int addToEmail(TelefonoBulk telefono) {
 		telefono.setTi_riferimento(TelefonoBulk.EMAIL);
+		telefono.setFattElettronica(false);
 		telefono.setTerzo(this);
 		email.add(telefono);
 		return email.size()-1;
+	}
+	public int addToPec(TelefonoBulk telefono) {
+		telefono.setTi_riferimento(TelefonoBulk.PEC);
+		telefono.setFattElettronica(false);
+		telefono.setTerzo(this);
+		pec.add(telefono);
+		return pec.size()-1;
+	}
+
+	public Boolean esistePecFatturazioneElettronica() {
+		if (getPecFatturazioneElettronica() != null){
+			return true;
+		}
+		
+		return false;
+	}
+	public Boolean inseriteDiversePecFatturazioneElettronica() {
+		Boolean esistePec = false;
+		for (java.util.Iterator i = pec.iterator(); i.hasNext();){
+			TelefonoBulk emailPec = (TelefonoBulk)i.next();
+			if (emailPec.getFattElettronica()){
+				if (!esistePec){
+					esistePec = true;
+				} else {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	public Boolean inseriteDiverseMailFatturazioneElettronica() {
+		Boolean esisteMail = false;
+		for (java.util.Iterator i = email.iterator(); i.hasNext();){
+			TelefonoBulk email = (TelefonoBulk)i.next();
+			if (email.getFattElettronica()){
+				if (!esisteMail){
+					esisteMail = true;
+				} else {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	public TelefonoBulk getPecFatturazioneElettronica() {
+		for (java.util.Iterator i = pec.iterator(); i.hasNext();){
+			TelefonoBulk emailPec = (TelefonoBulk)i.next();
+			if (emailPec.getFattElettronica())
+				return emailPec;
+		}
+		
+		return null;
+	}
+	public TelefonoBulk getEmailFatturazioneElettronica() {
+		for (java.util.Iterator i = email.iterator(); i.hasNext();){
+			TelefonoBulk emailPec = (TelefonoBulk)i.next();
+			if (emailPec.getFattElettronica())
+				return emailPec;
+		}
+		
+		return null;
 	}
 	/**
 	 * Metodo per l'aggiunta di un elemento <code>TelefonoBulk</code> alla <code>BulkList</code>
@@ -164,6 +230,7 @@ public int addToBanche(BancaBulk banca) {
 
 	public int addToFax(TelefonoBulk telefono) {
 		telefono.setTi_riferimento(TelefonoBulk.FAX);
+		telefono.setFattElettronica(false);
 		telefono.setTerzo(this);
 		fax.add(telefono);
 		return fax.size()-1;
@@ -197,6 +264,7 @@ public int addToModalita_pagamento(Modalita_pagamentoBulk modalita_pagamento) {
 
 	public int addToTelefoni(TelefonoBulk telefono) {
 		telefono.setTi_riferimento(TelefonoBulk.TEL);
+		telefono.setFattElettronica(false);
 		telefono.setTerzo(this);
 		telefoni.add(telefono);
 		return telefoni.size()-1;
@@ -287,6 +355,7 @@ public java.util.Map getBanchePerTipoPagamento() {
 			telefoni,
 			fax,
 			email,
+			pec,
 			contatti,
 			banche,
 			termini_pagamento,
@@ -350,6 +419,9 @@ public java.lang.String getCd_unita_organizzativa() {
 
 	public it.cnr.jada.bulk.BulkList getEmail() {
 		return email;
+	}
+	public it.cnr.jada.bulk.BulkList getPec() {
+		return pec;
 	}
 	/**
 	 * Restituisce una <code>BulkList</code> contenente l'elenco dei Fax in
@@ -592,6 +664,9 @@ public BancaBulk removeFromBanche(int index) {
 	public TelefonoBulk removeFromEmail(int index) {
 		return (TelefonoBulk)email.remove(index);
 	}
+	public TelefonoBulk removeFromPec(int index) {
+		return (TelefonoBulk)pec.remove(index);
+	}
 	/**
 	 * Elimina il <code>TelefonoBulk</code> alla posizione index dalla lista
 	 * fax.
@@ -769,6 +844,9 @@ public void setDipendente(boolean newDipendente) {
 
 	public void setEmail(it.cnr.jada.bulk.BulkList newEmail) {
 		email = newEmail;
+	}
+	public void setPec(it.cnr.jada.bulk.BulkList newPec) {
+		pec = newPec;
 	}
 	/**
 	 * Imposta una <code>BulkList</code> contenente l'elenco dei Fax in

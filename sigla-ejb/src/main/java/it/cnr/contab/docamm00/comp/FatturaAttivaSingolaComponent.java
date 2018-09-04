@@ -41,6 +41,7 @@ import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.RemoveAccent;
@@ -52,6 +53,7 @@ import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -2111,10 +2113,24 @@ public class FatturaAttivaSingolaComponent
                                                        Fattura_attivaBulk fatturaAttiva, TerzoBulk terzo)
             throws ComponentException {
         if (isAttivaFatturazioneElettronica(aUC, terzo.getAnagrafico(), fatturaAttiva.getDt_registrazione())) {
+        	try {
+				terzo.setPec(new BulkList(((TerzoHome) getHome(aUC, TerzoBulk.class)).findTelefoni(terzo, TelefonoBulk.PEC)));
+	        	terzo.setEmail(new BulkList(((TerzoHome) getHome(aUC, TerzoBulk.class)).findTelefoni(terzo, TelefonoBulk.EMAIL)));
+			} catch (IntrospectionException | PersistencyException e) {
+				throw new ComponentException(e);
+			}
             controlloCodiceIpaValorizzato(terzo);
             fatturaAttiva.setCodiceUnivocoUfficioIpa(terzo.getCodiceUnivocoUfficioIpa());
+            fatturaAttiva.setCodiceDestinatarioFatt(terzo.getCodiceDestinatarioFatt());
+            fatturaAttiva.setPecFatturaElettronica(terzo.getPecFatturazioneElettronica() == null ? null : terzo.getPecFatturazioneElettronica().getRiferimento());
+            fatturaAttiva.setMailFatturaElettronica(terzo.getEmailFatturazioneElettronica() == null ? null : terzo.getEmailFatturazioneElettronica().getRiferimento());
+            fatturaAttiva.setFlFatturaElettronica(true);
         } else {
+            fatturaAttiva.setCodiceDestinatarioFatt(null);
+            fatturaAttiva.setPecFatturaElettronica(null);
+            fatturaAttiva.setMailFatturaElettronica(null);
             fatturaAttiva.setCodiceUnivocoUfficioIpa(null);
+            fatturaAttiva.setFlFatturaElettronica(false);
         }
     }
 
@@ -2580,11 +2596,16 @@ public class FatturaAttivaSingolaComponent
 
     private void controlloCodiceIpaValorizzato(TerzoBulk terzo)
             throws ApplicationException {
-        if (terzo.getCodiceUnivocoUfficioIpa() == null) {
+        if (terzo.getAnagrafico().isEntePubblico() && terzo.getCodiceUnivocoUfficioIpa() == null) {
             throw new it.cnr.jada.comp.ApplicationException(
                     "Il codice terzo utilizzato si riferisce ad un'anagrafica censita nell'indice delle " +
                             "pubbliche amministrazioni. Richiedere tramite helpdesk l'inserimento del codice Univoco Ufficio IPA " +
                             "relativo al terzo per il quale si sta tentando di emettere fattura.");
+        }
+        if (terzo.getAnagrafico().isPersonaGiuridica() && terzo.getCodiceDestinatarioFatt() == null && !terzo.esistePecFatturazioneElettronica() && !terzo.getFlSbloccoFatturaElettronica()) {
+            throw new it.cnr.jada.comp.ApplicationException(
+                    "Il codice terzo utilizzato si riferisce ad un'anagrafica che ha attiva la fatturazione elettronica." +
+                            "E' necessario indicare sul terzo il codice destinatario fattura o la pec per la fatturazione elettronica.");
         }
     }
 /*
@@ -6293,7 +6314,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
                 throw new FatturaNonTrovataException("Fattura non trovata!");
         }
         if (fatturaAttiva != null || ncAttiva != null) {
-            if ((fatturaAttiva != null && fatturaAttiva.getCodiceUnivocoUfficioIpa() != null) || (ncAttiva != null && ncAttiva.getCodiceUnivocoUfficioIpa() != null))
+            if ((fatturaAttiva != null && fatturaAttiva.isDocumentoFatturazioneElettronica()) || (ncAttiva != null && ncAttiva.isDocumentoFatturazioneElettronica()))
                 throw new GenerazioneReportException("Generazione Stampa non riuscita, documento elettronico");
             if ((fatturaAttiva != null && fatturaAttiva.getProtocollo_iva() != null) || (ncAttiva != null && ncAttiva.getProtocollo_iva() != null)) {
                 V_stm_paramin_ft_attivaHome home = (V_stm_paramin_ft_attivaHome) getHome(userContext, V_stm_paramin_ft_attivaBulk.class);
@@ -7348,6 +7369,10 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         notaDiCredito.setCaricaDatiPerFatturazioneElettronica(!isNotaEsterna);
         if (isNotaEsterna) {
             notaDiCredito.setCodiceUnivocoUfficioIpa(fa.getCodiceUnivocoUfficioIpa());
+            notaDiCredito.setFlFatturaElettronica(fa.getFlFatturaElettronica());
+            notaDiCredito.setPecFatturaElettronica(fa.getPecFatturaElettronica());
+            notaDiCredito.setMailFatturaElettronica(fa.getMailFatturaElettronica());
+            notaDiCredito.setCodiceDestinatarioFatt(fa.getCodiceDestinatarioFatt());
         }
         notaDiCredito.setDt_termine_creazione_docamm(notaDiCredito.getDt_termine_creazione_docamm());
 
@@ -7624,7 +7649,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
 
     public Fattura_attivaBulk aggiornaFatturaConsegnaSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, Date dataConsegnaSdi) throws PersistencyException, ComponentException, java.rmi.RemoteException {
         fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI);
-//	fatturaAttiva.setDtConsegnaSdi(dataConsegnaSdi!=null?new Timestamp(dataConsegnaSdi.getTime()):null);
+        fatturaAttiva.setDtRicezioneSdi(dataConsegnaSdi!=null?new Timestamp(dataConsegnaSdi.getTime()):null);
         fatturaAttiva.setToBeUpdated();
         updateBulk(userContext, fatturaAttiva);
         return fatturaAttiva;
@@ -7637,8 +7662,37 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         fattura.setToBeUpdated();
         updateBulk(userContext, fattura);
 
-        return fattura;
+    	gestioneEmailUtenteAvvisoFatturaElettronica(userContext, fattura);
+
+    	return fattura;
     }
+
+	public void gestioneEmailUtenteAvvisoFatturaElettronica(UserContext userContext, Fattura_attivaBulk fattura)
+			throws ComponentException {
+		String msg = "Si comunica che occorre inviare al cliente la fattura "+fattura.getCd_uo_origine()+"-"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()+".";
+    	String subject = "IMPORTANTE: Necessario inviare al cliente la fattura";
+
+    	if (fattura.isFatturaEstera() || (fattura.getCodiceDestinatarioFatt() == null && 
+    			fattura.getPecFatturaElettronica() == null)){
+    		String eMail = recuperoEmailUtente(userContext, fattura);
+    		if (eMail != null){
+    			List<String> list = new ArrayList<>();
+    			list.add(eMail);
+    			if (fattura.isFatturaEstera()){
+    				SendMail.sendMail(subject, msg, list);
+        		} else {
+        			if (fattura.getPartita_iva() == null){
+            			String msgPersonaFisica = msg+" Bisogna inoltre avvisarlo che può visualizzare la fattura elettronica nella sua area riservata del sito WEB dell'agenzia delle entrate.";
+        				SendMail.sendMail(subject, msgPersonaFisica, list);
+        			} else {
+        				msg = "Comunicare al cliente che la fattura elettronica "+fattura.getCd_uo_origine()+"-"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()+" si trova nella sua area riservata del sito WEB dell'agenzia delle entrate.";
+        				subject = "Necessario comunicare al cliente trasmissione fattura elettronica";
+        				SendMail.sendMail(subject, msg, list);
+        			}
+    			}
+    		}
+    	}
+	}
 
     public Fattura_attivaBulk aggiornaFatturaRicevutaConsegnaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceSdi, Calendar dataConsegnaSdi) throws PersistencyException, ComponentException, java.rmi.RemoteException {
         fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO);
@@ -7661,7 +7715,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
 
         SQLBuilder sql = home.createSQLBuilder();
 
-        sql.addSQLClause("AND", "CODICE_UNIVOCO_UFFICIO_IPA", sql.ISNOTNULL, null);
+        sql.addSQLClause("AND", "FL_FATTURA_ELETTRONICA", sql.EQUALS, "Y");
         sql.addSQLClause("AND", "CD_UO_ORIGINE", sql.EQUALS, unita_organizzativaBulk.getCd_unita_organizzativa());
         sql.addSQLClause("AND", "STATO_INVIO_SDI", sql.EQUALS, statoInvioSdi);
 
@@ -7815,4 +7869,109 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
             throw handleException(e1);
         }
     }
+
+
+	public String recuperoEmailUtente(UserContext aUC, Fattura_attivaBulk fatturaAttiva) throws ComponentException {
+		UtenteBulk utente = new UtenteBulk(fatturaAttiva.getUtcr());
+		try {
+		    utente = (UtenteBulk) getHome(aUC, UtenteBulk.class).findByPrimaryKey(utente);
+		    if (utente != null){
+		    	if (utente.getCd_utente_uid() != null){
+		    		return utente.getCd_utente_uid()+"@cnr.it";
+		    	}
+
+				String msg = "Si comunica che occorre inviare al cliente la fattura "+fatturaAttiva.getCd_uo_origine()+"-"+fatturaAttiva.getEsercizio()+"-"+fatturaAttiva.getPg_fattura_attiva()+".";
+		    	String subject = "Email utente non trovata IMPORTANTE: Necessario inviare al cliente la fattura";
+		        SendMail.sendErrorMail(subject, msg);
+		    }
+		} catch (PersistencyException e) {
+		    throw new ComponentException(e);
+		}
+		return null;
+	}
+	
+	public void gestioneAvvisoInvioMailFattureAttive(UserContext aUC) throws ComponentException {
+        Fattura_attiva_IHome home = (Fattura_attiva_IHome) getHome(aUC, Fattura_attiva_IBulk.class);
+
+        SQLBuilder sql = home.createSQLBuilder();
+        
+		Calendar cal = Calendar.getInstance();
+    	cal.setTime(new Date());
+    	cal.add(Calendar.DATE, -2);
+    	Timestamp dateOfSearch = new Timestamp(cal.getTimeInMillis());
+
+
+        sql.addSQLClause("AND", "FL_FATTURA_ELETTRONICA", sql.EQUALS, "Y");
+        sql.addSQLClause("AND", "STATO_INVIO_SDI", sql.EQUALS, Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI);
+        sql.addSQLClause("AND", "DT_RICEZIONE_SDI", sql.LESS_EQUALS, dateOfSearch);
+        sql.addSQLClause("AND", "CODICE_UNIVOCO_UFFICIO_IPA", sql.ISNULL,null);
+        sql.addSQLClause("AND", "PEC_FATTURA_ELETTRONICA", sql.ISNULL,null);
+        sql.addSQLClause("AND", "CODICE_DESTINATARIO_FATT", sql.ISNULL,null);
+        
+        List fatture;
+		try {
+			fatture = home.fetchAll(sql);
+	        for (Iterator i = fatture.iterator(); i.hasNext(); ) {
+	            Fattura_attiva_IBulk fatturaProtocollata = (Fattura_attiva_IBulk) i.next();
+	            invioMail(aUC, fatturaProtocollata);
+	        }
+        } catch (PersistencyException e) {
+            throw handleException(e);
+		}
+        
+        Nota_di_credito_attivaHome homeNc = (Nota_di_credito_attivaHome) getHome(aUC, Nota_di_credito_attivaBulk.class);
+
+        sql = homeNc.createSQLBuilder();
+        
+        sql.addSQLClause("AND", "FL_FATTURA_ELETTRONICA", sql.EQUALS, "Y");
+        sql.addSQLClause("AND", "STATO_INVIO_SDI", sql.EQUALS, Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI);
+        sql.addSQLClause("AND", "DT_RICEZIONE_SDI", sql.LESS_EQUALS, dateOfSearch);
+        sql.addSQLClause("AND", "CODICE_UNIVOCO_UFFICIO_IPA", sql.ISNULL,null);
+        sql.addSQLClause("AND", "PEC_FATTURA_ELETTRONICA", sql.ISNULL,null);
+        sql.addSQLClause("AND", "CODICE_DESTINATARIO_FATT", sql.ISNULL,null);
+        
+        List nc;
+		try {
+			nc = home.fetchAll(sql);
+	        for (Iterator i = nc.iterator(); i.hasNext(); ) {
+	            Nota_di_credito_attivaBulk fatturaProtocollata = (Nota_di_credito_attivaBulk) i.next();
+	            invioMail(aUC, fatturaProtocollata);
+	        }
+        } catch (PersistencyException e) {
+            throw handleException(e);
+		}
+        
+	}
+
+	public void invioMail(UserContext aUC, Fattura_attivaBulk fatturaProtocollata)
+			throws ComponentException, PersistencyException {
+		String msg = "Si comunica che occorre inviare al cliente la fattura "+fatturaProtocollata.getCd_uo_origine()+"-"+fatturaProtocollata.getEsercizio()+"-"+fatturaProtocollata.getPg_fattura_attiva()+".";
+		String subject = "IMPORTANTE: Necessario inviare al cliente la fattura";
+
+		if (fatturaProtocollata.isFatturaEstera() || (fatturaProtocollata.getCodiceDestinatarioFatt() == null && 
+				fatturaProtocollata.getPecFatturaElettronica() == null)){
+			String eMail = recuperoEmailUtente(aUC, fatturaProtocollata);
+			if (eMail != null){
+				List<String> list = new ArrayList<>();
+				list.add(eMail);
+				if (fatturaProtocollata.isFatturaEstera()){
+					SendMail.sendMail(subject, msg, list);
+				} else {
+					if (fatturaProtocollata.getPartita_iva() == null){
+		    			String msgPersonaFisica = msg+" Bisogna inoltre avvisarlo che può visualizzare la fattura elettronica nella sua area riservata del sito WEB dell'agenzia delle entrate.";
+						SendMail.sendMail(subject, msgPersonaFisica, list);
+					} else {
+						msg = "Comunicare al cliente che la fattura elettronica "+fatturaProtocollata.getCd_uo_origine()+"-"+fatturaProtocollata.getEsercizio()+"-"+fatturaProtocollata.getPg_fattura_attiva()+" si trova nella sua area riservata del sito WEB dell'agenzia delle entrate.";
+						subject = "Necessario comunicare al cliente trasmissione fattura elettronica";
+						SendMail.sendMail(subject, msg, list);
+					}
+				}
+			} else {
+				SendMail.sendErrorMail(subject, msg);
+			}
+		}
+		
+		fatturaProtocollata.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_AVVISO_NOTIFICA_INVIO_MAIL);
+		updateBulk(aUC, fatturaProtocollata);
+	}
 }

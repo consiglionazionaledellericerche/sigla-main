@@ -24,6 +24,7 @@ import it.cnr.contab.missioni00.docs.bulk.MissioneHome;
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
@@ -203,7 +204,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
 
     @SuppressWarnings("unchecked")
     public OggettoBulk creaConBulk(UserContext userContext, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
-        valorizzaDatiIpa(userContext, bulk);
+        valorizzaDatiFatturazioneElettronica(userContext, bulk);
         AnagraficoBulk anagrafico = (AnagraficoBulk) super.creaConBulk(userContext, bulk);
         creaDefaultTerzo(userContext, anagrafico);
         calcolaMontantePerPagamentoEsterno(userContext, anagrafico, true);
@@ -226,7 +227,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         return anagrafico;
     }
 
-    private void valorizzaDatiIpa(UserContext userContext, OggettoBulk bulk)
+    private void valorizzaDatiFatturazioneElettronica(UserContext userContext, OggettoBulk bulk)
             throws ComponentException {
         IpaServFattBulk ipa = recuperoDatiIpa(userContext, bulk);
         if (ipa != null) {
@@ -234,7 +235,20 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             ((AnagraficoBulk) bulk).setDataAvvioFattElettr(ipa.getDataAvvioSfe());
         } else {
             ((AnagraficoBulk) bulk).setCodiceAmministrazioneIpa(null);
-            ((AnagraficoBulk) bulk).setDataAvvioFattElettr(null);
+            if (((AnagraficoBulk) bulk).getDataAvvioFattElettr() == null){
+                if (((AnagraficoBulk) bulk).isItaliano()){
+                	try {
+                		((AnagraficoBulk) bulk).setDataAvvioFattElettr(Utility.createConfigurazioneCnrComponentSession().
+                				getDt01(userContext, CNRUserContext.getEsercizio(userContext), null,"FATTURAZIONE_ELETTRONICA", "INIZIO_TRA_PRIVATI"));
+                	} catch (RemoteException e) {
+                		throw handleException(e);
+                	} catch (javax.ejb.EJBException ex) {
+                		throw handleException(ex);
+                	}
+                } else {
+                    ((AnagraficoBulk) bulk).setDataAvvioFattElettr(null);
+                }
+            }
         }
     }
 
@@ -348,6 +362,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             terzo.setNumero_civico_sede(anagrafico.getNum_civico_fiscale());
             terzo.setCap_comune_sede(anagrafico.getCap_comune_fiscale());
             terzo.setCaps_comune(anagrafico.getCaps_comune());
+            terzo.setFlSbloccoFatturaElettronica(false);
             terzo.setAnagrafico(anagrafico);
             terzo.setUser(Optional.ofNullable(anagrafico.getUser()).orElseGet(() -> userContext.getUser()));
             insertBulk(userContext, terzo);
@@ -722,7 +737,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             try {
                 AnagraficoBulk anagraficoDB = (AnagraficoBulk) getHome(aUC, AnagraficoBulk.class).findByPrimaryKey(new AnagraficoBulk(anagrafico.getCd_anag()));
                 if ((anagraficoDB.getCodice_fiscale() != null && !anagraficoDB.getCodice_fiscale().equals(anagrafico.getCodice_fiscale())) || anagraficoDB.getCodice_fiscale() == null) {
-                    valorizzaDatiIpa(aUC, anagrafico);
+                    valorizzaDatiFatturazioneElettronica(aUC, anagrafico);
                 }
             } catch (PersistencyException e1) {
                 // TODO Auto-generated catch block
