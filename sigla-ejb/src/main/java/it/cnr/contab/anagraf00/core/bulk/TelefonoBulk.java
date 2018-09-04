@@ -13,6 +13,7 @@ public class TelefonoBulk extends TelefonoBase {
 
 	public static final String TEL   = "T";
 	public static final String EMAIL = "E";
+	public static final String PEC = "P";
 	public static final String FAX   = "F";
 	
 	private TerzoBulk terzo;
