@@ -2,6 +2,7 @@ package it.cnr.contab.docamm00.comp;
 
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
@@ -38,7 +39,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.soap.*;
 import javax.xml.ws.soap.SOAPFaultException;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Stateless
 @WebService(endpointInterface="it.gov.fatturapa.TrasmissioneFatture", 
@@ -223,6 +226,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 							if (fattura instanceof Fattura_attiva_IBulk){
 								Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
 								if (fatturaAttiva.getNotaCreditoAutomaticaGenerata() != null){
+									component.gestioneInvioMailNonRecapitabilita(userContext, fattura);
 									try{
 										SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
 									} catch (Exception ex) {

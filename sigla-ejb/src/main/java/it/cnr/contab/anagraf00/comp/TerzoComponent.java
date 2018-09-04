@@ -23,6 +23,7 @@ import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -36,8 +37,10 @@ import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.ReferentialIntegrityException;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.action.CRUDBP;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -157,6 +160,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
 	try {
 		TerzoBulk terzo = (TerzoBulk)super.inizializzaBulkPerInserimento(userContext,bulk);
 		TerzoHome home = (TerzoHome)getHome(userContext,terzo);
+		terzo.setFlSbloccoFatturaElettronica(false);
 		terzo.setRif_termini_pagamento_disponibili(new BulkList(home.findRif_termini_pagamento_disponibili(terzo)));
 		terzo.setTi_terzo(TerzoBulk.ENTRAMBI);
 		return terzo;
@@ -184,6 +188,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 		terzo.setBanche(new BulkList(home.findBanca(terzo)));
 		terzo.setTelefoni(new BulkList(home.findTelefoni(terzo,TelefonoBulk.TEL)));
 		terzo.setEmail(new BulkList(home.findTelefoni(terzo,TelefonoBulk.EMAIL)));
+		terzo.setPec(new BulkList(home.findTelefoni(terzo,TelefonoBulk.PEC)));
 		terzo.setFax(new BulkList(home.findTelefoni(terzo,TelefonoBulk.FAX)));
 		terzo.setTermini_pagamento(new BulkList(home.findTermini_pagamento(terzo)));
 		terzo.setModalita_pagamento(new BulkList(home.findModalita_pagamento(terzo)));
@@ -461,12 +466,35 @@ protected void validaCreaModificaConBulk(UserContext userContext,OggettoBulk bul
 
 		validaCreaModificaBanche(terzo);
 
+//		if (terzo.getAnagrafico() != null && terzo.getAnagrafico().isPersonaGiuridica() && !terzo.getAnagrafico().isEntePubblico() && terzo.getAnagrafico().getDataAvvioFattElettr() != null ){
+//			if (terzo.getAnagrafico().getDataAvvioFattElettr().before(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate())) {
+//				if (terzo.getCodiceDestinatarioFatt() == null && !terzo.esistePecFatturazioneElettronica() && !terzo.getFlSbloccoFatturaElettronica()){
+//					throw new ApplicationException("Dato che in anagrafico è avviata la fatturazione elettronica è necessario indicare il codice destinatario fattura o la pec");
+//				}
+//			}
+//		}
+				
+		if (terzo.inseriteDiverseMailFatturazioneElettronica()){
+			throw new ApplicationException("Non è possibile indicare più e-mail per la fatturazione elettronica");
+		}
+		if (terzo.inseriteDiversePecFatturazioneElettronica()){
+			throw new ApplicationException("Non è possibile indicare più PEC per la fatturazione elettronica");
+		}
 			
 	} catch(Throwable e) {
 		throw handleException(e);
 	}
 }
-public void validaModificaConBulk(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
+
+	
+	public Date getSystemDate() {
+		Calendar cal = Calendar.getInstance();
+    	cal.setTime(new Date());
+    	Date data = cal.getTime();			    	
+    	return data;
+	}
+	
+	public void validaModificaConBulk(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
 	try {
 		boolean hasAccesso = ((it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")).controllaAccesso(userContext, TerzoBulk.ACCESSO_PER_CANCELLAZIONE_BANCA);
 		TerzoBulk terzo = (TerzoBulk)bulk;

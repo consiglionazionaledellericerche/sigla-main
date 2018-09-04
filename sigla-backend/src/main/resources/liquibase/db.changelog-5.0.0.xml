@@ -601,6 +601,77 @@
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn_telefono_fatt-elettronica">
+        <addColumn tableName="TELEFONO">
+            <column name="FATT_ELETTRONICA" type="CHAR(1)" defaultValue="N" remarks="Riferimento per fatturazione elettronica.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn_terzo_codice-destinatario-fatt">
+        <addColumn tableName="TERZO">
+            <column name="CODICE_DESTINATARIO_FATT" type="VARCHAR(7)" remarks="Codice destinatario fattura (solo per privati non persone fisiche)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn_fattura-attiva_elettr-privati">
+        <addColumn tableName="FATTURA_ATTIVA">
+            <column name="CODICE_DESTINATARIO_FATT" type="VARCHAR(7)" remarks="Codice destinatario fattura (solo per privati non persone fisiche)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="MAIL_FATTURA_ELETTRONICA" type="VARCHAR(100)" remarks="Indirizzo Mail per la fatturazione elettronica (solo per persone fisiche">
+                <constraints nullable="true"/>
+            </column>
+            <column name="PEC_FATTURA_ELETTRONICA" type="VARCHAR(100)" remarks="Indirizzo PEC per la fatturazione elettronica (solo per privati non persone fisiche)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn_fattura-attiva_elettr-privati-2">
+        <addColumn tableName="FATTURA_ATTIVA">
+            <column name="FL_FATTURA_ELETTRONICA" type="VARCHAR(1)" defaultValue="N" remarks="Fattura Elettronica Y=Si N=No">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+				<update tableName="FATTURA_ATTIVA">
+  	  		<column name="FL_FATTURA_ELETTRONICA" value="Y" type="varchar(1)"/>
+	    		<where>CODICE_UNIVOCO_UFFICIO_IPA IS NOT NULL</where>
+				</update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-terzo-sblocco_fatt_elettronica">
+        <addColumn tableName="TERZO">
+            <column name="FL_SBLOCCO_FATTURA_ELETTRONICA" type="VARCHAR(1)" defaultValue="N" remarks="Permette di creare la Fattura Elettronica anche in assenza di Codice Destinatario e PEC">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="configurazione_cnr-add-data_inizio_fatt_ele_privati">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/configurazione_cnr_data_inizio_fatt_ele_privati.csv" quotchar="&quot;" separator="," tableName="configurazione_cnr">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_unita_funzionale" name="cd_unita_funzionale" type="STRING"/>
+            <column header="cd_chiave_primaria" name="cd_chiave_primaria" type="STRING"/>
+            <column header="cd_chiave_secondaria" name="cd_chiave_secondaria" type="STRING"/>
+            <column header="val01" name="val01" type="STRING"/>
+            <column header="val02" name="val02" type="STRING"/>
+            <column header="val03" name="val03" type="STRING"/>
+            <column header="val04" name="val04" type="STRING"/>
+            <column header="im01" name="im01" type="NUMERIC"/>
+            <column header="im02" name="im02" type="NUMERIC"/>
+            <column header="dt01" name="dt01" type="${date.type}"/>
+            <column header="dt02" name="dt02" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn_fattura-attiva_dt_ricezione_sdi">
+        <addColumn tableName="FATTURA_ATTIVA">
+            <column name="DT_RICEZIONE_SDI" type="date" remarks="Data Ricezione della fattura da parte di SDI">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
-
-

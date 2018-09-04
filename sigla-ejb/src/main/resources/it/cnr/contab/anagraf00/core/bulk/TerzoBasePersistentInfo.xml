@@ -84,6 +84,18 @@
 			sqlTypeName="VARCHAR"
 			columnSize="6" />
 		<columnMapping
+			columnName="CODICE_DESTINATARIO_FATT"
+			propertyName="codiceDestinatarioFatt"
+			sqlTypeName="VARCHAR"
+			columnSize="7" />
+		<columnMapping
+			columnName="FL_SBLOCCO_FATTURA_ELETTRONICA"
+			propertyName="flSbloccoFatturaElettronica"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="DT_FINE_RAPPORTO"
 			propertyName="dt_fine_rapporto"
 			sqlTypeName="TIMESTAMP"
@@ -158,6 +170,8 @@
 	<persistentProperty
 		name="note" />
 	<persistentProperty
+		name="codiceDestinatarioFatt" />
+	<persistentProperty
 		name="codiceUnivocoUfficioIpa" />
 	<persistentProperty
 		name="dt_fine_rapporto" />
@@ -176,5 +190,7 @@
 	<persistentProperty
 		name="codiceUnivocoPcc" />
 	<persistentProperty
-		name="denominazionePcc" />		
+		name="denominazionePcc" />
+	<persistentProperty
+		name="flSbloccoFatturaElettronica" />		
 </SQLPersistentInfo>
