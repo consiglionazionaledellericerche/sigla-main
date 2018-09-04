@@ -61,7 +61,7 @@ public class RicercaDocumentiAmministrativiFatturazioneElettronicaAction extends
             clauses.addClause("AND", "cd_cds_origine", SQLBuilder.EQUALS, unita_organizzativa.getUnita_padre().getCd_unita_organizzativa());
             clauses.addClause("AND", "cd_uo_origine", SQLBuilder.EQUALS, unita_organizzativa.getCd_unita_organizzativa());
 
-            clauses.addClause("AND", "codiceUnivocoUfficioIpa", SQLBuilder.ISNOTNULL, null);
+            clauses.addClause("AND", "flFatturaElettronica", SQLBuilder.EQUALS, Boolean.TRUE);
             if (filtro.isDaFirmare()) {
                 clauses.addClause("AND", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
             } else if (filtro.isFirmata()) {

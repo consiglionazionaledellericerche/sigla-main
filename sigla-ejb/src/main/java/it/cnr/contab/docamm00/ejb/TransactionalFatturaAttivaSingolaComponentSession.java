@@ -1926,4 +1926,38 @@ public List findListaCondizioneConsegnaWS(UserContext userContext, String query,
 		}
 	}
 
+	public String recuperoEmailUtente(UserContext param0, Fattura_attivaBulk fatturaAttiva) throws ComponentException,java.rmi.RemoteException,javax.ejb.EJBException  {
+		try {
+			return (String)invoke("recuperoEmailUtente",new Object[] {param0,fatturaAttiva});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+
+	public void gestioneAvvisoInvioMailFattureAttive(UserContext param0) throws ComponentException,java.rmi.RemoteException,javax.ejb.EJBException  {
+		try {
+			invoke("gestioneAvvisoInvioMailFattureAttive",new Object[] {param0});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+
+	
+	
 }

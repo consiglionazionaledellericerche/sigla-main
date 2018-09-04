@@ -29,6 +29,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.jsp.Button;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaType;
@@ -236,15 +237,16 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                                                 componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fatturaProtocollata);
                                                 logger.info("Fattura con progressivo univoco " + fatturaProtocollata.getEsercizio() + "/" + fatturaProtocollata.getProgrUnivocoAnno() + " aggiornata.");
                                                 if (!fatturaProtocollata.isNotaCreditoDaNonInviareASdi()) {
-                                                    FatturaPassivaElettronicaService fatturaService = SpringUtil.getBean(FatturaPassivaElettronicaService.class);
-                                                    String password = null;
-                                                    try {
-                                                        password = StringEncrypter.decrypt(config.getVal01(), config.getVal02());
-                                                    } catch (EncryptionException e1) {
-                                                        new ApplicationException("Cannot decrypt password");
-                                                    }
-                                                    fatturaService.inviaFatturaElettronica(config.getVal01(), password, fileSigned, nomeFileP7m);
-                                                    logger.info("File firmato inviato");
+                                                	FatturaPassivaElettronicaService fatturaService = SpringUtil.getBean(FatturaPassivaElettronicaService.class);
+                                                	String password = null;
+                                                	try {
+                                                		password = StringEncrypter.decrypt(config.getVal01(), config.getVal02());
+                                                	} catch (EncryptionException e1) {
+                                                		new ApplicationException("Cannot decrypt password");
+                                                	}
+                                                	fatturaService.inviaFatturaElettronica(config.getVal01(), password, fileSigned, nomeFileP7m);
+                                                	logger.info("File firmato inviato");
+
                                                 }
                                             } catch (Exception ex) {
                                                 logger.error("Errore nell'invio del file " + ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()) : ex.getMessage());

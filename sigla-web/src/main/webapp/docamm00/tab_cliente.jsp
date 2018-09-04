@@ -33,6 +33,7 @@
 					<% bp.getController().writeFormInput(out, null, "cd_precedente", roOnAutoGen, null, "");%>
 				</td>
 				<% bp.getController().writeFormField(out,"codiceUnivocoUfficioIpa");%>
+				<% bp.getController().writeFormField(out,"codiceDestinatarioFatt");%>
 			</tr>
 			
 			<%	if (cliente != null && cliente.getAnagrafico() != null) {
@@ -126,9 +127,14 @@
 	</div>
     <div class="Group">
        <% if (
-    		   (fatturaAttiva != null && fatturaAttiva.getCodiceUnivocoUfficioIpa() != null )) { 
+    		   (fatturaAttiva != null && fatturaAttiva.isDocumentoFatturazioneElettronica() )) { 
 				%>
   	<table>
+		      <tr>     	
+		      	<td>
+				<% bp.getController().writeFormField(out,"codiceInvioSdi");%>
+		      	</td>      	
+		      </tr>
 		      <tr>     	
 		      	<td>
 				<% bp.getController().writeFormField(out,"codiceInvioSdi");%>
@@ -147,6 +153,16 @@
 		      <tr>     	
 		      	<td>
 				<% bp.getController().writeFormField(out,"statoInvioSdi");%>
+		      	</td>      	
+		      </tr>
+		      <tr>     	
+		      	<td>
+				<% bp.getController().writeFormField(out,"pecFatturaElettronica");%>
+		      	</td>      	
+		      </tr>
+		      <tr>     	
+		      	<td>
+				<% bp.getController().writeFormField(out,"mailFatturaElettronica");%>
 		      	</td>      	
 		      </tr>
      </table>
