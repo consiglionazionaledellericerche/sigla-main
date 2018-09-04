@@ -17,6 +17,13 @@
 		maxLength="100"  
 		readonlyPropertyOnEdit="terzo.dipendente" />
 	<fieldProperty
+		name="fattElettronica"
+		property="fattElettronica"
+		label="Fatt. Elettronica"
+		inputType="CHECKBOX"
+		readonlyPropertyOnEdit="terzo.dipendente" 
+		/>
+	<fieldProperty
 		name="riferimento"
 		property="riferimento"
 		label="Riferimento"
@@ -52,6 +59,16 @@
 			/>
 	</form>
 
+	<form name="pec">
+		<formFieldProperty
+			name="ds_riferimento"
+			/>
+		<formFieldProperty
+			name="riferimento"
+			label="Pec"
+			/>
+	</form>
+
 	<form name="fax">
 		<formFieldProperty
 			name="ds_riferimento"
@@ -76,6 +93,20 @@
 		<columnFieldProperty
 			name="riferimento"
 			label="Email" />
+		<columnFieldProperty
+			name="fattElettronica"
+			/>
+	</columnSet>
+
+	<columnSet name="pec">
+		<columnFieldProperty
+			name="ds_riferimento" />
+		<columnFieldProperty
+			name="riferimento"
+			label="Pec" />
+		<columnFieldProperty
+			name="fattElettronica"
+			/>
 	</columnSet>
 
 	<columnSet name="fax">
