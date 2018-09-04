@@ -3,6 +3,7 @@ package it.cnr.contab.docamm00.service;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.docamm00.ejb.DocAmmFatturazioneElettronicaComponentSession;
+import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.RicezioneFatturePA;
 import it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA;
@@ -73,6 +74,7 @@ import org.springframework.oxm.XmlMappingException;
 public class FatturaPassivaElettronicaService implements InitializingBean{
 	private transient final static Logger logger = LoggerFactory.getLogger(FatturaPassivaElettronicaService.class);
 	
+	private FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
 	private FatturaElettronicaPassivaComponentSession fatturaElettronicaPassivaComponentSession;
 	private RicercaDocContComponentSession ricercaDocContComponentSession;
 	private DocAmmFatturazioneElettronicaComponentSession docAmmFatturazioneElettronicaComponentSession;
@@ -216,6 +218,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		try{
 			if (pecScanDisable){
 				logger.info("PEC scan is disabled");
+				fatturaAttivaSingolaComponentSession.gestioneAvvisoInvioMailFattureAttive(userContext);
 			} else {
 				logger.info("PEC SCAN for ricevi Fatture started at: "+new Date());
 				Configurazione_cnrBulk email = fatturaElettronicaPassivaComponentSession.getEmailPecSdi(userContext);
@@ -1089,5 +1092,12 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			}
 			return null;
 		}
+	}
+	public FatturaAttivaSingolaComponentSession getFatturaAttivaSingolaComponentSession() {
+		return fatturaAttivaSingolaComponentSession;
+	}
+	public void setFatturaAttivaSingolaComponentSession(
+			FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession) {
+		this.fatturaAttivaSingolaComponentSession = fatturaAttivaSingolaComponentSession;
 	}
 }
