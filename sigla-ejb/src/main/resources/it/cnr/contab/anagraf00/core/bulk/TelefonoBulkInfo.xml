@@ -38,6 +38,9 @@
 	<formFieldProperty
 		name="riferimento"
 		/>
+	<formFieldProperty
+		name="fattElettronica"
+		/>
 
 	<form name="telefono">
 		<formFieldProperty
