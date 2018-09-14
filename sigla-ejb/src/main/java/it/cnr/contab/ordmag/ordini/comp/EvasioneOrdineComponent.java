@@ -172,8 +172,8 @@ public class EvasioneOrdineComponent extends it.cnr.jada.comp.CRUDComponent impl
 			});
 	
 	        final Map<OrdineAcqBulk, Map<OrdineAcqRigaBulk, List<OrdineAcqConsegnaBulk>>> mapOrdine =null;
-	       		//selectedElements.get().collect(Collectors.groupingBy(o -> o.getOrdineAcqRiga().getOrdineAcq(),
-		        	//				Collectors.groupingBy(o -> o.getOrdineAcqRiga())));
+	       		selectedElements.get().collect(Collectors.groupingBy(o -> o.getOrdineAcqRiga().getOrdineAcq(),
+		        					Collectors.groupingBy(o -> o.getOrdineAcqRiga())));
 	
 	        mapOrdine.keySet().stream().forEach(ordine->{
 				try {
