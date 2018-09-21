@@ -20,8 +20,8 @@
 	<queryString>
 		<![CDATA[SELECT * FROM PRT_PREV_DIP
 where SEDE like decode ($P{UO},'*','%',substr($P{UO},1,3)||substr($P{UO},5,7))
-and MATRICOLA like decode($P{Matricola},'0','%',$P{Matricola})
-and CD_TERZO like decode($P{Terzo},'0','%',$P{Terzo})]]>
+and ($P{Matricola} = '0' OR MATRICOLA = $P{Matricola})
+and ($P{Terzo} = '0' OR CD_TERZO = $P{Terzo})]]>
 	</queryString>
 	<field name="MATRICOLA" class="java.math.BigDecimal"/>
 	<field name="NOMINATIVO" class="java.lang.String"/>

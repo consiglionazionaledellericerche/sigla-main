@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OrdineMissioneAutoPropria" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="783"/>
+	<style name="table" mode="Transparent" isBold="true">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="bold" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
+	<parameter name="DIR_IMAGE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_SUBREPORT" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[numero]]></fieldDescription>
+	</field>
+	<field name="dataInserimento" class="java.lang.String">
+		<fieldDescription><![CDATA[dataInserimento]]></fieldDescription>
+	</field>
+	<field name="cognomeRich" class="java.lang.String">
+		<fieldDescription><![CDATA[cognomeRich]]></fieldDescription>
+	</field>
+	<field name="nomeRich" class="java.lang.String">
+		<fieldDescription><![CDATA[nomeRich]]></fieldDescription>
+	</field>
+	<field name="codiceFiscaleRich" class="java.lang.String">
+		<fieldDescription><![CDATA[codiceFiscaleRich]]></fieldDescription>
+	</field>
+	<field name="matricolaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[matricolaRich]]></fieldDescription>
+	</field>
+	<field name="luogoDiNascitaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[luogoDiNascitaRich]]></fieldDescription>
+	</field>
+	<field name="dataDiNascitaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[dataDiNascitaRich]]></fieldDescription>
+	</field>
+	<field name="comuneResidenzaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[comuneResidenzaRich]]></fieldDescription>
+	</field>
+	<field name="indirizzoResidenzaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[indirizzoResidenzaRich]]></fieldDescription>
+	</field>
+	<field name="domicilioFiscaleRich" class="java.lang.String"/>
+	<field name="datoreLavoroRich" class="java.lang.String">
+		<fieldDescription><![CDATA[datoreLavoroRich]]></fieldDescription>
+	</field>
+	<field name="qualificaRich" class="java.lang.String">
+		<fieldDescription><![CDATA[qualificaRich]]></fieldDescription>
+	</field>
+	<field name="livelloRich" class="java.lang.String">
+		<fieldDescription><![CDATA[livelloRich]]></fieldDescription>
+	</field>
+	<field name="oggetto" class="java.lang.String">
+		<fieldDescription><![CDATA[oggetto]]></fieldDescription>
+	</field>
+	<field name="dataInizioMissione" class="java.lang.String">
+		<fieldDescription><![CDATA[dataInizioMissione]]></fieldDescription>
+	</field>
+	<field name="dataFineMissione" class="java.lang.String">
+		<fieldDescription><![CDATA[dataFineMissione]]></fieldDescription>
+	</field>
+	<field name="note" class="java.lang.String">
+		<fieldDescription><![CDATA[note]]></fieldDescription>
+	</field>
+	<field name="cdrRich" class="java.lang.String">
+		<fieldDescription><![CDATA[cdrRich]]></fieldDescription>
+	</field>
+	<field name="uoRich" class="java.lang.String">
+		<fieldDescription><![CDATA[uoRich]]></fieldDescription>
+	</field>
+	<field name="cdsRich" class="java.lang.String">
+		<fieldDescription><![CDATA[cdsRich]]></fieldDescription>
+	</field>
+	<field name="destinazione" class="java.lang.String">
+		<fieldDescription><![CDATA[destinazione]]></fieldDescription>
+	</field>
+	<field name="spostamenti" class="java.lang.Object">
+		<fieldDescription><![CDATA[spostamenti]]></fieldDescription>
+	</field>
+	<field name="dataAnticipo" class="java.lang.String"/>
+	<field name="stato" class="java.lang.String">
+		<fieldDescription><![CDATA[stato]]></fieldDescription>
+	</field>
+	<field name="marca" class="java.lang.String">
+		<fieldDescription><![CDATA[marca]]></fieldDescription>
+	</field>
+	<field name="targa" class="java.lang.String">
+		<fieldDescription><![CDATA[targa]]></fieldDescription>
+	</field>
+	<field name="cartaCircolazione" class="java.lang.String">
+		<fieldDescription><![CDATA[cartaCircolazione]]></fieldDescription>
+	</field>
+	<field name="polizzaAssicurativa" class="java.lang.String">
+		<fieldDescription><![CDATA[polizzaAssicurativa]]></fieldDescription>
+	</field>
+	<field name="modello" class="java.lang.String">
+		<fieldDescription><![CDATA[modello]]></fieldDescription>
+	</field>
+	<field name="numeroPatente" class="java.lang.String">
+		<fieldDescription><![CDATA[numeroPatente]]></fieldDescription>
+	</field>
+	<field name="dataRilascioPatente" class="java.lang.String">
+		<fieldDescription><![CDATA[dataRilascioPatente]]></fieldDescription>
+	</field>
+	<field name="dataScadenzaPatente" class="java.lang.String">
+		<fieldDescription><![CDATA[dataScadenzaPatente]]></fieldDescription>
+	</field>
+	<field name="entePatente" class="java.lang.String">
+		<fieldDescription><![CDATA[entePatente]]></fieldDescription>
+	</field>
+	<field name="motiviIspettivi" class="java.lang.String">
+		<fieldDescription><![CDATA[motiviIspettivi]]></fieldDescription>
+	</field>
+	<field name="motiviUrgenza" class="java.lang.String">
+		<fieldDescription><![CDATA[motiviUrgenza]]></fieldDescription>
+	</field>
+	<field name="motiviTrasporto" class="java.lang.String">
+		<fieldDescription><![CDATA[motiviTrasporto]]></fieldDescription>
+	</field>
+	<field name="altriMotivi" class="java.lang.String">
+		<fieldDescription><![CDATA[altriMotivi]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="202" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement x="93" y="38" width="368" height="33" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RICHIESTA AUTORIZZAZIONE ALL'USO DEL MEZZO PROPRIO "+
+"PER L' ORDINE DI MISSIONE N. " + $F{numero} + "  DEL "+$F{dataInserimento}]]></textFieldExpression>
+			</textField>
+			<image isUsingCache="true">
+				<reportElement x="177" y="0" width="202" height="38" uuid="31f592d2-33e1-4e62-88ef-8840a03001b5"/>
+				<imageExpression><![CDATA[$P{DIR_IMAGE} + "CNR.JPG"]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="0" y="72" width="554" height="129" uuid="36243807-5214-4328-91de-1684de820b5d"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<textField isBlankWhenNull="false">
+				<reportElement x="152" y="76" width="309" height="20" uuid="e8951b51-1e9e-4770-a242-d48813a2f6a1"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cognomeRich} + " "+$F{nomeRich}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="517" y="76" width="37" height="20" uuid="fe4dc609-8651-443f-a3ff-ab1bbb971cc2"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{matricolaRich}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="96" width="53" height="20" uuid="e5521656-fe6b-481e-bd2f-1d3ec9c3296d"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataDiNascitaRich}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="447" y="96" width="107" height="20" uuid="0c32ab10-e6f1-4ff8-badf-e893fd8ae509"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codiceFiscaleRich}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="73" y="117" width="481" height="20" uuid="893e8e38-c0a8-474e-a94d-ff3cd6f3ad94"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{comuneResidenzaRich} + "  "+$F{indirizzoResidenzaRich}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="210" y="137" width="344" height="20" isRemoveLineWhenBlank="true" uuid="360a74e4-4a3b-4db1-a4cb-ac5248167e6c"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilioFiscaleRich}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="93" y="158" width="461" height="20" uuid="c346885b-b192-412c-98b5-2aa29f10e4f2"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datoreLavoroRich}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="73" y="179" width="364" height="20" uuid="e0b05bd9-8294-49d6-a45b-8593bc65b808"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qualificaRich}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="76" width="139" height="20" uuid="809ffb66-e8f4-4999-9787-8fce972f5eeb"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Richiedente (cognome e nome)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="76" width="45" height="20" uuid="633005d7-ab96-4a9b-8014-3793332ebf65"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Matricola]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="96" width="111" height="20" uuid="271d303a-44fe-4e4a-b0d2-5ac3b5a64445"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data e Luogo di Nascita]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="177" y="96" width="195" height="20" uuid="0ebdaafa-9ce5-4106-9d8b-b7f01dcf3820"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{luogoDiNascitaRich}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="372" y="96" width="65" height="20" uuid="04167617-2f01-4b05-bfce-32a9bb56bdcd"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codice Fiscale]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="117" width="60" height="20" uuid="cda61b17-ffef-40ff-b69d-4126b0b44701"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Residenza]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="137" width="197" height="20" uuid="6cd83e62-67de-4978-a16c-b3530ae07173"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Domicilio Fiscale (se diverso da residenza)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="158" width="80" height="20" uuid="43b87204-1a3d-4353-a92d-049c97733ee4"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Datore di Lavoro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="179" width="60" height="20" uuid="ff9b3a76-c201-4000-bee8-0cdb74f2cbc2"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qualifica]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="517" y="179" width="32" height="20" uuid="d67bfabd-7cfd-402f-88bb-27ffdf9e968f"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{livelloRich}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="472" y="180" width="45" height="20" uuid="17fc3eb1-3c4a-498b-9a6e-d0f98c62ccd1"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Livello]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="104">
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="4" width="554" height="98" uuid="a77eb553-d3ff-4e04-bf9d-0ba5e1b34d92"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="222" y="9" width="100" height="20" uuid="f8d618c2-dd11-488e-8b22-756324211cb2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[C H I E D E]]></text>
+			</staticText>
+			<subreport runToBottom="false">
+				<reportElement x="10" y="54" width="532" height="38" uuid="fec37bc5-13be-478f-b309-bee6a232b109"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("spostamenti")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "ordine_missione_spostamenti_sub.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="13" y="29" width="367" height="20" uuid="62b94a39-969b-4b67-8405-cb15cebb1fa4"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[di essere autorizzato ad utilizzare il mezzo proprio per effettuare i percorsi:]]></text>
+			</staticText>
+		</band>
+		<band height="51" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="32" y="29" width="377" height="20" uuid="f6dcd297-2c20-4f09-9201-d101b4849acf"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{marca} + " "+$F{modello}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="447" y="29" width="84" height="20" uuid="a8df0941-f2a5-4437-b760-4a9e66824537"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{targa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="227" y="7" width="100" height="20" uuid="6658cbab-7b80-4bf8-ac67-588807a3b13f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTREMI AUTO]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-182" x="0" y="0" width="554" height="1" uuid="49211f3c-41f5-4434-8136-bdc6def210ba"/>
+			</line>
+			<line>
+				<reportElement key="line-184" positionType="Float" stretchType="RelativeToBandHeight" x="-1" y="0" width="1" height="51" uuid="c4cffb29-8b4e-4e1b-9dbd-4129b78bbbcf"/>
+			</line>
+			<line>
+				<reportElement key="line-188" positionType="Float" stretchType="RelativeToBandHeight" x="554" y="1" width="1" height="50" uuid="892730ed-4c9f-4525-a9de-f60a53bca3db"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="29" width="30" height="20" uuid="ee121e1b-6632-4c65-97e4-1c089b411b76"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="29" width="30" height="20" uuid="87baa34e-82ff-4e1d-99e5-64f1c2c06c63"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Targa]]></text>
+			</staticText>
+		</band>
+		<band height="22">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="102" y="0" width="161" height="20" uuid="da037474-bd7c-410d-8801-e113016bf498"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cartaCircolazione}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="371" y="0" width="160" height="20" uuid="24cef83c-46e8-4574-a42f-1ea684536e5b"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{polizzaAssicurativa}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-184" positionType="Float" stretchType="RelativeToBandHeight" x="-1" y="0" width="1" height="22" uuid="d269a5ae-02ec-49a4-b2e5-2be0515d3d3a"/>
+			</line>
+			<line>
+				<reportElement key="line-188" positionType="Float" stretchType="RelativeToBandHeight" x="554" y="0" width="1" height="22" uuid="6b0a1e29-f8ad-4b03-a4ed-cbf8a7cffd9e"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="0" width="100" height="20" uuid="2a640bdc-d862-4a65-81e7-ea47dce09e08"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carta di Circolazione]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="263" y="0" width="100" height="20" uuid="cc7c1b0d-dd0a-43d8-ae2a-e3edf4df6c70"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Polizza Assicurativa n.]]></text>
+			</staticText>
+		</band>
+		<band height="22">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="65" y="0" width="197" height="20" uuid="84170ccc-f552-465d-8c2b-84fb1a34228a"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroPatente}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="331" y="0" width="55" height="20" uuid="066039e4-af4f-46b1-bae8-55e938455ef4"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataRilascioPatente}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-184" positionType="Float" stretchType="RelativeToBandHeight" x="-1" y="0" width="1" height="22" uuid="d8c211ec-0834-4043-b6cb-345d82cd2204"/>
+			</line>
+			<line>
+				<reportElement key="line-188" positionType="Float" stretchType="RelativeToBandHeight" x="554" y="0" width="1" height="22" uuid="64671c84-6835-4177-a97b-7edb34e69246"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="0" width="57" height="20" uuid="3cfb21c6-457d-47ca-88db-797edfe0bd68"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Patente n.  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="264" y="0" width="63" height="20" uuid="1ea2a784-fa2a-4afc-9352-9d6626e945e6"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rilasciata il]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="476" y="0" width="55" height="20" uuid="7668f19f-5a79-4608-b5b9-06a4a0578613"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataScadenzaPatente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="409" y="0" width="63" height="20" uuid="c5c9f5e8-6828-49a8-8975-d0653604090a"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valida fino al]]></text>
+			</staticText>
+		</band>
+		<band height="29">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="65" y="0" width="466" height="20" uuid="eb5f4ef1-a6ad-4c2b-9989-a345752ed486"/>
+				<textElement textAlignment="Left" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entePatente}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-182" positionType="FixRelativeToBottom" x="0" y="28" width="554" height="1" uuid="a37fefb2-3106-4cd5-9089-5c5d9b08fb04"/>
+			</line>
+			<line>
+				<reportElement key="line-184" positionType="Float" stretchType="RelativeToBandHeight" x="-1" y="0" width="1" height="29" uuid="cd130e08-b17c-44ab-98f0-f7c65ca9cd34"/>
+			</line>
+			<line>
+				<reportElement key="line-188" positionType="Float" stretchType="RelativeToBandHeight" x="554" y="0" width="1" height="29" uuid="7937e9a5-5ab1-42b9-a89d-84d8d515e8cf"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="0" width="60" height="20" uuid="c8f3f118-04c1-4308-ac3c-5072b111485d"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rilasciata da]]></text>
+			</staticText>
+		</band>
+		<band height="93">
+			<staticText>
+				<reportElement positionType="Float" x="0" y="11" width="552" height="39" uuid="652342d0-aafd-4859-8f3f-cf140fa43b98"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="9" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Ai sensi di quanto disposto dall’art. 6 c. 12 del D.L. 78/2010, dalla circolare n. 36 del 22/10/2010 del Ministero dell’Economia e delle Finanze – Dipartimento della Ragioneria Generale dello Stato e della delibera della Corte dei Conti a Sezioni Riunite n. 8/CONTR/11 del 7 febbraio 2011, si allega alla  presente la copia dei tariffari forniti dagli esercenti dei trasporti pubblici per le tratte sopra indicate.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="57" width="552" height="34" uuid="10d39fca-e610-4c42-9d3b-a7fd0a82673c"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="9" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Nel rispetto delle disposizioni normative in materia (Art. 6 c. 12 del D.L. 78/2010, Circ. 36 del 22/10/2010 del M.E.F. – Dip.to della Ragioneria Generale dello Stato e delibera della Corte dei Conti a Sezioni riunite n. 8/CONTR/11 del 7 febbraio 2011)  e trattandosi di una circostanza eccezionale e non ricorrente, si autorizza l’uso del mezzo proprio per le seguenti motivazioni:]]></text>
+			</staticText>
+		</band>
+		<band height="19">
+			<printWhenExpression><![CDATA[$F{motiviIspettivi}.equals( "S" )]]></printWhenExpression>
+			<textField isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="549" height="14" isRemoveLineWhenBlank="true" uuid="00504e92-6afa-477f-8143-cd4b40e37c2b"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" - Per lo svolgimento di funzioni istituzionali relativi a compiti ispettivi, di verifica e di controllo"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="23">
+			<printWhenExpression><![CDATA[$F{motiviUrgenza}.equals( "S" )]]></printWhenExpression>
+			<textField isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="549" height="17" isRemoveLineWhenBlank="true" uuid="33d90e21-a453-4b31-a291-09df3f29ed2f"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" - Per Attività caratterizzata da emergenza, urgenza, indifferibilità"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="22">
+			<printWhenExpression><![CDATA[$F{motiviTrasporto}.equals( "S" )]]></printWhenExpression>
+			<textField isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="549" height="17" isRemoveLineWhenBlank="true" uuid="99c34b20-86a5-49f1-a21a-30c81021fc6b"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" - Per Attività che richiede necessariamente il trasporto di materiale, o attrezzature ingombranti, pesanti, o fragili in dotazione"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="21" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="0" y="0" width="549" height="17" isRemoveLineWhenBlank="true" uuid="27e4463e-e73f-4839-a33d-a826e34a1452"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{altriMotivi}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="113" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement positionType="Float" x="0" y="3" width="554" height="107" uuid="47bb9ae0-dd67-413c-a2fb-fdaf2195bd29"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="80" y="45" width="472" height="16" uuid="1b50070c-cf85-43ca-bcfc-6af1290a4cf0"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{destinazione}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold" x="199" y="8" width="161" height="17" uuid="0f1c2a64-f520-4bc7-8282-edbdd34c9233"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DATI ORDINE DI MISSIONE]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="113" y="62" width="439" height="16" uuid="ab6edefc-339a-4161-989a-1b243a126789"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="Times New Roman" isUnderline="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oggetto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="193" y="29" width="82" height="16" uuid="6688f5cd-6cd4-4b71-8a77-95aa536fb7b8"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataInizioMissione}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="bold" x="9" y="62" width="104" height="16" uuid="d2cccd12-9a16-4946-ba4e-1e1364e0608d"/>
+				<text><![CDATA[Oggetto della Missione	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="123" y="29" width="70" height="16" uuid="02d04a4c-a690-4a5c-8474-3403e71b46ed"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Inizio Missione]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="356" y="29" width="78" height="16" uuid="0869987e-9e75-4179-95e7-d8a7edf4f67b"/>
+				<textElement markup="styled">
+					<font fontName="Times New Roman" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataFineMissione}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="290" y="29" width="66" height="16" uuid="1de9d89e-9e5f-4e03-a47e-002ee742abcd"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fine Missione]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="45" width="70" height="16" uuid="78dbbfa3-93da-4322-a8a6-c5f4c4d85a33"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Destinazione]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="7" splitType="Stretch"/>
+	</summary>
+</jasperReport>
