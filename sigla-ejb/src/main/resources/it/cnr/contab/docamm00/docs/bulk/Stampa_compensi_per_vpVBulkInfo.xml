@@ -11,6 +11,9 @@
 			name="esercizio"
 			inputType="ROTEXT" />
 		<formFieldProperty 
+			name="cd_cds"
+			inputType="ROTEXT" />	
+		<formFieldProperty 
 			name="cdUOForPrint" />
 		<formFieldProperty 
 			name="cd_elemento_voce" />
@@ -23,12 +26,16 @@
 			parameterPosition="0"
 			parameterType="STRING" />
 		<printFieldProperty 
-			name="cdUOCRForPrint"
+			name="cd_cds"
 			parameterPosition="1"
+			parameterType="STRING" />	
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="2"
 			parameterType="STRING" />
 		<printFieldProperty 
 			name="voceDPForPrint"
-			parameterPosition="2"
+			parameterPosition="3"
 			parameterType="STRING" />
 	</printForm>		
  	<printForm
@@ -40,14 +47,20 @@
 			paramNameJR="esercizio"
 			paramTypeJR="java.lang.Integer"/>
 		<printFieldProperty 
-			name="cdUOCRForPrint"
+			name="cd_cds"
 			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String" />	
+		<printFieldProperty 
+			name="cdUOCRForPrint"
+			parameterPosition="2"
 			parameterType="STRING"
 			paramNameJR="uo"
 			paramTypeJR="java.lang.String" />
 		<printFieldProperty 
 			name="voceDPForPrint"
-			parameterPosition="2"
+			parameterPosition="3"
 			parameterType="STRING" 
 			paramNameJR="capitolo"
 			paramTypeJR="java.lang.String"/>
