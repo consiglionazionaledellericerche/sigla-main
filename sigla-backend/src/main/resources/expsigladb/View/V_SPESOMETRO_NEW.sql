@@ -59,6 +59,11 @@
                             and STATO_INVIO_SDI is null
                             AND (   LTRIM (a.partita_iva) IS NOT NULL
                                  OR LTRIM (a.codice_fiscale) IS NOT NULL)
+                            having SUM (DECODE (f.ti_fattura,
+                                             'C', -fr.im_imponibile,
+                                             fr.im_imponibile
+                                            )
+                                    )!=0
                             group by
                              		f.dt_emissione,'ATTIVA' ,decode(f.ti_fattura,'F','TD_01','C','TD_04','TD_05'),
                                 f.esercizio,
@@ -137,6 +142,10 @@
         													f.esercizio = autofattura.esercizio(+)																	and
         													f.pg_fattura_passiva = autofattura.pg_fattura_passiva(+)	AND
         													'Y'=autofattura.FL_AUTOFATTURA  (+))
+        												having   SUM (DECODE (f.ti_fattura,
+                                             'C', -fr.im_imponibile,
+                                             fr.im_imponibile
+                                            )) !=0
                                 group by
                              		f.dt_registrazione,'PASSIVA' ,decode(f.fl_intra_ue,'Y',decode(f.ti_bene_servizio,'B','TD_10','TD_11'),decode(f.ti_fattura,'F','TD_01','C','TD_04','TD_05')),
                                    f.esercizio,
