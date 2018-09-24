@@ -61,7 +61,9 @@
             <td><% bp.writeFormInput(out,"default","codiceUnivocoUfficioIpa",true,null,null);%></td>
         <%} %>
       <%} else {%>
+        <%if(terzo.getAnagrafico().getDataAvvioFattElettr() != null){ %>
             <% bp.writeFormField(out,"codiceDestinatarioFatt");%>
+        <%} %>
         <%if(bp.isGestoreIstat(uc, terzo)){ %>
             <% bp.writeFormField(out,"flSbloccoFatturaElettronica");%>
         <%} %>

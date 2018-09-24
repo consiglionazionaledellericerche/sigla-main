@@ -466,13 +466,17 @@ protected void validaCreaModificaConBulk(UserContext userContext,OggettoBulk bul
 
 		validaCreaModificaBanche(terzo);
 
-//		if (terzo.getAnagrafico() != null && terzo.getAnagrafico().isPersonaGiuridica() && !terzo.getAnagrafico().isEntePubblico() && terzo.getAnagrafico().getDataAvvioFattElettr() != null ){
-//			if (terzo.getAnagrafico().getDataAvvioFattElettr().before(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate())) {
-//				if (terzo.getCodiceDestinatarioFatt() == null && !terzo.esistePecFatturazioneElettronica() && !terzo.getFlSbloccoFatturaElettronica()){
-//					throw new ApplicationException("Dato che in anagrafico è avviata la fatturazione elettronica è necessario indicare il codice destinatario fattura o la pec");
-//				}
-//			}
-//		}
+		if (terzo.getAnagrafico().getDataAvvioFattElettr() == null) {
+			if (terzo.getCodiceDestinatarioFatt() != null){
+				throw new ApplicationException("Dato che in anagrafico non è avviata la fatturazione elettronica non è possibile indicare il codice destinatario fattura");
+			}
+			if (terzo.esistePecFatturazioneElettronica() ){
+				throw new ApplicationException("Dato che in anagrafico non è avviata la fatturazione elettronica non è possibile indicare la pec per la fatturazione elettronica");
+			}
+			if (terzo.getEmailFatturazioneElettronica() != null){
+				throw new ApplicationException("Dato che in anagrafico non è avviata la fatturazione elettronica non è possibile indicare la e-mail per la fatturazione elettronica");
+			}
+		}
 				
 		if (terzo.inseriteDiverseMailFatturazioneElettronica()){
 			throw new ApplicationException("Non è possibile indicare più e-mail per la fatturazione elettronica");
