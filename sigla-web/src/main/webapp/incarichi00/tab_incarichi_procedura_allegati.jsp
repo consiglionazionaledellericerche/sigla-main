@@ -1,6 +1,5 @@
 <%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.action.*,
-	    it.cnr.jada.util.jsp.*,
 		it.cnr.jada.util.action.*,
 		it.cnr.contab.incarichi00.bulk.*,
 		it.cnr.contab.incarichi00.bp.*"
@@ -36,7 +35,7 @@
 	boolean isRODettaglio = false;
 	if (allegato!=null && ((allegato.isContratto() && (bp.isSuperUtente() || bp.isUtenteAbilitatoModificaAllegatoContratto())) ||
 						   (allegato.isAllegatoGenerico() && bp.isSuperUtente()) ||
-						   (allegato.isCurriculumVincitore() || allegato.isProgetto()))) {
+						   (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isProgetto()))) {
 		isRODettaglio = procedura==null||allegato==null||!allegato.isToBeCreated()||
 						!allegato.isAllegatoValido()||
 						procedura.getFaseProcesso().compareTo(Incarichi_proceduraBulk.FASE_PUBBLICAZIONE)==0||
@@ -59,7 +58,7 @@
 
 <script language="JavaScript">
 function doScaricaFile() {	
-	doPrint('<%=(allegato==null ? null : JSPUtils.getAppRoot(request) + allegato.getDownloadUrl())%>');
+	doPrint('<%=(allegato==null?null:allegato.getDownloadUrl())%>');
 }
 </script>
 
@@ -71,11 +70,11 @@ function doScaricaFile() {
 	</tr>
     <% if (allegato==null || allegato.getTipo_archivio()!=null) {%>
 	    <% if (allegato!=null && allegato.getTipo_archivio()!=null &&
-	    	  (allegato.isBando() || allegato.isContratto() || allegato.isCurriculumVincitore())) {%>
+	    	  (allegato.isBando() || allegato.isContratto() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) {%>
 		<tr>
 			<td colspan=5>
 			<div class="Group card m-2 border-warning"><table>
-				<% if (allegato.isContratto() || allegato.isCurriculumVincitore()) { %>
+				<% if (allegato.isContratto() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel" style="color:red">Attenzione:</span>
 			    </td>
@@ -89,7 +88,7 @@ function doScaricaFile() {
 					</span>
 				</td></tr>
 				<% } %>
- 				<% if (allegato.isBando() || allegato.isContratto() || allegato.isCurriculumVincitore()) { %>
+ 				<% if (allegato.isBando() || allegato.isContratto() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel" style="color:red">Attenzione:</span>
 			    </td>
