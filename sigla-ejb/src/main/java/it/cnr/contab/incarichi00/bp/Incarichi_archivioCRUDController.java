@@ -93,6 +93,10 @@ public class Incarichi_archivioCRUDController extends it.cnr.jada.util.action.Si
 		add(actioncontext);
 		((Incarichi_archivioBulk)getModel()).setTipo_archivio(Incarichi_archivioBulk.TIPO_CURRICULUM_VINCITORE);
 	}		
+	public void addAggiornamentoCurriculumVincitore(ActionContext actioncontext) throws BusinessProcessException {
+		add(actioncontext);
+		((Incarichi_archivioBulk)getModel()).setTipo_archivio(Incarichi_archivioBulk.TIPO_AGGIORNAMENTO_CURRICULUM_VINCITORE);
+	}
 	public void addProgetto(ActionContext actioncontext) throws BusinessProcessException {
 		add(actioncontext);
 		((Incarichi_archivioBulk)getModel()).setTipo_archivio(Incarichi_archivioBulk.TIPO_PROGETTO);

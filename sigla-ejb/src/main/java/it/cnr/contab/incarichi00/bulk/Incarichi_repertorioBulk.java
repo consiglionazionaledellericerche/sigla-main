@@ -22,10 +22,14 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.ValidationException;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -433,6 +437,15 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 			}
 		}
 		return null;
+	}
+	public List<Incarichi_repertorio_archivioBulk> getAggiornamentiCurriculumVincitore(){
+		return Optional.ofNullable((BulkList<Incarichi_repertorio_archivioBulk>)getArchivioAllegati())
+				.map(BulkList::stream)
+				.orElse(Stream.empty())
+				.filter(Incarichi_repertorio_archivioBulk.class::isInstance)
+				.map(Incarichi_repertorio_archivioBulk.class::cast)
+				.filter(el->el.isAggiornamentoCurriculumVincitore())
+				.collect(Collectors.toList());
 	}
 	public Incarichi_repertorio_archivioBulk getDecretoDiNomina(){
 		for ( Iterator i = getArchivioAllegati().iterator(); i.hasNext(); ) {
