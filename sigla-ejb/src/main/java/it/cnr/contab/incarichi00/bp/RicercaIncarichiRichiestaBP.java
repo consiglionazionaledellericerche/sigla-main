@@ -764,6 +764,30 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 			}
 		}
 
+		if (incarico.getIncaricoRepertorio().getAggiornamentiCurriculumVincitore()!=null && 
+				!incarico.getIncaricoRepertorio().getAggiornamentiCurriculumVincitore().isEmpty()){
+			Element elementAggiornamentiCurriculum = xmldoc.createElement(getTagRadice()+":aggiornamenti_curriculum");
+			for (Iterator<Incarichi_repertorio_archivioBulk> i = incarico.getIncaricoRepertorio().getAggiornamentiCurriculumVincitore().iterator();i.hasNext();){
+				Incarichi_repertorio_archivioBulk aggCurriculum = i.next();
+				
+				Element elementAggiornamento = xmldoc.createElement(getTagRadice()+":aggiornamento_curriculum");
+
+				Element elementLink = xmldoc.createElement(getTagRadice()+":url_aggiornamento_curriculum");
+				dato = "genericdownload/"+aggCurriculum.getNome_file()+"?nodeRef="+aggCurriculum.getCms_node_ref(); 
+				elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+				elementAggiornamento.appendChild(elementLink);
+
+				Element elementDataAggiornamento = xmldoc.createElement(getTagRadice()+":data_aggiornamento_curriculum");
+				dato = formatter.format(aggCurriculum.getDacr()).toString();
+				Node nodeDataAggiornamento = xmldoc.createTextNode(dato!=null?dato:"");
+				elementDataAggiornamento.appendChild(nodeDataAggiornamento);
+				elementAggiornamento.appendChild(elementDataAggiornamento);
+
+				elementAggiornamentiCurriculum.appendChild(elementAggiornamento);
+			}
+			elementRichiesta.appendChild(elementAggiornamentiCurriculum);
+		}
+
 		if (incarico.getIncarichi_repertorio_rapp_detColl()!=null && !incarico.getIncarichi_repertorio_rapp_detColl().isEmpty()){
 			Element elementAltriRapporti = xmldoc.createElement(getTagRadice()+":altrirapporti");
 		
