@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
+import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+
 /**
  * Remote interface for Enterprise Bean: CNRINCARICHI00_EJB_IncarichiProceduraComponentSession
  */
@@ -24,4 +28,5 @@ List getIncarichiForMigrateFromDBToCMIS(it.cnr.jada.UserContext param0, Integer 
 void migrateAllegatiFromDBToCMIS(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 List getIncarichiForMergeWithCMIS(it.cnr.jada.UserContext param0, Integer param1, Long param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.util.List<String> mergeAllegatiWithCMIS(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+void archiviaAllegati(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }
