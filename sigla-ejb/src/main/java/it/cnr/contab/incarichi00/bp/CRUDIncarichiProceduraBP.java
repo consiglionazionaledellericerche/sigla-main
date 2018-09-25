@@ -439,7 +439,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								innerDelete = innerDelete || Optional.ofNullable(getModel())
 										.filter(Incarichi_archivioBulk.class::isInstance)
 										.map(Incarichi_archivioBulk.class::cast)
-										.filter(el->el.isCurriculumVincitore())
+										.filter(el->el.isCurriculumVincitore() || el.isAggiornamentoCurriculumVincitore())
 										.isPresent();
 							}
 						}
@@ -724,12 +724,19 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"btn btn-sm btn-secondary btn-outline-secondary",
 								isFromBootstrap);
 
+						innerDelete = innerDelete || Optional.ofNullable(getModel())
+								.filter(Incarichi_archivioBulk.class::isInstance)
+								.map(Incarichi_archivioBulk.class::cast)
+								.filter(el->el.isToBeCreated())
+								.filter(el->el.isAggiornamentoCurriculumVincitore())
+								.isPresent();
+
 						if (((CRUDIncarichiProceduraBP)getParentController().getParentController()).isSuperUtente() ||
 								((CRUDIncarichiProceduraBP)getParentController().getParentController()).isUtenteAbilitatoModificaAllegatoCurriculum()) {
 							innerDelete = innerDelete || Optional.ofNullable(getModel())
 															.filter(Incarichi_archivioBulk.class::isInstance)
 															.map(Incarichi_archivioBulk.class::cast)
-															.filter(el->el.isCurriculumVincitore())
+															.filter(el->el.isCurriculumVincitore()||el.isAggiornamentoCurriculumVincitore())
 															.isPresent();
 						}
 					}
