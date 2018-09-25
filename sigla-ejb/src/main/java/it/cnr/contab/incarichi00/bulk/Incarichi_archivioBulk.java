@@ -53,6 +53,7 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 		tipo_archivioKeys.put(TIPO_BANDO,"Avviso da pubblicare");
 		tipo_archivioKeys.put(TIPO_CONTRATTO,"Contratto");
 		tipo_archivioKeys.put(TIPO_CURRICULUM_VINCITORE,"Curriculum vincitore");
+		tipo_archivioKeys.put(TIPO_AGGIORNAMENTO_CURRICULUM_VINCITORE,"Aggiornamento Curriculum vincitore");
 		tipo_archivioKeys.put(TIPO_DECRETO_DI_NOMINA,"Decreto di nomina");
 		tipo_archivioKeys.put(TIPO_DECISIONE_A_CONTRATTARE,"Decisione a contrattare");
 		tipo_archivioKeys.put(TIPO_ATTO_ESITO_CONTROLLO,"Esito Controllo Corte Conti");
