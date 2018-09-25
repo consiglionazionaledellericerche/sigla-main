@@ -70,25 +70,26 @@ function doScaricaFile() {
 	</tr>
     <% if (allegato==null || allegato.getTipo_archivio()!=null) {%>
 	    <% if (allegato!=null && allegato.getTipo_archivio()!=null &&
-	    	  (allegato.isBando() || allegato.isContratto() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) {%>
+	    	  (allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) {%>
 		<tr>
 			<td colspan=5>
 			<div class="Group card m-2 border-warning"><table>
-				<% if (allegato.isContratto() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()) { %>
+				<% if (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel" style="color:red">Attenzione:</span>
 			    </td>
 			    <td valign=top>
 			    	<span class="FormLabel">
 					al fine di rispettare le norme in materia di tutela dei dati personali, <%if (!bp.getParentRoot().isBootstrap()) { %><br><% } %>
-					prima di allegare il file del contratto da pubblicare sul sito internet istituzionale del CNR <%if (!bp.getParentRoot().isBootstrap()) { %><br><% } %>
-					e' necessario verificare che lo stesso esponga <b><i><u>esclusivamente</u></i></b> i seguenti dati personali: <br>
-					<b><i>Nome, Cognome, Luogo e Data di nascita, Codice Fiscale</i></b> <br>
-					Ogni altro dato personale dovrà essere <b><i>"<u>oscurato</u>"</i></b><br><br>
+					prima di allegare il file del curriculum da pubblicare sul sito internet istituzionale del CNR <%if (!bp.getParentRoot().isBootstrap()) { %><br><% } %>
+					in base alle disposizioni sulla trasparenza, e' necessario verificare che lo stesso esponga solo <b><i><u>dati personali minimi necessari</u></i></b> per le finalità della trasparenza.
+					<br><br>
+					<b><i>Si raccomanda di oscurare il codice fiscale, eventuali recapiti, la firma autografa e ogni altro dato utilizzabile per furti di identità</i></b>
+					<br><br>
 					</span>
 				</td></tr>
 				<% } %>
- 				<% if (allegato.isBando() || allegato.isContratto() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()) { %>
+ 				<% if (allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel" style="color:red">Attenzione:</span>
 			    </td>
@@ -96,8 +97,23 @@ function doScaricaFile() {
 			    	<span class="FormLabel">
 					ai fini della pubblicazione sul sito internet istituzionale del CNR, <i><u>si raccomanda di usare file in formato PDF</u></i><%if (!bp.getParentRoot().isBootstrap()) { %><br><% } %> 
 					e di <i><u>controllare sempre</u></i>, dopo il salvataggio, la leggibilità dell'allegato utilizzando il bottone "Apri file"<%if (!bp.getParentRoot().isBootstrap()) { %><br><% } %>
+					<br><br>
 					</span>
 				</td></tr>
+				<% } %>
+ 				<% if (allegato.isAggiornamentoCurriculumVincitore()) { %>
+				<tr>
+					<td valign=top>
+				    	<span class="FormLabel" style="color:red">Attenzione:</span>
+				    </td>
+				    <td valign=top>
+				    	<span class="FormLabel">
+						In caso di inserimento di una <b><i>integrazione/aggiornamento</i></b> dei dati personali contenuti nel curriculum presentato 
+						dall’interessato al momento dell’incarico e già pubblicato, si raccomanda l’inserimento di un nuovo documento, datato e 
+						distinto dal precedente curriculum che resterà comunque invariato.
+						</span>
+					</td>
+				</tr>
 				<% } %>
 			</table></div>
 			</td>
