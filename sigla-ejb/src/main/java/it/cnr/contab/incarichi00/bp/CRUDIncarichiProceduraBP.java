@@ -1562,6 +1562,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				Utility.createIncarichiRepertorioComponentSession().salvaDefinitivo(context.getUserContext(), (OggettoBulk)procedura.getIncarichi_repertorioValidiColl().get(0));
 
 			setModel(context, (Incarichi_proceduraBulk)createComponentSession().inizializzaBulkPerModifica(context.getUserContext(), getModel()));
+//			((IncarichiProceduraComponentSession)createComponentSession()).archiviaAllegati(context.getUserContext(), (Incarichi_proceduraBulk)getModel());
 		}
 		catch(Exception e)
 		{
@@ -1668,6 +1669,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				Utility.createIncarichiRepertorioComponentSession().annullaDefinitivo(context.getUserContext(), (OggettoBulk)procedura.getIncarichi_repertorioValidiColl().get(0));
 
 			setModel(context, (Incarichi_proceduraBulk)createComponentSession().inizializzaBulkPerModifica(context.getUserContext(), getModel()));
+//			((IncarichiProceduraComponentSession)createComponentSession()).archiviaAllegati(context.getUserContext(), (Incarichi_proceduraBulk)getModel());			
 		}
 		catch(Exception e)
 		{
