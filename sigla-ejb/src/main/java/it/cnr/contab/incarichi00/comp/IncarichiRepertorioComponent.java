@@ -925,6 +925,17 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                         contrattiService.addAspect(nodeAllegato, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
                         nodeAddAspect.add(nodeAllegato);
                     }
+					if (nodeAllegato!=null) {
+						if (incarico_repertorio.isIncaricoAnnullato() || incarico_repertorio.isIncaricoProvvisorio() || 
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+							contrattiService.setInheritedPermission(nodeAllegato, false);
+						else if (allegato.isBando())
+							contrattiService.setInheritedPermission(nodeAllegato, true);
+						else if (incarico_repertorio.isIncaricoDefinitivo() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+							contrattiService.setInheritedPermission(nodeAllegato, true);
+						else
+							contrattiService.setInheritedPermission(nodeAllegato, false);
+					}                    
                 }
             }
         } catch (Exception e) {
@@ -963,6 +974,17 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                         contrattiService.removeAspect(nodeAllegato, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
                         nodeRemoveAspect.add(nodeIncarico);
                     }
+					if (nodeAllegato!=null) {
+						if (incarico_repertorio.isIncaricoAnnullato() || incarico_repertorio.isIncaricoProvvisorio() || 
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+							contrattiService.setInheritedPermission(nodeAllegato, false);
+						else if (allegato.isBando())
+							contrattiService.setInheritedPermission(nodeAllegato, true);
+						else if (incarico_repertorio.isIncaricoDefinitivo() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+							contrattiService.setInheritedPermission(nodeAllegato, true);
+						else
+							contrattiService.setInheritedPermission(nodeAllegato, false);
+					}                    
                 }
             }
         } catch (Exception e) {
