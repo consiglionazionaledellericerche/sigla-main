@@ -601,6 +601,27 @@
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="configurazione_cnr_incarichi_mod_curriculum">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/configurazione_cnr_incarichi_mod_curriculum.csv" quotchar="&quot;" separator="," tableName="configurazione_cnr">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_unita_funzionale" name="cd_unita_funzionale" type="STRING"/>
+            <column header="cd_chiave_primaria" name="cd_chiave_primaria" type="STRING"/>
+            <column header="cd_chiave_secondaria" name="cd_chiave_secondaria" type="STRING"/>
+            <column header="val01" name="val01" type="STRING"/>
+            <column header="val02" name="val02" type="STRING"/>
+            <column header="val03" name="val03" type="STRING"/>
+            <column header="val04" name="val04" type="STRING"/>
+            <column header="im01" name="im01" type="NUMERIC"/>
+            <column header="im02" name="im02" type="NUMERIC"/>
+            <column header="dt01" name="dt01" type="${date.type}"/>
+            <column header="dt02" name="dt02" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>    
 </databaseChangeLog>
 
 
