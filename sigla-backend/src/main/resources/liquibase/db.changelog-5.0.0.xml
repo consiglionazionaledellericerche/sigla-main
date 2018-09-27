@@ -695,6 +695,29 @@
         </createTable>
         <addPrimaryKey columnNames="id" constraintName="tipo_finanziamento_pkey" tableName="tipo_finanziamento"/>
     </changeSet>
+    <changeSet author="marco.spasiano" id="insert_base_tipo_finanziamento">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_finanziamento.csv" quotchar="&quot;" separator="," tableName="tipo_finanziamento">
+            <column header="id" name="id" type="NUMERIC"/>
+            <column header="codice" name="codice" type="STRING"/>
+            <column header="descrizione" name="descrizione" type="STRING"/>
+            <column header="fl_piano_eco_fin" name="fl_piano_eco_fin" type="STRING"/>
+            <column header="fl_ass_cat_voci_ind" name="fl_ass_cat_voci_ind" type="STRING"/>
+            <column header="fl_ass_cat_voci_det" name="fl_ass_cat_voci_det" type="STRING"/>
+            <column header="fl_ass_cat_voci_altro" name="fl_ass_cat_voci_altro" type="STRING"/>
+            <column header="fl_prev_ent_spesa" name="fl_prev_ent_spesa" type="STRING"/>
+            <column header="fl_rip_costi_pers" name="fl_rip_costi_pers" type="STRING"/>
+            <column header="fl_quad_pdgp_econom" name="fl_quad_pdgp_econom" type="STRING"/>
+            <column header="fl_contr_val_prog" name="fl_contr_val_prog" type="STRING"/>
+            <column header="fl_piano_rend" name="fl_piano_rend" type="STRING"/>
+            <column header="fl_var_cons" name="fl_var_cons" type="STRING"/>
+            <column header="fl_inc_cons" name="fl_inc_cons" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
 </databaseChangeLog>
 
 
