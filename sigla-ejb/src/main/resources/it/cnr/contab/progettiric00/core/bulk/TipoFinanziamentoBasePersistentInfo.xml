@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="TipoFinanziamentoBase"
+	keyClassName="TipoFinanziamentoKey"
+	homeClassName="TipoFinanziamentoHome">
+	<defaultColumnMap
+		tableName="TIPO_FINANZIAMENTO">
+		<columnMapping
+			columnName="CODICE"
+			propertyName="codice"
+			sqlTypeName="VARCHAR"
+			columnSize="25"
+			nullable="false" />
+		<columnMapping
+			columnName="DESCRIZIONE"
+			propertyName="descrizione"
+			sqlTypeName="VARCHAR"
+			columnSize="1000"
+			nullable="false" />
+		<columnMapping
+			columnName="FL_PIANO_ECO_FIN"
+			propertyName="flPianoEcoFin"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_ASS_CAT_VOCI_IND"
+			propertyName="flAssCatVociInd"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_ASS_CAT_VOCI_DET"
+			propertyName="flAssCatVociDet"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_ASS_CAT_VOCI_ALTRO"
+			propertyName="flAssCatVociAltro"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_PREV_ENT_SPESA"
+			propertyName="flPrevEntSpesa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_RIP_COSTI_PERS"
+			propertyName="flRipCostiPers"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_QUAD_PDGP_ECONOM"
+			propertyName="flQuadPdgpEconom"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_CONTR_VAL_PROG"
+			propertyName="flContrValProg"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_PIANO_REND"
+			propertyName="flPianoRend"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_VAR_CONS"
+			propertyName="flVarCons"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_INC_CONS"
+			propertyName="flIncCons"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="codice" />
+	<persistentProperty
+		name="descrizione" />
+	<persistentProperty
+		name="flPianoEcoFin" />
+	<persistentProperty
+		name="flAssCatVociInd" />
+	<persistentProperty
+		name="flAssCatVociDet" />
+	<persistentProperty
+		name="flAssCatVociAltro" />
+	<persistentProperty
+		name="flPrevEntSpesa" />
+	<persistentProperty
+		name="flRipCostiPers" />
+	<persistentProperty
+		name="flQuadPdgpEconom" />
+	<persistentProperty
+		name="flContrValProg" />
+	<persistentProperty
+		name="flPianoRend" />
+	<persistentProperty
+		name="flVarCons" />
+	<persistentProperty
+		name="flIncCons" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>
