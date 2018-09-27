@@ -621,7 +621,80 @@
             <column header="utuv" name="utuv" type="STRING"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
-    </changeSet>    
+    </changeSet>
+
+    <changeSet author="marco.spasiano" id="create-table-tipologia-finanziamento">
+        <createTable remarks="Tabella contenente le tipologie di finanziamento." tableName="tipo_finanziamento">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codice" remarks="Codice identificativo dell tipo di finanziamento dominio (
+                'FOE'=FOE,
+                'FOE_PRO'=FOE progetti,
+                'AUT'=Autofinanziamento,
+                'AUT_AREE'=Autofinanziamento AREE,
+                'RIM'=Rimborsi da soggetti terzi,
+                'COF'=Cofinanziamento,
+                'FIN'=Finanziamento,
+                'ATT_COM'=Attività Commerciale pura,
+                'ATT_COMM_TAR'=Attività commerciale a tariffario
+                )" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descrizione" remarks="Descrizione della tipologia di finanziamento" type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_piano_eco_fin" remarks="Piano economico-finanziario" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_ass_cat_voci_ind" remarks="Associazione categoria-voci per il personale tempo indeterminato consentita" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_ass_cat_voci_det" remarks="Associazione categoria-voci per il personale tempo determinato consentita" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_ass_cat_voci_altro" remarks="Associazione categoria-voci per altre spese del personale" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_prev_ent_spesa" remarks="Previsione Entrata/Spesa consentita" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_rip_costi_pers" remarks="Ripartizione costi del personale" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_quad_pdgp_econom" remarks="Quadratura pdgp con quota annuale del piano economico" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_contr_val_prog" remarks="Controllo validità del Progetto" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_piano_rend" remarks="Piano delle rendicontazioni" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_var_cons" remarks="Variazioni consentite" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_inc_cons" remarks="Incassi consentiti" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="id" constraintName="tipo_finanziamento_pkey" tableName="tipo_finanziamento"/>
+    </changeSet>
 </databaseChangeLog>
 
 
