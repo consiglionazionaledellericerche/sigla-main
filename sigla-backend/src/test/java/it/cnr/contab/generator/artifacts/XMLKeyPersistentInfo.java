@@ -26,7 +26,7 @@ public class XMLKeyPersistentInfo extends XMLBase {
         openTag(Tags.SQL_PERSISTENT_INFO);
 
         String classe = names.getJavaClass(ArtifactNames.JAVA_KEY);
-        addAttribute(Tags.PERSISTENT_CLASS_NAME, classe);
+        addAttribute(Tags.PERSISTENT_CLASS_NAME, bean.getPackageName().concat(".").concat(classe));
 
         closeTag();
 
@@ -68,8 +68,6 @@ public class XMLKeyPersistentInfo extends XMLBase {
         }
 
         closeTag(Tags.SQL_PERSISTENT_INFO);
-
-        write();
     }
 
 }
