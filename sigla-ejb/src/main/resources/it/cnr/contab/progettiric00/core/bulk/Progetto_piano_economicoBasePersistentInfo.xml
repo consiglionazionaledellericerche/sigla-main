@@ -13,8 +13,15 @@
 			columnScale="2"
 			nullable="false" />
 		<columnMapping
-			columnName="IM_SPESA"
-			propertyName="im_spesa"
+			columnName="IM_SPESA_FINANZIATO"
+			propertyName="im_spesa_finanziato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_SPESA_COFINANZIATO"
+			propertyName="im_spesa_cofinanziato"
 			sqlTypeName="DECIMAL"
 			columnSize="15"
 			columnScale="2"
@@ -60,7 +67,9 @@
 	<persistentProperty
 		name="im_entrata" />
 	<persistentProperty
-		name="im_spesa" />
+		name="im_spesa_finanziato" />
+	<persistentProperty
+		name="im_spesa_cofinanziato" />
 	<persistentProperty
 		name="fl_ctrl_disp" />	
 	<persistentProperty

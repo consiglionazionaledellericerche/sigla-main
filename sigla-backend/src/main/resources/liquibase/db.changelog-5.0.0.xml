@@ -695,6 +695,95 @@
         </createTable>
         <addPrimaryKey columnNames="id" constraintName="tipo_finanziamento_pkey" tableName="tipo_finanziamento"/>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter_elemento_voce_add_piano_economico">
+        <addColumn tableName="elemento_voce">
+            <column name="cd_unita_piano" type="varchar(30)" remarks="Unità Organizzativa proprietaria della voce piano economico."/>
+            <column name="cd_voce_piano" type="varchar(10)" remarks="Codice identificativo voce piano economico."/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="cd_unita_piano,cd_voce_piano" baseTableName="elemento_voce" constraintName="fk_elemento_voce_piaeco" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_unita_organizzativa,cd_voce_piano" referencedTableName="voce_piano_economico_prg"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter_linea_attivita_drop_piano_economico">
+        <dropForeignKeyConstraint baseTableName="ass_linea_attivita_esercizio" constraintName="fk_ass_linea_attivita_eserc01"/>
+
+        <dropColumn columnName="cd_unita_piano" tableName="ass_linea_attivita_esercizio"/>
+        <dropColumn columnName="cd_voce_piano" tableName="ass_linea_attivita_esercizio"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="create_table_ass_progetto_piaeco_voce">
+        <createTable remarks="Tabella contenente le associazioni tra il piano economico di un progetto e le voci di bilancio." tableName="ass_progetto_piaeco_voce">
+            <column name="pg_progetto" remarks="Progressivo del progetto di ricerca" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_unita_organizzativa" remarks="Unitא Organizzativa proprietaria della voce piano economico." type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_voce_piano" remarks="Codice identificativo voce piano economico" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_piano" remarks="Esercizio piano economico. Se =0 indica il progetto complessivo." type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_voce" remarks="Esercizio di riferimento" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ti_appartenenza" remarks="Definisce l'appartenenza (CNR o CdS) delle voci del piano finanziario di riferimento&#10;&#10;Dominio:&#10;C=CNR&#10;D=CDS" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ti_gestione" remarks="Definisce la sezione (entrata o spesa) delle voci del piano finanziario di riferimento.&#10;&#10;Dominio:&#10;E=Entrate&#10;S=Spese" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_elemento_voce" remarks="Codice dell'elemento voce" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="pg_progetto,cd_unita_organizzativa,cd_voce_piano,esercizio_piano,esercizio_voce,ti_appartenenza,ti_gestione,cd_elemento_voce" constraintName="ass_progetto_piaeco_voce_pkey" tableName="ass_progetto_piaeco_voce"/>
+
+        <addForeignKeyConstraint baseColumnNames="pg_progetto,cd_unita_organizzativa,cd_voce_piano,esercizio_piano" baseTableName="ass_progetto_piaeco_voce" constraintName="fk_ass_progetto_piaeco_voce01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_progetto,cd_unita_organizzativa,cd_voce_piano,esercizio_piano" referencedTableName="progetto_piano_economico"/>
+
+        <addForeignKeyConstraint baseColumnNames="esercizio_voce,ti_appartenenza,ti_gestione,cd_elemento_voce" baseTableName="ass_progetto_piaeco_voce" constraintName="fk_ass_progetto_piaeco_voce02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,ti_appartenenza,ti_gestione,cd_elemento_voce" referencedTableName="elemento_voce"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter_progetto_other_field_modify_column">
+        <dropColumn columnName="fl_piano_economico" tableName="progetto_other_field"/>
+
+        <addColumn tableName="progetto_other_field">
+            <column name="id_tipo_finanziamento" type="INT" remarks="Chiave Primaria tipo finanziamento."/>
+            <column name="stato" remarks="Stato del progetto" type="CHAR(3)"/>
+            <column name="dt_inizio" remarks="Data inizio del progetto." type="${date.type}"/>
+            <column name="dt_fine" remarks="Data fine del progetto." type="${date.type}"/>
+            <column name="dt_proroga" remarks="Data proroga del progetto." type="${date.type}"/>
+            <column name="im_finanziato" remarks="Importo finanziario del progetto" type="numeric(15, 2)"/>
+            <column name="im_cofinanziato" remarks="Importo cofinanziario del progetto" type="numeric(15, 2)"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="id_tipo_finanziamento" baseTableName="progetto_other_field" constraintName="fk_progetto_other_field01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tipo_finanziamento"/>
+    </changeSet>    
+
+    <changeSet author="raffaele.pagano" id="alter_progetto_piano_economico">
+        <renameColumn oldColumnName="im_spesa" newColumnName="im_spesa_finanziato" tableName="progetto_piano_economico"/>
+        <addColumn tableName="progetto_piano_economico">
+            <column name="im_spesa_cofinanziato" remarks="Importo spesa cofinanziario del progetto" type="numeric(15, 2)"/>
+        </addColumn>
+    </changeSet>    
 </databaseChangeLog>
 
 

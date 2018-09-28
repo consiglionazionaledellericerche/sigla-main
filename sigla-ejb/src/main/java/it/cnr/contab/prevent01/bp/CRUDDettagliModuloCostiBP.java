@@ -54,7 +54,7 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 	   protected void validate(ActionContext actioncontext, it.cnr.jada.bulk.OggettoBulk oggettobulk) throws it.cnr.jada.bulk.ValidationException {
 		   if (getParametriEnte().getFl_prg_pianoeco() && ((Pdg_modulo_speseBulk)oggettobulk).getVoce_piano_economico()==null) {
 				Progetto_sipBulk progetto = ((Pdg_modulo_speseBulk)oggettobulk).getPdg_modulo_costi().getPdg_modulo().getProgetto();
-				if (progetto!=null && progetto.getFl_piano_economico())
+				if (progetto!=null && progetto.getTipoFinanziamento().getFlPianoEcoFin())
 					throw new it.cnr.jada.bulk.ValidationException("Il progetto selezionato richiede l'indicazione della Voce del Piano Economico.");
 		   }
 	   };

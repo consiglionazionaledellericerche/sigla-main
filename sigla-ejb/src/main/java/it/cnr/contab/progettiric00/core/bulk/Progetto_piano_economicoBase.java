@@ -6,8 +6,11 @@ public class Progetto_piano_economicoBase extends Progetto_piano_economicoKey im
 	// IM_ENTRATA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal im_entrata;
 
-	// IM_SPESA DECIMAL(15,2) NOT NULL
-	private java.math.BigDecimal im_spesa;
+	// IM_SPESA_FINANZIATO DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal im_spesa_finanziato;
+
+	// IM_SPESA_COFINANZIATO DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal im_spesa_cofinanziato;
 
 	//FL_CTRL-DISP CHAR(1 BYTE) DEFAULT 'Y' NOT NULL
 	private java.lang.Boolean fl_ctrl_disp;
@@ -28,12 +31,20 @@ public class Progetto_piano_economicoBase extends Progetto_piano_economicoKey im
 		this.im_entrata = im_entrata;
 	}
 	
-	public java.math.BigDecimal getIm_spesa() {
-		return im_spesa;
+	public java.math.BigDecimal getIm_spesa_finanziato() {
+		return im_spesa_finanziato;
 	}
 	
-	public void setIm_spesa(java.math.BigDecimal im_spesa) {
-		this.im_spesa = im_spesa;
+	public void setIm_spesa_finanziato(java.math.BigDecimal im_spesa_finanziato) {
+		this.im_spesa_finanziato = im_spesa_finanziato;
+	}
+
+	public java.math.BigDecimal getIm_spesa_cofinanziato() {
+		return im_spesa_cofinanziato;
+	}
+	
+	public void setIm_spesa_cofinanziato(java.math.BigDecimal im_spesa_cofinanziato) {
+		this.im_spesa_cofinanziato = im_spesa_cofinanziato;
 	}
 	
 	public java.lang.Boolean getFl_ctrl_disp() {

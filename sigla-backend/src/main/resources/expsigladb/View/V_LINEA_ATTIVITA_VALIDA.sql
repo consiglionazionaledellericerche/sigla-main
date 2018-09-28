@@ -2,7 +2,7 @@
 --  DDL for View V_LINEA_ATTIVITA_VALIDA
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_LINEA_ATTIVITA_VALIDA" ("ESERCIZIO", "ESERCIZIO_INIZIO", "CD_LINEA_ATTIVITA", "PG_PROGETTO", "CD_PROGETTO", "CD_PROGETTO_PADRE", "DS_LINEA_ATTIVITA", "CD_CENTRO_RESPONSABILITA", "CD_INSIEME_LA", "TI_GESTIONE", "DENOMINAZIONE", "CD_GRUPPO_LINEA_ATTIVITA", "CD_FUNZIONE", "CD_NATURA", "CD_TIPO_LINEA_ATTIVITA", "CD_CDR_COLLEGATO", "CD_LA_COLLEGATO", "ESERCIZIO_FINE", "DACR", "UTCR", "DUVA", "UTUV", "PG_VER_REC", "CD_RESPONSABILE_TERZO", "FL_LIMITE_ASS_OBBLIG", "CD_COFOG", "CD_PROGRAMMA", "CD_MISSIONE", "CD_UNITA_PIANO", "CD_VOCE_PIANO") AS 
+  CREATE OR REPLACE FORCE VIEW "V_LINEA_ATTIVITA_VALIDA" ("ESERCIZIO", "ESERCIZIO_INIZIO", "CD_LINEA_ATTIVITA", "PG_PROGETTO", "CD_PROGETTO", "CD_PROGETTO_PADRE", "DS_LINEA_ATTIVITA", "CD_CENTRO_RESPONSABILITA", "CD_INSIEME_LA", "TI_GESTIONE", "DENOMINAZIONE", "CD_GRUPPO_LINEA_ATTIVITA", "CD_FUNZIONE", "CD_NATURA", "CD_TIPO_LINEA_ATTIVITA", "CD_CDR_COLLEGATO", "CD_LA_COLLEGATO", "ESERCIZIO_FINE", "DACR", "UTCR", "DUVA", "UTUV", "PG_VER_REC", "CD_RESPONSABILE_TERZO", "FL_LIMITE_ASS_OBBLIG", "CD_COFOG", "CD_PROGRAMMA", "CD_MISSIONE") AS 
   SELECT
 --
 --
@@ -62,8 +62,7 @@
           a.cd_funzione, a.cd_natura, a.cd_tipo_linea_attivita,
           a.cd_cdr_collegato, a.cd_la_collegato, a.esercizio_fine, a.dacr,
           a.utcr, a.duva, a.utuv, a.pg_ver_rec, a.cd_responsabile_terzo,
-          a.fl_limite_ass_obblig, a.cd_cofog, a.cd_programma, a.cd_missione,
-          c.cd_unita_piano, c.cd_voce_piano
+          a.fl_limite_ass_obblig, a.cd_cofog, a.cd_programma, a.cd_missione
      FROM linea_attivita a,
           ass_linea_attivita_esercizio c,
           v_esercizi b,
