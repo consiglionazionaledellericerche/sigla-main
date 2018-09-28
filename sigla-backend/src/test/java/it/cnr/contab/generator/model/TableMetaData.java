@@ -8,14 +8,13 @@ import it.cnr.contab.generator.artifacts.ForeignKey;
 import it.cnr.contab.generator.artifacts.Tags;
 import it.cnr.contab.generator.properties.Preferences;
 import it.cnr.contab.generator.util.DatabaseUtil;
+import oracle.jdbc.driver.OracleConnection;
+import oracle.jdbc.driver.T4CXAConnection;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 
 /**
@@ -40,8 +39,16 @@ public class TableMetaData {
         if (dbUtil == null) {
             throw new Exception("TableMetaData: la database utility e' NULL");
         }
-        // senza questo setting il commento alle colonne � null
+        // senza questo setting il commento alle colonne è null
         Connection oc = (Connection) dbUtil.getConnection();
+
+        Optional.ofNullable(oc)
+                .filter(OracleConnection.class::isInstance)
+                .map(OracleConnection.class::cast)
+                .ifPresent(oracleConnection -> {
+                    oracleConnection.setRemarksReporting(true);
+                });
+
         //oc.setRemarksReporting(true);
 
         String schema = bean.getSchema();
