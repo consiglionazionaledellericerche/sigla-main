@@ -8,6 +8,8 @@ public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
 	
 	private Pdg_missioneBulk pdgMissione;
 	
+	private TipoFinanziamentoBulk tipoFinanziamento;
+	
 	public Progetto_other_fieldBulk() {
 		super();
 	}
@@ -54,5 +56,26 @@ public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
 	@Override
 	public void setCd_missione(String cd_missione) {
 		this.getPdgMissione().setCd_missione(cd_missione);
+	}
+	
+	public TipoFinanziamentoBulk getTipoFinanziamento() {
+		return tipoFinanziamento;
+	}
+	
+	public void setTipoFinanziamento(TipoFinanziamentoBulk tipoFinanziamento) {
+		this.tipoFinanziamento = tipoFinanziamento;
+	}
+	
+	@Override
+	public Long getIdTipoFinanziamento() {
+		TipoFinanziamentoBulk tipoFinanziamento = this.getTipoFinanziamento();
+		if (tipoFinanziamento == null)
+			return null;
+		return super.getIdTipoFinanziamento();
+	}
+	
+	@Override
+	public void setIdTipoFinanziamento(Long idTipoFinanziamento) {
+		this.getTipoFinanziamento().setId(idTipoFinanziamento);
 	}
 }

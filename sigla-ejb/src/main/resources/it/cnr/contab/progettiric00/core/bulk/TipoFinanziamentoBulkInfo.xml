@@ -196,4 +196,16 @@
 		name="flVarCons" />
 	<columnFieldProperty
 		name="flIncCons" />
+		
+	<form
+		name="searchtool" >
+		<formFieldProperty
+			name="codice"
+			inputType="TEXT"
+			inputSize="25" />
+		<formFieldProperty
+			name="descrizione"
+			inputType="TEXT"
+			inputSize="50" />
+	</form>		
 </bulkInfo>

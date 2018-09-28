@@ -3,6 +3,7 @@ package it.cnr.contab.progettiric00.action;
 import it.cnr.contab.progettiric00.bp.ProgettoAlberoBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
@@ -198,5 +199,15 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
                 ubiPadre);
     }
 
+    public it.cnr.jada.action.Forward doBringBackSearchTipoFinanziamentoOf(ActionContext context, ProgettoBulk progetto, TipoFinanziamentoBulk tipoFinanziamento) throws java.rmi.RemoteException {
+        if (tipoFinanziamento != null && !tipoFinanziamento.getFlPianoEcoFin()) {
+            if (progetto.isDettagliPianoEconomicoPresenti()) {
+                setErrorMessage(context, "Attenzione: non è possibile selezionare un tipo finanziamento che non prevede il piano economico essendo presente un piano economico sul progetto.");
+            	return context.findDefaultForward();
+            }
+        }
+    	progetto.getOtherField().setTipoFinanziamento(tipoFinanziamento);
+        return context.findDefaultForward();
+    }
 }
 

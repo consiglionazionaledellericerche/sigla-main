@@ -248,7 +248,6 @@ public class CRUDLinea_attivitaAction extends it.cnr.jada.util.action.CRUDAction
 
     public it.cnr.jada.action.Forward doBlankSearchFind_nodo_padre_2016(it.cnr.jada.action.ActionContext context, it.cnr.contab.config00.latt.bulk.WorkpackageBulk linea_attivita) {
         linea_attivita.setProgetto2016(new ProgettoBulk());
-        linea_attivita.setVocePianoEconomico2016(null);
         if (linea_attivita.getModulo2015() == null || linea_attivita.getModulo2015().getCd_progetto() == null)
             linea_attivita.setPdgProgramma(null);
         return context.findDefaultForward();
@@ -368,7 +367,6 @@ public class CRUDLinea_attivitaAction extends it.cnr.jada.util.action.CRUDAction
                 linea.setPdgProgramma((Pdg_programmaBulk) bp.createComponentSession().findByPrimaryKey(context.getUserContext(), progetto.getProgettopadre().getPdgProgramma()));
             }
             linea.setProgetto2016(progetto);
-            linea.setVocePianoEconomico2016(null);
             return context.findDefaultForward();
         } catch (Throwable e) {
             return handleException(context, e);
