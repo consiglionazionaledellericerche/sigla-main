@@ -4,6 +4,10 @@
  */
 package it.cnr.contab.progettiric00.core.bulk;
 
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.action.CRUDBP;
+
 import java.util.Dictionary;
 
 public class TipoFinanziamentoBulk extends TipoFinanziamentoBase {
@@ -47,5 +51,26 @@ public class TipoFinanziamentoBulk extends TipoFinanziamentoBase {
      **/
     public TipoFinanziamentoBulk(Long id) {
         super(id);
+    }
+
+    @Override
+    public OggettoBulk initializeForInsert(CRUDBP crudbp, ActionContext actioncontext) {
+        setFlPianoEcoFin(null);
+        setFlAssCatVociInd(null);
+        setFlAssCatVociDet(null);
+        setFlAssCatVociAltro(null);
+        setFlPrevEntSpesa(null);
+        setFlRipCostiPers(null);
+        setFlQuadPdgpEconom(null);
+        setFlContrValProg(null);
+        setFlPianoRend(null);
+        setFlVarCons(null);
+        setFlIncCons(null);
+        return super.initializeForInsert(crudbp, actioncontext);
+    }
+
+    @Override
+    public OggettoBulk initializeForSearch(CRUDBP crudbp, ActionContext actioncontext) {
+        return super.initializeForSearch(crudbp, actioncontext);
     }
 }
