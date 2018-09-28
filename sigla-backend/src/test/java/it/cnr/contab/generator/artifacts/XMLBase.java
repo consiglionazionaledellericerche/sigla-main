@@ -78,17 +78,6 @@ public abstract class XMLBase implements ArtifactContents {
         }
     }
 
-    // commentato perch� la scrittura la fa il programma esterno (ver2.0)
-    protected void write() throws Exception {
-//		the_file = the_file.replace('.', '_');		
-//		File file = new File(the_file + ".xml");
-//		FileOutputStream   fout = new FileOutputStream(file);
-//		OutputStreamWriter out  = new OutputStreamWriter(fout);
-//		out.write(document.toString());
-//		out.flush();
-//		out.close();
-    }
-
     /**
      * ritorna il contenuto generato (ver2.0)
      */
