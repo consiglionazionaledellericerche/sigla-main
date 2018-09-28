@@ -15,20 +15,10 @@
 			columnName="PG_PROGETTO"
 			propertyName="progetto.pg_progetto"
 			fetchOnly="false" />
-		<columnMapping
-			columnName="CD_UNITA_PIANO"
-			propertyName="voce_piano_economico.unita_organizzativa.cd_unita_organizzativa"
-			fetchOnly="false" />
-		<columnMapping
-			columnName="CD_VOCE_PIANO"
-			propertyName="voce_piano_economico.cd_voce_piano"
-			fetchOnly="false" />
 	</defaultColumnMap>
 
 	<persistentProperty
 		name="linea_attivita" />
 	<persistentProperty
 		name="progetto" />
-	<persistentProperty
-		name="voce_piano_economico" />
 </SQLPersistentInfo>

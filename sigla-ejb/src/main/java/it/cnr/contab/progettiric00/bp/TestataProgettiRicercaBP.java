@@ -1,8 +1,11 @@
 package it.cnr.contab.progettiric00.bp;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Optional;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,11 +13,13 @@ import org.springframework.beans.factory.InitializingBean;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_finanziatoreBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_uoBulk;
+import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
@@ -26,8 +31,11 @@ import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteBulkTree;
 import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IProgettoBP{
@@ -67,6 +75,8 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		};
 	};
 
+	private SimpleDetailCRUDController crudPianoEconomicoVoceBilancioAnnoCorrente = new ProgettoPianoEconomicoVoceBilancioCRUDController( "PianoEconomicoVoceBilancioAnnoCorrente", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", crudPianoEconomicoAnnoCorrente);
+	private SimpleDetailCRUDController crudPianoEconomicoVoceBilancioAltriAnni = new ProgettoPianoEconomicoVoceBilancioCRUDController( "PianoEconomicoVoceBilancioAltriAnni", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", crudPianoEconomicoAltriAnni);	
 	/**
 	 * TestataProgettiRicercaBP constructor comment.
 	 */
@@ -87,14 +97,16 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
 			setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
 			Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
-			setFlInformix(parEnte.getFl_informix().booleanValue());
+        	setFlInformix(parEnte.getFl_informix().booleanValue());
 			setFlPrgPianoEconomico(parEnte.getFl_prg_pianoeco().booleanValue());
 			Unita_organizzativaBulk uo = (Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findUOByCodice(actioncontext.getUserContext(), CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext()));
-			isUoCdsCollegata = uo.getFl_uo_cds() ;
+			isUoCdsCollegata = uo.getFl_uo_cds();
 		}catch(Throwable e) {
 			throw new BusinessProcessException(e);
 		}
 		super.init(config, actioncontext);
+		if (isFlInformix())
+			resetForSearch(actioncontext);
 	}
 	public BulkInfo getBulkInfo()
 	{
@@ -359,63 +371,51 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	public void basicEdit(ActionContext actioncontext, OggettoBulk oggettobulk, boolean flag)
 			throws BusinessProcessException {
 		super.basicEdit(actioncontext, oggettobulk, flag);
-		if (isFlInformix() || ((ProgettoBulk)oggettobulk).getCd_unita_organizzativa() ==null ||
+		if (((ProgettoBulk)oggettobulk).getCd_unita_organizzativa() ==null ||
 			!((ProgettoBulk)oggettobulk).getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())))
 			this.setStatus(VIEW);
-		
 	}
 	
 	public String[][] getTabs(HttpSession session) {
 		String uo = CNRUserContext.getCd_unita_organizzativa(HttpActionContext.getUserContext(session));
+		ProgettoBulk progetto = (ProgettoBulk)this.getModel();
+		
+		TreeMap<Integer, String[]> hash = new TreeMap<Integer, String[]>();
+		int i=0;
 
+		hash.put(i++, new String[]{"tabTestata","Testata","/progettiric00/progetto_ricerca_testata_commesse.jsp" });
 		
 	    if (this.isFlNuovoPdg() && 
 	    	 (isUoCdsCollegata || 
-	    	  (((ProgettoBulk)this.getModel()).getCd_unita_organizzativa()!=null &&
-	    	   ((ProgettoBulk)this.getModel()).getCd_unita_organizzativa().equals(uo)))) {
-	    	if (this.isFlPrgPianoEconomico() && ((ProgettoBulk)this.getModel()).getFl_piano_economico()) {
-		    	return new String[][] {
-		               { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_commesse.jsp" },
-		               { "tabPianoEconomico","Piano Economico","/progettiric00/progetto_piano_economico.jsp" } ,
-		               { "tabDettagliFinanziatori","Finanziatori","/progettiric00/progetto_ricerca_dettagliFinanziatori.jsp" },
-		               { "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" },
-		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" }};
-	    	} else {
-		    	return new String[][] {
-		               { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_commesse.jsp" },
-		               { "tabDettagliFinanziatori","Finanziatori","/progettiric00/progetto_ricerca_dettagliFinanziatori.jsp" },
-		               { "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" },
-		               { "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" }};
+	    	  (progetto.getCd_unita_organizzativa()!=null &&
+	    			  progetto.getCd_unita_organizzativa().equals(uo)))) {
+
+	    	if (this.isFlPrgPianoEconomico() && (progetto.isAttivoPianoEconomicoOf() || progetto.isDettagliPianoEconomicoPresenti()))
+	    		hash.put(i++, new String[]{"tabPianoEconomico","Piano Economico","/progettiric00/progetto_piano_economico.jsp" });
+
+	    	if (!this.isFlInformix()) {
+	    		hash.put(i++, new String[]{ "tabDettagliFinanziatori","Finanziatori","/progettiric00/progetto_ricerca_dettagliFinanziatori.jsp" });
+	    		hash.put(i++, new String[]{ "tabDettagliPartner_esterni","Partner esterni","/progettiric00/progetto_ricerca_dettagliPartner_esterni.jsp" });
+	    		hash.put(i++, new String[]{ "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" });
 	    	}
-	    } else {
-	  	   return new String[][] {
-	               { "tabTestata","Testata","/progettiric00/progetto_ricerca_testata_commesse.jsp" }};
 	    } 
+		String[][] tabs = new String[i][3];
+		for (int j = 0; j < i; j++) {
+			tabs[j]=new String[]{hash.get(j)[0],hash.get(j)[1],hash.get(j)[2]};
+		}
+		return tabs;
 	}
 
 	public String[][] getTabsPianoEconomico() {
+		TreeMap<Integer, String[]> hash = new TreeMap<Integer, String[]>();
+		int i=0;
+
+		hash.put(i++, new String[]{ "tabProgettoPianoEconomicoTotale","Totali","/progettiric00/progetto_piano_economico_totale.jsp" });
+
 		ProgettoBulk progetto = (ProgettoBulk)this.getModel();
 
 		boolean existAnnoCorrente = false;
-		Integer annoInizio = 0, annoFine = 9999;
-
-		if (progetto.getDt_inizio()!=null) {
-			GregorianCalendar calIni = new GregorianCalendar();
-			calIni.setTime(progetto.getDt_inizio());
-			annoInizio = calIni.get(Calendar.YEAR);
-		}
-		if (progetto.getDt_fine()!=null) {
-			GregorianCalendar calFin = new GregorianCalendar();
-			calFin.setTime(progetto.getDt_fine());
-			annoFine = calFin.get(Calendar.YEAR);
-		}
-		if (progetto.getDt_proroga()!=null) {
-			GregorianCalendar calPrg = new GregorianCalendar();
-			calPrg.setTime(progetto.getDt_proroga());
-			if (annoFine<calPrg.get(Calendar.YEAR))
-				annoFine = calPrg.get(Calendar.YEAR);
-		}
-		if (annoInizio > progetto.getEsercizio() || annoFine < progetto.getEsercizio()) {
+		if (progetto.getAnnoInizioOf() > progetto.getEsercizio() || progetto.getAnnoFineOf() < progetto.getEsercizio()) {
 			//non sono nell'anno ma verifico se per caso non l'ho erronemanete caricato
 			if (progetto.getDettagliPianoEconomicoAnnoCorrente().size()>0)
 				existAnnoCorrente = true;
@@ -423,14 +423,15 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			existAnnoCorrente = true;
 
 		if (existAnnoCorrente)
-	    	return new String[][] {
-				{ "tabProgettoPianoEconomicoTotale","Totali","/progettiric00/progetto_piano_economico_totale.jsp" },
-				{ "tabProgettoPianoEconomicoAnnoCorrente","Limiti Anno "+progetto.getEsercizio(),"/progettiric00/progetto_piano_economico_anno_corrente.jsp" },
-				{ "tabProgettoPianoEconomicoAltriAnni","Limiti Altri Anni","/progettiric00/progetto_piano_economico_altri_anni.jsp" }};
-    	else
-	    	return new String[][] {
-				{ "tabProgettoPianoEconomicoTotale","Totali","/progettiric00/progetto_piano_economico_totale.jsp" },
-				{ "tabProgettoPianoEconomicoAltriAnni","Limiti Annui","/progettiric00/progetto_piano_economico_altri_anni.jsp" }};
+			hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAnnoCorrente","Anno "+progetto.getEsercizio(),"/progettiric00/progetto_piano_economico_anno_corrente.jsp" });
+			
+		hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAltriAnni","Altri Anni","/progettiric00/progetto_piano_economico_altri_anni.jsp" });
+
+		String[][] tabs = new String[i][3];
+		for (int j = 0; j < i; j++) {
+			tabs[j]=new String[]{hash.get(j)[0],hash.get(j)[1],hash.get(j)[2]};
+		}
+		return tabs;
 	}
 
 	@Override
@@ -456,19 +457,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		}
 		return super.initializeModelForSearch(actioncontext, oggettobulk);
 	}
-	/*
-	public String getLabelCd_progetto_padre() {
-		if (this.isFlNuovoPdg())
-			return ProgettoBulk.LABEL_AREA_PROGETTUALE;
-		return ProgettoBulk.LABEL_COMMESSA;
-	}
-	
-	public String getLabelCd_progetto() {
-		if (this.isFlNuovoPdg())
-			return ProgettoBulk.LABEL_PROGETTO;
-		return ProgettoBulk.LABEL_MODULO;
-	}
-	 */
+
 	public SimpleDetailCRUDController getCrudPianoEconomicoTotale() {
 		return crudPianoEconomicoTotale;
 	}
@@ -479,6 +468,14 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	
 	public SimpleDetailCRUDController getCrudPianoEconomicoAltriAnni() {
 		return crudPianoEconomicoAltriAnni;
+	}
+
+	public SimpleDetailCRUDController getCrudPianoEconomicoVoceBilancioAnnoCorrente() {
+		return crudPianoEconomicoVoceBilancioAnnoCorrente;
+	}
+	
+	public SimpleDetailCRUDController getCrudPianoEconomicoVoceBilancioAltriAnni() {
+		return crudPianoEconomicoVoceBilancioAltriAnni;
 	}
 	
 	@Override
@@ -491,4 +488,48 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 					(this.isFlNuovoPdg()?"l' "+ProgettoBulk.LABEL_AREA_PROGETTUALE:"la "+ProgettoBulk.LABEL_COMMESSA)+"!");	                	
 		super.validate(actioncontext);
 	}
+	
+	@Override
+	public boolean isNewButtonHidden() {
+		return super.isNewButtonHidden() || this.isFlInformix();
+	}
+	
+	@Override
+	public boolean isDeleteButtonHidden() {
+		return super.isDeleteButtonHidden() || this.isFlInformix();
+	}
+
+	/*	
+	@Override
+	public boolean isSaveButtonEnabled() {
+		return super.isSaveButtonEnabled() || (this.isFlInformix() && this.isViewing()); 
+	}
+	
+	@Override
+	public void save(ActionContext actioncontext) throws ValidationException, BusinessProcessException {
+		if (this.isFlPrgPianoEconomico() && this.isViewing()) {
+			setStatus(EDIT);
+			super.save(actioncontext);
+			setStatus(VIEW);
+		} else
+			super.save(actioncontext);
+	}
+
+	@Override
+	public boolean isEditable() {
+		return super.isEditable() && (!this.isFlInformix() || "tabPianoEconomico".equals(getTab("tab")));
+	}
+
+	@Override
+	public void setTab(String tabName, String pageName) {
+		super.setTab(tabName, pageName);
+		if (!this.isFlInformix() || "tabPianoEconomico".equals(pageName) || "tabProgettoPianoEconomico".equals(tabName)) {
+			setEditable(Boolean.TRUE);
+			setStatus(EDIT);
+		} else {
+			setEditable(Boolean.FALSE);
+			setStatus(VIEW);
+		}		
+	}
+	 */
 }

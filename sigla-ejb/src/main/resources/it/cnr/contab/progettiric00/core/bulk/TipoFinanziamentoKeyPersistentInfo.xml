@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <SQLPersistentInfo
-	persistentClassName="TipoFinanziamentoKey">
+	persistentClassName="it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoKey">
 	<defaultColumnMap
 		tableName="TIPO_FINANZIAMENTO">
 		<columnMapping

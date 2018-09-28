@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="elemento_voce"
+		property="elemento_voce"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Voce di Bilancio" />
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="elemento_voce.cd_elemento_voce"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"		
+		label="Codice" />
+	<fieldProperty
+		name="ds_elemento_voce"
+		property="elemento_voce.ds_elemento_voce"
+		maxLength="100"
+		inputSize="100"
+		inputType="ROTEXT"
+		label="Descrizione"/>
+
+	<formFieldProperty name="elemento_voce" />
+	<formFieldProperty name="cd_elemento_voce"/>
+	<formFieldProperty name="ds_elemento_voce"/>
+	
+	<columnFieldProperty name="elemento_voce" />
+
+	<columnSet name="voce_bilancio">
+		<columnFieldProperty
+			name="cd_elemento_voce"/>
+		<columnFieldProperty
+			name="ds_elemento_voce"/>
+	</columnSet>
+	
+</bulkInfo>
