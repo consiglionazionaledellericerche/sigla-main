@@ -29,10 +29,10 @@ public class XMLBulkPersistentInfo extends XMLBase {
         openTag(Tags.SQL_PERSISTENT_INFO);
 
         String classe = names.getJavaClass(ArtifactNames.JAVA_BULK);
-        addAttribute(Tags.PERSISTENT_CLASS_NAME, classe);
+        addAttribute(Tags.PERSISTENT_CLASS_NAME, bean.getPackageName().concat(".").concat(classe));
 
         classe = names.getJavaClass(ArtifactNames.JAVA_HOME);
-        addAttribute(Tags.HOME_CLASS_NAME, classe);
+        addAttribute(Tags.HOME_CLASS_NAME, bean.getPackageName().concat(".").concat(classe));
 
         closeTag();
 
@@ -70,6 +70,5 @@ public class XMLBulkPersistentInfo extends XMLBase {
             }
         }
         closeTag(Tags.SQL_PERSISTENT_INFO);
-        write();
     }
 }

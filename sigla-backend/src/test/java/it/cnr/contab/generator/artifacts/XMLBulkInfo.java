@@ -188,8 +188,6 @@ public class XMLBulkInfo extends XMLBase {
             }
         }
         closeTag(Tags.BULK_INFO);
-
-        write();
     }
 
 }
