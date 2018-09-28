@@ -784,6 +784,119 @@
             <column name="im_spesa_cofinanziato" remarks="Importo spesa cofinanziario del progetto" type="numeric(15, 2)"/>
         </addColumn>
     </changeSet>    
+    <changeSet author="marco.spasiano" id="insert_base_tipo_finanziamento">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_finanziamento.csv" quotchar="&quot;" separator="," tableName="tipo_finanziamento">
+            <column header="id" name="id" type="NUMERIC"/>
+            <column header="codice" name="codice" type="STRING"/>
+            <column header="descrizione" name="descrizione" type="STRING"/>
+            <column header="fl_piano_eco_fin" name="fl_piano_eco_fin" type="STRING"/>
+            <column header="fl_ass_cat_voci_ind" name="fl_ass_cat_voci_ind" type="STRING"/>
+            <column header="fl_ass_cat_voci_det" name="fl_ass_cat_voci_det" type="STRING"/>
+            <column header="fl_ass_cat_voci_altro" name="fl_ass_cat_voci_altro" type="STRING"/>
+            <column header="fl_prev_ent_spesa" name="fl_prev_ent_spesa" type="STRING"/>
+            <column header="fl_rip_costi_pers" name="fl_rip_costi_pers" type="STRING"/>
+            <column header="fl_quad_pdgp_econom" name="fl_quad_pdgp_econom" type="STRING"/>
+            <column header="fl_contr_val_prog" name="fl_contr_val_prog" type="STRING"/>
+            <column header="fl_piano_rend" name="fl_piano_rend" type="STRING"/>
+            <column header="fl_var_cons" name="fl_var_cons" type="STRING"/>
+            <column header="fl_inc_cons" name="fl_inc_cons" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="accessi_tipo_finanziamento">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGTIPOFINANZIAM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione Tipo Finanziamento"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGTIPOFINANZIAV"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Visualizzazione Tipo Finanziamento"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGTIPOFINANZIAM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDTipoFinanziamentoBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGTIPOFINANZIAV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDTipoFinanziamentoBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.TIPO_FINANZIAMENTO"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Tipo Finanziamento"/>
+            <column name="pg_ordinamento" type="BIGINT" value="146"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="3"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="TIPO_FINANZIAMENTO"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG"/>
+            <column name="url_icona" type="VARCHAR(200)" value="leaf.gif"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.TIPO_FINANZIAMENTO.M"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGTIPOFINANZIAM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDTipoFinanziamentoBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.TIPO_FINANZIAMENTO"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.TIPO_FINANZIAMENTO.V"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGTIPOFINANZIAM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDTipoFinanziamentoBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="20"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.TIPO_FINANZIAMENTO"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
 
 

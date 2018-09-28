@@ -27,27 +27,6 @@ public class ArtifactGenerator {
         this.bean = bean;
     }
 
-    public static void main(String[] args) {
-        GeneratorBean bean = new GeneratorBean();
-        bean.setPackageName("it.cnr.contab.progettiric00.core.bulk");
-        bean.setSourceFolder("/home/mspasiano/");
-        bean.setTargetXMLFolder("/home/mspasiano/");
-        bean.setPrefix("TipoFinanziamento");
-        bean.setTable("TIPO_FINANZIAMENTO");
-        bean.setDriver("oracle.jdbc.driver.OracleDriver");
-        bean.setUrl("jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF");
-        bean.setSchema("PCIR009");
-        bean.setUser("PCIR009");
-        bean.setPassword("dbform");
-        ArtifactGenerator artifactGenerator = new ArtifactGenerator(bean);
-        try {
-            DatabaseUtil.getInstance().openConnection(bean);
-            artifactGenerator.generate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void generate() throws InvocationTargetException, InterruptedException {
         try {
             doGeneration();
