@@ -11,6 +11,7 @@ public class Generator {
         bean.setSourceFolder("/home/mspasiano/");
         bean.setTargetXMLFolder("/home/mspasiano/");
         bean.setPrefix("TipoFinanziamento");
+
         bean.setTable("TIPO_FINANZIAMENTO");
         bean.setDriver("oracle.jdbc.driver.OracleDriver");
         bean.setUrl("jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF");
