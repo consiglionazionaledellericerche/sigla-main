@@ -71,6 +71,11 @@
 	<tr>
 	  <% bp.getController().writeFormField(out,"find_classificazione_voci");%>
 	</tr>				
+	<% if (bp.isFlPrgPianoeco()) { %>
+	<tr>
+	  <% bp.getController().writeFormField(out,"voce_piano_economico");%>
+	</tr>
+	<% } %>			
 	</table>
 	
 	<table class="Panel card p-3">
@@ -116,7 +121,7 @@
 	</tr>	
 	<tr>
 	  <% bp.getController().writeFormField(out,"fl_missioni");%>
-	</tr>	
+	</tr>
 	</table>		
 	<% if (!bp.isFlNuovoPdg()) ((EV_cds_spese_capitoloBulk) bp.getModel()).writeTable( out, ((EV_cds_spese_capitoloBulk) bp.getModel()).getAssociazioni() ); %>
 

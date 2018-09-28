@@ -167,7 +167,7 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		label="Tipo"
-		nullable="false" />
+		nullable="true" />
 
 	<fieldProperty
 		name="dt_inizio"
@@ -682,15 +682,57 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="fase"
 		layout="HORIZONTAL" />
-	<fieldProperty
-		name="fl_piano_economico"
-		property="fl_piano_economico"
-		inputType="CHECKBOX"
-		readonlyProperty="ROFlPianoEconomico"
-		label="Attiva Piano Economico" 
-		command="doDefault"/>
-		
 
+	<fieldProperty
+		name="statoOf"
+		property="otherField.stato"
+		label="Stato"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"/>
+	<fieldProperty
+		name="tipoFinanziamentoOf"
+		property="otherField.tipoFinanziamento"
+		label="Tipo Finanziamento"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="dtInizioOf"
+		property="otherField.dtInizio"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		label="Data Inizio" />
+	<fieldProperty
+		name="dtFineOf"
+		property="otherField.dtFine"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		label="Data Fine" />
+	<fieldProperty
+		name="dtProrogaOf"
+		property="otherField.dtProroga"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		label="Data Proroga" />
+	<fieldProperty
+		name="imFinanziatoOf"
+		property="otherField.imFinanziato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Finanziato" />
+	<fieldProperty
+		name="imCofinanziatoOf"
+		property="otherField.imCofinanziato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Cofinanziato" />
+		
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -840,7 +882,19 @@
 		name="tipoFaseToSearch" />
 
 	<formFieldProperty
-		name="fl_piano_economico" />
+		name="statoOf" />
+	<formFieldProperty
+		name="tipoFinanziamentoOf" />
+	<formFieldProperty
+		name="dtInizioOf" />
+	<formFieldProperty
+		name="dtFineOf" />
+	<formFieldProperty
+		name="dtProrogaOf" />
+	<formFieldProperty
+		name="imFinanziatoOf" />
+	<formFieldProperty
+		name="imCofinanziatoOf" />
 
 	<columnFieldProperty
 		name="livello" />

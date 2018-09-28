@@ -1,7 +1,11 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Dictionary;
+import java.util.GregorianCalendar;
+import java.util.Optional;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
@@ -16,6 +20,7 @@ import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaNuovoBP;
 import it.cnr.contab.progettiric00.tabrif.bulk.Tipo_progettoBulk;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.DateUtils;
 
 public class ProgettoBulk extends ProgettoBase {
 
@@ -961,30 +966,48 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 		return otherField;
 	}
 	
-	public Boolean getFl_piano_economico() {
-		return getOtherField()!=null && 
-			   getOtherField().getFl_piano_economico()!=null &&
-			   getOtherField().getFl_piano_economico();
-	}
-	
-	public void setFl_piano_economico(Boolean fl_piano_economico) {
-		if (getOtherField()==null) {
-			Progetto_other_fieldBulk bulk = new Progetto_other_fieldBulk(this.getPg_progetto());
-			bulk.setFl_piano_economico(Boolean.FALSE);
-			bulk.setToBeCreated();
-			setOtherField(bulk); 
-		}
-		if (getFl_piano_economico()!=null && fl_piano_economico!=null && 
-				getFl_piano_economico()!=fl_piano_economico) {
-			getOtherField().setFl_piano_economico(fl_piano_economico);
-			getOtherField().setToBeUpdated();	
-		}
-	}
-	
-	public boolean isROFlPianoEconomico() {
-		return Boolean.TRUE.equals(getFl_piano_economico()) &&
+	public boolean isROPianoEconomico() {
+		return Boolean.TRUE.equals(getOtherField().getTipoFinanziamento().getFlPianoEcoFin()) &&
 				!getDettagliPianoEconomicoTotale().isEmpty() &&
 				!getDettagliPianoEconomicoAnnoCorrente().isEmpty() &&
 				!getDettagliPianoEconomicoAltriAnni().isEmpty();
+	}
+	
+	public Integer getAnnoInizioOf() {
+		return Optional.ofNullable(this.getOtherField())
+				.flatMap(el->Optional.ofNullable(el.getDtInizio()))
+				.map(elDate->{
+					GregorianCalendar calendar = new GregorianCalendar();
+					calendar.setTime(elDate);
+					return calendar.get(Calendar.YEAR);
+				})
+				.orElse(0);
+	}		
+
+	public Integer getAnnoFineOf() {
+		return Optional.ofNullable(this.getOtherField())
+				.flatMap(el->{
+					Optional<Integer> anno = Optional.empty();
+					if (el.getDtFine()!=null || el.getDtProroga()!=null) {
+						GregorianCalendar calendar = new GregorianCalendar();
+						calendar.setTime(DateUtils.max(el.getDtFine(), el.getDtProroga()));
+						anno = Optional.of(calendar.get(Calendar.YEAR));
+					}
+					return anno;
+				})
+				.orElse(9999);
+	}
+
+	public boolean isAttivoPianoEconomicoOf() {
+		return Optional.ofNullable(this.getOtherField())
+				.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
+				.flatMap(el->Optional.ofNullable(el.getFlPianoEcoFin()))
+				.orElse(Boolean.FALSE);
+	}
+	
+	public boolean isDettagliPianoEconomicoPresenti() {
+		return !getDettagliPianoEconomicoAnnoCorrente().isEmpty() ||
+				!getDettagliPianoEconomicoAltriAnni().isEmpty() ||
+				!getDettagliPianoEconomicoTotale().isEmpty();
 	}
 }
