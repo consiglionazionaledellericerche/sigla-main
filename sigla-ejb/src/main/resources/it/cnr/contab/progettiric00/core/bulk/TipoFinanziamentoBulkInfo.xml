@@ -1,199 +1,203 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <bulkInfo>
 	<fieldProperty
-		name="id"
-		property="id"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="38"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		nullable="false"
-		label="id" />
+			name="id"
+			property="id"
+			inputType="TEXTAREA"
+			cols="60"
+			rows="5"
+			maxLength="38"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			nullable="false"
+			label="Chiave Primaria." />
 	<fieldProperty
-		name="codice"
-		property="codice"
-		inputType="TEXT"
-		inputSize="25"
-		maxLength="25"
-		enabledOnEdit="false"
-		nullable="false"
-		label="codice" />
+			name="codice"
+			property="codice"
+            inputType="SELECT"
+            inputSize="8"
+            keysProperty="codiceKeys"
+			maxLength="25"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Codice identificativo del tipo di finanziamento" />
 	<fieldProperty
-		name="descrizione"
-		property="descrizione"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="1000"
-		enabledOnEdit="false"
-		nullable="false"
-		label="descrizione" />
+			name="descrizione"
+			property="descrizione"
+			inputType="TEXTAREA"
+			cols="60"
+			rows="5"
+			maxLength="1000"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Descrizione della tipologia di finanziamento" />
 	<fieldProperty
-		name="flPianoEcoFin"
-		property="flPianoEcoFin"
-		inputType="CHECKBOX"
-		enabledOnEdit="false"
-		nullable="false"
-		label="flPianoEcoFin" />
+			name="flPianoEcoFin"
+			property="flPianoEcoFin"
+			inputType="CHECKBOX"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Piano economico-finanziario" />
 	<fieldProperty
-		name="flAssCatVociInd"
-		property="flAssCatVociInd"
-		inputType="CHECKBOX"
-		enabledOnEdit="false"
-		nullable="false"
-		label="flAssCatVociInd" />
+			name="flAssCatVociInd"
+			property="flAssCatVociInd"
+			inputType="CHECKBOX"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Associazione categoria-voci per il personale tempo indeterminato consentita" />
 	<fieldProperty
-		name="flAssCatVociDet"
-		property="flAssCatVociDet"
-		inputType="CHECKBOX"
-		enabledOnEdit="false"
-		nullable="false"
-		label="flAssCatVociDet" />
+			name="flAssCatVociDet"
+			property="flAssCatVociDet"
+			inputType="CHECKBOX"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Associazione categoria-voci per il personale tempo determinato consentita" />
 	<fieldProperty
-		name="flAssCatVociAltro"
-		property="flAssCatVociAltro"
-		inputType="CHECKBOX"
-		enabledOnEdit="false"
-		nullable="false"
-		label="flAssCatVociAltro" />
+			name="flAssCatVociAltro"
+			property="flAssCatVociAltro"
+			inputType="CHECKBOX"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Associazione categoria-voci per altre spese del personale" />
 	<fieldProperty
-		name="flPrevEntSpesa"
-		property="flPrevEntSpesa"
-		inputType="CHECKBOX"
-		enabledOnEdit="false"
-		nullable="false"
-		label="flPrevEntSpesa" />
+			name="flPrevEntSpesa"
+			property="flPrevEntSpesa"
+			inputType="CHECKBOX"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Previsione Entrata/Spesa consentita" />
 	<fieldProperty
-		name="flRipCostiPers"
-		property="flRipCostiPers"
-		inputType="CHECKBOX"
-		enabledOnEdit="false"
-		nullable="false"
-		label="flRipCostiPers" />
+			name="flRipCostiPers"
+			property="flRipCostiPers"
+			inputType="CHECKBOX"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Ripartizione costi del personale" />
 	<fieldProperty
-		name="flQuadPdgpEconom"
-		property="flQuadPdgpEconom"
-		inputType="CHECKBOX"
-		enabledOnEdit="false"
-		nullable="false"
-		label="flQuadPdgpEconom" />
+			name="flQuadPdgpEconom"
+			property="flQuadPdgpEconom"
+			inputType="CHECKBOX"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Quadratura pdgp con quota annuale del piano economico" />
 	<fieldProperty
-		name="flContrValProg"
-		property="flContrValProg"
-		inputType="CHECKBOX"
-		enabledOnEdit="false"
-		nullable="false"
-		label="flContrValProg" />
+			name="flContrValProg"
+			property="flContrValProg"
+			inputType="CHECKBOX"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Controllo validità del Progetto" />
 	<fieldProperty
-		name="flPianoRend"
-		property="flPianoRend"
-		inputType="CHECKBOX"
-		enabledOnEdit="false"
-		nullable="false"
-		label="flPianoRend" />
+			name="flPianoRend"
+			property="flPianoRend"
+			inputType="CHECKBOX"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Piano delle rendicontazioni" />
 	<fieldProperty
-		name="flVarCons"
-		property="flVarCons"
-		inputType="CHECKBOX"
-		enabledOnEdit="false"
-		nullable="false"
-		label="flVarCons" />
+			name="flVarCons"
+			property="flVarCons"
+			inputType="CHECKBOX"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Variazioni consentite" />
 	<fieldProperty
-		name="flIncCons"
-		property="flIncCons"
-		inputType="CHECKBOX"
-		enabledOnEdit="false"
-		nullable="false"
-		label="flIncCons" />
+			name="flIncCons"
+			property="flIncCons"
+			inputType="CHECKBOX"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Incassi consentiti" />
 	<form
-		name="searchtool">
+			name="searchtool">
 		<formFieldProperty
-			name="id" />
+                name="codice"
+                inputType="TEXT"/>
+        <formFieldProperty
+                name="descrizione"
+                inputType="TEXT"/>
 	</form>
 	<formFieldProperty
-		name="id" />
+			name="codice" />
 	<formFieldProperty
-		name="codice" />
+			name="descrizione" />
 	<formFieldProperty
-		name="descrizione" />
+			name="flPianoEcoFin" />
 	<formFieldProperty
-		name="flPianoEcoFin" />
+			name="flAssCatVociInd" />
 	<formFieldProperty
-		name="flAssCatVociInd" />
+			name="flAssCatVociDet" />
 	<formFieldProperty
-		name="flAssCatVociDet" />
+			name="flAssCatVociAltro" />
 	<formFieldProperty
-		name="flAssCatVociAltro" />
+			name="flPrevEntSpesa" />
 	<formFieldProperty
-		name="flPrevEntSpesa" />
+			name="flRipCostiPers" />
 	<formFieldProperty
-		name="flRipCostiPers" />
+			name="flQuadPdgpEconom" />
 	<formFieldProperty
-		name="flQuadPdgpEconom" />
+			name="flContrValProg" />
 	<formFieldProperty
-		name="flContrValProg" />
+			name="flPianoRend" />
 	<formFieldProperty
-		name="flPianoRend" />
+			name="flVarCons" />
 	<formFieldProperty
-		name="flVarCons" />
-	<formFieldProperty
-		name="flIncCons" />
+			name="flIncCons" />
+
 	<findFieldProperty
-		name="id" />
+			name="id" />
 	<findFieldProperty
-		name="codice" />
+			name="codice" />
 	<findFieldProperty
-		name="descrizione" />
+			name="descrizione" />
 	<findFieldProperty
-		name="flPianoEcoFin" />
+			name="flPianoEcoFin" />
 	<findFieldProperty
-		name="flAssCatVociInd" />
+			name="flAssCatVociInd" />
 	<findFieldProperty
-		name="flAssCatVociDet" />
+			name="flAssCatVociDet" />
 	<findFieldProperty
-		name="flAssCatVociAltro" />
+			name="flAssCatVociAltro" />
 	<findFieldProperty
-		name="flPrevEntSpesa" />
+			name="flPrevEntSpesa" />
 	<findFieldProperty
-		name="flRipCostiPers" />
+			name="flRipCostiPers" />
 	<findFieldProperty
-		name="flQuadPdgpEconom" />
+			name="flQuadPdgpEconom" />
 	<findFieldProperty
-		name="flContrValProg" />
+			name="flContrValProg" />
 	<findFieldProperty
-		name="flPianoRend" />
+			name="flPianoRend" />
 	<findFieldProperty
-		name="flVarCons" />
+			name="flVarCons" />
 	<findFieldProperty
-		name="flIncCons" />
+			name="flIncCons" />
 	<columnFieldProperty
-		name="id" />
+			name="id" />
 	<columnFieldProperty
-		name="codice" />
+			name="codice" />
 	<columnFieldProperty
-		name="descrizione" />
+			name="descrizione" />
 	<columnFieldProperty
-		name="flPianoEcoFin" />
+			name="flPianoEcoFin" />
 	<columnFieldProperty
-		name="flAssCatVociInd" />
+			name="flAssCatVociInd" />
 	<columnFieldProperty
-		name="flAssCatVociDet" />
+			name="flAssCatVociDet" />
 	<columnFieldProperty
-		name="flAssCatVociAltro" />
+			name="flAssCatVociAltro" />
 	<columnFieldProperty
-		name="flPrevEntSpesa" />
+			name="flPrevEntSpesa" />
 	<columnFieldProperty
-		name="flRipCostiPers" />
+			name="flRipCostiPers" />
 	<columnFieldProperty
-		name="flQuadPdgpEconom" />
+			name="flQuadPdgpEconom" />
 	<columnFieldProperty
-		name="flContrValProg" />
+			name="flContrValProg" />
 	<columnFieldProperty
-		name="flPianoRend" />
+			name="flPianoRend" />
 	<columnFieldProperty
-		name="flVarCons" />
+			name="flVarCons" />
 	<columnFieldProperty
-		name="flIncCons" />
+			name="flIncCons" />
 </bulkInfo>
