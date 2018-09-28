@@ -12,9 +12,9 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 
-public class ProgettoPianoEconomicoCRUDController extends it.cnr.jada.util.action.SimpleDetailCRUDController {
+public class ProgettoPianoEconomicoVoceBilancioCRUDController extends it.cnr.jada.util.action.SimpleDetailCRUDController {
 
-	public ProgettoPianoEconomicoCRUDController(String name, Class modelClass, String listPropertyName, it.cnr.jada.util.action.FormController parent) {
+	public ProgettoPianoEconomicoVoceBilancioCRUDController(String name, Class modelClass, String listPropertyName, it.cnr.jada.util.action.FormController parent) {
 		super(name, modelClass, listPropertyName, parent);
 	}
 
@@ -32,12 +32,5 @@ public class ProgettoPianoEconomicoCRUDController extends it.cnr.jada.util.actio
 				throw new ValidationException(e.getMessage());
 			}
 		}
-	}
-	
-	@Override
-	public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
-		((Progetto_piano_economicoBulk)oggettobulk).setIm_entrata(BigDecimal.ZERO);
-		((Progetto_piano_economicoBulk)oggettobulk).setFl_ctrl_disp(Boolean.TRUE);
-		return super.addDetail(oggettobulk);
 	}
 }

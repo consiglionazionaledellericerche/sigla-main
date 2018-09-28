@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceKey" >
+	<defaultColumnMap
+		tableName="PROGETTO_PIANO_ECONOMICO" >
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="cd_unita_organizzativa"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" 
+			primary="true" />
+		<columnMapping
+			columnName="CD_VOCE_PIANO"
+			propertyName="cd_voce_piano"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_PIANO"
+			propertyName="esercizio_piano"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_VOCE"
+			propertyName="esercizio_voce"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+					
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_progetto" 
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_unita_organizzativa" 
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_voce_piano"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_piano" 
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_voce"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_appartenenza"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_gestione"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_elemento_voce"
+		partOfOid="true" />
+</SQLPersistentInfo>

@@ -325,12 +325,6 @@
 		enabledOnEdit="true"		
 		caseSensitiveSearch="false"/>	
 
-	<fieldProperty
-		name="voce_piano_economico2016"
-		property="vocePianoEconomico2016"
-		inputType="SEARCHTOOL"
-		formName="searchtool"
-		label="Voce del piano economico" />		
 	/*********************************************************/
 	
     <fieldProperty
@@ -565,8 +559,6 @@
 		name="cd_progetto2016"/>
 	<formFieldProperty
 		name="ds_progetto2016"/>
-	<formFieldProperty
-		name="voce_piano_economico2016" />
 
 	<columnFieldProperty
 		name="cd_linea_attivita"

@@ -23,7 +23,6 @@ public class WorkpackageBulk extends WorkpackageBase implements CostantiTi_gesti
 	protected it.cnr.contab.progettiric00.core.bulk.ProgettoBulk progetto;
 	protected it.cnr.contab.progettiric00.core.bulk.ProgettoBulk modulo2015;
 	protected it.cnr.contab.progettiric00.core.bulk.ProgettoBulk progetto2016;
-	protected Voce_piano_economico_prgBulk vocePianoEconomico2016;
 	protected TerzoBulk responsabile;
 	public boolean utilizzata2015 = Boolean.FALSE;
 	public boolean utilizzata2016 = Boolean.FALSE;
@@ -616,14 +615,6 @@ public void validate() throws ValidationException
 	
 	public void setProgetto2016(it.cnr.contab.progettiric00.core.bulk.ProgettoBulk progetto2016) {
 		this.progetto2016 = progetto2016;
-	}
-	
-	public Voce_piano_economico_prgBulk getVocePianoEconomico2016() {
-		return vocePianoEconomico2016;
-	}
-	
-	public void setVocePianoEconomico2016(Voce_piano_economico_prgBulk vocePianoEconomico2016) {
-		this.vocePianoEconomico2016 = vocePianoEconomico2016;
 	}
 	
 	public void setUtilizzata2015(boolean utilizzata2015) {
