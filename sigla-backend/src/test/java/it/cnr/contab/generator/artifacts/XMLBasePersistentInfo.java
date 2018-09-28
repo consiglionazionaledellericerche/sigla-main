@@ -28,13 +28,13 @@ public class XMLBasePersistentInfo extends XMLBase {
         openTag(Tags.SQL_PERSISTENT_INFO);
 
         String classe = names.getJavaClass(ArtifactNames.JAVA_BASE);
-        addAttribute(Tags.PERSISTENT_CLASS_NAME, classe);
+        addAttribute(Tags.PERSISTENT_CLASS_NAME, bean.getPackageName().concat(".").concat(classe));
 
         classe = names.getJavaClass(ArtifactNames.JAVA_KEY);
-        addAttribute(Tags.KEY_CLASS_NAME, classe);
+        addAttribute(Tags.KEY_CLASS_NAME, bean.getPackageName().concat(".").concat(classe));
 
         classe = names.getJavaClass(ArtifactNames.JAVA_HOME);
-        addAttribute(Tags.HOME_CLASS_NAME, classe);
+        addAttribute(Tags.HOME_CLASS_NAME, bean.getPackageName().concat(".").concat(classe));
 
         closeTag();
 
@@ -93,7 +93,5 @@ public class XMLBasePersistentInfo extends XMLBase {
         }
 
         closeTag(Tags.SQL_PERSISTENT_INFO);
-
-        write();
     }
 }
