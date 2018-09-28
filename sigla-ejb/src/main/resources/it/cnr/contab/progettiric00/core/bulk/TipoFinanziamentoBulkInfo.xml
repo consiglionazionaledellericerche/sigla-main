@@ -80,6 +80,7 @@
     <fieldProperty
             name="flContrValProg"
             property="flContrValProg"
+            enabledOnSearch="true"
             inputType="CHECKBOX"
             nullable="false"
             label="Controllo validità del Progetto"/>
