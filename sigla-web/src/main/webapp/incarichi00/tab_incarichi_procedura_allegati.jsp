@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8"
-	import="it.cnr.jada.action.*,
+	import="it.cnr.jada.util.jsp.*,
+	    it.cnr.jada.action.*,
 		it.cnr.jada.util.action.*,
 		it.cnr.contab.incarichi00.bulk.*,
 		it.cnr.contab.incarichi00.bp.*"
@@ -58,7 +59,7 @@
 
 <script language="JavaScript">
 function doScaricaFile() {	
-	doPrint('<%=(allegato==null?null:allegato.getDownloadUrl())%>');
+	doPrint('<%=(allegato==null?null:JSPUtils.getAppRoot(request) + allegato.getDownloadUrl())%>');
 }
 </script>
 
