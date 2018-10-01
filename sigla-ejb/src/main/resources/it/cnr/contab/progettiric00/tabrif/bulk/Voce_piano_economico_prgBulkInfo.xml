@@ -55,6 +55,12 @@
 		caseSensitiveSearch="false"
 		nullable="false" />
 	<fieldProperty
+		name="tipologia"
+		property="tipologia"
+		keysProperty= "tipoVoceEconomicaKeys"		
+		inputType="TEXT"		
+		label="Tipologia" />
+	<fieldProperty
 		name="fl_valido"
 		property="fl_valido"
 		inputType="CHECKBOX"
@@ -64,6 +70,7 @@
 	<formFieldProperty name="ds_voce_piano" />
 	<formFieldProperty name="cd_unita_organizzativa" />
 	<formFieldProperty name="ds_unita_organizzativa" />
+	<formFieldProperty name="tipologia" />
 	<formFieldProperty name="fl_valido" />
 	
 	<columnFieldProperty name="cd_voce_piano" />
