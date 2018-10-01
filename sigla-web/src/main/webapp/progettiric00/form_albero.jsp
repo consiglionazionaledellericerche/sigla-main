@@ -12,15 +12,18 @@
 </head>
 <body class="Form">
 <%   bp.openFormWindow(pageContext); %>
+
+    <table class="Panel w-100 card p-2 mb-2" width="100%">
+        <tr>
+            <td class="w-25">
+                <% bp.writeHistoryLabel(pageContext); %>
+            </td>
+            <td width="100%" class="w-100">
+                <% bp.writeHistoryField(pageContext,"cd_progetto"); %>
+            </td>
+        </tr>
+    </table>
 	<table class="Panel" width="100%" height="100%">
-		<tr>
-			<td>
-				<% bp.writeHistoryLabel(pageContext); %>
-			</td>
-			<td width="100%">
-				<% bp.writeHistoryField(pageContext,"cd_progetto"); %>
-			</td>
-		</tr>
 		<tr height="100%">
 			<td colspan="2">
 				<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
