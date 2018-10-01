@@ -22,9 +22,9 @@ public class ProgettoPianoEconomicoVoceBilancioCRUDController extends it.cnr.jad
 	{
 		if (!detail.isToBeCreated()) {
 			try {
-				Utility.createProgettoRicercaComponentSession().validaCancellazionePianoEconomicoAssociato(
+				Utility.createProgettoRicercaComponentSession().validaCancellazioneVoceAssociataPianoEconomico(
 					context.getUserContext(),
-					(ProgettoBulk)getParentModel(),
+					(Progetto_piano_economicoBulk)getParentModel(),
 					detail);
 			} catch (ComponentException e) {
 				throw new ValidationException(e.getMessage());

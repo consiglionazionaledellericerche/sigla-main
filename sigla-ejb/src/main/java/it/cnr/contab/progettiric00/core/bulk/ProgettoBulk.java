@@ -1010,4 +1010,5 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 				!getDettagliPianoEconomicoAltriAnni().isEmpty() ||
 				!getDettagliPianoEconomicoTotale().isEmpty();
 	}
+
 }
