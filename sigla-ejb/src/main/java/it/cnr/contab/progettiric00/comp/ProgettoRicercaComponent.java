@@ -11,9 +11,15 @@ import java.util.stream.Collectors;
 import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioBulk;
 import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioHome;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestHome;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestHome;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateHome;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
@@ -1246,5 +1252,52 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     	} catch(Throwable e) {
     		throw handleException(e);
     	}
+    }
+    
+    public void validaCancellazioneVoceAssociataPianoEconomico(UserContext userContext, Progetto_piano_economicoBulk prgPiano, OggettoBulk dett) throws ComponentException{
+    	Ass_progetto_piaeco_voceBulk assVoce = (Ass_progetto_piaeco_voceBulk) dett;
+    	
+    	try {
+    		if (Elemento_voceHome.GESTIONE_ENTRATE.equals(assVoce.getTi_gestione())) {
+    			Pdg_modulo_entrate_gestHome homeEtr = (Pdg_modulo_entrate_gestHome)getHome(userContext,Pdg_modulo_entrate_gestBulk.class);
+    			SQLBuilder sqlEtr = homeEtr.createSQLBuilder();
+    			sqlEtr.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,assVoce.getPg_progetto());    		
+    			sqlEtr.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,assVoce.getEsercizio_voce());
+    			sqlEtr.addClause(FindClause.AND,"ti_appartenenza",SQLBuilder.EQUALS,assVoce.getTi_appartenenza());    		
+    			sqlEtr.addClause(FindClause.AND,"ti_gestione",SQLBuilder.EQUALS,assVoce.getTi_gestione());
+    			sqlEtr.addClause(FindClause.AND,"cd_elemento_voce",SQLBuilder.EQUALS,assVoce.getCd_elemento_voce());
+
+    			List resultEtr = homeEtr.fetchAll(sqlEtr);
+	    		if (!resultEtr.isEmpty())
+	    			throw new ApplicationException("Impossibile cancellare la voce "+assVoce.getCd_elemento_voce()+" in quanto\n"+
+	                   "è già stata collegata al preventivo gestionale del progetto -  parte entrate.");
+    		} else {
+        		Pdg_modulo_spese_gestHome homeSpe = (Pdg_modulo_spese_gestHome)getHome(userContext,Pdg_modulo_spese_gestBulk.class);
+        		SQLBuilder sqlSpe = homeSpe.createSQLBuilder();
+        		sqlSpe.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,assVoce.getPg_progetto());    		
+    			sqlSpe.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,assVoce.getEsercizio_voce());
+    			sqlSpe.addClause(FindClause.AND,"ti_appartenenza",SQLBuilder.EQUALS,assVoce.getTi_appartenenza());    		
+    			sqlSpe.addClause(FindClause.AND,"ti_gestione",SQLBuilder.EQUALS,assVoce.getTi_gestione());
+    			sqlSpe.addClause(FindClause.AND,"cd_elemento_voce",SQLBuilder.EQUALS,assVoce.getCd_elemento_voce());
+
+        		List resultSpe = homeSpe.fetchAll(sqlSpe);
+        		if (!resultSpe.isEmpty())
+        			throw new ApplicationException("Impossibile cancellare la voce "+assVoce.getCd_elemento_voce()+" in quanto\n"+
+                       "è già stata collegata al preventivo gestionale del progetto -  parte spese.");
+    			
+    		}
+
+    	} catch(Throwable e) {
+    		throw handleException(e);
+    	}
+    }    
+	
+    public SQLBuilder selectElemento_voceByClause (UserContext userContext, Ass_progetto_piaeco_voceBulk assPiaecoVoce, Elemento_voceBulk voce, CompoundFindClause clauses) throws ComponentException {
+    	Elemento_voceHome home = (Elemento_voceHome)getHome(userContext, Elemento_voceBulk.class);
+    	SQLBuilder sql = home.createSQLBuilder();
+    	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, assPiaecoVoce.getEsercizio_piano());
+    	sql.addClause(clauses);
+    	sql.addOrderBy("cd_elemento_voce");
+    	return sql;
     }
 }
