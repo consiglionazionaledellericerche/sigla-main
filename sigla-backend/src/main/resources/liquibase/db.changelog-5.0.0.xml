@@ -897,6 +897,12 @@
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter_voce_piano_economico_prg001">
+        <addColumn tableName="voce_piano_economico_prg">
+            <column name="tipologia" remarks="Tipologia voce piano economico" type="CHAR(3)"/>
+        </addColumn>
+    </changeSet>   
 </databaseChangeLog>
 
 

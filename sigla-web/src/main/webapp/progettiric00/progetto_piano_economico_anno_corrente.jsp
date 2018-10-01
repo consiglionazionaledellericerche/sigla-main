@@ -30,11 +30,8 @@
 </br>
 <fieldset class="fieldset">
 	<legend class="GroupLabel">Voci Bilancio Associate</legend>
-	<table>
-		<tr><td>
 <%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio",true,false,true,"100%","100px"); %>
-		</td></tr>
-	</table>
+	</br>
 	<table class="Panel">
 	  <TR>
 	  	<% controllerVoci.writeFormField(out,"elemento_voce");%>

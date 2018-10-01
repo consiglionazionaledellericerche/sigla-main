@@ -37,6 +37,11 @@
 			<% bp.getController().writeFormInput(out,"ds_voce_piano");%>
 		</TD></TR>
 		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"tipologia");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"tipologia");%>
+		</TD></TR>
+		<TR><TD>
 			<% bp.getController().writeFormLabel(out,"fl_valido");%>
 			</TD><TD colspan="3">
 			<% bp.getController().writeFormInput(out,"fl_valido");%>
