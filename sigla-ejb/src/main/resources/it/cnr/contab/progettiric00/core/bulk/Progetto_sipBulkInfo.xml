@@ -203,7 +203,7 @@
 		<columnFieldProperty
 			name="cd_dipartimento"/>
 		<columnFieldProperty
-			name="ds_dipartimento"/>			
+			name="ds_dipartimento"/>
 	</columnSet>          
 
 	<columnSet
@@ -218,7 +218,7 @@
 			label="Programma"/>
 		<columnFieldProperty
 			name="ds_dipartimento"
-			label="Descrizione Programma"/>			
+			label="Descrizione Programma"/>
 	</columnSet>
 	
 	<columnSet
@@ -240,7 +240,11 @@
 		<columnFieldProperty
 			name="cd_responsabile_terzo" />
 		<columnFieldProperty
-			name="dt_inizio" />	
+			name="dt_inizio" />
+        <columnFieldProperty
+            property="otherField.tipoFinanziamento.codice"
+            name="codice_finanziamento"
+            label="Tipo Finanziamento"/>
 	</columnSet>
 	
 	<columnFieldProperty

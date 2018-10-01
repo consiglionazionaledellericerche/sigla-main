@@ -50,11 +50,11 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 	public Forward doFreeSearchSearchtool_progetto(ActionContext context) {
 		try{
 			Progetto_sipBulk progetto = new Progetto_sipBulk();
-			progetto.setProgettopadre(new Progetto_sipBulk());	
+			progetto.setProgettopadre(new Progetto_sipBulk());
 			return freeSearch(context, getFormField(context, "main.Dettagli.searchtool_progetto"), progetto);
 		} catch(Throwable e){
 			return handleException(context, e);
-		}		
+		}
 	}
 
 	public it.cnr.jada.action.Forward doSearchSearchtool_progetto(ActionContext context) {
@@ -76,7 +76,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 
 			TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)context.createBusinessProcess("TestataProgettiRicercaBP");
 			context.addBusinessProcess(bp);
-		
+
 			it.cnr.jada.util.RemoteIterator roots = roots = bp.getProgetti_sipTree(context).getChildren(context,null);
 			// Non ci sono Commesse disponibili
 			if (roots.countElements()==0){
@@ -87,7 +87,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			}else {
 				context.closeBusinessProcess();
 				// Apre un Selezionatore ad Albero per cercare i Progetti selezionando i vari livelli
-				ProgettoAlberoLABP slaBP = (ProgettoAlberoLABP)context.createBusinessProcess("ProgettoAlberoLABP",  
+				ProgettoAlberoLABP slaBP = (ProgettoAlberoLABP)context.createBusinessProcess("ProgettoAlberoLABP",
 						new Object[] { bpmod.getParametriCnr().getLivelloProgetto()});
 				slaBP.setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(Progetto_sipBulk.class));
 				slaBP.setRemoteBulkTree(context,bp.getProgetti_sipTree(context),roots);
@@ -108,7 +108,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 	public Forward doFreeSearchSearchtool_progetto_liv2(ActionContext context) {
 		return doFreeSearchSearchtool_progetto(context);
 	}
-	
+
 	public it.cnr.jada.action.Forward doSearchSearchtool_progetto_liv2(ActionContext context) {
 		return 	doSearchSearchtool_progetto(context);
 	}
@@ -116,7 +116,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 	public it.cnr.jada.action.Forward doBringBackSearchSearchtool_progetto_liv2(ActionContext context, Pdg_moduloBulk linea, Progetto_sipBulk progetto) throws java.rmi.RemoteException {
 		return 	doBringBackSearchSearchtool_progetto(context, linea, progetto);
 	}
-	
+
 	public it.cnr.jada.action.Forward doBringBackSearchSearchtool_progetto(ActionContext context, Pdg_moduloBulk linea, Progetto_sipBulk progetto) throws java.rmi.RemoteException {
 		CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)context.getBusinessProcess();
 
@@ -170,7 +170,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 					+ "Vuoi continuare?";
 		return openConfirm(context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doCambiaStatoConfermato");
 	}
-	
+
 	public Forward doCambiaStatoConfermato(ActionContext context, int opt) throws it.cnr.jada.action.BusinessProcessException {
 
 		if (opt == OptionBP.YES_BUTTON) {
@@ -271,22 +271,22 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			return handleException(context,e);
 		}
 	}
-	
+
 	public Forward doInserisciModuli(ActionContext context) {
 		try {
 			CRUDBP bp = getBusinessProcess(context);
 			if (bp.getStatus() == bp.INSERT || bp.getStatus() == bp.EDIT) {
 				Pdg_moduloBulk pdg_modulo = new Pdg_moduloBulk();
 				CompoundFindClause compoundfindclause = new CompoundFindClause();
-				
+
 				CdrBulk cdr = (CdrBulk) bp.getModel();
 				BulkList dettagli = cdr.getDettagli();
-	
+
 				Iterator itr = dettagli.iterator();
 				while(itr.hasNext()) {
 					compoundfindclause.addClause("AND","pg_progetto",SQLBuilder.NOT_EQUALS,((Pdg_moduloBulk)itr.next()).getPg_progetto());
 				}
-			
+
 				Progetto_sipBulk progetto = new Progetto_sipBulk();
 				it.cnr.jada.util.RemoteIterator ri = bp.find(context, compoundfindclause, progetto, pdg_modulo, "progetto");
 				if (ri == null || ri.countElements() == 0) {
@@ -308,7 +308,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			}
 		} catch(Throwable e) {
 			return handleException(context,e);
-		} 
+		}
 		return context.findDefaultForward();
 	}
 
@@ -358,10 +358,10 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			}
 
 			ConsultazioniBP ricercaLiberaBP = (ConsultazioniBP)context.createBusinessProcess("ConsPdgPianoRipartoBP");
-			
+
 			ricercaLiberaBP.addToBaseclause(clause);
 			ricercaLiberaBP.openIterator(context);
-			
+
 			context.addHookForward("close",this,"doDefault");
 			return context.addBusinessProcess(ricercaLiberaBP);
 		}catch(Throwable ex){
@@ -384,7 +384,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 
 	public Forward doConfirmScaricaCostiPersonale(ActionContext context,int option) {
 		try {
-			if ( option == OptionBP.YES_BUTTON) 
+			if ( option == OptionBP.YES_BUTTON)
 			{
 				CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)getBusinessProcess(context);
 				fillModel(context);
@@ -413,7 +413,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 	public Forward doRiportaSelezione(ActionContext context, OggettoBulk oggettobulk) {
 			try {
 				CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)getBusinessProcess(context);
-	
+
 				Forward forward = super.doRiportaSelezione(context, oggettobulk);
 				if (oggettobulk!=null) {
 					bp.caricaCdrPdGP(context);
@@ -428,32 +428,32 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 				return handleException(context,e);
 			}
 	}
-	
+
 	public Forward doStatoCdRPdGR(ActionContext context) {
-		try 
+		try
 		{
 			CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)getBusinessProcess(context);
 			CRUDStatoCdrPdGPBP bpDett;
 			String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().
 					validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),
-							((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? 
-									((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : 
+							((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ?
+									((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() :
 										"*","CRUDStatoCdrPdGPBP");
-			if (mode == null || mode.equals("V")) 
+			if (mode == null || mode.equals("V"))
 				throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa. Impossibile continuare.");
-			
+
 			if(bp.isEditable())
 				bpDett = (CRUDStatoCdrPdGPBP)context.createBusinessProcess("CRUDStatoCdrPdGPBP", new Object[] { "M" });
 			else
-				bpDett = (CRUDStatoCdrPdGPBP)context.createBusinessProcess("CRUDStatoCdrPdGPBP", new Object[] { "V" });				
+				bpDett = (CRUDStatoCdrPdGPBP)context.createBusinessProcess("CRUDStatoCdrPdGPBP", new Object[] { "V" });
 			return context.addBusinessProcess(bpDett);
-		} 
-		catch(Throwable e) 
-		{ 
+		}
+		catch(Throwable e)
+		{
 			return handleException(context,e);
 		}
 	}
-	
+
 	public it.cnr.jada.action.Forward doGestionaleEntrate(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
 		CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)context.getBusinessProcess();
 		Pdg_moduloBulk pdg_mod = (Pdg_moduloBulk)bp.getCrudDettagli().getModel();
@@ -474,12 +474,12 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 						bp.isEditable() && bp.isGestionaleOperabile() ? "M" : "V",
 					}
 				);
-			
+
 			ricercaLiberaBP.addToBaseclause(clause);
 			ricercaLiberaBP.openIterator(context);
 			ricercaLiberaBP.setSearchResultColumnSet("pdgModuloEntrateGest");
 			ricercaLiberaBP.setFreeSearchSet("pdgModuloEntrateGest");
-			
+
 			return context.addBusinessProcess(ricercaLiberaBP);
 		} catch(Throwable e) {
 			return handleException(context,e);
@@ -510,12 +510,12 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 						bp.isEditable() && bp.isGestionaleOperabile() ? "M" : "V",
 					}
 				);
-			
+
 			ricercaLiberaBP.addToBaseclause(clause);
 			ricercaLiberaBP.openIterator(context);
 			ricercaLiberaBP.setSearchResultColumnSet("pdgModuloSpeseGest");
 			ricercaLiberaBP.setFreeSearchSet("pdgModuloSpeseGest");
-			
+
 			return context.addBusinessProcess(ricercaLiberaBP);
 		} catch(Throwable e) {
 			return handleException(context,e);
