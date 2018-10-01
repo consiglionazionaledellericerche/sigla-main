@@ -720,7 +720,7 @@ public RemoteIterator getChildrenForSip(UserContext userContext, OggettoBulk bul
 		userContext,
 		ubiHome.selectChildrenFor(userContext,ubi),
 		Progetto_sipBulk.class,
-		null);
+		"tipoFinanziamento");
 }
 
 /** 
