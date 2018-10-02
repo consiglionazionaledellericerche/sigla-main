@@ -1,9 +1,13 @@
 package it.cnr.contab.progettiric00.action;
 
+import java.util.Optional;
+
 import it.cnr.contab.progettiric00.bp.ProgettoAlberoBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
@@ -208,6 +212,17 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
         }
     	progetto.getOtherField().setTipoFinanziamento(tipoFinanziamento);
         return context.findDefaultForward();
+    }
+    
+    public it.cnr.jada.action.Forward doBringBackSearchVoce_piano(ActionContext context, Progetto_piano_economicoBulk progettoPiaeco, Voce_piano_economico_prgBulk vocePiaeco) throws java.rmi.RemoteException {
+    	try {
+	        TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP) getBusinessProcess(context);
+	        progettoPiaeco.setVoce_piano_economico(vocePiaeco);
+	        bp.caricaVociPianoEconomicoAssociate(context,progettoPiaeco);
+	        return context.findDefaultForward();
+        } catch (Throwable e) {
+            return handleException(context, e);
+        }	        
     }
 }
 

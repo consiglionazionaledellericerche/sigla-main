@@ -42,6 +42,16 @@
 			<% bp.getController().writeFormInput(out,"tipologia");%>
 		</TD></TR>
 		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"fl_link_vocibil_associate");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"fl_link_vocibil_associate");%>
+		</TD></TR>
+		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"fl_add_vocibil");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"fl_add_vocibil");%>
+		</TD></TR>
+		<TR><TD>
 			<% bp.getController().writeFormLabel(out,"fl_valido");%>
 			</TD><TD colspan="3">
 			<% bp.getController().writeFormInput(out,"fl_valido");%>
