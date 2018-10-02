@@ -67,6 +67,44 @@
 			sqlTypeName="VARCHAR"
 			columnSize="25"
 			nullable="true" />
+		<columnMapping
+			columnName="STATO_OTHER_FIELD"
+			propertyName="otherField.stato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_INIZIO_OTHER_FIELD"
+			propertyName="otherField.dtInizio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FINE_OTHER_FIELD"
+			propertyName="otherField.dtFine"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROROGA_OTHER_FIELD"
+			propertyName="otherField.dtProroga"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping 
+			columnName="IM_FINANZIATO_OTHER_FIELD" 
+			propertyName="otherField.imFinanziato" 
+			sqlTypeName="DECIMAL" 
+			columnSize="15" 
+			columnScale="2" 
+			nullable="true"/>	
+		<columnMapping 
+			columnName="IM_COFINANZIATO_OTHER_FIELD" 
+			propertyName="otherField.imCofinanziato" 
+			sqlTypeName="DECIMAL" 
+			columnSize="15" 
+			columnScale="2" 
+			nullable="true"/>	
 	</columnMap>
 	<columnMap
 		name="V_ABIL_PROGETTI"

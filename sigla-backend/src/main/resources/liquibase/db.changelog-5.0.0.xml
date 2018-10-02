@@ -901,6 +901,12 @@
     <changeSet author="raffaele.pagano" id="alter_voce_piano_economico_prg001">
         <addColumn tableName="voce_piano_economico_prg">
             <column name="tipologia" remarks="Tipologia voce piano economico" type="CHAR(3)"/>
+            <column name="fl_link_voci_bilancio_associate" type="CHAR(1)" defaultValue="N" remarks="Voci di Bilancio associate collegate in automatico. - Dominio: S = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_add_voci_bilancio" type="CHAR(1)" defaultValue="N" remarks="Voci di Bilancio associabili manualmente. - Dominio: S = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
         </addColumn>
     </changeSet>   
 </databaseChangeLog>

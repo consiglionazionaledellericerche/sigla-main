@@ -58,8 +58,18 @@
 		name="tipologia"
 		property="tipologia"
 		keysProperty= "tipoVoceEconomicaKeys"		
-		inputType="TEXT"		
+		inputType="SELECT"
 		label="Tipologia" />
+	<fieldProperty
+		name="fl_link_vocibil_associate"
+		property="fl_link_vocibil_associate"
+		inputType="CHECKBOX"
+		label="Associazione Automatica Voci Bilancio Associate" />
+	<fieldProperty
+		name="fl_add_vocibil"
+		property="fl_add_vocibil"
+		inputType="CHECKBOX"
+		label="Associazione Manuale Voci Bilancio" />
 	<fieldProperty
 		name="fl_valido"
 		property="fl_valido"
@@ -71,12 +81,16 @@
 	<formFieldProperty name="cd_unita_organizzativa" />
 	<formFieldProperty name="ds_unita_organizzativa" />
 	<formFieldProperty name="tipologia" />
+	<formFieldProperty name="fl_link_vocibil_associate" />
+	<formFieldProperty name="fl_add_vocibil" />
 	<formFieldProperty name="fl_valido" />
 	
 	<columnFieldProperty name="cd_voce_piano" />
 	<columnFieldProperty name="ds_voce_piano" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
 	<columnFieldProperty name="ds_unita_organizzativa" />
+	<columnFieldProperty name="fl_link_vocibil_associate" />
+	<columnFieldProperty name="fl_add_vocibil" />
 	<columnFieldProperty name="fl_valido" />
 
 	<findFieldProperty name="cd_voce_piano" />

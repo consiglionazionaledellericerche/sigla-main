@@ -18,9 +18,23 @@
 			columnSize="3"
 			nullable="true" />
 		<columnMapping
+			columnName="FL_LINK_VOCIBIL_ASSOCIATE"
+			propertyName="fl_link_vocibil_associate"
+		    sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_ADD_VOCIBIL"
+			propertyName="fl_add_vocibil"
+		    sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="FL_VALIDO"
 			propertyName="fl_valido"
-		  sqlTypeName="CHAR"
+			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
@@ -59,6 +73,10 @@
 		name="ds_voce_piano" />
 	<persistentProperty
 		name="tipologia" />	
+	<persistentProperty
+		name="fl_link_vocibil_associate" />
+	<persistentProperty
+		name="fl_add_vocibil" />
 	<persistentProperty
 		name="fl_valido" />	
 	<persistentProperty

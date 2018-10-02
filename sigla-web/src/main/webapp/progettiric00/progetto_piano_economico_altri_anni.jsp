@@ -10,7 +10,7 @@
 <%
 	TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)BusinessProcess.getBusinessProcess(request);
 	SimpleDetailCRUDController controller = ( (TestataProgettiRicercaBP)bp ).getCrudPianoEconomicoAltriAnni();
-	SimpleDetailCRUDController controllerVoci = ( (TestataProgettiRicercaBP)bp ).getCrudPianoEconomicoVoceBilancioAnnoCorrente();
+	SimpleDetailCRUDController controllerVoci = ( (TestataProgettiRicercaBP)bp ).getCrudPianoEconomicoVoceBilancioAltriAnni();
 	boolean isKeyEditable = controller.getModel()!=null && controller.getModel().isNotNew();
 %>
 

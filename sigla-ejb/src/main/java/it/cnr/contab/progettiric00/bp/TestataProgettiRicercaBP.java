@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Optional;
 import java.util.TreeMap;
 
@@ -12,15 +13,19 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.InitializingBean;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_finanziatoreBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_uoBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
@@ -28,6 +33,7 @@ import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkInfo;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
@@ -455,7 +461,9 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			((ProgettoBulk)oggettobulk).setProgettopadre(progettopadre);
 			((ProgettoBulk)oggettobulk).setLivello(ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
 		}
-		return super.initializeModelForSearch(actioncontext, oggettobulk);
+		ProgettoBulk oggettobulk2 = (ProgettoBulk)super.initializeModelForSearch(actioncontext, oggettobulk); 
+		oggettobulk2.setOtherField(new Progetto_other_fieldBulk());
+		return oggettobulk2;
 	}
 
 	public SimpleDetailCRUDController getCrudPianoEconomicoTotale() {
@@ -499,37 +507,20 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		return super.isDeleteButtonHidden() || this.isFlInformix();
 	}
 
-	/*	
-	@Override
-	public boolean isSaveButtonEnabled() {
-		return super.isSaveButtonEnabled() || (this.isFlInformix() && this.isViewing()); 
+	public void caricaVociPianoEconomicoAssociate(ActionContext context, Progetto_piano_economicoBulk progettoPiaeco) throws BusinessProcessException {
+		try {
+			if (Optional.ofNullable(progettoPiaeco.getVoce_piano_economico()).map(Voce_piano_economico_prgBulk::getFl_link_vocibil_associate).orElse(Boolean.FALSE)) {
+				List<Elemento_voceBulk> listVoci = ((ProgettoRicercaComponentSession)createComponentSession()).find(context.getUserContext(), Elemento_voceBulk.class, "findElementoVociAssociate", progettoPiaeco);
+				progettoPiaeco.setVociBilancioAssociate(new BulkList<>());
+				listVoci.stream().forEach(el->{
+					Ass_progetto_piaeco_voceBulk dett = new Ass_progetto_piaeco_voceBulk();
+					dett.setElemento_voce(el);
+					dett.setToBeCreated();
+					progettoPiaeco.addToVociBilancioAssociate(dett);
+				});
+			}
+	    } catch (ComponentException | RemoteException e) {
+	        throw handleException(e);
+	    }
 	}
-	
-	@Override
-	public void save(ActionContext actioncontext) throws ValidationException, BusinessProcessException {
-		if (this.isFlPrgPianoEconomico() && this.isViewing()) {
-			setStatus(EDIT);
-			super.save(actioncontext);
-			setStatus(VIEW);
-		} else
-			super.save(actioncontext);
-	}
-
-	@Override
-	public boolean isEditable() {
-		return super.isEditable() && (!this.isFlInformix() || "tabPianoEconomico".equals(getTab("tab")));
-	}
-
-	@Override
-	public void setTab(String tabName, String pageName) {
-		super.setTab(tabName, pageName);
-		if (!this.isFlInformix() || "tabPianoEconomico".equals(pageName) || "tabProgettoPianoEconomico".equals(tabName)) {
-			setEditable(Boolean.TRUE);
-			setStatus(EDIT);
-		} else {
-			setEditable(Boolean.FALSE);
-			setStatus(VIEW);
-		}		
-	}
-	 */
 }
