@@ -6,8 +6,10 @@
  */
 package it.cnr.contab.prevent01.action;
 
+import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.prevent01.bp.CRUDPdGAggregatoModuloBP;
@@ -21,6 +23,7 @@ import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
@@ -28,6 +31,7 @@ import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.FieldProperty;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.BulkBP;
@@ -114,10 +118,29 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 	}
 
 	public it.cnr.jada.action.Forward doBringBackSearchSearchtool_progetto_liv2(ActionContext context, Pdg_moduloBulk linea, Progetto_sipBulk progetto) throws java.rmi.RemoteException {
-		return 	doBringBackSearchSearchtool_progetto(context, linea, progetto);
+		return doBringBackSearchSearchtool_progetto(context, linea, progetto);
 	}
 
-	public it.cnr.jada.action.Forward doBringBackSearchSearchtool_progetto(ActionContext context, Pdg_moduloBulk linea, Progetto_sipBulk progetto) throws java.rmi.RemoteException {
+	public it.cnr.jada.action.Forward doBringBackCRUDSearchtool_progetto_liv2(ActionContext context, Pdg_moduloBulk pdgModuloBulk, ProgettoBulk progetto) throws java.rmi.RemoteException {
+        CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)context.getBusinessProcess();
+		return doBringBackSearchSearchtool_progetto(context, pdgModuloBulk,
+				Optional.ofNullable(progetto)
+					.map(progettoBulk -> new Progetto_sipBulk(progettoBulk.getEsercizio(), progettoBulk.getPg_progetto(), progettoBulk.getTipo_fase()))
+                        .map(progetto_sipBulk -> {
+                            try {
+                                return Optional.ofNullable(bp.getProgettoRicercaPadreComponentSession().findByPrimaryKey(context.getUserContext(), progetto_sipBulk))
+                                        .filter(Progetto_sipBulk.class::isInstance)
+                                        .map(Progetto_sipBulk.class::cast)
+                                        .orElse(null);
+                            } catch (ComponentException|RemoteException e) {
+                                throw new DetailedRuntimeException(e);
+                            }
+                        })
+					.orElse(null)
+		);
+	}
+
+	public it.cnr.jada.action.Forward doBringBackSearchSearchtool_progetto(ActionContext context, Pdg_moduloBulk pdgModuloBulk, Progetto_sipBulk progetto) throws java.rmi.RemoteException {
 		CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)context.getBusinessProcess();
 
 		// valore di default nel caso non fose valorizzato
@@ -125,7 +148,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 
 		// nome del campo nel file xml
 		final String propName="cd_progetto";
-		FieldProperty property = BulkInfo.getBulkInfo(linea.getClass()).getFieldProperty(propName);
+		FieldProperty property = BulkInfo.getBulkInfo(pdgModuloBulk.getClass()).getFieldProperty(propName);
 		if (property != null)
 			columnDescription = property.getLabel();
 
@@ -147,7 +170,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 				return context.findDefaultForward();
 			}
 		}
-		linea.setProgetto(progetto);
+		pdgModuloBulk.setProgetto(progetto);
 		return context.findDefaultForward();
 	}
 
