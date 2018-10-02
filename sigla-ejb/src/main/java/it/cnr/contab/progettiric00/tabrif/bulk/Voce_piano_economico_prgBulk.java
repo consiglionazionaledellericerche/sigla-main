@@ -3,13 +3,6 @@ package it.cnr.contab.progettiric00.tabrif.bulk;
 import java.util.Dictionary;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.jada.UserContext;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.util.action.CRUDBP;
 
 public class Voce_piano_economico_prgBulk extends Voce_piano_economico_prgBase {
 	private Unita_organizzativaBulk unita_organizzativa;
@@ -56,5 +49,24 @@ public class Voce_piano_economico_prgBulk extends Voce_piano_economico_prgBase {
 	
 	public static Dictionary getTipovoceeconomicakeys() {
 		return tipoVoceEconomicaKeys;
+	}
+	
+
+	public boolean isVocePersonaleTempoDeterminato() {
+		return PERSONALE_DETER.equals(this.getTipologia());
+	}
+	
+	public boolean isVocePersonaleTempoIndeterminato() {
+		return PERSONALE_INDET.equals(this.getTipologia());
+	}
+
+	public boolean isVocePersonaleAltraTipologia() {
+		return PERSONALE_OTHER.equals(this.getTipologia());
+	}
+
+	public boolean isVocePersonale() {
+		return this.isVocePersonaleTempoDeterminato()||
+				this.isVocePersonaleTempoIndeterminato()||
+				this.isVocePersonaleAltraTipologia();
 	}
 }
