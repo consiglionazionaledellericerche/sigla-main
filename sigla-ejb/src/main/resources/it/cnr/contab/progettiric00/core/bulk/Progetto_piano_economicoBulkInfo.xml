@@ -197,41 +197,45 @@
 
 	<columnSet name="piano_economico">
 		<columnFieldProperty
-			name="esercizio_piano"/>
+			name="esercizio_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Esercizio"/>
 		<columnFieldProperty
-			name="cd_voce_piano"/>
+			name="cd_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Voce"/>
 		<columnFieldProperty
-			name="ds_voce_piano"/>
-		<columnFieldProperty
-			name="fl_ctrl_disp"/>
-		<columnFieldProperty
-			name="im_entrata"
-			headerLabel="ENTRATA"
-			label="Disp. Iniziale P.E."/>
-		<columnFieldProperty 
-			name="im_assestato_entrata"
-			headerLabel="ENTRATA"
-			label="Assestato"/>
-		<columnFieldProperty 
-			name="im_disp_residua_entrata"
-			headerLabel="ENTRATA"
-			label="Disp. Residua P.E."/>
+			name="ds_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Descrizione"/>
 		<columnFieldProperty
 			name="im_spesa_finanziato"
-			headerLabel="SPESA"
-			label="Disp. Iniziale P.E."/>
+			headerLabel="PIANO ECONOMICO"
+			label="Quota Finanziata"/>
 		<columnFieldProperty
 			name="im_spesa_cofinanziato"
-			headerLabel="SPESA"
-			label="Disp. Iniziale P.E."/>
+			headerLabel="PIANO ECONOMICO"
+			label="Quota Cofinanziata"/>
 		<columnFieldProperty 
-			name="im_assestato_spesa"
-			headerLabel="SPESA"
-			label="Assestato"/>
+			name="imTotaleSpesa"
+			headerLabel="PIANO ECONOMICO"
+			label="Quota Totale"/> 
 		<columnFieldProperty 
 			name="im_disp_residua_spesa"
-			headerLabel="SPESA"
-			label="Disp. Residua P.E."/>
+			headerLabel="PIANO ECONOMICO"
+			label="Quota da Stanziare"/>
+		<columnFieldProperty 
+			name="im_assestato_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Assestato"/>
+		<columnFieldProperty 
+			name="im_impacc_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Impegnato"/>
+		<columnFieldProperty 
+			name="im_manris_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Pagato"/>
 	</columnSet>
 	
 	<form name="piano_economico1">

@@ -1,5 +1,8 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 
