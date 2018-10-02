@@ -1434,23 +1434,13 @@
 		<findFieldProperty
 			name="cd_unita_organizzativa" />
 		<findFieldProperty
-			name="dt_proroga" />
-		<findFieldProperty
 			name="ds_progetto" />
 		<findFieldProperty
 			name="cd_responsabile_terzo" />
 		<findFieldProperty
-			name="dt_inizio" />
-		<findFieldProperty
-			name="dt_fine" />
-		<findFieldProperty
-			name="cd_tipo_progetto" />
-		<findFieldProperty
 			name="stato" />
 		<findFieldProperty
 			name="durata_progetto" />
-		<findFieldProperty
-			name="note" />
 	</freeSearchSet>
 
 	<form
