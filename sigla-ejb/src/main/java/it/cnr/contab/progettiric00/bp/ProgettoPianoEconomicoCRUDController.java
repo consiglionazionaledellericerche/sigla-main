@@ -2,9 +2,11 @@ package it.cnr.contab.progettiric00.bp;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.util.Optional;
 
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -33,11 +35,12 @@ public class ProgettoPianoEconomicoCRUDController extends it.cnr.jada.util.actio
 			}
 		}
 	}
-	
+
 	@Override
 	public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
-		((Progetto_piano_economicoBulk)oggettobulk).setIm_entrata(BigDecimal.ZERO);
-		((Progetto_piano_economicoBulk)oggettobulk).setFl_ctrl_disp(Boolean.TRUE);
+		Progetto_piano_economicoBulk pianoEco = (Progetto_piano_economicoBulk)oggettobulk;
+		pianoEco.setIm_entrata(BigDecimal.ZERO);
+		pianoEco.setFl_ctrl_disp(Boolean.TRUE);
 		return super.addDetail(oggettobulk);
 	}
 }
