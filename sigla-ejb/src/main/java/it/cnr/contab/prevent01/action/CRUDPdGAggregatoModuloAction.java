@@ -177,6 +177,12 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 				setErrorMessage(context,"Attenzione: il progetto non ha uno stato utile alla previsione!");
 				return context.findDefaultForward();
 			}
+			if (!Optional.ofNullable(progetto.getOtherField())
+					.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
+					.filter(tipoFinanziamentoBulk -> tipoFinanziamentoBulk.getFlPrevEntSpesa() || tipoFinanziamentoBulk.getFlRipCostiPers()).isPresent()) {
+				setErrorMessage(context,"Attenzione: per il progetto non è consentita la previsione!");
+				return context.findDefaultForward();
+			}
 
 		}
 		pdgModuloBulk.setProgetto(progetto);
