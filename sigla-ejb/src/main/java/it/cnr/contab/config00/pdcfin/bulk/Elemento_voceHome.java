@@ -1,20 +1,26 @@
 package it.cnr.contab.config00.pdcfin.bulk;
 
-import java.util.*;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Hashtable;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipologie_istatBulk;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.consultazioni.bulk.ConsultazioniRestHome;
-import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
-import it.cnr.contab.doccont00.core.bulk.Mandato_siopeBulk;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.PersistentHome;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class Elemento_voceHome extends BulkHome implements ConsultazioniRestHome {
 	private static java.util.Hashtable ti_appartenenzaKeys;
@@ -398,4 +404,14 @@ public class Elemento_voceHome extends BulkHome implements ConsultazioniRestHome
 //		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS, CNRUserContext.getEsercizio(userContext));
 		return sql;
 	}
+
+    public java.util.List<Elemento_voceBulk> findElementoVociAssociate(Progetto_piano_economicoBulk progettoPiaeco) throws IntrospectionException, PersistencyException {
+        PersistentHome home = getHomeCache().getHome(Elemento_voceBulk.class);
+        SQLBuilder sql = home.createSQLBuilder();
+    	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, progettoPiaeco.getEsercizio_piano());
+    	sql.addClause(FindClause.AND, "cd_unita_piano", SQLBuilder.EQUALS, progettoPiaeco.getCd_unita_organizzativa());
+    	sql.addClause(FindClause.AND, "cd_voce_piano", SQLBuilder.EQUALS, progettoPiaeco.getCd_voce_piano());
+    	sql.addOrderBy("cd_elemento_voce");
+        return home.fetchAll(sql);
+    }
 }
