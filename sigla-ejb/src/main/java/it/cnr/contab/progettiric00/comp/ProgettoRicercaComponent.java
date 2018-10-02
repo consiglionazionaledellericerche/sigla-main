@@ -1340,6 +1340,18 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     	Elemento_voceHome home = (Elemento_voceHome)getHome(userContext, Elemento_voceBulk.class);
     	SQLBuilder sql = home.createSQLBuilder();
     	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, assPiaecoVoce.getEsercizio_piano());
+
+    	sql.openParenthesis(FindClause.AND);
+    	sql.openParenthesis(FindClause.OR);
+    	sql.addClause(FindClause.AND, "cd_unita_piano", SQLBuilder.ISNULL, null);
+    	sql.addClause(FindClause.AND, "cd_voce_piano", SQLBuilder.ISNULL, null);
+    	sql.closeParenthesis();
+    	sql.openParenthesis(FindClause.OR);
+    	sql.addClause(FindClause.AND, "cd_unita_piano", SQLBuilder.EQUALS, assPiaecoVoce.getCd_unita_organizzativa());
+    	sql.addClause(FindClause.AND, "cd_voce_piano", SQLBuilder.EQUALS, assPiaecoVoce.getCd_voce_piano());
+    	sql.closeParenthesis();
+    	sql.closeParenthesis();
+    	
     	sql.addClause(clauses);
     	sql.addOrderBy("cd_elemento_voce");
     	return sql;
