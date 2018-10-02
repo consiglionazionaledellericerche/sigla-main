@@ -8,6 +8,7 @@
 		property="voce_piano_economico"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
+		readonlyProperty = "ROVocePiano"
 		label="Voce del piano economico" />
 	<fieldProperty
 		name="cd_voce_piano"
@@ -26,9 +27,14 @@
 	<fieldProperty
 		name="esercizio_piano"
 		property="esercizio_piano"
-		inputType="TEXT"
+		optionsProperty="anniList"
+		readonlyPropertyOnEdit="ROEsercizio_piano"
+		command="doDefault"
+		inputType="SELECT"
 		inputSize="4"
 		maxLength="4"
+		enabledOnSearch="true"
+		nullable="false"
 		label="Esercizio" />
 	<fieldProperty
 		name="im_entrata"

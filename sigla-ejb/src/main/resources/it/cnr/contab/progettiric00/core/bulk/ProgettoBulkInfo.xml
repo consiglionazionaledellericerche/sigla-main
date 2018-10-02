@@ -696,6 +696,7 @@
 		label="Tipo Finanziamento"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
+		readonlyProperty="ROdatiOtherField"
 		enabledOnSearch="true" />
 	<fieldProperty
 		name="dtInizioOf"
@@ -703,6 +704,7 @@
 		inputType="TEXT"
 		enabledOnSearch="true"
 		formatName="date_short"
+		readonlyProperty="ROdatiOtherField"
 		label="Data Inizio" />
 	<fieldProperty
 		name="dtFineOf"
@@ -710,6 +712,7 @@
 		inputType="TEXT"
 		enabledOnSearch="true"
 		formatName="date_short"
+		readonlyProperty="ROdatiOtherField"
 		label="Data Fine" />
 	<fieldProperty
 		name="dtProrogaOf"
