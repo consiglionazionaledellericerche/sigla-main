@@ -172,17 +172,6 @@ public class Progetto_sipHome extends BulkHome {
 		return sql;    	
 	}
 
-    @Override
-    public SQLBroker createBroker(LoggableStatement statement, ResultSet resultset) {
-        final SQLBroker broker = super.createBroker(statement, resultset);
-        try {
-            broker.setFetchPolicy(getIntrospector().getPersistentInfo(Progetto_sipBulk.class).getFetchPolicy("tipoFinanziamento"));
-        } catch (IntrospectionException e) {
-            throw new DetailedRuntimeException(e);
-        }
-        return broker;
-    }
-
     public Persistent findByPrimaryKey(UserContext userContext, Object persistent) throws PersistencyException {
     	return findByPrimaryKey(userContext,(Persistent)persistent);
     }
