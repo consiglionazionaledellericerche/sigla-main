@@ -7,6 +7,7 @@
 package it.cnr.contab.prevent01.action;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
 import it.cnr.contab.progettiric00.bp.ProgettoAlberoLABP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
@@ -155,7 +157,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 		if (bp.getParametriCnr().getFl_nuovo_pdg())
 			columnDescription="Codice Progetto";
 
-		if (progetto!=null) {
+		if (Optional.ofNullable(progetto).isPresent()) {
 			if (((CdrBulk)bp.getModel()).getDettagli()!=null) {
 				for (Iterator iterator = ((CdrBulk)bp.getModel()).getDettagli().iterator(); iterator.hasNext();) {
 					Pdg_moduloBulk modulo = (Pdg_moduloBulk) iterator.next();
@@ -169,6 +171,13 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 				setErrorMessage(context,"Attenzione: il valore immesso in "+columnDescription+" non è valido!");
 				return context.findDefaultForward();
 			}
+			if (!Optional.ofNullable(progetto.getOtherField())
+					.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getStato()))
+					.filter(stato -> Arrays.asList(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE, Progetto_other_fieldBulk.STATO_APPROVATO).indexOf(stato) != -1).isPresent()) {
+				setErrorMessage(context,"Attenzione: il progetto non ha uno stato utile alla previsione!");
+				return context.findDefaultForward();
+			}
+
 		}
 		pdgModuloBulk.setProgetto(progetto);
 		return context.findDefaultForward();
