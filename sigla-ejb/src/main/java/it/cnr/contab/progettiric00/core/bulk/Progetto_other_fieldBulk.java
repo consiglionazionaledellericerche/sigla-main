@@ -4,6 +4,14 @@ import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 
 public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
+	public static final String STATO_INIZIALE = "I";
+	public static final String STATO_NEGOZIAZIONE = "N";
+	public static final String STATO_APPROVATO = "A";
+	public static final String STATO_ANNULLATO = "U";
+	public static final String STATO_CHIUSO = "C";
+	public static final String STATO_MIGRAZIONE = "M";
+
+
 	private Pdg_programmaBulk pdgProgramma;
 	
 	private Pdg_missioneBulk pdgMissione;
