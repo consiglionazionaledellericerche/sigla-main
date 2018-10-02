@@ -3,13 +3,16 @@ package it.cnr.contab.progettiric00.bp;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Optional;
+import java.util.stream.Stream;
 
+import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
@@ -36,6 +39,18 @@ public class ProgettoPianoEconomicoCRUDController extends it.cnr.jada.util.actio
 		}
 	}
 
+	@Override
+	public OggettoBulk removeDetail(OggettoBulk oggettobulk, int i) {
+		Progetto_piano_economicoBulk pianoEco = (Progetto_piano_economicoBulk)oggettobulk;
+		BulkList<Ass_progetto_piaeco_voceBulk> vociToBeDelete = new BulkList<Ass_progetto_piaeco_voceBulk>(pianoEco.getVociBilancioAssociate());
+		Optional.ofNullable(vociToBeDelete).map(el->el.stream()).orElse(Stream.empty())
+		.forEach(e->{
+			e.setToBeDeleted();
+			pianoEco.removeFromVociBilancioAssociate(pianoEco.getVociBilancioAssociate().indexOf(e));
+		});
+		return super.removeDetail(oggettobulk, i);
+	}
+	
 	@Override
 	public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
 		Progetto_piano_economicoBulk pianoEco = (Progetto_piano_economicoBulk)oggettobulk;

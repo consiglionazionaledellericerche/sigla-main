@@ -59,6 +59,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	};
 	private SimpleDetailCRUDController crudDettagliFinanziatori = new SimpleDetailCRUDController( "DettagliFinanziatori", Progetto_finanziatoreBulk.class, "dettagliFinanziatori", this);
 	private SimpleDetailCRUDController crudDettagliPartner_esterni = new SimpleDetailCRUDController( "DettagliPartner_esterni", Progetto_partner_esternoBulk.class, "dettagliPartner_esterni", this);
+
 	private SimpleDetailCRUDController crudPianoEconomicoTotale = new ProgettoPianoEconomicoCRUDController( "PianoEconomicoTotale", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoTotale", this){
 		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
 			((Progetto_piano_economicoBulk)oggettobulk).setEsercizio_piano(Integer.valueOf(0));
@@ -80,6 +81,8 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 				throw new ValidationException("Operazione non possibile! Per caricare un dato relativo all'anno corrente utilizzare la sezione apposita.");
 		};
 	};
+
+	private SimpleDetailCRUDController pianoEconomicoSummary = new SimpleDetailCRUDController( "PianoEconomicoSummary", Progetto_piano_economicoBulk.class, "pianoEconomicoSummary", this); 
 
 	private SimpleDetailCRUDController crudPianoEconomicoVoceBilancioAnnoCorrente = new ProgettoPianoEconomicoVoceBilancioCRUDController( "PianoEconomicoVoceBilancioAnnoCorrente", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", crudPianoEconomicoAnnoCorrente);
 	private SimpleDetailCRUDController crudPianoEconomicoVoceBilancioAltriAnni = new ProgettoPianoEconomicoVoceBilancioCRUDController( "PianoEconomicoVoceBilancioAltriAnni", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", crudPianoEconomicoAltriAnni);	
@@ -140,7 +143,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		
 	protected void resetTabs(it.cnr.jada.action.ActionContext context) {
 		setTab("tab","tabTestata");
-		setTab("tabProgettoPianoEconomico","tabProgettoPianoEconomicoTotale");
+		setTab("tabProgettoPianoEconomico","tabProgettoPianoEconomicoSummary");
 	}
 	/**
 	 * E' stata generata la richiesta di cercare il Progetto che sarà nodo padre del Progetto
@@ -416,7 +419,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		TreeMap<Integer, String[]> hash = new TreeMap<Integer, String[]>();
 		int i=0;
 
-		hash.put(i++, new String[]{ "tabProgettoPianoEconomicoTotale","Totali","/progettiric00/progetto_piano_economico_totale.jsp" });
+		hash.put(i++, new String[]{ "tabProgettoPianoEconomicoSummary","Totali","/progettiric00/progetto_piano_economico_summary.jsp" });
 
 		ProgettoBulk progetto = (ProgettoBulk)this.getModel();
 
@@ -431,7 +434,8 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		if (existAnnoCorrente)
 			hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAnnoCorrente","Anno "+progetto.getEsercizio(),"/progettiric00/progetto_piano_economico_anno_corrente.jsp" });
 			
-		hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAltriAnni","Altri Anni","/progettiric00/progetto_piano_economico_altri_anni.jsp" });
+		if (!progetto.getAnnoInizioOf().equals(progetto.getEsercizio()) || !progetto.getAnnoFineOf().equals(progetto.getEsercizio()))
+			hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAltriAnni","Altri Anni","/progettiric00/progetto_piano_economico_altri_anni.jsp" });
 
 		String[][] tabs = new String[i][3];
 		for (int j = 0; j < i; j++) {
@@ -522,5 +526,9 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	    } catch (ComponentException | RemoteException e) {
 	        throw handleException(e);
 	    }
+	}
+	
+	public SimpleDetailCRUDController getPianoEconomicoSummary() {
+		return pianoEconomicoSummary;
 	}
 }
