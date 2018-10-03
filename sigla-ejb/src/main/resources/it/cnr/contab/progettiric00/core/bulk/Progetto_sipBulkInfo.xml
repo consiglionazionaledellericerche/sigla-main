@@ -67,6 +67,7 @@
 		maxLength="30"
 		inputSize="30"
 		inputType="TEXT"
+		enabledOnSearch="true"
 		label="Progetto"/>
 		
 	<fieldProperty
@@ -117,6 +118,7 @@
 		cols="80"
 		rows="3"
 		label="Descrizione"
+		enabledOnSearch="true"
 		caseSensitiveSearch="false"
 		nullable="false" /> 
 	<fieldProperty
@@ -151,7 +153,7 @@
 		<formFieldProperty
 		    inputSize="60"
 			maxLength="60"
-			inputType="ROTEXT"
+			inputType="TEXT"
 			name="ds_progetto"/>
 	</form>
 					         
@@ -264,5 +266,14 @@
 		name="cd_responsabile_terzo" />
 	<columnFieldProperty
 		name="dt_inizio" />
-	
+
+	<formFieldProperty
+			name="cd_progetto"/>
+	<formFieldProperty
+			name="ds_progetto"/>
+
+	<findFieldProperty
+			name="cd_progetto"/>
+	<findFieldProperty
+			name="ds_progetto"/>
 </bulkInfo>
