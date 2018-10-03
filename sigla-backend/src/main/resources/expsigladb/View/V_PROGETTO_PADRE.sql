@@ -2,7 +2,7 @@
 --  DDL for View V_PROGETTO_PADRE
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_PROGETTO_PADRE" ("ESERCIZIO", "PG_PROGETTO", "TIPO_FASE", "ESERCIZIO_PROGETTO_PADRE", "PG_PROGETTO_PADRE", "TIPO_FASE_PROGETTO_PADRE", "CD_PROGETTO", "DS_PROGETTO", "CD_TIPO_PROGETTO", "CD_UNITA_ORGANIZZATIVA", "CD_RESPONSABILE_TERZO", "DT_INIZIO", "DT_FINE", "DT_PROROGA", "IMPORTO_PROGETTO", "IMPORTO_DIVISA", "CD_DIVISA", "NOTE", "STATO", "CONDIVISO", "DURATA_PROGETTO", "LIVELLO", "CD_DIPARTIMENTO", "DACR", "UTCR", "DUVA", "UTUV", "PG_VER_REC", "FL_UTILIZZABILE", "FL_PIANO_TRIENNALE", "CD_PROGRAMMA", "CD_MISSIONE", "P_ESERCIZIO", "P_PG_PROGETTO", "P_CD_PROGETTO", "P_DS_PROGETTO", "P_CD_TIPO_PROGETTO", "P_CD_UNITA_ORGANIZZATIVA", "P_CD_RESPONSABILE_TERZO", "P_DT_INIZIO", "P_DT_FINE", "P_DT_PROROGA", "P_IMPORTO_PROGETTO", "P_IMPORTO_DIVISA", "P_CD_DIVISA", "P_NOTE", "P_STATO", "P_CONDIVISO", "P_DURATA_PROGETTO", "P_LIVELLO", "P_CD_DIPARTIMENTO", "P_CD_PROGRAMMA", "P_CD_MISSIONE") AS 
+  CREATE OR REPLACE FORCE VIEW "V_PROGETTO_PADRE" ("ESERCIZIO", "PG_PROGETTO", "TIPO_FASE", "ESERCIZIO_PROGETTO_PADRE", "PG_PROGETTO_PADRE", "TIPO_FASE_PROGETTO_PADRE", "CD_PROGETTO", "DS_PROGETTO", "CD_TIPO_PROGETTO", "CD_UNITA_ORGANIZZATIVA", "CD_RESPONSABILE_TERZO", "DT_INIZIO", "DT_FINE", "DT_PROROGA", "IMPORTO_PROGETTO", "IMPORTO_DIVISA", "CD_DIVISA", "NOTE", "STATO", "CONDIVISO", "DURATA_PROGETTO", "LIVELLO", "CD_DIPARTIMENTO", "DACR", "UTCR", "DUVA", "UTUV", "PG_VER_REC", "FL_UTILIZZABILE", "FL_PIANO_TRIENNALE", "CD_PROGRAMMA", "CD_MISSIONE", "P_ESERCIZIO", "P_PG_PROGETTO", "P_CD_PROGETTO", "P_DS_PROGETTO", "P_CD_TIPO_PROGETTO", "P_CD_UNITA_ORGANIZZATIVA", "P_CD_RESPONSABILE_TERZO", "P_DT_INIZIO", "P_DT_FINE", "P_DT_PROROGA", "P_IMPORTO_PROGETTO", "P_IMPORTO_DIVISA", "P_CD_DIVISA", "P_NOTE", "P_STATO", "P_CONDIVISO", "P_DURATA_PROGETTO", "P_LIVELLO", "P_CD_DIPARTIMENTO", "P_CD_PROGRAMMA", "P_CD_MISSIONE", "PG_PROGETTO_OTHER_FIELD", "ID_TIPO_FINANZIAMENTO", "CODICE_TIPO_FINANZIAMENTO", "STATO_OTHER_FIELD", "DT_INIZIO_OTHER_FIELD", "DT_FINE_OTHER_FIELD", "DT_PROROGA_OTHER_FIELD", "IM_FINANZIATO_OTHER_FIELD", "IM_COFINANZIATO_OTHER_FIELD") AS
   SELECT /*+ optimizer_features_enable('10.1.0') */
 --
 -- Date: 09/11/2006
@@ -52,8 +52,19 @@
           progetto_padre.durata_progetto p_durata_progetto,
           progetto_padre.livello p_livello, progetto_padre.cd_dipartimento,
           progetto_padre.cd_programma p_cd_programma,
-          progetto_padre.cd_missione p_cd_missione
-     FROM progetto progetto, progetto progetto_padre
+          progetto_padre.cd_missione p_cd_missione,
+          progetto_other_field.pg_progetto pg_progetto_other_field,
+          progetto_other_field.id_tipo_finanziamento id_tipo_finanziamento,
+          tipo_finanziamento.codice codice_tipo_finanziamento,
+          progetto_other_field.stato stato_other_field,
+          progetto_other_field.dt_inizio dt_inizio_other_field,
+          progetto_other_field.dt_fine dt_fine_other_field,
+          progetto_other_field.dt_proroga dt_proroga_other_field,
+          progetto_other_field.im_finanziato im_finanziato_other_field,
+          progetto_other_field.im_cofinanziato im_cofinanziato_other_field
+     FROM progetto progetto, progetto progetto_padre, progetto_other_field, tipo_finanziamento
     WHERE progetto.esercizio_progetto_padre = progetto_padre.esercizio(+)
       AND progetto.pg_progetto_padre = progetto_padre.pg_progetto(+)
-      AND progetto.tipo_fase_progetto_padre = progetto_padre.tipo_fase(+);
+      AND progetto.tipo_fase_progetto_padre = progetto_padre.tipo_fase(+)
+      AND progetto.pg_progetto = progetto_other_field.pg_progetto(+)
+      AND progetto_other_field.id_tipo_finanziamento = tipo_finanziamento.id(+);

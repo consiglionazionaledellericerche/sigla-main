@@ -696,6 +696,7 @@
 		label="Tipo Finanziamento"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
+		readonlyProperty="ROdatiOtherField"
 		enabledOnSearch="true" />
 	<fieldProperty
 		name="dtInizioOf"
@@ -703,6 +704,7 @@
 		inputType="TEXT"
 		enabledOnSearch="true"
 		formatName="date_short"
+		readonlyProperty="ROdatiOtherField"
 		label="Data Inizio" />
 	<fieldProperty
 		name="dtFineOf"
@@ -710,6 +712,7 @@
 		inputType="TEXT"
 		enabledOnSearch="true"
 		formatName="date_short"
+		readonlyProperty="ROdatiOtherField"
 		label="Data Fine" />
 	<fieldProperty
 		name="dtProrogaOf"
@@ -732,6 +735,55 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnSearch="true"
 		label="Importo Cofinanziato" />
+	<fieldProperty
+		name="imTotale"
+		property="imTotale"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Totale" />
+	<fieldProperty
+		name="imFinanziatoRipartito"
+		property="imFinanziatoRipartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Finanziato Ripartito" />
+	<fieldProperty
+		name="imCofinanziatoRipartito"
+		property="imCofinanziatoRipartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Cofinanziato Ripartito" />
+	<fieldProperty
+		name="imTotaleRipartito"
+		property="imTotaleRipartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Totale Ripartito" />
+	<fieldProperty
+		name="imFinanziatoDaRipartire"
+		property="imFinanziatoDaRipartire"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Finanziato da Ripartire" />
+	<fieldProperty
+		name="imCofinanziatoDaRipartire"
+		property="imCofinanziatoDaRipartire"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Cofinanziato da Ripartire" />
+	<fieldProperty
+		name="imTotaleDaRipartire"
+		property="imTotaleDaRipartire"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Totale da Ripartire" />
 		
 	<form
 		name="searchtool" >
@@ -895,6 +947,20 @@
 		name="imFinanziatoOf" />
 	<formFieldProperty
 		name="imCofinanziatoOf" />
+	<formFieldProperty
+		name="imTotale" />
+	<formFieldProperty
+		name="imFinanziatoRipartito" />
+	<formFieldProperty
+		name="imCofinanziatoRipartito" />
+	<formFieldProperty
+		name="imTotaleRipartito" />
+	<formFieldProperty
+		name="imFinanziatoDaRipartire" />
+	<formFieldProperty
+		name="imCofinanziatoDaRipartire" />
+	<formFieldProperty
+		name="imTotaleDaRipartire" />
 
 	<columnFieldProperty
 		name="livello" />
@@ -1434,23 +1500,13 @@
 		<findFieldProperty
 			name="cd_unita_organizzativa" />
 		<findFieldProperty
-			name="dt_proroga" />
-		<findFieldProperty
 			name="ds_progetto" />
 		<findFieldProperty
 			name="cd_responsabile_terzo" />
 		<findFieldProperty
-			name="dt_inizio" />
-		<findFieldProperty
-			name="dt_fine" />
-		<findFieldProperty
-			name="cd_tipo_progetto" />
-		<findFieldProperty
 			name="stato" />
 		<findFieldProperty
 			name="durata_progetto" />
-		<findFieldProperty
-			name="note" />
 	</freeSearchSet>
 
 	<form
