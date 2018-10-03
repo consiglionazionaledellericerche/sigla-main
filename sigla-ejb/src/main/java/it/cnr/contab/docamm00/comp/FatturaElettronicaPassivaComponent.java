@@ -148,6 +148,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
         	List<String> anomalieTrasmissione = new ArrayList<String>();
         	SQLBuilder sql = terzoHome.createSQLBuilder();
         	sql.addClause(FindClause.AND, "codiceUnivocoUfficioIpa", SQLBuilder.EQUALS, documentoEleTrasmissioneBulk.getCodiceDestinatario());
+        	sql.addSQLClause("AND", "DT_FINE_RAPPORTO", sql.ISNULL, null);
         	List<TerzoBulk> terzoUOS = terzoHome.fetchAll(sql);
         	if (terzoUOS != null && !terzoUOS.isEmpty()) {
         		documentoEleTrasmissioneBulk.setUnitaOrganizzativa(terzoUOS.get(0).getUnita_organizzativa());
