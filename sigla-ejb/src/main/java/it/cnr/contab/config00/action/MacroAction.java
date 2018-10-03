@@ -180,6 +180,7 @@ public class MacroAction extends BulkAction {
                             .flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getStato()))
                             .filter(stato -> Arrays.asList(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE, Progetto_other_fieldBulk.STATO_APPROVATO).indexOf(stato) != -1).isPresent()) {
                         newbp.setPgModulo(pg_modulo);
+                        pdg_modulo.setStato(Pdg_moduloBulk.STATO_AC);
 						((CdrBulk)newbp.getModel()).addToDettagli(pdg_modulo);
                         newbp.evidenziaModulo(actioncontext);
                         actioncontext.addBusinessProcess(newbp);
