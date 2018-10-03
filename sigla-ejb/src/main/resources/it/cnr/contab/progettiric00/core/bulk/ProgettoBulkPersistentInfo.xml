@@ -130,5 +130,15 @@
 		<exclude pattern="*"/>
 		<include pattern="progettopadre"/>		
 		<include pattern="progettopadre.progettopadre"/>
-	</fetchPolicy>				
+	</fetchPolicy>
+
+	<fetchPolicy
+            name="it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find">
+        <exclude pattern="*"/>
+        <include pattern="progettopadre"/>
+        <include pattern="progettopadre.progettopadre"/>
+        <include pattern="dipartimento"/>
+        <include pattern="otherField"/>
+        <include pattern="otherField.tipoFinanziamento"/>
+    </fetchPolicy>
 </SQLPersistentInfo>
