@@ -703,6 +703,11 @@
 		readonlyPropertyOnEdit="ROOtherFieldExistPianoEconomico"
 		enabledOnSearch="true" />
 	<fieldProperty
+		name="dsTipoFinanziamentoOf"
+		property="otherField.tipoFinanziamento.descrizione"
+		inputType="TEXT"
+		label="Finanziamento" />
+	<fieldProperty
 		name="dtInizioOf"
 		property="otherField.dtInizio"
 		inputType="TEXT"
@@ -947,6 +952,8 @@
 		name="statoOf" />
 	<formFieldProperty
 		name="tipoFinanziamentoOf" />
+	<formFieldProperty
+		name="dsTipoFinanziamentoOf" />
 	<formFieldProperty
 		name="dtInizioOf" />
 	<formFieldProperty
@@ -1265,27 +1272,21 @@
 			name="cd_progetto_padre"
 			label="Area Progettuale"/>
 		<columnFieldProperty
-			name="tipo_fase" />
-		<columnFieldProperty
 			name="cd_unita_organizzativa" />
-		<columnFieldProperty
-			name="dt_proroga" />
 		<columnFieldProperty
 			name="ds_progetto" />
 		<columnFieldProperty
 			name="cd_responsabile_terzo" />
 		<columnFieldProperty
-			name="dt_inizio" />
+			name="dsTipoFinanziamentoOf" />
 		<columnFieldProperty
-			name="dt_fine" />
+			name="dtInizioOf" />
 		<columnFieldProperty
-			name="cd_tipo_progetto" />
+			name="dtFineOf" />
 		<columnFieldProperty
-			name="stato" />
+			name="dtProrogaOf" />
 		<columnFieldProperty
-			name="durata_progetto" />
-		<columnFieldProperty
-			name="note" />
+			name="statoOf" />
 	</columnSet>
 
 	<columnSet
