@@ -343,7 +343,7 @@ where
    cOld cig_cupMandato%rowtype:=null;
    i cig_cupImpegno%rowtype;
    Tot_associato_cup number:=0;
-   
+   tot_da_pagare number(15,2):=0;
 begin
 /*
 -- Contabilizzate
@@ -770,7 +770,15 @@ open testata_scad;
 loop
 fetch testata_scad  into scad;
 exit when testata_scad%notfound;
-	if (scad.im_totale_fattura!=0 ) then
+	tot_da_pagare:=0;
+  select sum(nvl(IM_DIPONIBILE_NC,0)) into tot_da_pagare from fattura_passiva_riga
+  where stato_cofi not in('P','A') and
+  esercizio = scad.esercizio  and
+  cd_cds =scad.cd_cds  and
+  cd_unita_organizzativa =scad.cd_unita_organizzativa  and
+  pg_fattura_passiva =scad.pg_fattura_passiva;
+  
+	if (tot_da_pagare!=0 ) then
 					   	insert into modello3_pcc(lotto ,
   				   													CODICE_FISCALE_AMM ,
 																			CODICE_UFFICIO     ,
@@ -816,7 +824,8 @@ exit when testata_scad%notfound;
 						'CS',
 						nvl(to_char(scad.identificativo_sdi),'NA'),--PROGR_REGISTRAZIONE
 						scad.NR_FATTURA_FORNITORE,scad.dt_FATTURA_FORNITORE,
-						scad.im_totale_fattura,
+					  scad.im_totale_fattura,
+						--tot_da_pagare,
 						null, --numero_protocollo
 						null, --data_protocollo
 						null, --note_rc    
@@ -831,7 +840,7 @@ exit when testata_scad%notfound;
 						null, -- estremi impegno 
 						null, -- codice_cig_co
 						null, -- codice_cup_co
-						'SI', scad.im_totale_fattura,scad.dt_scadenza, -- CS
+						'SI', tot_da_pagare,scad.dt_scadenza,--scad.im_totale_fattura,scad.dt_scadenza, -- CS
 						null,null,-- CP
 						null, -- capitolo
 						null,
