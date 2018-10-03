@@ -430,7 +430,7 @@ public ProgettoRicercaComponent() {
 		   Optional.ofNullable(progetto.getOtherField())
 		   		   .map(el->{
 		   			   Optional.ofNullable(el.getStato()).ifPresent(stato->{
-		   				   sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.STATO", SQLBuilder.EQUALS,stato);
+		   				   sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.STATO_OTHER_FIELD", SQLBuilder.EQUALS,stato);
 			   		   });
 		   			   Optional.ofNullable(el.getTipoFinanziamento()).flatMap(tipofin->Optional.ofNullable(tipofin.getId())).ifPresent(idTipoFin->{
 		   				   sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.ID_TIPO_FINANZIAMENTO", SQLBuilder.EQUALS,idTipoFin);
