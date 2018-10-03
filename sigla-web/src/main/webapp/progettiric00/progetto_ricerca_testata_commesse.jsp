@@ -3,6 +3,7 @@
 		it.cnr.jada.bulk.*,
 		it.cnr.jada.util.action.*,
 		it.cnr.jada.util.jsp.*,
+		java.util.Optional,
 		it.cnr.contab.progettiric00.bp.*,
 		it.cnr.contab.progettiric00.core.bulk.*"
 %>
@@ -145,13 +146,19 @@
      </table>
 	 </div> 
 
+    <% if (Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField())).isPresent()) { %>
   	 <div class="GroupLabel">Dati Contabili</div>
 	 <div class="Group">
      <table class="Panel card border-info p-2">
 	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"statoOf");%></td>
+	  	<td colspan="3"><% bp.getController().writeFormInput( out, "statoOf"); %></td>
+	  </tr>	  
+	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"tipoFinanziamentoOf");%></td>
 	  	<td colspan="3"><% bp.getController().writeFormInput( out, "tipoFinanziamentoOf"); %></td>
 	  </tr>	  
+      <% if (Optional.ofNullable(bulk).filter(ProgettoBulk::isAttivoPianoEconomicoOf).isPresent()) { %>
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"dtInizioOf");%></td>
 	  	<td colspan="3"><% bp.getController().writeFormInput( out, "dtInizioOf"); %></td>
@@ -162,6 +169,7 @@
 	  	<td><% bp.getController().writeFormLabel(out,"dtProrogaOf");%></td>
 	  	<td><% bp.getController().writeFormInput( out, "dtProrogaOf"); %></td>
 	  </tr>
+	  <% } %> 
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"imFinanziatoOf");%></td>
 	  	<td><% bp.getController().writeFormInput( out, "imFinanziatoOf"); %></td>
@@ -169,7 +177,8 @@
 	  	<td><% bp.getController().writeFormInput( out, "imCofinanziatoOf"); %></td>
 	  </tr>
      </table>
-	 </div> 
+	 </div>
+	 <% } %> 
 <% } else { %>
      <div class="GroupLabel">
        	<% if (isFlNuovoPdg) {
@@ -244,9 +253,13 @@
 		</table>
 	</div>
 	
+    <% if (Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField())).isPresent()) { %>
 	<div class="GroupLabel">Dati Contabili</div>
 	<div class="Group">
     <table class="Panel card border-info p-2">
+		<tr>
+		  	<% bp.getController().writeFormField(out,"statoOf");%>
+		</tr>
 		<tr>
 		  	<td colspan="4">
 		  		<table>
@@ -267,4 +280,5 @@
 		</tr>
 	</table>
 	</div>
+	<% } %>  
 <%}%>  

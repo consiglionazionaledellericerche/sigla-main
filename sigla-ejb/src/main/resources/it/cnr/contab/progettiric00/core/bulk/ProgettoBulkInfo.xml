@@ -687,7 +687,11 @@
 		name="statoOf"
 		property="otherField.stato"
 		label="Stato"
-		inputType="TEXT"
+		inputType="SELECT"
+		keysProperty="statoOfKeys"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
 		inputSize="20"
 		maxLength="20"/>
 	<fieldProperty
@@ -696,7 +700,7 @@
 		label="Tipo Finanziamento"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
-		readonlyProperty="ROdatiOtherField"
+		readonlyPropertyOnEdit="ROOtherFieldExistPianoEconomico"
 		enabledOnSearch="true" />
 	<fieldProperty
 		name="dtInizioOf"
@@ -704,7 +708,8 @@
 		inputType="TEXT"
 		enabledOnSearch="true"
 		formatName="date_short"
-		readonlyProperty="ROdatiOtherField"
+		command="doOnDtInizioOfChange"
+		readonlyPropertyOnEdit="ROOtherFieldExistPianoEconomico"
 		label="Data Inizio" />
 	<fieldProperty
 		name="dtFineOf"
@@ -712,7 +717,8 @@
 		inputType="TEXT"
 		enabledOnSearch="true"
 		formatName="date_short"
-		readonlyProperty="ROdatiOtherField"
+		command="doOnDtFineOfChange"
+		readonlyPropertyOnEdit="ROOtherFieldExistPianoEconomico"
 		label="Data Fine" />
 	<fieldProperty
 		name="dtProrogaOf"
@@ -720,6 +726,8 @@
 		inputType="TEXT"
 		enabledOnSearch="true"
 		formatName="date_short"
+		command="doOnDtProrogaOfChange"
+		readonlyPropertyOnEdit="RODatiOtherField"
 		label="Data Proroga" />
 	<fieldProperty
 		name="imFinanziatoOf"
@@ -727,6 +735,7 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnSearch="true"
+		readonlyPropertyOnEdit="RODatiOtherField"
 		label="Importo Finanziato" />
 	<fieldProperty
 		name="imCofinanziatoOf"
@@ -734,6 +743,7 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnSearch="true"
+		readonlyPropertyOnEdit="RODatiOtherField"
 		label="Importo Cofinanziato" />
 	<fieldProperty
 		name="imTotale"
