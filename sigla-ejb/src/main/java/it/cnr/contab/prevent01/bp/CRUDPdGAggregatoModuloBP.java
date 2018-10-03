@@ -7,6 +7,7 @@
 package it.cnr.contab.prevent01.bp;
 
 import java.rmi.RemoteException;
+import java.util.Optional;
 
 import javax.ejb.RemoveException;
 
@@ -486,5 +487,16 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 	public Parametri_enteBulk getParametriEnte() {
 		return parametriEnte;
+	}
+
+	public boolean isPrevEntSpesaEnable() {
+		return Optional.ofNullable(getCrudDettagli().getModel())
+				.filter(Pdg_moduloBulk.class::isInstance)
+				.map(Pdg_moduloBulk.class::cast)
+				.flatMap(pdg_moduloBulk -> Optional.ofNullable(pdg_moduloBulk.getProgetto()))
+				.flatMap(progetto_sipBulk -> Optional.ofNullable(progetto_sipBulk.getOtherField()))
+				.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
+				.map(tipoFinanziamentoBulk -> tipoFinanziamentoBulk.getFlPrevEntSpesa())
+				.orElse(Boolean.FALSE);
 	}
 }
