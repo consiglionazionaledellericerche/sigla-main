@@ -236,7 +236,7 @@
 			label="Programma"/>
 		<columnFieldProperty
 			name="cd_unita_organizzativa"
-			label="UO Responsabile" />
+			label="UO Resp." />
 		<columnFieldProperty
 			name="ds_progetto" />
 		<columnFieldProperty
@@ -250,27 +250,25 @@
 		<columnFieldProperty
 			name="dt_inizio"
 			property="otherField.dtInizio"
+            formatName="date_short"
+            headerLabel="Data"
 			label="Inizio"/>
 		<columnFieldProperty
 			name="dt_fine"
 			property="otherField.dtFine"
+            formatName="date_short"
+            headerLabel="Data"
 			label="Fine"/>
 		<columnFieldProperty
 			name="dt_proroga"
 			property="otherField.dtProroga"
+            formatName="date_short"
+            headerLabel="Data"
 			label="Proroga"/>
-		<columnFieldProperty
-			property="otherField.tipoFinanziamento.codice"
-			name="codice_finanziamento"
-            inputType="SELECT"
-			keysProperty="otherField.tipoFinanziamento.codiceKeys"
-			headerLabel="Finanziamento"
-			label="Codice"/>
 		<columnFieldProperty
             property="otherField.tipoFinanziamento.descrizione"
             name="descrizione"
-			headerLabel="Finanziamento"
-            label="Descrizione"/>
+			label="Finanziamento"/>
 	</columnSet>
 	
 	<columnFieldProperty
