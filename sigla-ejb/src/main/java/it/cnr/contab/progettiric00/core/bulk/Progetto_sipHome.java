@@ -16,17 +16,18 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.PersistentHome;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.*;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.Optional;
 
 /**
  * @author mspasiano
@@ -79,7 +80,7 @@ public class Progetto_sipHome extends BulkHome {
 	 * Recupera i figli dell'oggetto bulk
 	 * Creation date: (27/07/2004 11.23.36)
 	 * @return it.cnr.jada.persistency.sql.SQLBuilder
-	 * @param bulk ProgettoBulk
+	 * @param ubi ProgettoBulk
 	 */
     
 	public SQLBuilder selectChildrenFor(it.cnr.jada.UserContext aUC, Progetto_sipBulk ubi){
@@ -170,17 +171,20 @@ public class Progetto_sipHome extends BulkHome {
 		sql.closeParenthesis();
 		return sql;    	
 	}
-    public Persistent findByPrimaryKey(UserContext userContext,Object persistent) throws PersistencyException {
+
+    public Persistent findByPrimaryKey(UserContext userContext, Object persistent) throws PersistencyException {
     	return findByPrimaryKey(userContext,(Persistent)persistent);
     }
+
 	@Override
     public Persistent findByPrimaryKey(UserContext userContext,Persistent persistent) throws PersistencyException {
+		Progetto_sipHome progettohome = (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class,"V_PROGETTO_PADRE");
     	Progetto_sipBulk progetto = ((Progetto_sipBulk)persistent);
-    	if (progetto.getEsercizio() == null)
+    	if (progetto.getEsercizio() == null && Optional.ofNullable(userContext).isPresent())
     		progetto.setEsercizio(CNRUserContext.getEsercizio(userContext));
     	if (progetto.getTipo_fase() == null)        	    	
     		progetto.setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
-    	return super.findByPrimaryKey(persistent);
+    	return progettohome.findByPrimaryKey(persistent);
     }
 	public DipartimentoBulk findDipartimento(UserContext userContext, Progetto_sipBulk bulk) throws it.cnr.jada.comp.ComponentException, PersistencyException {
 		Progetto_sipHome prgHome = (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class);

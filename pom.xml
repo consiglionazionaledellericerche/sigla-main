@@ -24,7 +24,7 @@
     	<sonar.skip>true</sonar.skip>
 		<java.version>1.8</java.version>
 		<spring.version>4.3.3.RELEASE</spring.version>
-		<jada.version>6.0.36</jada.version>
+		<jada.version>6.0.37</jada.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>
 		<slf4j.version>1.7.21</slf4j.version>
