@@ -71,11 +71,10 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			CRUDPdGAggregatoModuloBP bpmod = (CRUDPdGAggregatoModuloBP)context.getBusinessProcess();
 			Pdg_moduloBulk dettaglio = (Pdg_moduloBulk) bpmod.getCrudDettagli().getModel();
 
-			String cd = null;
-
-			if (dettaglio != null)
-				cd = dettaglio.getCd_progetto();
-			if (cd != null){
+			if (Optional.ofNullable(dettaglio)
+					.filter(pdg_moduloBulk -> Optional.ofNullable(pdg_moduloBulk.getProgetto()).isPresent())
+					.filter(progetto_sipBulk -> Optional.ofNullable(progetto_sipBulk.getProgetto().getCd_progetto()).isPresent() ||
+							Optional.ofNullable(progetto_sipBulk.getProgetto().getDs_progetto()).isPresent()).isPresent()) {
 				// L'utente ha indicato un codice da cercare: esegue una ricerca mirata.
 				return search(context, getFormField(context, "main.Dettagli.searchtool_progetto"),null);
 			}
