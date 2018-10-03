@@ -51,7 +51,7 @@
 		maxLength="18"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Importo Spesa Finanziato" />
+		label="Quota Finanziata" />
 	<fieldProperty
 		name="im_spesa_cofinanziato"
 		property="im_spesa_cofinanziato"
@@ -59,7 +59,7 @@
 		maxLength="18"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Importo Spesa Cofinanziato" />
+		label="Quota Cofinanziata" />
 	<fieldProperty
 		name="imTotaleSpesa"
 		property="imTotaleSpesa"
