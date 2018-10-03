@@ -243,6 +243,7 @@ public ProgettoRicercaComponent() {
 						testata.setSpeseEsercizio(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliSpese(userContext,testata)));
 						
 						List<Progetto_piano_economicoBulk> progettoPiano = new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPianoEconomico(userContext,testata));
+						progettoPiano.stream().forEach(el->el.setProgetto(testata));
 						testata.setDettagliPianoEconomicoTotale(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(Integer.valueOf(0))).collect(Collectors.toList())));
 						testata.setDettagliPianoEconomicoAnnoCorrente(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(testata.getEsercizio())).collect(Collectors.toList())));
 						testata.setDettagliPianoEconomicoAltriAnni(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->!e.getEsercizio_piano().equals(Integer.valueOf(0)) && !e.getEsercizio_piano().equals(testata.getEsercizio())).collect(Collectors.toList())));
@@ -401,9 +402,9 @@ public ProgettoRicercaComponent() {
 		   SQLBuilder sql = progettohome.createSQLBuilder();
 		   sql.addClause(clauses);
 		   sql.addClause(bulk.buildFindClauses(new Boolean(true)));
-		   sql.addSQLClause("AND", "V_PROGETTO_PADRE.ESERCIZIO", SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
-		   sql.addSQLClause("AND", "V_PROGETTO_PADRE.LIVELLO", sql.EQUALS,ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
-		   sql.addClause("AND","tipo_fase",SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_NON_DEFINITA);
+		   sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.ESERCIZIO", SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		   sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.LIVELLO", sql.EQUALS,ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+		   sql.addClause(FindClause.AND,"tipo_fase",SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_NON_DEFINITA);
 
 		   SQLBuilder sqlExistPrevisione = ((ProgettoHome)getHome(userContext, ProgettoBulk.class)).createSQLBuilder();
 		   sqlExistPrevisione.addSQLJoin("V_PROGETTO_PADRE.ESERCIZIO", "PROGETTO.ESERCIZIO");
@@ -425,6 +426,32 @@ public ProgettoRicercaComponent() {
 			   sql.addSQLExistsClause(FindClause.AND, sqlExistPrevisione);
 			   sql.addSQLExistsClause(FindClause.AND, sqlExistGestione);
 		   }
+
+		   Optional.ofNullable(progetto.getOtherField())
+		   		   .map(el->{
+		   			   Optional.ofNullable(el.getStato()).ifPresent(stato->{
+		   				   sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.STATO", SQLBuilder.EQUALS,stato);
+			   		   });
+		   			   Optional.ofNullable(el.getTipoFinanziamento()).flatMap(tipofin->Optional.ofNullable(tipofin.getId())).ifPresent(idTipoFin->{
+		   				   sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.ID_TIPO_FINANZIAMENTO", SQLBuilder.EQUALS,idTipoFin);
+			   		   });
+					   Optional.ofNullable(el.getDtInizio()).ifPresent(dt->{
+						   sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.DT_INIZIO_OTHER_FIELD", SQLBuilder.EQUALS,dt);
+					   });
+					   Optional.ofNullable(el.getDtFine()).ifPresent(dt->{
+						   sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.DT_FINE_OTHER_FIELD", SQLBuilder.EQUALS,dt);
+					   });
+					   Optional.ofNullable(el.getDtProroga()).ifPresent(dt->{
+						   sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.DT_PROROGA_OTHER_FIELD", SQLBuilder.EQUALS,dt);
+					   });
+					   Optional.ofNullable(el.getImFinanziato()).ifPresent(im->{
+						   sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.IM_FINANZIATO_OTHER_FIELD", SQLBuilder.EQUALS,im);
+					   });
+					   Optional.ofNullable(el.getImCofinanziato()).ifPresent(im->{
+						   sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.IM_COFINANZIATO_OTHER_FIELD", SQLBuilder.EQUALS,im);
+					   });
+				   	   return true;
+				   	});
 
 		   // Se uo 999.000 in scrivania: visualizza tutti i progetti
 		   Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
@@ -720,7 +747,7 @@ public RemoteIterator getChildrenForSip(UserContext userContext, OggettoBulk bul
 		userContext,
 		ubiHome.selectChildrenFor(userContext,ubi),
 		Progetto_sipBulk.class,
-		null);
+		"tipoFinanziamento");
 }
 
 /** 
@@ -1217,6 +1244,23 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     	sql.addClause(FindClause.OR, "cd_unita_organizzativa", SQLBuilder.EQUALS, pianoEconomico.getProgetto().getCd_unita_organizzativa());
     	sql.addSQLClause(FindClause.OR, "UNITA_ORGANIZZATIVA.CD_TIPO_UNITA", SQLBuilder.EQUALS, Tipo_unita_organizzativaHome.TIPO_UO_ENTE);
     	sql.closeParenthesis();
+
+    	Optional.ofNullable(pianoEconomico.getProgetto()).flatMap(el->Optional.ofNullable(el.getOtherField()))
+    			.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
+    			.ifPresent(tipoFin->{
+    				if (!tipoFin.getFlAssCatVociInd() || !tipoFin.getFlAssCatVociDet() || !tipoFin.getFlAssCatVociAltro()) {
+    			    	sql.openParenthesis(FindClause.AND);
+    			    	sql.addClause(FindClause.OR, "tipologia", SQLBuilder.ISNULL, null);
+    			    	if (!tipoFin.getFlAssCatVociInd())	
+	    					sql.addClause(FindClause.OR, "tipologia", SQLBuilder.NOT_EQUALS, Voce_piano_economico_prgBulk.PERSONALE_INDET);
+	    				if (!tipoFin.getFlAssCatVociDet())
+	    					sql.addClause(FindClause.OR, "tipologia", SQLBuilder.NOT_EQUALS, Voce_piano_economico_prgBulk.PERSONALE_DETER);
+	    				if (!tipoFin.getFlAssCatVociAltro())
+	    					sql.addClause(FindClause.OR, "tipologia", SQLBuilder.NOT_EQUALS, Voce_piano_economico_prgBulk.PERSONALE_OTHER);
+	    		    	sql.closeParenthesis();
+    				}   				
+    			});
+
     	sql.addClause(clauses);
     	sql.addOrderBy("cd_voce_piano");
     	return sql;
@@ -1296,6 +1340,18 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     	Elemento_voceHome home = (Elemento_voceHome)getHome(userContext, Elemento_voceBulk.class);
     	SQLBuilder sql = home.createSQLBuilder();
     	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, assPiaecoVoce.getEsercizio_piano());
+
+    	sql.openParenthesis(FindClause.AND);
+    	sql.openParenthesis(FindClause.OR);
+    	sql.addClause(FindClause.AND, "cd_unita_piano", SQLBuilder.ISNULL, null);
+    	sql.addClause(FindClause.AND, "cd_voce_piano", SQLBuilder.ISNULL, null);
+    	sql.closeParenthesis();
+    	sql.openParenthesis(FindClause.OR);
+    	sql.addClause(FindClause.AND, "cd_unita_piano", SQLBuilder.EQUALS, assPiaecoVoce.getCd_unita_organizzativa());
+    	sql.addClause(FindClause.AND, "cd_voce_piano", SQLBuilder.EQUALS, assPiaecoVoce.getCd_voce_piano());
+    	sql.closeParenthesis();
+    	sql.closeParenthesis();
+    	
     	sql.addClause(clauses);
     	sql.addOrderBy("cd_elemento_voce");
     	return sql;

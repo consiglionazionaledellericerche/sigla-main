@@ -1,9 +1,20 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 
 public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
+	public static final String STATO_INIZIALE = "INI";
+	public static final String STATO_NEGOZIAZIONE = "NEG";
+	public static final String STATO_APPROVATO = "APP";
+	public static final String STATO_ANNULLATO = "ANN";
+	public static final String STATO_CHIUSO = "CHI";
+	public static final String STATO_MIGRAZIONE = "MIG";
+
+
 	private Pdg_programmaBulk pdgProgramma;
 	
 	private Pdg_missioneBulk pdgMissione;
