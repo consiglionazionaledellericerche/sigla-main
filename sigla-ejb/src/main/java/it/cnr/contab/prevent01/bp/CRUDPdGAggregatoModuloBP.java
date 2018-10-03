@@ -19,6 +19,7 @@ import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
@@ -50,6 +51,8 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	private Integer pgModulo;
 	private Pdg_esercizioBulk cdrPdGP;
 	private boolean isUtenteDirettore;
+	private Progetto_sipBulk progettoForUpdate;
+
 	private SimpleDetailCRUDController crudDettagli = new SimpleDetailCRUDController( "Dettagli", Pdg_moduloBulk.class, "dettagli", this, false) {
 
 		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
@@ -489,7 +492,16 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 		return parametriEnte;
 	}
 
-	public boolean isPrevEntSpesaEnable() {
+    public Progetto_sipBulk getProgettoForUpdate() {
+        return progettoForUpdate;
+    }
+
+    public CRUDPdGAggregatoModuloBP setProgettoForUpdate(Progetto_sipBulk progettoForUpdate) {
+        this.progettoForUpdate = progettoForUpdate;
+        return this;
+    }
+
+    public boolean isPrevEntSpesaEnable() {
 		return Optional.ofNullable(getCrudDettagli().getModel())
 				.filter(Pdg_moduloBulk.class::isInstance)
 				.map(Pdg_moduloBulk.class::cast)

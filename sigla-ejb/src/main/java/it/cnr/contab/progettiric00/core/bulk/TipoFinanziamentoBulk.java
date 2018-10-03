@@ -73,4 +73,8 @@ public class TipoFinanziamentoBulk extends TipoFinanziamentoBase {
     public OggettoBulk initializeForSearch(CRUDBP crudbp, ActionContext actioncontext) {
         return super.initializeForSearch(crudbp, actioncontext);
     }
+
+    public Dictionary getCodiceKeys() {
+        return codiceKeys;
+    }
 }
