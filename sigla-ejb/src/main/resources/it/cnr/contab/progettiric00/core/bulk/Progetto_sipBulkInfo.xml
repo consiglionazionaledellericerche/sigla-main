@@ -242,11 +242,35 @@
 		<columnFieldProperty
 			name="cd_responsabile_terzo" />
 		<columnFieldProperty
-			name="dt_inizio" />
-        <columnFieldProperty
-            property="otherField.tipoFinanziamento.codice"
-            name="codice_finanziamento"
-            label="Tipo Finanziamento"/>
+			property="otherField.stato"
+            inputType="SELECT"
+            keysProperty="otherField.statoKeys"
+			name="stato"
+			label="Stato"/>
+		<columnFieldProperty
+			name="dt_inizio"
+			property="otherField.dtInizio"
+			label="Inizio"/>
+		<columnFieldProperty
+			name="dt_fine"
+			property="otherField.dtFine"
+			label="Fine"/>
+		<columnFieldProperty
+			name="dt_proroga"
+			property="otherField.dtProroga"
+			label="Proroga"/>
+		<columnFieldProperty
+			property="otherField.tipoFinanziamento.codice"
+			name="codice_finanziamento"
+            inputType="SELECT"
+			keysProperty="otherField.tipoFinanziamento.codiceKeys"
+			headerLabel="Finanziamento"
+			label="Codice"/>
+		<columnFieldProperty
+            property="otherField.tipoFinanziamento.descrizione"
+            name="descrizione"
+			headerLabel="Finanziamento"
+            label="Descrizione"/>
 	</columnSet>
 	
 	<columnFieldProperty
