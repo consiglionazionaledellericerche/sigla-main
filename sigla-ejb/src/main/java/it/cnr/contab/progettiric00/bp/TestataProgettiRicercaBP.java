@@ -496,12 +496,18 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	
 	@Override
 	public void validate(ActionContext actioncontext) throws ValidationException {
-		ProgettoBulk bulk = (ProgettoBulk)getModel();
-		if (bulk.getProgettopadre() == null || bulk.getProgettopadre().getPg_progetto() == null)
+		Optional<ProgettoBulk> optProgetto = Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast);
+		if (!optProgetto.isPresent())
+			throw new ValidationException("Operazione non possibile! Non è stato possibile individuare il progetto da aggiornare!");
+
+		if (optProgetto.get().getProgettopadre() == null || optProgetto.get().getProgettopadre().getPg_progetto() == null)
 			throw new ValidationException("Attenzione: Per salvare "+
 					(this.isFlNuovoPdg()?"il "+ProgettoBulk.LABEL_PROGETTO:"la "+ProgettoBulk.LABEL_COMMESSA)+
 					" è necessario inserire "+
-					(this.isFlNuovoPdg()?"l' "+ProgettoBulk.LABEL_AREA_PROGETTUALE:"la "+ProgettoBulk.LABEL_COMMESSA)+"!");	                	
+					(this.isFlNuovoPdg()?"l' "+ProgettoBulk.LABEL_AREA_PROGETTUALE:"la "+ProgettoBulk.LABEL_COMMESSA)+"!");
+		
+		Optional<Progetto_other_fieldBulk> optOtherField = optProgetto.flatMap(el->Optional.ofNullable(el.getOtherField()));
+		validateStato(actioncontext, optProgetto, optOtherField.flatMap(el->Optional.ofNullable(el.getStato())).orElse(null));
 		super.validate(actioncontext);
 	}
 	
@@ -604,32 +610,78 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 
 		Optional<Progetto_other_fieldBulk> optOtherField = optProgetto.flatMap(el->Optional.ofNullable(el.getOtherField()));
 		
-		if (!optOtherField.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
-				.flatMap(el->Optional.ofNullable(el.getCodice())).isPresent())
-			throw new ValidationException("Operazione non possibile! Indicare il tipo di finanziamento!");
-		
-		if (optProgetto.get().isAttivoPianoEconomicoOf()) {
-			if (!optOtherField.map(Progetto_other_fieldBulk::getDtInizio).isPresent())
-				throw new ValidationException("Operazione non possibile! Indicare la data di inizio progetto!");
-			if (!optOtherField.map(Progetto_other_fieldBulk::getDtFine).isPresent())
-				throw new ValidationException("Operazione non possibile! Indicare la data di fine progetto!");
-		}
-			
-		if (!optOtherField.map(Progetto_other_fieldBulk::getImFinanziato).isPresent())
-			throw new ValidationException("Operazione non possibile! Indicare l'importo del finanziamento!");
-		if (!optOtherField.map(Progetto_other_fieldBulk::getImCofinanziato).isPresent())
-			throw new ValidationException("Operazione non possibile! Indicare l'importo del cofinanziamento!");
-
-		if (optProgetto.get().isAttivoPianoEconomicoOf()) {
-			if (!optOtherField.map(Progetto_other_fieldBulk::getImFinanziato).filter(el->el.compareTo(BigDecimal.ZERO)>0).isPresent())
-				throw new ValidationException("Operazione non possibile! Indicare l'importo del finanziamento!");
-			if (!optOtherField.map(Progetto_other_fieldBulk::getImCofinanziato).isPresent())
-				throw new ValidationException("Operazione non possibile! Indicare l'importo del cofinanziamento!");
-		}
-
 		if (Progetto_other_fieldBulk.STATO_NEGOZIAZIONE.equals(newStato)){
 			if (!optOtherField.get().isStatoIniziale())
-				throw new ValidationException("Lo stato del progetto \"INIZIALE\" non consente il suo aggiornamento allo stato \"NEGOZIAZIONE\".");
+				throw new ValidationException("Lo stato corrente del progetto non consente il suo aggiornamento allo stato \"NEGOZIAZIONE\".");
+		} else if (Progetto_other_fieldBulk.STATO_APPROVATO.equals(newStato)){
+			if (!optOtherField.get().isStatoIniziale() && !optOtherField.get().isStatoNegoziazione())
+				throw new ValidationException("Lo stato corrente del progetto non consente il suo aggiornamento allo stato \"APPROVATO\".");
+		} else if (Progetto_other_fieldBulk.STATO_ANNULLATO.equals(newStato)){
+			if (!optOtherField.get().isStatoNegoziazione())
+				throw new ValidationException("Lo stato corrente del progetto non consente il suo aggiornamento allo stato \"ANNULLATO\".");
+		} else if (Progetto_other_fieldBulk.STATO_CHIUSURA.equals(newStato)){
+			if (optProgetto.get().isAttivoPianoEconomicoOf())
+				throw new ValidationException("Attenzione! Operazione non possibile in presenza delle date del progetto.");
+		} else
+			throw new ValidationException("Operazione non gestita.");
+		
+		validateStato(context, optProgetto, newStato);
+
+		//effettuo l'operazione richiesta
+		if (Progetto_other_fieldBulk.STATO_NEGOZIAZIONE.equals(newStato) || Progetto_other_fieldBulk.STATO_APPROVATO.equals(newStato) ||
+			Progetto_other_fieldBulk.STATO_ANNULLATO.equals(newStato)) {
+			optOtherField.get().setStato(newStato);
+			optOtherField.get().setToBeUpdated();
+			if (!optProgetto.get().isAttivoPianoEconomicoOf()) {
+				optOtherField.get().setDtInizio(null);
+				optOtherField.get().setDtFine(null);
+				optOtherField.get().setDtProroga(null);
+			}
+		} else if (Progetto_other_fieldBulk.STATO_CHIUSURA.equals(newStato)) {
+			optOtherField.get().setDtFine(DateUtils.truncate(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()));
+			optOtherField.get().setToBeUpdated();
+		}
+		optProgetto.get().setToBeUpdated();
+		this.save(context);
+	}
+
+	private void validateStato(ActionContext context, Optional<ProgettoBulk> optProgetto, String stato) throws ValidationException {
+		if (!optProgetto.isPresent())
+			throw new ValidationException("Operazione non possibile! Non è stato possibile individuare il progetto da aggiornare!");
+
+		Optional<Progetto_other_fieldBulk> optOtherField = optProgetto.flatMap(el->Optional.ofNullable(el.getOtherField()));
+
+		if (optOtherField.isPresent() && 
+				(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE.equals(stato) ||
+					Progetto_other_fieldBulk.STATO_APPROVATO.equals(stato) ||
+					Progetto_other_fieldBulk.STATO_CHIUSURA.equals(stato) ||
+					Progetto_other_fieldBulk.STATO_ANNULLATO.equals(stato))) {
+			if (!optOtherField.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
+					.flatMap(el->Optional.ofNullable(el.getCodice())).isPresent())
+				throw new ValidationException("Operazione non possibile! Indicare il tipo di finanziamento!");
+			
+			if (optProgetto.get().isAttivoPianoEconomicoOf()) {
+				if (!optOtherField.map(Progetto_other_fieldBulk::getDtInizio).isPresent())
+					throw new ValidationException("Operazione non possibile! Indicare la data di inizio progetto!");
+				if (!optOtherField.map(Progetto_other_fieldBulk::getDtFine).isPresent())
+					throw new ValidationException("Operazione non possibile! Indicare la data di fine progetto!");
+			}
+				
+			if (!optOtherField.map(Progetto_other_fieldBulk::getImFinanziato).filter(el->!(el.compareTo(BigDecimal.ZERO)<0)).isPresent())
+				throw new ValidationException("Operazione non possibile! Indicare l'importo del finanziamento (valore maggiore o uguale a 0)!");
+			if (!optOtherField.map(Progetto_other_fieldBulk::getImCofinanziato).filter(el->!(el.compareTo(BigDecimal.ZERO)<0)).isPresent())
+				throw new ValidationException("Operazione non possibile! Indicare l'importo del cofinanziamento (valore maggiore o uguale a 0)!");
+
+			if (optProgetto.get().isAttivoPianoEconomicoOf()) {
+				if (!optProgetto.map(ProgettoBulk::getImTotale).filter(el->el.compareTo(BigDecimal.ZERO)>0).isPresent())
+					throw new ValidationException("Operazione non possibile! Indicare almeno un importo positivo tra quello finanziato e cofinanziato!");
+				if (!optProgetto.map(ProgettoBulk::isDettagliPianoEconomicoPresenti).orElse(Boolean.TRUE))
+					throw new ValidationException("Operazione non possibile! E' obbligatorio caricare il piano economico del progetto!");
+				if (!optProgetto.map(ProgettoBulk::getImFinanziatoDaRipartire).filter(el->el.compareTo(BigDecimal.ZERO)==0).isPresent())
+					throw new ValidationException("Operazione non possibile! E' obbligatorio ripartire correttamente nel piano economico tutto l'importo finanziato del progetto!");
+				if (!optProgetto.map(ProgettoBulk::getImCofinanziatoDaRipartire).filter(el->el.compareTo(BigDecimal.ZERO)==0).isPresent())
+					throw new ValidationException("Operazione non possibile! E' obbligatorio ripartire correttamente nel piano economico tutto l'importo cofinanziato del progetto!");
+			}
 		}
 	}
 }
