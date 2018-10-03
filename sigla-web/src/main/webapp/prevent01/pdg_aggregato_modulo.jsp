@@ -104,7 +104,7 @@
                                             "Entrate",
                                             "if (disableDblClick()) submitForm('doContrattazioneEntrate')",
                                             "btn-secondary btn-outline-primary btn-title btn-block",
-                                            pdg_selezionato,
+                                            pdg_selezionato && bp.isPrevEntSpesaEnable(),
                                             bp.getParentRoot().isBootstrap());%>
                                 </td>
                                 <td>
@@ -114,7 +114,7 @@
                                             "Spese",
                                             "if (disableDblClick()) submitForm('doContrattazioneSpese')",
                                             "btn-secondary btn-outline-primary btn-title btn-block",
-                                            pdg_selezionato,
+                                            pdg_selezionato && bp.isPrevEntSpesaEnable(),
                                             bp.getParentRoot().isBootstrap());%>
                                 </td>
                             </tr>
@@ -138,7 +138,7 @@
                                             "Entrate",
                                             "if (disableDblClick()) submitForm('doGestionaleEntrate')",
                                             "btn-secondary btn-outline-primary btn-title btn-block",
-                                            pdg_selezionato&&bp.isGestionaleAccessibile(),
+                                            pdg_selezionato && bp.isGestionaleAccessibile() && bp.isPrevEntSpesaEnable(),
                                             bp.getParentRoot().isBootstrap());%>
                                 </td>
                                 <td>
@@ -148,7 +148,7 @@
                                             "Spese",
                                             "if (disableDblClick()) submitForm('doGestionaleSpese')",
                                             "btn-secondary btn-outline-primary btn-title btn-block",
-                                            pdg_selezionato&&bp.isGestionaleAccessibile(),
+                                            pdg_selezionato && bp.isGestionaleAccessibile() && bp.isPrevEntSpesaEnable(),
                                             bp.getParentRoot().isBootstrap());%>
                                 </td>
                             </tr>
