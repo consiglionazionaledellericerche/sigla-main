@@ -55,8 +55,8 @@ public class ProgettoBulk extends ProgettoBase {
 	private it.cnr.jada.bulk.BulkList	workpackage_collegati = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList	workpackage_disponibili  = new it.cnr.jada.bulk.BulkList();
 
-		public final static Dictionary statoKeys;
-		static {
+	public final static Dictionary statoKeys;
+	static {
 		statoKeys = new it.cnr.jada.util.OrderedHashtable();
 		statoKeys.put(TIPO_STATO_PROPOSTA,"Proposta");
 		statoKeys.put(TIPO_STATO_APPROVATO,"Approvato");
@@ -110,6 +110,17 @@ public class ProgettoBulk extends ProgettoBase {
 		for(int i=3;i<100;i++)
 			livello_progetto2016Keys.put(new Integer(i),"Sottogruppo");
 	};
+	
+	public final static Dictionary statoOfKeys;
+	static {
+		statoOfKeys = new it.cnr.jada.util.OrderedHashtable();
+		statoOfKeys.put(Progetto_other_fieldBulk.STATO_INIZIALE,"Iniziale");
+		statoOfKeys.put(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE,"Negoziazione");
+		statoOfKeys.put(Progetto_other_fieldBulk.STATO_APPROVATO,"Approvato");
+		statoOfKeys.put(Progetto_other_fieldBulk.STATO_ANNULLATO,"Annullato");
+		statoOfKeys.put(Progetto_other_fieldBulk.STATO_MIGRAZIONE,"Migrazione");
+	};
+	
 	private Tipo_progettoBulk tipo;
 	private Unita_organizzativaBulk unita_organizzativa;
 	private TerzoBulk responsabile;
@@ -975,7 +986,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 				!getDettagliPianoEconomicoAnnoCorrente().isEmpty() &&
 				!getDettagliPianoEconomicoAltriAnni().isEmpty();
 	}
-	
+
 	public Integer getAnnoInizioOf() {
 		return Optional.ofNullable(this.getOtherField())
 				.flatMap(el->Optional.ofNullable(el.getDtInizio()))
@@ -1008,12 +1019,6 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 				.orElse(Boolean.FALSE);
 	}
 	
-	public boolean isDettagliPianoEconomicoPresenti() {
-		return !getDettagliPianoEconomicoAnnoCorrente().isEmpty() ||
-				!getDettagliPianoEconomicoAltriAnni().isEmpty() ||
-				!getDettagliPianoEconomicoTotale().isEmpty();
-	}
-
 	public BulkList<Progetto_piano_economicoBulk> getPianoEconomicoSummary() {
 		Map<String, List<Progetto_piano_economicoBulk>> resultByVoce = 
 				this.getAllDetailsProgettoPianoEconomico().stream()
@@ -1035,8 +1040,18 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 				.collect(Collectors.toList()));
 	}
 
-	public boolean isROdatiOtherField() {
-		return this.isDettagliPianoEconomicoPresenti();
+	public boolean isDettagliPianoEconomicoPresenti() {
+		return !getDettagliPianoEconomicoAnnoCorrente().isEmpty() ||
+				!getDettagliPianoEconomicoAltriAnni().isEmpty() ||
+				!getDettagliPianoEconomicoTotale().isEmpty();
+	}
+
+	public boolean isRODatiOtherField() {
+		return !Optional.ofNullable(this.getOtherField()).flatMap(el->Optional.ofNullable(el.getStato())).isPresent();
+	}
+
+	public boolean isROOtherFieldExistPianoEconomico() {
+		return this.isRODatiOtherField() || this.isDettagliPianoEconomicoPresenti();
 	}
 
 	private BulkList<Progetto_piano_economicoBulk> getAllDetailsProgettoPianoEconomico() {

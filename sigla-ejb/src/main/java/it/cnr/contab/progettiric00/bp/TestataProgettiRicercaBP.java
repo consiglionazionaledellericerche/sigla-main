@@ -15,6 +15,7 @@ import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
@@ -43,6 +44,7 @@ import it.cnr.jada.util.RemoteBulkTree;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import it.cnr.jada.util.jsp.Button;
 
 public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IProgettoBP{
 	private boolean flNuovoPdg = false;
@@ -399,7 +401,9 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	    	  (progetto.getCd_unita_organizzativa()!=null &&
 	    			  progetto.getCd_unita_organizzativa().equals(uo)))) {
 
-	    	if (this.isFlPrgPianoEconomico() && (progetto.isAttivoPianoEconomicoOf() || progetto.isDettagliPianoEconomicoPresenti()))
+	    	if (this.isFlPrgPianoEconomico() && 
+	    			((progetto.isAttivoPianoEconomicoOf() && Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtInizio())).isPresent() &&
+	    					Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtFine())).isPresent()) || progetto.isDettagliPianoEconomicoPresenti()))
 	    		hash.put(i++, new String[]{"tabPianoEconomico","Piano Economico","/progettiric00/progetto_piano_economico.jsp" });
 
 	    	if (!this.isFlInformix()) {
@@ -507,6 +511,12 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 	
 	@Override
+	public boolean isSaveButtonEnabled() {
+		return super.isSaveButtonEnabled() && 
+				(!this.isFlInformix() || !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast).map(ProgettoBulk::isRODatiOtherField).orElse(Boolean.TRUE));
+	}
+
+	@Override
 	public boolean isDeleteButtonHidden() {
 		return super.isDeleteButtonHidden() || this.isFlInformix();
 	}
@@ -530,5 +540,96 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	
 	public SimpleDetailCRUDController getPianoEconomicoSummary() {
 		return pianoEconomicoSummary;
+	}
+
+	public boolean isNegoziazioneButtonHidden()	{
+		return !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
+				.filter(Progetto_other_fieldBulk::isStatoIniziale)
+				.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
+				.flatMap(el->Optional.ofNullable(el.getCodice()))
+				.filter(el->el.equals(TipoFinanziamentoBulk.CODICE_FIN)||el.equals(TipoFinanziamentoBulk.CODICE_COF))
+				.isPresent();
+	}
+
+	public boolean isApprovaButtonHidden()	{
+		return !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
+				.filter(el->Optional.ofNullable(el.getTipoFinanziamento()).isPresent())
+				.filter(el->el.isStatoIniziale()||el.isStatoNegoziazione())
+				.isPresent();
+	}
+		
+	public boolean isAnnullaButtonHidden()	{
+		return !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
+				.filter(el->Optional.ofNullable(el.getTipoFinanziamento()).isPresent())
+				.filter(Progetto_other_fieldBulk::isStatoNegoziazione)
+				.isPresent();
+	}
+
+	public boolean isChiusuraButtonHidden()	{
+		return !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
+				.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
+				.filter(el->!Optional.ofNullable(el.getFlPianoEcoFin()).orElse(Boolean.TRUE))
+				.isPresent();
+	}
+	
+	@Override
+	protected Button[] createToolbar() {
+		Button[] toolbar = super.createToolbar();
+		Button[] newToolbar = new Button[ toolbar.length + 4];
+		int i;
+		for ( i = 0; i < toolbar.length; i++ )
+			newToolbar[i] = toolbar[i];
+		newToolbar[ i ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.negoziazione");
+		newToolbar[ i ].setSeparator(true);
+		newToolbar[ i+1 ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.approva");
+		newToolbar[ i+1 ].setSeparator(true);
+		newToolbar[ i+2 ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.annulla");
+		newToolbar[ i+2 ].setSeparator(true);
+		newToolbar[ i+3 ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.chiusura");
+		newToolbar[ i+3 ].setSeparator(true);
+
+		return newToolbar;
+	}
+
+	public void changeStato(ActionContext context, String newStato) throws ValidationException, BusinessProcessException {
+		this.save(context);
+		
+		Optional<ProgettoBulk> optProgetto = Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast);
+		if (!optProgetto.isPresent())
+			throw new ValidationException("Operazione non possibile! Non è stato possibile individuare il progetto da aggiornare!");
+
+		Optional<Progetto_other_fieldBulk> optOtherField = optProgetto.flatMap(el->Optional.ofNullable(el.getOtherField()));
+		
+		if (!optOtherField.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
+				.flatMap(el->Optional.ofNullable(el.getCodice())).isPresent())
+			throw new ValidationException("Operazione non possibile! Indicare il tipo di finanziamento!");
+		
+		if (optProgetto.get().isAttivoPianoEconomicoOf()) {
+			if (!optOtherField.map(Progetto_other_fieldBulk::getDtInizio).isPresent())
+				throw new ValidationException("Operazione non possibile! Indicare la data di inizio progetto!");
+			if (!optOtherField.map(Progetto_other_fieldBulk::getDtFine).isPresent())
+				throw new ValidationException("Operazione non possibile! Indicare la data di fine progetto!");
+		}
+			
+		if (!optOtherField.map(Progetto_other_fieldBulk::getImFinanziato).isPresent())
+			throw new ValidationException("Operazione non possibile! Indicare l'importo del finanziamento!");
+		if (!optOtherField.map(Progetto_other_fieldBulk::getImCofinanziato).isPresent())
+			throw new ValidationException("Operazione non possibile! Indicare l'importo del cofinanziamento!");
+
+		if (optProgetto.get().isAttivoPianoEconomicoOf()) {
+			if (!optOtherField.map(Progetto_other_fieldBulk::getImFinanziato).filter(el->el.compareTo(BigDecimal.ZERO)>0).isPresent())
+				throw new ValidationException("Operazione non possibile! Indicare l'importo del finanziamento!");
+			if (!optOtherField.map(Progetto_other_fieldBulk::getImCofinanziato).isPresent())
+				throw new ValidationException("Operazione non possibile! Indicare l'importo del cofinanziamento!");
+		}
+
+		if (Progetto_other_fieldBulk.STATO_NEGOZIAZIONE.equals(newStato)){
+			if (!optOtherField.get().isStatoIniziale())
+				throw new ValidationException("Lo stato del progetto \"INIZIALE\" non consente il suo aggiornamento allo stato \"NEGOZIAZIONE\".");
+		}
 	}
 }
