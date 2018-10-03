@@ -5,12 +5,18 @@ package it.cnr.contab.config00.action;
 
 import it.cnr.contab.config00.ejb.CDRComponentSession;
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.pdg00.bp.CRUDRicostruzioneResiduiBP;
 import it.cnr.contab.pdg00.bp.CostiDipendenteBP;
+import it.cnr.contab.prevent01.action.CRUDPdGAggregatoModuloAction;
 import it.cnr.contab.prevent01.bp.CRUDPdGAggregatoModuloBP;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
+import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -19,17 +25,27 @@ import it.cnr.contab.utenze00.bp.LoginBP;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteComuneBulk;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.SendMail;
+import it.cnr.jada.util.action.BulkAction;
 import it.cnr.jada.util.action.FormAction;
+import it.cnr.jada.util.action.OptionBP;
+
+import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.Optional;
+
 /**
  * @author mspasiano
  *
  */
-public class MacroAction extends FormAction{
+public class MacroAction extends BulkAction {
 
 	public MacroAction() {
 		super();
@@ -141,8 +157,42 @@ public class MacroAction extends FormAction{
 				CRUDPdGAggregatoModuloBP newbp = (CRUDPdGAggregatoModuloBP)actioncontext.getUserInfo().createBusinessProcess(
 				                actioncontext,
 								"CRUDPdGAggregatoModuloBP",parametri);
+                if (mode.equals("M")){
+                    newbp.setStatus(CRUDPdGAggregatoModuloBP.EDIT);
+                    newbp.setEditable(true);
+                }
 				if (pg_modulo != null && mode.equals("M") && newbp.isModuloInseribile()){
 					Pdg_moduloBulk pdg_modulo = new Pdg_moduloBulk(CNRUserContext.getEsercizio(actioncontext.getUserContext()),ui.getCdr().getCd_centro_responsabilita(),pg_modulo);
+					Progetto_sipBulk progetto_sipBulk = new Progetto_sipBulk(esercizio, pg_modulo, ProgettoBulk.TIPO_FASE_PREVISIONE);
+					progetto_sipBulk = Optional.ofNullable(progetto_sipBulk)
+							.map(progetto -> {
+								try {
+									return Optional.ofNullable(getProgettoRicercaPadreComponentSession().findByPrimaryKey(userContext, progetto))
+											.filter(Progetto_sipBulk.class::isInstance)
+											.map(Progetto_sipBulk.class::cast)
+											.orElse(null);
+								} catch (ComponentException | RemoteException e) {
+									throw new DetailedRuntimeException(e);
+								}
+							})
+							.orElse(null);
+                    if (!Optional.ofNullable(progetto_sipBulk.getOtherField())
+                            .flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getStato()))
+                            .filter(stato -> Arrays.asList(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE, Progetto_other_fieldBulk.STATO_APPROVATO).indexOf(stato) != -1).isPresent()) {
+                        newbp.setPgModulo(pg_modulo);
+						((CdrBulk)newbp.getModel()).addToDettagli(pdg_modulo);
+                        newbp.evidenziaModulo(actioncontext);
+                        actioncontext.addBusinessProcess(newbp);
+                        return openConfirm(actioncontext,"Attenzione: il progetto non ha uno stato utile alla previsione! Vuoi procedere al caricamento del piano economico?",
+                                OptionBP.CONFIRM_YES_NO,"doConfermaCompletaProgetto");
+
+                    }
+                    if (!Optional.ofNullable(progetto_sipBulk.getOtherField())
+                            .flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
+                            .filter(tipoFinanziamentoBulk -> tipoFinanziamentoBulk.getFlPrevEntSpesa() || tipoFinanziamentoBulk.getFlRipCostiPers()).isPresent()) {
+                        setErrorMessage(actioncontext,"Attenzione: per il progetto non è consentita la previsione!");
+                        return actioncontext.findDefaultForward();
+                    }
 					try{
 						pdg_modulo = getPdgModuloComponentSession().findAndInsertBulkForMacro(actioncontext.getUserContext(),pdg_modulo);
 						if (pdg_modulo!=null) {
@@ -154,10 +204,6 @@ public class MacroAction extends FormAction{
 						setErrorMessage(actioncontext,e.getMessage());
 						return actioncontext.findDefaultForward();					
 					}
-				}            	
-				if (mode.equals("M")){
-					newbp.setStatus(CRUDPdGAggregatoModuloBP.EDIT);
-					newbp.setEditable(true);
 				}
 				actioncontext.addBusinessProcess(newbp);
 			}else  if (costi_personale.equals("Y")){
@@ -185,6 +231,33 @@ public class MacroAction extends FormAction{
 			return handleException(actioncontext,e);
 		}
 	}
+
+    public Forward doConfermaCompletaProgetto(ActionContext context, int opt) throws RemoteException, BusinessProcessException {
+        CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP) context.getBusinessProcess();
+        if (opt == OptionBP.YES_BUTTON) {
+            CRUDPdGAggregatoModuloAction crudPdGAggregatoModuloAction = new CRUDPdGAggregatoModuloAction();
+            crudPdGAggregatoModuloAction.doCRUD(context, "main.Dettagli.searchtool_progetto_liv2");
+            TestataProgettiRicercaBP testataProgettiRicercaBP = (TestataProgettiRicercaBP) context.getBusinessProcess();
+            ProgettoBulk progettoBulk = new ProgettoBulk(CNRUserContext.getEsercizio(context.getUserContext()), bp.getPgModulo(), ProgettoBulk.TIPO_FASE_PREVISIONE);
+            progettoBulk = Optional.ofNullable(progettoBulk)
+                    .map(progetto -> {
+                        try {
+                            return Optional.ofNullable(getProgettoRicercaPadreComponentSession().findByPrimaryKey(context.getUserContext(), progetto))
+                                    .filter(ProgettoBulk.class::isInstance)
+                                    .map(ProgettoBulk.class::cast)
+                                    .orElse(null);
+                        } catch (ComponentException | RemoteException e) {
+                            throw new DetailedRuntimeException(e);
+                        }
+                    })
+                    .orElse(null);
+            if (Optional.ofNullable(progettoBulk).isPresent()) {
+                testataProgettiRicercaBP.basicEdit(context, progettoBulk, true);
+            }
+        }
+        return context.findDefaultForward();
+    }
+
 	public static GestioneLoginComponentSession getComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException {
 		return (GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession",GestioneLoginComponentSession.class);
 	}
