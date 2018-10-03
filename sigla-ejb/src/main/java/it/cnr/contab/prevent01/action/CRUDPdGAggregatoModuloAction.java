@@ -27,6 +27,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.BulkInfo;
@@ -118,11 +119,11 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 		return 	doSearchSearchtool_progetto(context);
 	}
 
-	public it.cnr.jada.action.Forward doBringBackSearchSearchtool_progetto_liv2(ActionContext context, Pdg_moduloBulk linea, Progetto_sipBulk progetto) throws java.rmi.RemoteException {
+	public it.cnr.jada.action.Forward doBringBackSearchSearchtool_progetto_liv2(ActionContext context, Pdg_moduloBulk linea, Progetto_sipBulk progetto) throws BusinessProcessException {
 		return doBringBackSearchSearchtool_progetto(context, linea, progetto);
 	}
 
-	public it.cnr.jada.action.Forward doBringBackCRUDSearchtool_progetto_liv2(ActionContext context, Pdg_moduloBulk pdgModuloBulk, ProgettoBulk progetto) throws java.rmi.RemoteException {
+	public it.cnr.jada.action.Forward doBringBackCRUDSearchtool_progetto_liv2(ActionContext context, Pdg_moduloBulk pdgModuloBulk, ProgettoBulk progetto) throws BusinessProcessException {
         CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)context.getBusinessProcess();
 		return doBringBackSearchSearchtool_progetto(context, pdgModuloBulk,
 				Optional.ofNullable(progetto)
@@ -141,7 +142,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 		);
 	}
 
-	public it.cnr.jada.action.Forward doBringBackSearchSearchtool_progetto(ActionContext context, Pdg_moduloBulk pdgModuloBulk, Progetto_sipBulk progetto) throws java.rmi.RemoteException {
+	public it.cnr.jada.action.Forward doBringBackSearchSearchtool_progetto(ActionContext context, Pdg_moduloBulk pdgModuloBulk, Progetto_sipBulk progetto) throws BusinessProcessException {
 		CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)context.getBusinessProcess();
 
 		// valore di default nel caso non fose valorizzato
@@ -173,8 +174,9 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			if (!Optional.ofNullable(progetto.getOtherField())
 					.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getStato()))
 					.filter(stato -> Arrays.asList(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE, Progetto_other_fieldBulk.STATO_APPROVATO).indexOf(stato) != -1).isPresent()) {
-				setErrorMessage(context,"Attenzione: il progetto non ha uno stato utile alla previsione!");
-				return context.findDefaultForward();
+			    bp.setProgettoForUpdate(progetto);
+                return openConfirm(context,"Attenzione: il progetto non ha uno stato utile alla previsione! Vuoi procedere al caricamento del piano economico?",
+                        OptionBP.CONFIRM_YES_NO,"doConfermaCompletaProgetto");
 			}
 			if (!Optional.ofNullable(progetto.getOtherField())
 					.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
@@ -186,6 +188,31 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 		pdgModuloBulk.setProgetto(progetto);
 		return context.findDefaultForward();
 	}
+
+    public Forward doConfermaCompletaProgetto(ActionContext context, int opt) throws RemoteException, BusinessProcessException {
+        CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP) context.getBusinessProcess();
+        if (opt == OptionBP.YES_BUTTON) {
+            doCRUD(context, "main.Dettagli.searchtool_progetto_liv2");
+            TestataProgettiRicercaBP testataProgettiRicercaBP = (TestataProgettiRicercaBP) context.getBusinessProcess();
+            ProgettoBulk progettoBulk = new ProgettoBulk(CNRUserContext.getEsercizio(context.getUserContext()), bp.getProgettoForUpdate().getPg_progetto(), ProgettoBulk.TIPO_FASE_PREVISIONE);
+            progettoBulk = Optional.ofNullable(progettoBulk)
+                    .map(progetto -> {
+                        try {
+                            return Optional.ofNullable(bp.getProgettoRicercaPadreComponentSession().findByPrimaryKey(context.getUserContext(), progetto))
+                                    .filter(ProgettoBulk.class::isInstance)
+                                    .map(ProgettoBulk.class::cast)
+                                    .orElse(null);
+                        } catch (ComponentException | RemoteException e) {
+                            throw new DetailedRuntimeException(e);
+                        }
+                    })
+                    .orElse(null);
+            if (Optional.ofNullable(progettoBulk).isPresent()) {
+                testataProgettiRicercaBP.basicEdit(context, progettoBulk, true);
+            }
+        }
+        return context.findDefaultForward();
+    }
 
 	public Forward doFilterCRUDMain_Dettagli(ActionContext context) {
 		return context.findDefaultForward();

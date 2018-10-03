@@ -132,4 +132,8 @@ public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
 				this.getDtFine().after(this.getDtProroga()))
 			throw new ValidationException( "La \"Data di proroga\" del progetto deve essere uguale o superiore alla \"Data di fine\".");
 	}
+
+	public Dictionary getStatoKeys() {
+		return statoKeys;
+	}
 }
