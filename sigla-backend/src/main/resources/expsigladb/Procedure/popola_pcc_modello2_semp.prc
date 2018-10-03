@@ -1,9 +1,9 @@
-CREATE OR REPLACE procedure         popola_pcc_modello2_SEMP is
+CREATE OR REPLACE procedure PCIR009.popola_pcc_modello2_SEMP is
 begin
 declare
 cursor testata is
 --CODICE_UNIVOCO_UFFICIO_IPA o codice_univoco_pcc
-select fattura_passiva.*,cd_iso,ti_nazione,terzo_uo.codice_univoco_pcc,terzo_uo.denominazione_pcc,
+select fattura_passiva.*,cd_iso,ti_nazione,terzo_uo.codice_univoco_ufficio_ipa,terzo_uo.denominazione_sede,
 anagrafico.cognome ana_cognome,anagrafico.nome ana_nome,
 anagrafico.ragione_sociale ana_ragione_sociale,anagrafico.partita_iva ana_partita_iva,anagrafico.codice_fiscale ana_codice_fiscale
 from fattura_passiva,nazione,anagrafico,terzo,terzo terzo_uo
@@ -32,7 +32,7 @@ where
    --fattura_passiva.DT_REGISTRAZIONE < to_date('01'||TO_CHAR(SYSDATE,'mmYYYY'),'ddmmyyyy')   and
    --dt_fattura_fornitore<=to_date('31122015','ddmmyyyy')   and
    fl_intra_ue='N' and fl_extra_ue='N' and fl_merce_intra_ue='N' and FL_SAN_MARINO_SENZA_IVA='N' and FL_SAN_MARINO_CON_IVA='N' and
-	 terzo_uo.codice_univoco_pcc is not null
+	 terzo_uo.codice_univoco_ufficio_ipa is not null
    and not exists
    (select 1 from modello2_pcc
    where
@@ -140,7 +140,7 @@ exit when testata%notfound;
 					 importo_cig_cup,
 					 codice_cig,
 					 codice_cup ) values
-					('80054330586',nvl(t.codice_univoco_pcc,'0H-QWX'),nvl(t.denominazione_pcc,'Consiglio Nazionale delle Ricerche - CNR - Amministrazione Centrale'),
+					('80054330586',nvl(t.codice_univoco_ufficio_ipa,'0H-QWX'),nvl(t.denominazione_sede,'Consiglio Nazionale delle Ricerche - CNR - Amministrazione Centrale'),
 						--('80054330586','0H-QWX','Consiglio Nazionale delle Ricerche - CNR - Amministrazione Centrale',
 						substr(nvl(t.ana_codice_fiscale,t.ana_partita_iva),0,16),
 						substr(decode(t.TI_NAZIONE,'E',nvl(t.ana_partita_iva,t.ana_codice_fiscale),t.cd_iso||t.ana_partita_iva),0,16),nvl(t.ana_ragione_sociale,t.ana_cognome||' '||t.ana_nome),
@@ -158,6 +158,7 @@ exit when testata%notfound;
 					elsif (voceIva%notfound) then
 					*/
 					 --if (cig_cupContratto%found) then
+					 --dbms_output.put_line(' fattura '||t.pg_fattura_passiva||' uo '||t.cd_unita_organizzativa);
 					 	  insert into modello2_pcc(codice_fiscale_amm,
 						  CODICE_UFFICIO	,
 							DENOMINAZIONE_AMMINISTRAZIONE	,
@@ -188,7 +189,7 @@ exit when testata%notfound;
 						 codice_cup	,
 						 CODICE_SEGNALAZIONE,
 						 DESCRIZIONE_SEGNALAZIONE ) values
-					('80054330586',nvl(t.codice_univoco_pcc,'0H-QWX'),nvl(t.denominazione_pcc,'Consiglio Nazionale delle Ricerche - CNR - Amministrazione Centrale'),
+					('80054330586',nvl(t.codice_univoco_ufficio_ipa,'0H-QWX'),nvl(t.denominazione_sede,'Consiglio Nazionale delle Ricerche - CNR - Amministrazione Centrale'),
 					--('80054330586','0H-QWX','Consiglio Nazionale delle Ricerche - CNR - Amministrazione Centrale',
 						substr(nvl(t.ana_codice_fiscale,t.ana_partita_iva),0,16),
 						substr(decode(t.TI_NAZIONE,'E',nvl(t.ana_partita_iva,t.ana_codice_fiscale),decode(t.cd_iso||t.ana_partita_iva,t.cd_iso,t.ana_codice_fiscale,t.cd_iso||t.ana_partita_iva)) ,0,16),nvl(t.ana_ragione_sociale,t.ana_cognome||' '||t.ana_nome),
@@ -196,7 +197,7 @@ exit when testata%notfound;
 						t.NR_FATTURA_FORNITORE,t.dt_FATTURA_FORNITORE,
 						decode(t.FL_FATTURA_COMPENSO,'Y',c.imp,t.im_totale_fattura),
 						--t.im_totale_fattura,
-						substr(nvl(t.DS_FATTURA_PASSIVA,'Non indicata'),0,190),null,
+						substr(nvl(t.DS_FATTURA_PASSIVA,'Non indicata'),0,180),null,
 						--null,null,
 						--decode(t.FL_FATTURA_COMPENSO,'Y',null,t.IM_TOTALE_IMPONIBILE),
 						--decode(t.FL_FATTURA_COMPENSO,'Y',null,t.IM_TOTALE_IVA),
@@ -234,7 +235,7 @@ exit when testata%notfound;
 						 importo_cig_cup,
 						 codice_cig,
 						 codice_cup ) values
-					('80054330586',nvl(t.codice_univoco_pcc,'0H-QWX'),nvl(t.denominazione_pcc,'Consiglio Nazionale delle Ricerche - CNR - Amministrazione Centrale'),
+					('80054330586',nvl(t.codice_univoco_ufficio_ipa,'0H-QWX'),nvl(t.denominazione_sede,'Consiglio Nazionale delle Ricerche - CNR - Amministrazione Centrale'),
 						--('80054330586','0H-QWX','Consiglio Nazionale delle Ricerche - CNR - Amministrazione Centrale',
 						substr(nvl(t.ana_codice_fiscale,t.ana_partita_iva),0,16),
 						substr(decode(t.TI_NAZIONE,'E',nvl(t.ana_partita_iva,t.ana_codice_fiscale),decode(t.cd_iso||t.ana_partita_iva,t.cd_iso,t.ana_codice_fiscale,t.cd_iso||t.ana_partita_iva)) ,0,16),nvl(t.ana_ragione_sociale,t.ana_cognome||' '||t.ana_nome),
@@ -273,5 +274,3 @@ commit;
 end;
 end;
 /
-
-
