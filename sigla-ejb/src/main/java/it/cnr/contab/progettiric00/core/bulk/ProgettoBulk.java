@@ -1047,7 +1047,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	}
 
 	public boolean isRODatiOtherField() {
-		return !Optional.ofNullable(this.getOtherField()).flatMap(el->Optional.ofNullable(el.getStato())).isPresent();
+		return !Optional.ofNullable(this.getOtherField()).filter(Progetto_other_fieldBulk::isStatoIniziale).isPresent();
 	}
 
 	public boolean isROOtherFieldExistPianoEconomico() {
