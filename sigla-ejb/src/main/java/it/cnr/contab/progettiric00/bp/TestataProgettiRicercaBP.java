@@ -668,9 +668,9 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			}
 				
 			if (!optOtherField.map(Progetto_other_fieldBulk::getImFinanziato).filter(el->!(el.compareTo(BigDecimal.ZERO)<0)).isPresent())
-				throw new ValidationException("Operazione non possibile! Indicare l'importo del finanziamento (valore maggiore o uguale a 0)!");
+				throw new ValidationException("Operazione non possibile! Indicare l'importo finanziato (valore maggiore o uguale a 0)!");
 			if (!optOtherField.map(Progetto_other_fieldBulk::getImCofinanziato).filter(el->!(el.compareTo(BigDecimal.ZERO)<0)).isPresent())
-				throw new ValidationException("Operazione non possibile! Indicare l'importo del cofinanziamento (valore maggiore o uguale a 0)!");
+				throw new ValidationException("Operazione non possibile! Indicare l'importo cofinanziato (valore maggiore o uguale a 0)!");
 
 			if (optProgetto.get().isAttivoPianoEconomicoOf()) {
 				if (!optProgetto.map(ProgettoBulk::getImTotale).filter(el->el.compareTo(BigDecimal.ZERO)>0).isPresent())
