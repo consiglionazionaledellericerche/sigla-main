@@ -163,6 +163,7 @@
 		inputType="SEARCHTOOL"
 		readonlyProperty="ROprogetto"
 		formName="form_searchtool_progetto"
+		CRUDBusinessProcessName="TestataProgettiRicercaBP"
 		label="Progetto" />
 				
 <!-- r.p. campi per la visualizzazione della testata nella mappa di dettaglio-->

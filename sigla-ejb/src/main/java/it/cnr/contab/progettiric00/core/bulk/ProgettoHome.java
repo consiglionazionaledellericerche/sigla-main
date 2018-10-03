@@ -142,7 +142,7 @@ public class ProgettoHome extends BulkHome {
 	 * Recupera i figli dell'oggetto bulk
 	 * Creation date: (27/07/2004 11.23.36)
 	 * @return it.cnr.jada.persistency.sql.SQLBuilder
-	 * @param bulk ProgettoBulk
+	 * @param ubi ProgettoBulk
 	 */
     
 	public SQLBuilder selectChildrenForWorkpackage(it.cnr.jada.UserContext aUC, ProgettoBulk ubi){
@@ -181,7 +181,7 @@ public class ProgettoHome extends BulkHome {
 	 * Recupera i figli dell'oggetto bulk
 	 * Creation date: (27/07/2004 11.23.36)
 	 * @return it.cnr.jada.persistency.sql.SQLBuilder
-	 * @param bulk ProgettoBulk
+	 * @param ubi ProgettoBulk
 	 */
     
 	public SQLBuilder selectChildrenFor(it.cnr.jada.UserContext aUC, ProgettoBulk ubi){
@@ -552,6 +552,16 @@ public class ProgettoHome extends BulkHome {
 				geco_commessa.aggiornaProgettoSIP(progetto_sip);
 				progetto_sip.setToBeCreated();
 				progetto_sip_home.insert(progetto_sip, userContext);
+				/*
+					Inserimento Nuove informazioni del progetto
+				 */
+				Progetto_other_fieldHome progetto_other_fieldHome =  (Progetto_other_fieldHome)getHomeCache().getHome(Progetto_other_fieldBulk.class);
+				Progetto_other_fieldBulk progetto_other_fieldBulk = new Progetto_other_fieldBulk();
+				progetto_other_fieldBulk.setPg_progetto(geco_commessa.getId_comm().intValue());
+				progetto_other_fieldBulk.setStato(Progetto_other_fieldBulk.STATO_INIZIALE);
+				progetto_other_fieldBulk.setToBeCreated();
+				progetto_other_fieldHome.insert(progetto_other_fieldBulk, userContext);
+
 			}
 		}
 	}

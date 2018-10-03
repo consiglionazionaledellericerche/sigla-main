@@ -52,6 +52,59 @@
 			sqlTypeName="VARCHAR"
 			columnSize="30"
 			nullable="true" />
+        <columnMapping
+            columnName="PG_PROGETTO_OTHER_FIELD"
+            propertyName="otherField.pg_progetto"/>
+		<columnMapping
+			columnName="ID_TIPO_FINANZIAMENTO"
+			propertyName="otherField.tipoFinanziamento.id"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_TIPO_FINANZIAMENTO"
+			propertyName="otherField.tipoFinanziamento.codice"
+			sqlTypeName="VARCHAR"
+			columnSize="25"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_OTHER_FIELD"
+			propertyName="otherField.stato"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_INIZIO_OTHER_FIELD"
+			propertyName="otherField.dtInizio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FINE_OTHER_FIELD"
+			propertyName="otherField.dtFine"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROROGA_OTHER_FIELD"
+			propertyName="otherField.dtProroga"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping 
+			columnName="IM_FINANZIATO_OTHER_FIELD" 
+			propertyName="otherField.imFinanziato" 
+			sqlTypeName="DECIMAL" 
+			columnSize="15" 
+			columnScale="2" 
+			nullable="true"/>	
+		<columnMapping 
+			columnName="IM_COFINANZIATO_OTHER_FIELD" 
+			propertyName="otherField.imCofinanziato" 
+			sqlTypeName="DECIMAL" 
+			columnSize="15" 
+			columnScale="2" 
+			nullable="true"/>	
 	</columnMap>
 	<columnMap
 		name="V_ABIL_PROGETTI"
@@ -131,11 +184,22 @@
 		name="pdgProgramma" />	
 	<persistentProperty
 		name="pdgMissione" />
-		
+    <persistentProperty
+        name="otherField"/>
+
 	<fetchPolicy
 		name="it.cnr.contab.progettiric00.comp.ProgettoRicercaModuloComponent.findProgettoPadre">
 		<exclude pattern="*"/>
 		<include pattern="progettopadre"/>		
 		<include pattern="progettopadre.progettopadre"/>
-	</fetchPolicy>				
+	</fetchPolicy>
+    <fetchPolicy
+            name="tipoFinanziamento">
+        <exclude pattern="*"/>
+        <include pattern="progettopadre"/>
+        <include pattern="progettopadre.progettopadre"/>
+        <include pattern="dipartimento"/>
+        <include pattern="otherField"/>
+        <include pattern="otherField.tipoFinanziamento"/>
+    </fetchPolicy>
 </SQLPersistentInfo>
