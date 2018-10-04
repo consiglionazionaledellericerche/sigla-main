@@ -119,6 +119,32 @@ public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
 	public boolean isStatoMigrazione() {
 		return STATO_MIGRAZIONE.equals(this.getStato());
 	}
+
+	/*
+	 * Il progetto è chiuso se non è obbligatorio indicare le date 
+	 * e la data fine risulta essere valorizzata
+	 */
+	public boolean isStatoChiuso() {
+		return !isDatePianoEconomicoRequired() && 
+				Optional.ofNullable(this.getDtFine()).isPresent();
+	}
+
+	/*
+	 * Indica che è obbligatorio indicare le date del progetto
+	 */
+	public boolean isDatePianoEconomicoRequired() {
+		return this.isPianoEconomicoRequired();
+	}
+	
+	/*
+	 * Indica se è obbligatorio inserire il piano economico sulla base della tipologia 
+	 * di finanziamento associata
+	 */
+	public boolean isPianoEconomicoRequired() {
+		return Optional.ofNullable(this.getTipoFinanziamento())
+				.flatMap(el->Optional.ofNullable(el.getFlPianoEcoFin()))
+				.orElse(Boolean.FALSE);
+	}
 	
 	public void validaDateProgetto() throws ValidationException {
 		if (!Optional.ofNullable(this.getDtInizio()).isPresent() && Optional.ofNullable(this.getDtFine()).isPresent())  
