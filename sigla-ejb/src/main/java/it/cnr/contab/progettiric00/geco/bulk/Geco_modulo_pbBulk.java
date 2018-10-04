@@ -65,17 +65,5 @@ public class Geco_modulo_pbBulk extends Geco_modulo_pbBase implements Geco_modul
 				progetto_sip.setToBeUpdated();
 			}
 		}
-		// stato att contab '0' terminato - '1' attivo 
-		if (Utility.equalsNull(getStato_att_contab(), new Long(0))){
-			if (progetto_sip.getFl_utilizzabile()){
-				progetto_sip.setFl_utilizzabile(Boolean.FALSE);
-				progetto_sip.setToBeUpdated();
-			}
-		}else{
-			if (!progetto_sip.getFl_utilizzabile()){
-				progetto_sip.setFl_utilizzabile(Boolean.TRUE);
-				progetto_sip.setToBeUpdated();
-			}
-		}
 	}	
 }

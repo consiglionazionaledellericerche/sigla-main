@@ -248,18 +248,10 @@ public ProgettoRicercaComponent() {
 						testata.setDettagliPianoEconomicoAnnoCorrente(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(testata.getEsercizio())).collect(Collectors.toList())));
 						testata.setDettagliPianoEconomicoAltriAnni(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->!e.getEsercizio_piano().equals(Integer.valueOf(0)) && !e.getEsercizio_piano().equals(testata.getEsercizio())).collect(Collectors.toList())));
 
-						testata.setOtherField(testataHome.findProgettoOtherField(userContext, testata));
-                        
 						// controllo per evitare che il progetto padre sia modificabile nel caso
 						// in cui tale progetto sia stato inserito nel piano di gestione preventivo
 						if (!isProgettoPadreModificabile(userContext,testata))
 							testata.getProgettopadre().setOperabile(false);
-
-						ProgettoBulk progettoPrev = (ProgettoBulk)((ProgettoHome)getHome(userContext, ProgettoBulk.class)).findByPrimaryKey(new ProgettoBulk(testata.getEsercizio(), testata.getPg_progetto(), ProgettoBulk.TIPO_FASE_PREVISIONE));
-						ProgettoBulk progettoGest = (ProgettoBulk)((ProgettoHome)getHome(userContext, ProgettoBulk.class)).findByPrimaryKey(new ProgettoBulk(testata.getEsercizio(), testata.getPg_progetto(), ProgettoBulk.TIPO_FASE_GESTIONE));
-
-						testata.setFl_previsione(progettoPrev!=null);
-						testata.setFl_gestione(progettoGest!=null);
 
 						getHomeCache(userContext).fetchAll(userContext);
 						return testata;
