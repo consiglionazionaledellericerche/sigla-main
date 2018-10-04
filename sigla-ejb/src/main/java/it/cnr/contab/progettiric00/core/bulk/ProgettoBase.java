@@ -78,6 +78,9 @@ public class ProgettoBase extends ProgettoKey implements Keyed {
 	private String cd_programma;
 
 	private String cd_missione;
+	// PG_PROGETTO_PADRE DECIMAL(10,0) NULL
+
+	protected java.lang.Integer pg_progetto_other_field;
 
 	public ProgettoBase() {
 	super();
@@ -366,5 +369,14 @@ public void setNote(java.lang.String note) {
 	}
 	public void setCd_missione(String cd_missione) {
 		this.cd_missione = cd_missione;
+	}
+
+	public Integer getPg_progetto_other_field() {
+		return pg_progetto_other_field;
+	}
+
+	public ProgettoBase setPg_progetto_other_field(Integer pg_progetto_other_field) {
+		this.pg_progetto_other_field = pg_progetto_other_field;
+		return this;
 	}
 }
