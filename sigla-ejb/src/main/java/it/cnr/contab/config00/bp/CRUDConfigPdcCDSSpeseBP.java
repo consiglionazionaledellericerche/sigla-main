@@ -1,6 +1,7 @@
 package it.cnr.contab.config00.bp;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.pdcfin.bulk.EV_cds_spese_capitoloBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
@@ -13,7 +14,8 @@ public class CRUDConfigPdcCDSSpeseBP extends it.cnr.jada.util.action.SimpleCRUDB
 	private static final long serialVersionUID = 1L;
 
 	private boolean flNuovoPdg = false;
-    
+	private boolean flPrgPianoeco = false;
+
 	/**
 	 * Primo costruttore della classe <code>CRUDConfigPdcCDSSpeseBP</code>.
 	 */
@@ -51,10 +53,18 @@ public class CRUDConfigPdcCDSSpeseBP extends it.cnr.jada.util.action.SimpleCRUDB
 		try {
 			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())); 
 			setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
+			Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
+			setFlPrgPianoeco(parEnte.getFl_prg_pianoeco().booleanValue());
 		}
 	    catch(Throwable throwable)
 	    {
 	        throw new BusinessProcessException(throwable);
 	    }
+	}
+	public boolean isFlPrgPianoeco() {
+		return flPrgPianoeco;
+	}
+	public void setFlPrgPianoeco(boolean flPrgPianoeco) {
+		this.flPrgPianoeco = flPrgPianoeco;
 	}
 }

@@ -373,6 +373,13 @@
 		inputType="SELECT"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true" />
+	<fieldProperty
+		name="voce_piano_economico"
+		property="voce_piano_economico"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Voce del piano economico" />
+				
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -624,6 +631,8 @@
 		name="fl_azzera_residui"/>		
 	<formFieldProperty
 		name="fl_trovato" />
+	<formFieldProperty 
+		name="voce_piano_economico" />
 
 	<findFieldProperty
 		name="esercizio"

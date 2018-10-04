@@ -1310,7 +1310,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 
                 List<Progetto_piano_economicoBulk> pianoEconomicoList = (List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class)).findProgettoPianoEconomicoList(linea_attivita.getProgetto2016().getPg_progetto());
                 for (Progetto_piano_economicoBulk e : pianoEconomicoList) {
-                    if (e.getFl_ctrl_disp() && e.getCd_voce_piano().equals(linea_attivita.getVocePianoEconomico2016().getCd_voce_piano()) &&
+                	/*todo lello
+                	 */
+                    if (e.getFl_ctrl_disp() && /*e.getCd_voce_piano().equals(linea_attivita.getVocePianoEconomico2016().getCd_voce_piano()) &&*/
                             (e.getEsercizio_piano().equals(0) || e.getEsercizio_piano().equals(rigaVar.getEsercizio()))) {
                         try {
                             if (locked) {

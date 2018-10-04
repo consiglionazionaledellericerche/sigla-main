@@ -441,14 +441,14 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	    			documentoEleTestata.getDocEleIVAColl()!=null && !documentoEleTestata.getDocEleIVAColl().isEmpty() && 
 	    			documentoEleTestata.getDocEleIVAColl().stream().map(x->x.getImposta()).reduce((x,y)->x.add(y)).get().compareTo(BigDecimal.ZERO)!=0);
 
-	    	if (fatturaPassivaBulk.getFl_split_payment()) {
+	    	//if (fatturaPassivaBulk.getFl_split_payment()) {
 	    		java.util.Vector sezionali = comp.estraeSezionali(context.getUserContext(),fatturaPassivaBulk);
 	    		fatturaPassivaBulk.setSezionali(sezionali);
 	    		if (sezionali != null && !sezionali.isEmpty())
 	    			fatturaPassivaBulk.setTipo_sezionale((Tipo_sezionaleBulk)sezionali.firstElement());
 	    		else
 	    			fatturaPassivaBulk.setTipo_sezionale(null);
-	    	}
+	    	//}
 
 	    	//TODO eliminata su richiesta di Patrizia fatturaPassivaBulk.setDt_scadenza(new java.sql.Timestamp(date.getTime().getTime())); 
 	    	GregorianCalendar gcDataMinima = new GregorianCalendar(), gcDataMassima = new GregorianCalendar();
