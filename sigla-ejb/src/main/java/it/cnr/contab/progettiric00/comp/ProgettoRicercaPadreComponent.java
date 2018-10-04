@@ -622,7 +622,7 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
         try {
             //L'aggiornamento parte solo se attivo informix
             Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(userContext);
-            if (parEnte.getFl_informix()) {
+            if (parEnte.getFl_informix() && parEnte.getTipo_db().equals(Parametri_enteBulk.DB_PRODUZIONE)) {
                 ProgettoHome progettoHome = ((ProgettoHome) getHome(userContext, ProgettoBulk.class));
                 progettoHome.aggiornaGeco(userContext, null);
                 DipartimentoHome dipartimentoHome = ((DipartimentoHome) getHome(userContext, DipartimentoBulk.class));
