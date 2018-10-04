@@ -500,7 +500,7 @@ public class ProgettoHome extends BulkHome {
 		for (Iterator<Geco_progettoIBulk> iterator = progettiGeco.iterator(); iterator.hasNext();) {
 			Geco_progettoIBulk geco_progetto = iterator.next();
 			Progetto_sipHome progetto_sip_home =  (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class);
-			Progetto_sipBulk progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(new Progetto_sipBulk(new Integer(geco_progetto.getEsercizio().intValue()),new Integer(geco_progetto.getId_prog().intValue()),geco_progetto.getFase()));
+			Progetto_sipBulk progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(userContext, new Progetto_sipBulk(new Integer(geco_progetto.getEsercizio().intValue()),new Integer(geco_progetto.getId_prog().intValue()),geco_progetto.getFase()));
 			if (progetto_sip != null){
 				geco_progetto.aggiornaProgettoSIP(progetto_sip);				
 				if (progetto_sip.isToBeUpdated()){
@@ -530,9 +530,9 @@ public class ProgettoHome extends BulkHome {
 		for (Iterator<Geco_commessaIBulk> iterator = commesseGeco.iterator(); iterator.hasNext();) {
 			Geco_commessaIBulk geco_commessa = iterator.next();
 			Progetto_sipHome progetto_sip_home =  (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class);
-			Progetto_sipBulk progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(new Progetto_sipBulk(new Integer(geco_commessa.getEsercizio().intValue()),new Integer(geco_commessa.getId_comm().intValue()),geco_commessa.getFase()));
+			Progetto_sipBulk progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(userContext, new Progetto_sipBulk(new Integer(geco_commessa.getEsercizio().intValue()),new Integer(geco_commessa.getId_comm().intValue()),geco_commessa.getFase()));
 			if (progetto_sip != null){
-				progetto_sip.setProgettopadre((Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(new Progetto_sipBulk(new Integer(geco_commessa.getEsercizio().intValue()),new Integer(geco_commessa.getId_prog_padre().intValue()),geco_commessa.getFase())));
+				progetto_sip.setProgettopadre((Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(userContext, new Progetto_sipBulk(new Integer(geco_commessa.getEsercizio().intValue()),new Integer(geco_commessa.getId_prog_padre().intValue()),geco_commessa.getFase())));
 				geco_commessa.aggiornaProgettoSIP(progetto_sip);				
 				if (progetto_sip.isToBeUpdated()){
 					progetto_sip.setUser(CNRUserContext.getUser(userContext));
@@ -578,9 +578,9 @@ public class ProgettoHome extends BulkHome {
 		for (Iterator<Geco_moduloIBulk> iterator = moduliGeco.iterator(); iterator.hasNext();) {
 			Geco_moduloIBulk geco_modulo = iterator.next();
 			Progetto_sipHome progetto_sip_home =  (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class);
-			Progetto_sipBulk progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(new Progetto_sipBulk(new Integer(geco_modulo.getEsercizio().intValue()),new Integer(geco_modulo.getId_mod().intValue()),geco_modulo.getFase()));
+			Progetto_sipBulk progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(userContext, new Progetto_sipBulk(new Integer(geco_modulo.getEsercizio().intValue()),new Integer(geco_modulo.getId_mod().intValue()),geco_modulo.getFase()));
 			if (progetto_sip != null){
-				progetto_sip.setProgettopadre((Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(new Progetto_sipBulk(new Integer(geco_modulo.getEsercizio().intValue()),new Integer(geco_modulo.getId_comm().intValue()),geco_modulo.getFase())));
+				progetto_sip.setProgettopadre((Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(userContext, new Progetto_sipBulk(new Integer(geco_modulo.getEsercizio().intValue()),new Integer(geco_modulo.getId_comm().intValue()),geco_modulo.getFase())));
 				geco_modulo.aggiornaProgettoSIP(progetto_sip);				
 				if (progetto_sip.isToBeUpdated()){
 					progetto_sip.setUser(CNRUserContext.getUser(userContext));
