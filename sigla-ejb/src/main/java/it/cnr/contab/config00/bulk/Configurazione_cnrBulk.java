@@ -77,7 +77,8 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String SK_BLACKLIST="BLACKLIST";
 	public final static String PK_INCARICHI_MODIFICA_ALLEGATI = "INCARICHI_MODIFICA_ALLEGATI";
 	public final static String SK_INCARICHI_MOD_CONTRATTO = "INCARICHI_MOD_CONTRATTO";
-	
+	public final static String SK_INCARICHI_MOD_CURRICULUM = "INCARICHI_MOD_CURRICULUM";
+		
 	public final static String PK_LIMITE_UTILIZZO_CONTANTI = "LIMITE_UTILIZZO_CONTANTI";
 	public final static String SK_LIMITE1 = "LIMITE1";
 	public final static String PK_SPLIT_PAYMENT = "SPLIT_PAYMENT";

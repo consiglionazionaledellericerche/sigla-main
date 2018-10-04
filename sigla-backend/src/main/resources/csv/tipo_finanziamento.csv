@@ -1,0 +1,10 @@
+"id","codice","descrizione","fl_piano_eco_fin","fl_ass_cat_voci_ind","fl_ass_cat_voci_det","fl_ass_cat_voci_altro","fl_prev_ent_spesa","fl_rip_costi_pers","fl_quad_pdgp_econom","fl_contr_val_prog","fl_piano_rend","fl_var_cons","fl_inc_cons","dacr","utcr","duva","utuv","pg_ver_rec"
+1,"FOE","FOE","N","N","N","N","N","Y","N","N","N","N","N",2018-09-26,"CED",2018-09-26,"CED",1
+2,"FOE_PRO","FOE progetti","Y","Y","Y","Y","N","Y","N","Y","N","N","N",2018-09-26,"CED",2018-09-26,"CED",2
+3,"AUT","Autofinanziamento","Y","Y","N","Y","N","Y","N","Y","N","N","N",2018-09-26,"CED",2018-09-26,"CED",3
+4,"AUT_AREE","Autofinanziamento AREE","N","Y","N","N","N","Y","N","N","N","N","N",2018-09-26,"CED",2018-09-26,"CED",4
+5,"RIM","Rimborsi da soggetti terzi","N","Y","N","N","N","Y","N","Y","N","N","N",2018-09-26,"CED",2018-09-26,"CED",5
+6,"COF","Cofinanziamento","Y","Y","Y","Y","Y","Y","Y","Y","N","N","N",2018-09-26,"CED",2018-09-26,"CED",6
+7,"FIN","Finanziamento","Y","Y","Y","Y","Y","Y","Y","Y","N","N","N",2018-09-26,"CED",2018-09-26,"CED",7
+8,"ATT_COM","Attività Commerciale pura","Y","Y","N","Y","Y","Y","Y","Y","N","N","N",2018-09-26,"CED",2018-09-26,"CED",8
+9,"ATT_COMM_TAR","Attività commerciale a tariffario","N","Y","N","Y","N","Y","N","N","N","N","N",2018-09-26,"CED",2018-09-26,"CED",9

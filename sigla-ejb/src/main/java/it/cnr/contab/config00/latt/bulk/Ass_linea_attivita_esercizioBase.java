@@ -11,12 +11,6 @@ public class Ass_linea_attivita_esercizioBase extends Ass_linea_attivita_eserciz
 	// ESERCIZIO_FINE NUMBER(4)
 	private java.lang.Integer esercizio_fine;
 
-	// CD_UNITA_PIANO VARCHAR(30) NOT NULL
-	private java.lang.String cd_unita_piano;
-
-	// CD_VOCE_PIANO VARCHAR(10) NOT NULL
-	private java.lang.String cd_voce_piano;
-
 	public Ass_linea_attivita_esercizioBase() {
 		super();
 	}
@@ -39,21 +33,5 @@ public class Ass_linea_attivita_esercizioBase extends Ass_linea_attivita_eserciz
 
 	public void setEsercizio_fine(java.lang.Integer esercizio_fine) {
 		this.esercizio_fine = esercizio_fine;
-	}
-	
-	public java.lang.String getCd_unita_piano() {
-		return cd_unita_piano;
-	}
-	
-	public void setCd_unita_piano(java.lang.String cd_unita_piano) {
-		this.cd_unita_piano = cd_unita_piano;
-	}
-	
-	public java.lang.String getCd_voce_piano() {
-		return cd_voce_piano;
-	}
-	
-	public void setCd_voce_piano(java.lang.String cd_voce_piano) {
-		this.cd_voce_piano = cd_voce_piano;
 	}
 }

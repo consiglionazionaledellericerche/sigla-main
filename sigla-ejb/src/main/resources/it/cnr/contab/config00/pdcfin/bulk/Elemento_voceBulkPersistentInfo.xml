@@ -39,6 +39,14 @@
 			propertyName="v_classificazione_voci.id_classificazione"
 			sqlTypeName="DECIMAL"
 			columnSize="7" />
+		<columnMapping
+			columnName="CD_UNITA_PIANO"
+			propertyName="voce_piano_economico.unita_organizzativa.cd_unita_organizzativa"
+			fetchOnly="false" />
+		<columnMapping
+			columnName="CD_VOCE_PIANO"
+			propertyName="voce_piano_economico.cd_voce_piano"
+			fetchOnly="false" />
 	</defaultColumnMap>
 
 	<columnMap
@@ -83,6 +91,8 @@
 		name="v_classificazione_voci" />				
 	<persistentProperty
 		name="v_classificazione_voci.cd_classificazione" />				
+	<persistentProperty
+		name="voce_piano_economico" />
 	<fetchPolicy
 		name="it.cnr.contab.doccont00.comp.ObbligazioneComponent.find.elemento_voce">
 		<exclude pattern="*" />
