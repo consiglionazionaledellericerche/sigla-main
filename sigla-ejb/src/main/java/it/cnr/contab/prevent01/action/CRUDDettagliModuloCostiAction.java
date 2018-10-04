@@ -392,25 +392,40 @@ public class CRUDDettagliModuloCostiAction extends CRUDAction {
 	}
 	public it.cnr.jada.action.Forward doBringBackSearchClassificazione(ActionContext context, Pdg_modulo_speseBulk pdg_modulo_spese, V_classificazione_vociBulk classificazione) throws java.rmi.RemoteException {
 		try{
-			fillModel(context);	
-			CRUDDettagliModuloCostiBP bp = (CRUDDettagliModuloCostiBP)getBusinessProcess(context);
-			if (classificazione != null){
-				pdg_modulo_spese.setClassificazione(classificazione);
-				if(classificazione.getFl_mastrino().booleanValue()){
-					pdg_modulo_spese.setLimiteInt(((PdgModuloCostiComponentSession)bp.createComponentSession()).soggettaLimite(context.getUserContext(),pdg_modulo_spese,LimiteSpesaBulk.FONTE_INTERNA));
-					pdg_modulo_spese.setLimiteEst(((PdgModuloCostiComponentSession)bp.createComponentSession()).soggettaLimite(context.getUserContext(),pdg_modulo_spese,LimiteSpesaBulk.FONTE_ESTERNA));
-					pdg_modulo_spese.setPrevAnnoSucObb(classificazione.getFl_prev_obb_anno_suc());
-					if(pdg_modulo_spese.isPrevAnnoSucObb())
-						pdg_modulo_spese.setIm_spese_a2(null);
-					else
-						if (pdg_modulo_spese.getIm_spese_a2()==null)
-							pdg_modulo_spese.setIm_spese_a2(Utility.ZERO);
-				}
-				bp.setModel(context,((PdgModuloCostiComponentSession)bp.createComponentSession()).calcolaPrevisioneAssestataRowByRow(context.getUserContext(),(Pdg_modulo_costiBulk)bp.getModel() ,pdg_modulo_spese,new Integer(CNRUserContext.getEsercizio(context.getUserContext()).intValue() - 1)));
-			}
+			innerDoBringBackSearchClassificazione(context, pdg_modulo_spese, classificazione, false);
 			return context.findDefaultForward();
 		} catch(Throwable e) {
 			return handleException(context, e);
+		}
+	}
+
+	public it.cnr.jada.action.Forward doBringBackSearchClassificazione_codlast(ActionContext context, Pdg_modulo_speseBulk pdg_modulo_spese, V_classificazione_vociBulk classificazione) throws java.rmi.RemoteException {
+		try{
+			innerDoBringBackSearchClassificazione(context, pdg_modulo_spese, classificazione, true);
+			return context.findDefaultForward();
+		} catch(Throwable e) {
+			return handleException(context, e);
+		}
+	}
+
+	private void innerDoBringBackSearchClassificazione(ActionContext context, Pdg_modulo_speseBulk pdg_modulo_spese, V_classificazione_vociBulk classificazione, boolean initVoceEconomica) throws Throwable {
+		fillModel(context);	
+		CRUDDettagliModuloCostiBP bp = (CRUDDettagliModuloCostiBP)getBusinessProcess(context);
+		if (classificazione != null){
+			if (initVoceEconomica)
+				bp.inizializzaVoceEconomica(context, pdg_modulo_spese, classificazione);
+			pdg_modulo_spese.setClassificazione(classificazione);
+			if(classificazione.getFl_mastrino().booleanValue()){
+				pdg_modulo_spese.setLimiteInt(((PdgModuloCostiComponentSession)bp.createComponentSession()).soggettaLimite(context.getUserContext(),pdg_modulo_spese,LimiteSpesaBulk.FONTE_INTERNA));
+				pdg_modulo_spese.setLimiteEst(((PdgModuloCostiComponentSession)bp.createComponentSession()).soggettaLimite(context.getUserContext(),pdg_modulo_spese,LimiteSpesaBulk.FONTE_ESTERNA));
+				pdg_modulo_spese.setPrevAnnoSucObb(classificazione.getFl_prev_obb_anno_suc());
+				if(pdg_modulo_spese.isPrevAnnoSucObb())
+					pdg_modulo_spese.setIm_spese_a2(null);
+				else
+					if (pdg_modulo_spese.getIm_spese_a2()==null)
+						pdg_modulo_spese.setIm_spese_a2(Utility.ZERO);
+			}
+			bp.setModel(context,((PdgModuloCostiComponentSession)bp.createComponentSession()).calcolaPrevisioneAssestataRowByRow(context.getUserContext(),(Pdg_modulo_costiBulk)bp.getModel() ,pdg_modulo_spese,new Integer(CNRUserContext.getEsercizio(context.getUserContext()).intValue() - 1)));
 		}
 	}
 
@@ -424,6 +439,12 @@ public class CRUDDettagliModuloCostiAction extends CRUDAction {
 
 	}
 	public Forward doBlankSearchClassificazione(ActionContext context, Pdg_modulo_speseBulk pdg_modulo_spese) throws java.rmi.RemoteException {
+	 	pdg_modulo_spese.setLimiteEst(false);
+		pdg_modulo_spese.setLimiteInt(false);
+		pdg_modulo_spese.setClassificazione(new V_classificazione_vociBulk());
+		return context.findDefaultForward();
+	}
+	public Forward doBlankSearchClassificazione_codlast(ActionContext context, Pdg_modulo_speseBulk pdg_modulo_spese) throws java.rmi.RemoteException {
 	 	pdg_modulo_spese.setLimiteEst(false);
 		pdg_modulo_spese.setLimiteInt(false);
 		pdg_modulo_spese.setClassificazione(new V_classificazione_vociBulk());

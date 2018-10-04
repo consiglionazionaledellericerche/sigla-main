@@ -8,6 +8,7 @@ package it.cnr.contab.prevent01.bp;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.Collections;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import javax.servlet.jsp.JspWriter;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.ejb.Parametri_livelliComponentSession;
+import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.pdg00.ejb.CostiDipendenteComponentSession;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
@@ -26,15 +28,20 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.ejb.PdgContrSpeseComponentSession;
 import it.cnr.contab.prevent01.ejb.PdgModuloCostiComponentSession;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
@@ -434,5 +441,20 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 
 	public Parametri_enteBulk getParametriEnte() {
 		return parametriEnte;
+	}
+	
+	public void inizializzaVoceEconomica(ActionContext actioncontext, Pdg_modulo_speseBulk pdg_modulo_spese, V_classificazione_vociBulk classificazione) throws BusinessProcessException {
+		try {
+	    	java.util.Collection<Progetto_piano_economicoBulk> result = createComponentSession().find(actioncontext.getUserContext(), Progetto_piano_economicoBulk.class, "findProgettoPianoEconomicoList", classificazione.getEsercizio(), pdg_modulo_spese.getPg_progetto(), classificazione.getId_classificazione());
+	    	if (Optional.ofNullable(result).orElse(Collections.emptyList()).isEmpty())
+	    		throw new ValidationException("Voce di bilancio non associata a nessuna voce del piano economico del progetto.");
+	    	if (Optional.ofNullable(result).orElse(Collections.emptyList()).size()==1) {
+	    		Voce_piano_economico_prgBulk vocePiaeco = result.stream().findAny().map(Progetto_piano_economicoBulk::getVoce_piano_economico).get();
+	    		vocePiaeco = (Voce_piano_economico_prgBulk)createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), vocePiaeco);
+	    		pdg_modulo_spese.setVoce_piano_economico(vocePiaeco);
+	    	}
+		} catch (Exception e) {
+			throw new BusinessProcessException(e);
+		}
 	}
 }
