@@ -9,8 +9,8 @@ public class Voce_piano_economico_prgBulk extends Voce_piano_economico_prgBase {
 
 	public final static Dictionary tipoVoceEconomicaKeys;
 
-	public final static String PERSONALE_DETER = "PDT";
-	public final static String PERSONALE_INDET = "PIN";
+	public final static String PERSONALE_DETER = "PTD";
+	public final static String PERSONALE_INDET = "PTI";
 	public final static String PERSONALE_OTHER = "POT";
 	
 	static {
