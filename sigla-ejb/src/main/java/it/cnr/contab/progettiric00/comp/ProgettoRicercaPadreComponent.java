@@ -761,8 +761,8 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
 
     @Override
     public Persistent findByPrimaryKey(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
-        if (Optional.ofNullable(oggettobulk).filter(Progetto_sipBulk.class::isInstance).isPresent()) {
-            Progetto_sipHome progetto_sipHome = ((Progetto_sipHome) getHome(usercontext, Progetto_sipBulk.class));
+        if (Optional.ofNullable(oggettobulk).isPresent()) {
+            ProgettoHome progetto_sipHome = ((ProgettoHome) getHome(usercontext, ProgettoBulk.class, "V_PROGETTO_PADRE"));
             try {
                 final Persistent byPrimaryKey = progetto_sipHome.findByPrimaryKey(usercontext, oggettobulk);
                 getHomeCache(usercontext).fetchAll(usercontext);
