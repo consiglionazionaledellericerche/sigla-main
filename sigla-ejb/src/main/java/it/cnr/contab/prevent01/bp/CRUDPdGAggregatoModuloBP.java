@@ -501,6 +501,23 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
         return this;
     }
 
+    public String getHintProgetto() {
+		return Optional.ofNullable(getCrudDettagli().getModel())
+				.filter(Pdg_moduloBulk.class::isInstance)
+				.map(Pdg_moduloBulk.class::cast)
+				.flatMap(pdg_moduloBulk -> Optional.ofNullable(pdg_moduloBulk.getProgetto()))
+				.flatMap(progetto_sipBulk -> Optional.ofNullable(progetto_sipBulk.getOtherField()))
+				.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
+				.map(tipoFinanziamentoBulk -> "Tipologia di Finanziamento: "
+						.concat(tipoFinanziamentoBulk.getDescrizione())
+						.concat("<BR>")
+						.concat("Previsione Entrata/Spesa ").concat(tipoFinanziamentoBulk.getFlPrevEntSpesa() ? " consentita" : " non consentita")
+                        .concat("<BR>")
+                        .concat("Ripartizione Costi del Personale ").concat(tipoFinanziamentoBulk.getFlRipCostiPers() ? " consentita" : " non consentita")
+				)
+				.orElse("");
+	}
+
     public boolean isPrevEntSpesaEnable() {
 		return Optional.ofNullable(getCrudDettagli().getModel())
 				.filter(Pdg_moduloBulk.class::isInstance)
