@@ -185,7 +185,7 @@ public class MacroAction extends BulkAction {
 						((CdrBulk)newbp.getModel()).addToDettagli(pdg_modulo);
                         newbp.evidenziaModulo(actioncontext);
                         actioncontext.addBusinessProcess(newbp);
-                        return openConfirm(actioncontext,"Attenzione: il progetto non ha uno stato utile alla previsione! Vuoi procedere al caricamento del piano economico?",
+                        return openConfirm(actioncontext,"Attenzione: il progetto non ha uno stato utile alla previsione! Vuoi completare le informazioni mancanti?",
                                 OptionBP.CONFIRM_YES_NO,"doConfermaCompletaProgetto");
 
                     }
