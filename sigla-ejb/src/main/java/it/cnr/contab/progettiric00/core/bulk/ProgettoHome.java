@@ -327,20 +327,6 @@ public class ProgettoHome extends BulkHome {
 		return sql;    	
 	}
 
-    public Persistent findByPrimaryKey(UserContext userContext,Object persistent) throws PersistencyException {
-    	return findByPrimaryKey(userContext,(Persistent)persistent);
-    }
-	@Override
-    public Persistent findByPrimaryKey(UserContext userContext,Persistent persistent) throws PersistencyException {
-        ProgettoHome progettohome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class);
-        ProgettoBulk progetto = ((ProgettoBulk)persistent);
-        if (progetto.getEsercizio() == null && Optional.ofNullable(userContext).isPresent())
-            progetto.setEsercizio(CNRUserContext.getEsercizio(userContext));
-        if (progetto.getTipo_fase() == null)
-            progetto.setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
-        return progettohome.findByPrimaryKey(persistent);
-    }
-	
 	public void aggiornaGeco(UserContext userContext,ProgettoBulk progetto){
 		if (CNRUserContext.getEsercizio(userContext) ==null )
 			return;
@@ -564,11 +550,15 @@ public class ProgettoHome extends BulkHome {
 					Inserimento Nuove informazioni del progetto
 				 */
 				Progetto_other_fieldHome progetto_other_fieldHome =  (Progetto_other_fieldHome)getHomeCache().getHome(Progetto_other_fieldBulk.class);
-				Progetto_other_fieldBulk progetto_other_fieldBulk = new Progetto_other_fieldBulk();
-				progetto_other_fieldBulk.setPg_progetto(geco_commessa.getId_comm().intValue());
-				progetto_other_fieldBulk.setStato(Progetto_other_fieldBulk.STATO_INIZIALE);
-				progetto_other_fieldBulk.setToBeCreated();
-				progetto_other_fieldHome.insert(progetto_other_fieldBulk, userContext);
+                Progetto_other_fieldBulk progetto_other_fieldBulk = (Progetto_other_fieldBulk) progetto_other_fieldHome.findByPrimaryKey(new Progetto_other_fieldBulk(geco_commessa.getId_comm().intValue()));
+				if (progetto_other_fieldBulk == null) {
+                    progetto_other_fieldBulk = new Progetto_other_fieldBulk();
+                    progetto_other_fieldBulk.setPg_progetto(geco_commessa.getId_comm().intValue());
+                    progetto_other_fieldBulk.setStato(Progetto_other_fieldBulk.STATO_INIZIALE);
+                    progetto_other_fieldBulk.setUser(CNRUserContext.getUser(userContext));
+                    progetto_other_fieldBulk.setToBeCreated();
+                    progetto_other_fieldHome.insert(progetto_other_fieldBulk, userContext);
+                }
 
 				progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(userContext, new Progetto_sipBulk(new Integer(geco_commessa.getEsercizio().intValue()),new Integer(geco_commessa.getId_comm().intValue()),geco_commessa.getFase()));
 				progetto_sip.setOtherField(progetto_other_fieldBulk);
