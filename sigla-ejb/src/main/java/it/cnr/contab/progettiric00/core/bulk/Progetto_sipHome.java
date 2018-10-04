@@ -172,20 +172,6 @@ public class Progetto_sipHome extends BulkHome {
 		return sql;    	
 	}
 
-    public Persistent findByPrimaryKey(UserContext userContext, Object persistent) throws PersistencyException {
-    	return findByPrimaryKey(userContext,(Persistent)persistent);
-    }
-
-	@Override
-    public Persistent findByPrimaryKey(UserContext userContext,Persistent persistent) throws PersistencyException {
-		Progetto_sipHome progettohome = (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class);
-    	Progetto_sipBulk progetto = ((Progetto_sipBulk)persistent);
-    	if (progetto.getEsercizio() == null && Optional.ofNullable(userContext).isPresent())
-    		progetto.setEsercizio(CNRUserContext.getEsercizio(userContext));
-    	if (progetto.getTipo_fase() == null)        	    	
-    		progetto.setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
-    	return progettohome.findByPrimaryKey(persistent);
-    }
 	public DipartimentoBulk findDipartimento(UserContext userContext, Progetto_sipBulk bulk) throws it.cnr.jada.comp.ComponentException, PersistencyException {
 		Progetto_sipHome prgHome = (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class);
 		DipartimentoHome dipHome = (DipartimentoHome)getHomeCache().getHome(DipartimentoBulk.class);
