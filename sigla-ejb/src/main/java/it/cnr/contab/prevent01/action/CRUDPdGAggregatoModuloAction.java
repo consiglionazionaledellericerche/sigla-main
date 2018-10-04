@@ -175,7 +175,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 					.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getStato()))
 					.filter(stato -> Arrays.asList(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE, Progetto_other_fieldBulk.STATO_APPROVATO).indexOf(stato) != -1).isPresent()) {
 			    bp.setProgettoForUpdate(progetto);
-                return openConfirm(context,"Attenzione: il progetto non ha uno stato utile alla previsione! Vuoi procedere al caricamento del piano economico?",
+                return openConfirm(context,"Attenzione: il progetto non ha uno stato utile alla previsione! Vuoi completare le informazioni mancanti?",
                         OptionBP.CONFIRM_YES_NO,"doConfermaCompletaProgetto");
 			}
 			if (!Optional.ofNullable(progetto.getOtherField())
