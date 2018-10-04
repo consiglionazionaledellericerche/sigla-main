@@ -1,7 +1,13 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Dictionary;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
@@ -14,8 +20,10 @@ import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaNuovoBP;
 import it.cnr.contab.progettiric00.tabrif.bulk.Tipo_progettoBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.DateUtils;
 
 public class ProgettoBulk extends ProgettoBase {
 
@@ -47,8 +55,8 @@ public class ProgettoBulk extends ProgettoBase {
 	private it.cnr.jada.bulk.BulkList	workpackage_collegati = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList	workpackage_disponibili  = new it.cnr.jada.bulk.BulkList();
 
-		public final static Dictionary statoKeys;
-		static {
+	public final static Dictionary statoKeys;
+	static {
 		statoKeys = new it.cnr.jada.util.OrderedHashtable();
 		statoKeys.put(TIPO_STATO_PROPOSTA,"Proposta");
 		statoKeys.put(TIPO_STATO_APPROVATO,"Approvato");
@@ -102,6 +110,17 @@ public class ProgettoBulk extends ProgettoBase {
 		for(int i=3;i<100;i++)
 			livello_progetto2016Keys.put(new Integer(i),"Sottogruppo");
 	};
+	
+	public final static Dictionary statoOfKeys;
+	static {
+		statoOfKeys = new it.cnr.jada.util.OrderedHashtable();
+		statoOfKeys.put(Progetto_other_fieldBulk.STATO_INIZIALE,"Iniziale");
+		statoOfKeys.put(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE,"Negoziazione");
+		statoOfKeys.put(Progetto_other_fieldBulk.STATO_APPROVATO,"Approvato");
+		statoOfKeys.put(Progetto_other_fieldBulk.STATO_ANNULLATO,"Annullato");
+		statoOfKeys.put(Progetto_other_fieldBulk.STATO_MIGRAZIONE,"Migrazione");
+	};
+	
 	private Tipo_progettoBulk tipo;
 	private Unita_organizzativaBulk unita_organizzativa;
 	private TerzoBulk responsabile;
@@ -961,30 +980,131 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 		return otherField;
 	}
 	
-	public Boolean getFl_piano_economico() {
-		return getOtherField()!=null && 
-			   getOtherField().getFl_piano_economico()!=null &&
-			   getOtherField().getFl_piano_economico();
-	}
-	
-	public void setFl_piano_economico(Boolean fl_piano_economico) {
-		if (getOtherField()==null) {
-			Progetto_other_fieldBulk bulk = new Progetto_other_fieldBulk(this.getPg_progetto());
-			bulk.setFl_piano_economico(Boolean.FALSE);
-			bulk.setToBeCreated();
-			setOtherField(bulk); 
-		}
-		if (getFl_piano_economico()!=null && fl_piano_economico!=null && 
-				getFl_piano_economico()!=fl_piano_economico) {
-			getOtherField().setFl_piano_economico(fl_piano_economico);
-			getOtherField().setToBeUpdated();	
-		}
-	}
-	
-	public boolean isROFlPianoEconomico() {
-		return Boolean.TRUE.equals(getFl_piano_economico()) &&
+	public boolean isROPianoEconomico() {
+		return Boolean.TRUE.equals(getOtherField().getTipoFinanziamento().getFlPianoEcoFin()) &&
 				!getDettagliPianoEconomicoTotale().isEmpty() &&
 				!getDettagliPianoEconomicoAnnoCorrente().isEmpty() &&
 				!getDettagliPianoEconomicoAltriAnni().isEmpty();
+	}
+
+	public Integer getAnnoInizioOf() {
+		return Optional.ofNullable(this.getOtherField())
+				.flatMap(el->Optional.ofNullable(el.getDtInizio()))
+				.map(elDate->{
+					GregorianCalendar calendar = new GregorianCalendar();
+					calendar.setTime(elDate);
+					return calendar.get(Calendar.YEAR);
+				})
+				.orElse(0);
+	}		
+
+	public Integer getAnnoFineOf() {
+		return Optional.ofNullable(this.getOtherField())
+				.flatMap(el->{
+					Optional<Integer> anno = Optional.empty();
+					if (el.getDtFine()!=null || el.getDtProroga()!=null) {
+						GregorianCalendar calendar = new GregorianCalendar();
+						calendar.setTime(DateUtils.max(el.getDtFine(), el.getDtProroga()));
+						anno = Optional.of(calendar.get(Calendar.YEAR));
+					}
+					return anno;
+				})
+				.orElse(9999);
+	}
+
+	public boolean isAttivoPianoEconomicoOf() {
+		return Optional.ofNullable(this.getOtherField())
+				.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
+				.flatMap(el->Optional.ofNullable(el.getFlPianoEcoFin()))
+				.orElse(Boolean.FALSE);
+	}
+	
+	public BulkList<Progetto_piano_economicoBulk> getPianoEconomicoSummary() {
+		Map<String, List<Progetto_piano_economicoBulk>> resultByVoce = 
+				this.getAllDetailsProgettoPianoEconomico().stream()
+					 .filter(el->el.getVoce_piano_economico()!=null)
+					 .filter(el->el.getVoce_piano_economico().getCd_unita_organizzativa()!=null)
+					 .filter(el->el.getVoce_piano_economico().getCd_voce_piano()!=null)					 
+					 .collect(Collectors.groupingBy(x->{
+						 return x.getCd_unita_organizzativa().concat(x.getCd_voce_piano());
+					 }));
+		
+		return new BulkList<Progetto_piano_economicoBulk>(resultByVoce.keySet().stream()
+				.map(vocePiano->{
+						Progetto_piano_economicoBulk bulk = new Progetto_piano_economicoBulk();
+						bulk.setVoce_piano_economico(resultByVoce.get(vocePiano).stream().findFirst().get().getVoce_piano_economico());
+						bulk.setIm_spesa_finanziato(resultByVoce.get(vocePiano).stream().map(el->Optional.ofNullable(el.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						bulk.setIm_spesa_cofinanziato(resultByVoce.get(vocePiano).stream().map(el->Optional.ofNullable(el.getIm_spesa_cofinanziato()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						return bulk;
+					})
+				.collect(Collectors.toList()));
+	}
+
+	public boolean isDettagliPianoEconomicoPresenti() {
+		return !getDettagliPianoEconomicoAnnoCorrente().isEmpty() ||
+				!getDettagliPianoEconomicoAltriAnni().isEmpty() ||
+				!getDettagliPianoEconomicoTotale().isEmpty();
+	}
+
+	public boolean isRODatiOtherField() {
+		return !Optional.ofNullable(this.getOtherField()).filter(Progetto_other_fieldBulk::isStatoIniziale).isPresent();
+	}
+
+	public boolean isROOtherFieldExistPianoEconomico() {
+		return this.isRODatiOtherField() || this.isDettagliPianoEconomicoPresenti();
+	}
+
+	private BulkList<Progetto_piano_economicoBulk> getAllDetailsProgettoPianoEconomico() {
+		BulkList<Progetto_piano_economicoBulk> items = new BulkList<Progetto_piano_economicoBulk>();
+		items.addAll(getDettagliPianoEconomicoTotale());
+		items.addAll(getDettagliPianoEconomicoAnnoCorrente());
+		items.addAll(getDettagliPianoEconomicoAltriAnni());
+		return items;
+	}
+
+	public java.math.BigDecimal getImFinanziato() {
+		return Optional.ofNullable(getOtherField()).map(Progetto_other_fieldBulk::getImFinanziato).orElse(BigDecimal.ZERO);
+	}
+
+	public java.math.BigDecimal getImCofinanziato() {
+		return Optional.ofNullable(getOtherField()).map(Progetto_other_fieldBulk::getImCofinanziato).orElse(BigDecimal.ZERO);
+	}
+
+	public java.math.BigDecimal getImTotale() {
+		return this.getImFinanziato().add(this.getImCofinanziato());
+	}
+
+	public java.math.BigDecimal getImFinanziatoRipartito() {
+		return this.getAllDetailsProgettoPianoEconomico().stream()
+				.map(el->Optional.ofNullable(el.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO))
+				.reduce((x, y)->x.add(y))
+				.orElse(BigDecimal.ZERO);
+	}
+	
+	public java.math.BigDecimal getImCofinanziatoRipartito() {
+		return this.getAllDetailsProgettoPianoEconomico().stream()
+				.map(el->Optional.ofNullable(el.getIm_spesa_cofinanziato()).orElse(BigDecimal.ZERO))
+				.reduce((x, y)->x.add(y))
+				.orElse(BigDecimal.ZERO);
+	}
+	
+	public java.math.BigDecimal getImTotaleRipartito() {
+		return this.getAllDetailsProgettoPianoEconomico().stream()
+				.map(el->Optional.ofNullable(el.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO)
+						.add(Optional.ofNullable(el.getIm_spesa_cofinanziato()).orElse(BigDecimal.ZERO)))
+				.reduce((x, y)->x.add(y))
+				.orElse(BigDecimal.ZERO);
+	}
+
+	public java.math.BigDecimal getImFinanziatoDaRipartire() {
+		return this.getImFinanziato().subtract(this.getImFinanziatoRipartito());
+	}
+	
+	public java.math.BigDecimal getImCofinanziatoDaRipartire() {
+		return this.getImCofinanziato().subtract(this.getImCofinanziatoRipartito());
+	}
+	
+	public java.math.BigDecimal getImTotaleDaRipartire() {
+		return this.getImTotale().subtract(this.getImTotaleRipartito());
 	}
 }

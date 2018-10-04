@@ -674,4 +674,323 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="configurazione_cnr_incarichi_mod_curriculum">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/configurazione_cnr_incarichi_mod_curriculum.csv" quotchar="&quot;" separator="," tableName="configurazione_cnr">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_unita_funzionale" name="cd_unita_funzionale" type="STRING"/>
+            <column header="cd_chiave_primaria" name="cd_chiave_primaria" type="STRING"/>
+            <column header="cd_chiave_secondaria" name="cd_chiave_secondaria" type="STRING"/>
+            <column header="val01" name="val01" type="STRING"/>
+            <column header="val02" name="val02" type="STRING"/>
+            <column header="val03" name="val03" type="STRING"/>
+            <column header="val04" name="val04" type="STRING"/>
+            <column header="im01" name="im01" type="NUMERIC"/>
+            <column header="im02" name="im02" type="NUMERIC"/>
+            <column header="dt01" name="dt01" type="${date.type}"/>
+            <column header="dt02" name="dt02" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+
+    <changeSet author="marco.spasiano" id="create-table-tipologia-finanziamento">
+        <createTable remarks="Tabella contenente le tipologie di finanziamento." tableName="tipo_finanziamento">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codice" remarks="Codice identificativo dell tipo di finanziamento dominio (
+                'FOE'=FOE,
+                'FOE_PRO'=FOE progetti,
+                'AUT'=Autofinanziamento,
+                'AUT_AREE'=Autofinanziamento AREE,
+                'RIM'=Rimborsi da soggetti terzi,
+                'COF'=Cofinanziamento,
+                'FIN'=Finanziamento,
+                'ATT_COM'=Attività Commerciale pura,
+                'ATT_COMM_TAR'=Attività commerciale a tariffario
+                )" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descrizione" remarks="Descrizione della tipologia di finanziamento" type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_piano_eco_fin" remarks="Piano economico-finanziario" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_ass_cat_voci_ind" remarks="Associazione categoria-voci per il personale tempo indeterminato consentita" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_ass_cat_voci_det" remarks="Associazione categoria-voci per il personale tempo determinato consentita" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_ass_cat_voci_altro" remarks="Associazione categoria-voci per altre spese del personale" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_prev_ent_spesa" remarks="Previsione Entrata/Spesa consentita" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_rip_costi_pers" remarks="Ripartizione costi del personale" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_quad_pdgp_econom" remarks="Quadratura pdgp con quota annuale del piano economico" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_contr_val_prog" remarks="Controllo validità del Progetto" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_piano_rend" remarks="Piano delle rendicontazioni" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_var_cons" remarks="Variazioni consentite" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_inc_cons" remarks="Incassi consentiti" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="id" constraintName="tipo_finanziamento_pkey" tableName="tipo_finanziamento"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter_elemento_voce_add_piano_economico">
+        <addColumn tableName="elemento_voce">
+            <column name="cd_unita_piano" type="varchar(30)" remarks="Unità Organizzativa proprietaria della voce piano economico."/>
+            <column name="cd_voce_piano" type="varchar(10)" remarks="Codice identificativo voce piano economico."/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="cd_unita_piano,cd_voce_piano" baseTableName="elemento_voce" constraintName="fk_elemento_voce_piaeco" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_unita_organizzativa,cd_voce_piano" referencedTableName="voce_piano_economico_prg"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter_linea_attivita_drop_piano_economico">
+        <dropForeignKeyConstraint baseTableName="ass_linea_attivita_esercizio" constraintName="fk_ass_linea_attivita_eserc01"/>
+
+        <dropColumn columnName="cd_unita_piano" tableName="ass_linea_attivita_esercizio"/>
+        <dropColumn columnName="cd_voce_piano" tableName="ass_linea_attivita_esercizio"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="create_table_ass_progetto_piaeco_voce">
+        <createTable remarks="Tabella contenente le associazioni tra il piano economico di un progetto e le voci di bilancio." tableName="ass_progetto_piaeco_voce">
+            <column name="pg_progetto" remarks="Progressivo del progetto di ricerca" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_unita_organizzativa" remarks="Unitא Organizzativa proprietaria della voce piano economico." type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_voce_piano" remarks="Codice identificativo voce piano economico" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_piano" remarks="Esercizio piano economico. Se =0 indica il progetto complessivo." type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_voce" remarks="Esercizio di riferimento" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ti_appartenenza" remarks="Definisce l'appartenenza (CNR o CdS) delle voci del piano finanziario di riferimento&#10;&#10;Dominio:&#10;C=CNR&#10;D=CDS" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ti_gestione" remarks="Definisce la sezione (entrata o spesa) delle voci del piano finanziario di riferimento.&#10;&#10;Dominio:&#10;E=Entrate&#10;S=Spese" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_elemento_voce" remarks="Codice dell'elemento voce" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="pg_progetto,cd_unita_organizzativa,cd_voce_piano,esercizio_piano,esercizio_voce,ti_appartenenza,ti_gestione,cd_elemento_voce" constraintName="ass_progetto_piaeco_voce_pkey" tableName="ass_progetto_piaeco_voce"/>
+
+        <addForeignKeyConstraint baseColumnNames="pg_progetto,cd_unita_organizzativa,cd_voce_piano,esercizio_piano" baseTableName="ass_progetto_piaeco_voce" constraintName="fk_ass_progetto_piaeco_voce01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_progetto,cd_unita_organizzativa,cd_voce_piano,esercizio_piano" referencedTableName="progetto_piano_economico"/>
+
+        <addForeignKeyConstraint baseColumnNames="esercizio_voce,ti_appartenenza,ti_gestione,cd_elemento_voce" baseTableName="ass_progetto_piaeco_voce" constraintName="fk_ass_progetto_piaeco_voce02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,ti_appartenenza,ti_gestione,cd_elemento_voce" referencedTableName="elemento_voce"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter_progetto_other_field_modify_column">
+        <dropColumn columnName="fl_piano_economico" tableName="progetto_other_field"/>
+
+        <addColumn tableName="progetto_other_field">
+            <column name="id_tipo_finanziamento" type="INT" remarks="Chiave Primaria tipo finanziamento."/>
+            <column name="stato" remarks="Stato del progetto" type="CHAR(3)"/>
+            <column name="dt_inizio" remarks="Data inizio del progetto." type="${date.type}"/>
+            <column name="dt_fine" remarks="Data fine del progetto." type="${date.type}"/>
+            <column name="dt_proroga" remarks="Data proroga del progetto." type="${date.type}"/>
+            <column name="im_finanziato" remarks="Importo finanziario del progetto" type="numeric(15, 2)"/>
+            <column name="im_cofinanziato" remarks="Importo cofinanziario del progetto" type="numeric(15, 2)"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="id_tipo_finanziamento" baseTableName="progetto_other_field" constraintName="fk_progetto_other_field01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tipo_finanziamento"/>
+    </changeSet>    
+
+    <changeSet author="raffaele.pagano" id="alter_progetto_piano_economico">
+        <renameColumn oldColumnName="im_spesa" newColumnName="im_spesa_finanziato" tableName="progetto_piano_economico"/>
+        <addColumn tableName="progetto_piano_economico">
+            <column name="im_spesa_cofinanziato" remarks="Importo spesa cofinanziario del progetto" type="numeric(15, 2)"/>
+        </addColumn>
+    </changeSet>    
+    <changeSet author="marco.spasiano" id="insert_base_tipo_finanziamento">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_finanziamento.csv" quotchar="&quot;" separator="," tableName="tipo_finanziamento">
+            <column header="id" name="id" type="NUMERIC"/>
+            <column header="codice" name="codice" type="STRING"/>
+            <column header="descrizione" name="descrizione" type="STRING"/>
+            <column header="fl_piano_eco_fin" name="fl_piano_eco_fin" type="STRING"/>
+            <column header="fl_ass_cat_voci_ind" name="fl_ass_cat_voci_ind" type="STRING"/>
+            <column header="fl_ass_cat_voci_det" name="fl_ass_cat_voci_det" type="STRING"/>
+            <column header="fl_ass_cat_voci_altro" name="fl_ass_cat_voci_altro" type="STRING"/>
+            <column header="fl_prev_ent_spesa" name="fl_prev_ent_spesa" type="STRING"/>
+            <column header="fl_rip_costi_pers" name="fl_rip_costi_pers" type="STRING"/>
+            <column header="fl_quad_pdgp_econom" name="fl_quad_pdgp_econom" type="STRING"/>
+            <column header="fl_contr_val_prog" name="fl_contr_val_prog" type="STRING"/>
+            <column header="fl_piano_rend" name="fl_piano_rend" type="STRING"/>
+            <column header="fl_var_cons" name="fl_var_cons" type="STRING"/>
+            <column header="fl_inc_cons" name="fl_inc_cons" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="accessi_tipo_finanziamento">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGTIPOFINANZIAM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione Tipo Finanziamento"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGTIPOFINANZIAV"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Visualizzazione Tipo Finanziamento"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGTIPOFINANZIAM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDTipoFinanziamentoBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGTIPOFINANZIAV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDTipoFinanziamentoBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.TIPO_FINANZIAMENTO"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Tipo Finanziamento"/>
+            <column name="pg_ordinamento" type="BIGINT" value="146"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="3"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="TIPO_FINANZIAMENTO"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG"/>
+            <column name="url_icona" type="VARCHAR(200)" value="leaf.gif"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.TIPO_FINANZIAMENTO.M"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGTIPOFINANZIAM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDTipoFinanziamentoBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.TIPO_FINANZIAMENTO"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.TIPO_FINANZIAMENTO.V"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGTIPOFINANZIAM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDTipoFinanziamentoBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="20"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.TIPO_FINANZIAMENTO"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter_voce_piano_economico_prg001">
+        <addColumn tableName="voce_piano_economico_prg">
+            <column name="tipologia" remarks="Tipologia voce piano economico" type="CHAR(3)"/>
+            <column name="fl_link_voci_bilancio_associate" type="CHAR(1)" defaultValue="N" remarks="Voci di Bilancio associate collegate in automatico. - Dominio: S = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_add_voci_bilancio" type="CHAR(1)" defaultValue="N" remarks="Voci di Bilancio associabili manualmente. - Dominio: S = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="alter_progetto_for_other_field">
+        <addColumn tableName="progetto_sip">
+            <column name="pg_progetto_other_field" remarks="Progressivo del progetto" type="BIGINT"/>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="pg_progetto_other_field" baseTableName="progetto_sip" constraintName="progetto_sip_fk07" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_progetto" referencedTableName="progetto_other_field"/>
+        <addColumn tableName="progetto_sic">
+            <column name="pg_progetto_other_field" remarks="Progressivo del progetto" type="BIGINT"/>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="pg_progetto_other_field" baseTableName="progetto_sic" constraintName="progetto_sic_fk07" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_progetto" referencedTableName="progetto_other_field"/>
+    </changeSet>
+
 </databaseChangeLog>

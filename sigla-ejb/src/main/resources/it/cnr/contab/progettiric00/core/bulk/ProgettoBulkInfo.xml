@@ -167,7 +167,7 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		label="Tipo"
-		nullable="false" />
+		nullable="true" />
 
 	<fieldProperty
 		name="dt_inizio"
@@ -682,15 +682,124 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="fase"
 		layout="HORIZONTAL" />
-	<fieldProperty
-		name="fl_piano_economico"
-		property="fl_piano_economico"
-		inputType="CHECKBOX"
-		readonlyProperty="ROFlPianoEconomico"
-		label="Attiva Piano Economico" 
-		command="doDefault"/>
-		
 
+	<fieldProperty
+		name="statoOf"
+		property="otherField.stato"
+		label="Stato"
+		inputType="SELECT"
+		keysProperty="statoOfKeys"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		inputSize="20"
+		maxLength="20"/>
+	<fieldProperty
+		name="tipoFinanziamentoOf"
+		property="otherField.tipoFinanziamento"
+		label="Tipo Finanziamento"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		readonlyPropertyOnEdit="ROOtherFieldExistPianoEconomico"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="dsTipoFinanziamentoOf"
+		property="otherField.tipoFinanziamento.descrizione"
+		inputType="TEXT"
+		label="Finanziamento" />
+	<fieldProperty
+		name="dtInizioOf"
+		property="otherField.dtInizio"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		command="doOnDtInizioOfChange"
+		readonlyPropertyOnEdit="ROOtherFieldExistPianoEconomico"
+		label="Data Inizio" />
+	<fieldProperty
+		name="dtFineOf"
+		property="otherField.dtFine"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		command="doOnDtFineOfChange"
+		readonlyPropertyOnEdit="ROOtherFieldExistPianoEconomico"
+		label="Data Fine" />
+	<fieldProperty
+		name="dtProrogaOf"
+		property="otherField.dtProroga"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		command="doOnDtProrogaOfChange"
+		readonlyPropertyOnEdit="RODatiOtherField"
+		label="Data Proroga" />
+	<fieldProperty
+		name="imFinanziatoOf"
+		property="otherField.imFinanziato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		readonlyPropertyOnEdit="RODatiOtherField"
+		label="Importo Finanziato" />
+	<fieldProperty
+		name="imCofinanziatoOf"
+		property="otherField.imCofinanziato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		readonlyPropertyOnEdit="RODatiOtherField"
+		label="Importo Cofinanziato" />
+	<fieldProperty
+		name="imTotale"
+		property="imTotale"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Totale" />
+	<fieldProperty
+		name="imFinanziatoRipartito"
+		property="imFinanziatoRipartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Finanziato Ripartito" />
+	<fieldProperty
+		name="imCofinanziatoRipartito"
+		property="imCofinanziatoRipartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Cofinanziato Ripartito" />
+	<fieldProperty
+		name="imTotaleRipartito"
+		property="imTotaleRipartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Totale Ripartito" />
+	<fieldProperty
+		name="imFinanziatoDaRipartire"
+		property="imFinanziatoDaRipartire"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Finanziato da Ripartire" />
+	<fieldProperty
+		name="imCofinanziatoDaRipartire"
+		property="imCofinanziatoDaRipartire"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Cofinanziato da Ripartire" />
+	<fieldProperty
+		name="imTotaleDaRipartire"
+		property="imTotaleDaRipartire"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Totale da Ripartire" />
+		
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -840,7 +949,35 @@
 		name="tipoFaseToSearch" />
 
 	<formFieldProperty
-		name="fl_piano_economico" />
+		name="statoOf" />
+	<formFieldProperty
+		name="tipoFinanziamentoOf" />
+	<formFieldProperty
+		name="dsTipoFinanziamentoOf" />
+	<formFieldProperty
+		name="dtInizioOf" />
+	<formFieldProperty
+		name="dtFineOf" />
+	<formFieldProperty
+		name="dtProrogaOf" />
+	<formFieldProperty
+		name="imFinanziatoOf" />
+	<formFieldProperty
+		name="imCofinanziatoOf" />
+	<formFieldProperty
+		name="imTotale" />
+	<formFieldProperty
+		name="imFinanziatoRipartito" />
+	<formFieldProperty
+		name="imCofinanziatoRipartito" />
+	<formFieldProperty
+		name="imTotaleRipartito" />
+	<formFieldProperty
+		name="imFinanziatoDaRipartire" />
+	<formFieldProperty
+		name="imCofinanziatoDaRipartire" />
+	<formFieldProperty
+		name="imTotaleDaRipartire" />
 
 	<columnFieldProperty
 		name="livello" />
@@ -1135,27 +1272,21 @@
 			name="cd_progetto_padre"
 			label="Area Progettuale"/>
 		<columnFieldProperty
-			name="tipo_fase" />
-		<columnFieldProperty
 			name="cd_unita_organizzativa" />
-		<columnFieldProperty
-			name="dt_proroga" />
 		<columnFieldProperty
 			name="ds_progetto" />
 		<columnFieldProperty
 			name="cd_responsabile_terzo" />
 		<columnFieldProperty
-			name="dt_inizio" />
+			name="dsTipoFinanziamentoOf" />
 		<columnFieldProperty
-			name="dt_fine" />
+			name="dtInizioOf" />
 		<columnFieldProperty
-			name="cd_tipo_progetto" />
+			name="dtFineOf" />
 		<columnFieldProperty
-			name="stato" />
+			name="dtProrogaOf" />
 		<columnFieldProperty
-			name="durata_progetto" />
-		<columnFieldProperty
-			name="note" />
+			name="statoOf" />
 	</columnSet>
 
 	<columnSet
@@ -1380,23 +1511,13 @@
 		<findFieldProperty
 			name="cd_unita_organizzativa" />
 		<findFieldProperty
-			name="dt_proroga" />
-		<findFieldProperty
 			name="ds_progetto" />
 		<findFieldProperty
 			name="cd_responsabile_terzo" />
 		<findFieldProperty
-			name="dt_inizio" />
-		<findFieldProperty
-			name="dt_fine" />
-		<findFieldProperty
-			name="cd_tipo_progetto" />
-		<findFieldProperty
 			name="stato" />
 		<findFieldProperty
 			name="durata_progetto" />
-		<findFieldProperty
-			name="note" />
 	</freeSearchSet>
 
 	<form
