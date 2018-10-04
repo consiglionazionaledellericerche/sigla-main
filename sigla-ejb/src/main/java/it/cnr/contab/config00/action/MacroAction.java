@@ -179,14 +179,19 @@ public class MacroAction extends BulkAction {
                     if (!Optional.ofNullable(progetto_sipBulk.getOtherField())
                             .flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getStato()))
                             .filter(stato -> Arrays.asList(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE, Progetto_other_fieldBulk.STATO_APPROVATO).indexOf(stato) != -1).isPresent()) {
-                        newbp.setPgModulo(pg_modulo);
-                        pdg_modulo.setStato(Pdg_moduloBulk.STATO_AC);
-                        pdg_modulo.setToBeCreated();
-						((CdrBulk)newbp.getModel()).addToDettagli(pdg_modulo);
-                        newbp.evidenziaModulo(actioncontext);
-                        actioncontext.addBusinessProcess(newbp);
-                        return openConfirm(actioncontext,"Attenzione: il progetto non ha uno stato utile alla previsione! Vuoi completare le informazioni mancanti?",
-                                OptionBP.CONFIRM_YES_NO,"doConfermaCompletaProgetto");
+						if (!progetto_sipBulk.getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext()))) {
+							setErrorMessage(actioncontext,"Attenzione: il progetto non ha uno stato utile alla previsione! Deve essere completatato dalla UO responsabile!");
+							return actioncontext.findDefaultForward();
+						} else {
+							newbp.setPgModulo(pg_modulo);
+							pdg_modulo.setStato(Pdg_moduloBulk.STATO_AC);
+							pdg_modulo.setToBeCreated();
+							((CdrBulk)newbp.getModel()).addToDettagli(pdg_modulo);
+							newbp.evidenziaModulo(actioncontext);
+							actioncontext.addBusinessProcess(newbp);
+							return openConfirm(actioncontext,"Attenzione: il progetto non ha uno stato utile alla previsione! Vuoi completare le informazioni mancanti?",
+									OptionBP.CONFIRM_YES_NO,"doConfermaCompletaProgetto");
+						}
 
                     }
                     if (!Optional.ofNullable(progetto_sipBulk.getOtherField())

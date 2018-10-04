@@ -69,7 +69,7 @@
 			<td colspan="5" width="45%">
                 <div class="card">
                     <div class="GroupLabel card-header"><span class="font-weight-bold text-primary d-flex justify-content-center">Stato del PdG</span></div>
-                    <div class="Group card-block">
+                    <div class="Group card-block p-2">
                         <table>
                             <tr>
                                 <td><% controller.writeFormLabel(out,"cambia_stato");%></td>
@@ -94,7 +94,7 @@
 			<td>
                 <div class="card">
                     <div class="GroupLabel card-header"><span class="font-weight-bold text-primary d-flex justify-content-center">Contrattazione</span></div>
-                    <div class="Group card-block">
+                    <div class="Group card-block p-2">
                         <table width="100%" style="text-align: center;">
                             <tr>
                                 <td>
@@ -124,11 +124,15 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan=5></td>
+			<td colspan=5>
+                <div class="GroupLabel">
+                    <span class="font-weight-bold text-primary d-flex justify-content-center"><%=bp.getHintProgetto()%></span>
+                </div>
+			</td>
 			<td>
                 <div class="card">
                     <div class="GroupLabel card-header"><span class="font-weight-bold text-primary d-flex justify-content-center">Gestionale</span></div>
-                    <div class="Group card-block">
+                    <div class="Group card-block p-2">
                         <table width="100%" style="text-align: center;">
                             <tr>
                                 <td>
