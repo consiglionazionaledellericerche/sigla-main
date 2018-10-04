@@ -253,6 +253,12 @@ public ProgettoRicercaComponent() {
 						if (!isProgettoPadreModificabile(userContext,testata))
 							testata.getProgettopadre().setOperabile(false);
 
+						ProgettoBulk progettoPrev = (ProgettoBulk)((ProgettoHome)getHome(userContext, ProgettoBulk.class)).findByPrimaryKey(new ProgettoBulk(testata.getEsercizio(), testata.getPg_progetto(), ProgettoBulk.TIPO_FASE_PREVISIONE));
+						ProgettoBulk progettoGest = (ProgettoBulk)((ProgettoHome)getHome(userContext, ProgettoBulk.class)).findByPrimaryKey(new ProgettoBulk(testata.getEsercizio(), testata.getPg_progetto(), ProgettoBulk.TIPO_FASE_GESTIONE));
+
+						testata.setFl_previsione(progettoPrev!=null);
+						testata.setFl_gestione(progettoGest!=null);
+
 						getHomeCache(userContext).fetchAll(userContext);
 						return testata;
 				} catch(Exception e) {
@@ -343,7 +349,7 @@ public ProgettoRicercaComponent() {
 				BulkList<Progetto_piano_economicoBulk> allPiano = new BulkList<>();
 				allPiano.addAll(((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente());
 				allPiano.addAll(((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());
-				if (!allPiano.isEmpty() && !((ProgettoBulk)bulk).isAttivoPianoEconomicoOf())
+				if (!allPiano.isEmpty() && !((ProgettoBulk)bulk).isPianoEconomicoRequired())
 					throw new it.cnr.jada.comp.ApplicationException("Attenzione: E' stato inserito un piano economico anche se la tipologia di finanziamento non lo prevede!");	                	
 
 				for (Iterator iterator = allPiano.iterator(); iterator.hasNext();) {
