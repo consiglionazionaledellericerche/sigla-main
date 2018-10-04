@@ -3,6 +3,7 @@ package it.cnr.contab.progettiric00.core.bulk;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 
@@ -64,7 +65,13 @@ public class ProgettoHome extends BulkHome {
 	{
 		super(class1, connection, persistentcache);
 	}
-	/**
+
+    @Override
+    public SQLBuilder select(Persistent persistent) throws PersistencyException {
+        return super.select(persistent);
+    }
+
+    /**
 	 * Recupera tutti i dati nella tabella Progetto_uo relativi alla testata in uso.
 	 *
 	 * @param testata La testata in uso.
@@ -325,12 +332,13 @@ public class ProgettoHome extends BulkHome {
     }
 	@Override
     public Persistent findByPrimaryKey(UserContext userContext,Persistent persistent) throws PersistencyException {
-    	ProgettoBulk progetto = ((ProgettoBulk)persistent);
-    	if (progetto.getEsercizio() == null)
-    		progetto.setEsercizio(CNRUserContext.getEsercizio(userContext));
-    	if (progetto.getTipo_fase() == null)        	    	
-    		progetto.setTipo_fase(ProgettoBulk.TIPO_FASE_NON_DEFINITA);
-    	return super.findByPrimaryKey(persistent);
+        ProgettoHome progettohome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class,"V_PROGETTO_PADRE");
+        ProgettoBulk progetto = ((ProgettoBulk)persistent);
+        if (progetto.getEsercizio() == null && Optional.ofNullable(userContext).isPresent())
+            progetto.setEsercizio(CNRUserContext.getEsercizio(userContext));
+        if (progetto.getTipo_fase() == null)
+            progetto.setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
+        return progettohome.findByPrimaryKey(persistent);
     }
 	
 	public void aggiornaGeco(UserContext userContext,ProgettoBulk progetto){
