@@ -188,5 +188,19 @@ public class Progetto_sipHome extends BulkHome {
 			progetto = (Progetto_sipBulk)prgHome.findByPrimaryKey(userContext, commessa.getProgettopadre());
 
 		return (DipartimentoBulk)dipHome.findByPrimaryKey(progetto.getDipartimento());
-	} 
+	}
+
+	public Persistent findByPrimaryKey(UserContext userContext, Object persistent) throws PersistencyException {
+		return findByPrimaryKey(userContext,(Persistent)persistent);
+	}
+
+	@Override
+	public Persistent findByPrimaryKey(UserContext userContext,Persistent persistent) throws PersistencyException {
+		Progetto_sipBulk progetto = ((Progetto_sipBulk)persistent);
+		if (progetto.getEsercizio() == null && Optional.ofNullable(userContext).isPresent())
+			progetto.setEsercizio(CNRUserContext.getEsercizio(userContext));
+		if (progetto.getTipo_fase() == null)
+			progetto.setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
+		return findByPrimaryKey(persistent);
+	}
 }
