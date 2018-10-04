@@ -110,6 +110,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public final static String FATT_ELETT_ALLA_FIRMA = "FIR";
 	public final static String FATT_ELETT_SCARTATA_DA_SDI = "SCA";
 	public final static String FATT_ELETT_CONSEGNATA_SDI = "COS";
+	public final static String FATT_ELETT_AVVISO_NOTIFICA_INVIO_MAIL = "AVV";
 	public final static String FATT_ELETT_MANCATA_CONSEGNA = "MAC";
 	public final static String FATT_ELETT_NON_RECAPITABILE = "NRE";
 	public final static String FATT_ELETT_CONSEGNATA_DESTINATARIO = "CON";
@@ -201,7 +202,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		statoInvioSdiKeys.put(FATT_ELETT_INVIATA_SDI,"Inviata a SDI");
 		statoInvioSdiKeys.put(FATT_ELETT_ALLA_FIRMA,"Alla Firma");
 		statoInvioSdiKeys.put(FATT_ELETT_SCARTATA_DA_SDI,"Scartata da SDI");
-		statoInvioSdiKeys.put(FATT_ELETT_CONSEGNATA_SDI,"Consegnata SDI");	
+		statoInvioSdiKeys.put(FATT_ELETT_CONSEGNATA_SDI,"Consegnata SDI");
+		statoInvioSdiKeys.put(FATT_ELETT_AVVISO_NOTIFICA_INVIO_MAIL,"Inviato Avviso notifica e-mail");
 		statoInvioSdiKeys.put(FATT_ELETT_MANCATA_CONSEGNA,"Mancata consegna");	
 		statoInvioSdiKeys.put(FATT_ELETT_NON_RECAPITABILE,"Non recapitabile");	
 		statoInvioSdiKeys.put(FATT_ELETT_CONSEGNATA_DESTINATARIO,"Consegnata al destinatario");	
@@ -2064,10 +2066,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		return false;
 	}
 	public boolean isDocumentoFatturazioneElettronica() {
-		if (getCodiceUnivocoUfficioIpa() != null){
-			return true;
-		}
-		return false;
+		return getFlFatturaElettronica();
 	}
 	public String getCollegamentoDocumentale() {
 		return collegamentoDocumentale;
@@ -2137,5 +2136,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public void setArchivioAllegati(
 			BulkList<AllegatoGenericoBulk> archivioAllegati) {
 		this.archivioAllegati = archivioAllegati;
+	}
+	public Boolean isFatturaEstera(){
+		return getFl_extra_ue() || getFl_intra_ue() || getFl_san_marino();
 	}
 }
