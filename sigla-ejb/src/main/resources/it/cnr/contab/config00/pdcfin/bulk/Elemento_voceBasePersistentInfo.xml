@@ -236,6 +236,18 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="CD_UNITA_PIANO"
+			propertyName="cd_unita_piano"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true"/>
+		<columnMapping
+			columnName="CD_VOCE_PIANO"
+			propertyName="cd_voce_piano"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true"/>
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -314,4 +326,8 @@
 		name="fl_trovato" />
 	<persistentProperty
 		name="fl_missioni" />
+	<persistentProperty 
+		name="cd_unita_piano"/>
+	<persistentProperty 
+		name="cd_voce_piano"/>
 </SQLPersistentInfo>

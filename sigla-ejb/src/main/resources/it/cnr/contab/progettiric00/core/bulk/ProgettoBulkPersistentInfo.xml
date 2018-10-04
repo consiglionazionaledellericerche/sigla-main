@@ -41,7 +41,10 @@
 			propertyName="pdgProgramma.cd_programma"/>	
 		<columnMapping
 			columnName="CD_MISSIONE"
-			propertyName="pdgMissione.cd_missione"/>	
+			propertyName="pdgMissione.cd_missione"/>
+		<columnMapping
+			columnName="PG_PROGETTO_OTHER_FIELD"
+			propertyName="otherField.pg_progetto"/>
 	</defaultColumnMap>
 
 	<columnMap
@@ -106,7 +109,8 @@
 			columnName="CD_UNITA_ORGANIZZATIVA"
 			propertyName="cd_unita_organizzativa"
 			sqlTypeName="VARCHAR"
-			columnSize="30"/>					
+			columnSize="30"/>
+
 	</columnMap>
 	<persistentProperty
 		name="divisa" />
@@ -123,12 +127,21 @@
 	<persistentProperty
 		name="pdgProgramma" />	
 	<persistentProperty
-		name="pdgMissione" />	
+		name="pdgMissione" />
+	<persistentProperty
+		name="otherField"/>
 
 	<fetchPolicy
 		name="it.cnr.contab.progettiric00.comp.ProgettoRicercaModuloComponent.findProgettoPadre">
 		<exclude pattern="*"/>
 		<include pattern="progettopadre"/>		
 		<include pattern="progettopadre.progettopadre"/>
-	</fetchPolicy>				
+	</fetchPolicy>
+
+	<fetchPolicy
+            name="it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find">
+        <exclude pattern="*"/>
+        <include pattern="otherField"/>
+        <include pattern="otherField.tipoFinanziamento"/>
+    </fetchPolicy>
 </SQLPersistentInfo>

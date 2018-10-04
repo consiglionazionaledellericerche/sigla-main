@@ -2,7 +2,7 @@
 --  DDL for View PROGETTO_TEMP
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "PROGETTO_TEMP" ("ESERCIZIO", "PG_PROGETTO", "TIPO_FASE", "ESERCIZIO_PROGETTO_PADRE", "PG_PROGETTO_PADRE", "TIPO_FASE_PROGETTO_PADRE", "CD_PROGETTO", "DS_PROGETTO", "CD_TIPO_PROGETTO", "CD_UNITA_ORGANIZZATIVA", "CD_RESPONSABILE_TERZO", "DT_INIZIO", "DT_FINE", "DT_PROROGA", "IMPORTO_PROGETTO", "IMPORTO_DIVISA", "CD_DIVISA", "NOTE", "STATO", "CONDIVISO", "DURATA_PROGETTO", "LIVELLO", "CD_DIPARTIMENTO", "FL_UTILIZZABILE", "FL_PIANO_TRIENNALE", "DACR", "UTCR", "DUVA", "UTUV", "PG_VER_REC", "CD_PROGETTO_SIP", "CD_PROGRAMMA", "CD_MISSIONE") AS 
+  CREATE OR REPLACE FORCE VIEW "PROGETTO_TEMP" ("ESERCIZIO", "PG_PROGETTO", "TIPO_FASE", "ESERCIZIO_PROGETTO_PADRE", "PG_PROGETTO_PADRE", "TIPO_FASE_PROGETTO_PADRE", "CD_PROGETTO", "DS_PROGETTO", "CD_TIPO_PROGETTO", "CD_UNITA_ORGANIZZATIVA", "CD_RESPONSABILE_TERZO", "DT_INIZIO", "DT_FINE", "DT_PROROGA", "IMPORTO_PROGETTO", "IMPORTO_DIVISA", "CD_DIVISA", "NOTE", "STATO", "CONDIVISO", "DURATA_PROGETTO", "LIVELLO", "CD_DIPARTIMENTO", "FL_UTILIZZABILE", "FL_PIANO_TRIENNALE", "DACR", "UTCR", "DUVA", "UTUV", "PG_VER_REC", "CD_PROGETTO_SIP", "CD_PROGRAMMA", "CD_MISSIONE", "PG_PROGETTO_OTHER_FIELD") AS 
   SELECT
 --
 -- Date: 13/11/2006
@@ -30,7 +30,8 @@
           importo_progetto, importo_divisa, cd_divisa, note, stato, condiviso,
           durata_progetto, livello, cd_dipartimento, 'Y', fl_piano_triennale,
           dacr, utcr, duva, utuv, pg_ver_rec, NULL cd_progetto_sip,
-          nvl(cd_programma, cd_dipartimento) cd_programma, cd_missione
+          nvl(cd_programma, cd_dipartimento) cd_programma, cd_missione,
+          pg_progetto_other_field
      FROM progetto_sic
     WHERE NOT EXISTS (
              SELECT 1
@@ -60,7 +61,7 @@
           progetto_sip.duva, progetto_sip.utuv, progetto_sip.pg_ver_rec,
           progetto_sip.cd_progetto cd_progetto_sip,
           nvl(progetto_sip.cd_programma, progetto_sip.cd_dipartimento) cd_programma,
-          progetto_sip.cd_missione
+          progetto_sip.cd_missione, progetto_sip.pg_progetto_other_field
      FROM progetto_sip, progetto_sic
     WHERE progetto_sip.esercizio = progetto_sic.esercizio(+)
       AND progetto_sip.pg_progetto = progetto_sic.pg_progetto(+)

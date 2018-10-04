@@ -18,12 +18,48 @@
 			columnSize="30"
 			nullable="true"/>
 		<columnMapping
-			columnName="FL_PIANO_ECONOMICO"
-			propertyName="fl_piano_economico"
+			columnName="ID_TIPO_FINANZIAMENTO"
+			propertyName="idTipoFinanziamento"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			nullable="true" />			
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
 			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+			columnSize="1"/>			
+		<columnMapping
+			columnName="DT_INIZIO"
+			propertyName="dtInizio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FINE"
+			propertyName="dtFine"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROROGA"
+			propertyName="dtProroga"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping 
+			columnName="IM_FINANZIATO" 
+			propertyName="imFinanziato" 
+			sqlTypeName="DECIMAL" 
+			columnSize="15" 
+			columnScale="2" 
+			nullable="true"/>	
+		<columnMapping 
+			columnName="IM_COFINANZIATO" 
+			propertyName="imCofinanziato" 
+			sqlTypeName="DECIMAL" 
+			columnSize="15" 
+			columnScale="2" 
+			nullable="true"/>	
 		<columnMapping
 			columnName="PG_VER_REC"
 			propertyName="pg_ver_rec"
@@ -60,7 +96,19 @@
 	<persistentProperty
 		name="cd_missione" />
 	<persistentProperty
-		name="fl_piano_economico" />	
+		name="idTipoFinanziamento" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="dtInizio" />
+	<persistentProperty
+		name="dtFine" />
+	<persistentProperty
+		name="dtProroga" />
+	<persistentProperty
+		name="imFinanziato" />
+	<persistentProperty
+		name="imCofinanziato" /> 
 	<persistentProperty
 		name="pg_ver_rec" />
 	<persistentProperty

@@ -797,7 +797,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		return utilizzato;
 	}
 
-	private void archiviaAllegati(UserContext userContext, Incarichi_proceduraBulk procedura) throws ComponentException{
+	public void archiviaAllegati(UserContext userContext, Incarichi_proceduraBulk procedura) throws ComponentException{
 		List listFileAllegabili = null;
 		if (procedura.getProcedura_amministrativa()!=null && procedura.getProcedura_amministrativa().getCd_gruppo_file()!=null) {
 			try {
@@ -840,10 +840,10 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				}
 			}
 		}
-		archiviaAllegatiCMIS(userContext, listArchiviFile);
+		archiviaAllegatiCMIS(userContext, listArchiviFile, procedura);
 	}
 
-	private void archiviaAllegatiCMIS(UserContext userContext, BulkList<Incarichi_archivioBulk> listArchiviFile) throws ComponentException{
+	private void archiviaAllegatiCMIS(UserContext userContext, BulkList<Incarichi_archivioBulk> listArchiviFile, Incarichi_proceduraBulk procedura) throws ComponentException{
 		List<StorageFile> storageFileCreate = new ArrayList<StorageFile>();
 		List<StorageFile> storageFileAnnullati = new ArrayList<StorageFile>();
 		ContrattiService contrattiService = SpringUtil.getBean(ContrattiService.class);
@@ -921,6 +921,17 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 						}
 					} else {
 						contrattiService.updateProperties(storageFile, storageFile.getStorageObject());
+					}
+					if (allegato!=null) {
+						if (procedura.isProceduraAnnullata() || procedura.isProceduraProvvisoria() || 
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+							contrattiService.setInheritedPermission(storageFile.getStorageObject(), false);
+						else if (allegato.isBando())
+							contrattiService.setInheritedPermission(storageFile.getStorageObject(), true);
+						else if (procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+							contrattiService.setInheritedPermission(storageFile.getStorageObject(), true);
+						else
+							contrattiService.setInheritedPermission(storageFile.getStorageObject(), false);
 					}
 				}
 				if (allegato!=null && allegato.getFile()!=null)
@@ -1133,6 +1144,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				procedura.setStato(Incarichi_proceduraBulk.STATO_ANNULLATO);
 				procedura.setDt_cancellazione( DateServices.getDt_valida(usercontext));
 				updateBulk(usercontext, procedura);
+				archiviaAllegati(usercontext, procedura);
 				removeConsumerToEveryone(usercontext, procedura);
 			}
 			return oggettobulk;
@@ -1672,16 +1684,27 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 			for (Iterator i = listArchiviFile.iterator(); i.hasNext();) {
 				Incarichi_archivioBulk allegato = (Incarichi_archivioBulk)i.next();
 				if (allegato.getCms_node_ref()!=null) {
-                    Optional.ofNullable(contrattiService.getStorageObjectBykey(allegato.getCms_node_ref()))
-                            .filter(storageObject ->
+					Optional<StorageObject> optStorage = Optional.ofNullable(contrattiService.getStorageObjectBykey(allegato.getCms_node_ref()));
+					optStorage.filter(storageObject ->
                                     !storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains(
                                             StorageContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value()
                                     ) && !storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains(
                                             StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value()
                                     )
-                            ).ifPresent(storageObject -> {
+                            	).ifPresent(storageObject -> {
                         contrattiService.addAspect(storageObject, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
                     });
+					if (allegato!=null && optStorage.isPresent()) {
+						if (incarico_procedura.isProceduraAnnullata() || incarico_procedura.isProceduraProvvisoria() || 
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+							contrattiService.setInheritedPermission(optStorage.get(), false);
+						else if (allegato.isBando())
+							contrattiService.setInheritedPermission(optStorage.get(), true);
+						else if (incarico_procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+							contrattiService.setInheritedPermission(optStorage.get(), true);
+						else
+							contrattiService.setInheritedPermission(optStorage.get(), false);
+					}				
 				}
 			}
 		} catch( StorageException e ) {
@@ -1718,6 +1741,17 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 						contrattiService.removeAspect(nodeAllegato, StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value());
 						nodeRemoveAspect.add(nodeAllegato);
 					}
+					if (allegato!=null && nodeAllegato!=null) {
+						if (incarico_procedura.isProceduraAnnullata() || incarico_procedura.isProceduraProvvisoria() || 
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+							contrattiService.setInheritedPermission(nodeAllegato, false);
+						else if (allegato.isBando())
+							contrattiService.setInheritedPermission(nodeAllegato, true);
+						else if (incarico_procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+							contrattiService.setInheritedPermission(nodeAllegato, true);
+						else
+							contrattiService.setInheritedPermission(nodeAllegato, false);
+					}				
 				}
 			}
 		} catch( Exception e ) {

@@ -27,6 +27,7 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	final public static String TIPO_GENERICO = "G";
 	final public static String TIPO_CONTRATTO = "C";
 	final public static String TIPO_CURRICULUM_VINCITORE = "M";
+	final public static String TIPO_AGGIORNAMENTO_CURRICULUM_VINCITORE = "P";
 	final public static String TIPO_ALLEGATO_CONTRATTO = "A";
 	final public static String TIPO_DECISIONE_A_CONTRATTARE = "D";
 	final public static String TIPO_DECRETO_DI_NOMINA = "N";
@@ -52,6 +53,7 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 		tipo_archivioKeys.put(TIPO_BANDO,"Avviso da pubblicare");
 		tipo_archivioKeys.put(TIPO_CONTRATTO,"Contratto");
 		tipo_archivioKeys.put(TIPO_CURRICULUM_VINCITORE,"Curriculum vincitore");
+		tipo_archivioKeys.put(TIPO_AGGIORNAMENTO_CURRICULUM_VINCITORE,"Aggiornamento Curriculum vincitore");
 		tipo_archivioKeys.put(TIPO_DECRETO_DI_NOMINA,"Decreto di nomina");
 		tipo_archivioKeys.put(TIPO_DECISIONE_A_CONTRATTARE,"Decisione a contrattare");
 		tipo_archivioKeys.put(TIPO_ATTO_ESITO_CONTROLLO,"Esito Controllo Corte Conti");
@@ -120,6 +122,9 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	}
 	public boolean isCurriculumVincitore() {
 		return isAllegatoValido() && getTipo_archivio() != null && getTipo_archivio().equals(TIPO_CURRICULUM_VINCITORE);
+	}
+	public boolean isAggiornamentoCurriculumVincitore() {
+		return isAllegatoValido() && getTipo_archivio() != null && getTipo_archivio().equals(TIPO_AGGIORNAMENTO_CURRICULUM_VINCITORE);
 	}
 	public boolean isDecisioneAContrattare() {
 		return isAllegatoValido() && getTipo_archivio() != null && getTipo_archivio().equals(TIPO_DECISIONE_A_CONTRATTARE);
@@ -194,6 +199,8 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
     		nome = nome.append("ALLCTR");
     	else if (this.isCurriculumVincitore())
     		nome = nome.append("CUR");
+    	else if (this.isAggiornamentoCurriculumVincitore())
+    		nome = nome.append("CURAGG");
     	else if (this.isDecretoDiNomina())
     		nome = nome.append("DECNOM");
     	else if (this.isAttoEsitoControllo())
