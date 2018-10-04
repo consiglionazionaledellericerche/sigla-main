@@ -41,7 +41,10 @@
 			propertyName="pdgProgramma.cd_programma"/>	
 		<columnMapping
 			columnName="CD_MISSIONE"
-			propertyName="pdgMissione.cd_missione"/>	
+			propertyName="pdgMissione.cd_missione"/>
+		<columnMapping
+			columnName="PG_PROGETTO_OTHER_FIELD"
+			propertyName="otherField.pg_progetto"/>
 	</defaultColumnMap>
 
 	<columnMap
@@ -83,9 +86,6 @@
 			sqlTypeName="VARCHAR"
 			columnSize="30"
 			nullable="true" />
-		<columnMapping
-            columnName="PG_PROGETTO_OTHER_FIELD"
-            propertyName="otherField.pg_progetto"/>
 	</columnMap>
 	<columnMap
 		name="V_ABIL_PROGETTI"
@@ -109,7 +109,8 @@
 			columnName="CD_UNITA_ORGANIZZATIVA"
 			propertyName="cd_unita_organizzativa"
 			sqlTypeName="VARCHAR"
-			columnSize="30"/>					
+			columnSize="30"/>
+
 	</columnMap>
 	<persistentProperty
 		name="divisa" />
