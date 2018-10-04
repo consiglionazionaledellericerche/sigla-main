@@ -8,6 +8,7 @@ package it.cnr.contab.prevent01.bp;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.jsp.JspWriter;
@@ -54,7 +55,7 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 	   protected void validate(ActionContext actioncontext, it.cnr.jada.bulk.OggettoBulk oggettobulk) throws it.cnr.jada.bulk.ValidationException {
 		   if (getParametriEnte().getFl_prg_pianoeco() && ((Pdg_modulo_speseBulk)oggettobulk).getVoce_piano_economico()==null) {
 				Progetto_sipBulk progetto = ((Pdg_modulo_speseBulk)oggettobulk).getPdg_modulo_costi().getPdg_modulo().getProgetto();
-				if (progetto!=null && progetto.getTipoFinanziamento().getFlPianoEcoFin())
+				if (progetto.isPianoEconomicoRequired())
 					throw new it.cnr.jada.bulk.ValidationException("Il progetto selezionato richiede l'indicazione della Voce del Piano Economico.");
 		   }
 	   };
