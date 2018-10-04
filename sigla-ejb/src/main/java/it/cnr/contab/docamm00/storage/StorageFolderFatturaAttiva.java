@@ -149,7 +149,10 @@ public class StorageFolderFatturaAttiva extends StorageFolderFattura {
 	public String getCodiceIpa() {
 		if (this.getFattura_attivaBulk()==null)
 			return null;
-		return this.getFattura_attivaBulk().getCodiceUnivocoUfficioIpa();
+		if (this.getFattura_attivaBulk().getCodiceUnivocoUfficioIpa() != null){
+			return this.getFattura_attivaBulk().getCodiceUnivocoUfficioIpa();
+		}
+		return this.getFattura_attivaBulk().getCodiceDestinatarioFatt();
 	}
 	
 	@StorageProperty(name="sigla_fatture:codice_invio_sdi")

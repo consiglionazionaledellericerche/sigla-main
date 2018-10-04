@@ -117,7 +117,6 @@
 			<td><% bp.getController().writeFormInput(out,null,"find_tipologia_istat",(anagrafico!=null?!bp.isGestoreOk(uc):false),null,null);%></td>
 		</tr>
 	</table>
-	<%if (!anagrafico.isPersonaFisica()) {%>
 	<table>
 		<%	if(bp.isGestoreIstat(uc, anagrafico)){ %>
 			<tr>
@@ -134,10 +133,9 @@
 			<tr>
 				<td><%bp.writeFormLabel(out,"default","dataAvvioFattElettr"); %></td>
 				<td><% bp.writeFormInput(out,"default","dataAvvioFattElettr",true,null,null);%></td>
-			</tr>				
+			</tr>
 		<%} %>
 	</table>
-	<%} %>
 </fieldset>
 
 <fieldset class="fieldset card">

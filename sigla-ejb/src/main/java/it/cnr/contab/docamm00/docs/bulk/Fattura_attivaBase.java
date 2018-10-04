@@ -42,6 +42,13 @@ public class Fattura_attivaBase extends Fattura_attivaKey implements Keyed {
 	// COGNOME VARCHAR(50)
 	private java.lang.String cognome;
 	
+	// CODICE_DESTINATARIO_FATT VARCHAR(7)
+	private java.lang.String codiceDestinatarioFatt;
+	
+	private java.lang.String mailFatturaElettronica;
+	
+	private java.lang.String pecFatturaElettronica;
+	
 	// CODICE_UNIVOCO_UFFICIO_IPA VARCHAR(6)
 	private java.lang.String codiceUnivocoUfficioIpa;
 
@@ -96,6 +103,9 @@ public class Fattura_attivaBase extends Fattura_attivaKey implements Keyed {
 	// FL_STAMPA CHAR(1) NOT NULL
 	private java.lang.Boolean fl_stampa;
 
+	private java.lang.Boolean flFatturaElettronica;
+	
+	
 	// IM_TOTALE_FATTURA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal im_totale_fattura;
 
@@ -132,6 +142,8 @@ public class Fattura_attivaBase extends Fattura_attivaKey implements Keyed {
 	// DT_CONSEGNA_SDI TIMESTAMP 
 	private java.sql.Timestamp dtConsegnaSdi;
 
+	private java.sql.Timestamp dtRicezioneSdi;
+	
 	// NOME_FILE_INVIO_SDI CHAR(100) NOT NULL
 	private java.lang.String nomeFileInvioSdi;
 
@@ -766,5 +778,35 @@ public java.lang.String getNomeFileInvioSdi() {
 }
 public void setNomeFileInvioSdi(java.lang.String nomeFileInvioSdi) {
 	this.nomeFileInvioSdi = nomeFileInvioSdi;
+}
+public java.lang.String getCodiceDestinatarioFatt() {
+	return codiceDestinatarioFatt;
+}
+public void setCodiceDestinatarioFatt(java.lang.String codiceDestinatarioFatt) {
+	this.codiceDestinatarioFatt = codiceDestinatarioFatt;
+}
+public java.lang.String getMailFatturaElettronica() {
+	return mailFatturaElettronica;
+}
+public void setMailFatturaElettronica(java.lang.String mailFatturaElettronica) {
+	this.mailFatturaElettronica = mailFatturaElettronica;
+}
+public java.lang.String getPecFatturaElettronica() {
+	return pecFatturaElettronica;
+}
+public void setPecFatturaElettronica(java.lang.String pecFatturaElettronica) {
+	this.pecFatturaElettronica = pecFatturaElettronica;
+}
+public java.lang.Boolean getFlFatturaElettronica() {
+	return flFatturaElettronica;
+}
+public void setFlFatturaElettronica(java.lang.Boolean flFatturaElettronica) {
+	this.flFatturaElettronica = flFatturaElettronica;
+}
+public java.sql.Timestamp getDtRicezioneSdi() {
+	return dtRicezioneSdi;
+}
+public void setDtRicezioneSdi(java.sql.Timestamp dtRicezioneSdi) {
+	this.dtRicezioneSdi = dtRicezioneSdi;
 }
 }

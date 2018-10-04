@@ -5,11 +5,14 @@ import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class FatturaElettronicaAttivaComponent extends it.cnr.jada.comp.CRUDComponent 
 	implements Cloneable,Serializable {
@@ -48,6 +51,22 @@ public class FatturaElettronicaAttivaComponent extends it.cnr.jada.comp.CRUDComp
 	public Fattura_attivaBulk aggiornaFatturaConsegnaSDI(UserContext userContext, Fattura_attivaBulk fattura, Date dataConsegna) throws PersistencyException, ComponentException,java.rmi.RemoteException{
 		return recuperoComponentFatturaAttiva().aggiornaFatturaConsegnaSDI(userContext, fattura, dataConsegna);
 	}
+	
+	public void gestioneInvioMailNonRecapitabilita(UserContext userContext, Fattura_attivaBulk fattura) throws PersistencyException, ComponentException,java.rmi.RemoteException{
+	    	if (fattura != null){
+	    		String eMail = recuperoComponentFatturaAttiva().recuperoEmailUtente(userContext, fattura);
+				String msg = "Si comunica che SDI non ha potuto recapitare al cliente la fattura "+fattura.getCd_uo_origine()+"-"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()+". Provvedere ad avvisare il cliente che la fattura elettronica si trova nella sua area riservata del sito WEB dell'agenzia delle entrate.";
+				String subject = "Avviso di Fattura Attiva non recapitabile";
+				if (eMail != null){
+					List<String> lista = new ArrayList<>();
+					lista.add(eMail);
+					SendMail.sendMail(subject, msg, lista);
+				} else {
+					SendMail.sendErrorMail(subject, msg);
+				}
+	    	}
+	}
+	
 	
 	private FatturaAttivaSingolaComponentSession recuperoComponentFatturaAttiva() {
 		FatturaAttivaSingolaComponentSession componentFatturaAttiva = (FatturaAttivaSingolaComponentSession) EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession");

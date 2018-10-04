@@ -1,5 +1,6 @@
 package it.cnr.contab.docamm00.ejb;
 
+import it.cnr.contab.docamm00.comp.FatturaAttivaSingolaComponent;
 import it.cnr.contab.docamm00.comp.FatturaElettronicaAttivaComponent;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.jada.UserContext;
@@ -183,6 +184,23 @@ public class FatturaElettronicaAttivaComponentSessionBean extends it.cnr.jada.ej
         }catch(Error error){
             throw uncaughtError(userContext, componentObj, error);
         }
+	}
+	public void gestioneInvioMailNonRecapitabilita(UserContext param0, Fattura_attivaBulk fatturaAttiva) throws ComponentException,java.rmi.RemoteException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			((FatturaElettronicaAttivaComponentSession)componentObj).gestioneInvioMailNonRecapitabilita(param0,fatturaAttiva);
+			component_invocation_succes(param0,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
 	}
 	
 }

@@ -1,6 +1,7 @@
 package it.cnr.contab.docamm00.ejb;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 
@@ -18,4 +19,5 @@ public interface FatturaElettronicaAttivaComponentSession extends it.cnr.jada.ej
 	Fattura_attivaBulk aggiornaFatturaEsitoAccettatoSDI(UserContext userContext, Fattura_attivaBulk fattura) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 	Fattura_attivaBulk aggiornaFatturaTrasmissioneNonRecapitataSDI(UserContext userContext, Fattura_attivaBulk fattura, String codiceSdi, String noteInvioSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 	Fattura_attivaBulk aggiornaFatturaConsegnaSDI(UserContext userContext, Fattura_attivaBulk fattura, Date dataConsegna) throws PersistencyException, ComponentException,java.rmi.RemoteException;
+	void gestioneInvioMailNonRecapitabilita(UserContext aUC, Fattura_attivaBulk fatturaAttiva) throws ApplicationException, ComponentException,java.rmi.RemoteException;
 }
