@@ -1,5 +1,13 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
+import java.util.List;
+
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
@@ -43,5 +51,25 @@ public class Progetto_piano_economicoHome extends BulkHome {
 						prgPiaeco.getEsercizio_piano())));
 
 		return super.completeBulkRowByRow(userContext, persistent);
+	}
+
+	public SQLBuilder selectProgettoPianoEconomicoList( java.lang.Integer esercizio, java.lang.Integer pgProgetto, Integer idClassificazione ) throws PersistencyException {
+		SQLBuilder sql = this.createSQLBuilder();
+        sql.addSQLClause(FindClause.AND, "PROGETTO_PIANO_ECONOMICO.PG_PROGETTO", SQLBuilder.EQUALS, pgProgetto);
+		
+        Ass_progetto_piaeco_voceHome assHome = (Ass_progetto_piaeco_voceHome)getHomeCache().getHome(Ass_progetto_piaeco_voceBulk.class);
+    	SQLBuilder sqlExists = assHome.selectAssProgettoPiaecoVoceList(esercizio, pgProgetto, idClassificazione);
+        sqlExists.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO", "PROGETTO_PIANO_ECONOMICO.PG_PROGETTO");
+        sqlExists.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_UNITA_ORGANIZZATIVA", "PROGETTO_PIANO_ECONOMICO.CD_UNITA_ORGANIZZATIVA");
+        sqlExists.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_VOCE_PIANO", "PROGETTO_PIANO_ECONOMICO.CD_VOCE_PIANO");
+        sqlExists.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO", "PROGETTO_PIANO_ECONOMICO.ESERCIZIO_PIANO");
+
+        sql.addSQLExistsClause(FindClause.AND, sqlExists);
+		return sql;
+	}
+
+	public java.util.Collection<Progetto_piano_economicoBulk> findProgettoPianoEconomicoList( java.lang.Integer esercizio, java.lang.Integer pgProgetto, Integer idClassificazione ) throws PersistencyException {
+		SQLBuilder sql = this.selectProgettoPianoEconomicoList(esercizio, pgProgetto, idClassificazione);
+		return this.fetchAll(sql);
 	}
 }
