@@ -13,6 +13,7 @@ import it.cnr.contab.progettiric00.geco.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -762,9 +763,9 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
     @Override
     public Persistent findByPrimaryKey(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
         if (Optional.ofNullable(oggettobulk).isPresent()) {
-            ProgettoHome progetto_sipHome = ((ProgettoHome) getHome(usercontext, ProgettoBulk.class, "V_PROGETTO_PADRE"));
+            BulkHome progettoHome = getHome(usercontext, oggettobulk.getClass(), "V_PROGETTO_PADRE");
             try {
-                final Persistent byPrimaryKey = progetto_sipHome.findByPrimaryKey(usercontext, oggettobulk);
+                final Persistent byPrimaryKey = progettoHome.findByPrimaryKey(usercontext, oggettobulk);
                 getHomeCache(usercontext).fetchAll(usercontext);
                 return byPrimaryKey;
             } catch (PersistencyException e) {
