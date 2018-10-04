@@ -5,7 +5,9 @@ import it.cnr.jada.persistency.Keyed;
 public class TerzoBase extends TerzoKey implements Keyed {
 	// CAP_COMUNE_SEDE VARCHAR(5)
 	private java.lang.String cap_comune_sede;
-
+	
+	private java.lang.Boolean flSbloccoFatturaElettronica;
+	
 	// CD_ANAG DECIMAL(8,0) NOT NULL
 	private java.lang.Integer cd_anag;
 
@@ -36,6 +38,9 @@ public class TerzoBase extends TerzoKey implements Keyed {
 	// CODICE_UNIVOCO_UFFICIO_IPA VARCHAR(6)
 	private java.lang.String codiceUnivocoUfficioIpa;
 
+	// CODICE_DESTINATARIO_FATT VARCHAR(7)
+	private java.lang.String codiceDestinatarioFatt;
+	
 	// NUMERO_CIVICO_SEDE VARCHAR(5)
 	private java.lang.String numero_civico_sede;
 
@@ -258,5 +263,17 @@ public java.lang.String getDenominazionePcc() {
 }
 public void setDenominazionePcc(java.lang.String denominazionePcc) {
 	this.denominazionePcc = denominazionePcc;
+}
+public java.lang.String getCodiceDestinatarioFatt() {
+	return codiceDestinatarioFatt;
+}
+public void setCodiceDestinatarioFatt(java.lang.String codiceDestinatarioFatt) {
+	this.codiceDestinatarioFatt = codiceDestinatarioFatt;
+}
+public java.lang.Boolean getFlSbloccoFatturaElettronica() {
+	return flSbloccoFatturaElettronica;
+}
+public void setFlSbloccoFatturaElettronica(java.lang.Boolean flSbloccoFatturaElettronica) {
+	this.flSbloccoFatturaElettronica = flSbloccoFatturaElettronica;
 }
 }

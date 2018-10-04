@@ -1900,4 +1900,42 @@ public void controlliGestioneBolloVirtuale(UserContext param0, Fattura_attivaBul
 	}
 }
 
+public String recuperoEmailUtente(UserContext param0, Fattura_attivaBulk fatturaAttiva) throws ComponentException,java.rmi.RemoteException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		String res = ((FatturaAttivaSingolaComponent)componentObj).recuperoEmailUtente(param0,fatturaAttiva);
+		component_invocation_succes(param0,componentObj);
+		return res;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+
+public void gestioneAvvisoInvioMailFattureAttive(UserContext param0) throws ComponentException,java.rmi.RemoteException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		((FatturaAttivaSingolaComponent)componentObj).gestioneAvvisoInvioMailFattureAttive(param0);
+		component_invocation_succes(param0,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+
+
 }

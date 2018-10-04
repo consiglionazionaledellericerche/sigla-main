@@ -17,6 +17,12 @@
 			sqlTypeName="CHAR"
 			columnSize="1" />
 		<columnMapping
+			columnName="FATT_ELETTRONICA"
+			propertyName="fattElettronica"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="UTCR"
 			propertyName="utcr"
 			sqlTypeName="VARCHAR"
@@ -55,6 +61,8 @@
 		name="pg_ver_rec" />
 	<persistentProperty
 		name="ti_riferimento" />
+	<persistentProperty
+		name="fattElettronica" />
 	<persistentProperty
 		name="utcr" />
 	<persistentProperty
