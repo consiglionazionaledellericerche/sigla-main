@@ -106,11 +106,6 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 				testataHome.calcolaSpeseAccentrateFontiInterneArea(usercontext,testata)));
 						
 			testata.setTot_massa_spendibile_anno_in_corso(Utility.ZERO);
-
-			testata.getPdg_modulo().getProgetto().setOtherField(
-					(Progetto_other_fieldBulk)getHome(usercontext, Progetto_other_fieldBulk.class)
-					.findByPrimaryKey(new Progetto_other_fieldBulk(testata.getPdg_modulo().getProgetto().getPg_progetto())));
-
 		}catch (IntrospectionException e) {
 			throw new ComponentException(e);
 		} catch (PersistencyException e) {
