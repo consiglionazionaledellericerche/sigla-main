@@ -6,7 +6,11 @@ import java.util.Hashtable;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipologie_istatBulk;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
 import it.cnr.contab.consultazioni.bulk.ConsultazioniRestHome;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -413,5 +417,29 @@ public class Elemento_voceHome extends BulkHome implements ConsultazioniRestHome
     	sql.addClause(FindClause.AND, "cd_voce_piano", SQLBuilder.EQUALS, progettoPiaeco.getCd_voce_piano());
     	sql.addOrderBy("cd_elemento_voce");
         return home.fetchAll(sql);
+    }
+
+	public SQLBuilder selectElementoVociAssociate(Classificazione_vociBulk classificazione) throws it.cnr.jada.persistency.PersistencyException {
+    	Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHomeCache().getHome(Parametri_cnrBulk.class);
+    	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(classificazione.getEsercizio()));
+
+        SQLBuilder sql = this.createSQLBuilder();
+        
+        sql.addSQLClause(FindClause.AND, "ELEMENTO_VOCE.ESERCIZIO", SQLBuilder.EQUALS, classificazione.getEsercizio() );
+
+        sql.addTableToHeader("PARAMETRI_LIVELLI");
+        sql.addSQLJoin("ELEMENTO_VOCE.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
+
+        sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
+        sql.addSQLJoin("ELEMENTO_VOCE.ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
+        sql.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
+
+        sql.addSQLClause(FindClause.AND, "V_CLASSIFICAZIONE_VOCI_ALL.ID_LIV"+parCnrBulk.getLivello_pdg_decis_spe(), SQLBuilder.EQUALS, classificazione.getId_classificazione());	
+        return sql;
+	}
+
+	public java.util.List<Elemento_voceBulk> findElementoVociAssociate(Classificazione_vociBulk classificazione) throws IntrospectionException, PersistencyException {
+    	PersistentHome home = getHomeCache().getHome(Elemento_voceBulk.class);
+        return home.fetchAll(this.selectElementoVociAssociate(classificazione));
     }
 }

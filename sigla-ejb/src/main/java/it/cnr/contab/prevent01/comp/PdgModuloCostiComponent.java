@@ -9,6 +9,7 @@ package it.cnr.contab.prevent01.comp;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 
@@ -413,11 +414,10 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 
 	public SQLBuilder selectVoce_piano_economicoByClause(UserContext userContext, Pdg_modulo_speseBulk dettaglio, Voce_piano_economico_prgBulk vocePiano, CompoundFindClause clause) throws ComponentException, PersistencyException {
 		Voce_piano_economico_prgHome vocePianoHome = (Voce_piano_economico_prgHome)getHome(userContext, Voce_piano_economico_prgBulk.class);
-		Integer pgProgetto=null;
- 		if (dettaglio!=null && dettaglio.getPg_progetto()!=null)
- 			pgProgetto = dettaglio.getPg_progetto();
-
-		SQLBuilder sql = vocePianoHome.findVocePianoEconomicoPrgList(pgProgetto);
+		Integer esercizio = Optional.ofNullable(dettaglio).flatMap(el->Optional.ofNullable(el.getEsercizio())).orElse(null);
+		Integer pgProgetto = Optional.ofNullable(dettaglio).flatMap(el->Optional.ofNullable(el.getPg_progetto())).orElse(null);
+		Integer idClassificazione = Optional.ofNullable(dettaglio).flatMap(el->Optional.ofNullable(el.getId_classificazione())).orElse(null);
+		SQLBuilder sql = vocePianoHome.selectVocePianoEconomicoPrgList(esercizio, pgProgetto, idClassificazione);
 
 		if (clause != null) 
 			sql.addClause(clause);
