@@ -22,4 +22,5 @@
 	<persistentProperty
 		name="progetto"
 		partOfOid="true" />
+
 </SQLPersistentInfo>
