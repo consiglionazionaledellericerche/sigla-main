@@ -129,10 +129,6 @@
 	  	<td><% bp.getController().writeFormLabel(out,"responsabile");%></td>
 	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","responsabile", isROFieldInformix,null,null); %></td>
 	  </tr>
-	  <tr>
-	  	<td><% bp.getController().writeFormLabel(out,"durata_progetto");%></td>
-	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","durata_progetto", isROFieldInformix,null,null); %></td>
-	  </tr>
 	  <% if (!isFlInformix) {%>
 		  <tr>
 		  	<td><% bp.getController().writeFormLabel(out,"find_missione");%></td>
@@ -158,7 +154,7 @@
 	  	<td><% bp.getController().writeFormLabel(out,"tipoFinanziamentoOf");%></td>
 	  	<td colspan="3"><% bp.getController().writeFormInput( out, "tipoFinanziamentoOf"); %></td>
 	  </tr>	  
-      <% if (Optional.ofNullable(bulk).filter(ProgettoBulk::isAttivoPianoEconomicoOf).isPresent()) { %>
+      <% if (Optional.ofNullable(bulk).filter(ProgettoBulk::isDatePianoEconomicoRequired).isPresent()) { %>
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"dtInizioOf");%></td>
 	  	<td colspan="3"><% bp.getController().writeFormInput( out, "dtInizioOf"); %></td>
@@ -231,10 +227,6 @@
 			<tr>
 			  	<td><% bp.getController().writeFormLabel(out,"responsabile");%></td>
 			  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","responsabile", isROFieldInformix,null,null); %></td>
-			</tr>
-	  		<tr>
-			  	<td><% bp.getController().writeFormLabel(out,"durata_progetto");%></td>
-			  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","durata_progetto", isROFieldInformix,null,null); %></td>
 			</tr>
 			<% if (!isFlInformix) {%>
 			<tr>
