@@ -332,7 +332,7 @@ public class ProgettoHome extends BulkHome {
     }
 	@Override
     public Persistent findByPrimaryKey(UserContext userContext,Persistent persistent) throws PersistencyException {
-        ProgettoHome progettohome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class,"V_PROGETTO_PADRE");
+        ProgettoHome progettohome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class);
         ProgettoBulk progetto = ((ProgettoBulk)persistent);
         if (progetto.getEsercizio() == null && Optional.ofNullable(userContext).isPresent())
             progetto.setEsercizio(CNRUserContext.getEsercizio(userContext));
@@ -502,7 +502,7 @@ public class ProgettoHome extends BulkHome {
 			Progetto_sipHome progetto_sip_home =  (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class);
 			Progetto_sipBulk progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(userContext, new Progetto_sipBulk(new Integer(geco_progetto.getEsercizio().intValue()),new Integer(geco_progetto.getId_prog().intValue()),geco_progetto.getFase()));
 			if (progetto_sip != null){
-				geco_progetto.aggiornaProgettoSIP(progetto_sip);				
+				geco_progetto.aggiornaProgettoSIP(progetto_sip);
 				if (progetto_sip.isToBeUpdated()){
 					progetto_sip.setUser(CNRUserContext.getUser(userContext));
 					progetto_sip_home.update(progetto_sip, userContext);

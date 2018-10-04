@@ -908,7 +908,18 @@
                 <constraints nullable="false"/>
             </column>
         </addColumn>
-    </changeSet>   
+    </changeSet>
+    <changeSet author="marco.spasiano" id="alter_progetto_for_other_field">
+        <addColumn tableName="progetto_sip">
+            <column name="pg_progetto_other_field" remarks="Progressivo del progetto" type="BIGINT"/>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="pg_progetto_other_field" baseTableName="progetto_sip" constraintName="progetto_sip_fk07" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_progetto" referencedTableName="progetto_other_field"/>
+        <addColumn tableName="progetto_sic">
+            <column name="pg_progetto_other_field" remarks="Progressivo del progetto" type="BIGINT"/>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="pg_progetto_other_field" baseTableName="progetto_sic" constraintName="progetto_sic_fk07" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_progetto" referencedTableName="progetto_other_field"/>
+    </changeSet>
+
 </databaseChangeLog>
 
 

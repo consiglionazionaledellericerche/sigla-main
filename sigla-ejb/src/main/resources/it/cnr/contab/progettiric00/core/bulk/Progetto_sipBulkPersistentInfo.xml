@@ -27,7 +27,7 @@
 		<columnMapping
 			columnName="ESERCIZIO_PROGETTO_PADRE"
 			propertyName="progettopadre.esercizio"
-			fetchOnly="false" />			
+			fetchOnly="false" />
 		<columnMapping
 			columnName="TIPO_FASE_PROGETTO_PADRE"
 			propertyName="progettopadre.tipo_fase"
@@ -41,6 +41,9 @@
 		<columnMapping
 			columnName="CD_MISSIONE"
 			propertyName="pdgMissione.cd_missione"/>
+		<columnMapping
+			columnName="PG_PROGETTO_OTHER_FIELD"
+			propertyName="otherField.pg_progetto"/>
 	</defaultColumnMap>
 	<columnMap
 		name="V_PROGETTO_PADRE"
@@ -52,9 +55,6 @@
 			sqlTypeName="VARCHAR"
 			columnSize="30"
 			nullable="true" />
-        <columnMapping
-            columnName="PG_PROGETTO_OTHER_FIELD"
-            propertyName="otherField.pg_progetto"/>
 		<columnMapping
 			columnName="ID_TIPO_FINANZIAMENTO"
 			propertyName="otherField.tipoFinanziamento.id"

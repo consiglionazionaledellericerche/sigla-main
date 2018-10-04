@@ -178,7 +178,7 @@ public class Progetto_sipHome extends BulkHome {
 
 	@Override
     public Persistent findByPrimaryKey(UserContext userContext,Persistent persistent) throws PersistencyException {
-		Progetto_sipHome progettohome = (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class,"V_PROGETTO_PADRE");
+		Progetto_sipHome progettohome = (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class);
     	Progetto_sipBulk progetto = ((Progetto_sipBulk)persistent);
     	if (progetto.getEsercizio() == null && Optional.ofNullable(userContext).isPresent())
     		progetto.setEsercizio(CNRUserContext.getEsercizio(userContext));
