@@ -603,6 +603,27 @@
 		enabledOnEdit="false"
 		label="Valuta"/>
 	<fieldProperty
+		name="codiceDestinatarioFatt"
+		property="codiceDestinatarioFatt"
+		maxLength="7"
+		inputSize="7"
+		inputType="ROTEXT"
+		label="Codice Destinatario Fattura"/>	
+	<fieldProperty
+		name="pecFatturaElettronica"
+		property="pecFatturaElettronica"
+		maxLength="100"
+		inputSize="100"
+		inputType="ROTEXT"
+		label="PEC Fattura Elettronica"/>	
+	<fieldProperty
+		name="mailFatturaElettronica"
+		property="mailFatturaElettronica"
+		maxLength="100"
+		inputSize="100"
+		inputType="ROTEXT"
+		label="E-Mail Fattura Elettronica"/>
+	<fieldProperty
 		name="codiceUnivocoUfficioIpa"
 		property="codiceUnivocoUfficioIpa"
 		maxLength="6"
@@ -645,6 +666,13 @@
 		inputSize="10"
 		inputType="ROTEXT"
 		label="Data Consegna SDI"/>		
+	<fieldProperty
+		name="dtRicezioneSdi"
+		property="dtRicezioneSdi"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"
+		label="Data Ricezione SDI"/>		
 	<fieldProperty
 		name="im_totale_iva"
 		property="im_totale_iva"
@@ -919,9 +947,17 @@
 	<formFieldProperty
 		name="codiceUnivocoUfficioIpa" />
 	<formFieldProperty
+		name="codiceDestinatarioFatt" />
+	<formFieldProperty
+		name="pecFatturaElettronica" />
+	<formFieldProperty
+		name="mailFatturaElettronica" />
+	<formFieldProperty
 		name="codiceInvioSdi" />
 	<formFieldProperty
 		name="dtConsegnaSdi" />
+	<formFieldProperty
+		name="dtRicezioneSdi" />
 	<formFieldProperty
 		name="statoInvioSdi" />
 	<formFieldProperty

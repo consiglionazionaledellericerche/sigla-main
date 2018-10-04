@@ -83,6 +83,8 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 	private static SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	private static Hashtable<String, TipoDocumentoType> tipoDocumento = new Hashtable<String, TipoDocumentoType>();
 	private static Hashtable<Integer, String> conversioneNumeriIdUnivocoNomeFile = new Hashtable<Integer, String>();
+	private static String CODICE_DESTINATARIO_ESTERO = "XXXXXXX";
+	private static String CODICE_DESTINATARIO_CON_PEC_O_NON_REGISTRATO = "0000000";
 	private static BigDecimal BASE_ID_UNIVOCO = new BigDecimal(62);
 	static{
 		tipoDocumento.put(Fattura_attivaBulk.TIPO_FATTURA_ATTIVA, TipoDocumentoType.TD_01);
@@ -373,7 +375,20 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 				datiTrasmissione.setProgressivoInvio(fattura.getEsercizio().toString() + Utility.lpad(fattura.getProgrUnivocoAnno().toString(),6,'0'));
 
-				datiTrasmissione.setCodiceDestinatario(fattura.getCodiceUnivocoUfficioIpa());
+				if (fattura.getCodiceUnivocoUfficioIpa() != null){
+					datiTrasmissione.setCodiceDestinatario(fattura.getCodiceUnivocoUfficioIpa());
+				} else {
+					if (fattura.getCodiceDestinatarioFatt() != null){
+						datiTrasmissione.setCodiceDestinatario(fattura.getCodiceDestinatarioFatt());
+					} else {
+						if (fattura.isFatturaEstera()){
+							datiTrasmissione.setCodiceDestinatario(CODICE_DESTINATARIO_ESTERO);
+						} else {
+							datiTrasmissione.setCodiceDestinatario(CODICE_DESTINATARIO_CON_PEC_O_NON_REGISTRATO);
+						}
+						datiTrasmissione.setPECDestinatario(fattura.getPecFatturaElettronica());
+					}
+				}
 
 				ContattiTrasmittenteType contattiTrasmittenteType = factory.createContattiTrasmittenteType();
 				String eMailReferente = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_FATTURAZIONE_ELETTRONICA, Configurazione_cnrBulk.SK_MAIL_REFERENTE_TECNICO);

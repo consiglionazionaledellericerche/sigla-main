@@ -1,9 +1,6 @@
 package it.cnr.contab.anagraf00.core.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.Keyed;
 
 public class TelefonoBase extends TelefonoKey implements Keyed {
 	// DS_RIFERIMENTO VARCHAR(100)
@@ -14,6 +11,8 @@ public class TelefonoBase extends TelefonoKey implements Keyed {
 
 	// TI_RIFERIMENTO CHAR(1)
 	private java.lang.String ti_riferimento;
+
+	private java.lang.Boolean fattElettronica;
 
 public TelefonoBase() {
 	super();
@@ -56,5 +55,11 @@ public void setRiferimento(java.lang.String riferimento) {
  */
 public void setTi_riferimento(java.lang.String ti_riferimento) {
 	this.ti_riferimento = ti_riferimento;
+}
+public java.lang.Boolean getFattElettronica() {
+	return fattElettronica;
+}
+public void setFattElettronica(java.lang.Boolean fattElettronica) {
+	this.fattElettronica = fattElettronica;
 }
 }
