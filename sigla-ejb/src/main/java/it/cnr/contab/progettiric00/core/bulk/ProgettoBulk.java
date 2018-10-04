@@ -1012,10 +1012,22 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 				.orElse(9999);
 	}
 
-	public boolean isAttivoPianoEconomicoOf() {
+	/*
+	 * Indica che è obbligatorio indicare le date del progetto
+	 */
+	public boolean isDatePianoEconomicoRequired() {
 		return Optional.ofNullable(this.getOtherField())
-				.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
-				.flatMap(el->Optional.ofNullable(el.getFlPianoEcoFin()))
+				.map(Progetto_other_fieldBulk::isDatePianoEconomicoRequired)
+				.orElse(Boolean.FALSE);
+	}
+	
+	/*
+	 * Indica se è obbligatorio inserire il piano economico sulla base della tipologia 
+	 * di finanziamento associata
+	 */
+	public boolean isPianoEconomicoRequired() {
+		return Optional.ofNullable(this.getOtherField())
+				.map(Progetto_other_fieldBulk::isPianoEconomicoRequired)
 				.orElse(Boolean.FALSE);
 	}
 	

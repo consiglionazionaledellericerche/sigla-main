@@ -11,7 +11,6 @@
 <%
 	CRUDDettagliModuloCostiBP bp = (CRUDDettagliModuloCostiBP)BusinessProcess.getBusinessProcess(request);
 	Progetto_sipBulk progetto = ((Pdg_modulo_costiBulk)bp.getModel()).getPdg_modulo().getProgetto();
-
 %>
 <% bp.getCrudDettagliSpese().writeHTMLTable(pageContext,(bp.isFlNuovoPdg()?"without_area":"default"),true,false,true,"100%","200px"); 
 %>
@@ -78,7 +77,7 @@
 	  <% bp.getCrudDettagliSpese().writeFormField(out,"cofog");%>
 	</tr>
  <% } %>
-	<% if (bp.getParametriEnte().getFl_prg_pianoeco() && progetto.getFl_piano_economico()) {%>
+	<% if (bp.getParametriEnte().getFl_prg_pianoeco() && progetto.isPianoEconomicoRequired()) {%>
 	<tr>
 		<%bp.getCrudDettagliSpese().writeFormField(out,"voce_piano"); %>				
 	</tr>

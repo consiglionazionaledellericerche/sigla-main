@@ -79,7 +79,9 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	private SimpleDetailCRUDController crudPianoEconomicoAltriAnni = new ProgettoPianoEconomicoCRUDController( "PianoEconomicoAltriAnni", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoAltriAnni", this) {
 		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
 			super.validate(actioncontext, oggettobulk);
-			if (((Progetto_piano_economicoBulk)oggettobulk).getEsercizio_piano().equals(((ProgettoBulk)this.getParentModel()).getEsercizio()))
+			if (Optional.ofNullable(oggettobulk).filter(Progetto_piano_economicoBulk.class::isInstance)
+					.map(Progetto_piano_economicoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getEsercizio_piano()))
+					.filter(el->el.equals(((ProgettoBulk)this.getParentModel()).getEsercizio())).isPresent())
 				throw new ValidationException("Operazione non possibile! Per caricare un dato relativo all'anno corrente utilizzare la sezione apposita.");
 		};
 	};
@@ -402,7 +404,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	    			  progetto.getCd_unita_organizzativa().equals(uo)))) {
 
 	    	if (this.isFlPrgPianoEconomico() && 
-	    			((progetto.isAttivoPianoEconomicoOf() && Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtInizio())).isPresent() &&
+	    			((progetto.isPianoEconomicoRequired() && Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtInizio())).isPresent() &&
 	    					Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtFine())).isPresent()) || progetto.isDettagliPianoEconomicoPresenti()))
 	    		hash.put(i++, new String[]{"tabPianoEconomico","Piano Economico","/progettiric00/progetto_piano_economico.jsp" });
 
@@ -519,7 +521,11 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	@Override
 	public boolean isSaveButtonEnabled() {
 		return super.isSaveButtonEnabled() && 
-				(!this.isFlInformix() || !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast).map(ProgettoBulk::isRODatiOtherField).orElse(Boolean.TRUE));
+				(!this.isFlInformix() || !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+						.map(ProgettoBulk.class::cast)
+						.flatMap(el->Optional.ofNullable(el.getOtherField()))
+						.filter(el->el.isStatoAnnullato()||el.isStatoChiuso())
+						.isPresent());
 	}
 
 	@Override
@@ -620,7 +626,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			if (!optOtherField.get().isStatoNegoziazione())
 				throw new ValidationException("Lo stato corrente del progetto non consente il suo aggiornamento allo stato \"ANNULLATO\".");
 		} else if (Progetto_other_fieldBulk.STATO_CHIUSURA.equals(newStato)){
-			if (optProgetto.get().isAttivoPianoEconomicoOf())
+			if (optProgetto.get().isDatePianoEconomicoRequired())
 				throw new ValidationException("Attenzione! Operazione non possibile in presenza delle date del progetto.");
 		} else
 			throw new ValidationException("Operazione non gestita.");
@@ -632,7 +638,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			Progetto_other_fieldBulk.STATO_ANNULLATO.equals(newStato)) {
 			optOtherField.get().setStato(newStato);
 			optOtherField.get().setToBeUpdated();
-			if (!optProgetto.get().isAttivoPianoEconomicoOf()) {
+			if (!optProgetto.get().isDatePianoEconomicoRequired()) {
 				optOtherField.get().setDtInizio(null);
 				optOtherField.get().setDtFine(null);
 				optOtherField.get().setDtProroga(null);
@@ -660,7 +666,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 					.flatMap(el->Optional.ofNullable(el.getCodice())).isPresent())
 				throw new ValidationException("Operazione non possibile! Indicare il tipo di finanziamento!");
 			
-			if (optProgetto.get().isAttivoPianoEconomicoOf()) {
+			if (optProgetto.get().isDatePianoEconomicoRequired()) {
 				if (!optOtherField.map(Progetto_other_fieldBulk::getDtInizio).isPresent())
 					throw new ValidationException("Operazione non possibile! Indicare la data di inizio progetto!");
 				if (!optOtherField.map(Progetto_other_fieldBulk::getDtFine).isPresent())
@@ -672,7 +678,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			if (!optOtherField.map(Progetto_other_fieldBulk::getImCofinanziato).filter(el->!(el.compareTo(BigDecimal.ZERO)<0)).isPresent())
 				throw new ValidationException("Operazione non possibile! Indicare l'importo cofinanziato (valore maggiore o uguale a 0)!");
 
-			if (optProgetto.get().isAttivoPianoEconomicoOf()) {
+			if (optProgetto.get().isPianoEconomicoRequired()) {
 				if (!optProgetto.map(ProgettoBulk::getImTotale).filter(el->el.compareTo(BigDecimal.ZERO)>0).isPresent())
 					throw new ValidationException("Operazione non possibile! Indicare almeno un importo positivo tra quello finanziato e cofinanziato!");
 				if (!optProgetto.map(ProgettoBulk::isDettagliPianoEconomicoPresenti).orElse(Boolean.TRUE))
