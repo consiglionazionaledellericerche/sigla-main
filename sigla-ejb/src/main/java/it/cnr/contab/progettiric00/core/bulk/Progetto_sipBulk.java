@@ -275,4 +275,9 @@ public class Progetto_sipBulk extends ProgettoBase {
 		return otherField;
 	}
 
+	public boolean isPianoEconomicoRequired(){
+		return Optional.ofNullable(this.getOtherField())
+				.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento())).map(el->el.getFlPianoEcoFin())
+				.orElse(Boolean.FALSE);
+	}
 }
