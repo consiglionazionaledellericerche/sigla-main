@@ -3,6 +3,7 @@ package it.cnr.contab.progettiric00.core.bulk;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 
@@ -64,7 +65,13 @@ public class ProgettoHome extends BulkHome {
 	{
 		super(class1, connection, persistentcache);
 	}
-	/**
+
+    @Override
+    public SQLBuilder select(Persistent persistent) throws PersistencyException {
+        return super.select(persistent);
+    }
+
+    /**
 	 * Recupera tutti i dati nella tabella Progetto_uo relativi alla testata in uso.
 	 *
 	 * @param testata La testata in uso.
@@ -142,7 +149,7 @@ public class ProgettoHome extends BulkHome {
 	 * Recupera i figli dell'oggetto bulk
 	 * Creation date: (27/07/2004 11.23.36)
 	 * @return it.cnr.jada.persistency.sql.SQLBuilder
-	 * @param bulk ProgettoBulk
+	 * @param ubi ProgettoBulk
 	 */
     
 	public SQLBuilder selectChildrenForWorkpackage(it.cnr.jada.UserContext aUC, ProgettoBulk ubi){
@@ -181,7 +188,7 @@ public class ProgettoHome extends BulkHome {
 	 * Recupera i figli dell'oggetto bulk
 	 * Creation date: (27/07/2004 11.23.36)
 	 * @return it.cnr.jada.persistency.sql.SQLBuilder
-	 * @param bulk ProgettoBulk
+	 * @param ubi ProgettoBulk
 	 */
     
 	public SQLBuilder selectChildrenFor(it.cnr.jada.UserContext aUC, ProgettoBulk ubi){
@@ -325,12 +332,13 @@ public class ProgettoHome extends BulkHome {
     }
 	@Override
     public Persistent findByPrimaryKey(UserContext userContext,Persistent persistent) throws PersistencyException {
-    	ProgettoBulk progetto = ((ProgettoBulk)persistent);
-    	if (progetto.getEsercizio() == null)
-    		progetto.setEsercizio(CNRUserContext.getEsercizio(userContext));
-    	if (progetto.getTipo_fase() == null)        	    	
-    		progetto.setTipo_fase(ProgettoBulk.TIPO_FASE_NON_DEFINITA);
-    	return super.findByPrimaryKey(persistent);
+        ProgettoHome progettohome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class);
+        ProgettoBulk progetto = ((ProgettoBulk)persistent);
+        if (progetto.getEsercizio() == null && Optional.ofNullable(userContext).isPresent())
+            progetto.setEsercizio(CNRUserContext.getEsercizio(userContext));
+        if (progetto.getTipo_fase() == null)
+            progetto.setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
+        return progettohome.findByPrimaryKey(persistent);
     }
 	
 	public void aggiornaGeco(UserContext userContext,ProgettoBulk progetto){
@@ -492,9 +500,9 @@ public class ProgettoHome extends BulkHome {
 		for (Iterator<Geco_progettoIBulk> iterator = progettiGeco.iterator(); iterator.hasNext();) {
 			Geco_progettoIBulk geco_progetto = iterator.next();
 			Progetto_sipHome progetto_sip_home =  (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class);
-			Progetto_sipBulk progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(new Progetto_sipBulk(new Integer(geco_progetto.getEsercizio().intValue()),new Integer(geco_progetto.getId_prog().intValue()),geco_progetto.getFase()));
+			Progetto_sipBulk progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(userContext, new Progetto_sipBulk(new Integer(geco_progetto.getEsercizio().intValue()),new Integer(geco_progetto.getId_prog().intValue()),geco_progetto.getFase()));
 			if (progetto_sip != null){
-				geco_progetto.aggiornaProgettoSIP(progetto_sip);				
+				geco_progetto.aggiornaProgettoSIP(progetto_sip);
 				if (progetto_sip.isToBeUpdated()){
 					progetto_sip.setUser(CNRUserContext.getUser(userContext));
 					progetto_sip_home.update(progetto_sip, userContext);
@@ -522,9 +530,9 @@ public class ProgettoHome extends BulkHome {
 		for (Iterator<Geco_commessaIBulk> iterator = commesseGeco.iterator(); iterator.hasNext();) {
 			Geco_commessaIBulk geco_commessa = iterator.next();
 			Progetto_sipHome progetto_sip_home =  (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class);
-			Progetto_sipBulk progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(new Progetto_sipBulk(new Integer(geco_commessa.getEsercizio().intValue()),new Integer(geco_commessa.getId_comm().intValue()),geco_commessa.getFase()));
+			Progetto_sipBulk progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(userContext, new Progetto_sipBulk(new Integer(geco_commessa.getEsercizio().intValue()),new Integer(geco_commessa.getId_comm().intValue()),geco_commessa.getFase()));
 			if (progetto_sip != null){
-				progetto_sip.setProgettopadre((Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(new Progetto_sipBulk(new Integer(geco_commessa.getEsercizio().intValue()),new Integer(geco_commessa.getId_prog_padre().intValue()),geco_commessa.getFase())));
+				progetto_sip.setProgettopadre((Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(userContext, new Progetto_sipBulk(new Integer(geco_commessa.getEsercizio().intValue()),new Integer(geco_commessa.getId_prog_padre().intValue()),geco_commessa.getFase())));
 				geco_commessa.aggiornaProgettoSIP(progetto_sip);				
 				if (progetto_sip.isToBeUpdated()){
 					progetto_sip.setUser(CNRUserContext.getUser(userContext));
@@ -552,6 +560,16 @@ public class ProgettoHome extends BulkHome {
 				geco_commessa.aggiornaProgettoSIP(progetto_sip);
 				progetto_sip.setToBeCreated();
 				progetto_sip_home.insert(progetto_sip, userContext);
+				/*
+					Inserimento Nuove informazioni del progetto
+				 */
+				Progetto_other_fieldHome progetto_other_fieldHome =  (Progetto_other_fieldHome)getHomeCache().getHome(Progetto_other_fieldBulk.class);
+				Progetto_other_fieldBulk progetto_other_fieldBulk = new Progetto_other_fieldBulk();
+				progetto_other_fieldBulk.setPg_progetto(geco_commessa.getId_comm().intValue());
+				progetto_other_fieldBulk.setStato(Progetto_other_fieldBulk.STATO_INIZIALE);
+				progetto_other_fieldBulk.setToBeCreated();
+				progetto_other_fieldHome.insert(progetto_other_fieldBulk, userContext);
+
 			}
 		}
 	}
@@ -560,9 +578,9 @@ public class ProgettoHome extends BulkHome {
 		for (Iterator<Geco_moduloIBulk> iterator = moduliGeco.iterator(); iterator.hasNext();) {
 			Geco_moduloIBulk geco_modulo = iterator.next();
 			Progetto_sipHome progetto_sip_home =  (Progetto_sipHome)getHomeCache().getHome(Progetto_sipBulk.class);
-			Progetto_sipBulk progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(new Progetto_sipBulk(new Integer(geco_modulo.getEsercizio().intValue()),new Integer(geco_modulo.getId_mod().intValue()),geco_modulo.getFase()));
+			Progetto_sipBulk progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(userContext, new Progetto_sipBulk(new Integer(geco_modulo.getEsercizio().intValue()),new Integer(geco_modulo.getId_mod().intValue()),geco_modulo.getFase()));
 			if (progetto_sip != null){
-				progetto_sip.setProgettopadre((Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(new Progetto_sipBulk(new Integer(geco_modulo.getEsercizio().intValue()),new Integer(geco_modulo.getId_comm().intValue()),geco_modulo.getFase())));
+				progetto_sip.setProgettopadre((Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(userContext, new Progetto_sipBulk(new Integer(geco_modulo.getEsercizio().intValue()),new Integer(geco_modulo.getId_comm().intValue()),geco_modulo.getFase())));
 				geco_modulo.aggiornaProgettoSIP(progetto_sip);				
 				if (progetto_sip.isToBeUpdated()){
 					progetto_sip.setUser(CNRUserContext.getUser(userContext));
