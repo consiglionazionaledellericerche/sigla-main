@@ -174,9 +174,14 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			if (!Optional.ofNullable(progetto.getOtherField())
 					.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getStato()))
 					.filter(stato -> Arrays.asList(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE, Progetto_other_fieldBulk.STATO_APPROVATO).indexOf(stato) != -1).isPresent()) {
-			    bp.setProgettoForUpdate(progetto);
-                return openConfirm(context,"Attenzione: il progetto non ha uno stato utile alla previsione! Vuoi completare le informazioni mancanti?",
-                        OptionBP.CONFIRM_YES_NO,"doConfermaCompletaProgetto");
+				if (!progetto.getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(context.getUserContext()))) {
+					setErrorMessage(context,"Attenzione: il progetto non ha uno stato utile alla previsione! Deve essere completatato dalla UO responsabile!");
+					return context.findDefaultForward();
+				} else {
+					bp.setProgettoForUpdate(progetto);
+					return openConfirm(context,"Attenzione: il progetto non ha uno stato utile alla previsione! Vuoi completare le informazioni mancanti?",
+							OptionBP.CONFIRM_YES_NO,"doConfermaCompletaProgetto");
+				}
 			}
 			if (!Optional.ofNullable(progetto.getOtherField())
 					.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
