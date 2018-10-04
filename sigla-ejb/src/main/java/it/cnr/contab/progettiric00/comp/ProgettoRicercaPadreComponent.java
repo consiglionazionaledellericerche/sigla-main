@@ -379,12 +379,6 @@ public class ProgettoRicercaPadreComponent extends it.cnr.jada.comp.CRUDComponen
             testata.setDettagli(new it.cnr.jada.bulk.BulkList(testataHome.findDettagli(testata)));
             testata.setDettagliFinanziatori(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliFinanziatori(testata)));
             testata.setDettagliPartner_esterni(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPartner_esterni(testata)));
-            ProgettoBulk progettoPrev = (ProgettoBulk) ((ProgettoHome) getHome(userContext, ProgettoBulk.class)).findByPrimaryKey(new ProgettoBulk(testata.getEsercizio(), testata.getPg_progetto(), ProgettoBulk.TIPO_FASE_PREVISIONE));
-            ProgettoBulk progettoGest = (ProgettoBulk) ((ProgettoHome) getHome(userContext, ProgettoBulk.class)).findByPrimaryKey(new ProgettoBulk(testata.getEsercizio(), testata.getPg_progetto(), ProgettoBulk.TIPO_FASE_GESTIONE));
-
-            testata.setFl_previsione(progettoPrev != null);
-            testata.setFl_gestione(progettoGest != null);
-
             getHomeCache(userContext).fetchAll(userContext);
             return testata;
         } catch (Exception e) {
