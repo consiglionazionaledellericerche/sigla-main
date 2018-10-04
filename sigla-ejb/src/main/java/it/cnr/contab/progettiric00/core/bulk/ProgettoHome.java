@@ -570,6 +570,11 @@ public class ProgettoHome extends BulkHome {
 				progetto_other_fieldBulk.setToBeCreated();
 				progetto_other_fieldHome.insert(progetto_other_fieldBulk, userContext);
 
+				progetto_sip = (Progetto_sipBulk)progetto_sip_home.findByPrimaryKey(userContext, new Progetto_sipBulk(new Integer(geco_commessa.getEsercizio().intValue()),new Integer(geco_commessa.getId_comm().intValue()),geco_commessa.getFase()));
+				progetto_sip.setOtherField(progetto_other_fieldBulk);
+				progetto_sip.setToBeUpdated();
+				progetto_sip_home.update(progetto_sip, userContext);
+
 			}
 		}
 	}
