@@ -8,6 +8,7 @@
 		property="voce_piano_economico"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
+		readonlyProperty = "ROVocePiano"
 		label="Voce del piano economico" />
 	<fieldProperty
 		name="cd_voce_piano"
@@ -26,9 +27,14 @@
 	<fieldProperty
 		name="esercizio_piano"
 		property="esercizio_piano"
-		inputType="TEXT"
+		optionsProperty="anniList"
+		readonlyPropertyOnEdit="ROEsercizio_piano"
+		command="doDefault"
+		inputType="SELECT"
 		inputSize="4"
 		maxLength="4"
+		enabledOnSearch="true"
+		nullable="false"
 		label="Esercizio" />
 	<fieldProperty
 		name="im_entrata"
@@ -39,13 +45,29 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Importo Entrata" />
 	<fieldProperty
-		name="im_spesa"
-		property="im_spesa"
+		name="im_spesa_finanziato"
+		property="im_spesa_finanziato"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Importo Spesa" />
+		label="Quota Finanziata" />
+	<fieldProperty
+		name="im_spesa_cofinanziato"
+		property="im_spesa_cofinanziato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota Cofinanziata" />
+	<fieldProperty
+		name="imTotaleSpesa"
+		property="imTotaleSpesa"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Totale Spesa" />
 	<fieldProperty
 		name="fl_ctrl_disp"
 		property="fl_ctrl_disp"
@@ -124,7 +146,10 @@
 	<formFieldProperty name="ds_voce_piano" />
 	<formFieldProperty name="esercizio_piano" />
 	<formFieldProperty name="im_entrata"/> 
-	<formFieldProperty name="im_spesa" label="Quota Assegnata"/> 
+	<formFieldProperty name="im_spesa_finanziato" label="Quota Finanziata"/> 
+	<formFieldProperty name="im_spesa_cofinanziato" label="Quota Cofinanziata"/> 
+	<formFieldProperty name="imTotaleSpesa" label="Quota Totale"/> 
+	
 	<formFieldProperty name="fl_ctrl_disp" />
 	<formFieldProperty name="im_assestato_entrata" />
 	<formFieldProperty name="im_disp_residua_entrata" />
@@ -140,7 +165,9 @@
 	<columnFieldProperty name="ds_voce_piano" />
 	<columnFieldProperty name="esercizio_piano" />
 	<columnFieldProperty name="im_entrata"/> 
-	<columnFieldProperty name="im_spesa"/> 
+	<columnFieldProperty name="im_spesa_finanziato"/> 
+	<columnFieldProperty name="im_spesa_cofinanziato"/> 
+	<columnFieldProperty name="imTotaleSpesa"/> 
 	<columnFieldProperty name="fl_ctrl_disp" />
 	<columnFieldProperty name="im_assestato_entrata" />
 	<columnFieldProperty name="im_disp_residua_entrata" />
@@ -163,53 +190,61 @@
 		<formFieldProperty
 			name="im_entrata"/> 
 		<formFieldProperty
-			name="im_spesa"/> 
+			name="im_spesa_finanziato"/> 
 		<formFieldProperty
-			name="fl_ctrl_disp"/> 
+			name="im_spesa_cofinanziato"/> 
 	</form>
 
 	<columnSet name="piano_economico">
 		<columnFieldProperty
-			name="esercizio_piano"/>
+			name="esercizio_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Esercizio"/>
 		<columnFieldProperty
-			name="cd_voce_piano"/>
+			name="cd_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Voce"/>
 		<columnFieldProperty
-			name="ds_voce_piano"/>
+			name="ds_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Descrizione"/>
 		<columnFieldProperty
-			name="fl_ctrl_disp"/>
+			name="im_spesa_finanziato"
+			headerLabel="PIANO ECONOMICO"
+			label="Quota Finanziata"/>
 		<columnFieldProperty
-			name="im_entrata"
-			headerLabel="ENTRATA"
-			label="Disp. Iniziale P.E."/>
+			name="im_spesa_cofinanziato"
+			headerLabel="PIANO ECONOMICO"
+			label="Quota Cofinanziata"/>
 		<columnFieldProperty 
-			name="im_assestato_entrata"
-			headerLabel="ENTRATA"
-			label="Assestato"/>
-		<columnFieldProperty 
-			name="im_disp_residua_entrata"
-			headerLabel="ENTRATA"
-			label="Disp. Residua P.E."/>
-		<columnFieldProperty
-			name="im_spesa"
-			headerLabel="SPESA"
-			label="Disp. Iniziale P.E."/>
-		<columnFieldProperty 
-			name="im_assestato_spesa"
-			headerLabel="SPESA"
-			label="Assestato"/>
+			name="imTotaleSpesa"
+			headerLabel="PIANO ECONOMICO"
+			label="Quota Totale"/> 
 		<columnFieldProperty 
 			name="im_disp_residua_spesa"
-			headerLabel="SPESA"
-			label="Disp. Residua P.E."/>
+			headerLabel="PIANO ECONOMICO"
+			label="Quota da Stanziare"/>
+		<columnFieldProperty 
+			name="im_assestato_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Assestato"/>
+		<columnFieldProperty 
+			name="im_impacc_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Impegnato"/>
+		<columnFieldProperty 
+			name="im_manris_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Pagato"/>
 	</columnSet>
 	
 	<form name="piano_economico1">
 		<formFieldProperty
 			name="voce_piano"/>
 		<formFieldProperty
-			name="im_spesa"/> 
+			name="im_spesa_finanziato"/> 
 		<formFieldProperty
-			name="fl_ctrl_disp"/> 
+			name="im_spesa_cofinanziato"/> 
 	</form>
 
 	<columnSet name="piano_economico1">
@@ -222,12 +257,17 @@
 			headerLabel="PIANO ECONOMICO"
 			label="Descrizione"/>
 		<columnFieldProperty
-			name="fl_ctrl_disp"
-			headerLabel="PIANO ECONOMICO"/>
-		<columnFieldProperty
-			name="im_spesa"
+			name="im_spesa_finanziato"
 			headerLabel="PIANO ECONOMICO"
-			label="Quota Assegnata"/>
+			label="Quota Finanziata"/>
+		<columnFieldProperty
+			name="im_spesa_cofinanziato"
+			headerLabel="PIANO ECONOMICO"
+			label="Quota Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesa"
+			headerLabel="PIANO ECONOMICO"
+			label="Quota Totale"/> 
 		<columnFieldProperty 
 			name="im_disp_residua_spesa"
 			headerLabel="PIANO ECONOMICO"

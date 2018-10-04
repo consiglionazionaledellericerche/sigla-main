@@ -10,10 +10,15 @@
 		<columnMapping
 			columnName="CD_MISSIONE"
 			propertyName="pdgMissione.cd_missione"/>
+		<columnMapping
+			columnName="ID_TIPO_FINANZIAMENTO"
+			propertyName="tipoFinanziamento.id"/>	
 	</defaultColumnMap>
 
 	<persistentProperty
 		name="pdgProgramma" />	
 	<persistentProperty
 		name="pdgMissione" />
+	<persistentProperty
+		name="tipoFinanziamento" />
 </SQLPersistentInfo>

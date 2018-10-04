@@ -36,7 +36,6 @@ public class CRUDWorkpackageBP extends SimpleCRUDBP {
 	private final SimpleDetailCRUDController risultati = new SimpleDetailCRUDController("risultati",it.cnr.contab.config00.latt.bulk.RisultatoBulk.class,"risultati",this);
 	private boolean flNuovoPdg = false;
 	private boolean flTiGestioneES = false;
-	private boolean flPrgPianoeco = false;
 	
 	private Unita_organizzativaBulk uoScrivania;
 	private Integer esercizioScrivania;
@@ -136,7 +135,6 @@ protected void initialize(ActionContext actioncontext) throws BusinessProcessExc
 		setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
 		Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
 		setFlTiGestioneES(parEnte.getFl_gae_es().booleanValue());
-		setFlPrgPianoeco(parEnte.getFl_prg_pianoeco().booleanValue());
 		if (parEnte.getFl_informix())
 			aggiornaGECO(actioncontext.getUserContext());
 		super.initialize(actioncontext);
@@ -181,12 +179,6 @@ public boolean isFlTiGestioneES() {
 public void setFlTiGestioneES(boolean flTiGestioneES) {
 	this.flTiGestioneES = flTiGestioneES;
 }
-public boolean isFlPrgPianoeco() {
-	return flPrgPianoeco;
-}
-public void setFlPrgPianoeco(boolean flPrgPianoeco) {
-	this.flPrgPianoeco = flPrgPianoeco;
-}
 @Override
 public String getSearchResultColumnSet() {
 	if (this.isFlNuovoPdg()) return "prg_liv2";
@@ -213,7 +205,6 @@ public OggettoBulk initializeModelForInsert(ActionContext actioncontext, Oggetto
 				((WorkpackageBulk)oggettobulk).setPdgMissione(this.pdgModuloSpese.getPdgMissione());				
 				((WorkpackageBulk)oggettobulk).setPdgProgramma((Pdg_programmaBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), progetto.getProgettopadre().getPdgProgramma()));			
 				((WorkpackageBulk)oggettobulk).setCofog(this.pdgModuloSpese.getCofog());			
-				((WorkpackageBulk)oggettobulk).setVocePianoEconomico2016(this.pdgModuloSpese.getVoce_piano_economico());			
 			} else if (this.pdgModuloEntrate!=null) {
 				Progetto_sipBulk progettoSip = this.pdgModuloEntrate.getTestata().getProgetto();
 				ProgettoBulk progetto = ((ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 
@@ -226,7 +217,6 @@ public OggettoBulk initializeModelForInsert(ActionContext actioncontext, Oggetto
 				((WorkpackageBulk)oggettobulk).setTi_gestione(WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
 				((WorkpackageBulk)oggettobulk).setProgetto2016(progetto);
 				((WorkpackageBulk)oggettobulk).setPdgProgramma((Pdg_programmaBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), progetto.getProgettopadre().getPdgProgramma()));			
-				((WorkpackageBulk)oggettobulk).setVocePianoEconomico2016(this.pdgModuloEntrate.getVoce_piano_economico());			
 			} else if (this.pdgVariazioneRigaSpese!=null) {
 				if (this.pdgVariazioneRigaSpese.getProgetto()!=null && this.pdgVariazioneRigaSpese.getProgetto().getPg_progetto()!=null) {
 					ProgettoBulk progetto = ((ProgettoBulk)this.createComponentSession().findByPrimaryKey(actioncontext.getUserContext(), 

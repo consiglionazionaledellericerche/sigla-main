@@ -177,6 +177,12 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="PG_PROGETTO_OTHER_FIELD"
+			propertyName="pg_progetto_other_field"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true"/>
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -237,4 +243,6 @@
 		name="cd_programma" />	
 	<persistentProperty
 		name="cd_missione" />
+	<persistentProperty
+		name="pg_progetto_other_field" />
 </SQLPersistentInfo>

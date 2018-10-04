@@ -203,12 +203,10 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 		validaNaturaPerInsieme(uc,latt);
 
 		ProgettoBulk modulo2015=null,progetto2016=null;
-		Voce_piano_economico_prgBulk vocePianoEconomico2016=null;
 		if (latt.getModulo2015()!=null && latt.getModulo2015().getPg_progetto()!=null)
 			modulo2015=latt.getModulo2015();
 		if (latt.getProgetto2016()!=null && latt.getProgetto2016().getPg_progetto()!=null) {
 			progetto2016 = latt.getProgetto2016();
-			vocePianoEconomico2016 = latt.getVocePianoEconomico2016();
 		}
 		latt = (WorkpackageBulk)super.creaConBulk( uc, bulk );
 		if (modulo2015!=null) {
@@ -223,9 +221,6 @@ public it.cnr.jada.bulk.OggettoBulk creaConBulk(it.cnr.jada.UserContext uc, it.c
 			Ass_linea_attivita_esercizioBulk assGaeEsercizio2016 = new Ass_linea_attivita_esercizioBulk(CNRUserContext.getEsercizio(uc),latt.getCd_centro_responsabilita(), latt.getCd_linea_attivita());
 			assGaeEsercizio2016.setProgetto(progetto2016);
 			assGaeEsercizio2016.setEsercizio_fine(latt.getEsercizio_fine());
-			if (progetto2016.getFl_piano_economico() && (vocePianoEconomico2016==null || vocePianoEconomico2016.getCd_voce_piano()==null))
-				throw new ApplicationException( "Il Progetto selezionato impone l'indicazione della Voce Piano Economico sulla GAE." );
-			assGaeEsercizio2016.setVoce_piano_economico(vocePianoEconomico2016);
 			assGaeEsercizio2016.setToBeCreated();
 			makeBulkPersistent(uc, assGaeEsercizio2016);
 			latt.setProgetto2016(assGaeEsercizio2016.getProgetto());
@@ -533,7 +528,6 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 				aLA.setProgetto2016((ProgettoBulk)progettoHome.findByPrimaryKey(new ProgettoBulk(annoProgetto, assGaeEsercizio.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA)));
 				if (aLA.getProgetto2016()!=null && aLA.getProgetto2016().getPg_progetto()!=null)
 					aLA.getProgetto2016().setOtherField((Progetto_other_fieldBulk)progetto_other_fieldHome.findByPrimaryKey(new Progetto_other_fieldBulk(aLA.getProgetto2016().getPg_progetto())));
-				aLA.setVocePianoEconomico2016(assGaeEsercizio.getVoce_piano_economico());
 				if (aLA.getProgetto2016()==null)
 					throw new ApplicationException("Attenzione! E'' stato indicato sulla linea di attivita'' un progetto (" + assGaeEsercizio.getPg_progetto() + ") inesistente.");					
 				//Aggiorno l'anno anche sul progetto padre
@@ -720,30 +714,16 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 					if (isGaeUtilizzata(userContext,linea_attivita,false)) 
 						throw new ApplicationException( "Il Progetto non può essere eliminato in quanto la GAE risulta già utilizzata." );
 					assGaeEsercizio2016.setToBeDeleted();
-				} else if (linea_attivita.getProgetto2016()!=null && linea_attivita.getProgetto2016().getPg_progetto()!=null &&
-						linea_attivita.getProgetto2016().getFl_piano_economico() && 
-						(linea_attivita.getVocePianoEconomico2016()==null || linea_attivita.getVocePianoEconomico2016().getCd_voce_piano()==null)) {
-					throw new ApplicationException( "Il Progetto selezionato impone l'indicazione della Voce Piano Economico sulla GAE." );
 				} else if (linea_attivita.getProgetto2016().getPg_progetto().equals(assGaeEsercizio.getProgetto().getPg_progetto()) &&
-						  (linea_attivita.getEsercizio_fine().compareTo(assGaeEsercizio.getEsercizio_fine())!=0 ||
-						   (linea_attivita.getVocePianoEconomico2016()!=null && assGaeEsercizio.getVoce_piano_economico()!= null &&
-						    !linea_attivita.getVocePianoEconomico2016().equalsByPrimaryKey(assGaeEsercizio.getVoce_piano_economico())) ||
-						   (linea_attivita.getVocePianoEconomico2016()!=null && assGaeEsercizio.getVoce_piano_economico() == null) ||
-						   (linea_attivita.getVocePianoEconomico2016()==null && assGaeEsercizio.getVoce_piano_economico() != null))) {
+						   linea_attivita.getEsercizio_fine().compareTo(assGaeEsercizio.getEsercizio_fine())!=0) {
 					assGaeEsercizio2016.setEsercizio_fine(linea_attivita.getEsercizio_fine());
-					assGaeEsercizio2016.setVoce_piano_economico(linea_attivita.getVocePianoEconomico2016());
 					assGaeEsercizio2016.setToBeUpdated();
 				} else if (!linea_attivita.getProgetto2016().getPg_progetto().equals(assGaeEsercizio.getProgetto().getPg_progetto()) ||
-						   !linea_attivita.getEsercizio_fine().equals(assGaeEsercizio.getEsercizio_fine())||
-						   (linea_attivita.getVocePianoEconomico2016()!=null && assGaeEsercizio.getVoce_piano_economico()!= null &&
-						    !linea_attivita.getVocePianoEconomico2016().equalsByPrimaryKey(assGaeEsercizio.getVoce_piano_economico())) ||
-						   (linea_attivita.getVocePianoEconomico2016()!=null && assGaeEsercizio.getVoce_piano_economico() == null) ||
-						   (linea_attivita.getVocePianoEconomico2016()==null && assGaeEsercizio.getVoce_piano_economico() != null)) {
+						   !linea_attivita.getEsercizio_fine().equals(assGaeEsercizio.getEsercizio_fine())) {
 					if (isGaeUtilizzata(userContext,linea_attivita,false)) 
 						throw new ApplicationException( "Il Progetto non può essere modificato in quanto la GAE risulta già utilizzata." );
 					assGaeEsercizio2016.setProgetto(linea_attivita.getProgetto2016());
 					assGaeEsercizio2016.setEsercizio_fine(linea_attivita.getEsercizio_fine());
-					assGaeEsercizio2016.setVoce_piano_economico(linea_attivita.getVocePianoEconomico2016());
 					assGaeEsercizio2016.setToBeUpdated();
 				}
 			}
@@ -758,7 +738,6 @@ public OggettoBulk modificaConBulk(UserContext userContext,OggettoBulk bulk) thr
 			assGaeEsercizio2016 = new Ass_linea_attivita_esercizioBulk(Integer.valueOf(2016),linea_attivita.getCd_centro_responsabilita(), linea_attivita.getCd_linea_attivita());
 			assGaeEsercizio2016.setProgetto(linea_attivita.getProgetto2016());
 			assGaeEsercizio2016.setEsercizio_fine(linea_attivita.getEsercizio_fine());
-			assGaeEsercizio2016.setVoce_piano_economico(linea_attivita.getVocePianoEconomico2016());
 			assGaeEsercizio2016.setToBeCreated();
 		}
 		linea_attivita = (WorkpackageBulk)super.modificaConBulk( userContext, linea_attivita);

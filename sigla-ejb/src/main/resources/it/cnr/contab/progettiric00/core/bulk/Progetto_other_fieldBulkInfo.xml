@@ -74,10 +74,29 @@
 		nullable="false"
 		label="Missione" />				
 	<fieldProperty
-		name="fl_piano_economico"
-		property="fl_piano_economico"
-		inputType="CHECKBOX"
-		label="Attiva Piano Economico" />
+		name="find_tipo_finanziamento"
+		property="tipoFinanziamento"
+		label="Tipo Finanziamento"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		nullable="true"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="cd_finanziamento"
+		property="tipoFinanziamento.codice"
+		label="Codice Finanziamento"
+		inputType="TEXT"
+		inputSize="25"
+		maxLength="25"
+		enabledOnFreeSearch="true" />	
+	<fieldProperty
+		name="ds_finanziamento"
+		property="tipoFinanziamento.descrizione"
+		label="Descrizione Finanziamento"
+		inputType="ROTEXT"
+		inputSize="50"
+		maxLength="50"
+		enabledOnFreeSearch="false" />
 
 	<formFieldProperty name="find_programma" />
 	<formFieldProperty name="cd_programma" />
@@ -87,7 +106,9 @@
 	<formFieldProperty name="cd_missione"/> 
 	<formFieldProperty name="ds_missione" />
 	<formFieldProperty name="desctool_missione" />
-	<formFieldProperty name="fl_piano_economico" />
+	<formFieldProperty name="find_tipo_finanziamento" />
+	<formFieldProperty name="cd_finanziamento" />
+	<formFieldProperty name="ds_finanziamento" />
 	
 	<columnFieldProperty name="find_programma" />
 	<columnFieldProperty name="cd_programma" />
@@ -97,14 +118,17 @@
 	<columnFieldProperty name="cd_missione"/> 
 	<columnFieldProperty name="ds_missione" />
 	<columnFieldProperty name="desctool_missione" />
-	<columnFieldProperty name="fl_piano_economico" />
 
 	<findFieldProperty name="cd_programma" />
 	<findFieldProperty name="cd_missione" />
 	<findFieldProperty name="fl_piano_economico" />
 
 	<form name="other_field">
-		<formFieldProperty
-			name="fl_piano_economico" />			
+		<formFieldProperty 
+			name="find_tipo_finanziamento" />
+		<formFieldProperty 
+			name="cd_finanziamento" />
+		<formFieldProperty 
+			name="ds_finanziamento" />
 	</form>
 </bulkInfo>
