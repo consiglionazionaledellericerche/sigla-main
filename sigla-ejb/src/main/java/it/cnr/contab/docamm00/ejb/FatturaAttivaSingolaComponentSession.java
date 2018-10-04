@@ -124,4 +124,6 @@ Fattura_attivaBulk aggiornaFatturaTrasmissioneNonRecapitataSDI(UserContext userC
 Fattura_attivaBulk aggiornaFatturaConsegnaSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, Date dataConsegnaSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 BigDecimal getImportoBolloVirtuale(UserContext aUC, Fattura_attivaBulk fattura) throws ComponentException,java.rmi.RemoteException;
 void controlliGestioneBolloVirtuale(UserContext aUC, Fattura_attivaBulk fatturaAttiva, BulkList dettaglio) throws ApplicationException, ComponentException,java.rmi.RemoteException;
+String recuperoEmailUtente(UserContext aUC, Fattura_attivaBulk fatturaAttiva) throws ApplicationException, ComponentException,java.rmi.RemoteException;
+void gestioneAvvisoInvioMailFattureAttive(UserContext aUC) throws ApplicationException, ComponentException,java.rmi.RemoteException;
 }

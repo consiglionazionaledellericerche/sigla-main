@@ -1026,6 +1026,9 @@ public Forward doBlankSearchCliente(ActionContext context, Fattura_attivaBulk fa
         fattura_attiva.setCodice_fiscale(null);
         fattura_attiva.setPartita_iva(null);
         fattura_attiva.setCodiceUnivocoUfficioIpa(null);
+        fattura_attiva.setCodiceDestinatarioFatt(null);
+        fattura_attiva.setPecFatturaElettronica(null);
+        fattura_attiva.setMailFatturaElettronica(null);
         //fattura_attiva.setFl_liquidazione_differita(Boolean.FALSE);
         
 

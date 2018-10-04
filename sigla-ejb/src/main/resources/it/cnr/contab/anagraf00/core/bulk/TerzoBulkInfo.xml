@@ -63,6 +63,16 @@
 		enabledOnFreeSearch="true"
 		/>
 	<fieldProperty
+		name="flSbloccoFatturaElettronica"
+		property="flSbloccoFatturaElettronica"
+		inputType="CHECKBOX"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Creazione Fatt. Elettr. senza Cod. Dest. e PEC" />
+	<fieldProperty
 		name="cd_anag"
 		property="anagrafico.cd_anag"
 		label="Codice anagrafica"
@@ -138,6 +148,11 @@
 		property="codiceUnivocoUfficioIpa"
 		readonlyPropertyOnEdit="notGestoreIstat"
 		label="Codice Univoco Ufficio IPA"
+		inputType="TEXT" />
+	<fieldProperty
+		name="codiceDestinatarioFatt"
+		property="codiceDestinatarioFatt"
+		label="Codice Destinatario Fatt. Elettr."
 		inputType="TEXT" />
 	<fieldProperty
 		name="codiceUnivocoPcc"
@@ -311,6 +326,9 @@
 	</form>
 	
 	<formFieldProperty
+		name="flSbloccoFatturaElettronica"
+		/>
+	<formFieldProperty
 		name="cap_comune_sede"
 		/>
 	<formFieldProperty
@@ -354,6 +372,9 @@
 		/>
 	<formFieldProperty
 		name="codiceUnivocoUfficioIpa"
+		/>
+	<formFieldProperty
+		name="codiceDestinatarioFatt"
 		/>
 	<formFieldProperty
 		name="codiceUnivocoPcc"
@@ -457,6 +478,9 @@
 		<findFieldProperty
 			name="codiceUnivocoUfficioIpa"
 			enabledOnFreeSearch="true" />				
+		<findFieldProperty
+			name="codiceDestinatarioFatt"
+			enabledOnFreeSearch="true" />				
 	</freeSearchSet>
 	
 	<freeSearchSet
@@ -536,6 +560,9 @@
 	<columnFieldProperty
 		name="codiceUnivocoUfficioIpa"
 		label="Codice IPA" />
+	<columnFieldProperty
+		name="codiceDestinatarioFatt"
+		label="Codice Dest. Fatt. Elettr." />
 	<columnFieldProperty
 		name="codiceUnivocoPcc" />
 	<columnFieldProperty
