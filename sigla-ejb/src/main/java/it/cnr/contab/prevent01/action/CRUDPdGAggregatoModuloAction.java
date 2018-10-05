@@ -397,14 +397,14 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
                     if (!Optional.ofNullable(progetto.getOtherField())
                             .flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getStato()))
                             .filter(stato -> Arrays.asList(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE, Progetto_other_fieldBulk.STATO_APPROVATO).indexOf(stato) != -1).isPresent()) {
-                            errorMessage +="Attenzione: il progetto " + progetto.getCd_progetto() +" non ha uno stato utile alla previsione!";
+                            errorMessage +="Il progetto " + progetto.getCd_progetto() +" non ha uno stato utile alla previsione!";
                             errorMessage += bp.getParentRoot().isBootstrap() ? "<br>" : "\n";
                             continue;
                     }
                     if (!Optional.ofNullable(progetto.getOtherField())
                             .flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
                             .filter(tipoFinanziamentoBulk -> tipoFinanziamentoBulk.getFlPrevEntSpesa() || tipoFinanziamentoBulk.getFlRipCostiPers()).isPresent()) {
-                        errorMessage +="Attenzione: il progetto " + progetto.getCd_progetto() +" non è consentita la previsione!<br>";
+                        errorMessage +="Per il progetto " + progetto.getCd_progetto() +" non è consentita la previsione!<br>";
                         errorMessage += bp.getParentRoot().isBootstrap() ? "<br>" : "\n";
                         continue;
                     }
