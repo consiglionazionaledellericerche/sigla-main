@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.esercizio.bulk.EsercizioBulk"
+	homeClassName="it.cnr.contab.config00.esercizio.bulk.EsercizioHome">
+	<defaultColumnMap
+		tableName="ESERCIZIO">
+		<columnMapping
+				columnName="CD_CDS"
+				propertyName="cds.cd_unita_organizzativa"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="false"
+				primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+			name="cds"
+			partOfOid="true" />
+</SQLPersistentInfo>
