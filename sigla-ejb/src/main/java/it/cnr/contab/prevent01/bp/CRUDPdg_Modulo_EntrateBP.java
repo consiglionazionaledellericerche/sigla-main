@@ -81,15 +81,7 @@ public class CRUDPdg_Modulo_EntrateBP extends it.cnr.jada.util.action.SimpleCRUD
 		return super.isDeleteButtonEnabled() && this.getCrudDettagliEntrate().countDetails()!=0 && !isUtente_Ente();
 	}
 	
-   private CrudDettagliEntrataBP crudDettagliEntrate = new CrudDettagliEntrataBP( "dettagliCRUDController", Pdg_Modulo_EntrateBulk.class, "dettagli_entrata", this) {
-	   protected void validate(ActionContext actioncontext, it.cnr.jada.bulk.OggettoBulk oggettobulk) throws it.cnr.jada.bulk.ValidationException {
-		   if (getParametriEnte().getFl_prg_pianoeco() && ((Pdg_Modulo_EntrateBulk)oggettobulk).getVoce_piano_economico()==null) {
-				Progetto_sipBulk progetto = ((Pdg_Modulo_EntrateBulk )oggettobulk).getTestata().getProgetto();
-				if (progetto.isPianoEconomicoRequired())
-					throw new it.cnr.jada.bulk.ValidationException("Il progetto selezionato richiede l'indicazione della Voce del Piano Economico.");
-		   }
-	   };
-   };
+   private CrudDettagliEntrataBP crudDettagliEntrate = new CrudDettagliEntrataBP( "dettagliCRUDController", Pdg_Modulo_EntrateBulk.class, "dettagli_entrata", this);
 
 	protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
 		setModel(actioncontext,super.initializeModelForEdit(actioncontext,new Pdg_moduloBulk(getEsercizio(),getCdr().getCd_centro_responsabilita(),getProgetto().getPg_progetto())));
