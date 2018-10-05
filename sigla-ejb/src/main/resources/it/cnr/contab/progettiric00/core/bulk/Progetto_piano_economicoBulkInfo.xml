@@ -84,7 +84,7 @@
 		label="Assestato Entrata" />
 	<fieldProperty
 		name="im_disp_residua_entrata"
-		property="saldoEntrata.disp_residua"
+		property="saldoEntrata.dispResidua"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
@@ -116,13 +116,21 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Assestato Spesa" />
 	<fieldProperty
-		name="im_disp_residua_spesa"
-		property="saldoSpesa.disp_residua"
+		name="im_disp_residua_spesa_finanziata"
+		property="saldoSpesa.dispResiduaFinanziamento"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Disponibilità Residua Spesa" />
+		label="Quota da Stanziare Spesa Finanziata" />
+	<fieldProperty
+		name="im_disp_residua_spesa_cofinanziata"
+		property="saldoSpesa.dispResiduaCofinanziamento"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota da Stanziare Spesa Cofinanziata" />
 	<fieldProperty
 		name="im_impacc_spesa"
 		property="saldoSpesa.impacc"
@@ -156,7 +164,8 @@
 	<formFieldProperty name="im_impacc_entrata" />
 	<formFieldProperty name="im_manris_entrata" />
 	<formFieldProperty name="im_assestato_spesa" />
-	<formFieldProperty name="im_disp_residua_spesa" />
+	<formFieldProperty name="im_disp_residua_spesa_finanziata" />
+	<formFieldProperty name="im_disp_residua_spesa_cofinanziata" />
 	<formFieldProperty name="im_impacc_spesa" />
 	<formFieldProperty name="im_manris_spesa" />
 	
@@ -174,7 +183,8 @@
 	<columnFieldProperty name="im_impacc_entrata" />
 	<columnFieldProperty name="im_manris_entrata" />
 	<columnFieldProperty name="im_assestato_spesa" />
-	<columnFieldProperty name="im_disp_residua_spesa" />
+	<columnFieldProperty name="im_disp_residua_spesa_finanziata" />
+	<columnFieldProperty name="im_disp_residua_spesa_cofinanziata" />
 	<columnFieldProperty name="im_impacc_spesa" />
 	<columnFieldProperty name="im_manris_spesa" />
 
@@ -210,20 +220,24 @@
 			label="Descrizione"/>
 		<columnFieldProperty
 			name="im_spesa_finanziato"
-			headerLabel="PIANO ECONOMICO"
-			label="Quota Finanziata"/>
+			headerLabel="QUOTE PIANO ECONOMICO"
+			label="Finanziata"/>
 		<columnFieldProperty
 			name="im_spesa_cofinanziato"
-			headerLabel="PIANO ECONOMICO"
-			label="Quota Cofinanziata"/>
+			headerLabel="QUOTE PIANO ECONOMICO"
+			label="Cofinanziata"/>
 		<columnFieldProperty 
 			name="imTotaleSpesa"
-			headerLabel="PIANO ECONOMICO"
-			label="Quota Totale"/> 
+			headerLabel="QUOTE PIANO ECONOMICO"
+			label="Totale"/> 
 		<columnFieldProperty 
-			name="im_disp_residua_spesa"
-			headerLabel="PIANO ECONOMICO"
-			label="Quota da Stanziare"/>
+			name="im_disp_residua_spesa_finanziata"
+			headerLabel="QUOTE DA STANZIARE"
+			label="Finanziata"/>
+		<columnFieldProperty 
+			name="im_disp_residua_spesa_cofinanziata"
+			headerLabel="QUOTE DA STANZIARE"
+			label="Cofinanziata"/>
 		<columnFieldProperty 
 			name="im_assestato_spesa"
 			headerLabel="SITUAZIONE SPESA"
@@ -258,20 +272,24 @@
 			label="Descrizione"/>
 		<columnFieldProperty
 			name="im_spesa_finanziato"
-			headerLabel="PIANO ECONOMICO"
-			label="Quota Finanziata"/>
+			headerLabel="QUOTE PIANO ECONOMICO"
+			label="Finanziata"/>
 		<columnFieldProperty
 			name="im_spesa_cofinanziato"
-			headerLabel="PIANO ECONOMICO"
-			label="Quota Cofinanziata"/>
+			headerLabel="QUOTE PIANO ECONOMICO"
+			label="Cofinanziata"/>
 		<columnFieldProperty 
 			name="imTotaleSpesa"
-			headerLabel="PIANO ECONOMICO"
-			label="Quota Totale"/> 
+			headerLabel="QUOTE PIANO ECONOMICO"
+			label="Totale"/> 
 		<columnFieldProperty 
-			name="im_disp_residua_spesa"
-			headerLabel="PIANO ECONOMICO"
-			label="Quota da Stanziare"/>
+			name="im_disp_residua_spesa_finanziata"
+			headerLabel="QUOTE DA STANZIARE"
+			label="Finanziata"/>
+		<columnFieldProperty 
+			name="im_disp_residua_spesa_cofinanziata"
+			headerLabel="QUOTE DA STANZIARE"
+			label="Cofinanziata"/>
 		<columnFieldProperty 
 			name="im_assestato_spesa"
 			headerLabel="SITUAZIONE SPESA"

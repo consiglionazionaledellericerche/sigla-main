@@ -4,13 +4,21 @@
 	keyClassName="it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoKey"
 	homeClassName="it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoHome">
 	<defaultColumnMap tableName="V_SALDI_PIANO_ECONOM_PROGETTO">
-		<columnMapping columnName="DISP" propertyName="disp"
+		<columnMapping columnName="IMPORTO_FIN" propertyName="importoFin"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
-		<columnMapping columnName="STANZIAMENTO" propertyName="stanziamento"
+		<columnMapping columnName="STANZIAMENTO_FIN" propertyName="stanziamentoFin"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
-		<columnMapping columnName="VARIAPIU" propertyName="variapiu"
+		<columnMapping columnName="VARIAPIU_FIN" propertyName="variapiuFin"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
-		<columnMapping columnName="VARIAMENO" propertyName="variameno"
+		<columnMapping columnName="VARIAMENO_FIN" propertyName="variamenoFin"
+			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
+		<columnMapping columnName="IMPORTO_COFIN" propertyName="importoCofin"
+			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
+		<columnMapping columnName="STANZIAMENTO_COFIN" propertyName="stanziamentoCofin"
+			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
+		<columnMapping columnName="VARIAPIU_COFIN" propertyName="variapiuCofin"
+			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
+		<columnMapping columnName="VARIAMENO_COFIN" propertyName="variamenoCofin"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
 		<columnMapping columnName="IMPACC" propertyName="impacc"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
@@ -18,10 +26,14 @@
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
 	</defaultColumnMap>
 
-	<persistentProperty name="disp" />
-	<persistentProperty name="stanziamento" />
-	<persistentProperty name="variapiu" />
-	<persistentProperty name="variameno" />
+	<persistentProperty name="importoFin" />
+	<persistentProperty name="stanziamentoFin" />
+	<persistentProperty name="variapiuFin" />
+	<persistentProperty name="variamenoFin" />
+	<persistentProperty name="importoCofin" />
+	<persistentProperty name="stanziamentoCofin" />
+	<persistentProperty name="variapiuCofin" />
+	<persistentProperty name="variamenoCofin" />
 	<persistentProperty name="impacc" />
 	<persistentProperty name="manris" />
 </SQLPersistentInfo>

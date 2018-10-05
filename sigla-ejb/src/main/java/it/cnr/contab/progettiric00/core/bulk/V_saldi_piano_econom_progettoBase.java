@@ -16,17 +16,29 @@ import it.cnr.jada.persistency.Keyed;
 public class V_saldi_piano_econom_progettoBase extends V_saldi_piano_econom_progettoKey implements Keyed {
 	private static final long serialVersionUID = 5918224310476589096L;
 
-	// DISP DECIMAL(15,2) NOT NULL
-	private java.math.BigDecimal disp;
+	// IMPORTO_FIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal importoFin;
 
-	// STANZIAMENTO DECIMAL(15,2) NOT NULL
-	private java.math.BigDecimal stanziamento;
+	// STANZIAMENTO_FIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal stanziamentoFin;
 
-	// VARIAPIU DECIMAL(15,2) NOT NULL
-	private java.math.BigDecimal variapiu;
+	// VARIAPIU_FIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal variapiuFin;
 
-	// VARIAMENO DECIMAL(15,2) NOT NULL
-	private java.math.BigDecimal variameno;
+	// VARIAMENO_FIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal variamenoFin;
+
+	// IMPORTO_COFIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal importoCofin;
+
+	// STANZIAMENTO_COFIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal stanziamentoCofin;
+
+	// VARIAPIU_COFIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal variapiuCofin;
+
+	// VARIAMENO_COFIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal variamenoCofin;
 
 	// IMPACC DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal impacc;
@@ -38,50 +50,82 @@ public class V_saldi_piano_econom_progettoBase extends V_saldi_piano_econom_prog
 		super();
 	}
 
-	public java.math.BigDecimal getDisp() {
-		return disp;
+	public java.math.BigDecimal getImportoFin() {
+		return importoFin;
+	}
+	
+	public void setImportoFin(java.math.BigDecimal importoFin) {
+		this.importoFin = importoFin;
 	}
 
-	public void setDisp(java.math.BigDecimal disp) {
-		this.disp = disp;
+	public java.math.BigDecimal getStanziamentoFin() {
+		return stanziamentoFin;
 	}
 
-	public java.math.BigDecimal getStanziamento() {
-		return stanziamento;
+	public void setStanziamentoFin(java.math.BigDecimal stanziamentoFin) {
+		this.stanziamentoFin = stanziamentoFin;
 	}
 
-	public void setStanziamento(java.math.BigDecimal stanziamento) {
-		this.stanziamento = stanziamento;
+	public java.math.BigDecimal getVariapiuFin() {
+		return variapiuFin;
 	}
 
-	public java.math.BigDecimal getVariapiu() {
-		return variapiu;
+	public void setVariapiuFin(java.math.BigDecimal variapiuFin) {
+		this.variapiuFin = variapiuFin;
 	}
 
-	public void setVariapiu(java.math.BigDecimal variapiu) {
-		this.variapiu = variapiu;
+	public java.math.BigDecimal getVariamenoFin() {
+		return variamenoFin;
 	}
 
-	public java.math.BigDecimal getVariameno() {
-		return variameno;
+	public void setVariamenoFin(java.math.BigDecimal variamenoFin) {
+		this.variamenoFin = variamenoFin;
 	}
 
-	public void setVariameno(java.math.BigDecimal variameno) {
-		this.variameno = variameno;
+	public java.math.BigDecimal getImportoCofin() {
+		return importoCofin;
+	}
+
+	public void setImportoCofin(java.math.BigDecimal importoCofin) {
+		this.importoCofin = importoCofin;
+	}
+
+	public java.math.BigDecimal getStanziamentoCofin() {
+		return stanziamentoCofin;
+	}
+
+	public void setStanziamentoCofin(java.math.BigDecimal stanziamentoCofin) {
+		this.stanziamentoCofin = stanziamentoCofin;
+	}
+
+	public java.math.BigDecimal getVariapiuCofin() {
+		return variapiuCofin;
+	}
+
+	public void setVariapiuCofin(java.math.BigDecimal variapiuCofin) {
+		this.variapiuCofin = variapiuCofin;
+	}
+
+	public java.math.BigDecimal getVariamenoCofin() {
+		return variamenoCofin;
+	}
+
+	public void setVariamenoCofin(java.math.BigDecimal variamenoCofin) {
+		this.variamenoCofin = variamenoCofin;
 	}
 
 	public java.math.BigDecimal getImpacc() {
 		return impacc;
 	}
-	
+
 	public void setImpacc(java.math.BigDecimal impacc) {
 		this.impacc = impacc;
 	}
-	
+
 	public java.math.BigDecimal getManris() {
 		return manris;
 	}
-	
+
 	public void setManris(java.math.BigDecimal manris) {
 		this.manris = manris;
 	}
