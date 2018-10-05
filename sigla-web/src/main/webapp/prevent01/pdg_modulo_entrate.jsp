@@ -173,17 +173,7 @@
 				</td>
 			</table>
 		</td>	
-	</tr>		
-	<% if (bp.getParametriEnte().getFl_prg_pianoeco() && progetto.isPianoEconomicoRequired()) {%>
-	<tr>
-		<td>			
-			<%bp.getCrudDettagliEntrate().writeFormLabel(out,"voce_piano"); %>				
-		</td>	
-		<td colspan="3">	
-			<%bp.getCrudDettagliEntrate().writeFormInput(out,null,"voce_piano",bp.isUtente_Ente(),null,null); %>
-		</td>	
 	</tr>
-	<% } %>
 <% if (!bp.getParametriCnr().getFl_nuovo_pdg()){%>
 	<tr>
 		<td>			
