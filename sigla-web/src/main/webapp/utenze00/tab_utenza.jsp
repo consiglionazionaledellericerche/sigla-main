@@ -95,7 +95,7 @@
                         bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-user-circle-o" : bp.encodePath("img/properties24.gif"),
                         bp.encodePath("Abilitazione accesso in SIGLA"),
                         "javascript:submitForm('doVerificaAbilitazioneUtenteLdap')",
-                        "btn-outline-primary btn-title faa-parent animated-hover",
+                        "btn-outline-primary btn-title",
                         bulk!=null && bulk.getCd_utente_uid()!=null,
                         bp.getParentRoot().isBootstrap()); %>
                 </td>
