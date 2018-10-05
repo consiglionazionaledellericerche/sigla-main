@@ -532,6 +532,7 @@
 		property="voce_piano_economico"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
+		readonlyProperty="ROVocePianoEconomico"
 		label="Voce del piano economico" />
 
 	<formFieldProperty

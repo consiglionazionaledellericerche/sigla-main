@@ -14,6 +14,7 @@ import java.util.Optional;
 import javax.ejb.EJBException;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.latt.bulk.CofogBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
@@ -195,35 +196,16 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 			return sql.union(sql2,true);
 	}
 	
-	public SQLBuilder selectClassificazioneByClause (UserContext userContext,Pdg_modulo_speseBulk dett,V_classificazione_vociBulk classificazione,CompoundFindClause clause) throws ComponentException, PersistencyException
-	{
-			SQLBuilder sql = ((V_classificazione_vociHome)getHome(userContext, V_classificazione_vociBulk.class)).createSQLBuilder();
-			sql.addTableToHeader("PARAMETRI_CNR");
-			sql.addTableToHeader("CDR");
-			sql.addTableToHeader("UNITA_ORGANIZZATIVA");
-			sql.addSQLClause("AND", "PARAMETRI_CNR.ESERCIZIO", sql.EQUALS, dett.getEsercizio());
-			sql.addSQLJoin("PARAMETRI_CNR.LIVELLO_PDG_DECIS_SPE","V_CLASSIFICAZIONE_VOCI.NR_LIVELLO");
-			sql.addSQLClause("AND", "CDR.CD_CENTRO_RESPONSABILITA", sql.EQUALS, dett.getCd_centro_responsabilita());
-			sql.addSQLJoin("CDR.CD_UNITA_ORGANIZZATIVA","UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
-		    sql.openParenthesis("AND");
-		      sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.FL_ACCENTRATO", sql.EQUALS, "Y");
-		      sql.addSQLClause("OR", "V_CLASSIFICAZIONE_VOCI.FL_DECENTRATO", sql.EQUALS, "Y");
-		    sql.closeParenthesis();
-			sql.openParenthesis("AND");
-				sql.addSQLClause("AND", "UNITA_ORGANIZZATIVA.CD_TIPO_UNITA", sql.EQUALS, Tipo_unita_organizzativaHome.TIPO_UO_SAC);
-				//sql.addClause("AND", "V_CLASSIFICAZIONE_VOCI.FL_CLASS_SAC", sql.EQUALS, Boolean.TRUE);
-				sql.openParenthesis("OR");		        
-				  sql.addSQLClause("AND", "UNITA_ORGANIZZATIVA.CD_TIPO_UNITA", sql.NOT_EQUALS, Tipo_unita_organizzativaHome.TIPO_UO_SAC);
-				  sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.FL_CLASS_SAC", sql.EQUALS, "N");
-				sql.closeParenthesis();  		      
-			sql.closeParenthesis();
-		    sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.ESERCIZIO", sql.EQUALS, dett.getEsercizio());
-		    sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.TI_GESTIONE", sql.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
-		    sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI.FL_SOLO_GESTIONE", sql.EQUALS,"N");
-			if (clause != null) 
-			  sql.addClause(clause);
-			return sql;
+	public SQLBuilder selectClassificazioneByClause (UserContext userContext,Pdg_modulo_speseBulk dett,V_classificazione_vociBulk classificazione,CompoundFindClause clause) throws ComponentException, PersistencyException {
+    	Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+    	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(classificazione.getEsercizio()));
+
+    	SQLBuilder sql = ((Pdg_modulo_speseHome)getHome(userContext, Pdg_modulo_speseBulk.class)).selectClassificazioneByClause(dett.getEsercizio(),  dett.getCd_centro_responsabilita(), parCnrBulk.getLivello_pdg_decis_spe());
+		if (clause != null) 
+		  sql.addClause(clause);
+		return sql;
 	}
+
 	private BigDecimal calcolaImporto(UserContext userContext, SQLBuilder sql) throws ComponentException{
 		BigDecimal totale = Utility.ZERO;
 		try {
