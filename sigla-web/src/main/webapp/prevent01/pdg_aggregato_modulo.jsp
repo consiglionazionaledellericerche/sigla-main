@@ -126,7 +126,7 @@
 		<tr>
 			<td colspan=5>
                 <div class="GroupLabel">
-                    <span class="font-weight-bold text-primary d-flex justify-content-center fadeInDownBig"><%=bp.getHintProgetto()%></span>
+                    <span class="font-weight-bold text-primary d-flex justify-content-center animated fadeInDownBig"><%=bp.getHintProgetto()%></span>
                 </div>
 			</td>
 			<td>
