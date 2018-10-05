@@ -22,11 +22,14 @@ import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.UserInfo;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.Config;
@@ -518,7 +521,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 				.orElse("");
 	}
 
-    public boolean isPrevEntSpesaEnable() {
+    public boolean isPrevEntSpesaEnable(UserInfo userInfo) {
 		return Optional.ofNullable(getCrudDettagli().getModel())
 				.filter(Pdg_moduloBulk.class::isInstance)
 				.map(Pdg_moduloBulk.class::cast)
@@ -526,6 +529,12 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 				.flatMap(progetto_sipBulk -> Optional.ofNullable(progetto_sipBulk.getOtherField()))
 				.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
 				.map(tipoFinanziamentoBulk -> tipoFinanziamentoBulk.getFlPrevEntSpesa())
-				.orElse(Boolean.FALSE);
+				.orElse(Boolean.FALSE) ||
+                Optional.ofNullable(userInfo)
+                        .filter(CNRUserInfo.class::isInstance)
+                        .map(CNRUserInfo.class::cast)
+                        .map(CNRUserInfo::getUnita_organizzativa)
+                        .map(Unita_organizzativaBulk::isUoEnte)
+                        .orElse(Boolean.FALSE);
 	}
 }
