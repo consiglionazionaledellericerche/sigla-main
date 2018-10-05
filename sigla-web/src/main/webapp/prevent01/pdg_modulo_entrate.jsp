@@ -174,7 +174,7 @@
 			</table>
 		</td>	
 	</tr>		
-	<% if (bp.getParametriEnte().getFl_prg_pianoeco() && progetto.getFl_piano_economico()) {%>
+	<% if (bp.getParametriEnte().getFl_prg_pianoeco() && progetto.isPianoEconomicoRequired()) {%>
 	<tr>
 		<td>			
 			<%bp.getCrudDettagliEntrate().writeFormLabel(out,"voce_piano"); %>				

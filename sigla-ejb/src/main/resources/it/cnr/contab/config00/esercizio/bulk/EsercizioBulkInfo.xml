@@ -31,8 +31,18 @@
 		enabledOnSearch="true"
 		caseSensitiveSearch="false" />
 	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Cds"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false" />
+	<fieldProperty
 		name="cd_cds"
-		property="cd_cds"
+		property="cds.cd_unita_organizzativa"
 		inputType="ROTEXT"
 		maxLength="30"
 		inputSize="8"
@@ -42,7 +52,7 @@
 		caseSensitiveSearch="false" />
 	<fieldProperty
 		name="ds_cds"
-		property="ds_cds"
+		property="cds.ds_unita_organizzativa"
 		inputType="ROTEXT"
 		label=""
 		inputSize="20"
@@ -58,9 +68,7 @@
 	<formFieldProperty
 		name="ds_esercizio" />
 	<formFieldProperty
-		name="cd_cds" />
-	<formFieldProperty
-		name="ds_cds" />
+		name="cds" />
 
 	<columnFieldProperty
 		name="st_apertura_chiusura" />
