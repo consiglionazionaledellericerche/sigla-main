@@ -419,13 +419,10 @@ public class Elemento_voceHome extends BulkHome implements ConsultazioniRestHome
         return home.fetchAll(sql);
     }
 
-	public SQLBuilder selectElementoVociAssociate(Classificazione_vociBulk classificazione) throws it.cnr.jada.persistency.PersistencyException {
-    	Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHomeCache().getHome(Parametri_cnrBulk.class);
-    	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(classificazione.getEsercizio()));
-
+	public SQLBuilder selectElementoVociAssociate(Integer esercizio, Integer nrLivello, Integer idClassificazione) throws it.cnr.jada.persistency.PersistencyException {
         SQLBuilder sql = this.createSQLBuilder();
         
-        sql.addSQLClause(FindClause.AND, "ELEMENTO_VOCE.ESERCIZIO", SQLBuilder.EQUALS, classificazione.getEsercizio() );
+        sql.addSQLClause(FindClause.AND, "ELEMENTO_VOCE.ESERCIZIO", SQLBuilder.EQUALS, esercizio );
 
         sql.addTableToHeader("PARAMETRI_LIVELLI");
         sql.addSQLJoin("ELEMENTO_VOCE.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
@@ -434,12 +431,15 @@ public class Elemento_voceHome extends BulkHome implements ConsultazioniRestHome
         sql.addSQLJoin("ELEMENTO_VOCE.ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
         sql.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
 
-        sql.addSQLClause(FindClause.AND, "V_CLASSIFICAZIONE_VOCI_ALL.ID_LIV"+parCnrBulk.getLivello_pdg_decis_spe(), SQLBuilder.EQUALS, classificazione.getId_classificazione());	
+        sql.addSQLClause(FindClause.AND, "V_CLASSIFICAZIONE_VOCI_ALL.ID_LIV"+nrLivello, SQLBuilder.EQUALS, idClassificazione);	
         return sql;
 	}
 
 	public java.util.List<Elemento_voceBulk> findElementoVociAssociate(Classificazione_vociBulk classificazione) throws IntrospectionException, PersistencyException {
+    	Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHomeCache().getHome(Parametri_cnrBulk.class);
+    	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(classificazione.getEsercizio()));
+
     	PersistentHome home = getHomeCache().getHome(Elemento_voceBulk.class);
-        return home.fetchAll(this.selectElementoVociAssociate(classificazione));
+        return home.fetchAll(this.selectElementoVociAssociate(classificazione.getEsercizio(), parCnrBulk.getLivello_pdg_decis_spe(), classificazione.getId_classificazione()));
     }
 }
