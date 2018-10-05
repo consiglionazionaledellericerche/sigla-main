@@ -19,12 +19,27 @@ public class V_saldi_piano_econom_progettoBulk extends V_saldi_piano_econom_prog
 		super();
 	}
 	
-	public java.math.BigDecimal getAssestato() {
-		return getStanziamento().add(getVariapiu()).subtract(getVariameno());
+	public java.math.BigDecimal getAssestatoFinanziamento() {
+		return getStanziamentoFin().add(getVariapiuFin()).subtract(getVariamenoFin());
 	}
 
-	public java.math.BigDecimal getDisp_residua() {
-		return getDisp().subtract(getAssestato());
+	public java.math.BigDecimal getAssestatoCofinanziamento() {
+		return getStanziamentoCofin().add(getVariapiuCofin()).subtract(getVariamenoCofin());
+	}
+
+	public java.math.BigDecimal getDispResiduaFinanziamento() {
+		return getImportoFin().subtract(getAssestatoFinanziamento());
+	}
+
+	public java.math.BigDecimal getDispResiduaCofinanziamento() {
+		return getImportoCofin().subtract(getAssestatoCofinanziamento());
+	}
+
+	public java.math.BigDecimal getAssestato() {
+		return getAssestatoFinanziamento().add(getAssestatoCofinanziamento());
+	}
+
+	public java.math.BigDecimal getDispResidua() {
+		return getDispResiduaFinanziamento().add(getDispResiduaCofinanziamento());
 	}
 }
-
