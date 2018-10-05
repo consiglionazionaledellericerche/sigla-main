@@ -26,10 +26,7 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.DetailedRuntimeException;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.Forward;
-import it.cnr.jada.action.HookForward;
+import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.FieldProperty;
@@ -387,20 +384,36 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP)getBusinessProcess(context);
 			CdrBulk cdr = (CdrBulk) bp.getModel();
 			SimpleDetailCRUDController controller = bp.getCrudDettagli();
-
 			java.util.List l = (java.util.List)caller.getParameter("selectedElements");
+			String errorMessage = "";
 			if (l!=null && !l.isEmpty()){
 				Iterator it = l.iterator();
 				while(it.hasNext()) {
-					Pdg_moduloBulk mod = new Pdg_moduloBulk();
+                    Progetto_sipBulk progetto = (Progetto_sipBulk) it.next();
+                    Pdg_moduloBulk mod = new Pdg_moduloBulk();
 					mod.initializeForInsert(bp,context);
 					mod.setCdr(cdr);
-					mod.setProgetto((Progetto_sipBulk)it.next());
+					mod.setProgetto(progetto);
+                    if (!Optional.ofNullable(progetto.getOtherField())
+                            .flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getStato()))
+                            .filter(stato -> Arrays.asList(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE, Progetto_other_fieldBulk.STATO_APPROVATO).indexOf(stato) != -1).isPresent()) {
+                            errorMessage +="Attenzione: il progetto " + progetto.getCd_progetto() +" non ha uno stato utile alla previsione!";
+                            errorMessage += bp.getParentRoot().isBootstrap() ? "<br>" : "\n";
+                            continue;
+                    }
+                    if (!Optional.ofNullable(progetto.getOtherField())
+                            .flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
+                            .filter(tipoFinanziamentoBulk -> tipoFinanziamentoBulk.getFlPrevEntSpesa() || tipoFinanziamentoBulk.getFlRipCostiPers()).isPresent()) {
+                        errorMessage +="Attenzione: il progetto " + progetto.getCd_progetto() +" non è consentita la previsione!<br>";
+                        errorMessage += bp.getParentRoot().isBootstrap() ? "<br>" : "\n";
+                        continue;
+                    }
 					if (!cdr.getDettagli().containsByPrimaryKey(mod))
 						controller.add(context, mod);
 				}
 			}
-
+			if (errorMessage.length() > 0)
+			    setErrorMessage(context, errorMessage);
 			return context.findDefaultForward();
 		} catch(Exception e) {
 			return handleException(context,e);
