@@ -20,6 +20,7 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
@@ -1251,26 +1252,49 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                                 V_saldi_piano_econom_progettoBulk saldo = ((V_saldi_piano_econom_progettoHome)getHome( userContext,V_saldi_piano_econom_progettoBulk.class )).
                                         cercaSaldoPianoEconomico(bulk, "S");
 
-                                BigDecimal dispResidua = saldo.getDisp_residua();
+                                BigDecimal dispResiduaFin = saldo.getDispResiduaFinanziamento();
 
-                                dispResidua = dispResidua.add(
+                                dispResiduaFin = dispResiduaFin.add(
                                         speseListDB.stream()
                                                 .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
-                                                .map(Pdg_modulo_speseBulk::getTot_competenza_anno_in_corso)
+                                                .map(el->Utility.nvl(el.getIm_spese_gest_decentrata_est()))
                                                 .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
 
-                                dispResidua = dispResidua.subtract(
+                                dispResiduaFin = dispResiduaFin.subtract(
                                         speseList.stream()
                                                 .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
-                                                .map(Pdg_modulo_speseBulk::getTot_competenza_anno_in_corso)
+                                                .map(el->Utility.nvl(el.getIm_spese_gest_decentrata_est()))
                                                 .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
 
-                                if (dispResidua.compareTo(BigDecimal.ZERO)<0)
+                                if (dispResiduaFin.compareTo(BigDecimal.ZERO)<0)
                                     throw new ApplicationException(
                                             "Impossibile effettuare l'operazione !\n"+
                                                     "Il piano economico "+e.getCd_voce_piano()+
                                                     " associato al progetto "+(e.getEsercizio_piano().equals(0)?"":"per l'esercizio "+e.getEsercizio_piano())+
-                                                    " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(dispResidua.abs())+")");
+                                                    " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(dispResiduaFin.abs())+
+                                                    ") per la quota finanziata.");
+
+                                BigDecimal dispResiduaCofin = saldo.getDispResiduaCofinanziamento();
+
+                                dispResiduaCofin = dispResiduaCofin.add(
+                                        speseListDB.stream()
+                                                .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
+                                                .map(el->Utility.nvl(el.getIm_spese_gest_decentrata_est()))
+                                                .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
+
+                                dispResiduaCofin = dispResiduaCofin.subtract(
+                                        speseList.stream()
+                                                .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
+                                                .map(el->Utility.nvl(el.getIm_spese_gest_decentrata_int()))
+                                                .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
+
+                                if (dispResiduaCofin.compareTo(BigDecimal.ZERO)<0)
+                                    throw new ApplicationException(
+                                            "Impossibile effettuare l'operazione !\n"+
+                                                    "Il piano economico "+e.getCd_voce_piano()+
+                                                    " associato al progetto "+(e.getEsercizio_piano().equals(0)?"":"per l'esercizio "+e.getEsercizio_piano())+
+                                                    " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(dispResiduaCofin.abs())+
+                                                    ") per la quota cofinanziata.");
                             }
                         }
                         catch (Exception ex )
@@ -1329,16 +1353,38 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                             V_saldi_piano_econom_progettoBulk saldo = ((V_saldi_piano_econom_progettoHome)getHome( userContext,V_saldi_piano_econom_progettoBulk.class )).
                                     cercaSaldoPianoEconomico(e, "S");
 
-                            BigDecimal dispResidua = saldo.getDisp_residua().subtract(rigaVar.getIm_variazione());
-                            if (dispResidua.compareTo(BigDecimal.ZERO)<0) {
+                    		BigDecimal imVariazioneFin = BigDecimal.ZERO;
+                    		if (rigaVar.getTi_gestione()!=null && rigaVar.getTi_gestione().equals(Elemento_voceHome.GESTIONE_ENTRATE))
+                    			imVariazioneFin = rigaVar.getIm_entrata();
+                    		else if (rigaVar.getTi_gestione()!=null && rigaVar.getTi_gestione().equals(Elemento_voceHome.GESTIONE_SPESE))
+                    			imVariazioneFin = Utility.nvl(rigaVar.getIm_spese_gest_decentrata_est());
+
+                            BigDecimal dispResiduaFin = saldo.getDispResiduaFinanziamento().subtract(imVariazioneFin);
+                            if (dispResiduaFin.compareTo(BigDecimal.ZERO)<0) {
                                 if (messaggio!=null && messaggio.length()>0)
                                     messaggio = messaggio+ "\n";
                                 messaggio = messaggio +
-                                        "La disponibilità del piano economico "+e.getCd_voce_piano()+
+                                        "La disponibilità quota finanziata del piano economico "+e.getCd_voce_piano()+
                                         " associato al progetto"+(e.getEsercizio_piano().equals(0)?"":" per l'esercizio "+e.getEsercizio_piano())+
                                         " per la Voce " + rigaVar.getCd_elemento_voce() + " e GAE " + rigaVar.getCd_linea_attivita() +
                                         " non è sufficiente a coprire la variazione che risulta di " +
-                                        new it.cnr.contab.util.EuroFormat().format(rigaVar.getIm_variazione()) + ".\n";
+                                        new it.cnr.contab.util.EuroFormat().format(imVariazioneFin) + ".\n";
+                            }
+
+                    		BigDecimal imVariazioneCofin = BigDecimal.ZERO;
+                    		if (rigaVar.getTi_gestione()!=null && rigaVar.getTi_gestione().equals(Elemento_voceHome.GESTIONE_SPESE))
+                    			imVariazioneCofin = Utility.nvl(rigaVar.getIm_spese_gest_decentrata_int());
+
+                            BigDecimal dispResiduaCofin = saldo.getDispResiduaCofinanziamento().subtract(imVariazioneCofin);
+                            if (dispResiduaCofin.compareTo(BigDecimal.ZERO)<0) {
+                                if (messaggio!=null && messaggio.length()>0)
+                                    messaggio = messaggio+ "\n";
+                                messaggio = messaggio +
+                                        "La disponibilità quota cofinanziata del piano economico "+e.getCd_voce_piano()+
+                                        " associato al progetto"+(e.getEsercizio_piano().equals(0)?"":" per l'esercizio "+e.getEsercizio_piano())+
+                                        " per la Voce " + rigaVar.getCd_elemento_voce() + " e GAE " + rigaVar.getCd_linea_attivita() +
+                                        " non è sufficiente a coprire la variazione che risulta di " +
+                                        new it.cnr.contab.util.EuroFormat().format(imVariazioneCofin) + ".\n";
                             }
                         }
                         catch (Exception ex )

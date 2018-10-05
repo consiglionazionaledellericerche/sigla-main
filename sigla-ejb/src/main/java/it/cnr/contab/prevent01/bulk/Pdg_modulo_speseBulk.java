@@ -5,6 +5,7 @@
 package it.cnr.contab.prevent01.bulk;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Optional;
 
 import it.cnr.contab.config00.latt.bulk.CofogBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
@@ -481,5 +482,9 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 	@Override
 	public void setCd_voce_piano(String cd_voce_piano) {
 		this.getVoce_piano_economico().setCd_voce_piano(cd_voce_piano);
+	}
+	
+	public boolean isROVocePianoEconomico(){
+		return !Optional.ofNullable(this.getId_classificazione()).isPresent();
 	}
 }

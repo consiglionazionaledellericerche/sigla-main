@@ -5,10 +5,15 @@
 package it.cnr.contab.prevent01.bulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+
+import org.apache.poi.hssf.record.formula.functions.Find;
+
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociHome;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -20,6 +25,7 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 public class Pdg_modulo_speseHome extends BulkHome {
@@ -270,4 +276,28 @@ public class Pdg_modulo_speseHome extends BulkHome {
 		return sql;
 	}
 
+	public SQLBuilder selectClassificazioneByClause(Integer esercizio, String cdr, Integer nrLivello) throws ComponentException, PersistencyException {
+		SQLBuilder sql = ((V_classificazione_vociHome)getHomeCache().getHome(V_classificazione_vociBulk.class)).createSQLBuilder();
+		sql.addTableToHeader("CDR");
+		sql.addTableToHeader("UNITA_ORGANIZZATIVA");
+		sql.addSQLClause(FindClause.AND, "V_CLASSIFICAZIONE_VOCI.NR_LIVELLO", SQLBuilder.EQUALS, nrLivello);
+		sql.addSQLClause(FindClause.AND, "CDR.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, cdr);
+		sql.addSQLJoin("CDR.CD_UNITA_ORGANIZZATIVA","UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA");
+	    sql.openParenthesis(FindClause.AND);
+	      sql.addSQLClause(FindClause.AND, "V_CLASSIFICAZIONE_VOCI.FL_ACCENTRATO", SQLBuilder.EQUALS, "Y");
+	      sql.addSQLClause(FindClause.OR, "V_CLASSIFICAZIONE_VOCI.FL_DECENTRATO", SQLBuilder.EQUALS, "Y");
+	    sql.closeParenthesis();
+		sql.openParenthesis(FindClause.AND);
+			sql.addSQLClause(FindClause.AND, "UNITA_ORGANIZZATIVA.CD_TIPO_UNITA", SQLBuilder.EQUALS, Tipo_unita_organizzativaHome.TIPO_UO_SAC);
+			//sql.addClause("AND", "V_CLASSIFICAZIONE_VOCI.FL_CLASS_SAC", sql.EQUALS, Boolean.TRUE);
+			sql.openParenthesis(FindClause.OR);		        
+			  sql.addSQLClause(FindClause.AND, "UNITA_ORGANIZZATIVA.CD_TIPO_UNITA", SQLBuilder.NOT_EQUALS, Tipo_unita_organizzativaHome.TIPO_UO_SAC);
+			  sql.addSQLClause(FindClause.AND, "V_CLASSIFICAZIONE_VOCI.FL_CLASS_SAC", SQLBuilder.EQUALS, "N");
+			sql.closeParenthesis();  		      
+		sql.closeParenthesis();
+	    sql.addSQLClause(FindClause.AND, "V_CLASSIFICAZIONE_VOCI.ESERCIZIO", SQLBuilder.EQUALS, esercizio);
+	    sql.addSQLClause(FindClause.AND, "V_CLASSIFICAZIONE_VOCI.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
+	    sql.addSQLClause(FindClause.AND, "V_CLASSIFICAZIONE_VOCI.FL_SOLO_GESTIONE", SQLBuilder.EQUALS,"N");
+		return sql;
+	}
 }
