@@ -131,7 +131,7 @@
 			</td>
 			<td>
                 <div class="card">
-                    <div class="GroupLabel card-header"><span class="font-weight-bold text-primary d-flex justify-content-center">Gestionale</span></div>
+                    <div class="GroupLabel card-header"><span class="font-weight-bold text-primary d-flex justify-content-center fadeInDownBig">Gestionale</span></div>
                     <div class="Group card-block p-2">
                         <table width="100%" style="text-align: center;">
                             <tr>
