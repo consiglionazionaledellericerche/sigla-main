@@ -32,6 +32,13 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_ALL_PREV_FIN"
+			propertyName="flAllPrevFin"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />			
+		<columnMapping
 			columnName="FL_VALIDO"
 			propertyName="fl_valido"
 			sqlTypeName="CHAR"
@@ -77,6 +84,8 @@
 		name="fl_link_vocibil_associate" />
 	<persistentProperty
 		name="fl_add_vocibil" />
+	<persistentProperty
+		name="flAllPrevFin" />
 	<persistentProperty
 		name="fl_valido" />	
 	<persistentProperty

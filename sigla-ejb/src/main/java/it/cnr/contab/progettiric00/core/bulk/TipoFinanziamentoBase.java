@@ -43,7 +43,10 @@ public class TipoFinanziamentoBase extends TipoFinanziamentoKey implements Keyed
  
 //    FL_INC_CONS CHAR(1) NOT NULL
 	private Boolean flIncCons;
- 
+
+//  FL_ALL_PREV_FIN CHAR(1) NOT NULL
+	private Boolean flAllPrevFin;
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: TIPO_FINANZIAMENTO
@@ -235,5 +238,13 @@ public class TipoFinanziamentoBase extends TipoFinanziamentoKey implements Keyed
 	 **/
 	public void setFlIncCons(Boolean flIncCons)  {
 		this.flIncCons=flIncCons;
+	}
+	
+	public Boolean getFlAllPrevFin() {
+		return flAllPrevFin;
+	}
+	
+	public void setFlAllPrevFin(Boolean flAllPrevFin) {
+		this.flAllPrevFin = flAllPrevFin;
 	}
 }

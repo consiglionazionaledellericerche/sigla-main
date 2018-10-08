@@ -15,6 +15,9 @@ public class Voce_piano_economico_prgBase extends Voce_piano_economico_prgKey im
 	// FL_ADD_VOCIBIL CHAR(1 BYTE) DEFAULT 'N' NOT NULL
 	private java.lang.Boolean fl_add_vocibil;
 
+	// FL_ALL_PREV_FIN CHAR(1) NOT NULL
+	private Boolean flAllPrevFin;
+	
 	// FL_VALIDO CHAR(1 BYTE) DEFAULT 'Y' NOT NULL
 	private java.lang.Boolean fl_valido;
 
@@ -62,6 +65,14 @@ public class Voce_piano_economico_prgBase extends Voce_piano_economico_prgKey im
 	
 	public void setFl_add_vocibil(java.lang.Boolean fl_add_vocibil) {
 		this.fl_add_vocibil = fl_add_vocibil;
+	}
+	
+	public Boolean getFlAllPrevFin() {
+		return flAllPrevFin;
+	}
+	
+	public void setFlAllPrevFin(Boolean flAllPrevFin) {
+		this.flAllPrevFin = flAllPrevFin;
 	}
 	
 	public java.lang.Boolean getFl_valido() {
