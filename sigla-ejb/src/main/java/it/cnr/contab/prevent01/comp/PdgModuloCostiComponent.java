@@ -41,6 +41,8 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
+import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
+import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgHome;
@@ -197,11 +199,19 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 	}
 	
 	public SQLBuilder selectClassificazioneByClause (UserContext userContext,Pdg_modulo_speseBulk dett,V_classificazione_vociBulk classificazione,CompoundFindClause clause) throws ComponentException, PersistencyException {
-    	Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
-    	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(Optional.ofNullable(dett.getEsercizio()).orElse(CNRUserContext.getEsercizio(userContext))));
+		Integer esercizio = Optional.ofNullable(dett.getEsercizio()).orElse(CNRUserContext.getEsercizio(userContext));
+		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+    	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(esercizio));
 
     	SQLBuilder sql = ((Pdg_modulo_speseHome)getHome(userContext, Pdg_modulo_speseBulk.class)).selectClassificazioneByClause(dett.getEsercizio(),  dett.getCd_centro_responsabilita(), parCnrBulk.getLivello_pdg_decis_spe());
-		if (clause != null) 
+    	
+    	Ass_progetto_piaeco_voceHome assPiaecoHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
+
+    	SQLBuilder sqlExists = assPiaecoHome.selectAssProgettoPiaecoVoceList(esercizio, dett.getPg_progetto(), null);
+    	sqlExists.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.ID_LIV"+parCnrBulk.getLivello_pdg_decis_spe(), "V_CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
+    	sql.addSQLExistsClause(FindClause.AND, sqlExists);
+		
+    	if (clause != null) 
 		  sql.addClause(clause);
 		return sql;
 	}
