@@ -385,7 +385,8 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			throws BusinessProcessException {
 		super.basicEdit(actioncontext, oggettobulk, flag);
 		if (((ProgettoBulk)oggettobulk).getCd_unita_organizzativa() ==null ||
-			!((ProgettoBulk)oggettobulk).getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())))
+			!((ProgettoBulk)oggettobulk).getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())) ||
+			!Optional.ofNullable(((ProgettoBulk)oggettobulk).getOtherField()).filter(el->el.isStatoIniziale()||el.isStatoMigrazione()).isPresent())
 			this.setStatus(VIEW);
 	}
 	
