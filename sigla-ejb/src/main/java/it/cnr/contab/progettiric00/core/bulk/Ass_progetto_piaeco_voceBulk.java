@@ -1,5 +1,7 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
+import java.util.Optional;
+
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 
@@ -134,3 +136,4 @@ public class Ass_progetto_piaeco_voceBulk extends Ass_progetto_piaeco_voceBase {
 		this.getElemento_voce().setCd_elemento_voce(cd_elemento_voce);
 	}
 }
+

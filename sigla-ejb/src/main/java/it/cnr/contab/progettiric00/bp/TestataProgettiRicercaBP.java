@@ -384,10 +384,22 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	public void basicEdit(ActionContext actioncontext, OggettoBulk oggettobulk, boolean flag)
 			throws BusinessProcessException {
 		super.basicEdit(actioncontext, oggettobulk, flag);
-		if (((ProgettoBulk)oggettobulk).getCd_unita_organizzativa() ==null ||
-			!((ProgettoBulk)oggettobulk).getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())) ||
-			!Optional.ofNullable(((ProgettoBulk)oggettobulk).getOtherField()).filter(el->el.isStatoIniziale()||el.isStatoMigrazione()).isPresent())
+		ProgettoBulk progetto = (ProgettoBulk)oggettobulk;
+		if (progetto.getCd_unita_organizzativa() ==null ||
+			!progetto.getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())))
 			this.setStatus(VIEW);
+		else {
+			if (!Optional.ofNullable(progetto.getOtherField()).filter(el->el.isStatoIniziale()||el.isStatoMigrazione()).isPresent() &&
+				progetto.getPianoEconomicoSummary().stream()
+						.filter(el->Optional.ofNullable(el.getSaldoEntrata())
+											.filter(saldo->saldo.getAssestato().compareTo(BigDecimal.ZERO)!=0)
+											.isPresent() ||
+									Optional.ofNullable(el.getSaldoSpesa())
+											.filter(saldo->saldo.getAssestato().compareTo(BigDecimal.ZERO)!=0)
+											.isPresent())
+						.findFirst().isPresent())
+					this.setStatus(VIEW);
+		}
 	}
 	
 	public String[][] getTabs(HttpSession session) {

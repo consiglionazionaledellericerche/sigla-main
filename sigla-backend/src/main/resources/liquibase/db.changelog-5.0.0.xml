@@ -1091,4 +1091,22 @@
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+
+    <changeSet author="marco.spasiano" id="alter-table-finanziamento-e-voce-economica">
+        <addColumn tableName="tipo_finanziamento">
+            <column name="fl_all_prev_fin" remarks="Previsione totale quota finanziata" type="CHAR(1)" />
+        </addColumn>
+        <update tableName="tipo_finanziamento">
+            <column name="fl_all_prev_fin" value='N' type="CHAR(1)"/>
+        </update>
+        <addNotNullConstraint columnName="fl_all_prev_fin" tableName="tipo_finanziamento"/>
+
+        <addColumn tableName="voce_piano_economico_prg">
+            <column name="fl_all_prev_fin" remarks="Previsione totale quota finanziata" type="CHAR(1)" />
+        </addColumn>
+        <update tableName="voce_piano_economico_prg">
+            <column name="fl_all_prev_fin" value='N' type="CHAR(1)"/>
+        </update>
+        <addNotNullConstraint columnName="fl_all_prev_fin" tableName="voce_piano_economico_prg"/>
+    </changeSet>
 </databaseChangeLog>

@@ -8,8 +8,7 @@
 		property="elemento_voce"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
-		enabledOnEdit="false"
-		enabledOnInsert="true"
+		readonlyProperty= "notNew"
 		label="Voce di Bilancio" />
 	<fieldProperty
 		name="cd_elemento_voce"

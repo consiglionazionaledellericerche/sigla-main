@@ -52,6 +52,11 @@
 			<% bp.getController().writeFormInput(out,"fl_add_vocibil");%>
 		</TD></TR>
 		<TR><TD>
+			<% bp.getController().writeFormLabel(out,"flAllPrevFin");%>
+			</TD><TD colspan="3">
+			<% bp.getController().writeFormInput(out,"flAllPrevFin");%>
+		</TD></TR>
+		<TR><TD>
 			<% bp.getController().writeFormLabel(out,"fl_valido");%>
 			</TD><TD colspan="3">
 			<% bp.getController().writeFormInput(out,"fl_valido");%>

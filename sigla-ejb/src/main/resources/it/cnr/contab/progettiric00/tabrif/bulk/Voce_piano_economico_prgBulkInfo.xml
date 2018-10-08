@@ -70,6 +70,13 @@
 		property="fl_add_vocibil"
 		inputType="CHECKBOX"
 		label="Associazione Manuale Voci Bilancio" />
+    <fieldProperty
+        name="flAllPrevFin"
+        property="flAllPrevFin"
+        enabledOnSearch="true"
+        inputType="CHECKBOX"
+        nullable="false"
+        label="Previsione totale quota finanziata"/>
 	<fieldProperty
 		name="fl_valido"
 		property="fl_valido"
@@ -83,6 +90,7 @@
 	<formFieldProperty name="tipologia" />
 	<formFieldProperty name="fl_link_vocibil_associate" />
 	<formFieldProperty name="fl_add_vocibil" />
+	<formFieldProperty name="flAllPrevFin" />
 	<formFieldProperty name="fl_valido" />
 	
 	<columnFieldProperty name="cd_voce_piano" />
@@ -91,6 +99,7 @@
 	<columnFieldProperty name="ds_unita_organizzativa" />
 	<columnFieldProperty name="fl_link_vocibil_associate" />
 	<columnFieldProperty name="fl_add_vocibil" />
+	<columnFieldProperty name="flAllPrevFin" />
 	<columnFieldProperty name="fl_valido" />
 
 	<findFieldProperty name="cd_voce_piano" />

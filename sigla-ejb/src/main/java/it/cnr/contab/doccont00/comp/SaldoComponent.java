@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.ejb.EJBException;
@@ -35,6 +36,7 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoHome;
+import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoHome;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
@@ -1274,6 +1276,23 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                                                     " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(dispResiduaFin.abs())+
                                                     ") per la quota finanziata.");
 
+                                if (Optional.ofNullable(moduloCosti)
+                                		.flatMap(el->Optional.ofNullable(el.getPdg_modulo()))
+                                		.flatMap(el->Optional.ofNullable(el.getProgetto()))
+                                		.flatMap(el->Optional.ofNullable(el.getOtherField()))
+                                		.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
+                                		.map(TipoFinanziamentoBulk::getFlAllPrevFin)
+                                		.orElse(Boolean.TRUE) &&
+                                	Optional.ofNullable(e.getVoce_piano_economico())
+                                		.map(Voce_piano_economico_prgBulk::getFlAllPrevFin)
+                                		.orElse(Boolean.TRUE) &&
+                                	dispResiduaFin.compareTo(BigDecimal.ZERO)!=0)
+                                    throw new ApplicationException(
+                                            "Impossibile effettuare l'operazione !\n"+
+                                                    "L'importo finanziato del progetto "+(e.getEsercizio_piano().equals(0)?"":"per l'esercizio "+e.getEsercizio_piano())+
+                                                    " non corrisponde all'importo totale della previsione " +
+                                                    "(diff: "+new it.cnr.contab.util.EuroFormat().format(dispResiduaFin.abs())+").");
+                                		
                                 BigDecimal dispResiduaCofin = saldo.getDispResiduaCofinanziamento();
 
                                 dispResiduaCofin = dispResiduaCofin.add(
