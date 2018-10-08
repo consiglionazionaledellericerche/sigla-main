@@ -992,5 +992,51 @@
         </addColumn>
         <addForeignKeyConstraint baseColumnNames="pg_progetto_other_field" baseTableName="progetto_sic" constraintName="progetto_sic_fk07" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_progetto" referencedTableName="progetto_other_field"/>
     </changeSet>
-
+    <changeSet author="marco.spasiano" id="accessi_ruolo_pdgp">
+        <insert tableName="ruolo_accesso">
+            <column name="cd_ruolo" type="VARCHAR(20)" value="PDGPC"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPROGERCOREPROGERT"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ruolo_accesso">
+            <column name="cd_ruolo" type="VARCHAR(20)" value="PDGPC"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPROGERCOREPROGERS"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ruolo_accesso">
+            <column name="cd_ruolo" type="VARCHAR(20)" value="PDGPH"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPROGERCOREPROGERS"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ruolo_accesso">
+            <column name="cd_ruolo" type="VARCHAR(20)" value="PDGPV"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPROGERCOREPROGERT"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ruolo_accesso">
+            <column name="cd_ruolo" type="VARCHAR(20)" value="PDGPV"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPROGERCOREPROGERS"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

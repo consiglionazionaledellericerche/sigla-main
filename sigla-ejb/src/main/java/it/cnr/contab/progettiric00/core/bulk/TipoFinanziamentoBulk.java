@@ -21,6 +21,8 @@ public class TipoFinanziamentoBulk extends TipoFinanziamentoBase {
     public static final String CODICE_FIN = "FIN";
     public static final String CODICE_ATT_COM = "ATT_COM";
     public static final String CODICE_ATT_COMM_TAR = "ATT_COMM_TAR";
+    public static final String DON = "DON";
+    public static final String ATT_COMM_SUB = "ATT_COMM_SUB";
 
     public final static Dictionary codiceKeys;
 
@@ -35,6 +37,8 @@ public class TipoFinanziamentoBulk extends TipoFinanziamentoBase {
         codiceKeys.put(CODICE_FIN, "Finanziamento");
         codiceKeys.put(CODICE_ATT_COM, "Attività Commerciale pura");
         codiceKeys.put(CODICE_ATT_COMM_TAR, "Attività commerciale a tariffario");
+        codiceKeys.put(ATT_COMM_SUB, "Attività commerciale (CNR sub contraente)");
+        codiceKeys.put(DON, "Donazioni");
     };
 
     /**
