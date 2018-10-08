@@ -1316,6 +1316,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	    			throw new ApplicationException("Impossibile cancellare la voce "+assVoce.getCd_elemento_voce()+" in quanto\n"+
 	                   "è già stata collegata al preventivo gestionale del progetto -  parte entrate.");
     		} else {
+    			
         		Pdg_modulo_spese_gestHome homeSpe = (Pdg_modulo_spese_gestHome)getHome(userContext,Pdg_modulo_spese_gestBulk.class);
         		SQLBuilder sqlSpe = homeSpe.createSQLBuilder();
         		sqlSpe.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,assVoce.getPg_progetto());    		
@@ -1383,4 +1384,61 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     		throw handleException(e);
     	}
     }
+
+    /*
+    public void validaPianoEconomico(UserContext userContext, ProgettoBulk progetto) throws ComponentException{
+		ProgettoHome testataHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+
+    	List<Progetto_piano_economicoBulk> progettoPiano = new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPianoEconomico(userContext,progetto));
+
+    	for (Progetto_piano_economicoBulk piaecoBulk : progettoPiano) {
+    		//verifico che sia stato utilizzato sui piani di gestione preliminare
+    		Pdg_modulo_speseHome homeSpe = (Pdg_modulo_speseHome)getHome(userContext,Pdg_modulo_speseBulk.class);
+    		SQLBuilder sqlSpe = homeSpe.createSQLBuilder();
+    		sqlSpe.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,piaecoBulk.getPg_progetto());    		
+			sqlSpe.addClause(FindClause.AND,"cd_unita_piano",SQLBuilder.EQUALS,piaecoBulk.getCd_unita_organizzativa());
+			sqlSpe.addClause(FindClause.AND,"cd_voce_piano",SQLBuilder.EQUALS,piaecoBulk.getCd_voce_piano());
+
+			List resultSpe = homeSpe.fetchAll(sqlSpe);
+    		if (!resultSpe.isEmpty())
+    			throw new ApplicationException("Impossibile cancellare la voce "+assVoce.getCd_elemento_voce()+" in quanto\n"+
+                   "è già stata collegata al preventivo gestionale del progetto -  parte entrate.");
+		}
+    	
+		try {
+    		if (Elemento_voceHome.GESTIONE_ENTRATE.equals(assVoce.getTi_gestione())) {
+    			Pdg_modulo_entrate_gestHome homeEtr = (Pdg_modulo_entrate_gestHome)getHome(userContext,Pdg_modulo_entrate_gestBulk.class);
+    			SQLBuilder sqlEtr = homeEtr.createSQLBuilder();
+    			sqlEtr.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,assVoce.getPg_progetto());    		
+    			sqlEtr.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,assVoce.getEsercizio_voce());
+    			sqlEtr.addClause(FindClause.AND,"ti_appartenenza",SQLBuilder.EQUALS,assVoce.getTi_appartenenza());    		
+    			sqlEtr.addClause(FindClause.AND,"ti_gestione",SQLBuilder.EQUALS,assVoce.getTi_gestione());
+    			sqlEtr.addClause(FindClause.AND,"cd_elemento_voce",SQLBuilder.EQUALS,assVoce.getCd_elemento_voce());
+
+    			List resultEtr = homeEtr.fetchAll(sqlEtr);
+	    		if (!resultEtr.isEmpty())
+	    			throw new ApplicationException("Impossibile cancellare la voce "+assVoce.getCd_elemento_voce()+" in quanto\n"+
+	                   "è già stata collegata al preventivo gestionale del progetto -  parte entrate.");
+    		} else {
+    			
+        		Pdg_modulo_spese_gestHome homeSpe = (Pdg_modulo_spese_gestHome)getHome(userContext,Pdg_modulo_spese_gestBulk.class);
+        		SQLBuilder sqlSpe = homeSpe.createSQLBuilder();
+        		sqlSpe.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,assVoce.getPg_progetto());    		
+    			sqlSpe.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,assVoce.getEsercizio_voce());
+    			sqlSpe.addClause(FindClause.AND,"ti_appartenenza",SQLBuilder.EQUALS,assVoce.getTi_appartenenza());    		
+    			sqlSpe.addClause(FindClause.AND,"ti_gestione",SQLBuilder.EQUALS,assVoce.getTi_gestione());
+    			sqlSpe.addClause(FindClause.AND,"cd_elemento_voce",SQLBuilder.EQUALS,assVoce.getCd_elemento_voce());
+
+        		List resultSpe = homeSpe.fetchAll(sqlSpe);
+        		if (!resultSpe.isEmpty())
+        			throw new ApplicationException("Impossibile cancellare la voce "+assVoce.getCd_elemento_voce()+" in quanto\n"+
+                       "è già stata collegata al preventivo gestionale del progetto -  parte spese.");
+    			
+    		}
+
+    	} catch(Throwable e) {
+    		throw handleException(e);
+    	}
+    }
+    */
 }

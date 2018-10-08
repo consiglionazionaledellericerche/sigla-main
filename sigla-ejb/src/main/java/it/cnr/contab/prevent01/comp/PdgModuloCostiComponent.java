@@ -198,7 +198,7 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 	
 	public SQLBuilder selectClassificazioneByClause (UserContext userContext,Pdg_modulo_speseBulk dett,V_classificazione_vociBulk classificazione,CompoundFindClause clause) throws ComponentException, PersistencyException {
     	Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
-    	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(classificazione.getEsercizio()));
+    	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(Optional.ofNullable(dett.getEsercizio()).orElse(CNRUserContext.getEsercizio(userContext))));
 
     	SQLBuilder sql = ((Pdg_modulo_speseHome)getHome(userContext, Pdg_modulo_speseBulk.class)).selectClassificazioneByClause(dett.getEsercizio(),  dett.getCd_centro_responsabilita(), parCnrBulk.getLivello_pdg_decis_spe());
 		if (clause != null) 
