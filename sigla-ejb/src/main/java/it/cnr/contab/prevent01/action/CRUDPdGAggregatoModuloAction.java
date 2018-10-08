@@ -158,7 +158,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			if (((CdrBulk)bp.getModel()).getDettagli()!=null) {
 				for (Iterator iterator = ((CdrBulk)bp.getModel()).getDettagli().iterator(); iterator.hasNext();) {
 					Pdg_moduloBulk modulo = (Pdg_moduloBulk) iterator.next();
-					if (modulo.getCrudStatus() != OggettoBulk.UNDEFINED && modulo.getPg_progetto()!=null && modulo.getPg_progetto().equals(progetto.getPg_progetto())) {
+					if (modulo.getCrudStatus() != OggettoBulk.UNDEFINED && modulo.getCrudStatus() != OggettoBulk.TO_BE_CREATED && modulo.getPg_progetto()!=null && modulo.getPg_progetto().equals(progetto.getPg_progetto())) {
 						setErrorMessage(context,"Attenzione: il valore immesso in "+columnDescription+" è già presente!");
 						return context.findDefaultForward();
 					}
