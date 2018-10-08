@@ -1,6 +1,7 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.util.List;
+import java.util.Optional;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
@@ -35,9 +36,6 @@ public class Ass_progetto_piaeco_voceHome extends BulkHome {
 	}
 	
 	public SQLBuilder selectAssProgettoPiaecoVoceList( java.lang.Integer esercizio, java.lang.Integer pgProgetto, Integer idClassificazione ) throws PersistencyException {
-    	Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHomeCache().getHome(Parametri_cnrBulk.class);
-    	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(esercizio));
-
     	SQLBuilder sql = this.createSQLBuilder();
 
     	sql.addTableToHeader("ELEMENTO_VOCE");
@@ -55,7 +53,11 @@ public class Ass_progetto_piaeco_voceHome extends BulkHome {
 		sql.addSQLJoin("ELEMENTO_VOCE.ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
 		sql.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
 
-		sql.addSQLClause(FindClause.AND, "V_CLASSIFICAZIONE_VOCI_ALL.ID_LIV"+parCnrBulk.getLivello_pdg_decis_spe(), SQLBuilder.EQUALS, idClassificazione);
+		if (Optional.ofNullable(idClassificazione).isPresent()) {
+	    	Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHomeCache().getHome(Parametri_cnrBulk.class);
+	    	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(esercizio));
+	    	sql.addSQLClause(FindClause.AND, "V_CLASSIFICAZIONE_VOCI_ALL.ID_LIV"+parCnrBulk.getLivello_pdg_decis_spe(), SQLBuilder.EQUALS, idClassificazione);
+		}
 		return sql;
 	}
 
