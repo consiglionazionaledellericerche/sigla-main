@@ -384,7 +384,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	public void basicEdit(ActionContext actioncontext, OggettoBulk oggettobulk, boolean flag)
 			throws BusinessProcessException {
 		super.basicEdit(actioncontext, oggettobulk, flag);
-		ProgettoBulk progetto = (ProgettoBulk)oggettobulk;
+		ProgettoBulk progetto = (ProgettoBulk)getModel();
 		if (progetto.getCd_unita_organizzativa() ==null ||
 			!progetto.getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())))
 			this.setStatus(VIEW);
