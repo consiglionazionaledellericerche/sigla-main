@@ -38,14 +38,15 @@ public class Ass_progetto_piaeco_voceHome extends BulkHome {
 	public SQLBuilder selectAssProgettoPiaecoVoceList( java.lang.Integer esercizio, java.lang.Integer pgProgetto, Integer idClassificazione ) throws PersistencyException {
     	SQLBuilder sql = this.createSQLBuilder();
 
+    	sql.addSQLClause(FindClause.AND, "ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE", SQLBuilder.EQUALS, esercizio);
+    	sql.addSQLClause(FindClause.AND, "ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO", SQLBuilder.EQUALS, pgProgetto);
+    	
     	sql.addTableToHeader("ELEMENTO_VOCE");
     
 		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE", "ELEMENTO_VOCE.ESERCIZIO");
 		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA", "ELEMENTO_VOCE.TI_APPARTENENZA");
 		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE", "ELEMENTO_VOCE.TI_GESTIONE");
 		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE", "ELEMENTO_VOCE.CD_ELEMENTO_VOCE");
-
-		sql.addSQLClause(FindClause.AND, "ELEMENTO_VOCE.ESERCIZIO", SQLBuilder.EQUALS, esercizio );
 
 		sql.addTableToHeader("PARAMETRI_LIVELLI");
 		sql.addSQLJoin("ELEMENTO_VOCE.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");

@@ -1304,7 +1304,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                                 dispResiduaCofin = dispResiduaCofin.subtract(
                                         speseList.stream()
                                                 .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
-                                                .map(el->Utility.nvl(el.getIm_spese_gest_decentrata_int()))
+                                                .map(el->Utility.nvl(el.getIm_spese_gest_decentrata_est()))
                                                 .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
 
                                 if (dispResiduaCofin.compareTo(BigDecimal.ZERO)<0)
