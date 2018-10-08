@@ -95,6 +95,13 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_ALL_PREV_FIN"
+			propertyName="flAllPrevFin"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="DACR"
 			propertyName="dacr"
 			sqlTypeName="TIMESTAMP"
@@ -151,6 +158,8 @@
 		name="flVarCons" />
 	<persistentProperty
 		name="flIncCons" />
+	<persistentProperty
+		name="flAllPrevFin" />
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty

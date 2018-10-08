@@ -105,6 +105,13 @@
             inputType="CHECKBOX"
             nullable="false"
             label="Incassi consentiti"/>
+    <fieldProperty
+            name="flAllPrevFin"
+            property="flAllPrevFin"
+            enabledOnSearch="true"
+            inputType="CHECKBOX"
+            nullable="false"
+            label="Previsione totale quota finanziata"/>
     <form
             name="searchtool">
         <formFieldProperty
@@ -140,6 +147,8 @@
             name="flVarCons"/>
     <formFieldProperty
             name="flIncCons"/>
+    <formFieldProperty
+            name="flAllPrevFin" />
 
     <findFieldProperty
             name="id"/>
@@ -169,6 +178,9 @@
             name="flVarCons"/>
     <findFieldProperty
             name="flIncCons"/>
+    <findFieldProperty
+            name="flAllPrevFin" />
+            
     <columnFieldProperty
             name="id"/>
     <columnFieldProperty
@@ -197,4 +209,6 @@
             name="flVarCons"/>
     <columnFieldProperty
             name="flIncCons"/>
+    <columnFieldProperty
+            name="flAllPrevFin" />
 </bulkInfo>
