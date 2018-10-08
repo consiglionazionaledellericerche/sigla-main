@@ -1290,7 +1290,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                                     throw new ApplicationException(
                                             "Impossibile effettuare l'operazione !\n"+
                                                     "L'importo finanziato del progetto "+(e.getEsercizio_piano().equals(0)?"":"per l'esercizio "+e.getEsercizio_piano())+
-                                                    " non corrisponde all'importo totale della previsione " +
+                                                    " non corrisponde all'importo totale fonti esterne della previsione " +
                                                     "(diff: "+new it.cnr.contab.util.EuroFormat().format(dispResiduaFin.abs())+").");
                                 		
                                 BigDecimal dispResiduaCofin = saldo.getDispResiduaCofinanziamento();
