@@ -244,23 +244,28 @@ public class MacroAction extends BulkAction {
         if (opt == OptionBP.YES_BUTTON) {
             CRUDPdGAggregatoModuloAction crudPdGAggregatoModuloAction = new CRUDPdGAggregatoModuloAction();
             crudPdGAggregatoModuloAction.doCRUD(context, "main.Dettagli.searchtool_progetto_liv2");
-            TestataProgettiRicercaBP testataProgettiRicercaBP = (TestataProgettiRicercaBP) context.getBusinessProcess();
-            ProgettoBulk progettoBulk = new ProgettoBulk(CNRUserContext.getEsercizio(context.getUserContext()), bp.getPgModulo(), ProgettoBulk.TIPO_FASE_PREVISIONE);
-            progettoBulk = Optional.ofNullable(progettoBulk)
-                    .map(progetto -> {
-                        try {
-                            return Optional.ofNullable(getProgettoRicercaPadreComponentSession().findByPrimaryKey(context.getUserContext(), progetto))
-                                    .filter(ProgettoBulk.class::isInstance)
-                                    .map(ProgettoBulk.class::cast)
-                                    .orElse(null);
-                        } catch (ComponentException | RemoteException e) {
-                            throw new DetailedRuntimeException(e);
-                        }
-                    })
-                    .orElse(null);
-            if (Optional.ofNullable(progettoBulk).isPresent()) {
-                testataProgettiRicercaBP.basicEdit(context, progettoBulk, true);
-            }
+			TestataProgettiRicercaBP testataProgettiRicercaBP = Optional.ofNullable(context.getBusinessProcess())
+					.filter(TestataProgettiRicercaBP.class::isInstance)
+					.map(TestataProgettiRicercaBP.class::cast)
+					.orElse(null);
+            if (testataProgettiRicercaBP != null) {
+				ProgettoBulk progettoBulk = new ProgettoBulk(CNRUserContext.getEsercizio(context.getUserContext()), bp.getPgModulo(), ProgettoBulk.TIPO_FASE_PREVISIONE);
+				progettoBulk = Optional.ofNullable(progettoBulk)
+						.map(progetto -> {
+							try {
+								return Optional.ofNullable(getProgettoRicercaPadreComponentSession().findByPrimaryKey(context.getUserContext(), progetto))
+										.filter(ProgettoBulk.class::isInstance)
+										.map(ProgettoBulk.class::cast)
+										.orElse(null);
+							} catch (ComponentException | RemoteException e) {
+								throw new DetailedRuntimeException(e);
+							}
+						})
+						.orElse(null);
+				if (Optional.ofNullable(progettoBulk).isPresent()) {
+					testataProgettiRicercaBP.basicEdit(context, progettoBulk, true);
+				}
+			}
         }
         return context.findDefaultForward();
     }
