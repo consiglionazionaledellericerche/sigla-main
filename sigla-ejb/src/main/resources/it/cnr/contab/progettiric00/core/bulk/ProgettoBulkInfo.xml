@@ -740,7 +740,6 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnSearch="true"
-		readonlyPropertyOnEdit="RODatiOtherField"
 		label="Importo Finanziato" />
 	<fieldProperty
 		name="imCofinanziatoOf"
@@ -748,7 +747,6 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnSearch="true"
-		readonlyPropertyOnEdit="RODatiOtherField"
 		label="Importo Cofinanziato" />
 	<fieldProperty
 		name="imTotale"
