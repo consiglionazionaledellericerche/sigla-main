@@ -38,6 +38,10 @@ public boolean equalsByPrimaryKey(Object o) {
 	if(!compareKey(getTi_gestione(),k.getTi_gestione())) return false;
 	return true;
 }
+@Override
+public boolean equals(Object obj) {
+	return this.equalsByPrimaryKey(obj);
+}
 /* 
  * Getter dell'attributo cd_elemento_voce
  */
