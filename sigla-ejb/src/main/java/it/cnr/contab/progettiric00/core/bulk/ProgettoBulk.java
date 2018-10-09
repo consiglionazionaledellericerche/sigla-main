@@ -1102,7 +1102,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 		return this.isRODatiOtherField() || this.isDettagliPianoEconomicoPresenti();
 	}
 
-	private BulkList<Progetto_piano_economicoBulk> getAllDetailsProgettoPianoEconomico() {
+	public BulkList<Progetto_piano_economicoBulk> getAllDetailsProgettoPianoEconomico() {
 		BulkList<Progetto_piano_economicoBulk> items = new BulkList<Progetto_piano_economicoBulk>();
 		items.addAll(getDettagliPianoEconomicoTotale());
 		items.addAll(getDettagliPianoEconomicoAnnoCorrente());
