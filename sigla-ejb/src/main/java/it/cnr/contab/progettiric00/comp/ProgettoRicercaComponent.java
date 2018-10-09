@@ -5,6 +5,7 @@ import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -358,11 +359,25 @@ public ProgettoRicercaComponent() {
 					Progetto_piano_economicoBulk pianoeco = (Progetto_piano_economicoBulk) iterator.next();
 					if (pianoeco.getEsercizio_piano()!=null && !pianoeco.getEsercizio_piano().equals(0))
 						if (pianoeco.getEsercizio_piano().compareTo(((ProgettoBulk)bulk).getAnnoInizioOf())<0 || 
-								pianoeco.getEsercizio_piano().compareTo(((ProgettoBulk)bulk).getAnnoFineOf())>0)
+							pianoeco.getEsercizio_piano().compareTo(((ProgettoBulk)bulk).getAnnoFineOf())>0)
 							throw new it.cnr.jada.comp.ApplicationException("Attenzione: E' stato inserito nel piano economico un anno non compatibile con la durata del progetto!");	                	
 				}
 			}
 					
+			//VERIFICO CHE UNA VOCE DI BILANCIO NON SIA ASSOCIATA PIù VOLTE
+			BulkList<Ass_progetto_piaeco_voceBulk> newList = new BulkList<Ass_progetto_piaeco_voceBulk>();
+			((ProgettoBulk)bulk).getAllDetailsProgettoPianoEconomico().stream()
+					.map(Progetto_piano_economicoBulk::getVociBilancioAssociate).forEach(el->newList.addAll(el));
+			Optional<String> optChiaveVoceMultipla = newList.stream()
+					.map(Ass_progetto_piaeco_voceBulk::getElemento_voce)
+					.collect(Collectors.groupingBy(el->el.getEsercizio()+"/"+el.getTi_gestione()+"/"+el.getCd_elemento_voce(), Collectors.counting()))
+					.entrySet()
+					.stream()
+					.filter(el->el.getValue()>1)
+					.map(el->el.getKey()).findFirst();
+			if (optChiaveVoceMultipla.isPresent())
+				throw new it.cnr.jada.comp.ApplicationException("Attenzione: la voce di bilancio "+
+						optChiaveVoceMultipla.get()+" risulta associata a più voci del piano economico. Operazione non consentita!");				
 			return bulk;
 		}
 
