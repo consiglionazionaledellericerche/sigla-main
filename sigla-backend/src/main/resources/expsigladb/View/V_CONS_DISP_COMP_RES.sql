@@ -312,8 +312,8 @@
                       + voce_f_saldi_cdr_linea.im_mandati_reversali_imp
                      ) pagato_res,
                   v_linea_attivita_valida.cd_natura,
-                  v_linea_attivita_valida.cd_unita_piano,
-                  v_linea_attivita_valida.cd_voce_piano,
+                  NULL cd_unita_piano,
+                  NULL cd_voce_piano,
                   cnrutl002.IM_VINCOLI(voce_f_saldi_cdr_linea.esercizio,
                                        voce_f_saldi_cdr_linea.esercizio_res,
                                        voce_f_saldi_cdr_linea.cd_centro_responsabilita,
