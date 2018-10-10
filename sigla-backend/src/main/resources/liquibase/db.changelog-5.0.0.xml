@@ -974,7 +974,7 @@
     <changeSet author="raffaele.pagano" id="alter_voce_piano_economico_prg001">
         <addColumn tableName="voce_piano_economico_prg">
             <column name="tipologia" remarks="Tipologia voce piano economico" type="CHAR(3)"/>
-            <column name="fl_link_voci_bilancio_associate" type="CHAR(1)" defaultValue="N" remarks="Voci di Bilancio associate collegate in automatico. - Dominio: S = Sì; N = No;.">
+            <column name="fl_link_vocibil_associate" type="CHAR(1)" defaultValue="N" remarks="Voci di Bilancio associate collegate in automatico. - Dominio: S = Sì; N = No;.">
                 <constraints nullable="false"/>
             </column>
             <column name="fl_add_voci_bilancio" type="CHAR(1)" defaultValue="N" remarks="Voci di Bilancio associabili manualmente. - Dominio: S = Sì; N = No;.">
@@ -1097,7 +1097,7 @@
             <column name="fl_all_prev_fin" remarks="Previsione totale quota finanziata" type="CHAR(1)" />
         </addColumn>
         <update tableName="tipo_finanziamento">
-            <column name="fl_all_prev_fin" value='N' type="CHAR(1)"/>
+            <column name="fl_all_prev_fin" value='Y' type="CHAR(1)"/>
         </update>
         <addNotNullConstraint columnName="fl_all_prev_fin" tableName="tipo_finanziamento"/>
 
@@ -1105,7 +1105,7 @@
             <column name="fl_all_prev_fin" remarks="Previsione totale quota finanziata" type="CHAR(1)" />
         </addColumn>
         <update tableName="voce_piano_economico_prg">
-            <column name="fl_all_prev_fin" value='N' type="CHAR(1)"/>
+            <column name="fl_all_prev_fin" value='Y' type="CHAR(1)"/>
         </update>
         <addNotNullConstraint columnName="fl_all_prev_fin" tableName="voce_piano_economico_prg"/>
     </changeSet>
