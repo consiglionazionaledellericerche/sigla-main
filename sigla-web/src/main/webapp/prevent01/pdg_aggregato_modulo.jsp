@@ -126,7 +126,7 @@
 		<tr>
 			<td colspan=5>
                 <div class="GroupLabel">
-                    <span class="font-weight-bold text-primary d-flex justify-content-center animated bounceInLeft"><%=bp.getHintProgetto()%></span>
+                    <span class="font-weight-bold text-primary d-flex justify-content-center animated bounceInLeft"><%=bp.getHintProgetto(HttpActionContext.getUserInfo(request))%></span>
                 </div>
 			</td>
 			<td>
