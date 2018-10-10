@@ -418,7 +418,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 
 	    	if (this.isFlPrgPianoEconomico() && 
 	    			((progetto.isPianoEconomicoRequired() && Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtInizio())).isPresent() &&
-	    					Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtFine())).isPresent()) || progetto.isDettagliPianoEconomicoPresenti()))
+	    					Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtFine())).isPresent())))
 	    		hash.put(i++, new String[]{"tabPianoEconomico","Piano Economico","/progettiric00/progetto_piano_economico.jsp" });
 
 	    	if (!this.isFlInformix()) {

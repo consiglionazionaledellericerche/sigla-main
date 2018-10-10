@@ -22,7 +22,7 @@ public class EsercizioBulk extends EsercizioBase {
     final public static Integer ESERCIZIO_FINE;
     private static OrderedHashtable statoKeys;
     private static Hashtable prossimoStato;
-
+    private CdsBulk cds;
     static {
 
         Integer ESERCIZIO_INIZIO_DA_CONFIG;
@@ -171,5 +171,14 @@ public class EsercizioBulk extends EsercizioBase {
     @Override
     public String getCd_cds() {
         return Optional.ofNullable(getCds()).map(CdsBulk::getCd_unita_organizzativa).orElse(super.getCd_cds());
+    }
+
+
+    public CdsBulk getCds() {
+        return cds;
+    }
+
+    public void setCds(CdsBulk cds) {
+        this.cds = cds;
     }
 }
