@@ -11,8 +11,6 @@ public class EsercizioKey extends OggettoBulk implements KeyedPersistent {
     // ESERCIZIO DECIMAL(4,0) NOT NULL (PK)
     private java.lang.Integer esercizio;
 
-    private CdsBulk cds;
-
     public EsercizioKey() {
         super();
     }
@@ -66,11 +64,4 @@ public class EsercizioKey extends OggettoBulk implements KeyedPersistent {
                         calculateKeyHashCode(getEsercizio());
     }
 
-    public CdsBulk getCds() {
-        return cds;
-    }
-
-    public void setCds(CdsBulk cds) {
-        this.cds = cds;
-    }
 }
