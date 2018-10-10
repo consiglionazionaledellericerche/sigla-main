@@ -202,8 +202,8 @@
                   voce_f_saldi_cdr_linea.im_mandati_reversali_pro
                  ),
           v_linea_attivita_valida.cd_natura, natura.ds_natura, natura.tipo,
-          v_linea_attivita_valida.cd_unita_piano,
-          v_linea_attivita_valida.cd_voce_piano
+          NULL cd_unita_piano,
+          NULL cd_voce_piano
      FROM v_progetto_padre modu,
           v_linea_attivita_valida,
           unita_organizzativa cds,
