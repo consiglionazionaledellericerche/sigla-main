@@ -32,6 +32,7 @@ import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.progettiric00.tabrif.bulk.*;
 import it.cnr.contab.progettiric00.bp.*;
 import it.cnr.contab.utenze00.bulk.*;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.config00.bulk.*;
@@ -368,16 +369,19 @@ public ProgettoRicercaComponent() {
 			BulkList<Ass_progetto_piaeco_voceBulk> newList = new BulkList<Ass_progetto_piaeco_voceBulk>();
 			((ProgettoBulk)bulk).getAllDetailsProgettoPianoEconomico().stream()
 					.map(Progetto_piano_economicoBulk::getVociBilancioAssociate).forEach(el->newList.addAll(el));
-			Optional<String> optChiaveVoceMultipla = newList.stream()
-					.map(Ass_progetto_piaeco_voceBulk::getElemento_voce)
-					.collect(Collectors.groupingBy(el->el.getEsercizio()+"/"+el.getTi_gestione()+"/"+el.getCd_elemento_voce(), Collectors.counting()))
+			Optional<Elemento_voceBulk> optChiaveVoceMultipla = newList.stream()
+					.collect(Collectors.groupingBy(Ass_progetto_piaeco_voceBulk::getElemento_voce, Collectors.counting()))
 					.entrySet()
 					.stream()
 					.filter(el->el.getValue()>1)
-					.map(el->el.getKey()).findFirst();
+					.map(el->el.getKey())
+					.findFirst();
 			if (optChiaveVoceMultipla.isPresent())
-				throw new it.cnr.jada.comp.ApplicationException("Attenzione: la voce di bilancio "+
-						optChiaveVoceMultipla.get()+" risulta associata a più voci del piano economico. Operazione non consentita!");				
+				throw new ApplicationMessageFormatException("Attenzione: la voce di bilancio {0}/{1}/{2} risulta associata a più voci del piano economico. " +
+                        "Operazione non consentita!",
+                        String.valueOf(optChiaveVoceMultipla.get().getEsercizio()),
+                        optChiaveVoceMultipla.get().getTi_gestione(),
+                        optChiaveVoceMultipla.get().getCd_elemento_voce());
 			return bulk;
 		}
 
@@ -989,7 +993,7 @@ public Parametri_cdsBulk parametriCds(UserContext aUC, ProgettoBulk bulk) throws
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param progetto il <code>ProgettoBulk</code> progetto di ricerca.
-  * @param gruppi <code>OggettoBulk</code> la UO di cui fare la verifica.
+  * @param dett <code>OggettoBulk</code> la UO di cui fare la verifica.
 **/ 
 public void validaCancellazioneUoAssociata(UserContext userContext, ProgettoBulk progetto, OggettoBulk dett) throws ComponentException{
 	Progetto_uoBulk pruo = (Progetto_uoBulk) dett;
