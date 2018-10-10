@@ -6,7 +6,7 @@
 		tableName="CHIUSURA_COEP">
 		<columnMapping
 			columnName="CD_CDS"
-			propertyName="esercizio_rif.cd_cds" />
+			propertyName="esercizio_rif.cds.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="ESERCIZIO"
 			propertyName="esercizio_rif.esercizio"/>
