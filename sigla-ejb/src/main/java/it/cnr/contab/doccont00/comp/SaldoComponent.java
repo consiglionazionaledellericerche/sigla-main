@@ -1283,16 +1283,18 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                                 		.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
                                 		.map(TipoFinanziamentoBulk::getFlAllPrevFin)
                                 		.orElse(Boolean.TRUE) &&
-                                	Optional.ofNullable(e.getVoce_piano_economico())
+                                    	dispResiduaFin.compareTo(BigDecimal.ZERO)!=0) {
+                                	Voce_piano_economico_prgBulk vocePianoEconomico = (Voce_piano_economico_prgBulk)((Voce_piano_economico_prgHome)getHome(userContext, Voce_piano_economico_prgBulk.class)).findByPrimaryKey(e.getVoce_piano_economico());
+                                	if (Optional.ofNullable(vocePianoEconomico)
                                 		.map(Voce_piano_economico_prgBulk::getFlAllPrevFin)
-                                		.orElse(Boolean.TRUE) &&
-                                	dispResiduaFin.compareTo(BigDecimal.ZERO)!=0)
-                                    throw new ApplicationException(
-                                            "Impossibile effettuare l'operazione !\n"+
-                                                    "L'importo finanziato del progetto "+(e.getEsercizio_piano().equals(0)?"":"per l'esercizio "+e.getEsercizio_piano())+
-                                                    " per la voce di piano economico "+e.getCd_voce_piano()+
-                                                    " non corrisponde all'importo totale fonti esterne della previsione " +
-                                                    "(diff: "+new it.cnr.contab.util.EuroFormat().format(dispResiduaFin.abs())+").");
+                                		.orElse(Boolean.TRUE))
+	                                    throw new ApplicationException(
+	                                            "Impossibile effettuare l'operazione !\n"+
+	                                                    "L'importo finanziato del progetto "+(e.getEsercizio_piano().equals(0)?"":"per l'esercizio "+e.getEsercizio_piano())+
+	                                                    " per la voce di piano economico "+e.getCd_voce_piano()+
+	                                                    " non corrisponde all'importo totale fonti esterne della previsione " +
+	                                                    "(diff: "+new it.cnr.contab.util.EuroFormat().format(dispResiduaFin.abs())+").");
+            					}
                                 		
                                 BigDecimal dispResiduaCofin = saldo.getDispResiduaCofinanziamento();
 
