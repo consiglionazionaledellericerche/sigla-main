@@ -236,7 +236,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         } else {
             ((AnagraficoBulk) bulk).setCodiceAmministrazioneIpa(null);
             if (((AnagraficoBulk) bulk).getDataAvvioFattElettr() == null){
-                if (((AnagraficoBulk) bulk).isItaliano()){
+                if (((AnagraficoBulk) bulk).isItaliano() && !((AnagraficoBulk) bulk).isEntePubblico()){
                 	try {
                 		((AnagraficoBulk) bulk).setDataAvvioFattElettr(Utility.createConfigurazioneCnrComponentSession().
                 				getDt01(userContext, CNRUserContext.getEsercizio(userContext), null,"FATTURAZIONE_ELETTRONICA", "INIZIO_TRA_PRIVATI"));
