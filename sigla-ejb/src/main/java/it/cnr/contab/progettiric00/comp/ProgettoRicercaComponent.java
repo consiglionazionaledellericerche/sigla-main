@@ -370,6 +370,7 @@ public ProgettoRicercaComponent() {
 			((ProgettoBulk)bulk).getAllDetailsProgettoPianoEconomico().stream()
 					.map(Progetto_piano_economicoBulk::getVociBilancioAssociate).forEach(el->newList.addAll(el));
 			Optional<Elemento_voceBulk> optChiaveVoceMultipla = newList.stream()
+                    .filter(ass_progetto_piaeco_voceBulk -> Optional.ofNullable(ass_progetto_piaeco_voceBulk.getElemento_voce()).isPresent())
 					.collect(Collectors.groupingBy(Ass_progetto_piaeco_voceBulk::getElemento_voce, Collectors.counting()))
 					.entrySet()
 					.stream()
