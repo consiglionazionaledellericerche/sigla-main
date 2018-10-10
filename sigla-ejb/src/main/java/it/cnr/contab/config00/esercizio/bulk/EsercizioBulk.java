@@ -41,7 +41,6 @@ public class EsercizioBulk extends EsercizioBase {
         ESERCIZIO_FINE = ESERCIZIO_FINE_DA_CONFIG;
     }
 
-    private CdsBulk cds;
     /**
      * Primo costruttore della classe <code>EsercizioBulk</code>.
      */
@@ -169,16 +168,8 @@ public class EsercizioBulk extends EsercizioBase {
             throw new ValidationException("E' necessario indicare lo STATO dell'esercizio contabile.");
     }
 
-    public CdsBulk getCds() {
-        return cds;
-    }
-
-    public void setCds(CdsBulk cds) {
-        this.cds = cds;
-    }
-
     @Override
     public String getCd_cds() {
-        return Optional.ofNullable(cds).map(CdsBulk::getCd_unita_organizzativa).orElse(super.getCd_cds());
+        return Optional.ofNullable(getCds()).map(CdsBulk::getCd_unita_organizzativa).orElse(super.getCd_cds());
     }
 }
