@@ -421,11 +421,12 @@ public void aggiornaSaldiAnniSuccessivi(it.cnr.jada.UserContext param1, String p
 		}
 	}
 }
-public void checkDispPianoEconomicoProgetto(it.cnr.jada.UserContext param1, it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public void checkDispPianoEconomicoProgetto(it.cnr.jada.UserContext param1, it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk param2, boolean param3) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		invoke("checkDispPianoEconomicoProgetto",new Object[] {
 			param1,
-			param2});
+			param2,
+			param3});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {
