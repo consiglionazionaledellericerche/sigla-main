@@ -246,7 +246,7 @@ public ProgettoRicercaComponent() {
 						testata.setDettagliPartner_esterni(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPartner_esterni(testata)));
 						testata.setSpeseEsercizio(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliSpese(userContext,testata)));
 						
-						List<Progetto_piano_economicoBulk> progettoPiano = new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPianoEconomico(userContext,testata));
+						List<Progetto_piano_economicoBulk> progettoPiano = new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPianoEconomico(userContext,testata.getPg_progetto()));
 						progettoPiano.stream().forEach(el->el.setProgetto(testata));
 						testata.setDettagliPianoEconomicoTotale(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(Integer.valueOf(0))).collect(Collectors.toList())));
 						testata.setDettagliPianoEconomicoAnnoCorrente(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(testata.getEsercizio())).collect(Collectors.toList())));
