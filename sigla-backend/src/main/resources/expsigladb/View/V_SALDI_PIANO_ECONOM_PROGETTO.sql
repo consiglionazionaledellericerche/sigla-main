@@ -181,7 +181,7 @@
                  AND b.cd_linea_attivita = c.cd_linea_attivita
                  AND c.pg_progetto = d.pg_progetto
                  AND d.esercizio_piano = 0
-                 AND d.esercizio_voce = b.esercizio
+                 AND d.esercizio_voce = b.esercizio_res
                  AND d.ti_appartenenza = b.ti_appartenenza
                  AND d.ti_gestione = b.ti_gestione
                  AND d.cd_elemento_voce = b.cd_elemento_voce
@@ -208,7 +208,7 @@
                  AND a.cd_linea_attivita = b.cd_linea_attivita
                  AND b.pg_progetto = c.pg_progetto
                  AND c.esercizio_piano = 0
-                 AND c.esercizio_voce = a.esercizio
+                 AND c.esercizio_voce = a.esercizio_res
                  AND c.ti_appartenenza = a.ti_appartenenza
                  AND c.ti_gestione = a.ti_gestione
                  AND c.cd_elemento_voce = a.cd_elemento_voce
@@ -360,8 +360,8 @@
                  AND b.cd_cdr = c.cd_centro_responsabilita
                  AND b.cd_linea_attivita = c.cd_linea_attivita
                  AND c.pg_progetto = d.pg_progetto
-                 AND d.esercizio_piano = b.esercizio
-                 AND d.esercizio_voce = b.esercizio
+                 AND d.esercizio_piano = b.esercizio_res
+                 AND d.esercizio_voce = b.esercizio_res
                  AND d.ti_appartenenza = b.ti_appartenenza
                  AND d.ti_gestione = b.ti_gestione
                  AND d.cd_elemento_voce = b.cd_elemento_voce
@@ -387,8 +387,8 @@
                  AND a.cd_centro_responsabilita = b.cd_centro_responsabilita
                  AND a.cd_linea_attivita = b.cd_linea_attivita
                  AND b.pg_progetto = c.pg_progetto
-                 AND c.esercizio_piano = b.esercizio
-                 AND c.esercizio_voce = a.esercizio
+                 AND c.esercizio_piano = a.esercizio_res
+                 AND c.esercizio_voce = a.esercizio_res
                  AND c.ti_appartenenza = a.ti_appartenenza
                  AND c.ti_gestione = a.ti_gestione
                  AND c.cd_elemento_voce = a.cd_elemento_voce) x
