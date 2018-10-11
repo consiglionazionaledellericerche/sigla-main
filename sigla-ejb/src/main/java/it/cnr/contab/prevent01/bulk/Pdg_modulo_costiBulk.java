@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
@@ -27,7 +28,8 @@ public class Pdg_modulo_costiBulk extends Pdg_modulo_costiBase {
 	private BigDecimal spese_accentrate_fonti_interne_aree;
 	private BulkList dettagliSpese = new BulkList();
 	private BulkList dettagliContrSpese = new BulkList();
-		
+	private BulkList dettagliPianoEconomicoAnnoCorrente = new BulkList();
+
 	public Pdg_modulo_costiBulk() {
 		super();
 	}
@@ -357,5 +359,13 @@ public class Pdg_modulo_costiBulk extends Pdg_modulo_costiBase {
 	 */
 	public void setDettagliContrSpese(BulkList list) {
 		dettagliContrSpese = list;
-	} 
+	}
+	
+	public BulkList getDettagliPianoEconomicoAnnoCorrente() {
+		return dettagliPianoEconomicoAnnoCorrente;
+	}
+
+	public void setDettagliPianoEconomicoAnnoCorrente(BulkList dettagliPianoEconomicoAnnoCorrente) {
+		this.dettagliPianoEconomicoAnnoCorrente = dettagliPianoEconomicoAnnoCorrente;
+	}
 }
