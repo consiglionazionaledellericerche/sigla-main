@@ -1,4 +1,4 @@
-CREATE OR REPLACE Procedure         PRC_LOAD_SITUAZIONE_PROGETTI
+CREATE OR REPLACE Procedure PRC_LOAD_SITUAZIONE_PROGETTI
 (P_ESERCIZIO             IN ESERCIZIO.ESERCIZIO%TYPE,
  P_PROGETTO              IN PROGETTO_SIP.PG_PROGETTO%TYPE,
  P_UO                    IN UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA%TYPE,
@@ -231,11 +231,11 @@ Begin
                                END esercizio_res,
                           'S' tipo,
                           CASE WHEN P_ROTTURA_PIANO='S'
-                               THEN cd_unita_piano
+                               THEN c.cd_unita_organizzativa
                                ELSE 'PIANOUNICO'
                                END cd_unita_piano,
                           CASE WHEN P_ROTTURA_PIANO='S'
-                               THEN cd_voce_piano
+                               THEN c.cd_voce_piano
                                ELSE 'PIANOUNICO'
                                END cd_voce_piano,
                           CASE WHEN P_ROTTURA_GAE='S'
@@ -258,7 +258,8 @@ Begin
                                THEN 1
                                ELSE 0
                                END contamov
-                   FROM pdg_modulo_spese_gest a, v_linea_attivita_valida b
+                   FROM pdg_modulo_spese_gest a, v_linea_attivita_valida b,
+                        ass_progetto_piaeco_voce c
                    WHERE a.cd_cdr_assegnatario = P_CENTRO_RESPONSABILITA
                    AND   b.esercizio = P_ESERCIZIO
                    AND   a.cd_cdr_assegnatario = b.cd_centro_responsabilita
@@ -266,6 +267,12 @@ Begin
                    AND   b.pg_progetto=P_PG_PROGLIV2
                    AND   b.cd_linea_attivita = NVL(decode(P_GAE,'*',null,P_GAE), b.cd_linea_attivita)
                    AND   (P_RESPONSABILE_GAE IS NULL OR b.cd_responsabile_terzo=P_RESPONSABILE_GAE)
+                   AND   b.pg_progetto = c.pg_progetto (+)
+                   AND   a.esercizio = c.esercizio_piano (+)
+                   AND   a.esercizio = c.esercizio_voce (+)
+                   AND   a.ti_appartenenza = c.ti_appartenenza (+)
+                   AND   a.ti_gestione = c.ti_gestione (+)
+                   AND   a.cd_elemento_voce = c.cd_elemento_voce (+)
                    UNION ALL
                    SELECT a.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -274,11 +281,11 @@ Begin
                                END esercizio_res,
                           'S' tipo,
                           CASE WHEN P_ROTTURA_PIANO='S'
-                               THEN cd_unita_piano
+                               THEN d.cd_unita_organizzativa
                                ELSE 'PIANOUNICO'
                                END cd_unita_piano,
                           CASE WHEN P_ROTTURA_PIANO='S'
-                               THEN cd_voce_piano
+                               THEN d.cd_voce_piano
                                ELSE 'PIANOUNICO'
                                END cd_voce_piano,
                           CASE WHEN P_ROTTURA_GAE='S'
@@ -303,7 +310,8 @@ Begin
                                END contamov
                    FROM pdg_variazione a,
                         pdg_variazione_riga_gest b,
-                        v_linea_attivita_valida c
+                        v_linea_attivita_valida c,
+                        ass_progetto_piaeco_voce d
                    WHERE a.esercizio = b.esercizio
                    AND   a.pg_variazione_pdg = b.pg_variazione_pdg
                    AND   a.stato IN ('APP', 'APF')
@@ -314,6 +322,12 @@ Begin
                    AND   c.pg_progetto=P_PG_PROGLIV2
                    AND   c.cd_linea_attivita = NVL(decode(P_GAE,'*',null,P_GAE), c.cd_linea_attivita)
                    AND   (P_RESPONSABILE_GAE IS NULL OR c.cd_responsabile_terzo=P_RESPONSABILE_GAE)
+                   AND   c.pg_progetto = d.pg_progetto (+)
+                   AND   b.esercizio = d.esercizio_piano (+)
+                   AND   b.esercizio = d.esercizio_voce (+)
+                   AND   b.ti_appartenenza = d.ti_appartenenza (+)
+                   AND   b.ti_gestione = d.ti_gestione (+)
+                   AND   b.cd_elemento_voce = d.cd_elemento_voce (+)
                    UNION ALL
                    SELECT c.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -322,11 +336,11 @@ Begin
                                END esercizio_res,
                           'S' tipo,
                           CASE WHEN P_ROTTURA_PIANO='S'
-                               THEN cd_unita_piano
+                               THEN c.cd_unita_organizzativa
                                ELSE 'PIANOUNICO'
                                END cd_unita_piano,
                           CASE WHEN P_ROTTURA_PIANO='S'
-                               THEN cd_voce_piano
+                               THEN e.cd_voce_piano
                                ELSE 'PIANOUNICO'
                                END cd_voce_piano,
                           CASE WHEN P_ROTTURA_GAE='S'
@@ -341,7 +355,7 @@ Begin
                           0 stanziamento_acc, 0 variazioni_acc,
                           0 stanziamento, -(im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA))) variazioni,
                           0 impegnato, 0 pagato, 1 contamov
-                   FROM obbligazione_scad_voce a, obbligazione_scadenzario b, obbligazione c, v_linea_attivita_valida d
+                   FROM obbligazione_scad_voce a, obbligazione_scadenzario b, obbligazione c, v_linea_attivita_valida d, ass_progetto_piaeco_voce e
                    WHERE a.cd_cds = b.cd_cds
                    and   a.esercizio=b.esercizio
                    and   a.esercizio_originale=b.esercizio_originale
@@ -361,6 +375,12 @@ Begin
                    AND   d.cd_linea_attivita = NVL(decode(P_GAE,'*',null,P_GAE), d.cd_linea_attivita)
                    AND   (P_RESPONSABILE_GAE IS NULL OR d.cd_responsabile_terzo=P_RESPONSABILE_GAE)
                    AND   (im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)))!=0
+                   AND   d.pg_progetto = e.pg_progetto (+)
+                   AND   a.esercizio = e.esercizio_piano (+)
+                   AND   a.esercizio = e.esercizio_voce (+)
+                   AND   a.ti_appartenenza = e.ti_appartenenza (+)
+                   AND   a.ti_gestione = e.ti_gestione (+)
+                   AND   a.cd_voce = e.cd_elemento_voce (+)
                    UNION ALL
                    SELECT c.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -369,11 +389,11 @@ Begin
                                END esercizio_res,
                           'S' tipo,
                           CASE WHEN P_ROTTURA_PIANO='S'
-                               THEN cd_unita_piano
+                               THEN e.cd_unita_organizzativa
                                ELSE 'PIANOUNICO'
                                END cd_unita_piano,
                           CASE WHEN P_ROTTURA_PIANO='S'
-                               THEN cd_voce_piano
+                               THEN e.cd_voce_piano
                                ELSE 'PIANOUNICO'
                                END cd_voce_piano,
                           CASE WHEN P_ROTTURA_GAE='S'
@@ -387,7 +407,7 @@ Begin
                           0 stanziamento_acc, 0 variazioni_acc,
                           0 stanziamento, im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)) variazioni,
                           0 impegnato, 0 pagato, 1 contamov
-                   FROM obbligazione_scad_voce a, obbligazione_scadenzario b, obbligazione c, v_linea_attivita_valida d
+                   FROM obbligazione_scad_voce a, obbligazione_scadenzario b, obbligazione c, v_linea_attivita_valida d, ass_progetto_piaeco_voce e
                    WHERE a.cd_cds = b.cd_cds
                    and   a.esercizio=b.esercizio
                    and   a.esercizio_originale=b.esercizio_originale
@@ -407,6 +427,12 @@ Begin
                    AND   d.cd_linea_attivita = NVL(decode(P_GAE,'*',null,P_GAE), d.cd_linea_attivita)
                    AND   (P_RESPONSABILE_GAE IS NULL OR d.cd_responsabile_terzo=P_RESPONSABILE_GAE)
                    AND   (im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)))!=0
+                   AND   d.pg_progetto = e.pg_progetto (+)
+                   AND   a.esercizio = e.esercizio_piano (+)
+                   AND   a.esercizio = e.esercizio_voce (+)
+                   AND   a.ti_appartenenza = e.ti_appartenenza (+)
+                   AND   a.ti_gestione = e.ti_gestione (+)
+                   AND   a.cd_voce = e.cd_elemento_voce (+)                   
                    UNION ALL
                    SELECT c.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -415,11 +441,11 @@ Begin
                                END esercizio_res,
                           'E' tipo,
                           CASE WHEN P_ROTTURA_PIANO='S'
-                               THEN cd_unita_piano
+                               THEN e.cd_unita_organizzativa
                                ELSE 'PIANOUNICO'
                                END cd_unita_piano,
                           CASE WHEN P_ROTTURA_PIANO='S'
-                               THEN cd_voce_piano
+                               THEN e.cd_voce_piano
                                ELSE 'PIANOUNICO'
                                END cd_voce_piano,
                           CASE WHEN P_ROTTURA_GAE='S'
@@ -434,7 +460,7 @@ Begin
                           0 stanziamento_acc, 0 variazioni_acc,
                           0 stanziamento, -(im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA))) variazioni,
                           0 impegnato, 0 pagato, 1 contamov
-                   FROM accertamento_scad_voce a, accertamento_scadenzario b, accertamento c, v_linea_attivita_valida d
+                   FROM accertamento_scad_voce a, accertamento_scadenzario b, accertamento c, v_linea_attivita_valida d, ass_progetto_piaeco_voce e
                    WHERE a.cd_cds = b.cd_cds
                    and   a.esercizio=b.esercizio
                    and   a.esercizio_originale=b.esercizio_originale
@@ -454,6 +480,12 @@ Begin
                    AND   d.cd_linea_attivita = NVL(decode(P_GAE,'*',null,P_GAE), d.cd_linea_attivita)
                    AND   (P_RESPONSABILE_GAE IS NULL OR d.cd_responsabile_terzo=P_RESPONSABILE_GAE)
                    AND   (im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)))!=0
+                   AND   d.pg_progetto = e.pg_progetto (+)
+                   AND   c.esercizio = e.esercizio_piano (+)
+                   AND   c.esercizio = e.esercizio_voce (+)
+                   AND   c.ti_appartenenza = e.ti_appartenenza (+)
+                   AND   c.ti_gestione = e.ti_gestione (+)
+                   AND   c.cd_voce = e.cd_elemento_voce (+)                      
                    UNION ALL
                    SELECT c.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -462,11 +494,11 @@ Begin
                                END esercizio_res,
                           'E' tipo,
                           CASE WHEN P_ROTTURA_PIANO='S'
-                               THEN cd_unita_piano
+                               THEN e.cd_unita_organizzativa
                                ELSE 'PIANOUNICO'
                                END cd_unita_piano,
                           CASE WHEN P_ROTTURA_PIANO='S'
-                               THEN cd_voce_piano
+                               THEN e.cd_voce_piano
                                ELSE 'PIANOUNICO'
                                END cd_voce_piano,
                           CASE WHEN P_ROTTURA_GAE='S'
@@ -480,7 +512,7 @@ Begin
                           0 stanziamento_acc, 0 variazioni_acc,
                           0 stanziamento, im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)) variazioni,
                           0 impegnato, 0 pagato, 1 contamov
-                   FROM accertamento_scad_voce a, accertamento_scadenzario b, accertamento c, v_linea_attivita_valida d
+                   FROM accertamento_scad_voce a, accertamento_scadenzario b, accertamento c, v_linea_attivita_valida d, ass_progetto_piaeco_voce e
                    WHERE a.cd_cds = b.cd_cds
                    and   a.esercizio=b.esercizio
                    and   a.esercizio_originale=b.esercizio_originale
@@ -500,6 +532,12 @@ Begin
                    AND   d.cd_linea_attivita = NVL(decode(P_GAE,'*',null,P_GAE), d.cd_linea_attivita)
                    AND   (P_RESPONSABILE_GAE IS NULL OR d.cd_responsabile_terzo=P_RESPONSABILE_GAE)
                    AND   (im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)))!=0
+                   AND   d.pg_progetto = e.pg_progetto (+)
+                   AND   c.esercizio = e.esercizio_piano (+)
+                   AND   c.esercizio = e.esercizio_voce (+)
+                   AND   c.ti_appartenenza = e.ti_appartenenza (+)
+                   AND   c.ti_gestione = e.ti_gestione (+)
+                   AND   c.cd_voce = e.cd_elemento_voce (+) 
                    UNION ALL
                    SELECT a.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -508,11 +546,11 @@ Begin
                                END esercizio_res,
                           'S' tipo,
                           CASE WHEN P_ROTTURA_PIANO='S'
-                               THEN cd_unita_piano
+                               THEN c.cd_unita_organizzativa
                                ELSE 'PIANOUNICO'
                                END cd_unita_piano,
                           CASE WHEN P_ROTTURA_PIANO='S'
-                               THEN cd_voce_piano
+                               THEN c.cd_voce_piano
                                ELSE 'PIANOUNICO'
                                END cd_voce_piano,
                           CASE WHEN P_ROTTURA_GAE='S'
@@ -526,7 +564,7 @@ Begin
                                END cd_elemento_voce,
                           0 stanziamento_acc, 0 variazioni_acc,
                           NVL(a.im_residuo, 0), 0 variazioni, 0 impegnato, 0 pagato, 1 contamov
-                   FROM pdg_residuo_det a, v_linea_attivita_valida b
+                   FROM pdg_residuo_det a, v_linea_attivita_valida b, ass_progetto_piaeco_voce c
                    WHERE a.esercizio = 2005
                    AND   a.stato != 'A'
                    AND   a.cd_cdr_linea = P_CENTRO_RESPONSABILITA
@@ -535,7 +573,13 @@ Begin
                    AND   a.cd_linea_attivita = b.cd_linea_attivita
                    AND   b.pg_progetto=P_PG_PROGLIV2
                    AND   b.cd_linea_attivita = NVL(decode(P_GAE,'*',null,P_GAE), b.cd_linea_attivita)
-                   AND   (P_RESPONSABILE_GAE IS NULL OR b.cd_responsabile_terzo=P_RESPONSABILE_GAE)) a
+                   AND   (P_RESPONSABILE_GAE IS NULL OR b.cd_responsabile_terzo=P_RESPONSABILE_GAE)
+                   AND   b.pg_progetto = c.pg_progetto (+)
+                   AND   a.esercizio = c.esercizio_piano (+)
+                   AND   a.esercizio = c.esercizio_voce (+)
+                   AND   a.ti_appartenenza = c.ti_appartenenza (+)
+                   AND   a.ti_gestione = c.ti_gestione (+)
+                   AND   a.cd_elemento_voce = c.cd_elemento_voce (+)) a
              WHERE a.esercizio <= P_ESERCIZIO
              GROUP BY a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_unita_piano, a.cd_voce_piano, a.cd_elemento_voce) P
              WHERE (p.stanziamento != 0 OR p.variazioni != 0 OR p.impacc != 0 OR p.pagris != 0 or p.nummov!=0)
