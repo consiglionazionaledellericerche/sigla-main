@@ -268,11 +268,12 @@ Begin
                    AND   b.cd_linea_attivita = NVL(decode(P_GAE,'*',null,P_GAE), b.cd_linea_attivita)
                    AND   (P_RESPONSABILE_GAE IS NULL OR b.cd_responsabile_terzo=P_RESPONSABILE_GAE)
                    AND   b.pg_progetto = c.pg_progetto (+)
-                   AND   a.esercizio = c.esercizio_piano (+)
-                   AND   a.esercizio = c.esercizio_voce (+)
-                   AND   a.ti_appartenenza = c.ti_appartenenza (+)
-                   AND   a.ti_gestione = c.ti_gestione (+)
-                   AND   a.cd_elemento_voce = c.cd_elemento_voce (+)
+                   AND   (c.pg_progetto is null or 
+                          (a.esercizio = c.esercizio_piano AND   
+                           a.esercizio = c.esercizio_voce AND
+                           a.ti_appartenenza = c.ti_appartenenza AND
+                           a.ti_gestione = c.ti_gestione AND
+                           a.cd_elemento_voce = c.cd_elemento_voce))
                    UNION ALL
                    SELECT a.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -323,11 +324,12 @@ Begin
                    AND   c.cd_linea_attivita = NVL(decode(P_GAE,'*',null,P_GAE), c.cd_linea_attivita)
                    AND   (P_RESPONSABILE_GAE IS NULL OR c.cd_responsabile_terzo=P_RESPONSABILE_GAE)
                    AND   c.pg_progetto = d.pg_progetto (+)
-                   AND   b.esercizio = d.esercizio_piano (+)
-                   AND   b.esercizio = d.esercizio_voce (+)
-                   AND   b.ti_appartenenza = d.ti_appartenenza (+)
-                   AND   b.ti_gestione = d.ti_gestione (+)
-                   AND   b.cd_elemento_voce = d.cd_elemento_voce (+)
+                   AND   (d.pg_progetto is null or 
+                          (b.esercizio = d.esercizio_piano AND   
+                           b.esercizio = d.esercizio_voce AND
+                           b.ti_appartenenza = d.ti_appartenenza AND
+                           b.ti_gestione = d.ti_gestione AND
+                           b.cd_elemento_voce = d.cd_elemento_voce))
                    UNION ALL
                    SELECT c.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -376,11 +378,12 @@ Begin
                    AND   (P_RESPONSABILE_GAE IS NULL OR d.cd_responsabile_terzo=P_RESPONSABILE_GAE)
                    AND   (im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)))!=0
                    AND   d.pg_progetto = e.pg_progetto (+)
-                   AND   a.esercizio = e.esercizio_piano (+)
-                   AND   a.esercizio = e.esercizio_voce (+)
-                   AND   a.ti_appartenenza = e.ti_appartenenza (+)
-                   AND   a.ti_gestione = e.ti_gestione (+)
-                   AND   a.cd_voce = e.cd_elemento_voce (+)
+                   AND   (e.pg_progetto is null or 
+                          (a.esercizio = e.esercizio_piano AND   
+                           a.esercizio = e.esercizio_voce AND
+                           a.ti_appartenenza = e.ti_appartenenza AND
+                           a.ti_gestione = e.ti_gestione AND
+                           a.cd_voce = e.cd_elemento_voce))
                    UNION ALL
                    SELECT c.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -428,11 +431,12 @@ Begin
                    AND   (P_RESPONSABILE_GAE IS NULL OR d.cd_responsabile_terzo=P_RESPONSABILE_GAE)
                    AND   (im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)))!=0
                    AND   d.pg_progetto = e.pg_progetto (+)
-                   AND   a.esercizio = e.esercizio_piano (+)
-                   AND   a.esercizio = e.esercizio_voce (+)
-                   AND   a.ti_appartenenza = e.ti_appartenenza (+)
-                   AND   a.ti_gestione = e.ti_gestione (+)
-                   AND   a.cd_voce = e.cd_elemento_voce (+)                   
+                   AND   (e.pg_progetto is null or 
+                          (a.esercizio = e.esercizio_piano AND   
+                           a.esercizio = e.esercizio_voce AND
+                           a.ti_appartenenza = e.ti_appartenenza AND
+                           a.ti_gestione = e.ti_gestione AND
+                           a.cd_voce = e.cd_elemento_voce))
                    UNION ALL
                    SELECT c.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -481,11 +485,12 @@ Begin
                    AND   (P_RESPONSABILE_GAE IS NULL OR d.cd_responsabile_terzo=P_RESPONSABILE_GAE)
                    AND   (im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)))!=0
                    AND   d.pg_progetto = e.pg_progetto (+)
-                   AND   c.esercizio = e.esercizio_piano (+)
-                   AND   c.esercizio = e.esercizio_voce (+)
-                   AND   c.ti_appartenenza = e.ti_appartenenza (+)
-                   AND   c.ti_gestione = e.ti_gestione (+)
-                   AND   c.cd_voce = e.cd_elemento_voce (+)                      
+                   AND   (e.pg_progetto is null or 
+                          (c.esercizio = e.esercizio_piano AND   
+                           c.esercizio = e.esercizio_voce AND
+                           c.ti_appartenenza = e.ti_appartenenza AND
+                           c.ti_gestione = e.ti_gestione AND
+                           c.cd_voce = e.cd_elemento_voce))
                    UNION ALL
                    SELECT c.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -533,11 +538,12 @@ Begin
                    AND   (P_RESPONSABILE_GAE IS NULL OR d.cd_responsabile_terzo=P_RESPONSABILE_GAE)
                    AND   (im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)))!=0
                    AND   d.pg_progetto = e.pg_progetto (+)
-                   AND   c.esercizio = e.esercizio_piano (+)
-                   AND   c.esercizio = e.esercizio_voce (+)
-                   AND   c.ti_appartenenza = e.ti_appartenenza (+)
-                   AND   c.ti_gestione = e.ti_gestione (+)
-                   AND   c.cd_voce = e.cd_elemento_voce (+) 
+                   AND   (e.pg_progetto is null or 
+                          (c.esercizio = e.esercizio_piano AND   
+                           c.esercizio = e.esercizio_voce AND
+                           c.ti_appartenenza = e.ti_appartenenza AND
+                           c.ti_gestione = e.ti_gestione AND
+                           c.cd_voce = e.cd_elemento_voce))
                    UNION ALL
                    SELECT a.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -575,11 +581,12 @@ Begin
                    AND   b.cd_linea_attivita = NVL(decode(P_GAE,'*',null,P_GAE), b.cd_linea_attivita)
                    AND   (P_RESPONSABILE_GAE IS NULL OR b.cd_responsabile_terzo=P_RESPONSABILE_GAE)
                    AND   b.pg_progetto = c.pg_progetto (+)
-                   AND   a.esercizio = c.esercizio_piano (+)
-                   AND   a.esercizio = c.esercizio_voce (+)
-                   AND   a.ti_appartenenza = c.ti_appartenenza (+)
-                   AND   a.ti_gestione = c.ti_gestione (+)
-                   AND   a.cd_elemento_voce = c.cd_elemento_voce (+)) a
+                   AND   (c.pg_progetto is null or 
+                          (a.esercizio = c.esercizio_piano AND   
+                           a.esercizio = c.esercizio_voce AND
+                           a.ti_appartenenza = c.ti_appartenenza AND
+                           a.ti_gestione = c.ti_gestione AND
+                           a.cd_elemento_voce = c.cd_elemento_voce))) a
              WHERE a.esercizio <= P_ESERCIZIO
              GROUP BY a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_unita_piano, a.cd_voce_piano, a.cd_elemento_voce) P
              WHERE (p.stanziamento != 0 OR p.variazioni != 0 OR p.impacc != 0 OR p.pagris != 0 or p.nummov!=0)
