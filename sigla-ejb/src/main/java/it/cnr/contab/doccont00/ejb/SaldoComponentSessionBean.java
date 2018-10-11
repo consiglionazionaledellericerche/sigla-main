@@ -382,10 +382,10 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param1,componentObj,e);
 		}
 	}
-	public void checkDispPianoEconomicoProgetto(it.cnr.jada.UserContext param1, it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk param2) throws ComponentException,javax.ejb.EJBException {
+	public void checkDispPianoEconomicoProgetto(it.cnr.jada.UserContext param1, it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk param2, boolean param3) throws ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param1,componentObj);
 		try {
-			componentObj.checkDispPianoEconomicoProgetto(param1,param2);
+			componentObj.checkDispPianoEconomicoProgetto(param1,param2,param3);
 			component_invocation_succes(param1,componentObj);
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(param1,componentObj);
