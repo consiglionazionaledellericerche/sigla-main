@@ -650,4 +650,15 @@ public class ProgettoHome extends BulkHome {
 		PersistentHome otherHome = getHomeCache().getHome(Progetto_other_fieldBulk.class);
 		return (Progetto_other_fieldBulk)otherHome.findByPrimaryKey(new Progetto_other_fieldBulk(testata.getPg_progetto()));
 	}
+
+	@Override
+	public Persistent findByPrimaryKey(UserContext userContext,Persistent persistent) throws PersistencyException {
+		ProgettoBulk progetto = ((ProgettoBulk)persistent);
+		if (progetto.getEsercizio() == null && Optional.ofNullable(userContext).isPresent())
+			progetto.setEsercizio(CNRUserContext.getEsercizio(userContext));
+		if (progetto.getTipo_fase() == null)
+			progetto.setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
+		return findByPrimaryKey(persistent);
+	}
+
 }
