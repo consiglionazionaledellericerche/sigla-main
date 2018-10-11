@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
@@ -37,8 +38,12 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
 import it.cnr.contab.prevent01.bulk.Stampa_pdgp_bilancioBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipHome;
+import it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoHome;
 //import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
@@ -287,6 +292,8 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 			
 			controllaImportiFontiEsterne(userContext, pdg_modulo);
 			
+			Utility.createSaldoComponentSession().checkDispPianoEconomicoProgetto(userContext,new Pdg_modulo_costiBulk(pdg_modulo),true);
+			
 		} catch(Throwable e) {
 			throw handleException(e);
 		}
@@ -337,6 +344,8 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 			
 			controllaImportiFontiEsterne(userContext, pdg_modulo);
 			
+			Utility.createSaldoComponentSession().checkDispPianoEconomicoProgetto(userContext,new Pdg_modulo_costiBulk(pdg_modulo),true);
+
 			controllaAdeguamentoContrattazione(userContext, pdg_modulo);
 			
 		} catch(Throwable e) {
