@@ -1359,44 +1359,48 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	
     public SQLBuilder selectElemento_voceByClause (UserContext userContext, Ass_progetto_piaeco_voceBulk assPiaecoVoce, Elemento_voceBulk voce, CompoundFindClause clauses) throws ComponentException {
     	try {
-	    	Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
-	    	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(assPiaecoVoce.getEsercizio_piano()));
-	
 	    	Elemento_voceHome home = (Elemento_voceHome)getHome(userContext, Elemento_voceBulk.class);
 	    	SQLBuilder sql = home.createSQLBuilder();
 	        
-	    	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, assPiaecoVoce.getEsercizio_piano());
-	
-	    	sql.openParenthesis(FindClause.AND);
-	    	sql.openParenthesis(FindClause.OR);
-	    	sql.addClause(FindClause.AND, "cd_unita_piano", SQLBuilder.ISNULL, null);
-	    	sql.addClause(FindClause.AND, "cd_voce_piano", SQLBuilder.ISNULL, null);
-	    	sql.closeParenthesis();
-	    	sql.openParenthesis(FindClause.OR);
-	    	sql.addClause(FindClause.AND, "cd_unita_piano", SQLBuilder.EQUALS, assPiaecoVoce.getCd_unita_organizzativa());
-	    	sql.addClause(FindClause.AND, "cd_voce_piano", SQLBuilder.EQUALS, assPiaecoVoce.getCd_voce_piano());
-	    	sql.closeParenthesis();
-	    	sql.closeParenthesis();
-	
-	    	sql.addClause(clauses);
-	    	
-	        sql.addTableToHeader("PARAMETRI_LIVELLI");
-	        sql.addSQLJoin("ELEMENTO_VOCE.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
-	
-	        sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL", "CLASS_VOCE");
-	        sql.addSQLJoin("ELEMENTO_VOCE.ID_CLASSIFICAZIONE", "CLASS_VOCE.ID_CLASSIFICAZIONE");
-	        sql.addSQLJoin("CLASS_VOCE.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
-	
-			sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI", "CLASS_PARENT");
-			sql.addSQLJoin("CLASS_VOCE.ID_LIV"+parCnrBulk.getLivello_pdg_decis_spe(),"CLASS_PARENT.ID_CLASSIFICAZIONE");
-			sql.addSQLClause(FindClause.AND, "CLASS_PARENT.NR_LIVELLO", SQLBuilder.EQUALS, parCnrBulk.getLivello_pdg_decis_spe());
-		    sql.openParenthesis(FindClause.AND);
-		      sql.addSQLClause(FindClause.AND, "CLASS_PARENT.FL_ACCENTRATO", SQLBuilder.EQUALS, "Y");
-		      sql.addSQLClause(FindClause.OR, "CLASS_PARENT.FL_DECENTRATO", SQLBuilder.EQUALS, "Y");
-		    sql.closeParenthesis();
-		    sql.addSQLClause(FindClause.AND, "CLASS_PARENT.ESERCIZIO", SQLBuilder.EQUALS, assPiaecoVoce.getEsercizio_piano());
-		    sql.addSQLClause(FindClause.AND, "CLASS_PARENT.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
-		    sql.addSQLClause(FindClause.AND, "CLASS_PARENT.FL_SOLO_GESTIONE", SQLBuilder.EQUALS,"N");
+    		if (!Optional.of(assPiaecoVoce.getEsercizio_piano()).isPresent())
+    			sql.addSQLClause(FindClause.AND, "1!=1"); //Condizione inserita per far fallire la query
+    		else {
+    	    	Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+    	    	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(assPiaecoVoce.getEsercizio_piano()));
+    	
+	    		sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, assPiaecoVoce.getEsercizio_piano());
+		
+		    	sql.openParenthesis(FindClause.AND);
+		    	sql.openParenthesis(FindClause.OR);
+		    	sql.addClause(FindClause.AND, "cd_unita_piano", SQLBuilder.ISNULL, null);
+		    	sql.addClause(FindClause.AND, "cd_voce_piano", SQLBuilder.ISNULL, null);
+		    	sql.closeParenthesis();
+		    	sql.openParenthesis(FindClause.OR);
+		    	sql.addClause(FindClause.AND, "cd_unita_piano", SQLBuilder.EQUALS, assPiaecoVoce.getCd_unita_organizzativa());
+		    	sql.addClause(FindClause.AND, "cd_voce_piano", SQLBuilder.EQUALS, assPiaecoVoce.getCd_voce_piano());
+		    	sql.closeParenthesis();
+		    	sql.closeParenthesis();
+		
+		    	sql.addClause(clauses);
+		    	
+		        sql.addTableToHeader("PARAMETRI_LIVELLI");
+		        sql.addSQLJoin("ELEMENTO_VOCE.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
+		
+		        sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL", "CLASS_VOCE");
+		        sql.addSQLJoin("ELEMENTO_VOCE.ID_CLASSIFICAZIONE", "CLASS_VOCE.ID_CLASSIFICAZIONE");
+		        sql.addSQLJoin("CLASS_VOCE.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
+		
+				sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI", "CLASS_PARENT");
+				sql.addSQLJoin("CLASS_VOCE.ID_LIV"+parCnrBulk.getLivello_pdg_decis_spe(),"CLASS_PARENT.ID_CLASSIFICAZIONE");
+				sql.addSQLClause(FindClause.AND, "CLASS_PARENT.NR_LIVELLO", SQLBuilder.EQUALS, parCnrBulk.getLivello_pdg_decis_spe());
+			    sql.openParenthesis(FindClause.AND);
+			      sql.addSQLClause(FindClause.AND, "CLASS_PARENT.FL_ACCENTRATO", SQLBuilder.EQUALS, "Y");
+			      sql.addSQLClause(FindClause.OR, "CLASS_PARENT.FL_DECENTRATO", SQLBuilder.EQUALS, "Y");
+			    sql.closeParenthesis();
+			    sql.addSQLClause(FindClause.AND, "CLASS_PARENT.ESERCIZIO", SQLBuilder.EQUALS, assPiaecoVoce.getEsercizio_piano());
+			    sql.addSQLClause(FindClause.AND, "CLASS_PARENT.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
+			    sql.addSQLClause(FindClause.AND, "CLASS_PARENT.FL_SOLO_GESTIONE", SQLBuilder.EQUALS,"N");
+    		}
 	    	sql.addOrderBy("cd_elemento_voce");
 	
 	    	return sql;
