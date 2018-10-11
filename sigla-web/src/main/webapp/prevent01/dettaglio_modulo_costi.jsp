@@ -19,7 +19,7 @@
 <body class="Form">
 <%!     static String[][] tabs = null; %>
 <% bp.openFormWindow(pageContext);
-   tabs = new String[][] {
+	tabs = new String[][] {
 	               { "tabTotali","<SPAN style='font : bold 13px;'>Totali</SPAN>","/prevent01/tab_modulo_totali.jsp" },	                     
 	               { "tabSpese","<SPAN style='font : bold 13px;'>Previsione di Impegno</SPAN>","/prevent01/tab_modulo_spese.jsp" },	                  
 	               { "tabRisorse","<SPAN style='font : bold 13px;'>Risorse provenienti da esercizi precedenti</SPAN>","/prevent01/tab_modulo_risorse.jsp" },	               
@@ -66,7 +66,7 @@
    <% JSPUtils.tabbed(
                    pageContext,
                    "tab",
-                   tabs,
+                   bp.getTabs(session),
                    bp.getTab("tab"),
                    "center",
                    "100%",
