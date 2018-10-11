@@ -634,10 +634,10 @@ public class ProgettoHome extends BulkHome {
 	public void handleObjectNotFoundException(ObjectNotFoundException objectnotfoundexception) throws ObjectNotFoundException {
 	}
 	
-	public java.util.Collection findDettagliPianoEconomico(it.cnr.jada.UserContext userContext,ProgettoBulk testata) throws IntrospectionException, PersistencyException {
+	public java.util.Collection findDettagliPianoEconomico(it.cnr.jada.UserContext userContext,Integer pgProgetto) throws IntrospectionException, PersistencyException {
 		Progetto_piano_economicoHome dettHome = (Progetto_piano_economicoHome)getHomeCache().getHome(Progetto_piano_economicoBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
-		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,testata.getPg_progetto());
+		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);
 		sql.addOrderBy("esercizio_piano, cd_voce_piano");
 		List<Progetto_piano_economicoBulk> pianoList = dettHome.fetchAll(sql);
 		List<Progetto_piano_economicoBulk> pianoListNew = new ArrayList<>();
