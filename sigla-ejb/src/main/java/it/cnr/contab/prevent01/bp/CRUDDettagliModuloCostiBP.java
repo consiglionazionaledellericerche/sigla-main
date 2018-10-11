@@ -10,8 +10,10 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -28,6 +30,8 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.ejb.PdgContrSpeseComponentSession;
 import it.cnr.contab.prevent01.ejb.PdgModuloCostiComponentSession;
+import it.cnr.contab.progettiric00.bp.ProgettoPianoEconomicoVoceBilancioCRUDController;
+import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
@@ -37,6 +41,7 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
@@ -75,7 +80,6 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 	private boolean flPdgCodlast = false;
 
 	private SimpleDetailCRUDController crudDettagliContrSpese = new SimpleDetailCRUDController( "DettagliContrSpese", Pdg_contrattazione_speseBulk.class, "dettagliContrSpese", this, false) {
-
 		public boolean isFiltered()
 		{
 			return false;
@@ -92,9 +96,11 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 		{
 			return false;	
 		}
-		
 	};
-		
+
+	private SimpleDetailCRUDController pianoEconomicoAnnoCorrente = new SimpleDetailCRUDController( "PianoEconomicoAnnoCorrente", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoAnnoCorrente", this);
+	private SimpleDetailCRUDController pianoEconomicoVoceBilancioAnnoCorrente = new ProgettoPianoEconomicoVoceBilancioCRUDController( "PianoEconomicoVoceBilancioAnnoCorrente", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", pianoEconomicoAnnoCorrente);
+
 	private String anno_corrente,anno_precedente,anno_successivo,anno_successivo_successivo;
 	private Pdg_moduloBulk pdg_modulo;
 	private Pdg_esercizioBulk pdg_esercizio;
@@ -456,5 +462,31 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 		} catch (Exception e) {
 			throw new BusinessProcessException(e);
 		}
+	}
+	
+	public SimpleDetailCRUDController getPianoEconomicoAnnoCorrente() {
+		return pianoEconomicoAnnoCorrente;
+	}
+	
+	public SimpleDetailCRUDController getPianoEconomicoVoceBilancioAnnoCorrente() {
+		return pianoEconomicoVoceBilancioAnnoCorrente;
+	}
+
+	public String[][] getTabs(HttpSession session) {
+		TreeMap<Integer, String[]> hash = new TreeMap<Integer, String[]>();
+		int i=0;
+
+		hash.put(i++, new String[]{"tabTotali","<SPAN style='font : bold 13px;'>Totali</SPAN>","/prevent01/tab_modulo_totali.jsp" });
+		hash.put(i++, new String[]{"tabSpese","<SPAN style='font : bold 13px;'>Previsione di Impegno</SPAN>","/prevent01/tab_modulo_spese.jsp" });
+		hash.put(i++, new String[]{"tabRisorse","<SPAN style='font : bold 13px;'>Risorse provenienti da esercizi precedenti</SPAN>","/prevent01/tab_modulo_risorse.jsp" });
+		hash.put(i++, new String[]{"tabCosti","<SPAN style='font : bold 13px;'>Costi Generali e Figurativi</SPAN>","/prevent01/tab_modulo_costi.jsp" });
+		
+	    if (this.isFlNuovoPdg() && this.getParametriEnte().getFl_prg_pianoeco())
+    		hash.put(i++, new String[]{"tabPianoEconomico","<SPAN style='font : bold 13px;'>Piano Economico</SPAN>","/prevent01/tab_modulo_piaeco.jsp" });
+
+	    String[][] tabs = new String[i][3];
+		for (int j = 0; j < i; j++)
+			tabs[j]=new String[]{hash.get(j)[0],hash.get(j)[1],hash.get(j)[2]};
+		return tabs;
 	}
 }

@@ -9,7 +9,9 @@ package it.cnr.contab.prevent01.comp;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJBException;
 
@@ -43,7 +45,10 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceHome;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -110,6 +115,11 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 				testataHome.calcolaSpeseAccentrateFontiInterneArea(usercontext,testata)));
 						
 			testata.setTot_massa_spendibile_anno_in_corso(Utility.ZERO);
+			
+			ProgettoHome progettoHome = (ProgettoHome)getHome(usercontext, ProgettoBulk.class);
+			List<Progetto_piano_economicoBulk> progettoPiano = new it.cnr.jada.bulk.BulkList(progettoHome.findDettagliPianoEconomico(usercontext,testata.getPg_progetto()));
+			testata.setDettagliPianoEconomicoAnnoCorrente(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(testata.getEsercizio())).collect(Collectors.toList())));
+			getHomeCache(usercontext).fetchAll(usercontext);			
 		}catch (IntrospectionException e) {
 			throw new ComponentException(e);
 		} catch (PersistencyException e) {
@@ -170,6 +180,10 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 					pdgContrHome.calcolaTotalePropostoModificatoFI(usercontext,pdg_contrattazione_spese,pdg_contrattazione_spese.getArea())));
 			}
 			
+			ProgettoHome progettoHome = (ProgettoHome)getHome(usercontext, ProgettoBulk.class);
+			List<Progetto_piano_economicoBulk> progettoPiano = new it.cnr.jada.bulk.BulkList(progettoHome.findDettagliPianoEconomico(usercontext,testata.getPg_progetto()));
+			testata.setDettagliPianoEconomicoAnnoCorrente(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(testata.getEsercizio())).collect(Collectors.toList())));
+			getHomeCache(usercontext).fetchAll(usercontext);
 			return testata;
 		} catch (IntrospectionException e) {
 			throw new ComponentException(e);
@@ -397,7 +411,7 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 				 }
 			}
 		}
-		Utility.createSaldoComponentSession().checkDispPianoEconomicoProgetto(usercontext, bulk);
+		Utility.createSaldoComponentSession().checkDispPianoEconomicoProgetto(usercontext,bulk,false);
 		super.validaCreaModificaConBulk(usercontext, oggettobulk);
 		} catch (RemoteException e) {
 			throw handleException(e);
