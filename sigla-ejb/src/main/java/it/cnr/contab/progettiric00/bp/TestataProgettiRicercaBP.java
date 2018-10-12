@@ -515,7 +515,8 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		if (!optProgetto.isPresent())
 			throw new ValidationException("Operazione non possibile! Non è stato possibile individuare il progetto da aggiornare!");
 
-		if (optProgetto.get().getProgettopadre() == null || optProgetto.get().getProgettopadre().getPg_progetto() == null)
+		if ((optProgetto.get().getProgettopadre() == null || optProgetto.get().getProgettopadre().getPg_progetto() == null) &&
+				!optProgetto.get().getLivello().equals(ProgettoBulk.LIVELLO_PROGETTO_PRIMO))
 			throw new ValidationException("Attenzione: Per salvare "+
 					(this.isFlNuovoPdg()?"il "+ProgettoBulk.LABEL_PROGETTO:"la "+ProgettoBulk.LABEL_COMMESSA)+
 					" è necessario inserire "+
