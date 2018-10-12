@@ -1391,7 +1391,9 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		        sql.addSQLJoin("CLASS_VOCE.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
 		
 				sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI", "CLASS_PARENT");
-				sql.addSQLJoin("CLASS_VOCE.ID_LIV"+parCnrBulk.getLivello_pdg_decis_spe(),"CLASS_PARENT.ID_CLASSIFICAZIONE");
+				sql.addSQLJoin("CLASS_VOCE.ID_LIV" + Optional.ofNullable(parCnrBulk)
+															.flatMap(parametri_cnrBulk -> Optional.ofNullable(parametri_cnrBulk.getLivello_pdg_decis_spe()))
+															.orElse(6),"CLASS_PARENT.ID_CLASSIFICAZIONE");
 				sql.addSQLClause(FindClause.AND, "CLASS_PARENT.NR_LIVELLO", SQLBuilder.EQUALS, parCnrBulk.getLivello_pdg_decis_spe());
 			    sql.openParenthesis(FindClause.AND);
 			      sql.addSQLClause(FindClause.AND, "CLASS_PARENT.FL_ACCENTRATO", SQLBuilder.EQUALS, "Y");
