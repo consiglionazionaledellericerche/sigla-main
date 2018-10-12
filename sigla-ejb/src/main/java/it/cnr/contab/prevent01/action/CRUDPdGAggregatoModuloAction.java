@@ -34,14 +34,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.action.BulkBP;
-import it.cnr.jada.util.action.CRUDAction;
-import it.cnr.jada.util.action.CRUDBP;
-import it.cnr.jada.util.action.ConsultazioniBP;
-import it.cnr.jada.util.action.OptionBP;
-import it.cnr.jada.util.action.Selection;
-import it.cnr.jada.util.action.SelezionatoreListaBP;
-import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import it.cnr.jada.util.action.*;
 
 /**
  * @author mincarnato
@@ -339,21 +332,9 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 
 	public Forward doInserisciModuli(ActionContext context) {
 		try {
-			CRUDBP bp = getBusinessProcess(context);
+			CRUDPdGAggregatoModuloBP bp = (CRUDPdGAggregatoModuloBP) getBusinessProcess(context);
 			if (bp.getStatus() == bp.INSERT || bp.getStatus() == bp.EDIT) {
-				Pdg_moduloBulk pdg_modulo = new Pdg_moduloBulk();
-				CompoundFindClause compoundfindclause = new CompoundFindClause();
-
-				CdrBulk cdr = (CdrBulk) bp.getModel();
-				BulkList dettagli = cdr.getDettagli();
-
-				Iterator itr = dettagli.iterator();
-				while(itr.hasNext()) {
-					compoundfindclause.addClause("AND","pg_progetto",SQLBuilder.NOT_EQUALS,((Pdg_moduloBulk)itr.next()).getPg_progetto());
-				}
-
-				Progetto_sipBulk progetto = new Progetto_sipBulk();
-				it.cnr.jada.util.RemoteIterator ri = bp.find(context, compoundfindclause, progetto, pdg_modulo, "progetto");
+				it.cnr.jada.util.RemoteIterator ri = bp.search(context, new CompoundFindClause(), null);
 				if (ri == null || ri.countElements() == 0) {
 					it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context, ri);
 					bp.setMessage("La ricerca non ha fornito alcun risultato.");
@@ -362,11 +343,13 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 					SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("Selezionatore");
 					nbp.setIterator(context,ri);
 					nbp.setMultiSelection(true);
-					nbp.setBulkInfo(progetto.getBulkInfo());
-					if (bp instanceof CRUDPdGAggregatoModuloBP && ((CRUDPdGAggregatoModuloBP)bp).getParametriCnr().getFl_nuovo_pdg())
-						nbp.setColumns( nbp.getBulkInfo().getColumnFieldPropertyDictionary("progetto_liv2"));
-					else
-						nbp.setColumns( nbp.getBulkInfo().getColumnFieldPropertyDictionary("moduli_sip"));
+					nbp.setBulkInfo(new Progetto_sipBulk().getBulkInfo());
+					nbp.setFormField(new FormField(nbp, new Pdg_moduloBulk().getBulkInfo().getFieldProperty("progetto"), new Progetto_sipBulk()));
+					if (bp instanceof CRUDPdGAggregatoModuloBP && ((CRUDPdGAggregatoModuloBP)bp).getParametriCnr().getFl_nuovo_pdg()) {
+						nbp.setColumns(nbp.getBulkInfo().getColumnFieldPropertyDictionary("progetto_liv2"));
+					}else {
+						nbp.setColumns(nbp.getBulkInfo().getColumnFieldPropertyDictionary("moduli_sip"));
+					}
 					context.addHookForward("seleziona",this,"doRiportaSelezioneModuli");
 					return context.addBusinessProcess(nbp);
 				}
