@@ -7,6 +7,7 @@
 package it.cnr.contab.prevent01.bp;
 
 import java.rmi.RemoteException;
+import java.util.Iterator;
 import java.util.Optional;
 
 import javax.ejb.RemoveException;
@@ -28,13 +29,17 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.UserInfo;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.SendMail;
+import it.cnr.jada.util.action.SearchProvider;
 import it.cnr.jada.util.action.Selection;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -46,7 +51,7 @@ import it.cnr.jada.util.jsp.Button;
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUDBP {
+public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUDBP implements SearchProvider {
 	private Parametri_cnrBulk parametriCnr;
 	private Parametri_enteBulk parametriEnte;
 	private Unita_organizzativaBulk uoScrivania;
@@ -564,5 +569,28 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
                         .map(CNRUserInfo::getUnita_organizzativa)
                         .map(Unita_organizzativaBulk::isUoEnte)
                         .orElse(Boolean.FALSE);
+	}
+
+	@Override
+	public SearchProvider getSearchProvider(OggettoBulk oggettobulk, String s) {
+		if(Optional.ofNullable(oggettobulk)
+				.filter(Progetto_sipBulk.class::isInstance).isPresent())
+			return this;
+		return super.getSearchProvider(oggettobulk, s);
+	}
+
+	@Override
+	public RemoteIterator search(ActionContext actioncontext, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws BusinessProcessException {
+		Pdg_moduloBulk pdg_modulo = new Pdg_moduloBulk();
+		CdrBulk cdr = (CdrBulk) getModel();
+		BulkList dettagli = cdr.getDettagli();
+
+		Iterator itr = dettagli.iterator();
+		while(itr.hasNext()) {
+			compoundfindclause.addClause("AND","pg_progetto", SQLBuilder.NOT_EQUALS,((Pdg_moduloBulk)itr.next()).getPg_progetto());
+		}
+
+		Progetto_sipBulk progetto = new Progetto_sipBulk();
+		return find(actioncontext, compoundfindclause, progetto, pdg_modulo, "progetto");
 	}
 }
