@@ -53,6 +53,7 @@ import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -219,11 +220,26 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 
     	SQLBuilder sql = ((Pdg_modulo_speseHome)getHome(userContext, Pdg_modulo_speseBulk.class)).selectClassificazioneByClause(dett.getEsercizio(),  dett.getCd_centro_responsabilita(), parCnrBulk.getLivello_pdg_decis_spe());
     	
-    	Ass_progetto_piaeco_voceHome assPiaecoHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
-
-    	SQLBuilder sqlExists = assPiaecoHome.selectAssProgettoPiaecoVoceList(esercizio, dett.getPg_progetto(), null);
-    	sqlExists.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.ID_LIV"+parCnrBulk.getLivello_pdg_decis_spe(), "V_CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
-    	sql.addSQLExistsClause(FindClause.AND, sqlExists);
+    	Optional.ofNullable(dett.getPdg_modulo_costi())
+    			.flatMap(el->Optional.ofNullable(el.getPdg_modulo()))
+    			.flatMap(el->Optional.ofNullable(el.getProgetto()))
+    			.flatMap(el->Optional.ofNullable(el.getOtherField()))
+    			.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
+    			.flatMap(el->Optional.ofNullable(el.getFlPianoEcoFin()))
+    			.map(isFlPianoEconomico->{
+    		    	if (isFlPianoEconomico) {
+    		    		try {
+    		    	    	Ass_progetto_piaeco_voceHome assPiaecoHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
+		    				SQLBuilder sqlExists = assPiaecoHome.selectAssProgettoPiaecoVoceList(esercizio, dett.getPg_progetto(), null);
+		    		    	sqlExists.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.ID_LIV"+parCnrBulk.getLivello_pdg_decis_spe(), "V_CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
+		    		    	sql.addSQLExistsClause(FindClause.AND, sqlExists);
+    		    		} catch (Exception e) {
+    		    			new DetailedRuntimeException(e);
+    		    		}
+    		    	}
+    		    	return true;
+    			})
+    			.orElseThrow(()->new RuntimeException("Errore in fase di ricerca. Aprire una segnalazione HelpDesk"));
 		
     	if (clause != null) 
 		  sql.addClause(clause);
@@ -391,7 +407,6 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 	protected void validaCreaModificaConBulk(UserContext usercontext,
 			OggettoBulk oggettobulk) throws ComponentException {
 		Pdg_modulo_costiBulk bulk =null;
-		Pdg_modulo_speseBulk spesebulk =null;
 		try {
 		Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(usercontext, CNRUserContext.getEsercizio(usercontext)); 
 		if (oggettobulk instanceof Pdg_modulo_costiBulk){
@@ -409,6 +424,19 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 						 if(!pdg_modulo_spese.isPrevAnnoSucObb() && pdg_modulo_spese.getIm_spese_a2()==null)
 							 pdg_modulo_spese.setIm_spese_a2(BigDecimal.ZERO);
 				 }
+			   	 if (Optional.ofNullable(pdg_modulo_spese.getPdg_modulo_costi())
+		    				.flatMap(el->Optional.ofNullable(el.getPdg_modulo()))
+		    				.flatMap(el->Optional.ofNullable(el.getProgetto()))
+		    				.flatMap(el->Optional.ofNullable(el.getOtherField()))
+		    				.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
+		    				.flatMap(el->Optional.ofNullable(el.getFlPianoEcoFin()))
+		    				.orElseThrow(()->new RuntimeException("Errore in fase di ricerca tipo finanziamento associato al progetto. Aprire una segnalazione HelpDesk"))
+		    				.booleanValue() && 
+		    				!Optional.ofNullable(pdg_modulo_spese.getVoce_piano_economico())
+		    						 .flatMap(el->Optional.ofNullable(el.getCd_voce_piano()))
+		    						 .isPresent()) {
+					 throw new ApplicationException("Non è possibile inserire la spesa senza indicare la voce di piano economico associato al progetto.");
+		    	}
 			}
 		}
 		Utility.createSaldoComponentSession().checkDispPianoEconomicoProgetto(usercontext,bulk,false);
