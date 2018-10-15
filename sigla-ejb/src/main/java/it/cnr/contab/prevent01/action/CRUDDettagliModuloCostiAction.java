@@ -6,6 +6,8 @@
  */
 package it.cnr.contab.prevent01.action;
 
+import java.util.Optional;
+
 import it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
@@ -412,8 +414,18 @@ public class CRUDDettagliModuloCostiAction extends CRUDAction {
 		fillModel(context);	
 		CRUDDettagliModuloCostiBP bp = (CRUDDettagliModuloCostiBP)getBusinessProcess(context);
 		if (classificazione != null){
-			if (initVoceEconomica)
-				bp.inizializzaVoceEconomica(context, pdg_modulo_spese, classificazione);
+			if (initVoceEconomica) {
+		    	if (Optional.ofNullable(pdg_modulo_spese.getPdg_modulo_costi())
+		    				.flatMap(el->Optional.ofNullable(el.getPdg_modulo()))
+		    				.flatMap(el->Optional.ofNullable(el.getProgetto()))
+		    				.flatMap(el->Optional.ofNullable(el.getOtherField()))
+		    				.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
+		    				.flatMap(el->Optional.ofNullable(el.getFlPianoEcoFin()))
+		    				.orElseThrow(()->new RuntimeException("Errore in fase di ricerca. Aprire una segnalazione HelpDesk"))
+		    				.booleanValue()) {
+		    		bp.inizializzaVoceEconomica(context, pdg_modulo_spese, classificazione);
+		    	}
+			}
 			pdg_modulo_spese.setClassificazione(classificazione);
 			if(classificazione.getFl_mastrino().booleanValue()){
 				pdg_modulo_spese.setLimiteInt(((PdgModuloCostiComponentSession)bp.createComponentSession()).soggettaLimite(context.getUserContext(),pdg_modulo_spese,LimiteSpesaBulk.FONTE_INTERNA));

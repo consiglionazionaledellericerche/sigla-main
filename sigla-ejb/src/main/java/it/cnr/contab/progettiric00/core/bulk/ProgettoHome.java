@@ -653,11 +653,11 @@ public class ProgettoHome extends BulkHome {
 
 	@Override
 	public Persistent findByPrimaryKey(UserContext userContext,Persistent persistent) throws PersistencyException {
-		ProgettoBulk progetto = ((ProgettoBulk)persistent);
+ 		ProgettoBulk progetto = ((ProgettoBulk)persistent);
 		if (progetto.getEsercizio() == null && Optional.ofNullable(userContext).isPresent())
 			progetto.setEsercizio(CNRUserContext.getEsercizio(userContext));
 		if (progetto.getTipo_fase() == null)
-			progetto.setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
+			progetto.setTipo_fase(ProgettoBulk.TIPO_FASE_NON_DEFINITA);
 		return findByPrimaryKey(persistent);
 	}
 

@@ -1270,12 +1270,14 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                                 if (!isFromChangeStato) {
 	                                dispResiduaFin = dispResiduaFin.add(
 	                                        speseListDB.stream()
+	                                        		.filter(x->Optional.ofNullable(x.getVoce_piano_economico()).isPresent())
 	                                                .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
 	                                                .map(el->Utility.nvl(el.getIm_spese_gest_decentrata_est()))
 	                                                .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
 	
 	                                dispResiduaFin = dispResiduaFin.subtract(
 	                                        speseList.stream()
+	                                        		.filter(x->Optional.ofNullable(x.getVoce_piano_economico()).isPresent())
 	                                                .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
 	                                                .map(el->Utility.nvl(el.getIm_spese_gest_decentrata_est()))
 	                                                .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
@@ -1316,12 +1318,14 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                                 if (!isFromChangeStato) {
 	                                dispResiduaCofin = dispResiduaCofin.add(
 	                                        speseListDB.stream()
+	                                        		.filter(x->Optional.ofNullable(x.getVoce_piano_economico()).isPresent())
 	                                                .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
 	                                                .map(el->Utility.nvl(el.getIm_spese_gest_decentrata_int()))
 	                                                .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
 	
 	                                dispResiduaCofin = dispResiduaCofin.subtract(
 	                                        speseList.stream()
+	                                        		.filter(x->Optional.ofNullable(x.getVoce_piano_economico()).isPresent())
 	                                                .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
 	                                                .map(el->Utility.nvl(el.getIm_spese_gest_decentrata_int()))
 	                                                .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
