@@ -15,9 +15,9 @@
 %>
     <div class="GroupLabel">
       	<% if (isFlNuovoPdg) {
-			   bp.getController().writeFormInput(out,null,"livello2016",true,"GroupLabel h3 h-100 text-primary","style=\"border-style : none; cursor:default;\"");
+			   bp.getController().writeFormInput(out,null,"livello2016",true,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default;\"");
 		  } else {
-			   bp.getController().writeFormInput(out,null,"livello",true,"GroupLabel h3 h-100 text-primary","style=\"border-style : none; cursor:default;\"");
+			   bp.getController().writeFormInput(out,null,"livello",true,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default;\"");
 		  } 
 		%>
    	</div>
