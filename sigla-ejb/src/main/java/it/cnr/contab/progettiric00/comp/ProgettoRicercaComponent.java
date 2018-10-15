@@ -1367,8 +1367,11 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     		else {
     	    	Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
     	    	Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(assPiaecoVoce.getEsercizio_piano()));
-    	
-	    		sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, assPiaecoVoce.getEsercizio_piano());
+				final Integer livelloPdgDecisSpe = Optional.ofNullable(parCnrBulk)
+						.flatMap(parametri_cnrBulk -> Optional.ofNullable(parametri_cnrBulk.getLivello_pdg_decis_spe()))
+						.orElse(6);
+
+				sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, assPiaecoVoce.getEsercizio_piano());
 		
 		    	sql.openParenthesis(FindClause.AND);
 		    	sql.openParenthesis(FindClause.OR);
@@ -1391,10 +1394,8 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		        sql.addSQLJoin("CLASS_VOCE.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
 		
 				sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI", "CLASS_PARENT");
-				sql.addSQLJoin("CLASS_VOCE.ID_LIV" + Optional.ofNullable(parCnrBulk)
-															.flatMap(parametri_cnrBulk -> Optional.ofNullable(parametri_cnrBulk.getLivello_pdg_decis_spe()))
-															.orElse(6),"CLASS_PARENT.ID_CLASSIFICAZIONE");
-				sql.addSQLClause(FindClause.AND, "CLASS_PARENT.NR_LIVELLO", SQLBuilder.EQUALS, parCnrBulk.getLivello_pdg_decis_spe());
+				sql.addSQLJoin("CLASS_VOCE.ID_LIV" + livelloPdgDecisSpe,"CLASS_PARENT.ID_CLASSIFICAZIONE");
+				sql.addSQLClause(FindClause.AND, "CLASS_PARENT.NR_LIVELLO", SQLBuilder.EQUALS, livelloPdgDecisSpe);
 			    sql.openParenthesis(FindClause.AND);
 			      sql.addSQLClause(FindClause.AND, "CLASS_PARENT.FL_ACCENTRATO", SQLBuilder.EQUALS, "Y");
 			      sql.addSQLClause(FindClause.OR, "CLASS_PARENT.FL_DECENTRATO", SQLBuilder.EQUALS, "Y");
