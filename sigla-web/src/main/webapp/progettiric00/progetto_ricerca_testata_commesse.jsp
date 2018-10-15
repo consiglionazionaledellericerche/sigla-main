@@ -17,9 +17,9 @@
 <% if (bp.getStatus() == bp.INSERT || bp.getStatus() == bp.EDIT || bp.getStatus() == bp.VIEW) {%>
      <div class="GroupLabel">
       	<% if (isFlNuovoPdg) {
-			   bp.getController().writeFormInput(out,null,"livello_padre2016",isROFieldInformix,"GroupLabel h3 h-100 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
+			   bp.getController().writeFormInput(out,null,"livello_padre2016",isROFieldInformix,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
 		  } else {
-			   bp.getController().writeFormInput(out,null,"livello_padre",isROFieldInformix,"GroupLabel h3 h-100 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
+			   bp.getController().writeFormInput(out,null,"livello_padre",isROFieldInformix,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
 		  } 
 		%>
 	 </div>
@@ -65,9 +65,9 @@
   	 
   	 <div class="GroupLabel">
       	<% if (isFlNuovoPdg) {
-			 bp.getController().writeFormInput(out,null,"livello2016",isROFieldInformix,"GroupLabel h3 h-100 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
+			 bp.getController().writeFormInput(out,null,"livello2016",isROFieldInformix,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
 		  } else {
-			   bp.getController().writeFormInput(out,null,"livello",isROFieldInformix,"GroupLabel h3 h-100 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
+			   bp.getController().writeFormInput(out,null,"livello",isROFieldInformix,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
 		  } 
 		%>
 	 </div>
@@ -143,7 +143,7 @@
 	 </div> 
 
     <% if (Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField())).isPresent()) { %>
-  	 <div class="GroupLabel h3 h-100 text-primary" style="border-style: none; cursor:default; background-color:initial;">Dati Contabili</div>
+  	 <div class="GroupLabel h3 text-primary" style="border-style: none; cursor:default; background-color:initial;">Dati Contabili</div>
 	 <div class="Group">
      <table class="Panel card border-info p-2">
 	  <tr>
@@ -178,9 +178,9 @@
 <% } else { %>
      <div class="GroupLabel">
        	<% if (isFlNuovoPdg) {
-		   	 bp.getController().writeFormInput(out,null,"livello2016",true,"GroupLabel h3 h-100 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
+		   	 bp.getController().writeFormInput(out,null,"livello2016",true,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
 		   } else {
-			 bp.getController().writeFormInput(out,null,"livello",true,"GroupLabel h3 h-100 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
+			 bp.getController().writeFormInput(out,null,"livello",true,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
 		   } 
 		%>
      </div>
@@ -242,7 +242,7 @@
 	</div>
 	
     <% if (Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField())).isPresent()) { %>
-	<div class="GroupLabel h3 h-100 text-primary" style="border-style:none; cursor:default; background-color:initial;">Dati Contabili</div>
+	<div class="GroupLabel h3 text-primary" style="border-style:none; cursor:default; background-color:initial;">Dati Contabili</div>
 	<div class="Group">
     <table class="Panel card border-info p-2">
 		<tr>
