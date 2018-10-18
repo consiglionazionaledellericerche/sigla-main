@@ -133,4 +133,21 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 		return Optional.ofNullable(this.getVoce_piano_economico()).isPresent();
 	}
 			
+	public java.math.BigDecimal getDispResiduaFinanziamento() {
+		return Optional.ofNullable(this.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO)
+				.subtract(Optional.ofNullable(this.getSaldoSpesa())
+								  .flatMap(el->Optional.ofNullable(el.getAssestatoFinanziamento()))
+								  .orElse(BigDecimal.ZERO));
+	}
+
+	public java.math.BigDecimal getDispResiduaCofinanziamento() {
+		return Optional.ofNullable(this.getIm_spesa_cofinanziato()).orElse(BigDecimal.ZERO)
+				.subtract(Optional.ofNullable(this.getSaldoSpesa())
+								  .flatMap(el->Optional.ofNullable(el.getAssestatoCofinanziamento()))
+						          .orElse(BigDecimal.ZERO));
+	}
+
+	public java.math.BigDecimal getDispResidua() {
+		return this.getDispResiduaFinanziamento().add(this.getDispResiduaCofinanziamento());
+	}
 }
