@@ -1,10 +1,8 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.Dictionary;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -21,10 +19,10 @@ import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaNuovoBP;
 import it.cnr.contab.progettiric00.tabrif.bulk.Tipo_progettoBulk;
-import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.DateUtils;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 
 public class ProgettoBulk extends ProgettoBase {
 
@@ -990,26 +988,13 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 
 	public Integer getAnnoInizioOf() {
 		return Optional.ofNullable(this.getOtherField())
-				.flatMap(el->Optional.ofNullable(el.getDtInizio()))
-				.map(elDate->{
-					GregorianCalendar calendar = new GregorianCalendar();
-					calendar.setTime(elDate);
-					return calendar.get(Calendar.YEAR);
-				})
+				.map(Progetto_other_fieldBulk::getAnnoInizio)
 				.orElse(0);
 	}		
 
 	public Integer getAnnoFineOf() {
 		return Optional.ofNullable(this.getOtherField())
-				.flatMap(el->{
-					Optional<Integer> anno = Optional.empty();
-					if (el.getDtFine()!=null || el.getDtProroga()!=null) {
-						GregorianCalendar calendar = new GregorianCalendar();
-						calendar.setTime(DateUtils.max(el.getDtFine(), el.getDtProroga()));
-						anno = Optional.of(calendar.get(Calendar.YEAR));
-					}
-					return anno;
-				})
+				.map(Progetto_other_fieldBulk::getAnnoFine)
 				.orElse(9999);
 	}
 
@@ -1094,14 +1079,6 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 				!getDettagliPianoEconomicoTotale().isEmpty();
 	}
 
-	public boolean isRODatiOtherField() {
-		return !Optional.ofNullable(this.getOtherField()).filter(Progetto_other_fieldBulk::isStatoIniziale).isPresent();
-	}
-
-	public boolean isROOtherFieldExistPianoEconomico() {
-		return this.isRODatiOtherField() || this.isDettagliPianoEconomicoPresenti();
-	}
-
 	public BulkList<Progetto_piano_economicoBulk> getAllDetailsProgettoPianoEconomico() {
 		BulkList<Progetto_piano_economicoBulk> items = new BulkList<Progetto_piano_economicoBulk>();
 		items.addAll(getDettagliPianoEconomicoTotale());
@@ -1154,5 +1131,28 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	
 	public java.math.BigDecimal getImTotaleDaRipartire() {
 		return this.getImTotale().subtract(this.getImTotaleRipartito());
+	}
+	
+	public void validaDateProgetto() throws ValidationException {
+		if (Optional.ofNullable(this.getOtherField()).isPresent())
+			this.getOtherField().validaDateProgetto();
+
+		this.getAllDetailsProgettoPianoEconomico().stream()
+			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoInizioOf())<0)
+			.map(Progetto_piano_economicoBulk::getEsercizio_piano)
+			.min(Comparator.comparing(Integer::valueOf))
+			.ifPresent(annoMin->{
+				throw new ApplicationRuntimeException("Non è possibile indicare una data di inizio con anno maggiore del "+annoMin+
+						" per il quale risulta già caricato un piano economico.");
+			});
+
+		this.getAllDetailsProgettoPianoEconomico().stream()
+			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoFineOf())>0)
+			.map(Progetto_piano_economicoBulk::getEsercizio_piano)
+			.max(Comparator.comparing(Integer::valueOf))
+			.ifPresent(annoMax->{
+				throw new ApplicationRuntimeException("Non è possibile indicare una data di fine/proroga con anno inferiore al "+annoMax+
+						" per il quale risulta già caricato un piano economico.");
+		});
 	}
 }

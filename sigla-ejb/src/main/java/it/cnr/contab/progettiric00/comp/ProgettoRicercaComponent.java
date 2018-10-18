@@ -9,6 +9,8 @@ import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.apache.poi.hssf.record.formula.functions.Find;
+
 import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioBulk;
 import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioHome;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -23,9 +25,13 @@ import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestHome;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestHome;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateHome;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
 import it.cnr.contab.progettiric00.core.bulk.*;
@@ -33,6 +39,7 @@ import it.cnr.contab.progettiric00.tabrif.bulk.*;
 import it.cnr.contab.progettiric00.bp.*;
 import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.contab.util.ApplicationMessageFormatException;
+import it.cnr.contab.util.EuroFormat;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.config00.bulk.*;
@@ -45,6 +52,7 @@ import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.PersistencyException;
@@ -145,6 +153,8 @@ public ProgettoRicercaComponent() {
 				}
 
 				allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
+
+				validaPianoEconomico(uc, (ProgettoBulk)bulk);
 			}catch(Throwable throwable){
 	            throw handleException(throwable);
 	        }
@@ -551,6 +561,8 @@ public ProgettoRicercaComponent() {
 
 				if (!parEnte.getFl_informix().booleanValue())
 					allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
+
+				validaPianoEconomico(uc, (ProgettoBulk)bulk);
 		   }catch(Throwable throwable){
 		       throw handleException(throwable);
 		   }
@@ -1299,7 +1311,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
     		List resultEtr = homeEtr.fetchAll(sqlEtr);
     		if (!resultEtr.isEmpty())
-    			throw new ApplicationException("Impossibile cancellare la voce "+piano.getCd_voce_piano()+" in quanto\n"+
+    			throw new ApplicationException("Impossibile cancellare la voce "+piano.getCd_voce_piano()+" in quanto "+
                    "è già stata collegata al preventivo decisionale del progetto -  parte entrate.");
 
     		Pdg_modulo_speseHome homeSpe = (Pdg_modulo_speseHome)getHome(userContext,Pdg_modulo_speseBulk.class);
@@ -1310,7 +1322,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
     		List resultSpe = homeSpe.fetchAll(sqlSpe);
     		if (!resultSpe.isEmpty())
-    			throw new ApplicationException("Impossibile cancellare la voce "+piano.getCd_voce_piano()+" in quanto\n"+
+    			throw new ApplicationException("Impossibile cancellare la voce "+piano.getCd_voce_piano()+" in quanto "+
                    "è già stata collegata al preventivo decisionale del progetto -  parte spese.");
 
     	} catch(Throwable e) {
@@ -1412,60 +1424,335 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     	}
     }
 
-    /*
-    public void validaPianoEconomico(UserContext userContext, ProgettoBulk progetto) throws ComponentException{
-		ProgettoHome testataHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
-
-    	List<Progetto_piano_economicoBulk> progettoPiano = new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPianoEconomico(userContext,progetto));
-
-    	for (Progetto_piano_economicoBulk piaecoBulk : progettoPiano) {
-    		//verifico che sia stato utilizzato sui piani di gestione preliminare
-    		Pdg_modulo_speseHome homeSpe = (Pdg_modulo_speseHome)getHome(userContext,Pdg_modulo_speseBulk.class);
-    		SQLBuilder sqlSpe = homeSpe.createSQLBuilder();
-    		sqlSpe.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,piaecoBulk.getPg_progetto());    		
-			sqlSpe.addClause(FindClause.AND,"cd_unita_piano",SQLBuilder.EQUALS,piaecoBulk.getCd_unita_organizzativa());
-			sqlSpe.addClause(FindClause.AND,"cd_voce_piano",SQLBuilder.EQUALS,piaecoBulk.getCd_voce_piano());
-
-			List resultSpe = homeSpe.fetchAll(sqlSpe);
-    		if (!resultSpe.isEmpty())
-    			throw new ApplicationException("Impossibile cancellare la voce "+assVoce.getCd_elemento_voce()+" in quanto\n"+
-                   "è già stata collegata al preventivo gestionale del progetto -  parte entrate.");
-		}
-    	
-		try {
-    		if (Elemento_voceHome.GESTIONE_ENTRATE.equals(assVoce.getTi_gestione())) {
-    			Pdg_modulo_entrate_gestHome homeEtr = (Pdg_modulo_entrate_gestHome)getHome(userContext,Pdg_modulo_entrate_gestBulk.class);
-    			SQLBuilder sqlEtr = homeEtr.createSQLBuilder();
-    			sqlEtr.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,assVoce.getPg_progetto());    		
-    			sqlEtr.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,assVoce.getEsercizio_voce());
-    			sqlEtr.addClause(FindClause.AND,"ti_appartenenza",SQLBuilder.EQUALS,assVoce.getTi_appartenenza());    		
-    			sqlEtr.addClause(FindClause.AND,"ti_gestione",SQLBuilder.EQUALS,assVoce.getTi_gestione());
-    			sqlEtr.addClause(FindClause.AND,"cd_elemento_voce",SQLBuilder.EQUALS,assVoce.getCd_elemento_voce());
-
-    			List resultEtr = homeEtr.fetchAll(sqlEtr);
-	    		if (!resultEtr.isEmpty())
-	    			throw new ApplicationException("Impossibile cancellare la voce "+assVoce.getCd_elemento_voce()+" in quanto\n"+
-	                   "è già stata collegata al preventivo gestionale del progetto -  parte entrate.");
-    		} else {
-    			
-        		Pdg_modulo_spese_gestHome homeSpe = (Pdg_modulo_spese_gestHome)getHome(userContext,Pdg_modulo_spese_gestBulk.class);
-        		SQLBuilder sqlSpe = homeSpe.createSQLBuilder();
-        		sqlSpe.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,assVoce.getPg_progetto());    		
-    			sqlSpe.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,assVoce.getEsercizio_voce());
-    			sqlSpe.addClause(FindClause.AND,"ti_appartenenza",SQLBuilder.EQUALS,assVoce.getTi_appartenenza());    		
-    			sqlSpe.addClause(FindClause.AND,"ti_gestione",SQLBuilder.EQUALS,assVoce.getTi_gestione());
-    			sqlSpe.addClause(FindClause.AND,"cd_elemento_voce",SQLBuilder.EQUALS,assVoce.getCd_elemento_voce());
-
-        		List resultSpe = homeSpe.fetchAll(sqlSpe);
-        		if (!resultSpe.isEmpty())
-        			throw new ApplicationException("Impossibile cancellare la voce "+assVoce.getCd_elemento_voce()+" in quanto\n"+
-                       "è già stata collegata al preventivo gestionale del progetto -  parte spese.");
-    			
-    		}
-
+    private void validaPianoEconomico(UserContext userContext, ProgettoBulk progetto) throws ComponentException {
+    	try {
+	   		it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
+	   		BigDecimal annoFrom = configSession.getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+	   		if (Optional.ofNullable(annoFrom).isPresent()) {
+		   		validaVociPianoEconomicoDecisionale(userContext, progetto, annoFrom.intValue());
+		   		validaVociPianoEconomicoGestionale(userContext, progetto, annoFrom.intValue());
+		   		validaSaldiPianoEconomico(userContext, progetto, annoFrom.intValue());
+		   		validaTipoFinanziamento(userContext, progetto, annoFrom.intValue());
+	   		};
     	} catch(Throwable e) {
     		throw handleException(e);
     	}
     }
-    */
+
+    private void validaVociPianoEconomicoDecisionale(UserContext userContext, ProgettoBulk progetto, Integer annoFrom) throws ComponentException {
+    	try {
+	    	Elemento_voceHome elementoVoceHome = (Elemento_voceHome)getHome(userContext, Elemento_voceBulk.class);
+	    	V_classificazione_vociHome classVoceHome = (V_classificazione_vociHome)getHome(userContext, V_classificazione_vociBulk.class);
+	
+	    	Pdg_modulo_speseHome pdgModuloHome = (Pdg_modulo_speseHome)getHome(userContext, Pdg_modulo_speseBulk.class);
+			SQLBuilder sqlPdgModulo = pdgModuloHome.createSQLBuilder();
+			sqlPdgModulo.addClause(FindClause.AND,"esercizio",SQLBuilder.GREATER_EQUALS,annoFrom);
+			sqlPdgModulo.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,progetto.getPg_progetto());
+			sqlPdgModulo.addClause(FindClause.AND,"cd_unita_piano",SQLBuilder.ISNOTNULL,null);
+			sqlPdgModulo.addClause(FindClause.AND,"cd_voce_piano",SQLBuilder.ISNOTNULL,null);
+	
+			List<Pdg_modulo_speseBulk> pdgModuloList = new it.cnr.jada.bulk.BulkList(pdgModuloHome.fetchAll(sqlPdgModulo));
+		
+			pdgModuloList.stream().collect(Collectors.groupingBy(Pdg_modulo_speseBulk::getEsercizio))
+			.entrySet().forEach(entryEse->{
+				try {
+					Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+					Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(entryEse.getKey()));
+
+					entryEse.getValue().stream().collect(Collectors.groupingBy(Pdg_modulo_speseBulk::getVoce_piano_economico))
+						.entrySet().forEach(entryVpe->{
+							if (!progetto.getAllDetailsProgettoPianoEconomico().stream()
+									.filter(el->el.getEsercizio_piano().equals(entryEse.getKey()))
+									.filter(el->el.getVoce_piano_economico().equalsByPrimaryKey(entryVpe.getKey())).findAny().isPresent())
+								throw new ApplicationRuntimeException("Attenzione: non risulta presente la voce del piano economico "+
+										entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" già inserita in previsione (Es: " + 
+										entryEse.getKey()+" - Cdr: "+
+										entryVpe.getValue().stream().map(Pdg_modulo_speseBulk::getCd_centro_responsabilita).findFirst().orElse(null)+
+										"). Operazione non consentita!");
+	
+							BigDecimal imDecentrataInt = entryVpe.getValue().stream()
+									.map(pme->Optional.ofNullable(pme.getIm_spese_gest_decentrata_int()).orElse(BigDecimal.ZERO))
+									.reduce((x, y) -> x.add(y)).get();
+							
+							BigDecimal imDecentrataInt2 = progetto.getAllDetailsProgettoPianoEconomico().stream()
+									.filter(ppe->ppe.getEsercizio_piano().equals(entryEse.getKey()))
+									.filter(ppe->ppe.getVoce_piano_economico().equalsByPrimaryKey(entryVpe.getKey()))
+									.map(ppe->Optional.ofNullable(ppe.getIm_spesa_cofinanziato()).orElse(BigDecimal.ZERO))
+									.reduce((x, y) -> x.add(y)).get();
+							
+							if (imDecentrataInt2.compareTo(imDecentrataInt)<0)
+								throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato per la voce del piano economico "+
+										entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" non può essere inferiore all'importo già inserito in previsione "	+ 
+										"per le fonti decentrate interne ("+new EuroFormat().format(imDecentrataInt)+"). Operazione non consentita!");
+								
+							BigDecimal imDecentrataEst = entryVpe.getValue().stream()
+									.map(pme->Optional.ofNullable(pme.getIm_spese_gest_decentrata_est()).orElse(BigDecimal.ZERO))
+									.reduce((x, y) -> x.add(y)).get();
+							
+							BigDecimal imDecentrataEst2 = progetto.getAllDetailsProgettoPianoEconomico().stream()
+									.filter(ppe->ppe.getEsercizio_piano().equals(entryEse.getKey()))
+									.filter(ppe->ppe.getVoce_piano_economico().equalsByPrimaryKey(entryVpe.getKey()))
+									.map(ppe->Optional.ofNullable(ppe.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO))
+									.reduce((x, y) -> x.add(y)).get();
+							
+							if (imDecentrataEst2.compareTo(imDecentrataEst)<0)
+								throw new ApplicationRuntimeException("Attenzione: l'importo finanziato per la voce del piano economico "+
+										entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" non può essere inferiore all'importo già inserito in previsione "	+ 
+										"per le fonti decentrate esterne ("+new EuroFormat().format(imDecentrataEst)+"). Operazione non consentita!");
+	
+							BulkList<Elemento_voceBulk> vociAssociatePianoEconomico = new BulkList<Elemento_voceBulk>();
+							progetto.getAllDetailsProgettoPianoEconomico().stream()
+									.filter(el->el.getEsercizio_piano().equals(entryEse.getKey()))
+									.filter(el->el.getVoce_piano_economico().equalsByPrimaryKey(entryVpe.getKey()))
+									.map(Progetto_piano_economicoBulk::getVociBilancioAssociate)
+									.forEach(el->vociAssociatePianoEconomico.addAll(el.stream()
+											.map(Ass_progetto_piaeco_voceBulk::getElemento_voce)
+											.collect(Collectors.toList())));
+
+							entryVpe.getValue().stream().forEach(pms->{
+								List<Elemento_voceBulk> vociAssociateClassificazione;
+								V_classificazione_vociBulk classVoce;
+								try {
+									classVoce = (V_classificazione_vociBulk)classVoceHome.findByPrimaryKey(pms.getClassificazione());
+									SQLBuilder sqlElementoVoce = elementoVoceHome.createSQLBuilder();
+
+									sqlElementoVoce.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,entryEse.getKey());
+
+									sqlElementoVoce.addTableToHeader("PARAMETRI_LIVELLI");
+									sqlElementoVoce.addSQLJoin("ELEMENTO_VOCE.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
+									sqlElementoVoce.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
+									sqlElementoVoce.addSQLJoin("ELEMENTO_VOCE.ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
+									sqlElementoVoce.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
+									sqlElementoVoce.addSQLClause(FindClause.AND, "V_CLASSIFICAZIONE_VOCI_ALL.ID_LIV"+parCnrBulk.getLivello_pdg_decis_spe(), SQLBuilder.EQUALS, pms.getId_classificazione());
+
+									vociAssociateClassificazione = new it.cnr.jada.bulk.BulkList(elementoVoceHome.fetchAll(sqlElementoVoce));
+								} catch(Throwable e) {
+									throw new ApplicationRuntimeException(e);
+								}
+
+								if (!vociAssociatePianoEconomico.stream()
+									.filter(voce->Optional.ofNullable(vociAssociateClassificazione).orElse(Collections.emptyList()).contains(voce))
+									.findAny().isPresent())
+									throw new ApplicationRuntimeException("Attenzione: non risulta presente per la voce del piano economico "+
+											entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" l'associazione alle voci di bilancio già inserite in previsione (Es: " + 
+											entryEse.getKey()+" - Cdr: "+pms.getCd_centro_responsabilita()+
+											" - Classificazione: "+(parCnrBulk.getFl_pdg_codlast()?classVoce.getCd_livello_last():classVoce.getCd_classificazione())+
+											"). Operazione non consentita!");
+							});
+						});
+			    	} catch(Throwable e) {
+			    		throw new ApplicationRuntimeException(e);
+			    	}
+				});
+    	} catch(Throwable e) {
+    		throw handleException(e);
+    	}
+    }
+
+    private void validaVociPianoEconomicoGestionale(UserContext userContext, ProgettoBulk progetto, Integer annoFrom) throws ComponentException {
+    	try {
+	    	Pdg_modulo_spese_gestHome pdgModuloGestHome = (Pdg_modulo_spese_gestHome)getHome(userContext, Pdg_modulo_spese_gestBulk.class);
+			SQLBuilder sqlPdgModuloGest = pdgModuloGestHome.createSQLBuilder();
+			sqlPdgModuloGest.addClause(FindClause.AND,"esercizio",SQLBuilder.GREATER_EQUALS,annoFrom);
+			sqlPdgModuloGest.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,progetto.getPg_progetto());
+			sqlPdgModuloGest.addClause(FindClause.AND,"cd_unita_piano",SQLBuilder.ISNOTNULL,null);
+			sqlPdgModuloGest.addClause(FindClause.AND,"cd_voce_piano",SQLBuilder.ISNOTNULL,null);
+	
+			List<Pdg_modulo_spese_gestBulk> pdgModuloGestList = new it.cnr.jada.bulk.BulkList(pdgModuloGestHome.fetchAll(sqlPdgModuloGest));
+
+			pdgModuloGestList.stream().collect(Collectors.groupingBy(Pdg_modulo_spese_gestBulk::getEsercizio))
+			.entrySet().forEach(entryEse->{
+				entryEse.getValue().stream().collect(Collectors.groupingBy(el->el.getPdg_modulo_spese().getVoce_piano_economico()))
+					.entrySet().forEach(entryVpe->{
+						if (!progetto.getAllDetailsProgettoPianoEconomico().stream()
+								.filter(el->el.getEsercizio_piano().equals(entryEse.getKey()))
+								.filter(el->el.getVoce_piano_economico().equalsByPrimaryKey(entryVpe.getKey())).findAny().isPresent())
+							throw new ApplicationRuntimeException("Attenzione: non risulta presente la voce del piano economico "+
+									entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" già inserita in previsione (Es: " + 
+									entryEse.getKey()+" - Cdr: "+
+									entryVpe.getValue().stream().map(Pdg_modulo_spese_gestBulk::getCd_centro_responsabilita).findFirst().orElse(null)+
+									"). Operazione non consentita!");
+
+						BulkList<Elemento_voceBulk> vociAssociatePianoEconomico = new BulkList<Elemento_voceBulk>();
+						progetto.getAllDetailsProgettoPianoEconomico().stream()
+								.filter(el->el.getEsercizio_piano().equals(entryEse.getKey()))
+								.filter(el->el.getVoce_piano_economico().equalsByPrimaryKey(entryVpe.getKey()))
+								.map(Progetto_piano_economicoBulk::getVociBilancioAssociate)
+								.forEach(el->vociAssociatePianoEconomico.addAll(el.stream()
+										.map(Ass_progetto_piaeco_voceBulk::getElemento_voce)
+										.collect(Collectors.toList())));
+
+						entryVpe.getValue().stream().collect(Collectors.groupingBy(Pdg_modulo_spese_gestBulk::getElemento_voce))
+							.keySet().stream().filter(voce->vociAssociatePianoEconomico.contains(voce)).findFirst().ifPresent(voce->{
+								throw new ApplicationRuntimeException("Attenzione: non risulta presente per la voce del piano economico "+
+									entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" l'associazione alla voce di bilancio già inserita in previsione (Es: " + 
+									entryEse.getKey()+" - Cdr: "+
+									entryVpe.getValue().stream().map(Pdg_modulo_spese_gestBulk::getCd_centro_responsabilita).findFirst().orElse(null)+
+									" - Voce: "+voce.getEsercizio()+"/"+voce.getTi_gestione()+"/"+voce.getCd_elemento_voce()+
+									"). Operazione non consentita!");
+							});
+					});						
+			});
+    	} catch(Throwable e) {
+    		throw handleException(e);
+    	}
+    }
+
+    private void validaSaldiPianoEconomico(UserContext userContext, ProgettoBulk progetto, Integer annoFrom) throws ComponentException {
+		try{
+			progetto.getAllDetailsProgettoPianoEconomico().stream()
+				.filter(el->el.getEsercizio_piano().compareTo(annoFrom)>=0).forEach(ppe->{
+	   			V_saldi_piano_econom_progettoBulk saldo;
+	   			try{
+	                saldo = ((V_saldi_piano_econom_progettoHome)getHome( userContext,V_saldi_piano_econom_progettoBulk.class )).
+	                        cercaSaldoPianoEconomico(ppe, "S");
+		    	} catch(Throwable e) {
+		    		throw new ApplicationRuntimeException(e);
+		    	}    			
+	
+	   			Optional.ofNullable(saldo).filter(el->el.getDispResiduaFinanziamento().compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
+	   	           	throw new ApplicationRuntimeException("Attenzione: l'importo finanziato per la voce del piano economico "+
+	   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+" non può essere inferiore all'importo assestato per le fonti decentrate interne ("+
+	   	           			el.getAssestatoFinanziamento()+"). Operazione non consentita!");
+				});
+	
+	  			Optional.ofNullable(saldo).filter(el->el.getDispResiduaCofinanziamento().compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
+	               	throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato per la voce del piano economico "+
+	               			ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+" non può essere inferiore all'importo assestato per le fonti decentrate interne ("+
+	    					el.getAssestatoCofinanziamento()+"). Operazione non consentita!");
+				});
+	   		});
+			
+			Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
+			SQLBuilder sqlSaldi = saldiHome.createSQLBuilder();
+			sqlSaldi.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+			sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO","VOCE_F_SALDI_CDR_LINEA.ESERCIZIO");
+			sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA","VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
+			sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA","VOCE_F_SALDI_CDR_LINEA.CD_LINEA_ATTIVITA");
+			sqlSaldi.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.GREATER_EQUALS,annoFrom);
+			sqlSaldi.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO",SQLBuilder.EQUALS,progetto.getPg_progetto());
+
+			sqlSaldi.openParenthesis(FindClause.AND);
+			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.IM_STANZ_INIZIALE_A1",SQLBuilder.GREATER_EQUALS,BigDecimal.ZERO);
+			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VARIAZIONI_PIU",SQLBuilder.GREATER_EQUALS,BigDecimal.ZERO);
+			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VARIAZIONI_MENO",SQLBuilder.GREATER_EQUALS,BigDecimal.ZERO);
+			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.IM_STANZ_RES_IMPROPRIO",SQLBuilder.GREATER_EQUALS,BigDecimal.ZERO);
+			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VAR_PIU_STANZ_RES_IMP",SQLBuilder.GREATER_EQUALS,BigDecimal.ZERO);
+			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VAR_MENO_STANZ_RES_IMP",SQLBuilder.GREATER_EQUALS,BigDecimal.ZERO);
+			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VAR_PIU_OBBL_RES_PRO",SQLBuilder.GREATER_EQUALS,BigDecimal.ZERO);
+			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VAR_MENO_OBBL_RES_PRO",SQLBuilder.GREATER_EQUALS,BigDecimal.ZERO);
+			sqlSaldi.closeParenthesis();
+			
+			Ass_progetto_piaeco_voceHome assPiaecoHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
+			SQLBuilder sqlExist = assPiaecoHome.createSQLBuilder();
+			sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO","V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO");
+			sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO","VOCE_F_SALDI_CDR_LINEA.ESERCIZIO_RES");
+			sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA","VOCE_F_SALDI_CDR_LINEA.TI_APPARTENENZA");
+			sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE","VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE");
+			sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE","VOCE_F_SALDI_CDR_LINEA.CD_ELEMENTO_VOCE");			
+			
+			sqlSaldi.addSQLNotExistsClause(FindClause.AND, sqlExist);
+
+			List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(sqlSaldi));
+			saldiList.stream().findFirst().ifPresent(el->{
+               	throw new ApplicationRuntimeException("Attenzione: risulta movimentata per il progetto la voce di bilancio " +
+               			el.getTi_gestione()+"/"+el.getCd_voce()+" che non risulta associata a nessuna voce del piano economico." + 
+               			"Operazione non consentita!");
+			});
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+    }
+
+    private void validaTipoFinanziamento(UserContext userContext, ProgettoBulk progetto, Integer annoFrom) throws ComponentException {
+		try{
+			Optional<TipoFinanziamentoBulk> optTipoFin = Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()));
+	    	if (progetto.isDettagliPianoEconomicoPresenti()) {
+	    		optTipoFin.filter(TipoFinanziamentoBulk::getFlPianoEcoFin)
+	    				.orElseThrow(()-> new ApplicationException("Attenzione: Sul progetto risulta caricato un piano economico. "
+	    						+ "Il tipo finanziamento selezionato non è coerente! Selezionare un tipo di finanziamento che non prevede "
+	    						+ "piano economico o eliminare il piano economico stesso!"));
+	    		
+	    		if (optTipoFin.filter(el->!el.getFlAssCatVociDet()).isPresent() && 
+	    			progetto.getAllDetailsProgettoPianoEconomico().stream()
+	    					.filter(el2->el2.getVoce_piano_economico().isVocePersonaleTempoDeterminato())
+	    					.findFirst().isPresent())
+	    			throw new ApplicationException("Attenzione: Il tipo finanziamento selezionato non è coerente! "
+	    					  		+ "Sul progetto risulta caricata una voce di piano economico di tipo 'Personale a Tempo Determinato' "
+	    					  		+ "non consentita dal tipo di finanziamento.");
+	
+	    		if (optTipoFin.filter(el->!el.getFlAssCatVociInd()).isPresent() &&
+	    			progetto.getAllDetailsProgettoPianoEconomico().stream()
+	    					.filter(el2->el2.getVoce_piano_economico().isVocePersonaleTempoIndeterminato())
+	    					.findFirst().isPresent())
+	    			throw new ApplicationException("Attenzione: Il tipo finanziamento selezionato non è coerente! "
+							  		+ "Sul progetto risulta caricata una voce di piano economico di tipo 'Personale a Tempo Indeterminato' "
+							  		+ "non consentita dal tipo di finanziamento.");
+
+	    		if (optTipoFin.filter(el->!el.getFlAssCatVociInd()).isPresent() &&
+	    			progetto.getAllDetailsProgettoPianoEconomico().stream()
+							.filter(el2->el2.getVoce_piano_economico().isVocePersonaleAltraTipologia())
+							.findFirst().isPresent())
+	    			throw new ApplicationException("Attenzione: Il tipo finanziamento selezionato non è coerente! "
+							  		+ "Sul progetto risulta caricata una voce di piano economico di tipo 'Altro Personale' "
+							  		+ "non consentita dal tipo di finanziamento.");
+	    	}
+
+	   		Pdg_modulo_costiHome pdgModuloHome = (Pdg_modulo_costiHome)getHome(userContext, Pdg_modulo_costiBulk.class);
+	        SQLBuilder sqlPdgModulo = pdgModuloHome.createSQLBuilder();
+		   	if (Optional.ofNullable(annoFrom).isPresent())
+		       	sqlPdgModulo.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, progetto.getEsercizio());
+	        sqlPdgModulo.addClause(FindClause.AND, "pg_progetto", SQLBuilder.EQUALS, progetto.getPg_progetto());
+	        	
+    		if (optTipoFin.filter(el->!el.getFlPrevEntSpesa()).isPresent() &&
+    			sqlPdgModulo.executeExistsQuery(getConnection(userContext)))
+    			throw new ApplicationException("Attenzione: Il tipo finanziamento selezionato non è coerente! "
+    								+ "Sul progetto risultano caricati dati previsionali non previsti dal tipo di finanziamento.");
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+    }
+
+    public SQLBuilder selectOtherField_tipoFinanziamentoByClause(UserContext userContext,ProgettoBulk progetto,TipoFinanziamentoBulk tipoFinanziamento,CompoundFindClause clauses) throws ComponentException, PersistencyException{
+    	try {
+	    	TipoFinanziamentoHome home = (TipoFinanziamentoHome)getHome(userContext, TipoFinanziamentoBulk.class);
+	    	SQLBuilder sql = home.createSQLBuilder();
+	        
+	    	if (progetto.isDettagliPianoEconomicoPresenti()) {
+	    		sql.addClause(FindClause.AND, "flPianoEcoFin", SQLBuilder.EQUALS, Boolean.TRUE);
+	    		
+	        	if (progetto.getAllDetailsProgettoPianoEconomico().stream()
+	        			.filter(el->el.getVoce_piano_economico().isVocePersonaleTempoDeterminato())
+	        			.count()>0)
+	        		sql.addClause(FindClause.AND, "flAssCatVociDet", SQLBuilder.EQUALS, Boolean.TRUE);
+	
+	        	if (progetto.getAllDetailsProgettoPianoEconomico().stream()
+	        			.filter(el->el.getVoce_piano_economico().isVocePersonaleTempoIndeterminato())
+	        			.count()>0)
+	        		sql.addClause(FindClause.AND, "flAssCatVociInd", SQLBuilder.EQUALS, Boolean.TRUE);
+	
+	        	if (progetto.getAllDetailsProgettoPianoEconomico().stream()
+	        			.filter(el->el.getVoce_piano_economico().isVocePersonaleAltraTipologia())
+	        			.count()>0)
+	        		sql.addClause(FindClause.AND, "flAssCatVociAltro", SQLBuilder.EQUALS, Boolean.TRUE);
+	    	}        	
+	
+	   		it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
+	   		BigDecimal annoFrom = configSession.getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+	
+	   		Pdg_modulo_costiHome pdgModuloHome = (Pdg_modulo_costiHome)getHome(userContext, Pdg_modulo_costiBulk.class);
+	        SQLBuilder sqlPdgModulo = pdgModuloHome.createSQLBuilder();
+		   	if (Optional.ofNullable(annoFrom).isPresent())
+		       	sqlPdgModulo.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, progetto.getEsercizio());
+	        sqlPdgModulo.addClause(FindClause.AND, "pg_progetto", SQLBuilder.EQUALS, progetto.getPg_progetto());
+	        	
+	        if (sqlPdgModulo.executeExistsQuery(getConnection(userContext)))
+	           	sql.addClause(FindClause.AND, "flPrevEntSpesa", SQLBuilder.EQUALS, Boolean.TRUE);
+	
+	    	sql.addClause(clauses);
+	    	return sql;
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+    }
 }
