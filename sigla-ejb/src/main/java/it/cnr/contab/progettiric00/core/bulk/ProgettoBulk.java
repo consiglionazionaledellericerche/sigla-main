@@ -15,6 +15,7 @@ import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaNuovoBP;
@@ -142,6 +143,7 @@ public class ProgettoBulk extends ProgettoBase {
 	private Boolean fl_gestione;
 	private String tipoFaseToSearch;
 	private Progetto_other_fieldBulk otherField;
+	private BulkList pdgModuli = new BulkList();
 
 	public ProgettoBulk() {
 		super();
@@ -1154,5 +1156,13 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 				throw new ApplicationRuntimeException("Non è possibile indicare una data di fine/proroga con anno inferiore al "+annoMax+
 						" per il quale risulta già caricato un piano economico.");
 		});
+	}
+	
+	public BulkList<Pdg_moduloBulk> getPdgModuli() {
+		return pdgModuli;
+	}
+	
+	public void setPdgModuli(BulkList<Pdg_moduloBulk> pdgModuli) {
+		this.pdgModuli = pdgModuli;
 	}
 }
