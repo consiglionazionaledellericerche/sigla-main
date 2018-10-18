@@ -30,6 +30,7 @@ import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateHome;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_moduloHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
@@ -273,6 +274,14 @@ public ProgettoRicercaComponent() {
 						testata.setFl_previsione(progettoPrev!=null);
 						testata.setFl_gestione(progettoGest!=null);
 
+						BulkList<Pdg_moduloBulk> pdgModuliList = new it.cnr.jada.bulk.BulkList(testataHome.findPdgModuliAssociati(userContext, testata.getPg_progetto()));
+
+						it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
+				   		BigDecimal annoFrom = configSession.getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+				   		if (Optional.ofNullable(annoFrom).isPresent())
+				   			testata.setPdgModuli(new BulkList(pdgModuliList.stream().filter(el->el.getEsercizio().compareTo(annoFrom.intValue())>=0).collect(Collectors.toList())));
+				   		else
+				   			testata.setPdgModuli(pdgModuliList);
 						getHomeCache(userContext).fetchAll(userContext);
 						return testata;
 				} catch(Exception e) {
@@ -1433,6 +1442,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		   		validaVociPianoEconomicoGestionale(userContext, progetto, annoFrom.intValue());
 		   		validaSaldiPianoEconomico(userContext, progetto, annoFrom.intValue());
 		   		validaTipoFinanziamento(userContext, progetto, annoFrom.intValue());
+		   		validaQuadraturaPianoEconomico(userContext, progetto, annoFrom.intValue());
 	   		};
     	} catch(Throwable e) {
     		throw handleException(e);
@@ -1713,6 +1723,45 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		}
     }
 
+    private void validaQuadraturaPianoEconomico(UserContext userContext, ProgettoBulk progetto, Integer annoFrom) throws ComponentException {
+		try{
+			Optional<TipoFinanziamentoBulk> optTipoFin = Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()));
+			if (optTipoFin.filter(el->el.getFlAllPrevFin()).isPresent()) {
+				progetto.getAllDetailsProgettoPianoEconomico().stream()
+						.filter(el->Optional.ofNullable(el.getVoce_piano_economico()).map(Voce_piano_economico_prgBulk::getFlAllPrevFin).orElse(Boolean.FALSE))
+						.map(Progetto_piano_economicoBulk::getEsercizio_piano)
+						.filter(annoPiano->Optional.ofNullable(annoFrom).map(el->annoPiano.compareTo(el)>=0).orElse(Boolean.TRUE))
+						.distinct().forEach(annoPiano->{
+							try {
+						   		Pdg_modulo_costiHome pdgModuloHome = (Pdg_modulo_costiHome)getHome(userContext, Pdg_modulo_costiBulk.class);
+						        SQLBuilder sqlPdgModulo = pdgModuloHome.createSQLBuilder();
+						        sqlPdgModulo.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, annoPiano);
+						        sqlPdgModulo.addClause(FindClause.AND, "pg_progetto", SQLBuilder.EQUALS, progetto.getPg_progetto());
+						        sqlPdgModulo.addTableToHeader("PDG_MODULO");
+						        sqlPdgModulo.addSQLJoin("PDG_MODULO_COSTI.ESERCIZIO", "PDG_MODULO.ESERCIZIO");
+						        sqlPdgModulo.addSQLJoin("PDG_MODULO_COSTI.CD_CENTRO_RESPONSABILITA", "PDG_MODULO.CD_CENTRO_RESPONSABILITA");
+						        sqlPdgModulo.addSQLJoin("PDG_MODULO_COSTI.PG_PROGETTO", "PDG_MODULO.PG_PROGETTO");
+						        sqlPdgModulo.addSQLClause(FindClause.AND, "PDG_MODULO.STATO", SQLBuilder.NOT_EQUALS, Pdg_moduloBulk.STATO_AC);
+
+								List<Pdg_modulo_costiBulk> pdgModuloList = new it.cnr.jada.bulk.BulkList(pdgModuloHome.fetchAll(sqlPdgModulo));
+								pdgModuloList.stream().forEach(modCosti->{
+									try {
+										Utility.createSaldoComponentSession().checkDispPianoEconomicoProgetto(userContext, modCosti, Boolean.TRUE);
+									} catch(Throwable e) {
+										throw new ApplicationRuntimeException(e);
+									}
+						        });
+							} catch(Throwable e) {
+								throw new ApplicationRuntimeException(e);
+							}
+						});
+			}
+	        	
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+    }
+    
     public SQLBuilder selectOtherField_tipoFinanziamentoByClause(UserContext userContext,ProgettoBulk progetto,TipoFinanziamentoBulk tipoFinanziamento,CompoundFindClause clauses) throws ComponentException, PersistencyException{
     	try {
 	    	TipoFinanziamentoHome home = (TipoFinanziamentoHome)getHome(userContext, TipoFinanziamentoBulk.class);
@@ -1743,7 +1792,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	   		Pdg_modulo_costiHome pdgModuloHome = (Pdg_modulo_costiHome)getHome(userContext, Pdg_modulo_costiBulk.class);
 	        SQLBuilder sqlPdgModulo = pdgModuloHome.createSQLBuilder();
 		   	if (Optional.ofNullable(annoFrom).isPresent())
-		       	sqlPdgModulo.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, progetto.getEsercizio());
+		       	sqlPdgModulo.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, annoFrom);
 	        sqlPdgModulo.addClause(FindClause.AND, "pg_progetto", SQLBuilder.EQUALS, progetto.getPg_progetto());
 	        	
 	        if (sqlPdgModulo.executeExistsQuery(getConnection(userContext)))
