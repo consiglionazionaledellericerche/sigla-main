@@ -1,11 +1,14 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
+import java.util.Calendar;
 import java.util.Dictionary;
+import java.util.GregorianCalendar;
 import java.util.Optional;
 
 import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.DateUtils;
 
 public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
 	public static final String STATO_INIZIALE = "INI";
@@ -161,5 +164,26 @@ public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
 
 	public Dictionary getStatoKeys() {
 		return statoKeys;
+	}
+	
+	public Integer getAnnoInizio() {
+		return Optional.ofNullable(this.getDtInizio())
+				.map(elDate->{
+					GregorianCalendar calendar = new GregorianCalendar();
+					calendar.setTime(elDate);
+					return calendar.get(Calendar.YEAR);
+				})
+				.orElse(0);
+	}
+	
+	public Integer getAnnoFine() {
+		Optional<Integer> anno = Optional.empty();
+		if (Optional.ofNullable(this.getDtFine()).isPresent() || 
+				Optional.ofNullable(this.getDtProroga()).isPresent()) {
+			GregorianCalendar calendar = new GregorianCalendar();
+			calendar.setTime(DateUtils.max(this.getDtFine(), this.getDtProroga()));
+			anno = Optional.of(calendar.get(Calendar.YEAR));
+		}
+		return anno.orElse(9999);
 	}
 }
