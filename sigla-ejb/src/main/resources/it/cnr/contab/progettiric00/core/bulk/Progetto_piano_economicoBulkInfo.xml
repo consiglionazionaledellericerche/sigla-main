@@ -50,6 +50,7 @@
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
+		readonlyPropertyOnEdit="ROProgettoPianoEconomico"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Finanziata" />
 	<fieldProperty
@@ -58,6 +59,7 @@
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
+		readonlyPropertyOnEdit="ROProgettoPianoEconomico"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Cofinanziata" />
 	<fieldProperty
