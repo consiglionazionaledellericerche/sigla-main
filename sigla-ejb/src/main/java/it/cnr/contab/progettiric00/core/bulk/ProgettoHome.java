@@ -19,6 +19,7 @@ import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_area_progBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_attivitaBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_commessaBulk;
@@ -661,4 +662,10 @@ public class ProgettoHome extends BulkHome {
 		return findByPrimaryKey(persistent);
 	}
 
+	public java.util.Collection findPdgModuliAssociati(it.cnr.jada.UserContext userContext,Integer pgProgetto) throws IntrospectionException, PersistencyException {
+		PersistentHome pdgModuloHome = getHomeCache().getHome(Pdg_moduloBulk.class);
+		SQLBuilder sql = pdgModuloHome.createSQLBuilder();
+		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);
+		return pdgModuloHome.fetchAll(sql);
+	}
 }
