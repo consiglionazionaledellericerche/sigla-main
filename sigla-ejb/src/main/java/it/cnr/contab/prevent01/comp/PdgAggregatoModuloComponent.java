@@ -2,9 +2,12 @@ package it.cnr.contab.prevent01.comp;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
@@ -38,6 +41,7 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
 import it.cnr.contab.prevent01.bulk.Stampa_pdgp_bilancioBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
@@ -54,6 +58,7 @@ import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.OutdatedResourceException;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.IPrintMgr;
@@ -65,6 +70,7 @@ import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.action.OptionBP;
 
 public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrintMgr {
 /**
@@ -75,9 +81,28 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 	}
 	
 	private OggettoBulk intBulk(UserContext userContext, OggettoBulk bulk) throws ComponentException {
-		//if(((CdrBulk)bulk).getDettagli().isEmpty() )
-		//   throw new it.cnr.jada.comp.ApplicationException("Attenzione: Per salvare è necessario inserire almeno un dettaglio!");
-		return bulk;
+		try {
+			Optional.ofNullable(bulk).filter(CdrBulk.class::isInstance).map(CdrBulk.class::cast)
+				.flatMap(el->Optional.ofNullable(el.getDettagli())).map(BulkList<Pdg_moduloBulk>::stream)
+				.orElse(Stream.empty()).forEach(el->{
+					if (!Optional.of(el.getProgetto()).isPresent())
+						throw new ApplicationRuntimeException("Salvataggio non possibile! Non risulta indicato il progetto su una riga!");
+					else if (!Optional.ofNullable(el.getProgetto().getOtherField())
+							.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getStato()))
+							.filter(stato -> Arrays.asList(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE, Progetto_other_fieldBulk.STATO_APPROVATO).indexOf(stato) != -1).isPresent()) {
+						throw new ApplicationRuntimeException("Attenzione: il progetto "+el.getProgetto().getCd_progetto()+" non ha uno stato utile alla previsione! Deve essere completato dalla UO responsabile! "
+								+ "Eliminare l'associazione al bilancio!");
+					}
+					if (!Optional.ofNullable(el.getProgetto().getOtherField())
+							.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
+							.filter(tipoFinanziamentoBulk -> tipoFinanziamentoBulk.getFlPrevEntSpesa() || tipoFinanziamentoBulk.getFlRipCostiPers()).isPresent())
+						throw new ApplicationRuntimeException("Attenzione: per il progetto "+el.getProgetto().getCd_progetto()+" non è consentita la previsione! "
+								+ "Eliminare l'associazione al bilancio!");
+				});
+			return bulk;
+    	} catch(Throwable e) {
+    		throw handleException(e);
+    	}
 	}
 	
 	public OggettoBulk creaConBulk(UserContext uc, OggettoBulk bulk) throws ComponentException {
