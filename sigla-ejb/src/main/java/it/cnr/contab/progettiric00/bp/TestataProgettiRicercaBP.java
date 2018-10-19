@@ -46,7 +46,8 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	private boolean flPrgPianoEconomico = false;
 	private boolean isUoCdsCollegata = false;
 	private Integer annoFromPianoEconomico;
-
+	private Unita_organizzativaBulk uoScrivania;
+	
 	private SimpleDetailCRUDController crudDettagli = new SimpleDetailCRUDController( "Dettagli", Progetto_uoBulk.class, "dettagli", this) {
 		public void validateForDelete(ActionContext context, OggettoBulk detail)
 			throws ValidationException
@@ -127,8 +128,8 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
         	setFlInformix(parEnte.getFl_informix().booleanValue());
 			setFlPrgPianoEconomico(parEnte.getFl_prg_pianoeco().booleanValue());
-			Unita_organizzativaBulk uo = (Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findUOByCodice(actioncontext.getUserContext(), CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext()));
-			isUoCdsCollegata = uo.getFl_uo_cds();
+			uoScrivania = (Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findUOByCodice(actioncontext.getUserContext(), CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext()));
+			isUoCdsCollegata = uoScrivania.getFl_uo_cds();
 
 			it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
 	   		BigDecimal annoFrom = configSession.getIm01(actioncontext.getUserContext(), new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
@@ -594,6 +595,10 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 
 	public boolean isApprovaButtonHidden()	{
 		return !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa()))
+				.filter(el->el.equals(uoScrivania.getCd_unita_organizzativa()))
+				.isPresent() ||
+			   !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
 				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
 				.filter(el->Optional.ofNullable(el.getTipoFinanziamento()).isPresent())
 				.filter(el->el.isStatoIniziale()||el.isStatoNegoziazione())
@@ -602,6 +607,10 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		
 	public boolean isAnnullaButtonHidden()	{
 		return !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa()))
+				.filter(el->el.equals(uoScrivania.getCd_unita_organizzativa()))
+				.isPresent() ||
+			   !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
 				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
 				.filter(el->Optional.ofNullable(el.getTipoFinanziamento()).isPresent())
 				.filter(Progetto_other_fieldBulk::isStatoNegoziazione)
@@ -610,6 +619,10 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 
 	public boolean isChiusuraButtonHidden()	{
 		return !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa()))
+				.filter(el->el.equals(uoScrivania.getCd_unita_organizzativa()))
+				.isPresent() ||
+			   !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
 				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
 				.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
 				.filter(el->!Optional.ofNullable(el.getFlPianoEcoFin()).orElse(Boolean.TRUE))
