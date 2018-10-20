@@ -74,9 +74,9 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		@Override
 		public boolean isGrowable() {
 			return super.isGrowable() &&
-					Optional.ofNullable(getModel())
-							.filter(Progetto_piano_economicoBulk.class::isInstance)
-							.map(Progetto_piano_economicoBulk.class::cast)
+					Optional.ofNullable(getParentModel())
+							.filter(ProgettoBulk.class::isInstance)
+							.map(ProgettoBulk.class::cast)
 							.map(el->!el.isROProgettoPianoEconomico())
 							.orElse(Boolean.FALSE);
 		}
@@ -84,9 +84,9 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		@Override
 		public boolean isShrinkable() {
 			return super.isShrinkable() &&
-					Optional.ofNullable(getModel())
-							.filter(Progetto_piano_economicoBulk.class::isInstance)
-							.map(Progetto_piano_economicoBulk.class::cast)
+					Optional.ofNullable(getParentModel())
+							.filter(ProgettoBulk.class::isInstance)
+							.map(ProgettoBulk.class::cast)
 							.map(el->!el.isROProgettoPianoEconomico())
 							.orElse(Boolean.FALSE);
 		}		
