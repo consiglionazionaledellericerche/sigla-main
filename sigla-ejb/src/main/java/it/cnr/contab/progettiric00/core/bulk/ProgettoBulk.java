@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
@@ -1164,5 +1165,15 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	
 	public void setPdgModuli(BulkList<Pdg_moduloBulk> pdgModuli) {
 		this.pdgModuli = pdgModuli;
+	}
+
+	public boolean isROProgettoPianoEconomico() {
+		return Optional.ofNullable(this)
+				.flatMap(el->Optional.ofNullable(el.getPdgModuli()))
+				.map(el->el.stream())
+				.orElse(Stream.empty())
+				.filter(el->el.getEsercizio().equals(this.getEsercizio()))
+				.filter(el->!el.getStato().equals(Pdg_moduloBulk.STATO_AC))
+				.findAny().isPresent();
 	}
 }
