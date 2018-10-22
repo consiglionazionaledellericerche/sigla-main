@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.util.Optional;
 
 import it.cnr.contab.config00.latt.bulk.CofogBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
@@ -247,7 +248,12 @@ public class Pdg_modulo_speseBulk extends Pdg_modulo_speseBase {
 			    !getClassificazione().getFl_decentrato().booleanValue() &&
 			    getClassificazione().getCentro_responsabilita() != null &&
 			    getClassificazione().getCentro_responsabilita().getCd_centro_responsabilita() != null &&
-			    !getClassificazione().getCentro_responsabilita().equalsByPrimaryKey(getPdg_modulo_costi().getPdg_modulo().getCdr()));
+			    !getClassificazione().getCentro_responsabilita().equalsByPrimaryKey(getPdg_modulo_costi().getPdg_modulo().getCdr())) ||
+			    Optional.ofNullable(this.getPdg_modulo_costi()).flatMap(el->Optional.ofNullable(el.getPdg_modulo()))
+					   .flatMap(el->Optional.ofNullable(el.getProgetto())).flatMap(el->Optional.ofNullable(el.getOtherField()))
+					   .flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
+					   .map(tipoFinanziamentoBulk -> !tipoFinanziamentoBulk.getFlPrevEntSpesa())
+			   		   .orElse(Boolean.TRUE);
 	}
 	
 	public boolean isRODecentrata(){
