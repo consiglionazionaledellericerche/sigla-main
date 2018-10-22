@@ -16,6 +16,8 @@ import javax.ejb.RemoveException;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
@@ -527,7 +529,9 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 				.map(tipoFinanziamentoBulk -> "Tipologia di Finanziamento: "
 						.concat(tipoFinanziamentoBulk.getDescrizione())
 						.concat("<BR>")
-						.concat("Previsione Entrata/Spesa ").concat(tipoFinanziamentoBulk.getFlPrevEntSpesa() ? " consentita" : " non consentita")
+						.concat("Previsione Entrata ").concat(tipoFinanziamentoBulk.getFlPrevEntSpesa() ? " consentita" : " non consentita")
+						.concat("<BR>")
+						.concat("Previsione Spesa ").concat(tipoFinanziamentoBulk.getFlPrevEntSpesa() ? " consentita" : " consentita solo per le spese accentrate")
                         .concat("<BR>")
                         .concat("Ripartizione Costi del Personale ").concat(tipoFinanziamentoBulk.getFlRipCostiPers() ? " consentita" : " non consentita")
 				)
@@ -551,7 +555,15 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 								.orElse(""));
 	}
 
-    public boolean isPrevEntSpesaEnable(UserInfo userInfo) {
+    public boolean isPrevEntrataEnable(UserInfo userInfo) {
+		return isPrevEntSpesaEnable(userInfo, Elemento_voceHome.GESTIONE_ENTRATE);
+	}
+
+    public boolean isPrevSpesaEnable(UserInfo userInfo) {
+		return isPrevEntSpesaEnable(userInfo, Elemento_voceHome.GESTIONE_SPESE);
+	}
+
+    private boolean isPrevEntSpesaEnable(UserInfo userInfo, String tipo) {
 		return Optional.ofNullable(getCrudDettagli().getModel())
 				.filter(Pdg_moduloBulk.class::isInstance)
 				.map(Pdg_moduloBulk.class::cast)
@@ -577,7 +589,8 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 							.orElse(Boolean.TRUE) ||
 					Optional.ofNullable(progetto_sipBulk.getOtherField())
 							.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
-							.map(tipoFinanziamentoBulk -> tipoFinanziamentoBulk.getFlPrevEntSpesa())
+							.map(tipoFinanziamentoBulk -> tipo.equals(Elemento_voceHome.GESTIONE_SPESE) ||
+														  tipoFinanziamentoBulk.getFlPrevEntSpesa())
 							.orElse(Boolean.FALSE))
 				.orElse(Boolean.FALSE) ||
                 Optional.ofNullable(userInfo)
