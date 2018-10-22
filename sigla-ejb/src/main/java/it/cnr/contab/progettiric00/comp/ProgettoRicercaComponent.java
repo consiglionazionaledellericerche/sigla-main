@@ -1708,16 +1708,34 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 							  		+ "non consentita dal tipo di finanziamento.");
 	    	}
 
-	   		Pdg_modulo_costiHome pdgModuloHome = (Pdg_modulo_costiHome)getHome(userContext, Pdg_modulo_costiBulk.class);
-	        SQLBuilder sqlPdgModulo = pdgModuloHome.createSQLBuilder();
-		   	if (Optional.ofNullable(annoFrom).isPresent())
-		       	sqlPdgModulo.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, progetto.getEsercizio());
-	        sqlPdgModulo.addClause(FindClause.AND, "pg_progetto", SQLBuilder.EQUALS, progetto.getPg_progetto());
-	        	
-    		if (optTipoFin.filter(el->!el.getFlPrevEntSpesa()).isPresent() &&
-    			sqlPdgModulo.executeExistsQuery(getConnection(userContext)))
-    			throw new ApplicationException("Attenzione: Il tipo finanziamento selezionato non è coerente! "
-    								+ "Sul progetto risultano caricati dati previsionali non previsti dal tipo di finanziamento.");
+	    	if (optTipoFin.flatMap(el->Optional.ofNullable(el.getFlPrevEntSpesa())).filter(el->el.equals(Boolean.FALSE)).isPresent()) {
+		    	Pdg_Modulo_EntrateHome pdgModuloEntrateHome = (Pdg_Modulo_EntrateHome)getHome(userContext, Pdg_Modulo_EntrateBulk.class);
+		        SQLBuilder sqlPdgModuloEntrate = pdgModuloEntrateHome.createSQLBuilder();
+			   	if (Optional.ofNullable(annoFrom).isPresent())
+			       	sqlPdgModuloEntrate.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, progetto.getEsercizio());
+		        sqlPdgModuloEntrate.addClause(FindClause.AND, "pg_progetto", SQLBuilder.EQUALS, progetto.getPg_progetto());
+		        
+	    		if (sqlPdgModuloEntrate.executeExistsQuery(getConnection(userContext)))
+	    			throw new ApplicationException("Attenzione: Il tipo finanziamento selezionato non è coerente! "
+	    								+ "Sul progetto risultano caricati dati previsionali di entrata non previsti "
+	    								+ "dal tipo di finanziamento.");
+	
+		    	Pdg_modulo_speseHome pdgModuloSpeseHome = (Pdg_modulo_speseHome)getHome(userContext, Pdg_modulo_speseBulk.class);
+		        SQLBuilder sqlPdgModuloSpese = pdgModuloSpeseHome.createSQLBuilder();
+			   	if (Optional.ofNullable(annoFrom).isPresent())
+			       	sqlPdgModuloSpese.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, progetto.getEsercizio());
+		        sqlPdgModuloSpese.addClause(FindClause.AND, "pg_progetto", SQLBuilder.EQUALS, progetto.getPg_progetto());
+		        
+		        sqlPdgModuloSpese.openParenthesis(FindClause.AND);
+		        sqlPdgModuloSpese.addClause(FindClause.OR, "im_spese_gest_decentrata_int", SQLBuilder.NOT_EQUALS, BigDecimal.ZERO);
+		        sqlPdgModuloSpese.addClause(FindClause.OR, "im_spese_gest_decentrata_est", SQLBuilder.NOT_EQUALS, BigDecimal.ZERO);
+		        sqlPdgModuloSpese.closeParenthesis();
+		        	
+	    		if (sqlPdgModuloSpese.executeExistsQuery(getConnection(userContext)))
+	    			throw new ApplicationException("Attenzione: Il tipo finanziamento selezionato non è coerente! "
+	    								+ "Sul progetto risultano caricati dati previsionali di spesa con importi decentrati valorizzati "
+	    								+ "non previsti dal tipo di finanziamento.");
+	    	}
 		} catch(Throwable e) {
 			throw handleException(e);
 		}
@@ -1726,7 +1744,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     private void validaQuadraturaPianoEconomico(UserContext userContext, ProgettoBulk progetto, Integer annoFrom) throws ComponentException {
 		try{
 			Optional<TipoFinanziamentoBulk> optTipoFin = Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()));
-			if (optTipoFin.filter(el->el.getFlAllPrevFin()).isPresent()) {
+	    	if (optTipoFin.flatMap(el->Optional.ofNullable(el.getFlAllPrevFin())).filter(el->el.equals(Boolean.TRUE)).isPresent()) {
 				progetto.getAllDetailsProgettoPianoEconomico().stream()
 						.filter(el->Optional.ofNullable(el.getVoce_piano_economico()).map(Voce_piano_economico_prgBulk::getFlAllPrevFin).orElse(Boolean.FALSE))
 						.map(Progetto_piano_economicoBulk::getEsercizio_piano)
