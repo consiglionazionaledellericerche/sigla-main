@@ -13,10 +13,12 @@ import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.contab.util.StringEncrypter;
 import it.cnr.contab.util.StringEncrypter.EncryptionException;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.mail.SimplePECMail;
 import it.gov.fatturapa.sdi.messaggi.v1.MetadatiInvioFileType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoCommittenteType;
@@ -78,6 +80,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	private FatturaElettronicaPassivaComponentSession fatturaElettronicaPassivaComponentSession;
 	private RicercaDocContComponentSession ricercaDocContComponentSession;
 	private DocAmmFatturazioneElettronicaComponentSession docAmmFatturazioneElettronicaComponentSession;
+
 	private RicezioneFatturePA ricezioneFattureService;
 	private TrasmissioneFatturePA trasmissioneFattureService;
 	private FatturazioneElettronicaClient fatturazioneElettronicaClient;
@@ -90,7 +93,44 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		pecSDIFromStringTerm, pecSDISubjectRiceviFattureTerm, pecSDISubjectFatturaAttivaRicevutaConsegnaTerm, pecSDISubjectFatturaAttivaNotificaScartoTerm, pecSDISubjectFatturaAttivaMancataConsegnaTerm,
 		pecSDISubjectNotificaEsitoTerm, pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm, pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm, pecHostAddressReturn, pecSDISubjectMancataConsegnaPecTerm;
 	private List<String> pecScanFolderName, pecScanReceiptFolderName, pecHostAddress;
-	
+
+
+	public void afterPropertiesSet() throws Exception {
+		userContext = new WSUserContext("SDI",null,
+				new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),
+				null,null,null);
+		this.fatturaElettronicaPassivaComponentSession = Optional.ofNullable(EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession"))
+				.filter(FatturaElettronicaPassivaComponentSession.class::isInstance)
+				.map(FatturaElettronicaPassivaComponentSession.class::cast)
+				.orElseThrow(() -> new DetailedRuntimeException("cannot find ejb CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession"));
+
+		this.ricezioneFattureService = Optional.ofNullable(EJBCommonServices.createEJB("RicezioneFatture!it.cnr.contab.docamm00.ejb.RicezioneFatturePA"))
+				.filter(RicezioneFatturePA.class::isInstance)
+				.map(RicezioneFatturePA.class::cast)
+				.orElseThrow(() -> new DetailedRuntimeException("cannot find ejb RicezioneFatture!it.cnr.contab.docamm00.ejb.RicezioneFatturePA"));
+
+		this.trasmissioneFattureService = Optional.ofNullable(EJBCommonServices.createEJB("TrasmissioneFatture!it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA"))
+				.filter(TrasmissioneFatturePA.class::isInstance)
+				.map(TrasmissioneFatturePA.class::cast)
+				.orElseThrow(() -> new DetailedRuntimeException("cannot find ejb TrasmissioneFatture!it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA"));
+
+		this.fatturaAttivaSingolaComponentSession = Optional.ofNullable(EJBCommonServices.createEJB("CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession"))
+				.filter(FatturaAttivaSingolaComponentSession.class::isInstance)
+				.map(FatturaAttivaSingolaComponentSession.class::cast)
+				.orElseThrow(() -> new DetailedRuntimeException("cannot find ejb CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession"));
+
+		this.ricercaDocContComponentSession = Optional.ofNullable(EJBCommonServices.createEJB("CNRCHIUSURA00_EJB_RicercaDocContComponentSession"))
+				.filter(RicercaDocContComponentSession.class::isInstance)
+				.map(RicercaDocContComponentSession.class::cast)
+				.orElseThrow(() -> new DetailedRuntimeException("cannot find ejb CNRCHIUSURA00_EJB_RicercaDocContComponentSession"));
+
+		this.docAmmFatturazioneElettronicaComponentSession = Optional.ofNullable(EJBCommonServices.createEJB("CNRDOCAMM00_EJB_DocAmmFatturazioneElettronicaComponentSession"))
+				.filter(DocAmmFatturazioneElettronicaComponentSession.class::isInstance)
+				.map(DocAmmFatturazioneElettronicaComponentSession.class::cast)
+				.orElseThrow(() -> new DetailedRuntimeException("cannot find ejb CNRDOCAMM00_EJB_DocAmmFatturazioneElettronicaComponentSession"));
+
+	}
+
 	public RicercaDocContComponentSession getRicercaDocContComponentSession() {
 		return ricercaDocContComponentSession;
 	}
@@ -971,11 +1011,6 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 				}
 			}
 		}		
-	}
-	public void afterPropertiesSet() throws Exception {
-    	userContext = new WSUserContext("SDI",null, 
-    			new Integer(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)),
-    			null,null,null);		
 	}
 
 	class UploadedFileDataSourceStream implements DataSource {

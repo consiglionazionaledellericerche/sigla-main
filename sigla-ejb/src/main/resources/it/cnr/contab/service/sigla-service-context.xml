@@ -2,11 +2,9 @@
 <beans
 		xmlns="http://www.springframework.org/schema/beans"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns:jee="http://www.springframework.org/schema/jee"
 		xmlns:task="http://www.springframework.org/schema/task"
 		xmlns:context="http://www.springframework.org/schema/context"
 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-						http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 						http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd">
 
@@ -26,32 +24,6 @@
 	<import resource="classpath*:it/cnr/contab/storage/service/storage-service-context.xml"/>
 	<import resource="classpath*:it/cnr/contab/service/sdi-client-service-context.xml"/>
 
-	<jee:jndi-lookup id="offlineReportComponent"
-					 jndi-name="java:global/SIGLA/sigla-ejb/BREPORTS_EJB_OfflineReportComponentSession"
-					 resource-ref="false">
-	</jee:jndi-lookup>
-	<jee:jndi-lookup id="gestioneLoginComponent"
-					 jndi-name="java:global/SIGLA/sigla-ejb/CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession"
-					 resource-ref="false">
-	</jee:jndi-lookup>
-	<jee:jndi-lookup id="ricezioneFattureService"
-					 jndi-name="java:global/SIGLA/sigla-sdi/RicezioneFatture!it.cnr.contab.docamm00.ejb.RicezioneFatturePA"
-					 resource-ref="false"/>
-	<jee:jndi-lookup id="trasmissioneFattureService"
-					 jndi-name="java:global/SIGLA/sigla-sdi/TrasmissioneFatture!it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA"
-					 resource-ref="false"/>
-	<jee:jndi-lookup id="fatturaElettronicaPassivaComponentSession"
-					 jndi-name="java:global/SIGLA/sigla-ejb/CNRDOCAMM00_EJB_FatturaElettronicaPassivaComponentSession"
-					 resource-ref="false"/>
-	<jee:jndi-lookup id="fatturaAttivaSingolaComponentSession"
-					 jndi-name="java:global/SIGLA/sigla-ejb/CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession"
-					 resource-ref="false"/>
-	<jee:jndi-lookup id="ricercaDocContComponentSession"
-					 jndi-name="java:global/SIGLA/sigla-ejb/CNRCHIUSURA00_EJB_RicercaDocContComponentSession"
-					 resource-ref="false"/>
-	<jee:jndi-lookup id="docAmmFatturazioneElettronicaComponentSession"
-					 jndi-name="java:global/SIGLA/sigla-ejb/CNRDOCAMM00_EJB_DocAmmFatturazioneElettronicaComponentSession"
-					 resource-ref="false"/>
 	<bean id="trovatoProperties" class="it.cnr.contab.docamm00.client.TrovatoProperties">
 		<property name="trovatoTargetEndpoint" value="${TrovatoTargetEndpoint}" />
 		<property name="trovatoSiglaRestClientUser" value="${TrovatoSiglaRestClientUser}" />
@@ -70,22 +42,12 @@
 	<bean id="gson" class="com.google.gson.Gson"/>
 
 	<bean id="printService" class="it.cnr.contab.reports.service.PrintService">
-		<property name="offlineReportComponent" ref="offlineReportComponent"/>
 		<property name="gson" ref="gson"/>
 	</bean>
 
-	<bean id="ldapService" class="it.cnr.contab.utenze00.service.LDAPService">
-		<property name="gestioneLoginComponent" ref="gestioneLoginComponent"/>
-	</bean>
-
+	<bean id="ldapService" class="it.cnr.contab.utenze00.service.LDAPService"/>
 
 	<bean id="fatturaPassivaElettronicaService" class="it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService">
-		<property name="fatturaElettronicaPassivaComponentSession" ref="fatturaElettronicaPassivaComponentSession"/>
-		<property name="fatturaAttivaSingolaComponentSession" ref="fatturaAttivaSingolaComponentSession"/>
-		<property name="docAmmFatturazioneElettronicaComponentSession" ref="docAmmFatturazioneElettronicaComponentSession"/>
-		<property name="ricercaDocContComponentSession" ref="ricercaDocContComponentSession"/>
-		<property name="ricezioneFattureService" ref="ricezioneFattureService"/>
-		<property name="trasmissioneFattureService" ref="trasmissioneFattureService"/>
 		<property name="fatturazioneElettronicaClient" ref="fatturazioneElettronicaClient"/>
 		<property name="pecScanDisable" value="${pec.scan.disable}"/>
 		<property name="pecHostName" value="${pec.host.name}"/>
