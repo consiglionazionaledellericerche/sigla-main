@@ -1,0 +1,40 @@
+logger:
+  level: DEBUG
+swarm:
+  datasources:
+    data-sources:
+      SIGLA:
+        driver-name: oracle
+        connection-url: jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF
+        user-name: PCIR009
+        password: dbform
+        use-java-context: true
+        jndi-name: java:/jdbc/CIR
+  transactions:
+    default-timeout: 3600
+  institute:
+    acronym: CNR
+  bind:
+    address: 0.0.0.0
+  context:
+    path: SIGLA
+spring:
+  profiles:
+    active: CMIS
+repository:
+  base:
+    url: http://as1dock.si.cnr.it:8080/alfresco/
+---
+project:
+  stage: development-isin
+swarm:
+  datasources:
+    data-sources:
+      SIGLA:
+        connection-url: jdbc:oracle:thin:@as4dock.si.cnr.it:1521:xe
+  deployment:
+    timeout: 1200
+
+spring:
+  profiles:
+    active: CMIS,liquibase-isin

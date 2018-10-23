@@ -3,12 +3,15 @@ package it.cnr.contab.reports.service;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.ejb.OfflineReportComponentSession;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Optional;
 
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,11 +22,11 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import com.google.gson.Gson;
+import org.springframework.beans.factory.InitializingBean;
 
-public class PrintService {
+public class PrintService implements InitializingBean {
 	private Gson gson;
 	private OfflineReportComponentSession offlineReportComponent;
-
 
 	public void setGson(Gson gson) {
 		this.gson = gson;
@@ -56,5 +59,13 @@ public class PrintService {
 			if (method != null)
 				method.releaseConnection();
 		}
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		this.offlineReportComponent = Optional.ofNullable(EJBCommonServices.createEJB("BREPORTS_EJB_OfflineReportComponentSession"))
+				.filter(OfflineReportComponentSession.class::isInstance)
+				.map(OfflineReportComponentSession.class::cast)
+				.orElseThrow(() -> new DetailedRuntimeException("cannot find ejb BREPORTS_EJB_OfflineReportComponentSession"));
 	}
 }

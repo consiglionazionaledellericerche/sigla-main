@@ -1,0 +1,2262 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="sigla" id="1516802834820-1">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/abi.csv.gz" quotchar="&quot;" separator="," tableName="abi">
+            <column header="abi" name="abi" type="STRING"/>
+            <column header="ds_abi" name="ds_abi" type="STRING"/>
+            <column header="tipo" name="tipo" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-2">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/abicab.csv.gz" quotchar="&quot;" separator="," tableName="abicab">
+            <column header="abi" name="abi" type="STRING"/>
+            <column header="cab" name="cab" type="STRING"/>
+            <column header="ds_abicab" name="ds_abicab" type="STRING"/>
+            <column header="via" name="via" type="STRING"/>
+            <column header="cap" name="cap" type="STRING"/>
+            <column header="frazione" name="frazione" type="STRING"/>
+            <column header="pg_comune" name="pg_comune" type="NUMERIC"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-16">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/accesso.csv.gz" quotchar="&quot;" separator="," tableName="accesso">
+            <column header="cd_accesso" name="cd_accesso" type="STRING"/>
+            <column header="ti_accesso" name="ti_accesso" type="STRING"/>
+            <column header="ds_accesso" name="ds_accesso" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-20">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/albero_main.csv.gz" quotchar="&quot;" separator="," tableName="albero_main">
+            <column header="cd_nodo" name="cd_nodo" type="STRING"/>
+            <column header="ds_nodo" name="ds_nodo" type="STRING"/>
+            <column header="cd_accesso" name="cd_accesso" type="STRING"/>
+            <column header="business_process" name="business_process" type="STRING"/>
+            <column header="pg_ordinamento" name="pg_ordinamento" type="NUMERIC"/>
+            <column header="fl_terminale" name="fl_terminale" type="STRING"/>
+            <column header="livello" name="livello" type="NUMERIC"/>
+            <column header="url_icona" name="url_icona" type="STRING"/>
+            <column header="cd_proprio_nodo" name="cd_proprio_nodo" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="cd_nodo_padre" name="cd_nodo_padre" type="STRING"/>
+            <column header="url_icona_open" name="url_icona_open" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-24">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/anagrafico.csv.gz" quotchar="&quot;" separator="," tableName="anagrafico">
+            <column header="cd_anag" name="cd_anag" type="NUMERIC"/>
+            <column header="cd_classific_anag" name="cd_classific_anag" type="STRING"/>
+            <column header="ti_entita" name="ti_entita" type="STRING"/>
+            <column header="ti_entita_fisica" name="ti_entita_fisica" type="STRING"/>
+            <column header="ti_entita_giuridica" name="ti_entita_giuridica" type="STRING"/>
+            <column header="fl_soggetto_iva" name="fl_soggetto_iva" type="STRING"/>
+            <column header="codice_fiscale" name="codice_fiscale" type="STRING"/>
+            <column header="partita_iva" name="partita_iva" type="STRING"/>
+            <column header="id_fiscale_estero" name="id_fiscale_estero" type="STRING"/>
+            <column header="ragione_sociale" name="ragione_sociale" type="STRING"/>
+            <column header="nome" name="nome" type="STRING"/>
+            <column header="cognome" name="cognome" type="STRING"/>
+            <column header="ti_sesso" name="ti_sesso" type="STRING"/>
+            <column header="dt_nascita" name="dt_nascita" type="${date.type}"/>
+            <column header="pg_comune_nascita" name="pg_comune_nascita" type="NUMERIC"/>
+            <column header="via_fiscale" name="via_fiscale" type="STRING"/>
+            <column header="num_civico_fiscale" name="num_civico_fiscale" type="STRING"/>
+            <column header="pg_comune_fiscale" name="pg_comune_fiscale" type="NUMERIC"/>
+            <column header="cap_comune_fiscale" name="cap_comune_fiscale" type="STRING"/>
+            <column header="frazione_fiscale" name="frazione_fiscale" type="STRING"/>
+            <column header="pg_nazione_fiscale" name="pg_nazione_fiscale" type="NUMERIC"/>
+            <column header="pg_nazione_nazionalita" name="pg_nazione_nazionalita" type="NUMERIC"/>
+            <column header="fl_fatturazione_differita" name="fl_fatturazione_differita" type="STRING"/>
+            <column header="fl_occasionale" name="fl_occasionale" type="STRING"/>
+            <column header="ti_italiano_estero" name="ti_italiano_estero" type="STRING"/>
+            <column header="cd_attivita_inps" name="cd_attivita_inps"/>
+            <column header="altra_ass_previd_inps" name="altra_ass_previd_inps"/>
+            <column header="aliquota_fiscale" name="aliquota_fiscale"/>
+            <column header="codice_fiscale_caf" name="codice_fiscale_caf"/>
+            <column header="denominazione_caf" name="denominazione_caf"/>
+            <column header="sede_inail" name="sede_inail"/>
+            <column header="matricola_inail" name="matricola_inail"/>
+            <column header="conto_numerario_credito" name="conto_numerario_credito"/>
+            <column header="conto_numerario_debito" name="conto_numerario_debito"/>
+            <column header="num_iscriz_cciaa" name="num_iscriz_cciaa" type="STRING"/>
+            <column header="num_iscriz_albo" name="num_iscriz_albo"/>
+            <column header="dt_fine_rapporto" name="dt_fine_rapporto"/>
+            <column header="causale_fine_rapporto" name="causale_fine_rapporto" type="STRING"/>
+            <column header="dt_canc" name="dt_canc"/>
+            <column header="dt_antimafia" name="dt_antimafia"/>
+            <column header="cd_ente_appartenenza" name="cd_ente_appartenenza"/>
+            <column header="note" name="note" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_cervellone" name="fl_cervellone" type="STRING"/>
+            <column header="dt_inizio_res_italia" name="dt_inizio_res_italia"/>
+            <column header="dt_fine_res_italia" name="dt_fine_res_italia"/>
+            <column header="anno_inizio_res_fis" name="anno_inizio_res_fis"/>
+            <column header="anno_fine_agevolazioni" name="anno_fine_agevolazioni"/>
+            <column header="fl_non_obblig_p_iva" name="fl_non_obblig_p_iva" type="STRING"/>
+            <column header="pg_tipologia" name="pg_tipologia" type="NUMERIC"/>
+            <column header="fl_studio_associato" name="fl_studio_associato" type="STRING"/>
+            <column header="fl_speciale" name="fl_speciale" type="STRING"/>
+            <column header="fl_sospensione_irpef" name="fl_sospensione_irpef" type="STRING"/>
+            <column header="titolo_studio" name="titolo_studio" type="STRING"/>
+            <column header="codice_amministrazione_ipa" name="codice_amministrazione_ipa" type="STRING"/>
+            <column header="data_avvio_fatt_elettr" name="data_avvio_fatt_elettr" type="${date.type}"/>
+            <column header="fl_abilita_diaria_miss_est" name="fl_abilita_diaria_miss_est" type="STRING"/>
+            <column header="dt_inizio_diaria_miss_est" name="dt_inizio_diaria_miss_est"/>
+            <column header="dt_fine_diaria_miss_est" name="dt_fine_diaria_miss_est"/>
+            <column header="fl_piva_verificata" name="fl_piva_verificata"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-32">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/ass_bp_accesso.csv.gz" quotchar="&quot;" separator="," tableName="ass_bp_accesso">
+            <column header="cd_accesso" name="cd_accesso" type="STRING"/>
+            <column header="business_process" name="business_process" type="STRING"/>
+            <column header="ti_funzione" name="ti_funzione" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="esercizio_inizio_validita" name="esercizio_inizio_validita" type="NUMERIC"/>
+            <column header="esercizio_fine_validita" name="esercizio_fine_validita" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-47">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/ass_ev_ev.csv.gz" quotchar="&quot;" separator="," tableName="ass_ev_ev">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="ti_appartenenza" name="ti_appartenenza" type="STRING"/>
+            <column header="ti_gestione" name="ti_gestione" type="STRING"/>
+            <column header="cd_elemento_voce" name="cd_elemento_voce" type="STRING"/>
+            <column header="cd_elemento_voce_coll" name="cd_elemento_voce_coll" type="STRING"/>
+            <column header="ti_appartenenza_coll" name="ti_appartenenza_coll" type="STRING"/>
+            <column header="ti_gestione_coll" name="ti_gestione_coll" type="STRING"/>
+            <column header="cd_cds" name="cd_cds" type="STRING"/>
+            <column header="cd_natura" name="cd_natura" type="STRING"/>
+            <column header="ti_elemento_voce" name="ti_elemento_voce" type="STRING"/>
+            <column header="ti_elemento_voce_coll" name="ti_elemento_voce_coll"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-49">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/ass_ev_siope.csv.gz" quotchar="&quot;" separator="," tableName="ass_ev_siope">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="ti_appartenenza" name="ti_appartenenza" type="STRING"/>
+            <column header="ti_gestione" name="ti_gestione" type="STRING"/>
+            <column header="cd_elemento_voce" name="cd_elemento_voce" type="STRING"/>
+            <column header="esercizio_siope" name="esercizio_siope" type="NUMERIC"/>
+            <column header="ti_gestione_siope" name="ti_gestione_siope" type="STRING"/>
+            <column header="cd_siope" name="cd_siope" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-72">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/ass_tipo_amm_cat_grup_inv.csv.gz" quotchar="&quot;" separator="," tableName="ass_tipo_amm_cat_grup_inv">
+            <column header="cd_tipo_ammortamento" name="cd_tipo_ammortamento" type="STRING"/>
+            <column header="ti_ammortamento" name="ti_ammortamento" type="STRING"/>
+            <column header="cd_categoria_gruppo" name="cd_categoria_gruppo" type="STRING"/>
+            <column header="esercizio_competenza" name="esercizio_competenza" type="NUMERIC"/>
+            <column header="dt_cancellazione" name="dt_cancellazione"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-74">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/ass_tipo_contr_ritenuta_siope.csv.gz" quotchar="&quot;" separator="," tableName="ass_tipo_contr_ritenuta_siope">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_contributo_ritenuta" name="cd_contributo_ritenuta" type="STRING"/>
+            <column header="dt_ini_validita" name="dt_ini_validita" type="${date.type}"/>
+            <column header="esercizio_siope_s" name="esercizio_siope_s" type="NUMERIC"/>
+            <column header="ti_gestione_siope_s" name="ti_gestione_siope_s" type="STRING"/>
+            <column header="cd_siope_s" name="cd_siope_s" type="STRING"/>
+            <column header="esercizio_siope_e" name="esercizio_siope_e" type="NUMERIC"/>
+            <column header="ti_gestione_siope_e" name="ti_gestione_siope_e" type="STRING"/>
+            <column header="cd_siope_e" name="cd_siope_e" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-75">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/ass_tipo_cori_ev.csv.gz" quotchar="&quot;" separator="," tableName="ass_tipo_cori_ev">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="ti_appartenenza" name="ti_appartenenza" type="STRING"/>
+            <column header="ti_gestione" name="ti_gestione" type="STRING"/>
+            <column header="ti_ente_percepiente" name="ti_ente_percepiente" type="STRING"/>
+            <column header="cd_contributo_ritenuta" name="cd_contributo_ritenuta" type="STRING"/>
+            <column header="cd_elemento_voce" name="cd_elemento_voce" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-80">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/ass_tipologia_istat_siope.csv.gz" quotchar="&quot;" separator="," tableName="ass_tipologia_istat_siope">
+            <column header="pg_tipologia" name="pg_tipologia" type="NUMERIC"/>
+            <column header="esercizio_siope" name="esercizio_siope" type="NUMERIC"/>
+            <column header="ti_gestione_siope" name="ti_gestione_siope" type="STRING"/>
+            <column header="cd_siope" name="cd_siope" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-86">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/attivita_commerciale.csv.gz" quotchar="&quot;" separator="," tableName="attivita_commerciale">
+            <column header="cd_attivita_commerciale" name="cd_attivita_commerciale" type="STRING"/>
+            <column header="ds_attivita_commerciale" name="ds_attivita_commerciale" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-92">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/batch_log_tipo.csv.gz" quotchar="&quot;" separator="," tableName="batch_log_tipo">
+            <column header="cd_log_tipo" name="cd_log_tipo" type="STRING"/>
+            <column header="ti_log" name="ti_log" type="STRING"/>
+            <column header="ds_log_tipo" name="ds_log_tipo" type="STRING"/>
+            <column header="note" name="note" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-94">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/batch_procedura.csv.gz" quotchar="&quot;" separator="," tableName="batch_procedura">
+            <column header="cd_procedura" name="cd_procedura" type="STRING"/>
+            <column header="ds_procedura" name="ds_procedura" type="STRING"/>
+            <column header="object_name" name="object_name" type="STRING"/>
+            <column header="package_name" name="package_name" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="cd_utente" name="cd_utente" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-96">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/batch_procedura_parametro.csv.gz" quotchar="&quot;" separator="," tableName="batch_procedura_parametro">
+            <column header="cd_procedura" name="cd_procedura" type="STRING"/>
+            <column header="nome_parametro" name="nome_parametro" type="STRING"/>
+            <column header="pg_valore_parametro" name="pg_valore_parametro" type="NUMERIC"/>
+            <column header="valore_varchar" name="valore_varchar" type="STRING"/>
+            <column header="valore_date" name="valore_date"/>
+            <column header="valore_number" name="valore_number" type="NUMERIC"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-97">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/bene_servizio.csv.gz" quotchar="&quot;" separator="," tableName="bene_servizio">
+            <column header="cd_bene_servizio" name="cd_bene_servizio" type="STRING"/>
+            <column header="ds_bene_servizio" name="ds_bene_servizio" type="STRING"/>
+            <column header="unita_misura" name="unita_misura" type="STRING"/>
+            <column header="fl_gestione_inventario" name="fl_gestione_inventario" type="STRING"/>
+            <column header="fl_gestione_magazzino" name="fl_gestione_magazzino" type="STRING"/>
+            <column header="cd_voce_iva" name="cd_voce_iva" type="STRING"/>
+            <column header="cd_categoria_gruppo" name="cd_categoria_gruppo" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="ti_bene_servizio" name="ti_bene_servizio" type="STRING"/>
+            <column header="fl_obb_intrastat_acq" name="fl_obb_intrastat_acq" type="STRING"/>
+            <column header="fl_obb_intrastat_ven" name="fl_obb_intrastat_ven" type="STRING"/>
+            <column header="fl_valido" name="fl_valido" type="STRING"/>
+            <column header="fl_autofattura" name="fl_autofattura" type="STRING"/>
+            <column header="fl_bollo" name="fl_bollo" type="STRING"/>
+            <column header="fl_scadenza" name="fl_scadenza" type="STRING"/>
+            <column header="tipo_servizio" name="tipo_servizio" type="STRING"/>
+            <column header="tipo_manutenzione" name="tipo_manutenzione" type="STRING"/>
+            <column header="note" name="note" type="STRING"/>
+            <column header="tipo_gestione" name="tipo_gestione" type="STRING"/>
+            <column header="sconti_applic_invent" name="sconti_applic_invent" type="STRING"/>
+            <column header="cd_gruppo_merceologico" name="cd_gruppo_merceologico" type="STRING"/>
+            <column header="cd_tipo_articolo" name="cd_tipo_articolo"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-100">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/bframe_blob_tipo.csv.gz" quotchar="&quot;" separator="," tableName="bframe_blob_tipo">
+            <column header="cd_tipo" name="cd_tipo" type="STRING"/>
+            <column header="ds_tipo" name="ds_tipo" type="STRING"/>
+            <column header="fl_binario" name="fl_binario" type="STRING"/>
+            <column header="root" name="root" type="STRING"/>
+            <column header="upd_callback" name="upd_callback" type="STRING"/>
+            <column header="del_callback" name="del_callback" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-119">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/cab.csv.gz" quotchar="&quot;" separator="," tableName="cab">
+            <column header="abi" name="abi" type="STRING"/>
+            <column header="cab" name="cab" type="STRING"/>
+            <column header="ds_cab" name="ds_cab" type="STRING"/>
+            <column header="indirizzo" name="indirizzo" type="STRING"/>
+            <column header="comune" name="comune" type="STRING"/>
+            <column header="cap" name="cap" type="STRING"/>
+            <column header="provincia" name="provincia" type="STRING"/>
+            <column header="frazione" name="frazione" type="STRING"/>
+            <column header="dt_attivazione" name="dt_attivazione" type="${date.type}"/>
+            <column header="dt_cessazione" name="dt_cessazione" type="${date.type}"/>
+            <column header="tipo" name="tipo" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-120">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/cambio.csv.gz" quotchar="&quot;" separator="," tableName="cambio">
+            <column header="cd_divisa" name="cd_divisa" type="STRING"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="cambio" name="cambio" type="NUMERIC"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-121">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/cap.csv.gz" quotchar="&quot;" separator="," tableName="cap">
+            <column header="pg_comune" name="pg_comune" type="NUMERIC"/>
+            <column header="cd_cap" name="cd_cap" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-122">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/capoconto_fin.csv.gz" quotchar="&quot;" separator="," tableName="capoconto_fin">
+            <column header="cd_capoconto_fin" name="cd_capoconto_fin" type="STRING"/>
+            <column header="ds_capoconto_fin" name="ds_capoconto_fin" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-124">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/categoria_gruppo_invent.csv.gz" quotchar="&quot;" separator="," tableName="categoria_gruppo_invent">
+            <column header="cd_categoria_gruppo" name="cd_categoria_gruppo" type="STRING"/>
+            <column header="ds_categoria_gruppo" name="ds_categoria_gruppo" type="STRING"/>
+            <column header="fl_gestione_inventario" name="fl_gestione_inventario" type="STRING"/>
+            <column header="fl_gestione_magazzino" name="fl_gestione_magazzino" type="STRING"/>
+            <column header="fl_ammortamento" name="fl_ammortamento" type="STRING"/>
+            <column header="cd_proprio" name="cd_proprio" type="STRING"/>
+            <column header="livello" name="livello" type="NUMERIC"/>
+            <column header="data_cancellazione" name="data_cancellazione"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="cd_categoria_padre" name="cd_categoria_padre" type="STRING"/>
+            <column header="fl_gestione_targa" name="fl_gestione_targa" type="STRING"/>
+            <column header="fl_gestione_seriale" name="fl_gestione_seriale" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-125">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/categoria_gruppo_voce.csv.gz" quotchar="&quot;" separator="," tableName="categoria_gruppo_voce">
+            <column header="cd_categoria_gruppo" name="cd_categoria_gruppo" type="STRING"/>
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="ti_appartenenza" name="ti_appartenenza" type="STRING"/>
+            <column header="ti_gestione" name="ti_gestione" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="cd_elemento_voce" name="cd_elemento_voce" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-127">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/categorie_ipa.csv.gz" quotchar="&quot;" separator="," tableName="categorie_ipa">
+            <column header="cod_categoria" name="cod_categoria" type="STRING"/>
+            <column header="ds_categoria" name="ds_categoria" type="STRING"/>
+            <column header="cod_tipologia" name="cod_tipologia" type="STRING"/>
+            <column header="ds_tipologia" name="ds_tipologia" type="STRING"/>
+            <column header="fl_split" name="fl_split" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-129">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/causale_coge.csv.gz" quotchar="&quot;" separator="," tableName="causale_coge">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_causale_coge" name="cd_causale_coge" type="STRING"/>
+            <column header="ds_causale" name="ds_causale" type="STRING"/>
+            <column header="ti_causale_coge" name="ti_causale_coge" type="STRING"/>
+            <column header="centro_costo" name="centro_costo"/>
+            <column header="dt_cancellazione" name="dt_cancellazione"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-132">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/causale_var_bilancio.csv.gz" quotchar="&quot;" separator="," tableName="causale_var_bilancio">
+            <column header="cd_causale_var_bilancio" name="cd_causale_var_bilancio" type="STRING"/>
+            <column header="ds_causale_var_bilancio" name="ds_causale_var_bilancio" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="ti_causale" name="ti_causale" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-133">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/cdr.csv.gz" quotchar="&quot;" separator="," tableName="cdr">
+            <column header="cd_centro_responsabilita" name="cd_centro_responsabilita" type="STRING"/>
+            <column header="cd_unita_organizzativa" name="cd_unita_organizzativa" type="STRING"/>
+            <column header="ds_cdr" name="ds_cdr" type="STRING"/>
+            <column header="livello" name="livello" type="NUMERIC"/>
+            <column header="cd_proprio_cdr" name="cd_proprio_cdr" type="STRING"/>
+            <column header="cd_responsabile" name="cd_responsabile" type="NUMERIC"/>
+            <column header="indirizzo" name="indirizzo"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="cd_cdr_afferenza" name="cd_cdr_afferenza" type="STRING"/>
+            <column header="esercizio_fine" name="esercizio_fine" type="NUMERIC"/>
+            <column header="esercizio_inizio" name="esercizio_inizio" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-138">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/classificazione_anag.csv.gz" quotchar="&quot;" separator="," tableName="classificazione_anag">
+            <column header="cd_classific_anag" name="cd_classific_anag" type="STRING"/>
+            <column header="dt_canc" name="dt_canc"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="ds_classific_anag" name="ds_classific_anag" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-139">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/classificazione_cori.csv.gz" quotchar="&quot;" separator="," tableName="classificazione_cori">
+            <column header="cd_classificazione_cori" name="cd_classificazione_cori" type="STRING"/>
+            <column header="ds_classificazione_cori" name="ds_classificazione_cori" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-141">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/classificazione_montanti.csv.gz" quotchar="&quot;" separator="," tableName="classificazione_montanti">
+            <column header="pg_classificazione_montanti" name="pg_classificazione_montanti" type="NUMERIC"/>
+            <column header="ds_classificazione_montanti" name="ds_classificazione_montanti" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-143">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/classificazione_voci.csv.gz" quotchar="&quot;" separator="," tableName="classificazione_voci">
+            <column header="id_classificazione" name="id_classificazione" type="NUMERIC"/>
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="ti_gestione" name="ti_gestione" type="STRING"/>
+            <column header="ds_classificazione" name="ds_classificazione" type="STRING"/>
+            <column header="cd_livello1" name="cd_livello1" type="STRING"/>
+            <column header="cd_livello2" name="cd_livello2" type="STRING"/>
+            <column header="cd_livello3" name="cd_livello3" type="STRING"/>
+            <column header="cd_livello4" name="cd_livello4" type="STRING"/>
+            <column header="cd_livello5" name="cd_livello5" type="STRING"/>
+            <column header="cd_livello6" name="cd_livello6" type="STRING"/>
+            <column header="cd_livello7" name="cd_livello7"/>
+            <column header="id_class_padre" name="id_class_padre" type="NUMERIC"/>
+            <column header="fl_mastrino" name="fl_mastrino" type="STRING"/>
+            <column header="fl_class_sac" name="fl_class_sac" type="STRING"/>
+            <column header="fl_solo_gestione" name="fl_solo_gestione" type="STRING"/>
+            <column header="fl_accentrato" name="fl_accentrato" type="STRING"/>
+            <column header="fl_decentrato" name="fl_decentrato" type="STRING"/>
+            <column header="cdr_accentratore" name="cdr_accentratore" type="STRING"/>
+            <column header="fl_piano_riparto" name="fl_piano_riparto" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_esterna_da_quadrare_sac" name="fl_esterna_da_quadrare_sac" type="STRING"/>
+            <column header="fl_visto_dip_variazioni" name="fl_visto_dip_variazioni" type="STRING"/>
+            <column header="ti_classificazione" name="ti_classificazione"/>
+            <column header="fl_prev_obb_anno_suc" name="fl_prev_obb_anno_suc" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-144">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/classificazione_voci_ep.csv.gz" quotchar="&quot;" separator="," tableName="classificazione_voci_ep">
+            <column header="id_classificazione" name="id_classificazione" type="NUMERIC"/>
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="tipo" name="tipo" type="STRING"/>
+            <column header="ds_classificazione" name="ds_classificazione" type="STRING"/>
+            <column header="cd_livello1" name="cd_livello1" type="STRING"/>
+            <column header="cd_livello2" name="cd_livello2" type="STRING"/>
+            <column header="cd_livello3" name="cd_livello3" type="STRING"/>
+            <column header="cd_livello4" name="cd_livello4" type="STRING"/>
+            <column header="cd_livello5" name="cd_livello5" type="STRING"/>
+            <column header="cd_livello6" name="cd_livello6" type="STRING"/>
+            <column header="cd_livello7" name="cd_livello7" type="STRING"/>
+            <column header="cd_livello8" name="cd_livello8" type="STRING"/>
+            <column header="id_class_padre" name="id_class_padre" type="NUMERIC"/>
+            <column header="fl_mastrino" name="fl_mastrino" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-146">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/cnr_abicab.csv.gz" quotchar="&quot;" separator="," tableName="cnr_abicab">
+            <column header="abi" name="abi" type="STRING"/>
+            <column header="cab" name="cab" type="STRING"/>
+            <column header="ds_abicab_cnr" name="ds_abicab_cnr" type="STRING"/>
+            <column header="ds_comune_cnr" name="ds_comune_cnr" type="STRING"/>
+            <column header="via_cnr" name="via_cnr" type="STRING"/>
+            <column header="cap_cnr" name="cap_cnr" type="STRING"/>
+            <column header="frazione_cnr" name="frazione_cnr" type="STRING"/>
+            <column header="cd_provincia_cnr" name="cd_provincia_cnr" type="STRING"/>
+            <column header="fl_cancellato_cnr" name="fl_cancellato_cnr" type="STRING"/>
+            <column header="pg_comune_cir" name="pg_comune_cir" type="NUMERIC"/>
+            <column header="ds_comune_cir" name="ds_comune_cir" type="STRING"/>
+            <column header="cd_provincia_cir" name="cd_provincia_cir" type="STRING"/>
+            <column header="utente" name="utente" type="STRING"/>
+            <column header="timestamp" name="timestamp" type="${date.type}"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-152">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/cnr_cir_rif_mod_pag.csv.gz" quotchar="&quot;" separator="," tableName="cnr_cir_rif_mod_pag">
+            <column header="cd_modalita_pag_cnr" name="cd_modalita_pag_cnr" type="NUMERIC"/>
+            <column header="ds_modalita_pag_cnr" name="ds_modalita_pag_cnr" type="STRING"/>
+            <column header="cd_modalita_pag_cir" name="cd_modalita_pag_cir" type="STRING"/>
+            <column header="ds_modalita_pag_cir" name="ds_modalita_pag_cir" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-157">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/cnr_gruppo_ep.csv.gz" quotchar="&quot;" separator="," tableName="cnr_gruppo_ep">
+            <column header="cd_piano_gruppi" name="cd_piano_gruppi" type="STRING"/>
+            <column header="cd_gruppo_ep" name="cd_gruppo_ep" type="STRING"/>
+            <column header="cd_gruppo_padre" name="cd_gruppo_padre" type="STRING"/>
+            <column header="sequenza" name="sequenza" type="NUMERIC"/>
+            <column header="nome" name="nome" type="STRING"/>
+            <column header="ds_gruppo_ep" name="ds_gruppo_ep" type="STRING"/>
+            <column header="segno" name="segno" type="STRING"/>
+            <column header="fl_mastrino" name="fl_mastrino" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="cd_piano_padre" name="cd_piano_padre" type="STRING"/>
+            <column header="formula" name="formula" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-172">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/codici_altra_forma_ass_inps.csv.gz" quotchar="&quot;" separator="," tableName="codici_altra_forma_ass_inps">
+            <column header="altra_ass_previd_inps" name="altra_ass_previd_inps" type="STRING"/>
+            <column header="ds_altra_ass_previd_inps" name="ds_altra_ass_previd_inps" type="STRING"/>
+            <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-173">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/codici_attivita_inps.csv.gz" quotchar="&quot;" separator="," tableName="codici_attivita_inps">
+            <column header="cd_attivita_inps" name="cd_attivita_inps" type="STRING"/>
+            <column header="ds_attivita_inps" name="ds_attivita_inps" type="STRING"/>
+            <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-174">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/codici_cpa.csv.gz" quotchar="&quot;" separator="," tableName="codici_cpa">
+            <column header="id_cpa" name="id_cpa" type="NUMERIC"/>
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_cpa" name="cd_cpa" type="STRING"/>
+            <column header="ds_cpa" name="ds_cpa" type="STRING"/>
+            <column header="livello" name="livello" type="NUMERIC"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="ti_bene_servizio" name="ti_bene_servizio" type="STRING"/>
+            <column header="fl_utilizzabile" name="fl_utilizzabile" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-175">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/codici_rapporti_inps.csv.gz" quotchar="&quot;" separator="," tableName="codici_rapporti_inps">
+            <column header="cd_rapporto_inps" name="cd_rapporto_inps" type="STRING"/>
+            <column header="ds_rapporto_inps" name="ds_rapporto_inps" type="STRING"/>
+            <column header="fl_attivita_obbl" name="fl_attivita_obbl" type="STRING"/>
+            <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-176">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/codici_siope.csv.gz" quotchar="&quot;" separator="," tableName="codici_siope">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="ti_gestione" name="ti_gestione" type="STRING"/>
+            <column header="cd_siope" name="cd_siope" type="STRING"/>
+            <column header="descrizione" name="descrizione" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-178">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/cofog.csv.gz" quotchar="&quot;" separator="," tableName="cofog">
+            <column header="cd_cofog" name="cd_cofog" type="STRING"/>
+            <column header="ds_cofog" name="ds_cofog" type="STRING"/>
+            <column header="cd_livello1" name="cd_livello1" type="STRING"/>
+            <column header="cd_livello2" name="cd_livello2" type="STRING"/>
+            <column header="cd_livello3" name="cd_livello3" type="STRING"/>
+            <column header="nr_livello" name="nr_livello" type="NUMERIC"/>
+            <column header="fl_accentrato" name="fl_accentrato" type="STRING"/>
+            <column header="fl_decentrato" name="fl_decentrato" type="STRING"/>
+            <column header="dt_cancellazione" name="dt_cancellazione"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-181">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/comune.csv.gz" quotchar="&quot;" separator="," tableName="comune">
+            <column header="pg_comune" name="pg_comune" type="NUMERIC"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="ds_comune" name="ds_comune" type="STRING"/>
+            <column header="ti_italiano_estero" name="ti_italiano_estero" type="STRING"/>
+            <column header="cd_comune" name="cd_comune" type="STRING"/>
+            <column header="cd_catastale" name="cd_catastale" type="STRING"/>
+            <column header="cd_cap" name="cd_cap" type="STRING"/>
+            <column header="pg_nazione" name="pg_nazione" type="NUMERIC"/>
+            <column header="cd_provincia" name="cd_provincia" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_addcom_aliqmax" name="fl_addcom_aliqmax" type="STRING"/>
+            <column header="dt_canc" name="dt_canc" type="${date.type}"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-183">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/condizione_consegna.csv.gz" quotchar="&quot;" separator="," tableName="condizione_consegna">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_incoterm" name="cd_incoterm" type="STRING"/>
+            <column header="cd_gruppo" name="cd_gruppo" type="STRING"/>
+            <column header="ds_condizione_consegna" name="ds_condizione_consegna" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-187">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/configurazione_cnr.csv.gz" quotchar="&quot;" separator="," tableName="configurazione_cnr">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_unita_funzionale" name="cd_unita_funzionale" type="STRING"/>
+            <column header="cd_chiave_primaria" name="cd_chiave_primaria" type="STRING"/>
+            <column header="cd_chiave_secondaria" name="cd_chiave_secondaria" type="STRING"/>
+            <column header="val01" name="val01" type="STRING"/>
+            <column header="val02" name="val02" type="STRING"/>
+            <column header="val03" name="val03" type="STRING"/>
+            <column header="val04" name="val04" type="STRING"/>
+            <column header="im01" name="im01" type="NUMERIC"/>
+            <column header="im02" name="im02" type="NUMERIC"/>
+            <column header="dt01" name="dt01" type="${date.type}"/>
+            <column header="dt02" name="dt02" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-205">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/detrazioni_familiari.csv.gz" quotchar="&quot;" separator="," tableName="detrazioni_familiari">
+            <column header="ti_persona" name="ti_persona" type="STRING"/>
+            <column header="numero" name="numero" type="NUMERIC"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="im_inferiore" name="im_inferiore" type="NUMERIC"/>
+            <column header="im_superiore" name="im_superiore" type="NUMERIC"/>
+            <column header="im_detrazione" name="im_detrazione" type="NUMERIC"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="im_detrazione_primo_figlio" name="im_detrazione_primo_figlio" type="NUMERIC"/>
+            <column header="im_maggiorazione" name="im_maggiorazione" type="NUMERIC"/>
+            <column header="moltiplicatore" name="moltiplicatore" type="NUMERIC"/>
+            <column header="numeratore" name="numeratore" type="NUMERIC"/>
+            <column header="denominatore" name="denominatore" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-206">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/detrazioni_lavoro.csv.gz" quotchar="&quot;" separator="," tableName="detrazioni_lavoro">
+            <column header="ti_lavoro" name="ti_lavoro" type="STRING"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="im_inferiore" name="im_inferiore" type="NUMERIC"/>
+            <column header="im_superiore" name="im_superiore" type="NUMERIC"/>
+            <column header="im_detrazione" name="im_detrazione" type="NUMERIC"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="im_maggiorazione" name="im_maggiorazione" type="NUMERIC"/>
+            <column header="moltiplicatore" name="moltiplicatore" type="NUMERIC"/>
+            <column header="numeratore" name="numeratore" type="NUMERIC"/>
+            <column header="denominatore" name="denominatore" type="NUMERIC"/>
+            <column header="im_detrazione_minima" name="im_detrazione_minima" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-213">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/divisa.csv.gz" quotchar="&quot;" separator="," tableName="divisa">
+            <column header="cd_divisa" name="cd_divisa" type="STRING"/>
+            <column header="ds_divisa" name="ds_divisa" type="STRING"/>
+            <column header="precisione" name="precisione" type="NUMERIC"/>
+            <column header="fl_calcola_con_diviso" name="fl_calcola_con_diviso" type="STRING"/>
+            <column header="dt_cancellazione" name="dt_cancellazione" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-229">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/elemento_voce.csv.gz" quotchar="&quot;" separator="," tableName="elemento_voce">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="ti_appartenenza" name="ti_appartenenza" type="STRING"/>
+            <column header="ti_gestione" name="ti_gestione" type="STRING"/>
+            <column header="cd_elemento_voce" name="cd_elemento_voce" type="STRING"/>
+            <column header="cd_proprio_elemento" name="cd_proprio_elemento" type="STRING"/>
+            <column header="ti_elemento_voce" name="ti_elemento_voce" type="STRING"/>
+            <column header="fl_limite_ass_obblig" name="fl_limite_ass_obblig" type="STRING"/>
+            <column header="fl_voce_personale" name="fl_voce_personale" type="STRING"/>
+            <column header="cd_parte" name="cd_parte"/>
+            <column header="ds_elemento_voce" name="ds_elemento_voce" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="cd_elemento_padre" name="cd_elemento_padre"/>
+            <column header="fl_partita_giro" name="fl_partita_giro" type="STRING"/>
+            <column header="cd_capoconto_fin" name="cd_capoconto_fin"/>
+            <column header="fl_voce_sac" name="fl_voce_sac" type="STRING"/>
+            <column header="fl_voce_non_sogg_imp_aut" name="fl_voce_non_sogg_imp_aut" type="STRING"/>
+            <column header="esercizio_cla_e" name="esercizio_cla_e"/>
+            <column header="cod_cla_e" name="cod_cla_e"/>
+            <column header="esercizio_cla_s" name="esercizio_cla_s"/>
+            <column header="cod_cla_s" name="cod_cla_s"/>
+            <column header="fl_recon" name="fl_recon" type="STRING"/>
+            <column header="fl_inv_beni_patr" name="fl_inv_beni_patr" type="STRING"/>
+            <column header="id_classificazione" name="id_classificazione" type="NUMERIC"/>
+            <column header="cd_tipo_spesa_sac" name="cd_tipo_spesa_sac"/>
+            <column header="cd_tipo_spesa_ist" name="cd_tipo_spesa_ist"/>
+            <column header="fl_voce_fondo" name="fl_voce_fondo" type="STRING"/>
+            <column header="fl_check_terzo_siope" name="fl_check_terzo_siope" type="STRING"/>
+            <column header="fl_inv_beni_comp" name="fl_inv_beni_comp" type="STRING"/>
+            <column header="fl_limite_spesa" name="fl_limite_spesa" type="STRING"/>
+            <column header="fl_prelievo" name="fl_prelievo" type="STRING"/>
+            <column header="fl_soggetto_prelievo" name="fl_soggetto_prelievo" type="STRING"/>
+            <column header="perc_prelievo_pdgp_entrate" name="perc_prelievo_pdgp_entrate" type="NUMERIC"/>
+            <column header="fl_solo_residuo" name="fl_solo_residuo" type="STRING"/>
+            <column header="fl_solo_competenza" name="fl_solo_competenza" type="STRING"/>
+            <column header="fl_trovato" name="fl_trovato" type="STRING"/>
+            <column header="fl_azzera_residui" name="fl_azzera_residui" type="STRING"/>
+            <column header="esercizio_elemento_padre" name="esercizio_elemento_padre"/>
+            <column header="ti_appartenenza_elemento_padre" name="ti_appartenenza_elemento_padre"/>
+            <column header="ti_gestione_elemento_padre" name="ti_gestione_elemento_padre"/>
+            <column header="fl_missioni" name="fl_missioni" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-230">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/esenzioni_addcom.csv.gz" quotchar="&quot;" separator="," tableName="esenzioni_addcom">
+            <column header="cd_catastale" name="cd_catastale" type="STRING"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="importo" name="importo" type="NUMERIC"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="pg_comune" name="pg_comune" type="NUMERIC"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-232">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/esercizio.csv.gz" quotchar="&quot;" separator="," tableName="esercizio">
+            <column header="cd_cds" name="cd_cds" type="STRING"/>
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="ds_esercizio" name="ds_esercizio" type="STRING"/>
+            <column header="st_apertura_chiusura" name="st_apertura_chiusura" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="im_cassa_iniziale" name="im_cassa_iniziale" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-233">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/esercizio_base.csv.gz" quotchar="&quot;" separator="," tableName="esercizio_base">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-267">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/funzione.csv.gz" quotchar="&quot;" separator="," tableName="funzione">
+            <column header="cd_funzione" name="cd_funzione" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="ds_funzione" name="ds_funzione" type="STRING"/>
+            <column header="fl_utilizzabile" name="fl_utilizzabile" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-268">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/gruppo_cr.csv.gz" quotchar="&quot;" separator="," tableName="gruppo_cr">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_gruppo_cr" name="cd_gruppo_cr" type="STRING"/>
+            <column header="ds_gruppo_cr" name="ds_gruppo_cr" type="STRING"/>
+            <column header="fl_accentrato" name="fl_accentrato" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_anno_prec" name="fl_anno_prec" type="STRING"/>
+            <column header="fl_f24online" name="fl_f24online" type="STRING"/>
+            <column header="fl_f24online_previd" name="fl_f24online_previd" type="STRING"/>
+            <column header="cd_tributo_erario" name="cd_tributo_erario" type="STRING"/>
+            <column header="cd_tipo_riga_f24" name="cd_tipo_riga_f24" type="STRING"/>
+            <column header="cd_matricola_inps" name="cd_matricola_inps" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-272">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/gruppo_file.csv.gz" quotchar="&quot;" separator="," tableName="gruppo_file">
+            <column header="cd_gruppo_file" name="cd_gruppo_file" type="STRING"/>
+            <column header="ds_gruppo_file" name="ds_gruppo_file" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-273">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/gruppo_inquadramento.csv.gz" quotchar="&quot;" separator="," tableName="gruppo_inquadramento">
+            <column header="cd_gruppo_inquadramento" name="cd_gruppo_inquadramento" type="STRING"/>
+            <column header="ds_gruppo_inquadramento" name="ds_gruppo_inquadramento" type="STRING"/>
+            <column header="fl_default" name="fl_default" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-274">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/gruppo_iva.csv.gz" quotchar="&quot;" separator="," tableName="gruppo_iva">
+            <column header="cd_gruppo_iva" name="cd_gruppo_iva" type="STRING"/>
+            <column header="ds_gruppo_iva" name="ds_gruppo_iva" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-276">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/gruppo_merceologico.csv.gz" quotchar="&quot;" separator="," tableName="gruppo_merceologico">
+            <column header="cd_gruppo_merceologico" name="cd_gruppo_merceologico" type="STRING"/>
+            <column header="ds_gruppo_merceologico" name="ds_gruppo_merceologico" type="STRING"/>
+            <column header="dt_cancellazione" name="dt_cancellazione"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-277">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/help_lkt.csv.gz" quotchar="&quot;" separator="," tableName="help_lkt">
+            <column header="cd_help" name="cd_help" type="STRING"/>
+            <column header="page" name="page" type="STRING"/>
+            <column header="help_url" name="help_url" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="ds_page" name="ds_page" type="STRING"/>
+            <column header="flag_man" name="flag_man" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-311">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/ipa_amministrazioni.csv.gz" quotchar="&quot;" separator="," tableName="ipa_amministrazioni">
+            <column header="cod_amm" name="cod_amm" type="STRING"/>
+            <column header="des_amm" name="des_amm" type="STRING"/>
+            <column header="comune" name="comune" type="STRING"/>
+            <column header="nome_resp" name="nome_resp" type="STRING"/>
+            <column header="cogn_resp" name="cogn_resp" type="STRING"/>
+            <column header="cap" name="cap" type="STRING"/>
+            <column header="provincia" name="provincia" type="STRING"/>
+            <column header="regione" name="regione" type="STRING"/>
+            <column header="sito_istituzionale" name="sito_istituzionale" type="STRING"/>
+            <column header="indirizzo" name="indirizzo" type="STRING"/>
+            <column header="titolo_resp" name="titolo_resp" type="STRING"/>
+            <column header="tipologia_istat" name="tipologia_istat" type="STRING"/>
+            <column header="tipologia_amm" name="tipologia_amm" type="STRING"/>
+            <column header="acronimo" name="acronimo" type="STRING"/>
+            <column header="cf_validato" name="cf_validato" type="STRING"/>
+            <column header="cf" name="cf" type="STRING"/>
+            <column header="mail1" name="mail1" type="STRING"/>
+            <column header="tipo_mail1" name="tipo_mail1" type="STRING"/>
+            <column header="mail2" name="mail2" type="STRING"/>
+            <column header="tipo_mail2" name="tipo_mail2" type="STRING"/>
+            <column header="mail3" name="mail3" type="STRING"/>
+            <column header="tipo_mail3" name="tipo_mail3" type="STRING"/>
+            <column header="mail4" name="mail4" type="STRING"/>
+            <column header="tipo_mail4" name="tipo_mail4" type="STRING"/>
+            <column header="mail5" name="mail5" type="STRING"/>
+            <column header="tipo_mail5" name="tipo_mail5" type="STRING"/>
+            <column header="url_facebook" name="url_facebook" type="STRING"/>
+            <column header="url_twitter" name="url_twitter" type="STRING"/>
+            <column header="url_googleplus" name="url_googleplus" type="STRING"/>
+            <column header="url_youtube" name="url_youtube" type="STRING"/>
+            <column header="liv_accessibili" name="liv_accessibili" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-312">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/ipa_serv_fatt.csv.gz" quotchar="&quot;" separator="," tableName="ipa_serv_fatt">
+            <column header="cod_amm" name="cod_amm" type="STRING"/>
+            <column header="cod_ou" name="cod_ou" type="STRING"/>
+            <column header="cod_uni_ou" name="cod_uni_ou" type="STRING"/>
+            <column header="des_ou" name="des_ou" type="STRING"/>
+            <column header="regione" name="regione" type="STRING"/>
+            <column header="provincia" name="provincia" type="STRING"/>
+            <column header="comune" name="comune" type="STRING"/>
+            <column header="indirizzo" name="indirizzo" type="STRING"/>
+            <column header="cap" name="cap" type="STRING"/>
+            <column header="cf" name="cf" type="STRING"/>
+            <column header="dt_verifica_cf" name="dt_verifica_cf" type="${date.type}"/>
+            <column header="data_avvio_sfe" name="data_avvio_sfe" type="${date.type}"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-339">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/log_registry.csv.gz" quotchar="&quot;" separator="," tableName="log_registry">
+            <column header="nome_table_src" name="nome_table_src" type="STRING"/>
+            <column header="nome_table_log" name="nome_table_log" type="STRING"/>
+            <column header="ds_table_log" name="ds_table_log" type="STRING"/>
+            <column header="stato_trg_ad" name="stato_trg_ad" type="STRING"/>
+            <column header="dt_ultimo_start_ad" name="dt_ultimo_start_ad" type="${date.type}"/>
+            <column header="stato_trg_ai" name="stato_trg_ai" type="STRING"/>
+            <column header="dt_ultimo_start_ai" name="dt_ultimo_start_ai" type="${date.type}"/>
+            <column header="stato_trg_au" name="stato_trg_au" type="STRING"/>
+            <column header="dt_ultimo_start_au" name="dt_ultimo_start_au" type="${date.type}"/>
+            <column header="dt_attivazione_ad" name="dt_attivazione_ad" type="${date.type}"/>
+            <column header="dt_disattivazione_ad" name="dt_disattivazione_ad" type="${date.type}"/>
+            <column header="dt_attivazione_ai" name="dt_attivazione_ai" type="${date.type}"/>
+            <column header="dt_disattivazione_ai" name="dt_disattivazione_ai" type="${date.type}"/>
+            <column header="dt_attivazione_au" name="dt_attivazione_au" type="${date.type}"/>
+            <column header="dt_disattivazione_au" name="dt_disattivazione_au" type="${date.type}"/>
+            <column header="num_righe_in_table_log" name="num_righe_in_table_log" type="NUMERIC"/>
+            <column header="num_max_righe_table_log" name="num_max_righe_table_log" type="NUMERIC"/>
+            <column header="nome_trg_ad" name="nome_trg_ad" type="STRING"/>
+            <column header="nome_trg_ai" name="nome_trg_ai" type="STRING"/>
+            <column header="nome_trg_au" name="nome_trg_au" type="STRING"/>
+            <column header="nome_pkg" name="nome_pkg" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-343">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/lunghezza_chiavi.csv.gz" quotchar="&quot;" separator="," tableName="lunghezza_chiavi">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="livello" name="livello" type="NUMERIC"/>
+            <column header="tabella" name="tabella" type="STRING"/>
+            <column header="attributo" name="attributo" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="lunghezza" name="lunghezza" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-362">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/missione_abbattimenti.csv.gz" quotchar="&quot;" separator="," tableName="missione_abbattimenti">
+            <column header="ti_area_geografica" name="ti_area_geografica" type="STRING"/>
+            <column header="pg_nazione" name="pg_nazione" type="NUMERIC"/>
+            <column header="pg_rif_inquadramento" name="pg_rif_inquadramento" type="NUMERIC"/>
+            <column header="fl_pasto" name="fl_pasto" type="STRING"/>
+            <column header="fl_alloggio" name="fl_alloggio" type="STRING"/>
+            <column header="fl_trasporto" name="fl_trasporto" type="STRING"/>
+            <column header="fl_navigazione" name="fl_navigazione" type="STRING"/>
+            <column header="fl_vitto_gratuito" name="fl_vitto_gratuito" type="STRING"/>
+            <column header="fl_alloggio_gratuito" name="fl_alloggio_gratuito" type="STRING"/>
+            <column header="fl_vitto_alloggio_gratuito" name="fl_vitto_alloggio_gratuito" type="STRING"/>
+            <column header="durata_ore" name="durata_ore" type="STRING"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="percentuale_abbattimento" name="percentuale_abbattimento" type="NUMERIC"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="dt_cancellazione" name="dt_cancellazione"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-364">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/missione_diaria.csv.gz" quotchar="&quot;" separator="," tableName="missione_diaria">
+            <column header="pg_nazione" name="pg_nazione" type="NUMERIC"/>
+            <column header="cd_gruppo_inquadramento" name="cd_gruppo_inquadramento" type="STRING"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="im_diaria" name="im_diaria" type="NUMERIC"/>
+            <column header="cd_divisa" name="cd_divisa" type="STRING"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-366">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/missione_quota_rimborso.csv.gz" quotchar="&quot;" separator="," tableName="missione_quota_rimborso">
+            <column header="cd_area_estera" name="cd_area_estera" type="STRING"/>
+            <column header="cd_gruppo_inquadramento" name="cd_gruppo_inquadramento" type="STRING"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="im_rimborso" name="im_rimborso" type="NUMERIC"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-367">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/missione_rimborso_km.csv.gz" quotchar="&quot;" separator="," tableName="missione_rimborso_km">
+            <column header="ti_auto" name="ti_auto" type="STRING"/>
+            <column header="ti_area_geografica" name="ti_area_geografica" type="STRING"/>
+            <column header="pg_nazione" name="pg_nazione" type="NUMERIC"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="indennita_chilometrica" name="indennita_chilometrica" type="NUMERIC"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="dt_cancellazione" name="dt_cancellazione"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-370">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/missione_tipo_pasto.csv.gz" quotchar="&quot;" separator="," tableName="missione_tipo_pasto">
+            <column header="cd_ti_pasto" name="cd_ti_pasto" type="STRING"/>
+            <column header="ti_area_geografica" name="ti_area_geografica" type="STRING"/>
+            <column header="pg_nazione" name="pg_nazione" type="NUMERIC"/>
+            <column header="pg_rif_inquadramento" name="pg_rif_inquadramento" type="NUMERIC"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="cd_divisa" name="cd_divisa" type="STRING"/>
+            <column header="limite_max_pasto" name="limite_max_pasto" type="NUMERIC"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="dt_cancellazione" name="dt_cancellazione"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="cd_area_estera" name="cd_area_estera" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-371">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/missione_tipo_spesa.csv.gz" quotchar="&quot;" separator="," tableName="missione_tipo_spesa">
+            <column header="cd_ti_spesa" name="cd_ti_spesa" type="STRING"/>
+            <column header="ti_area_geografica" name="ti_area_geografica" type="STRING"/>
+            <column header="pg_nazione" name="pg_nazione" type="NUMERIC"/>
+            <column header="pg_rif_inquadramento" name="pg_rif_inquadramento" type="NUMERIC"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="ds_ti_spesa" name="ds_ti_spesa" type="STRING"/>
+            <column header="fl_giustificativo_richiesto" name="fl_giustificativo_richiesto" type="STRING"/>
+            <column header="fl_pasto" name="fl_pasto" type="STRING"/>
+            <column header="fl_trasporto" name="fl_trasporto" type="STRING"/>
+            <column header="fl_rimborso_km" name="fl_rimborso_km" type="STRING"/>
+            <column header="fl_alloggio" name="fl_alloggio" type="STRING"/>
+            <column header="cd_divisa" name="cd_divisa" type="STRING"/>
+            <column header="limite_max_spesa" name="limite_max_spesa" type="NUMERIC"/>
+            <column header="percentuale_maggiorazione" name="percentuale_maggiorazione" type="NUMERIC"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="dt_cancellazione" name="dt_cancellazione"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_ammissibile_con_rimborso" name="fl_ammissibile_con_rimborso" type="STRING"/>
+        </loadData>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-385">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/nazione.csv.gz" quotchar="&quot;" separator="," tableName="nazione">
+            <column header="pg_nazione" name="pg_nazione" type="NUMERIC"/>
+            <column header="cd_catastale" name="cd_catastale" type="STRING"/>
+            <column header="ti_nazione" name="ti_nazione" type="STRING"/>
+            <column header="ds_nazione" name="ds_nazione" type="STRING"/>
+            <column header="nazionalita" name="nazionalita" type="STRING"/>
+            <column header="cd_divisa" name="cd_divisa" type="STRING"/>
+            <column header="cd_divisa_per_missione" name="cd_divisa_per_missione"/>
+            <column header="cd_nazione_770" name="cd_nazione_770" type="STRING"/>
+            <column header="cd_nazione" name="cd_nazione" type="STRING"/>
+            <column header="cd_iso" name="cd_iso" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_iban" name="fl_iban" type="STRING"/>
+            <column header="struttura_iban" name="struttura_iban" type="STRING"/>
+            <column header="struttura_piva" name="struttura_piva" type="STRING"/>
+            <column header="cd_iso_intrastat" name="cd_iso_intrastat" type="STRING"/>
+            <column header="cd_area_estera" name="cd_area_estera" type="STRING"/>
+            <column header="fl_sepa" name="fl_sepa" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-386">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/nazione_blacklist.csv.gz" quotchar="&quot;" separator="," tableName="nazione_blacklist">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_catastale" name="cd_catastale" type="STRING"/>
+            <column header="ds_nazione" name="ds_nazione" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="cd_nazione" name="cd_nazione" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-387">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/nomenclatura_combinata.csv.gz" quotchar="&quot;" separator="," tableName="nomenclatura_combinata">
+            <column header="id_nomenclatura_combinata" name="id_nomenclatura_combinata" type="NUMERIC"/>
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_nomenclatura_combinata" name="cd_nomenclatura_combinata" type="STRING"/>
+            <column header="ds_nomenclatura_combinata" name="ds_nomenclatura_combinata" type="STRING"/>
+            <column header="livello" name="livello" type="NUMERIC"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="esercizio_inizio" name="esercizio_inizio" type="NUMERIC"/>
+            <column header="esercizio_fine" name="esercizio_fine" type="NUMERIC"/>
+            <column header="unita_supplementari" name="unita_supplementari" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-391">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/numerazione_base.csv.gz" quotchar="&quot;" separator="," tableName="numerazione_base">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="colonna" name="colonna" type="STRING"/>
+            <column header="tabella" name="tabella" type="STRING"/>
+            <column header="cd_corrente" name="cd_corrente" type="STRING"/>
+            <column header="cd_massimo" name="cd_massimo" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="cd_iniziale" name="cd_iniziale" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-411">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/organo.csv.gz" quotchar="&quot;" separator="," tableName="organo">
+            <column header="cd_organo" name="cd_organo" type="STRING"/>
+            <column header="ds_organo" name="ds_organo" type="STRING"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
+            <column header="fl_non_definito" name="fl_non_definito" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-413">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/parametri_cds.csv.gz" quotchar="&quot;" separator="," tableName="parametri_cds">
+            <column header="cd_cds" name="cd_cds" type="STRING"/>
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="fl_commessa_obbligatoria" name="fl_commessa_obbligatoria" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_progetto_numeratore" name="fl_progetto_numeratore" type="STRING"/>
+            <column header="progetto_numeratore_cifre" name="progetto_numeratore_cifre" type="NUMERIC"/>
+            <column header="im_soglia_contratto_s" name="im_soglia_contratto_s" type="NUMERIC"/>
+            <column header="im_soglia_contratto_e" name="im_soglia_contratto_e" type="NUMERIC"/>
+            <column header="fl_obbligo_protocollo_inf" name="fl_obbligo_protocollo_inf" type="STRING"/>
+            <column header="fl_contratto_cessato" name="fl_contratto_cessato" type="STRING"/>
+            <column header="blocco_impegni_cdr_gae" name="blocco_impegni_cdr_gae" type="STRING"/>
+            <column header="fl_approva_var_pdg" name="fl_approva_var_pdg" type="STRING"/>
+            <column header="fl_ribaltato" name="fl_ribaltato" type="STRING"/>
+            <column header="im_soglia_ribaltamento_res_imp" name="im_soglia_ribaltamento_res_imp"/>
+            <column header="fl_approva_var_stanz_res" name="fl_approva_var_stanz_res" type="STRING"/>
+            <column header="im_soglia_consumo_residuo" name="im_soglia_consumo_residuo" type="NUMERIC"/>
+            <column header="fl_blocco_ass_imp_iva" name="fl_blocco_ass_imp_iva" type="STRING"/>
+            <column header="fl_riporta_avanti" name="fl_riporta_avanti" type="STRING"/>
+            <column header="fl_riporta_indietro" name="fl_riporta_indietro" type="STRING"/>
+            <column header="fl_linea_pgiro_e_cds" name="fl_linea_pgiro_e_cds" type="STRING"/>
+            <column header="cd_cdr_linea_pgiro_e" name="cd_cdr_linea_pgiro_e"/>
+            <column header="cd_linea_pgiro_e" name="cd_linea_pgiro_e"/>
+            <column header="fl_linea_pgiro_s_cds" name="fl_linea_pgiro_s_cds" type="STRING"/>
+            <column header="cd_cdr_linea_pgiro_s" name="cd_cdr_linea_pgiro_s"/>
+            <column header="cd_linea_pgiro_s" name="cd_linea_pgiro_s"/>
+            <column header="fl_mod_obbl_res" name="fl_mod_obbl_res" type="STRING"/>
+            <column header="fl_blocco_iban" name="fl_blocco_iban" type="STRING"/>
+            <column header="fl_kit_firma_digitale" name="fl_kit_firma_digitale" type="STRING"/>
+            <column header="cd_dipartimento" name="cd_dipartimento"/>
+            <column header="fl_riaccertamento" name="fl_riaccertamento" type="STRING"/>
+            <column header="fl_riobbligazione" name="fl_riobbligazione" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-414">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/parametri_cnr.csv.gz" quotchar="&quot;" separator="," tableName="parametri_cnr">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_tipo_rapporto" name="cd_tipo_rapporto" type="STRING"/>
+            <column header="importo_franchigia_occa" name="importo_franchigia_occa" type="NUMERIC"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_versamenti_cori" name="fl_versamenti_cori" type="STRING"/>
+            <column header="versamenti_cori_giorno" name="versamenti_cori_giorno" type="NUMERIC"/>
+            <column header="cd_tipo_rapporto_prof" name="cd_tipo_rapporto_prof" type="STRING"/>
+            <column header="livello_pdg_decis_spe" name="livello_pdg_decis_spe" type="NUMERIC"/>
+            <column header="livello_pdg_decis_etr" name="livello_pdg_decis_etr" type="NUMERIC"/>
+            <column header="livello_contratt_pdg_spe" name="livello_contratt_pdg_spe" type="NUMERIC"/>
+            <column header="fl_regolamento_2006" name="fl_regolamento_2006" type="STRING"/>
+            <column header="fl_diaria_miss_italia" name="fl_diaria_miss_italia" type="STRING"/>
+            <column header="fl_visto_dip_variazioni" name="fl_visto_dip_variazioni" type="STRING"/>
+            <column header="importo_min_visto_dip" name="importo_min_visto_dip"/>
+            <column header="fl_motivazione_su_imp" name="fl_motivazione_su_imp" type="STRING"/>
+            <column header="importo_max_imp" name="importo_max_imp" type="NUMERIC"/>
+            <column header="fl_deduzione_irpef" name="fl_deduzione_irpef" type="STRING"/>
+            <column header="fl_deduzione_family" name="fl_deduzione_family" type="STRING"/>
+            <column header="fl_detrazioni_altre" name="fl_detrazioni_altre" type="STRING"/>
+            <column header="fl_detrazioni_family" name="fl_detrazioni_family" type="STRING"/>
+            <column header="fl_approvato_definitivo" name="fl_approvato_definitivo" type="STRING"/>
+            <column header="fl_siope" name="fl_siope" type="STRING"/>
+            <column header="ricerca_prof_int_giorni_pubbl" name="ricerca_prof_int_giorni_pubbl" type="NUMERIC"/>
+            <column header="ricerca_prof_int_giorni_scad" name="ricerca_prof_int_giorni_scad" type="NUMERIC"/>
+            <column header="fl_incarico" name="fl_incarico" type="STRING"/>
+            <column header="oggetto_email_terzi_congua" name="oggetto_email_terzi_congua"/>
+            <column header="corpo_email_terzi_congua" name="corpo_email_terzi_congua"/>
+            <column header="corpo_email" name="corpo_email"/>
+            <column header="oggetto_email" name="oggetto_email"/>
+            <column header="fl_obb_intrastat" name="fl_obb_intrastat" type="STRING"/>
+            <column header="fl_cup" name="fl_cup" type="STRING"/>
+            <column header="clausola_ordine" name="clausola_ordine"/>
+            <column header="data_stipula_contratti" name="data_stipula_contratti" type="${date.type}"/>
+            <column header="livello_pdg_cofog" name="livello_pdg_cofog" type="NUMERIC"/>
+            <column header="fl_siope_cup" name="fl_siope_cup" type="STRING"/>
+            <column header="fl_credito_irpef" name="fl_credito_irpef" type="STRING"/>
+            <column header="fl_nuovo_pdg" name="fl_nuovo_pdg" type="STRING"/>
+            <column header="data_attivazione_new_voce" name="data_attivazione_new_voce"/>
+            <column header="fl_tesoreria_unica" name="fl_tesoreria_unica" type="STRING"/>
+            <column header="fl_pubblica_contratto" name="fl_pubblica_contratto" type="STRING"/>
+            <column header="fl_pdg_codlast" name="fl_pdg_codlast" type="STRING"/>
+            <column header="fl_pdg_contrattazione" name="fl_pdg_contrattazione" type="STRING"/>
+            <column header="fl_pdg_quadra_fonti_esterne" name="fl_pdg_quadra_fonti_esterne" type="STRING"/>
+            <column header="livello_pat" name="livello_pat" type="NUMERIC"/>
+            <column header="livello_eco" name="livello_eco" type="NUMERIC"/>
+            <column header="fl_nuova_gestione_pg" name="fl_nuova_gestione_pg" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-415">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/parametri_ente.csv.gz" quotchar="&quot;" separator="," tableName="parametri_ente">
+            <column header="id" name="id" type="NUMERIC"/>
+            <column header="descrizione" name="descrizione" type="STRING"/>
+            <column header="attivo" name="attivo" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="cancella_stampe" name="cancella_stampe" type="NUMERIC"/>
+            <column header="box_scadenze" name="box_scadenze" type="STRING"/>
+            <column header="box_comunicazioni" name="box_comunicazioni" type="STRING"/>
+            <column header="tipo_db" name="tipo_db" type="STRING"/>
+            <column header="fl_autenticazione_ldap" name="fl_autenticazione_ldap" type="STRING"/>
+            <column header="ldap_user" name="ldap_user" type="STRING"/>
+            <column header="ldap_password" name="ldap_password" type="STRING"/>
+            <column header="ldap_base_dn" name="ldap_base_dn" type="STRING"/>
+            <column header="ldap_app_name" name="ldap_app_name" type="STRING"/>
+            <column header="dt_ldap_migrazione" name="dt_ldap_migrazione" type="${date.type}"/>
+            <column header="ldap_link_cambio_password" name="ldap_link_cambio_password" type="STRING"/>
+            <column header="fl_informix" name="fl_informix" type="STRING"/>
+            <column header="fl_gae_es" name="fl_gae_es" type="STRING"/>
+            <column header="fl_prg_pianoeco" name="fl_prg_pianoeco" type="STRING"/>
+            <column header="abil_progetto_strorg" name="abil_progetto_strorg" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-416">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/parametri_livelli.csv.gz" quotchar="&quot;" separator="," tableName="parametri_livelli">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="livelli_entrata" name="livelli_entrata" type="NUMERIC"/>
+            <column header="lung_livello1e" name="lung_livello1e" type="STRING"/>
+            <column header="ds_livello1e" name="ds_livello1e" type="STRING"/>
+            <column header="lung_livello2e" name="lung_livello2e" type="STRING"/>
+            <column header="ds_livello2e" name="ds_livello2e" type="STRING"/>
+            <column header="lung_livello3e" name="lung_livello3e" type="STRING"/>
+            <column header="ds_livello3e" name="ds_livello3e" type="STRING"/>
+            <column header="lung_livello4e" name="lung_livello4e" type="STRING"/>
+            <column header="ds_livello4e" name="ds_livello4e" type="STRING"/>
+            <column header="lung_livello5e" name="lung_livello5e" type="STRING"/>
+            <column header="ds_livello5e" name="ds_livello5e" type="STRING"/>
+            <column header="lung_livello6e" name="lung_livello6e" type="STRING"/>
+            <column header="ds_livello6e" name="ds_livello6e" type="STRING"/>
+            <column header="lung_livello7e" name="lung_livello7e"/>
+            <column header="ds_livello7e" name="ds_livello7e"/>
+            <column header="livelli_spesa" name="livelli_spesa" type="NUMERIC"/>
+            <column header="lung_livello1s" name="lung_livello1s" type="STRING"/>
+            <column header="ds_livello1s" name="ds_livello1s" type="STRING"/>
+            <column header="lung_livello2s" name="lung_livello2s" type="STRING"/>
+            <column header="ds_livello2s" name="ds_livello2s" type="STRING"/>
+            <column header="lung_livello3s" name="lung_livello3s" type="STRING"/>
+            <column header="ds_livello3s" name="ds_livello3s" type="STRING"/>
+            <column header="lung_livello4s" name="lung_livello4s" type="STRING"/>
+            <column header="ds_livello4s" name="ds_livello4s" type="STRING"/>
+            <column header="lung_livello5s" name="lung_livello5s" type="STRING"/>
+            <column header="ds_livello5s" name="ds_livello5s" type="STRING"/>
+            <column header="lung_livello6s" name="lung_livello6s" type="STRING"/>
+            <column header="ds_livello6s" name="ds_livello6s" type="STRING"/>
+            <column header="lung_livello7s" name="lung_livello7s"/>
+            <column header="ds_livello7s" name="ds_livello7s"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-417">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/parametri_livelli_ep.csv.gz" quotchar="&quot;" separator="," tableName="parametri_livelli_ep">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="livelli_eco" name="livelli_eco" type="NUMERIC"/>
+            <column header="lung_livello1e" name="lung_livello1e" type="STRING"/>
+            <column header="ds_livello1e" name="ds_livello1e" type="STRING"/>
+            <column header="lung_livello2e" name="lung_livello2e" type="STRING"/>
+            <column header="ds_livello2e" name="ds_livello2e" type="STRING"/>
+            <column header="lung_livello3e" name="lung_livello3e" type="STRING"/>
+            <column header="ds_livello3e" name="ds_livello3e" type="STRING"/>
+            <column header="lung_livello4e" name="lung_livello4e" type="STRING"/>
+            <column header="ds_livello4e" name="ds_livello4e" type="STRING"/>
+            <column header="lung_livello5e" name="lung_livello5e" type="STRING"/>
+            <column header="ds_livello5e" name="ds_livello5e" type="STRING"/>
+            <column header="lung_livello6e" name="lung_livello6e" type="STRING"/>
+            <column header="ds_livello6e" name="ds_livello6e" type="STRING"/>
+            <column header="lung_livello7e" name="lung_livello7e" type="STRING"/>
+            <column header="ds_livello7e" name="ds_livello7e" type="STRING"/>
+            <column header="lung_livello8e" name="lung_livello8e"/>
+            <column header="ds_livello8e" name="ds_livello8e"/>
+            <column header="livelli_pat" name="livelli_pat" type="NUMERIC"/>
+            <column header="lung_livello1p" name="lung_livello1p" type="STRING"/>
+            <column header="ds_livello1p" name="ds_livello1p" type="STRING"/>
+            <column header="lung_livello2p" name="lung_livello2p" type="STRING"/>
+            <column header="ds_livello2p" name="ds_livello2p" type="STRING"/>
+            <column header="lung_livello3p" name="lung_livello3p" type="STRING"/>
+            <column header="ds_livello3p" name="ds_livello3p" type="STRING"/>
+            <column header="lung_livello4p" name="lung_livello4p" type="STRING"/>
+            <column header="ds_livello4p" name="ds_livello4p" type="STRING"/>
+            <column header="lung_livello5p" name="lung_livello5p" type="STRING"/>
+            <column header="ds_livello5p" name="ds_livello5p" type="STRING"/>
+            <column header="lung_livello6p" name="lung_livello6p" type="STRING"/>
+            <column header="ds_livello6p" name="ds_livello6p" type="STRING"/>
+            <column header="lung_livello7p" name="lung_livello7p" type="STRING"/>
+            <column header="ds_livello7p" name="ds_livello7p" type="STRING"/>
+            <column header="lung_livello8p" name="lung_livello8p" type="STRING"/>
+            <column header="ds_livello8p" name="ds_livello8p" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-467">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/print_priority.csv.gz" quotchar="&quot;" separator="," tableName="print_priority">
+            <column header="report_name" name="report_name" type="STRING"/>
+            <column header="priority" name="priority" type="NUMERIC"/>
+            <column header="ds_report" name="ds_report" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-470">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/privilegio.csv.gz" quotchar="&quot;" separator="," tableName="privilegio">
+            <column header="cd_privilegio" name="cd_privilegio" type="STRING"/>
+            <column header="ds_privilegio" name="ds_privilegio" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="ti_privilegio" name="ti_privilegio" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-472">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/procedure_amministrative.csv.gz" quotchar="&quot;" separator="," tableName="procedure_amministrative">
+            <column header="cd_proc_amm" name="cd_proc_amm" type="STRING"/>
+            <column header="ds_proc_amm" name="ds_proc_amm" type="STRING"/>
+            <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="ti_proc_amm" name="ti_proc_amm" type="STRING"/>
+            <column header="fl_ricerca_incarico" name="fl_ricerca_incarico" type="STRING"/>
+            <column header="incarico_ric_giorni_pubbl" name="incarico_ric_giorni_pubbl" type="NUMERIC"/>
+            <column header="incarico_ric_giorni_scad" name="incarico_ric_giorni_scad" type="NUMERIC"/>
+            <column header="cd_gruppo_file" name="cd_gruppo_file" type="STRING"/>
+            <column header="fl_meramente_occasionale" name="fl_meramente_occasionale" type="STRING"/>
+            <column header="codice_anac" name="codice_anac"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-482">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/provincia.csv.gz" quotchar="&quot;" separator="," tableName="provincia">
+            <column header="cd_provincia" name="cd_provincia" type="STRING"/>
+            <column header="cd_regione" name="cd_regione" type="STRING"/>
+            <column header="ds_provincia" name="ds_provincia" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-489">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/regione.csv.gz" quotchar="&quot;" separator="," tableName="regione">
+            <column header="cd_regione" name="cd_regione" type="STRING"/>
+            <column header="ds_regione" name="ds_regione" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_addreg_aliqmax" name="fl_addreg_aliqmax" type="STRING"/>
+            <column header="cd_regione_uff" name="cd_regione_uff" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-506">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/rif_inquadramento.csv.gz" quotchar="&quot;" separator="," tableName="rif_inquadramento">
+            <column header="pg_rif_inquadramento" name="pg_rif_inquadramento" type="NUMERIC"/>
+            <column header="cd_profilo" name="cd_profilo" type="STRING"/>
+            <column header="cd_progressione" name="cd_progressione" type="STRING"/>
+            <column header="cd_livello" name="cd_livello"/>
+            <column header="ds_inquadramento" name="ds_inquadramento" type="STRING"/>
+            <column header="ti_dipendente_altro" name="ti_dipendente_altro" type="STRING"/>
+            <column header="cd_gruppo_inquadramento" name="cd_gruppo_inquadramento" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-505">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/rif_aree_paesi_esteri.csv.gz" quotchar="&quot;" separator="," tableName="rif_aree_paesi_esteri">
+            <column header="cd_area_estera" name="cd_area_estera" type="STRING"/>
+            <column header="ds_area_estera" name="ds_area_estera" type="STRING"/>
+            <column header="ti_italia_estero" name="ti_italia_estero" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-507">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/rif_modalita_pagamento.csv.gz" quotchar="&quot;" separator="," tableName="rif_modalita_pagamento">
+            <column header="cd_modalita_pag" name="cd_modalita_pag" type="STRING"/>
+            <column header="ds_modalita_pag" name="ds_modalita_pag" type="STRING"/>
+            <column header="codice_cassiere" name="codice_cassiere"/>
+            <column header="ti_pagamento" name="ti_pagamento" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_per_cessione" name="fl_per_cessione" type="STRING"/>
+            <column header="fl_utilizzabile_art35" name="fl_utilizzabile_art35" type="STRING"/>
+            <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
+            <column header="fl_flusso" name="fl_flusso" type="STRING"/>
+            <column header="tipo_pagamento_sdi" name="tipo_pagamento_sdi"/>
+            <column header="fl_all_obbl_mandato" name="fl_all_obbl_mandato" type="STRING"/>
+            <column header="fl_conto_bi" name="fl_conto_bi" type="STRING"/>
+            <column header="ti_mandato" name="ti_mandato" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-513">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/ruolo.csv.gz" quotchar="&quot;" separator="," tableName="ruolo">
+            <column header="cd_ruolo" name="cd_ruolo" type="STRING"/>
+            <column header="ds_ruolo" name="ds_ruolo" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="cd_cds" name="cd_cds" type="STRING"/>
+            <column header="tipo" name="tipo" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-514">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/ruolo_accesso.csv.gz" quotchar="&quot;" separator="," tableName="ruolo_accesso">
+            <column header="cd_ruolo" name="cd_ruolo" type="STRING"/>
+            <column header="cd_accesso" name="cd_accesso" type="STRING"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-521">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/scaglione.csv.gz" quotchar="&quot;" separator="," tableName="scaglione">
+            <column header="cd_contributo_ritenuta" name="cd_contributo_ritenuta" type="STRING"/>
+            <column header="ti_anagrafico" name="ti_anagrafico" type="STRING"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="im_inferiore" name="im_inferiore" type="NUMERIC"/>
+            <column header="cd_regione" name="cd_regione" type="STRING"/>
+            <column header="cd_provincia" name="cd_provincia" type="STRING"/>
+            <column header="pg_comune" name="pg_comune" type="NUMERIC"/>
+            <column header="ti_ente_percipiente" name="ti_ente_percipiente" type="STRING"/>
+            <column header="im_superiore" name="im_superiore" type="NUMERIC"/>
+            <column header="aliquota" name="aliquota" type="NUMERIC"/>
+            <column header="base_calcolo" name="base_calcolo" type="NUMERIC"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-522">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/scaglione_new.csv.gz" quotchar="&quot;" separator="," tableName="scaglione_new">
+            <column header="cd_catastale" name="cd_catastale" type="STRING"/>
+            <column header="ds_comune" name="ds_comune" type="STRING"/>
+            <column header="cd_provincia" name="cd_provincia" type="STRING"/>
+            <column header="aliquota" name="aliquota" type="NUMERIC"/>
+            <column header="im_inferiore" name="im_inferiore" type="NUMERIC"/>
+            <column header="im_superiore" name="im_superiore" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-527">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/semaforo_tipo.csv.gz" quotchar="&quot;" separator="," tableName="semaforo_tipo">
+            <column header="cd_tipo_semaforo" name="cd_tipo_semaforo" type="STRING"/>
+            <column header="ds_tipo_semaforo" name="ds_tipo_semaforo" type="STRING"/>
+            <column header="pattern" name="pattern" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-554">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/terzo.csv.gz" quotchar="&quot;" separator="," tableName="terzo">
+            <column header="cd_terzo" name="cd_terzo" type="NUMERIC"/>
+            <column header="frazione_sede" name="frazione_sede" type="STRING"/>
+            <column header="cd_anag" name="cd_anag" type="NUMERIC"/>
+            <column header="dt_fine_rapporto" name="dt_fine_rapporto"/>
+            <column header="ti_terzo" name="ti_terzo" type="STRING"/>
+            <column header="cd_precedente" name="cd_precedente" type="STRING"/>
+            <column header="denominazione_sede" name="denominazione_sede" type="STRING"/>
+            <column header="via_sede" name="via_sede" type="STRING"/>
+            <column header="numero_civico_sede" name="numero_civico_sede" type="STRING"/>
+            <column header="pg_comune_sede" name="pg_comune_sede" type="NUMERIC"/>
+            <column header="cap_comune_sede" name="cap_comune_sede" type="STRING"/>
+            <column header="pg_rapp_legale" name="pg_rapp_legale"/>
+            <column header="cd_unita_organizzativa" name="cd_unita_organizzativa" type="STRING"/>
+            <column header="nome_unita_organizzativa" name="nome_unita_organizzativa" type="STRING"/>
+            <column header="note" name="note" type="STRING"/>
+            <column header="dt_canc" name="dt_canc"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="codice_univoco_ufficio_ipa" name="codice_univoco_ufficio_ipa" type="STRING"/>
+            <column header="codice_univoco_pcc" name="codice_univoco_pcc"/>
+            <column header="denominazione_pcc" name="denominazione_pcc"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-556">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_ammortamento.csv.gz" quotchar="&quot;" separator="," tableName="tipo_ammortamento">
+            <column header="cd_tipo_ammortamento" name="cd_tipo_ammortamento" type="STRING"/>
+            <column header="ti_ammortamento" name="ti_ammortamento" type="STRING"/>
+            <column header="ds_tipo_ammortamento" name="ds_tipo_ammortamento" type="STRING"/>
+            <column header="perc_primo_anno" name="perc_primo_anno" type="NUMERIC"/>
+            <column header="perc_successivi" name="perc_successivi" type="NUMERIC"/>
+            <column header="numero_anni" name="numero_anni" type="NUMERIC"/>
+            <column header="dt_cancellazione" name="dt_cancellazione"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-557">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_articolo.csv.gz" quotchar="&quot;" separator="," tableName="tipo_articolo">
+            <column header="cd_tipo_articolo" name="cd_tipo_articolo" type="STRING"/>
+            <column header="ds_tipo_articolo" name="ds_tipo_articolo" type="STRING"/>
+            <column header="dt_cancellazione" name="dt_cancellazione"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-560">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_atto_amministrativo.csv.gz" quotchar="&quot;" separator="," tableName="tipo_atto_amministrativo">
+            <column header="cd_tipo_atto" name="cd_tipo_atto" type="STRING"/>
+            <column header="ds_tipo_atto" name="ds_tipo_atto" type="STRING"/>
+            <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
+            <column header="fl_non_definito" name="fl_non_definito" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-561">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_bollo.csv.gz" quotchar="&quot;" separator="," tableName="tipo_bollo">
+            <column header="cd_tipo_bollo" name="cd_tipo_bollo" type="STRING"/>
+            <column header="ds_tipo_bollo" name="ds_tipo_bollo" type="STRING"/>
+            <column header="ti_entrata_spesa" name="ti_entrata_spesa" type="STRING"/>
+            <column header="classe_tipo_bollo" name="classe_tipo_bollo" type="STRING"/>
+            <column header="im_tipo_bollo" name="im_tipo_bollo" type="NUMERIC"/>
+            <column header="fl_default" name="fl_default" type="STRING"/>
+            <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="assoggettamento_bollo" name="assoggettamento_bollo" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-562">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_carico_scarico.csv.gz" quotchar="&quot;" separator="," tableName="tipo_carico_scarico">
+            <column header="cd_tipo_carico_scarico" name="cd_tipo_carico_scarico" type="STRING"/>
+            <column header="ds_tipo_carico_scarico" name="ds_tipo_carico_scarico" type="STRING"/>
+            <column header="ti_documento" name="ti_documento" type="STRING"/>
+            <column header="dt_cancellazione" name="dt_cancellazione" type="${date.type}"/>
+            <column header="fl_fatturabile" name="fl_fatturabile" type="STRING"/>
+            <column header="fl_aumento_valore" name="fl_aumento_valore" type="STRING"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_elabora_buono_coge" name="fl_elabora_buono_coge" type="STRING"/>
+            <column header="fl_buono_per_trasferimento" name="fl_buono_per_trasferimento" type="STRING"/>
+            <column header="fl_storno_fondo" name="fl_storno_fondo" type="STRING"/>
+            <column header="fl_chiude_fondo" name="fl_chiude_fondo" type="STRING"/>
+            <column header="fl_vendita" name="fl_vendita" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-563">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_compenso.csv.gz" quotchar="&quot;" separator="," tableName="tipo_compenso">
+            <column header="cd_trattamento" name="cd_trattamento" type="STRING"/>
+            <column header="cd_ti_compenso" name="cd_ti_compenso" type="STRING"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="ds_ti_compenso" name="ds_ti_compenso" type="STRING"/>
+            <column header="fl_registra_fattura" name="fl_registra_fattura" type="STRING"/>
+            <column header="fl_diaria" name="fl_diaria" type="STRING"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-565">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_contratto.csv.gz" quotchar="&quot;" separator="," tableName="tipo_contratto">
+            <column header="cd_tipo_contratto" name="cd_tipo_contratto" type="STRING"/>
+            <column header="ds_tipo_contratto" name="ds_tipo_contratto" type="STRING"/>
+            <column header="natura_contabile" name="natura_contabile" type="STRING"/>
+            <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_cig" name="fl_cig" type="STRING"/>
+            <column header="fl_pubblica_contratto" name="fl_pubblica_contratto" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-566">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_contributo_ritenuta.csv.gz" quotchar="&quot;" separator="," tableName="tipo_contributo_ritenuta">
+            <column header="cd_contributo_ritenuta" name="cd_contributo_ritenuta" type="STRING"/>
+            <column header="dt_ini_validita" name="dt_ini_validita" type="${date.type}"/>
+            <column header="ds_contributo_ritenuta" name="ds_contributo_ritenuta" type="STRING"/>
+            <column header="ti_cassa_competenza" name="ti_cassa_competenza" type="STRING"/>
+            <column header="cd_tributo_erario" name="cd_tributo_erario" type="STRING"/>
+            <column header="fl_assistenza_fiscale" name="fl_assistenza_fiscale" type="STRING"/>
+            <column header="precisione" name="precisione" type="NUMERIC"/>
+            <column header="dt_fin_validita" name="dt_fin_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="pg_classificazione_montanti" name="pg_classificazione_montanti" type="NUMERIC"/>
+            <column header="cd_classificazione_cori" name="cd_classificazione_cori" type="STRING"/>
+            <column header="fl_scrivi_montanti" name="fl_scrivi_montanti" type="STRING"/>
+            <column header="fl_uso_in_lordizza" name="fl_uso_in_lordizza" type="STRING"/>
+            <column header="fl_aliquota_ridotta" name="fl_aliquota_ridotta" type="STRING"/>
+            <column header="fl_gla" name="fl_gla" type="STRING"/>
+            <column header="cd_ente_prev_sti" name="cd_ente_prev_sti"/>
+            <column header="ds_stampe" name="ds_stampe" type="STRING"/>
+            <column header="fl_sospensione_irpef" name="fl_sospensione_irpef" type="STRING"/>
+            <column header="fl_credito_irpef" name="fl_credito_irpef" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-567">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_cr_base.csv.gz" quotchar="&quot;" separator="," tableName="tipo_cr_base">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_contributo_ritenuta" name="cd_contributo_ritenuta" type="STRING"/>
+            <column header="cd_gruppo_cr" name="cd_gruppo_cr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-568">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_documento_amm.csv.gz" quotchar="&quot;" separator="," tableName="tipo_documento_amm">
+            <column header="cd_tipo_documento_amm" name="cd_tipo_documento_amm" type="STRING"/>
+            <column header="ds_tipo_documento_amm" name="ds_tipo_documento_amm" type="STRING"/>
+            <column header="ti_entrata_spesa" name="ti_entrata_spesa" type="STRING"/>
+            <column header="fl_doc_generico" name="fl_doc_generico" type="STRING"/>
+            <column header="fl_utilizzo_doc_generico" name="fl_utilizzo_doc_generico" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_solo_partita_giro" name="fl_solo_partita_giro" type="STRING"/>
+            <column header="fl_manrev_utente" name="fl_manrev_utente" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-569">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_documento_cont.csv.gz" quotchar="&quot;" separator="," tableName="tipo_documento_cont">
+            <column header="cd_tipo_documento_cont" name="cd_tipo_documento_cont" type="STRING"/>
+            <column header="ds_tipo_documento_cont" name="ds_tipo_documento_cont" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-572">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_incarico.csv.gz" quotchar="&quot;" separator="," tableName="tipo_incarico">
+            <column header="cd_tipo_incarico" name="cd_tipo_incarico" type="STRING"/>
+            <column header="ds_tipo_incarico" name="ds_tipo_incarico" type="STRING"/>
+            <column header="prc_incremento" name="prc_incremento" type="NUMERIC"/>
+            <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="cd_tipo_rapporto" name="cd_tipo_rapporto" type="STRING"/>
+            <column header="prc_incremento_var" name="prc_incremento_var" type="NUMERIC"/>
+            <column header="tipo_associazione" name="tipo_associazione" type="STRING"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-573">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_limite.csv.gz" quotchar="&quot;" separator="," tableName="tipo_limite">
+            <column header="cd_tipo_limite" name="cd_tipo_limite" type="STRING"/>
+            <column header="ds_tipo_limite" name="ds_tipo_limite" type="STRING"/>
+            <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-575">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_missione.csv.gz" quotchar="&quot;" separator="," tableName="tipo_missione">
+            <column header="cd_tipo_missione" name="cd_tipo_missione" type="STRING"/>
+            <column header="ds_tipo_missione" name="ds_tipo_missione" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_valido" name="fl_valido" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-578">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_norma_perla.csv.gz" quotchar="&quot;" separator="," tableName="tipo_norma_perla">
+            <column header="cd_tipo_norma" name="cd_tipo_norma" type="STRING"/>
+            <column header="ds_tipo_norma" name="ds_tipo_norma" type="STRING"/>
+            <column header="cd_tipo_norma_perla" name="cd_tipo_norma_perla" type="STRING"/>
+            <column header="numero_tipo_norma" name="numero_tipo_norma" type="STRING"/>
+            <column header="dt_tipo_norma" name="dt_tipo_norma" type="${date.type}"/>
+            <column header="articolo_tipo_norma" name="articolo_tipo_norma" type="STRING"/>
+            <column header="comma_tipo_norma" name="comma_tipo_norma" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="tipo_associazione" name="tipo_associazione" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-579">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_obbligazione.csv.gz" quotchar="&quot;" separator="," tableName="tipo_obbligazione">
+            <column header="cd_tipo_obbligazione" name="cd_tipo_obbligazione" type="STRING"/>
+            <column header="ds_tipo_obbligazione" name="ds_tipo_obbligazione" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-580">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_operazione_ord.csv.gz" quotchar="&quot;" separator="," tableName="tipo_operazione_ord">
+            <column header="cd_tipo_operazione" name="cd_tipo_operazione" type="STRING"/>
+            <column header="ds_tipo_operazione" name="ds_tipo_operazione" type="STRING"/>
+            <column header="dt_cancellazione" name="dt_cancellazione"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-582">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_prestazione.csv.gz" quotchar="&quot;" separator="," tableName="tipo_prestazione">
+            <column header="cd_tipo_prestazione" name="cd_tipo_prestazione" type="STRING"/>
+            <column header="ds_tipo_prestazione" name="ds_tipo_prestazione" type="STRING"/>
+            <column header="tipo_classificazione" name="tipo_classificazione" type="STRING"/>
+            <column header="fl_cancellato" name="fl_cancellato" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-583">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_prestazione_compenso.csv.gz" quotchar="&quot;" separator="," tableName="tipo_prestazione_compenso">
+            <column header="cd_ti_prestazione" name="cd_ti_prestazione" type="STRING"/>
+            <column header="ds_ti_prestazione" name="ds_ti_prestazione" type="STRING"/>
+            <column header="fl_incarico" name="fl_incarico" type="STRING"/>
+            <column header="fl_contratto" name="fl_contratto" type="STRING"/>
+            <column header="fl_controllo_fondi" name="fl_controllo_fondi" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-585">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_rapporto.csv.gz" quotchar="&quot;" separator="," tableName="tipo_rapporto">
+            <column header="cd_tipo_rapporto" name="cd_tipo_rapporto" type="STRING"/>
+            <column header="ds_tipo_rapporto" name="ds_tipo_rapporto" type="STRING"/>
+            <column header="ti_dipendente_altro" name="ti_dipendente_altro" type="STRING"/>
+            <column header="ti_rapporto_altro" name="ti_rapporto_altro" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_inquadramento" name="fl_inquadramento" type="STRING"/>
+            <column header="fl_bonus" name="fl_bonus" type="STRING"/>
+            <column header="cd_trattamento" name="cd_trattamento" type="STRING"/>
+            <column header="fl_visibile_a_tutti" name="fl_visibile_a_tutti" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-587">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_ruolo.csv.gz" quotchar="&quot;" separator="," tableName="tipo_ruolo">
+            <column header="tipo" name="tipo" type="STRING"/>
+            <column header="ds_tipo" name="ds_tipo" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-589">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_sezionale.csv.gz" quotchar="&quot;" separator="," tableName="tipo_sezionale">
+            <column header="cd_tipo_sezionale" name="cd_tipo_sezionale" type="STRING"/>
+            <column header="ds_tipo_sezionale" name="ds_tipo_sezionale" type="STRING"/>
+            <column header="ti_acquisti_vendite" name="ti_acquisti_vendite" type="STRING"/>
+            <column header="ti_istituz_commerc" name="ti_istituz_commerc" type="STRING"/>
+            <column header="cd_attivita_commerciale" name="cd_attivita_commerciale" type="STRING"/>
+            <column header="fl_ordinario" name="fl_ordinario" type="STRING"/>
+            <column header="fl_san_marino_con_iva" name="fl_san_marino_con_iva" type="STRING"/>
+            <column header="fl_san_marino_senza_iva" name="fl_san_marino_senza_iva" type="STRING"/>
+            <column header="fl_intra_ue" name="fl_intra_ue" type="STRING"/>
+            <column header="fl_extra_ue" name="fl_extra_ue" type="STRING"/>
+            <column header="fl_autofattura" name="fl_autofattura" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="sezionale_ven_liquidazione" name="sezionale_ven_liquidazione" type="STRING"/>
+            <column header="ti_bene_servizio" name="ti_bene_servizio" type="STRING"/>
+            <column header="fl_servizi_non_residenti" name="fl_servizi_non_residenti" type="STRING"/>
+            <column header="ordina" name="ordina" type="NUMERIC"/>
+            <column header="fl_split_payment" name="fl_split_payment" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-591">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_trattamento.csv.gz" quotchar="&quot;" separator="," tableName="tipo_trattamento">
+            <column header="cd_trattamento" name="cd_trattamento" type="STRING"/>
+            <column header="dt_ini_validita" name="dt_ini_validita" type="${date.type}"/>
+            <column header="ds_ti_trattamento" name="ds_ti_trattamento" type="STRING"/>
+            <column header="ti_anagrafico" name="ti_anagrafico" type="STRING"/>
+            <column header="fl_diaria" name="fl_diaria" type="STRING"/>
+            <column header="fl_detrazioni_familiari" name="fl_detrazioni_familiari" type="STRING"/>
+            <column header="fl_detrazioni_dipendente" name="fl_detrazioni_dipendente" type="STRING"/>
+            <column header="fl_tassazione_separata" name="fl_tassazione_separata" type="STRING"/>
+            <column header="fl_irpef_annualizzata" name="fl_irpef_annualizzata" type="STRING"/>
+            <column header="fl_senza_calcoli" name="fl_senza_calcoli" type="STRING"/>
+            <column header="ti_commerciale" name="ti_commerciale" type="STRING"/>
+            <column header="fl_soggetto_conguaglio" name="fl_soggetto_conguaglio" type="STRING"/>
+            <column header="fl_registra_fattura" name="fl_registra_fattura" type="STRING"/>
+            <column header="dt_fin_validita" name="dt_fin_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_default_conguaglio" name="fl_default_conguaglio" type="STRING"/>
+            <column header="fl_agevolazioni_cervelli" name="fl_agevolazioni_cervelli" type="STRING"/>
+            <column header="fl_utilizzabile_art35" name="fl_utilizzabile_art35" type="STRING"/>
+            <column header="fl_anno_prec" name="fl_anno_prec"/>
+            <column header="fl_detrazioni_altre" name="fl_detrazioni_altre" type="STRING"/>
+            <column header="fl_incarico" name="fl_incarico" type="STRING"/>
+            <column header="tipo_rapp_impiego" name="tipo_rapp_impiego"/>
+            <column header="fl_stralcio_dip" name="fl_stralcio_dip"/>
+            <column header="fl_visibile_a_tutti" name="fl_visibile_a_tutti" type="STRING"/>
+            <column header="fl_pignorato_obbl" name="fl_pignorato_obbl" type="STRING"/>
+            <column header="fl_tipo_prestazione_obbl" name="fl_tipo_prestazione_obbl" type="STRING"/>
+            <column header="fl_agevolazioni_rientro_lav" name="fl_agevolazioni_rientro_lav" type="STRING"/>
+            <column header="fl_solo_inail_ente" name="fl_solo_inail_ente" type="STRING"/>
+            <column header="fl_split_payment" name="fl_split_payment" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-592">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_unita_organizzativa.csv.gz" quotchar="&quot;" separator="," tableName="tipo_unita_organizzativa">
+            <column header="cd_tipo_unita" name="cd_tipo_unita" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="ds_tipo_unita" name="ds_tipo_unita" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-593">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipo_variazione.csv.gz" quotchar="&quot;" separator="," tableName="tipo_variazione">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_tipo_variazione" name="cd_tipo_variazione" type="STRING"/>
+            <column header="ds_tipo_variazione" name="ds_tipo_variazione" type="STRING"/>
+            <column header="ti_tipo_variazione" name="ti_tipo_variazione" type="STRING"/>
+            <column header="fl_utilizzabile_ente" name="fl_utilizzabile_ente" type="STRING"/>
+            <column header="fl_utilizzabile_area" name="fl_utilizzabile_area" type="STRING"/>
+            <column header="fl_utilizzabile_cds" name="fl_utilizzabile_cds" type="STRING"/>
+            <column header="ti_approvazione" name="ti_approvazione" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_visto_dip_saldo_modulo" name="fl_visto_dip_saldo_modulo" type="STRING"/>
+            <column header="fl_visto_dip_classificazione" name="fl_visto_dip_classificazione" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-594">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipologia_rischio.csv.gz" quotchar="&quot;" separator="," tableName="tipologia_rischio">
+            <column header="cd_tipologia_rischio" name="cd_tipologia_rischio" type="STRING"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="ds_tipologia_rischio" name="ds_tipologia_rischio" type="STRING"/>
+            <column header="aliquota_percipiente" name="aliquota_percipiente" type="NUMERIC"/>
+            <column header="aliquota_ente" name="aliquota_ente" type="NUMERIC"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-595">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/tipologie_istat.csv.gz" quotchar="&quot;" separator="," tableName="tipologie_istat">
+            <column header="pg_tipologia" name="pg_tipologia" type="NUMERIC"/>
+            <column header="ds_tipologia" name="ds_tipologia" type="STRING"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-597">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/trattamento_cori.csv.gz" quotchar="&quot;" separator="," tableName="trattamento_cori">
+            <column header="cd_trattamento" name="cd_trattamento" type="STRING"/>
+            <column header="cd_contributo_ritenuta" name="cd_contributo_ritenuta" type="STRING"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="id_riga" name="id_riga" type="STRING"/>
+            <column header="segno" name="segno" type="STRING"/>
+            <column header="calcolo_imponibile" name="calcolo_imponibile" type="STRING"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-599">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/unita_misura.csv.gz" quotchar="&quot;" separator="," tableName="unita_misura">
+            <column header="cd_unita_misura" name="cd_unita_misura" type="STRING"/>
+            <column header="ds_unita_misura" name="ds_unita_misura" type="STRING"/>
+            <column header="dt_cancellazione" name="dt_cancellazione"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-602">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/unita_organizzativa.csv.gz" quotchar="&quot;" separator="," tableName="unita_organizzativa">
+            <column header="cd_unita_organizzativa" name="cd_unita_organizzativa" type="STRING"/>
+            <column header="ds_unita_organizzativa" name="ds_unita_organizzativa" type="STRING"/>
+            <column header="cd_proprio_unita" name="cd_proprio_unita" type="STRING"/>
+            <column header="cd_tipo_unita" name="cd_tipo_unita" type="STRING"/>
+            <column header="fl_cds" name="fl_cds" type="STRING"/>
+            <column header="fl_uo_cds" name="fl_uo_cds" type="STRING"/>
+            <column header="fl_rubrica" name="fl_rubrica" type="STRING"/>
+            <column header="livello" name="livello" type="NUMERIC"/>
+            <column header="prc_copertura_obblig_2" name="prc_copertura_obblig_2"/>
+            <column header="prc_copertura_obblig_3" name="prc_copertura_obblig_3"/>
+            <column header="cd_responsabile" name="cd_responsabile" type="NUMERIC"/>
+            <column header="cd_responsabile_amm" name="cd_responsabile_amm"/>
+            <column header="fl_presidente_area" name="fl_presidente_area" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="cd_unita_padre" name="cd_unita_padre" type="STRING"/>
+            <column header="cd_area_ricerca" name="cd_area_ricerca"/>
+            <column header="esercizio_fine" name="esercizio_fine" type="NUMERIC"/>
+            <column header="esercizio_inizio" name="esercizio_inizio" type="NUMERIC"/>
+            <column header="cd_area_scientifica" name="cd_area_scientifica"/>
+            <column header="id_funzione_pubblica" name="id_funzione_pubblica"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-604">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/utente.csv.gz" quotchar="&quot;" separator="," tableName="utente">
+            <column header="cd_utente" name="cd_utente" type="STRING"/>
+            <column header="ds_utente" name="ds_utente" type="STRING"/>
+            <column header="fl_utente_templ" name="fl_utente_templ" type="STRING"/>
+            <column header="cognome" name="cognome" type="STRING"/>
+            <column header="cd_gestore" name="cd_gestore" type="STRING"/>
+            <column header="PASSWORD" name="PASSWORD" type="STRING"/>
+            <column header="fl_password_change" name="fl_password_change" type="STRING"/>
+            <column header="cd_cdr" name="cd_cdr" type="STRING"/>
+            <column header="cd_cds_configuratore" name="cd_cds_configuratore" type="STRING"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="dt_fine_validita" name="dt_fine_validita" type="${date.type}"/>
+            <column header="ti_utente" name="ti_utente" type="STRING"/>
+            <column header="nome" name="nome" type="STRING"/>
+            <column header="indirizzo" name="indirizzo"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="cd_utente_templ" name="cd_utente_templ" type="STRING"/>
+            <column header="dt_ultima_var_password" name="dt_ultima_var_password" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_altra_proc" name="fl_altra_proc" type="STRING"/>
+            <column header="cd_dipartimento" name="cd_dipartimento"/>
+            <column header="dt_ultimo_accesso" name="dt_ultimo_accesso" type="${date.type}"/>
+            <column header="fl_autenticazione_ldap" name="fl_autenticazione_ldap" type="STRING"/>
+            <column header="cd_utente_uid" name="cd_utente_uid" type="STRING"/>
+            <column header="fl_supervisore" name="fl_supervisore" type="STRING"/>
+            <column header="cd_ruolo_supervisore" name="cd_ruolo_supervisore" type="STRING"/>
+            <column header="fl_attiva_blocco" name="fl_attiva_blocco" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-609">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/utente_unita_accesso.csv.gz" quotchar="&quot;" separator="," tableName="utente_unita_accesso">
+            <column header="cd_utente" name="cd_utente" type="STRING"/>
+            <column header="cd_unita_organizzativa" name="cd_unita_organizzativa" type="STRING"/>
+            <column header="cd_accesso" name="cd_accesso" type="STRING"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-610">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/utente_unita_ruolo.csv.gz" quotchar="&quot;" separator="," tableName="utente_unita_ruolo">
+            <column header="cd_unita_organizzativa" name="cd_unita_organizzativa" type="STRING"/>
+            <column header="cd_utente" name="cd_utente" type="STRING"/>
+            <column header="cd_ruolo" name="cd_ruolo" type="STRING"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sigla" id="1516802834820-623">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="isin/csv/voce_iva.csv.gz" quotchar="&quot;" separator="," tableName="voce_iva">
+            <column header="cd_voce_iva" name="cd_voce_iva" type="STRING"/>
+            <column header="ds_voce_iva" name="ds_voce_iva" type="STRING"/>
+            <column header="percentuale" name="percentuale" type="NUMERIC"/>
+            <column header="dt_inizio_validita" name="dt_inizio_validita" type="${date.type}"/>
+            <column header="dt_cancellazione" name="dt_cancellazione"/>
+            <column header="fl_detraibile" name="fl_detraibile" type="STRING"/>
+            <column header="percentuale_detraibilita" name="percentuale_detraibilita" type="NUMERIC"/>
+            <column header="fl_non_imponibile" name="fl_non_imponibile" type="STRING"/>
+            <column header="fl_esente" name="fl_esente" type="STRING"/>
+            <column header="fl_non_soggetto" name="fl_non_soggetto" type="STRING"/>
+            <column header="fl_escluso" name="fl_escluso" type="STRING"/>
+            <column header="ti_applicazione" name="ti_applicazione" type="STRING"/>
+            <column header="cd_gruppo_iva" name="cd_gruppo_iva" type="STRING"/>
+            <column header="fl_intra" name="fl_intra" type="STRING"/>
+            <column header="fl_autofattura" name="fl_autofattura" type="STRING"/>
+            <column header="fl_bolla_doganale" name="fl_bolla_doganale" type="STRING"/>
+            <column header="fl_default_istituzionale" name="fl_default_istituzionale" type="STRING"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+            <column header="fl_iva_non_recuperabile" name="fl_iva_non_recuperabile" type="STRING"/>
+            <column header="natura_oper_non_imp_sdi" name="natura_oper_non_imp_sdi" type="STRING"/>
+            <column header="rif_norm_oper_non_imp_sdi" name="rif_norm_oper_non_imp_sdi" type="STRING"/>
+            <column header="fl_solo_italia" name="fl_solo_italia" type="STRING"/>
+            <column header="ti_bene_servizio" name="ti_bene_servizio" type="STRING"/>
+            <column header="fl_obb_dichiarazione_intento" name="fl_obb_dichiarazione_intento" type="STRING"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
