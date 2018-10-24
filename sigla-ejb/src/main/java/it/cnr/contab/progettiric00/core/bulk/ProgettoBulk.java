@@ -156,7 +156,7 @@ public class ProgettoBulk extends ProgettoBase {
 	/**
 	* Aggiunge il progetto figlio alla collezione progetti_figli
 	*
-	* @param progetto figlio da aggiungere
+	* @param figlio da aggiungere
 	*/
 	public void addToProgetti_figli(ProgettoBulk figlio) {
 	  if (progetti_figli == null)
@@ -455,7 +455,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	}
 	/**
 	 * Sets the pg_progetto_padre.
-	 * @param pg_progetto_padre The pg_progetto_padre to set
+	 * @param progetto_padre The pg_progetto_padre to set
 	 */
 	public void setPg_progetto_padre(java.lang.Integer progetto_padre) {
 		it.cnr.contab.progettiric00.core.bulk.ProgettoBulk progettopadre = this.getProgettopadre();
@@ -727,77 +727,77 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	}
 
 	/**
-	 * @param decimal
+	 * @param acc_tfr
 	 */
 	public void setAcc_tfr(BigDecimal acc_tfr) {
 		this.getSpese().setAcc_tfr(acc_tfr);
 	}
 
 	/**
-	 * @param decimal
+	 * @param amm_altri_beni
 	 */
 	public void setAmm_altri_beni(BigDecimal amm_altri_beni) {
 		this.getSpese().setAmm_altri_beni(amm_altri_beni);
 	}
 
 	/**
-	 * @param decimal
+	 * @param amm_immobili
 	 */
 	public void setAmm_immobili(BigDecimal amm_immobili) {
 		this.getSpese().setAmm_immobili(amm_immobili);
 	}
 
 	/**
-	 * @param decimal
+	 * @param amm_tecnico
 	 */
 	public void setAmm_tecnico(BigDecimal amm_tecnico) {
 		this.getSpese().setAmm_tecnico(amm_tecnico);
 	}
 
 	/**
-	 * @param decimal
+	 * @param cc_brev_pi
 	 */
 	public void setCc_brev_pi(BigDecimal cc_brev_pi) {
 		this.getSpese().setCc_brev_pi(cc_brev_pi);
 	}
 
 	/**
-	 * @param decimal
+	 * @param edilizia
 	 */
 	public void setEdilizia(BigDecimal edilizia) {
 		this.getSpese().setEdilizia(edilizia);
 	}
 
 	/**
-	 * @param decimal
+	 * @param gestione_nave
 	 */
 	public void setGestione_nave(BigDecimal gestione_nave) {
 		this.getSpese().setGestione_nave(gestione_nave);
 	}
 
 	/**
-	 * @param decimal
+	 * @param res_fo
 	 */
 	public void setRes_fo(BigDecimal res_fo) {
 		this.getSpese().setRes_fo(res_fo);
 	}
 
 	/**
-	 * @param decimal
+	 * @param res_min
 	 */
 	public void setRes_min(BigDecimal res_min) {
 		this.getSpese().setRes_min(res_min);
 	}
 
 	/**
-	 * @param decimal
+	 * @param res_privati
 	 */
 	public void setRes_privati(BigDecimal res_privati) {
 		this.getSpese().setRes_privati(res_privati);
 	}
 
 	/**
-	 * @param decimal
+	 * @param res_ue_int
 	 */
 	public void setRes_ue_int(BigDecimal res_ue_int) {
 		this.getSpese().setRes_ue_int(res_ue_int);
@@ -1141,6 +1141,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 			this.getOtherField().validaDateProgetto();
 
 		this.getAllDetailsProgettoPianoEconomico().stream()
+			.filter(progetto_piano_economicoBulk -> Optional.ofNullable(progetto_piano_economicoBulk.getEsercizio_piano()).isPresent())
 			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoInizioOf())<0)
 			.map(Progetto_piano_economicoBulk::getEsercizio_piano)
 			.min(Comparator.comparing(Integer::valueOf))
