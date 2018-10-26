@@ -424,7 +424,9 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 						 if(!pdg_modulo_spese.isPrevAnnoSucObb() && pdg_modulo_spese.getIm_spese_a2()==null)
 							 pdg_modulo_spese.setIm_spese_a2(BigDecimal.ZERO);
 				 }
-			   	 if (Optional.ofNullable(pdg_modulo_spese.getPdg_modulo_costi())
+			   	 if ((Optional.ofNullable(pdg_modulo_spese.getIm_spese_gest_decentrata_int()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)!=0 ||
+			   		  Optional.ofNullable(pdg_modulo_spese.getIm_spese_gest_decentrata_est()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)!=0) && 
+			   		 Optional.ofNullable(pdg_modulo_spese.getPdg_modulo_costi())
 		    				.flatMap(el->Optional.ofNullable(el.getPdg_modulo()))
 		    				.flatMap(el->Optional.ofNullable(el.getProgetto()))
 		    				.flatMap(el->Optional.ofNullable(el.getOtherField()))
