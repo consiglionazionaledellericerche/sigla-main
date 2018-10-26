@@ -7,6 +7,7 @@
 package it.cnr.contab.prevent01.bp;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Collections;
 import java.util.Optional;
@@ -65,7 +66,11 @@ public class CRUDDettagliModuloCostiBP extends SimpleCRUDBP {
 	private Unita_organizzativaBulk uoSrivania;
 	private CrudDettagliSpeseBP crudDettagliSpese = new CrudDettagliSpeseBP( "DettagliSpese", Pdg_modulo_speseBulk.class, "dettagliSpese", this) {
 	   protected void validate(ActionContext actioncontext, it.cnr.jada.bulk.OggettoBulk oggettobulk) throws it.cnr.jada.bulk.ValidationException {
-		   if (getParametriEnte().getFl_prg_pianoeco() && ((Pdg_modulo_speseBulk)oggettobulk).getVoce_piano_economico()==null) {
+		   Pdg_modulo_speseBulk pdgModuloSpese = (Pdg_modulo_speseBulk)oggettobulk;
+		   if (getParametriEnte().getFl_prg_pianoeco() && 
+				!Optional.ofNullable(pdgModuloSpese.getVoce_piano_economico()).flatMap(el->Optional.ofNullable(el.getCd_voce_piano())).isPresent() &&
+				(Optional.ofNullable(pdgModuloSpese.getIm_spese_gest_decentrata_int()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)!=0 ||
+				 Optional.ofNullable(pdgModuloSpese.getIm_spese_gest_decentrata_est()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)!=0)) {
 				Progetto_sipBulk progetto = ((Pdg_modulo_speseBulk)oggettobulk).getPdg_modulo_costi().getPdg_modulo().getProgetto();
 				if (progetto.isPianoEconomicoRequired())
 					throw new it.cnr.jada.bulk.ValidationException("Il progetto selezionato richiede l'indicazione della Voce del Piano Economico.");
