@@ -435,13 +435,6 @@
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
-                    <groupId>com.google.code.gson</groupId>
-                    <artifactId>gson</artifactId>
-                    <version>1.4</version>
-                    <type>jar</type>
-                    <scope>compile</scope>
-                </dependency>
-                <dependency>
                     <groupId>org.jvnet.jaxb2_commons</groupId>
                     <artifactId>jaxb2-basics-runtime</artifactId>
                     <version>0.6.3</version>
