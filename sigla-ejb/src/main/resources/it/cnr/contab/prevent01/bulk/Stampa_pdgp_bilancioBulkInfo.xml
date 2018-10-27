@@ -7,7 +7,7 @@
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
-		inputSize="2"		
+		inputSize="5"
 		inputType="ROTEXT"
 		label="Esercizio" />
 	<fieldProperty
