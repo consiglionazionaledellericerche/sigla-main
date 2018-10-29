@@ -1,14 +1,13 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.Dictionary;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
@@ -17,14 +16,15 @@ import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaNuovoBP;
 import it.cnr.contab.progettiric00.tabrif.bulk.Tipo_progettoBulk;
-import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.DateUtils;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 
 public class ProgettoBulk extends ProgettoBase {
 
@@ -144,6 +144,7 @@ public class ProgettoBulk extends ProgettoBase {
 	private Boolean fl_gestione;
 	private String tipoFaseToSearch;
 	private Progetto_other_fieldBulk otherField;
+	private BulkList pdgModuli = new BulkList();
 
 	public ProgettoBulk() {
 		super();
@@ -155,7 +156,7 @@ public class ProgettoBulk extends ProgettoBase {
 	/**
 	* Aggiunge il progetto figlio alla collezione progetti_figli
 	*
-	* @param progetto figlio da aggiungere
+	* @param figlio da aggiungere
 	*/
 	public void addToProgetti_figli(ProgettoBulk figlio) {
 	  if (progetti_figli == null)
@@ -454,7 +455,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	}
 	/**
 	 * Sets the pg_progetto_padre.
-	 * @param pg_progetto_padre The pg_progetto_padre to set
+	 * @param progetto_padre The pg_progetto_padre to set
 	 */
 	public void setPg_progetto_padre(java.lang.Integer progetto_padre) {
 		it.cnr.contab.progettiric00.core.bulk.ProgettoBulk progettopadre = this.getProgettopadre();
@@ -726,77 +727,77 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	}
 
 	/**
-	 * @param decimal
+	 * @param acc_tfr
 	 */
 	public void setAcc_tfr(BigDecimal acc_tfr) {
 		this.getSpese().setAcc_tfr(acc_tfr);
 	}
 
 	/**
-	 * @param decimal
+	 * @param amm_altri_beni
 	 */
 	public void setAmm_altri_beni(BigDecimal amm_altri_beni) {
 		this.getSpese().setAmm_altri_beni(amm_altri_beni);
 	}
 
 	/**
-	 * @param decimal
+	 * @param amm_immobili
 	 */
 	public void setAmm_immobili(BigDecimal amm_immobili) {
 		this.getSpese().setAmm_immobili(amm_immobili);
 	}
 
 	/**
-	 * @param decimal
+	 * @param amm_tecnico
 	 */
 	public void setAmm_tecnico(BigDecimal amm_tecnico) {
 		this.getSpese().setAmm_tecnico(amm_tecnico);
 	}
 
 	/**
-	 * @param decimal
+	 * @param cc_brev_pi
 	 */
 	public void setCc_brev_pi(BigDecimal cc_brev_pi) {
 		this.getSpese().setCc_brev_pi(cc_brev_pi);
 	}
 
 	/**
-	 * @param decimal
+	 * @param edilizia
 	 */
 	public void setEdilizia(BigDecimal edilizia) {
 		this.getSpese().setEdilizia(edilizia);
 	}
 
 	/**
-	 * @param decimal
+	 * @param gestione_nave
 	 */
 	public void setGestione_nave(BigDecimal gestione_nave) {
 		this.getSpese().setGestione_nave(gestione_nave);
 	}
 
 	/**
-	 * @param decimal
+	 * @param res_fo
 	 */
 	public void setRes_fo(BigDecimal res_fo) {
 		this.getSpese().setRes_fo(res_fo);
 	}
 
 	/**
-	 * @param decimal
+	 * @param res_min
 	 */
 	public void setRes_min(BigDecimal res_min) {
 		this.getSpese().setRes_min(res_min);
 	}
 
 	/**
-	 * @param decimal
+	 * @param res_privati
 	 */
 	public void setRes_privati(BigDecimal res_privati) {
 		this.getSpese().setRes_privati(res_privati);
 	}
 
 	/**
-	 * @param decimal
+	 * @param res_ue_int
 	 */
 	public void setRes_ue_int(BigDecimal res_ue_int) {
 		this.getSpese().setRes_ue_int(res_ue_int);
@@ -990,26 +991,13 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 
 	public Integer getAnnoInizioOf() {
 		return Optional.ofNullable(this.getOtherField())
-				.flatMap(el->Optional.ofNullable(el.getDtInizio()))
-				.map(elDate->{
-					GregorianCalendar calendar = new GregorianCalendar();
-					calendar.setTime(elDate);
-					return calendar.get(Calendar.YEAR);
-				})
+				.map(Progetto_other_fieldBulk::getAnnoInizio)
 				.orElse(0);
 	}		
 
 	public Integer getAnnoFineOf() {
 		return Optional.ofNullable(this.getOtherField())
-				.flatMap(el->{
-					Optional<Integer> anno = Optional.empty();
-					if (el.getDtFine()!=null || el.getDtProroga()!=null) {
-						GregorianCalendar calendar = new GregorianCalendar();
-						calendar.setTime(DateUtils.max(el.getDtFine(), el.getDtProroga()));
-						anno = Optional.of(calendar.get(Calendar.YEAR));
-					}
-					return anno;
-				})
+				.map(Progetto_other_fieldBulk::getAnnoFine)
 				.orElse(9999);
 	}
 
@@ -1094,14 +1082,6 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 				!getDettagliPianoEconomicoTotale().isEmpty();
 	}
 
-	public boolean isRODatiOtherField() {
-		return !Optional.ofNullable(this.getOtherField()).filter(Progetto_other_fieldBulk::isStatoIniziale).isPresent();
-	}
-
-	public boolean isROOtherFieldExistPianoEconomico() {
-		return this.isRODatiOtherField() || this.isDettagliPianoEconomicoPresenti();
-	}
-
 	public BulkList<Progetto_piano_economicoBulk> getAllDetailsProgettoPianoEconomico() {
 		BulkList<Progetto_piano_economicoBulk> items = new BulkList<Progetto_piano_economicoBulk>();
 		items.addAll(getDettagliPianoEconomicoTotale());
@@ -1154,5 +1134,47 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	
 	public java.math.BigDecimal getImTotaleDaRipartire() {
 		return this.getImTotale().subtract(this.getImTotaleRipartito());
+	}
+	
+	public void validaDateProgetto() throws ValidationException {
+		if (Optional.ofNullable(this.getOtherField()).isPresent())
+			this.getOtherField().validaDateProgetto();
+
+		this.getAllDetailsProgettoPianoEconomico().stream()
+			.filter(progetto_piano_economicoBulk -> Optional.ofNullable(progetto_piano_economicoBulk.getEsercizio_piano()).isPresent())
+			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoInizioOf())<0)
+			.map(Progetto_piano_economicoBulk::getEsercizio_piano)
+			.min(Comparator.comparing(Integer::valueOf))
+			.ifPresent(annoMin->{
+				throw new ApplicationRuntimeException("Non è possibile indicare una data di inizio con anno maggiore del "+annoMin+
+						" per il quale risulta già caricato un piano economico.");
+			});
+
+		this.getAllDetailsProgettoPianoEconomico().stream()
+			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoFineOf())>0)
+			.map(Progetto_piano_economicoBulk::getEsercizio_piano)
+			.max(Comparator.comparing(Integer::valueOf))
+			.ifPresent(annoMax->{
+				throw new ApplicationRuntimeException("Non è possibile indicare una data di fine/proroga con anno inferiore al "+annoMax+
+						" per il quale risulta già caricato un piano economico.");
+		});
+	}
+	
+	public BulkList<Pdg_moduloBulk> getPdgModuli() {
+		return pdgModuli;
+	}
+	
+	public void setPdgModuli(BulkList<Pdg_moduloBulk> pdgModuli) {
+		this.pdgModuli = pdgModuli;
+	}
+
+	public boolean isROProgettoPianoEconomico() {
+		return Optional.ofNullable(this)
+				.flatMap(el->Optional.ofNullable(el.getPdgModuli()))
+				.map(el->el.stream())
+				.orElse(Stream.empty())
+				.filter(el->el.getEsercizio().equals(this.getEsercizio()))
+				.filter(el->!el.getStato().equals(Pdg_moduloBulk.STATO_AC))
+				.findAny().isPresent();
 	}
 }

@@ -274,6 +274,13 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 					PrintService.class).executeReport(actioncontext.getUserContext(),
 					print);
 			String path = getPath(archiviaStampaPdgVariazioneBulk);
+			if (Optional.ofNullable(pdgVariazioniService.getStorageObjectByPath(
+						path.concat(StorageService.SUFFIX).concat(pdgVariazioniService.sanitizeFilename(report.getName()))))
+					.map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+					.filter(aspects -> aspects.contains(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value())).isPresent()){
+				throw new ApplicationException("La variazione risulta già firmata, Operazione non possibile!");
+			}
+
 			StorageObject storageObject = pdgVariazioniService.restoreSimpleDocument(
 					archiviaStampaPdgVariazioneBulk,
 					report.getInputStream(),
