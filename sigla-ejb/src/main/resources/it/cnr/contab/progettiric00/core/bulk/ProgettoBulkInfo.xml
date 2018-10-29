@@ -700,7 +700,6 @@
 		label="Tipo Finanziamento"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
-		readonlyPropertyOnEdit="ROOtherFieldExistPianoEconomico"
 		enabledOnSearch="true" />
 	<fieldProperty
 		name="dsTipoFinanziamentoOf"
@@ -714,7 +713,6 @@
 		enabledOnSearch="true"
 		formatName="date_short"
 		command="doOnDtInizioOfChange"
-		readonlyPropertyOnEdit="ROOtherFieldExistPianoEconomico"
 		label="Data Inizio" />
 	<fieldProperty
 		name="dtFineOf"
@@ -723,7 +721,6 @@
 		enabledOnSearch="true"
 		formatName="date_short"
 		command="doOnDtFineOfChange"
-		readonlyPropertyOnEdit="ROOtherFieldExistPianoEconomico"
 		label="Data Fine" />
 	<fieldProperty
 		name="dtProrogaOf"
@@ -732,7 +729,6 @@
 		enabledOnSearch="true"
 		formatName="date_short"
 		command="doOnDtProrogaOfChange"
-		readonlyPropertyOnEdit="RODatiOtherField"
 		label="Data Proroga" />
 	<fieldProperty
 		name="imFinanziatoOf"
