@@ -1,15 +1,18 @@
 package it.cnr.contab.progettiric00.bp;
 
 import java.math.BigDecimal;
+import java.nio.file.DirectoryStream.Filter;
 import java.rmi.RemoteException;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
-import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkList;
@@ -26,6 +29,11 @@ public class ProgettoPianoEconomicoCRUDController extends it.cnr.jada.util.actio
 	public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException
 	{
 		if (!detail.isToBeCreated()) {
+			Optional<Progetto_piano_economicoBulk> opt = Optional.ofNullable(detail).filter(Progetto_piano_economicoBulk.class::isInstance)
+																 .map(Progetto_piano_economicoBulk.class::cast);
+			if (opt.filter(el->el.isROProgettoPianoEconomico()).isPresent())
+				throw new ValidationException("Eliminazione non possibile! Il progetto per l'anno di riferimento "
+								+ opt.get().getEsercizio_piano() + " risulta essere stato confermato in PdgP!");
 			try {
 				Utility.createProgettoRicercaComponentSession().validaCancellazionePianoEconomicoAssociato(
 					context.getUserContext(),
@@ -58,4 +66,5 @@ public class ProgettoPianoEconomicoCRUDController extends it.cnr.jada.util.actio
 		pianoEco.setFl_ctrl_disp(Boolean.TRUE);
 		return super.addDetail(oggettobulk);
 	}
+
 }

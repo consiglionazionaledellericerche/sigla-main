@@ -74,7 +74,6 @@
   commit;
  exception when others then
   rollback;
-  raise;
  end;
 
  procedure unregister(aIdSessione varchar2) is

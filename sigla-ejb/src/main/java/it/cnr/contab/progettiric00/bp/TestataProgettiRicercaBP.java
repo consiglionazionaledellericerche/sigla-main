@@ -2,21 +2,17 @@ package it.cnr.contab.progettiric00.bp;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.InitializingBean;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_finanziatoreBulk;
@@ -38,11 +34,9 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteBulkTree;
 import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 
@@ -51,7 +45,9 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	private boolean flInformix = false;
 	private boolean flPrgPianoEconomico = false;
 	private boolean isUoCdsCollegata = false;
-
+	private Integer annoFromPianoEconomico;
+	private Unita_organizzativaBulk uoScrivania;
+	
 	private SimpleDetailCRUDController crudDettagli = new SimpleDetailCRUDController( "Dettagli", Progetto_uoBulk.class, "dettagli", this) {
 		public void validateForDelete(ActionContext context, OggettoBulk detail)
 			throws ValidationException
@@ -74,6 +70,26 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			((Progetto_piano_economicoBulk)oggettobulk).setEsercizio_piano(((ProgettoBulk)this.getParentModel()).getEsercizio());
 			return super.addDetail(oggettobulk);
 		};
+		
+		@Override
+		public boolean isGrowable() {
+			return super.isGrowable() &&
+					Optional.ofNullable(getParentModel())
+							.filter(ProgettoBulk.class::isInstance)
+							.map(ProgettoBulk.class::cast)
+							.map(el->!el.isROProgettoPianoEconomico())
+							.orElse(Boolean.FALSE);
+		}
+		
+		@Override
+		public boolean isShrinkable() {
+			return super.isShrinkable() &&
+					Optional.ofNullable(getParentModel())
+							.filter(ProgettoBulk.class::isInstance)
+							.map(ProgettoBulk.class::cast)
+							.map(el->!el.isROProgettoPianoEconomico())
+							.orElse(Boolean.FALSE);
+		}		
 	};
 
 	private SimpleDetailCRUDController crudPianoEconomicoAltriAnni = new ProgettoPianoEconomicoCRUDController( "PianoEconomicoAltriAnni", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoAltriAnni", this) {
@@ -112,8 +128,13 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
         	setFlInformix(parEnte.getFl_informix().booleanValue());
 			setFlPrgPianoEconomico(parEnte.getFl_prg_pianoeco().booleanValue());
-			Unita_organizzativaBulk uo = (Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findUOByCodice(actioncontext.getUserContext(), CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext()));
-			isUoCdsCollegata = uo.getFl_uo_cds();
+			uoScrivania = (Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findUOByCodice(actioncontext.getUserContext(), CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext()));
+			isUoCdsCollegata = uoScrivania.getFl_uo_cds();
+
+			it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
+	   		BigDecimal annoFrom = configSession.getIm01(actioncontext.getUserContext(), new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+	   		if (Optional.ofNullable(annoFrom).isPresent())
+	   			setAnnoFromPianoEconomico(annoFrom.intValue());
 		}catch(Throwable e) {
 			throw new BusinessProcessException(e);
 		}
@@ -385,21 +406,11 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 			throws BusinessProcessException {
 		super.basicEdit(actioncontext, oggettobulk, flag);
 		ProgettoBulk progetto = (ProgettoBulk)getModel();
-		if (progetto.getCd_unita_organizzativa() ==null ||
-			!progetto.getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())))
+		if (Optional.ofNullable(progetto.getCd_unita_organizzativa())
+					.map(el->!el.equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())))
+					.orElse(Boolean.TRUE) ||
+			Optional.ofNullable(progetto.getOtherField()).filter(el->el.isStatoChiuso()||el.isStatoAnnullato()).isPresent())
 			this.setStatus(VIEW);
-		else {
-			if (!Optional.ofNullable(progetto.getOtherField()).filter(el->el.isStatoIniziale()||el.isStatoMigrazione()).isPresent() &&
-				progetto.getPianoEconomicoSummary().stream()
-						.filter(el->Optional.ofNullable(el.getSaldoEntrata())
-											.filter(saldo->saldo.getAssestato().compareTo(BigDecimal.ZERO)!=0)
-											.isPresent() ||
-									Optional.ofNullable(el.getSaldoSpesa())
-											.filter(saldo->saldo.getAssestato().compareTo(BigDecimal.ZERO)!=0)
-											.isPresent())
-						.findFirst().isPresent())
-					this.setStatus(VIEW);
-		}
 	}
 	
 	public String[][] getTabs(HttpSession session) {
@@ -417,8 +428,12 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	    			  progetto.getCd_unita_organizzativa().equals(uo)))) {
 
 	    	if (this.isFlPrgPianoEconomico() && 
-	    			((progetto.isPianoEconomicoRequired() && Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtInizio())).isPresent() &&
-	    					Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtFine())).isPresent())))
+	    		((progetto.isPianoEconomicoRequired() && 
+	    		  Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtInizio())).isPresent() &&
+	    		  Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtFine())).isPresent()) ||
+	    		 (progetto.isDettagliPianoEconomicoPresenti() && 
+	    		  Optional.ofNullable(this.getAnnoFromPianoEconomico()).map(el->el.compareTo(CNRUserContext.getEsercizio(HttpActionContext.getUserContext(session)))<=0)
+	    				 .orElse(Boolean.FALSE))))
 	    		hash.put(i++, new String[]{"tabPianoEconomico","Piano Economico","/progettiric00/progetto_piano_economico.jsp" });
 
 	    	if (!this.isFlInformix()) {
@@ -580,6 +595,10 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 
 	public boolean isApprovaButtonHidden()	{
 		return !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa()))
+				.filter(el->el.equals(uoScrivania.getCd_unita_organizzativa()))
+				.isPresent() ||
+			   !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
 				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
 				.filter(el->Optional.ofNullable(el.getTipoFinanziamento()).isPresent())
 				.filter(el->el.isStatoIniziale()||el.isStatoNegoziazione())
@@ -588,6 +607,10 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		
 	public boolean isAnnullaButtonHidden()	{
 		return !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa()))
+				.filter(el->el.equals(uoScrivania.getCd_unita_organizzativa()))
+				.isPresent() ||
+			   !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
 				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
 				.filter(el->Optional.ofNullable(el.getTipoFinanziamento()).isPresent())
 				.filter(Progetto_other_fieldBulk::isStatoNegoziazione)
@@ -596,6 +619,10 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 
 	public boolean isChiusuraButtonHidden()	{
 		return !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa()))
+				.filter(el->el.equals(uoScrivania.getCd_unita_organizzativa()))
+				.isPresent() ||
+			   !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
 				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
 				.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
 				.filter(el->!Optional.ofNullable(el.getFlPianoEcoFin()).orElse(Boolean.TRUE))
@@ -703,5 +730,13 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 					throw new ValidationException("Operazione non possibile! E' obbligatorio ripartire correttamente nel piano economico tutto l'importo cofinanziato del progetto!");
 			}
 		}
+	}
+
+	private Integer getAnnoFromPianoEconomico() {
+		return annoFromPianoEconomico;
+	}
+	
+	public void setAnnoFromPianoEconomico(Integer annoFromPianoEconomico) {
+		this.annoFromPianoEconomico = annoFromPianoEconomico;
 	}
 }

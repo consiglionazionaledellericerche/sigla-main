@@ -50,6 +50,7 @@
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
+		readonlyPropertyOnEdit="ROProgettoPianoEconomico"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Finanziata" />
 	<fieldProperty
@@ -58,6 +59,7 @@
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
+		readonlyPropertyOnEdit="ROProgettoPianoEconomico"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Cofinanziata" />
 	<fieldProperty
@@ -117,7 +119,7 @@
 		label="Assestato Spesa" />
 	<fieldProperty
 		name="im_disp_residua_spesa_finanziata"
-		property="saldoSpesa.dispResiduaFinanziamento"
+		property="dispResiduaFinanziamento"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
@@ -125,7 +127,7 @@
 		label="Quota da Stanziare Spesa Finanziata" />
 	<fieldProperty
 		name="im_disp_residua_spesa_cofinanziata"
-		property="saldoSpesa.dispResiduaCofinanziamento"
+		property="dispResiduaCofinanziamento"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"

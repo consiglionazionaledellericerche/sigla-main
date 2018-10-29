@@ -6,14 +6,18 @@
  */
 package it.cnr.contab.prevent01.bp;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.Optional;
 
 import javax.ejb.RemoveException;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
@@ -60,7 +64,8 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 	private Pdg_esercizioBulk cdrPdGP;
 	private boolean isUtenteDirettore;
 	private Progetto_sipBulk progettoForUpdate;
-
+	private Integer annoFromPianoEconomico;
+	
 	private SimpleDetailCRUDController crudDettagli = new SimpleDetailCRUDController( "Dettagli", Pdg_moduloBulk.class, "dettagli", this, false) {
 
 		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
@@ -126,6 +131,11 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 			setParametriEnte(Utility.createParametriEnteComponentSession().getParametriEnte(context.getUserContext())); 
 			if (getParametriEnte().getFl_informix())
 				aggiornaGECO(context);
+			
+			it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
+	   		BigDecimal annoFrom = configSession.getIm01(context.getUserContext(), new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+	   		if (Optional.ofNullable(annoFrom).isPresent())
+	   			setAnnoFromPianoEconomico(annoFrom.intValue());
 		} catch (ComponentException e1) {
 			throw handleException(e1);
 		} catch (RemoteException e1) {
@@ -519,7 +529,9 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 				.map(tipoFinanziamentoBulk -> "Tipologia di Finanziamento: "
 						.concat(tipoFinanziamentoBulk.getDescrizione())
 						.concat("<BR>")
-						.concat("Previsione Entrata/Spesa ").concat(tipoFinanziamentoBulk.getFlPrevEntSpesa() ? " consentita" : " non consentita")
+						.concat("Previsione Entrata ").concat(tipoFinanziamentoBulk.getFlPrevEntSpesa() ? " consentita" : " non consentita")
+						.concat("<BR>")
+						.concat("Previsione Spesa ").concat(tipoFinanziamentoBulk.getFlPrevEntSpesa() ? " consentita" : " consentita solo per le spese accentrate")
                         .concat("<BR>")
                         .concat("Ripartizione Costi del Personale ").concat(tipoFinanziamentoBulk.getFlRipCostiPers() ? " consentita" : " non consentita")
 				)
@@ -543,7 +555,15 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 								.orElse(""));
 	}
 
-    public boolean isPrevEntSpesaEnable(UserInfo userInfo) {
+    public boolean isPrevEntrataEnable(UserInfo userInfo) {
+		return isPrevEntSpesaEnable(userInfo, Elemento_voceHome.GESTIONE_ENTRATE);
+	}
+
+    public boolean isPrevSpesaEnable(UserInfo userInfo) {
+		return isPrevEntSpesaEnable(userInfo, Elemento_voceHome.GESTIONE_SPESE);
+	}
+
+    private boolean isPrevEntSpesaEnable(UserInfo userInfo, String tipo) {
 		return Optional.ofNullable(getCrudDettagli().getModel())
 				.filter(Pdg_moduloBulk.class::isInstance)
 				.map(Pdg_moduloBulk.class::cast)
@@ -559,9 +579,19 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 				                        .map(Unita_organizzativaBulk::getCd_cds)
 				                        .orElse(null)))
 							.orElse(Boolean.FALSE))
-				.flatMap(progetto_sipBulk -> Optional.ofNullable(progetto_sipBulk.getOtherField()))
-				.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
-				.map(tipoFinanziamentoBulk -> tipoFinanziamentoBulk.getFlPrevEntSpesa())
+				.map(progetto_sipBulk->
+					Optional.ofNullable(this.getAnnoFromPianoEconomico())
+							.map(el->el.compareTo(Optional.ofNullable(userInfo)
+									.filter(CNRUserInfo.class::isInstance)
+			                        .map(CNRUserInfo.class::cast)
+			                        .map(CNRUserInfo::getEsercizio)
+			                        .orElse(null))>0)
+							.orElse(Boolean.TRUE) ||
+					Optional.ofNullable(progetto_sipBulk.getOtherField())
+							.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
+							.map(tipoFinanziamentoBulk -> tipo.equals(Elemento_voceHome.GESTIONE_SPESE) ||
+														  tipoFinanziamentoBulk.getFlPrevEntSpesa())
+							.orElse(Boolean.FALSE))
 				.orElse(Boolean.FALSE) ||
                 Optional.ofNullable(userInfo)
                         .filter(CNRUserInfo.class::isInstance)
@@ -592,5 +622,13 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 
 		Progetto_sipBulk progetto = new Progetto_sipBulk();
 		return find(actioncontext, compoundfindclause, progetto, pdg_modulo, "progetto");
+	}
+	
+	private Integer getAnnoFromPianoEconomico() {
+		return annoFromPianoEconomico;
+	}
+	
+	public void setAnnoFromPianoEconomico(Integer annoFromPianoEconomico) {
+		this.annoFromPianoEconomico = annoFromPianoEconomico;
 	}
 }
