@@ -3,9 +3,6 @@ package it.cnr.contab.progettiric00.action;
 import java.sql.Timestamp;
 import java.util.Optional;
 
-import it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
 import it.cnr.contab.progettiric00.bp.ProgettoAlberoBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
@@ -13,16 +10,12 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
-import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
-import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.OptionBP;
-import it.cnr.jada.util.ejb.EJBCommonServices;
 
 /**
  * Azione che gestisce le richieste relative alla Gestione Progetto Risorse
@@ -364,9 +357,11 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 
 	public Forward doOnDtInizioOfChange(ActionContext context) {
 		TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)getBusinessProcess(context);
-		Optional<Progetto_other_fieldBulk> optOtherField = Optional.ofNullable(bp.getModel())
-				.filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast)
-				.flatMap(el->Optional.ofNullable(el.getOtherField()));
+		Optional<ProgettoBulk> optProgetto = Optional.ofNullable(bp.getModel())
+				.filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast);
+
+		Optional<Progetto_other_fieldBulk> optOtherField = 
+				optProgetto.flatMap(el->Optional.ofNullable(el.getOtherField()));
 
 		Optional<Timestamp> optData = optOtherField.flatMap(el->Optional.ofNullable(el.getDtInizio()));
 	
@@ -376,7 +371,8 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 	
 		try {
 			fillModel(context);
-			optOtherField.get().validaDateProgetto();
+			if (optProgetto.isPresent())
+				optProgetto.get().validaDateProgetto();
 			return context.findDefaultForward();
 		}
 		catch (Throwable ex) {
@@ -395,9 +391,11 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 
 	public Forward doOnDtFineOfChange(ActionContext context) {
 		TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)getBusinessProcess(context);
-		Optional<Progetto_other_fieldBulk> optOtherField = Optional.ofNullable(bp.getModel())
-				.filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast)
-				.flatMap(el->Optional.ofNullable(el.getOtherField()));
+		Optional<ProgettoBulk> optProgetto = Optional.ofNullable(bp.getModel())
+				.filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast);
+
+		Optional<Progetto_other_fieldBulk> optOtherField = 
+				optProgetto.flatMap(el->Optional.ofNullable(el.getOtherField()));
 
 		Optional<Timestamp> optData = optOtherField.flatMap(el->Optional.ofNullable(el.getDtFine()));
 	
@@ -407,7 +405,8 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 	
 		try {
 			fillModel(context);
-			optOtherField.get().validaDateProgetto();
+			if (optProgetto.isPresent())
+				optProgetto.get().validaDateProgetto();
 			return context.findDefaultForward();
 		}
 		catch (Throwable ex) {
@@ -426,9 +425,11 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 
 	public Forward doOnDtProrogaOfChange(ActionContext context) {
 		TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)getBusinessProcess(context);
-		Optional<Progetto_other_fieldBulk> optOtherField = Optional.ofNullable(bp.getModel())
-				.filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast)
-				.flatMap(el->Optional.ofNullable(el.getOtherField()));
+		Optional<ProgettoBulk> optProgetto = Optional.ofNullable(bp.getModel())
+				.filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast);
+
+		Optional<Progetto_other_fieldBulk> optOtherField = 
+				optProgetto.flatMap(el->Optional.ofNullable(el.getOtherField()));
 
 		Optional<Timestamp> optData = optOtherField.flatMap(el->Optional.ofNullable(el.getDtProroga()));
 	
@@ -438,7 +439,8 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 	
 		try {
 			fillModel(context);
-			optOtherField.get().validaDateProgetto();
+			if (optProgetto.isPresent())
+				optProgetto.get().validaDateProgetto();
 			return context.findDefaultForward();
 		}
 		catch (Throwable ex) {

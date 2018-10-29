@@ -272,20 +272,21 @@ public final class Utility {
 		provider.addIncludeFilter(new AssignableTypeFilter(OggettoBulk.class));
 		AdminSession adminSession = (AdminSession) EJBCommonServices.createEJB("JADAEJB_AdminSession");
 		Set<BeanDefinition> components = provider.findCandidateComponents("it/cnr");
+		logger.info("Load PersistentInfo start");
 		for (BeanDefinition component : components){
 			try {
 			    Class<?> clazz = Class.forName(component.getBeanClassName());
-				logger.info("Load PersistentInfo for class: {}",clazz.getName());
+				logger.debug("Load PersistentInfo for class: {}",clazz.getName());
 				adminSession.loadPersistentInfos(clazz);
 				if(clazz.getName().endsWith("Bulk")) {
-					logger.info("Load BulkInfo for class: {}",clazz.getName());
+					logger.debug("Load BulkInfo for class: {}",clazz.getName());
 					adminSession.loadBulkInfos(clazz);					
 				}
 			} catch (Exception e) {
 				logger.error("Cannot load persistentInfo for class : {}", component.getBeanClassName(), e);
 			}
-
-		}		
+		}
+		logger.info("Load PersistentInfo finish");
 	}
 	
 	private static String NumberToTextRicorsiva(int n) {
