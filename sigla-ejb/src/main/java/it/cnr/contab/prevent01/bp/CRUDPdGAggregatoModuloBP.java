@@ -25,6 +25,7 @@ import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
+import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
@@ -520,39 +521,52 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
     }
 
     public String getHintProgetto(UserInfo userInfo) {
-		return Optional.ofNullable(getCrudDettagli().getModel())
-				.filter(Pdg_moduloBulk.class::isInstance)
-				.map(Pdg_moduloBulk.class::cast)
-				.flatMap(pdg_moduloBulk -> Optional.ofNullable(pdg_moduloBulk.getProgetto()))
-				.flatMap(progetto_sipBulk -> Optional.ofNullable(progetto_sipBulk.getOtherField()))
-				.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()))
+    	Optional<TipoFinanziamentoBulk> optTipoFinanziamento = 
+    			Optional.ofNullable(getCrudDettagli().getModel())
+													.filter(Pdg_moduloBulk.class::isInstance)
+													.map(Pdg_moduloBulk.class::cast)
+													.flatMap(pdg_moduloBulk -> Optional.ofNullable(pdg_moduloBulk.getProgetto()))
+													.flatMap(progetto_sipBulk -> Optional.ofNullable(progetto_sipBulk.getOtherField()))
+													.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getTipoFinanziamento()));
+
+    	boolean isUoCoordinatrice = Optional.ofNullable(getCrudDettagli().getModel())
+    										.filter(Pdg_moduloBulk.class::isInstance)
+											.map(Pdg_moduloBulk.class::cast)
+											.flatMap(pdg_moduloBulk -> Optional.ofNullable(pdg_moduloBulk.getProgetto()))
+											.map(progetto_sipBulk->
+												Optional.ofNullable(progetto_sipBulk.getUnita_organizzativa())
+														.map(Unita_organizzativaBulk::getCd_cds)
+														.map(cdCds->cdCds.equals(
+																		Optional.ofNullable(userInfo)
+																			.filter(CNRUserInfo.class::isInstance)
+													                        .map(CNRUserInfo.class::cast)
+													                        .map(CNRUserInfo::getUnita_organizzativa)
+													                        .map(Unita_organizzativaBulk::getCd_cds)
+													                        .orElse(null)))
+														.orElse(Boolean.FALSE))
+											.orElse(Boolean.FALSE);
+    	
+		return optTipoFinanziamento
 				.map(tipoFinanziamentoBulk -> "Tipologia di Finanziamento: "
 						.concat(tipoFinanziamentoBulk.getDescrizione())
 						.concat("<BR>")
 						.concat("Previsione Entrata ").concat(tipoFinanziamentoBulk.getFlPrevEntSpesa() ? " consentita" : " non consentita")
 						.concat("<BR>")
-						.concat("Previsione Spesa ").concat(tipoFinanziamentoBulk.getFlPrevEntSpesa() ? " consentita" : " consentita solo per le spese accentrate")
+						.concat("Previsione Spesa ").concat(tipoFinanziamentoBulk.getFlPrevEntSpesa() ? (isUoCoordinatrice?" consentita":"") : " consentita solo per le spese accentrate")
                         .concat("<BR>")
                         .concat("Ripartizione Costi del Personale ").concat(tipoFinanziamentoBulk.getFlRipCostiPers() ? " consentita" : " non consentita")
 				)
 				.orElse("")
-				.concat(Optional.ofNullable(getCrudDettagli().getModel())
+				.concat(!isUoCoordinatrice?
+						Optional.ofNullable(getCrudDettagli().getModel())
 								.filter(Pdg_moduloBulk.class::isInstance)
 								.map(Pdg_moduloBulk.class::cast)
 								.flatMap(pdg_moduloBulk -> Optional.ofNullable(pdg_moduloBulk.getProgetto()))
-								.filter(progetto_sipBulk->
-									Optional.ofNullable(progetto_sipBulk.getUnita_organizzativa())
-											.map(Unita_organizzativaBulk::getCd_cds)
-											.map(cdCds->!cdCds.equals(
-														Optional.ofNullable(userInfo)
-														.filter(CNRUserInfo.class::isInstance)
-								                        .map(CNRUserInfo.class::cast)
-								                        .map(CNRUserInfo::getUnita_organizzativa)
-								                        .map(Unita_organizzativaBulk::getCd_cds)
-								                        .orElse(null)))
-											.orElse(Boolean.FALSE))
-								.map(progetto_sipBulk -> "<BR>Previsione entrata/spesa consentita solo alla Uo Coordinatrice "+progetto_sipBulk.getCd_unita_organizzativa())
-								.orElse(""));
+								.map(progetto_sipBulk -> 
+									optTipoFinanziamento.filter(TipoFinanziamentoBulk::getFlPrevEntSpesa).isPresent()?
+										"<BR>Previsione entrata/spesa decentrata consentita solo alla Uo Coordinatrice "+progetto_sipBulk.getCd_unita_organizzativa():
+										"<BR>Uo Coordinatrice "+progetto_sipBulk.getCd_unita_organizzativa())
+								.orElse(""):"");
 	}
 
     public boolean isPrevEntrataEnable(UserInfo userInfo) {
@@ -569,6 +583,7 @@ public class CRUDPdGAggregatoModuloBP extends it.cnr.jada.util.action.SimpleCRUD
 				.map(Pdg_moduloBulk.class::cast)
 				.flatMap(pdg_moduloBulk -> Optional.ofNullable(pdg_moduloBulk.getProgetto()))
 				.filter(progetto_sipBulk->
+					tipo.equals(Elemento_voceHome.GESTIONE_SPESE) ||
 					Optional.ofNullable(progetto_sipBulk.getUnita_organizzativa())
 							.map(Unita_organizzativaBulk::getCd_cds)
 							.map(cdCds->cdCds.equals(
