@@ -56,10 +56,10 @@ public class ProgettoPianoEconomicoVoceBilancioCRUDController extends it.cnr.jad
     public boolean isShrinkable() {
         return super.isShrinkable()
                 && Optional.ofNullable(getParentController().getModel())
-    			.filter(Progetto_piano_economicoBulk.class::isInstance)
-    			.map(Progetto_piano_economicoBulk.class::cast)
-    			.flatMap(el->Optional.ofNullable(el.getVoce_piano_economico()))
-    			.map(Voce_piano_economico_prgBulk::getFl_add_vocibil)
-    			.orElse(Boolean.FALSE);
+			    			.filter(Progetto_piano_economicoBulk.class::isInstance)
+			    			.map(Progetto_piano_economicoBulk.class::cast)
+			    			.flatMap(el->Optional.ofNullable(el.getVoce_piano_economico()))
+			    			.map(Voce_piano_economico_prgBulk::getFl_add_vocibil)
+			    			.orElse(Boolean.FALSE);
     }
 }

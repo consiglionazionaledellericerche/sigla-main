@@ -3,8 +3,10 @@ package it.cnr.contab.progettiric00.core.bulk;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.bulk.BulkList;
@@ -114,6 +116,7 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 
 	public boolean isROVocePiano() {
 		return !Optional.ofNullable(this.getEsercizio_piano()).isPresent() ||
+				this.isROProgettoPianoEconomico() ||
 				Optional.ofNullable(this.getVociBilancioAssociate())
 				.map(el->!el.isEmpty())
 				.orElse(Boolean.TRUE);
@@ -126,6 +129,12 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 		if (this.getEsercizio_piano()!=null && list.get(this.getEsercizio_piano())==null)
 			list.put(this.getEsercizio_piano(), this.getEsercizio_piano());
 		list.remove(this.getProgetto().getEsercizio());
+		Optional.ofNullable(this.getProgetto())
+				.flatMap(el->Optional.ofNullable(el.getPdgModuli()))
+				.map(el->el.stream())
+				.orElse(Stream.empty())
+				.filter(el->Optional.ofNullable(el.getStato()).map(stato->!stato.equals(Pdg_moduloBulk.STATO_AC)).orElse(Boolean.FALSE))
+				.forEach(el->list.remove(el));
 		return list;
 	}
 	
@@ -133,4 +142,33 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 		return Optional.ofNullable(this.getVoce_piano_economico()).isPresent();
 	}
 			
+	public java.math.BigDecimal getDispResiduaFinanziamento() {
+		return Optional.ofNullable(this.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO)
+				.subtract(Optional.ofNullable(this.getSaldoSpesa())
+								  .flatMap(el->Optional.ofNullable(el.getAssestatoFinanziamento()))
+								  .orElse(BigDecimal.ZERO));
+	}
+
+	public java.math.BigDecimal getDispResiduaCofinanziamento() {
+		return Optional.ofNullable(this.getIm_spesa_cofinanziato()).orElse(BigDecimal.ZERO)
+				.subtract(Optional.ofNullable(this.getSaldoSpesa())
+								  .flatMap(el->Optional.ofNullable(el.getAssestatoCofinanziamento()))
+						          .orElse(BigDecimal.ZERO));
+	}
+
+	public java.math.BigDecimal getDispResidua() {
+		return this.getDispResiduaFinanziamento().add(this.getDispResiduaCofinanziamento());
+	}
+	
+	
+	public boolean isROProgettoPianoEconomico() {
+		return Optional.ofNullable(this.getProgetto())
+					   .flatMap(el->Optional.ofNullable(el.getPdgModuli()))
+					   .map(el->el.stream())
+					   .orElse(Stream.empty())
+					   .filter(el->el.getEsercizio().equals(this.getEsercizio_piano()))
+					   .filter(el->!el.getStato().equals(Pdg_moduloBulk.STATO_AC))
+					   .findAny().isPresent();
+	}
+
 }
