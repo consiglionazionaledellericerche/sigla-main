@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<property name="now" value="sysdate" dbms="oracle"/>
+	<property name="now" value="now()" dbms="postgresql"/>
+
+    <property name="date.type" value="DATE" dbms="oracle"/>
+    <property name="date.type" value="DATETIME" dbms="postgresql"/>
+
+    <!-- Inizio schema iniziale-->
+    <include file="liquibase/tables.xml"/>
+    <include file="liquibase/data-isin.xml"/>
+    <include file="liquibase/constraints.xml"/>
+    <!-- Fine schema iniziale-->
+    <include file="liquibase/db.changelog-5.0.0.xml"/>
+
+    <!-- Attenzione inserire i changeset prima della compilazione degli invalidi-->
+    <include file="liquibase/views.xml"/>
+    <include file="liquibase/oracle-sql4.xml"/>
+    <include file="liquibase/function-postgres.xml"/>
+    <include file="liquibase/oracle_compile_objects.xml"/>
+</databaseChangeLog>

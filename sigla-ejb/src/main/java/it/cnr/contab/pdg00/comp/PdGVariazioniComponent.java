@@ -81,6 +81,7 @@ import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
 import it.cnr.contab.utenze00.bulk.UtenteKey;
 import it.cnr.contab.util.ICancellatoLogicamente;
+import it.cnr.contab.util.SIGLAStoragePropertyNames;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.V_var_stanz_resBulk;
 import it.cnr.contab.varstanz00.bulk.V_var_stanz_resHome;
@@ -106,6 +107,8 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
 public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		implements Cloneable, Serializable, IPrintMgr {
@@ -342,6 +345,11 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 					ArchiviaStampaPdgVariazioneBulk stampapdg=new ArchiviaStampaPdgVariazioneBulk();
 					stampapdg.setPdg_variazioneForPrint(pdg);
 					stampapdg.setPdgVariazioneDocument(pdgVariazioniService.getPdgVariazioneDocument(stampapdg));
+					if (Optional.ofNullable(stampapdg.getPdgVariazioneDocument().getStorageObject())
+							.map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+							.filter(aspects -> aspects.contains(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value())).isPresent()){
+						throw new ApplicationException("La variazione risulta già firmata, Operazione non possibile!");
+					}
 					pdgVariazioniService.updateStream(stampapdg.getPdgVariazioneDocument().getStorageObject().getKey(), report.getInputStream(), report.getContentType());
 					pdgVariazioniService.updateProperties(stampapdg, stampapdg.getPdgVariazioneDocument().getStorageObject());
 			} catch (IOException e) {
