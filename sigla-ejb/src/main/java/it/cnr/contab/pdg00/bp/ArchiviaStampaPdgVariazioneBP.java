@@ -305,7 +305,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 				Optional.ofNullable(archiviaStampaPdgVariazioneBulk.getEsercizio())
 						.map(esercizio -> String.valueOf(esercizio))
 						.orElse("0"),
-				pdgVariazioniService.sanitizeFolderName(archiviaStampaPdgVariazioneBulk.getCd_cds().concat(" - ").concat(archiviaStampaPdgVariazioneBulk.getDs_cds())),
+				pdgVariazioniService.sanitizeFolderName(archiviaStampaPdgVariazioneBulk.getCd_cds()),
 				"CdR "+archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita()+
 						" Variazione "+ Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0')
 		).stream().collect(
