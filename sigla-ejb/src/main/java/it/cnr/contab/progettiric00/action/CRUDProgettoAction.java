@@ -213,6 +213,11 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
             }
         }
     	progetto.getOtherField().setTipoFinanziamento(tipoFinanziamento);
+    	if (!progetto.isDatePianoEconomicoRequired()) {
+    		progetto.getOtherField().setDtInizio(null);
+    		progetto.getOtherField().setDtFine(null);
+    		progetto.getOtherField().setDtProroga(null);
+    	}
         return context.findDefaultForward();
     }
     
