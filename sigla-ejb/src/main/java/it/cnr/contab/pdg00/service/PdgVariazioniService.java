@@ -43,7 +43,7 @@ public class PdgVariazioniService extends DocumentiContabiliService {
                 Optional.ofNullable(archiviaStampaPdgVariazioneBulk.getEsercizio())
                         .map(esercizio -> String.valueOf(esercizio))
                         .orElse("0"),
-                sanitizeFolderName(archiviaStampaPdgVariazioneBulk.getCd_cds() + " - " + archiviaStampaPdgVariazioneBulk.getDs_cds()),
+                sanitizeFolderName(archiviaStampaPdgVariazioneBulk.getCd_cds()),
                 "CdR " + archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita() +
                         " Variazione " + Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(), 5, '0'),
                 "Variazione al PdG n. "
