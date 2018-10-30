@@ -858,8 +858,7 @@ public class FirmaDigitalePdgVariazioniBP extends
                 Optional.ofNullable(archiviaStampaPdgVariazioneBulk.getEsercizio())
                         .map(esercizio -> String.valueOf(esercizio))
                         .orElse("0"),
-                archiviaStampaPdgVariazioneBulk.getCd_cds() + " - "
-                        + archiviaStampaPdgVariazioneBulk.getDs_cds(),
+                archiviaStampaPdgVariazioneBulk.getCd_cds(),
                 "CdR "
                         + archiviaStampaPdgVariazioneBulk
                         .getCd_centro_responsabilita()
