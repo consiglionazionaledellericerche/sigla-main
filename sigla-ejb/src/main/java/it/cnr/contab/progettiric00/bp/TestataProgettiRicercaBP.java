@@ -600,7 +600,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 				.isPresent() ||
 			   !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
 				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
-				.filter(el->Optional.ofNullable(el.getTipoFinanziamento()).isPresent())
+				.filter(el->Optional.ofNullable(el.getIdTipoFinanziamento()).isPresent())
 				.filter(el->el.isStatoIniziale()||el.isStatoNegoziazione())
 				.isPresent();
 	}
@@ -612,7 +612,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 				.isPresent() ||
 			   !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
 				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
-				.filter(el->Optional.ofNullable(el.getTipoFinanziamento()).isPresent())
+				.filter(el->Optional.ofNullable(el.getIdTipoFinanziamento()).isPresent())
 				.filter(Progetto_other_fieldBulk::isStatoNegoziazione)
 				.isPresent();
 	}
@@ -624,8 +624,8 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 				.isPresent() ||
 			   !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
 				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
-				.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
-				.filter(el->!Optional.ofNullable(el.getFlPianoEcoFin()).orElse(Boolean.TRUE))
+				.filter(el->Optional.ofNullable(el.getIdTipoFinanziamento()).isPresent())
+				.filter(el->!el.isDatePianoEconomicoRequired())
 				.isPresent();
 	}
 	
@@ -685,6 +685,8 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 				optOtherField.get().setDtProroga(null);
 			}
 		} else if (Progetto_other_fieldBulk.STATO_CHIUSURA.equals(newStato)) {
+			optOtherField.get().setDtInizio(null);
+			optOtherField.get().setDtProroga(null);
 			optOtherField.get().setDtFine(DateUtils.truncate(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()));
 			optOtherField.get().setToBeUpdated();
 		}
