@@ -95,7 +95,7 @@ public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
 		TipoFinanziamentoBulk tipoFinanziamento = this.getTipoFinanziamento();
 		if (tipoFinanziamento == null)
 			return null;
-		return super.getIdTipoFinanziamento();
+		return tipoFinanziamento.getId();
 	}
 	
 	@Override

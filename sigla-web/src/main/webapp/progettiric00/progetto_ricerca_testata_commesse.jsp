@@ -148,7 +148,13 @@
      <table class="Panel card border-info p-2">
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"statoOf");%></td>
-	  	<td colspan="3"><% bp.getController().writeFormInput( out, "statoOf"); %></td>
+	  	<td colspan="3">
+	      <% if (Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField())).filter(Progetto_other_fieldBulk::isStatoChiuso).isPresent()) { %>
+	      	<div class="GroupLabel h3 text-danger" style="border-style: none; cursor:default; background-color:initial;color:red">CHIUSO</div>
+	      <% } else
+		  	bp.getController().writeFormInput( out, "statoOf");
+	      %>
+	    </td>
 	  </tr>	  
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"tipoFinanziamentoOf");%></td>
