@@ -63,9 +63,7 @@ public class PdgVariazioniService extends DocumentiContabiliService {
         );
         if (Optional.ofNullable(cds).isPresent()) {
             basePath = basePath.concat(StorageService.SUFFIX)
-                    .concat(cds.getCd_unita_organizzativa())
-                    .concat(" - ")
-                    .concat(cds.getDs_unita_organizzativa());
+                    .concat(cds.getCd_unita_organizzativa());
         }
         final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(getStorageObjectByPath(basePath));
         if (storageObjectByPath.isPresent() && Optional.ofNullable(cds).isPresent()) {
