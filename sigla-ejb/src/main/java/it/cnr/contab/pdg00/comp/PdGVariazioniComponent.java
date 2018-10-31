@@ -354,8 +354,6 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 					pdgVariazioniService.updateProperties(stampapdg, stampapdg.getPdgVariazioneDocument().getStorageObject());
 			} catch (IOException e) {
 				throw new ComponentException(e);
-			} catch (DetailedException e) {
-				throw new ComponentException(e);
 			}
 		}
 	}

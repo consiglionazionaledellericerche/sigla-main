@@ -214,11 +214,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
             final PdgVariazioneDocument pdgVariazioneDocument =
                     Optional.ofNullable(archiviaStampaPdgVariazioneBulk.getPdgVariazioneDocument())
                         .orElseGet(() -> {
-                            try {
-                                return pdgVariazioniService.getPdgVariazioneDocument(archiviaStampaPdgVariazioneBulk);
-                            } catch (DetailedException e) {
-                               throw new DetailedRuntimeException(e);
-                            }
+                            return pdgVariazioniService.getPdgVariazioneDocument(archiviaStampaPdgVariazioneBulk);
                         });
             archiviaStampaPdgVariazioneBulk.setPdgVariazioneDocument(pdgVariazioneDocument);
             if (pdgVariazioneDocument.isSignedDocument())

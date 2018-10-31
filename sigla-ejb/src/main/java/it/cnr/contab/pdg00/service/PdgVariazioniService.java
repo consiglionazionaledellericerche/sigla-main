@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class PdgVariazioniService extends DocumentiContabiliService {
 
-    public PdgVariazioneDocument getPdgVariazioneDocument(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) throws DetailedException {
+    public PdgVariazioneDocument getPdgVariazioneDocument(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) {
         return PdgVariazioneDocument.construct((Optional.ofNullable(getStorageObjectByPath(getCMISPath(archiviaStampaPdgVariazioneBulk)))
                 .orElseGet(() -> {
                     StringBuffer query = new StringBuffer("select * from varpianogest:document");
