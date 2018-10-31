@@ -124,12 +124,8 @@ public class FirmaDigitalePdgVariazioniBP extends
             ArchiviaStampaPdgVariazioneBulk bulk = (ArchiviaStampaPdgVariazioneBulk) getModel();
             bulk.setPdg_variazioneForPrint((Pdg_variazioneBulk) obj);
             if (!isTestSession()) {
-                try {
                     bulk.setPdgVariazioneDocument(pdgVariazioniService
                             .getPdgVariazioneDocument(bulk));
-                } catch (DetailedException e) {
-                    throw handleException(e);
-                }
             } else {
                 PdgVariazioneDocument varDoc = new PdgVariazioneDocument(null);
                 bulk.setPdgVariazioneDocument(varDoc);
