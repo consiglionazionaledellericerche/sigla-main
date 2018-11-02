@@ -11,6 +11,7 @@ import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -35,6 +36,7 @@ import java.io.OutputStream;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -57,7 +59,8 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 			FatturazioneElettronicaClient client = SpringUtil.getBean("fatturazioneElettronicaClient", 
 	    			FatturazioneElettronicaClient.class);
 	    	JAXBElement<NotificaDecorrenzaTerminiType>  notificaDecorrenzaTermini = (JAXBElement<NotificaDecorrenzaTerminiType>) client.getUnmarshaller().unmarshal(new StreamSource(request.getInputStream()));
-	    	SpringUtil.getBean("ricezioneFattureService", RicezioneFatturePA.class).
+	    	
+	    	getRicezioneFattureService().
 	    		notificaDecorrenzaTermini(notificaDecorrenzaTermini.getValue().getIdentificativoSdI(), 
 	    				notificaDecorrenzaTermini.getValue().getNomeFile(), 
 	    				null);//TODO
@@ -72,7 +75,7 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 	    	FatturazioneElettronicaClient client = SpringUtil.getBean("fatturazioneElettronicaClient", 
 	    			FatturazioneElettronicaClient.class);
 	    	JAXBElement<FileSdIConMetadatiType>  fileSdIConMetadati = (JAXBElement<FileSdIConMetadatiType>) client.getUnmarshaller().unmarshal(new StreamSource(request.getInputStream()));
-	    	SpringUtil.getBean("ricezioneFattureService", RicezioneFatturePA.class).
+	    	getRicezioneFattureService().
 			riceviFatturaSIGLA(fileSdIConMetadati.getValue().getIdentificativoSdI(), 
 					fileSdIConMetadati.getValue().getNomeFile(), null, 
 					fileSdIConMetadati.getValue().getFile(), 
@@ -106,7 +109,7 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 	    	DataSource byteArrayDataSource = new UploadedFileDataSource(file);
 			DataSource byteArrayDataSource2 = new UploadedFileDataSource(fileMetadata);
 			
-			SpringUtil.getBean("ricezioneFattureService", RicezioneFatturePA.class).
+			getRicezioneFattureService().
 				riceviFatturaSIGLA(fileSdIConMetadatiTypeBulk.getIdentificativoSdI(), file.getName(), null, 
 						new DataHandler(byteArrayDataSource), 
 								fileMetadata.getName(), 
@@ -254,8 +257,13 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 			return file.getContentType();
 		}
 		
-		
 	}
 	
+	private RicezioneFatturePA getRicezioneFattureService() {
+		return Optional.ofNullable(EJBCommonServices.createEJB("RicezioneFatture!it.cnr.contab.docamm00.ejb.RicezioneFatturePA"))
+				.filter(RicezioneFatturePA.class::isInstance)
+				.map(RicezioneFatturePA.class::cast)
+				.orElseThrow(() -> new DetailedRuntimeException("cannot find ejb RicezioneFatture!it.cnr.contab.docamm00.ejb.RicezioneFatturePA"));
+	}
 	
 }
