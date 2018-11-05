@@ -38,16 +38,7 @@ import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
 
 import java.io.File;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -2066,7 +2057,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		return false;
 	}
 	public boolean isDocumentoFatturazioneElettronica() {
-		return getFlFatturaElettronica();
+		return Optional.ofNullable(getFlFatturaElettronica()).orElse(Boolean.FALSE);
 	}
 	public String getCollegamentoDocumentale() {
 		return collegamentoDocumentale;
