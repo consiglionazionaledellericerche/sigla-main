@@ -164,8 +164,7 @@
 		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_assestato_modulo_var_pdgBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 		<init-param name="searchResultColumnSet" value="assestatoSpese"/>
-	    <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction" />	    
-	    <init-param name="archiveEnabled" value="Y" />
+	    <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction" />
   </businessProcess>  
 
   <businessProcess
@@ -174,8 +173,7 @@
 		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_assestato_modulo_var_pdgBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 		<init-param name="searchResultColumnSet" value="assestatoCosti"/>
-	    <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction" />	    
-	    <init-param name="archiveEnabled" value="Y" />
+	    <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction" />
   </businessProcess>  
 
   <businessProcess
@@ -184,8 +182,7 @@
 		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_assestato_modulo_var_pdgBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 		<init-param name="searchResultColumnSet" value="assestatoEntrate"/>
-	    <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction" />	    
-	    <init-param name="archiveEnabled" value="Y" />
+	    <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction" />
   </businessProcess>  
 
   <businessProcess
@@ -194,8 +191,7 @@
 		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.cdip.bulk.V_assestato_modulo_var_pdgBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 		<init-param name="searchResultColumnSet" value="assestatoRicavi"/>
-	    <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction" />	    
-	    <init-param name="archiveEnabled" value="Y" />
+	    <init-param name="defaultAction" value="PdGConsultazioneAssestatoAction" />
   </businessProcess>  
 
   <businessProcess
