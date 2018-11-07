@@ -137,11 +137,6 @@
 		      </tr>
 		      <tr>     	
 		      	<td>
-				<% bp.getController().writeFormField(out,"codiceInvioSdi");%>
-		      	</td>      	
-		      </tr>
-		      <tr>     	
-		      	<td>
 				<% bp.getController().writeFormField(out,"dtConsegnaSdi");%>
 		      	</td>      	
 		      </tr>
