@@ -108,6 +108,7 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StorageService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
@@ -328,11 +329,12 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 	public void archiviaVariazioneDocumentale(UserContext userContext, OggettoBulk oggettobulk) throws ComponentException {
 		pdgVariazioniService = SpringUtil.getBean(PdgVariazioniService.class);
 		Pdg_variazioneBulk pdg = (Pdg_variazioneBulk) oggettobulk;
-		ArchiviaStampaPdgVariazioneBulk stampapdg= new ArchiviaStampaPdgVariazioneBulk();
+		ArchiviaStampaPdgVariazioneBulk stampapdg = new ArchiviaStampaPdgVariazioneBulk();
 		stampapdg.setPdg_variazioneForPrint(pdg);
-		final Optional<PdgVariazioneDocument> pdgVariazioneDocument = Optional.ofNullable(pdgVariazioniService.getPdgVariazioneDocument(stampapdg));
-		if(pdgVariazioneDocument.isPresent() && !Optional.ofNullable(pdgVariazioneDocument.get().getStorageObject())
-				.map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+		final Optional<StorageObject> storageObject = Optional.ofNullable(
+				pdgVariazioniService.getPdgVariazioneDocument(stampapdg).getStorageObject());
+		if(storageObject.isPresent() && !Optional.of(storageObject)
+				.map(storageObject1 -> storageObject1.get().<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
 				.filter(aspects -> aspects.contains(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value())).isPresent()){
 			Print_spoolerBulk print = new Print_spoolerBulk();
 			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
@@ -347,7 +349,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			print.addParam("Variazione", pdg.getPg_variazione_pdg().intValue(), Integer.class);
 			try {
 				    Report report = SpringUtil.getBean("printService",PrintService.class).executeReport(userContext,print);
-					stampapdg.setPdgVariazioneDocument(pdgVariazioneDocument.get());
+					stampapdg.setPdgVariazioneDocument(pdgVariazioniService.getPdgVariazioneDocument(stampapdg));
 					pdgVariazioniService.updateStream(stampapdg.getPdgVariazioneDocument().getStorageObject().getKey(), report.getInputStream(), report.getContentType());
 					pdgVariazioniService.updateProperties(stampapdg, stampapdg.getPdgVariazioneDocument().getStorageObject());
 			} catch (IOException e) {

@@ -659,7 +659,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
             PdGVariazioniComponentSession comp = (PdGVariazioniComponentSession) createComponentSession();
             comp.archiviaVariazioneDocumentale(context.getUserContext(), bulk);
         } catch (Throwable e) {
-            throw new BusinessProcessException(e.getMessage());
+            throw handleException(e);
         }
     }
 
@@ -668,7 +668,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
             PdGVariazioniComponentSession comp = (PdGVariazioniComponentSession) createComponentSession();
             return comp.isVariazioneFromLiquidazioneIvaDaModificare(context.getUserContext(), variazione);
         } catch (Throwable e) {
-            throw new BusinessProcessException(e.getMessage());
+            throw handleException(e);
         }
     }
 
