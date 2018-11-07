@@ -76,6 +76,7 @@ import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.NaturaType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ObjectFactory;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TipoDocumentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v2.VersioneType;
 import it.gov.fatturapa.sdi.ws.trasmissione.v1_0.types.FileSdIBaseType;
 
 @XmlRootElement(name = "fileSdIBase_Type")
@@ -362,7 +363,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 			ObjectFactory factory = new ObjectFactory();
 			FatturaElettronicaType fatturaType = factory.createFatturaElettronicaType();
-			fatturaType.setVersione(FormatoTrasmissioneType.FPA_12);
+			fatturaType.setVersione(fattura.getCodiceUnivocoUfficioIpa()==null ? FormatoTrasmissioneType.FPR_12 : FormatoTrasmissioneType.FPA_12);
 			FatturaElettronicaHeaderType fatturaHeaderType = factory.createFatturaElettronicaHeaderType();
 			TerzoBulk terzoCnr = ((TerzoHome)getHome( userContext, TerzoBulk.class)).findTerzoEnte();
 			TerzoBulk cliente = fattura.getCliente();
@@ -397,7 +398,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				contattiTrasmittenteType.setTelefono(telefonoReferente);
 				datiTrasmissione.setContattiTrasmittente(contattiTrasmittenteType);
 
-				datiTrasmissione.setFormatoTrasmissione(FormatoTrasmissioneType.FPA_12);
+				datiTrasmissione.setFormatoTrasmissione(fattura.getCodiceUnivocoUfficioIpa()==null ? FormatoTrasmissioneType.FPR_12 : FormatoTrasmissioneType.FPA_12);
 
 				fatturaHeaderType.setDatiTrasmissione(datiTrasmissione);
 
