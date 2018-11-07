@@ -58,6 +58,7 @@ import it.cnr.contab.pdg00.bulk.Stampa_var_stanz_resBulk;
 import it.cnr.contab.pdg00.bulk.V_stm_paramin_pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Var_stanz_resBulk;
 import it.cnr.contab.pdg00.bulk.Var_stanz_resHome;
+import it.cnr.contab.pdg00.bulk.storage.PdgVariazioneDocument;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
 import it.cnr.contab.pdg00.service.PdgVariazioniService;
@@ -324,11 +325,15 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		return pdg;
 	}
 	
-	public void archiviaVariazioneDocumentale(UserContext userContext, OggettoBulk oggettobulk) throws ComponentException 
-	{
+	public void archiviaVariazioneDocumentale(UserContext userContext, OggettoBulk oggettobulk) throws ComponentException {
+		pdgVariazioniService = SpringUtil.getBean(PdgVariazioniService.class);
 		Pdg_variazioneBulk pdg = (Pdg_variazioneBulk) oggettobulk;
-		if(pdg.getStatoDocumentale()!=null && pdg.getStatoDocumentale().compareTo(ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED)==0){
-			pdgVariazioniService = SpringUtil.getBean(PdgVariazioniService.class);
+		ArchiviaStampaPdgVariazioneBulk stampapdg= new ArchiviaStampaPdgVariazioneBulk();
+		stampapdg.setPdg_variazioneForPrint(pdg);
+		final Optional<PdgVariazioneDocument> pdgVariazioneDocument = Optional.ofNullable(pdgVariazioniService.getPdgVariazioneDocument(stampapdg));
+		if(pdgVariazioneDocument.isPresent() && !Optional.ofNullable(pdgVariazioneDocument.get().getStorageObject())
+				.map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+				.filter(aspects -> aspects.contains(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value())).isPresent()){
 			Print_spoolerBulk print = new Print_spoolerBulk();
 			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
 			print.setFlEmail(false);
@@ -342,14 +347,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			print.addParam("Variazione", pdg.getPg_variazione_pdg().intValue(), Integer.class);
 			try {
 				    Report report = SpringUtil.getBean("printService",PrintService.class).executeReport(userContext,print);
-					ArchiviaStampaPdgVariazioneBulk stampapdg=new ArchiviaStampaPdgVariazioneBulk();
-					stampapdg.setPdg_variazioneForPrint(pdg);
-					stampapdg.setPdgVariazioneDocument(pdgVariazioniService.getPdgVariazioneDocument(stampapdg));
-					if (Optional.ofNullable(stampapdg.getPdgVariazioneDocument().getStorageObject())
-							.map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
-							.filter(aspects -> aspects.contains(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value())).isPresent()){
-						throw new ApplicationException("La variazione risulta già firmata, Operazione non possibile!");
-					}
+					stampapdg.setPdgVariazioneDocument(pdgVariazioneDocument.get());
 					pdgVariazioniService.updateStream(stampapdg.getPdgVariazioneDocument().getStorageObject().getKey(), report.getInputStream(), report.getContentType());
 					pdgVariazioniService.updateProperties(stampapdg, stampapdg.getPdgVariazioneDocument().getStorageObject());
 			} catch (IOException e) {
