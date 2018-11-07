@@ -481,11 +481,18 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	@Override
 	public OggettoBulk initializeModelForInsert(ActionContext actioncontext, OggettoBulk oggettobulk)
 			throws BusinessProcessException {
+		ProgettoBulk progetto = (ProgettoBulk)oggettobulk;
 		if (this.isFlNuovoPdg()) {
 			ProgettoBulk progettopadre = new ProgettoBulk();
 			progettopadre.setLivello(ProgettoBulk.LIVELLO_PROGETTO_PRIMO);
-			((ProgettoBulk)oggettobulk).setProgettopadre(progettopadre);
-			((ProgettoBulk)oggettobulk).setLivello(ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+			progetto.setProgettopadre(progettopadre);
+			progetto.setLivello(ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+		}
+		if (!this.isFlInformix()) {
+			Progetto_other_fieldBulk otherField = new Progetto_other_fieldBulk();
+			otherField.setStato(Progetto_other_fieldBulk.STATO_INIZIALE);
+			otherField.setToBeCreated();
+			progetto.setOtherField(otherField);
 		}
 		return super.initializeModelForInsert(actioncontext, oggettobulk);
 	}

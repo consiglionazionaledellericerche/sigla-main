@@ -93,7 +93,23 @@ public ProgettoRicercaComponent() {
 				Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(uc);
 				if (parEnte.getFl_informix().booleanValue())
 					throw new ComponentException("Operazione creazione progetto non possibile in presenza del sistema Informix!");
-			
+				
+				Optional<ProgettoBulk> optBulk = Optional.ofNullable(bulk).filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast);
+				optBulk.filter(el->!Optional.ofNullable(el.getImporto_progetto()).isPresent())
+					.ifPresent(el->el.setImporto_progetto(Optional.ofNullable(el.getProgettopadre())
+							  .flatMap(el1->Optional.ofNullable(el1.getImporto_progetto()))
+							  .orElse(BigDecimal.ZERO)));
+
+				optBulk.filter(el->!Optional.ofNullable(el.getDurata_progetto()).isPresent())
+					.ifPresent(el->el.setDurata_progetto(Optional.ofNullable(el.getProgettopadre())
+							  .flatMap(el1->Optional.ofNullable(el1.getDurata_progetto()))
+							  .orElse(ProgettoBulk.DURATA_PROGETTO_ANNUALE)));
+
+				optBulk.filter(el->!Optional.ofNullable(el.getDt_inizio()).isPresent())
+					.ifPresent(el->el.setDt_inizio(Optional.ofNullable(el.getProgettopadre())
+							  .flatMap(el1->Optional.ofNullable(el1.getDt_inizio()))
+							  .orElse(DateUtils.firstDateOfTheYear(CNRUserContext.getEsercizio(uc)))));
+
 				intBulk(uc, (ProgettoBulk)bulk, parEnte.getFl_informix().booleanValue());
 			}catch(Throwable throwable){
 	            throw handleException(throwable);
@@ -130,6 +146,13 @@ public ProgettoRicercaComponent() {
 			((ProgettoBulk)bulk).setStato(ProgettoBulk.TIPO_STATO_APPROVATO);
 			try {
 				validaCreaConBulk(uc, bulk);
+				if (((ProgettoBulk)bulk).getOtherField()!=null) {
+					((ProgettoBulk)bulk).getOtherField().setPg_progetto(((ProgettoBulk)bulk).getPg_progetto());
+					((ProgettoBulk)bulk).getOtherField().setUser(bulk.getUser());
+					getHome(uc, Progetto_other_fieldBulk.class).insert(((ProgettoBulk)bulk).getOtherField(), uc);
+					
+					((ProgettoBulk)bulk).setPg_progetto_other_field(((ProgettoBulk)bulk).getOtherField().getPg_progetto());
+				}
 				if (((ProgettoBulk)bulk).getFl_previsione()) {
 					((ProgettoBulk)bulk).setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
 					((ProgettoBulk)bulk).setTipo_fase_progetto_padre(ProgettoBulk.TIPO_FASE_PREVISIONE);
@@ -146,12 +169,6 @@ public ProgettoRicercaComponent() {
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliFinanziatori());
 				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPartner_esterni());
-
-				if (((ProgettoBulk)bulk).getOtherField()!=null) {
-					((ProgettoBulk)bulk).getOtherField().setPg_progetto(((ProgettoBulk)bulk).getPg_progetto());
-					((ProgettoBulk)bulk).getOtherField().setUser(bulk.getUser());
-					getHome(uc, Progetto_other_fieldBulk.class).insert(((ProgettoBulk)bulk).getOtherField(), uc);
-				}
 
 				allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
 
