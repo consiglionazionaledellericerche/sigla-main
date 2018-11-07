@@ -5,8 +5,6 @@
 	** -- Il Parametro "recordPerPagina" indica quanti **
 	** record devono essere visualizzati in ciascuna pagina **
 	** (default: 20) **
-	** -- Il Parametro "archiveEnabled" impostato a "Y" permette la **
-	** gestione dell'archiviazione del file excel prodotto **
 	*******************************************************************/
 	<action path="/ConsultazioniAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>

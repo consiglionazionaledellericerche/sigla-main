@@ -5633,7 +5633,11 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         if (fatturaRiga instanceof Nota_di_credito_attiva_rigaBulk && fatturaRiga.getFattura_attiva() != null && !fatturaRiga.getFattura_attiva().isIvaRecuperabile() && fatturaRiga.getVoce_iva() != null && !fatturaRiga.getVoce_iva().getFl_iva_non_recuperabile())
             throw new it.cnr.jada.comp.ApplicationException(
                     "Attenzione! Il codice iva " + ((fatturaRiga.getDs_riga_fattura() != null) ? "sul dettaglio " + fatturaRiga.getDs_riga_fattura() : "su un dettaglio") + " non è valido");
-        if (fatturaRiga.getVoce_iva() != null && fatturaRiga.getVoce_iva().getFl_obb_dichiarazione_intento())
+
+        if (Optional.ofNullable(fatturaRiga)
+                .flatMap(fattura_attiva_rigaBulk -> Optional.ofNullable(fattura_attiva_rigaBulk.getVoce_iva()))
+                .flatMap(voce_ivaBulk -> Optional.ofNullable(voce_ivaBulk.getFl_obb_dichiarazione_intento()))
+                .orElse(Boolean.FALSE))
             verificaEsistenzaDichiarazioneIntento(aUC, fatturaRiga);
     }
 
