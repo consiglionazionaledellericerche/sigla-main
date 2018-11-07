@@ -218,7 +218,7 @@ public TerzoBulk inizializzaTerzoPerUnitaOrganizzativa(UserContext userContext,U
 	terzo.setUnita_organizzativa(unita_organizzativa);
 	terzo.setAnagrafico(getAnagEnte(userContext));
 	terzo.setDenominazione_sede(unita_organizzativa.getDs_unita_organizzativa());
-
+	terzo.setFlSbloccoFatturaElettronica(false);
 	// Imposto il Tipo del Terzo come ENTRAMBI, di default
 	//	Questo mi permette, nel caso di una UO che non ha Terzi, di visualizzare i raidoButton relativi al terzo
 	terzo.setTi_terzo(TerzoBulk.ENTRAMBI);
