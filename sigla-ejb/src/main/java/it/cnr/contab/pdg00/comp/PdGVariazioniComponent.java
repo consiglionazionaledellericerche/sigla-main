@@ -331,31 +331,33 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		Pdg_variazioneBulk pdg = (Pdg_variazioneBulk) oggettobulk;
 		ArchiviaStampaPdgVariazioneBulk stampapdg = new ArchiviaStampaPdgVariazioneBulk();
 		stampapdg.setPdg_variazioneForPrint(pdg);
-		final Optional<StorageObject> storageObject = Optional.ofNullable(
-				pdgVariazioniService.getPdgVariazioneDocument(stampapdg).getStorageObject());
-		if(storageObject.isPresent() && !Optional.of(storageObject)
-				.map(storageObject1 -> storageObject1.get().<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
-				.filter(aspects -> aspects.contains(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value())).isPresent()){
-			Print_spoolerBulk print = new Print_spoolerBulk();
-			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
-			print.setFlEmail(false);
-			print.setReport("/cnrpreventivo/pdg/stampa_variazioni_pdg.jasper");
-			print.setNomeFile("Variazione al PdG n. "
-					+ pdg.getPg_variazione_pdg()
-					+ " CdR proponente "
-					+ pdg.getCd_centro_responsabilita() + ".pdf");
-			print.setUtcr(userContext.getUser());
-			print.addParam("Esercizio", pdg.getEsercizio(), Integer.class);
-			print.addParam("Variazione", pdg.getPg_variazione_pdg().intValue(), Integer.class);
-			try {
-				    Report report = SpringUtil.getBean("printService",PrintService.class).executeReport(userContext,print);
-					stampapdg.setPdgVariazioneDocument(pdgVariazioniService.getPdgVariazioneDocument(stampapdg));
-					pdgVariazioniService.updateStream(stampapdg.getPdgVariazioneDocument().getStorageObject().getKey(), report.getInputStream(), report.getContentType());
-					pdgVariazioniService.updateProperties(stampapdg, stampapdg.getPdgVariazioneDocument().getStorageObject());
-			} catch (IOException e) {
-				throw new ComponentException(e);
-			}
-		}
+		if (Optional.ofNullable(stampapdg.getCd_cds()).isPresent()) {
+            final Optional<StorageObject> storageObject = Optional.ofNullable(
+                    pdgVariazioniService.getPdgVariazioneDocument(stampapdg).getStorageObject());
+            if(storageObject.isPresent() && !Optional.of(storageObject)
+                    .map(storageObject1 -> storageObject1.get().<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+                    .filter(aspects -> aspects.contains(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value())).isPresent()){
+                Print_spoolerBulk print = new Print_spoolerBulk();
+                print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+                print.setFlEmail(false);
+                print.setReport("/cnrpreventivo/pdg/stampa_variazioni_pdg.jasper");
+                print.setNomeFile("Variazione al PdG n. "
+                        + pdg.getPg_variazione_pdg()
+                        + " CdR proponente "
+                        + pdg.getCd_centro_responsabilita() + ".pdf");
+                print.setUtcr(userContext.getUser());
+                print.addParam("Esercizio", pdg.getEsercizio(), Integer.class);
+                print.addParam("Variazione", pdg.getPg_variazione_pdg().intValue(), Integer.class);
+                try {
+                    Report report = SpringUtil.getBean("printService",PrintService.class).executeReport(userContext,print);
+                    stampapdg.setPdgVariazioneDocument(pdgVariazioniService.getPdgVariazioneDocument(stampapdg));
+                    pdgVariazioniService.updateStream(stampapdg.getPdgVariazioneDocument().getStorageObject().getKey(), report.getInputStream(), report.getContentType());
+                    pdgVariazioniService.updateProperties(stampapdg, stampapdg.getPdgVariazioneDocument().getStorageObject());
+                } catch (IOException e) {
+                    throw new ComponentException(e);
+                }
+            }
+        }
 	}
 	protected MessaggioBulk generaMessaggio(UserContext userContext,
 			UtenteBulk utente, Pdg_variazioneBulk pdg, String tipo)
