@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vpg_doc_generico_subreport" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vpg_doc_generico_subreport" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="1ea23a9d-dafb-47aa-914e-b7f19ead65cf">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="1087"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -121,49 +121,46 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 			<band height="89" splitType="Prevent">
 				<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue()==1)]]></printWhenExpression>
 				<image>
-					<reportElement key="image-1" x="3" y="2" width="497" height="40"/>
+					<reportElement key="image-1" x="3" y="2" width="497" height="40" uuid="9c388ea2-044f-48da-b57e-cbd59f7a23df"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+					<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
 				</image>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-1" style="TNR10" x="5" y="47" width="219" height="14"/>
+					<reportElement key="textField-1" style="TNR10" x="5" y="47" width="219" height="14" uuid="80bb8cdb-efe3-4f9e-bff8-8760539e1073"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{VIA_FISCALE_ENTE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{VIA_FISCALE_ENTE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-2" style="TNR10" x="4" y="61" width="280" height="14"/>
+					<reportElement key="textField-2" style="TNR10" x="4" y="61" width="280" height="14" uuid="67d372f2-e116-46c0-bbc4-ed80bf1559db"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{CAP_COMUNE_FISCALE_ENTE}==null?"":$F{CAP_COMUNE_FISCALE_ENTE})+" - "+
+					<textFieldExpression><![CDATA[($F{CAP_COMUNE_FISCALE_ENTE}==null?"":$F{CAP_COMUNE_FISCALE_ENTE})+" - "+
 ($F{DS_COMUNE_ENTE}==null?"":$F{DS_COMUNE_ENTE})+"("+
 ($F{CD_PROVINCIA_ENTE}==null?"":$F{CD_PROVINCIA_ENTE})+")"]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-5" style="TNR10" x="4" y="75" width="282" height="14"/>
+					<reportElement key="textField-5" style="TNR10" x="4" y="75" width="282" height="14" uuid="5dbac508-ec30-426c-b72d-d304f2ffe2db"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA["Codice Fiscale "+($F{CODICE_FISCALE_ENTE}==null?"":$F{CODICE_FISCALE_ENTE})+" - Partita Iva "+($F{PARTITA_IVA_ENTE}==null?"":$F{PARTITA_IVA_ENTE})]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Codice Fiscale "+($F{CODICE_FISCALE_ENTE}==null?"":$F{CODICE_FISCALE_ENTE})+" - Partita Iva "+($F{PARTITA_IVA_ENTE}==null?"":$F{PARTITA_IVA_ENTE})]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -177,7 +174,7 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 			<band height="34" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue()==1)]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR14BOLD" x="0" y="3" width="535" height="18"/>
+					<reportElement key="textField" style="TNR14BOLD" x="0" y="3" width="535" height="18" uuid="724d78fa-15db-416a-828f-690f5dcbbc0d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -185,10 +182,10 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_TIPO_DOCUMENTO_AMM}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DS_TIPO_DOCUMENTO_AMM}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-7" style="TNR12BOLD" x="198" y="20" width="138" height="14"/>
+					<reportElement key="textField-7" style="TNR12BOLD" x="198" y="20" width="138" height="14" uuid="a998a7e6-6181-46b0-ab44-c5d86d15420b"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -196,7 +193,7 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{TI_ISTITUZ_COMMERC}.equals("I"))?"Istituzionale":
+					<textFieldExpression><![CDATA[($F{TI_ISTITUZ_COMMERC}.equals("I"))?"Istituzionale":
 "Commerciale"]]></textFieldExpression>
 				</textField>
 			</band>
@@ -210,13 +207,13 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 		<groupHeader>
 			<band height="50" splitType="Stretch">
 				<rectangle>
-					<reportElement key="rectangle-1" style="TNR8" x="2" y="3" width="530" height="47"/>
+					<reportElement key="rectangle-1" style="TNR8" x="2" y="3" width="530" height="47" uuid="a53e04ab-cd2c-4dbd-bced-1682ab575075"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</rectangle>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-8" style="TNR10" x="3" y="4" width="159" height="14"/>
+					<reportElement key="textField-8" style="TNR10" x="3" y="4" width="159" height="14" uuid="b03f9ba6-6634-4acd-a390-e54df40bc9d8"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -224,63 +221,58 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($V{PAGE_NUMBER}.intValue()==1)?"Numero del documento:":
+					<textFieldExpression><![CDATA[($V{PAGE_NUMBER}.intValue()==1)?"Numero del documento:":
 "Allegato al documento numero:"]]></textFieldExpression>
 				</textField>
 				<textField pattern="##0" isBlankWhenNull="false">
-					<reportElement key="textField" style="TNR10BOLD" x="145" y="4" width="41" height="14"/>
+					<reportElement key="textField" style="TNR10BOLD" x="145" y="4" width="41" height="14" uuid="734a04ed-ea02-45bb-99ab-080a813caf1e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PG_DOCUMENTO_GENERICO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{PG_DOCUMENTO_GENERICO}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-6" style="TNR10" x="3" y="20" width="40" height="14"/>
+					<reportElement key="staticText-6" style="TNR10" x="3" y="20" width="40" height="14" uuid="fc7c9185-f3d1-4821-b1a5-7c7d60b8ffe7"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[Esercizio:]]></text>
 				</staticText>
 				<textField pattern="##0" isBlankWhenNull="true">
-					<reportElement key="textField-9" style="TNR10BOLD" x="46" y="20" width="100" height="14"/>
+					<reportElement key="textField-9" style="TNR10BOLD" x="46" y="20" width="100" height="14" uuid="4353c747-0465-4586-9c7e-0e50360bc5f8"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ESERCIZIO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{ESERCIZIO}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-7" style="TNR10" x="3" y="34" width="40" height="14"/>
+					<reportElement key="staticText-7" style="TNR10" x="3" y="34" width="40" height="14" uuid="a7ecb05c-01d8-4658-8abc-a610162fc30f"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[Data:]]></text>
 				</staticText>
 				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR10BOLD" x="46" y="34" width="100" height="14"/>
+					<reportElement key="textField" style="TNR10BOLD" x="46" y="34" width="100" height="14" uuid="3600577d-9dda-4c6b-b306-397c8bec6814"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.util.Date"><![CDATA[$F{DATA_REGISTRAZIONE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DATA_REGISTRAZIONE}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -294,57 +286,53 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 			<band height="36" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue()==1)]]></printWhenExpression>
 				<rectangle>
-					<reportElement key="rectangle-2" x="2" y="2" width="530" height="33"/>
+					<reportElement key="rectangle-2" x="2" y="2" width="530" height="33" uuid="fe9fc6bb-b595-438d-a972-fe285e2f7eac"/>
 					<graphicElement>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 					</graphicElement>
 				</rectangle>
 				<staticText>
-					<reportElement key="staticText-8" style="TNR10" x="5" y="4" width="40" height="14"/>
+					<reportElement key="staticText-8" style="TNR10" x="5" y="4" width="40" height="14" uuid="95c77b76-9f3f-4833-92af-0aa6e01b8d61"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[Bilancio:]]></text>
 				</staticText>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField" style="TNR10BOLD" x="46" y="4" width="20" height="14"/>
+					<reportElement key="textField" style="TNR10BOLD" x="46" y="4" width="20" height="14" uuid="4d3624e6-1163-4ae1-9243-6fa1e070db9e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_CDS}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_CDS}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR10" x="68" y="4" width="417" height="14"/>
+					<reportElement key="textField" style="TNR10" x="68" y="4" width="417" height="14" uuid="17fd641b-3ff8-462f-a222-ad1ed39a53b8"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[" - "+$F{DS_CDS}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[" - "+$F{DS_CDS}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-9" style="TNR10" x="5" y="19" width="122" height="14"/>
+					<reportElement key="staticText-9" style="TNR10" x="5" y="19" width="122" height="14" uuid="92d74eeb-ed25-448f-bde3-28274d56bd0d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[Unità organizzativa emittente:]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR10BOLD" x="127" y="19" width="35" height="14"/>
+					<reportElement key="textField" style="TNR10BOLD" x="127" y="19" width="35" height="14" uuid="23bb4849-b9a6-4d60-98b8-d4801241461b"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -352,18 +340,17 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{CD_UO_ORIGINE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CD_UO_ORIGINE}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR10" x="162" y="19" width="357" height="14"/>
+					<reportElement key="textField" style="TNR10" x="162" y="19" width="357" height="14" uuid="427f95ee-30e3-4be8-b7ae-1367d56d9341"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[" - "+$F{DS_UO_ORIGINE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[" - "+$F{DS_UO_ORIGINE}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -377,74 +364,68 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 			<band height="106" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue()==1 &&($F{TI_ENTRATA_SPESA}.compareTo("E")==0))]]></printWhenExpression>
 				<staticText>
-					<reportElement key="staticText-10" style="TNR10" x="6" y="4" width="105" height="14"/>
+					<reportElement key="staticText-10" style="TNR10" x="6" y="4" width="105" height="14" uuid="73792b19-18fa-46b3-95b8-710fc27a47b0"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[L'Istituto Cassiere del ]]></text>
 				</staticText>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-10" style="TNR10" x="6" y="18" width="513" height="14"/>
+					<reportElement key="textField-10" style="TNR10" x="6" y="18" width="513" height="14" uuid="02ba1df6-c9c2-4891-a548-6c77ed2f6ab2"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA["sul c/c n."+ ($F{CIN_IC}==null?"":$F{CIN_IC})+" "+($F{ABI_IC}==null?"":$F{ABI_IC})+" "+($F{CAB_IC}==null?"":$F{CAB_IC})+" "+($F{NUMERO_CONTO_IC}==null?"":$F{NUMERO_CONTO_IC})
+					<textFieldExpression><![CDATA["sul c/c n."+ ($F{CIN_IC}==null?"":$F{CIN_IC})+" "+($F{ABI_IC}==null?"":$F{ABI_IC})+" "+($F{CAB_IC}==null?"":$F{CAB_IC})+" "+($F{NUMERO_CONTO_IC}==null?"":$F{NUMERO_CONTO_IC})
 +" "+($F{IBAN_IC}==null?"":"Iban "+$F{IBAN_IC})+" "+($F{INTESTAZIONE_IC}==null?"":"Iban "+$F{INTESTAZIONE_IC})]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-11" style="TNR10" x="7" y="33" width="461" height="14"/>
+					<reportElement key="textField-11" style="TNR10" x="7" y="33" width="461" height="14" uuid="53c93440-aede-4c0d-bd08-010279c8a912"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA["presso   "+ ($F{DS_ABICAB_IC}==null?"":$F{DS_ABICAB_IC})]]></textFieldExpression>
+					<textFieldExpression><![CDATA["presso   "+ ($F{DS_ABICAB_IC}==null?"":$F{DS_ABICAB_IC})]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR10" x="34" y="47" width="348" height="14"/>
+					<reportElement key="textField" style="TNR10" x="34" y="47" width="348" height="14" uuid="1b1adabf-569d-4f35-9f15-3046649cf58c"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{VIA_IC}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{VIA_IC}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-12" style="TNR10" x="34" y="61" width="461" height="14"/>
+					<reportElement key="textField-12" style="TNR10" x="34" y="61" width="461" height="14" uuid="4634b918-1369-49d2-809b-ccca0c1b45c0"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{CAP_IC}==null?"":$F{CAP_IC})+" "+($F{DS_COMUNE_IC}==null?"":$F{DS_COMUNE_IC})+" "+($F{CD_PROVINCIA_IC}==null?"":$F{CD_PROVINCIA_IC})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{CAP_IC}==null?"":$F{CAP_IC})+" "+($F{DS_COMUNE_IC}==null?"":$F{DS_COMUNE_IC})+" "+($F{CD_PROVINCIA_IC}==null?"":$F{CD_PROVINCIA_IC})]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-11" style="TNR10" x="7" y="75" width="120" height="14"/>
+					<reportElement key="staticText-11" style="TNR10" x="7" y="75" width="120" height="14" uuid="9ea7cdb8-16a9-4fdd-a63d-2523f223bbc9"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[incasserà la somma di]]></text>
 				</staticText>
 				<textField pattern="€ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR10" x="132" y="75" width="84" height="14"/>
+					<reportElement key="textField" style="TNR10" x="132" y="75" width="84" height="14" uuid="35d3d1b7-1409-43ce-8029-59715745cb8c"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -452,41 +433,39 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_TOTALE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_TOTALE}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-12" style="TNR10" x="7" y="90" width="47" height="14"/>
+					<reportElement key="staticText-12" style="TNR10" x="7" y="90" width="47" height="14" uuid="eb0d221d-5aea-4af0-ac13-fe99cba87c95"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[Causale:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR10" x="54" y="90" width="469" height="14"/>
+					<reportElement key="textField" style="TNR10" x="54" y="90" width="469" height="14" uuid="3127b903-5461-42fa-b9e0-a0e2fd9e60bc"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_DOCUMENTO_GENERICO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DS_DOCUMENTO_GENERICO}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-27" style="TNR8" x="3" y="2" width="529" height="1"/>
+					<reportElement key="line-27" style="TNR8" x="3" y="2" width="529" height="1" uuid="aacb7f86-083b-4818-bba0-fb420fd4ef5d"/>
 				</line>
 				<line>
-					<reportElement key="line-28" style="TNR8" positionType="FixRelativeToBottom" x="3" y="105" width="529" height="1"/>
+					<reportElement key="line-28" style="TNR8" positionType="FixRelativeToBottom" x="3" y="105" width="529" height="1" uuid="64a21441-281e-46b2-8bcc-566dc657d549"/>
 				</line>
 				<line>
-					<reportElement key="line-29" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="2" width="1" height="104"/>
+					<reportElement key="line-29" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="2" width="1" height="104" uuid="25ce6578-de78-4c47-a421-d8474fcef828"/>
 				</line>
 				<line>
-					<reportElement key="line-30" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="2" width="1" height="104"/>
+					<reportElement key="line-30" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="2" width="1" height="104" uuid="e6a7036b-411b-492a-9652-900e38307dcf"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -500,7 +479,7 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 			<band height="22" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue()==1 &&($F{TI_ENTRATA_SPESA}.compareTo("S")==0))]]></printWhenExpression>
 				<staticText>
-					<reportElement key="staticText-13" style="TNR10" x="6" y="6" width="45" height="14"/>
+					<reportElement key="staticText-13" style="TNR10" x="6" y="6" width="45" height="14" uuid="d2cd4c90-a085-4562-be02-7addd176f506"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -511,24 +490,23 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 					<text><![CDATA[Causale:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-13" style="TNR10" x="51" y="6" width="480" height="14"/>
+					<reportElement key="textField-13" style="TNR10" x="51" y="6" width="480" height="14" uuid="bd21e669-73f0-4859-904b-b693d5178966"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_DOCUMENTO_GENERICO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DS_DOCUMENTO_GENERICO}]]></textFieldExpression>
 				</textField>
 				<line direction="BottomUp">
-					<reportElement key="line-1" style="TNR8" x="2" y="2" width="530" height="1"/>
+					<reportElement key="line-1" style="TNR8" x="2" y="2" width="530" height="1" uuid="36a621aa-f7a6-4226-b0b2-749a7d7e199f"/>
 				</line>
 				<line>
-					<reportElement key="line-2" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="2" width="1" height="20"/>
+					<reportElement key="line-2" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="2" y="2" width="1" height="20" uuid="15f7fbe0-4153-42a1-bbbb-e1812e1468ba"/>
 				</line>
 				<line>
-					<reportElement key="line-3" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="532" y="2" width="1" height="20"/>
+					<reportElement key="line-3" style="TNR8" positionType="Float" stretchType="RelativeToBandHeight" x="532" y="2" width="1" height="20" uuid="d5245e87-ab0b-43f0-9ef2-e01ba68dd8df"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -542,7 +520,7 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 			<band height="21" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue()==1 &&($F{TI_ENTRATA_SPESA}.compareTo("S")==0))]]></printWhenExpression>
 				<staticText>
-					<reportElement key="staticText-14" style="TNR10" x="6" y="1" width="45" height="14"/>
+					<reportElement key="staticText-14" style="TNR10" x="6" y="1" width="45" height="14" uuid="28ef0f37-8bcc-4ce9-977c-5ccab8feb6d2"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -553,7 +531,7 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 					<text><![CDATA[Importo:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="€ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-14" style="TNR10" x="54" y="1" width="73" height="14"/>
+					<reportElement key="textField-14" style="TNR10" x="54" y="1" width="73" height="14" uuid="10edd5c5-cac1-4af8-bc45-d50d1b97aef3"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -561,27 +539,26 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_TOTALE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_TOTALE}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-23" style="TNR10" x="129" y="2" width="19" height="14"/>
+					<reportElement key="staticText-23" style="TNR10" x="129" y="2" width="19" height="14" uuid="7ce88b5e-c6c2-46a6-b05b-8d6eab8f0055"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[ #]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-4" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="20"/>
+					<reportElement key="line-4" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="20" uuid="eb73570a-124b-4811-99dd-6331d0a3978e"/>
 				</line>
 				<line>
-					<reportElement key="line-5" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="20"/>
+					<reportElement key="line-5" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="20" uuid="cd2bdf2b-b9b2-4064-bcc7-46159c1d152d"/>
 				</line>
 				<line direction="BottomUp">
-					<reportElement key="line-6" style="TNR8" x="2" y="19" width="530" height="1"/>
+					<reportElement key="line-6" style="TNR8" x="2" y="19" width="530" height="1" uuid="205b8fac-dbd5-40c9-83ce-1e81d1459d2a"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -596,10 +573,22 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 			<band splitType="Stretch"/>
 		</groupHeader>
 		<groupFooter>
-			<band height="1" splitType="Stretch">
+			<band height="25" splitType="Stretch">
 				<line direction="BottomUp">
-					<reportElement key="line-26" style="TNR8" x="2" y="0" width="531" height="1"/>
+					<reportElement key="line-26" style="TNR8" x="2" y="0" width="531" height="1" uuid="313cef7b-2c5c-4705-b7d9-1f7d1bc12f44"/>
 				</line>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField-26" style="TNR10" x="4" y="0" width="528" height="20" uuid="1b605c27-ca10-446d-b6dd-a84bccd1a496">
+						<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.compareTo("C")==0 && $F{TI_RECORD_L2}.compareTo("A")==0 && $F{DS_VOCE}!=null)]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$F{DS_VOCE} ]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>
@@ -636,7 +625,7 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 			<band height="70" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.compareTo("B")==0 && $F{TI_RECORD_L2}.compareTo("A")==0)]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-15" style="TNR10" x="3" y="3" width="528" height="14"/>
+					<reportElement key="textField-15" style="TNR10" x="3" y="3" width="528" height="14" uuid="1c5953ab-8a68-409d-930e-a174cc4b8b49"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -644,44 +633,41 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{TI_ENTRATA_SPESA}.equals("E"))?"Da: "+$F{DENOMINAZIONE_SEDE}:
+					<textFieldExpression><![CDATA[($F{TI_ENTRATA_SPESA}.equals("E"))?"Da: "+$F{DENOMINAZIONE_SEDE}:
 "A: "+$F{DENOMINAZIONE_SEDE}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR10" x="54" y="16" width="267" height="14"/>
+					<reportElement key="textField" style="TNR10" x="54" y="16" width="267" height="14" uuid="7ab1f7c1-ea45-42ef-9d7e-f9d9a8b9e45a"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{VIA_SEDE}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{VIA_SEDE}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-16" style="TNR10" x="54" y="29" width="461" height="14"/>
+					<reportElement key="textField-16" style="TNR10" x="54" y="29" width="461" height="14" uuid="e848d41e-1dfc-4e5e-b930-fcd273fdbdaf"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{CAP_COMUNE_SEDE}==null?"":$F{CAP_COMUNE_SEDE})+" "+($F{DS_COMUNE_SEDE}==null?"":$F{DS_COMUNE_SEDE})+" "+($F{CD_PROVINCIA_SEDE}==null?"":$F{CD_PROVINCIA_SEDE})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{CAP_COMUNE_SEDE}==null?"":$F{CAP_COMUNE_SEDE})+" "+($F{DS_COMUNE_SEDE}==null?"":$F{DS_COMUNE_SEDE})+" "+($F{CD_PROVINCIA_SEDE}==null?"":$F{CD_PROVINCIA_SEDE})]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-17" style="TNR10" x="4" y="56" width="123" height="14"/>
+					<reportElement key="staticText-17" style="TNR10" x="4" y="56" width="123" height="14" uuid="aa2bd8a3-4a24-46ec-95ec-8f683a711700"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[Importo del pagamento:]]></text>
 				</staticText>
 				<textField pattern="€ #,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-19" style="TNR10" x="121" y="56" width="96" height="14"/>
+					<reportElement key="textField-19" style="TNR10" x="121" y="56" width="96" height="14" uuid="7cbaf2a4-5b23-4543-852d-1e10658a356d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -689,27 +675,26 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_RIGA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_RIGA}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-34" style="TNR10" x="55" y="41" width="282" height="14"/>
+					<reportElement key="textField-34" style="TNR10" x="55" y="41" width="282" height="14" uuid="b1c6aea5-f442-43d3-9b23-b4ca56c86f83"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA["Codice Fiscale "+($F{CODICE_FISCALE}==null?"":$F{CODICE_FISCALE})+" - Partita Iva "+($F{PARTITA_IVA}==null?"":$F{PARTITA_IVA})]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Codice Fiscale "+($F{CODICE_FISCALE}==null?"":$F{CODICE_FISCALE})+" - Partita Iva "+($F{PARTITA_IVA}==null?"":$F{PARTITA_IVA})]]></textFieldExpression>
 				</textField>
 				<line direction="BottomUp">
-					<reportElement key="line-7" style="TNR8" x="2" y="2" width="530" height="1"/>
+					<reportElement key="line-7" style="TNR8" x="2" y="2" width="530" height="1" uuid="6d637fa0-3418-4071-83de-1546bf4275ef"/>
 				</line>
 				<line>
-					<reportElement key="line-8" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="2" width="1" height="68"/>
+					<reportElement key="line-8" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="2" width="1" height="68" uuid="05b61c74-f20c-4b27-bed0-4c278239d371"/>
 				</line>
 				<line>
-					<reportElement key="line-9" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="2" width="1" height="68"/>
+					<reportElement key="line-9" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="2" width="1" height="68" uuid="2e26eefc-a7a8-426f-976a-a2acc180d1b2"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -723,18 +708,17 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 			<band height="17" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.compareTo("B")==0 && $F{TI_RECORD_L2}.compareTo("A")==0 && $F{CD_DIVISA}.compareTo("EURO")!=0)]]></printWhenExpression>
 				<staticText>
-					<reportElement key="staticText-18" style="TNR10" x="4" y="3" width="91" height="14"/>
+					<reportElement key="staticText-18" style="TNR10" x="4" y="3" width="91" height="14" uuid="fb455b70-2df4-4116-b780-07fa61bbe629"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[Importo in valuta]]></text>
 				</staticText>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField-20" style="TNR10" x="120" y="3" width="96" height="14"/>
+					<reportElement key="textField-20" style="TNR10" x="120" y="3" width="96" height="14" uuid="f324418f-51bc-491b-93bd-f6b29feb4e53"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -742,24 +726,23 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IM_RIGA_DIVISA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{IM_RIGA_DIVISA}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-21" style="TNR10" x="95" y="3" width="25" height="14"/>
+					<reportElement key="textField-21" style="TNR10" x="95" y="3" width="25" height="14" uuid="d61753f2-b375-4994-a7fe-ff53fbe664c8"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA["("+$F{CD_DIVISA}+"):"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+$F{CD_DIVISA}+"):"]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-10" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="17"/>
+					<reportElement key="line-10" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="17" uuid="8187c45c-6742-4bbb-87ef-a53c9d06645a"/>
 				</line>
 				<line>
-					<reportElement key="line-12" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="17"/>
+					<reportElement key="line-12" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="17" uuid="2e8ff323-2bd4-4332-b563-b389abf38c2b"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -773,32 +756,30 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 			<band height="20" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.compareTo("B")==0 && $F{TI_RECORD_L2}.compareTo("A")==0)]]></printWhenExpression>
 				<staticText>
-					<reportElement key="staticText-19" style="TNR10" stretchType="RelativeToBandHeight" x="4" y="4" width="47" height="14"/>
+					<reportElement key="staticText-19" style="TNR10" stretchType="RelativeToBandHeight" x="4" y="4" width="47" height="14" uuid="67184249-2bb6-4fc3-a7a2-b5fb2b463072"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[Causale:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-22" style="TNR10" stretchType="RelativeToBandHeight" x="51" y="4" width="480" height="14"/>
+					<reportElement key="textField-22" style="TNR10" stretchType="RelativeToBandHeight" x="51" y="4" width="480" height="14" uuid="cc847cc3-fd96-4e1c-96f3-8b7e7ef35c68"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{DS_RIGA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DS_RIGA}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-13" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="20"/>
+					<reportElement key="line-13" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="20" uuid="4636dcb3-71ba-4319-b681-8f1043da334b"/>
 				</line>
 				<line>
-					<reportElement key="line-14" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="20"/>
+					<reportElement key="line-14" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="20" uuid="061aebd7-5e80-4c36-9aaa-4906484123d0"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -812,26 +793,24 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 			<band height="20" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_ENTRATA_SPESA}.compareTo("S")==0 && ($F{TI_RECORD_L1}.compareTo("B")==0 && $F{TI_RECORD_L2}.compareTo("A")==0)||$F{TI_ENTRATA_SPESA}.compareTo("E")!=0 && $F{TI_ENTRATA_SPESA}.compareTo("S")!=0)]]></printWhenExpression>
 				<staticText>
-					<reportElement key="staticText-20" style="TNR10" stretchType="RelativeToBandHeight" x="3" y="3" width="138" height="14"/>
+					<reportElement key="staticText-20" style="TNR10" stretchType="RelativeToBandHeight" x="3" y="3" width="138" height="14" uuid="457bae56-5f6a-4746-a7e2-4d123ad058e6"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[Modalità di pagamento:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-23" style="TNR10" stretchType="RelativeToBandHeight" x="106" y="3" width="387" height="14"/>
+					<reportElement key="textField-23" style="TNR10" stretchType="RelativeToBandHeight" x="106" y="3" width="387" height="14" uuid="ec8f8b28-259f-4367-b011-abd410b6a51d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{TI_PAGAMENTO}.equals("B"))? $F{DS_MODALITA_PAG} + " sul c/c n. "+ $F{CIN_TERZO}+" "+ $F{ABI_TERZO}+" "+$F{CAB_TERZO}+" "+$F{NUMERO_CONTO_TERZO} +" "+($F{IBAN}==null?"":"Iban "+$F{IBAN}):
+					<textFieldExpression><![CDATA[($F{TI_PAGAMENTO}.equals("B"))? $F{DS_MODALITA_PAG} + " sul c/c n. "+ $F{CIN_TERZO}+" "+ $F{ABI_TERZO}+" "+$F{CAB_TERZO}+" "+$F{NUMERO_CONTO_TERZO} +" "+($F{IBAN}==null?"":"Iban "+$F{IBAN}):
 ($F{TI_PAGAMENTO}.equals("P"))? $F{DS_MODALITA_PAG} + " n. "+$F{NUMERO_CONTO_TERZO}:
 ($F{TI_PAGAMENTO}.equals("A"))? $F{DS_MODALITA_PAG} + ", intestazione: "+$F{INTESTAZIONE_TERZO}:
 ($F{TI_PAGAMENTO}.equals("Q"))? $F{DS_MODALITA_PAG} + ", intestazione: "+$F{INTESTAZIONE_TERZO}:
@@ -839,10 +818,10 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 $F{DS_MODALITA_PAG}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-15" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="20"/>
+					<reportElement key="line-15" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="20" uuid="55d38c47-0554-4d69-8b8d-4204fec98fbd"/>
 				</line>
 				<line>
-					<reportElement key="line-16" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="20"/>
+					<reportElement key="line-16" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="20" uuid="e28f812c-357b-4f9e-912f-063acce39bb5"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -856,53 +835,49 @@ $F{DS_MODALITA_PAG}]]></textFieldExpression>
 			<band height="44" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue()==1 && $F{TI_PAGAMENTO}!=null && $F{CAB_TERZO}!=null)]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-24" style="TNR10BOLD" stretchType="RelativeToBandHeight" x="103" y="2" width="417" height="14"/>
+					<reportElement key="textField-24" style="TNR10BOLD" stretchType="RelativeToBandHeight" x="103" y="2" width="417" height="14" uuid="d4da0913-26f4-4508-80c7-87a51d9bf830"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{DS_ABICAB_TERZO}==null?"":$F{DS_ABICAB_TERZO})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{DS_ABICAB_TERZO}==null?"":$F{DS_ABICAB_TERZO})]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-25" style="TNR10" x="103" y="16" width="348" height="14"/>
+					<reportElement key="textField-25" style="TNR10" x="103" y="16" width="348" height="14" uuid="c44741a2-664b-45bc-8b7c-390f2a34f678"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{VIA_BANCA_TERZO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{VIA_BANCA_TERZO}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-26" style="TNR10" x="103" y="30" width="429" height="14"/>
+					<reportElement key="textField-26" style="TNR10" x="103" y="30" width="429" height="14" uuid="84244a34-85a3-4745-96e6-cb19329c96e2"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{CAP_BANCA_TERZO}==null?"":$F{CAP_BANCA_TERZO})+" "+($F{DS_COMUNE_BANCA_TERZO}==null?"":$F{DS_COMUNE_BANCA_TERZO})+" "+($F{CD_PV_BANCA_TERZO}==null?"":$F{CD_PV_BANCA_TERZO})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{CAP_BANCA_TERZO}==null?"":$F{CAP_BANCA_TERZO})+" "+($F{DS_COMUNE_BANCA_TERZO}==null?"":$F{DS_COMUNE_BANCA_TERZO})+" "+($F{CD_PV_BANCA_TERZO}==null?"":$F{CD_PV_BANCA_TERZO})]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-17" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="44"/>
+					<reportElement key="line-17" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="44" uuid="2dde2542-cd68-4af6-b46d-6528576ef2e0"/>
 				</line>
 				<line>
-					<reportElement key="line-18" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="44"/>
+					<reportElement key="line-18" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="44" uuid="29a61c83-4afa-492d-9848-f8035fd520f1"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-27" style="TNR10" x="54" y="1" width="50" height="14"/>
+					<reportElement key="staticText-27" style="TNR10" x="54" y="1" width="50" height="14" uuid="f8cfa12e-2680-479e-9f3a-51f960043906"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[presso]]></text>
 				</staticText>
 			</band>
@@ -917,33 +892,31 @@ $F{DS_MODALITA_PAG}]]></textFieldExpression>
 			<band height="16" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.compareTo("B")==0 && $F{TI_RECORD_L2}.compareTo("B")==0)]]></printWhenExpression>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-27" style="TNR10" x="3" y="2" width="73" height="14"/>
+					<reportElement key="textField-27" style="TNR10" x="3" y="2" width="73" height="14" uuid="9cd01090-fb1b-4d8c-8ebf-fe8359df4e54"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{TI_ENTRATA_SPESA}.equals("E"))?"Accertamento: ":
+					<textFieldExpression><![CDATA[($F{TI_ENTRATA_SPESA}.equals("E"))?"Accertamento: ":
 "Obbligazione: "]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-28" style="TNR10" x="91" y="2" width="348" height="14"/>
+					<reportElement key="textField-28" style="TNR10" x="91" y="2" width="348" height="14" uuid="bc427c24-227b-47f4-8e1e-acd3d376171c"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{PG_OBB_ACC}+" / "+$F{ESERCIZIO_OBB_ACC}+" - "+$F{PG_OBB_ACC_SCAD}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{PG_OBB_ACC}+" / "+$F{ESERCIZIO_OBB_ACC}+" - "+$F{PG_OBB_ACC_SCAD}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-19" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="16"/>
+					<reportElement key="line-19" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="16" uuid="2c5bc088-e24f-4d30-aacc-bd44b04b582e"/>
 				</line>
 				<line>
-					<reportElement key="line-20" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="16"/>
+					<reportElement key="line-20" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="16" uuid="90bf9e69-b080-45d4-84bb-f1143f7af5ec"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -957,18 +930,17 @@ $F{DS_MODALITA_PAG}]]></textFieldExpression>
 			<band height="17" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.compareTo("B")==0 && $F{TI_RECORD_L2}.compareTo("B")==0)]]></printWhenExpression>
 				<staticText>
-					<reportElement key="staticText-21" style="TNR10" x="4" y="3" width="87" height="14"/>
+					<reportElement key="staticText-21" style="TNR10" x="4" y="3" width="87" height="14" uuid="fd129f68-5f78-4f28-8274-061387b1c9ae"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
 					<text><![CDATA[Capitolo/Articolo:]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR10" x="91" y="3" width="320" height="14"/>
+					<reportElement key="textField" style="TNR10" x="91" y="3" width="320" height="14" uuid="c685975c-f9db-4f5d-8dcd-5ab0c5a44cfc"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -976,13 +948,13 @@ $F{DS_MODALITA_PAG}]]></textFieldExpression>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left"/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{CD_VOCE}==null?"":$F{CD_VOCE})+" "+($F{DS_VOCE}==null?"":$F{DS_VOCE})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{CD_VOCE}==null?"":$F{CD_VOCE})+" "+($F{DS_VOCE}==null?"":$F{DS_VOCE})]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-21" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="17"/>
+					<reportElement key="line-21" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="17" uuid="cd5a094a-af7b-4f13-8f2d-821d97e615b2"/>
 				</line>
 				<line>
-					<reportElement key="line-22" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="17"/>
+					<reportElement key="line-22" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="17" uuid="a494f920-7904-414c-b1fb-9f92307bbe6d"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -996,33 +968,31 @@ $F{DS_MODALITA_PAG}]]></textFieldExpression>
 			<band height="17" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TI_RECORD_L1}.compareTo("B")==0 && $F{TI_RECORD_L2}.compareTo("B")==0 && $F{PG_MAN_REV}!=null )]]></printWhenExpression>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-29" style="TNR10" x="3" y="2" width="62" height="14"/>
+					<reportElement key="textField-29" style="TNR10" x="3" y="2" width="62" height="14" uuid="dcc7b091-12fe-41a5-b05c-64db0e158430"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[($F{TI_ENTRATA_SPESA}.equals("E"))?"Reversale: ":
+					<textFieldExpression><![CDATA[($F{TI_ENTRATA_SPESA}.equals("E"))?"Reversale: ":
 "Mandato: "]]></textFieldExpression>
 				</textField>
 				<textField pattern="##0" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR10" x="91" y="1" width="100" height="14"/>
+					<reportElement key="textField" style="TNR10" x="91" y="1" width="100" height="14" uuid="ef6d638c-1651-4e77-b9eb-c6bef9ac9847"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement/>
-					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PG_MAN_REV}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{PG_MAN_REV}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-23" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="17"/>
+					<reportElement key="line-23" style="TNR8" stretchType="RelativeToBandHeight" x="2" y="0" width="1" height="17" uuid="82cfce22-f42e-47aa-af93-4ba4d3d7db90"/>
 				</line>
 				<line>
-					<reportElement key="line-24" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="17"/>
+					<reportElement key="line-24" style="TNR8" stretchType="RelativeToBandHeight" x="532" y="0" width="1" height="17" uuid="f0555864-4959-4ac6-bafa-6dd00c0fe834"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -1051,40 +1021,37 @@ $F{DS_MODALITA_PAG}]]></textFieldExpression>
 	<pageFooter>
 		<band height="222" splitType="Stretch">
 			<staticText>
-				<reportElement key="staticText-22" style="TNR10" positionType="FixRelativeToBottom" x="3" y="202" width="74" height="14"/>
+				<reportElement key="staticText-22" style="TNR10" positionType="FixRelativeToBottom" x="3" y="202" width="74" height="14" uuid="19b905dc-4062-440f-af79-d18bf2bfb10f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[Emesso in data]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement key="textField-30" style="TNR10" positionType="FixRelativeToBottom" x="78" y="202" width="64" height="14"/>
+				<reportElement key="textField-30" style="TNR10" positionType="FixRelativeToBottom" x="78" y="202" width="64" height="14" uuid="228b5d78-3132-4ddb-aa15-02aaae7837db"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{DATA_REGISTRAZIONE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DATA_REGISTRAZIONE}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-31" style="TNR10" positionType="FixRelativeToBottom" x="149" y="202" width="165" height="14"/>
+				<reportElement key="textField-31" style="TNR10" positionType="FixRelativeToBottom" x="149" y="202" width="165" height="14" uuid="399bee0f-e66d-4977-81a1-3429d4fa0f6b"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[" dall'utente "+$F{UTCR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" dall'utente "+$F{UTCR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-32" style="TNR10" positionType="FixRelativeToBottom" x="317" y="201" width="197" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="textField-32" style="TNR10" positionType="FixRelativeToBottom" x="317" y="201" width="197" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="b0efd384-2dea-474a-b163-fdbed73d7716"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1094,10 +1061,10 @@ $F{DS_MODALITA_PAG}]]></textFieldExpression>
 				<textElement textAlignment="Right">
 					<font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Pag." + $V{PAGE_NUMBER}+ "/"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Pag." + $V{PAGE_NUMBER}+ "/"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Group" evaluationGroup="pk_generico" pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-33" style="TNR10" positionType="FixRelativeToBottom" x="516" y="201" width="18" height="14"/>
+				<reportElement key="textField-33" style="TNR10" positionType="FixRelativeToBottom" x="516" y="201" width="18" height="14" uuid="39f8e56e-8247-4651-9e7e-dbe13079005f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1107,7 +1074,7 @@ $F{DS_MODALITA_PAG}]]></textFieldExpression>
 				<textElement>
 					<font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{PAGE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
