@@ -160,7 +160,11 @@
         If aComp.FL_COMPENSO_MINICARRIERA='Y' And aComp.FL_COMPENSO_MCARRIERA_TASSEP = 'Y' Then
            --per la tassazione separata non distinguiamo anno corrente e anno precedente (anche perchè per il momento non esistono questi casi)
            aCnrEstr.TI_PAGAMENTO:=4;
-           aCnrEstr.ESERCIZIO_COMPENSO:=To_Char(DT_FI_COMP,'YYYY');
+           If (To_Char(DT_FI_COMP,'YYYY') > aLiquid.esercizio) then
+           			aCnrEstr.ESERCIZIO_COMPENSO:=aLiquid.esercizio;
+           		else
+           			aCnrEstr.ESERCIZIO_COMPENSO:=To_Char(DT_FI_COMP,'YYYY');
+           	end if;		
         Else
            --se la competenza del compenso è di anni precedenti
            If To_Char(DT_IN_COMP,'YYYY') < aLiquid.esercizio /*And
@@ -175,7 +179,11 @@
               --Else
                  aCnrEstr.TI_PAGAMENTO:=1;
               --End If;
-              aCnrEstr.ESERCIZIO_COMPENSO:=To_Char(DT_FI_COMP,'YYYY');
+              If (To_Char(DT_FI_COMP,'YYYY') > aLiquid.esercizio) then
+           			aCnrEstr.ESERCIZIO_COMPENSO:=aLiquid.esercizio;
+           		else
+           			aCnrEstr.ESERCIZIO_COMPENSO:=To_Char(DT_FI_COMP,'YYYY');
+           	end if;		
            End If;
   	End if;
 
@@ -308,7 +316,7 @@ procedure processaCoriMensile(aLiquid liquid_cori%rowtype, aMese NUMBER, aCori c
         aCnrEstr.PG_LIQUIDAZIONE:=aLiquid.pg_liquidazione;
         aCnrEstr.MATRICOLA:=aIdMatr;
         aCnrEstr.CODICE_FISCALE:=aComp.codice_fiscale;
-	aCnrEstr.MESE:=aMese;
+				aCnrEstr.MESE:=aMese;
 
         DT_IN_COMP:=aComp.dt_da_competenza_coge;
         DT_FI_COMP:=aComp.dt_a_competenza_coge;
@@ -316,7 +324,11 @@ procedure processaCoriMensile(aLiquid liquid_cori%rowtype, aMese NUMBER, aCori c
         If aComp.FL_COMPENSO_MINICARRIERA='Y' And aComp.FL_COMPENSO_MCARRIERA_TASSEP = 'Y' Then
            --per la tassazione separata non distinguiamo anno corrente e anno precedente (anche perchè per il momento non esistono questi casi)
            aCnrEstr.TI_PAGAMENTO:=4;
-           aCnrEstr.ESERCIZIO_COMPENSO:=To_Char(DT_FI_COMP,'YYYY');
+           if (To_Char(DT_FI_COMP,'YYYY')> aComp.esercizio) then			
+              	aCnrEstr.ESERCIZIO_COMPENSO:=aComp.esercizio;
+              else
+              	aCnrEstr.ESERCIZIO_COMPENSO:=To_Char(DT_FI_COMP,'YYYY');
+            end if;	
         Else
            --se la competenza del compenso è di anni precedenti
            If To_Char(DT_IN_COMP,'YYYY') < aLiquid.esercizio /*And
@@ -331,7 +343,11 @@ procedure processaCoriMensile(aLiquid liquid_cori%rowtype, aMese NUMBER, aCori c
               --Else
                  aCnrEstr.TI_PAGAMENTO:=1;
               --End If;
-              aCnrEstr.ESERCIZIO_COMPENSO:=To_Char(DT_FI_COMP,'YYYY');
+              if (To_Char(DT_FI_COMP,'YYYY')> aComp.esercizio) then			
+              	aCnrEstr.ESERCIZIO_COMPENSO:=aComp.esercizio;
+              else
+              	aCnrEstr.ESERCIZIO_COMPENSO:=To_Char(DT_FI_COMP,'YYYY');
+              end if;	
            End If;
   	End if;
 
