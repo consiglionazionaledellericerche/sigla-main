@@ -28,7 +28,7 @@
                             AND figli.cd_sospeso_padre = sospeso.cd_sospeso),0),
                   im_associato
                  ),                                            -- IM_ASSOCIATO
-          DECODE (cd_sospeso_padre,
+          DECODE (fl_stornato, 'N',DECODE (cd_sospeso_padre,
                   NULL, im_sospeso
                    - nvl((SELECT SUM (nvl(figli.im_associato,0))
                         FROM sospeso figli
@@ -40,7 +40,7 @@
                          AND figli.fl_stornato =  'N'
                          AND figli.cd_sospeso_padre = sospeso.cd_sospeso),0),
                   NVL (im_sospeso, 0) - NVL (im_associato, 0)
-                 ),                                            -- DA ASSOCIARE
+                 ),0),                                            -- DA ASSOCIARE
           DECODE (cd_sospeso_padre,
                   NULL,                                     -- STATO DEL PADRE
                   DECODE (im_sospeso,
