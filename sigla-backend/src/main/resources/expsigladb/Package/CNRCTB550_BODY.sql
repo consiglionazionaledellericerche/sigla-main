@@ -929,7 +929,7 @@ BEGIN
                      B.dt_ini_validita = A.dt_ini_validita AND
                      B.pg_classificazione_montanti IS NOT NULL AND
                      B.fl_scrivi_montanti = 'Y' AND
-                     B.pg_classificazione_montanti = '5';
+                     B.pg_classificazione_montanti in('3', '5');
          LOOP
 
             FETCH gen_cur INTO
@@ -1448,8 +1448,8 @@ BEGIN
          -- Solo per la RIDUZIONE ERARIALE �revista l'operativit�u pi� scaglioni
          -- In tutti gli altri casi �oluto che si prende lo scaglione massimo
          IF tabella_cori(i).tPgClassificazioneMontanti is null or
-            tabella_cori(i).tPgClassificazioneMontanti != '5' or
-            (tabella_cori(i).tPgClassificazioneMontanti = '5' and
+            tabella_cori(i).tPgClassificazioneMontanti not in('3', '5') or
+            (tabella_cori(i).tPgClassificazioneMontanti in('3', '5') and
               aRecVPreScaglione.im_superiore >= aImportoMaxRifScaglione)  Then
 --pipe.send_message('IF = '||tabella_cori(i).tCdCori);
              -------------------------------------------------------------------------------------------
