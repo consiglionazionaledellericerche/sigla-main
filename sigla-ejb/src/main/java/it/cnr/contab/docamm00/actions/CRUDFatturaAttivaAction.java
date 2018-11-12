@@ -220,7 +220,7 @@ public class CRUDFatturaAttivaAction extends it.cnr.jada.util.action.CRUDAction 
             bp.rollbackUserTransaction();
 
             String status = bp.isEditing() ? "M" : "V";
-            CRUDNotaDiCreditoAttivaBP notaBp = (CRUDNotaDiCreditoAttivaBP) context.createBusinessProcess("CRUDNotaDiCreditoAttivaBP", new Object[]{status + "Tr"});
+            CRUDNotaDiCreditoAttivaBP notaBp = (CRUDNotaDiCreditoAttivaBP) context.createBusinessProcess("CRUDNotaDiCreditoAttivaBP", new Object[]{status + "Tn"});
             FatturaAttivaSingolaComponentSession h = (FatturaAttivaSingolaComponentSession) notaBp.createComponentSession();
 
             if (notaDiCredito.getCrudStatus() == notaDiCredito.NORMAL) {
@@ -269,7 +269,7 @@ public class CRUDFatturaAttivaAction extends it.cnr.jada.util.action.CRUDAction 
             bp.rollbackUserTransaction();
 
             String status = bp.isEditing() ? "M" : "V";
-            CRUDNotaDiDebitoAttivaBP notaBp = (CRUDNotaDiDebitoAttivaBP) context.createBusinessProcess("CRUDNotaDiDebitoAttivaBP", new Object[]{status + "Tr"});
+            CRUDNotaDiDebitoAttivaBP notaBp = (CRUDNotaDiDebitoAttivaBP) context.createBusinessProcess("CRUDNotaDiDebitoAttivaBP", new Object[]{status + "Tn"});
             FatturaAttivaSingolaComponentSession h = (FatturaAttivaSingolaComponentSession) notaBp.createComponentSession();
 
             if (notaDiDebito.getCrudStatus() == notaDiDebito.NORMAL) {
