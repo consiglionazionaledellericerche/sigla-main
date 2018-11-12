@@ -85,7 +85,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 			Optional.ofNullable(bulk).filter(CdrBulk.class::isInstance).map(CdrBulk.class::cast)
 				.flatMap(el->Optional.ofNullable(el.getDettagli())).map(BulkList<Pdg_moduloBulk>::stream)
 				.orElse(Stream.empty()).forEach(el->{
-					if (!Optional.of(el.getProgetto()).isPresent())
+					if (!Optional.ofNullable(el.getProgetto()).isPresent())
 						throw new ApplicationRuntimeException("Salvataggio non possibile! Non risulta indicato il progetto su una riga!");
 					else if (!Optional.ofNullable(el.getProgetto().getOtherField())
 							.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getStato()))
