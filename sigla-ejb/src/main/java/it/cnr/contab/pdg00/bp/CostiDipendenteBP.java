@@ -16,6 +16,7 @@ import it.cnr.jada.util.action.SelectionIterator;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
 import javax.ejb.EJBException;
+
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
@@ -456,8 +457,8 @@ if (matricola_src.getTi_rapporto().equalsIgnoreCase(Costo_del_dipendenteBulk.TI_
                                 newAssCpdLa.setPrc_la_a1(ass_cdp_la.getPrc_la_a1());
                                 newAssCpdLa.setPrc_la_a2(ass_cdp_la.getPrc_la_a2());
                                 newAssCpdLa.setPrc_la_a3(ass_cdp_la.getPrc_la_a3());
-                                newAssCpdLa.setFl_dip_altra_uo(ass_cdp_la.getFl_dip_altra_uo());
-
+                               // newAssCpdLa.setFl_dip_altra_uo(ass_cdp_la.getFl_dip_altra_uo());
+                                newAssCpdLa.setFl_dip_altra_uo(new Boolean(matricola_dest.isProvenienzaCaricato()));
                                 newAssCpdLa.setUser(userContext.getUser());
                                 newAssCpdLa.setToBeCreated();
 
