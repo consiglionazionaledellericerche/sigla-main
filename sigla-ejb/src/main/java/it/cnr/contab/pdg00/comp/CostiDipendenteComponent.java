@@ -304,6 +304,7 @@ public OggettoBulk copiaRipartizione(it.cnr.jada.UserContext userContext,Costi_d
 			Ass_cdp_laBulk ass_cdp_la = i.next();
 			ass_cdp_la.setId_matricola(matricola_dest.getId_matricola());
 			ass_cdp_la.setUser(userContext.getUser());
+			ass_cdp_la.setFl_dip_altra_uo(new Boolean(matricola_dest.isProvenienzaCaricato()));
 			matricola_dest.addToCostiScaricati(ass_cdp_la);
 		}
 		return cdp;
