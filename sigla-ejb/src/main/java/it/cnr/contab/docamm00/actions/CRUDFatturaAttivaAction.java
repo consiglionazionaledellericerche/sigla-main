@@ -217,7 +217,7 @@ public class CRUDFatturaAttivaAction extends it.cnr.jada.util.action.CRUDAction 
                 throw new it.cnr.jada.comp.ApplicationException("Il documento risulta modificato! Per continuare o salvare o deselezionare i dettagli da aggiungere alla nota di credito e ricercarli successivamente.");
 
             //Assolutamente necessario eseguirlo DOPO i controlli
-            bp.rollbackUserTransaction();
+            bp.rollbackAndCloseUserTransaction();
 
             String status = bp.isEditing() ? "M" : "V";
             CRUDNotaDiCreditoAttivaBP notaBp = (CRUDNotaDiCreditoAttivaBP) context.createBusinessProcess("CRUDNotaDiCreditoAttivaBP", new Object[]{status + "Tn"});
@@ -266,7 +266,7 @@ public class CRUDFatturaAttivaAction extends it.cnr.jada.util.action.CRUDAction 
                 throw new it.cnr.jada.comp.ApplicationException("Il documento risulta modificato! Per continuare o salvare o deselezionare i dettagli da aggiungere alla nota di debito e ricercarli successivamente.");
 
             //Assolutamente necessario eseguirlo DOPO i controlli
-            bp.rollbackUserTransaction();
+            bp.rollbackAndCloseUserTransaction();
 
             String status = bp.isEditing() ? "M" : "V";
             CRUDNotaDiDebitoAttivaBP notaBp = (CRUDNotaDiDebitoAttivaBP) context.createBusinessProcess("CRUDNotaDiDebitoAttivaBP", new Object[]{status + "Tn"});
@@ -1616,6 +1616,7 @@ public class CRUDFatturaAttivaAction extends it.cnr.jada.util.action.CRUDAction 
 //ndc
         try {
             it.cnr.jada.util.action.CRUDBP bp = (it.cnr.jada.util.action.CRUDBP) context.getBusinessProcess();
+            bp.initializeUserTransaction(context);
             bp.edit(context, bp.getModel());
             return context.findDefaultForward();
         } catch (BusinessProcessException e) {
@@ -1633,6 +1634,7 @@ public class CRUDFatturaAttivaAction extends it.cnr.jada.util.action.CRUDAction 
 //ndd
         try {
             it.cnr.jada.util.action.CRUDBP bp = (it.cnr.jada.util.action.CRUDBP) context.getBusinessProcess();
+            bp.initializeUserTransaction(context);
             bp.edit(context, bp.getModel());
             return context.findDefaultForward();
         } catch (BusinessProcessException e) {
