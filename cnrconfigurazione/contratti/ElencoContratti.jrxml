@@ -18,7 +18,7 @@
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="unita_organizzativa" class="java.lang.String">
-		<defaultValueExpression><![CDATA["407.000"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="firmatario" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
@@ -36,16 +36,16 @@
 		<defaultValueExpression><![CDATA["1970/01/01"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="data_stipula_a" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2100/12/31"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2018/12/31"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="data_inizio_da" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["1970/01/01"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="data_inizio_a" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2100/12/31"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2018/12/31"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="data_fine_da" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["1970/01/01"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2018/01/01"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="data_fine_a" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["2100/12/31"]]></defaultValueExpression>
