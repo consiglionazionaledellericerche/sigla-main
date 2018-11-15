@@ -8,6 +8,13 @@ import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 
 public class StampaPreventivoFinDecBP extends OfflineReportPrintBP {
+	public StampaPreventivoFinDecBP() {
+	}
+
+	public StampaPreventivoFinDecBP(String function) {
+		super(function);
+	}
+
 	protected void init(Config config, ActionContext context) throws BusinessProcessException {
 		Print_spooler_paramBulk param;
 		param = new Print_spooler_paramBulk();
