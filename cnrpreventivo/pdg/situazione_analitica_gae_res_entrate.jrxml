@@ -364,7 +364,7 @@ ORDER BY v.CDS ASC,v.UO ASC,v.CD_COMMESSA ASC,
 					<textElement>
 						<font isUnderline="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["Totale Unitï¿½ Operativa "+$F{UO}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA["Totale Unità Operativa "+$F{UO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField-57" style="TNR8BOLD" x="341" y="3" width="65" height="13"/>
@@ -1181,7 +1181,7 @@ ORDER BY v.CDS ASC,v.UO ASC,v.CD_COMMESSA ASC,
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement/>
-				<text><![CDATA[Unitï¿½ Organizzativa]]></text>
+				<text><![CDATA[Unità Organizzativa]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-5" style="TNR10BOLDITALIC" x="16" y="144" width="85" height="13"/>
