@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="44"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -49,21 +49,22 @@
 		<defaultValueExpression><![CDATA["084"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="uo" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["084.000"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="cdr" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["%"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT * FROM V_SIT_ANAL_GAE_RESIDUI_SPE
 WHERE ESERCIZIO = $P{esercizio}
-  AND CDS = $P{cds}
+    and CDS like decode($P{cds},CNRCTB020.GETCDCDSENTE ($P{esercizio}),'%',$P{cds})
+   and cds not like CNRCTB020.GETCDCDSENTE($P{esercizio})
   AND UO LIKE DECODE($P{uo},'*','%',$P{uo})
   AND CD_CENTRO_RESPONSABILITA LIKE DECODE($P{cdr},'*','%',$P{cdr})
 ORDER BY CDS ASC,UO ASC,CD_CENTRO_RESPONSABILITA ASC,
     CD_ELEMENTO_VOCE ASC,ESERCIZIO_RES ASC,CD_LINEA_ATTIVITA ASC]]>
 	</queryString>
-	<field name="ESERCIZIO" class="java.lang.Integer"/>
+	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
 	<field name="CDS" class="java.lang.String"/>
 	<field name="UO" class="java.lang.String"/>
 	<field name="CD_CENTRO_RESPONSABILITA" class="java.lang.String"/>
