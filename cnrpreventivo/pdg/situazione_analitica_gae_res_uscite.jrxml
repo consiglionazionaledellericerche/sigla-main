@@ -2,9 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="situazione_analitica_gae_res_uscite" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="826" leftMargin="8" rightMargin="8" topMargin="8" bottomMargin="8" uuid="5c71143b-9686-4bd7-86ba-3f8f326d9c02">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
-	<property name="ireport.zoom" value="1.6105100000000043"/>
-	<property name="ireport.x" value="383"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.zoom" value="1.3310000000000035"/>
+	<property name="ireport.x" value="280"/>
+	<property name="ireport.y" value="72"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -60,7 +60,8 @@
 	<queryString>
 		<![CDATA[SELECT v.*, p.fl_nuovo_pdg FROM V_SIT_ANAL_GAE_RESIDUI_SPE v, parametri_cnr p
 WHERE v.ESERCIZIO = $P{esercizio}
-  AND v.CDS = $P{cds}
+   and v.CDS like decode($P{cds},CNRCTB020.GETCDCDSENTE ($P{esercizio}),'%',$P{cds})
+   and v.cds not like CNRCTB020.GETCDCDSENTE($P{esercizio})
   AND v.UO LIKE DECODE($P{uo},'*','%',$P{uo})
   AND v.CD_CENTRO_RESPONSABILITA LIKE DECODE($P{cdr},'*','%',$P{cdr})
 and p.esercizio = v.esercizio]]>
