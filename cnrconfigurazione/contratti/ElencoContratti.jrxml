@@ -72,7 +72,7 @@ where CD_UNITA_ORGANIZZATIVA like decode($P{unita_organizzativa},'*','%',$P{unit
   and ( DT_FINE_VALIDITA is null or
         DT_FINE_VALIDITA >= to_date($P{data_fine_da}, 'YYYY/MM/DD') and
         DT_FINE_VALIDITA <= to_date($P{data_fine_a}, 'YYYY/MM/DD') )
-order by CD_UNITA_ORGANIZZATIVA, ESERCIZIO, PG_CONTRATTO, STATO]]>
+order by  ESERCIZIO, PG_CONTRATTO, STATO]]>
 	</queryString>
 	<field name="CD_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
 	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
