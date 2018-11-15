@@ -26,6 +26,7 @@ CREATE OR REPLACE function get_dip_from_modulo(
  commessa_ese_pr_padre PROGETTO.ESERCIZIO_PROGETTO_PADRE%Type;
  commessa_pg_progetto_padre PROGETTO.PG_PROGETTO_PADRE%Type;
  commessa_fase_pr_padre PROGETTO.TIPO_FASE_PROGETTO_PADRE%Type;
+ livello_prog PROGETTO.LIVELLO%Type;
 
  APPO_cod_dip DIPARTIMENTO.CD_DIPARTIMENTO%TYPE;
 
@@ -33,19 +34,27 @@ Begin
 
 If aEsercizio Is Not Null And aPg_progetto Is Not Null And aTipo_fase Is Not Null Then
 
-   Select ESERCIZIO_PROGETTO_PADRE,PG_PROGETTO_PADRE,TIPO_FASE_PROGETTO_PADRE
-   Into modulo_ese_pr_padre,modulo_pg_progetto_padre,modulo_fase_pr_padre
+   Select ESERCIZIO_PROGETTO_PADRE,PG_PROGETTO_PADRE,TIPO_FASE_PROGETTO_PADRE, LIVELLO, CD_DIPARTIMENTO
+   Into modulo_ese_pr_padre,modulo_pg_progetto_padre,modulo_fase_pr_padre, livello_prog, cod_dip
    From progetto
    Where ESERCIZIO = aEsercizio
      And PG_PROGETTO = aPg_progetto
      And TIPO_FASE = aTipo_fase;
 
-   Select ESERCIZIO_PROGETTO_PADRE,PG_PROGETTO_PADRE,TIPO_FASE_PROGETTO_PADRE
-   Into commessa_ese_pr_padre,commessa_pg_progetto_padre,commessa_fase_pr_padre
+   if (livello_prog = 1) then
+      return cod_dip;
+   end if;
+
+   Select ESERCIZIO_PROGETTO_PADRE,PG_PROGETTO_PADRE,TIPO_FASE_PROGETTO_PADRE, LIVELLO, CD_DIPARTIMENTO
+   Into commessa_ese_pr_padre,commessa_pg_progetto_padre,commessa_fase_pr_padre, livello_prog, cod_dip
    From progetto
    Where ESERCIZIO = modulo_ese_pr_padre
      And PG_PROGETTO = modulo_pg_progetto_padre
      And TIPO_FASE = modulo_fase_pr_padre;
+
+   if (livello_prog = 1) then
+      return cod_dip;
+   end if;
 
    Select CD_DIPARTIMENTO Into cod_dip
    From progetto
