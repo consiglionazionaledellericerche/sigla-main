@@ -31,7 +31,7 @@ public class CRUDAccertamentoResiduoAmministraBP extends
     @Override
     public void update(ActionContext actioncontext) throws BusinessProcessException {
     	Optional.ofNullable(this.getModel()).map(AccertamentoResiduoBulk.class::cast).ifPresent(acc->{
-    		if (!acc.isParzialmenteInesigibile() && !acc.isInesigibile()) {
+    		if (!acc.isStatoParzialmenteInesigibile() && !acc.isStatoInesigibile() && !acc.isStatoDubbio()) {
     			acc.getPdgVincoliColl().stream().forEach(e->{
     				e.setFl_attivo(Boolean.FALSE);
     				e.setToBeUpdated();
