@@ -61,7 +61,7 @@
             <td><% bp.writeFormInput(out,"default","codiceUnivocoUfficioIpa",true,null,null);%></td>
         <%} %>
       <%} else {%>
-        <%if(bp.getAnagrafico() != null && bp.getAnagrafico().getDataAvvioFattElettr() != null){ %>
+        <%if(terzo != null && terzo.getAnagrafico() != null && terzo.getAnagrafico().getDataAvvioFattElettr() != null){ %>
             <% bp.writeFormField(out,"codiceDestinatarioFatt");%>
         <%} %>
         <%if(bp.isGestoreIstat(uc, terzo)){ %>
