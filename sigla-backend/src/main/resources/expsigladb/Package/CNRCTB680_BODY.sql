@@ -79,9 +79,9 @@
 
   begin
    select * into aTipoCoriLoc from tipo_contributo_ritenuta where
-	     cd_contributo_ritenuta = aCori.cd_contributo_ritenuta
-	 and dt_ini_validita <= trunc(aDateCont)
-	 and dt_fin_validita >= trunc(aDateCont);
+       cd_contributo_ritenuta = aCori.cd_contributo_ritenuta
+   and dt_ini_validita <= trunc(aDateCont)
+   and dt_fin_validita >= trunc(aDateCont);
   exception
     when NO_DATA_FOUND then
      IBMERR001.RAISE_ERR_GENERICO('Cori specificato in interfaccia stipendi non trovato o attualmente non valido:'||aCori.cd_contributo_ritenuta);
@@ -94,8 +94,8 @@
    -- Estrae la prima occorrenza di TIPO CORI presente in TIPO_CONTRIBUTO RITENUTA e registra la classificazione CORI di tale occorrenza
   begin
     select distinct cd_classificazione_cori into aClassCori from tipo_contributo_ritenuta where
-  	         cd_contributo_ritenuta=aCori.cd_contributo_ritenuta
-		 and rownum=1;
+             cd_contributo_ritenuta=aCori.cd_contributo_ritenuta
+     and rownum=1;
   exception
     when NO_DATA_FOUND then
      IBMERR001.RAISE_ERR_GENERICO('Contributo ritenuta non trovato in tabella CORI:'||aCori.cd_contributo_ritenuta);
@@ -112,7 +112,7 @@
   begin
    select * into aAssCoriFin from ass_tipo_cori_ev where
         cd_contributo_ritenuta = aCori.cd_contributo_ritenuta
-	 and esercizio = aCori.esercizio
+   and esercizio = aCori.esercizio
     and ti_gestione = CNRCTB001.GESTIONE_ENTRATE
  and ti_appartenenza = CNRCTB001.APPARTENENZA_CDS
  and ti_ente_percepiente = aCori.ti_ente_percipiente; -- I CORI degli stipendi sono sempre di tipo ente
@@ -123,7 +123,7 @@ else
 begin
    select * into aAssCoriFin from ass_tipo_cori_ev where
         cd_contributo_ritenuta = aCori.cd_contributo_ritenuta
-	 and esercizio = aCori.esercizio
+   and esercizio = aCori.esercizio
     and ti_gestione = CNRCTB001.GESTIONE_ENTRATE
  and ti_appartenenza = CNRCTB001.APPARTENENZA_CNR
  and ti_ente_percepiente = aCori.ti_ente_percipiente; -- I CORI degli stipendi sono sempre di tipo ente
@@ -161,9 +161,9 @@ end if;
    aAcc.TI_GESTIONE:=aAssCoriFin.ti_gestione;
    aAcc.CD_ELEMENTO_VOCE:=aAssCoriFin.cd_elemento_voce;
    if(parametriCnr.fl_nuovo_pdg ='N') then
-   		aAcc.CD_VOCE:=aVoceF.cd_voce;
+      aAcc.CD_VOCE:=aVoceF.cd_voce;
    else
-   		aAcc.CD_VOCE:=aAssCoriFin.cd_elemento_voce;
+      aAcc.CD_VOCE:=aAssCoriFin.cd_elemento_voce;
    end if;
    aAcc.DT_REGISTRAZIONE:=TRUNC(aDateCont);
    aAcc.DS_ACCERTAMENTO:='CORI-D '||getDescCori(aCori);
@@ -187,7 +187,7 @@ end if;
   else
     isCoriEntrata:=false;
    begin
-	 select * into aContoColl from ass_partita_giro where
+   select * into aContoColl from ass_partita_giro where
             esercizio = aStip.esercizio
         and ti_appartenenza = aAssCoriFin.ti_appartenenza
         and ti_gestione = aAssCoriFin.ti_gestione
@@ -534,7 +534,7 @@ end if;
   isFoundRapp:=false;
   for aTmpRapporto in (select * from rapporto where
           cd_anag = aAnagTerzoDivComp.cd_anag
-	  and cd_tipo_rapporto = TIPO_RAPPORTO_STIPENDI
+    and cd_tipo_rapporto = TIPO_RAPPORTO_STIPENDI
   ) loop
    isFoundRapp:=true;
    aRapporto:=aTmpRapporto;
@@ -550,10 +550,10 @@ end if;
   aCdTipoTrattamento:=CNRCTB015.GETVAL01PERCHIAVE(TRATTAMENTO_SPECIALE,TRATTAMENTO_STIPENDI);
   for aTmpTipoTrattamento in (select * from tipo_trattamento a where
           cd_trattamento = aCdTipoTrattamento
-	  and exists (select 1 from ass_ti_rapp_ti_tratt where
-	                                                cd_tipo_rapporto = TIPO_RAPPORTO_STIPENDI
-												and cd_trattamento = a.cd_trattamento
-	             )
+    and exists (select 1 from ass_ti_rapp_ti_tratt where
+                                                  cd_tipo_rapporto = TIPO_RAPPORTO_STIPENDI
+                        and cd_trattamento = a.cd_trattamento
+               )
   ) loop
    isFoundTT:=true;
    aTipoTrattamento:=aTmpTipoTrattamento;
@@ -761,7 +761,7 @@ end if;
                From   stipendi_cofi
                Where  mese = aMese-1
                  And  esercizio = aEs
-	         And stato = CNRCTB100.STATO_COM_COFI_TOT_MR
+           And stato = CNRCTB100.STATO_COM_COFI_TOT_MR
                For update nowait;
            Exception when NO_DATA_FOUND then
             IBMERR001.RAISE_ERR_GENERICO('Dati stipendiali non trovati o contabilizzazione non ancora effettuata per mese precedente al corrente');
@@ -830,9 +830,9 @@ end if;
    Begin
        select * into aObb from obbligazione where
              cd_cds = aStipObb.cd_cds_obbligazione
-     	and esercizio = aStipObb.esercizio
-     	and esercizio_originale = aStipObb.esercizio_ori_obbligazione
- 		and pg_obbligazione = aStipObb.pg_obbligazione
+      and esercizio = aStipObb.esercizio
+      and esercizio_originale = aStipObb.esercizio_ori_obbligazione
+    and pg_obbligazione = aStipObb.pg_obbligazione
        for update nowait;
    Exception
       When No_Data_Found Then
@@ -885,7 +885,15 @@ end if;
                      pg_obbligazione = aStipObb.pg_obbligazione And
                      pg_obbligazione_scadenzario = currMese;
 
-              CNRCTB030.adeguaObbScadSuccSV(currObbScad,0,aGen.UTCR);
+              If (aMese=15) Then
+                If (currObbScad.im_scadenza<aStipObb.im_totale) Then
+                  IBMERR001.RAISE_ERR_GENERICO('Disponibilità residua dell''obbligazione n. '||aStipObb.pg_obbligazione||' non sufficiente per il pagamento del mese n. '||aMese||' es. '||aEs);
+                End If;
+                CNRCTB030.adeguaObbScadSuccSV(currObbScad,aMese,currObbScad.im_scadenza-aStipObb.im_totale,aGen.UTCR);
+                exit;
+              Else
+                CNRCTB030.adeguaObbScadSuccSV(currObbScad,currMese+1,0,aGen.UTCR);
+              End If;
             End;
           End Loop;
        End if;
@@ -916,12 +924,15 @@ end if;
         IBMERR001.RAISE_ERR_GENERICO('Scadenza di impegno n. '||aStipObb.pg_obbligazione||' associato a liquidazione stipendi mese n. '||aMese||' es. '||aEs||' già associata a documenti contabili o amministrativi');
       End If;
    End If;
+   If aMese = 14 or aMese > 15 Then
+        IBMERR001.RAISE_ERR_GENERICO('Mese '||aMese||' indicato per il pagamento non valido');
+   End If;
    If aMese != 15 Then
        -- Anche per il mese di dicembre deve essere aggiornata la scadenza successiva
        --if aMese = 13 then
        -- CNRCTB030.adeguaObbSV(aObbScad,aStipObb.im_totale,aGen.UTCR);
        --else
-        CNRCTB030.adeguaObbScadSuccSV(aObbScad,aStipObb.im_totale,aGen.UTCR);
+        CNRCTB030.adeguaObbScadSuccSV(aObbScad,aObbScad.pg_obbligazione_scadenzario+1,aStipObb.im_totale,aGen.UTCR);
        --end if;
    End If;
    If aMese = 15 And aObbScad.im_scadenza != aStipObb.im_totale Then
@@ -1051,17 +1062,17 @@ end if;
 
   Update stipendi_cofi
   Set    stato             = CNRCTB100.STATO_COM_COFI_TOT_MR,
-	 cd_cds_mandato    = aManP.cd_cds,
-	 esercizio_mandato = aManP.esercizio,
-	 pg_mandato        = aManP.pg_mandato,
-	 cd_cds_doc_gen    = aGen.cd_cds,
-	 cd_uo_doc_gen     = aGen.cd_unita_organizzativa,
-	 esercizio_doc_gen = aGen.esercizio,
-	 cd_tipo_doc_gen   = aGen.cd_tipo_documento_amm,
-	 pg_doc_gen        = aGen.pg_documento_generico,
+   cd_cds_mandato    = aManP.cd_cds,
+   esercizio_mandato = aManP.esercizio,
+   pg_mandato        = aManP.pg_mandato,
+   cd_cds_doc_gen    = aGen.cd_cds,
+   cd_uo_doc_gen     = aGen.cd_unita_organizzativa,
+   esercizio_doc_gen = aGen.esercizio,
+   cd_tipo_doc_gen   = aGen.cd_tipo_documento_amm,
+   pg_doc_gen        = aGen.pg_documento_generico,
          duva              = aTSNow,
-	 utuv              = aUser,
-	 pg_ver_rec        = pg_ver_rec+1
+   utuv              = aUser,
+   pg_ver_rec        = pg_ver_rec+1
   Where  mese = aStip.mese And
          esercizio = aStip.esercizio;
 
@@ -1093,8 +1104,8 @@ end if;
  end;
 
  Procedure elaboraStipDett (aEs number,
-       			    aMese number,
-       			    aUser varchar2) Is
+                aMese number,
+                aUser varchar2) Is
 
     aStipObb  STIPENDI_COFI_OBB_SCAD%Rowtype;
     aStipCori STIPENDI_COFI_CORI%Rowtype;
@@ -1104,21 +1115,21 @@ end if;
 
     aLog STIPENDI_COFI_LOGS%Rowtype;
 
-    totaleIrap		Number:=0;
-    annulliIrap		Number:=0;
-    sommaDettIrap  	Number:=0;
-    sommaDetAddCom 	Number:=0;
+    totaleIrap    Number:=0;
+    annulliIrap   Number:=0;
+    sommaDettIrap   Number:=0;
+    sommaDetAddCom  Number:=0;
     sommaSaldiNegAddCom NUMBER:=0;
     sommaSaldiPosAddCom NUMBER:=0;
-    totaleSpesa		NUMBER:=0;
-    totaleEntrata	NUMBER:=0;
-    differenza		NUMBER:=0;
-    contaAddCom 	Number:=0;
-    ritAddCom	 	TIPO_CONTRIBUTO_RITENUTA.CD_CONTRIBUTO_RITENUTA%Type;
-    esistonoDati	varchar2(1):='N';
-    errore		varchar2(1):='N';
-    meseCompetenza	number(2);
-    totaleNegativi	NUMBER:=0;
+    totaleSpesa   NUMBER:=0;
+    totaleEntrata NUMBER:=0;
+    differenza    NUMBER:=0;
+    contaAddCom   Number:=0;
+    ritAddCom   TIPO_CONTRIBUTO_RITENUTA.CD_CONTRIBUTO_RITENUTA%Type;
+    esistonoDati  varchar2(1):='N';
+    errore    varchar2(1):='N';
+    meseCompetenza  number(2);
+    totaleNegativi  NUMBER:=0;
     totSpesaContribFig NUMBER:=0;
     totEntrataContribFig NUMBER:=0;
 
@@ -1154,19 +1165,19 @@ end if;
 
     --Flusso Stipendi 'Principale'
     For aStipObbDett In cObb(FLUSSO_PRINCIPALE) Loop
-    	  esistonoDati := 'Y';
-          aStipObb.esercizio 			:= aStipObbDett.esercizio;
-          aStipObb.mese 			:= aStipObbDett.mese;
-          aStipObb.cd_cds_obbligazione 		:= aStipObbDett.cd_cds_obbligazione;
-          aStipObb.esercizio_obbligazione 	:= aStipObbDett.esercizio_obbligazione;
-          aStipObb.pg_obbligazione 		:= aStipObbDett.pg_obbligazione;
-          aStipObb.im_totale 			:= aStipObbDett.im_totale;
-          aStipObb.dacr 			:= Sysdate;
-          aStipObb.utcr 			:= aUser;
-          aStipObb.duva 			:= Sysdate;
-          aStipObb.utuv 			:= aUser;
-          aStipObb.pg_ver_rec 			:= 1;
-          aStipObb.esercizio_ori_obbligazione 	:= aStipObbDett.esercizio_ori_obbligazione;
+        esistonoDati := 'Y';
+          aStipObb.esercizio      := aStipObbDett.esercizio;
+          aStipObb.mese       := aStipObbDett.mese;
+          aStipObb.cd_cds_obbligazione    := aStipObbDett.cd_cds_obbligazione;
+          aStipObb.esercizio_obbligazione   := aStipObbDett.esercizio_obbligazione;
+          aStipObb.pg_obbligazione    := aStipObbDett.pg_obbligazione;
+          aStipObb.im_totale      := aStipObbDett.im_totale;
+          aStipObb.dacr       := Sysdate;
+          aStipObb.utcr       := aUser;
+          aStipObb.duva       := Sysdate;
+          aStipObb.utuv       := aUser;
+          aStipObb.pg_ver_rec       := 1;
+          aStipObb.esercizio_ori_obbligazione   := aStipObbDett.esercizio_ori_obbligazione;
           ins_STIPENDI_COFI_OBB_SCAD(aStipObb);
     End Loop;
     If esistonoDati = 'Y' Then
@@ -1176,19 +1187,19 @@ end if;
     End If;
     esistonoDati := 'N';
     For aStipCoriDett In cCori(FLUSSO_PRINCIPALE) Loop
-    	  esistonoDati := 'Y';
-          aStipCori.esercizio 			:= aStipCoriDett.esercizio;
-          aStipCori.mese 			:= aStipCoriDett.mese;
-          aStipCori.cd_contributo_ritenuta 	:= aStipCoriDett.cd_contributo_ritenuta;
-          aStipCori.ti_ente_percipiente 	:= aStipCoriDett.ti_ente_percipiente;
-          aStipCori.ammontare 			:= aStipCoriDett.ammontare;
-          aStipCori.dt_da_competenza_coge 	:= aStipCoriDett.dt_da_competenza_coge;
-          aStipCori.dt_a_competenza_coge 	:= aStipCoriDett.dt_a_competenza_coge;
-          aStipCori.dacr 			:= Sysdate;
-          aStipCori.utcr 			:= aUser;
-          aStipCori.duva 			:= Sysdate;
-          aStipCori.utuv 			:= aUser;
-          aStipCori.pg_ver_rec 			:= 1;
+        esistonoDati := 'Y';
+          aStipCori.esercizio       := aStipCoriDett.esercizio;
+          aStipCori.mese      := aStipCoriDett.mese;
+          aStipCori.cd_contributo_ritenuta  := aStipCoriDett.cd_contributo_ritenuta;
+          aStipCori.ti_ente_percipiente   := aStipCoriDett.ti_ente_percipiente;
+          aStipCori.ammontare       := aStipCoriDett.ammontare;
+          aStipCori.dt_da_competenza_coge   := aStipCoriDett.dt_da_competenza_coge;
+          aStipCori.dt_a_competenza_coge  := aStipCoriDett.dt_a_competenza_coge;
+          aStipCori.dacr      := Sysdate;
+          aStipCori.utcr      := aUser;
+          aStipCori.duva      := Sysdate;
+          aStipCori.utuv      := aUser;
+          aStipCori.pg_ver_rec      := 1;
           ins_STIPENDI_COFI_CORI(aStipCori);
     End Loop;
     If esistonoDati = 'Y' Then
@@ -1201,34 +1212,34 @@ end if;
     --Va' elaborato prima della regionalizzazione irap
     esistonoDati := 'N';
     For aStipObbDett In cObb(FLUSSO_ANNULLI) Loop
-    	  esistonoDati := 'Y';
+        esistonoDati := 'Y';
           Update STIPENDI_COFI_OBB_SCAD
           Set im_totale = Nvl(im_totale,0) - Nvl(aStipObbDett.im_totale,0)
-          Where esercizio 			= aStipObbDett.esercizio
-            And mese 				= aStipObbDett.mese
-            And cd_cds_obbligazione 		= aStipObbDett.cd_cds_obbligazione
-            And esercizio_obbligazione 		= aStipObbDett.esercizio_obbligazione
-            And pg_obbligazione 		= aStipObbDett.pg_obbligazione
-            And esercizio_ori_obbligazione 	= aStipObbDett.esercizio_ori_obbligazione;
+          Where esercizio       = aStipObbDett.esercizio
+            And mese        = aStipObbDett.mese
+            And cd_cds_obbligazione     = aStipObbDett.cd_cds_obbligazione
+            And esercizio_obbligazione    = aStipObbDett.esercizio_obbligazione
+            And pg_obbligazione     = aStipObbDett.pg_obbligazione
+            And esercizio_ori_obbligazione  = aStipObbDett.esercizio_ori_obbligazione;
           If sql%Rowcount = 0 Then
-          	errore := 'Y';
-          	ibmutl200.logErr(gPgLog, '6', 'Nel Flusso Annulli Stipendiali è presente l''obbligazione '
-          	||To_Char(aStipObbDett.esercizio_obbligazione)||'/'||To_Char(aStipObbDett.esercizio_ori_obbligazione)||'/'||aStipObbDett.cd_cds_obbligazione||'/'||To_Char(aStipObbDett.pg_obbligazione)
-          	||' che non esiste nel flusso degli Stipendi Principale', '');
-          	-- inserisco la riga
-          	aStipObb.esercizio 			:= aStipObbDett.esercizio;
-          	aStipObb.mese 				:= aStipObbDett.mese;
-          	aStipObb.cd_cds_obbligazione 		:= aStipObbDett.cd_cds_obbligazione;
-          	aStipObb.esercizio_obbligazione 	:= aStipObbDett.esercizio_obbligazione;
-          	aStipObb.pg_obbligazione 		:= aStipObbDett.pg_obbligazione;
-          	aStipObb.im_totale 			:= - aStipObbDett.im_totale;
-          	aStipObb.dacr 				:= Sysdate;
-          	aStipObb.utcr 				:= aUser;
-          	aStipObb.duva 				:= Sysdate;
-          	aStipObb.utuv 				:= aUser;
-          	aStipObb.pg_ver_rec 			:= 1;
-          	aStipObb.esercizio_ori_obbligazione 	:= aStipObbDett.esercizio_ori_obbligazione;
-          	ins_STIPENDI_COFI_OBB_SCAD(aStipObb);
+            errore := 'Y';
+            ibmutl200.logErr(gPgLog, '6', 'Nel Flusso Annulli Stipendiali è presente l''obbligazione '
+            ||To_Char(aStipObbDett.esercizio_obbligazione)||'/'||To_Char(aStipObbDett.esercizio_ori_obbligazione)||'/'||aStipObbDett.cd_cds_obbligazione||'/'||To_Char(aStipObbDett.pg_obbligazione)
+            ||' che non esiste nel flusso degli Stipendi Principale', '');
+            -- inserisco la riga
+            aStipObb.esercizio      := aStipObbDett.esercizio;
+            aStipObb.mese         := aStipObbDett.mese;
+            aStipObb.cd_cds_obbligazione    := aStipObbDett.cd_cds_obbligazione;
+            aStipObb.esercizio_obbligazione   := aStipObbDett.esercizio_obbligazione;
+            aStipObb.pg_obbligazione    := aStipObbDett.pg_obbligazione;
+            aStipObb.im_totale      := - aStipObbDett.im_totale;
+            aStipObb.dacr         := Sysdate;
+            aStipObb.utcr         := aUser;
+            aStipObb.duva         := Sysdate;
+            aStipObb.utuv         := aUser;
+            aStipObb.pg_ver_rec       := 1;
+            aStipObb.esercizio_ori_obbligazione   := aStipObbDett.esercizio_ori_obbligazione;
+            ins_STIPENDI_COFI_OBB_SCAD(aStipObb);
           End If;
     End Loop;
     If esistonoDati = 'Y' Then
@@ -1238,32 +1249,32 @@ end if;
     End If;
     esistonoDati := 'N';
     For aStipCoriDett In cCori(FLUSSO_ANNULLI) Loop
-    	  esistonoDati := 'Y';
+        esistonoDati := 'Y';
           Update STIPENDI_COFI_CORI
           Set ammontare = Nvl(ammontare,0) - Nvl(aStipCoriDett.ammontare,0)
-          Where esercizio 			= aStipCoriDett.esercizio
-            And mese  				= aStipCoriDett.mese
-            And cd_contributo_ritenuta		= aStipCoriDett.cd_contributo_ritenuta
-            And ti_ente_percipiente		= aStipCoriDett.ti_ente_percipiente;
+          Where esercizio       = aStipCoriDett.esercizio
+            And mese          = aStipCoriDett.mese
+            And cd_contributo_ritenuta    = aStipCoriDett.cd_contributo_ritenuta
+            And ti_ente_percipiente   = aStipCoriDett.ti_ente_percipiente;
 
           If sql%Rowcount = 0 Then
-          	errore := 'Y';
-          	ibmutl200.logErr(gPgLog, '6', 'Nel Flusso Annulli Stipendiali è presente la ritenuta '
-          	||aStipCoriDett.cd_contributo_ritenuta||' che non esiste nel flusso degli Stipendi Principale', '');
-          	-- inserisco la riga
-          	aStipCori.esercizio 		:= aStipCoriDett.esercizio;
-          	aStipCori.mese 			:= aStipCoriDett.mese;
-          	aStipCori.cd_contributo_ritenuta:= aStipCoriDett.cd_contributo_ritenuta;
-          	aStipCori.ti_ente_percipiente 	:= aStipCoriDett.ti_ente_percipiente;
-          	aStipCori.ammontare 		:= - aStipCoriDett.ammontare;
-          	aStipCori.dt_da_competenza_coge := aStipCoriDett.dt_da_competenza_coge;
-          	aStipCori.dt_a_competenza_coge 	:= aStipCoriDett.dt_a_competenza_coge;
-          	aStipCori.dacr 			:= Sysdate;
-          	aStipCori.utcr 			:= aUser;
-          	aStipCori.duva 			:= Sysdate;
-          	aStipCori.utuv 			:= aUser;
-          	aStipCori.pg_ver_rec 		:= 1;
-          	ins_STIPENDI_COFI_CORI(aStipCori);
+            errore := 'Y';
+            ibmutl200.logErr(gPgLog, '6', 'Nel Flusso Annulli Stipendiali è presente la ritenuta '
+            ||aStipCoriDett.cd_contributo_ritenuta||' che non esiste nel flusso degli Stipendi Principale', '');
+            -- inserisco la riga
+            aStipCori.esercizio     := aStipCoriDett.esercizio;
+            aStipCori.mese      := aStipCoriDett.mese;
+            aStipCori.cd_contributo_ritenuta:= aStipCoriDett.cd_contributo_ritenuta;
+            aStipCori.ti_ente_percipiente   := aStipCoriDett.ti_ente_percipiente;
+            aStipCori.ammontare     := - aStipCoriDett.ammontare;
+            aStipCori.dt_da_competenza_coge := aStipCoriDett.dt_da_competenza_coge;
+            aStipCori.dt_a_competenza_coge  := aStipCoriDett.dt_a_competenza_coge;
+            aStipCori.dacr      := Sysdate;
+            aStipCori.utcr      := aUser;
+            aStipCori.duva      := Sysdate;
+            aStipCori.utuv      := aUser;
+            aStipCori.pg_ver_rec    := 1;
+            ins_STIPENDI_COFI_CORI(aStipCori);
           End If;
 
           Declare
@@ -1272,10 +1283,10 @@ end if;
              Select ammontare
              Into importo
              From STIPENDI_COFI_CORI
-             Where esercizio 			= aStipCoriDett.esercizio
-               And mese  			= aStipCoriDett.mese
-               And cd_contributo_ritenuta	= aStipCoriDett.cd_contributo_ritenuta
-               And ti_ente_percipiente		= aStipCoriDett.ti_ente_percipiente;
+             Where esercizio      = aStipCoriDett.esercizio
+               And mese       = aStipCoriDett.mese
+               And cd_contributo_ritenuta = aStipCoriDett.cd_contributo_ritenuta
+               And ti_ente_percipiente    = aStipCoriDett.ti_ente_percipiente;
              If importo < 0 Then
                 ibmutl200.logInf(gPgLog, '7', 'Dopo l''elaborazione del Flusso degli Annulli, la ritenuta '
                 ||aStipCoriDett.cd_contributo_ritenuta||' risulta negativa ('||To_Char(importo, '999G999G999G999G990D00')||')', '');
@@ -1291,32 +1302,32 @@ end if;
     --Flusso Rimborsi (solo parte entrata)
     esistonoDati := 'N';
     For aStipCoriDett In cCori(FLUSSO_RIMBORSI) Loop
-    	  esistonoDati := 'Y';
+        esistonoDati := 'Y';
           Update STIPENDI_COFI_CORI
           Set ammontare = Nvl(ammontare,0) - Nvl(aStipCoriDett.ammontare,0)
-          Where esercizio 			= aStipCoriDett.esercizio
-            And mese  				= aStipCoriDett.mese
-            And cd_contributo_ritenuta		= aStipCoriDett.cd_contributo_ritenuta
-            And ti_ente_percipiente		= aStipCoriDett.ti_ente_percipiente;
+          Where esercizio       = aStipCoriDett.esercizio
+            And mese          = aStipCoriDett.mese
+            And cd_contributo_ritenuta    = aStipCoriDett.cd_contributo_ritenuta
+            And ti_ente_percipiente   = aStipCoriDett.ti_ente_percipiente;
 
           If sql%Rowcount = 0 Then
-          	errore := 'Y';
-          	ibmutl200.logErr(gPgLog, '6', 'Nel Flusso Rimborsi è presente la ritenuta '
-          	||aStipCoriDett.cd_contributo_ritenuta||' che non esiste nel flusso degli Stipendi Principale', '');
-          	-- inserisco la riga
-          	aStipCori.esercizio 		:= aStipCoriDett.esercizio;
-          	aStipCori.mese 			:= aStipCoriDett.mese;
-          	aStipCori.cd_contributo_ritenuta:= aStipCoriDett.cd_contributo_ritenuta;
-          	aStipCori.ti_ente_percipiente 	:= aStipCoriDett.ti_ente_percipiente;
-          	aStipCori.ammontare 		:= - aStipCoriDett.ammontare;
-          	aStipCori.dt_da_competenza_coge := aStipCoriDett.dt_da_competenza_coge;
-          	aStipCori.dt_a_competenza_coge 	:= aStipCoriDett.dt_a_competenza_coge;
-          	aStipCori.dacr 			:= Sysdate;
-          	aStipCori.utcr 			:= aUser;
-          	aStipCori.duva 			:= Sysdate;
-          	aStipCori.utuv 			:= aUser;
-          	aStipCori.pg_ver_rec 		:= 1;
-          	ins_STIPENDI_COFI_CORI(aStipCori);
+            errore := 'Y';
+            ibmutl200.logErr(gPgLog, '6', 'Nel Flusso Rimborsi è presente la ritenuta '
+            ||aStipCoriDett.cd_contributo_ritenuta||' che non esiste nel flusso degli Stipendi Principale', '');
+            -- inserisco la riga
+            aStipCori.esercizio     := aStipCoriDett.esercizio;
+            aStipCori.mese      := aStipCoriDett.mese;
+            aStipCori.cd_contributo_ritenuta:= aStipCoriDett.cd_contributo_ritenuta;
+            aStipCori.ti_ente_percipiente   := aStipCoriDett.ti_ente_percipiente;
+            aStipCori.ammontare     := - aStipCoriDett.ammontare;
+            aStipCori.dt_da_competenza_coge := aStipCoriDett.dt_da_competenza_coge;
+            aStipCori.dt_a_competenza_coge  := aStipCoriDett.dt_a_competenza_coge;
+            aStipCori.dacr      := Sysdate;
+            aStipCori.utcr      := aUser;
+            aStipCori.duva      := Sysdate;
+            aStipCori.utuv      := aUser;
+            aStipCori.pg_ver_rec    := 1;
+            ins_STIPENDI_COFI_CORI(aStipCori);
           End If;
 
           Declare
@@ -1325,10 +1336,10 @@ end if;
              Select ammontare
              Into importo
              From STIPENDI_COFI_CORI
-             Where esercizio 			= aStipCoriDett.esercizio
-               And mese  			= aStipCoriDett.mese
-               And cd_contributo_ritenuta	= aStipCoriDett.cd_contributo_ritenuta
-               And ti_ente_percipiente		= aStipCoriDett.ti_ente_percipiente;
+             Where esercizio      = aStipCoriDett.esercizio
+               And mese       = aStipCoriDett.mese
+               And cd_contributo_ritenuta = aStipCoriDett.cd_contributo_ritenuta
+               And ti_ente_percipiente    = aStipCoriDett.ti_ente_percipiente;
              If importo < 0 Then
                 ibmutl200.logInf(gPgLog, '7', 'Dopo l''elaborazione del Flusso dei Rimborsi, la ritenuta '
                 ||aStipCoriDett.cd_contributo_ritenuta||' risulta negativa ('||To_Char(importo, '999G999G999G999G990D00')||')', '');
@@ -1353,8 +1364,8 @@ end if;
       And mese = aMese
       And tipo_flusso = FLUSSO_PRINCIPALE
       And cd_contributo_ritenuta In (Select cd_contributo_ritenuta
-      				 From tipo_contributo_ritenuta
-      				 Where cd_classificazione_cori = cnrctb545.isCoriIrap);
+               From tipo_contributo_ritenuta
+               Where cd_classificazione_cori = cnrctb545.isCoriIrap);
 
     Select Nvl(Sum(ammontare),0)
     Into annulliIrap
@@ -1363,8 +1374,8 @@ end if;
       And mese = aMese
       And tipo_flusso = FLUSSO_ANNULLI
       And cd_contributo_ritenuta In (Select cd_contributo_ritenuta
-      				 From tipo_contributo_ritenuta
-      				 Where cd_classificazione_cori = cnrctb545.isCoriIrap);
+               From tipo_contributo_ritenuta
+               Where cd_classificazione_cori = cnrctb545.isCoriIrap);
 
     Select Nvl(Sum(ammontare),0)
     Into sommaDettIrap
@@ -1373,8 +1384,8 @@ end if;
       And mese = aMese
       And tipo_flusso = FLUSSO_IRAP
       And cd_contributo_ritenuta In (Select cd_contributo_ritenuta
-      				 From tipo_contributo_ritenuta
-      				 Where cd_classificazione_cori = cnrctb545.isCoriIrap);
+               From tipo_contributo_ritenuta
+               Where cd_classificazione_cori = cnrctb545.isCoriIrap);
     If (totaleIrap - annulliIrap) != sommaDettIrap Then
        errore := 'Y';
        ibmutl200.logErr(gPgLog, '3', 'Errore di squadratura in Flusso Regionalizzazione IRAP. Nel Flusso principale '||
@@ -1384,23 +1395,23 @@ end if;
       Where esercizio = aEs
         And mese = aMese
         And cd_contributo_ritenuta In (Select cd_contributo_ritenuta
-      	    		               From tipo_contributo_ritenuta
-      				       Where cd_classificazione_cori = cnrctb545.isCoriIrap);
+                               From tipo_contributo_ritenuta
+                     Where cd_classificazione_cori = cnrctb545.isCoriIrap);
       esistonoDati := 'N';
       For aStipCoriDett In cCori(FLUSSO_IRAP) Loop
           esistonoDati := 'Y';
-          aStipCori.esercizio 			:= aStipCoriDett.esercizio;
-          aStipCori.mese 			:= aStipCoriDett.mese;
-          aStipCori.cd_contributo_ritenuta 	:= aStipCoriDett.cd_contributo_ritenuta;
-          aStipCori.ti_ente_percipiente 	:= aStipCoriDett.ti_ente_percipiente;
-          aStipCori.ammontare 			:= aStipCoriDett.ammontare;
-          aStipCori.dt_da_competenza_coge 	:= aStipCoriDett.dt_da_competenza_coge;
-          aStipCori.dt_a_competenza_coge 	:= aStipCoriDett.dt_a_competenza_coge;
-          aStipCori.dacr 			:= Sysdate;
-          aStipCori.utcr 			:= aUser;
-          aStipCori.duva 			:= Sysdate;
-          aStipCori.utuv 			:= aUser;
-          aStipCori.pg_ver_rec 			:= 1;
+          aStipCori.esercizio       := aStipCoriDett.esercizio;
+          aStipCori.mese      := aStipCoriDett.mese;
+          aStipCori.cd_contributo_ritenuta  := aStipCoriDett.cd_contributo_ritenuta;
+          aStipCori.ti_ente_percipiente   := aStipCoriDett.ti_ente_percipiente;
+          aStipCori.ammontare       := aStipCoriDett.ammontare;
+          aStipCori.dt_da_competenza_coge   := aStipCoriDett.dt_da_competenza_coge;
+          aStipCori.dt_a_competenza_coge  := aStipCoriDett.dt_a_competenza_coge;
+          aStipCori.dacr      := Sysdate;
+          aStipCori.utcr      := aUser;
+          aStipCori.duva      := Sysdate;
+          aStipCori.utuv      := aUser;
+          aStipCori.pg_ver_rec      := 1;
           ins_STIPENDI_COFI_CORI(aStipCori);
       End Loop;
       If esistonoDati = 'Y' Then
@@ -1426,7 +1437,7 @@ end if;
       And mese = aMese
       And tipo_flusso = FLUSSO_CONTR_FIGURATIVI;
 
-	  If totSpesaContribFig != totEntrataContribFig Then
+    If totSpesaContribFig != totEntrataContribFig Then
        errore := 'Y';
        ibmutl200.logErr(gPgLog, '3', 'Errore di squadratura nel Flusso dei Contributi Figurativi: Per la parte spesa '||
        'l''importo e'' '||To_Char(totSpesaContribFig, '999G999G999G999G990D00')||' mentre per la parte entrata l''importo e'' '||To_Char(totEntrataContribFig, '999G999G999G999G990D00'), '');
@@ -1434,20 +1445,20 @@ end if;
 
     esistonoDati := 'N';
     For aStipObbDett In cObb(FLUSSO_CONTR_FIGURATIVI) Loop
-    	  esistonoDati := 'Y';
+        esistonoDati := 'Y';
           Update STIPENDI_COFI_OBB_SCAD
           Set im_totale = Nvl(im_totale,0) + Nvl(aStipObbDett.im_totale,0)
-          Where esercizio 			= aStipObbDett.esercizio
-            And mese 				= aStipObbDett.mese
-            And cd_cds_obbligazione 		= aStipObbDett.cd_cds_obbligazione
-            And esercizio_obbligazione 		= aStipObbDett.esercizio_obbligazione
-            And pg_obbligazione 		= aStipObbDett.pg_obbligazione
-            And esercizio_ori_obbligazione 	= aStipObbDett.esercizio_ori_obbligazione;
+          Where esercizio       = aStipObbDett.esercizio
+            And mese        = aStipObbDett.mese
+            And cd_cds_obbligazione     = aStipObbDett.cd_cds_obbligazione
+            And esercizio_obbligazione    = aStipObbDett.esercizio_obbligazione
+            And pg_obbligazione     = aStipObbDett.pg_obbligazione
+            And esercizio_ori_obbligazione  = aStipObbDett.esercizio_ori_obbligazione;
           If sql%Rowcount = 0 Then
-          	errore := 'Y';
-          	ibmutl200.logErr(gPgLog, '6', 'Nel Flusso Contributi Figurativi è presente l''obbligazione '
-          	||To_Char(aStipObbDett.esercizio_obbligazione)||'/'||To_Char(aStipObbDett.esercizio_ori_obbligazione)||'/'||aStipObbDett.cd_cds_obbligazione||'/'||To_Char(aStipObbDett.pg_obbligazione)
-          	||' che non esiste nel flusso degli Stipendi Principale', '');
+            errore := 'Y';
+            ibmutl200.logErr(gPgLog, '6', 'Nel Flusso Contributi Figurativi è presente l''obbligazione '
+            ||To_Char(aStipObbDett.esercizio_obbligazione)||'/'||To_Char(aStipObbDett.esercizio_ori_obbligazione)||'/'||aStipObbDett.cd_cds_obbligazione||'/'||To_Char(aStipObbDett.pg_obbligazione)
+            ||' che non esiste nel flusso degli Stipendi Principale', '');
           End If;
     End Loop;
     If esistonoDati = 'Y' Then
@@ -1457,17 +1468,17 @@ end if;
     End If;
     esistonoDati := 'N';
     For aStipCoriDett In cCori(FLUSSO_CONTR_FIGURATIVI) Loop
-    	  esistonoDati := 'Y';
+        esistonoDati := 'Y';
           Update STIPENDI_COFI_CORI
           Set ammontare = Nvl(ammontare,0) + Nvl(aStipCoriDett.ammontare,0)
-          Where esercizio 			= aStipCoriDett.esercizio
-            And mese  				= aStipCoriDett.mese
-            And cd_contributo_ritenuta		= aStipCoriDett.cd_contributo_ritenuta
-            And ti_ente_percipiente		= aStipCoriDett.ti_ente_percipiente;
+          Where esercizio       = aStipCoriDett.esercizio
+            And mese          = aStipCoriDett.mese
+            And cd_contributo_ritenuta    = aStipCoriDett.cd_contributo_ritenuta
+            And ti_ente_percipiente   = aStipCoriDett.ti_ente_percipiente;
           If sql%Rowcount = 0 Then
-          	errore := 'Y';
-          	ibmutl200.logErr(gPgLog, '6', 'Nel Flusso Contributi Figurativi è presente la ritenuta '
-          	||aStipCoriDett.cd_contributo_ritenuta||' che non esiste nel flusso degli Stipendi Principale', '');
+            errore := 'Y';
+            ibmutl200.logErr(gPgLog, '6', 'Nel Flusso Contributi Figurativi è presente la ritenuta '
+            ||aStipCoriDett.cd_contributo_ritenuta||' che non esiste nel flusso degli Stipendi Principale', '');
           End If;
     End Loop;
     If esistonoDati = 'Y' Then
@@ -1526,7 +1537,7 @@ end if;
 
       If contaAddCom >0 Then
            errore := 'Y';
-	       ibmutl200.logErr(gPgLog, '9', 'Errore nel Flusso delle Addizionali Comunali. Alcuni Codici Catastali non sono valorizzati', '');
+         ibmutl200.logErr(gPgLog, '9', 'Errore nel Flusso delle Addizionali Comunali. Alcuni Codici Catastali non sono valorizzati', '');
       Else
            Select Count(1)
            Into contaAddCom
@@ -1540,7 +1551,7 @@ end if;
                 errore := 'Y';
                 Begin
                    for rec in (select cd_catastale
-                   					  From STIPENDI_COFI_CORI_DETT
+                              From STIPENDI_COFI_CORI_DETT
                               Where esercizio = aEs
                                 And mese = aMese
                                 And tipo_flusso = FLUSSO_ADDIZIONALE_COMUNALE
@@ -1549,111 +1560,111 @@ end if;
                          ibmutl200.logErr(gPgLog, '9', 'Errore nel Flusso delle Addizionali Comunali. Il Codice Catastale '||rec.cd_catastale||' non è corretto', '');
                    end loop;
                 End;
-	            --ibmutl200.logErr(gPgLog, '9', 'Errore nel Flusso delle Addizionali Comunali. Alcuni Codici Catastali non sono corretti', '');
+              --ibmutl200.logErr(gPgLog, '9', 'Errore nel Flusso delle Addizionali Comunali. Alcuni Codici Catastali non sono corretti', '');
            Else
              If esistonoDati = 'Y' Then
                 --per tutti i cori presenti in STIPENDI_COFI_CORI det tipo Addizionale, controllo la quadratura in STIPENDI_COFI_CORI_DETT
                 For aStipCori In (Select *
-                		   From STIPENDI_COFI_CORI
-             			   Where esercizio = aEs
-       			            And mese = aMese
-       			     	    And cd_contributo_ritenuta In (Select cd_contributo_ritenuta
-           		               			           From tipo_contributo_ritenuta
-       			        			    	   Where cnrctb545.getIsAddComunale(cd_classificazione_cori) = 'Y')) Loop
+                       From STIPENDI_COFI_CORI
+                     Where esercizio = aEs
+                        And mese = aMese
+                      And cd_contributo_ritenuta In (Select cd_contributo_ritenuta
+                                             From tipo_contributo_ritenuta
+                                   Where cnrctb545.getIsAddComunale(cd_classificazione_cori) = 'Y')) Loop
 
-  	   	    -- Controllo la quadratura con il flusso dei dettagli
-	   	    Select Nvl(Sum(ammontare),0)
-    	   	    Into sommaDetAddCom
-    	   	    From STIPENDI_COFI_CORI_DETT
-    	   	    Where esercizio = aEs
-       	      	      And mese = aMese
-       	              And tipo_flusso = FLUSSO_ADDIZIONALE_COMUNALE
-       	              And cd_contributo_ritenuta = aStipCori.cd_contributo_ritenuta
-       	              And ti_ente_percipiente = aStipCori.ti_ente_percipiente;
+            -- Controllo la quadratura con il flusso dei dettagli
+          Select Nvl(Sum(ammontare),0)
+              Into sommaDetAddCom
+              From STIPENDI_COFI_CORI_DETT
+              Where esercizio = aEs
+                      And mese = aMese
+                      And tipo_flusso = FLUSSO_ADDIZIONALE_COMUNALE
+                      And cd_contributo_ritenuta = aStipCori.cd_contributo_ritenuta
+                      And ti_ente_percipiente = aStipCori.ti_ente_percipiente;
 
-       	              If aStipCori.ammontare != sommaDetAddCom Then
-	   	         errore := 'Y';
-	   	         ibmutl200.logErr(gPgLog, '3', 'Errore di squadratura nel Flusso delle Addizionali Comunali per il cori '||To_Char(aStipCori.cd_contributo_ritenuta)||
-	   	         '. Nel Flusso (Principale - Annulli - Rimborsi) l''importo e'' '||To_Char(aStipCori.ammontare, '999G999G999G999G990D00')||' mentre la somma dei dettagli e'' '||To_Char(sommaDetAddCom, '999G999G999G999G990D00'), '');
-	              End If;
+                      If aStipCori.ammontare != sommaDetAddCom Then
+               errore := 'Y';
+               ibmutl200.logErr(gPgLog, '3', 'Errore di squadratura nel Flusso delle Addizionali Comunali per il cori '||To_Char(aStipCori.cd_contributo_ritenuta)||
+               '. Nel Flusso (Principale - Annulli - Rimborsi) l''importo e'' '||To_Char(aStipCori.ammontare, '999G999G999G999G990D00')||' mentre la somma dei dettagli e'' '||To_Char(sommaDetAddCom, '999G999G999G999G990D00'), '');
+                End If;
 
-	   	    -- Aggiorno l'importo del gruppo su STIPENDI_COFI_CORI con la somma dei positivi della colonna saldo
-	   	    -- cioè con quello che realmente verso con F24
-	   	    Select Nvl(Sum(saldo),0)
-	            Into sommaSaldiPosAddCom
-	            From STIPENDI_COFI_CORI_DETT
-    	   	    Where esercizio = aEs
-       	      	      And mese = aMese
-       	              And tipo_flusso = FLUSSO_ADDIZIONALE_COMUNALE
-       	              And cd_contributo_ritenuta = aStipCori.cd_contributo_ritenuta
-       	              And ti_ente_percipiente = aStipCori.ti_ente_percipiente
-       	              And saldo > 0;
+          -- Aggiorno l'importo del gruppo su STIPENDI_COFI_CORI con la somma dei positivi della colonna saldo
+          -- cioè con quello che realmente verso con F24
+          Select Nvl(Sum(saldo),0)
+              Into sommaSaldiPosAddCom
+              From STIPENDI_COFI_CORI_DETT
+              Where esercizio = aEs
+                      And mese = aMese
+                      And tipo_flusso = FLUSSO_ADDIZIONALE_COMUNALE
+                      And cd_contributo_ritenuta = aStipCori.cd_contributo_ritenuta
+                      And ti_ente_percipiente = aStipCori.ti_ente_percipiente
+                      And saldo > 0;
 
-       	            -- Calcolo la differenza tra quello che mi risulta da versare su STIPENDI_COFI_CORI e quello
-       	            -- che realmente verserò con F24 (cioè la somma dei positivi della colonna saldo in STIPENDI_COFI_CORI_DETT
-       	            differenza := sommaSaldiPosAddCom - Nvl(aStipCori.ammontare,0);
-       	            -- se la differenza è positiva vuol dire che in F24 ho di più di quello che mi risulta da versare
-       	            -- e quindi aumento l'importo da versare esattamente della differenza
-       	            -- se la differenza è negativa vuol dire che in F24 ho di meno di quello che mi risulta da versare
-       	            -- e quindi diminuisco l'importo da versare esattamente della differenza
-       	            If differenza != 0 Then
-       	                --devo aggiungere in STIPENDI_COFI_CORI la ritenuta per la differenza delle addizionali comunali
-       	                ritAddCom := CNRCTB015.getVal01PerChiave(aEs, 'DIFFERENZA_ADD_COM_STIPENDI','CONTRIBUTO_RITENUTA');
+                    -- Calcolo la differenza tra quello che mi risulta da versare su STIPENDI_COFI_CORI e quello
+                    -- che realmente verserò con F24 (cioè la somma dei positivi della colonna saldo in STIPENDI_COFI_CORI_DETT
+                    differenza := sommaSaldiPosAddCom - Nvl(aStipCori.ammontare,0);
+                    -- se la differenza è positiva vuol dire che in F24 ho di più di quello che mi risulta da versare
+                    -- e quindi aumento l'importo da versare esattamente della differenza
+                    -- se la differenza è negativa vuol dire che in F24 ho di meno di quello che mi risulta da versare
+                    -- e quindi diminuisco l'importo da versare esattamente della differenza
+                    If differenza != 0 Then
+                        --devo aggiungere in STIPENDI_COFI_CORI la ritenuta per la differenza delle addizionali comunali
+                        ritAddCom := CNRCTB015.getVal01PerChiave(aEs, 'DIFFERENZA_ADD_COM_STIPENDI','CONTRIBUTO_RITENUTA');
 
-       	                Update STIPENDI_COFI_CORI
-       	                   Set ammontare = Nvl(ammontare,0) + differenza
-       	                 Where esercizio = aEs
-       		           And mese = aMese
-       		           And cd_contributo_ritenuta = aStipCori.cd_contributo_ritenuta
-       		           And ti_ente_percipiente = aStipCori.ti_ente_percipiente;
+                        Update STIPENDI_COFI_CORI
+                           Set ammontare = Nvl(ammontare,0) + differenza
+                         Where esercizio = aEs
+                     And mese = aMese
+                     And cd_contributo_ritenuta = aStipCori.cd_contributo_ritenuta
+                     And ti_ente_percipiente = aStipCori.ti_ente_percipiente;
 
-       		        If differenza > 0 Then
-       		           ibmutl200.logInf(gPgLog, '5', 'Per il cori '||To_Char(aStipCori.cd_contributo_ritenuta)||' è stato aggiunto all''importo '||
-	   	           To_Char(aStipCori.ammontare, '999G999G999G999G990D00')||', l''importo '||To_Char(Abs(differenza), '999G999G999G999G990D00'), '');
-	   	        Else
-	   	           ibmutl200.logInf(gPgLog, '5', 'Per il cori '||To_Char(aStipCori.cd_contributo_ritenuta)||' è stato diminuito l''importo '||
-	   	           To_Char(aStipCori.ammontare, '999G999G999G999G990D00')||', dell''importo '||To_Char(Abs(differenza), '999G999G999G999G990D00'), '');
-	   	        End If;
+                  If differenza > 0 Then
+                     ibmutl200.logInf(gPgLog, '5', 'Per il cori '||To_Char(aStipCori.cd_contributo_ritenuta)||' è stato aggiunto all''importo '||
+                 To_Char(aStipCori.ammontare, '999G999G999G999G990D00')||', l''importo '||To_Char(Abs(differenza), '999G999G999G999G990D00'), '');
+              Else
+                 ibmutl200.logInf(gPgLog, '5', 'Per il cori '||To_Char(aStipCori.cd_contributo_ritenuta)||' è stato diminuito l''importo '||
+                 To_Char(aStipCori.ammontare, '999G999G999G999G990D00')||', dell''importo '||To_Char(Abs(differenza), '999G999G999G999G990D00'), '');
+              End If;
 
-       	                --l'importo eventualmente aumentato o diminuito viene inserito con una ritenuta particolare per la quadratura degli stipendi
-          	        Begin
-          	           If aMese = 15 Then
-          	              meseCompetenza := 11;
-          	           Elsif aMese = 13 Then
-          	              meseCompetenza := 12;
-          	           Else
-          	              meseCompetenza := aMese;
-          	           End If;
+                        --l'importo eventualmente aumentato o diminuito viene inserito con una ritenuta particolare per la quadratura degli stipendi
+                    Begin
+                       If aMese = 15 Then
+                          meseCompetenza := 11;
+                       Elsif aMese = 13 Then
+                          meseCompetenza := 12;
+                       Else
+                          meseCompetenza := aMese;
+                       End If;
 
-       	                   aStipCori.esercizio 			:= aEs;
-          		   aStipCori.mese 			:= aMese;
-          		   aStipCori.cd_contributo_ritenuta 	:= ritAddCom;
-          		   aStipCori.ti_ente_percipiente 	:= 'P';
-          		   aStipCori.ammontare 			:= -differenza;
-          		   aStipCori.dt_da_competenza_coge 	:= IBMUTL001.getFirstDayOfMonth(TO_DATE('01'|| To_Char(Lpad(meseCompetenza,2,0)) || To_Char(aEs), 'DDMMYYYY'));
-          		   aStipCori.dt_a_competenza_coge 	:= IBMUTL001.getLastDayOfMonth(TO_DATE('01'|| To_Char(Lpad(meseCompetenza,2,0)) || To_Char(aEs), 'DDMMYYYY'));
-          		   aStipCori.dacr 			:= Sysdate;
-          		   aStipCori.utcr 			:= aUser;
-          		   aStipCori.duva 			:= Sysdate;
-          		   aStipCori.utuv 			:= aUser;
-          		   aStipCori.pg_ver_rec 		:= 1;
-          		   ins_STIPENDI_COFI_CORI(aStipCori);
-          	        Exception
-          		 When Dup_Val_On_Index Then
-          		    Update STIPENDI_COFI_CORI
-          		    Set ammontare = Nvl(ammontare,0) - Nvl(differenza,0)
-          		    Where esercizio = aEs
-            		      And mese  = aMese
-            		      And cd_contributo_ritenuta = ritAddCom
-            		      And ti_ente_percipiente = 'P';
-            	        End;
+                           aStipCori.esercizio      := aEs;
+                 aStipCori.mese       := aMese;
+                 aStipCori.cd_contributo_ritenuta   := ritAddCom;
+                 aStipCori.ti_ente_percipiente  := 'P';
+                 aStipCori.ammontare      := -differenza;
+                 aStipCori.dt_da_competenza_coge  := IBMUTL001.getFirstDayOfMonth(TO_DATE('01'|| To_Char(Lpad(meseCompetenza,2,0)) || To_Char(aEs), 'DDMMYYYY'));
+                 aStipCori.dt_a_competenza_coge   := IBMUTL001.getLastDayOfMonth(TO_DATE('01'|| To_Char(Lpad(meseCompetenza,2,0)) || To_Char(aEs), 'DDMMYYYY'));
+                 aStipCori.dacr       := Sysdate;
+                 aStipCori.utcr       := aUser;
+                 aStipCori.duva       := Sysdate;
+                 aStipCori.utuv       := aUser;
+                 aStipCori.pg_ver_rec     := 1;
+                 ins_STIPENDI_COFI_CORI(aStipCori);
+                    Exception
+               When Dup_Val_On_Index Then
+                  Update STIPENDI_COFI_CORI
+                  Set ammontare = Nvl(ammontare,0) - Nvl(differenza,0)
+                  Where esercizio = aEs
+                      And mese  = aMese
+                      And cd_contributo_ritenuta = ritAddCom
+                      And ti_ente_percipiente = 'P';
+                      End;
 
-			ibmutl200.logInf(gPgLog, '5', 'Verra'' aggiunta alla ritenuta '||ritAddCom||' l''importo '
-          			||To_Char(- differenza, '999G999G999G999G990D00'), '');
-       		    End If;
-  	   	End Loop;
-  	     End If;
-  	   End If;
+      ibmutl200.logInf(gPgLog, '5', 'Verra'' aggiunta alla ritenuta '||ritAddCom||' l''importo '
+                ||To_Char(- differenza, '999G999G999G999G990D00'), '');
+              End If;
+        End Loop;
+         End If;
+       End If;
       End If;
 
       If esistonoDati = 'Y' Then
@@ -1671,7 +1682,7 @@ end if;
           If aStipCori.ammontare < 0 Then
              totaleNegativi := totaleNegativi + aStipCori.ammontare;
 
-       	     ibmutl200.logInf(gPgLog, '2', 'Eliminata la ritenuta '||To_Char(aStipCori.cd_contributo_ritenuta)||' perche'' negativa. ('||To_Char(aStipCori.ammontare)||')', '');
+             ibmutl200.logInf(gPgLog, '2', 'Eliminata la ritenuta '||To_Char(aStipCori.cd_contributo_ritenuta)||' perche'' negativa. ('||To_Char(aStipCori.ammontare)||')', '');
 
              Delete STIPENDI_COFI_CORI
              Where esercizio = aStipCori.esercizio
@@ -1781,8 +1792,8 @@ end if;
     );
  end;
  Procedure annullaElabStipDett (aEs number,
-       			    aMese number,
-       			    aUser varchar2) Is
+                aMese number,
+                aUser varchar2) Is
   stato_liquidazione  VARCHAR2(1);
  Begin
     --controllo che per il mese scelto non sia stata già effettuata la liquidazione
@@ -1796,16 +1807,16 @@ end if;
          IBMERR001.RAISE_ERR_GENERICO('Non è possibile procedere all''annullamento dell''elaborazione poichè è stata già effettuata la liquidazione del mese selezionato');
     Else
          Delete STIPENDI_COFI_OBB_SCAD
-    	 Where esercizio = aEs
-      	   And mese = aMese;
+       Where esercizio = aEs
+           And mese = aMese;
 
-    	 Delete STIPENDI_COFI_CORI
-    	 Where esercizio = aEs
-      	   And mese = aMese;
+       Delete STIPENDI_COFI_CORI
+       Where esercizio = aEs
+           And mese = aMese;
 
-    	 Delete STIPENDI_COFI_LOGS
-     	 Where esercizio = aEs
-      	   And mese = aMese;
+       Delete STIPENDI_COFI_LOGS
+       Where esercizio = aEs
+           And mese = aMese;
     End If;
   End;
 
