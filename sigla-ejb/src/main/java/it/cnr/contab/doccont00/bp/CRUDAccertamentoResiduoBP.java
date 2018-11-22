@@ -253,7 +253,7 @@ public class CRUDAccertamentoResiduoBP extends CRUDAccertamentoBP {
 						getArchivioAllegati().setReadonlyOnEdit(true);
 					}
 				} else if (getTab( "tab" ).equalsIgnoreCase("tabVincoli")) {
-					if (!isROStato())
+					if (!isROStato() || ((AccertamentoResiduoBulk)getModel()).isStatoDubbio())
 						setStatusAndEditableMap(EDIT);
 				}
 			}
