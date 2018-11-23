@@ -312,4 +312,16 @@ public class CRUDVar_stanz_resAction extends CRUDAction {
 			return handleException(context, ex);
 		}			
 	}
+	public Forward doOnChangeTipologia(ActionContext context) {
+		CRUDVar_stanz_resBP testataBP = (CRUDVar_stanz_resBP)getBusinessProcess(context);
+		Var_stanz_resBulk var_stanz_res = (Var_stanz_resBulk)testataBP.getModel();
+		try{
+			fillModel(context);
+			if (!(Var_stanz_resBulk.TIPOLOGIA_STO.equals(var_stanz_res.getTipologia())||Var_stanz_resBulk.TIPOLOGIA_STO_INT.equals(var_stanz_res.getTipologia())))
+			   var_stanz_res.setDs_causale(null);
+			return context.findDefaultForward();
+		}catch(Throwable e){ 
+			return handleException(context,e);
+		}		
+	}
 }

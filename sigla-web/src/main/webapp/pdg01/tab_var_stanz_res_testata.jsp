@@ -12,6 +12,7 @@
 	Var_stanz_resBulk var_stanz_res = (Var_stanz_resBulk)bp.getModel();	
 	boolean isTableEnabled = (bp.isCdrScrivania() && var_stanz_res.isPropostaProvvisoria());
 	boolean isFieldEnabled = !isTableEnabled;
+	 boolean isFieldStoEnabled = !(bp.isSearching()||(isTableEnabled && (Var_stanz_resBulk.TIPOLOGIA_STO.equals(var_stanz_res.getTipologia())|| Var_stanz_resBulk.TIPOLOGIA_STO_INT.equals(var_stanz_res.getTipologia()))));
 //	boolean isAbilitato = !(bp.isCdrScrivania() && bp.isAbilitatoModificaDescVariazioni());
 	boolean isAbilitato =( isFieldEnabled && !(bp.isCdrScrivania() && bp.isAbilitatoModificaDescVariazioni()));
 %>
@@ -42,7 +43,11 @@
 	</tr>
   <TR>
    <TD><% bp.getController().writeFormLabel(out,"tipologia");%></TD>
-   <TD colspan="5"><% bp.getController().writeFormInput(out,"default","tipologia",bp.isROTipologia(),null,null);%></TD>
+   <TD colspan="2"><% bp.getController().writeFormInput(out,"default","tipologia",bp.isROTipologia(),null,null);%></TD>
+   <TD><% bp.getController().writeFormLabel(out,"ds_causale");%></TD>
+    <TD colspan="3">	  
+    	<% bp.getController().writeFormInput(out,"default","ds_causale",isFieldStoEnabled,null,null);%>
+    </TD>
   </TR>
 <% if (bp.isAttivaGestioneVariazioniTrasferimento() && (bp.isSearching() ||  
 		var_stanz_res!=null && Var_stanz_resBulk.TIPOLOGIA_STO.equals(var_stanz_res.getTipologia()))) { %>
@@ -60,7 +65,7 @@
 		 	%>
 		 </TD>
 		 <% } %>
-  	 <% } 
+  	 <% }  
 	    if (bp.isSearching() || (var_stanz_res.isMotivazioneVariazioneProroga() || var_stanz_res.isMotivazioneVariazioneAltreSpese())) { %>
 		 <TD <% if (!bp.isSearching()){ %>colspan="3"<% } %>>
 		 	<%	
