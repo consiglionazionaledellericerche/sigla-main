@@ -12,6 +12,7 @@
 	PdGVariazioneBP bp = (PdGVariazioneBP)BusinessProcess.getBusinessProcess(request);
 	Pdg_variazioneBulk bk = (Pdg_variazioneBulk) bp.getModel();
 	boolean isFieldEnabled = !((bp.isSearching())||(bp.isCdrScrivania()&&bk.isPropostaProvvisoria()));
+	boolean isFieldStoEnabled = !((bp.isSearching())||(bp.isCdrScrivania()&&bk.isPropostaProvvisoria())&& bk.isStorno()&&bk.isGestioneSpeseEnable());
 	boolean isFieldNonApprovaEnabled = !(bp.isSearching()||bk.isPropostaDefinitiva());
 //	boolean isAbilitato = !(bp.isCdrScrivania() &&bk.isApprovata() && bp.isAbilitatoModificaDescVariazioni());
 	boolean isAbilitato =( isFieldEnabled && !(bp.isCdrScrivania() &&bk.isApprovata() && bp.isAbilitatoModificaDescVariazioni()));
@@ -81,7 +82,11 @@
     <% } %>
     <TR>
       <TD><% bp.getController().writeFormLabel(out,"tipologia_fin");%></TD>
-      <TD colspan="5"><% bp.getController().writeFormInput(out,"tipologia_fin");%></TD>
+      <TD colspan="1"><% bp.getController().writeFormInput(out,"tipologia_fin");%></TD>
+      <TD><% bp.getController().writeFormLabel(out,"ds_causale");%></TD>
+     <TD colspan="3">	  
+    	<% bp.getController().writeFormInput(out,"default","ds_causale",isFieldStoEnabled,null,null);%>
+    </TD>
     </TR>
 <% } %>
   <TR>
