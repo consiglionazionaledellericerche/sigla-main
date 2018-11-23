@@ -55,17 +55,27 @@
         <td><% bp.getController().writeFormInput( out, "dt_fine_validita"); %></td>
         </tr>
         <tr>
-        <td><% JSPUtils.button(out,
-            bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-scissors" : bp.encodePath("img/cut24.gif"),
-            bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-scissors" : bp.encodePath("img/cut24.gif"),
-            "Annulla password",
-            "javascript:submitForm('doResetPassword')",
-            "btn-outline-danger btn-title btn-block faa-parent animated-hover",
-            bp.isEditing(),
-            bp.getParentRoot().isBootstrap()); %>
-        </td>
-        <td><% bp.getController().writeFormInput( out, "fl_password_change"); %>
-                <% bp.getController().writeFormLabel( out, "fl_password_change"); %></td>
+         <% if (bulk != null && bulk.getFl_autenticazione_ldap()) {%>
+        		<td><% JSPUtils.button(out,
+           			bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-scissors" : bp.encodePath("img/cut24.gif"),
+   					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-scissors" : bp.encodePath("img/cut24.gif"),
+        			"Riattiva utenza inutilizzata","javascript:submitForm('doResetInutilizzo')",
+        			"btn-outline-danger btn-title btn-block faa-parent animated-hover",
+					bp.isEditing(),bp.getParentRoot().isBootstrap()); %></td>
+         <%}else{ %>  	
+	        <td><% JSPUtils.button(out,
+	            bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-scissors" : bp.encodePath("img/cut24.gif"),
+	            bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-scissors" : bp.encodePath("img/cut24.gif"),
+	            "Annulla password",
+	            "javascript:submitForm('doResetPassword')",
+	            "btn-outline-danger btn-title btn-block faa-parent animated-hover",
+	            bp.isEditing(),
+	            bp.getParentRoot().isBootstrap()); %>
+	        </td>
+	        <td><% bp.getController().writeFormInput( out, "fl_password_change"); %>
+	                <% bp.getController().writeFormLabel( out, "fl_password_change"); %></td>
+	        
+         <%} %>
         </tr>
         <tr><% bp.getController().writeFormField( out, "find_cdr"); %></tr>
         <% if (bp.isCdrConfiguratoreAll(HttpActionContext.getUserContext(session))) {%>
