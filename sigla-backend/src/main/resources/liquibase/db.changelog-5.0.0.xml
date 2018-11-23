@@ -1221,4 +1221,15 @@
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
+      <changeSet author="rosangela.pucciarelli" id="alter_var_stanz_res_causale>
+        <addColumn tableName="var_stanz_res">
+            <column name="ds_causale" type="varchar(50)" remarks="Descrizione aggiuntiva per etichettare delle variazioni."/>
+        </addColumn>
+    </changeSet>
+      <changeSet author="rosangela.pucciarelli" id="alter_pdg_varizione_causale>
+        <addColumn tableName="pdg_variazione">
+            <column name="ds_causale" type="varchar(50)" remarks="Descrizione aggiuntiva per etichettare delle variazioni."/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

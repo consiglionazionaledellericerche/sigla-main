@@ -72,7 +72,16 @@ public class Pdg_variazioneBase extends Pdg_variazioneKey implements Keyed {
 
 	// ID_BANDO VARCHAR2(30)
 	private java.lang.String idBando;
+	
+	
+    private java.lang.String ds_causale;
 
+	public java.lang.String getDs_causale() {
+		return ds_causale;
+	}
+	public void setDs_causale(java.lang.String ds_causale) {
+		this.ds_causale = ds_causale;
+	}
 	public Pdg_variazioneBase() {
 		super();
 	}
