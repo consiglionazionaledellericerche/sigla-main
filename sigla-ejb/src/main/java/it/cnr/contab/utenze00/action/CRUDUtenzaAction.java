@@ -322,7 +322,7 @@ public Forward doAbilitaUtenteLdap(ActionContext context, int opt) throws Remote
 		return handleException(context,e);
 	}
 	return context.findDefaultForward();
-}
+} 
 public Forward doDisabilitaUtenteLdap(ActionContext context, int opt) throws RemoteException {
 	try 
 	{
@@ -335,4 +335,20 @@ public Forward doDisabilitaUtenteLdap(ActionContext context, int opt) throws Rem
 	}
 	return context.findDefaultForward();
 }
+public Forward doResetInutilizzo(ActionContext context) 
+{
+	try
+	{
+		CRUDBP bp = (CRUDBP)context.getBusinessProcess();
+		if ( bp instanceof it.cnr.contab.utenze00.bp.CRUDUtenzaBP )
+			((it.cnr.contab.utenze00.bp.CRUDUtenzaBP)bp).resetInutilizzo( context );
+		bp.setMessage( "Utenza riattivata!" );
+		return context.findDefaultForward();
+	}
+	catch (Exception e )
+	{
+		return handleException( context, e );
+	}	
+}
+
 }
