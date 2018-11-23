@@ -414,6 +414,7 @@
 		inputSize="8"
 		label="Data firma" />	
 
+	
 	<fieldProperty
 		name="tiMotivazioneVariazione"
 		property="tiMotivazioneVariazione"
@@ -459,7 +460,18 @@
         enabledOnEdit="true"                
 		nullable="false"
 		label="Dettagli Bando" />
-
+	<fieldProperty
+		name="ds_causale"
+		property="ds_causale"
+		inputType="SELECT"
+		keysProperty="ds_causaleKeys"
+		maxLength="50"
+        enabledOnInsert="true"
+        enabledOnEdit="true"
+        enabledOnSearch="true"		
+		nullable="true"
+		label="Delibera 210/2018" />	
+	
     <form
         name="searchtool">
 	 	<formFieldProperty
@@ -587,6 +599,8 @@
 		name="idMatricola" />
 	<formFieldProperty
 		name="idBando" />
+	<formFieldProperty
+		name="ds_causale" />	
 		
 							
 	<findFieldProperty
@@ -637,6 +651,8 @@
 		name="idMatricola" />
 	<findFieldProperty
 		name="idBando" />
+	<findFieldProperty
+		name="ds_causale" />
 
 	<columnFieldProperty
 		name="esercizio" />
@@ -676,6 +692,8 @@
 		name="stato_invio" />	
 	<columnFieldProperty
 		name="dt_firma" />		
+	<columnFieldProperty
+		name="ds_causale" />	
 	<columnSet
 	        name="RiepilogoVariazioni">
         	<columnFieldProperty
@@ -742,6 +760,8 @@
 				name="stato_invio" />	
 			<columnFieldProperty
 				name="dt_firma" />	
+			<columnFieldProperty
+				name="ds_causale" />	
 	</columnSet>
 	
 	
