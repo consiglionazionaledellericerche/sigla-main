@@ -29,6 +29,7 @@ import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneGestionaleBP;
 import it.cnr.contab.pdg01.bp.SelezionatoreAssestatoBP;
+import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resBP;
@@ -598,6 +599,8 @@ public class PdGVariazioneAction extends it.cnr.jada.util.action.CRUDAction {
 				pdgVar.setIdMatricola(null);
 				pdgVar.setIdBando(null);
 			}				
+			if (!(Tipo_variazioneBulk.STORNO_SPESA_ISTITUTI_DIVERSI.equals(pdgVar.getTipologia())||Tipo_variazioneBulk.STORNO_SPESA_STESSO_ISTITUTO.equals(pdgVar.getTipologia())))
+				pdgVar.setDs_causale(null);
 			return context.findDefaultForward();
 		}catch(java.lang.ClassCastException ex){
 			return context.findDefaultForward();

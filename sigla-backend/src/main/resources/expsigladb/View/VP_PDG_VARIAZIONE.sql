@@ -29,7 +29,8 @@ CREATE OR REPLACE FORCE VIEW vp_pdg_variazione (esercizio,
                                                 dt_firma,
                                                 ti_motivazione_variazione,
                                                 id_matricola,
-                                                id_bando
+                                                id_bando,
+                                                ds_causale
                                                )
 AS
    SELECT
@@ -55,6 +56,6 @@ AS
           v.utcr, v.duva, v.utuv, v.pg_ver_rec, v.dt_app_formale, v.tipologia,
           v.tipologia_fin, v.ti_appartenenza, v.ti_gestione,
           v.cd_elemento_voce, v.fl_visto_dip_variazioni, v.stato_invio,
-          v.dt_firma, v.ti_motivazione_variazione, v.id_matricola, v.id_bando
+          v.dt_firma, v.ti_motivazione_variazione, v.id_matricola, v.id_bando,v.ds_causale
      FROM pdg_variazione v, cdr c
     WHERE v.cd_centro_responsabilita = c.cd_centro_responsabilita;

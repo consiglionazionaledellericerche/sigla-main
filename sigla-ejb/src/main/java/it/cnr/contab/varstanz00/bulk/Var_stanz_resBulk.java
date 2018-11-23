@@ -56,6 +56,14 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 		ti_tipologia_finKeys.put(NaturaBulk.TIPO_NATURA_FONTI_INTERNE,"Fonti Interne");
 		ti_tipologia_finKeys.put(NaturaBulk.TIPO_NATURA_FONTI_ESTERNE,"Fonti Esterne");
 	}
+	private static final java.util.Dictionary ds_causaleKeys = new it.cnr.jada.util.OrderedHashtable();
+	final public static String FONDO = "Fondo Perequativo Stabilizzazioni";
+	final public static String OVERHEAD = "Overhead/Spese Generali";
+
+	static{
+		ds_causaleKeys.put(FONDO,"Fondo Perequativo Stabilizzazioni");
+		ds_causaleKeys.put(OVERHEAD,"Overhead/Spese Generali");
+	}
 
 	private CdsBulk centroDiSpesa;
 	private CdrBulk centroDiResponsabilita;
@@ -507,5 +515,8 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	
 	public void setStorageMatricola(String storageMatricola) {
 		this.storageMatricola = storageMatricola;
+	}
+	public final java.util.Dictionary getDs_causaleKeys() {
+		return ds_causaleKeys;
 	}
 }
