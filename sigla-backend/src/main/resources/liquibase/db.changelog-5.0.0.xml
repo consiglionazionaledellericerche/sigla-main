@@ -1383,10 +1383,10 @@
 					  <column name="data_movimento" type="DATE"/>
 					  <column name="data_valuta_ente" type="DATE"/>
 					  <column name="tipo_esecuzione" type="VARCHAR(20)"/>
-					  <column name="tipo_esecuzione" type="VARCHAR(20)"/>
 					  <column name="coordinate" type="VARCHAR(30)"/>
 					  <column name="codice_rif_operazione" type="VARCHAR(20)"/>
 					  <column name="codice_rif_interno" type="VARCHAR(20)"/>
+					  <column name="tipo_contabilita" type="VARCHAR(20)"/>
 					  <column name="destinazione" type="VARCHAR(20)"/>
 					  <column name="assoggettamento_bollo" type="VARCHAR(30)"/>
             <column name="importo_bollo" 		type="numeric(15, 2)"/>
