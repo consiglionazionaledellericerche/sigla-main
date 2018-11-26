@@ -29,6 +29,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	private static final java.util.Dictionary stato_invioKeys = new it.cnr.jada.util.OrderedHashtable();
 	public static final java.util.Dictionary tiMotivazioneVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
 	public static final java.util.Dictionary tiMotivazioneVariazioneForSearchKeys = new it.cnr.jada.util.OrderedHashtable();
+	private static final java.util.Dictionary ds_causaleKeys = new it.cnr.jada.util.OrderedHashtable();
 	
 	private String storageMatricola;
 	
@@ -46,6 +47,9 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	final public static String MOTIVAZIONE_BANDO = "BAN";
 	final public static String MOTIVAZIONE_PROROGA = "PRG";
 	final public static String MOTIVAZIONE_ALTRE_SPESE = "ALT";
+
+	final public static String FONDO = "Fondo Perequativo Stabilizzazioni";
+	final public static String OVERHEAD = "Overhead/Spese Generali";
 
 	static {
 		ti_statoKeys.put(STATO_PROPOSTA_PROVVISORIA,"Proposta Provvisoria");
@@ -69,6 +73,9 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando da pubblicare");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altre Spese");
+		
+		ds_causaleKeys.put(FONDO,"Fondo Perequativo Stabilizzazioni");
+		ds_causaleKeys.put(OVERHEAD,"Overhead/Spese Generali");
 	}
 
 	private BulkList associazioneCDR = new BulkList();
@@ -167,7 +174,10 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	}	
 	public final java.util.Dictionary getStato_invioKeys() {
 		return stato_invioKeys;
-	}	
+	}	 
+	public final java.util.Dictionary getDs_causaleKeys() {
+		return ds_causaleKeys;
+	}
 	/**
 	 * @return
 	 */

@@ -294,6 +294,23 @@
 		layout="HORIZONTAL"
 		keysProperty="tiStatoTextForSearchKeys"
 		label="Visualizza sospesi in stato" />		
+	<fieldProperty
+		name="tipo_contabilita"
+		property="tipo_contabilita"
+		inputType="TEXT"
+		maxLength="20"
+		label="Tipo contabilita"
+		enabledOnEdit="false"
+		enabledOnSearch="true"/>
+	<fieldProperty
+		name="destinazione"
+		property="destinazione"
+		inputType="TEXT"
+		maxLength="20"
+		label="Destinazione"
+		enabledOnEdit="false"
+		enabledOnSearch="true"/>
+		
 
 	<formFieldProperty
 		name="statoText" />	
@@ -349,6 +366,10 @@
 		name="find_documento_cont" />
 	<formFieldProperty
 		name="find_documento_cont_for_search" />
+	<formFieldProperty
+		name="tipo_contabilita" />
+	<formFieldProperty
+		name="destinazione" />
 
 	<columnFieldProperty
 		name="ti_sospeso_riscontro" />
@@ -375,7 +396,10 @@
 	<columnFieldProperty
 		name="statoText"
 		inputType="ROTEXT" />
-		
+	<columnFieldProperty
+			name="tipo_contabilita" />
+		<columnFieldProperty
+			name="destinazione" />	
 	<columnSet
 		name="SospesiPadre">
 	<columnFieldProperty
@@ -399,9 +423,12 @@
 		name="ds_anagrafico" />
 	<columnFieldProperty
 		name="statoText" />	
+	<columnFieldProperty
+			name="tipo_contabilita" />
+	<columnFieldProperty
+			name="destinazione" />	
 	</columnSet>	
-		
-
+	
 	<columnSet
 		name="SospesiReversale">
 		<columnFieldProperty
@@ -420,6 +447,10 @@
 			name="ds_anagrafico" />
 		<columnFieldProperty
 			name="stato_sospeso" />
+		<columnFieldProperty
+			name="tipo_contabilita" />
+		<columnFieldProperty
+			name="destinazione" />			
 	</columnSet>
 
 	<columnSet
@@ -440,6 +471,10 @@
 			name="ds_anagrafico" />
 		<columnFieldProperty
 			name="stato_sospeso" />
+		<columnFieldProperty
+			name="tipo_contabilita" />
+		<columnFieldProperty
+			name="destinazione" />	
 	</columnSet>
 
 	<columnSet
@@ -462,6 +497,10 @@
 			name="ds_anagrafico" />
 		<columnFieldProperty
 			name="statoText" />
+		<columnFieldProperty
+			name="tipo_contabilita" />
+		<columnFieldProperty
+			name="destinazione" />
 	</columnSet>
 
 
@@ -476,7 +515,11 @@
 		<columnFieldProperty
 			name="stato_sospeso" />
 		<columnFieldProperty
-			name="cd_cds_origine" />			
+			name="cd_cds_origine" />		
+		<columnFieldProperty
+			name="tipo_contabilita" />
+		<columnFieldProperty
+			name="destinazione" />			
 	</columnSet>
 
 	<columnSet
@@ -503,6 +546,10 @@
 			name="causale" />
 		<columnFieldProperty
 			name="ds_anagrafico" />
+		<columnFieldProperty
+			name="tipo_contabilita" />
+		<columnFieldProperty
+			name="destinazione" />	
 	</columnSet>		
 
 	
