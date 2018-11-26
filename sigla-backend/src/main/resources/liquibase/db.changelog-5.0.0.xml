@@ -1332,7 +1332,7 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addPrimaryKey columnNames="esercizio,identificativo_flusso" constraintName="px_flusso_giornale_di_cassa" tableName="giornale_di_cassa"/>
+        <addPrimaryKey columnNames="esercizio,identificativo_flusso" constraintName="px_flusso_giornale_di_cassa" tableName="flusso_giornale_di_cassa"/>
     		<createTable remarks="Tabella contenente i conti presenti nel flusso della giornaliera." tableName="informazioni_conto_evidenza">
             <column name="esercizio"  type="INT"/>                
             <column name="identificativo_flusso" type="VARCHAR(50)"/>
@@ -1359,7 +1359,7 @@
             </column>
         </createTable>
         <addPrimaryKey columnNames="esercizio,identificativo_flusso,conto_evidenza" constraintName="px_informazioni_conto_evidenza" tableName="informazioni_conto_evidenza"/>
-				<addForeignKeyConstraint baseColumnNames="esercizio,identificativo_flusso" baseTableName="informazioni_conto_evidenza" constraintName="fk_informazioni_conto_evidenza" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,identificativo_flusso" referencedTableName="giornale_di_cassa"/>
+				<addForeignKeyConstraint baseColumnNames="esercizio,identificativo_flusso" baseTableName="informazioni_conto_evidenza" constraintName="fk_informazioni_conto_evidenza" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,identificativo_flusso" referencedTableName="flusso_giornale_di_cassa"/>
         <createIndex indexName="fx_informazioni_conto_evidenza" tableName="informazioni_conto_evidenza">
             <column name="esercizio,identificativo_flusso"/>
         </createIndex>
@@ -1383,10 +1383,10 @@
 					  <column name="data_movimento" type="DATE"/>
 					  <column name="data_valuta_ente" type="DATE"/>
 					  <column name="tipo_esecuzione" type="VARCHAR(20)"/>
-					  <column name="tipo_esecuzione" type="VARCHAR(20)"/>
 					  <column name="coordinate" type="VARCHAR(30)"/>
 					  <column name="codice_rif_operazione" type="VARCHAR(20)"/>
 					  <column name="codice_rif_interno" type="VARCHAR(20)"/>
+					  <column name="tipo_contabilita" type="VARCHAR(20)"/>
 					  <column name="destinazione" type="VARCHAR(20)"/>
 					  <column name="assoggettamento_bollo" type="VARCHAR(30)"/>
             <column name="importo_bollo" 		type="numeric(15, 2)"/>
