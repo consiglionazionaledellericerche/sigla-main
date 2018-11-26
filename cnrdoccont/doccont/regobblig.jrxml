@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="125"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -30,7 +30,7 @@
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(2006)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2018)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["080.000"]]></defaultValueExpression>
@@ -45,13 +45,13 @@
 		<defaultValueExpression><![CDATA[new Long(999999999)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DaData" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2006/01/01")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2018/01/01")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="AData" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2006/12/01")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2018/12/01")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Tipo" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["OBB"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["RES"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Stato" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
@@ -61,7 +61,8 @@
 where ESERCIZIO = $P{Esercizio}
 and UO like decode($P{UO},'*','%',$P{UO})
 and CDS like decode($P{CDS},CNRCTB020.GETCDCDSENTE ($P{Esercizio}),'%',$P{CDS})
-AND TIPO = decode($P{Tipo},'*',TIPO,$P{Tipo})
+and (($P{Tipo}='RES' and TIPO in('OBB_RES','OBB_RESIM')) or
+     ($P{Tipo}!='RES' and TIPO = decode($P{Tipo},'*',TIPO,$P{Tipo})))
 AND STATO_OBBL = decode($P{Stato},'*',STATO_OBBL,$P{Stato})
 AND PROGRESSIVO between $P{DaNumero} AND $P{ANumero}
 AND DATA between $P{DaData} AND $P{AData}]]>
