@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.giornaliera.InformazioniContoEvidenzaBulk"
+	homeClassName="it.cnr.contab.doccont00.intcass.giornaliera.InformazioniContoEvidenzaHome">
+	<defaultColumnMap
+		tableName="INFORMAZIONI_CONTO_EVIDENZA">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="flussoGiornaleDiCassa.esercizio" />
+		<columnMapping
+			columnName="IDENTIFICATIVO_FLUSSO"
+			propertyName="flussoGiornaleDiCassa.identificativoFlusso" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="flussoGiornaleDiCassa"
+		partOfOid="true" />
+</SQLPersistentInfo>

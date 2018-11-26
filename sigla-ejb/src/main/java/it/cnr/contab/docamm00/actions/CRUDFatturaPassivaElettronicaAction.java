@@ -232,6 +232,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
 			DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
 			BigDecimal tot_riepilogo=BigDecimal.ZERO;
+			boolean hasAccesso = ((it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")).controllaAccesso(context.getUserContext(), "AMMFATTURDOCSFATPASA");
 			if (bulk.getImportoDocumento() == null) {
 				fatturaPassivaElettronicaBP.setMessage("Prima di procedere verificare il totale del documento!");
 				return context.findDefaultForward();
@@ -246,7 +247,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 							(bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_02.name()) ||
 									bulk.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_19.name())))) {
 					  if (!bulk.isAttivoSplitPaymentProf() && (rigaEle.getImposta()!=null && rigaEle.getImposta().compareTo(BigDecimal.ZERO)!=0) && 
-						   rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0) {
+						   rigaEle.getEsigibilitaIva()!=null && rigaEle.getEsigibilitaIva().compareTo("I")!=0  &&  !hasAccesso ) {
 				    	  java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 				    	  fatturaPassivaElettronicaBP.setMessage("La tipologia di esigibilità IVA non deve essere di tipo 'Differita' "
 				    	  		+ "o 'Split Payment'"
@@ -281,7 +282,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 					return context.findDefaultForward();
 				}
 			}
-			boolean hasAccesso = ((it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")).controllaAccesso(context.getUserContext(), "AMMFATTURDOCSFATPASA");
+			
 	      
 			if ((bulk.getDocEleTributiColl()!=null && !bulk.getDocEleTributiColl().isEmpty()) 
 					||(bulk.getDocumentoEleTrasmissione().getRegimefiscale()!= null && 

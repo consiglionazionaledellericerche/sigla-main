@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="findFlussoGiornaleDiCassa"
+		property="flussoGiornaleDiCassa"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="FlussoGiornaleDiCassa" />
+	<fieldProperty
+		name="esercizio"
+		property="flussoGiornaleDiCassa.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="identificativoFlusso"
+		property="flussoGiornaleDiCassa.identificativoFlusso"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="identificativoFlusso" />
+	<fieldProperty
+		name="contoEvidenza"
+		property="contoEvidenza"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="contoEvidenza" />
+	<fieldProperty
+		name="descrizioneContoEvidenza"
+		property="descrizioneContoEvidenza"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="descrizioneContoEvidenza" />
+	<fieldProperty
+		name="saldoPrecedenteContoEvid"
+		property="saldoPrecedenteContoEvid"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="saldoPrecedenteContoEvid" />
+	<fieldProperty
+		name="totaleEntrateContoEvidenza"
+		property="totaleEntrateContoEvidenza"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="totaleEntrateContoEvidenza" />
+	<fieldProperty
+		name="totaleUsciteContoEvidenza"
+		property="totaleUsciteContoEvidenza"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="totaleUsciteContoEvidenza" />
+	<fieldProperty
+		name="saldoFinaleContoEvidenza"
+		property="saldoFinaleContoEvidenza"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="saldoFinaleContoEvidenza" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="identificativoFlusso" />
+		<formFieldProperty
+			name="contoEvidenza" />
+	</form>
+	<formFieldProperty
+		name="findFlussoGiornaleDiCassa" />
+	<formFieldProperty
+		name="contoEvidenza" />
+	<formFieldProperty
+		name="descrizioneContoEvidenza" />
+	<formFieldProperty
+		name="saldoPrecedenteContoEvid" />
+	<formFieldProperty
+		name="totaleEntrateContoEvidenza" />
+	<formFieldProperty
+		name="totaleUsciteContoEvidenza" />
+	<formFieldProperty
+		name="saldoFinaleContoEvidenza" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="identificativoFlusso" />
+	<findFieldProperty
+		name="contoEvidenza" />
+	<findFieldProperty
+		name="descrizioneContoEvidenza" />
+	<findFieldProperty
+		name="saldoPrecedenteContoEvid" />
+	<findFieldProperty
+		name="totaleEntrateContoEvidenza" />
+	<findFieldProperty
+		name="totaleUsciteContoEvidenza" />
+	<findFieldProperty
+		name="saldoFinaleContoEvidenza" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="identificativoFlusso" />
+	<columnFieldProperty
+		name="contoEvidenza" />
+	<columnFieldProperty
+		name="descrizioneContoEvidenza" />
+	<columnFieldProperty
+		name="saldoPrecedenteContoEvid" />
+	<columnFieldProperty
+		name="totaleEntrateContoEvidenza" />
+	<columnFieldProperty
+		name="totaleUsciteContoEvidenza" />
+	<columnFieldProperty
+		name="saldoFinaleContoEvidenza" />
+</bulkInfo>
