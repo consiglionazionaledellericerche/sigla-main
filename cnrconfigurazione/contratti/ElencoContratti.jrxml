@@ -27,7 +27,7 @@
 		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="stato" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["NOPROV"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="tipologia" class="java.lang.String">
 		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
@@ -56,7 +56,8 @@
 	<queryString>
 		<![CDATA[select * from PRT_ELENCO_CONTRATTI
 where CD_UNITA_ORGANIZZATIVA like decode($P{unita_organizzativa},'*','%',$P{unita_organizzativa})
-  and STATO like decode($P{stato},'*','%',$P{stato})
+  and (($P{stato} ='NOPROV' and STATO in('D','C')) or
+       ($P{stato} !='NOPROV' and STATO like decode($P{stato},'*','%',$P{stato})))
   and ( CD_TIPO_CONTRATTO like decode($P{tipologia},'*','%',$P{tipologia}) or
        (CD_TIPO_CONTRATTO is null and $P{tipologia} = '*') )
   and ( CD_TERZO_FIRMATARIO like decode($P{firmatario},'*','%',$P{firmatario}) or
@@ -72,7 +73,7 @@ where CD_UNITA_ORGANIZZATIVA like decode($P{unita_organizzativa},'*','%',$P{unit
   and ( DT_FINE_VALIDITA is null or
         DT_FINE_VALIDITA >= to_date($P{data_fine_da}, 'YYYY/MM/DD') and
         DT_FINE_VALIDITA <= to_date($P{data_fine_a}, 'YYYY/MM/DD') )
-order by  ESERCIZIO, PG_CONTRATTO, STATO]]>
+order by  decode($P{unita_organizzativa},'*',null,cd_unita_organizzativa),ESERCIZIO, PG_CONTRATTO, STATO]]>
 	</queryString>
 	<field name="CD_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
 	<field name="ESERCIZIO" class="java.math.BigDecimal"/>
@@ -195,7 +196,6 @@ Data inizio]]></text>
 					</box>
 					<textElement markup="styled"/>
 					<text><![CDATA[Data proroga
-
 Data fine]]></text>
 				</staticText>
 				<staticText>
@@ -248,6 +248,7 @@ Spesa assoc.
 		<groupExpression><![CDATA[null]]></groupExpression>
 		<groupHeader>
 			<band height="14" splitType="Stretch">
+				<printWhenExpression><![CDATA[($P{unita_organizzativa}.compareTo(new String("*"))!=0)]]></printWhenExpression>
 				<staticText>
 					<reportElement key="staticText-11" style="BOLD" x="5" y="0" width="75" height="10" uuid="f6ac8ae7-457f-4a2e-aeba-6f9a764aba39"/>
 					<box>
