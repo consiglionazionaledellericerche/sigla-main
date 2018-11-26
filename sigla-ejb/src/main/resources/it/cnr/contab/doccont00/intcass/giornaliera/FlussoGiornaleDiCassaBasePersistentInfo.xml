@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.giornaliera.FlussoGiornaleDiCassaBase"
+	keyClassName="it.cnr.contab.doccont00.intcass.giornaliera.FlussoGiornaleDiCassaKey"
+	homeClassName="it.cnr.contab.doccont00.intcass.giornaliera.FlussoGiornaleDiCassaHome">
+	<defaultColumnMap
+		tableName="FLUSSO_GIORNALE_DI_CASSA">
+		<columnMapping
+			columnName="CODICE_ABI_BT"
+			propertyName="codiceAbiBt"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_ORA_CREAZIONE_FLUSSO"
+			propertyName="dataOraCreazioneFlusso"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_INIZIO_PERIODO_RIF"
+			propertyName="dataInizioPeriodoRif"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_FINE_PERIODO_RIF"
+			propertyName="dataFinePeriodoRif"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_ENTE"
+			propertyName="codiceEnte"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="DESCRIZIONE_ENTE"
+			propertyName="descrizioneEnte"
+			sqlTypeName="VARCHAR"
+			columnSize="100"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_ENTE_BT"
+			propertyName="codiceEnteBt"
+			sqlTypeName="VARCHAR"
+			columnSize="8"
+			nullable="true" />
+		<columnMapping
+			columnName="RIFERIMENTO_ENTE"
+			propertyName="riferimentoEnte"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="SALDO_COMPLESSIVO_PREC"
+			propertyName="saldoComplessivoPrec"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_COMPLESSIVO_ENTRATE"
+			propertyName="totaleComplessivoEntrate"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_COMPLESSIVO_USCITE"
+			propertyName="totaleComplessivoUscite"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="SALDO_COMPLESSIVO_FINALE"
+			propertyName="saldoComplessivoFinale"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="FONDO_DI_CASSA"
+			propertyName="fondoDiCassa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_REVERSALI_RISCOSSE"
+			propertyName="totaleReversaliRiscosse"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_SOSPESI_ENTRATA"
+			propertyName="totaleSospesiEntrata"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_ENTRATE"
+			propertyName="totaleEntrate"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DEFICIT_DI_CASSA"
+			propertyName="deficitDiCassa"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_MANDATI_PAGATI"
+			propertyName="totaleMandatiPagati"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_SOSPESI_USCITA"
+			propertyName="totaleSospesiUscita"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_USCITE"
+			propertyName="totaleUscite"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="SALDO_ESERCIZIO"
+			propertyName="saldoEsercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="SALDO_CONTI_CORRENTI"
+			propertyName="saldoContiCorrenti"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="SALDO_CONTI_BI"
+			propertyName="saldoContiBi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_CONTI"
+			propertyName="totaleConti"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VINCOLI_CONTI_CORRENTI"
+			propertyName="vincoliContiCorrenti"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="VINCOLI_CONTI_BI"
+			propertyName="vincoliContiBi"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_VINCOLI"
+			propertyName="totaleVincoli"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ANTICIPAZIONE_ACCORDATA"
+			propertyName="anticipazioneAccordata"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ANTICIPAZIONE_UTILIZZATA"
+			propertyName="anticipazioneUtilizzata"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="DISPONIBILITA"
+			propertyName="disponibilita"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+			<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+
+	</defaultColumnMap>
+	<persistentProperty
+		name="codiceAbiBt" />
+	<persistentProperty
+		name="dataOraCreazioneFlusso" />
+	<persistentProperty
+		name="dataInizioPeriodoRif" />
+	<persistentProperty
+		name="dataFinePeriodoRif" />
+	<persistentProperty
+		name="codiceEnte" />
+	<persistentProperty
+		name="descrizioneEnte" />
+	<persistentProperty
+		name="codiceEnteBt" />
+	<persistentProperty
+		name="riferimentoEnte" />
+	<persistentProperty
+		name="saldoComplessivoPrec" />
+	<persistentProperty
+		name="totaleComplessivoEntrate" />
+	<persistentProperty
+		name="totaleComplessivoUscite" />
+	<persistentProperty
+		name="saldoComplessivoFinale" />
+	<persistentProperty
+		name="fondoDiCassa" />
+	<persistentProperty
+		name="totaleReversaliRiscosse" />
+	<persistentProperty
+		name="totaleSospesiEntrata" />
+	<persistentProperty
+		name="totaleEntrate" />
+	<persistentProperty
+		name="deficitDiCassa" />
+	<persistentProperty
+		name="totaleMandatiPagati" />
+	<persistentProperty
+		name="totaleSospesiUscita" />
+	<persistentProperty
+		name="totaleUscite" />
+	<persistentProperty
+		name="saldoEsercizio" />
+	<persistentProperty
+		name="saldoContiCorrenti" />
+	<persistentProperty
+		name="saldoContiBi" />
+	<persistentProperty
+		name="totaleConti" />
+	<persistentProperty
+		name="vincoliContiCorrenti" />
+	<persistentProperty
+		name="vincoliContiBi" />
+	<persistentProperty
+		name="totaleVincoli" />
+	<persistentProperty
+		name="anticipazioneAccordata" />
+	<persistentProperty
+		name="anticipazioneUtilizzata" />
+	<persistentProperty
+		name="disponibilita" />
+		<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

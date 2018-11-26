@@ -14,11 +14,27 @@
 			columnName="NOME_FILE"
 			propertyName="nome_file"
 			sqlTypeName="VARCHAR"
-			columnSize="20"
+			columnSize="30"
 			nullable="false" />
+		<columnMapping
+			columnName="DATA_INIZIO_RIF"
+			propertyName="data_inizio_rif"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_FINE_RIF"
+			propertyName="data_fine_rif"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />		
 	</defaultColumnMap>
 	<persistentProperty
 		name="esercizio" />
 	<persistentProperty
 		name="nome_file" />
+	<persistentProperty
+		name="data_inizio_rif" />
+	<persistentProperty
+		name="data_fine_rif" />	
 </SQLPersistentInfo>

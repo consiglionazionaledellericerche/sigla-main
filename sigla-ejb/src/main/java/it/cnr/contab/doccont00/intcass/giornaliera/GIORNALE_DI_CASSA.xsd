@@ -1,0 +1,852 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SCHEMA GIORNALE DI CASSA 3.02 -->
+<!-- 05-06-2012 - TAG <codice_riferimento_interno> lunghezza massima 60 caratteri -->
+<!-- 26-11-2012 - TAG <vincoli_conti_correnti>, <vincoli_conti_BI> e <totale_vincoli> ammettono valori negativi -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:simpleType name="OnlyNumMax7">
+		<xs:annotation>
+			<xs:documentation>Solo numeri lunghezza massima 7</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:maxInclusive value="9999999"/>
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OnlyNumMax18">
+		<xs:annotation>
+			<xs:documentation>Solo numeri lunghezza massima 7</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:maxInclusive value="999999999999999999"/>
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="anyTAG" mixed="true">
+		<xs:annotation>
+			<xs:documentation>struttura XML ente</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="xs:anyType">
+				<xs:sequence>
+					<xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="flusso_giornale_di_cassa">
+		<xs:annotation>
+			<xs:documentation>XML Flusso Giornale di Cassa</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="codice_ABI_BT">
+					<xs:simpleType>
+						<xs:restriction base="xs:nonNegativeInteger">
+							<xs:minInclusive value="00001"/>
+							<xs:maxInclusive value="99999"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="identificativo_flusso">
+					<xs:simpleType>
+						<xs:restriction base="xs:string"/>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="data_ora_creazione_flusso" type="xs:dateTime"/>
+				<xs:element name="data_inizio_periodo_riferimento">
+					<xs:simpleType>
+						<xs:restriction base="xs:date"/>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="data_fine_periodo_riferimento">
+					<xs:simpleType>
+						<xs:restriction base="xs:date"/>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="codice_ente" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>codice alfanumerico che può contenere:
+Codice ISTAT
+Codice MIUR
+Codice SIA
+ecc.</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string"/>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="descrizione_ente">
+					<xs:simpleType>
+						<xs:restriction base="xs:string"/>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="codice_ente_BT">
+					<xs:simpleType>
+						<xs:restriction base="xs:string"/>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="riferimento_ente" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>codice concordato tra ente e banca</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string"/>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="esercizio">
+					<xs:simpleType>
+						<xs:restriction base="xs:nonNegativeInteger">
+							<xs:minInclusive value="1999"/>
+							<xs:maxInclusive value="2099"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="informazioni_conto_evidenza" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="conto_evidenza">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+										<xs:maxLength value="25"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="descrizione_conto_evidenza" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="movimento_conto_evidenza" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="tipo_movimento">
+											<xs:annotation>
+												<xs:documentation>può assumere i valori ENTRATA
+USCITA</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="ENTRATA"/>
+													<xs:enumeration value="USCITA"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="tipo_documento">
+											<xs:annotation>
+												<xs:documentation>può assumere i valori
+REVERSALE
+MANDATO
+SOSPESO ENTRATA
+SOSPESO USCITA
+ANTICIPAZIONE
+GIROCONTO
+FONDO DI CASSA
+DEFICIT DI CASSA</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="REVERSALE"/>
+													<xs:enumeration value="MANDATO"/>
+													<xs:enumeration value="SOSPESO ENTRATA"/>
+													<xs:enumeration value="SOSPESO USCITA"/>
+													<xs:enumeration value="ANTICIPAZIONE"/>
+													<xs:enumeration value="GIROCONTO"/>
+													<xs:enumeration value="FONDO DI CASSA"/>
+													<xs:enumeration value="DEFICIT DI CASSA"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="tipo_operazione">
+											<xs:annotation>
+												<xs:documentation>può assumere i valori ESEGUITO
+STORNATO
+REGOLARIZZATO
+RIPRISTINATO</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="ESEGUITO"/>
+													<xs:enumeration value="STORNATO"/>
+													<xs:enumeration value="REGOLARIZZATO"/>
+													<xs:enumeration value="RIPRISTINATO"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="numero_documento" type="OnlyNumMax18"/>
+										<xs:element name="tipologia_pagamento_funzionario_delegato" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="numero_pagamento_funzionario_delegato" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="progressivo_documento">
+											<xs:annotation>
+												<xs:documentation>numero progressivo dei beneficiarii/versanti all'interno dello stesso documento. Può assumere valore 0 nel caso di "SOSPESO ENTRATA", "SOSPESO USCITA", "ANTICIPAZIONE", "GIROCONTO", "FONDO DI CASSA", "DEFICIT DI CASSA"</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:nonNegativeInteger"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="importo">
+											<xs:simpleType>
+												<xs:restriction base="xs:decimal">
+													<xs:totalDigits value="15"/>
+													<xs:fractionDigits value="2"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="importo_ritenute" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:decimal">
+													<xs:totalDigits value="15"/>
+													<xs:fractionDigits value="2"/>
+													<xs:minInclusive value="0.01"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="numero_bolletta_quietanza" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:nonNegativeInteger"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="numero_bolletta_quietanza_storno" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:nonNegativeInteger"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="data_movimento">
+											<xs:simpleType>
+												<xs:restriction base="xs:date"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="data_valuta_ente" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:date"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="tipo_esecuzione">
+											<xs:annotation>
+												<xs:documentation>Può assumere i valori:
+CASSA
+ACCREDITO BANCA D'ITALIA
+REGOLARIZZAZIONE
+REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA
+PRELIEVO DA CC POSTALE
+BONIFICO BANCARIO E POSTALE
+SEPA CREDIT TRANSFER
+ASSEGNO BANCARIO E POSTALE
+ASSEGNO CIRCOLARE
+ACCREDITO CONTO CORRENTE POSTALE
+ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A
+ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B
+F24EP
+VAGLIA POSTALE
+VAGLIA TESORO
+REGOLARIZZAZIONE
+REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A
+REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B
+ADDEBITO PREAUTORIZZATO DISPOSIZIONE DOCUMENTO ESTERNO
+COMPENSAZIONE</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="CASSA"/>
+													<xs:enumeration value="ACCREDITO BANCA D'ITALIA"/>
+													<xs:enumeration value="REGOLARIZZAZIONE"/>
+													<xs:enumeration value="REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA"/>
+													<xs:enumeration value="PRELIEVO DA CC POSTALE"/>
+													<xs:enumeration value="BONIFICO BANCARIO E POSTALE"/>
+													<xs:enumeration value="ASSEGNO BANCARIO E POSTALE"/>
+													<xs:enumeration value="SEPA CREDIT TRANSFER"/>
+													<xs:enumeration value="ASSEGNO CIRCOLARE"/>
+													<xs:enumeration value="ACCREDITO CONTO CORRENTE POSTALE"/>
+													<xs:enumeration value="ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A"/>
+													<xs:enumeration value="ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B"/>
+													<xs:enumeration value="F24EP"/>
+													<xs:enumeration value="VAGLIA POSTALE"/>
+													<xs:enumeration value="VAGLIA TESORO"/>
+													<xs:enumeration value="REGOLARIZZAZIONE"/>
+													<xs:enumeration value="REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A"/>
+													<xs:enumeration value="REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B"/>
+													<xs:enumeration value="ADDEBITO PREAUTORIZZATO"/>
+													<xs:enumeration value="DISPOSIZIONE DOCUMENTO ESTERNO"/>
+													<xs:enumeration value="COMPENSAZIONE"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="coordinate" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="1"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="codice_riferimento_operazione" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="1"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="codice_riferimento_interno" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="1"/>
+													<xs:maxLength value="60"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="tipo_contabilita" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>può assumere i valori FRUTTIFERO
+INFRUTTIFERO</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="FRUTTIFERO"/>
+													<xs:enumeration value="INFRUTTIFERO"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="destinazione" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>può assumere i valori LIBERA
+VINCOLATA</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="LIBERA"/>
+													<xs:enumeration value="VINCOLATA"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="assoggettamento_bollo">
+											<xs:annotation>
+												<xs:documentation>può assumere i valori:
+ESENTE BOLLO
+ASSOGGETTATO BOLLO A CARICO ENTE
+ASSOGGETTATO BOLLO A CARICO CLIENTE</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="ESENTE BOLLO"/>
+													<xs:enumeration value="ASSOGGETTATO BOLLO A CARICO ENTE"/>
+													<xs:enumeration value="ASSOGGETTATO BOLLO A CARICO CLIENTE"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="importo_bollo" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:decimal">
+													<xs:totalDigits value="15"/>
+													<xs:fractionDigits value="2"/>
+													<xs:minInclusive value="0.01"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="assoggettamento_spese" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>può assumere i valori
+ESENTE SPESE
+ASSOGGETTAMENTO SPESE A CARICO ENTE
+ASSOGGETTAMENTO SPESE A CARICO CLIENTE</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="ESENTE SPESE"/>
+													<xs:enumeration value="ASSOGGETTAMENTO SPESE A CARICO ENTE"/>
+													<xs:enumeration value="ASSOGGETTAMENTO SPESE A CARICO CLIENTE"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="importo_spese" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:decimal">
+													<xs:totalDigits value="15"/>
+													<xs:fractionDigits value="2"/>
+													<xs:minInclusive value="0.01"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="assoggettamento_commissioni" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>può assumere i valori
+ASSOGGETTAMENTO COMMISSIONI A CARICO ENTE
+ASSOGGETTAMENTO COMMISSIONI A CARICO CLIENTE</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="ASSOGGETTAMENTO COMMISSIONI A CARICO ENTE"/>
+													<xs:enumeration value="ASSOGGETTAMENTO COMMISSIONI A CARICO CLIENTE"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="importo_commissioni" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:decimal">
+													<xs:totalDigits value="15"/>
+													<xs:fractionDigits value="2"/>
+													<xs:minInclusive value="0.01"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="cliente">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="anagrafica_cliente">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="indirizzo_cliente" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string"/>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="cap_cliente" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="16"/>
+																<xs:pattern value="\d{5}"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="localita_cliente" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string"/>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="provincia_cliente" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string"/>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="stato_cliente" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="2"/>
+																<xs:maxLength value="2"/>
+																<xs:pattern value="[A-Z]{2,2}"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="partita_iva_cliente" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>lunghezza 35 caratteri per SEPA</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="35"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="codice_fiscale_cliente" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>lunghezza 35 caratteri per SEPA</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="35"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="delegato" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>anagrafica soggetto autorizzato a rilasciare quietanza</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="anagrafica_delegato">
+														<xs:simpleType>
+															<xs:restriction base="xs:string"/>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="indirizzo_delegato" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string"/>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="cap_delegato" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="16"/>
+																<xs:pattern value="\d{5}"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="localita_delegato" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string"/>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="provincia_delegato" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string"/>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="stato_delegato" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="2"/>
+																<xs:maxLength value="2"/>
+																<xs:pattern value="[A-Z]{2,2}"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="codice_fiscale_delegato" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>lunghezza 35 caratteri per SEPA</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="35"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="creditore_effettivo" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="anagrafica_creditore_effettivo">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="indirizzo_creditore_effettivo" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string"/>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="cap_creditore_effettivo" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="16"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="localita_creditore_effettivo" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string"/>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="provincia_creditore_effettivo" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string"/>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="stato_creditore_effettivo">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="2"/>
+																<xs:maxLength value="2"/>
+																<xs:pattern value="[A-Z]{2,2}"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="partita_iva_creditore_effettivo" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>lunghezza 35 caratteri per SEPA</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="35"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="codice_fiscale_creditore_effettivo" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>lunghezza 35 caratteri per SEPA</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:maxLength value="35"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="causale">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="1"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="numero_sospeso" type="OnlyNumMax18" minOccurs="0"/>
+										<xs:element name="dati_a_disposizione_BT" type="anyTAG" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>TAG utilizzato per inserire informazioni utilizzate dalla BT previ accordi con la PA (contiene strutture e informazioni definite internamente da ciascuna BT).</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="saldo_precedente_conto_evidenza">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="totale_entrate_conto_evidenza">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="totale_uscite_conto_evidenza">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="saldo_finale_conto_evidenza">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="saldo_complessivo_precedente">
+					<xs:simpleType>
+						<xs:restriction base="xs:decimal">
+							<xs:totalDigits value="15"/>
+							<xs:fractionDigits value="2"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="totale_complessivo_entrate">
+					<xs:simpleType>
+						<xs:restriction base="xs:decimal">
+							<xs:totalDigits value="15"/>
+							<xs:fractionDigits value="2"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="totale_complessivo_uscite">
+					<xs:simpleType>
+						<xs:restriction base="xs:decimal">
+							<xs:totalDigits value="15"/>
+							<xs:fractionDigits value="2"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="saldo_complessivo_finale">
+					<xs:simpleType>
+						<xs:restriction base="xs:decimal">
+							<xs:totalDigits value="15"/>
+							<xs:fractionDigits value="2"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="totali_esercizio" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>struttura con le informazioni relative ai totali di esercizio</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="fondo_di_cassa">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="totale_reversali_riscosse">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="totale_sospesi_entrata">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="totale_entrate">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="deficit_di_cassa">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="totale_mandati_pagati">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="totale_sospesi_uscita">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="totale_uscite">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="saldo_esercizio">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="totali_disponibilita_liquide" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>struttura con le informazioni relative ai totali di esercizio</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="saldo_conti_correnti">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="saldo_conti_BI" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="totale_conti" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="vincoli_conti_correnti" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="vincoli_conti_BI" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="totale_vincoli" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="anticipazione_accordata">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="anticipazione_utilizzata">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="disponibilita">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="15"/>
+										<xs:fractionDigits value="2"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
