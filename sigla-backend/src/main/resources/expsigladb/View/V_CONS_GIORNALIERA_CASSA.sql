@@ -127,4 +127,97 @@ Select ESERCIZIO,                                 -- ESERCIZIO
        To_Number(Null) IM_MAN_STORNI     -- IM_MAN_STORNI
          ,0
 From   EXT_CASSIERE00
-Where  TR = '30';
+Where  TR = '30'
+UNION
+ Select MOVIMENTO_CONTO_EVIDENZA.ESERCIZIO,                                 -- ESERCIZIO
+        MOVIMENTO_CONTO_EVIDENZA.IDENTIFICATIVO_FLUSSO,                     -- NOME_FILE
+        PROGRESSIVO,                                    -- PG_REC
+        '32',                                        -- TR
+        DATA_INIZIO_PERIODO_RIF, -- DATA_GIORNALIERA
+        DATA_MOVIMENTO,               -- DATA_MOVIMENTO
+(Select CD_CDS
+ From   EXT_CASSIERE_CDS
+ Where  esercizio    = MOVIMENTO_CONTO_EVIDENZA.ESERCIZIO And
+        CODICE_ENTE_BT like '%'||codice_proto) CD_CDS,  -- CD_CDS
+       Null PG_MANDATO    ,                                      -- PG_MANDATO
+       Null PG_REVERSALE  ,                                      -- PG_REVERSALE
+       to_char(Decode( tipo_movimento,'ENTRATA',lpad(NUMERO_DOCUMENTO,18,'0'),NULL))CD_SOSPESO_E,  -- CD_SOSPESO_E
+       to_char(Decode(tipo_movimento, 'USCITA', lpad(NUMERO_DOCUMENTO,18,'0'),NULL)) CD_SOSPESO_S,  -- CD_SOSPESO_S
+       Decode(tipo_movimento,'ENTRATA', Decode(TIPO_OPERAZIONE, 'ESEGUITO', IMPORTO)) IM_SOS_E_APERTI,   -- IM_SOS_E_APERTI
+       Decode(tipo_movimento,'ENTRATA', Decode(TIPO_OPERAZIONE, 'STORNATO', -1*IMPORTO)) IM_SOS_E_STORNI,-- IM_SOS_E_STORNI
+       To_Number(Null)  IM_REV_SOSPESI,                                      -- IM_REV_SOSPESI
+       To_Number(Null)  IM_REVERSALI  ,                                      -- IM_REVERSALI
+       To_Number(Null)  IM_REV_STORNI ,                                      -- IM_REV_STORNI
+       Decode(tipo_movimento, 'USCITA', Decode(TIPO_OPERAZIONE, 'ESEGUITO',IMPORTO)) IM_SOS_S_APERTI,    -- IM_SOS_S_APERTI
+       Decode(tipo_movimento, 'USCITA', Decode(TIPO_OPERAZIONE, 'STORNATO', -1*IMPORTO)) IM_SOS_S_STORNI, -- IM_SOS_S_STORNI
+       To_Number(Null) IM_MAN_SOSPESI  ,                                      -- IM_MANDATI A COPERTURA DI SOSPESI
+       To_Number(Null) IM_MANDATI      ,                                      -- IM_MANDATI
+       To_Number(Null) IM_MAN_STORNI                                          -- IM_MAN_STORNI
+       ,0
+From   MOVIMENTO_CONTO_EVIDENZA,FLUSSO_GIORNALE_DI_CASSA
+Where   tipo_documento   LIKE  'SOSPESO%' And
+       TIPO_OPERAZIONE In ('ESEGUITO', 'STORNATO') AND
+       MOVIMENTO_CONTO_EVIDENZA.ESERCIZIO = FLUSSO_GIORNALE_DI_CASSA.ESERCIZIO   AND
+       MOVIMENTO_CONTO_EVIDENZA.IDENTIFICATIVO_FLUSSO = FLUSSO_GIORNALE_DI_CASSA.IDENTIFICATIVO_FLUSSO
+Union
+-- MANDATI/REVERSALI RISCONTRI/STORNI
+Select MOVIMENTO_CONTO_EVIDENZA.ESERCIZIO,                                 -- ESERCIZIO
+       MOVIMENTO_CONTO_EVIDENZA.IDENTIFICATIVO_FLUSSO,                                 -- NOME_FILE
+       PROGRESSIVO,                                    -- PG_REC
+       '30',                                        -- TR
+       DATA_INIZIO_PERIODO_RIF, -- DATA_GIORNALIERA
+       DATA_MOVIMENTO,               -- DATA_MOVIMENTO
+			(Select CD_CDS
+			 From   EXT_CASSIERE_CDS
+			 Where  esercizio    = MOVIMENTO_CONTO_EVIDENZA.ESERCIZIO And
+			        CODICE_ENTE_BT like '%'||codice_proto) CD_CDS,  -- CD_CDS
+       to_char(Decode(tipo_documento, 'MANDATO', NUMERO_DOCUMENTO)) PG_MANDATO,          -- PG_MANDATO
+       to_char(Decode(tipo_documento, 'REVERSALE',NUMERO_DOCUMENTO)) PG_REVERSALE,        -- PG_REVERSALE
+       to_char(Decode(tipo_documento, 'REVERSALE', lpad(numero_SOSPESO,18,'0'))) CD_SOSPESO_E,   -- CD_SOSPESO_E
+       to_char(Decode(tipo_documento, 'MANDATO', lpad(numero_SOSPESO,18,'0'))) CD_SOSPESO_S,   -- CD_SOSPESO_S
+       To_Number(Null)  IM_SOS_E_APERTI,   -- IM_SOS_E_APERTI
+       To_Number(Null)  IM_SOS_E_STORNI,   -- IM_SOS_E_STORNI
+       -- SE E' 'R' (REVERSALE) ED IL CODICE SOSPESO E' PIENO PRENDO IL VALORE SENNO' NIENTE
+       TO_NUMBER(Decode(tipo_documento, 'REVERSALE',
+                         Decode(NUMERO_SOSPESO, -- CODICE SOSPESO
+                                    Null,
+                                    Null,
+                                    IMPORTO  -- IMPORTO CON DECIMALI
+                                   )
+                        )
+                 ) IM_REV_SOSPESI, -- IM_REV_SOSPESI
+       -- SE E' 'R' (REVERSALE) ED IL CODICE SOSPESO E' VUOTO PRENDO IL VALORE SENNO' NIENTE
+       To_Number(Decode(tipo_documento, 'REVERSALE',
+                        	 Decode(NUMERO_SOSPESO, -- CODICE SOSPESO
+                                    Null,
+                                    IMPORTO, -- IMPORTO CON DECIMALI
+                                    Null
+                                   )
+                        )
+                 ) IM_REVERSALI,   -- IM_REVERSALI
+       To_Number(Null) IM_REV_STORNI ,    -- IM_REV_STORNI
+       To_Number(Null) IM_SOS_S_APERTI ,  -- IM_SOS_S_APERTI
+       To_Number(Null) IM_SOS_S_STORNI ,  -- IM_SOS_S_STORNI
+       To_Number(Decode(tipo_documento, 'MANDATO',
+                        Decode(NUMERO_SOSPESO, -- CODICE SOSPESO
+                                    Null,
+                                    Null,
+                                    IMPORTO  -- IMPORTO CON DECIMALI
+                                    )
+                        )
+                 ) IM_MAN_SOSPESI,    -- IM_MANDATI A COPERTURA DI SOSPESI
+       To_Number(Decode(tipo_documento, 'MANDATO',
+                         Decode(NUMERO_SOSPESO,  -- CODICE SOSPESO
+                                    Null,
+                                    IMPORTO, -- IMPORTO CON DECIMALI
+                                    Null
+                                    )
+                        )
+                 ) IM_MANDATI,   -- IM_MANDATI
+       To_Number(Null) IM_MAN_STORNI     -- IM_MAN_STORNI
+         ,0
+From   MOVIMENTO_CONTO_EVIDENZA,FLUSSO_GIORNALE_DI_CASSA
+Where  tipo_documento IN('MANDATO','REVERSALE')  AND
+			 MOVIMENTO_CONTO_EVIDENZA.ESERCIZIO = FLUSSO_GIORNALE_DI_CASSA.ESERCIZIO   AND
+       MOVIMENTO_CONTO_EVIDENZA.IDENTIFICATIVO_FLUSSO = FLUSSO_GIORNALE_DI_CASSA.IDENTIFICATIVO_FLUSSO
+/

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.giornaliera.InformazioniContoEvidenzaKey">
+	<defaultColumnMap
+		tableName="INFORMAZIONI_CONTO_EVIDENZA">
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="IDENTIFICATIVO_FLUSSO"
+			propertyName="identificativoFlusso"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CONTO_EVIDENZA"
+			propertyName="contoEvidenza"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio"
+		partOfOid="true" />
+	<persistentProperty
+		name="identificativoFlusso"
+		partOfOid="true" />
+	<persistentProperty
+		name="contoEvidenza"
+		partOfOid="true" />
+</SQLPersistentInfo>
