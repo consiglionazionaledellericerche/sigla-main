@@ -274,4 +274,15 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
                 });
         super.save(actioncontext);
     }
+    public void resetInutilizzo( ActionContext context ) throws it.cnr.jada.action.BusinessProcessException {
+    	try 
+    	{
+    		UtenteBulk utente = (UtenteBulk)getModel();
+    		utente.setDt_ultimo_accesso(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp());
+    		setModel(context,((UtenteComponentSession)createComponentSession()).modificaConBulk(context.getUserContext(),utente));
+    		save(context); 
+    	} catch(Exception e) {
+    		throw handleException(e);
+    	}
+    }
 }

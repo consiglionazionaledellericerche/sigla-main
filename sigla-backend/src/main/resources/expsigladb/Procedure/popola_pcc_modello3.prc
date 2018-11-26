@@ -771,7 +771,7 @@ loop
 fetch testata_scad  into scad;
 exit when testata_scad%notfound;
 	tot_da_pagare:=0;
-  select sum(nvl(IM_DIPONIBILE_NC,0)) into tot_da_pagare from fattura_passiva_riga
+  select sum(nvl(IM_DIPONIBILE_NC,0)- DECODE(SCAD.FL_SPLIT_PAYMENT,'N',0,IM_IVA)) into tot_da_pagare from fattura_passiva_riga
   where stato_cofi not in('P','A') and
   esercizio = scad.esercizio  and
   cd_cds =scad.cd_cds  and
@@ -824,7 +824,7 @@ exit when testata_scad%notfound;
 						'CS',
 						nvl(to_char(scad.identificativo_sdi),'NA'),--PROGR_REGISTRAZIONE
 						scad.NR_FATTURA_FORNITORE,scad.dt_FATTURA_FORNITORE,
-					  scad.im_totale_fattura,
+					  DECODE(SCAD.FL_SPLIT_PAYMENT,'N',scad.im_totale_fattura,SCAD.IM_TOTALE_IMPONIBILE),
 						--tot_da_pagare,
 						null, --numero_protocollo
 						null, --data_protocollo
@@ -840,7 +840,7 @@ exit when testata_scad%notfound;
 						null, -- estremi impegno 
 						null, -- codice_cig_co
 						null, -- codice_cup_co
-						'SI', tot_da_pagare,scad.dt_scadenza,--scad.im_totale_fattura,scad.dt_scadenza, -- CS
+						'SI',tot_da_pagare,scad.dt_scadenza,--scad.im_totale_fattura,scad.dt_scadenza, -- CS
 						null,null,-- CP
 						null, -- capitolo
 						null,

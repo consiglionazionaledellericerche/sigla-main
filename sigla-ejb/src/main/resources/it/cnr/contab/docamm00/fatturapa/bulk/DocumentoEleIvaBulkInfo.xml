@@ -68,7 +68,9 @@
 		inputType="TEXT"
 		inputSize="2"
 		maxLength="2"
-		enabledOnEdit="false"
+		readonlyProperty="documentoEleTestata.RODocumento"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
+		enabledOnEdit="true"
 		label="Natura" />
 	<fieldProperty
 		name="cdVoceIva"
@@ -120,6 +122,7 @@
 		inputType="TEXT"
 		inputSize="1"
 		maxLength="1"
+		formatName="it.cnr.jada.util.UppercaseStringFormat"
 		readonlyProperty="documentoEleTestata.RODocumento"
 		enabledOnEdit="true"
 		label="Esigibilità Iva" />
