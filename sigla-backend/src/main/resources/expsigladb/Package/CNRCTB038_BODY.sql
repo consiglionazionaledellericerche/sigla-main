@@ -548,6 +548,8 @@ End;
     ,UTUV
     ,DUVA
     ,PG_VER_REC
+    ,tipo_contabilita
+    ,destinazione
    ) values (
      aDest.CD_PROPRIO_SOSPESO
     ,aDest.IM_ASS_MOD_1210
@@ -572,6 +574,8 @@ End;
     ,aDest.UTUV
     ,aDest.DUVA
     ,aDest.PG_VER_REC
+    ,aDest.tipo_contabilita
+    ,aDest.destinazione
     );
  end;
 

@@ -167,7 +167,7 @@
   lock table EXT_CASSIERE00 in exclusive mode;
 
   -- LOOP SULLA TABELLA DOVE SONO STATI CARICATI I RECORD DELLA GIORNALIERA PRENDENDO SOLO QUELLI IN STATO "INIZIALE" E NON "PROCESSATO"
-
+ dbms_output.put_line('primo loop');
   For aR in (Select * from EXT_CASSIERE00
              Where    esercizio = aEs And
                       nome_file = aNomeFile And
@@ -175,7 +175,7 @@
              Order by pg_rec asc) Loop
 
    Begin -- CHIUDE ALLA FINE, APPENA PRIMA DELL'END LOOP SULLE RIGHE DI EXT_CASSIERE00 E POI INSERISCE I LOG
-
+	dbms_output.put_line('entra nel primo loop');
      lTiRiga := null;
 
      If CNRCTB755.isT01(aR.data) Then
@@ -1022,7 +1022,628 @@ IBMUTL200.logerr(pg_exec, aR.data, aCds.cd_unita_organizzativa||'-'||aNomeFile||
 End;
 
 End Loop;
+dbms_output.put_line('fine primo loop');
+-- nuovo 
+ For aR in (Select * from MOVIMENTO_CONTO_EVIDENZA
+             Where    esercizio = aEs And
+                      IDENTIFICATIVO_FLUSSO = aNomeFile And
+                      stato     = CNRCTB755.STATO_RECORD_INIZIALE
+             Order by progressivo asc) Loop
 
+   Begin -- CHIUDE ALLA FINE, APPENA PRIMA DELL'END LOOP SULLE RIGHE DI EXT_CASSIERE00 E POI INSERISCE I LOG
+
+dbms_output.put_line('entro secondo loop');
+	aEsercizio:=aR.esercizio;
+-- ====================================================================================================
+--                                                RISCONTRI
+-- ====================================================================================================
+
+If (aR.tipo_documento in('MANDATO','REVERSALE')) Then
+	dbms_output.put_line('if riscontri');
+  aNumProcessati:=aNumProcessati+1;
+
+  -- Check esistenza record di testata
+
+
+  If aR.tipo_operazione in('ESEGUITO','REGOLARIZZATO')  then
+
+       select * into aCds from unita_organizzativa
+  			where cd_tipo_unita ='ENTE' and fl_cds='Y';
+  	
+
+-- ====================================================================================================
+--                                                REVERSALE
+-- ====================================================================================================
+
+If aR.tipo_documento = 'REVERSALE' Then
+          aRev:=null;
+    			aRev.esercizio:=aEsercizio;
+    			if(tesoreria_unica ='N') then
+    				aRev.cd_cds:=aCds.cd_unita_organizzativa;
+    			end if;
+		    	aRev.pg_reversale:= aR.numero_documento;
+
+        	   -- Reversale
+  	      Begin
+   	         Select * into aRev
+   	         From   reversale
+   	         Where  esercizio = aRev.esercizio And
+   	                cd_cds like decode(tesoreria_unica,'N',aCds.cd_unita_organizzativa,'%') And
+   	                pg_reversale = aR.numero_documento And
+   	                stato <> CNRCTB038.STATO_AUT_ANN
+ 	         For update nowait;
+
+ 	      Exception when NO_DATA_FOUND Then
+
+ 	         Select Count(*)
+ 	         Into   conta_err
+   	         From   reversale
+   	         Where  esercizio = aRev.esercizio And
+   	                cd_cds like decode(tesoreria_unica,'N',aCds.cd_unita_organizzativa,'%') And
+   	                pg_reversale = aR.numero_documento And
+   	                stato = CNRCTB038.STATO_AUT_ANN;
+                 If Conta_err > 0 Then
+                   IBMERR001.RAISE_ERR_GENERICO('Il riscontro di euro '||Ltrim(To_Char(aR.importo, '999g999g999g999g999g990d00'))||' fa riferimento alla reversale '||aCds.cd_unita_organizzativa||'/'||aEsercizio||'/'||aR.numero_documento||' che risulta annullata.');
+                 Else
+                   IBMERR001.RAISE_ERR_GENERICO('Il riscontro di euro '||Ltrim(To_Char(aR.importo, '999g999g999g999g999g990d00'))||' fa riferimento alla reversale '||aCds.cd_unita_organizzativa||'/'|| aEsercizio||'/'||aR.numero_documento||' che non esiste.');
+                 End If;
+ 	      End;
+
+       -- controllo lo sfondamento del riscontrato (a questo punto automatico, avendo già controllato l'inesistenza di riscontri manuali)
+
+   	 If CNRCTB048.getImRiscontratoManRev(aRev.cd_cds, aRev.esercizio, aRev.pg_reversale, 'R') = aRev.im_reversale Then
+             IBMERR001.RAISE_ERR_GENERICO('La reversale '||CNRCTB038.getDesc(aRev)||' risulta già completamente riscontrata (totale dei riscontri ed importo '||
+                                          ' della reversale pari a '||Ltrim(To_Char(aRev.im_reversale, '999g999g999g999g999g990d00'))||'). E'' impossibile quindi '||
+                                          ' riscontrarla ulteriormente tramite flusso per '||Ltrim(To_Char(aR30.importo_operazione, '999g999g999g999g999g990d00'))||'.');
+ 	   Elsif CNRCTB048.getImRiscontratoManRev(aRev.cd_cds, aRev.esercizio, aRev.pg_reversale, 'R') + aR30.importo_operazione > aRev.im_reversale then
+             IBMERR001.RAISE_ERR_GENERICO('Impossibile riscontrare la reversale '||CNRCTB038.getDesc(aRev)||
+                                ' per '||Ltrim(To_Char(aR.importo, '999g999g999g999g999g990d00'))||'. Essa risulta già riscontrata per '||
+                                Ltrim(To_Char(CNRCTB048.getImRiscontratoManRev(aRev.cd_cds, aRev.esercizio, aRev.pg_reversale, 'R'), '999g999g999g999g999g990d00'))||
+                                ' e pertanto il totale dei riscontri supererebbe l''importo della reversale stessa che è di '||
+                                Ltrim(To_Char(aRev.im_reversale, '999g999g999g999g999g990d00')));
+ 	   End If;
+
+
+ 	   -- Preparo l'inserimento del riscontro
+       aRisc.CD_CDS:=aRev.cd_cds;
+       aRisc.ESERCIZIO:=aRev.esercizio;
+       aRisc.TI_ENTRATA_SPESA:='E';
+       aRisc.TI_SOSPESO_RISCONTRO:='R';
+       aRisc.CD_SOSPESO:=CNRCTB038.nextProgressivoRiscontro(aRev.cd_cds, aRev.esercizio, 'E');
+       aRisc.CD_CDS_ORIGINE:=aRev.cd_cds;
+       aRisc.CD_UO_ORIGINE:=null;
+       aRisc.DT_REGISTRAZIONE:=aR.DATA_MOVIMENTO;
+       aRisc.DS_ANAGRAFICO:=aR.ANAGRAFICA_CLIENTE;
+       aRisc.CAUSALE:=aR.CAUSALE;
+       aRisc.TI_CC_BI:='C';
+  		 aRisc.FL_STORNATO:='N';
+       aRisc.IM_SOSPESO:=aR.IMPORTO;
+       aRisc.IM_ASSOCIATO:=aR.IMPORTO;
+       aRisc.STATO_SOSPESO:='N';
+       aRisc.DACR:=aTSNow;
+       aRisc.UTCR:=aUser;
+       aRisc.UTUV:=aUser;
+       aRisc.DUVA:=aTSNow;
+       aRisc.PG_VER_REC:=1;
+       aRisc.IM_ASS_MOD_1210:=0;
+       aRisc.CD_SOSPESO_PADRE:=null;
+       aRisc.CD_PROPRIO_SOSPESO:=null;
+
+       -- inserisce il riscontro
+       CNRCTB038.INS_SOSPESO(aRisc);
+
+     -- e mette il record a processato
+     Update movimento_conto_evidenza
+     Set    STATO                   = CNRCTB755.STATO_RECORD_PROCESSATO,
+            --cd_cds_sr               = aRisc.cd_cds,
+            --esercizio_sr            = aRisc.esercizio,
+            --ti_entrata_spesa_sr     = aRisc.ti_entrata_spesa,
+            --ti_sospeso_riscontro_sr = aRisc.ti_sospeso_riscontro,
+	    			--cd_sr                   = aRisc.cd_sospeso,  ???numero_sospeso
+            duva                    = aRisc.duva,
+	    			utuv                    = aRisc.utuv,
+	    			pg_ver_rec              = pg_ver_rec+1
+     Where  esercizio = aR.esercizio And
+            identificativo_flusso = aR.identificativo_flusso And
+            progressivo    = aR.progressivo;
+
+ 	   -- Aggiorno il dettaglio det USC
+ 	   			 aDetEtr.CD_CDS       := aRev.cd_cds;
+           aDetEtr.ESERCIZIO    := aRev.esercizio;
+           aDetEtr.PG_REVERSALE := aRev.pg_reversale;
+           aDetEtr.TI_ENTRATA_SPESA := 'E';
+           aDetEtr.TI_SOSPESO_RISCONTRO := 'R';
+           aDetEtr.CD_SOSPESO   := aRisc.cd_sospeso;
+           aDetEtr.IM_ASSOCIATO := aRisc.IM_SOSPESO;
+           aDetEtr.STATO        := CNRCTB038.STATO_SOSPESO_DET_DEFAULT;
+           aDetEtr.DACR         := aTSNow;
+           aDetEtr.UTCR         := aUser;
+           aDetEtr.UTUV         := aUser;
+           aDetEtr.DUVA         := aTSNow;
+           aDetEtr.PG_VER_REC   := 1;
+           aDetEtr.CD_CDS_REVERSALE :=aRev.cd_cds;
+           CNRCTB038.INS_SOSPESO_DET_ETR(aDetEtr);
+
+           -- Aggiorno l'importo incassato della reversale
+  	   Update reversale
+  	   Set    im_incassato = CNRCTB048.getImRiscontratoManRev(aRev.cd_cds, aRev.esercizio, aR.numero_documento, 'R'),
+                  duva = aRisc.duva,
+		  utuv=aRisc.utuv,
+		  pg_ver_rec=pg_ver_rec+1
+	   Where  esercizio = aRev.esercizio And
+	          cd_cds = aRev.cd_cds and
+	          pg_reversale = aR.numero_documento;
+
+ 	   -- Aggiorno lo stato di incasso della reversale e aggiorno i saldi
+
+ 	   If CNRCTB048.getImRiscontratoManRev(aRev.cd_cds, aRev.esercizio,aR.numero_documento, 'R') = aRev.im_reversale then
+ 	     CNRCTB037.riscontroReversale(aRev.esercizio,aRev.cd_cds,aRev.pg_reversale,'I',aUser);
+ 	   End If;
+
+     aNumOk := aNumOk+1;
+
+Elsif aR.TIPO_DOCUMENTO = 'MANDATO' Then
+dbms_output.put_line('if riscontri man');
+
+-- ====================================================================================================
+--                                                MANDATO
+-- ====================================================================================================
+
+           aMan := null;
+	   aMan.esercizio := aEsercizio;
+	   if(tesoreria_unica ='N') then
+	   		aMan.cd_cds := aCds.cd_unita_organizzativa;
+		 end if;
+	   	 aMan.pg_mandato := aR.numero_documento;
+
+  	   Begin
+  	    Select *
+  	    Into   aMan
+  	    From   mandato
+  	    Where  esercizio =  aMan.esercizio And
+  	           cd_cds like  decode(tesoreria_unica,'N',aCds.cd_unita_organizzativa,'%') And
+  	           pg_mandato = aR.numero_documento And
+  	           stato <> CNRCTB038.STATO_AUT_ANN
+ 	    For Update Nowait;
+
+ 	   Exception when NO_DATA_FOUND Then
+
+ 	     Select Count(*)
+ 	     Into   conta_err
+   	     From   mandato
+  	     Where  esercizio =  aMan.esercizio And
+  	            cd_cds like decode(tesoreria_unica,'N',aCds.cd_unita_organizzativa,'%') And
+  	            pg_mandato = aR.numero_documento And
+  	            stato = CNRCTB038.STATO_AUT_ANN;
+
+             If Conta_err > 0 Then
+               IBMERR001.RAISE_ERR_GENERICO('Il riscontro di euro '||Ltrim(To_Char(aR.importo, '999g999g999g999g999g990d00'))||' fa riferimento al mandato '||aCds.cd_unita_organizzativa||'/'|| aEsercizio||'/'||aR.numero_documento||' che risulta annullato.');
+             Else
+               IBMERR001.RAISE_ERR_GENERICO('Il riscontro di euro '||Ltrim(To_Char(aR.importo, '999g999g999g999g999g990d00'))||' fa riferimento al mandato '||aCds.cd_unita_organizzativa||'/'|| aEsercizio||'/'||aR.numero_documento||' che non esiste.');
+             End If;
+
+ 	   End;
+
+	   -- controllo lo sfondamento del riscontrato (a questo punto automatico, avendo già controllato l'inesistenza di riscontri manuali)
+
+   	 If CNRCTB048.getImRiscontratoManRev(aMan.cd_cds, aMan.esercizio, aMan.pg_mandato, 'M') = aMan.im_mandato Then
+             IBMERR001.RAISE_ERR_GENERICO('Il mandato '||CNRCTB038.getDesc(aMan)||' risulta già completamente riscontrato (totale dei riscontri ed importo '||
+                                          ' del mandato pari a '||Ltrim(To_Char(aMan.im_mandato, '999g999g999g999g999g990d00'))||'). E'' impossibile quindi '||
+                                          ' riscontrarlo ulteriormente tramite flusso per '||Ltrim(To_Char(aR30.importo_operazione, '999g999g999g999g999g990d00'))||'.');
+ 	   Elsif CNRCTB048.getImRiscontratoManRev(aMan.cd_cds, aMan.esercizio, aMan.pg_mandato, 'M') + aR.importo > aMan.im_mandato then
+             IBMERR001.RAISE_ERR_GENERICO('Impossibile riscontrare il mandato '||CNRCTB038.getDesc(aMan)||
+                                ' per '||Ltrim(To_Char(aR30.importo_operazione, '999g999g999g999g999g990d00'))||'. Esso risulta già riscontrato per '||
+                                Ltrim(To_Char(CNRCTB048.getImRiscontratoManRev(aMan.cd_cds, aMan.esercizio, aMan.pg_mandato, 'M'), '999g999g999g999g999g990d00'))||
+                                ' e pertanto il totale dei riscontri supererebbe l''importo del mandato stesso che è di '||
+                                Ltrim(To_Char(aMan.im_mandato, '999g999g999g999g999g990d00')));
+ 	   End If;
+
+
+ 	   -- Preparo l'inserimento del riscontro
+                aRisc.CD_CDS:=aMan.cd_cds;
+                aRisc.ESERCIZIO:=aMan.esercizio;
+                aRisc.TI_ENTRATA_SPESA:='S';
+                aRisc.TI_SOSPESO_RISCONTRO:='R';
+                aRisc.CD_SOSPESO:=CNRCTB038.nextProgressivoRiscontro(aMan.cd_cds, aMan.esercizio, 'S');
+                aRisc.CD_CDS_ORIGINE:=aMan.cd_cds;
+                aRisc.CD_UO_ORIGINE:=null;
+                aRisc.DT_REGISTRAZIONE:=aR.DATA_MOVIMENTO;
+                aRisc.DS_ANAGRAFICO:=aR.ANAGRAFICA_CLIENTE;
+                aRisc.CAUSALE:=aR.CAUSALE;
+								aRisc.TI_CC_BI:='C';
+                aRisc.FL_STORNATO:='N';
+                aRisc.IM_SOSPESO:=aR.IMPORTO;
+                aRisc.IM_ASSOCIATO:=aR.IMPORTO;
+                aRisc.STATO_SOSPESO:='N';
+                aRisc.DACR:=aTSNow;
+                aRisc.UTCR:=aUser;
+                aRisc.UTUV:=aUser;
+                aRisc.DUVA:=aTSNow;
+                aRisc.PG_VER_REC:=1;
+                aRisc.IM_ASS_MOD_1210:=0;
+                aRisc.CD_SOSPESO_PADRE:=null;
+                aRisc.CD_PROPRIO_SOSPESO:=null;
+
+                CNRCTB038.INS_SOSPESO(aRisc);
+
+	        Update MOVIMENTO_CONTO_EVIDENZA
+	        Set     STATO = CNRCTB755.STATO_RECORD_PROCESSATO,
+                        --cd_cds_sr = aRisc.cd_cds,
+                        --esercizio_sr = aRisc.esercizio,
+                        --ti_entrata_spesa_sr = aRisc.ti_entrata_spesa,
+                        --ti_sospeso_riscontro_sr = aRisc.ti_sospeso_riscontro,
+												--cd_sr = aRisc.cd_sospeso,
+                        duva = aRisc.duva,
+												utuv = aRisc.utuv,
+												pg_ver_rec=pg_ver_rec+1
+	        Where   esercizio = aR.esercizio And
+	                identificativo_flusso = aR.identificativo_flusso And
+	                progressivo = aR.progressivo;
+
+ 	   -- Aggiorno il dettaglio det USC
+
+ 	   			 aDetUsc.CD_CDS:=aMan.cd_cds;
+           aDetUsc.ESERCIZIO:=aMan.esercizio;
+           aDetUsc.PG_MANDATO:=aMan.pg_mandato;
+           aDetUsc.TI_ENTRATA_SPESA:='S';
+           aDetUsc.TI_SOSPESO_RISCONTRO:='R';
+           aDetUsc.CD_SOSPESO:=aRisc.cd_sospeso;
+           aDetUsc.IM_ASSOCIATO:=aRisc.IM_SOSPESO;
+           aDetUsc.STATO:=CNRCTB038.STATO_SOSPESO_DET_DEFAULT;
+           aDetUsc.DACR:=aTSNow;
+           aDetUsc.UTCR:=aUser;
+           aDetUsc.UTUV:=aUser;
+           aDetUsc.DUVA:=aTSNow;
+           aDetUsc.PG_VER_REC:=1;
+           aDetUsc.CD_CDS_MANDATO:=aMan.cd_cds;
+           CNRCTB038.INS_SOSPESO_DET_USC(aDetUsc);
+
+           -- Aggiorno l'importo pagato del mandato
+
+  	   Update mandato
+  	   Set    im_pagato = CNRCTB048.getImRiscontratoManRev(aMan.cd_cds, aMan.esercizio, aR.numero_documento, 'M'),
+                  duva=aRisc.duva,
+		  utuv=aRisc.utuv,
+		  pg_ver_rec=pg_ver_rec+1
+	   Where  esercizio = aMan.esercizio And
+	          cd_cds = aMan.cd_cds And
+	          pg_mandato = aR.numero_documento;
+
+ 	   -- Aggiorno lo stato di incasso del mandato e aggiorno i saldi
+
+ 	   if CNRCTB048.getImRiscontratoManRev(aMan.cd_cds, aMan.esercizio, aR.numero_documento, 'M') = aMan.im_mandato then
+ 	    CNRCTB037.riscontroMandato(aMan.esercizio,aMan.cd_cds,aMan.pg_mandato,'I',aUser);
+           end if;
+
+           aNumOk:=aNumOk+1;
+
+      else -- Doc non riconosciuto
+       IBMERR001.RAISE_ERR_GENERICO('Il Tipo Ordinativo '||aR.TIPO_DOCUMENTO||' non è compatibile, può assumere solo i valori R (Reversale) e M (Mandato)');
+      end if;
+
+     End If; -- end controllo stato ordinativo = '03'
+
+ End If;  -- TERMINE GESTIONE RISCONTRI (record T30)
+
+
+-- =========================
+-- SOSPESI
+-- =========================
+	
+If  (aR.tipo_documento like 'SOSPESO%')  Then -- 1
+	select * into aCds from unita_organizzativa
+  where cd_tipo_unita ='ENTE' and fl_cds='Y';
+  	
+    
+-- GESTIONE STORNO -- 4
+if (aR.tipo_operazione = 'STORNATO') then
+     
+  	aSospeso := null;
+
+   Begin
+       Select *
+       Into   aSospeso
+       From   sospeso
+       Where  cd_cds = aCds.cd_unita_organizzativa And
+              esercizio = aR.esercizio And
+              ti_entrata_spesa = decode(aR.tipo_movimento,'ENTRATA','E','S') And
+              ti_sospeso_riscontro = 'S' And
+              cd_sospeso = lpad(aR.numero_documento,18,'0')  And
+              cd_sospeso_padre is null
+       For Update Nowait;
+   Exception when NO_DATA_FOUND then
+       IBMERR001.RAISE_ERR_GENERICO('Sospeso da stornare non trovato: '||aR.numero_documento||' cds.: '||aCds.cd_unita_organizzativa||' es.: '||aR.esercizio);
+   End;
+
+   If abs(aR.IMPORTO) <> aSospeso.im_sospeso Then -- 5
+        IBMERR001.RAISE_ERR_GENERICO('Si sta tentando di stornare il sospeso '||getDesc(aSospeso)||' per '
+                                     ||Ltrim(To_Char(aR.IMPORTO, '999g999g999g999g999g990d00'))||
+                                    ' ma tale importo è differente rispetto all''importo che il sospeso già possiede che è di '||
+                                    Ltrim(To_Char(aSospeso.im_sospeso, '999g999g999g999g999g990d00')));
+   End if; -- 5
+
+   -- Operazioni di storno del sospeso
+   -- Le operazioni consistono nel verificare che il sospeso non sia associato a mandati/reversali o 1210
+
+     For aSosF in (select * from sospeso where
+	  	   	 cd_cds = aSospeso.cd_cds
+		 and esercizio = aSospeso.esercizio
+		 and cd_sospeso_padre = aSospeso.cd_sospeso
+		 and ti_entrata_spesa = aSospeso.ti_entrata_spesa
+		 and ti_sospeso_riscontro = aSospeso.ti_sospeso_riscontro
+	    for update nowait) Loop  -- INIZIO LOOP 1
+
+        If aSosF.im_ass_mod_1210 <> 0 Then
+           IBMERR001.RAISE_ERR_GENERICO('Impossibile stornare il sospeso '||getDesc(aSosF)||', risulta associato a 1210 per '||Ltrim(To_Char(aSosF.im_ass_mod_1210, '999g999g999g999g999g990d00')));
+        End If;
+
+        If aSosF.im_associato <> 0 Then
+           IBMERR001.RAISE_ERR_GENERICO('Impossibile stornare il sospeso '||getDesc(aSosF)||', risulta già associato a documenti autorizzatori per '||Ltrim(To_Char(aSosF.im_associato, '999g999g999g999g999g990d00')));
+        End If;
+
+	If aSosF.ti_entrata_spesa = 'E' then
+           for aSosDet in (Select * from sospeso_det_etr
+                           Where esercizio = aSosF.esercizio And
+                                 cd_cds = aSosF.cd_cds And
+                                 cd_sospeso = aSosF.cd_sospeso And
+                                 ti_entrata_spesa = aSosF.ti_entrata_spesa And
+                                 ti_sospeso_riscontro  =aSosF.ti_sospeso_riscontro And
+                                 stato <> 'A'
+                           For update nowait) Loop
+            IBMERR001.RAISE_ERR_GENERICO('Il sospeso '||getDesc(aSosF)||' non risulta associato a reversali, ma esistono associazioni con reversale non annullate '||
+                                        '(per esempio alla reversale '||aSosDet.CD_CDS||'/'||aSosDet.esercizio||'/'||aSosDet.PG_REVERSALE||')');
+	   End loop;
+        else
+           for aSosDet in (select * from sospeso_det_usc where
+                    		     esercizio = aSosF.esercizio
+                    		 and cd_cds = aSosF.cd_cds
+                    		 and cd_sospeso = aSosF.cd_sospeso
+                    		 and ti_entrata_spesa = aSosF.ti_entrata_spesa
+                    		 and ti_sospeso_riscontro  =aSosF.ti_sospeso_riscontro
+							 and stato <> 'A'
+						 for update nowait) Loop
+            IBMERR001.RAISE_ERR_GENERICO('Il sospeso '||getDesc(aSosF)||' non risulta associato a mandati, ma esistono associazioni con mandati non annullate '||
+                                        '(per esempio al mandato '||aSosDet.CD_CDS||'/'||aSosDet.esercizio||'/'||aSosDet.PG_mandato||')');
+           end loop;
+	end if;
+
+        Update sospeso
+        Set    fl_stornato = 'Y',
+               dt_storno   = To_Date(aR.data_movimento, 'yyyymmdd'),
+               duva        = aTSNow,
+	       utuv        = aUser,
+	       pg_ver_rec  = pg_ver_rec + 1
+	Where  esercizio            = aSosF.esercizio And
+	       cd_cds               = aSosF.cd_cds And
+	       cd_sospeso           = aSosF.cd_sospeso And
+	       ti_entrata_spesa     = aSosF.ti_entrata_spesa And
+	       ti_sospeso_riscontro = aSosF.ti_sospeso_riscontro;
+
+End loop; -- FINE LOOP 1
+
+
+       Update sospeso
+       Set   fl_stornato  = 'Y',
+             dt_storno    = To_Date(aR.data_movimento, 'yyyymmdd'),
+	     duva         = aTSNow,
+	     utuv         = aUser,
+	     pg_ver_rec   = pg_ver_rec+1
+       Where esercizio            = aSospeso.esercizio And
+             cd_cds               = aSospeso.cd_cds And
+             cd_sospeso           = aSospeso.cd_sospeso And
+             ti_entrata_spesa     = aSospeso.ti_entrata_spesa And
+             ti_sospeso_riscontro = aSospeso.ti_sospeso_riscontro;
+
+       Update movimento_conto_evidenza
+       Set    STATO=CNRCTB755.STATO_RECORD_PROCESSATO,
+              duva=aTSNow,
+              utuv=aUser,
+	      pg_ver_rec=pg_ver_rec+1
+       Where  esercizio =aR.esercizio And
+              identificativo_flusso = aR.identificativo_flusso And
+              progressivo = aR.progressivo;
+
+       aNumOk := aNumOk+1;
+
+Elsif -- GESTIONE INSERIMENTO IF 4
+
+        aR.TIPO_OPERAZIONE = 'ESEGUITO'  Then
+
+ 	  	aSospeso:=null;
+ 	  	aSF:=null;
+  	  aSospeso.CD_CDS:=aCds.cd_unita_organizzativa;
+      aSospeso.ESERCIZIO:=aR.esercizio;
+
+  	  if aR.TIPO_MOVIMENTO='ENTRATA' then          -- VERIFICARE I VALORI
+               aSospeso.TI_ENTRATA_SPESA:='E';
+          else
+               aSospeso.TI_ENTRATA_SPESA:='S';
+  	  end if;
+
+  	  		aSospeso.TI_SOSPESO_RISCONTRO:='S';
+          aSospeso.CD_SOSPESO:=lpad(aR.numero_documento,18,'0');
+          aSospeso.CD_CDS_ORIGINE:=null;
+          aSospeso.CD_UO_ORIGINE:=null;
+          aSospeso.DT_REGISTRAZIONE:=aR.DATA_MOVIMENTO;
+          aSospeso.DS_ANAGRAFICO:=aR.ANAGRAFICA_CLIENTE;
+          aSospeso.CAUSALE:=aR.CAUSALE;
+          -- identificazione banca d'Italia solo per sospesi ENTE
+	  --If aR01.NUMERO_CONT_TESO = '000000218154' then
+	  if ((aR.codice_rif_interno is not null and aR.codice_rif_interno like 'FZPBP1%') 
+	  	or(aR.tipo_esecuzione='ACCREDITO BANCA D''ITALIA')) then
+        If aCds.cd_tipo_unita = CNRCTB020.TIPO_ENTE then
+	        aSospeso.TI_CC_BI:='B';
+ 	      Else
+                IBMERR001.RAISE_ERR_GENERICO('Il sospeso '||lpad(aR.numero_documento,18,'0')||' del CDS '||aCds.cd_unita_organizzativa||
+                                             ' non può essere da Banca d''Italia');
+	      End if;
+	  Else
+              aSospeso.TI_CC_BI:='C';
+ 	  End if;
+					--aSospeso.TI_CC_BI:='C';
+          aSospeso.FL_STORNATO:='N';
+          aSospeso.IM_SOSPESO:=abs(aR.IMPORTO);
+          aSospeso.IM_ASSOCIATO:=0;
+          aSospeso.STATO_SOSPESO:='I'; --INIZIALE
+          aSospeso.DACR:=aTSNow;
+          aSospeso.UTCR:=aUser;
+          aSospeso.UTUV:=aUser;
+          aSospeso.DUVA:=aTSNow;
+          aSospeso.PG_VER_REC:=1;
+          aSospeso.IM_ASS_MOD_1210:=0;
+          aSospeso.CD_SOSPESO_PADRE:=null;
+          aSospeso.CD_PROPRIO_SOSPESO:=null;
+					aSospeso.tipo_contabilita:=aR.tipo_contabilita;
+					aSospeso.destinazione:=aR.destinazione;
+          Begin
+	       CNRCTB038.ins_SOSPESO(aSospeso);
+          Exception when DUP_VAL_ON_INDEX Then
+              Begin
+                Select im_sospeso
+                Into   importo_sospeso_esistente
+                From   sospeso
+                Where  CD_CDS               = aSospeso.CD_CDS And
+                       ESERCIZIO            = aSospeso.ESERCIZIO And
+                       TI_ENTRATA_SPESA     = aSospeso.TI_ENTRATA_SPESA And
+                       TI_SOSPESO_RISCONTRO = aSospeso.TI_SOSPESO_RISCONTRO And
+                       CD_SOSPESO           = aSospeso.CD_SOSPESO;
+              Exception
+                When Others Then
+                  importo_sospeso_esistente := Null;
+              End;
+
+            If abs(aR.IMPORTO) != importo_sospeso_esistente Then -- sospeso già esistente di importo diverso
+               IBMERR001.RAISE_ERR_GENERICO('Impossibile inserire il sospeso '||aSospeso.CD_CDS||'/'||aSospeso.ESERCIZIO||'/'||aSospeso.TI_ENTRATA_SPESA||'/'||
+                                             aSospeso.TI_SOSPESO_RISCONTRO||'/'||aSospeso.CD_SOSPESO||', già esiste. L''importo del sospeso che si sta tentando di '||
+                                             'inserire è '||Ltrim(To_Char(aR.IMPORTO, '999g999g999g999g999g990d00'))||' mentre l''importo del sospeso '||
+                                             'già esistente con lo stesso codice è '||Ltrim(To_Char(importo_sospeso_esistente, '999g999g999g999g999g990d00'))||'.');
+	    Else -- sospeso già esistente di uguale importo
+	       IBMERR001.RAISE_ERR_GENERICO('Impossibile inserire il sospeso '||aSospeso.CD_CDS||'/'||aSospeso.ESERCIZIO||'/'||aSospeso.TI_ENTRATA_SPESA||'/'||
+                                             aSospeso.TI_SOSPESO_RISCONTRO||'/'||aSospeso.CD_SOSPESO||'. Con quel codice ne esiste già uno ed ha lo stesso importo di quello che si sta'||
+                                             ' tentando di caricare, vale a dire '||Ltrim(To_Char(aR.IMPORTO, '999g999g999g999g999g990d00'))||'.');
+	    End If;
+	  End;
+
+          aSF.CD_CDS:=aSospeso.CD_CDS;
+          aSF.ESERCIZIO:=aSospeso.esercizio;
+          aSF.TI_ENTRATA_SPESA:=aSospeso.ti_entrata_spesa;
+          aSF.TI_SOSPESO_RISCONTRO:=aSospeso.ti_sospeso_riscontro;
+          aSF.CD_SOSPESO:=aSospeso.cd_sospeso || '.001';
+          aSF.DT_REGISTRAZIONE:=aSospeso.DT_REGISTRAZIONE;
+          aSF.DS_ANAGRAFICO:=aSospeso.DS_ANAGRAFICO;
+          aSF.CAUSALE:=aSospeso.CAUSALE;
+          aSF.TI_CC_BI:=aSospeso.TI_CC_BI;
+          aSF.FL_STORNATO:=aSospeso.FL_STORNATO;
+          aSF.IM_SOSPESO:=aSospeso.IM_SOSPESO;
+          aSF.IM_ASSOCIATO:=0;
+          aSF.DACR:=aTSNow;
+          aSF.UTCR:=aUser;
+          aSF.UTUV:=aUser;
+          aSF.DUVA:=aTSNow;
+          aSF.PG_VER_REC:=1;
+          aSF.IM_ASS_MOD_1210:=0;
+          aSF.CD_SOSPESO_PADRE:=aSospeso.CD_SOSPESO;
+          aSF.CD_PROPRIO_SOSPESO:='001';
+
+ 	  			if aCds.cd_tipo_unita <> CNRCTB020.TIPO_ENTE then
+            aSF.CD_CDS_ORIGINE:=aSospeso.CD_CDS;
+            aSF.CD_UO_ORIGINE:=null;
+            aSF.STATO_SOSPESO:='A'; --ASSEGNATO A CDS
+          else
+            aSF.CD_CDS_ORIGINE:=null;
+            aSF.CD_UO_ORIGINE:=null;
+            aSF.STATO_SOSPESO:='I'; --INIZIALE
+          end if;
+
+          CNRCTB038.ins_SOSPESO(aSF);
+
+	  Update movimento_conto_evidenza
+	  Set    STATO=CNRCTB755.STATO_RECORD_PROCESSATO,
+                 duva=aTSNow,
+                 utuv=aUser,
+	         pg_ver_rec=pg_ver_rec+1
+	  Where  esercizio =aR.esercizio And
+	         identificativo_flusso = aR.identificativo_flusso And
+	         progressivo = aR.progressivo;
+
+	  aNumOk:=aNumOk+1;
+
+      -- Condizioni di processabilità non verificate
+End if;
+
+End if; -- TERMINE GESTIONE SOPESI (record T32) if n. 1
+
+Commit;
+
+Exception
+ When Others Then
+                Rollback;
+
+-- 16.01.2008 nuova gestione degli scarti, inserisce nella tabella degli scarti
+
+If (aR.tipo_documento in('MANDATO','REVERSALE')) Then
+
+  aRecScarto := Null;
+
+  aRecScarto.ESERCIZIO               := aEs;
+  aRecScarto.NOME_FILE               := aNomeFile;
+  aRecScarto.PG_ESECUZIONE           := pg_exec;
+  aRecScarto.PG_REC                  := aR.progressivo;
+  aRecScarto.DT_GIORNALIERA          := aR.data_movimento;
+  aRecScarto.DT_ELABORAZIONE         := Trunc(aTSNow);
+  aRecScarto.DT_ESECUZIONE           := null;
+  aRecScarto.CD_CDS                  := aCds.cd_unita_organizzativa;
+
+  aRecScarto.TIPO_MOV                := substr(aR.tipo_documento,1,1);
+  aRecScarto.CD_CDS_MANREV           := aCds.cd_unita_organizzativa;
+  aRecScarto.ESERCIZIO_MANREV        := aR.esercizio;
+  aRecScarto.PG_MANREV               := aR.numero_documento;
+  aRecScarto.ANOMALIA                := IBMUTL001.getErrorMessage;
+  aRecScarto.DACR                    := aTSNow;
+  aRecScarto.UTCR                    := aUser;
+  aRecScarto.DUVA                    := aTSNow;
+  aRecScarto.UTUV                    := aUser;
+  aRecScarto.PG_VER_REC              := 1;
+
+Elsif aR.tipo_documento like 'SOSPESO%' Then -- SOSPESI
+
+  aRecScarto := Null;
+
+  aRecScarto.ESERCIZIO               := aEs;
+  aRecScarto.NOME_FILE               := aNomeFile;
+  aRecScarto.PG_ESECUZIONE           := pg_exec;
+  aRecScarto.PG_REC                  := aR.progressivo;
+  aRecScarto.DT_GIORNALIERA          := ar.Data_movimento;
+  aRecScarto.DT_ELABORAZIONE         := Trunc(aTSNow);
+  aRecScarto.DT_ESECUZIONE           := null; -- DATA REGISTRAZIONE SOSPESO
+  aRecScarto.CD_CDS                  := aCds.cd_unita_organizzativa;
+
+  aRecScarto.TIPO_MOV                := 'S'; -- SOSPESO
+
+  aRecScarto.CD_CDS_SR               := aSospeso.CD_CDS;
+  aRecScarto.ESERCIZIO_SR            := aSospeso.esercizio;
+  aRecScarto.TI_ENTRATA_SPESA_SR     := aSospeso.ti_entrata_spesa;
+  aRecScarto.TI_SOSPESO_RISCONTRO_SR := aSospeso.ti_sospeso_riscontro;
+  aRecScarto.CD_SR                   := aSospeso.cd_sospeso || '.001';
+
+  -- I DATI MANDATI E REVERSALI NON SI METTONO PER I SOSPESI
+  aRecScarto.ANOMALIA                := IBMUTL001.getErrorMessage;
+  aRecScarto.DACR                    := aTSNow;
+  aRecScarto.UTCR                    := aUser;
+  aRecScarto.DUVA                    := aTSNow;
+  aRecScarto.UTUV                    := aUser;
+  aRecScarto.PG_VER_REC              := 1;
+
+End If;
+
+IBMUTL200.ins_EXT_CASSIERE00_SCARTI (aRecScarto);
+Commit;
+
+IBMUTL200.logerr(pg_exec, aCds.cd_unita_organizzativa||'-'||aNomeFile||'-'|| 'Riga -'||aR.progressivo, aCds.cd_unita_organizzativa||'-'||aNomeFile||'-'|| 'Riga -'||aR.progressivo, DBMS_UTILITY.FORMAT_ERROR_STACK);
+End;
+
+End Loop;
+-- fine nuovo
 IBMUTL200.loginf(pg_exec, 'Processati: '||aNumProcessati||' Caricati: '||aNumOk, null,
                  'Termine operazione caricamento interfaccia ritorno cassiere. '||To_Char(sysdate,'DD/MM/YYYY HH:MI:SS'));
 

@@ -75,6 +75,8 @@ public class V_cons_giornaliera_cassaBulk extends OggettoBulk implements Persist
 	 //tot_sbilancio
 	 private java.math.BigDecimal tot_sbilancio;
 	 
+	 private java.sql.Timestamp data_inizio_rif;
+	 
 	public java.lang.Integer getEsercizio() {
 		return esercizio;
 	}
@@ -206,6 +208,12 @@ public class V_cons_giornaliera_cassaBulk extends OggettoBulk implements Persist
 	}
 	public void setTot_sbilancio(java.math.BigDecimal tot_sbilancio) {
 		this.tot_sbilancio = tot_sbilancio;
+	}
+	public java.sql.Timestamp getData_inizio_rif() {
+		return data_inizio_rif;
+	}
+	public void setData_inizio_rif(java.sql.Timestamp data_inizio_rif) {
+		this.data_inizio_rif = data_inizio_rif;
 	}
 	
 }
