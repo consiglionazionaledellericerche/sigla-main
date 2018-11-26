@@ -35,6 +35,7 @@ public class Stampa_registro_obbligazioniBulk extends ObbligazioneBulk {
 		tipoCompetenzaResiduoKeys.put(Numerazione_doc_contBulk.TIPO_OBB, "Competenza");
 		tipoCompetenzaResiduoKeys.put(Numerazione_doc_contBulk.TIPO_OBB_RES, "Residuo Proprio");
 		tipoCompetenzaResiduoKeys.put(Numerazione_doc_contBulk.TIPO_OBB_RES_IMPROPRIA, "Residuo Improprio");
+		tipoCompetenzaResiduoKeys.put("RES", "Residuo");
 		tipoCompetenzaResiduoKeys.put(TIPO_TUTTI, "Tutti");
 	};
 

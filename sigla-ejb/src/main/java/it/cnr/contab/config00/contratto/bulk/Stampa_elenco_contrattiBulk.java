@@ -35,13 +35,15 @@ public class Stampa_elenco_contrattiBulk extends it.cnr.jada.bulk.OggettoBulk {
 		
 	final public static String STATO_D = "D";
 	final public static String STATO_P = "P";
-	final public static String STATO_A = "A";
+	final public static String STATO_A = "C";
+	final public static String STATO_NOPROV = "NOPROV";
 	final public static String STATO_TUTTI = "*";
 
 	static {
 			ti_statoKeys.put(STATO_D,"Definitivo");
 			ti_statoKeys.put(STATO_P,"Provvisorio");
 			ti_statoKeys.put(STATO_A,"Cessato");
+			ti_statoKeys.put(STATO_NOPROV,"Non Provvisorio");
 			ti_statoKeys.put(STATO_TUTTI,"Tutti");
 			}	
 		/**
