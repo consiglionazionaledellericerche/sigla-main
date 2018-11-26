@@ -137,6 +137,12 @@
 			sqlTypeName="DECIMAL"
 			columnSize="22"
 			nullable="false" />
+		<columnMapping
+			columnName="DS_CAUSALE"
+			propertyName="ds_causale"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />		
 	</defaultColumnMap>
 	<persistentProperty
 		name="cd_cds" />
@@ -182,4 +188,6 @@
 		name="utuv" />
 	<persistentProperty
 		name="pg_ver_rec" />
+	<persistentProperty
+		name="ds_causale" />	
 </SQLPersistentInfo>

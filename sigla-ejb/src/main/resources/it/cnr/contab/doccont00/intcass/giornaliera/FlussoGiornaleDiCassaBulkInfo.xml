@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="codiceAbiBt"
+		property="codiceAbiBt"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="codiceAbiBt" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="identificativoFlusso"
+		property="identificativoFlusso"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="identificativoFlusso" />
+	<fieldProperty
+		name="dataOraCreazioneFlusso"
+		property="dataOraCreazioneFlusso"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dataOraCreazioneFlusso" />
+	<fieldProperty
+		name="dataInizioPeriodoRif"
+		property="dataInizioPeriodoRif"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dataInizioPeriodoRif" />
+	<fieldProperty
+		name="dataFinePeriodoRif"
+		property="dataFinePeriodoRif"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dataFinePeriodoRif" />
+	<fieldProperty
+		name="codiceEnte"
+		property="codiceEnte"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="codiceEnte" />
+	<fieldProperty
+		name="descrizioneEnte"
+		property="descrizioneEnte"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnEdit="false"
+		label="descrizioneEnte" />
+	<fieldProperty
+		name="codiceEnteBt"
+		property="codiceEnteBt"
+		inputType="TEXT"
+		inputSize="8"
+		maxLength="8"
+		enabledOnEdit="false"
+		label="codiceEnteBt" />
+	<fieldProperty
+		name="riferimentoEnte"
+		property="riferimentoEnte"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="riferimentoEnte" />
+	<fieldProperty
+		name="saldoComplessivoPrec"
+		property="saldoComplessivoPrec"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="saldoComplessivoPrec" />
+	<fieldProperty
+		name="totaleComplessivoEntrate"
+		property="totaleComplessivoEntrate"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="totaleComplessivoEntrate" />
+	<fieldProperty
+		name="totaleComplessivoUscite"
+		property="totaleComplessivoUscite"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="totaleComplessivoUscite" />
+	<fieldProperty
+		name="saldoComplessivoFinale"
+		property="saldoComplessivoFinale"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="saldoComplessivoFinale" />
+	<fieldProperty
+		name="fondoDiCassa"
+		property="fondoDiCassa"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="fondoDiCassa" />
+	<fieldProperty
+		name="totaleReversaliRiscosse"
+		property="totaleReversaliRiscosse"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="totaleReversaliRiscosse" />
+	<fieldProperty
+		name="totaleSospesiEntrata"
+		property="totaleSospesiEntrata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="totaleSospesiEntrata" />
+	<fieldProperty
+		name="totaleEntrate"
+		property="totaleEntrate"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="totaleEntrate" />
+	<fieldProperty
+		name="deficitDiCassa"
+		property="deficitDiCassa"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="deficitDiCassa" />
+	<fieldProperty
+		name="totaleMandatiPagati"
+		property="totaleMandatiPagati"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="totaleMandatiPagati" />
+	<fieldProperty
+		name="totaleSospesiUscita"
+		property="totaleSospesiUscita"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="totaleSospesiUscita" />
+	<fieldProperty
+		name="totaleUscite"
+		property="totaleUscite"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="totaleUscite" />
+	<fieldProperty
+		name="saldoEsercizio"
+		property="saldoEsercizio"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="saldoEsercizio" />
+	<fieldProperty
+		name="saldoContiCorrenti"
+		property="saldoContiCorrenti"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="saldoContiCorrenti" />
+	<fieldProperty
+		name="saldoContiBi"
+		property="saldoContiBi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="saldoContiBi" />
+	<fieldProperty
+		name="totaleConti"
+		property="totaleConti"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="totaleConti" />
+	<fieldProperty
+		name="vincoliContiCorrenti"
+		property="vincoliContiCorrenti"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="vincoliContiCorrenti" />
+	<fieldProperty
+		name="vincoliContiBi"
+		property="vincoliContiBi"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="vincoliContiBi" />
+	<fieldProperty
+		name="totaleVincoli"
+		property="totaleVincoli"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="totaleVincoli" />
+	<fieldProperty
+		name="anticipazioneAccordata"
+		property="anticipazioneAccordata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="anticipazioneAccordata" />
+	<fieldProperty
+		name="anticipazioneUtilizzata"
+		property="anticipazioneUtilizzata"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="anticipazioneUtilizzata" />
+	<fieldProperty
+		name="disponibilita"
+		property="disponibilita"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="disponibilita" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="identificativoFlusso" />
+	</form>
+	<formFieldProperty
+		name="codiceAbiBt" />
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="identificativoFlusso" />
+	<formFieldProperty
+		name="dataOraCreazioneFlusso" />
+	<formFieldProperty
+		name="dataInizioPeriodoRif" />
+	<formFieldProperty
+		name="dataFinePeriodoRif" />
+	<formFieldProperty
+		name="codiceEnte" />
+	<formFieldProperty
+		name="descrizioneEnte" />
+	<formFieldProperty
+		name="codiceEnteBt" />
+	<formFieldProperty
+		name="riferimentoEnte" />
+	<formFieldProperty
+		name="saldoComplessivoPrec" />
+	<formFieldProperty
+		name="totaleComplessivoEntrate" />
+	<formFieldProperty
+		name="totaleComplessivoUscite" />
+	<formFieldProperty
+		name="saldoComplessivoFinale" />
+	<formFieldProperty
+		name="fondoDiCassa" />
+	<formFieldProperty
+		name="totaleReversaliRiscosse" />
+	<formFieldProperty
+		name="totaleSospesiEntrata" />
+	<formFieldProperty
+		name="totaleEntrate" />
+	<formFieldProperty
+		name="deficitDiCassa" />
+	<formFieldProperty
+		name="totaleMandatiPagati" />
+	<formFieldProperty
+		name="totaleSospesiUscita" />
+	<formFieldProperty
+		name="totaleUscite" />
+	<formFieldProperty
+		name="saldoEsercizio" />
+	<formFieldProperty
+		name="saldoContiCorrenti" />
+	<formFieldProperty
+		name="saldoContiBi" />
+	<formFieldProperty
+		name="totaleConti" />
+	<formFieldProperty
+		name="vincoliContiCorrenti" />
+	<formFieldProperty
+		name="vincoliContiBi" />
+	<formFieldProperty
+		name="totaleVincoli" />
+	<formFieldProperty
+		name="anticipazioneAccordata" />
+	<formFieldProperty
+		name="anticipazioneUtilizzata" />
+	<formFieldProperty
+		name="disponibilita" />
+	<findFieldProperty
+		name="codiceAbiBt" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="identificativoFlusso" />
+	<findFieldProperty
+		name="dataOraCreazioneFlusso" />
+	<findFieldProperty
+		name="dataInizioPeriodoRif" />
+	<findFieldProperty
+		name="dataFinePeriodoRif" />
+	<findFieldProperty
+		name="codiceEnte" />
+	<findFieldProperty
+		name="descrizioneEnte" />
+	<findFieldProperty
+		name="codiceEnteBt" />
+	<findFieldProperty
+		name="riferimentoEnte" />
+	<findFieldProperty
+		name="saldoComplessivoPrec" />
+	<findFieldProperty
+		name="totaleComplessivoEntrate" />
+	<findFieldProperty
+		name="totaleComplessivoUscite" />
+	<findFieldProperty
+		name="saldoComplessivoFinale" />
+	<findFieldProperty
+		name="fondoDiCassa" />
+	<findFieldProperty
+		name="totaleReversaliRiscosse" />
+	<findFieldProperty
+		name="totaleSospesiEntrata" />
+	<findFieldProperty
+		name="totaleEntrate" />
+	<findFieldProperty
+		name="deficitDiCassa" />
+	<findFieldProperty
+		name="totaleMandatiPagati" />
+	<findFieldProperty
+		name="totaleSospesiUscita" />
+	<findFieldProperty
+		name="totaleUscite" />
+	<findFieldProperty
+		name="saldoEsercizio" />
+	<findFieldProperty
+		name="saldoContiCorrenti" />
+	<findFieldProperty
+		name="saldoContiBi" />
+	<findFieldProperty
+		name="totaleConti" />
+	<findFieldProperty
+		name="vincoliContiCorrenti" />
+	<findFieldProperty
+		name="vincoliContiBi" />
+	<findFieldProperty
+		name="totaleVincoli" />
+	<findFieldProperty
+		name="anticipazioneAccordata" />
+	<findFieldProperty
+		name="anticipazioneUtilizzata" />
+	<findFieldProperty
+		name="disponibilita" />
+	<columnFieldProperty
+		name="codiceAbiBt" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="identificativoFlusso" />
+	<columnFieldProperty
+		name="dataOraCreazioneFlusso" />
+	<columnFieldProperty
+		name="dataInizioPeriodoRif" />
+	<columnFieldProperty
+		name="dataFinePeriodoRif" />
+	<columnFieldProperty
+		name="codiceEnte" />
+	<columnFieldProperty
+		name="descrizioneEnte" />
+	<columnFieldProperty
+		name="codiceEnteBt" />
+	<columnFieldProperty
+		name="riferimentoEnte" />
+	<columnFieldProperty
+		name="saldoComplessivoPrec" />
+	<columnFieldProperty
+		name="totaleComplessivoEntrate" />
+	<columnFieldProperty
+		name="totaleComplessivoUscite" />
+	<columnFieldProperty
+		name="saldoComplessivoFinale" />
+	<columnFieldProperty
+		name="fondoDiCassa" />
+	<columnFieldProperty
+		name="totaleReversaliRiscosse" />
+	<columnFieldProperty
+		name="totaleSospesiEntrata" />
+	<columnFieldProperty
+		name="totaleEntrate" />
+	<columnFieldProperty
+		name="deficitDiCassa" />
+	<columnFieldProperty
+		name="totaleMandatiPagati" />
+	<columnFieldProperty
+		name="totaleSospesiUscita" />
+	<columnFieldProperty
+		name="totaleUscite" />
+	<columnFieldProperty
+		name="saldoEsercizio" />
+	<columnFieldProperty
+		name="saldoContiCorrenti" />
+	<columnFieldProperty
+		name="saldoContiBi" />
+	<columnFieldProperty
+		name="totaleConti" />
+	<columnFieldProperty
+		name="vincoliContiCorrenti" />
+	<columnFieldProperty
+		name="vincoliContiBi" />
+	<columnFieldProperty
+		name="totaleVincoli" />
+	<columnFieldProperty
+		name="anticipazioneAccordata" />
+	<columnFieldProperty
+		name="anticipazioneUtilizzata" />
+	<columnFieldProperty
+		name="disponibilita" />
+</bulkInfo>

@@ -55,6 +55,8 @@ public class Var_stanz_resBase extends Var_stanz_resKey implements Keyed {
 
 	// ID_BANDO VARCHAR2(30)
 	private java.lang.String idBando;
+	
+	private java.lang.String ds_causale;
 
 	public Var_stanz_resBase() {
 		super();
@@ -184,5 +186,11 @@ public class Var_stanz_resBase extends Var_stanz_resKey implements Keyed {
 	
 	public void setIdBando(java.lang.String idBando) {
 		this.idBando = idBando;
+	}
+	public java.lang.String getDs_causale() {
+		return ds_causale;
+	}
+	public void setDs_causale(java.lang.String ds_causale) {
+		this.ds_causale = ds_causale;
 	}
 }
