@@ -14,8 +14,8 @@
 		name="nome_file"
 		property="nome_file"
 		inputType="TEXT"
-		inputSize="20"
-		maxLength="20"
+		inputSize="30"
+		maxLength="30"
 		label="nome file" />
 	<fieldProperty
 		name="pg_rec"
@@ -163,7 +163,14 @@
 		inputSize="22"
 		maxLength="22"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Sbilancio giornata" />	
+		label="Sbilancio giornata" />
+	<fieldProperty
+		name="data_inizio_rif"
+		property="data_giornaliera"
+		inputType="TEXT"
+		formatName="date_short"
+		label="data giornaliera" />	
+	
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -207,7 +214,8 @@
 	<formFieldProperty
 		name="im_man_sospesi" />	
 	<formFieldProperty
-		name="tot_sbilancio" />	
+		name="tot_sbilancio" />
+	
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -302,12 +310,16 @@
 			name="esercizio"/>
 		<columnFieldProperty 
 			name="nome_file"/>
+		<columnFieldProperty 
+			name="data_inizio_rif"/>			
 	</columnSet>			
 	<freeSearchSet name="FILENAME">
 		<findFieldProperty 
 			name="esercizio"/>
 		<findFieldProperty 
 			name="nome_file"/>
+		<findFieldProperty 
+			name="data_inizio_rif"/>	
 	</freeSearchSet>
 	<columnSet name="BASE">
 		<columnFieldProperty 
