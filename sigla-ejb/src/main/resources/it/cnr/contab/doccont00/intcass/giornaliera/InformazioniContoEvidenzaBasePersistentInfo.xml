@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.giornaliera.InformazioniContoEvidenzaBase"
+	keyClassName="it.cnr.contab.doccont00.intcass.giornaliera.InformazioniContoEvidenzaKey"
+	homeClassName="it.cnr.contab.doccont00.intcass.giornaliera.InformazioniContoEvidenzaHome">
+	<defaultColumnMap
+		tableName="INFORMAZIONI_CONTO_EVIDENZA">
+		<columnMapping
+			columnName="DESCRIZIONE_CONTO_EVIDENZA"
+			propertyName="descrizioneContoEvidenza"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="SALDO_PRECEDENTE_CONTO_EVID"
+			propertyName="saldoPrecedenteContoEvid"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_ENTRATE_CONTO_EVIDENZA"
+			propertyName="totaleEntrateContoEvidenza"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="TOTALE_USCITE_CONTO_EVIDENZA"
+			propertyName="totaleUsciteContoEvidenza"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="SALDO_FINALE_CONTO_EVIDENZA"
+			propertyName="saldoFinaleContoEvidenza"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	
+	</defaultColumnMap>
+	<persistentProperty
+		name="descrizioneContoEvidenza" />
+	<persistentProperty
+		name="saldoPrecedenteContoEvid" />
+	<persistentProperty
+		name="totaleEntrateContoEvidenza" />
+	<persistentProperty
+		name="totaleUsciteContoEvidenza" />
+	<persistentProperty
+		name="saldoFinaleContoEvidenza" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />	
+</SQLPersistentInfo>

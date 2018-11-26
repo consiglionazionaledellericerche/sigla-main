@@ -1255,7 +1255,7 @@ public class DistintaCassiereComponent extends
 
 		SQLBuilder sql = getHome(userContext, V_ext_cassiere00Bulk.class)
 				.createSQLBuilder();
-
+		sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS,((CNRUserContext) userContext).getEsercizio()); 
 		if (user_clauses != null)
 			sql.addClause(user_clauses);
 

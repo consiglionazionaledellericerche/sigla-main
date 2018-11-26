@@ -16,22 +16,42 @@
 		property="esercizio"
 		inputType="TEXT"
 		label="Esercizio" />
-
+	<fieldProperty
+		name="data_inizio_rif"
+		property="data_inizio_rif"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data inizio rif."/>
+	<fieldProperty
+		name="data_fine_rif"
+		property="data_fine_rif"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data fine rif."/>
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
 		name="nome_file" />
-
+	<formFieldProperty
+		name="data_inizio_rif" />
+	<formFieldProperty
+		name="data_fine_rif" />
 		
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
 		name="nome_file" 
 		style="width:300px" />
+	<columnFieldProperty
+		name="data_inizio_rif" />
+	<columnFieldProperty
+		name="data_fine_rif" />
 
-	
-	
 	<findFieldProperty
 		name="nome_file" />
-
+	<findFieldProperty
+		name="data_inizio_rif" />
+	<findFieldProperty
+		name="data_fine_rif" />
+		
 </bulkInfo>
