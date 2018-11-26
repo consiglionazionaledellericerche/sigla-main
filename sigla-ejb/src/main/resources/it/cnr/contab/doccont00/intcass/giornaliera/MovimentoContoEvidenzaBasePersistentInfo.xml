@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBase"
+	keyClassName="it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaKey"
+	homeClassName="it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaHome">
+	<defaultColumnMap
+		tableName="MOVIMENTO_CONTO_EVIDENZA">
+		<columnMapping
+			columnName="TIPO_MOVIMENTO"
+			propertyName="tipoMovimento"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_DOCUMENTO"
+			propertyName="tipoDocumento"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_OPERAZIONE"
+			propertyName="tipoOperazione"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_DOCUMENTO"
+			propertyName="numeroDocumento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="TI_PAGAMENTO_FUNZ_DELEGATO"
+			propertyName="tiPagamentoFunzDelegato"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="NUM_PAG_FUNZ_DELEGATO"
+			propertyName="numPagFunzDelegato"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PROGRESSIVO_DOCUMENTO"
+			propertyName="progressivoDocumento"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO"
+			propertyName="importo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_RITENUTE"
+			propertyName="importoRitenute"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_BOLLETTA_QUIETANZA"
+			propertyName="numeroBollettaQuietanza"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_BOLLETTA_QUIETANZA_S"
+			propertyName="numeroBollettaQuietanzaS"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_MOVIMENTO"
+			propertyName="dataMovimento"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_VALUTA_ENTE"
+			propertyName="dataValutaEnte"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_ESECUZIONE"
+			propertyName="tipoEsecuzione"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="COORDINATE"
+			propertyName="coordinate"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_RIF_OPERAZIONE"
+			propertyName="codiceRifOperazione"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_RIF_INTERNO"
+			propertyName="codiceRifInterno"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_CONTABILITA"
+			propertyName="tipoContabilita"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="DESTINAZIONE"
+			propertyName="destinazione"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSOGGETTAMENTO_BOLLO"
+			propertyName="assoggettamentoBollo"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_BOLLO"
+			propertyName="importoBollo"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSOGGETTAMENTO_SPESE"
+			propertyName="assoggettamentoSpese"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_SPESE"
+			propertyName="importoSpese"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ASSOGGETTAMENTO_COMMISSIONI"
+			propertyName="assoggettamentoCommissioni"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="IMPORTO_COMMISSIONI"
+			propertyName="importoCommissioni"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
+			columnName="ANAGRAFICA_CLIENTE"
+			propertyName="anagraficaCliente"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="INDIRIZZO_CLIENTE"
+			propertyName="indirizzoCliente"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="CAP_CLIENTE"
+			propertyName="capCliente"
+			sqlTypeName="VARCHAR"
+			columnSize="16"
+			nullable="true" />
+		<columnMapping
+			columnName="LOCALITA_CLIENTE"
+			propertyName="localitaCliente"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="PROVINCIA_CLIENTE"
+			propertyName="provinciaCliente"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_CLIENTE"
+			propertyName="statoCliente"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PARTITA_IVA_CLIENTE"
+			propertyName="partitaIvaCliente"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_FISCALE_CLIENTE"
+			propertyName="codiceFiscaleCliente"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="ANAGRAFICA_DELEGATO"
+			propertyName="anagraficaDelegato"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="INDIRIZZO_DELEGATO"
+			propertyName="indirizzoDelegato"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="CAP_DELEGATO"
+			propertyName="capDelegato"
+			sqlTypeName="VARCHAR"
+			columnSize="16"
+			nullable="true" />
+		<columnMapping
+			columnName="LOCALITA_DELEGATO"
+			propertyName="localitaDelegato"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="PROVINCIA_DELEGATO"
+			propertyName="provinciaDelegato"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_DELEGATO"
+			propertyName="statoDelegato"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_FISCALE_DELEGATO"
+			propertyName="codiceFiscaleDelegato"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="ANAGRAFICA_CREDITORE_EFF"
+			propertyName="anagraficaCreditoreEff"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="INDIRIZZO_CREDITORE_EFF"
+			propertyName="indirizzoCreditoreEff"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="CAP_CREDITORE_EFF"
+			propertyName="capCreditoreEff"
+			sqlTypeName="VARCHAR"
+			columnSize="16"
+			nullable="true" />
+		<columnMapping
+			columnName="LOCALITA_CREDITORE_EFF"
+			propertyName="localitaCreditoreEff"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
+		<columnMapping
+			columnName="PROVINCIA_CREDITORE_EFF"
+			propertyName="provinciaCreditoreEff"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO_CREDITORE_EFF"
+			propertyName="statoCreditoreEff"
+			sqlTypeName="VARCHAR"
+			columnSize="2"
+			nullable="true" />
+		<columnMapping
+			columnName="PARTITA_IVA_CREDITORE_EFF"
+			propertyName="partitaIvaCreditoreEff"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_FISCALE_CREDITORE_EFF"
+			propertyName="codiceFiscaleCreditoreEff"
+			sqlTypeName="VARCHAR"
+			columnSize="35"
+			nullable="true" />
+		<columnMapping
+			columnName="CAUSALE"
+			propertyName="causale"
+			sqlTypeName="VARCHAR"
+			columnSize="200"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_SOSPESO"
+			propertyName="numeroSospeso"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+	
+	</defaultColumnMap>
+	<persistentProperty
+		name="tipoMovimento" />
+	<persistentProperty
+		name="tipoDocumento" />
+	<persistentProperty
+		name="tipoOperazione" />
+	<persistentProperty
+		name="numeroDocumento" />
+	<persistentProperty
+		name="tiPagamentoFunzDelegato" />
+	<persistentProperty
+		name="numPagFunzDelegato" />
+	<persistentProperty
+		name="progressivoDocumento" />
+	<persistentProperty
+		name="importo" />
+	<persistentProperty
+		name="importoRitenute" />
+	<persistentProperty
+		name="numeroBollettaQuietanza" />
+	<persistentProperty
+		name="numeroBollettaQuietanzaS" />
+	<persistentProperty
+		name="dataMovimento" />
+	<persistentProperty
+		name="dataValutaEnte" />
+	<persistentProperty
+		name="tipoEsecuzione" />
+	<persistentProperty
+		name="coordinate" />
+	<persistentProperty
+		name="codiceRifOperazione" />
+	<persistentProperty
+		name="codiceRifInterno" />
+	<persistentProperty
+		name="tipoContabilita" />
+	<persistentProperty
+		name="destinazione" />
+	<persistentProperty
+		name="assoggettamentoBollo" />
+	<persistentProperty
+		name="importoBollo" />
+	<persistentProperty
+		name="assoggettamentoSpese" />
+	<persistentProperty
+		name="importoSpese" />
+	<persistentProperty
+		name="assoggettamentoCommissioni" />
+	<persistentProperty
+		name="importoCommissioni" />
+	<persistentProperty
+		name="anagraficaCliente" />
+	<persistentProperty
+		name="indirizzoCliente" />
+	<persistentProperty
+		name="capCliente" />
+	<persistentProperty
+		name="localitaCliente" />
+	<persistentProperty
+		name="provinciaCliente" />
+	<persistentProperty
+		name="statoCliente" />
+	<persistentProperty
+		name="partitaIvaCliente" />
+	<persistentProperty
+		name="codiceFiscaleCliente" />
+	<persistentProperty
+		name="anagraficaDelegato" />
+	<persistentProperty
+		name="indirizzoDelegato" />
+	<persistentProperty
+		name="capDelegato" />
+	<persistentProperty
+		name="localitaDelegato" />
+	<persistentProperty
+		name="provinciaDelegato" />
+	<persistentProperty
+		name="statoDelegato" />
+	<persistentProperty
+		name="codiceFiscaleDelegato" />
+	<persistentProperty
+		name="anagraficaCreditoreEff" />
+	<persistentProperty
+		name="indirizzoCreditoreEff" />
+	<persistentProperty
+		name="capCreditoreEff" />
+	<persistentProperty
+		name="localitaCreditoreEff" />
+	<persistentProperty
+		name="provinciaCreditoreEff" />
+	<persistentProperty
+		name="statoCreditoreEff" />
+	<persistentProperty
+		name="partitaIvaCreditoreEff" />
+	<persistentProperty
+		name="codiceFiscaleCreditoreEff" />
+	<persistentProperty
+		name="causale" />
+	<persistentProperty
+		name="numeroSospeso" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />	
+</SQLPersistentInfo>

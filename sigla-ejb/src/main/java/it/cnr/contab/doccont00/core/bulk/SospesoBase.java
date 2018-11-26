@@ -48,6 +48,22 @@ public class SospesoBase extends SospesoKey implements Keyed {
 	// DT_STORNO TIMESTAMP NULL
 	private java.sql.Timestamp dt_storno;
 	
+	private java.lang.String destinazione;
+	
+	private java.lang.String tipo_contabilita;
+	
+public java.lang.String getDestinazione() {
+		return destinazione;
+	}
+	public void setDestinazione(java.lang.String destinazione) {
+		this.destinazione = destinazione;
+	}
+	public java.lang.String getTipo_contabilita() {
+		return tipo_contabilita;
+	}
+	public void setTipo_contabilita(java.lang.String tipo_contabilita) {
+		this.tipo_contabilita = tipo_contabilita;
+	}
 public SospesoBase() {
 	super();
 }

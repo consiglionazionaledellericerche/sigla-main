@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="findInformazioniContoEvidenza"
+		property="informazioniContoEvidenza"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="InformazioniContoEvidenza" />
+	<fieldProperty
+		name="esercizio"
+		property="informazioniContoEvidenza.esercizio"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="esercizio" />
+	<fieldProperty
+		name="identificativoFlusso"
+		property="informazioniContoEvidenza.identificativoFlusso"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="identificativoFlusso" />
+	<fieldProperty
+		name="contoEvidenza"
+		property="informazioniContoEvidenza.contoEvidenza"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="contoEvidenza" />
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="stato" />
+	<fieldProperty
+		name="progressivo"
+		property="progressivo"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="progressivo" />
+	<fieldProperty
+		name="tipoMovimento"
+		property="tipoMovimento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="tipoMovimento" />
+	<fieldProperty
+		name="tipoDocumento"
+		property="tipoDocumento"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="tipoDocumento" />
+	<fieldProperty
+		name="tipoOperazione"
+		property="tipoOperazione"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="tipoOperazione" />
+	<fieldProperty
+		name="numeroDocumento"
+		property="numeroDocumento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="numeroDocumento" />
+	<fieldProperty
+		name="tiPagamentoFunzDelegato"
+		property="tiPagamentoFunzDelegato"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="tiPagamentoFunzDelegato" />
+	<fieldProperty
+		name="numPagFunzDelegato"
+		property="numPagFunzDelegato"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="numPagFunzDelegato" />
+	<fieldProperty
+		name="progressivoDocumento"
+		property="progressivoDocumento"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="progressivoDocumento" />
+	<fieldProperty
+		name="importo"
+		property="importo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="importo" />
+	<fieldProperty
+		name="importoRitenute"
+		property="importoRitenute"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="importoRitenute" />
+	<fieldProperty
+		name="numeroBollettaQuietanza"
+		property="numeroBollettaQuietanza"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="numeroBollettaQuietanza" />
+	<fieldProperty
+		name="numeroBollettaQuietanzaS"
+		property="numeroBollettaQuietanzaS"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="numeroBollettaQuietanzaS" />
+	<fieldProperty
+		name="dataMovimento"
+		property="dataMovimento"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dataMovimento" />
+	<fieldProperty
+		name="dataValutaEnte"
+		property="dataValutaEnte"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		label="dataValutaEnte" />
+	<fieldProperty
+		name="tipoEsecuzione"
+		property="tipoEsecuzione"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="tipoEsecuzione" />
+	<fieldProperty
+		name="coordinate"
+		property="coordinate"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="coordinate" />
+	<fieldProperty
+		name="codiceRifOperazione"
+		property="codiceRifOperazione"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="codiceRifOperazione" />
+	<fieldProperty
+		name="codiceRifInterno"
+		property="codiceRifInterno"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="codiceRifInterno" />
+	<fieldProperty
+		name="tipoContabilita"
+		property="tipoContabilita"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="tipoContabilita" />
+	<fieldProperty
+		name="destinazione"
+		property="destinazione"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="destinazione" />
+	<fieldProperty
+		name="assoggettamentoBollo"
+		property="assoggettamentoBollo"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="assoggettamentoBollo" />
+	<fieldProperty
+		name="importoBollo"
+		property="importoBollo"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="importoBollo" />
+	<fieldProperty
+		name="assoggettamentoSpese"
+		property="assoggettamentoSpese"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="assoggettamentoSpese" />
+	<fieldProperty
+		name="importoSpese"
+		property="importoSpese"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="importoSpese" />
+	<fieldProperty
+		name="assoggettamentoCommissioni"
+		property="assoggettamentoCommissioni"
+		inputType="TEXT"
+		inputSize="50"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="assoggettamentoCommissioni" />
+	<fieldProperty
+		name="importoCommissioni"
+		property="importoCommissioni"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="false"
+		label="importoCommissioni" />
+	<fieldProperty
+		name="anagraficaCliente"
+		property="anagraficaCliente"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="anagraficaCliente" />
+	<fieldProperty
+		name="indirizzoCliente"
+		property="indirizzoCliente"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="indirizzoCliente" />
+	<fieldProperty
+		name="capCliente"
+		property="capCliente"
+		inputType="TEXT"
+		inputSize="16"
+		maxLength="16"
+		enabledOnEdit="false"
+		label="capCliente" />
+	<fieldProperty
+		name="localitaCliente"
+		property="localitaCliente"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="localitaCliente" />
+	<fieldProperty
+		name="provinciaCliente"
+		property="provinciaCliente"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="provinciaCliente" />
+	<fieldProperty
+		name="statoCliente"
+		property="statoCliente"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		label="statoCliente" />
+	<fieldProperty
+		name="partitaIvaCliente"
+		property="partitaIvaCliente"
+		inputType="TEXT"
+		maxLength="35"
+		enabledOnEdit="false"
+		label="partitaIvaCliente" />
+	<fieldProperty
+		name="codiceFiscaleCliente"
+		property="codiceFiscaleCliente"
+		inputType="TEXT"
+		maxLength="35"
+		enabledOnEdit="false"
+		label="codiceFiscaleCliente" />
+	<fieldProperty
+		name="anagraficaDelegato"
+		property="anagraficaDelegato"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="anagraficaDelegato" />
+	<fieldProperty
+		name="indirizzoDelegato"
+		property="indirizzoDelegato"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="indirizzoDelegato" />
+	<fieldProperty
+		name="capDelegato"
+		property="capDelegato"
+		inputType="TEXT"
+		inputSize="16"
+		maxLength="16"
+		enabledOnEdit="false"
+		label="capDelegato" />
+	<fieldProperty
+		name="localitaDelegato"
+		property="localitaDelegato"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="localitaDelegato" />
+	<fieldProperty
+		name="provinciaDelegato"
+		property="provinciaDelegato"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="provinciaDelegato" />
+	<fieldProperty
+		name="statoDelegato"
+		property="statoDelegato"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		label="statoDelegato" />
+	<fieldProperty
+		name="codiceFiscaleDelegato"
+		property="codiceFiscaleDelegato"
+		inputType="TEXT"
+		maxLength="35"
+		enabledOnEdit="false"
+		label="codiceFiscaleDelegato" />
+	<fieldProperty
+		name="anagraficaCreditoreEff"
+		property="anagraficaCreditoreEff"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="anagraficaCreditoreEff" />
+	<fieldProperty
+		name="indirizzoCreditoreEff"
+		property="indirizzoCreditoreEff"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="indirizzoCreditoreEff" />
+	<fieldProperty
+		name="capCreditoreEff"
+		property="capCreditoreEff"
+		inputType="TEXT"
+		inputSize="16"
+		maxLength="16"
+		enabledOnEdit="false"
+		label="capCreditoreEff" />
+	<fieldProperty
+		name="localitaCreditoreEff"
+		property="localitaCreditoreEff"
+		inputType="TEXT"
+		maxLength="50"
+		enabledOnEdit="false"
+		label="localitaCreditoreEff" />
+	<fieldProperty
+		name="provinciaCreditoreEff"
+		property="provinciaCreditoreEff"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="false"
+		label="provinciaCreditoreEff" />
+	<fieldProperty
+		name="statoCreditoreEff"
+		property="statoCreditoreEff"
+		inputType="TEXT"
+		inputSize="2"
+		maxLength="2"
+		enabledOnEdit="false"
+		label="statoCreditoreEff" />
+	<fieldProperty
+		name="partitaIvaCreditoreEff"
+		property="partitaIvaCreditoreEff"
+		inputType="TEXT"
+		maxLength="35"
+		enabledOnEdit="false"
+		label="partitaIvaCreditoreEff" />
+	<fieldProperty
+		name="codiceFiscaleCreditoreEff"
+		property="codiceFiscaleCreditoreEff"
+		inputType="TEXT"
+		maxLength="35"
+		enabledOnEdit="false"
+		label="codiceFiscaleCreditoreEff" />
+	<fieldProperty
+		name="causale"
+		property="causale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="causale" />
+	<fieldProperty
+		name="numeroSospeso"
+		property="numeroSospeso"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="numeroSospeso" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="esercizio" />
+		<formFieldProperty
+			name="identificativoFlusso" />
+		<formFieldProperty
+			name="contoEvidenza" />
+		<formFieldProperty
+			name="stato" />
+		<formFieldProperty
+			name="progressivo" />
+	</form>
+	<formFieldProperty
+		name="findInformazioniContoEvidenza" />
+	<formFieldProperty
+		name="stato" />
+	<formFieldProperty
+		name="progressivo" />
+	<formFieldProperty
+		name="tipoMovimento" />
+	<formFieldProperty
+		name="tipoDocumento" />
+	<formFieldProperty
+		name="tipoOperazione" />
+	<formFieldProperty
+		name="numeroDocumento" />
+	<formFieldProperty
+		name="tiPagamentoFunzDelegato" />
+	<formFieldProperty
+		name="numPagFunzDelegato" />
+	<formFieldProperty
+		name="progressivoDocumento" />
+	<formFieldProperty
+		name="importo" />
+	<formFieldProperty
+		name="importoRitenute" />
+	<formFieldProperty
+		name="numeroBollettaQuietanza" />
+	<formFieldProperty
+		name="numeroBollettaQuietanzaS" />
+	<formFieldProperty
+		name="dataMovimento" />
+	<formFieldProperty
+		name="dataValutaEnte" />
+	<formFieldProperty
+		name="tipoEsecuzione" />
+	<formFieldProperty
+		name="coordinate" />
+	<formFieldProperty
+		name="codiceRifOperazione" />
+	<formFieldProperty
+		name="codiceRifInterno" />
+	<formFieldProperty
+		name="tipoContabilita" />
+	<formFieldProperty
+		name="destinazione" />
+	<formFieldProperty
+		name="assoggettamentoBollo" />
+	<formFieldProperty
+		name="importoBollo" />
+	<formFieldProperty
+		name="assoggettamentoSpese" />
+	<formFieldProperty
+		name="importoSpese" />
+	<formFieldProperty
+		name="assoggettamentoCommissioni" />
+	<formFieldProperty
+		name="importoCommissioni" />
+	<formFieldProperty
+		name="anagraficaCliente" />
+	<formFieldProperty
+		name="indirizzoCliente" />
+	<formFieldProperty
+		name="capCliente" />
+	<formFieldProperty
+		name="localitaCliente" />
+	<formFieldProperty
+		name="provinciaCliente" />
+	<formFieldProperty
+		name="statoCliente" />
+	<formFieldProperty
+		name="partitaIvaCliente" />
+	<formFieldProperty
+		name="codiceFiscaleCliente" />
+	<formFieldProperty
+		name="anagraficaDelegato" />
+	<formFieldProperty
+		name="indirizzoDelegato" />
+	<formFieldProperty
+		name="capDelegato" />
+	<formFieldProperty
+		name="localitaDelegato" />
+	<formFieldProperty
+		name="provinciaDelegato" />
+	<formFieldProperty
+		name="statoDelegato" />
+	<formFieldProperty
+		name="codiceFiscaleDelegato" />
+	<formFieldProperty
+		name="anagraficaCreditoreEff" />
+	<formFieldProperty
+		name="indirizzoCreditoreEff" />
+	<formFieldProperty
+		name="capCreditoreEff" />
+	<formFieldProperty
+		name="localitaCreditoreEff" />
+	<formFieldProperty
+		name="provinciaCreditoreEff" />
+	<formFieldProperty
+		name="statoCreditoreEff" />
+	<formFieldProperty
+		name="partitaIvaCreditoreEff" />
+	<formFieldProperty
+		name="codiceFiscaleCreditoreEff" />
+	<formFieldProperty
+		name="causale" />
+	<formFieldProperty
+		name="numeroSospeso" />
+	<findFieldProperty
+		name="esercizio" />
+	<findFieldProperty
+		name="identificativoFlusso" />
+	<findFieldProperty
+		name="contoEvidenza" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="progressivo" />
+	<findFieldProperty
+		name="tipoMovimento" />
+	<findFieldProperty
+		name="tipoDocumento" />
+	<findFieldProperty
+		name="tipoOperazione" />
+	<findFieldProperty
+		name="numeroDocumento" />
+	<findFieldProperty
+		name="tiPagamentoFunzDelegato" />
+	<findFieldProperty
+		name="numPagFunzDelegato" />
+	<findFieldProperty
+		name="progressivoDocumento" />
+	<findFieldProperty
+		name="importo" />
+	<findFieldProperty
+		name="importoRitenute" />
+	<findFieldProperty
+		name="numeroBollettaQuietanza" />
+	<findFieldProperty
+		name="numeroBollettaQuietanzaS" />
+	<findFieldProperty
+		name="dataMovimento" />
+	<findFieldProperty
+		name="dataValutaEnte" />
+	<findFieldProperty
+		name="tipoEsecuzione" />
+	<findFieldProperty
+		name="coordinate" />
+	<findFieldProperty
+		name="codiceRifOperazione" />
+	<findFieldProperty
+		name="codiceRifInterno" />
+	<findFieldProperty
+		name="tipoContabilita" />
+	<findFieldProperty
+		name="destinazione" />
+	<findFieldProperty
+		name="assoggettamentoBollo" />
+	<findFieldProperty
+		name="importoBollo" />
+	<findFieldProperty
+		name="assoggettamentoSpese" />
+	<findFieldProperty
+		name="importoSpese" />
+	<findFieldProperty
+		name="assoggettamentoCommissioni" />
+	<findFieldProperty
+		name="importoCommissioni" />
+	<findFieldProperty
+		name="anagraficaCliente" />
+	<findFieldProperty
+		name="indirizzoCliente" />
+	<findFieldProperty
+		name="capCliente" />
+	<findFieldProperty
+		name="localitaCliente" />
+	<findFieldProperty
+		name="provinciaCliente" />
+	<findFieldProperty
+		name="statoCliente" />
+	<findFieldProperty
+		name="partitaIvaCliente" />
+	<findFieldProperty
+		name="codiceFiscaleCliente" />
+	<findFieldProperty
+		name="anagraficaDelegato" />
+	<findFieldProperty
+		name="indirizzoDelegato" />
+	<findFieldProperty
+		name="capDelegato" />
+	<findFieldProperty
+		name="localitaDelegato" />
+	<findFieldProperty
+		name="provinciaDelegato" />
+	<findFieldProperty
+		name="statoDelegato" />
+	<findFieldProperty
+		name="codiceFiscaleDelegato" />
+	<findFieldProperty
+		name="anagraficaCreditoreEff" />
+	<findFieldProperty
+		name="indirizzoCreditoreEff" />
+	<findFieldProperty
+		name="capCreditoreEff" />
+	<findFieldProperty
+		name="localitaCreditoreEff" />
+	<findFieldProperty
+		name="provinciaCreditoreEff" />
+	<findFieldProperty
+		name="statoCreditoreEff" />
+	<findFieldProperty
+		name="partitaIvaCreditoreEff" />
+	<findFieldProperty
+		name="codiceFiscaleCreditoreEff" />
+	<findFieldProperty
+		name="causale" />
+	<findFieldProperty
+		name="numeroSospeso" />
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="identificativoFlusso" />
+	<columnFieldProperty
+		name="contoEvidenza" />
+	<columnFieldProperty
+		name="stato" />
+	<columnFieldProperty
+		name="progressivo" />
+	<columnFieldProperty
+		name="tipoMovimento" />
+	<columnFieldProperty
+		name="tipoDocumento" />
+	<columnFieldProperty
+		name="tipoOperazione" />
+	<columnFieldProperty
+		name="numeroDocumento" />
+	<columnFieldProperty
+		name="tiPagamentoFunzDelegato" />
+	<columnFieldProperty
+		name="numPagFunzDelegato" />
+	<columnFieldProperty
+		name="progressivoDocumento" />
+	<columnFieldProperty
+		name="importo" />
+	<columnFieldProperty
+		name="importoRitenute" />
+	<columnFieldProperty
+		name="numeroBollettaQuietanza" />
+	<columnFieldProperty
+		name="numeroBollettaQuietanzaS" />
+	<columnFieldProperty
+		name="dataMovimento" />
+	<columnFieldProperty
+		name="dataValutaEnte" />
+	<columnFieldProperty
+		name="tipoEsecuzione" />
+	<columnFieldProperty
+		name="coordinate" />
+	<columnFieldProperty
+		name="codiceRifOperazione" />
+	<columnFieldProperty
+		name="codiceRifInterno" />
+	<columnFieldProperty
+		name="tipoContabilita" />
+	<columnFieldProperty
+		name="destinazione" />
+	<columnFieldProperty
+		name="assoggettamentoBollo" />
+	<columnFieldProperty
+		name="importoBollo" />
+	<columnFieldProperty
+		name="assoggettamentoSpese" />
+	<columnFieldProperty
+		name="importoSpese" />
+	<columnFieldProperty
+		name="assoggettamentoCommissioni" />
+	<columnFieldProperty
+		name="importoCommissioni" />
+	<columnFieldProperty
+		name="anagraficaCliente" />
+	<columnFieldProperty
+		name="indirizzoCliente" />
+	<columnFieldProperty
+		name="capCliente" />
+	<columnFieldProperty
+		name="localitaCliente" />
+	<columnFieldProperty
+		name="provinciaCliente" />
+	<columnFieldProperty
+		name="statoCliente" />
+	<columnFieldProperty
+		name="partitaIvaCliente" />
+	<columnFieldProperty
+		name="codiceFiscaleCliente" />
+	<columnFieldProperty
+		name="anagraficaDelegato" />
+	<columnFieldProperty
+		name="indirizzoDelegato" />
+	<columnFieldProperty
+		name="capDelegato" />
+	<columnFieldProperty
+		name="localitaDelegato" />
+	<columnFieldProperty
+		name="provinciaDelegato" />
+	<columnFieldProperty
+		name="statoDelegato" />
+	<columnFieldProperty
+		name="codiceFiscaleDelegato" />
+	<columnFieldProperty
+		name="anagraficaCreditoreEff" />
+	<columnFieldProperty
+		name="indirizzoCreditoreEff" />
+	<columnFieldProperty
+		name="capCreditoreEff" />
+	<columnFieldProperty
+		name="localitaCreditoreEff" />
+	<columnFieldProperty
+		name="provinciaCreditoreEff" />
+	<columnFieldProperty
+		name="statoCreditoreEff" />
+	<columnFieldProperty
+		name="partitaIvaCreditoreEff" />
+	<columnFieldProperty
+		name="codiceFiscaleCreditoreEff" />
+	<columnFieldProperty
+		name="causale" />
+	<columnFieldProperty
+		name="numeroSospeso" />
+</bulkInfo>
