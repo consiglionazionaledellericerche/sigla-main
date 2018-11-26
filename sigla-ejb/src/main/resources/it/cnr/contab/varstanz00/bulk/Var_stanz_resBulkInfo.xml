@@ -272,6 +272,17 @@
         enabledOnEdit="true"                
 		nullable="false"
 		label="Dettagli Bando" />
+	<fieldProperty
+		name="ds_causale"
+		property="ds_causale"
+		inputType="SELECT"
+		keysProperty="ds_causaleKeys"
+		maxLength="50"
+        enabledOnInsert="true"
+        enabledOnEdit="true"
+        enabledOnSearch="true"		
+		nullable="true"
+		label="Delibera 210/2018" />		
 		
 	<form name="searchtool">
     	<formFieldProperty
@@ -317,7 +328,8 @@
 	<formFieldProperty
 		name="stato" />
 	<formFieldProperty
-		name="tipologia" />
+		name="tipologia" 
+		command="doOnChangeTipologia"/>/>
 	<formFieldProperty
 		name="tipologia_fin"
 		command="doOnChangeTipologiaFin"/>
@@ -345,6 +357,8 @@
 		name="idMatricola" />
 	<formFieldProperty
 		name="idBando" />
+	<formFieldProperty
+		name="ds_causale" />
 		
 	<findFieldProperty
 		name="esercizio" />
@@ -380,6 +394,8 @@
 		name="idMatricola" />
 	<findFieldProperty
 		name="idBando" />
+	<findFieldProperty
+		name="ds_causale" />
 		
 	<columnFieldProperty
 		name="esercizio" />
@@ -408,5 +424,8 @@
 	<columnFieldProperty
 		name="tipologia" />
 	<columnFieldProperty
-		name="tipologia_fin" />		
+		name="tipologia_fin" />
+	<columnFieldProperty
+		name="ds_causale" />
+				
 </bulkInfo>
