@@ -1358,12 +1358,12 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addPrimaryKey columnNames="esercizio,identificativo_flusso,conto_evidenza" constraintName="px_informazioni_conto_evidenza" tableName="informazioni_conto_evidenza"/>
-				<addForeignKeyConstraint baseColumnNames="esercizio,identificativo_flusso" baseTableName="informazioni_conto_evidenza" constraintName="fk_informazioni_conto_evidenza" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,identificativo_flusso" referencedTableName="flusso_giornale_di_cassa"/>
-        <createIndex indexName="fx_informazioni_conto_evidenza" tableName="informazioni_conto_evidenza">
+        <addPrimaryKey columnNames="esercizio,identificativo_flusso,conto_evidenza" constraintName="px_informazioni_conto_evid" tableName="informazioni_conto_evidenza"/>
+		<addForeignKeyConstraint baseColumnNames="esercizio,identificativo_flusso" baseTableName="informazioni_conto_evidenza" constraintName="fk_informazioni_conto_evid" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,identificativo_flusso" referencedTableName="flusso_giornale_di_cassa"/>
+        <createIndex indexName="fx_informazioni_conto_evid" tableName="informazioni_conto_evidenza">
             <column name="esercizio,identificativo_flusso"/>
         </createIndex>
-				<createTable remarks="Tabella contenente il dettaglio dei movimenti dei conti presenti nel flusso della giornaliera." tableName="movimento_conto_evidenza">
+		<createTable remarks="Tabella contenente il dettaglio dei movimenti dei conti presenti nel flusso della giornaliera." tableName="movimento_conto_evidenza">
             <column name="esercizio"  type="INT"/>                
             <column name="identificativo_flusso" type="VARCHAR(50)"/>
             <column name="progressivo" type="BIGINT"/>
