@@ -1221,12 +1221,12 @@
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
-      <changeSet author="rosangela.pucciarelli" id="alter_var_stanz_res_causale>
+      <changeSet author="rosangela.pucciarelli" id="alter_var_stanz_res_causale">
         <addColumn tableName="var_stanz_res">
             <column name="ds_causale" type="varchar(50)" remarks="Descrizione aggiuntiva per etichettare delle variazioni."/>
         </addColumn>
     </changeSet>
-      <changeSet author="rosangela.pucciarelli" id="alter_pdg_varizione_causale>
+      <changeSet author="rosangela.pucciarelli" id="alter_pdg_variazione_causale">
         <addColumn tableName="pdg_variazione">
             <column name="ds_causale" type="varchar(50)" remarks="Descrizione aggiuntiva per etichettare delle variazioni."/>
         </addColumn>
@@ -1270,11 +1270,11 @@
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
       </changeSet>
-      <changeSet author="rosangela.pucciarelli" id="alter_nome_file>
+      <changeSet author="rosangela.pucciarelli" id="alter_nome_file">
         <modifyDataType tableName="ext_cassiere00_logs" columnName="nome_file" newDataType="VARCHAR(30)"/>
         <modifyDataType tableName="ext_cassiere00_scarti" columnName="nome_file" newDataType="VARCHAR(30)"/>
 	    </changeSet>
-      <changeSet author="rosangela.pucciarelli" id="alter_sospeso_giornaliera>
+      <changeSet author="rosangela.pucciarelli" id="alter_sospeso_giornaliera">
         <addColumn tableName="sospeso">
             <column name="tipo_contabilita" type="varchar(20)"/>
         </addColumn>
