@@ -180,7 +180,9 @@
 	<persistentProperty
 		name="im_man_sospesi" />	
 	<persistentProperty
-		name="tot_sbilancio" />		
+		name="tot_sbilancio" />
+	<persistentProperty
+			name="data_inizio_rif" />
 	<columnMap 
 		name="FILENAME"
 		tableName="V_EXT_CASSIERE00">
@@ -202,7 +204,5 @@
 			sqlTypeName="TIMESTAMP"
 			columnSize="7"
 			nullable="true" />
-		<persistentProperty
-			name="data_inizio_rif" />				
 	</columnMap>		
 </SQLPersistentInfo>
