@@ -693,16 +693,16 @@ public String checkDispObbligazioniAccertamenti(UserContext userContext, String 
 		   }   	 
 		   if(diff != null && diff.compareTo(Utility.ZERO) == -1){
 			 messaggio = "L'importo relativo al CDR "+cd_cdr+" G.A.E. "+cd_linea_attivita+" Voce "+voce.getCd_voce()+ aCapo +
-                         "supera la disponibilità di " + new it.cnr.contab.util.EuroFormat().format(diff.abs());
+                         "supera la disponibilità di " + new it.cnr.contab.util.EuroFormat().format(diff.abs())+".";
 		   }
 		   //aggiungo i vincoli
 		   Pdg_vincoloHome home = (Pdg_vincoloHome)getHome(userContext, Pdg_vincoloBulk.class);
 		   List<Pdg_vincoloBulk> listVincoli = home.cercaDettagliVincolati(saldo);
 		   BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-		   if (diff.subtract(impVincolo).compareTo(BigDecimal.ZERO)==-1)
+		   if (impVincolo.compareTo(BigDecimal.ZERO)!=0 && diff.subtract(impVincolo).compareTo(BigDecimal.ZERO)==-1)
 			   messaggio = "L'importo relativo al CDR "+cd_cdr+" G.A.E. "+cd_linea_attivita+" Voce "+voce.getCd_voce()+ aCapo +
 			   "supera la disponibilità di " + new it.cnr.contab.util.EuroFormat().format(diff.subtract(impVincolo).abs())+" in conseguenza della presenza "
-			   		+ "di vincoli di spesa per un importo di " + new it.cnr.contab.util.EuroFormat().format(impVincolo.abs());
+			   		+ "di vincoli di spesa per un importo di " + new it.cnr.contab.util.EuroFormat().format(impVincolo.abs())+".";
 		}
 		return messaggio;
 	}

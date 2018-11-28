@@ -80,9 +80,9 @@
 
         <addPrimaryKey columnNames="id" constraintName="tipo_atto_bollo_pkey" tableName="tipo_atto_bollo"/>
 
-        <loadData commentLineStartsWith="#" encoding="UTF-8" 
-        		  file="csv/tipo_atto_bollo.csv" quotchar="&quot;" separator="," tableName="tipo_atto_bollo">
-	        <column name="dt_ini_validita" type="${date.type}"/>
+        <loadData commentLineStartsWith="#" encoding="UTF-8"
+                  file="csv/tipo_atto_bollo.csv" quotchar="&quot;" separator="," tableName="tipo_atto_bollo">
+            <column name="dt_ini_validita" type="${date.type}"/>
             <column name="dt_fin_validita" type="${date.type}"/>
             <column name="dacr" type="${date.type}"/>
             <column name="duva" type="${date.type}"/>
@@ -190,228 +190,228 @@
     </changeSet>
 
     <changeSet author="raffaele.pagano" id="accessi_gestione_bollo">
-    	<insert tableName="accesso">
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOM"/>
-        	<column name="ti_accesso" type="CHAR(1)" value=""/>
-        	<column name="ds_accesso" type="VARCHAR(200)" value="Gestione Tipo Atto Soggetto a Bollo"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOM"/>
+            <column name="ti_accesso" type="CHAR(1)" value=""/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione Tipo Atto Soggetto a Bollo"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="accesso">
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOV"/>
-        	<column name="ti_accesso" type="CHAR(1)" value=""/>
-        	<column name="ds_accesso" type="VARCHAR(200)" value="Gestione Tipo Atto Soggetto a Bollo"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOV"/>
+            <column name="ti_accesso" type="CHAR(1)" value=""/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione Tipo Atto Soggetto a Bollo"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="accesso">
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOM"/>
-        	<column name="ti_accesso" type="CHAR(1)" value=""/>
-        	<column name="ds_accesso" type="VARCHAR(200)" value="Gestione Atto Soggetto a Bollo"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOM"/>
+            <column name="ti_accesso" type="CHAR(1)" value=""/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione Atto Soggetto a Bollo"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="accesso">
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOV"/>
-        	<column name="ti_accesso" type="CHAR(1)" value=""/>
-        	<column name="ds_accesso" type="VARCHAR(200)" value="Gestione Atto Soggetto a Bollo"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOV"/>
+            <column name="ti_accesso" type="CHAR(1)" value=""/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione Atto Soggetto a Bollo"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="accesso">
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOCONSATTO"/>
-        	<column name="ti_accesso" type="CHAR(1)" value=""/>
-        	<column name="ds_accesso" type="VARCHAR(200)" value="Consultazione Atti Soggetti a Bollo"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOCONSATTO"/>
+            <column name="ti_accesso" type="CHAR(1)" value=""/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Consultazione Atti Soggetti a Bollo"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="ass_bp_accesso">
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOM"/>
-        	<column name="business_process" type="VARCHAR(200)" value="CRUDConfigTipoAttoBolloBP"/>
-        	<column name="ti_funzione" type="CHAR(1)" value="M"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDConfigTipoAttoBolloBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="ass_bp_accesso">
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOV"/>
-        	<column name="business_process" type="VARCHAR(200)" value="CRUDConfigTipoAttoBolloBP"/>
-        	<column name="ti_funzione" type="CHAR(1)" value="V"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDConfigTipoAttoBolloBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="ass_bp_accesso">
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOM"/>
-        	<column name="business_process" type="VARCHAR(200)" value="CRUDAttoBolloBP"/>
-        	<column name="ti_funzione" type="CHAR(1)" value="M"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDAttoBolloBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="ass_bp_accesso">
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOV"/>
-        	<column name="business_process" type="VARCHAR(200)" value="CRUDAttoBolloBP"/>
-        	<column name="ti_funzione" type="CHAR(1)" value="V"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDAttoBolloBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="ass_bp_accesso">
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOCONSATTO"/>
-        	<column name="business_process" type="VARCHAR(200)" value="ConsAttoBolloBP"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOCONSATTO"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsAttoBolloBP"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
 
-    	<insert tableName="albero_main">
-        	<column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
-        	<column name="ds_nodo" type="VARCHAR(200)" value="Bollo Virtuale"/>
-        	<column name="pg_ordinamento" type="BIGINT" value="145"/>
-        	<column name="fl_terminale" type="CHAR(1)" value="N"/>
-        	<column name="livello" type="SMALLINT" value="3"/>
-        	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="BOLLO"/>
-        	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG"/>
-        	<column name="url_icona" type="VARCHAR(200)" value="leaf.gif"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Bollo Virtuale"/>
+            <column name="pg_ordinamento" type="BIGINT" value="145"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="3"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="BOLLO"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG"/>
+            <column name="url_icona" type="VARCHAR(200)" value="leaf.gif"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="albero_main">
-        	<column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO.M"/>
-        	<column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOM"/>
-        	<column name="business_process" type="VARCHAR(200)" value="CRUDAttoBolloBP"/>
-        	<column name="pg_ordinamento" type="BIGINT" value="10"/>
-        	<column name="fl_terminale" type="CHAR(1)" value="Y"/>
-        	<column name="livello" type="SMALLINT" value="4"/>
-        	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
-        	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO.M"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDAttoBolloBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="albero_main">
-        	<column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO.V"/>
-        	<column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOM"/>
-        	<column name="business_process" type="VARCHAR(200)" value="CRUDAttoBolloBP"/>
-        	<column name="pg_ordinamento" type="BIGINT" value="20"/>
-        	<column name="fl_terminale" type="CHAR(1)" value="Y"/>
-        	<column name="livello" type="SMALLINT" value="4"/>
-        	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
-        	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO.V"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOATTOM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDAttoBolloBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="20"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="albero_main">
-        	<column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO.C"/>
-        	<column name="ds_nodo" type="VARCHAR(200)" value="consultazione"/>
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOCONSATTO"/>
-        	<column name="business_process" type="VARCHAR(200)" value="ConsAttoBolloBP"/>
-        	<column name="pg_ordinamento" type="BIGINT" value="30"/>
-        	<column name="fl_terminale" type="CHAR(1)" value="Y"/>
-        	<column name="livello" type="SMALLINT" value="4"/>
-        	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="C"/>
-        	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO.C"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="consultazione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOCONSATTO"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsAttoBolloBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="30"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="C"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="albero_main">
-        	<column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF"/>
-        	<column name="ds_nodo" type="VARCHAR(200)" value="tabelle di riferimento"/>
-        	<column name="pg_ordinamento" type="BIGINT" value="40"/>
-        	<column name="fl_terminale" type="CHAR(1)" value="N"/>
-        	<column name="livello" type="SMALLINT" value="4"/>
-        	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="TABRIF"/>
-        	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="tabelle di riferimento"/>
+            <column name="pg_ordinamento" type="BIGINT" value="40"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="TABRIF"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="albero_main">
-        	<column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF.TIPOATT"/>
-        	<column name="ds_nodo" type="VARCHAR(200)" value="Tipo Atto"/>
-        	<column name="pg_ordinamento" type="BIGINT" value="10"/>
-        	<column name="fl_terminale" type="CHAR(1)" value="N"/>
-        	<column name="livello" type="SMALLINT" value="5"/>
-        	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="TIPOATT"/>
-        	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF.TIPOATT"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Tipo Atto"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="5"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="TIPOATT"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="albero_main">
-        	<column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF.TIPOATT.M"/>
-        	<column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOM"/>
-        	<column name="business_process" type="VARCHAR(200)" value="CRUDConfigTipoAttoBolloBP"/>
-        	<column name="pg_ordinamento" type="BIGINT" value="10"/>
-        	<column name="fl_terminale" type="CHAR(1)" value="Y"/>
-        	<column name="livello" type="SMALLINT" value="6"/>
-        	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
-        	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF.TIPOATT"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF.TIPOATT.M"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDConfigTipoAttoBolloBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="6"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF.TIPOATT"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    	<insert tableName="albero_main">
-        	<column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF.TIPOATT.V"/>
-        	<column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
-        	<column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOV"/>
-        	<column name="business_process" type="VARCHAR(200)" value="CRUDConfigTipoAttoBolloBP"/>
-        	<column name="pg_ordinamento" type="BIGINT" value="20"/>
-        	<column name="fl_terminale" type="CHAR(1)" value="Y"/>
-        	<column name="livello" type="SMALLINT" value="6"/>
-        	<column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
-        	<column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF.TIPOATT"/>
-        	<column name="duva" type="${date.type}" valueDate="${now}"/>
-        	<column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="dacr" type="${date.type}" valueDate="${now}"/>
-        	<column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
-        	<column name="pg_ver_rec" type="BIGINT" value="0"/>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF.TIPOATT.V"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGBOLLOTIPOATTOV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDConfigTipoAttoBolloBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="20"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="6"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.BOLLO.TABRIF.TIPOATT"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
     <changeSet author="gianfranco.gasparro" id="create-table-tipo-documento-generico">
@@ -460,12 +460,12 @@
             <column name="id_tipo_documento_generico"/>
         </createIndex>
     </changeSet>
-	<changeSet id="drop-table-excel_blob" author="marco.spasiano">
-		<dropTable tableName="excel_blob"></dropTable>
-	</changeSet>
-	<changeSet id="drop-table-doc_firma_digitale" author="marco.spasiano">
-		<dropTable tableName="doc_firma_digitale"></dropTable>
-	</changeSet>
+    <changeSet id="drop-table-excel_blob" author="marco.spasiano">
+        <dropTable tableName="excel_blob"></dropTable>
+    </changeSet>
+    <changeSet id="drop-table-doc_firma_digitale" author="marco.spasiano">
+        <dropTable tableName="doc_firma_digitale"></dropTable>
+    </changeSet>
     <changeSet author="marco.spasiano" id="accessi_gestione_preferiti">
         <insert tableName="accesso">
             <column name="cd_accesso" type="VARCHAR(20)" value="SERVPREFERITIM"/>
@@ -525,13 +525,13 @@
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
-    <changeSet author="rosangela.pucciarelli" id="modifiche-detraibilità-iva"> 
-    <addColumn tableName="tipo_sezionale">
+    <changeSet author="rosangela.pucciarelli" id="modifiche-detraibilità-iva">
+        <addColumn tableName="tipo_sezionale">
             <column name="fl_reg_tardiva" type="CHAR(1)" defaultValue="N" remarks="Tipo sezionale su cui registrare le fatture ancora detraibili ma tardive - Dominio: Y = Yes; N = No;.">
-               <constraints nullable="false"/>
+                <constraints nullable="false"/>
             </column>
-    </addColumn>
-    <insert tableName="tipo_sezionale">
+        </addColumn>
+        <insert tableName="tipo_sezionale">
             <column name="cd_tipo_sezionale" type="VARCHAR(10)" value="a/comrt"/>
             <column name="ds_tipo_sezionale" type="VARCHAR(50)" value="REGISTRO IVA ORDINARIO ACQUISTI Reg.Tardiva"/>
             <column name="ti_acquisti_vendite" type="CHAR(1)" value="A"/>
@@ -554,8 +554,8 @@
             <column name="ordina" type="BIGINT" value="4"/>
             <column name="fl_split_payment"  type="CHAR(1)" value="N"/>
             <column name="fl_reg_tardiva" type="CHAR(1)" value="Y"/>
-     </insert>
-     <insert tableName="tipo_sezionale">
+        </insert>
+        <insert tableName="tipo_sezionale">
             <column name="cd_tipo_sezionale" type="VARCHAR(10)" value="v/cautrt"/>
             <column name="ds_tipo_sezionale" type="VARCHAR(50)" value="REGISTRO IVA VENDITE DELLE AUTOFATTURE Reg.Tardiva"/>
             <column name="ti_acquisti_vendite" type="CHAR(1)" value="V"/>
@@ -578,7 +578,7 @@
             <column name="ordina" type="BIGINT" value="3"/>
             <column name="fl_split_payment"  type="CHAR(1)" value="N"/>
             <column name="fl_reg_tardiva" type="CHAR(1)" value="Y"/>
-     </insert>
+        </insert>
     </changeSet>
     <changeSet author="rosangela.pucciarelli" id="configurazione_cnr-add-configurazione-split-prof">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/configurazione_cnr_split_prof.csv" quotchar="&quot;" separator="," tableName="configurazione_cnr">
@@ -634,10 +634,10 @@
                 <constraints nullable="false"/>
             </column>
         </addColumn>
-				<update tableName="FATTURA_ATTIVA">
-  	  		<column name="FL_FATTURA_ELETTRONICA" value="Y" type="varchar(1)"/>
-	    		<where>CODICE_UNIVOCO_UFFICIO_IPA IS NOT NULL</where>
-				</update>
+        <update tableName="FATTURA_ATTIVA">
+            <column name="FL_FATTURA_ELETTRONICA" value="Y" type="varchar(1)"/>
+            <where>CODICE_UNIVOCO_UFFICIO_IPA IS NOT NULL</where>
+        </update>
     </changeSet>
     <changeSet author="gianfranco.gasparro" id="addColumn-terzo-sblocco_fatt_elettronica">
         <addColumn tableName="TERZO">
@@ -849,14 +849,14 @@
         </addColumn>
 
         <addForeignKeyConstraint baseColumnNames="id_tipo_finanziamento" baseTableName="progetto_other_field" constraintName="fk_progetto_other_field01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tipo_finanziamento"/>
-    </changeSet>    
+    </changeSet>
 
     <changeSet author="raffaele.pagano" id="alter_progetto_piano_economico">
         <renameColumn oldColumnName="im_spesa" newColumnName="im_spesa_finanziato" tableName="progetto_piano_economico"/>
         <addColumn tableName="progetto_piano_economico">
             <column name="im_spesa_cofinanziato" remarks="Importo spesa cofinanziario del progetto" type="numeric(15, 2)"/>
         </addColumn>
-    </changeSet>    
+    </changeSet>
     <changeSet author="marco.spasiano" id="insert_base_tipo_finanziamento">
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/tipo_finanziamento.csv" quotchar="&quot;" separator="," tableName="tipo_finanziamento">
             <column header="id" name="id" type="NUMERIC"/>
@@ -1221,18 +1221,18 @@
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
-      <changeSet author="rosangela.pucciarelli" id="alter_var_stanz_res_causale>
+    <changeSet author="rosangela.pucciarelli" id="alter_var_stanz_res_causale">
         <addColumn tableName="var_stanz_res">
             <column name="ds_causale" type="varchar(50)" remarks="Descrizione aggiuntiva per etichettare delle variazioni."/>
         </addColumn>
     </changeSet>
-      <changeSet author="rosangela.pucciarelli" id="alter_pdg_varizione_causale>
+    <changeSet author="rosangela.pucciarelli" id="alter_pdg_variazione_causale">
         <addColumn tableName="pdg_variazione">
             <column name="ds_causale" type="varchar(50)" remarks="Descrizione aggiuntiva per etichettare delle variazioni."/>
         </addColumn>
     </changeSet>
- 		<changeSet author="rosangela.pucciarelli" id="accessi_gionaliera">
- 			<insert tableName="accesso">
+    <changeSet author="rosangela.pucciarelli" id="accessi_gionaliera">
+        <insert tableName="accesso">
             <column name="cd_accesso" type="VARCHAR(20)" value="DOCINTCASCORECAGIOM"/>
             <column name="ti_accesso" type="CHAR(1)"  value="" />
             <column name="ds_accesso" type="VARCHAR(200)" value="Carica File Giornaliera"/>
@@ -1242,7 +1242,7 @@
             <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-		    <insert tableName="ass_bp_accesso">
+        <insert tableName="ass_bp_accesso">
             <column name="cd_accesso" type="VARCHAR(20)" value="DOCINTCASCORECAGIOM"/>
             <column name="business_process" type="VARCHAR(200)" value="CaricaFileGiornalieraBP"/>
             <column name="ti_funzione" type="CHAR(1)" value="M"/>
@@ -1269,12 +1269,12 @@
             <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-      </changeSet>
-      <changeSet author="rosangela.pucciarelli" id="alter_nome_file>
+    </changeSet>
+    <changeSet author="rosangela.pucciarelli" id="alter_nome_file">
         <modifyDataType tableName="ext_cassiere00_logs" columnName="nome_file" newDataType="VARCHAR(30)"/>
         <modifyDataType tableName="ext_cassiere00_scarti" columnName="nome_file" newDataType="VARCHAR(30)"/>
-	    </changeSet>
-      <changeSet author="rosangela.pucciarelli" id="alter_sospeso_giornaliera>
+    </changeSet>
+    <changeSet author="rosangela.pucciarelli" id="alter_sospeso_giornaliera">
         <addColumn tableName="sospeso">
             <column name="tipo_contabilita" type="varchar(20)"/>
         </addColumn>
@@ -1282,41 +1282,41 @@
             <column name="destinazione" type="varchar(20)"/>
         </addColumn>
     </changeSet>
-     <changeSet author="rosangela.pucciarelli" id="create-table-flusso-giornale-cassa">
+    <changeSet author="rosangela.pucciarelli" id="create-table-flusso-giornale-cassa">
         <createTable remarks="Tabella contenente la testata del flusso della giornaliera." tableName="flusso_giornale_di_cassa">
             <column name="codice_abi_bt"  type="BIGINT"/>
-						<column name="esercizio"  type="INT"/>                
+            <column name="esercizio"  type="INT"/>
             <column name="identificativo_flusso" type="VARCHAR(50)"/>
-            <column name="data_ora_creazione_flusso" type="DATE"/>    
-            <column name="data_inizio_periodo_rif" type="DATE"/>    
-            <column name="data_fine_periodo_rif" type="DATE"/>    
+            <column name="data_ora_creazione_flusso" type="DATE"/>
+            <column name="data_inizio_periodo_rif" type="DATE"/>
+            <column name="data_fine_periodo_rif" type="DATE"/>
             <column name="codice_ente" type="VARCHAR(30)"/>
             <column name="descrizione_ente" type="VARCHAR(100)"/>
             <column name="codice_ente_bt" type="VARCHAR(8)"/>
             <column name="riferimento_ente" type="VARCHAR(20)"/>
-					  <column name="saldo_complessivo_prec" 		type="numeric(15, 2)"/>
-					  <column name="totale_complessivo_entrate" type="numeric(15, 2)"/>
-					  <column name="totale_complessivo_uscite"	type="numeric(15, 2)"/>
-					  <column name="saldo_complessivo_finale" 	type="numeric(15, 2)"/>
-					  <column name="fondo_di_cassa"  						type="numeric(15, 2)"/>
-					  <column name="totale_reversali_riscosse"	type="numeric(15, 2)"/>	
-					  <column name="totale_sospesi_entrata"  		type="numeric(15, 2)"/>
-					  <column name="totale_entrate"  						type="numeric(15, 2)"/>
-					  <column name="deficit_di_cassa"  					type="numeric(15, 2)"/>
-					  <column name="totale_mandati_pagati"  		type="numeric(15, 2)"/>
-					  <column name="totale_sospesi_uscita"  		type="numeric(15, 2)"/>
-					  <column name="totale_uscite"  						type="numeric(15, 2)"/>
-					  <column name="saldo_esercizio"  					type="numeric(15, 2)"/>
-					 	<column name="saldo_conti_correnti"  			type="numeric(15, 2)"/>
-					 	<column name="saldo_conti_bi"  						type="numeric(15, 2)"/>
-					 	<column name="totale_conti"  							type="numeric(15, 2)"/>
-					 	<column name="vincoli_conti_correnti"  		type="numeric(15, 2)"/>
-					 	<column name="vincoli_conti_bi"  					type="numeric(15, 2)"/>
-					 	<column name="totale_vincoli"  						type="numeric(15, 2)"/>
-					 	<column name="anticipazione_accordata" 		type="numeric(15, 2)"/>
-					 	<column name="anticipazione_utilizzata"	 	type="numeric(15, 2)"/>
-					 	<column name="disponibilita"  						type="numeric(15, 2)"/>
-	          <column name="dacr" type="DATE">
+            <column name="saldo_complessivo_prec" 		type="numeric(15, 2)"/>
+            <column name="totale_complessivo_entrate" type="numeric(15, 2)"/>
+            <column name="totale_complessivo_uscite"	type="numeric(15, 2)"/>
+            <column name="saldo_complessivo_finale" 	type="numeric(15, 2)"/>
+            <column name="fondo_di_cassa"  						type="numeric(15, 2)"/>
+            <column name="totale_reversali_riscosse"	type="numeric(15, 2)"/>
+            <column name="totale_sospesi_entrata"  		type="numeric(15, 2)"/>
+            <column name="totale_entrate"  						type="numeric(15, 2)"/>
+            <column name="deficit_di_cassa"  					type="numeric(15, 2)"/>
+            <column name="totale_mandati_pagati"  		type="numeric(15, 2)"/>
+            <column name="totale_sospesi_uscita"  		type="numeric(15, 2)"/>
+            <column name="totale_uscite"  						type="numeric(15, 2)"/>
+            <column name="saldo_esercizio"  					type="numeric(15, 2)"/>
+            <column name="saldo_conti_correnti"  			type="numeric(15, 2)"/>
+            <column name="saldo_conti_bi"  						type="numeric(15, 2)"/>
+            <column name="totale_conti"  							type="numeric(15, 2)"/>
+            <column name="vincoli_conti_correnti"  		type="numeric(15, 2)"/>
+            <column name="vincoli_conti_bi"  					type="numeric(15, 2)"/>
+            <column name="totale_vincoli"  						type="numeric(15, 2)"/>
+            <column name="anticipazione_accordata" 		type="numeric(15, 2)"/>
+            <column name="anticipazione_utilizzata"	 	type="numeric(15, 2)"/>
+            <column name="disponibilita"  						type="numeric(15, 2)"/>
+            <column name="dacr" type="DATE">
                 <constraints nullable="false"/>
             </column>
             <column name="utcr" type="VARCHAR(20)">
@@ -1333,16 +1333,16 @@
             </column>
         </createTable>
         <addPrimaryKey columnNames="esercizio,identificativo_flusso" constraintName="px_flusso_giornale_di_cassa" tableName="flusso_giornale_di_cassa"/>
-    		<createTable remarks="Tabella contenente i conti presenti nel flusso della giornaliera." tableName="informazioni_conto_evidenza">
-            <column name="esercizio"  type="INT"/>                
+        <createTable remarks="Tabella contenente i conti presenti nel flusso della giornaliera." tableName="informazioni_conto_evidenza">
+            <column name="esercizio"  type="INT"/>
             <column name="identificativo_flusso" type="VARCHAR(50)"/>
             <column name="conto_evidenza" type="VARCHAR(20)"/>
             <column name="descrizione_conto_evidenza" type="VARCHAR(50)"/>
             <column name="saldo_precedente_conto_evid" 		type="numeric(15, 2)"/>
-					  <column name="totale_entrate_conto_evidenza" type="numeric(15, 2)"/>
-					  <column name="totale_uscite_conto_evidenza"	type="numeric(15, 2)"/>
-					  <column name="saldo_finale_conto_evidenza" 	type="numeric(15, 2)"/>
-					  <column name="dacr" type="DATE">
+            <column name="totale_entrate_conto_evidenza" type="numeric(15, 2)"/>
+            <column name="totale_uscite_conto_evidenza"	type="numeric(15, 2)"/>
+            <column name="saldo_finale_conto_evidenza" 	type="numeric(15, 2)"/>
+            <column name="dacr" type="DATE">
                 <constraints nullable="false"/>
             </column>
             <column name="utcr" type="VARCHAR(20)">
@@ -1358,13 +1358,14 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addPrimaryKey columnNames="esercizio,identificativo_flusso,conto_evidenza" constraintName="px_informazioni_conto_evidenza" tableName="informazioni_conto_evidenza"/>
-				<addForeignKeyConstraint baseColumnNames="esercizio,identificativo_flusso" baseTableName="informazioni_conto_evidenza" constraintName="fk_informazioni_conto_evidenza" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,identificativo_flusso" referencedTableName="flusso_giornale_di_cassa"/>
-        <createIndex indexName="fx_informazioni_conto_evidenza" tableName="informazioni_conto_evidenza">
-            <column name="esercizio,identificativo_flusso"/>
+        <addPrimaryKey columnNames="esercizio,identificativo_flusso,conto_evidenza" constraintName="px_informazioni_conto_evid" tableName="informazioni_conto_evidenza"/>
+        <addForeignKeyConstraint baseColumnNames="esercizio,identificativo_flusso" baseTableName="informazioni_conto_evidenza" constraintName="fk_informazioni_conto_evid" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,identificativo_flusso" referencedTableName="flusso_giornale_di_cassa"/>
+        <createIndex indexName="fx_informazioni_conto_evid" tableName="informazioni_conto_evidenza">
+            <column name="esercizio"/>
+            <column name="identificativo_flusso"/>
         </createIndex>
-				<createTable remarks="Tabella contenente il dettaglio dei movimenti dei conti presenti nel flusso della giornaliera." tableName="movimento_conto_evidenza">
-            <column name="esercizio"  type="INT"/>                
+        <createTable remarks="Tabella contenente il dettaglio dei movimenti dei conti presenti nel flusso della giornaliera." tableName="movimento_conto_evidenza">
+            <column name="esercizio"  type="INT"/>
             <column name="identificativo_flusso" type="VARCHAR(50)"/>
             <column name="progressivo" type="BIGINT"/>
             <column name="conto_evidenza" type="VARCHAR(20)"/>
@@ -1377,49 +1378,49 @@
             <column name="num_pag_funz_delegato" type="VARCHAR(10)"/>
             <column name="progressivo_documento" type="BIGINT"/>
             <column name="importo" 		type="numeric(15, 2)"/>
-					  <column name="importo_ritenute" type="numeric(15, 2)"/>
-					  <column name="numero_bolletta_quietanza" type="VARCHAR(10)"/>
-					  <column name="numero_bolletta_quietanza_s" type="VARCHAR(10)"/>
-					  <column name="data_movimento" type="DATE"/>
-					  <column name="data_valuta_ente" type="DATE"/>
-					  <column name="tipo_esecuzione" type="VARCHAR(20)"/>
-					  <column name="coordinate" type="VARCHAR(30)"/>
-					  <column name="codice_rif_operazione" type="VARCHAR(20)"/>
-					  <column name="codice_rif_interno" type="VARCHAR(20)"/>
-					  <column name="tipo_contabilita" type="VARCHAR(20)"/>
-					  <column name="destinazione" type="VARCHAR(20)"/>
-					  <column name="assoggettamento_bollo" type="VARCHAR(30)"/>
+            <column name="importo_ritenute" type="numeric(15, 2)"/>
+            <column name="numero_bolletta_quietanza" type="VARCHAR(10)"/>
+            <column name="numero_bolletta_quietanza_s" type="VARCHAR(10)"/>
+            <column name="data_movimento" type="DATE"/>
+            <column name="data_valuta_ente" type="DATE"/>
+            <column name="tipo_esecuzione" type="VARCHAR(20)"/>
+            <column name="coordinate" type="VARCHAR(30)"/>
+            <column name="codice_rif_operazione" type="VARCHAR(20)"/>
+            <column name="codice_rif_interno" type="VARCHAR(20)"/>
+            <column name="tipo_contabilita" type="VARCHAR(20)"/>
+            <column name="destinazione" type="VARCHAR(20)"/>
+            <column name="assoggettamento_bollo" type="VARCHAR(30)"/>
             <column name="importo_bollo" 		type="numeric(15, 2)"/>
-					  <column name="assoggettamento_spese" type="VARCHAR(30)"/>
+            <column name="assoggettamento_spese" type="VARCHAR(30)"/>
             <column name="importo_spese" 		type="numeric(15, 2)"/>
-					  <column name="assoggettamento_commissioni" type="VARCHAR(30)"/>
+            <column name="assoggettamento_commissioni" type="VARCHAR(30)"/>
             <column name="importo_commissioni" 		type="numeric(15, 2)"/>
-					  <column name="anagrafica_cliente" type="VARCHAR(50)"/>
-					  <column name="indirizzo_cliente" type="VARCHAR(50)"/>
-					  <column name="cap_cliente" type="VARCHAR(16)"/>
-					  <column name="localita_cliente" type="VARCHAR(50)"/>
-					  <column name="provincia_cliente" type="VARCHAR(20)"/>
-					  <column name="stato_cliente" type="VARCHAR(2)"/>
-					  <column name="partita_iva_cliente" type="VARCHAR(35)"/>
-					  <column name="codice_fiscale_cliente" type="VARCHAR(35)"/>
-   			  	<column name="anagrafica_delegato" type="VARCHAR(50)"/>
-					  <column name="indirizzo_delegato" type="VARCHAR(50)"/>
-					  <column name="cap_delegato" type="VARCHAR(16)"/>
-					  <column name="localita_delegato" type="VARCHAR(50)"/>
-					  <column name="provincia_delegato" type="VARCHAR(20)"/>
-					  <column name="stato_delegato" type="VARCHAR(2)"/>
-					  <column name="codice_fiscale_delegato" type="VARCHAR(35)"/>
- 				  	<column name="anagrafica_creditore_eff" type="VARCHAR(50)"/>
-					  <column name="indirizzo_creditore_eff" type="VARCHAR(50)"/>
-					  <column name="cap_creditore_eff" type="VARCHAR(16)"/>
-					  <column name="localita_creditore_eff" type="VARCHAR(50)"/>
-					  <column name="provincia_creditore_eff" type="VARCHAR(20)"/>
-					  <column name="stato_creditore_eff" type="VARCHAR(2)"/>
-					  <column name="partita_iva_creditore_eff" type="VARCHAR(35)"/>
-					  <column name="codice_fiscale_creditore_eff" type="VARCHAR(35)"/>
+            <column name="anagrafica_cliente" type="VARCHAR(50)"/>
+            <column name="indirizzo_cliente" type="VARCHAR(50)"/>
+            <column name="cap_cliente" type="VARCHAR(16)"/>
+            <column name="localita_cliente" type="VARCHAR(50)"/>
+            <column name="provincia_cliente" type="VARCHAR(20)"/>
+            <column name="stato_cliente" type="VARCHAR(2)"/>
+            <column name="partita_iva_cliente" type="VARCHAR(35)"/>
+            <column name="codice_fiscale_cliente" type="VARCHAR(35)"/>
+            <column name="anagrafica_delegato" type="VARCHAR(50)"/>
+            <column name="indirizzo_delegato" type="VARCHAR(50)"/>
+            <column name="cap_delegato" type="VARCHAR(16)"/>
+            <column name="localita_delegato" type="VARCHAR(50)"/>
+            <column name="provincia_delegato" type="VARCHAR(20)"/>
+            <column name="stato_delegato" type="VARCHAR(2)"/>
+            <column name="codice_fiscale_delegato" type="VARCHAR(35)"/>
+            <column name="anagrafica_creditore_eff" type="VARCHAR(50)"/>
+            <column name="indirizzo_creditore_eff" type="VARCHAR(50)"/>
+            <column name="cap_creditore_eff" type="VARCHAR(16)"/>
+            <column name="localita_creditore_eff" type="VARCHAR(50)"/>
+            <column name="provincia_creditore_eff" type="VARCHAR(20)"/>
+            <column name="stato_creditore_eff" type="VARCHAR(2)"/>
+            <column name="partita_iva_creditore_eff" type="VARCHAR(35)"/>
+            <column name="codice_fiscale_creditore_eff" type="VARCHAR(35)"/>
             <column name="causale" type="VARCHAR(200)"/>
             <column name="numero_sospeso" type="BIGINT"/>
-					  <column name="dacr" type="DATE">
+            <column name="dacr" type="DATE">
                 <constraints nullable="false"/>
             </column>
             <column name="utcr" type="VARCHAR(20)">
@@ -1436,9 +1437,11 @@
             </column>
         </createTable>
         <addPrimaryKey columnNames="esercizio,identificativo_flusso,conto_evidenza,stato,progressivo" constraintName="px_movimento_conto_evidenza" tableName="movimento_conto_evidenza"/>
-				<addForeignKeyConstraint baseColumnNames="esercizio,identificativo_flusso,conto_evidenza" baseTableName="movimento_conto_evidenza" constraintName="fk_movimento_conto_evidenza" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,identificativo_flusso,conto_evidenza" referencedTableName="informazioni_conto_evidenza"/>
+        <addForeignKeyConstraint baseColumnNames="esercizio,identificativo_flusso,conto_evidenza" baseTableName="movimento_conto_evidenza" constraintName="fk_movimento_conto_evidenza" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,identificativo_flusso,conto_evidenza" referencedTableName="informazioni_conto_evidenza"/>
         <createIndex indexName="fx_movimento_conto_evidenza" tableName="movimento_conto_evidenza">
-            <column name="esercizio,identificativo_flusso,conto_evidenza"/>
+            <column name="esercizio"/>
+            <column name="identificativo_flusso"/>
+            <column name="conto_evidenza"/>
         </createIndex>
     </changeSet>    
          <changeSet author="rosangela.pucciarelli" id="alter_movimento_c_evi>
