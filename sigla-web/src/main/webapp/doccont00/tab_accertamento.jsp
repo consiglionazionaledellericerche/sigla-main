@@ -65,9 +65,9 @@
 			<td><% bp.getController().writeFormLabel( out, ((CRUDAccertamentoResiduoBP)bp).isROStato() ?"statoAccertamento_ro":"statoAccertamento"); %></td>
 			<td colspan=2>
 			<% bp.getController().writeFormInput( out, ((CRUDAccertamentoResiduoBP)bp).isROStato() ?"statoAccertamento_ro":"statoAccertamento"); %>
-			<% if (((AccertamentoResiduoBulk)accertamento).isParzialmenteInesigibile() || ((AccertamentoResiduoBulk)accertamento).isInesigibile()) {%>
-				<% bp.getController().writeFormLabel( out, ((CRUDAccertamentoResiduoBP)bp).isROStato() || ((AccertamentoResiduoBulk)accertamento).isInesigibile()?"im_quota_inesigibile_ro":"im_quota_inesigibile"); %>
-				<% bp.getController().writeFormInput( out, ((CRUDAccertamentoResiduoBP)bp).isROStato() || ((AccertamentoResiduoBulk)accertamento).isInesigibile()?"im_quota_inesigibile_ro":"im_quota_inesigibile"); %>
+			<% if (((AccertamentoResiduoBulk)accertamento).isStatoParzialmenteInesigibile() || ((AccertamentoResiduoBulk)accertamento).isStatoInesigibile()) {%>
+				<% bp.getController().writeFormLabel( out, ((CRUDAccertamentoResiduoBP)bp).isROStato() || ((AccertamentoResiduoBulk)accertamento).isStatoInesigibile()?"im_quota_inesigibile_ro":"im_quota_inesigibile"); %>
+				<% bp.getController().writeFormInput( out, ((CRUDAccertamentoResiduoBP)bp).isROStato() || ((AccertamentoResiduoBulk)accertamento).isStatoInesigibile()?"im_quota_inesigibile_ro":"im_quota_inesigibile"); %>
 			<% } %>
 			</td>
 		</tr>		  		
