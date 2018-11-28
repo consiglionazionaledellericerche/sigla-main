@@ -1444,7 +1444,7 @@
             <column name="conto_evidenza"/>
         </createIndex>
     </changeSet>    
-         <changeSet author="rosangela.pucciarelli" id="alter_movimento_c_evi>
+    <changeSet author="rosangela.pucciarelli" id="alter_movimento_c_evi">
         <modifyDataType tableName="movimento_conto_evidenza" columnName="tipo_esecuzione" newDataType="VARCHAR(100)"/>
         <modifyDataType tableName="movimento_conto_evidenza" columnName="assoggettamento_bollo" newDataType="VARCHAR(50)"/>
         <modifyDataType tableName="movimento_conto_evidenza" columnName="assoggettamento_spese" newDataType="VARCHAR(50)"/>
