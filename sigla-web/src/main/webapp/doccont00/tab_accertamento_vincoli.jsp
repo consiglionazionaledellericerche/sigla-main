@@ -4,12 +4,19 @@
 %>
 <%  
 	CRUDAccertamentoBP bp = (CRUDAccertamentoBP)BusinessProcess.getBusinessProcess(request);
+	AccertamentoResiduoBulk accertamento = (AccertamentoResiduoBulk)bp.getModel();
 %>
 
 <table class="Panel">
 	<tr>
 		<% bp.getController().writeFormField( out, "im_quota_inesigibile_ripartita"); %>
-		<% bp.getController().writeFormField( out, "im_quota_inesigibile_da_ripartire"); %>
+		<% 
+		   if (accertamento.isStatoParzialmenteInesigibile() || accertamento.isStatoInesigibile()) {
+			  bp.getController().writeFormField( out, "im_quota_inesigibile_da_ripartire");
+		   } else if (accertamento.isStatoDubbio()) {
+			  bp.getController().writeFormField( out, "importoNonIncassato");
+		   }
+		%>
 	</tr>
 </table>
 <%
