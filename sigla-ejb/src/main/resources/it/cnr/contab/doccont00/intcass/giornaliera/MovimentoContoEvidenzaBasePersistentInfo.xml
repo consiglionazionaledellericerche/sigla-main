@@ -89,7 +89,7 @@
 			columnName="TIPO_ESECUZIONE"
 			propertyName="tipoEsecuzione"
 			sqlTypeName="VARCHAR"
-			columnSize="50"
+			columnSize="100"
 			nullable="true" />
 		<columnMapping
 			columnName="COORDINATE"
