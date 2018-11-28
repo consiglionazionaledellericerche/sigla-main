@@ -163,8 +163,8 @@
 		name="tipoEsecuzione"
 		property="tipoEsecuzione"
 		inputType="TEXT"
-		inputSize="50"
-		maxLength="50"
+		inputSize="100"
+		maxLength="100"
 		enabledOnEdit="false"
 		label="tipoEsecuzione" />
 	<fieldProperty
