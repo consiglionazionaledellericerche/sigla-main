@@ -221,40 +221,46 @@ public class CRUDPdgModuloEntrateGestComponent extends it.cnr.jada.comp.CRUDComp
 	public SQLBuilder selectElemento_voceByClause (UserContext userContext, 
 												   Pdg_modulo_entrate_gestBulk dett,
 												   Elemento_voceBulk elementoVoce, 
-												   CompoundFindClause clause) throws ComponentException, PersistencyException {	
-		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
-		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
-
-		if (clause == null) clause = ((OggettoBulk)elementoVoce).buildFindClauses(null);
-
-		SQLBuilder sql = getHome(userContext, elementoVoce,"V_ELEMENTO_VOCE_PDG_ETR").createSQLBuilder();
-
-		if(clause != null) sql.addClause(clause);
-
-		sql.addSQLClause("AND", "V_ELEMENTO_VOCE_PDG_ETR.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
-
-		sql.addTableToHeader("PARAMETRI_LIVELLI");
-		sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_ETR.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
-
-		sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
-		sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_ETR.ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
-		sql.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_ENTRATA");
-
-		sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI_ALL.ID_LIV"+parCnrBulk.getLivello_pdg_decis_etr(), sql.EQUALS, dett.getId_classificazione());	
-
-		sql.openParenthesis("AND");
-		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_ETR.FL_PARTITA_GIRO", sql.ISNULL, null);	
-		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_ETR.FL_PARTITA_GIRO", sql.EQUALS, "N");	
-		sql.closeParenthesis();
-		sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_ETR.FL_SOLO_RESIDUO", sql.EQUALS, "N");
-		if (dett.getLinea_attivita() != null && dett.getCd_linea_attivita() != null)
-			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_ETR.CD_NATURA",sql.EQUALS,dett.getLinea_attivita().getCd_natura());
-		if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null && !dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC))
-			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_ETR.FL_VOCE_SAC",sql.EQUALS,"N");	      
+												   CompoundFindClause clause) throws ComponentException, PersistencyException {
+		try {
+			Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+			Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
 	
-		if (clause != null) sql.addClause(clause);
-
-		return sql;
+			if (clause == null) clause = ((OggettoBulk)elementoVoce).buildFindClauses(null);
+	
+			SQLBuilder sql = getHome(userContext, elementoVoce,"V_ELEMENTO_VOCE_PDG_ETR").createSQLBuilder();
+	
+			if(clause != null) sql.addClause(clause);
+	
+			sql.addSQLClause("AND", "V_ELEMENTO_VOCE_PDG_ETR.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
+	
+			sql.addTableToHeader("PARAMETRI_LIVELLI");
+			sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_ETR.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
+	
+			sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
+			sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_ETR.ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
+			sql.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_ENTRATA");
+	
+			sql.addSQLClause("AND", "V_CLASSIFICAZIONE_VOCI_ALL.ID_LIV"+parCnrBulk.getLivello_pdg_decis_etr(), sql.EQUALS, dett.getId_classificazione());	
+	
+			if (Utility.createParametriEnteComponentSession().getParametriEnte(userContext).isEnteCNR()) {
+				sql.openParenthesis("AND");
+				sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_ETR.FL_PARTITA_GIRO", sql.ISNULL, null);	
+				sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_ETR.FL_PARTITA_GIRO", sql.EQUALS, "N");	
+				sql.closeParenthesis();
+			}
+			sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_ETR.FL_SOLO_RESIDUO", sql.EQUALS, "N");
+			if (dett.getLinea_attivita() != null && dett.getCd_linea_attivita() != null)
+				sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_ETR.CD_NATURA",sql.EQUALS,dett.getLinea_attivita().getCd_natura());
+			if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null && !dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_SAC))
+				sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_ETR.FL_VOCE_SAC",sql.EQUALS,"N");	      
+		
+			if (clause != null) sql.addClause(clause);
+	
+			return sql;
+		} catch(RemoteException e) {
+			throw new it.cnr.jada.comp.ComponentException(e);
+		}
 	}
 	
 	private BigDecimal calcolaImporto(UserContext userContext, SQLBuilder sql) throws ComponentException{

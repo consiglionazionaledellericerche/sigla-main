@@ -25,7 +25,7 @@
    for update nowait;
   exception
    when TOO_MANY_ROWS  then
-    IBMERR001.RAISE_ERR_GENERICO('L'''||getDescObbligazione(aObbScad)||' ha scadenze con piש di un dettaglio analitico. Funzione non supportata');
+    IBMERR001.RAISE_ERR_GENERICO('L'''||getDescObbligazione(aObbScad)||' ha scadenze con più di un dettaglio analitico. Funzione non supportata');
    when NO_DATA_FOUND  then
     IBMERR001.RAISE_ERR_GENERICO('Nessuna scadenza analitica trovata per '||getDescObbligazione(aObbScad));
   end;
@@ -71,75 +71,78 @@
     and pg_obbligazione_scadenzario = aObbScad.pg_obbligazione_scadenzario;
  End;
 
- procedure adeguaObbScadSuccSV(aObbScad obbligazione_scadenzario%rowtype,aNewImp number,aUser varchar2) is
+ procedure adeguaObbScadSuccSV(aObbScad obbligazione_scadenzario%rowtype,aNextPgObbScad number,aNewImp number,aUser varchar2) is
   aNextScad obbligazione_scadenzario%rowtype;
   aTSNow date;
   aTotScadVoce number;
   aLastPg number;
  begin
 
-  If aNewImp = aObbScad.im_scadenza Then --Scadenza con importo giא uguale a quello richiesto
+  If aNewImp = aObbScad.im_scadenza Then --Scadenza con importo già uguale a quello richiesto
     return;
   end if;
 
   aTSNow:=sysdate;
   aTotScadVoce:=0;
 
-  -- Leggo la scadenza successiva a quella corrente se non esiste la creo
+  -- Leggo la scadenza su cui spostare le somme e se non esiste la creo
   begin
     select * into aNextScad from obbligazione_scadenzario where
            cd_cds = aObbScad.cd_cds
        and esercizio = aObbScad.esercizio
        and esercizio_originale = aObbScad.esercizio_originale
        and pg_obbligazione = aObbScad.pg_obbligazione
-       and pg_obbligazione_scadenzario = aObbScad.pg_obbligazione_scadenzario + 1;
+       and pg_obbligazione_scadenzario = aNextPgObbScad;
   exception
     when NO_DATA_FOUND then
       aNextScad.CD_CDS := aObbScad.CD_CDS;
       aNextScad.ESERCIZIO := aObbScad.ESERCIZIO;
       aNextScad.ESERCIZIO_ORIGINALE := aObbScad.ESERCIZIO_ORIGINALE;
       aNextScad.PG_OBBLIGAZIONE := aObbScad.PG_OBBLIGAZIONE;
-      aNextScad.PG_OBBLIGAZIONE_SCADENZARIO := aObbScad.PG_OBBLIGAZIONE_SCADENZARIO + 1;
+      aNextScad.PG_OBBLIGAZIONE_SCADENZARIO := aNextPgObbScad;
 
-      if aObbScad.PG_OBBLIGAZIONE_SCADENZARIO=1 and aObbScad.DS_SCADENZA='gennaio' Then
+      if aObbScad.DS_SCADENZA='gennaio' and aNextPgObbScad=2 Then
         aNextScad.DT_SCADENZA := to_date('25/02/'||aObbScad.esercizio, 'dd/mm/yyyy');
         aNextScad.DS_SCADENZA := 'febbraio';
-      elsif aObbScad.PG_OBBLIGAZIONE_SCADENZARIO=2 and aObbScad.DS_SCADENZA='febbraio' Then
+      elsif aObbScad.DS_SCADENZA='febbraio' and aNextPgObbScad=3 Then
         aNextScad.DT_SCADENZA := to_date('25/03/'||aObbScad.esercizio, 'dd/mm/yyyy');
         aNextScad.DS_SCADENZA := 'marzo';
-      elsif aObbScad.PG_OBBLIGAZIONE_SCADENZARIO=3 and aObbScad.DS_SCADENZA='marzo' Then
+      elsif aObbScad.DS_SCADENZA='marzo' and aNextPgObbScad=4 Then
         aNextScad.DT_SCADENZA := to_date('25/04/'||aObbScad.esercizio, 'dd/mm/yyyy');
         aNextScad.DS_SCADENZA := 'aprile';
-      elsif aObbScad.PG_OBBLIGAZIONE_SCADENZARIO=4 and aObbScad.DS_SCADENZA='aprile' Then
+      elsif aObbScad.DS_SCADENZA='aprile' and aNextPgObbScad=5 Then
         aNextScad.DT_SCADENZA := to_date('25/05/'||aObbScad.esercizio, 'dd/mm/yyyy');
         aNextScad.DS_SCADENZA := 'maggio';
-      elsif aObbScad.PG_OBBLIGAZIONE_SCADENZARIO=5 and aObbScad.DS_SCADENZA='maggio' Then
+      elsif aObbScad.DS_SCADENZA='maggio' and aNextPgObbScad=6 Then
         aNextScad.DT_SCADENZA := to_date('25/06/'||aObbScad.esercizio, 'dd/mm/yyyy');
         aNextScad.DS_SCADENZA := 'giugno';
-      elsif aObbScad.PG_OBBLIGAZIONE_SCADENZARIO=6 and aObbScad.DS_SCADENZA='giugno' Then
+      elsif aObbScad.DS_SCADENZA='giugno' and aNextPgObbScad=7 Then
         aNextScad.DT_SCADENZA := to_date('25/07/'||aObbScad.esercizio, 'dd/mm/yyyy');
         aNextScad.DS_SCADENZA := 'luglio';
-      elsif aObbScad.PG_OBBLIGAZIONE_SCADENZARIO=7 and aObbScad.DS_SCADENZA='luglio' Then
+      elsif aObbScad.DS_SCADENZA='luglio' and aNextPgObbScad=8 Then
         aNextScad.DT_SCADENZA := to_date('25/08/'||aObbScad.esercizio, 'dd/mm/yyyy');
         aNextScad.DS_SCADENZA := 'agosto';
-      elsif aObbScad.PG_OBBLIGAZIONE_SCADENZARIO=8 and aObbScad.DS_SCADENZA='agosto' Then
+      elsif aObbScad.DS_SCADENZA='agosto' and aNextPgObbScad=9 Then
         aNextScad.DT_SCADENZA := to_date('25/09/'||aObbScad.esercizio, 'dd/mm/yyyy');
         aNextScad.DS_SCADENZA := 'settembre';
-      elsif aObbScad.PG_OBBLIGAZIONE_SCADENZARIO=9 and aObbScad.DS_SCADENZA='settembre' Then
+      elsif aObbScad.DS_SCADENZA='settembre' and aNextPgObbScad=10 Then
         aNextScad.DT_SCADENZA := to_date('25/10/'||aObbScad.esercizio, 'dd/mm/yyyy');
         aNextScad.DS_SCADENZA := 'ottobre';
-      elsif aObbScad.PG_OBBLIGAZIONE_SCADENZARIO=10 and aObbScad.DS_SCADENZA='ottobre' Then
+      elsif aObbScad.DS_SCADENZA='ottobre' and aNextPgObbScad=11 Then
         aNextScad.DT_SCADENZA := to_date('25/11/'||aObbScad.esercizio, 'dd/mm/yyyy');
         aNextScad.DS_SCADENZA := 'novembre';
-      elsif aObbScad.PG_OBBLIGAZIONE_SCADENZARIO=11 and aObbScad.DS_SCADENZA='novembre' Then
+      elsif aObbScad.DS_SCADENZA='novembre' and aNextPgObbScad=12 Then
         aNextScad.DT_SCADENZA := to_date('15/12/'||aObbScad.esercizio, 'dd/mm/yyyy');
         aNextScad.DS_SCADENZA := 'tredicesima';
-      elsif aObbScad.PG_OBBLIGAZIONE_SCADENZARIO=12 and aObbScad.DS_SCADENZA='tredicesima' Then
+      elsif aObbScad.DS_SCADENZA='tredicesima' and aNextPgObbScad=13 Then
         aNextScad.DT_SCADENZA := to_date('25/12/'||aObbScad.esercizio, 'dd/mm/yyyy');
         aNextScad.DS_SCADENZA := 'dicembre';
-      elsif aObbScad.PG_OBBLIGAZIONE_SCADENZARIO=13 and aObbScad.DS_SCADENZA='dicembre' Then
+      elsif aObbScad.DS_SCADENZA='dicembre' and aNextPgObbScad=14 Then
         aNextScad.DT_SCADENZA := to_date('31/12/'||aObbScad.esercizio, 'dd/mm/yyyy');
         aNextScad.DS_SCADENZA := 'residuo';
+      elsif aNextPgObbScad=15 Then
+        aNextScad.DT_SCADENZA := to_date('30/11/'||aObbScad.esercizio, 'dd/mm/yyyy');
+        aNextScad.DS_SCADENZA := 'recupero addizionali reg/com';
       else
         aNextScad.DT_SCADENZA := aObbScad.DT_SCADENZA;
         aNextScad.DS_SCADENZA := aObbScad.DS_SCADENZA;
@@ -785,24 +788,24 @@ If isPerVariazione Then
            for update nowait;
 
           if aObbligScadRib.IM_SCADENZA - aObbligScadRib.IM_ASSOCIATO_DOC_AMM + DELTA_VAR_RES < 0 Then
-            IBMERR001.RAISE_ERR_GENERICO('L''impegno n.'||aObbligRib.pg_obbligazione||' del '||aObbligRib.esercizio_originale||' relativo al capitolo '||aObbligScadVoceRib.cd_voce||' risulta riportato a nuovo esercizio e non ט modificabile.');
+            IBMERR001.RAISE_ERR_GENERICO('L''impegno n.'||aObbligRib.pg_obbligazione||' del '||aObbligRib.esercizio_originale||' relativo al capitolo '||aObbligScadVoceRib.cd_voce||' risulta riportato a nuovo esercizio e non è modificabile.');
           else
              aNuovoImportoRib := aObbligScadRib.IM_SCADENZA + DELTA_VAR_RES;
              delta_saldo_cdrRib := Nvl(DELTA_VAR_RES, 0);
           end if;
         exception when no_data_found then
-          IBMERR001.RAISE_ERR_GENERICO('L''impegno relativo al capitolo '||aSaldo.cd_voce||' risulta riportato a nuovo esercizio e non ט modificabile.');
+          IBMERR001.RAISE_ERR_GENERICO('L''impegno relativo al capitolo '||aSaldo.cd_voce||' risulta riportato a nuovo esercizio e non è modificabile.');
         end;
 
     end if;
 
-    -- Se la modifica ט fatta per variazione, devo sanare necessariamente le differenze
+    -- Se la modifica è fatta per variazione, devo sanare necessariamente le differenze
     -- tra assestato e importo associato a doc. amm. dell'impegno
 
     If TIPO_IMPEGNO = CNRCTB018.TI_DOC_IMP Then  -- VARIAZIONE DI UN COMPETENZA
         If aObbligScad.IM_SCADENZA + DELTA_VAR_RES < aObbligScad.im_associato_doc_amm Then
          IBMERR001.RAISE_ERR_GENERICO('Il nuovo importo dell'''||DES_TIPO_IMPEGNO||' n. '||aObbligScad.pg_obbligazione||' del '||aObbligScad.esercizio_originale||
-         ' sulla voce '||aSaldo.cd_voce||' risulterebbe inferiore a quanto giא  associato a documenti amministrativi (importo '||
+         ' sulla voce '||aSaldo.cd_voce||' risulterebbe inferiore a quanto già associato a documenti amministrativi (importo '||
          To_Char(aObbligScad.IM_SCADENZA)||', variazione '||DELTA_VAR_RES||', quota associata '||aObbligScad.im_associato_doc_amm||')');
         Else
          aNuovoImporto := aObbligScad.IM_SCADENZA + DELTA_VAR_RES;
@@ -814,7 +817,7 @@ If isPerVariazione Then
         if aObbligScad.IM_SCADENZA - aObbligScad.IM_ASSOCIATO_DOC_AMM + DELTA_VAR_RES < 0 Then
          IBMERR001.RAISE_ERR_GENERICO('La scadenza dell''impegno residuo '||aObbligScad.pg_obbligazione||' del '||aObbligScad.esercizio_originale||
          ' sul capitolo '||aSaldo.cd_voce||' ('||To_Char(aObbligScad.IM_SCADENZA)||
-         ') ט giא associata a documenti amministrativi per '||aObbligScad.im_associato_doc_amm||'. Non puע essere inserita la variazione di '||DELTA_VAR_RES);
+         ') è già associata a documenti amministrativi per '||aObbligScad.im_associato_doc_amm||'. Non può essere inserita la variazione di '||DELTA_VAR_RES);
         else
          aNuovoImporto := aObbligScad.IM_SCADENZA + DELTA_VAR_RES;
          delta_saldo_cdr := Nvl(DELTA_VAR_RES, 0);
@@ -825,13 +828,13 @@ Else -- NON PER VARIAZIONE
      -- 24.01.2008 POTREBBE ANCHE ESSERE CHE LE CHIUSURE CONTINUE DEI PIANI DI GESTIONE INCREMENTANO LO STESSO IMPEGNO
      --            MA L'INCREMENTO NON E' CONSIDERATO PER VARIAZIONE
 
-    -- L'importo dell'impegno non puע essere inferiore al saldo dei documenti amministrativi
+    -- L'importo dell'impegno non può essere inferiore al saldo dei documenti amministrativi
 
     if aSaldo.im_stanz_iniziale_a1 + aSaldo.VARIAZIONI_PIU - aSaldo.VARIAZIONI_MENO < aObbligScad.im_associato_doc_amm then
      aNuovoImporto := aObbligScad.im_associato_doc_amm;
 /*
          IBMERR001.RAISE_ERR_GENERICO('Attenzione !! Lo stanziamento sulla voce '||aSaldo.cd_voce||' ('||
-aSaldo.im_stanz_iniziale_a1||') risulterebbe inferiore a quanto giא associato '||
+aSaldo.im_stanz_iniziale_a1||') risulterebbe inferiore a quanto già associato '||
 'a documenti amministrativi ('||aObbligScad.im_associato_doc_amm||')');
 */
     else
@@ -986,8 +989,8 @@ end if;
     CNRCTB054.crea_aggiorna_saldi(aSaldoCdrLineaRib, '030.aggiornaImpegnoCapitolo', 'N');
   end if;
 
-  -- Se l'impegno non esiste e l'aggiornamento non ט per variazione di bilancio, l'impegno viene creato
-  -- Se l'aggiornamento ט per variazione di bilancio l'impegno deve essere giא presente (eventualmente con importo a 0) NON PIU' !!!!
+  -- Se l'impegno non esiste e l'aggiornamento non è per variazione di bilancio, l'impegno viene creato
+  -- Se l'aggiornamento è per variazione di bilancio l'impegno deve essere già presente (eventualmente con importo a 0) NON PIU' !!!!
 
   -- ATTENZIONE !!!! 16.05.2006
   -- DAL 2006 NON E' PIU' VERO CHE L'IMPEGNO CI DEVE ESSERE PER FORZA, ANCHE SE A ZERO.
@@ -995,7 +998,7 @@ end if;
 
 Exception
     When Too_Many_Rows Then
-      IBMERR001.RAISE_ERR_GENERICO('Esiste piש di un '||DES_TIPO_IMPEGNO||' del CDS '||CNRCTB020.GETCDCDSENTE(aSaldo.esercizio)||
+      IBMERR001.RAISE_ERR_GENERICO('Esiste più di un '||DES_TIPO_IMPEGNO||' del CDS '||CNRCTB020.GETCDCDSENTE(aSaldo.esercizio)||
 ' dell''esercizio '||aSaldo.esercizio||' (proveniente dal '||aSaldo.esercizio_res||') per la Voce '||aSaldo.cd_voce);
     When No_Data_Found then
 
@@ -1006,11 +1009,11 @@ Exception
       If TIPO_IMPEGNO = CNRCTB018.TI_DOC_IMP THEN
        IBMERR001.RAISE_ERR_GENERICO(DES_TIPO_IMPEGNO||' del CDS '||CNRCTB020.GETCDCDSENTE(aSaldo.esercizio)||
 ', esercizio '||aSaldo.esercizio||' sulla Voce '||aSaldo.cd_voce||
-' non trovato, con stato non valido oppure senza disponibilitא sufficiente (importo variazione '||DELTA_VAR_RES||').');
+' non trovato, con stato non valido oppure senza disponibilità sufficiente (importo variazione '||DELTA_VAR_RES||').');
       Elsif TIPO_IMPEGNO = CNRCTB018.TI_DOC_IMP_RES Then
        IBMERR001.RAISE_ERR_GENERICO(DES_TIPO_IMPEGNO||' del CDS '||CNRCTB020.GETCDCDSENTE(aSaldo.esercizio)||
 ', esercizio '||aSaldo.esercizio||' (proveniente dal '||aSaldo.esercizio_res||') sulla Voce '||aSaldo.cd_voce||
-' non trovato, con stato non valido oppure senza disponibilitא sufficiente (importo variazione '||DELTA_VAR_RES||').');
+' non trovato, con stato non valido oppure senza disponibilità sufficiente (importo variazione '||DELTA_VAR_RES||').');
       End If;
     End if;
 
@@ -1033,14 +1036,14 @@ Exception
    aCodTerzoDivImpegni := CNRCTB015.GETIM01PERCHIAVE(CNRCTB016.TERZO_SPECIALE,CNRCTB016.CODICE_DIVERSI_IMPEGNI);
 
    if aCodTerzoDivImpegni is null then
-    IBMERR001.RAISE_ERR_GENERICO('Codice terzo ''Diversi'' da utilizzare come entitא anagrafica per l''impegno, non specificato in Configurazione CNR');
+    IBMERR001.RAISE_ERR_GENERICO('Codice terzo ''Diversi'' da utilizzare come entità anagrafica per l''impegno, non specificato in Configurazione CNR');
    end if;
 
    begin
     select * into aTerzoTemp from terzo
      where cd_terzo = aCodTerzoDivImpegni;
    exception when NO_DATA_FOUND then
-    IBMERR001.RAISE_ERR_GENERICO('Codice terzo ''Diversi'' da utilizzare come entitא anagrafica per l''impegno, non trovato nella tabella TERZO');
+    IBMERR001.RAISE_ERR_GENERICO('Codice terzo ''Diversi'' da utilizzare come entità anagrafica per l''impegno, non trovato nella tabella TERZO');
    end;
 
    aNumeratore:=CNRCTB018.getNextNumDocCont(TIPO_IMPEGNO, aSaldo.esercizio, CNRCTB020.GETCDCDSENTE (aSaldo.esercizio), aSaldo.utuv);
@@ -1161,7 +1164,7 @@ Exception
 
   -- se e' competenza
   If aSaldoCdrLinea.ESERCIZIO = aSaldoCdrLinea.ESERCIZIO_RES Then
-    -- o ט variazione
+    -- o è variazione
     If isPerVariazione Then
        --aSaldocdrlinea.VARIAZIONI_PIU := aObbligScadVoce.IM_VOCE;
        aSaldocdrlinea.IM_OBBL_ACC_COMP := aObbligScadVoce.IM_VOCE;
@@ -1172,10 +1175,10 @@ Exception
   Elsif aSaldoCdrLinea.ESERCIZIO > aSaldoCdrLinea.ESERCIZIO_RES Then
   -- se e' residuo
     If isPerVariazione Then
-    -- o ט variazione
+    -- o è variazione
        aSaldocdrlinea.VAR_PIU_OBBL_RES_PRO := aObbligScadVoce.IM_VOCE;
     Else
-    -- o ט residuo
+    -- o è residuo
        aSaldocdrlinea.IM_OBBL_RES_PRO := aObbligScadVoce.IM_VOCE;
     End If;
   End If;
@@ -1262,7 +1265,7 @@ Dbms_Output.PUT_LINE ('d');
     When Too_Many_Rows then
         IBMERR001.RAISE_ERR_GENERICO('Esistono impegni dell''Ente su diversi GAE sull''esercizio '||aEs||', esercizio residuo '||aEs_Residuo||
 ', Voce '||aVoceF||'  e GAE '||CNRCTB015.getVal02PerChiave(0, 'LINEA_ATTIVITA_SPECIALE',  'LINEA_ATTIVITA_SPESA_ENTE')||
-'(esistono piש saldi per Voce/CdR/GAE)');
+'(esistono più saldi per Voce/CdR/GAE)');
   End;
 End;
 
@@ -1351,18 +1354,18 @@ Dbms_Output.put_line ('dentro creaObbligazionePgiroInt');
 	        esercizio = aEV.esercizio
 		and ti_gestione = aEV.ti_gestione
 		and ti_appartenenza = aEV.ti_appartenenza
-		and cd_voce = aObb.cd_elemento_voce -- In spesa la partita di giro non ט articolata
+		and cd_voce = aObb.cd_elemento_voce -- In spesa la partita di giro non è articolata
 	    and fl_mastrino = 'Y';
 	  exception when NO_DATA_FOUND then
 	   IBMERR001.RAISE_ERR_GENERICO('Conto finanziario partita di giro di spesa non trovato');
 	  end;
 
 	  if aCDS.cd_tipo_unita = CNRCTB020.TIPO_ENTE and aEV.ti_appartenenza = CNRCTB001.APPARTENENZA_CDS then
-	   IBMERR001.RAISE_ERR_GENERICO('La voce del piano specificata non ט una voce del piano dell''ENTE');
+	   IBMERR001.RAISE_ERR_GENERICO('La voce del piano specificata non è una voce del piano dell''ENTE');
 	  end if;
 
 	  if aCDS.cd_tipo_unita <> CNRCTB020.TIPO_ENTE and aEV.ti_appartenenza = CNRCTB001.APPARTENENZA_CNR then
-	   IBMERR001.RAISE_ERR_GENERICO('La voce del piano specificata non ט una voce del piano di CDS');
+	   IBMERR001.RAISE_ERR_GENERICO('La voce del piano specificata non è una voce del piano di CDS');
 	  end if;
   end if;
   if aObb.esercizio != aObb.esercizio_competenza then
@@ -1376,7 +1379,7 @@ Dbms_Output.put_line ('dentro creaObbligazionePgiroInt');
     aNumeratore := aObb.pg_obbligazione; -- rimane il vecchio numero
   End If;
 
-  --Se l'esercizio originale non ט valorizzato lo inizializzo con quello dell'esercizio
+  --Se l'esercizio originale non è valorizzato lo inizializzo con quello dell'esercizio
   If (aObb.esercizio_originale Is Null) Then
      aObb.esercizio_originale := aObb.esercizio;
   End If;
@@ -1481,7 +1484,7 @@ If aObb.cd_tipo_documento_cont != CNRCTB018.TI_DOC_OBB_PGIRO_RES Then
           ti_appartenenza = aEVContr.ti_appartenenza And
           cd_titolo_capitolo = aEVContr.cd_elemento_voce And
           fl_mastrino = 'Y' And
-         -- Nel caso di pgiro su ente ט necessaria l'UO per determinare il cap. entrata
+         -- Nel caso di pgiro su ente è necessaria l'UO per determinare il cap. entrata
          (aEVContr.ti_appartenenza=CNRCTB001.APPARTENENZA_CDS Or cd_unita_organizzativa = aObb.cd_unita_organizzativa);
   Exception
     When NO_DATA_FOUND Then
@@ -1725,7 +1728,7 @@ End;
    IBMERR001.RAISE_ERR_GENERICO('2. Generazione automatica di '||cnrutil.getLabelObbligazioneMin()||' in esercizi futuri non supportata');
   end if;
 
-  --commentato poichט i controlli vengono rifatti in CNRCTB035.creaScadObbligazione
+  --commentato poichè i controlli vengono rifatti in CNRCTB035.creaScadObbligazione
   /*
   if isControlloBloccante then
    if checkAssunzObblig(
@@ -1741,7 +1744,7 @@ End;
   */
   aNumeratore:=CNRCTB018.getNextNumDocCont(aObb.cd_tipo_documento_cont, aObb.esercizio, aObb.cd_cds, aObb.utcr);
 
-  --Se l'esercizio originale non ט valorizzato lo inizializzo con quello dell'esercizio
+  --Se l'esercizio originale non è valorizzato lo inizializzo con quello dell'esercizio
   If (aObb.esercizio_originale Is Null) Then
      aObb.ESERCIZIO_ORIGINALE:=aObb.esercizio;
   End If;
